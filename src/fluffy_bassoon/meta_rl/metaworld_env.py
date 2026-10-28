@@ -7,11 +7,26 @@ import gymnasium as gym
 import numpy as np
 
 
+BENCHMARKS = ("ml1-push", "ml10", "pointmaze", "halfcheetah-vel")
+
+
+def make_trial(factory, tasks, *, benchmark, **options):
+    if benchmark in ("pointmaze", "halfcheetah-vel"):
+        from .metta_env import MemoryTrial
+        return MemoryTrial(factory, tasks, benchmark=benchmark, **options)
+    if benchmark not in ("ml1-push", "ml10"):
+        raise ValueError("Unknown benchmark")
+    return MetaWorldTrial(factory, tasks, **options)
+
+
 def task_digest(tasks):
     return hashlib.sha256(b"".join(t.env_name.encode() + t.data for t in tasks)).hexdigest()
 
 
 def benchmark_pools(benchmark, seed=0):
+    if benchmark in ("pointmaze", "halfcheetah-vel"):
+        from .metta_env import memory_pools
+        return memory_pools(benchmark, seed)
     import metaworld
     factory = (lambda s: metaworld.ML1("push-v3", seed=s)) if benchmark == "ml1-push" else (
         (lambda s: metaworld.ML10(seed=s)) if benchmark == "ml10" else None)
@@ -137,7 +152,7 @@ def make_lanes(pool, count, *, benchmark, attempts=5, horizon=500):
     try:
         for index in range(count):
             name = names[index % len(names)]
-            env = MetaWorldTrial(classes[name], [t for t in tasks if t.env_name == name],
+            env = make_trial(classes[name], [t for t in tasks if t.env_name == name], benchmark=benchmark,
                                  attempts=attempts, horizon=horizon,
                                  goal_visible=benchmark == "ml10",
                                  resample_instance=benchmark == "ml10")

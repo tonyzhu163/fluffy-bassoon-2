@@ -32,9 +32,13 @@ class StateContextCore(nn.Module):
             self.memory.constrain_parameters()
 
     @torch.no_grad()
-    def observe_after_update(self, observations):
+    def observe_after_update(self, observations, mask=None):
         # Hold statistics fixed throughout collection AND its PPO replay.
         values = observations[..., -self.state_dim:].reshape(-1, self.state_dim).double()
+        if mask is not None:
+            values = values[mask.reshape(-1)]
+            if not len(values):
+                raise ValueError("State normalization needs real transitions")
         n = values.shape[0]
         mean, var = values.mean(0), values.var(0, unbiased=False)
         old_n = self.state_count
@@ -49,12 +53,12 @@ class StateContextCore(nn.Module):
 
 def make_policy(core, config, env):
     policy = build_policy(core, config, env)
-    policy.core = StateContextCore(policy.core)
+    policy.core = StateContextCore(policy.core, env.observation_space["state"].shape[0])
     width = policy.core.output_dim
     def head(outputs):
         return nn.Sequential(nn.Linear(width, 64), nn.Tanh(), nn.Linear(64, 64), nn.Tanh(),
                              nn.Linear(64, outputs))
-    policy.actor, policy.critic = head(4), head(1)
+    policy.actor, policy.critic = head(env.action_space.shape[0]), head(1)
     nn.init.orthogonal_(policy.actor[-1].weight, gain=.01)
     nn.init.zeros_(policy.actor[-1].bias)
     policy.log_std.data.zero_()

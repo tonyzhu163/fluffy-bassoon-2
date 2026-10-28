@@ -13,7 +13,7 @@ import threading
 import time
 import traceback
 
-from .metaworld_env import MetaWorldTrial
+from .metaworld_env import BENCHMARKS, make_trial
 
 
 class MetaWorldWorkerError(RuntimeError):
@@ -24,7 +24,7 @@ def _worker_main(connection, specs):
     lanes = {}
     try:
         for index, family, factory, tasks, options in specs:
-            env = MetaWorldTrial(factory, tasks, **options)
+            env = make_trial(factory, tasks, **options)
             env.family = family
             lanes[index] = env
         connection.send(("ready", {index: dict(observation_space=env.observation_space,
@@ -48,6 +48,8 @@ def _worker_main(connection, specs):
                 if boundary:
                     snapshot.update(task=env.task, outcomes=list(env.outcomes),
                                     native_returns=list(env.native_returns))
+                    if hasattr(env, "episode_metrics"):
+                        snapshot["episode_metrics"] = list(env.episode_metrics)
                 results[index] = result, snapshot
             connection.send(("result", results))
     except EOFError:
@@ -101,6 +103,7 @@ class MetaWorldLaneProxy:
         self.family, self.tasks = family, tuple(tasks)
         self.attempts, self.horizon = options["attempts"], options["horizon"]
         self.goal_visible, self.resample_instance = options["goal_visible"], options["resample_instance"]
+        self.variable_length_trials = options["benchmark"] == "pointmaze"
         self.reward_scale = options["reward_scale"]
         self.observation_space, self.action_space = spaces["observation_space"], spaces["action_space"]
         self.finished, self.outcomes, self.native_returns = True, [], []
@@ -124,7 +127,7 @@ class MetaWorldWorkerBatch:
                  workers=1, allocated_cpus=None, timeout_seconds=120.):
         classes, tasks = pool
         names = list(classes)
-        if (benchmark not in ("ml1-push", "ml10") or not names or type(count) is not int
+        if (benchmark not in BENCHMARKS or not names or type(count) is not int
                 or count < len(names) or count % len(names) or type(workers) is not int
                 or not 1 <= workers <= min(count, _cpu_limit(allocated_cpus))
                 or not isinstance(timeout_seconds, (int, float)) or not 0 < timeout_seconds < float("inf")
@@ -134,7 +137,7 @@ class MetaWorldWorkerBatch:
         self.timeout_seconds, self.closed = float(timeout_seconds), False
         self._lock, self._connections, self._processes, self._group_by_lane = threading.RLock(), [], [], {}
         self._group_indices, self.lanes = [], []
-        options = dict(attempts=attempts, horizon=horizon, goal_visible=benchmark == "ml10",
+        options = dict(benchmark=benchmark, attempts=attempts, horizon=horizon, goal_visible=benchmark == "ml10",
                        resample_instance=benchmark == "ml10", reward_scale=.1)
         family_tasks = {name: tuple(task for task in tasks if task.env_name == name) for name in names}
         if any(not family_tasks[name] for name in names):

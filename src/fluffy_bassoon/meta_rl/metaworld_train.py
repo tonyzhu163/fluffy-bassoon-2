@@ -17,7 +17,7 @@ import torch
 
 from fluffy_bassoon.evaluation_stages import write_json
 from .checkpoint import restore_checkpoint, save_checkpoint
-from .metaworld_env import benchmark_pools, make_lanes, task_digest
+from .metaworld_env import BENCHMARKS, benchmark_pools, make_lanes, task_digest
 from .metaworld_policy import make_policy, match_policy
 from .metaworld_workers import make_worker_lanes
 from .ppo import collect_trials, replay_windows, update_ppo
@@ -32,6 +32,8 @@ def core_settings(core):
         return dict(ticks=1, memory_length=64, layers=2, heads=4)
     if core == "gru":
         return dict(ticks=1)
+    if core == "cmm":
+        return dict(ticks=1, stm_length=32, ltm_tokens=32, synapse_depth=8)
     raise ValueError("Unknown benchmark core")
 
 
@@ -62,10 +64,10 @@ def replay_error(policy, rollout, replay_chunk_length=0):
 @torch.no_grad()
 def evaluate(policy, pools, benchmark, *, attempts, horizon, lane_count,
              conditions=("normal",), seed_start=1_000_000_000, training_attempts=None,
-             env_workers=0, allocated_cpus=16):
+             env_workers=0, allocated_cpus=16, trained_episode_reset=False):
     records = {}
     with preserve_random_streams():
-        for split in ("train_eval", "test"):
+        for split in (name for name in pools if name != "train"):
             factory = make_worker_lanes if env_workers else make_lanes
             worker_options = dict(workers=env_workers, allocated_cpus=allocated_cpus) if env_workers else {}
             envs = factory(pools[split], lane_count, benchmark=benchmark,
@@ -73,8 +75,8 @@ def evaluate(policy, pools, benchmark, *, attempts, horizon, lane_count,
             try:
                 records[split] = {}
                 for condition in conditions:
-                    collect_trials(policy, envs, np.arange(seed_start, seed_start + len(envs)),
-                                   deterministic=True, reset_each_attempt=condition == "memory_reset",
+                    rollout = collect_trials(policy, envs, np.arange(seed_start, seed_start + len(envs)),
+                                   deterministic=True, reset_each_attempt=(condition == "memory_reset" or trained_episode_reset),
                                    reward_blind=condition == "reward_blind",
                                    clock_scale=(None if training_attempts is None else
                                                 np.array([max(training_attempts - 1, 1), horizon])))
@@ -88,7 +90,9 @@ def evaluate(policy, pools, benchmark, *, attempts, horizon, lane_count,
                         success_by_episode=curve.tolist(), per_family=by_family,
                         outcomes=outcomes.tolist(), native_returns=returns.tolist(),
                         family_by_lane=[env.family for env in envs], trials=len(envs),
-                        environment_steps=len(envs) * attempts * horizon)
+                        environment_steps=int(rollout["action_mask"].sum()),
+                        mean_return=float(returns.mean()), return_by_episode=returns.mean(0).tolist(),
+                        episode_metrics=[getattr(env, "episode_metrics", []) for env in envs])
             finally:
                 for env in envs:
                     env.close()
@@ -97,8 +101,8 @@ def evaluate(policy, pools, benchmark, *, attempts, horizon, lane_count,
 
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--benchmark", choices=("ml1-push", "ml10"), required=True)
-    p.add_argument("--core", choices=("persistent_ctm", "gru", "transformer_xl"), required=True)
+    p.add_argument("--benchmark", choices=BENCHMARKS, required=True)
+    p.add_argument("--core", choices=("persistent_ctm", "cmm", "gru", "transformer_xl"), required=True)
     p.add_argument("--source-commit", required=True)
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--seed", type=int, default=1000)
@@ -109,6 +113,10 @@ def parser():
     p.add_argument("--updates", type=int, default=80)
     p.add_argument("--parameter-budget", type=int, default=250_000)
     p.add_argument("--ctm-ticks", type=int, default=1)
+    p.add_argument("--ltm-tokens", type=int, default=32)
+    p.add_argument("--mode", choices=("meta", "episode"), default="meta")
+    p.add_argument("--target-environment-steps", type=int, default=0,
+                   help="Optional real interaction budget; zero uses the update count.")
     p.add_argument("--ppo-epochs", type=int, default=10)
     p.add_argument("--minibatch-trials", type=int, default=10)
     p.add_argument("--replay-chunk-length", type=int, default=0,
@@ -141,6 +149,7 @@ def main(argv=None, *, learner=None):
                 args.eval_lanes, args.threads, args.ctm_ticks, args.allocated_cpus)
     if (any(v < 1 for v in positive) or args.horizon > 500
             or args.replay_chunk_length < 0 or args.env_workers < 0
+            or args.ltm_tokens < 0 or args.target_environment_steps < 0
             or args.replay_chunk_length and args.attempts * args.horizon % args.replay_chunk_length
             or not np.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0
             or not 0 <= args.seed < 1_000_000_000 or not 0 <= args.benchmark_seed < 1_000_000):
@@ -161,6 +170,8 @@ def main(argv=None, *, learner=None):
     settings = core_settings(args.core) if learner is None else dict(learner["settings"])
     if learner is None and args.core == "persistent_ctm":
         settings["ticks"] = args.ctm_ticks
+    if learner is None and args.core == "cmm":
+        settings["ltm_tokens"] = args.ltm_tokens
     matcher = match_policy if learner is None else learner["match"]
     config, size = (matcher(args.core, settings, envs[0], args.parameter_budget) if learner is None else
                     matcher(settings, envs[0], args.parameter_budget))
@@ -203,7 +214,15 @@ def main(argv=None, *, learner=None):
                         success="any success within episode; average episodes and families equally"),
         throughput_qualification_only=args.qualify_one_update,
         versions={name: importlib.metadata.version(name) for name in
-                  ("torch", "numpy", "gymnasium", "mujoco", "metaworld")})
+                  (("torch", "numpy", "gymnasium", "mujoco", "metaworld") if args.benchmark in ("ml1-push", "ml10")
+                   else ("torch", "numpy", "gymnasium", "mujoco"))})
+    if args.benchmark in ("pointmaze", "halfcheetah-vel"):
+        from .metta_env import benchmark_contract
+        contract.update(benchmark_contract(args.benchmark))
+        contract["protocol"] = "hidden_task_variable_trial_ppo_v1" if args.benchmark == "pointmaze" else "hidden_velocity_trial_ppo_v1"
+        if args.benchmark == "pointmaze":
+            contract["versions"]["gymnasium-robotics"] = importlib.metadata.version("gymnasium-robotics")
+    contract.update(memory_mode=args.mode, target_environment_steps=args.target_environment_steps)
     if learner is not None:
         method = learner["contract"](config)
         for key in ("normalization", "actor_critic", "action_distribution", "observation", "reward"):
@@ -249,7 +268,7 @@ def main(argv=None, *, learner=None):
         result = evaluate(policy, pools, args.benchmark, attempts=args.eval_attempts,
                           horizon=args.horizon, lane_count=args.eval_lanes, conditions=conditions,
                           training_attempts=args.attempts, env_workers=args.env_workers,
-                          allocated_cpus=args.allocated_cpus)
+                          allocated_cpus=args.allocated_cpus, trained_episode_reset=args.mode == "episode")
         synchronize(args.device)
         counters["evaluation_seconds"] += time.monotonic() - before
         counters["evaluation_steps"] += sum(v["environment_steps"] for split in result.values()
@@ -279,12 +298,13 @@ def main(argv=None, *, learner=None):
                 last_evaluation = evaluation()
                 record(log, evaluation=last_evaluation)
             while (iteration < args.updates and not stop
+                   and (not args.target_environment_steps or counters["environment_steps"] < args.target_environment_steps)
                    and time.monotonic() - started < args.max_elapsed_seconds):
                 before = time.monotonic()
                 seeds = sampler.integers(0, 1_000_000_000, size=args.num_envs)
                 collection_breakdown = {}
                 rollout = collect_trials(policy, envs, seeds, replay_chunk_length=args.replay_chunk_length,
-                                         timing=collection_breakdown)
+                                         reset_each_attempt=args.mode == "episode", timing=collection_breakdown)
                 synchronize(args.device)
                 collection = time.monotonic() - before
                 # Reconstruct one full trial before the first optimizer step.
@@ -298,11 +318,14 @@ def main(argv=None, *, learner=None):
                         raise RuntimeError(f"Behavior replay differs: {error}")
                 update_started = time.monotonic()
                 metrics = update(policy, optimizer, rollout, **optimization)
-                policy.core.observe_after_update(rollout["observations"])
+                if args.benchmark == "pointmaze":
+                    policy.core.observe_after_update(rollout["observations"], mask=rollout["action_mask"])
+                else:
+                    policy.core.observe_after_update(rollout["observations"])
                 synchronize(args.device)
                 update_seconds = time.monotonic() - update_started
                 counters["training_seconds"] += time.monotonic() - before
-                counters["environment_steps"] += rollout["rewards"].numel()
+                counters["environment_steps"] += int(rollout["action_mask"].sum())
                 counters["optimizer_steps"] += metrics["optimizer_steps"]
                 iteration += 1
                 # Every completed update has a full optimizer/sampler/RNG snapshot.
@@ -319,7 +342,8 @@ def main(argv=None, *, learner=None):
                 last_evaluation = evaluation(("normal", "memory_reset", "reward_blind"))
                 record(log, final=True, evaluation=last_evaluation)
         digest = snapshot()
-        write_json(args.output_dir / "summary.json", dict(completed=iteration == args.updates,
+        completed = (counters["environment_steps"] >= args.target_environment_steps if args.target_environment_steps else iteration == args.updates)
+        write_json(args.output_dir / "summary.json", dict(completed=completed,
             iteration=iteration, source_commit=source, counters=counters,
             checkpoint_sha256=digest, last_evaluation=last_evaluation,
             cuda_peak_allocated_bytes=torch.cuda.max_memory_allocated() if args.device == "cuda" else 0))

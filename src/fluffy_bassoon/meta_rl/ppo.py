@@ -204,6 +204,11 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
                 or not set(reset_keys) <= initial.keys()):
             raise ValueError("Component resets need attempt resets and named entries of a dict core state")
     first = envs[0]
+    variable = bool(getattr(first, "variable_length_trials", False))
+    if any(bool(getattr(env, "variable_length_trials", False)) != variable for env in envs):
+        raise ValueError("Batched trials must share termination semantics")
+    if variable and record_states:
+        raise ValueError("Variable episode boundaries need event-indexed state export")
     if (type(replay_chunk_length) is not int or replay_chunk_length < 0
             or replay_chunk_length and (first.attempts * first.horizon) % replay_chunk_length):
         raise ValueError("Replay chunk length must be zero or divide the complete trial length")
@@ -265,8 +270,11 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
         if phases is not None:
             phases["environment_step_seconds"] += perf_counter() - phase_started
         observations, rewards, ended, truncated, info = map(list, zip(*returned, strict=True))
-        if any(truncated) or any(done != (step == first.attempts * first.horizon - 1) for done in ended):
+        if any(truncated) or (not variable and any(
+                done != (step == first.attempts * first.horizon - 1) for done in ended)):
             raise RuntimeError("Collector requires complete fixed-length trials without external truncation")
+        if variable and step == first.attempts * first.horizon - 1 and not all(ended):
+            raise RuntimeError("Variable trials exceeded their declared maximum length")
         settling = [int(item.get("settling_steps", 0)) for item in info]
         increments = [current - previous for current, previous in zip(settling, previous_settling, strict=True)]
         if any(value < 0 for value in increments):
@@ -297,7 +305,7 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
     if phases is not None:
         total = perf_counter() - collection_started
         timing.update(phases, total_seconds=total, decisions=first.attempts * first.horizon,
-                      environment_steps=first.attempts * first.horizon * len(envs),
+                      environment_steps=int(result["action_mask"].sum()),
                       reset_and_bookkeeping_seconds=total - sum(phases.values()))
     return result
 
@@ -410,7 +418,8 @@ def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, cli
             actor_loss = torch.maximum(-advantage * ratio, -advantage * ratio.clamp(1 - clip, 1 + clip)).mean()
             old_value, target = data["values"][:, lanes], data["returns"][:, lanes]
             clipped_value = old_value + (value - old_value).clamp(-clip, clip)
-            critic_loss = .5 * torch.maximum((value - target).square(), (clipped_value - target).square()).mean()
+            critic_errors = torch.maximum((value - target).square(), (clipped_value - target).square())
+            critic_loss = .5 * torch.where(mask, critic_errors, 0.).mean()
             entropy = torch.where(mask, entropy, 0.)
             loss = actor_loss + value_coef * critic_loss - entropy_coef * entropy.mean()
             if not torch.isfinite(loss):
