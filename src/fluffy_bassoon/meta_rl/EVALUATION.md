@@ -2,6 +2,42 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## ML10 RL²-PPO single-seed completion, 2026-10-29
+
+Baige `job-j400lp4d3m6m`, source
+`cd0128f03a060aff2d538a91f35058aa822df845`, finished all 80 updates and
+10,000,000 training transitions, with launcher exit zero. One RPBZZZ6,
+16 CPUs, 64 GiB RAM and eight simulator workers; garage-adapted GRU64,
+21,960 trainable parameters, seed1000, ten PPO epochs and 50 K5/H500 lanes.
+
+Final fresh training-family success was **24.8%**, versus **22.8%** with
+episode-boundary memory reset and **16.0%** reward blind. Held-out family
+success was **0%** in all three conditions. Evaluation used ten balanced
+lanes and 25 episodes, with equal family weighting and paired conditions.
+These single-seed results establish neither a reliable memory benefit nor
+generalization. The other three methods remain in progress; do not infer
+an architecture ranking from their incomplete curves.
+
+Measured launcher-active cost was **3,018s / .8383 GPU-hours**; learner
+cost was 3,012.27s / .8367 GPU-hours, including 1,441.96s training and
+1,536.14s evaluation. The run used 1,600 optimizer steps, 100M PPO sample
+forwards and 5M evaluation simulator steps. Median collection and PPO
+times were 17.63s and .728s per update; peak CUDA allocation was .668 GiB.
+
+The terminal audit independently recomputed all 40 saved evaluation
+conditions from raw binary outcomes, reconciled step/sample/cost counters,
+and verified checkpoint SHA256
+`a9634a8124ffb129211c00ea43d80028b3abdb2c6a97ddd8d0901d737bb03de3`.
+Checkpoint policy/optimizer/sampler/Python/NumPy/Torch/CUDA recovery key
+metadata is present; exact next-update recovery was qualified on allocated
+Linux before launch. No model was loaded or executed on the development
+host for this saved-artifact audit.
+
+Evidence: `outputs/metaworld-ml10-matched-baige-20261028-r1/rl2/RESULTS.md`,
+`checks/20261029-0023/receipt.json` and the date-stamped single-seed PNG
+curves under `figures/`. Checkpoints remain on shared storage. No follow-on
+run, extra seed or resource extension was launched.
+
 ## ML10 methods and parallel collection admission, 2026-10-28
 
 All four methods passed separate allocated Baige RPBZZZ6 qualifications.
