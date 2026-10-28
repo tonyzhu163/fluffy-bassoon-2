@@ -9,9 +9,30 @@ from gymnasium.utils.env_checker import check_env
 import torch
 
 from fluffy_bassoon.meta_rl.maniskill_rotation import (
-    ANGLES, NET_ANGLES, CachedRotationTrial, OutcomeCache, baseline_trials, evaluate_policy,
+    ANGLES, NET_ANGLES, PROTOCOL, CachedRotationTrial, OutcomeCache, baseline_trials, evaluate_policy,
+    parser, validate_cpu_execution,
 )
 from fluffy_bassoon.meta_rl.ppo import GRUCore, RecurrentActorCritic, collect_trials, update_ppo
+
+
+def test_v2_protocol_and_optimizer_defaults_are_explicit():
+    args = parser().parse_args(["--cache", "cache.jsonl", "--cache-sha256", "0" * 64,
+                                "--source-commit", "a" * 40, "--output-dir", "new-output"])
+    assert PROTOCOL == "cached_rotation_a1_plumbing_v2"
+    assert ANGLES == (-45., 0., 45.) and NET_ANGLES == (-90., -45., 0., 45., 90.)
+    assert args.value_coef == .01 and args.reward_offset == .5
+
+
+def test_cpu_boundary_accepts_a_real_slurm_step_and_exact_baige_container():
+    assert validate_cpu_execution({"SLURM_JOB_ID": "12", "SLURM_STEP_ID": "0"}, "node") == "slurm"
+    assert validate_cpu_execution({"KUBERNETES_SERVICE_HOST": "host"},
+                                  "job-abc123-master-0", "job-abc123-master-0") == "baige"
+    for env, host, expected in (({}, "node", None),
+                                ({"SLURM_JOB_ID": "12", "SLURM_STEP_ID": "batch"}, "node", None),
+                                ({"KUBERNETES_SERVICE_HOST": "host"}, "dev-container", "dev-container"),
+                                ({"KUBERNETES_SERVICE_HOST": "host"}, "job-abc123-master-0", "job-other-master-0")):
+        with pytest.raises(ValueError):
+            validate_cpu_execution(env, host, expected)
 
 
 @pytest.fixture

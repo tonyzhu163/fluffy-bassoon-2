@@ -9,14 +9,22 @@ pilot omits the planned teacher warm start and its PPO anchor.
 
 ## Frozen task
 
-Theta and correction phi both have the grid `[-30, 0, 30]` degrees. Their exact
-sum uses only cached net rotations `[-60, -30, 0, 30, 60]`; there is no nearest
+Protocol `cached_rotation_a1_plumbing_v2` uses theta and correction phi on the
+grid `[-45, 0, 45]` degrees. Their exact sum uses only cached net rotations
+`[-90, -45, 0, 45, 90]`; there is no nearest
 angle interpolation. A trial samples theta uniformly once and samples eight
 distinct scenes without replacement from its split. Each action chooses phi
 once, then samples a cached repeat uniformly for that scene and net angle.
 Reward is the row's binary `success_once`. With one repeat, this is a
 deterministic empirical outcome conditional on scene and net angle; resampling
 scenes does not create additional independent simulator evidence.
+
+This is a separate headroom-driven protocol from v1's `[-30, 0, 30]` grid.
+The exact empirical validation table has zero-correction return .4167 and
+angle-canceling return .7500 at ±45, compared with .6458 and .7500 at ±30.
+V1 runs and checkpoints remain pinned to their original source and contract;
+they are not migrated or resumed as v2. The wider grid increases the reward
+information available to a learner; it adds no simulator data or privileged input.
 
 The source headroom cache has 704 rows: 16 objects × 4 scenes × 11 angles,
 one repeat each. Scene indices modulo four define the split: residues 0/1/2
@@ -37,10 +45,16 @@ environment reset seeds from training, with common seeds across conditions.
 
 ## Learners and controls
 
-The CLI supports `persistent_ctm`, `transformer_xl` and `gru`. CTM uses bounded
+The CLI supports `persistent_ctm`, `transformer_xl` and `gru`. Default ticks are
+CTM T4, Transformer-XL T1 and GRU T1. CTM uses bounded
 synchronization and per-observation decay. Width defaults to 64; parameter count
 and retained state bytes are reported. Equal width does not match capacity or
 compute, so these first pilots cannot establish architectural superiority.
+V2 uses four full-trial PPO epochs, learning rate .0003, value-loss weight .01,
+reward offset .5 and entropy coefficient .01. `--value-coef` and
+`--reward-offset` are explicit options recorded in the checkpoint contract.
+Reward centering affects return/value fitting only; the learner still receives
+raw binary motor feedback and all evaluation metrics use raw outcomes.
 
 Every saved evaluation reports greedy and sampled behavior, each with normal
 memory, memory wiped at every attempt, and reward input zeroed. Evaluation

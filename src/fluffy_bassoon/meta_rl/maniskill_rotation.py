@@ -27,8 +27,9 @@ from .ppo import GRUCore, PersistentCTMVectorCore, RecurrentActorCritic, collect
 from .transformer_xl import TransformerXLCore
 
 
-ANGLES = (-30., 0., 30.)
-NET_ANGLES = (-60., -30., 0., 30., 60.)
+ANGLES = (-45., 0., 45.)
+NET_ANGLES = (-90., -45., 0., 45., 90.)
+PROTOCOL = "cached_rotation_a1_plumbing_v2"
 SCENE_FIELDS = ("object", "overlay", "position", "orientation", "episode_id", "scene_index")
 
 
@@ -175,7 +176,19 @@ def evaluate_policy(policy, cache, seeds, attempts=8):
     return results, raw
 
 
-def main(argv=None):
+def validate_cpu_execution(environ, hostname, expected_hostname=None):
+    """Accept an actual Slurm step or the exact named scheduled CPU container."""
+    if environ.get("SLURM_JOB_ID"):
+        validate_execution("slurm", environ)
+        return "slurm"
+    if (not expected_hostname or hostname != expected_hostname
+            or not re.fullmatch(r"job-[a-z0-9]+-master-0", hostname)
+            or not environ.get("KUBERNETES_SERVICE_HOST")):
+        raise ValueError("Require the exact scheduled Baige container or a Slurm step")
+    return "baige"
+
+
+def parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache", type=Path, required=True)
     parser.add_argument("--cache-sha256", required=True)
@@ -184,35 +197,39 @@ def main(argv=None):
     parser.add_argument("--expected-hostname", help="Exact authorized allocated Linux host if not using Slurm")
     parser.add_argument("--core", choices=("persistent_ctm", "transformer_xl", "gru"), default="persistent_ctm")
     parser.add_argument("--width", type=int, default=64)
-    parser.add_argument("--ticks", type=int, default=1)
+    parser.add_argument("--ticks", type=int, help="Default CTM T4; Transformer-XL and GRU T1")
     parser.add_argument("--attempts", type=int, default=8)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--updates", type=int, default=500)
     parser.add_argument("--num-envs", type=int, default=64)
     parser.add_argument("--ppo-epochs", type=int, default=4)
     parser.add_argument("--learning-rate", type=float, default=3e-4)
+    parser.add_argument("--value-coef", type=float, default=.01)
+    parser.add_argument("--reward-offset", type=float, default=.5)
     parser.add_argument("--eval-trials", type=int, default=128)
     parser.add_argument("--eval-every", type=int, default=100)
     parser.add_argument("--threads", type=int, default=2)
     parser.add_argument("--max-elapsed-seconds", type=float, default=1800.)
     parser.add_argument("--resume", type=Path)
-    args = parser.parse_args(argv)
+    return parser
+
+
+def main(argv=None):
+    args = parser().parse_args(argv)
     if sys.platform != "linux":
         raise ValueError("Run the cached robot pilot only on allocated Linux resources")
-    if os.environ.get("SLURM_JOB_ID"):
-        validate_execution("slurm", os.environ)
-    elif (not args.expected_hostname or socket.gethostname() != args.expected_hostname
-          or not re.fullmatch(r"job-[a-z0-9]+-master-0", socket.gethostname())
-          or not os.environ.get("KUBERNETES_SERVICE_HOST")):
-        raise ValueError("Require the exact scheduled Baige container or a Slurm step")
+    execution = validate_cpu_execution(os.environ, socket.gethostname(), args.expected_hostname)
     # This pilot is CPU-only; do not initialize CUDA RNG state on a shared GPU host.
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
+    args.ticks = (4 if args.core == "persistent_ctm" else 1) if args.ticks is None else args.ticks
     if any(getattr(args, key) < 1 for key in ("width", "ticks", "attempts", "updates", "num_envs",
                                             "ppo_epochs", "eval_trials", "eval_every", "threads")):
         raise ValueError("Counts must be positive")
     if (not 0 <= args.seed < 2**32 or not np.isfinite(args.learning_rate) or args.learning_rate <= 0
-            or not np.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0):
-        raise ValueError("Invalid seed, learning rate or time budget")
+            or not np.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0
+            or not np.isfinite(args.value_coef) or args.value_coef < 0
+            or not np.isfinite(args.reward_offset) or not 0 <= args.reward_offset <= 1):
+        raise ValueError("Invalid seed, learning rate, time budget or PPO value/reward settings")
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     if source != args.source_commit or subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise ValueError("Require the exact clean source commit")
@@ -235,9 +252,9 @@ def main(argv=None):
     policy = RecurrentActorCritic(factory(inputs, **core_config), envs[0].action_space)
     optimizer = torch.optim.AdamW(policy.parameters(), lr=args.learning_rate, weight_decay=0.)
     optimization = dict(epochs=args.ppo_epochs, minibatch_trials=min(16, args.num_envs), clip=.2,
-                        gamma=1., gae_lambda=1., entropy_coef=.01, value_coef=.5,
-                        max_grad_norm=1., reward_offset=0., normalize_advantages=True)
-    contract = dict(protocol="cached_rotation_a1_plumbing_v1", source_commit=source,
+                        gamma=1., gae_lambda=1., entropy_coef=.01, value_coef=args.value_coef,
+                        max_grad_norm=1., reward_offset=args.reward_offset, normalize_advantages=True)
+    contract = dict(protocol=PROTOCOL, source_commit=source,
                     cache=cache.describe(), core=args.core, core_config=core_config,
                     attempts=args.attempts, num_envs=args.num_envs, seed=args.seed,
                     observation_encoding="clock_by_declared_max_v1", optimization=optimization,
@@ -255,7 +272,7 @@ def main(argv=None):
     write_json(args.output_dir / "config.json", dict(contract=contract, updates=args.updates,
                parameters=sum(parameter.numel() for parameter in policy.parameters()),
                retained_state_bytes_per_lane=sum(value.numel() * value.element_size() for value in tensors),
-               cache_path=str(args.cache), hostname=socket.gethostname(),
+               cache_path=str(args.cache), execution=execution, hostname=socket.gethostname(),
                limitation="existing headroom table; shared objects/angles; no AD warm start or live validation"))
     seeds = np.arange(1_000_000_000, 1_000_000_000 + args.eval_trials)
     baselines, baseline_raw = baseline_trials(cache, seeds, args.attempts)
