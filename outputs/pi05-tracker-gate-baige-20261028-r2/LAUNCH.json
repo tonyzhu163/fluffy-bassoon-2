@@ -1,0 +1,53 @@
+{
+  "cluster": "Baige",
+  "job_id": "job-o16q3eimo8bq",
+  "name": "mwj_1028_pi05_tracker_gate_g1_c2c4715",
+  "submitted_at": "2026-10-28T21:54:34+08:00",
+  "source_commit": "c2c47152303ccfc1ac469fd3e1ad1e1344201e42",
+  "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/pi05-tracker-gate-baige-20261028-r2",
+  "output_dir": "/mowenjie/fluffy-bassoon-2/outputs/pi05-tracker-gate-baige-20261028-r2",
+  "launcher": "/mowenjie/fluffy-bassoon-2/launchers/pi05-tracker-gate-baige-20261028-r2/launch.sh",
+  "resources": {
+    "gpus": 1,
+    "gpu_type": "NVIDIA RPBZZZ6",
+    "cpus": 16,
+    "ram_gib": 64,
+    "shm_gib": 8,
+    "scheduler_minutes": 60,
+    "tracker_seconds": 1500,
+    "crossed_seconds": 1800,
+    "retries": false,
+    "auto_delete": false
+  },
+  "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+  "storage": {
+    "dataset": "mowenjie",
+    "version": "v1",
+    "mount": "/mowenjie",
+    "access": "rw"
+  },
+  "task": "PutOnPlateInScene25Main-v3",
+  "objects": [
+    0,
+    1
+  ],
+  "tracker_angles": [
+    -45,
+    0,
+    45
+  ],
+  "motor_checkpoint": "RLinf ManiSkill RL-finetuned pi0.5/global_step_150/actor",
+  "input_sha256": {
+    "ctm": "864def977c02df44048890c1bb69916b742705c5f9be256baa6d6ea8e14b6fea",
+    "xl": "366f2d13864f6030b6fc670ea417aef54673f5d7d90fc6cf6e5c40b016f6d613"
+  },
+  "validation": {
+    "mac": "AST and bash syntax passed; source reviewed; no model computation",
+    "linux": "151 passed in 20.02 seconds, allocated GPU probe passed; first complete two-object episode and next trajectory advancing; both renderers on allocated PCI a2:00.0",
+    "initial_receipt": "evidence/initial-admission.json"
+  },
+  "admission": "Repeated zero trajectory stability and provisional privileged capacity required for crossed diagnostic; no PPO",
+  "prior_staging": "r1 source5193e27 never submitted; preserved",
+  "url": "https://console.bce.baidu.com/aihc/infoTaskIndex/detail?clusterUuid=aihc-serverless&k8sNamespace=default&k8sName=job-o16q3eimo8bq&kind=PyTorchJob&jobId=job-o16q3eimo8bq&queueID=aihcq-rh0wwk9muei4",
+  "started_at": "2026-10-28T21:54:52+08:00"
+}

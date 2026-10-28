@@ -4,6 +4,7 @@ Targets are private teacher information. Executed commands always come from
 the actual four-Euler residual sampler, never directly from inverse labels.
 """
 
+import hashlib
 import json
 import math
 import os
@@ -31,7 +32,53 @@ GAINS = (.25, .5, 1.)
 THETAS = (-45., 0., 45.)
 
 
-def review_tracker_gate(raw):
+def compare_zero_trajectories(original, repeated):
+    """Require the same complete zero rollout, not merely the same first prefix.
+
+    Full observation/native-input digests and actual executed commands come
+    from the collector's opt-in audit. Raw arrays remain in both saved runs.
+    Exact equality is deliberately conservative; divergence flags an unstable
+    paired experiment without asserting whether physics, rendering or numerical
+    nondeterminism caused it.
+    """
+    def digest(value):
+        return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
+                                         allow_nan=False).encode()).hexdigest()
+    required = ("observation_sha256", "prepared_observation_sha256", "native_kv_sha256",
+                "feedback_sha256", "initial_noise_sha256", "decoded_actions",
+                "prepared_commands", "issued_commands", "success_per_step")
+    expected = len(original.get("plan", {}).get("scenes", [])) * (ms.STEPS // ms.CHUNK)
+    first, second = original.get("chunks", []), repeated.get("chunks", [])
+    valid_outcomes = all(isinstance(item.get("outcomes"), list) and item["outcomes"]
+                         and all(isinstance(row, list) and len(row) == 2
+                                 and all(value in (0, 1) for value in row) for row in item["outcomes"])
+                         for item in (original, repeated))
+    complete = bool(expected and valid_outcomes and original.get("completed") is True and repeated.get("completed") is True
+                    and len(first) == len(second) == expected
+                    and all(all(key in row for key in required) for row in first + second))
+    same_plan = original.get("plan") == repeated.get("plan")
+    seed = original.get("native_noise_seed")
+    same_seed = type(seed) is int and 0 <= seed < 2**32 and seed == repeated.get("native_noise_seed")
+    same_initial = (isinstance(original.get("initial_state"), dict)
+                    and original["initial_state"] == repeated.get("initial_state"))
+    same_outcomes = original.get("outcomes") == repeated.get("outcomes")
+    first_hash, second_hash = digest(first), digest(second)
+    first_difference = None
+    for index, (left, right) in enumerate(zip(first, second)):
+        if left != right:
+            first_difference = dict(chunk_index=index,
+                fields=[key for key in sorted(set(left) | set(right)) if left.get(key) != right.get(key)])
+            break
+    stable = bool(complete and same_plan and same_seed and same_initial and same_outcomes and first_hash == second_hash)
+    return dict(stable=stable, complete=complete, exact_trajectory_identical=first_hash == second_hash,
+                outcomes_identical=same_outcomes, private_plan_identical=same_plan,
+                native_noise_seed_identical=same_seed, initial_public_state_identical=same_initial, expected_chunks=expected,
+                original_chunks=len(first), repeated_chunks=len(second), first_difference=first_difference,
+                original_trajectory_sha256=first_hash, repeated_trajectory_sha256=second_hash,
+                interpretation="exact zero-repeat stability; divergence blocks provisional capacity admission")
+
+
+def review_tracker_gate(raw, zero_stability=None, *, bounded_stop=False):
     """Exploratory small-screen rule declared in the launch plan before execution."""
     required = {str(theta) for theta in THETAS}
     if set(raw) != required or any(set(value) != {"bridge", "zero_bridge", "external_oracle"} for value in raw.values()):
@@ -50,21 +97,31 @@ def review_tracker_gate(raw):
     perturbed_success = all(per_theta[str(theta)]["bridge"] >= 1 for theta in (-45., 45.))
     improvement = totals["bridge"] > totals["zero_bridge"]
     passed = bool(no_degradation and perturbed_success and improvement)
-    return dict(passed=passed, status="provisional_capacity_screen_passed" if passed else "unresolved",
+    repeat_complete = (isinstance(zero_stability, dict) and set(zero_stability) == required
+                       and all(isinstance(value, dict) and value.get("complete") is True
+                               for value in zero_stability.values()))
+    repeat_stable = bool(repeat_complete and all(value.get("stable") is True for value in zero_stability.values()))
+    passed = bool(passed and repeat_stable and not bounded_stop)
+    status = ("provisional_capacity_screen_passed" if passed else
+              "bounded_stop" if bounded_stop else
+              "repeat_stability_unresolved" if not repeat_complete else
+              "zero_reference_unstable" if not repeat_stable else "unresolved")
+    return dict(passed=passed, status=status, bounded_stop=bool(bounded_stop), zero_repeat_complete=repeat_complete,
+        zero_repeat_stable=repeat_stable,
         per_theta=per_theta, totals=totals, no_per_theta_degradation=no_degradation,
         perturbed_success_each=perturbed_success, aggregate_improvement=improvement,
-        interpretation="six paired episodes per condition; privileged constrained controller only; no learned-CTM or ICRL claim")
+        interpretation="six paired episodes per condition plus zero repeats; provisional privileged capacity only; no learned-CTM competence or ICRL claim")
 
 
 def main(argv=None):
     p = live_parser()
     p.description = __doc__
-    p.set_defaults(num_envs=2, max_elapsed_seconds=2700.)
+    p.set_defaults(num_envs=2, max_elapsed_seconds=1500.)
     p.add_argument("--reference-plan-dir", type=Path, required=True)
     args = p.parse_args(argv)
     if (sys.platform != "linux" or args.num_envs != 2 or args.width != 64 or args.objects != [0, 1]
             or args.resume or args.warmstart or args.collect_dpt or args.balanced_paired_plan
-            or not math.isfinite(args.max_elapsed_seconds) or not 0 < args.max_elapsed_seconds <= 2700):
+            or not math.isfinite(args.max_elapsed_seconds) or not 0 < args.max_elapsed_seconds <= 1500):
         raise ValueError("Require allocated Linux and the bounded two-object tracker gate")
     root = Path(__file__).resolve().parents[3]
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
@@ -84,8 +141,10 @@ def main(argv=None):
     args.output_dir.mkdir(parents=True, exist_ok=False)
     env, stop, started = None, False, time.monotonic()
     raw, calibration, selected, diagnostics = {}, {}, {"0.0": 1.}, {}
+    trajectories, trajectory_records, zero_repeats, zero_stability = {}, {}, {}, {}
     counters = dict(simulator_steps=0, policy_chunks=0, native_prefix_queries=0,
-                    native_suffix_queries=0, extra_label_motor_calls=0)
+                    native_suffix_queries=0, extra_label_motor_calls=0,
+                    extra_tracker_target_motor_calls=0)
     def request_stop(signum, frame):
         nonlocal stop
         stop = True
@@ -95,7 +154,9 @@ def main(argv=None):
         return stop or time.monotonic()-started >= args.max_elapsed_seconds
     def save_progress(phase):
         receipt = dict(source_commit=source, phase=phase, calibration=calibration, selected_gains=selected,
-            comparisons=raw, diagnostics=diagnostics, counters=counters, elapsed_seconds=time.monotonic()-started)
+            comparisons=raw, diagnostics=diagnostics, zero_repeat_outcomes=zero_repeats,
+            zero_stability=zero_stability, trajectory_artifacts=trajectories,
+            counters=counters, elapsed_seconds=time.monotonic()-started)
         write_json(args.output_dir / "progress.json", receipt)
         print(json.dumps(dict(phase=phase, selected_gains=selected, comparisons=raw, counters=counters), allow_nan=False), flush=True)
         return receipt
@@ -131,14 +192,31 @@ def main(argv=None):
             gains=list(GAINS), heldout_reference_plans=reference_plans, hostname=os.uname().nodename,
             job_id=ms.job_id(), max_elapsed_seconds=args.max_elapsed_seconds,
             gain_selection="maximize training success, then prefer higher gain; no held-out tuning",
-            pass_rule="all per-theta bridge >= zero; >=1 perturbed success per angle; strict aggregate gain",
-            qualification="privileged controller capacity screen; no automatic PPO admission"))
+            pass_rule="all per-theta bridge >= zero; >=1 perturbed success per angle; strict aggregate gain; exact complete zero-repeat stability at every theta",
+            zero_repeat=dict(repeats_per_theta=1, native_noise_seed=810000, comparison="exact all-chunk trajectory and outcome equality"),
+            trajectory_audit="full decoded/prepared/issued commands and observation/native-input/feedback digests every chunk; diagnostic only",
+            qualification="provisional privileged controller capacity screen; no learned CTM competence or automatic PPO admission"))
         generator = torch.Generator(device="cuda")
         def run(policy, plan, name, *, execute_labels=False):
             before = ms.model_fingerprint(policy)
             generator.manual_seed(810000)
+            trajectory_path = args.output_dir / f"trajectory-{name}.json"
+            trajectory = dict(protocol="pi05_tracker_complete_trajectory_v1", source_commit=source,
+                name=name, plan=plan, native_noise_seed=810000, completed=False, chunks=[], outcomes=None,
+                initial_state=dict(recurrent_memory="fresh None", previous_command=[[0.] * 7] * 2,
+                    pending_reward=[0., 0.], attempt_index=0, reset_seeds=plan["reset_seeds"]))
+            def audit_chunk(row):
+                trajectory["chunks"].append(row)
+                # Preserve complete earlier chunks if a later simulator step fails.
+                write_json(trajectory_path, trajectory)
             rollout = collect_live_trials(policy, motor, env, plan, generator=generator,
-                deterministic=True, execute_labels=execute_labels, preprocess=preprocess)
+                deterministic=True, execute_labels=execute_labels, preprocess=preprocess,
+                trajectory_audit_callback=audit_chunk)
+            trajectory.update(completed=True, outcomes=rollout["outcomes"].tolist())
+            write_json(trajectory_path, trajectory)
+            trajectory_records[name] = trajectory
+            trajectories[name] = dict(file=trajectory_path.name, sha256=sha256(trajectory_path),
+                                     chunks=len(trajectory["chunks"]), outcomes=trajectory["outcomes"])
             if ms.model_fingerprint(policy) != before:
                 raise RuntimeError("Frozen tracker evaluation changed policy tensors")
             chunks = rollout["policy_chunks"]
@@ -156,11 +234,14 @@ def main(argv=None):
                     raise RuntimeError("Tracker escaped the actual bounded intervention path")
                 counters["native_prefix_queries"] += row["extra_native_prefix_queries"]
                 counters["native_suffix_queries"] += row["extra_native_suffix_queries"]
+                counters["extra_tracker_target_motor_calls"] += row["extra_native_prefix_queries"]
             if rows:
                 diagnostics[name] = rows
             write_json(args.output_dir / f"audit-{name}.json", rollout["audit"])
             atomic_save(args.output_dir / "latest.pt", dict(source_commit=source, phase=name,
                 selected_gains=selected, calibration=calibration, comparisons=raw, counters=counters,
+                zero_repeat_outcomes=zero_repeats, zero_stability=zero_stability,
+                trajectory_artifacts=trajectories,
                 policy=tracker.state_dict(), motor_rng=generator.get_state(), rng=rng_state(),
                 last_outcomes=rollout["outcomes"].tolist(),
                 optimization="finite scalar gain selection; no gradient optimizer", reference_plans=reference_plans))
@@ -199,12 +280,23 @@ def main(argv=None):
                 raw[str(theta)][condition] = run(tracker if condition == "bridge" else zero, plan,
                     f"heldout-{int(theta):+d}-{condition}", execute_labels=condition == "external_oracle")
                 save_progress("heldout_live_comparison")
+                if condition == "zero_bridge" and not should_stop():
+                    repeat_name = f"heldout-{int(theta):+d}-zero_bridge-repeat1"
+                    zero_repeats[str(theta)] = run(zero, plan, repeat_name)
+                    zero_stability[str(theta)] = compare_zero_trajectories(
+                        trajectory_records[f"heldout-{int(theta):+d}-zero_bridge"],
+                        trajectory_records[repeat_name])
+                    save_progress("zero_repeat_stability")
         if ms.model_fingerprint(motor) != frozen_before:
             raise RuntimeError("Tracker gate changed frozen motor")
         result = save_progress("finished")
-        result.update(review=review_tracker_gate(raw), bounded_stop=should_stop(),
+        bounded_stop = should_stop()
+        result.update(review=review_tracker_gate(raw, zero_stability, bounded_stop=bounded_stop), bounded_stop=bounded_stop,
                       frozen_motor_before=frozen_before, frozen_motor_after=ms.model_fingerprint(motor))
         write_json(args.output_dir / "summary.json", result)
+        atomic_save(args.output_dir / "latest.pt", dict(result, phase="finished",
+            policy=tracker.state_dict(), motor_rng=generator.get_state(), rng=rng_state(),
+            optimization="finite scalar gain selection; no gradient optimizer", reference_plans=reference_plans))
     except BaseException as error:
         write_json(args.output_dir / "failure.json", dict(error_type=type(error).__name__, error=str(error),
             counters=counters, source_commit=source, elapsed_seconds=time.monotonic()-started))
