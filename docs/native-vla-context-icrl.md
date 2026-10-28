@@ -2,7 +2,8 @@
 
 Status: prototype implemented in `rl/pi05_context_policy.py` and the bounded
 `meta_rl.pi05_context_pilot` driver. The real-model gradient/parity/replay gate
-has passed; end-to-end collection and learning qualification are tracked in
+has passed; the bounded end-to-end pilot completed without demonstrated
+adaptation or a nonzero PPO gradient. Verified results are tracked in
 [EVALUATION.md](../src/fluffy_bassoon/meta_rl/EVALUATION.md).
 This is a separate experimental arm alongside the existing frozen-motor CTM
 and Transformer-XL bridges. It tests whether the VLA can implement adaptation

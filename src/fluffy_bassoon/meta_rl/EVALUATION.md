@@ -305,9 +305,31 @@ Raw admission and failure receipts:
 No held-out adaptation, reward-use or architecture-comparison result is yet
 established by this arm.
 
-The fixed collector subsequently passed both CPU and actual allocated-CUDA
-integration tests on Baige `job-lwpvhzys2vtc`, source `0d6dee3`. Its real
-gate repeated the above numerical results, and the first complete K4 base
-history (320 simulator steps / 64 action chunks) was saved and checksum
-recorded. Warm-start/PPO/held-out results remain pending; see the dated
-[launch verification](../../../outputs/native-vla-context-pilot-20261028-r4/STATUS-20261028-1933.md).
+The fixed collector passed both CPU and actual allocated-CUDA integration
+tests on Baige `job-lwpvhzys2vtc`, source `0d6dee3`. This bounded pilot
+**completed with exit 0 at 20:00:45 Shanghai**, 1,899.94 driver seconds.
+Five complete K4 histories and 20 supervised updates were saved; validation
+flow loss fell from 0.68696 to 0.51411. A paired +45-degree oracle gate
+scored 4/4 versus base 1/4. Original frozen weights passed the final check.
+
+| Held-out smoke condition | Success / attempts | Per-attempt successes across two K4 trials |
+| --- | --- | --- |
+| Normal history | 2/8 | 2, 0, 0, 0 |
+| History wiped between attempts | 5/8 | 2, 1, 1, 1 |
+| Reward blind | 2/8 | 2, 0, 0, 0 |
+
+There is no observed memory/reward benefit in this small panel. The normal
+and blind arrays match; wiping scores higher. There is no matched frozen-base
+or warm-start-only live control. These two held-out trials per condition
+cannot establish a statistical adaptation or architecture result.
+
+The one PPO step had **zero loss and zero gradient**: its K4 rollout contained
+only failures, and both rewards and old values were zero. Exact replay passed
+for all 64 chunks. Code-path completion does not establish RL learning; the
+shared Adam optimizer retains warm-start momentum, which can still move
+weights despite zero new gradient. The final checkpoint retains optimizer,
+sampler and all RNG state, 20 supervised updates and the PPO completion flag;
+all five stored history hashes and delayed public feedback fields were
+independently verified on allocated CPU resources. Total task rollout cost:
+4,160 steps. Monitor deleted; no follow-on launch. See
+[complete results and audit](../../../outputs/native-vla-context-pilot-20261028-r4/RESULTS.md).

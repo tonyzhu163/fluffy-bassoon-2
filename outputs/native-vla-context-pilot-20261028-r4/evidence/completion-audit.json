@@ -1,0 +1,125 @@
+{
+  "status": "audited",
+  "source_commit": "0d6dee3d2a792dbede86fe754425bdd361e3cdde",
+  "checkpoint_sha256": "2ea6b5644f8c91673f807116f1bde3d7cde51dcb7ba50b05943e106df1f6b4fa",
+  "checkpoint_updates": 20,
+  "checkpoint_ppo_done": true,
+  "optimizer_states": 145,
+  "optimizer_step_counts": [
+    1,
+    21
+  ],
+  "rng_fields": [
+    "cuda",
+    "numpy",
+    "python",
+    "torch"
+  ],
+  "sampler_and_generator_preserved": true,
+  "trainable_weights_finite": true,
+  "history_feedback_and_reward_checks": true,
+  "histories": [
+    {
+      "successes": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rewards": 1.0,
+      "chunks": 64,
+      "sha256": "772ea93a2fe144e83a1646216f72fcf21d90bfd1b0d56bad8c7f02bcc56bfd67"
+    },
+    {
+      "successes": [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      "rewards": 3.0,
+      "chunks": 64,
+      "sha256": "57c3bdfdc116a53d39f67546594b096a0edb3f0ec40b1b1b0d628c765ba1fb7c"
+    },
+    {
+      "successes": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "rewards": 1.0,
+      "chunks": 64,
+      "sha256": "2fb6f45323cf6c3bdc69b08dd224f2d4aeaad4633a7ab7f0de84ab6179050fe0"
+    },
+    {
+      "successes": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "rewards": 2.0,
+      "chunks": 64,
+      "sha256": "0a1b8c0f1b43b3f3d108d067458d51f11149f39eb8d78fb72f6e325589b48150"
+    },
+    {
+      "successes": [
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "rewards": 3.0,
+      "chunks": 64,
+      "sha256": "3332f2927a5b34f3910f9944fa42fc6e9af8e85f0e6ee97d085cfe048d2e3be9"
+    }
+  ],
+  "ppo_rollout": {
+    "successes": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rewards": 0.0,
+    "chunks": 64,
+    "sha256": "5f13fce2c6adc637937d4e766efb9effe06b2264e984baf33c5f267cddc68e4b"
+  },
+  "ppo_old_values_all_zero": true,
+  "ppo_gradient_norm": 0.0,
+  "evaluation": {
+    "normal": {
+      "successes": 2.0,
+      "attempts": 8,
+      "per_attempt": [
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "memory_wiped": {
+      "successes": 5.0,
+      "attempts": 8,
+      "per_attempt": [
+        2.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "reward_blind": {
+      "successes": 2.0,
+      "attempts": 8,
+      "per_attempt": [
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "task_simulator_steps": 4160,
+  "interpretation": "PPO rollout had zero rewards/values/advantages; zero PPO gradient is not RL learning. Adam momentum from warm-start can still move parameters on that optimizer step. Tiny evaluation has no paired frozen-base or warmstart-only evaluation control."
+}
