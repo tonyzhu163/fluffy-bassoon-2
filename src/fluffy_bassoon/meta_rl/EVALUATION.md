@@ -2,6 +2,27 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Meta-World execution admission, 2026-10-28
+
+Baige `job-x2x4kdpfn011`, source
+`adf741d6e955a624e9f785b9d1572dabf9ff4ab1`, passed the one-GPU training
+probe at 19:20:45 Shanghai. CUDA allocation and PID/PCI identity agree with
+the scheduler's single NVIDIA RPBZZZ6 allocation. Inside that allocation,
+`test_metaworld_pilot.py`, `test_meta_rl_ppo.py` and
+`test_meta_rl_checkpoint.py` passed 71 tests with two CUDA-marker skips in
+33.22 seconds. New checks include real two-episode ML1 Push and ML10
+simulator trials, goal visibility, terminal reward preservation, and exact
+next-update checkpoint recovery for CTM, GRU and Transformer-XL.
+
+This qualifies interfaces and recovery, not trained adaptation or benchmark
+performance. The bounded six-cell single-seed pilot remains a separate learning
+experiment. The initial r1 allocation `job-ikplxyvyh7p9` stopped at the missing
+CUDA-selector check before any model work; its worktree and failed receipt are
+preserved. Protocol and limits: [method contract](../../../docs/metaworld-ctm.md).
+Receipts: `outputs/metaworld-ctm-pilot-baige-20261028-r2/qualification.log`
+and `gpu-probe.json`, mirrored from the same run directory under
+`/mowenjie/fluffy-bassoon-2/outputs/`.
+
 ## Native DPT warm-start completion, 2026-10-28
 
 Baige `job-l3coajmm9noh`, source
