@@ -59,3 +59,26 @@ def test_partial_last_batch_preserves_exact_paper_epoch_budget():
         assert sum(batches) == 10_000
         assert batches[:-1] == [64]*156
         assert batches[-1] == 16
+
+
+def test_decay_initialization_changes_only_the_decay_rates():
+    torch.manual_seed(0)
+    reference = fs.build("cmm", 16)
+    for spec, low, high in (("0", 0., 0.), ("1", 1., 1.), ("uniform:0,3", 0., 3.)):
+        torch.manual_seed(0)
+        model = fs.build("cmm", 16)
+        fs.initialize_decay(model, spec, seed=7)
+        decay = model.core.decay_params
+        assert decay.min() >= low and decay.max() <= high
+        if low < high:
+            assert decay.std() > 0
+        for (name, a), b in zip(model.state_dict().items(), reference.state_dict().values()):
+            if name != "core.decay_params":
+                torch.testing.assert_close(a, b, atol=0, rtol=0)
+    first, second = fs.build("cmm", 16), fs.build("cmm", 16)
+    fs.initialize_decay(first, "uniform:0,3", seed=7)
+    fs.initialize_decay(second, "uniform:0,3", seed=7)
+    torch.testing.assert_close(first.core.decay_params, second.core.decay_params, atol=0, rtol=0)
+    for bad in ("x", "uniform:3,0", "uniform:0", "16", "-1"):
+        with pytest.raises(ValueError):
+            fs.initialize_decay(first, bad, seed=7)
