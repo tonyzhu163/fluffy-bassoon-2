@@ -75,6 +75,17 @@ per epoch (157 updates at batch 64, final batch 16). Measure update time with
 tests/test_meta_rl_fewshot.py tests/test_meta_rl_copy.py tests/test_meta_rl_ppo.py
 tests/test_meta_rl_train.py` (and `tests/test_meta_rl_cuda.py` inside a GPU step).
 
+For the first full CMM K=20 seed, `scripts/run_cmm_calibration.py` runs the
+allocation-local GPU probe and these qualification tests, saves their receipts,
+then starts the exact 1,000-epoch contract. Run it with the selected environment's
+Python, `--execution slurm` inside a one-task `srun` step or `--execution baige`
+inside a fresh exclusive one-GPU container, plus `--source-commit` and a new
+`--output-dir`. A failing probe or test prevents training. Its default 23-hour
+training cap must fit inside the scheduler wall limit after qualification and
+checkpointing. Slurm jobs should request `--signal=USR1@180` so the trainer
+saves a complete checkpoint before timeout. `--resume PATH` uses a new output
+identity and requires the original exact source and training contract.
+
 Parameter counts: at the few-shot layout (M_S 10, M_L 32, J 1, synapse depth 8,
 input projection to d, scalar head) this core gives 498,449 parameters at d=190
 against the paper's 496,129, so the depth-8 U-Net synapse is consistent with the
