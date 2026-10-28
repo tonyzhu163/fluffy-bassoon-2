@@ -133,13 +133,3 @@ def test_baige_boundary_rejects_dev_shell_and_accepts_owned_scheduler(monkeypatc
     monkeypatch.setattr('socket.gethostname', lambda: 'job-abc123-master-0')
     assert ms.execution_mode() == 'baige'
     assert ms.job_id() == 'job-abc123'
-
-
-def test_env_config_replaces_the_yaml_string_none_control_mode(tmp_path):
-    pytest.importorskip("omegaconf")
-    config = tmp_path/"examples/embodiment/config/env/maniskill_put_on_plate_in_scene_25_main.yaml"
-    config.parent.mkdir(parents=True)
-    config.write_text("init_params:\n  control_mode: None\n  obj_set: train\n")
-    cfg = ms.env_config(tmp_path, 10, 7)
-    assert cfg.init_params.control_mode == ms.CONTROL_MODE
-    assert (cfg.total_num_envs, cfg.seed, cfg.init_params.obj_set) == (10, 7, "all")

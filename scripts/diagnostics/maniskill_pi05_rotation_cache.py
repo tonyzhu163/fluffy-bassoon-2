@@ -82,12 +82,12 @@ def main():
     torch.manual_seed(args.seed)
     env = None
     try:
-        model = get_model(ms.model_config(args.model_path, args.norm_stats)).cuda().eval()
-        model.requires_grad_(False)
-        frozen_before = ms.model_fingerprint(model)
         env = ManiskillEnv(ms.env_config(args.rlinf_root, args.num_envs, args.seed), args.num_envs,
                            seed_offset=0, total_num_processes=1, worker_info=None, record_metrics=True)
         ms.record_renderer_binding(env, args.output_dir)
+        model = get_model(ms.model_config(args.model_path, args.norm_stats)).cuda().eval()
+        model.requires_grad_(False)
+        frozen_before = ms.model_fingerprint(model)
         base = env.env.unwrapped
         rng = np.random.default_rng(args.seed)
         scenes = ms.sample_scenes(base.basic_obj_infos, args.objects, args.scenes_per_object, rng)
@@ -104,6 +104,7 @@ def main():
             scenes_per_object=args.scenes_per_object, overlays="training range 0-15",
             net_angles_degrees=args.angles, repeats=args.repeats, num_envs=args.num_envs, seed=args.seed,
             rows=len(plan), max_episode_steps=ms.STEPS, action_chunk=ms.CHUNK, denoise_steps=4,
+            control_mode=env.cfg.init_params.control_mode,
             perturbation="RLinf prepared world_vector[:2] rotated about vertical by net angle before chunk_step; "
                          "z, rotation, gripper unchanged",
             sampler="RLinf eval-mode Euler ODE, generator seeded per batch",

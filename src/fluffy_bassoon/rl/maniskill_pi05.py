@@ -20,8 +20,6 @@ import torch
 
 TRAIN_OBJECTS, TRAIN_OVERLAYS, OBJECTS = 16, 16, 25
 CHUNK, STEPS = 5, 80
-# The WidowX agent's only mode. RLinf's YAML says `None`, which loads as the string "None".
-CONTROL_MODE = "arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos"
 
 
 def execution_mode():
@@ -117,7 +115,7 @@ def env_config(rlinf_root, num_envs, seed):
         max_steps_per_rollout_epoch=STEPS,
         video_cfg=dict(save_video=False, info_on_video=False, video_base_dir="unused"),
         init_params=dict(obj_set="all", use_multiple_plates=False, max_episode_steps=STEPS,
-                         control_mode=CONTROL_MODE)))
+                         control_mode="arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos")))
     if os.environ.get('FLUFFY_GPU_EXECUTION') == 'baige':
         from fluffy_bassoon.baige_gpu import selected_device
         cfg.init_params.render_backend = 'pci:' + selected_device()['pci_bus_id']
