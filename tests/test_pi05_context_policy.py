@@ -86,6 +86,53 @@ def test_history_reset_and_overflow():
         h.append(bad)
 
 
+@pytest.mark.parametrize('device', ['cpu', 'cuda'])
+def test_collector_returns_cpu_decoded_commands_to_policy(device):
+    if device == 'cuda' and not torch.cuda.is_available():
+        pytest.skip('requires allocated CUDA')
+    from fluffy_bassoon.meta_rl.pi05_context_pilot import collect_trial
+
+    class Policy(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.reference = nn.Parameter(torch.zeros((),device=device))
+            self.motor = SimpleNamespace(
+                env_obs_to_observation=lambda obs: SimpleNamespace(state=torch.zeros(1,32,device=device)),
+                decode_actions=lambda actions,state: actions.cpu().double())
+            self.histories = []
+
+        def embed_observation(self, prepared):
+            return (prepared.state[:,None],)
+
+        def sample_chunk(self,prepared,inputs,history,mask,**kwargs):
+            assert history.device == self.reference.device
+            assert history.dtype == self.reference.dtype
+            self.histories.append(history.cpu().clone())
+            return torch.ones(1,8,7,device=device), {}
+
+    class Env:
+        device = 'cpu'
+        env = SimpleNamespace(unwrapped=SimpleNamespace(select_carrot_ids=torch.tensor([0])))
+
+        def reset(self, **kwargs):
+            return {}, {}
+
+        def chunk_step(self, commands):
+            assert commands.device.type == 'cpu'
+            return [{}]*5,None,None,None,[dict(success=torch.tensor([True]))]*5
+
+    policy = Policy()
+    plan = dict(scenes=[[dict(episode_id=0,object=0)]]*2,reset_seeds=[1,2],theta_degrees=[45.])
+    trial = collect_trial(policy,Env(),plan,torch.Generator(device=device),behavior='mean',
+                          preprocess=lambda obs:obs,prepare_actions=lambda actions:actions[:,:5])
+    assert len(policy.histories) == len(trial['records']) == 32
+    boundary = policy.histories[16][0,-1]
+    torch.testing.assert_close(boundary[:7],torch.ones(7))
+    assert boundary[7:9].tolist() == [1.,1.]
+    assert trial['rewards'].sum() == 2
+    assert all(record['feedback'].dtype == torch.float32 for record in trial['records'])
+
+
 def test_native_mask_visibility_and_padding():
     valid = torch.tensor([[True,True,True,True,False]])
     mask = attention_mask(valid, torch.tensor([True,True,True,False,False]))

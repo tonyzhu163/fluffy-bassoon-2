@@ -51,14 +51,21 @@ def history_at(records, index, device, lesion='normal'):
 
 
 @torch.no_grad()
-def collect_trial(policy, env, plan, generator, *, behavior='base', lesion='normal', labels=False):
-    from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
-    from rlinf.envs.action_utils import prepare_actions
+def collect_trial(policy, env, plan, generator, *, behavior='base', lesion='normal', labels=False,
+                  preprocess=None, prepare_actions=None):
+    if preprocess is None:
+        from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
+        preprocess = lambda obs: preprocess_observation(obs,train=False)
+    if prepare_actions is None:
+        from rlinf.envs.action_utils import prepare_actions as native_prepare
+        prepare_actions = lambda actions: native_prepare(raw_chunk_actions=actions,
+            env_type='maniskill',model_type='openpi',num_action_chunks=5,action_dim=7,policy='widowx_bridge')
     motor = policy.motor
+    reference = next(policy.parameters())
     attempts = len(plan['scenes'])
     records, rewards, successes = [], [], []
-    history = PublicHistory(1,attempts*16,device='cuda')
-    previous, feedback_reward = torch.zeros(1,7,device='cuda'), torch.zeros(1)
+    history = PublicHistory(1,attempts*16,device=reference.device)
+    previous, feedback_reward = reference.new_zeros(1,7), torch.zeros(1)
     for attempt, scene in enumerate(plan['scenes']):
         obs,_ = env.reset(seed=int(plan['reset_seeds'][attempt]),
                           options={'episode_id':torch.tensor([scene[0]['episode_id']],device=env.device)})
@@ -73,7 +80,7 @@ def collect_trial(policy, env, plan, generator, *, behavior='base', lesion='norm
             history.append(feedback)
             values,mask = history.snapshot()
             observation = motor.env_obs_to_observation(obs)
-            prepared = preprocess_observation(observation,train=False)
+            prepared = preprocess(observation)
             inputs = policy.embed_observation(prepared)
             if behavior in ('base','oracle'):
                 public,public_mask = values[:,:0],mask[:,:0]
@@ -84,8 +91,7 @@ def collect_trial(policy, env, plan, generator, *, behavior='base', lesion='norm
             target = corrected_action_label(motor,observation.state,action,plan['theta_degrees']) if labels or behavior == 'oracle' else None
             if behavior == 'oracle':
                 action = target
-            command = prepare_actions(raw_chunk_actions=motor.decode_actions(action,observation.state),
-                env_type='maniskill',model_type='openpi',num_action_chunks=5,action_dim=7,policy='widowx_bridge')
+            command = prepare_actions(motor.decode_actions(action,observation.state))
             if command.shape != (1,5,7) or not command.isfinite().all():
                 raise RuntimeError('Invalid decoded native commands')
             issued = ms.rotate_translation(command,plan['theta_degrees'])
@@ -98,7 +104,9 @@ def collect_trial(policy, env, plan, generator, *, behavior='base', lesion='norm
                 feedback=cpu(feedback), requested_commands=cpu(command),
                 target_actions=None if target is None else cpu(target), stochastic=stochastic))
             rewards.append(reward)
-            previous = command[:,-1].detach()
+            # Native ManiSkill preparation returns CPU commands. Public feedback
+            # must return to the policy device before entering its history.
+            previous = command[:,-1].detach().to(reference)
             feedback_reward = reward
         successes.append(float(success[0]))
     return dict(format=DATA_FORMAT,records=records,rewards=torch.stack(rewards),successes=successes,
