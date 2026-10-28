@@ -18,7 +18,9 @@ def main(argv=None):
     for path in sorted(args.root.rglob("config.json")):
         config = json.loads(path.read_text())
         contract = config.get("contract")
-        if not contract or contract.get("throughput_qualification_only") or contract.get("qualification_only") or contract.get("mode") == "one_update_throughput":
+        if (not contract or contract.get("comparison_eligible") is False
+                or contract.get("throughput_qualification_only") or contract.get("qualification_only")
+                or contract.get("mode") == "one_update_throughput"):
             continue
         metrics = path.with_name("metrics.jsonl")
         if not metrics.exists():
