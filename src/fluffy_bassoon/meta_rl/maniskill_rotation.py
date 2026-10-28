@@ -22,6 +22,7 @@ import torch
 from fluffy_bassoon.evaluation_stages import write_json
 from fluffy_bassoon.gpu_execution import validate_execution
 from .checkpoint import restore_checkpoint, save_checkpoint
+from .warmstart import CACHED, add_warmstart_arguments, initialize_from_warmstart, validate_warmstart_arguments
 from .environments import _TrialEnv
 from .ppo import GRUCore, PersistentCTMVectorCore, RecurrentActorCritic, collect_trials, update_ppo
 from .transformer_xl import TransformerXLCore
@@ -211,11 +212,13 @@ def parser():
     parser.add_argument("--threads", type=int, default=2)
     parser.add_argument("--max-elapsed-seconds", type=float, default=1800.)
     parser.add_argument("--resume", type=Path)
+    add_warmstart_arguments(parser)
     return parser
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
+    validate_warmstart_arguments(args)
     if sys.platform != "linux":
         raise ValueError("Run the cached robot pilot only on allocated Linux resources")
     execution = validate_cpu_execution(os.environ, socket.gethostname(), args.expected_hostname)
@@ -259,6 +262,9 @@ def main(argv=None):
                     attempts=args.attempts, num_envs=args.num_envs, seed=args.seed,
                     observation_encoding="clock_by_declared_max_v1", optimization=optimization,
                     learning_rate=args.learning_rate, device="cpu", dtype="float32")
+    if args.warmstart:
+        contract["initialization"] = initialize_from_warmstart(args.warmstart, args.warmstart_sha256,
+            family=CACHED, policy=policy, contract=contract)
     counters = dict(environment_steps=0, optimizer_steps=0, evaluation_steps=0)
     iteration = 0
     if args.resume:

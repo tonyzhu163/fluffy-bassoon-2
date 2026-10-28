@@ -21,6 +21,7 @@ from .cores import CORE_NAMES, build_policy, core_config_from_args, policy_size
 from .environments import (BernoulliBandit, DarkRoom, HiddenGainReach, HiddenRewardBandit, KeyToDoor,
                            NonstationaryBernoulliBandit)
 from .ppo import collect_trials, update_ppo
+from .warmstart import COMPACT, add_warmstart_arguments, initialize_from_warmstart, validate_warmstart_arguments
 
 
 BANDITS = {"bandit": HiddenRewardBandit, "bernoulli": BernoulliBandit,
@@ -130,11 +131,13 @@ def parser():
     p.add_argument("--motor-warmstart",type=Path)
     p.add_argument("--motor-warmstart-sha256")
     p.add_argument("--resume", type=Path)
+    add_warmstart_arguments(p)
     return p
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
+    validate_warmstart_arguments(args)
     if sys.platform != "linux":
         raise ValueError("Model computation requires allocated Linux resources")
     execution = os.environ.get("FLUFFY_GPU_EXECUTION", "slurm")
@@ -189,6 +192,9 @@ def main(argv=None):
     if args.motor_warmstart:
         contract['initialization']=initialize_from_motor_checkpoint(args.motor_warmstart,
             args.motor_warmstart_sha256,policy=policy,contract=contract)
+    if args.warmstart:
+        contract["initialization"] = initialize_from_warmstart(args.warmstart, args.warmstart_sha256,
+            family=COMPACT, policy=policy, contract=contract)
     counters = dict(environment_steps=0, settling_steps=0, rollout_forward_samples=0, update_forward_samples=0,
                     active_action_update_samples=0, optimizer_steps=0, evaluation_steps=0,
                     evaluation_policy_steps=0, evaluation_settling_steps=0)
