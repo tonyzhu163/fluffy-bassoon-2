@@ -17,7 +17,8 @@ weights i.i.d. N(0,1) with no bias; support noise std 0.1 (reading N(0, 0.01) as
 a variance; --noise-std changes it); query steps carry observed value 0; the
 full-episode MSE targets the clean standardized value at every step; 4 heads;
 one tick per input; width = largest multiple of 4 within the paper's parameter
-count for that variant.
+count for that variant; synchronization decay rates start at r=0 (--decay-init
+changes it).
 """
 
 import argparse
@@ -99,6 +100,30 @@ def build(variant, width):
     return RegressionModel(core)
 
 
+def initialize_decay(model, spec, seed):
+    """Set the synchronization decay rates r: a constant "c" or "uniform:a,b" per pair.
+
+    The uniform draw uses its own generator, so every other initial weight is
+    identical across decay settings at one seed.
+    """
+    try:
+        if spec.startswith("uniform:"):
+            low, high = (float(v) for v in spec.removeprefix("uniform:").split(","))
+        else:
+            low = high = float(spec)
+    except ValueError:
+        raise ValueError(f"Invalid decay initialization {spec!r}") from None
+    if not (math.isfinite(low) and math.isfinite(high) and 0 <= low <= high <= 15):
+        raise ValueError("Decay initialization must lie within the [0, 15] projection")
+    decay = model.core.decay_params
+    with torch.no_grad():
+        if low == high:
+            decay.fill_(low)
+        else:
+            generator = torch.Generator().manual_seed(seed)
+            decay.copy_(torch.empty(decay.shape).uniform_(low, high, generator=generator))
+
+
 def parameters(model):
     return sum(p.numel() for p in model.parameters())
 
@@ -131,6 +156,8 @@ def main(argv=None):
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--width", type=int, help="Override the parameter-matched width")
     parser.add_argument("--noise-std", type=float, default=.1)
+    parser.add_argument("--decay-init", default="0",
+                        help='Initial synchronization decay rate r: a constant or "uniform:a,b" per pair')
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--learning-rate", type=float, default=1e-4)
@@ -171,7 +198,9 @@ def main(argv=None):
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     rng = np.random.default_rng(args.seed)
-    model = build(args.variant, width).to(args.device)
+    model = build(args.variant, width)
+    initialize_decay(model, args.decay_init, args.seed)
+    model = model.to(args.device)
     updates_per_epoch = math.ceil(EPISODES_PER_EPOCH / args.batch_size)
     target_updates = args.epochs * updates_per_epoch
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.)
@@ -184,6 +213,7 @@ def main(argv=None):
         unstated_choices=dict(inputs="uniform[-1,1]", weights="iid N(0,1), no bias",
             noise="std (reading N(0,0.01) as variance)", query_observed_value=0.,
             loss="MSE to clean standardized target at every step", heads=4, ticks=1,
+            decay_init=args.decay_init,
             width="largest multiple of 4 within the paper parameter count"),
         paper_parameters=VARIANTS[args.variant]["target"])
     iteration, counters = 0, dict(training_episodes=0, evaluation_episodes=0)
