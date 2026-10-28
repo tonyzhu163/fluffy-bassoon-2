@@ -2,6 +2,59 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## ML10 CTM completion and optimizer diagnosis, 2026-10-29
+
+CTM T1/cached100, Baige `job-rczwk9dd1v1e`, source
+`cd0128f03a060aff2d538a91f35058aa822df845`, completed80updates/10Msteps,
+4000Adam steps,100M PPO sample forwards and5M evaluation steps, exit0.
+Final normal/reset/reward-blind fresh training-family success was
+**16.0/18.4/14.0%**, with all held-out results0%. One seed; this supports
+neither a reliable memory benefit nor an architecture advantage. All40raw
+evaluation conditions, repeated final normal arrays, costs and checkpoint
+SHA256 `a34dff8decfef013bde1f74310c67709b5ae0689a2b1f89ed49848db51a58b18`
+were independently checked. Launcher-active cost7290s/2.025GPUh, peak1.687GiB.
+The unchanged CTM setting is weaker and more costly than the completed
+RL²-PPO baseline in this single-seed screen. ECET/AMAGO remain incomplete.
+
+Isolated diagnostic `job-ver4kajpyynd`, source
+`98dddd57dbad5abaf302fdc839da7d2cfe33724e`, passed58allocated Linux tests
+and completed exit0 in337allocated seconds. On one25k-transition minibatch,
+the shared-core weighted critic gradient norm10.619 versus actor0.07479
+gives a142x ratio; their cosine was-.0353. This is a measured gradient
+imbalance, not a measured factor in Adam parameter step sizes. Global
+GAE-target value explained variance was.933, with substantial variation
+by family. Gaussian standard deviations.824–.866 and7.0% action saturation
+do not indicate collapsed exploration.
+
+Before updating, cached/full-prefix replay matched within mixed FP32
+atol2e-5/rtol2e-6. After ten PPO epochs, cached-versus-fresh saved-action
+log-probability RMS drift was.03564 and value RMS drift.2952.31.1% of
+value-loss positions selected an outside-clip, locally flat loss branch.
+These are diagnostic differences, not distribution KLs or causal learning
+effects. Output synchronization median positive half-life was152steps;
+33.9% of rates implied half-lives above500steps. No complete-memory-horizon
+claim follows from synchronization decay alone.
+
+A paired smaller-minibatch update on the identical125k rollout kept ten
+epochs/1.25M samples but used250versus50Adam steps. PPO took182.07versus
+38.23s; cached log-probability RMS drift increased to.07449. The METTA
+published episode-segment loop implies250steps at its defaults, unlike our
+full-trial-equivalent minibatch. Matching optimizer-step counts alone is
+not yet a validated remedy for the cached approximation.
+
+Both full diagnostic optimizer/sampler/normalizer/RNG checkpoints and sample
+counts/hashes were audited; their protocol explicitly excludes them from
+the original comparison. Failed r1 `job-pkx5txzwylyn` is preserved:57tests
+passed, no optimizer update, max value difference2.098e-5 just exceeded the
+absolute2e-5 check. Its raw rollout is byte-identical to r3. The new mixed
+tolerance includes a test accepting small FP32 roundoff and rejecting
+material drift; the learner is unchanged. Failed scheduler-pod time131s.
+
+Evidence: `outputs/metaworld-ml10-matched-baige-20261028-r1/ctm/`,
+`checks/20261029-0147/`, `outputs/metaworld-ppo-debug-baige-20261029-r3/audit.json`
+and `checkpoint-audit.json`. A bounded paired continuation control of value
+coefficient.5versus.005 is prepared; no learning benefit is yet established.
+
 ## ML10 RL²-PPO single-seed completion, 2026-10-29
 
 Baige `job-j400lp4d3m6m`, source
