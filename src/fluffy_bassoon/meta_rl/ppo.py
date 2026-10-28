@@ -376,13 +376,14 @@ def generalized_advantages(rewards, values, ends, *, gamma=1., gae_lambda=1., bo
 def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, clip=.2,
                gamma=1., gae_lambda=1., entropy_coef=.01, value_coef=.5,
                max_grad_norm=1., episode_returns=False, reward_offset=0., normalize_advantages=True,
-               bounded_entropy=False, replay_chunk_length=0):
+               bounded_entropy=False, replay_chunk_length=0, mask_padding=False):
     if (type(epochs) is not int or epochs < 1 or type(minibatch_trials) is not int or minibatch_trials < 1
             or not 0 < clip < 1 or not math.isfinite(max_grad_norm) or max_grad_norm <= 0
             or not math.isfinite(entropy_coef) or entropy_coef < 0
             or not math.isfinite(value_coef) or value_coef < 0
             or not math.isfinite(reward_offset) or not 0 <= reward_offset <= 1
-            or type(normalize_advantages) is not bool or type(bounded_entropy) is not bool):
+            or type(normalize_advantages) is not bool or type(bounded_entropy) is not bool
+            or type(mask_padding) is not bool):
         raise ValueError("Invalid PPO optimization settings")
     ends = rollout["attempt_ends"] if episode_returns else rollout["trial_ends"]
     advantages, returns = generalized_advantages(rollout["rewards"] - reward_offset, rollout["values"], ends,
@@ -397,13 +398,15 @@ def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, cli
     advantages = torch.where(action_mask, advantages, 0.)
     data, states, chunks = replay_windows(dict(rollout, advantages=advantages, returns=returns,
                                               action_mask=action_mask), replay_chunk_length)
-    batch = data["advantages"].shape[1]
+    valid_lanes = (data["action_mask"].any(0).nonzero(as_tuple=False).flatten() if mask_padding else
+                   torch.arange(data["advantages"].shape[1], device=advantages.device))
+    batch = valid_lanes.numel()
     minibatch_size = minibatch_trials * chunks
-    totals, count, optimizer_steps, active_samples = {}, 0, 0, 0
+    totals, count, optimizer_steps, active_samples, forward_samples = {}, 0, 0, 0, 0
     # Deterministic recurrent transitions are required for behavior-policy likelihood replay.
     policy.eval()
     for _ in range(epochs):
-        order = torch.randperm(batch, device=advantages.device)
+        order = valid_lanes[torch.randperm(batch, device=advantages.device)]
         for start in range(0, batch, minibatch_size):
             lanes = order[start:start + minibatch_size]
             initial_state = ({key: value[lanes] for key, value in states.items()}
@@ -412,16 +415,20 @@ def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, cli
                 data["observations"][:, lanes], data["raw_actions"][:, lanes], data["resets"][:, lanes],
                 bounded_entropy=bounded_entropy, initial_state=initial_state)
             mask = data["action_mask"][:, lanes]
+            valid_count = mask.sum() if mask_padding else mask.numel()
             log_ratio = torch.where(mask, log_prob - data["log_probs"][:, lanes], 0.)
             ratio = log_ratio.exp()
             advantage = data["advantages"][:, lanes]
-            actor_loss = torch.maximum(-advantage * ratio, -advantage * ratio.clamp(1 - clip, 1 + clip)).mean()
+            actor_terms = torch.maximum(-advantage * ratio, -advantage * ratio.clamp(1 - clip, 1 + clip))
+            actor_loss = actor_terms.sum() / valid_count if mask_padding else actor_terms.mean()
             old_value, target = data["values"][:, lanes], data["returns"][:, lanes]
             clipped_value = old_value + (value - old_value).clamp(-clip, clip)
             critic_errors = torch.maximum((value - target).square(), (clipped_value - target).square())
-            critic_loss = .5 * torch.where(mask, critic_errors, 0.).mean()
+            critic_loss = (.5 * torch.where(mask, critic_errors, 0.).sum() / valid_count if mask_padding else
+                           .5 * critic_errors.mean())
             entropy = torch.where(mask, entropy, 0.)
-            loss = actor_loss + value_coef * critic_loss - entropy_coef * entropy.mean()
+            mean_entropy = entropy.sum() / valid_count if mask_padding else entropy.mean()
+            loss = actor_loss + value_coef * critic_loss - entropy_coef * mean_entropy
             if not torch.isfinite(loss):
                 raise FloatingPointError("Nonfinite recurrent PPO loss")
             optimizer.zero_grad(set_to_none=True)
@@ -430,15 +437,19 @@ def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, cli
             optimizer.step()
             if hasattr(policy.core, "constrain_parameters"):
                 policy.core.constrain_parameters()
-            weight = advantage.numel()
+            weight = int(valid_count)
             metrics = dict(loss=loss.detach(), actor_loss=actor_loss.detach(),
-                           critic_loss=critic_loss.detach(), exploration_entropy=entropy.detach().mean(),
-                           approximate_kl=((ratio - 1) - log_ratio).detach().mean(),
-                           clip_fraction=((ratio - 1).abs() > clip).float().mean(), gradient_norm=gradient_norm)
+                           critic_loss=critic_loss.detach(), exploration_entropy=mean_entropy.detach(),
+                           approximate_kl=((((ratio - 1) - log_ratio) * mask).detach().sum() / valid_count if mask_padding
+                                           else ((ratio - 1) - log_ratio).detach().mean()),
+                           clip_fraction=((((ratio - 1).abs() > clip) & mask).float().sum() / valid_count if mask_padding
+                                          else ((ratio - 1).abs() > clip).float().mean()),
+                           gradient_norm=gradient_norm)
             for key, metric in metrics.items():
                 totals[key] = totals.get(key, 0.) + float(metric) * weight
             count += weight
             optimizer_steps += 1
             active_samples += int(mask.sum())
+            forward_samples += advantage.numel()
     return {**{key: value / count for key, value in totals.items()},
-            "optimizer_steps": optimizer_steps, "forward_samples": count, "active_action_samples": active_samples}
+            "optimizer_steps": optimizer_steps, "forward_samples": forward_samples, "active_action_samples": active_samples}

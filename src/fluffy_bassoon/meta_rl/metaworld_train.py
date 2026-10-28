@@ -190,6 +190,8 @@ def main(argv=None, *, learner=None):
                         clip=.2, gamma=.99, gae_lambda=.95, entropy_coef=0., value_coef=.5,
                         max_grad_norm=.5, normalize_advantages=True,
                         replay_chunk_length=args.replay_chunk_length)
+    if args.benchmark == "pointmaze":
+        optimization["mask_padding"] = True
     if learner is not None:
         optimization.update(learner.get("optimization", {}))
     protocol = ("metaworld_state_cached_chunk_ppo_v2" if args.replay_chunk_length else

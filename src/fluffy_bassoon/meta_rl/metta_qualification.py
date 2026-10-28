@@ -50,7 +50,7 @@ def main(argv=None):
             for index, task in enumerate(tasks):
                 env = MemoryTrial(classes[task.env_name], [task], benchmark="pointmaze", attempts=2, horizon=500)
                 rng = np.random.default_rng(1_000_000_000 + index)
-                steps, episode = 0, -1
+                steps, episode, trace = 0, -1, []
                 try:
                     obs, _ = env.reset(seed=1_000_000_000 + index)
                     while not env.finished:
@@ -72,11 +72,16 @@ def main(argv=None):
                             if steps % 10 == 0:
                                 persistent = np.tanh(rng.normal(size=2))
                             action = persistent
+                        if index < 2 and steps % 10 == 0:
+                            trace.append(dict(episode=env.episode, step=env.inner_step,
+                                state=obs["state"].tolist(), action=np.asarray(action).tolist(),
+                                waypoint=waypoint if condition == "oracle" else None))
                         obs, _, _, _, _ = env.step(np.asarray(action, np.float32))
                         steps += 1
                     records.append(dict(task=json.loads(task.data), outcomes=env.outcomes,
                         returns=env.native_returns, episode_metrics=env.episode_metrics,
-                        environment_steps=steps))
+                        environment_steps=steps, diagnostic_trace=trace,
+                        simulator_control_dt=float(env.env.unwrapped.point_env.dt)))
                 finally:
                     env.close()
             result["records"][split][condition] = dict(

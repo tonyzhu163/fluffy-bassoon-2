@@ -34,6 +34,8 @@ the collector pads the suffix to its declared maximum length. Padding never
 occurs between real episodes, never steps the simulator, and cannot influence
 a later real action. Trial-end flags prevent bootstrapping through padding;
 actor, critic and entropy losses and state-normalizer updates exclude it.
+Losses are normalized by real transitions, so padding does not dilute gradients;
+cached windows containing no real transition are omitted from optimization.
 All interaction counters use the real-action mask. Trial padding must not be
 misreported as environment interaction. GPU-hours include its actual cost.
 

@@ -122,7 +122,7 @@ def test_variable_trial_replay_and_padding_count(core, chunk):
     assert rollout["trial_ends"][1:].all()
     assert max(replay_error(policy, rollout, chunk).values()) < 2e-5
     update_ppo(policy, torch.optim.Adam(policy.parameters()), rollout, epochs=1,
-               minibatch_trials=2, replay_chunk_length=chunk)
+               minibatch_trials=2, replay_chunk_length=chunk, mask_padding=True)
     policy.core.observe_after_update(rollout["observations"], mask=rollout["action_mask"])
     assert policy.core.state_count.item() == pytest.approx(4.0001)
 
@@ -140,9 +140,27 @@ def test_padding_has_no_effect_on_ppo_parameter_update():
         altered[key][padding] = 42.
     for model, data in ((policy, rollout), (other, altered)):
         torch.manual_seed(77)
-        update_ppo(model, torch.optim.Adam(model.parameters()), data, epochs=1, minibatch_trials=2)
+        update_ppo(model, torch.optim.Adam(model.parameters()), data, epochs=1, minibatch_trials=2, mask_padding=True)
     for key, value in policy.state_dict().items():
         torch.testing.assert_close(value, other.state_dict()[key], rtol=0, atol=0)
+
+
+def test_amount_of_absorbing_padding_does_not_dilute_ppo_loss():
+    torch.set_num_threads(1)
+    torch.manual_seed(1)
+    envs = [fake_point(), fake_point()]
+    policy = make_policy("gru", dict(width=16, ticks=1), envs[0])
+    other = copy.deepcopy(policy)
+    rollout = collect_trials(policy, envs, [1, 2])
+    shorter = {key: value[:2].clone() for key, value in rollout.items()}
+    metrics = []
+    for model, data in ((policy, rollout), (other, shorter)):
+        torch.manual_seed(77)
+        metrics.append(update_ppo(model, torch.optim.Adam(model.parameters()), data, epochs=1, minibatch_trials=2,
+                                  mask_padding=True))
+    assert metrics[0]["active_action_samples"] == metrics[1]["active_action_samples"] == 4
+    for key, value in policy.state_dict().items():
+        torch.testing.assert_close(value, other.state_dict()[key], rtol=0, atol=2e-7)
 
 
 @pytest.mark.parametrize("core", ["gru", "cmm", "persistent_ctm"])
@@ -162,7 +180,7 @@ def test_complete_variable_trial_checkpoint_recovery(tmp_path, core):
             restore_checkpoint(tmp_path / "latest.pt", policy=policy, optimizer=optimizer,
                                environment_rng=sampler, contract=contract)
         rollout = collect_trials(policy, envs, sampler.integers(0, 1000, 2), replay_chunk_length=3)
-        update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=1, replay_chunk_length=3)
+        update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=1, replay_chunk_length=3, mask_padding=True)
         policy.core.observe_after_update(rollout["observations"], mask=rollout["action_mask"])
         actual = {name: value.clone() for name, value in policy.state_dict().items()}
         if repeat:
