@@ -14,7 +14,7 @@ below are frozen greedy means on the same 256 paired validation trials:
 | --- | ---: | ---: | ---: | ---: | ---: |
 | GRU T1 | 3 | 500 | 54.26% | 42.38% | 36.36% |
 | Transformer-XL T1 | 3 | 500 | 55.05% | 45.08% | 37.50% |
-| Persistent CTM T4 | 1 budget stop | 353 | 56.64% | 49.95% | 37.65% |
+| Persistent CTM T4 | 3 budget stops | 353/350/358 | 56.53% | 48.76% | 37.03% |
 
 Zero correction scores 42.38%, Thompson sampling 45.36% and angle cancellation
 oracle 74.76%. Normal greedy seed standard deviation is 2.38 percentage points
@@ -23,7 +23,9 @@ signal in this cached control. They do not establish live visual robot
 adaptation. All final raw binary arrays were independently checked against the
 saved means and attempt curves. The immutable 900-second cap stopped CTM seed
 0 cleanly at 904.41 seconds, with `completed=false`, full recovery checkpoint
-and no failure/partial file. Other CTM seeds remain pending at this snapshot.
+and no failure/partial file. All three CTM seeds now have final evaluation artifacts, stopping at
+353/350/358 updates under their original caps. Across seeds, CTM normal greedy
+standard deviation is 1.20 percentage points.
 GRU and XL took about 65.1 and 245.3 seconds per completed 500-update seed;
 CTM's 353 updates took 904.4 seconds including evaluation/checkpoint overhead
 and concurrent contention. Different achieved updates, ticks and parameter
@@ -68,6 +70,26 @@ not establish learned adaptation or a reliable architecture ranking. The
 held-out update-10/50/100 diagnostics remain pending. Evidence:
 [launch receipt](../../../outputs/pi05-live-bridge-poc-baige-20261028-r1/LAUNCH.md)
 and `/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1/`.
+
+## First held-out live bridge evaluation, 2026-10-28
+
+The same native run/source completed update-10 frozen evaluations and reached
+21 updates/84 optimizer steps per learner by 18:00 Shanghai, with no failure
+receipts and checkpoints advancing. Only two held-out K4 trials are evaluated
+per condition. At update 10:
+
+| Core | Normal | Memory wiped | Reward blind |
+| --- | ---: | ---: | ---: |
+| Persistent CTM T4 | 62.5% | 62.5% | 50.0% |
+| Transformer-XL T1 | 75.0% | 75.0% | 62.5% |
+
+Memory wiping does not reduce aggregate score for either learner in these tiny
+samples. The live task therefore has no demonstrated memory benefit yet. The
+XL normal increase versus the initial 62.5% is one additional successful
+attempt; this cannot establish learning or an architecture ranking. All raw
+binary arrays exactly reproduce the saved means and attempt curves. Update-50
+evaluation remains pending within the original time cap. Evidence:
+[18:00 status and raw checks](../../../outputs/pi05-live-bridge-poc-baige-20261028-r1/STATUS-20261028-1800.md).
 
 ## Matched execution pilot and cached robot control, 2026-10-28
 

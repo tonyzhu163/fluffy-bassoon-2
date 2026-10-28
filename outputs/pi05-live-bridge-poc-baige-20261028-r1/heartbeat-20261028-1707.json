@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-28T17:07:43+08:00",
+  "environment": "Baige",
+  "job_id": "job-61p1rncjnr1x",
+  "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+  "status": "healthy_in_progress",
+  "live": {
+    "persistent_ctm": {
+      "updates": 4,
+      "optimizer_steps": 16,
+      "last_joint_kl": 0.020865721628069878,
+      "last_clip_fraction": 0.2734375,
+      "checkpoint_sha256": "133ecbed56a0195fcb06880757fcf87de8671b9f62e5ac6ca8592209acc73399"
+    },
+    "transformer_xl": {
+      "updates": 4,
+      "optimizer_steps": 16,
+      "last_joint_kl": 0.020177669823169708,
+      "last_clip_fraction": 0.3046875,
+      "checkpoint_sha256": "97ce6fc8f48af64de657f4d4f73fcb898fd563fbb23a91c9895d753aa5d8b562"
+    }
+  },
+  "checks": {
+    "initial_two_joint_and_value_replay_errors": 0,
+    "source_pin_verified": true,
+    "allocated_probe_and_renderer_bindings_verified": true,
+    "checkpoint_hashes_stable": true,
+    "failure_receipts": false,
+    "new_heldout_evaluations": false
+  },
+  "cached": {
+    "gru_completed_seeds": 3,
+    "xl_completed_seeds": 3,
+    "ctm_seed0": "clean_budget_stop_353_updates",
+    "ctm_seed1_updates": 149,
+    "ctm_seed2": "not_started"
+  },
+  "next_action": "Wait for update-10 held-out evaluations and remaining CTM CPU seeds; retain existing caps and checkpoints.",
+  "notification": "quiet: healthy advancement only; no new actionable result"
+}

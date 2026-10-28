@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-28T17:01:39+08:00",
+  "checked_at": "2026-10-28T18:02:30+08:00",
   "allocation": "Baige job-61p1rncjnr1x",
   "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
   "cache_sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
@@ -162,22 +162,309 @@
       "run": "persistent_ctm-seed1",
       "core": "persistent_ctm",
       "seed": 1,
-      "status": "running",
+      "status": "clean_budget_stop",
       "completed": false,
       "parameters": 95274,
       "retained_state_bytes_per_lane": 4864,
       "ticks": 4,
-      "iteration": 8,
-      "elapsed_seconds": 22.499670865014195,
-      "latest_interval_seconds_per_update": 2.5401624490041286,
-      "wall_seconds_per_achieved_update": 2.8124588581267744
+      "iteration": 350,
+      "elapsed_seconds": 902.0725220779423,
+      "latest_interval_seconds_per_update": 2.462514468934387,
+      "checkpoint_sha256": "8848ccee828eef5fd0e885a9db77687b370d5e9da13ab6f442fb893fe08f9064",
+      "counters": {
+        "environment_steps": 179200,
+        "optimizer_steps": 5600,
+        "evaluation_steps": 61440
+      },
+      "scores": {
+        "greedy_normal": 0.57666015625,
+        "greedy_memory_wiped": 0.5,
+        "greedy_reward_blind": 0.37060546875,
+        "sampled_normal": 0.5654296875,
+        "sampled_memory_wiped": 0.49755859375,
+        "sampled_reward_blind": 0.36474609375
+      },
+      "curves": {
+        "greedy_normal": [
+          0.421875,
+          0.46875,
+          0.5625,
+          0.5625,
+          0.64453125,
+          0.66796875,
+          0.66796875,
+          0.6171875
+        ],
+        "greedy_memory_wiped": [
+          0.421875,
+          0.4296875,
+          0.55078125,
+          0.52734375,
+          0.4921875,
+          0.484375,
+          0.55859375,
+          0.53515625
+        ],
+        "greedy_reward_blind": [
+          0.421875,
+          0.3515625,
+          0.34375,
+          0.41015625,
+          0.359375,
+          0.3515625,
+          0.34375,
+          0.3828125
+        ],
+        "sampled_normal": [
+          0.41796875,
+          0.46875,
+          0.53515625,
+          0.5703125,
+          0.609375,
+          0.64453125,
+          0.66015625,
+          0.6171875
+        ],
+        "sampled_memory_wiped": [
+          0.41796875,
+          0.453125,
+          0.51953125,
+          0.51171875,
+          0.5,
+          0.51171875,
+          0.546875,
+          0.51953125
+        ],
+        "sampled_reward_blind": [
+          0.41796875,
+          0.33984375,
+          0.37109375,
+          0.34765625,
+          0.390625,
+          0.33203125,
+          0.30078125,
+          0.41796875
+        ]
+      },
+      "baselines": {
+        "zero": {
+          "mean_reward": 0.423828125,
+          "reward_by_attempt": [
+            0.421875,
+            0.42578125,
+            0.44921875,
+            0.41015625,
+            0.421875,
+            0.43359375,
+            0.4453125,
+            0.3828125
+          ],
+          "trial_reward": 3.390625,
+          "trials": 256
+        },
+        "oracle": {
+          "mean_reward": 0.74755859375,
+          "reward_by_attempt": [
+            0.734375,
+            0.74609375,
+            0.7265625,
+            0.765625,
+            0.73046875,
+            0.7890625,
+            0.765625,
+            0.72265625
+          ],
+          "trial_reward": 5.98046875,
+          "trials": 256
+        },
+        "thompson": {
+          "mean_reward": 0.45361328125,
+          "reward_by_attempt": [
+            0.36328125,
+            0.38671875,
+            0.4296875,
+            0.4453125,
+            0.4921875,
+            0.47265625,
+            0.53125,
+            0.5078125
+          ],
+          "trial_reward": 3.62890625,
+          "trials": 256
+        }
+      },
+      "paired_trial_checks": {
+        "normal_minus_memory_wiped": {
+          "mean_gap": 0.07666015625,
+          "conditional_cache_trial_standard_error": 0.012632520227722805
+        },
+        "normal_minus_reward_blind": {
+          "mean_gap": 0.2060546875,
+          "conditional_cache_trial_standard_error": 0.011288140164336864
+        }
+      },
+      "raw_final_array_verified": true,
+      "gaps": {
+        "normal_minus_wiped": 0.07666015625,
+        "normal_minus_reward_blind": 0.2060546875,
+        "normal_minus_zero": 0.15283203125,
+        "normal_minus_thompson": 0.123046875
+      },
+      "wall_seconds_per_achieved_update": 2.577350063079835
     },
     {
       "run": "persistent_ctm-seed2",
       "core": "persistent_ctm",
       "seed": 2,
-      "status": "not_started",
-      "completed": false
+      "status": "clean_budget_stop",
+      "completed": false,
+      "parameters": 95274,
+      "retained_state_bytes_per_lane": 4864,
+      "ticks": 4,
+      "iteration": 358,
+      "elapsed_seconds": 903.6700593528803,
+      "latest_interval_seconds_per_update": 2.4955648679751903,
+      "checkpoint_sha256": "42181d05b0d0d86beeffc74d29690e898d2bbcdbe874e269e88625478bdb3d6d",
+      "counters": {
+        "environment_steps": 183296,
+        "optimizer_steps": 5728,
+        "evaluation_steps": 61440
+      },
+      "scores": {
+        "greedy_normal": 0.552734375,
+        "greedy_memory_wiped": 0.46337890625,
+        "greedy_reward_blind": 0.36376953125,
+        "sampled_normal": 0.556640625,
+        "sampled_memory_wiped": 0.48046875,
+        "sampled_reward_blind": 0.36279296875
+      },
+      "curves": {
+        "greedy_normal": [
+          0.328125,
+          0.44921875,
+          0.56640625,
+          0.5390625,
+          0.60546875,
+          0.6484375,
+          0.640625,
+          0.64453125
+        ],
+        "greedy_memory_wiped": [
+          0.328125,
+          0.44921875,
+          0.50390625,
+          0.484375,
+          0.47265625,
+          0.49609375,
+          0.53125,
+          0.44140625
+        ],
+        "greedy_reward_blind": [
+          0.328125,
+          0.328125,
+          0.44921875,
+          0.36328125,
+          0.3203125,
+          0.43359375,
+          0.328125,
+          0.359375
+        ],
+        "sampled_normal": [
+          0.33203125,
+          0.44921875,
+          0.56640625,
+          0.5625,
+          0.60546875,
+          0.62890625,
+          0.66015625,
+          0.6484375
+        ],
+        "sampled_memory_wiped": [
+          0.33203125,
+          0.46875,
+          0.4609375,
+          0.44921875,
+          0.5390625,
+          0.53125,
+          0.5390625,
+          0.5234375
+        ],
+        "sampled_reward_blind": [
+          0.33203125,
+          0.33203125,
+          0.44921875,
+          0.37890625,
+          0.30078125,
+          0.3984375,
+          0.35546875,
+          0.35546875
+        ]
+      },
+      "baselines": {
+        "zero": {
+          "mean_reward": 0.423828125,
+          "reward_by_attempt": [
+            0.421875,
+            0.42578125,
+            0.44921875,
+            0.41015625,
+            0.421875,
+            0.43359375,
+            0.4453125,
+            0.3828125
+          ],
+          "trial_reward": 3.390625,
+          "trials": 256
+        },
+        "oracle": {
+          "mean_reward": 0.74755859375,
+          "reward_by_attempt": [
+            0.734375,
+            0.74609375,
+            0.7265625,
+            0.765625,
+            0.73046875,
+            0.7890625,
+            0.765625,
+            0.72265625
+          ],
+          "trial_reward": 5.98046875,
+          "trials": 256
+        },
+        "thompson": {
+          "mean_reward": 0.45361328125,
+          "reward_by_attempt": [
+            0.36328125,
+            0.38671875,
+            0.4296875,
+            0.4453125,
+            0.4921875,
+            0.47265625,
+            0.53125,
+            0.5078125
+          ],
+          "trial_reward": 3.62890625,
+          "trials": 256
+        }
+      },
+      "paired_trial_checks": {
+        "normal_minus_memory_wiped": {
+          "mean_gap": 0.08935546875,
+          "conditional_cache_trial_standard_error": 0.011265048929985687
+        },
+        "normal_minus_reward_blind": {
+          "mean_gap": 0.18896484375,
+          "conditional_cache_trial_standard_error": 0.011535690755520975
+        }
+      },
+      "raw_final_array_verified": true,
+      "gaps": {
+        "normal_minus_wiped": 0.08935546875,
+        "normal_minus_reward_blind": 0.18896484375,
+        "normal_minus_zero": 0.12890625,
+        "normal_minus_thompson": 0.09912109375
+      },
+      "wall_seconds_per_achieved_update": 2.5242180428851406
     },
     {
       "run": "transformer_xl-seed0",
@@ -1106,37 +1393,39 @@
   ],
   "aggregates": {
     "persistent_ctm": {
-      "seeds_with_saved_final_evaluation": 1,
+      "seeds_with_saved_final_evaluation": 3,
       "completed_seeds": 0,
       "achieved_updates": [
-        353
+        353,
+        350,
+        358
       ],
-      "mean_elapsed_seconds": 904.4077757580671,
-      "mean_wall_seconds_per_achieved_update": 2.5620616876999067,
+      "mean_elapsed_seconds": 903.3834523962965,
+      "mean_wall_seconds_per_achieved_update": 2.554543264554961,
       "scores": {
         "greedy_normal": {
-          "mean": 0.56640625,
-          "sample_sd": null
+          "mean": 0.5652669270833334,
+          "sample_sd": 0.012003511762690296
         },
         "greedy_memory_wiped": {
-          "mean": 0.49951171875,
-          "sample_sd": null
+          "mean": 0.4876302083333333,
+          "sample_sd": 0.02100366263768277
         },
         "greedy_reward_blind": {
-          "mean": 0.37646484375,
-          "sample_sd": null
+          "mean": 0.3702799479166667,
+          "sample_sd": 0.006353913182273156
         },
         "sampled_normal": {
-          "mean": 0.55029296875,
-          "sample_sd": null
+          "mean": 0.5574544270833334,
+          "sample_sd": 0.007601103143773188
         },
         "sampled_memory_wiped": {
-          "mean": 0.49560546875,
-          "sample_sd": null
+          "mean": 0.4912109375,
+          "sample_sd": 0.009354123076498055
         },
         "sampled_reward_blind": {
-          "mean": 0.361328125,
-          "sample_sd": null
+          "mean": 0.3629557291666667,
+          "sample_sd": 0.001714787394670042
         }
       }
     },
