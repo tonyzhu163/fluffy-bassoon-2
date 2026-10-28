@@ -2,6 +2,25 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## ML10 AMAGO completion, 2026-10-29
+
+Baige `job-dm64v27p0a30`, source
+`cd0128f03a060aff2d538a91f35058aa822df845`, completed80collections/10M
+training transitions, exit0. The accepted ten replay-pass adaptation used
+2083optimizer steps and99,984,000sampled replay transitions. Final
+normal/reset/reward-blind training-family success was12.8/12.0/11.2%;
+all held-out results were0%. This is one training seed, with no reliable
+memory benefit or architecture advantage. Only ECET remains incomplete.
+
+Launcher-active cost was9585s/2.6625GPUh; learner-active cost9569.97s,
+including4320.27s training and5195.27s evaluation. All40saved evaluation
+conditions were independently recomputed with equal family weighting.
+Checkpoint SHA256
+`e0ea9c8d542adfded6fdc656bd3fea5f3bfd21e1d75d5399ee8627026fd31532`
+and complete policy/optimizer/replay/sampler/scheduler/scaler/exploration
+and RNG metadata were checked without executing a model on the dev host.
+Evidence: `outputs/metaworld-ml10-matched-baige-20261028-r1/checks/20261029-0222/`.
+
 ## ML10 CTM completion and optimizer diagnosis, 2026-10-29
 
 CTM T1/cached100, Baige `job-rczwk9dd1v1e`, source
@@ -14,7 +33,8 @@ evaluation conditions, repeated final normal arrays, costs and checkpoint
 SHA256 `a34dff8decfef013bde1f74310c67709b5ae0689a2b1f89ed49848db51a58b18`
 were independently checked. Launcher-active cost7290s/2.025GPUh, peak1.687GiB.
 The unchanged CTM setting is weaker and more costly than the completed
-RL²-PPO baseline in this single-seed screen. ECET/AMAGO remain incomplete.
+RL²-PPO baseline in this single-seed screen. ECET remains incomplete;
+AMAGO subsequently finished, as recorded above.
 
 Isolated diagnostic `job-ver4kajpyynd`, source
 `98dddd57dbad5abaf302fdc839da7d2cfe33724e`, passed58allocated Linux tests
@@ -53,7 +73,9 @@ material drift; the learner is unchanged. Failed scheduler-pod time131s.
 Evidence: `outputs/metaworld-ml10-matched-baige-20261028-r1/ctm/`,
 `checks/20261029-0147/`, `outputs/metaworld-ppo-debug-baige-20261029-r3/audit.json`
 and `checkpoint-audit.json`. A bounded paired continuation control of value
-coefficient.5versus.005 is prepared; no learning benefit is yet established.
+coefficient.5versus.005 is running as `job-knyy09k3p6rr`; no learning
+benefit is yet established. The unchanged first update exactly reproduced
+the diagnostic's rollout, policy and Adam reference state.
 
 ## ML10 RL²-PPO single-seed completion, 2026-10-29
 
