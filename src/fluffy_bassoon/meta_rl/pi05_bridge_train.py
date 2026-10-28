@@ -62,7 +62,7 @@ def feedback_batch(previous, rewards, attempt, chunk, attempts, *, reward_blind=
 @torch.no_grad()
 def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=False,
                         lesion="normal", preprocess=None, prepare_actions=None,
-                        dpt_generator=None, execute_labels=False):
+                        dpt_generator=None, execute_labels=False, diagnostic_callback=None):
     """Collect one complete global batch; privileged plan never enters bridge inputs."""
     if lesion not in ("normal", "memory_wiped", "reward_blind"):
         raise ValueError("Unknown live evaluation lesion")
@@ -101,6 +101,8 @@ def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=Fa
             model_actions, memory, record = policy.sample_chunk(
                 motor, prepared, feedback, memory, rng=generator, deterministic=deterministic,
                 reset=reset, num_steps=4)
+            diagnostic = (diagnostic_callback(motor, observation, model_actions, record, attempt, chunk_index)
+                          if diagnostic_callback is not None else None)
             if dpt_generator is not None or execute_labels:
                 # Same native noise gives a paired base-motor label; label RNG does not alter behavior RNG.
                 native_actions = motor.sample_actions(observation, num_steps=4,
@@ -142,6 +144,8 @@ def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=Fa
                               issued_command_sha256=hashlib.sha256(
                                   issued.detach().cpu().contiguous().numpy().tobytes()).hexdigest(),
                               non_xy_fields_unchanged=True))
+            if diagnostic is not None:
+                audit[-1]["action_diagnostic"] = diagnostic
         outcomes.append(success_once.float())
     ends = torch.zeros(len(records), lanes, dtype=torch.bool)
     ends[-1] = True

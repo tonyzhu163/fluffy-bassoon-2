@@ -1,0 +1,115 @@
+{
+  "benchmark": "native_pi05_put_on_plate",
+  "family": "native_pi05_history_v1",
+  "source_commit": "79da19500f4e898d078539b4c562c150e610c16a",
+  "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r2/native-warmstart/warmstart.pt",
+  "sha256": "fb219453dd12e84d8e2f534ac17515543cd334c5bedf1858efd8a2fe584542d2",
+  "resume_sha256": "c4d60ef8fd2c6f9700821e7cce0e3b6323943cf004316d7cf0539d0bfcc8236c",
+  "updates": 100,
+  "compatibility": {
+    "task": "PutOnPlateInScene25Main-v3",
+    "objects": [
+      0,
+      1
+    ],
+    "train_theta_degrees": [
+      -45.0,
+      0.0,
+      45.0
+    ],
+    "train_overlays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "attempts": 4,
+    "episode_steps": 80,
+    "action_chunk": 5,
+    "denoise_steps": 4,
+    "feedback": "unrotated 7D requested command; previous terminal success; boundary; fixed clocks",
+    "reward": "success_once latched within attempt, emitted only on its final chunk",
+    "core": "persistent_ctm",
+    "bridge": {
+      "core": "persistent_ctm",
+      "width": 64,
+      "ticks": 4,
+      "residual_scale": 1.0
+    },
+    "gaussian_policy": {
+      "protocol": "pi05_gaussian_flow_residual_v1",
+      "noise_scale": 0.05,
+      "active_dims": 7,
+      "residual_scale": 1.0,
+      "kv_layer": -1,
+      "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+      "entropy": "fixed sigma; constant entropy",
+      "dtype": "float32"
+    },
+    "motor_sha256": "0adb5b40f064760ff245f53ae0a4e078b86680b65f77d1f5991a173543edd5a1",
+    "norm_stats_sha256": "930b816bf2f142f3e377d088d2252e5238b8d082ad8f0abceedfc6296be58852",
+    "rlinf_sources": {
+      "rlinf/models/embodiment/openpi/pi0.py": "b5d84d0669362a96d5bb4c5cbc4012d74ee8ecbbf6251abb9952f42fc017299d",
+      "rlinf/models/embodiment/openpi/env_io.py": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc",
+      "rlinf/models/embodiment/openpi/modules/gemma.py": "552625553b40efb52e0880cdf663d0097fe008e1943ab205d9cfe00cc9c5ae78",
+      "rlinf/models/embodiment/openpi/checkpoint.py": "01b8a68a0085cafb64ce3b0716732305e78921086b948654c2a4ce9edc5b71c9"
+    }
+  },
+  "counters": {
+    "teacher_simulator_steps": 1280,
+    "optimizer_steps": 100,
+    "replayed_policy_chunks": 12800,
+    "validation_policy_chunks": 512
+  },
+  "label_gate": {
+    "passed": true,
+    "baseline": 0.375,
+    "oracle": 0.9375,
+    "criterion": "two complete history batches; paired oracle success >= 0.25 and >= frozen baseline",
+    "interpretation": "small pilot competence check, not statistical evidence of superiority"
+  },
+  "frozen_live_evaluation": {
+    "normal": {
+      "mean_success": 0.375,
+      "success_by_attempt": [
+        0.0,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "trials": 2
+    },
+    "memory_wiped": {
+      "mean_success": 0.25,
+      "success_by_attempt": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "trials": 2
+    },
+    "reward_blind": {
+      "mean_success": 0.375,
+      "success_by_attempt": [
+        0.0,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "trials": 2
+    }
+  },
+  "frozen_live_evaluation_iteration": 0,
+  "downstream_optimizer_steps": 1,
+  "downstream_stopped_early_for_kl": true,
+  "status": "candidate saved; useful reward-driven ICRL or downstream benefit not established"
+}
