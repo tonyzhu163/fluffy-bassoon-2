@@ -292,8 +292,8 @@ execution. The seven configurations are the persistent CTM at T1/T4/T8, the
 consolidated CMM at T1, Transformer-XL, GRU, and the house looped Transformer
 at T4. The CTM uses bounded synchronization and decay once per observation;
 both CTM and CMM have length-32 short-term traces, and CMM has 32 long-term
-tokens. Transformer-XL retains the longest declared trial length, with two
-independent layers. The looped Transformer retains eight memory tokens.
+tokens. Transformer-XL retains the longest declared trial in decisions
+(attempts times horizon), with two independent layers. The looped Transformer retains eight memory tokens.
 
 Each configuration uses the largest width divisible by four that fits the
 declared total policy parameter cap, including actor and critic. The default
@@ -304,6 +304,15 @@ axes and must be reported, rather than interpreted as matched compute. The
 default screen has two stationary six-arm Bernoulli tasks (K64 and K128), five
 training seeds, 32 trial lanes, 300 PPO updates, four epochs and minibatches of
 16 complete trials. Reward centering is .5 and value-loss weight is .01.
+
+`--task` selects the trial family: `bernoulli` (default), `nonstationary`,
+`darkroom` or `keydoor`. Grid screens default to K4 and K16 episodes at the
+task's default horizon (20 for Dark Room, 50 for Key-to-Door) with no reward
+centering, because their per-attempt return is a dense step count rather than
+a success probability. Explicit `--attempts`, `--horizon` and `--reward-offset`
+override these defaults and are sealed in the manifest. Grid cells carry no
+bandit arm count. Each manifest holds one task; separate tasks get separate
+manifests and output identities.
 
 Planning constructs candidate models only inside allocated Linux resources.
 A manifest SHA256, exact source and clean checkout are checked by every worker.
@@ -324,8 +333,34 @@ Final diagnostics evaluate greedy actions and three independent policy-sampling
 seeds, each under normal memory, reset between attempts, and reward blinding.
 These are frozen-checkpoint interventions, not independently trained controls.
 The screen is an architecture selection experiment; a trained episode-reset
-control and a non-bandit long-memory task remain necessary before stronger
+control and grid-screen results remain necessary before stronger
 in-context learning or task-generalization claims.
+
+## CMM structure diagnostics
+
+`screen plan --variant-set cmm-structure` seals contrasts inside the one CMM
+implementation: full CMM at T1 and T4, `cmm-stm` (zero long-term tokens) and
+`ctm-control` (zero memory blocks), with Transformer-XL and GRU references,
+all under the same parameter cap. Its diagnostics add, per core, attempt-boundary
+component lesions (`evaluate --lesions`): `long_term`, `trace` and
+`synchronization` (CMM `alpha`/`beta`; persistent-CTM action and output banks)
+are each reset to their initial values at every attempt boundary while the other
+state entries carry. Resetting every entry equals the existing reset condition.
+
+They also evaluate the same checkpoint at 2x and 4x the trained attempts
+(`evaluate --attempts`, `--extrapolation-factors`). The clock keeps its trained
+encoding, so the trained attempts receive identical inputs and later attempts
+extrapolate the attempt clock. Transformer-XL retains only its sealed memory
+length. The greedy-reference check applies only at the trained length.
+
+`evaluate --export-states` saves, for greedy conditions, each state entry after
+every attempt's last decision as `state_<entry>[trial, attempt, ...]` and the
+private trial setting as `hidden_<label>` (goal cell, key/door cell, best arm,
+gain sign). These targets are read after the trial and never reach the policy.
+`python -m fluffy_bassoon.meta_rl.probe` fits a closed-form ridge classifier per
+entry and attempt on the first half of the trials and scores the second half,
+with the majority-class baseline. Probes show what is linearly readable, not
+what the policy uses; pair them with the lesions.
 
 The LIBERO robot learner sections (gain-trial wrapper, native-prefix interface,
 supervised warm start, robot PPO transition) stayed in fluffy-bassoon with their

@@ -42,10 +42,28 @@ def make_env(task, attempts, horizon, arms=2):
     raise ValueError("Unknown compact RL task")
 
 
+def hidden_labels(env, task):
+    """EVALUATION PROBE TARGETS ONLY: private trial-fixed settings, read after the trial ends."""
+    if task == "bandit":
+        return dict(best_arm=env._target)
+    if task == "bernoulli":
+        return dict(best_arm=int(env._means.argmax()))
+    if task == "nonstationary":
+        return dict(best_arm_by_attempt=env._mean_history.argmax(1))
+    if task == "reach":
+        return dict(gain_positive=int(env._gain > 0))
+    if task == "darkroom":
+        return dict(goal_cell=int(env._goal[0] * env.size + env._goal[1]))
+    if task == "keydoor":
+        return dict(key_cell=int(env._key[0] * env.size + env._key[1]),
+                    door_cell=int(env._door[0] * env.size + env._door[1]))
+    raise ValueError("Unknown compact RL task")
+
+
 @torch.no_grad()
 def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_each_attempt=False,
                     deterministic=True, policy_seed=2_000_000_000, normalize_clock=True,
-                    reward_blind=False):
+                    reward_blind=False, reset_keys=None, clock_scale=None, record_states=False):
     if type(policy_seed) is not int or not 0 <= policy_seed < 2**32:
         raise ValueError("Policy evaluation seed must be an integer in [0, 2**32)")
     envs = [make_env(task, attempts, horizon, arms) for _ in seeds]
@@ -56,16 +74,25 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
             torch.manual_seed(policy_seed)
             rollout = collect_trials(policy, envs, seeds, reset_each_attempt=reset_each_attempt,
                                       deterministic=deterministic, normalize_clock=normalize_clock,
-                                      reward_blind=reward_blind)
+                                      reward_blind=reward_blind, reset_keys=reset_keys,
+                                      clock_scale=clock_scale, record_states=record_states)
         successes = rollout["rewards"].reshape(attempts, horizon, len(envs)).sum(1)
         trial_data = dict(rewards=successes.T.cpu().numpy(),
                           raw_actions=rollout["raw_actions"].transpose(0, 1).cpu().numpy())
+        if record_states:
+            # Trial-major arrays: state_<entry>[trial, attempt, ...] and hidden_<label>[trial, ...].
+            for key, value in rollout["attempt_states"].items():
+                trial_data[f"state_{key}"] = value.transpose(0, 1).numpy()
+            labels = [hidden_labels(env, task) for env in envs]
+            for key in labels[0]:
+                trial_data[f"hidden_{key}"] = np.stack([np.asarray(label[key]) for label in labels])
         common = dict(trial_reward=float(successes.sum(0).mean()), trials=len(envs),
                       environment_steps=int(rollout["action_mask"].sum()),
                       policy_steps=rollout["rewards"].numel(), settling_steps=int(rollout["settling_steps"].sum()),
                       reset_each_attempt=reset_each_attempt,
                       deterministic=deterministic, policy_seed=None if deterministic else policy_seed,
-                      normalize_clock=normalize_clock, reward_blind=reward_blind)
+                      normalize_clock=normalize_clock, reward_blind=reward_blind,
+                      reset_keys=None if reset_keys is None else sorted(reset_keys))
         if task in ("bernoulli", "nonstationary"):
             # Latent probabilities score evaluation only; PPO uses sampled rewards and public observations.
             means = np.stack([env._mean_history if task == "nonstationary"
