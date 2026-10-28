@@ -1,0 +1,219 @@
+{
+  "family": "cached_rotation_history_v1",
+  "compatibility": {
+    "protocol": "cached_rotation_a1_plumbing_v2",
+    "cache": {
+      "sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
+      "rows": 704,
+      "scenes": 64,
+      "splits": {
+        "train": 48,
+        "validation": 16
+      },
+      "theta_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "phi_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "net_angle_degrees": [
+        -90.0,
+        -45.0,
+        0.0,
+        45.0,
+        90.0
+      ],
+      "reward_field": "success_once",
+      "split_rule": "scene_index modulo 4: validation=3; train=0,1,2"
+    },
+    "attempts": 8,
+    "observation_encoding": "clock_by_declared_max_v1",
+    "core": "persistent_ctm",
+    "core_config": {
+      "width": 64,
+      "ticks": 4,
+      "history_length": 10,
+      "synapse_depth": 8,
+      "bounded_synchronisation": true,
+      "decay_per_observation": true
+    },
+    "dtype": "float32"
+  },
+  "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+  "iteration": 200,
+  "pretraining_counters": {
+    "teacher_environment_steps": 2176,
+    "update_forward_samples": 12800,
+    "optimizer_steps": 200,
+    "evaluation_steps": 4608
+  },
+  "data": {
+    "contract": {
+      "behavior": "public_feedback_teachers_v1",
+      "labels": "training_task_action_labels_v1",
+      "objective": "dpt",
+      "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+      "task": "cached_rotation",
+      "attempts": 8,
+      "horizon": 1,
+      "arms": null,
+      "encoding": "clock_by_declared_max_v1",
+      "training_seed_start": 0,
+      "training_trials": 256,
+      "validation_seed_start": 800000000,
+      "validation_trials": 16,
+      "cache": {
+        "sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
+        "rows": 704,
+        "scenes": 64,
+        "splits": {
+          "train": 48,
+          "validation": 16
+        },
+        "theta_degrees": [
+          -45.0,
+          0.0,
+          45.0
+        ],
+        "phi_degrees": [
+          -45.0,
+          0.0,
+          45.0
+        ],
+        "net_angle_degrees": [
+          -90.0,
+          -45.0,
+          0.0,
+          45.0,
+          90.0
+        ],
+        "reward_field": "success_once",
+        "split_rule": "scene_index modulo 4: validation=3; train=0,1,2"
+      },
+      "rotation_likelihoods": [
+        [
+          0.04,
+          0.26,
+          0.9
+        ],
+        [
+          0.26,
+          0.9,
+          0.18
+        ],
+        [
+          0.9,
+          0.18,
+          0.04
+        ]
+      ]
+    },
+    "train_sha256": "267574f01eeaa2918de6b76300346e47c81439e4b78b3ba3e173ef1715892e59",
+    "validation_sha256": "e1e9b4e1440366e88c80c90788c14be93b2b2833e6f3350040eba68135d1b245",
+    "teacher_environment_steps": 2176,
+    "teacher_train_mean_return": 4.50390625,
+    "teacher_validation_mean_return": 5.375
+  },
+  "evaluation": {
+    "validation_nll": 0.40255188941955566,
+    "behavior": {
+      "greedy_normal": {
+        "mean_reward": 0.50390625,
+        "reward_by_attempt": [
+          0.3125,
+          0.40625,
+          0.59375,
+          0.46875,
+          0.5625,
+          0.5,
+          0.53125,
+          0.65625
+        ],
+        "trial_reward": 4.03125,
+        "trials": 32
+      },
+      "greedy_memory_wiped": {
+        "mean_reward": 0.41796875,
+        "reward_by_attempt": [
+          0.3125,
+          0.40625,
+          0.5,
+          0.34375,
+          0.4375,
+          0.4375,
+          0.46875,
+          0.4375
+        ],
+        "trial_reward": 3.34375,
+        "trials": 32
+      },
+      "greedy_reward_blind": {
+        "mean_reward": 0.359375,
+        "reward_by_attempt": [
+          0.3125,
+          0.375,
+          0.46875,
+          0.25,
+          0.40625,
+          0.28125,
+          0.34375,
+          0.4375
+        ],
+        "trial_reward": 2.875,
+        "trials": 32
+      },
+      "sampled_normal": {
+        "mean_reward": 0.52734375,
+        "reward_by_attempt": [
+          0.40625,
+          0.53125,
+          0.625,
+          0.46875,
+          0.53125,
+          0.4375,
+          0.53125,
+          0.6875
+        ],
+        "trial_reward": 4.21875,
+        "trials": 32
+      },
+      "sampled_memory_wiped": {
+        "mean_reward": 0.47265625,
+        "reward_by_attempt": [
+          0.40625,
+          0.4375,
+          0.71875,
+          0.375,
+          0.4375,
+          0.375,
+          0.5625,
+          0.46875
+        ],
+        "trial_reward": 3.78125,
+        "trials": 32
+      },
+      "sampled_reward_blind": {
+        "mean_reward": 0.390625,
+        "reward_by_attempt": [
+          0.40625,
+          0.5625,
+          0.5625,
+          0.34375,
+          0.25,
+          0.25,
+          0.375,
+          0.375
+        ],
+        "trial_reward": 3.125,
+        "trials": 32
+      }
+    }
+  },
+  "status": "candidate; adaptation requires behavioral evaluation",
+  "checkpoint_sha256": "515e61ed0fb6f007c474f06397301966adec2840c5ab9eee9add89b2b3156149",
+  "checkpoint_file": "warmstart.pt"
+}

@@ -1,0 +1,326 @@
+{
+  "checkpoint_count": 7,
+  "source": "Baige immutable r1 outputs; hashes checked against saved manifests and summaries",
+  "candidates": [
+    {
+      "benchmark": "bandit",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-bandit/warmstart.pt",
+      "sha256": "40975d57321201180dffe3415d6cb92bc1acb777f2272327a73f20239fd25639",
+      "resume_sha256": "628e7f5e365c1361310f29729b54783eaf6189f33b129bf48d540965840fdb66",
+      "updates": 200,
+      "completed_target": true,
+      "counters": {
+        "teacher_environment_steps": 2176,
+        "update_forward_samples": 12800,
+        "optimizer_steps": 200,
+        "evaluation_steps": 4608
+      },
+      "validation_nll": 0.1326303370296955,
+      "metric": "mean_success",
+      "greedy_evaluation": {
+        "normal": 0.921875,
+        "memory_wiped": 0.921875,
+        "reward_blind": 0.53125
+      },
+      "trials": 32,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "bandit",
+        "attempts": 8,
+        "horizon": 1,
+        "arms": 2,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "bernoulli",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-bernoulli/warmstart.pt",
+      "sha256": "49bbee3133fcdd1fe694e203baf3e2c76f2172ff381ad5bd5087d7601733215a",
+      "resume_sha256": "b20de03991db6d5a8c36508f0a1f615bf0481251ffbf65446f328f908c8e2d9c",
+      "updates": 200,
+      "completed_target": true,
+      "counters": {
+        "teacher_environment_steps": 2176,
+        "update_forward_samples": 12800,
+        "optimizer_steps": 200,
+        "evaluation_steps": 4608
+      },
+      "validation_nll": 0.6284500509500504,
+      "metric": "mean_reward",
+      "greedy_evaluation": {
+        "normal": 0.5078125,
+        "memory_wiped": 0.5078125,
+        "reward_blind": 0.5078125
+      },
+      "trials": 32,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "bernoulli",
+        "attempts": 8,
+        "horizon": 1,
+        "arms": 2,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "cached_rotation",
+      "family": "cached_rotation_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-cached_rotation/warmstart.pt",
+      "sha256": "515e61ed0fb6f007c474f06397301966adec2840c5ab9eee9add89b2b3156149",
+      "resume_sha256": "e25d1aca46f0568fc9077f04fa4d2cbe054081e9fd02c4ed6fdec98fd022cb1d",
+      "updates": 200,
+      "completed_target": true,
+      "counters": {
+        "teacher_environment_steps": 2176,
+        "update_forward_samples": 12800,
+        "optimizer_steps": 200,
+        "evaluation_steps": 4608
+      },
+      "validation_nll": 0.40255188941955566,
+      "metric": "mean_reward",
+      "greedy_evaluation": {
+        "normal": 0.50390625,
+        "memory_wiped": 0.41796875,
+        "reward_blind": 0.359375
+      },
+      "trials": 32,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "protocol": "cached_rotation_a1_plumbing_v2",
+        "cache": {
+          "sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
+          "rows": 704,
+          "scenes": 64,
+          "splits": {
+            "train": 48,
+            "validation": 16
+          },
+          "theta_degrees": [
+            -45.0,
+            0.0,
+            45.0
+          ],
+          "phi_degrees": [
+            -45.0,
+            0.0,
+            45.0
+          ],
+          "net_angle_degrees": [
+            -90.0,
+            -45.0,
+            0.0,
+            45.0,
+            90.0
+          ],
+          "reward_field": "success_once",
+          "split_rule": "scene_index modulo 4: validation=3; train=0,1,2"
+        },
+        "attempts": 8,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "darkroom",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-darkroom/warmstart.pt",
+      "sha256": "3620a2349dff7602fb98277d8f966b9739e949fc362dd54d811c686a669bfb87",
+      "resume_sha256": "4956b6bdc213106571ab25ca9392cd8bd3ed18460e3b655e33ded8e9e9c724fc",
+      "updates": 112,
+      "completed_target": false,
+      "counters": {
+        "teacher_environment_steps": 43520,
+        "update_forward_samples": 143360,
+        "optimizer_steps": 112,
+        "evaluation_steps": 15360
+      },
+      "validation_nll": 1.3356683850288391,
+      "metric": "mean_reward",
+      "greedy_evaluation": {
+        "normal": 0.03125,
+        "memory_wiped": 0.765625,
+        "reward_blind": 0.03125
+      },
+      "trials": 8,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "darkroom",
+        "attempts": 8,
+        "horizon": 20,
+        "arms": null,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "keydoor",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-keydoor/warmstart.pt",
+      "sha256": "fd423a83b0e4f6dcf88591f732af1a67f1f653ee34425f64da90e7d01118b487",
+      "resume_sha256": "79e3fad5c897fff64e3ba262d58bbdd7eef8791d0d19cdacf3c501d53d47237a",
+      "updates": 37,
+      "completed_target": false,
+      "counters": {
+        "teacher_environment_steps": 108800,
+        "update_forward_samples": 118400,
+        "optimizer_steps": 37,
+        "evaluation_steps": 38400
+      },
+      "validation_nll": 1.465437412261963,
+      "metric": "mean_reward",
+      "greedy_evaluation": {
+        "normal": 0.0625,
+        "memory_wiped": 0.0,
+        "reward_blind": 0.0625
+      },
+      "trials": 8,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "keydoor",
+        "attempts": 8,
+        "horizon": 50,
+        "arms": null,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "nonstationary",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-nonstationary/warmstart.pt",
+      "sha256": "7a4aef194eb43356ab847b22312f03865f3c7500cdbade1f3ee4cb66417220db",
+      "resume_sha256": "03b1ab726c77f111c42dd167ade217c4542c9ed48e9bec81d4909fc3e4a022d1",
+      "updates": 200,
+      "completed_target": true,
+      "counters": {
+        "teacher_environment_steps": 2176,
+        "update_forward_samples": 12800,
+        "optimizer_steps": 200,
+        "evaluation_steps": 4608
+      },
+      "validation_nll": 0.5835524350404739,
+      "metric": "mean_reward",
+      "greedy_evaluation": {
+        "normal": 0.56640625,
+        "memory_wiped": 0.578125,
+        "reward_blind": 0.51953125
+      },
+      "trials": 32,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "nonstationary",
+        "attempts": 8,
+        "horizon": 1,
+        "arms": 2,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    },
+    {
+      "benchmark": "reach",
+      "family": "compact_history_v1",
+      "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+      "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-reach/warmstart.pt",
+      "sha256": "49b92f8fdc7e29d41281927cf24817bf689e6fcb3aec766909f65b84023a6b95",
+      "resume_sha256": "c0a58596e1b381fdfdb12b4e2d78d08201412951ba7bd1814f0aae3e08f53e29",
+      "updates": 200,
+      "completed_target": true,
+      "counters": {
+        "teacher_environment_steps": 17408,
+        "update_forward_samples": 102400,
+        "optimizer_steps": 200,
+        "evaluation_steps": 36864
+      },
+      "validation_nll": 11.844356536865234,
+      "metric": "mean_success",
+      "greedy_evaluation": {
+        "normal": 0.0,
+        "memory_wiped": 0.0,
+        "reward_blind": 0.0
+      },
+      "trials": 32,
+      "status": "candidate; no automatic promotion",
+      "compatibility": {
+        "task": "reach",
+        "attempts": 8,
+        "horizon": 8,
+        "arms": null,
+        "observation_encoding": "clock_by_declared_max_v1",
+        "core": "persistent_ctm",
+        "core_config": {
+          "width": 64,
+          "ticks": 4,
+          "history_length": 10,
+          "synapse_depth": 8,
+          "bounded_synchronisation": true,
+          "decay_per_observation": true
+        },
+        "dtype": "float32"
+      }
+    }
+  ]
+}

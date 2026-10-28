@@ -1,0 +1,67 @@
+{
+  "contract": {
+    "behavior": "public_feedback_teachers_v1",
+    "labels": "training_task_action_labels_v1",
+    "objective": "dpt",
+    "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+    "task": "cached_rotation",
+    "attempts": 8,
+    "horizon": 1,
+    "arms": null,
+    "encoding": "clock_by_declared_max_v1",
+    "training_seed_start": 0,
+    "training_trials": 256,
+    "validation_seed_start": 800000000,
+    "validation_trials": 16,
+    "cache": {
+      "sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
+      "rows": 704,
+      "scenes": 64,
+      "splits": {
+        "train": 48,
+        "validation": 16
+      },
+      "theta_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "phi_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "net_angle_degrees": [
+        -90.0,
+        -45.0,
+        0.0,
+        45.0,
+        90.0
+      ],
+      "reward_field": "success_once",
+      "split_rule": "scene_index modulo 4: validation=3; train=0,1,2"
+    },
+    "rotation_likelihoods": [
+      [
+        0.04,
+        0.26,
+        0.9
+      ],
+      [
+        0.26,
+        0.9,
+        0.18
+      ],
+      [
+        0.9,
+        0.18,
+        0.04
+      ]
+    ]
+  },
+  "train_sha256": "267574f01eeaa2918de6b76300346e47c81439e4b78b3ba3e173ef1715892e59",
+  "validation_sha256": "e1e9b4e1440366e88c80c90788c14be93b2b2833e6f3350040eba68135d1b245",
+  "teacher_environment_steps": 2176,
+  "teacher_train_mean_return": 4.50390625,
+  "teacher_validation_mean_return": 5.375
+}

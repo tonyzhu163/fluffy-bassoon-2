@@ -1,0 +1,264 @@
+{
+  "family": "compact_history_v1",
+  "compatibility": {
+    "task": "bernoulli",
+    "attempts": 8,
+    "horizon": 1,
+    "arms": 2,
+    "observation_encoding": "clock_by_declared_max_v1",
+    "core": "persistent_ctm",
+    "core_config": {
+      "width": 64,
+      "ticks": 4,
+      "history_length": 10,
+      "synapse_depth": 8,
+      "bounded_synchronisation": true,
+      "decay_per_observation": true
+    },
+    "dtype": "float32"
+  },
+  "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+  "iteration": 200,
+  "pretraining_counters": {
+    "teacher_environment_steps": 2176,
+    "update_forward_samples": 12800,
+    "optimizer_steps": 200,
+    "evaluation_steps": 4608
+  },
+  "data": {
+    "contract": {
+      "behavior": "public_feedback_teachers_v1",
+      "labels": "training_task_action_labels_v1",
+      "objective": "dpt",
+      "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+      "task": "bernoulli",
+      "attempts": 8,
+      "horizon": 1,
+      "arms": 2,
+      "encoding": "clock_by_declared_max_v1",
+      "training_seed_start": 0,
+      "training_trials": 256,
+      "validation_seed_start": 800000000,
+      "validation_trials": 16,
+      "cache": null,
+      "rotation_likelihoods": null
+    },
+    "train_sha256": "f3df52393d2aeeec718b6d90334ededcf0457c9f3f3e5de2299f65a5ffd81367",
+    "validation_sha256": "c1ab0f88766bdeb94e5b11b4a6d4ca40bf41ec6463f0b25b2b8ed6779cbbd428",
+    "teacher_environment_steps": 2176,
+    "teacher_train_mean_return": 4.515625,
+    "teacher_validation_mean_return": 5.125
+  },
+  "evaluation": {
+    "validation_nll": 0.6284500509500504,
+    "behavior": {
+      "normal": {
+        "trial_reward": 4.0625,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.5,
+          0.46875,
+          0.65625,
+          0.46875,
+          0.53125,
+          0.53125,
+          0.53125,
+          0.375
+        ],
+        "mean_reward": 0.5078125,
+        "expected_regret_by_attempt": [
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832
+        ],
+        "cumulative_expected_regret": 1.6150808838318658
+      },
+      "memory_wiped": {
+        "trial_reward": 4.0625,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": true,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.5,
+          0.46875,
+          0.65625,
+          0.46875,
+          0.53125,
+          0.53125,
+          0.53125,
+          0.375
+        ],
+        "mean_reward": 0.5078125,
+        "expected_regret_by_attempt": [
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832
+        ],
+        "cumulative_expected_regret": 1.6150808838318658
+      },
+      "reward_blind": {
+        "trial_reward": 4.0625,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": true,
+        "reward_by_attempt": [
+          0.5,
+          0.46875,
+          0.65625,
+          0.46875,
+          0.53125,
+          0.53125,
+          0.53125,
+          0.375
+        ],
+        "mean_reward": 0.5078125,
+        "expected_regret_by_attempt": [
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832,
+          0.2018851104789832
+        ],
+        "cumulative_expected_regret": 1.6150808838318658
+      },
+      "sampled_normal": {
+        "trial_reward": 4.1875,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.53125,
+          0.5,
+          0.625,
+          0.46875,
+          0.53125,
+          0.5625,
+          0.5625,
+          0.40625
+        ],
+        "mean_reward": 0.5234375,
+        "expected_regret_by_attempt": [
+          0.16421365614497532,
+          0.15330331131388808,
+          0.1798438265211845,
+          0.19274136233515837,
+          0.20763431756113931,
+          0.18141243983557082,
+          0.17853767346017346,
+          0.1787097924347167
+        ],
+        "cumulative_expected_regret": 1.4363963796068067
+      },
+      "sampled_memory_wiped": {
+        "trial_reward": 4.34375,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": true,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.53125,
+          0.5625,
+          0.59375,
+          0.4375,
+          0.59375,
+          0.59375,
+          0.59375,
+          0.4375
+        ],
+        "mean_reward": 0.54296875,
+        "expected_regret_by_attempt": [
+          0.16421365614497532,
+          0.15261623297873939,
+          0.19097732774500367,
+          0.22931520659056642,
+          0.18343476220935676,
+          0.17083460857118177,
+          0.179067111666744,
+          0.16302607704285782
+        ],
+        "cumulative_expected_regret": 1.433484982949425
+      },
+      "sampled_reward_blind": {
+        "trial_reward": 4.15625,
+        "trials": 32,
+        "environment_steps": 256,
+        "policy_steps": 256,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": true,
+        "reward_by_attempt": [
+          0.53125,
+          0.5,
+          0.625,
+          0.46875,
+          0.53125,
+          0.5,
+          0.59375,
+          0.40625
+        ],
+        "mean_reward": 0.51953125,
+        "expected_regret_by_attempt": [
+          0.16421365614497532,
+          0.15736451574748844,
+          0.1798438265211845,
+          0.1916882255007223,
+          0.20763431756113931,
+          0.21398589678378516,
+          0.1848549168472653,
+          0.1798445622717965
+        ],
+        "cumulative_expected_regret": 1.479429917378357
+      }
+    }
+  },
+  "status": "candidate; adaptation requires behavioral evaluation",
+  "checkpoint_sha256": "49bbee3133fcdd1fe694e203baf3e2c76f2172ff381ad5bd5087d7601733215a",
+  "checkpoint_file": "warmstart.pt"
+}

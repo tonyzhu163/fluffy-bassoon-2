@@ -1,0 +1,24 @@
+{
+  "contract": {
+    "behavior": "public_feedback_teachers_v1",
+    "labels": "training_task_action_labels_v1",
+    "objective": "dpt",
+    "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+    "task": "keydoor",
+    "attempts": 8,
+    "horizon": 50,
+    "arms": null,
+    "encoding": "clock_by_declared_max_v1",
+    "training_seed_start": 0,
+    "training_trials": 256,
+    "validation_seed_start": 800000000,
+    "validation_trials": 16,
+    "cache": null,
+    "rotation_likelihoods": null
+  },
+  "train_sha256": "c0693150afc8a53a01d560d7d538a6b4eb392564f58f29528434500ce8a44422",
+  "validation_sha256": "2eb6c616d700fa88525217c0c8b7d37ce47be0fd75720ba06767f1506c439861",
+  "teacher_environment_steps": 108800,
+  "teacher_train_mean_return": 10.72265625,
+  "teacher_validation_mean_return": 12.4375
+}

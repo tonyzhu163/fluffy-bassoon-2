@@ -1,0 +1,57 @@
+{
+  "contract": {
+    "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+    "phase": "supervised_history_warmstart",
+    "objective": "dpt",
+    "task": "nonstationary",
+    "attempts": 8,
+    "horizon": 1,
+    "arms": 2,
+    "observation_encoding": "clock_by_declared_max_v1",
+    "core": "persistent_ctm",
+    "core_config": {
+      "width": 64,
+      "ticks": 4,
+      "history_length": 10,
+      "synapse_depth": 8,
+      "bounded_synchronisation": true,
+      "decay_per_observation": true
+    },
+    "dtype": "float32",
+    "device": "cpu",
+    "seed": 0,
+    "dataset": {
+      "contract": {
+        "behavior": "public_feedback_teachers_v1",
+        "labels": "training_task_action_labels_v1",
+        "objective": "dpt",
+        "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+        "task": "nonstationary",
+        "attempts": 8,
+        "horizon": 1,
+        "arms": 2,
+        "encoding": "clock_by_declared_max_v1",
+        "training_seed_start": 0,
+        "training_trials": 256,
+        "validation_seed_start": 800000000,
+        "validation_trials": 16,
+        "cache": null,
+        "rotation_likelihoods": null
+      },
+      "train_sha256": "5b45d7defe1cbe3bc93ac6acd93a9b41534f33ca5a27327465dc3b192e92eb33",
+      "validation_sha256": "f8ccb6f2cb659b7131a7522877ba84662e40345b2a3e668c1677cad73b0b443e",
+      "teacher_environment_steps": 2176,
+      "teacher_train_mean_return": 4.453125,
+      "teacher_validation_mean_return": 5.4375
+    },
+    "batch_trials": 8,
+    "learning_rate": 0.0003,
+    "evaluation": {
+      "seed_start": 1000000000,
+      "trials": 32
+    }
+  },
+  "target_updates": 200,
+  "dataset_dir": "/mowenjie/fluffy-bassoon-2/outputs/ctm-dpt-warmstart-20261028-r1/compact-nonstationary",
+  "hostname": "job-qqijcsjw5rhu-master-0"
+}

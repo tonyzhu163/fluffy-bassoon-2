@@ -1,0 +1,198 @@
+{
+  "family": "compact_history_v1",
+  "compatibility": {
+    "task": "darkroom",
+    "attempts": 8,
+    "horizon": 20,
+    "arms": null,
+    "observation_encoding": "clock_by_declared_max_v1",
+    "core": "persistent_ctm",
+    "core_config": {
+      "width": 64,
+      "ticks": 4,
+      "history_length": 10,
+      "synapse_depth": 8,
+      "bounded_synchronisation": true,
+      "decay_per_observation": true
+    },
+    "dtype": "float32"
+  },
+  "source_commit": "1569aee35495e2e16e651793537b03eb380aacd1",
+  "iteration": 112,
+  "pretraining_counters": {
+    "teacher_environment_steps": 43520,
+    "update_forward_samples": 143360,
+    "optimizer_steps": 112,
+    "evaluation_steps": 15360
+  },
+  "data": {
+    "contract": {
+      "behavior": "public_feedback_teachers_v1",
+      "labels": "training_task_action_labels_v1",
+      "objective": "dpt",
+      "context": "actual observations/actions/rewards; per-trial uniform random-action fraction",
+      "task": "darkroom",
+      "attempts": 8,
+      "horizon": 20,
+      "arms": null,
+      "encoding": "clock_by_declared_max_v1",
+      "training_seed_start": 0,
+      "training_trials": 256,
+      "validation_seed_start": 800000000,
+      "validation_trials": 16,
+      "cache": null,
+      "rotation_likelihoods": null
+    },
+    "train_sha256": "03aa5d0102e35213ec123902fe627641f4ecde6045bbdf9757770340eef0670c",
+    "validation_sha256": "59bd8643afa14ad685ab33940e7c48641f22fc035cec9e79916061014e19b521",
+    "teacher_environment_steps": 43520,
+    "teacher_train_mean_return": 39.8828125,
+    "teacher_validation_mean_return": 47.9375
+  },
+  "evaluation": {
+    "validation_nll": 1.3356683850288391,
+    "behavior": {
+      "normal": {
+        "trial_reward": 0.25,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_reward": 0.03125
+      },
+      "memory_wiped": {
+        "trial_reward": 6.125,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": true,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.25,
+          0.25,
+          1.375,
+          0.0,
+          2.0,
+          0.125,
+          2.0,
+          0.125
+        ],
+        "mean_reward": 0.765625
+      },
+      "reward_blind": {
+        "trial_reward": 0.25,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": true,
+        "policy_seed": null,
+        "normalize_clock": true,
+        "reward_blind": true,
+        "reward_by_attempt": [
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_reward": 0.03125
+      },
+      "sampled_normal": {
+        "trial_reward": 2.875,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.125,
+          1.75,
+          0.0,
+          0.625,
+          0.125,
+          0.0,
+          0.25,
+          0.0
+        ],
+        "mean_reward": 0.359375
+      },
+      "sampled_memory_wiped": {
+        "trial_reward": 2.375,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": true,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": false,
+        "reward_by_attempt": [
+          0.125,
+          1.0,
+          0.0,
+          0.75,
+          0.25,
+          0.125,
+          0.125,
+          0.0
+        ],
+        "mean_reward": 0.296875
+      },
+      "sampled_reward_blind": {
+        "trial_reward": 3.125,
+        "trials": 8,
+        "environment_steps": 1280,
+        "policy_steps": 1280,
+        "settling_steps": 0,
+        "reset_each_attempt": false,
+        "deterministic": false,
+        "policy_seed": 2000000000,
+        "normalize_clock": true,
+        "reward_blind": true,
+        "reward_by_attempt": [
+          0.125,
+          1.75,
+          0.0,
+          0.5,
+          0.5,
+          0.0,
+          0.25,
+          0.0
+        ],
+        "mean_reward": 0.390625
+      }
+    }
+  },
+  "status": "candidate; adaptation requires behavioral evaluation",
+  "checkpoint_sha256": "3620a2349dff7602fb98277d8f966b9739e949fc362dd54d811c686a669bfb87",
+  "checkpoint_file": "warmstart.pt"
+}

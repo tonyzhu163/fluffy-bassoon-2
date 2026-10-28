@@ -2,6 +2,41 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## DPT-inspired compact warm-start pilot, 2026-10-28
+
+Baige `job-qqijcsjw5rhu`, source
+`1569aee35495e2e16e651793537b03eb380aacd1`, saved seven separate persistent-CTM
+warm-start candidates plus full optimizer/sampler/RNG recovery checkpoints.
+All export/resume hashes and 84 initial/final raw behavioral means and attempt
+curves were checked. One training seed, width 64/T4, eight attempts, 256 training
+histories and 16 validation histories; 32 behavioral trials except eight for grids.
+
+| Benchmark | Updates | Greedy normal | Memory wiped | Reward blind |
+| --- | ---: | ---: | ---: | ---: |
+| Deterministic bandit | 200 | .92188 | .92188 | .53125 |
+| Bernoulli | 200 | .50781 | .50781 | .50781 |
+| Nonstationary | 200 | .56641 | .57813 | .51953 |
+| Hidden-gain reach | 200 | .00000 | .00000 | .00000 |
+| Dark Room | 112 | .03125 | .76563 | .03125 |
+| Key-to-Door | 37 | .06250 | .00000 | .06250 |
+| Cached rotation | 200 | .50391 | .41797 | .35938 |
+
+Grid scores are dense return per attempt, not success rates. Their 300-second
+soft caps ended before the update target. Bandit learns an immediate-feedback
+solution that survives memory wiping. Cached rotation shows a tentative scalar
+history signal; it is not a live robot result. The harder tasks are weak, and
+Dark Room's greedy memory lesion is substantially better than normal. All NLLs
+fell, demonstrating why supervised loss alone cannot qualify these candidates.
+No matched downstream-PPO benefit or task-generalization claim is supported.
+Full interpretation, initial/sampled controls and artifact index:
+[pilot audit](../../../outputs/ctm-dpt-warmstart-20261028-r1/RESULTS.md).
+
+The same job's native labeler failed before saving histories because pi0.5
+generates eight steps while its decoder returns five. The prefix-only label/loss
+fix at `79da195` passed 67 tests with nine Slurm-only skips in an allocated Baige
+qualification. The native-only recovery uses a new immutable output identity;
+its launch receipt is [r2](../../../outputs/ctm-dpt-warmstart-20261028-r2/PLAN.md).
+
 ## Wider-angle cached rotation control, 2026-10-28
 
 The CPU controls inside Baige `job-61p1rncjnr1x` use source

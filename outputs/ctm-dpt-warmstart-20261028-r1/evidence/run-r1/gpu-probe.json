@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "timing_comparison_eligible": false,
+  "allocation_type": "baige_container",
+  "hostname": "job-qqijcsjw5rhu-master-0",
+  "probe_pid": 252,
+  "created_at_utc": "2026-10-28T10:01:38.404913+00:00",
+  "devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "f39647ba-c253-361f-4e6e-c205169c5c25",
+      "cuda_name": "NVIDIA RPBZZZ6",
+      "cuda_total_bytes": 101973950464,
+      "pci_bus_id": "0000:a2:00.0",
+      "uuid": "GPU-815a74d7-d183-724d-f8f6-a385574dbc96",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-815a74d7-d183-724d-f8f6-a385574dbc96",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887.0,
+        "memory_used_mib": 0.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:A2:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "own_pid_gpu_uuids": [
+          "GPU-815a74d7-d183-724d-f8f6-a385574dbc96"
+        ]
+      }
+    }
+  ],
+  "idle_utilization_required": true,
+  "gpu_identity_mapping": {
+    "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+    "assigned_nvml_uuids": [
+      "GPU-815a74d7-d183-724d-f8f6-a385574dbc96"
+    ]
+  },
+  "compute_processes_before": [],
+  "compute_processes_after": [
+    {
+      "gpu_uuid": "GPU-815a74d7-d183-724d-f8f6-a385574dbc96",
+      "pid": 252,
+      "process_name": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/bin/python",
+      "memory_used_mib": "640"
+    }
+  ],
+  "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2"
+}
