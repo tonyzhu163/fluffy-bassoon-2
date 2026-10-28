@@ -4,6 +4,7 @@ Run on allocated Linux CPU resources; no frozen motor or simulator is loaded.
 """
 
 from copy import deepcopy
+import json
 from types import SimpleNamespace
 
 import pytest
@@ -13,7 +14,7 @@ from torch import nn
 from fluffy_bassoon.evaluation_stages import sha256
 from fluffy_bassoon.meta_rl.pi05_fresh_probe import ProbeBoundary, run_live_attempt
 from fluffy_bassoon.meta_rl.pi05_public_history import (
-    PUBLIC_RECORD_KEYS, PublicHistoryRecorder, load_public_history,
+    PARTIAL_FORMAT, PUBLIC_RECORD_KEYS, PublicHistoryRecorder, load_public_history,
     replay_public_history, save_public_history, validate_public_history,
 )
 from fluffy_bassoon.rl.pi05_bridge_policy import StochasticPi05BridgePolicy
@@ -160,6 +161,68 @@ def test_constructor_requires_declared_motor_and_interface_sha256(bad):
         PublicHistoryRecorder(motor_sha256=bad, interface_sha256=INTERFACE, history_ids=IDS)
     with pytest.raises(ValueError):
         PublicHistoryRecorder(motor_sha256=MOTOR, interface_sha256=bad, history_ids=IDS)
+
+
+def append_public_attempt(recorder, records, boundary, history_ids=IDS):
+    for record in records:
+        recorder.on_chunk(record)
+    recorder.on_boundary(ProbeBoundary(None, boundary["previous_command"], boundary["pending_reward"],
+        boundary["attempt_index"], tuple(history_ids), attempt_end=True))
+
+
+def test_partial_snapshot_preserves_public_prefix_without_aliases_or_private_state(tmp_path):
+    history, _ = collect(reader("transformer_xl"))
+    recorder = PublicHistoryRecorder(motor_sha256=MOTOR, interface_sha256=INTERFACE, history_ids=IDS)
+    append_public_attempt(recorder, history["records"][:16], history["boundaries"][0])
+    partial = recorder.partial_snapshot()
+    assert partial["format"] == PARTIAL_FORMAT and partial["complete"] is False
+    assert partial["completed_support_attempts"] == 1 and partial["collected_chunks"] == 16
+    assert partial["history_ids"] == list(IDS) and len(partial["boundaries"]) == 1
+    assert set(partial) == {"format", "complete", "motor_sha256", "interface_sha256", "history_ids",
+        "completed_support_attempts", "collected_chunks", "records", "boundaries", "content_sha256"}
+    assert all(set(record) == set(PUBLIC_RECORD_KEYS) for record in partial["records"])
+    assert set(partial["boundaries"][0]) == {"previous_command", "pending_reward", "attempt_index",
+        "attempts", "chunk_index", "attempt_end"}
+    assert all(value.device.type == "cpu" and not value.requires_grad
+               for record in partial["records"] for value in record.values())
+    with pytest.raises(ValueError, match="format or motor/interface"):
+        validate(partial)
+    with pytest.raises(ValueError):
+        save_public_history(tmp_path / "partial", partial, source_commit=SOURCE, collector_id="base")
+    # Even checksum-pinning partial bytes in an otherwise final manifest cannot
+    # make load_public_history accept this incomplete schema.
+    saved = save_public_history(tmp_path / "final", history, source_commit=SOURCE, collector_id="base")
+    torch.save(partial, tmp_path / "final/history.pt")
+    manifest = saved["manifest"]
+    manifest["history_sha256"] = sha256(tmp_path / "final/history.pt")
+    (tmp_path / "final/manifest.json").write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="format or motor/interface"):
+        load_public_history(tmp_path / "final", sha256(tmp_path / "final/manifest.json"),
+            expected_motor_sha256=MOTOR, expected_interface_sha256=INTERFACE)
+    original_digest = partial["content_sha256"]
+    partial["records"][0]["kv_key"].zero_()
+    partial["boundaries"][0]["pending_reward"].zero_()
+    partial["history_ids"][0] = "changed"
+    again = recorder.partial_snapshot()
+    assert again["content_sha256"] == original_digest
+    assert again["records"][0]["kv_key"].abs().sum() > 0
+    assert again["boundaries"][0]["pending_reward"].tolist() == [1., 0.]
+    assert again["history_ids"] == list(IDS)
+
+
+def test_partial_public_prefix_can_be_manually_reassembled_without_claiming_driver_resume():
+    history, _ = collect(reader("transformer_xl"))
+    recorder = PublicHistoryRecorder(motor_sha256=MOTOR, interface_sha256=INTERFACE, history_ids=IDS)
+    append_public_attempt(recorder, history["records"][:16], history["boundaries"][0])
+    partial = recorder.partial_snapshot()
+    recovered = PublicHistoryRecorder(motor_sha256=partial["motor_sha256"],
+        interface_sha256=partial["interface_sha256"], history_ids=partial["history_ids"])
+    append_public_attempt(recovered, partial["records"], partial["boundaries"][0])
+    for attempt in (1, 2):
+        append_public_attempt(recovered, history["records"][attempt*16:(attempt+1)*16], history["boundaries"][attempt])
+    # This only proves preservation of the public data prefix. Continuing live
+    # behavior also requires the caller's separate collector state and RNG.
+    assert recovered.finish()["content_sha256"] == history["content_sha256"]
 
 
 def test_artifact_manifest_and_history_are_externally_pinned_and_never_overwritten(tmp_path):

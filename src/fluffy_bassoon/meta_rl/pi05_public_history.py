@@ -19,6 +19,7 @@ from .warmstart import atomic_save, checked_load
 
 
 FORMAT = "native_pi05_public_support_history_v1"
+PARTIAL_FORMAT = "native_pi05_public_support_partial_v1"
 MANIFEST_FORMAT = "native_pi05_public_support_manifest_v1"
 PUBLIC_RECORD_KEYS = ("kv_key", "kv_value", "prefix_mask", "feedback")
 BOUNDARY_KEYS = {"previous_command", "pending_reward", "attempt_index", "attempts",
@@ -196,6 +197,32 @@ class PublicHistoryRecorder:
                                 expected_interface_sha256=self._history["interface_sha256"])
         self._finished = True
         return self._history
+
+    def partial_snapshot(self):
+        """Copy the accumulated public prefix for a separate boundary checkpoint.
+
+        This is deliberately a different, incomplete format, even if all three
+        supports have accumulated. It is not accepted by final history loading
+        or replay. The caller separately saves collector policy/state and RNG;
+        this API neither provides nor promises a driver/CLI resume mechanism.
+        """
+        for index, record in enumerate(self._history["records"]):
+            _record(record, self._lanes, index)
+        for attempt, boundary in enumerate(self._history["boundaries"], 1):
+            _boundary(boundary, self._lanes, attempt)
+        partial = dict(format=PARTIAL_FORMAT, complete=False,
+            motor_sha256=self._history["motor_sha256"],
+            interface_sha256=self._history["interface_sha256"],
+            history_ids=list(self._history["history_ids"]),
+            completed_support_attempts=len(self._history["boundaries"]),
+            collected_chunks=len(self._history["records"]),
+            records=[{key: _cpu(record[key]) for key in PUBLIC_RECORD_KEYS}
+                     for record in self._history["records"]],
+            boundaries=[{key: _cpu(boundary[key]) if isinstance(boundary[key], torch.Tensor) else boundary[key]
+                         for key in sorted(BOUNDARY_KEYS)}
+                        for boundary in self._history["boundaries"]])
+        partial["content_sha256"] = _content_hash(partial)
+        return partial
 
 
 @torch.no_grad()
