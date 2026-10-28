@@ -32,11 +32,13 @@ export PYTHONPATH="$TASK_WORKTREE/src" PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECOD
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MUJOCO_GL=egl WANDB_MODE=disabled
 export FLUFFY_META_RL_CUDA_QUALIFICATION=1
+export FLUFFY_METAWORLD_REAL_QUALIFICATION=1
 TASK_STARTED=$(date +%s)
 "$TASK_PYTHON" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 "$TASK_PYTHON" -m pytest -q -p no:cacheprovider tests/test_metaworld_ppo_diagnose.py \
-  tests/test_meta_rl_replay_windows.py tests/test_metaworld_pilot.py > "$TASK_OUTPUT/tests.log" 2>&1
+  tests/test_meta_rl_replay_windows.py tests/test_metaworld_pilot.py \
+  tests/test_meta_rl_cmm.py tests/test_continuous_memory_machine.py > "$TASK_OUTPUT/tests.log" 2>&1
 timeout --signal=TERM --kill-after=30s 1500 "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.metaworld_ppo_diagnose \
   --source-commit "$TASK_SOURCE" --parent-dir "$TASK_PARENT" --output-dir "$TASK_OUTPUT/diagnosis"
 printf '%s\n' "$(($(date +%s)-TASK_STARTED))" > "$TASK_OUTPUT/allocation-active-seconds.txt"
