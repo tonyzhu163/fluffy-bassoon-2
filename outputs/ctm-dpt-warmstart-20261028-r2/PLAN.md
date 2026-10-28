@@ -43,6 +43,13 @@ the iteration-two metrics and gate result. The timestamped evidence snapshot
 contains the two-batch manifest, qualification, allocation/renderer binding,
 configuration and first metric; it does not imply the pending gate has passed.
 
+The realized trial plans expose a substantial pilot limitation: batch one,
+which will train the CTM, has rotations `[45, 0]`; reserved validation batch two
+has `[0, 0]`. Neither contains a -45-degree trial. A lower validation loss here
+therefore cannot demonstrate learned correction across the declared training
+support. Keep this tiny execution screen separate from any claim of a useful
+robot adaptation initializer; the later live behavior check remains necessary.
+
 Live status remains in the single canonical `outputs/coordination.md` referenced
 by this repository. The existing 20-minute heartbeat monitors this run and
 will report a meaningful change, failure or completion.
