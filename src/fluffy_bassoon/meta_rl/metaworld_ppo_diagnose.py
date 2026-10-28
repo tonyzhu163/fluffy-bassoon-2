@@ -106,8 +106,24 @@ def gradient_components(policy, rollout, optimization, *, all_windows=False):
     return result
 
 
+def critic_diagnostics(value, old_value, target, clip):
+    """Measure whether value clipping makes the selected loss branch locally flat."""
+    with torch.no_grad():
+        delta = value-old_value
+        clipped = old_value + delta.clamp(-clip, clip)
+        ordinary, bounded = (value-target).square(), (clipped-target).square()
+        outside = delta.abs() > clip
+        return dict(value_change=tensor_stats(delta),
+                    outside_value_clip_fraction=float(outside.double().mean()),
+                    flat_clipped_loss_fraction=float((outside & (bounded > ordinary)).double().mean()),
+                    old_value_mse=float((old_value-target).square().mean()),
+                    new_value_mse=float(ordinary.mean()),
+                    clipped_loss_mse=float(torch.maximum(ordinary, bounded).mean()),
+                    value_explained_variance=explained_variance(target, value))
+
+
 @torch.no_grad()
-def replay_drift(policy, rollout, chunk_length):
+def replay_drift(policy, rollout, chunk_length, optimization=None):
     """Fresh current-policy prefixes versus saved behavior-policy boundary states."""
     full = policy.evaluate_sequence(rollout["observations"], rollout["raw_actions"], rollout["resets"])
     data, states, _ = replay_windows(rollout, chunk_length)
@@ -119,6 +135,10 @@ def replay_drift(policy, rollout, chunk_length):
         result[name] = dict(mean_absolute=float(difference.abs().mean()),
                             rms=float(difference.square().mean().sqrt()), maximum_absolute=float(difference.abs().max()))
     result["interpretation"] = "Saved-action log-probability difference, not distribution KL."
+    if optimization is not None:
+        _, _, targets = advantage_data(rollout, optimization)
+        target = replay_windows(dict(rollout, diagnostic=targets), chunk_length)[0]["diagnostic"]
+        result["critic"] = critic_diagnostics(cached[2], data["values"], target, optimization["clip"])
     return result
 
 
@@ -201,8 +221,8 @@ def main(argv=None):
         report["executed_actions"] = tensor_stats(rollout["raw_actions"].tanh())
         report["fraction_abs_action_above_095"] = float((rollout["raw_actions"].tanh().abs() > .95).float().mean())
         report["gaussian_std"] = policy.log_std.detach().clamp(-5, 2).exp().cpu().tolist()
-        report["replay_drift_before"] = replay_drift(policy, rollout, 100)
-        if max(v["maximum_absolute"] for v in report["replay_drift_before"].values() if isinstance(v, dict)) > 2e-5:
+        report["replay_drift_before"] = replay_drift(policy, rollout, 100, optimization)
+        if max(report["replay_drift_before"][k]["maximum_absolute"] for k in ("log_probability", "value")) > 2e-5:
             raise ValueError("Frozen cached/full-prefix replay mismatch")
         write_json(args.output_dir/"progress.json", report)
         print(json.dumps({"phase":"frozen_diagnostics_complete", "gradient":report["gradient_components_before"]}), flush=True)
@@ -210,7 +230,7 @@ def main(argv=None):
         report["isolated_update"] = update_ppo(policy, optimizer, rollout, **optimization)
         torch.cuda.synchronize()
         report["isolated_update_seconds"] = time.monotonic()-before
-        report["replay_drift_after"] = replay_drift(policy, rollout, 100)
+        report["replay_drift_after"] = replay_drift(policy, rollout, 100, optimization)
         report["gradient_components_after"] = gradient_components(policy, rollout, optimization)
         # Delay the normalizer update exactly until both replay paths were compared.
         policy.core.observe_after_update(rollout["observations"])
