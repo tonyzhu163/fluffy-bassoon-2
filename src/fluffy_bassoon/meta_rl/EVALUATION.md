@@ -2,6 +2,40 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Complementary memory-benchmark runtime qualification, 2026-10-29
+
+Baige `job-1txxb3w3qvak`, source
+`47a37b7ddc34de413623481999c63bc4915fd377`, completed exit zero at 00:06:52
+Shanghai. The allocated suite passed 173 tests with three skips, covering
+real PointMaze/HalfCheetah episodes, exact serial/subprocess parity, variable
+trial replay/recovery, and padding-value/length invariance. Eight separate
+one-update cells (persistent CTM, CMM, GRU, Transformer-XL on each task)
+completed with finite metrics and frozen likelihood/value replay below 2e-5.
+Independent audits verified all eight full checkpoint hashes, source pins,
+85–100% parameter matches, actual interactions and active PPO sample counts.
+
+The PointMaze adapter explicitly uses ten 0.01-second physics substeps per
+action, hidden goals, and disjoint held-out start/goal cell pairs. Privileged
+navigation succeeded on 96/96 episodes. White-noise success was 85.42% fresh
+and 81.25% held-out; persistent-noise success was 93.75%/89.58%. These are
+simulator headroom controls, not learned CTM/CMM results. Success must be
+interpreted alongside steps-to-goal and exploration/reuse metrics.
+
+HalfCheetah's default 25k-transition/ten-epoch update used 50 optimizer steps:
+collection/PPO seconds were CTM 3.12/37.49, CMM 2.66/28.48, GRU 1.68/1.77,
+XL 2.41/18.75. This single-update measurement establishes no convergence or
+training-efficiency advantage. The CMM supervised calibration remains a
+separate requirement for paper-parity claims. Earlier 2026-10-28 r1/r2
+qualification evidence is preserved, including the failed headroom gate;
+their PointMaze action-duration contract differs and must not be pooled.
+
+Raw receipts and hash/cost audit:
+`outputs/metta-bench-qualification-20261029-r1/AUDIT.json` in the attached
+benchmark worktree and mirrored Baige outputs. Method contract:
+[memory benchmarks](../../../docs/metta-memory-benchmarks.md).
+The bounded first-seed learning screen is separate ongoing work; no
+architecture-performance or VLA-steering result is qualified here.
+
 ## Meta-World execution admission, 2026-10-28
 
 Baige `job-x2x4kdpfn011`, source
