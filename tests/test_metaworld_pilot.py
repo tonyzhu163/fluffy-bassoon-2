@@ -82,7 +82,8 @@ def test_goal_visibility_and_seeded_lanes(visible):
 
 
 @pytest.mark.parametrize("core", ["gru", "persistent_ctm", "transformer_xl"])
-def test_replay_and_exact_next_update_after_checkpoint(tmp_path, core):
+@pytest.mark.parametrize("chunk_length", [0, 3])
+def test_replay_and_exact_next_update_after_checkpoint(tmp_path, core, chunk_length):
     torch.set_num_threads(1)
     torch.manual_seed(12)
     envs = [fake_env(), fake_env()]
@@ -90,23 +91,23 @@ def test_replay_and_exact_next_update_after_checkpoint(tmp_path, core):
     policy = make_policy(core, config, envs[0])
     optimizer = torch.optim.Adam(policy.parameters(), lr=3e-4)
     sampler = np.random.default_rng(4)
-    rollout = collect_trials(policy, envs, [3, 4])
-    assert max(replay_error(policy, rollout).values()) < 2e-5
-    update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=2)
+    rollout = collect_trials(policy, envs, [3, 4], replay_chunk_length=chunk_length)
+    assert max(replay_error(policy, rollout, chunk_length).values()) < 2e-5
+    update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=2, replay_chunk_length=chunk_length)
     policy.core.observe_after_update(rollout["observations"])
     save_checkpoint(tmp_path / "latest.pt", policy=policy, optimizer=optimizer,
                     environment_rng=sampler, iteration=1, counters={"updates": 1}, contract={"test": core})
     next_seeds = sampler.integers(0, 1000, 2)
-    next_rollout = collect_trials(policy, envs, next_seeds)
-    update_ppo(policy, optimizer, next_rollout, epochs=1, minibatch_trials=1)
+    next_rollout = collect_trials(policy, envs, next_seeds, replay_chunk_length=chunk_length)
+    update_ppo(policy, optimizer, next_rollout, epochs=1, minibatch_trials=1, replay_chunk_length=chunk_length)
     expected = {key: value.clone() for key, value in policy.state_dict().items()}
     restore_checkpoint(tmp_path / "latest.pt", policy=policy, optimizer=optimizer,
                        environment_rng=sampler, contract={"test": core})
     np.testing.assert_array_equal(sampler.integers(0, 1000, 2), next_seeds)
-    restored = collect_trials(policy, envs, next_seeds)
+    restored = collect_trials(policy, envs, next_seeds, replay_chunk_length=chunk_length)
     for key in restored:
         torch.testing.assert_close(restored[key], next_rollout[key], rtol=0, atol=0)
-    update_ppo(policy, optimizer, restored, epochs=1, minibatch_trials=1)
+    update_ppo(policy, optimizer, restored, epochs=1, minibatch_trials=1, replay_chunk_length=chunk_length)
     for key, value in policy.state_dict().items():
         torch.testing.assert_close(value, expected[key], rtol=0, atol=0)
 

@@ -19,13 +19,13 @@ from fluffy_bassoon.evaluation_stages import write_json
 from .checkpoint import restore_checkpoint, save_checkpoint
 from .metaworld_env import benchmark_pools, make_lanes, task_digest
 from .metaworld_policy import make_policy, match_policy
-from .ppo import collect_trials, update_ppo
+from .ppo import collect_trials, replay_windows, update_ppo
 from .screen import allocation, clean_source
 
 
 def core_settings(core):
     if core == "persistent_ctm":
-        return dict(ticks=4, history_length=32, synapse_depth=8,
+        return dict(ticks=1, history_length=32, synapse_depth=8,
                     bounded_synchronisation=True, decay_per_observation=True)
     if core == "transformer_xl":
         return dict(ticks=1, memory_length=64, layers=2, heads=4)
@@ -50,11 +50,12 @@ def preserve_random_streams():
 
 
 @torch.no_grad()
-def replay_error(policy, rollout):
-    log_prob, _, values = policy.evaluate_sequence(rollout["observations"],
-        rollout["raw_actions"], rollout["resets"])
-    return dict(log_probability=float((log_prob - rollout["log_probs"]).abs().max()),
-                value=float((values - rollout["values"]).abs().max()))
+def replay_error(policy, rollout, replay_chunk_length=0):
+    data, state, _ = replay_windows(rollout, replay_chunk_length)
+    log_prob, _, values = policy.evaluate_sequence(data["observations"],
+        data["raw_actions"], data["resets"], initial_state=state)
+    return dict(log_probability=float((log_prob - data["log_probs"]).abs().max()),
+                value=float((values - data["values"]).abs().max()))
 
 
 @torch.no_grad()
@@ -101,8 +102,11 @@ def parser():
     p.add_argument("--horizon", type=int, default=500)
     p.add_argument("--updates", type=int, default=80)
     p.add_argument("--parameter-budget", type=int, default=250_000)
+    p.add_argument("--ctm-ticks", type=int, default=1)
     p.add_argument("--ppo-epochs", type=int, default=2)
     p.add_argument("--minibatch-trials", type=int, default=2)
+    p.add_argument("--replay-chunk-length", type=int, default=0,
+                   help="Zero: full-trial gradients. Positive divisor of trial length: cached-state TBPTT.")
     p.add_argument("--eval-every", type=int, default=5)
     p.add_argument("--eval-attempts", type=int, default=5)
     p.add_argument("--eval-lanes", type=int, default=10)
@@ -113,14 +117,19 @@ def parser():
     return p
 
 
-def main(argv=None):
-    args = parser().parse_args(argv)
+def main(argv=None, *, learner=None):
+    argument_parser = parser()
+    if learner is not None:
+        argument_parser.set_defaults(**learner.get("defaults", {}))
+    args = argument_parser.parse_args(argv)
     evidence = allocation()
     source = clean_source(args.source_commit)
     positive = (args.num_envs, args.attempts, args.horizon, args.updates, args.parameter_budget,
                 args.ppo_epochs, args.minibatch_trials, args.eval_every, args.eval_attempts,
-                args.eval_lanes, args.threads)
+                args.eval_lanes, args.threads, args.ctm_ticks)
     if (any(v < 1 for v in positive) or args.horizon > 500
+            or args.replay_chunk_length < 0
+            or args.replay_chunk_length and args.attempts * args.horizon % args.replay_chunk_length
             or not np.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0
             or not 0 <= args.seed < 1_000_000_000 or not 0 <= args.benchmark_seed < 1_000_000):
         raise ValueError("Invalid bounded benchmark settings")
@@ -135,18 +144,29 @@ def main(argv=None):
     pools = benchmark_pools(args.benchmark, args.benchmark_seed)
     envs = make_lanes(pools["train"], args.num_envs, benchmark=args.benchmark,
                       attempts=args.attempts, horizon=args.horizon)
-    config, size = match_policy(args.core, core_settings(args.core), envs[0], args.parameter_budget)
+    settings = core_settings(args.core) if learner is None else dict(learner["settings"])
+    if learner is None and args.core == "persistent_ctm":
+        settings["ticks"] = args.ctm_ticks
+    matcher = match_policy if learner is None else learner["match"]
+    config, size = (matcher(args.core, settings, envs[0], args.parameter_budget) if learner is None else
+                    matcher(settings, envs[0], args.parameter_budget))
     # Width search must not choose the actual learner's initialization stream.
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
-    policy = make_policy(args.core, config, envs[0]).to(args.device)
+    policy = (make_policy(args.core, config, envs[0]) if learner is None else
+              learner["make"](config, envs[0])).to(args.device)
     optimizer = torch.optim.Adam(policy.parameters(), lr=3e-4, eps=1e-8)
     sampler = np.random.default_rng(args.seed)
     optimization = dict(epochs=args.ppo_epochs, minibatch_trials=args.minibatch_trials,
                         clip=.2, gamma=.99, gae_lambda=.95, entropy_coef=0., value_coef=.5,
-                        max_grad_norm=.5, normalize_advantages=True)
-    contract = dict(protocol="metaworld_state_full_trial_ppo_v1", source_commit=source,
+                        max_grad_norm=.5, normalize_advantages=True,
+                        replay_chunk_length=args.replay_chunk_length)
+    if learner is not None:
+        optimization.update(learner.get("optimization", {}))
+    protocol = ("metaworld_state_cached_chunk_ppo_v2" if args.replay_chunk_length else
+                "metaworld_state_full_trial_ppo_v1")
+    contract = dict(protocol=protocol, source_commit=source,
         benchmark=args.benchmark, benchmark_seed=args.benchmark_seed, seed=args.seed,
         pool_hashes={key: task_digest(pool[1]) for key, pool in pools.items()},
         goal_visible=args.benchmark == "ml10", resample_instance=args.benchmark == "ml10",
@@ -163,6 +183,9 @@ def main(argv=None):
                         success="any success within episode; average episodes and families equally"),
         versions={name: importlib.metadata.version(name) for name in
                   ("torch", "numpy", "gymnasium", "mujoco", "metaworld")})
+    if learner is not None:
+        contract["method"] = dict(name=learner["name"], **learner["contract"](config))
+    update = update_ppo if learner is None else learner.get("update", update_ppo)
     counters = dict(environment_steps=0, optimizer_steps=0, evaluation_steps=0,
                     training_seconds=0., evaluation_seconds=0., cumulative_elapsed_seconds=0.)
     iteration = 0
@@ -226,19 +249,20 @@ def main(argv=None):
                    and time.monotonic() - started < args.max_elapsed_seconds):
                 before = time.monotonic()
                 seeds = sampler.integers(0, 1_000_000_000, size=args.num_envs)
-                rollout = collect_trials(policy, envs, seeds)
+                rollout = collect_trials(policy, envs, seeds, replay_chunk_length=args.replay_chunk_length)
                 synchronize(args.device)
                 collection = time.monotonic() - before
                 # Reconstruct one full trial before the first optimizer step.
                 # Normalization and recurrence must match behavior likelihoods.
                 error = None
                 if iteration == 0:
-                    first = {key: value[:, :1] for key, value in rollout.items()}
-                    error = replay_error(policy, first)
+                    first = (rollout if args.replay_chunk_length else
+                             {key: value[:, :1] for key, value in rollout.items()})
+                    error = replay_error(policy, first, args.replay_chunk_length)
                     if max(error.values()) > 2e-5:
                         raise RuntimeError(f"Behavior replay differs: {error}")
                 update_started = time.monotonic()
-                metrics = update_ppo(policy, optimizer, rollout, **optimization)
+                metrics = update(policy, optimizer, rollout, **optimization)
                 policy.core.observe_after_update(rollout["observations"])
                 synchronize(args.device)
                 update_seconds = time.monotonic() - update_started

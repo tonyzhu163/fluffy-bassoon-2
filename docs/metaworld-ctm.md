@@ -34,7 +34,7 @@ as well as aggregate success; the last-episode metric is a separate quantity.
 
 ## Learners and optimization
 
-Compare persistent robot CTM T4, GRU T1 and Transformer-XL T1 with a 64-step
+Compare persistent robot CTM T1, GRU T1 and Transformer-XL T1 with a 64-step
 cache. CTM uses bounded synchronization and decay once per observation. Choose
 the largest width divisible by four under a common 250,000-parameter total
 policy cap, requiring at least 85% of the cap. Record parameters, retained
@@ -46,6 +46,9 @@ the current normalized state alongside the memory output. Running state
 normalization is frozen during collection and PPO replay, then updated after
 the complete optimizer update. Its buffers belong in the checkpoint.
 
+CTM defaults to one internal iteration. `--ctm-ticks` explicitly selects another
+count. The earlier immutable r2 pilot used T4; its measurements remain T4 results.
+
 The existing full-trial PPO replays complete chronological trials with gradients
 across episode boundaries. Use Adam 3e-4, gamma .99, GAE lambda .95, clip .2,
 value coefficient .5, gradient norm .5, and no entropy bonus. Continuous actions
@@ -53,6 +56,45 @@ use the existing tanh Gaussian and corrected likelihood. This differs from
 METTA's sequential segment optimizer and its running-return reward scaling.
 Pilot batch size, PPO epochs and evaluation length also differ and must remain
 visible in manifests and chart labels. Do not call a pilot curve a METTA reproduction.
+
+## PPO replay execution and optional truncation
+
+The implementation follows the recurrence/head separation and saved starting
+states in [Sakana CTM RL's trainer](https://github.com/SakanaAI/continuous-thought-machines/blob/4a6c9c3a7fb5dc4bca6381cc7883a3b9252c6466/tasks/rl/train.py).
+Its `Agent.get_states` scans recurrence, then evaluates actor/critic heads on
+the entire time/batch tensor. Its default rollout is 100 steps, initialized
+from a state snapshot. It does not implement a fused full-trial recurrence.
+
+Here the heads and distributions are batched across time, and all-false reset
+rows skip constructing unused initial states. Full-trial replay remains the
+default (`--replay-chunk-length 0`) and keeps cross-episode gradients.
+
+Optional `--replay-chunk-length 100` records detached incoming behavior states
+at each chunk boundary, then batches windows as independent recurrent lanes.
+This adapts upstream state-snapshot replay to the existing complete-trial
+collector. It is **truncated BPTT**, with protocol
+`metaworld_state_cached_chunk_ppo_v2`; it changes the gradient estimator and
+minibatch membership. It must not be reported as an equivalent full-trial
+optimization. Frozen forward history is retained across chunks and physical
+episode resets. The first window of each trial reinserts the current learned
+initial state so its parameters still receive gradients.
+
+Trial length must divide exactly by chunk length. Keep full-trial GAE, global
+advantage normalization, every transition, loss weighting, PPO epochs and
+optimizer steps fixed. For 10 lanes x 2,500 steps, a 2-trial minibatch becomes
+50 windows x 100 steps, still 5,000 transitions and five optimizer steps per
+epoch. This retains our full-trial return estimator rather than importing
+upstream's rollout-end bootstrap or its unrelated hyperparameters. Cached
+states are ephemeral rollout data; checkpoints remain between complete trials
+with policy, optimizer, normalizer, sampler and all RNG states.
+
+Qualification compares frozen likelihoods/values, full-trial outputs and
+parameter gradients against a serial reference, a full-length-window PPO
+update against full-trial PPO, explicit truncated credit boundaries, and
+exact next-update recovery for CTM/GRU/XL. Time the original serial replay,
+batched-head full-trial replay and cached-window replay on the same real ML10
+batch and the same CTM T1 weights. Report collection and optimization separately.
+One timed update is a throughput check, not a learning result.
 
 ## Admission, recovery and accounting
 
