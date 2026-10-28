@@ -139,6 +139,8 @@ def main(argv=None):
     parser.add_argument("--checkpoint-every-epochs", type=int, default=5)
     parser.add_argument("--max-elapsed-seconds", type=float, default=7*24*3600)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    parser.add_argument("--torch-threads", type=int,
+                        help="Execution-only CPU thread count; defaults to allocated Slurm CPUs or one")
     parser.add_argument("--resume", type=Path)
     args = parser.parse_args(argv)
     if sys.platform != "linux":
@@ -158,7 +160,10 @@ def main(argv=None):
         raise ValueError("Require exact clean source")
     if args.device == "cuda" and torch.cuda.device_count() != 1:
         raise ValueError("Require exactly one allocated GPU for --device cuda")
-    torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "1")))
+    threads = args.torch_threads if args.torch_threads is not None else int(os.environ.get("SLURM_CPUS_PER_TASK", "1"))
+    if threads < 1:
+        raise ValueError("Require a positive Torch thread count")
+    torch.set_num_threads(threads)
     width, matched_count = select_width(args.variant)
     if args.width is not None:
         width = args.width
@@ -193,7 +198,9 @@ def main(argv=None):
                parameter_matched_count=matched_count,
                job_id=os.environ['SLURM_JOB_ID'] if execution == 'slurm' else os.uname().nodename.removesuffix('-master-0'),
                resumed_from=None if args.resume is None else dict(path=str(args.resume), sha256=sha256(args.resume)),
-               hostname=os.uname().nodename, runtime=dict(torch=torch.__version__, python=sys.version)))
+               hostname=os.uname().nodename, runtime=dict(torch=torch.__version__, python=sys.version,
+                   torch_threads=torch.get_num_threads(), cuda=torch.version.cuda,
+                   device_name=torch.cuda.get_device_name(0) if args.device == "cuda" else None)))
     stopped = False
 
     def request_stop(signum, frame):
@@ -202,13 +209,20 @@ def main(argv=None):
     for name in ("SIGUSR1", "SIGTERM", "SIGINT"):
         signal.signal(getattr(signal, name), request_stop)
     started = time.monotonic()
+    timing = dict(training_seconds=0., evaluation_seconds=0., checkpoint_seconds=0.,
+                  data_host_seconds=0., forward_host_seconds=0., backward_host_seconds=0.,
+                  optimizer_host_seconds=0.)
 
     def checkpoint():
-        return save_checkpoint(args.output_dir / "latest.pt", policy=model, optimizer=optimizer,
+        before = time.monotonic()
+        digest = save_checkpoint(args.output_dir / "latest.pt", policy=model, optimizer=optimizer,
                                environment_rng=rng, iteration=iteration, counters=counters, contract=contract)
+        timing["checkpoint_seconds"] += time.monotonic() - before
+        return digest
 
     @torch.no_grad()
     def evaluate(episodes, seed):
+        before = time.monotonic()
         model.eval()
         generator, totals = np.random.default_rng(seed), dict(correct=0., squared=0., queries=0)
         for start in range(0, episodes, 500):
@@ -219,7 +233,10 @@ def main(argv=None):
             totals["squared"] += metrics["query_mse"] * metrics["queries"]
             totals["queries"] += metrics["queries"]
         counters["evaluation_episodes"] += episodes
+        elapsed = time.monotonic() - before
+        timing["evaluation_seconds"] += elapsed
         return dict(iteration=iteration, epoch=iteration / updates_per_epoch, episodes=episodes,
+                    elapsed_seconds=elapsed,
                     query_accuracy=totals["correct"] / totals["queries"],
                     query_mse=totals["squared"] / totals["queries"])
 
@@ -228,22 +245,54 @@ def main(argv=None):
     with (args.output_dir / "metrics.jsonl").open("x", buffering=1) as log:
         log.write(json.dumps(dict(iteration=iteration, development=last)) + "\n")
         while iteration < target_updates and not stopped and time.monotonic() - started < args.max_elapsed_seconds:
+            before = time.monotonic()
+            # Sample stream timing without synchronizing each individual phase.
+            # The final event is synchronized once after the complete update.
+            sample_cuda = args.device == "cuda" and (iteration < 5 or (iteration + 1) % updates_per_epoch == 0)
+            events = [torch.cuda.Event(enable_timing=True) for _ in range(4)] if sample_cuda else None
             actual_batch = training_batch_size(iteration, args.batch_size)
             inputs, targets, _ = regression_batch(rng, actual_batch, args.shots, args.noise_std, args.device)
             model.train()
+            data_done = time.monotonic()
+            if events:
+                events[0].record()
             loss = (model(inputs) - targets).square().mean()
             if not torch.isfinite(loss):
                 raise FloatingPointError("Nonfinite regression loss")
             optimizer.zero_grad(set_to_none=True)
+            forward_done = time.monotonic()
+            if events:
+                events[1].record()
             loss.backward()
             norm = nn.utils.clip_grad_norm_(model.parameters(), 5., error_if_nonfinite=True)
+            backward_done = time.monotonic()
+            if events:
+                events[2].record()
             optimizer.step()
             model.core.constrain_parameters()
+            if events:
+                events[3].record()
             iteration += 1
             counters["training_episodes"] += actual_batch
             record = dict(iteration=iteration, loss=float(loss.detach()), gradient_norm=float(norm))
+            if events:
+                events[-1].synchronize()
+                record["cuda_stream_seconds"] = dict(
+                    forward=events[0].elapsed_time(events[1]) / 1000,
+                    backward_and_clip=events[1].elapsed_time(events[2]) / 1000,
+                    optimizer_and_projection=events[2].elapsed_time(events[3]) / 1000)
+            done = time.monotonic()
+            record["update_seconds"] = done - before
+            timing["training_seconds"] += done - before
+            for key, elapsed in (("data_host_seconds", data_done - before),
+                                 ("forward_host_seconds", forward_done - data_done),
+                                 ("backward_host_seconds", backward_done - forward_done),
+                                 ("optimizer_host_seconds", done - backward_done)):
+                timing[key] += elapsed
             if iteration % updates_per_epoch == 0:
                 epoch = iteration // updates_per_epoch
+                record["timing"] = dict(timing)
+                record["timing_note"] = "Host phase times include submission and existing scalar waits; CUDA stream samples time the complete phases"
                 if epoch % args.eval_every_epochs == 0:
                     last = evaluate(args.dev_episodes, TEST_SEED + 1)
                     record["development"] = last
@@ -256,6 +305,7 @@ def main(argv=None):
     final = evaluate(TEST_EPISODES, TEST_SEED) if completed else None
     result = dict(completed=completed, iteration=iteration, source_commit=source,
                   elapsed_seconds=time.monotonic() - started, counters=counters,
+                  timing=timing,
                   checkpoint=dict(path=str(args.output_dir / "latest.pt"), sha256=digest),
                   last_development=last, final_test=final)
     write_json(args.output_dir / "summary.json", result)

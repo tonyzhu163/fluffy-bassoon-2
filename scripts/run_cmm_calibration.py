@@ -25,6 +25,7 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--max-elapsed-seconds", type=float, default=23 * 3600)
+    parser.add_argument("--torch-threads", type=int, default=1)
     args = parser.parse_args()
     if sys.platform != "linux":
         parser.error("Run qualification and calibration on allocated Linux")
@@ -32,6 +33,8 @@ def main():
         parser.error("Require a complete source commit")
     if not math.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0:
         parser.error("Require a positive finite time cap")
+    if args.torch_threads < 1:
+        parser.error("Require a positive Torch thread count")
     root = Path(__file__).resolve().parents[1]
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True).strip()
@@ -68,6 +71,7 @@ def main():
                 "--variant", "cmm", "--shots", "20", "--seed", "0", "--epochs", "1000",
                 "--batch-size", "64", "--eval-every-epochs", "25", "--checkpoint-every-epochs", "5",
                 "--dev-episodes", "1000", "--device", "cuda",
+                "--torch-threads", str(args.torch_threads),
                 "--max-elapsed-seconds", str(args.max_elapsed_seconds)]
     if args.resume:
         training.extend(("--resume", str(args.resume.resolve())))
