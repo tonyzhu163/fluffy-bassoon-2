@@ -123,9 +123,12 @@ def test_initialization_is_weights_only_atomic_compatible_and_fresh(tmp_path, ba
 
 
 class TinyMotor:
+    def __init__(self, decoded_steps=None):
+        self.decoded_steps = decoded_steps
+
     def decode_actions(self, actions, state):
         # Nontrivial scale + offset catches incorrect rotation in normalized model coordinates.
-        return actions[..., :7] * actions.new_tensor([.2, .7, 1., 1., 1., 1., 1.]) + .1
+        return actions[:, :self.decoded_steps, :7] * actions.new_tensor([.2, .7, 1., 1., 1., 1., 1.]) + .1
 
     def build_prefix_cache(self, observation):
         key = observation.state[:, None, None, :4].expand(-1, 3, 1, -1)
@@ -138,9 +141,10 @@ class TinyMotor:
         return .2 * suffix
 
 
-def test_native_labels_invert_actual_decoder_without_affecting_other_commands():
+@pytest.mark.parametrize("decoded_steps", [None, 1])
+def test_native_labels_invert_actual_decoder_without_affecting_other_commands(decoded_steps):
     from fluffy_bassoon.rl.maniskill_pi05 import rotate_translation
-    motor = TinyMotor()
+    motor = TinyMotor(decoded_steps)
     actions = torch.randn(2, 2, 8)
     state = torch.zeros(2, 4)
     target = corrected_action_label(motor, state, actions, [-45., 45.])
@@ -148,6 +152,8 @@ def test_native_labels_invert_actual_decoder_without_affecting_other_commands():
     corrected = motor.decode_actions(target, state)
     torch.testing.assert_close(rotate_translation(corrected, [-45., 45.]), decoded, atol=1e-6, rtol=1e-6)
     torch.testing.assert_close(corrected[..., 2:], decoded[..., 2:], rtol=0, atol=0)
+    if decoded_steps is not None:
+        torch.testing.assert_close(target[:, decoded_steps:], actions[:, decoded_steps:], rtol=0, atol=0)
 
 
 @pytest.mark.parametrize("core", ["persistent_ctm", "transformer_xl"])
@@ -159,12 +165,13 @@ def test_native_flow_loss_replays_context_and_does_not_feed_labels_to_recurrence
     motor, generator = TinyMotor(), torch.Generator().manual_seed(8)
     records = [make_dpt_record(motor, SimpleNamespace(state=torch.randn(2, 4)), torch.randn(2, 11),
                torch.randn(2, 2, 8), generator=generator) for _ in range(3)]
-    data = dict(records=records)
+    data = dict(records=records, supervised_action_steps=1)
     loss = distillation_loss(policy, data)
     # target_actions is provenance; only target_velocity supervises, and neither is a recurrent input.
     altered = deepcopy(data)
     for record in altered["records"]:
         record["target_actions"].fill_(1e6)
+        record["target_velocity"][:, 1:].fill_(1e6)  # The unexecuted tail has no loss.
     torch.testing.assert_close(loss, distillation_loss(policy, altered), rtol=0, atol=0)
     update_distillation(policy, optimizer, data)
     before = deepcopy(bridge.core.state_dict())

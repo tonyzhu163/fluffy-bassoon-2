@@ -3,6 +3,8 @@
 set -euo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
 TASK_RUN=${2:?fresh run identity}
+TASK_MODE=${3:-all}
+[[ $TASK_MODE = all || $TASK_MODE = native ]]
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_OLD=/mowenjie/fluffy-bassoon
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
@@ -109,11 +111,13 @@ PY
 
 TASK_PIDS=()
 TASK_NAMES=()
+if test "$TASK_MODE" = all; then
 for TASK_GROUP in 'bandit bernoulli nonstationary' 'reach darkroom' 'keydoor cached_rotation'; do
   (for TASK_BENCH in $TASK_GROUP; do run_compact "$TASK_BENCH"; done) &
   TASK_PIDS+=("$!")
   TASK_NAMES+=("$TASK_GROUP")
 done
+fi
 run_native &
 TASK_PIDS+=("$!")
 TASK_NAMES+=(native)

@@ -29,7 +29,10 @@ def corrected_action_label(motor, state, native_actions, theta_degrees):
         columns.append((motor.decode_actions(basis, state) - zero)[..., :2])
     matrix = torch.stack(columns, dim=-1)
     decoded = motor.decode_actions(native_actions, state)
-    predicted = zero[..., :2] + torch.einsum("bhij,bhj->bhi", matrix, native_actions[..., :2])
+    steps = decoded.shape[1]
+    if not 0 < steps <= native_actions.shape[1]:
+        raise ValueError("Decoded action horizon must be a nonempty prefix of the model horizon")
+    predicted = zero[..., :2] + torch.einsum("bhij,bhj->bhi", matrix, native_actions[:, :steps, :2])
     if not torch.allclose(predicted, decoded[..., :2], atol=1e-5, rtol=1e-4):
         raise ValueError("Action labels require a verified affine XY decoder")
     angles = -torch.as_tensor(theta_degrees, device=decoded.device, dtype=decoded.dtype).deg2rad()
@@ -40,7 +43,9 @@ def corrected_action_label(motor, state, native_actions, theta_degrees):
     desired[..., 0] = angles.cos()[:, None] * x - angles.sin()[:, None] * y
     desired[..., 1] = angles.sin()[:, None] * x + angles.cos()[:, None] * y
     target = native_actions.clone()
-    target[..., :2] = torch.linalg.solve(matrix, (desired[..., :2] - zero[..., :2]).unsqueeze(-1)).squeeze(-1)
+    # Native pi0.5 emits H=8 model actions but this decoder exposes only H=5.
+    # Relabel the executable prefix; retain the unsupervised tail unchanged.
+    target[:, :steps, :2] = torch.linalg.solve(matrix, (desired[..., :2] - zero[..., :2]).unsqueeze(-1)).squeeze(-1)
     if not torch.allclose(motor.decode_actions(target, state), desired, atol=1e-5, rtol=1e-4):
         raise ValueError("Inverse action label failed decoding or changed non-XY commands")
     return target
@@ -78,7 +83,7 @@ def export_history(directory, rollout, *, contract, iteration):
     filename = f"history-{iteration:06d}.pt"
     if (directory / filename).exists():
         raise ValueError("Teacher histories are immutable; use a fresh output identity")
-    data = dict(records=rollout["dpt_records"],
+    data = dict(records=rollout["dpt_records"], supervised_action_steps=schema["action_chunk"],
                 **{key: rollout[key] for key in ("rewards", "resets", "attempt_ends", "trial_ends")})
     validate_history(data, schema)
     digest = atomic_save(directory / filename, dict(format=HISTORY_FORMAT, compatibility=schema, data=data))
@@ -100,11 +105,14 @@ def validate_history(data, schema):
         raise ValueError("Require complete trials with memory retained across attempts")
     expected = {"kv_key", "kv_value", "prefix_mask", "feedback", "noisy_actions", "timesteps",
                 "suffix_hidden", "native_velocity", "target_velocity", "target_actions"}
+    if type(data.get("supervised_action_steps")) is not int or data["supervised_action_steps"] != schema["action_chunk"]:
+        raise ValueError("Supervise only the benchmark's executed action prefix")
     for record in data["records"]:
         if set(record) != expected or any(not isinstance(v, torch.Tensor) or not v.isfinite().all() for v in record.values()):
             raise ValueError("DPT record must contain only the declared finite fields")
         shape = record["noisy_actions"].shape
-        if (len(shape) != 3 or shape[0] != ends.shape[1] or record["feedback"].shape != (shape[0], 11)
+        if (len(shape) != 3 or shape[0] != ends.shape[1] or not 0 < data["supervised_action_steps"] <= shape[1]
+                or record["feedback"].shape != (shape[0], 11)
                 or record["timesteps"].shape != (shape[0],)
                 or any(record[key].shape != shape for key in ("native_velocity", "target_velocity", "target_actions"))):
             raise ValueError("DPT flow/action shape mismatch")
@@ -130,7 +138,9 @@ def distillation_loss(policy, data):
             saved("prefix_mask"), saved("feedback").to(reference.dtype), memory)
         velocity = policy.bridge.correct_velocity(saved("native_velocity"), saved("suffix_hidden"),
             saved("noisy_actions"), saved("timesteps"), features)
-        losses.append((velocity[..., :policy.active_dims] - saved("target_velocity")[..., :policy.active_dims]).square().mean())
+        steps = data["supervised_action_steps"]
+        losses.append((velocity[:, :steps, :policy.active_dims]
+                       - saved("target_velocity")[:, :steps, :policy.active_dims]).square().mean())
     return torch.stack(losses).mean()
 
 

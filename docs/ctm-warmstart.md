@@ -28,7 +28,10 @@ each new trial starts from fresh recurrent state.
   independent flow-matching sample `x_t=(1-t)*a_star+t*epsilon`, with target
   velocity `epsilon-a_star`. The learner reads native KV and public feedback;
   its velocity residual is supervised on the same seven active model channels
-  subsequently used by PPO. Frozen motor weights are never optimized.
+  and five executed action steps subsequently used by PPO. The native model
+  emits eight steps, while its decoder exposes five: relabel only that decoded
+  prefix, retain the model-action tail unchanged, and exclude the tail from the
+  loss. Frozen motor weights are never optimized.
 
 Native label-policy evaluation is privileged and must be called an oracle
 reference, not a learned ICRL result. Measure its competence against the paired
