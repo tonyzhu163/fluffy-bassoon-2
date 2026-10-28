@@ -2,6 +2,51 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## ML10 methods and parallel collection admission, 2026-10-28
+
+All four methods passed separate allocated Baige RPBZZZ6 qualifications.
+CTM job `job-ww6cxxyv1rm1` passed 168 CPU/CUDA/simulator/recovery checks;
+ECET `job-4uiaykh1zrzh` passed official-encoder parity, unit and real-simulator
+checks; AMAGO `job-pdkat27baohg` passed 15 tests plus real simulator and actual
+B24/L2000 default capacity. These use source `6448495ddd6837a9f7b6e9db101175da0129ae30`.
+RL² `job-0hn0u49y84v7`, source `3a029b6199458f9eb99b2b872c603a5eeb8c2b1a`,
+passed 18 checks including exact CUDA recovery and both FP32 backward paths
+against an independent CPU float64 oracle. This only revised a too-tight
+elementwise gradient check; learner code is unchanged. Its failed r1 receipt
+`job-3g0m5zpcn4tb` remains preserved. All successful launchers exited zero.
+
+For one real 50-lane K5/H500 batch (125k transitions), collection / ten-epoch
+optimization seconds were CTM T1 cached100 **21.77 / 36.80**, RL²-PPO GRU64
+**15.60 / .87**, ECET **17.76 / 365.63**. Optimizer counts differ: 50, 20 and
+78,140 respectively; ECET separately optimizes actor and critic. Trainable
+parameters are 237,347 / 21,960 / 69,194. These are method-specific learners,
+not parameter- or optimizer-step-matched models. The common comparison fixes
+environment interactions and epoch count, not computation.
+
+Official AMAGO1 with native SDPA, width256/layers3, B24/L2000 used **.524s**
+for a genuine 48k-transition off-policy optimizer step, with **29.94GB** peak
+GPU allocation. Its 4,179,817 trainable parameters and original learner are
+retained. This capacity gate samples independent windows from one real trial;
+it does not measure full 50-lane collection throughput. The user-selected
+comparison uses ten sampled replay passes instead of the original update/data
+schedule; AMAGO does not have PPO epochs.
+
+Paired frozen CTM collection fell **69.921 to 20.943s** with eight persistent
+CPU workers, a **3.34x** measured gain. Complete trajectory hashes agree
+exactly, including sampled actions and all recorded tensors. Simulator time
+fell 58.754 to 10.585s; inference/action-transfer time was 8.617 versus 8.311s.
+Worker startup is additional charged overhead. New synchronization/reset
+execution shortcuts passed output, memory and parameter-gradient parity.
+
+Frozen behavior replay errors were below 2e-5. Full checkpoint hashes for
+CTM, RL² and ECET were independently reconciled with their summaries.
+These one-update results establish execution/capacity only. They do not
+establish convergence, useful adaptation or an architecture advantage.
+Evidence: `outputs/metaworld-method-qual-baige-20261028-r1/RESULTS.md`,
+`ADMISSION-AUDIT-20261028-2334.json`, and the retained r2 RL² receipts.
+The subsequent one-seed 10M-step plan is separate; its source adds only
+launch/plan changes and preserves identical qualified model code.
+
 ## Meta-World execution admission, 2026-10-28
 
 Baige `job-x2x4kdpfn011`, source
