@@ -14,6 +14,7 @@ recurrent gradient boundaries, achieved optimizer work and admission receipt.
 Only static inspection and artifact arithmetic run on macOS. All model tests
 and timing were performed in the existing allocated Linux job.
 
-Keep full-trial gradients as the default. Expose cached 100-step replay only
-as an explicit TBPTT protocol, retaining forward memory across the trial.
+Use the user-selected cached 100-step replay as the default TBPTT protocol,
+retaining forward memory across the trial. Keep full-trial gradients available
+through explicit `--replay-chunk-length 0`.
 Learning and success versus GPU-hour comparisons remain a subsequent gate.

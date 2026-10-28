@@ -10,15 +10,18 @@ CPU/CUDA/simulator tests. On one paired ML10 batch (CTM T1 width84/depth8,
 25,000 transitions, one PPO epoch/five optimizer steps), batching heads and
 skipping unused reset construction reduced full-trial PPO from 124.22 to
 96.38 seconds with matching losses and gradients. Including collection gives
-146.54 versus 118.71 seconds, a 1.23× improvement. Full-trial remains the default.
+146.54 versus 118.71 seconds, a 1.23× improvement.
 
-Explicit cached 100-step TBPTT took 3.98 seconds of PPO, or 25.96 seconds
+Cached 100-step TBPTT took 3.98 seconds of PPO, or 25.96 seconds
 including collection (5.64× faster). It retains forward history and full-trial
 GAE but truncates recurrent gradients and changes minibatch membership; no
 learning-equivalence claim follows. Frozen replay, transition/optimizer counts
 and exact next-update recovery passed. No new job was launched for integration.
 One batch on an RPBZZZ6 is not a success curve or a hardware-normalized comparison
 with METTA. [Independent audit](../../../outputs/ctm-t1-throughput-audit-20261028-r1/RESULTS.md).
+The user-selected training default is now 100-step TBPTT; explicit
+`--replay-chunk-length 0` retains full-trial replay. This default change does
+not alter the immutable qualification source or its measured results.
 
 ## Meta-World execution admission, 2026-10-28
 

@@ -24,8 +24,9 @@ allocation seconds, including both collectors, three update modes and tests.
 
 The exact optimization batches actor/critic heads and distributions after
 scanning recurrence, and avoids constructing initial states on all-false reset
-rows. T1 is the MetaWorld driver's explicit default. Full-trial replay remains
-the default (`--replay-chunk-length 0`), including cross-episode gradients.
+rows. T1 is the MetaWorld driver's explicit default. Following qualification,
+the user selected 100-step TBPTT as the training default. Explicit
+`--replay-chunk-length 0` retains full-trial replay and cross-episode gradients.
 
 The faster `--replay-chunk-length 100` preserves forward history and computes
 GAE over full trials, but detaches recurrent credit at chunk boundaries and
@@ -55,6 +56,6 @@ Admission and checks:
 
 Small copied receipts and an independent arithmetic/hash audit are in
 `evidence/`. Preserve the remote raw receipts under their original run ID.
-Next: validate sustained learning and episode-wise success before selecting
-the truncated protocol for an overnight comparison. These measurements alone
+Next: validate sustained learning and episode-wise success using the selected
+100-step protocol. These measurements alone
 establish neither adaptation nor generalization.

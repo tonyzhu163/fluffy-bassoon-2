@@ -10,6 +10,7 @@ import subprocess
 root = Path(__file__).resolve().parent
 evidence = root / "evidence"
 source = "91c16961a02aa739c6cda6cb3c8627145d51aeef"
+integration = "db507380b6961825bfb00f12b2585594fa9919fe"
 summary = json.loads((evidence / "summary.json").read_text())
 probe = json.loads((evidence / "gpu-probe.json").read_text())
 assert (evidence / "exit-code.txt").read_text().strip() == "0"
@@ -53,7 +54,7 @@ hashes = {}
 repo = root.parents[1]
 for name in files:
     qualified = subprocess.check_output(["git", "show", f"{source}:{name}"], cwd=repo)
-    integrated = (repo / name).read_bytes()
+    integrated = subprocess.check_output(["git", "show", f"{integration}:{name}"], cwd=repo)
     assert qualified == integrated, name
     hashes[name] = hashlib.sha256(integrated).hexdigest()
 original_collection = summary["rollouts"]["original_collection"]["seconds"]
@@ -62,7 +63,7 @@ original_total = original_collection + serial["seconds"]
 batched_total = original_collection + batched["seconds"]
 chunked_total = cached_collection + chunked["seconds"]
 result = dict(
-    status="passed", source_commit=source,
+    status="passed", source_commit=source, integration_commit=integration,
     job_id="job-6zp4ujvgjbqw", model_computation_performed_by_audit=False,
     audit_basis="saved artifacts and identical qualified source blobs",
     active_allocation_seconds=int((evidence / "allocation-active-seconds.txt").read_text()),

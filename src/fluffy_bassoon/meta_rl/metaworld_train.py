@@ -105,8 +105,8 @@ def parser():
     p.add_argument("--ctm-ticks", type=int, default=1)
     p.add_argument("--ppo-epochs", type=int, default=2)
     p.add_argument("--minibatch-trials", type=int, default=2)
-    p.add_argument("--replay-chunk-length", type=int, default=0,
-                   help="Zero: full-trial gradients. Positive divisor of trial length: cached-state TBPTT.")
+    p.add_argument("--replay-chunk-length", type=int, default=100,
+                   help="Cached-state TBPTT window (default: 100). Zero selects full-trial gradients.")
     p.add_argument("--eval-every", type=int, default=5)
     p.add_argument("--eval-attempts", type=int, default=5)
     p.add_argument("--eval-lanes", type=int, default=10)

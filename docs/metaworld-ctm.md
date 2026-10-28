@@ -49,8 +49,9 @@ the complete optimizer update. Its buffers belong in the checkpoint.
 CTM defaults to one internal iteration. `--ctm-ticks` explicitly selects another
 count. The earlier immutable r2 pilot used T4; its measurements remain T4 results.
 
-The existing full-trial PPO replays complete chronological trials with gradients
-across episode boundaries. Use Adam 3e-4, gamma .99, GAE lambda .95, clip .2,
+The default PPO uses cached-state 100-step truncated replay, carrying forward
+memory across episode boundaries and computing GAE over complete trials.
+Use Adam 3e-4, gamma .99, GAE lambda .95, clip .2,
 value coefficient .5, gradient norm .5, and no entropy bonus. Continuous actions
 use the existing tanh Gaussian and corrected likelihood. This differs from
 METTA's sequential segment optimizer and its running-return reward scaling.
@@ -66,10 +67,11 @@ the entire time/batch tensor. Its default rollout is 100 steps, initialized
 from a state snapshot. It does not implement a fused full-trial recurrence.
 
 Here the heads and distributions are batched across time, and all-false reset
-rows skip constructing unused initial states. Full-trial replay remains the
-default (`--replay-chunk-length 0`) and keeps cross-episode gradients.
+rows skip constructing unused initial states. Cached-state 100-step replay is
+the default (`--replay-chunk-length 100`). Explicit `--replay-chunk-length 0`
+selects full-trial replay with gradients across episode boundaries.
 
-Optional `--replay-chunk-length 100` records detached incoming behavior states
+The default records detached incoming behavior states
 at each chunk boundary, then batches windows as independent recurrent lanes.
 This adapts upstream state-snapshot replay to the existing complete-trial
 collector. It is **truncated BPTT**, with protocol
