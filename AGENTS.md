@@ -30,7 +30,10 @@ live status in the single `outputs/coordination.md` (archived per the
   without overwriting changes.
 - Never commit credentials, machine-local SSH configuration, or secret-bearing
   logs. Protect shared data and checkpoints needed by active jobs.
-- Ask the user before every GPU launch. CPU tests and static checks need no ask.
+- Launch GPU jobs within the user-approved task scope as soon as verified code
+  and allocated resources are ready; no repeated launch confirmation is needed.
+  Ask before expanding the scientific scope or a materially larger resource
+  budget. CPU tests and static checks need no ask.
 
 ## Cluster access
 
