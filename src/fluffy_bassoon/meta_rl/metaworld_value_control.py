@@ -123,6 +123,7 @@ def main(argv=None):
                     torch.cuda.synchronize()
                     collection = time.monotonic()-before
                     if iteration == 1:
+                        torch.save(rollout, output/"first-rollout.pt")
                         reference_rollout = torch.load(args.reference_diagnostic/"diagnostic-rollout.pt",
                                                        map_location="cuda", weights_only=False)
                         assert_exact(rollout, reference_rollout)
@@ -137,6 +138,12 @@ def main(argv=None):
                         first_diagnostics["cache_drift_after"] = replay_drift(policy, rollout, 100, optimization)
                         write_json(output/"first-update-diagnostics.json", first_diagnostics)
                     policy.core.observe_after_update(rollout["observations"])
+                    counters["environment_steps"] += 125000
+                    counters["optimizer_steps"] += metrics["optimizer_steps"]
+                    counters["training_seconds"] += time.monotonic()-before
+                    counters["cumulative_elapsed_seconds"] = parent_summary["counters"]["cumulative_elapsed_seconds"]+time.monotonic()-fork_started
+                    digest = save_checkpoint(output/"latest.pt", policy=policy, optimizer=optimizer,
+                        environment_rng=sampler, iteration=parent_iteration+iteration, counters=counters, contract=contract)
                     if iteration == 1 and label == "baseline":
                         reference = torch.load(reference_path, map_location="cuda", weights_only=False)
                         assert_exact(policy.state_dict(), reference["policy"])
@@ -145,12 +152,6 @@ def main(argv=None):
                         del reference
                         write_json(output/"baseline-reference-parity.json", dict(exact=True,
                             reference_checkpoint_sha256=reference_summary["diagnostic_checkpoint_sha256"]))
-                    counters["environment_steps"] += 125000
-                    counters["optimizer_steps"] += metrics["optimizer_steps"]
-                    counters["training_seconds"] += time.monotonic()-before
-                    counters["cumulative_elapsed_seconds"] = parent_summary["counters"]["cumulative_elapsed_seconds"]+time.monotonic()-fork_started
-                    digest = save_checkpoint(output/"latest.pt", policy=policy, optimizer=optimizer,
-                        environment_rng=sampler, iteration=parent_iteration+iteration, counters=counters, contract=contract)
                     row = dict(iteration=iteration, environment_steps=counters["environment_steps"],
                         additional_environment_steps=iteration*125000, optimizer_steps=counters["optimizer_steps"],
                         additional_gpu_hours=(time.monotonic()-fork_started)/3600,
@@ -170,7 +171,8 @@ def main(argv=None):
             digest = save_checkpoint(output/"latest.pt",policy=policy,optimizer=optimizer,environment_rng=sampler,
                 iteration=parent_iteration+iteration,counters=counters,contract=contract)
             result = dict(completed=iteration==args.updates,additional_updates=iteration,counters=counters,
-                evaluations=evaluations,checkpoint_sha256=digest,fork_active_seconds=time.monotonic()-fork_started)
+                evaluations=evaluations,checkpoint_sha256=digest,fork_active_seconds=time.monotonic()-fork_started,
+                first_update_diagnostic_forward_samples=300000 if iteration else 0)
             write_json(output/"summary.json",result)
             results[label] = result
         write_json(args.output_dir/"summary.json",dict(completed=len(results)==2 and all(x["completed"] for x in results.values()),
