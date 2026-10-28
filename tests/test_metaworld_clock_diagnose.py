@@ -50,7 +50,11 @@ def test_frozen_prefix_parity_and_noop_within_training_range(core, reset):
     torch.set_num_threads(1)
     torch.manual_seed(4)
     envs = lanes(4)
-    policy = make_policy(core, dict(core_settings(core), width=16), envs[0]).eval()
+    # The original CTM runner predates the CMM CLI preset, while its shared
+    # constructor already supports CMM. Specify that same preset explicitly.
+    settings = (dict(ticks=1, stm_length=32, ltm_tokens=32, synapse_depth=8)
+                if core == "cmm" else core_settings(core))
+    policy = make_policy(core, dict(settings, width=16), envs[0]).eval()
     original = fingerprint(policy)
     raw = evaluate_condition(policy, envs, capped=False, reset=reset, training_attempts=2, seed_start=11)
     capped = evaluate_condition(policy, envs, capped=True, reset=reset, training_attempts=2, seed_start=11)

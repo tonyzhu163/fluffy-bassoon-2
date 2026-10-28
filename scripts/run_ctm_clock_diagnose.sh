@@ -6,6 +6,7 @@ TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PARENT=$TASK_ROOT/outputs/metaworld-ml10-matched-baige-20261028-r1/ctm/train
 TASK_DIAG=$TASK_ROOT/outputs/metaworld-ppo-debug-baige-20261029-r3
 TASK_CONTROL=$TASK_ROOT/outputs/metaworld-ppo-controls-baige-20261029-r1
+TASK_FAILED=$TASK_ROOT/outputs/metaworld-clock-debug-baige-20261029-r2
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_PYTHON=$TASK_ROOT/envs/metaworld-baselines-20261028-r1/bin/python
@@ -14,11 +15,14 @@ TASK_PYTHON=$TASK_ROOT/envs/metaworld-baselines-20261028-r1/bin/python
 test "$(cat "$(dirname "$TASK_PARENT")/exit-code.txt")" = 0
 test "$(cat "$TASK_DIAG/exit-code.txt")" = 0
 test "$(cat "$TASK_CONTROL/exit-code.txt")" = 0
+test "$(cat "$TASK_FAILED/exit-code.txt")" = 1
+test ! -e "$TASK_FAILED/diagnosis"
 TASK_PARENT_SECONDS=$(cat "$(dirname "$TASK_PARENT")/allocation-active-seconds.txt")
 TASK_DIAG_SECONDS=$(cat "$TASK_DIAG/allocation-active-seconds.txt")
 TASK_CONTROL_SECONDS=$(cat "$TASK_CONTROL/allocation-active-seconds.txt")
+TASK_FAILED_SECONDS=$(cat "$TASK_FAILED/allocation-active-seconds.txt")
 # Failed diagnostic r1 consumed131scheduler-pod seconds, retained in its audit.
-(( TASK_PARENT_SECONDS + 131 + TASK_DIAG_SECONDS + TASK_CONTROL_SECONDS + 900 <= 21600 ))
+(( TASK_PARENT_SECONDS + 131 + TASK_DIAG_SECONDS + TASK_CONTROL_SECONDS + TASK_FAILED_SECONDS + 900 <= 21600 ))
 cd "$TASK_WORKTREE"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"
