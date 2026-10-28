@@ -1,0 +1,88 @@
+{
+  "format": "native_pi05_dpt_history_v1",
+  "compatibility": {
+    "task": "PutOnPlateInScene25Main-v3",
+    "objects": [
+      0,
+      1
+    ],
+    "train_theta_degrees": [
+      -45.0,
+      0.0,
+      45.0
+    ],
+    "train_overlays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "attempts": 4,
+    "episode_steps": 80,
+    "action_chunk": 5,
+    "denoise_steps": 4,
+    "feedback": "unrotated 7D requested command; previous terminal success; boundary; fixed clocks",
+    "reward": "success_once latched within attempt, emitted only on its final chunk",
+    "core": "persistent_ctm",
+    "bridge": {
+      "core": "persistent_ctm",
+      "width": 64,
+      "ticks": 4,
+      "residual_scale": 1.0
+    },
+    "gaussian_policy": {
+      "protocol": "pi05_gaussian_flow_residual_v1",
+      "noise_scale": 0.05,
+      "active_dims": 7,
+      "residual_scale": 1.0,
+      "kv_layer": -1,
+      "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+      "entropy": "fixed sigma; constant entropy",
+      "dtype": "float32"
+    },
+    "motor_sha256": "0adb5b40f064760ff245f53ae0a4e078b86680b65f77d1f5991a173543edd5a1",
+    "norm_stats_sha256": "930b816bf2f142f3e377d088d2252e5238b8d082ad8f0abceedfc6296be58852",
+    "rlinf_sources": {
+      "rlinf/models/embodiment/openpi/pi0.py": "b5d84d0669362a96d5bb4c5cbc4012d74ee8ecbbf6251abb9952f42fc017299d",
+      "rlinf/models/embodiment/openpi/env_io.py": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc",
+      "rlinf/models/embodiment/openpi/modules/gemma.py": "552625553b40efb52e0880cdf663d0097fe008e1943ab205d9cfe00cc9c5ae78",
+      "rlinf/models/embodiment/openpi/checkpoint.py": "01b8a68a0085cafb64ce3b0716732305e78921086b948654c2a4ce9edc5b71c9"
+    }
+  },
+  "histories": [
+    {
+      "file": "history-000001.pt",
+      "sha256": "a86a013c59fc6c1a17674510da5f82245962265847ac7ba4b57515ace60d8a02",
+      "iteration": 1,
+      "simulator_steps": 1920,
+      "policy_chunks": 384,
+      "additional_label_motor_calls": 384
+    },
+    {
+      "file": "history-000002.pt",
+      "sha256": "0da262e3123a3d866a3a75dfa596b1dc887bd6e46d96fcc81c68f5e284b47881",
+      "iteration": 2,
+      "simulator_steps": 1920,
+      "policy_chunks": 384,
+      "additional_label_motor_calls": 384
+    }
+  ],
+  "labels": "training-only inverse-rotation of frozen pi0.5 actions; competence measured separately",
+  "context": "actual requested command, terminal reward, boundary and clocks; no private task inputs",
+  "source_commit": "5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a",
+  "train_indices": [
+    0
+  ],
+  "validation_indices": [
+    1
+  ],
+  "balanced_plan_sha256": "a72e8043e46e90d8498baf2b56bcf6d4e044ebba2c909f9e1defd5aa8eb22988"
+}

@@ -1,4 +1,10 @@
-"""DPT-inspired chronological pretraining: imperfect contexts, separate expert labels."""
+"""Chronological supervised pretraining on trial histories.
+
+`dpt` labels imperfect contexts with separate expert actions. `behavior_cloning`
+imitates the executed noisy teacher actions. `ad_noise` is noise-distillation
+Algorithm Distillation: the random-action fraction anneals to zero across the
+attempts of each trial, so histories improve and the executed actions are labels.
+"""
 
 import argparse
 import json
@@ -27,7 +33,7 @@ from .warmstart import COMPACT, CACHED, export_warmstart
 
 def generate_histories(factory, task, seeds, *, arms=2, rotation_rates=None, objective="dpt"):
     """Private task state is used only for labels. One column is a full causal trial."""
-    if objective not in ("dpt", "behavior_cloning"):
+    if objective not in OBJECTIVES:
         raise ValueError("Unknown supervised objective")
     observations, actions, labels, rewards = [], [], [], []
     for seed in seeds:
@@ -37,11 +43,14 @@ def generate_histories(factory, task, seeds, *, arms=2, rotation_rates=None, obj
                                       rotation_rates=rotation_rates)
             behavior_rng = np.random.default_rng(int(seed) + 2**33)
             label_rng = np.random.default_rng(int(seed) + 2**34)
-            # Fixed per trial, not annealed with the attempt clock.
-            random_fraction = float(behavior_rng.uniform())
+            # Fixed per trial for dpt/behavior_cloning; ad_noise anneals it to zero by the last attempt.
+            initial_fraction = float(behavior_rng.uniform())
             observation, _ = env.reset(seed=int(seed))
             trial_obs, trial_actions, trial_labels, trial_rewards = [], [], [], []
             for step in range(env.attempts * env.horizon):
+                random_fraction = initial_fraction
+                if objective == "ad_noise":
+                    random_fraction *= 1 - (step // env.horizon) / max(env.attempts - 1, 1)
                 encoded = dict(observation, clock=observation["clock"] / np.maximum(
                     env.observation_space["clock"].high, 1))
                 trial_obs.append(flatten(env.observation_space, encoded).astype(np.float32))
@@ -68,6 +77,24 @@ def generate_histories(factory, task, seeds, *, arms=2, rotation_rates=None, obj
                 raw_actions=np.asarray(actions, dtype=np.float32 if task == "reach" else np.int64).swapaxes(0, 1),
                 target_actions=np.asarray(labels, dtype=np.float32 if task == "reach" else np.int64).swapaxes(0, 1),
                 rewards=np.asarray(rewards, dtype=np.float32).swapaxes(0, 1), seeds=np.asarray(seeds))
+
+
+OBJECTIVES = ("dpt", "behavior_cloning", "ad_noise")
+WARMSTART_CORES = ("persistent_ctm", "cmm", "ctm", "transformer_xl", "gru")
+
+
+def warmstart_core_config(args):
+    config = dict(width=args.width, ticks=args.ticks)
+    if args.core == "persistent_ctm":
+        config.update(history_length=10, synapse_depth=8, bounded_synchronisation=True, decay_per_observation=True)
+    elif args.core == "transformer_xl":
+        config.update(memory_length=args.memory_length, layers=2, heads=4)
+    elif args.core in ("cmm", "ctm"):
+        # Same keys as cores.core_config_from_args, so PPO can load the warm start.
+        config.update(stm_length=args.stm_length, ltm_tokens=args.ltm_tokens, synapse_depth=8)
+        if args.core == "ctm":
+            config.update(layers=0, ltm_tokens=0)
+    return config
 
 
 def supervised_loss(policy, data, lanes):
@@ -99,14 +126,16 @@ def update_supervised(policy, optimizer, data, lanes):
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--task", choices=(*BANDITS, "reach", "darkroom", "keydoor", "cached_rotation"), required=True)
-    p.add_argument("--core", choices=("persistent_ctm", "transformer_xl", "gru"), default="persistent_ctm")
+    p.add_argument("--core", choices=WARMSTART_CORES, default="persistent_ctm")
     p.add_argument("--width", type=int, default=64)
     p.add_argument("--ticks", type=int)
     p.add_argument("--memory-length", type=int, default=16)
+    p.add_argument("--stm-length", type=int, default=10, help="cmm/ctm short-term trace length")
+    p.add_argument("--ltm-tokens", type=int, default=32, help="cmm long-term tokens; 0 is the CMM-STM ablation")
     p.add_argument("--attempts", type=int, default=8)
     p.add_argument("--horizon", type=int)
     p.add_argument("--arms", type=int, default=2)
-    p.add_argument("--objective", choices=("dpt", "behavior_cloning"), default="dpt")
+    p.add_argument("--objective", choices=OBJECTIVES, default="dpt")
     p.add_argument("--cache", type=Path)
     p.add_argument("--cache-sha256")
     p.add_argument("--train-trials", type=int, default=2048)
@@ -147,11 +176,9 @@ def main(argv=None):
         raise ValueError("Require the exact clean reviewed source")
     args.horizon = DEFAULT_HORIZONS.get(args.task, 1) if args.horizon is None else args.horizon
     args.ticks = (4 if args.core == "persistent_ctm" else 1) if args.ticks is None else args.ticks
-    core_config = dict(width=args.width, ticks=args.ticks)
-    if args.core == "persistent_ctm":
-        core_config.update(history_length=10, synapse_depth=8, bounded_synchronisation=True, decay_per_observation=True)
-    elif args.core == "transformer_xl":
-        core_config.update(memory_length=args.memory_length, layers=2, heads=4)
+    if args.stm_length < 1 or args.ltm_tokens < 0:
+        raise ValueError("Require a positive short-term trace and nonnegative long-term tokens")
+    core_config = warmstart_core_config(args)
     cache, rates = None, None
     if args.task == "cached_rotation":
         if args.cache is None or args.cache_sha256 is None or args.horizon != 1:
@@ -176,7 +203,8 @@ def main(argv=None):
     optimizer = torch.optim.AdamW(policy.parameters(), lr=args.learning_rate, weight_decay=0.)
     args.output_dir.mkdir(parents=True, exist_ok=False)
     dataset_contract = dict(behavior=TEACHER_VERSION, labels=DPT_LABEL_VERSION, objective=args.objective,
-        context="actual observations/actions/rewards; per-trial uniform random-action fraction",
+        context=("actual observations/actions/rewards; per-trial uniform random-action fraction"
+                 + (", annealed linearly to zero at the last attempt" if args.objective == "ad_noise" else "")),
         task=args.task, attempts=args.attempts, horizon=args.horizon,
         arms=args.arms if args.task in BANDITS else None, encoding="clock_by_declared_max_v1",
         training_seed_start=0, training_trials=args.train_trials,

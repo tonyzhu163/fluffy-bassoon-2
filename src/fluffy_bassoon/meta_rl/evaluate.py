@@ -17,6 +17,19 @@ from .cores import build_policy
 from .train import evaluate_trials, make_env
 
 
+# Attempt-boundary component lesions; each resets whichever named entries the saved core carries.
+LESIONS = {"long_term": ("long_term",), "trace": ("trace",), "activated": ("activated",),
+           "synchronization": ("alpha", "beta", "action_alpha", "action_beta", "out_alpha", "out_beta")}
+
+
+def lesion_keys(policy, name):
+    state = policy.core.initial_state(1)
+    keys = tuple(key for key in LESIONS[name] if isinstance(state, dict) and key in state)
+    if not keys:
+        raise ValueError(f"Core {type(policy.core).__name__} has no state for the {name} lesion")
+    return keys
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-commit", required=True)
@@ -27,6 +40,12 @@ def main(argv=None):
     parser.add_argument("--reward-blind", action="store_true",
                         help="Also zero only previous_reward, preserving actions, observations and true scoring")
     parser.add_argument("--policy-seeds", type=int, nargs="+", default=[2_000_000_000, 2_000_000_001, 2_000_000_002])
+    parser.add_argument("--attempts", type=int,
+                        help="Evaluate a different trial length; the clock keeps its training scale")
+    parser.add_argument("--lesions", nargs="+", choices=tuple(LESIONS), default=[],
+                        help="Also reset only these state components at every attempt boundary")
+    parser.add_argument("--export-states", action="store_true",
+                        help="Save per-attempt core state and private probe targets for greedy conditions")
     args = parser.parse_args(argv)
     if sys.platform != "linux":
         raise ValueError("Run checkpoint evaluation on allocated Linux resources")
@@ -60,8 +79,18 @@ def main(argv=None):
     arms = contract.get("arms") or 2
     env = make_env(task, attempts, horizon, arms)
     policy = build_policy(contract["core"], contract["core_config"], env).to(args.device)
+    clock_scale = None
+    if args.attempts is not None:
+        if args.attempts < 1 or not normalize_clock:
+            raise ValueError("Attempt overrides need a positive count and the declared clock encoding")
+        # Inputs of the first trained attempts stay identical; later attempts extrapolate the clock.
+        clock_scale = np.maximum(env.observation_space["clock"].high, 1)
+        attempts = args.attempts
     env.close()
     policy.load_state_dict(saved["policy"], strict=True)
+    lesions = {name: lesion_keys(policy, name) for name in args.lesions}
+    if lesions and contract["mode"] == "episode":
+        raise ValueError("Component lesions need a policy whose memory spans attempts")
     before = deepcopy(policy.state_dict())
     trials = contract["evaluation"]["trials"] if args.trials is None else args.trials
     if trials < 1:
@@ -74,16 +103,20 @@ def main(argv=None):
                   checkpoint=dict(path=str(args.checkpoint), sha256=digest, iteration=saved["iteration"]),
                   observation_encoding="raw_legacy" if encoding is None else encoding,
                   trials=trials, seed_start=seed_start, policy_seeds=args.policy_seeds,
+                  trained_attempts=contract["attempts"], attempts=attempts,
+                  clock_scale=None if clock_scale is None else clock_scale.tolist(),
+                  lesions={name: list(keys) for name, keys in lesions.items()},
                   execution=execution, device=args.device,
                   job_id=os.environ.get("SLURM_JOB_ID", os.uname().nodename), hostname=os.uname().nodename,
                   runtime=dict(torch=torch.__version__, numpy=np.__version__, python=sys.version),
                   conditions={}, evaluation_steps=0, completed_run_greedy_reference_matched=False)
     normal_reset = contract["mode"] == "episode"
-    def condition(name, deterministic, policy_seed, reset, reward_blind=False):
+    def condition(name, deterministic, policy_seed, reset, reward_blind=False, reset_keys=None):
         summary, raw = evaluate_trials(policy, task, attempts, horizon, seeds, arms=arms,
                          reset_each_attempt=reset, deterministic=deterministic,
                          policy_seed=policy_seed, normalize_clock=normalize_clock,
-                         reward_blind=reward_blind)
+                         reward_blind=reward_blind, reset_keys=reset_keys, clock_scale=clock_scale,
+                         record_states=args.export_states and deterministic)
         np.savez_compressed(args.output_dir / f"{name}.npz", **raw)
         result["conditions"][name] = summary
         result["evaluation_steps"] += summary["environment_steps"]
@@ -92,7 +125,7 @@ def main(argv=None):
     greedy = condition("greedy", True, args.policy_seeds[0], normal_reset)
     summary_path = args.checkpoint.parent / "summary.json"
     if (summary_path.exists() and trials == contract["evaluation"]["trials"]
-            and args.device == contract["device"]):
+            and args.device == contract["device"] and attempts == contract["attempts"]):
         previous = json.loads(summary_path.read_text())
         if previous.get("completed") and previous["checkpoint"]["sha256"] == digest:
             expected = previous["last_evaluation"]["normal"]
@@ -105,12 +138,16 @@ def main(argv=None):
         condition("greedy_reset", True, args.policy_seeds[0], True)
     if args.reward_blind:
         condition("greedy_reward_blind", True, args.policy_seeds[0], normal_reset, True)
+    for name, keys in lesions.items():
+        condition(f"greedy_lesion_{name}", True, args.policy_seeds[0], True, reset_keys=keys)
     for policy_seed in args.policy_seeds:
         condition(f"sampled-{policy_seed}", False, policy_seed, normal_reset)
         if not normal_reset:
             condition(f"sampled-{policy_seed}-reset", False, policy_seed, True)
         if args.reward_blind:
             condition(f"sampled-{policy_seed}-reward-blind", False, policy_seed, normal_reset, True)
+        for name, keys in lesions.items():
+            condition(f"sampled-{policy_seed}-lesion-{name}", False, policy_seed, True, reset_keys=keys)
     if any(not torch.equal(value, before[key]) for key, value in policy.state_dict().items()):
         raise RuntimeError("Evaluation modified a model tensor")
     result["model_tensors_unchanged"] = True

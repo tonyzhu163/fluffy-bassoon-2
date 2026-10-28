@@ -1,0 +1,322 @@
+{
+  "checked_at": "2026-10-28T19:23:02.508916+08:00",
+  "verification": "Saved-artifact reads on shared project storage; scheduler state not queried",
+  "jobs": {
+    "pi05-live-bridge-poc-baige-20261028-r1": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-61p1rncjnr1x-master-0"
+      },
+      "worker-exit-codes.tsv": "name\tpid\texit_code\nlive-persistent_ctm-seed0\t440\t0",
+      "failures": {},
+      "summaries": {
+        "persistent_ctm-seed0/summary.json": {
+          "completed": false,
+          "iteration": 50,
+          "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+          "elapsed_seconds": 9353.657157493057,
+          "last_evaluation_means": {
+            "normal": 0.75,
+            "memory_wiped": 0.5,
+            "reward_blind": 0.625
+          }
+        }
+      },
+      "metrics": {
+        "transformer_xl-seed0/metrics.jsonl": {
+          "iteration": 49,
+          "elapsed_seconds": 8829.714582546847,
+          "modified_at": "2026-10-28T19:13:24.711063+08:00",
+          "evaluation_iteration": 10,
+          "evaluation_means": {
+            "normal": 0.75,
+            "memory_wiped": 0.75,
+            "reward_blind": 0.625
+          }
+        },
+        "persistent_ctm-seed0/metrics.jsonl": {
+          "iteration": 50,
+          "elapsed_seconds": 8880.240286086919,
+          "modified_at": "2026-10-28T19:21:54.822532+08:00",
+          "evaluation_iteration": 50,
+          "evaluation_means": {
+            "normal": 0.75,
+            "memory_wiped": 0.5,
+            "reward_blind": 0.625
+          }
+        }
+      },
+      "root_files": [
+        "gpu-uuids.tsv",
+        "gpu-probe.json",
+        "transformer_xl-seed0.log",
+        "worker-exit-codes.tsv",
+        "qualification.log",
+        "worker-pids.tsv",
+        "persistent_ctm-seed0.log",
+        "console.log"
+      ]
+    },
+    "pi05-support-probe-baige-20261028-r1": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/pi05-support-probe-baige-20261028-r1",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-37q79sp1o23m-master-0"
+      },
+      "failures": {},
+      "summaries": {
+        "execution/persistent_ctm/summary.json": {
+          "completed": true,
+          "iteration": 100,
+          "elapsed_seconds": 177.25233826600015,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta--45/summary.json": {
+          "completed": true,
+          "iteration": 100,
+          "elapsed_seconds": 174.71908304933459,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta-+0/summary.json": {
+          "completed": true,
+          "iteration": 100,
+          "elapsed_seconds": 174.19799164310098,
+          "evaluation_means": {}
+        },
+        "execution/transformer_xl/summary.json": {
+          "completed": true,
+          "iteration": 100,
+          "elapsed_seconds": 40.148381871171296,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta-+45/summary.json": {
+          "completed": true,
+          "iteration": 100,
+          "elapsed_seconds": 174.69680299516767,
+          "evaluation_means": {}
+        }
+      },
+      "metrics": {
+        "execution/persistent_ctm/metrics.jsonl": {
+          "iteration": 100,
+          "elapsed_seconds": 176.52341922558844,
+          "modified_at": "2026-10-28T19:17:52.401116+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta--45/metrics.jsonl": {
+          "iteration": 100,
+          "elapsed_seconds": 173.99779697787017,
+          "modified_at": "2026-10-28T19:09:06.131210+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta-+0/metrics.jsonl": {
+          "iteration": 100,
+          "elapsed_seconds": 173.4934910722077,
+          "modified_at": "2026-10-28T19:12:00.396118+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {}
+        },
+        "execution/transformer_xl/metrics.jsonl": {
+          "iteration": 100,
+          "elapsed_seconds": 39.856531804427505,
+          "modified_at": "2026-10-28T19:18:33.005757+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {}
+        },
+        "execution/privileged-theta-+45/metrics.jsonl": {
+          "iteration": 100,
+          "elapsed_seconds": 173.99757002759725,
+          "modified_at": "2026-10-28T19:14:55.153461+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {}
+        }
+      },
+      "completed_phases": [
+        "collection-1",
+        "collection-2",
+        "privileged-theta--45",
+        "privileged-theta-+0",
+        "privileged-theta-+45",
+        "persistent_ctm",
+        "transformer_xl",
+        "interface--45.0-bridge",
+        "interface--45.0-zero_bridge",
+        "interface--45.0-external_oracle",
+        "interface-0.0-bridge",
+        "interface-0.0-zero_bridge",
+        "interface-0.0-external_oracle"
+      ],
+      "costs": {
+        "simulator_steps": 4800,
+        "policy_chunks": 960,
+        "additional_label_motor_calls": 836,
+        "additional_flow_matching_suffix_calls": 768,
+        "native_prefix_queries": 2564,
+        "native_suffix_queries": 7952,
+        "bridge_context_updates": 960
+      },
+      "root_files": [
+        "gpu-probe.json",
+        "qualification.log",
+        "console.log"
+      ]
+    },
+    "cmm-cache-screen-baige-20261028-r1": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/cmm-cache-screen-baige-20261028-r1",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-qp353vjtueol-master-0"
+      },
+      "exit-code.txt": "0",
+      "failures": {},
+      "summaries": {
+        "cmm-seed0/summary.json": {
+          "completed": true,
+          "iteration": 500,
+          "elapsed_seconds": 424.2077988499659,
+          "evaluation_means": {
+            "greedy_normal": 0.54296875,
+            "greedy_memory_wiped": 0.423828125,
+            "greedy_reward_blind": 0.37744140625,
+            "sampled_normal": 0.54345703125,
+            "sampled_memory_wiped": 0.41796875,
+            "sampled_reward_blind": 0.37451171875
+          }
+        }
+      },
+      "metrics": {
+        "cmm-seed0/metrics.jsonl": {
+          "iteration": 500,
+          "elapsed_seconds": 421.9169647989911,
+          "modified_at": "2026-10-28T19:21:01.096312+08:00",
+          "evaluation_iteration": 500,
+          "evaluation_means": {
+            "greedy_normal": 0.54296875,
+            "greedy_memory_wiped": 0.423828125,
+            "greedy_reward_blind": 0.37744140625,
+            "sampled_normal": 0.54345703125,
+            "sampled_memory_wiped": 0.41796875,
+            "sampled_reward_blind": 0.37451171875
+          }
+        }
+      },
+      "root_files": [
+        "gpu-probe.json",
+        "capacity.json",
+        "cmm-seed0.log",
+        "qualification.log",
+        "exit-code.txt",
+        "console.log",
+        "width.txt"
+      ]
+    },
+    "robotwin-grpo-learning-gate-20261028-r1": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-grpo-learning-gate-20261028-r1",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-vh9lp7fvgf9n-master-0"
+      },
+      "failures": {},
+      "summaries": {},
+      "metrics": {},
+      "root_files": [
+        "gpu-probe.json",
+        "console.log"
+      ]
+    },
+    "metaworld-ctm-pilot-baige-20261028-r2": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/metaworld-ctm-pilot-baige-20261028-r2",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-x2x4kdpfn011-master-0"
+      },
+      "failures": {},
+      "summaries": {},
+      "metrics": {
+        "ml1-push-gru-seed1000/metrics.jsonl": {
+          "iteration": 0,
+          "elapsed_seconds": 52.937648359686136,
+          "modified_at": "2026-10-28T19:22:18.958302+08:00",
+          "evaluation_iteration": 0,
+          "evaluation_means": {
+            "train_eval": {
+              "normal": 0
+            },
+            "test": {
+              "normal": 0
+            }
+          }
+        }
+      },
+      "root_files": [
+        "gpu-probe.json",
+        "qualification.log",
+        "package-freeze.txt",
+        "console.log"
+      ]
+    },
+    "native-vla-context-pilot-20261028-r3": {
+      "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/native-vla-context-pilot-20261028-r3",
+      "gpu-probe.json": {
+        "status": "passed",
+        "hostname": "job-8kkjhb65px67-master-0"
+      },
+      "exit-code.txt": "1",
+      "failures": {
+        "execution/failure.json": {
+          "type": "ValueError",
+          "message": "Require finite public feedback, binary reward/boundary and normalized clocks",
+          "elapsed_seconds": 100.8361997641623
+        }
+      },
+      "summaries": {},
+      "metrics": {},
+      "root_files": [
+        "gpu-probe.json",
+        "qualification.log",
+        "exit-code.txt",
+        "console.log"
+      ]
+    }
+  },
+  "user_reported": {
+    "cmm_calibration": {
+      "text": "cmm calibration hit 15% at 350",
+      "reported_on": "2026-10-28",
+      "raw_receipt_verified": false
+    }
+  },
+  "school_access": {
+    "cluster": "thu2",
+    "alias": "thu2-node01",
+    "result": "Alias does not resolve here; scheduler and raw calibration metrics could not be refreshed"
+  },
+  "sources": {
+    "pi05-live-bridge-poc-baige-20261028-r1": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+    "pi05-support-probe-baige-20261028-r1": "5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a",
+    "cmm-cache-screen-baige-20261028-r1": "2bb88a9899919031cd3b5ba8a1b8b7f812502b12",
+    "robotwin-grpo-learning-gate-20261028-r1": "5484bb31c9cfc6f2fbb5aaf926281861a708603d",
+    "metaworld-ctm-pilot-baige-20261028-r2": "adf741d6e955a624e9f785b9d1572dabf9ff4ab1",
+    "native-vla-context-pilot-20261028-r3": "b5d97b0a7c0f6aed29660a96e2ab10cce9610915"
+  },
+  "upstream_calibration": {
+    "source_commit": "1a21c86cd2275244ffc91edde5c36efc8aa39b9f",
+    "checked_at": "2026-10-28T19:22:00+08:00",
+    "cluster": "thu2",
+    "calibration_job": 48876,
+    "epoch": 350,
+    "query_accuracy": 0.154,
+    "query_mse": 0.091,
+    "update": 58500,
+    "target_updates": 157000,
+    "calibration_state": "Running, improving; continue existing run",
+    "decay_jobs": [
+      48983,
+      48984
+    ],
+    "decay_state": "Queued (Priority), retained by user"
+  }
+}

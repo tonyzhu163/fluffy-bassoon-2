@@ -19,7 +19,14 @@ each new trial starts from fresh recurrent state.
   signed-gain reaching controller, or train-scene population success rates
   given the cached rotation. Cross-entropy / squashed-Gaussian NLL trains the
   existing actor. `--objective behavior_cloning` is an explicit control that
-  predicts the executed behavior action instead.
+  predicts the executed behavior action instead. `--objective ad_noise` is
+  noise-distillation Algorithm Distillation: the per-trial random fraction
+  anneals linearly to zero at the last attempt, so each history improves, and
+  the executed actions are the labels. This deliberately ties improvement to
+  the attempt index; it is the AD anchor, not a replacement for DPT labels.
+  `--core cmm` and `--core ctm` use the same core configuration as PPO
+  (`--stm-length`, `--ltm-tokens`), so their warm starts load into
+  `meta_rl.train`.
 - Native pi0.5: collect imperfect trials with the frozen motor plus fixed
   Gaussian residual noise. At each visited observation, query the frozen
   motor with the same native initial noise and undo the training actuator's

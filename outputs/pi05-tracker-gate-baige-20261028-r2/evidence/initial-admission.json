@@ -1,0 +1,269 @@
+{
+  "checked_at_utc": "2026-10-28T13:58:43.860886+00:00",
+  "job_id": "job-o16q3eimo8bq",
+  "source_commit": "c2c47152303ccfc1ac469fd3e1ad1e1344201e42",
+  "clean_worktree": true,
+  "tests": "151 passed in 20.02s",
+  "phase": "gain_calibration",
+  "calibration": {
+    "-45.0": {
+      "0.25": [
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "0.5": [
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "counters": {
+    "simulator_steps": 320,
+    "policy_chunks": 64,
+    "native_prefix_queries": 128,
+    "native_suffix_queries": 512,
+    "extra_label_motor_calls": 0,
+    "extra_tracker_target_motor_calls": 64
+  },
+  "complete_trajectory_artifacts": {
+    "calibrate--45-0.25": {
+      "file": "trajectory-calibrate--45-0.25.json",
+      "sha256": "11e989664a32ac5706b248b51a411f7e0921cc2f7517fd2771b3b5cc079ba6a2",
+      "chunks": 16,
+      "outcomes": [
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    "calibrate--45-0.5": {
+      "file": "trajectory-calibrate--45-0.5.json",
+      "sha256": "f4ad207984097afbf4b1a053fcbcf6ee2fea8d6d3030535cdd17290293b34528",
+      "chunks": 16,
+      "outcomes": [
+        [
+          1.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "residual_mean_abs_max": 1.0,
+  "renderer_binding": {
+    "job_id": "job-o16q3eimo8bq",
+    "pid": 963,
+    "cuda_pci_bus_id": "0000:a2:00.0",
+    "simulation_device": "cuda",
+    "actual_sapien_render_devices": [
+      {
+        "name": "NVIDIA RPBZZZ6",
+        "pci_bus_id": "0000:a2:00.0",
+        "cuda_id": 0
+      },
+      {
+        "name": "NVIDIA RPBZZZ6",
+        "pci_bus_id": "0000:a2:00.0",
+        "cuda_id": 0
+      }
+    ]
+  },
+  "config": {
+    "contract": {
+      "protocol": "native_pi05_balanced_support_probe_gate_v1",
+      "source_commit": "c2c47152303ccfc1ac469fd3e1ad1e1344201e42",
+      "core": "persistent_ctm",
+      "bridge": {
+        "core": "persistent_ctm",
+        "width": 64,
+        "ticks": 4,
+        "residual_scale": 1.0
+      },
+      "gaussian_policy": {
+        "protocol": "pi05_gaussian_flow_residual_v1",
+        "noise_scale": 0.05,
+        "active_dims": 7,
+        "residual_scale": 1.0,
+        "kv_layer": -1,
+        "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+        "entropy": "fixed sigma; constant entropy",
+        "dtype": "float32"
+      },
+      "task": "PutOnPlateInScene25Main-v3",
+      "objects": [
+        0,
+        1
+      ],
+      "train_theta_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "train_overlays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "attempts": 4,
+      "episode_steps": 80,
+      "action_chunk": 5,
+      "denoise_steps": 4,
+      "feedback": "unrotated 7D requested command; previous terminal success; boundary; fixed clocks",
+      "reward": "success_once latched within attempt, emitted only on its final chunk",
+      "motor_sha256": "0adb5b40f064760ff245f53ae0a4e078b86680b65f77d1f5991a173543edd5a1",
+      "norm_stats_sha256": "930b816bf2f142f3e377d088d2252e5238b8d082ad8f0abceedfc6296be58852",
+      "frozen_motor_fingerprint": "ed862a89a39052dad591d6542959ef0a72866b2c85eac2c84767bf55f52205dc",
+      "rlinf_sources": {
+        "rlinf/models/embodiment/openpi/pi0.py": "b5d84d0669362a96d5bb4c5cbc4012d74ee8ecbbf6251abb9952f42fc017299d",
+        "rlinf/models/embodiment/openpi/env_io.py": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc",
+        "rlinf/models/embodiment/openpi/modules/gemma.py": "552625553b40efb52e0880cdf663d0097fe008e1943ab205d9cfe00cc9c5ae78",
+        "rlinf/models/embodiment/openpi/checkpoint.py": "01b8a68a0085cafb64ce3b0716732305e78921086b948654c2a4ce9edc5b71c9"
+      }
+    },
+    "tracker": {
+      "protocol": "native_pi05_privileged_bounded_target_tracker_v1",
+      "noise_scale": 0.05,
+      "active_dims": 7,
+      "residual_scale": 1.0,
+      "kv_layer": -1,
+      "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+      "entropy": "fixed sigma; constant entropy",
+      "dtype": "float32",
+      "gain": 1.0,
+      "controller": "private target tracker through bounded residual; not learned CTM",
+      "zero_theta": "exact zero residual preserves native flow path",
+      "eligibility": "deterministic diagnostic only; no PPO replay or training"
+    },
+    "gains": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "heldout_reference_plans": {
+      "-45.0": {
+        "plan": {
+          "theta_degrees": [
+            -45.0,
+            -45.0
+          ],
+          "scenes": [
+            [
+              {
+                "object": 0,
+                "overlay": 12,
+                "position": 27,
+                "orientation": 3,
+                "episode_id": 37743
+              },
+              {
+                "object": 1,
+                "overlay": 13,
+                "position": 92,
+                "orientation": 2,
+                "episode_id": 106994
+              }
+            ]
+          ],
+          "reset_seeds": [
+            710000
+          ],
+          "split": "teacher_fresh_scene_gate"
+        },
+        "sha256": "272ff9ee11af436a9988c5263af14f65053c355f07c41ae3865f14cef42f0d7b"
+      },
+      "0.0": {
+        "plan": {
+          "theta_degrees": [
+            0.0,
+            0.0
+          ],
+          "scenes": [
+            [
+              {
+                "object": 0,
+                "overlay": 12,
+                "position": 629,
+                "orientation": 2,
+                "episode_id": 40150
+              },
+              {
+                "object": 1,
+                "overlay": 13,
+                "position": 374,
+                "orientation": 3,
+                "episode_id": 108123
+              }
+            ]
+          ],
+          "reset_seeds": [
+            710000
+          ],
+          "split": "teacher_fresh_scene_gate"
+        },
+        "sha256": "91d85cccb24c172048685d4e8b8dd6f4145b0a979fd70f09c10411fac27b464f"
+      },
+      "45.0": {
+        "plan": {
+          "theta_degrees": [
+            45.0,
+            45.0
+          ],
+          "scenes": [
+            [
+              {
+                "object": 0,
+                "overlay": 12,
+                "position": 611,
+                "orientation": 1,
+                "episode_id": 40077
+              },
+              {
+                "object": 1,
+                "overlay": 13,
+                "position": 177,
+                "orientation": 2,
+                "episode_id": 107334
+              }
+            ]
+          ],
+          "reset_seeds": [
+            710000
+          ],
+          "split": "teacher_fresh_scene_gate"
+        },
+        "sha256": "33a885a2de38c25059d56b99694ae3993c3c76d1337da6f6ddd9296313711f75"
+      }
+    },
+    "hostname": "job-o16q3eimo8bq-master-0",
+    "job_id": "job-o16q3eimo8bq",
+    "max_elapsed_seconds": 1500.0,
+    "gain_selection": "maximize training success, then prefer higher gain; no held-out tuning",
+    "pass_rule": "all per-theta bridge >= zero; >=1 perturbed success per angle; strict aggregate gain; exact complete zero-repeat stability at every theta",
+    "zero_repeat": {
+      "repeats_per_theta": 1,
+      "native_noise_seed": 810000,
+      "comparison": "exact all-chunk trajectory and outcome equality"
+    },
+    "trajectory_audit": "full decoded/prepared/issued commands and observation/native-input/feedback digests every chunk; diagnostic only",
+    "qualification": "provisional privileged controller capacity screen; no learned CTM competence or automatic PPO admission"
+  },
+  "artifact_sha256": {
+    "qualification.log": "4cf173d4f714949fba3b6d06aa2d59422c5aada60414fd68e78f9265de6e4327",
+    "gpu-probe.json": "363864b221007da366163853e965778a1b1a5265622262642f921ad8bc985983",
+    "tracker/config.json": "3cc8bd41d337d8c4518efc0553aa0c3a6001e6990016c96cf1504251e09f3faf",
+    "tracker/renderer-binding.json": "3d95c58062cb561525af8d82f57f4c57efca17b946eee7224fd8e31bf31ad82b"
+  }
+}
