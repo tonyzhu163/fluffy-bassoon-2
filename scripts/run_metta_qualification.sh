@@ -27,6 +27,8 @@ export FLUFFY_META_RL_CUDA_QUALIFICATION=1 FLUFFY_METTA_REAL_QUALIFICATION=1
   tests/test_meta_rl_replay_windows.py tests/test_meta_rl_ppo.py tests/test_meta_rl_checkpoint.py \
   tests/test_meta_rl_cmm.py tests/test_ctm_sync_options.py tests/test_meta_rl_cuda.py \
   > "$TASK_OUTPUT/tests.log" 2>&1
+"$TASK_PYTHON" -m fluffy_bassoon.meta_rl.metta_qualification \
+  --source-commit "$TASK_SOURCE" --output "$TASK_OUTPUT/pointmaze-headroom.json"
 for TASK_BENCH in pointmaze halfcheetah-vel; do
   for TASK_CORE in persistent_ctm cmm gru transformer_xl; do
     if [[ $TASK_BENCH = pointmaze ]]; then
@@ -38,7 +40,7 @@ for TASK_BENCH in pointmaze halfcheetah-vel; do
       --benchmark "$TASK_BENCH" --core "$TASK_CORE" --source-commit "$TASK_SOURCE" \
       --output-dir "$TASK_OUTPUT/$TASK_BENCH-$TASK_CORE" --qualify-one-update --updates 1 \
       --num-envs "$TASK_ENVS" --attempts "$TASK_ATTEMPTS" --horizon "$TASK_HORIZON" \
-      --ppo-epochs "$TASK_EPOCHS" --minibatch-trials 5 --replay-chunk-length "$TASK_CHUNK" \
+      --ppo-epochs "$TASK_EPOCHS" --minibatch-trials 10 --replay-chunk-length "$TASK_CHUNK" \
       --max-elapsed-seconds 1200 --device cuda --env-workers 8 --allocated-cpus 16
   done
 done

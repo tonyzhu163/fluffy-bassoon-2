@@ -1,6 +1,7 @@
 """Hidden-task, early termination, parallel replay and simulator qualification."""
 
 import copy
+import json
 import os
 
 import gymnasium as gym
@@ -13,6 +14,7 @@ from fluffy_bassoon.meta_rl.metaworld_env import make_lanes
 from fluffy_bassoon.meta_rl.metaworld_policy import make_policy
 from fluffy_bassoon.meta_rl.metaworld_train import core_settings, replay_error
 from fluffy_bassoon.meta_rl.ppo import collect_trials, update_ppo
+from fluffy_bassoon.meta_rl.checkpoint import restore_checkpoint, save_checkpoint
 
 
 class FakePoint:
@@ -68,6 +70,12 @@ def test_task_splits_are_disjoint_deterministic_and_path_constrained():
         assert len(pools["test"][1]) == 24
         values = [t.data for _, tasks in pools.values() for t in tasks]
         assert len(values) == len(set(values))
+        if name == "pointmaze":
+            def pairs(split):
+                return {(tuple(json.loads(t.data)["start"]), tuple(json.loads(t.data)["goal"]))
+                        for t in pools[split][1]}
+            assert not pairs("train").intersection(pairs("test"))
+            assert pairs("train_eval") <= pairs("train")
 
 
 def test_goal_is_hidden_and_early_success_resets_immediately_then_only_pads_suffix():
@@ -135,6 +143,33 @@ def test_padding_has_no_effect_on_ppo_parameter_update():
         update_ppo(model, torch.optim.Adam(model.parameters()), data, epochs=1, minibatch_trials=2)
     for key, value in policy.state_dict().items():
         torch.testing.assert_close(value, other.state_dict()[key], rtol=0, atol=0)
+
+
+@pytest.mark.parametrize("core", ["gru", "cmm", "persistent_ctm"])
+def test_complete_variable_trial_checkpoint_recovery(tmp_path, core):
+    torch.set_num_threads(1)
+    torch.manual_seed(8)
+    envs = [fake_point(), fake_point()]
+    policy = make_policy(core, dict(core_settings(core), width=16), envs[0])
+    optimizer = torch.optim.Adam(policy.parameters())
+    sampler = np.random.default_rng(88)
+    contract = {"variable_trial_recovery": core}
+    save_checkpoint(tmp_path / "latest.pt", policy=policy, optimizer=optimizer,
+                    environment_rng=sampler, iteration=0, counters={}, contract=contract)
+    expected = None
+    for repeat in range(2):
+        if repeat:
+            restore_checkpoint(tmp_path / "latest.pt", policy=policy, optimizer=optimizer,
+                               environment_rng=sampler, contract=contract)
+        rollout = collect_trials(policy, envs, sampler.integers(0, 1000, 2), replay_chunk_length=3)
+        update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=1, replay_chunk_length=3)
+        policy.core.observe_after_update(rollout["observations"], mask=rollout["action_mask"])
+        actual = {name: value.clone() for name, value in policy.state_dict().items()}
+        if repeat:
+            for name, value in actual.items():
+                torch.testing.assert_close(value, expected[name], rtol=0, atol=0)
+        else:
+            expected = actual
 
 
 @pytest.mark.skipif(os.environ.get("FLUFFY_METTA_REAL_QUALIFICATION") != "1",

@@ -138,7 +138,8 @@ class MetaWorldWorkerBatch:
         self._lock, self._connections, self._processes, self._group_by_lane = threading.RLock(), [], [], {}
         self._group_indices, self.lanes = [], []
         options = dict(benchmark=benchmark, attempts=attempts, horizon=horizon, goal_visible=benchmark == "ml10",
-                       resample_instance=benchmark == "ml10", reward_scale=.1)
+                       resample_instance=benchmark == "ml10",
+                       reward_scale=.1 if benchmark in ("ml1-push", "ml10") else 1.)
         family_tasks = {name: tuple(task for task in tasks if task.env_name == name) for name in names}
         if any(not family_tasks[name] for name in names):
             raise ValueError("Every Meta-World family needs at least one task")

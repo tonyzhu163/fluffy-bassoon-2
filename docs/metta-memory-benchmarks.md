@@ -18,8 +18,10 @@ metadata are not policy inputs. Public reward and boundaries remain available.
 The pools contain 100 training, 24 fresh training-range, and 24 test
 configurations. A task specifies start/goal cells with shortest path at least
 10 plus a reset seed fixing their continuous offsets throughout the trial.
-Splits are disjoint configurations, but share the layout and can share cells.
-They do not establish held-out-map or held-out-goal-cell generalization.
+Training and fresh training-range configurations use 40 start/goal cell pairs;
+test configurations use disjoint held-out pairs. Continuous offsets are also
+disjoint. The splits share the layout and can share individual cells; they do
+not establish held-out-map or held-out-goal-cell generalization.
 
 Trials have at most K*H real transitions. After all K episodes have finished,
 the collector pads the suffix to its declared maximum length. Padding never

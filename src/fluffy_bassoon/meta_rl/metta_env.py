@@ -70,9 +70,11 @@ def memory_pools(benchmark, seed=0):
         # Held-out configurations can share cells; this is not held-out-map testing.
         pairs = distant_pairs()
         order = rng.permutation(len(pairs))
+        training_pairs, heldout_pairs = order[:40], order[40:]
         values = []
         for index in range(148):
-            start, goal, distance = pairs[int(order[index % len(order)])]
+            choices = training_pairs if index < 124 else heldout_pairs
+            start, goal, distance = pairs[int(choices[index % len(choices)])]
             values.append(task(benchmark, start=start, goal=goal, distance=distance,
                                reset_seed=int(rng.integers(2**31))))
         factory = pointmaze_factory
@@ -93,7 +95,7 @@ def benchmark_contract(benchmark):
     if benchmark == "pointmaze":
         return dict(**common, reward="+1 once at goal; zero otherwise; native success terminates each episode",
                     maze=MAZE, minimum_cell_path_distance=10,
-                    split="100/24/24 disjoint seeded continuous start/goal configurations; shared layout/cells",
+                    split="100 training and 24 fresh configurations on 40 pairs; 24 test configurations on disjoint held-out pairs; shared layout/cells",
                     termination="early physical reset at success; masked padding only AFTER complete trial",
                     padding="no simulator action or PPO actor/critic/entropy loss; excluded from state moments")
     if benchmark == "halfcheetah-vel":
@@ -114,12 +116,12 @@ class MemoryTrial(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, factory, tasks, *, benchmark, attempts=5, horizon=100,
-                 goal_visible=False, resample_instance=False, reward_scale=.1):
+                 goal_visible=False, resample_instance=False, reward_scale=1.):
         if (benchmark not in ("pointmaze", "halfcheetah-vel") or not tasks
                 or {t.env_name for t in tasks} != {benchmark}
                 or type(attempts) is not int or attempts < 1
                 or type(horizon) is not int or not 1 <= horizon <= 500
-                or goal_visible or resample_instance):
+                or goal_visible or resample_instance or reward_scale != 1.):
             raise ValueError("Invalid hidden-task trial contract")
         self.benchmark, self.tasks = benchmark, tuple(tasks)
         self.attempts, self.horizon = attempts, horizon
