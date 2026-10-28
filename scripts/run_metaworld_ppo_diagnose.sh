@@ -39,5 +39,6 @@ TASK_STARTED=$(date +%s)
 "$TASK_PYTHON" -m pytest -q -p no:cacheprovider tests/test_metaworld_ppo_diagnose.py \
   tests/test_meta_rl_replay_windows.py tests/test_metaworld_pilot.py > "$TASK_OUTPUT/tests.log" 2>&1
 timeout --signal=TERM --kill-after=30s 1500 "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.metaworld_ppo_diagnose \
-  --source-commit "$TASK_SOURCE" --parent-dir "$TASK_PARENT" --output-dir "$TASK_OUTPUT/diagnosis"
+  --source-commit "$TASK_SOURCE" --parent-dir "$TASK_PARENT" --output-dir "$TASK_OUTPUT/diagnosis" \
+  --compare-minibatch-trials 2
 printf '%s\n' "$(($(date +%s)-TASK_STARTED))" > "$TASK_OUTPUT/allocation-active-seconds.txt"
