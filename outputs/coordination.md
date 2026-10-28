@@ -1,6 +1,6 @@
 # CTM in-context RL: coordination
 
-Live coordination for `fluffy-bassoon-2`, updated **2026-10-28 19:23
+Live coordination for `fluffy-bassoon-2`, updated **2026-10-28 21:48
 Asia/Shanghai**. Keep current decisions and jobs here, method contracts in
 `docs/`, verified results in `EVALUATION.md`, and dated evidence in
 `outputs/<run-id>/`. Follow [AGENTS.md](../AGENTS.md) and the
@@ -105,24 +105,25 @@ revision is a later extension.
 
 ## Ongoing work and pending checks
 
-All times are **2026-10-28 Asia/Shanghai**. Baige progress was freshly read
-from saved artifacts at **19:23**, without a fresh scheduler query.
+All times are **2026-10-28 Asia/Shanghai**. The native PPO and balanced
+support/probe rows were audited from saved artifacts at **21:48**; other
+rows retain their individually stated checks, without a fresh scheduler query.
 [Status receipt](coordination-refresh-20261028-r1/jobs-1923.json) contains
 exact source commits, paths and observations. A missing terminal receipt
 does not alone establish that a job remains running.
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
-| Native pi0.5 CTM/XL PPO | Baige `job-61p1rncjnr1x`; `c3e9cca68b93b6e777cbe5314e130bcaf85c8e14` | **19:23:** CTM worker exited 0 with a **partial 50/100-update** summary under its existing cap. Update-50 normal/wiped/blind **75.0/50.0/62.5%**, only two K4 trials/condition. XL's last saved metric is 49; final evaluation/summary pending. Next: audit both final arrays and recovery checkpoints; preserve caps. These tiny samples cannot establish reliable ICRL or an architecture ranking. |
-| Balanced native support/fresh-probe gate | Baige `job-37q79sp1o23m`; `5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a` | **19:23:** both balanced history splits, all three privileged heads and CTM/XL warm starts saved; all five heads completed **100/100 fitting updates**. Live interface panels advancing; fresh probes pending. Next: verify same-interface live competence and paired fresh probes before PPO expansion. [Plan](pi05-support-probe-baige-20261028-r1/PLAN.md). |
+| Native pi0.5 CTM/XL PPO | Baige `job-61p1rncjnr1x`; `c3e9cca68b93b6e777cbe5314e130bcaf85c8e14` | **21:48: both workers exited 0**, capped at **50/100 updates**, 32,000 training simulator steps and 200 optimizer steps each. Final normal/wiped/blind: CTM **75.0/50.0/62.5%**, XL **50.0/62.5/75.0%**, only two K4 trials/condition. Full optimizer/sampler/RNG checkpoints and frozen motor audited. Next: preserve partial-run evidence; no extension or reliable ICRL/architecture claim. [Final audit](pi05-live-bridge-poc-baige-20261028-r1/FINAL-AUDIT-20261028.md). |
+| Balanced native support/fresh-probe gate | Baige `job-37q79sp1o23m`; `5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a` | **21:48: complete, exit 0**, all four fresh-probe methods, 228 saved-artifact checks passed, unchanged frozen motor. Privileged learned bridge **3/6**, zero **3/6**, external oracle **4/6**: interface competence remains unresolved. Normal never beats reset memory on success-once. Zero-control outcomes differ across methods despite matching initial prefix/noise; next gate adds repeated zero controls and complete trajectory hashes. Longer paired PPO held. [Audit and raw evidence](pi05-support-probe-baige-20261028-r1/AUDIT-20261028-2148.md). |
 | RoboTwin GRPO learning gate | Baige `job-vh9lp7fvgf9n`; `5484bb31c9cfc6f2fbb5aaf926281861a708603d` | **19:23:** submitted 19:19:50; allocation probe and four focused tests passed. Initializing, no saved training metrics or terminal result yet. One GPU/20-minute cap; group size 8, reward filtering, 64 trajectories, horizon 400, one update. Next: require retained mixed groups, signed advantages and a finite nonzero gradient. Earlier all-success smoke had zero gradients. |
 | MetaWorld bounded pilot r2 | Baige `job-x2x4kdpfn011`; `adf741d6e955a624e9f785b9d1572dabf9ff4ab1` | **19:23:** probe passed; first ML1 push GRU cell saved an initial evaluation at 19:22, zero success before training. Six-cell pilot, no terminal receipt. Next: verify advancing updates and train/test adaptation curves within the original one-GPU/180-minute contract. |
 | Direct native-context pilot r3 | Baige `job-8kkjhb65px67`; `b5d97b0a7c0f6aed29660a96e2ab10cce9610915` | **19:23: failed, exit 1.** Saved error: `Require finite public feedback, binary reward/boundary and normalized clocks`. No learning result. Next: diagnose feedback validation against saved evidence before a separately identified recovery; preserve r3. |
 | CMM full few-shot calibration | Secondary school cluster (thu2), **48876**, source `b6919d6`, K20 seed0 | **19:22 upstream check:** dev query accuracy **15.4% at epoch 350**, MSE .091; update 58.5k/157k. Keep running under the existing contract; about 7.5 hours remained at that check. [Full calibration record](#cmm-calibration). |
 | CMM decay diagnostics | Secondary school cluster (thu2), **48983 / 48984**, source `bd38dd0` | **19:22 upstream record:** queued (Priority), retained by the user. Two 50-epoch runs compare decay starts 1 and uniform[0,3]. Verify probes/tests after startup and compare matched-epoch metrics; leave 48876 untouched. [Full diagnostic record](#cmm-calibration). |
 
-Check unfinished work on the existing 20-minute cadence: next planned check
-**19:43**, or earlier on a meaningful result/failure. Preserve full
+Check unfinished work on the existing 20-minute cadence, or earlier on a
+meaningful result/failure; use each owning monitor's current schedule. Preserve full
 optimizer/sampler/RNG recovery state and immutable run identities.
 
 ## CMM calibration
