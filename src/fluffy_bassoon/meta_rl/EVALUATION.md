@@ -2,6 +2,73 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Wider-angle cached rotation control, 2026-10-28
+
+The CPU controls inside Baige `job-61p1rncjnr1x` use source
+`c3e9cca68b93b6e777cbe5314e130bcaf85c8e14`, distinct protocol
+`cached_rotation_a1_plumbing_v2`, theta/phi {-45,0,45} degrees, and the existing
+headroom table SHA256 `74910dc7…`. No new simulator outcomes are used. Scores
+below are frozen greedy means on the same 256 paired validation trials:
+
+| Core | Finished seeds | Updates/seed | Normal | Memory wiped | Reward blind |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| GRU T1 | 3 | 500 | 54.26% | 42.38% | 36.36% |
+| Transformer-XL T1 | 3 | 500 | 55.05% | 45.08% | 37.50% |
+| Persistent CTM T4 | 1 budget stop | 353 | 56.64% | 49.95% | 37.65% |
+
+Zero correction scores 42.38%, Thompson sampling 45.36% and angle cancellation
+oracle 74.76%. Normal greedy seed standard deviation is 2.38 percentage points
+for GRU and 2.19 for XL. These results show a history-dependent reward-only
+signal in this cached control. They do not establish live visual robot
+adaptation. All final raw binary arrays were independently checked against the
+saved means and attempt curves. The immutable 900-second cap stopped CTM seed
+0 cleanly at 904.41 seconds, with `completed=false`, full recovery checkpoint
+and no failure/partial file. Other CTM seeds remain pending at this snapshot.
+GRU and XL took about 65.1 and 245.3 seconds per completed 500-update seed;
+CTM's 353 updates took 904.4 seconds including evaluation/checkpoint overhead
+and concurrent contention. Different achieved updates, ticks and parameter
+budgets prevent a matched architecture ranking. Objects/angle support are
+shared across the cache split, and the table has one recorded motor outcome
+per scene/action. Evidence:
+[cached control audit](../../../outputs/robot-cache-poc-v2-baige-20261028-r2/AUDIT.md).
+
+## Live native feature-bridge PPO admission, 2026-10-28
+
+Baige `job-61p1rncjnr1x`, source
+`c3e9cca68b93b6e777cbe5314e130bcaf85c8e14`, runs one persistent CTM T4
+and one Transformer-XL T1 worker on distinct assigned RPBZZZ6 GPUs. The
+allocation-local two-GPU training probe passed; 32 relevant CPU tests passed
+in 3.71 seconds inside the allocation. Actual SAPIEN renderer PCI bindings
+match both selected GPUs. The workers share the same frozen native pi0.5
+checkpoint, normalized inputs and public feedback/residual-action interface.
+They have 202,055 and 264,865 trainable parameters, respectively; this is not
+a parameter-matched architecture comparison.
+
+At 17:01 Shanghai, both workers completed two full live-trial updates and
+eight optimizer steps. Before each of the first two updates, saved joint
+Gaussian likelihoods and critic values replayed with maximum absolute error
+exactly zero. After the initially zero output heads moved, 111 CTM or 44 XL
+parameter tensors received finite nonzero gradients. All four PPO epochs ran
+in each update; final measured joint KL was CTM .03114/.02172 and XL
+.04002/.02175. Native-motor no-gradient and fingerprint assertions passed,
+and complete between-trial optimizer/sampler/global/motor RNG checkpoints
+were saved after both updates. Each worker collected 1,280 training simulator
+steps across four trials in total. Their private trial-plan hashes match.
+
+Native collection took 153–162 seconds per update, versus 7.81–7.93 seconds
+of CTM PPO or 2.12–2.17 seconds of XL PPO. Peak allocated CUDA memory was
+7,650,967,040 bytes (CTM) and 7,623,074,304 bytes (XL). The 100-update target
+would exceed the fixed 9,000-second driver cap at this cadence; reaching the
+cap leaves a resumable partial run. No cap or active contract was changed.
+
+At update zero, each of the three paired held-out conditions scored 5/8
+successful attempts for both bridges. This is only two held-out trials per
+condition. Initial equality and training updates qualify execution; they do
+not establish learned adaptation or a reliable architecture ranking. The
+held-out update-10/50/100 diagnostics remain pending. Evidence:
+[launch receipt](../../../outputs/pi05-live-bridge-poc-baige-20261028-r1/LAUNCH.md)
+and `/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1/`.
+
 ## Matched execution pilot and cached robot control, 2026-10-28
 
 Baige `job-uomh9zm3mpnd`, source

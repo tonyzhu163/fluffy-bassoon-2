@@ -1,0 +1,202 @@
+{
+  "job_id": "job-61p1rncjnr1x",
+  "cluster": "Baige",
+  "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+  "reviewed_at_shanghai": "2026-10-28T17:04:19.191585+08:00",
+  "qualification": "32 allocated CPU tests passed; parent2GPU probe and per-child CUDA/renderer PCI binding passed",
+  "checkpoint_payload_loaded_on_development_host": false,
+  "checkpoint_rng_schema": {
+    "top_level": [
+      "environment_rng",
+      "motor_rng",
+      "rng"
+    ],
+    "nested_rng": [
+      "python",
+      "numpy",
+      "torch",
+      "cuda"
+    ],
+    "verification": "Pinned source save_live_checkpoint plus allocated recovery test; actual live weights were not loaded for this audit"
+  },
+  "cores": {
+    "persistent_ctm": {
+      "iteration": 2,
+      "optimizer_steps": 8,
+      "simulator_steps": 1280,
+      "policy_chunks": 256,
+      "parameters": 202055,
+      "retained_state_bytes_per_lane": 4864,
+      "selected_gpu_uuid": "GPU-efff128b-5cfb-dbb4-272f-be456ff19dac",
+      "renderer_pci": "0000:62:00.0",
+      "frozen_motor_fingerprint": "ed862a89a39052dad591d6542959ef0a72866b2c85eac2c84767bf55f52205dc",
+      "frozen_motor_assertions_passed_through_iteration": 2,
+      "exact_joint_replay_errors": [
+        0.0,
+        0.0
+      ],
+      "exact_value_replay_errors": [
+        0.0,
+        0.0
+      ],
+      "final_epoch_joint_kl": [
+        0.031141972169280052,
+        0.02171703428030014
+      ],
+      "max_abs_joint_log_ratio": [
+        0.676971435546875,
+        0.528045654296875
+      ],
+      "final_epoch_clip_fraction": [
+        0.4296875,
+        0.3203125
+      ],
+      "final_epoch_nonzero_gradient_parameters": [
+        111,
+        111
+      ],
+      "finite_losses_and_gradient_norms": true,
+      "trial_plan_sha256": [
+        "5b5d7da4317e858d73cffeb94518211896eaeba191cd1bb2aff776aa5ef67648",
+        "83fae118d0e5cee2763d8875183e8893451171c6e84ec41fb5d643445d7824d3"
+      ],
+      "phase_times": [
+        {
+          "iteration": 1,
+          "collection_seconds": 158.94824558403343,
+          "replay_qualification_seconds": 0.6864984480198473,
+          "update_seconds": 7.9348932730499655,
+          "checkpoint_seconds": 0.03309166990220547
+        },
+        {
+          "iteration": 2,
+          "collection_seconds": 153.0582372660283,
+          "replay_qualification_seconds": 0.6987315970472991,
+          "update_seconds": 7.805050872033462,
+          "checkpoint_seconds": 0.029880531132221222
+        }
+      ],
+      "peak_cuda_allocated_bytes": 7650967040,
+      "observed_training_mean_success": [
+        0.625,
+        0.875
+      ],
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1/persistent_ctm-seed0/latest.pt",
+        "snapshot_iteration": 2,
+        "scope": "Mutable latest checkpoint observed after update2; later complete checkpoints may supersede this hash",
+        "sha256": "de19e59366383821b488ba9faad90f7296b13d9d77fc2478df9beb4368f4f99f",
+        "bytes": 2577847,
+        "modified_shanghai": "2026-10-28T17:00:45.079294786+08:00"
+      }
+    },
+    "transformer_xl": {
+      "iteration": 2,
+      "optimizer_steps": 8,
+      "simulator_steps": 1280,
+      "policy_chunks": 256,
+      "parameters": 264865,
+      "retained_state_bytes_per_lane": 16392,
+      "selected_gpu_uuid": "GPU-45c0bba8-4423-e3c6-1913-4d330e8bdc14",
+      "renderer_pci": "0000:a2:00.0",
+      "frozen_motor_fingerprint": "ed862a89a39052dad591d6542959ef0a72866b2c85eac2c84767bf55f52205dc",
+      "frozen_motor_assertions_passed_through_iteration": 2,
+      "exact_joint_replay_errors": [
+        0.0,
+        0.0
+      ],
+      "exact_value_replay_errors": [
+        0.0,
+        0.0
+      ],
+      "final_epoch_joint_kl": [
+        0.0400221012532711,
+        0.02175181917846203
+      ],
+      "max_abs_joint_log_ratio": [
+        1.012115478515625,
+        0.58709716796875
+      ],
+      "final_epoch_clip_fraction": [
+        0.4921875,
+        0.3359375
+      ],
+      "final_epoch_nonzero_gradient_parameters": [
+        44,
+        44
+      ],
+      "finite_losses_and_gradient_norms": true,
+      "trial_plan_sha256": [
+        "5b5d7da4317e858d73cffeb94518211896eaeba191cd1bb2aff776aa5ef67648",
+        "83fae118d0e5cee2763d8875183e8893451171c6e84ec41fb5d643445d7824d3"
+      ],
+      "phase_times": [
+        {
+          "iteration": 1,
+          "collection_seconds": 162.33224737690762,
+          "replay_qualification_seconds": 0.2507274830713868,
+          "update_seconds": 2.17462506191805,
+          "checkpoint_seconds": 0.02749243611469865
+        },
+        {
+          "iteration": 2,
+          "collection_seconds": 160.1387882558629,
+          "replay_qualification_seconds": 0.25840077619068325,
+          "update_seconds": 2.1247960559558123,
+          "checkpoint_seconds": 0.01962129003368318
+        }
+      ],
+      "peak_cuda_allocated_bytes": 7623074304,
+      "observed_training_mean_success": [
+        0.625,
+        1.0
+      ],
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1/transformer_xl-seed0/latest.pt",
+        "snapshot_iteration": 2,
+        "scope": "Mutable latest checkpoint observed after update2; later complete checkpoints may supersede this hash",
+        "sha256": "1bb520a765d54d78fe52c26c1b33ce669763026d3ae71436e1274558c55fb5f3",
+        "bytes": 3257493,
+        "modified_shanghai": "2026-10-28T17:00:52.418167352+08:00"
+      }
+    }
+  },
+  "shared_trial_plan_sha256": [
+    "5b5d7da4317e858d73cffeb94518211896eaeba191cd1bb2aff776aa5ef67648",
+    "83fae118d0e5cee2763d8875183e8893451171c6e84ec41fb5d643445d7824d3"
+  ],
+  "baseline_evaluation0": {
+    "normal": {
+      "mean_success": 0.625,
+      "success_by_attempt": [
+        0.5,
+        1.0,
+        0.5,
+        0.5
+      ],
+      "trials": 2
+    },
+    "memory_wiped": {
+      "mean_success": 0.625,
+      "success_by_attempt": [
+        0.5,
+        1.0,
+        0.5,
+        0.5
+      ],
+      "trials": 2
+    },
+    "reward_blind": {
+      "mean_success": 0.625,
+      "success_by_attempt": [
+        0.5,
+        1.0,
+        0.5,
+        0.5
+      ],
+      "trials": 2
+    }
+  },
+  "conclusion": "Both real native-feature bridge learners completed two finite four-epoch PPO updates and remain active. This is execution/gradient qualification, not evidence of adaptation improvement.",
+  "next_action": "Continue unchanged source/contract toward100 updates until9000s cap; monitor held-out normal/memory-wiped/reward-blind evaluation at10/50/100. Observed rate exceeds the current cap for100 updates, so any continuation uses the saved complete checkpoint and a fresh output identity."
+}

@@ -1,0 +1,69 @@
+{
+  "contract": {
+    "protocol": "cached_rotation_a1_plumbing_v2",
+    "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+    "cache": {
+      "sha256": "74910dc755b959fe86ec0a3d4cf1c05957ba57510c64bbb1bb2c85ba56e41575",
+      "rows": 704,
+      "scenes": 64,
+      "splits": {
+        "train": 48,
+        "validation": 16
+      },
+      "theta_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "phi_degrees": [
+        -45.0,
+        0.0,
+        45.0
+      ],
+      "net_angle_degrees": [
+        -90.0,
+        -45.0,
+        0.0,
+        45.0,
+        90.0
+      ],
+      "reward_field": "success_once",
+      "split_rule": "scene_index modulo 4: validation=3; train=0,1,2"
+    },
+    "core": "persistent_ctm",
+    "core_config": {
+      "width": 64,
+      "ticks": 4,
+      "history_length": 10,
+      "synapse_depth": 8,
+      "bounded_synchronisation": true,
+      "decay_per_observation": true
+    },
+    "attempts": 8,
+    "num_envs": 64,
+    "seed": 0,
+    "observation_encoding": "clock_by_declared_max_v1",
+    "optimization": {
+      "epochs": 4,
+      "minibatch_trials": 16,
+      "clip": 0.2,
+      "gamma": 1.0,
+      "gae_lambda": 1.0,
+      "entropy_coef": 0.01,
+      "value_coef": 0.01,
+      "max_grad_norm": 1.0,
+      "reward_offset": 0.5,
+      "normalize_advantages": true
+    },
+    "learning_rate": 0.0003,
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "updates": 500,
+  "parameters": 95274,
+  "retained_state_bytes_per_lane": 4864,
+  "cache_path": "/mowenjie/fluffy-bassoon/outputs/maniskill-pi05-baige-gates-20261028-r7/execution/headroom-rl/outcomes.jsonl",
+  "execution": "baige",
+  "hostname": "job-61p1rncjnr1x-master-0",
+  "limitation": "existing headroom table; shared objects/angles; no AD warm start or live validation"
+}

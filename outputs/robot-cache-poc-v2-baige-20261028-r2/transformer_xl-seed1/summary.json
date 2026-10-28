@@ -1,0 +1,150 @@
+{
+  "completed": true,
+  "iteration": 500,
+  "checkpoint_sha256": "b63c60a9e4c60a75680ee4d0a2c138255154c6bfb62a0f809bf63bb36beb651f",
+  "evaluation": {
+    "greedy_normal": {
+      "mean_reward": 0.57568359375,
+      "reward_by_attempt": [
+        0.421875,
+        0.46875,
+        0.5546875,
+        0.58203125,
+        0.64453125,
+        0.6484375,
+        0.66015625,
+        0.625
+      ],
+      "trial_reward": 4.60546875,
+      "trials": 256
+    },
+    "greedy_memory_wiped": {
+      "mean_reward": 0.45458984375,
+      "reward_by_attempt": [
+        0.421875,
+        0.46875,
+        0.453125,
+        0.4140625,
+        0.50390625,
+        0.4921875,
+        0.46875,
+        0.4140625
+      ],
+      "trial_reward": 3.63671875,
+      "trials": 256
+    },
+    "greedy_reward_blind": {
+      "mean_reward": 0.36474609375,
+      "reward_by_attempt": [
+        0.421875,
+        0.3515625,
+        0.34375,
+        0.36328125,
+        0.3203125,
+        0.43359375,
+        0.34375,
+        0.33984375
+      ],
+      "trial_reward": 2.91796875,
+      "trials": 256
+    },
+    "sampled_normal": {
+      "mean_reward": 0.572265625,
+      "reward_by_attempt": [
+        0.421875,
+        0.46875,
+        0.5546875,
+        0.58203125,
+        0.62890625,
+        0.6484375,
+        0.63671875,
+        0.63671875
+      ],
+      "trial_reward": 4.578125,
+      "trials": 256
+    },
+    "sampled_memory_wiped": {
+      "mean_reward": 0.45654296875,
+      "reward_by_attempt": [
+        0.421875,
+        0.4609375,
+        0.45703125,
+        0.42578125,
+        0.50390625,
+        0.49609375,
+        0.47265625,
+        0.4140625
+      ],
+      "trial_reward": 3.65234375,
+      "trials": 256
+    },
+    "sampled_reward_blind": {
+      "mean_reward": 0.3583984375,
+      "reward_by_attempt": [
+        0.421875,
+        0.35546875,
+        0.34765625,
+        0.3671875,
+        0.3203125,
+        0.3828125,
+        0.33984375,
+        0.33203125
+      ],
+      "trial_reward": 2.8671875,
+      "trials": 256
+    }
+  },
+  "baselines": {
+    "zero": {
+      "mean_reward": 0.423828125,
+      "reward_by_attempt": [
+        0.421875,
+        0.42578125,
+        0.44921875,
+        0.41015625,
+        0.421875,
+        0.43359375,
+        0.4453125,
+        0.3828125
+      ],
+      "trial_reward": 3.390625,
+      "trials": 256
+    },
+    "oracle": {
+      "mean_reward": 0.74755859375,
+      "reward_by_attempt": [
+        0.734375,
+        0.74609375,
+        0.7265625,
+        0.765625,
+        0.73046875,
+        0.7890625,
+        0.765625,
+        0.72265625
+      ],
+      "trial_reward": 5.98046875,
+      "trials": 256
+    },
+    "thompson": {
+      "mean_reward": 0.45361328125,
+      "reward_by_attempt": [
+        0.36328125,
+        0.38671875,
+        0.4296875,
+        0.4453125,
+        0.4921875,
+        0.47265625,
+        0.53125,
+        0.5078125
+      ],
+      "trial_reward": 3.62890625,
+      "trials": 256
+    }
+  },
+  "counters": {
+    "environment_steps": 256000,
+    "optimizer_steps": 8000,
+    "evaluation_steps": 73728
+  },
+  "elapsed_seconds": 243.4414897719398
+}
