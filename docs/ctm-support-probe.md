@@ -64,6 +64,14 @@ interface competence unresolved: it does not prove that the interface is
 incapable, nor isolate a memory or PPO failure. Pointwise flow-loss bounds and
 decoded-action distances help diagnose this gate but cannot replace live success.
 
+`pi05_privileged_tracker` supplies a separate capacity diagnostic. It computes
+a private same-noise target, then executes through the actual four-Euler
+sampler with each residual coordinate clipped to the existing bound. Its scalar
+gain is selected on training scenes; held-out scenes remain independent. At
+known zero rotation it uses exactly zero residual. This controller incurs extra
+teacher-only native queries and is not a learned CTM or a student initialization.
+It helps distinguish intervention capacity from failure of a fitted teacher.
+
 ## Held-out support and fresh probes
 
 `make_heldout_probe_plan` returns the evaluator wrapper: a three-attempt
@@ -133,11 +141,20 @@ collector-by-reader evaluation after qualifying the current interface:
    collector supports more useful evidence. A higher end-to-end score or a
    wrong-history lesion alone does not establish that claim.
 
-The current bounded qualification uses shared offline histories for fitting CTM
+The balanced warm-start qualification uses shared offline histories for fitting CTM
 and XL, but their live supports are collected by their own policies. It does
 not implement this controlled collector-by-reader comparison and must not be
-reported as evidence for active experimentation. Do not modify an active run
-to add the comparison; use a fresh, pinned protocol after auditing the gate.
+reported as evidence for active experimentation.
+
+The separate `pi05_crossed_probe` driver records three-support public streams
+with `pi05_public_history`, reconstructs each reader's own memory, verifies
+own-reader replay parity, and evaluates normal/reset probes under paired scene
+and native-noise plans. Public records exclude labels and collector memory;
+complete boundary snapshots preserve unfinished public prefixes separately from
+final history artifacts. Parent weights and derived zero-head fingerprints are
+recorded explicitly. Crossed diagnostic scores remain conditional on reader
+familiarity with each collector's histories. Do not modify an active run to add
+the comparison; use a fresh, pinned protocol after auditing the gate.
 
 ## Measure the benefit of warm starts
 
@@ -155,6 +172,15 @@ Check live competence and state-dependent fresh-probe behavior; validation loss
 alone cannot promote a candidate. A DPT-only versus direct-PPO diagnostic does
 not establish the benefit of subsequent DPT-to-PPO training. Longer training
 should follow verified interface competence and the bounded evaluation audit.
+
+`pi05_paired_ppo_plan` and `pi05_bridge_train --balanced-paired-plan` provide the
+bounded matched comparison. Admission requires externally checksum-pinned live
+gate evidence and balanced parent weights. Both routes receive identical
+per-update scene plans and motor/residual noise seeds, fresh optimizers and zero
+critics; only the DPT route transfers the declared supervised weights. Retain
+every completed-update checkpoint so cap-limited routes can be compared at a
+common online budget. Preparation or passing software tests does not admit a
+run when live competence remains unresolved.
 
 ## Admission
 

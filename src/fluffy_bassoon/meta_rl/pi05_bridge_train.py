@@ -7,6 +7,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import shutil
 import signal
 import subprocess
@@ -279,6 +280,41 @@ def admit_gpu(args, root, output):
     return mode
 
 
+def load_paired_gate_receipt(path, expected_sha256):
+    from .pi05_paired_ppo_plan import require_live_competence_gate
+    if path is None or not isinstance(expected_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_sha256):
+        raise ValueError("Require reviewed live competence gate path and SHA256 together")
+    path = Path(path)
+    if sha256(path) != expected_sha256:
+        raise ValueError("Live competence gate checksum differs")
+    gate = json.loads(path.read_text())
+    if sha256(path) != expected_sha256:
+        raise ValueError("Live competence gate changed while reading")
+    return require_live_competence_gate(gate)
+
+
+def paired_plan_admission(args, infos, policy, contract):
+    """Verify externally pinned gate and DPT parent before starting paired PPO."""
+    from .pi05_paired_ppo_plan import PairedPPOPlanProvider, make_paired_ppo_contract
+    from .warmstart import checked_load, compatibility, validate_weights
+    if (not args.paired_parent or not args.paired_parent_sha256 or not args.competence_gate
+            or not args.competence_gate_sha256):
+        raise ValueError("Paired PPO requires hash-pinned balanced parent and reviewed live competence gate")
+    gate = load_paired_gate_receipt(args.competence_gate, args.competence_gate_sha256)
+    saved = checked_load(args.paired_parent, args.paired_parent_sha256)
+    if saved.get("manifest", {}).get("compatibility") != compatibility(NATIVE, contract):
+        raise ValueError("Paired DPT parent differs from the actual native training interface")
+    validate_weights(policy, saved.get("policy"))
+    provider = PairedPPOPlanProvider(infos, seed=args.seed, updates=args.updates)
+    comparison = make_paired_ppo_contract(provider, source_commit=contract["source_commit"],
+        warmstart_sha256=args.paired_parent_sha256, warmstart_provenance=saved["manifest"], competence_gate=gate)
+    if args.warmstart and args.warmstart_sha256 != args.paired_parent_sha256:
+        raise ValueError("DPT route must initialize from the paired comparison's declared parent")
+    comparison.update(route="dpt_to_ppo" if args.warmstart else "direct_ppo",
+                      competence_gate_file_sha256=args.competence_gate_sha256)
+    return provider, comparison
+
+
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--source-commit", required=True)
@@ -312,6 +348,12 @@ def parser():
     add_warmstart_arguments(p)
     p.add_argument("--collect-dpt", action="store_true",
                    help="Collect imperfect histories plus training-only corrected motor labels; no PPO updates")
+    p.add_argument("--balanced-paired-plan", action="store_true",
+                   help="New bounded comparison only: balanced six-lane paired plans and noise streams")
+    p.add_argument("--paired-parent", type=Path)
+    p.add_argument("--paired-parent-sha256")
+    p.add_argument("--competence-gate", type=Path)
+    p.add_argument("--competence-gate-sha256")
     return p
 
 
@@ -320,6 +362,19 @@ def main(argv=None):
     validate_warmstart_arguments(args)
     if args.collect_dpt and (args.warmstart or args.resume):
         raise ValueError("DPT collection uses the fixed base behavior and a fresh immutable dataset")
+    if args.balanced_paired_plan and (
+            args.collect_dpt or args.num_envs != 6 or args.attempts != 4 or args.objects != [0, 1]
+            or args.core != "persistent_ctm" or args.width != 64 or args.ticks not in (None, 4)
+            or not 1 <= args.updates <= 20 or args.ppo_epochs != 4 or args.learning_rate != 1e-4
+            or args.value_coef != .01 or args.reward_offset != 0 or args.target_kl != .05
+            or args.noise_scale != .05 or args.residual_scale != 1.):
+        raise ValueError("Arguments differ from the declared matched six-lane paired PPO contract")
+    if not args.balanced_paired_plan and any(getattr(args, key) is not None for key in (
+            "paired_parent", "paired_parent_sha256", "competence_gate", "competence_gate_sha256")):
+        raise ValueError("Paired parent/gate inputs require the explicit paired-plan phase")
+    if args.balanced_paired_plan:
+        # Refuse an unresolved gate before loading the large motor or simulator.
+        load_paired_gate_receipt(args.competence_gate, args.competence_gate_sha256)
     if sys.platform != "linux":
         raise ValueError("Live model/simulator computation requires allocated Linux resources")
     ms.execution_mode()
@@ -399,6 +454,10 @@ def main(argv=None):
             contract.update(protocol="native_pi05_dpt_collection_v1", label_seed=args.seed + 17,
                 labels="training-only inverse actuator rotation applied to frozen motor actions",
                 behavior="fixed base motor plus Gaussian flow residual noise; actual feedback preserved")
+        plan_provider = None
+        if args.balanced_paired_plan:
+            plan_provider, comparison = paired_plan_admission(args, env.env.unwrapped.basic_obj_infos, policy, contract)
+            contract.update(protocol="native_pi05_paired_dpt_ppo_v1", paired_comparison=comparison)
         if args.resume:
             iteration, counters = restore_live_checkpoint(args.resume, policy=policy, optimizer=optimizer,
                                                           environment_rng=sampler, motor_rng=motor_rng, contract=contract)
@@ -421,9 +480,14 @@ def main(argv=None):
         for name in ("SIGUSR1", "SIGTERM", "SIGINT"):
             signal.signal(getattr(signal, name), request_stop)
         def checkpoint():
-            return save_live_checkpoint(args.output_dir / "latest.pt", policy=policy, optimizer=optimizer,
+            digest = save_live_checkpoint(args.output_dir / "latest.pt", policy=policy, optimizer=optimizer,
                                         environment_rng=sampler, motor_rng=motor_rng, iteration=iteration,
                                         counters=counters, contract=contract)
+            if args.balanced_paired_plan:
+                retained = args.output_dir / f"checkpoint-{iteration}.pt"
+                if not retained.exists():
+                    shutil.copyfile(args.output_dir / "latest.pt", retained)
+            return digest
         def evaluation():
             before = ms.model_fingerprint(policy)
             result, raw = {}, {}
@@ -460,8 +524,12 @@ def main(argv=None):
                                            evaluation_seconds=time.monotonic() - phase), allow_nan=False) + "\n")
             while iteration < args.updates and not stop and time.monotonic() - started < args.max_elapsed_seconds:
                 timing = {}
-                plan = sample_trial_plan(env.env.unwrapped.basic_obj_infos, args.objects,
-                                         args.attempts, args.num_envs, sampler)
+                if plan_provider is None:
+                    plan = sample_trial_plan(env.env.unwrapped.basic_obj_infos, args.objects,
+                                             args.attempts, args.num_envs, sampler)
+                else:
+                    plan = plan_provider(iteration)
+                    motor_rng.manual_seed(plan["motor_residual_rng_seed"])
                 phase = time.monotonic()
                 rollout = collect_live_trials(policy, motor, env, plan, generator=motor_rng, dpt_generator=label_rng)
                 timing["collection_seconds"] = time.monotonic() - phase
