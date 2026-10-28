@@ -15,6 +15,12 @@ episode starts with the same hidden task. Only the four-dimensional physical
 state is exposed; `desired_goal`, task identity, shortest paths, and success
 metadata are not policy inputs. Public reward and boundaries remain available.
 
+Action duration is explicitly 0.1 seconds: ten 0.01-second MuJoCo substeps per
+policy action. Installed Farama v1.4.2 instead defaults to one substep, despite
+the PointMaze documentation's 10Hz description. This adapter sets frame_skip=10
+on its own environment object, without modifying the shared package. Record
+both decisions and physics substeps when comparing other simulator protocols.
+
 The pools contain 100 training, 24 fresh training-range, and 24 test
 configurations. A task specifies start/goal cells with shortest path at least
 10 plus a reset seed fixing their continuous offsets throughout the trial.

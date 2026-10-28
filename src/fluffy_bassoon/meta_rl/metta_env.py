@@ -51,9 +51,18 @@ def distant_pairs():
 def pointmaze_factory():
     import gymnasium_robotics
     gym.register_envs(gymnasium_robotics)
-    return gym.make("PointMaze_UMaze-v3", maze_map=[list(row) for row in MAZE],
+    env = gym.make("PointMaze_UMaze-v3", maze_map=[list(row) for row in MAZE],
                     reward_type="sparse", continuing_task=False, reset_target=False,
                     max_episode_steps=500)
+    # The installed Farama PointEnv uses 1 x .01s physics step, whereas the
+    # documented PointMaze control rate is 10Hz. Explicitly hold each policy
+    # command for ten physics steps; never conflate decisions and substeps.
+    point = env.unwrapped.point_env
+    if not np.isclose(point.model.opt.timestep, .01):
+        raise RuntimeError("PointMaze physics timestep changed; requalify action duration")
+    point.frame_skip = 10
+    point.metadata = dict(point.metadata, render_fps=10)
+    return env
 
 
 def halfcheetah_factory():
@@ -95,6 +104,8 @@ def benchmark_contract(benchmark):
     if benchmark == "pointmaze":
         return dict(**common, reward="+1 once at goal; zero otherwise; native success terminates each episode",
                     maze=MAZE, minimum_cell_path_distance=10,
+                    physics_timestep_seconds=.01, physics_substeps_per_action=10,
+                    control_timestep_seconds=.1,
                     split="100 training and 24 fresh configurations on 40 pairs; 24 test configurations on disjoint held-out pairs; shared layout/cells",
                     termination="early physical reset at success; masked padding only AFTER complete trial",
                     padding="no simulator action or PPO actor/critic/entropy loss; excluded from state moments")

@@ -63,7 +63,9 @@ def main(argv=None):
                             state = obs["state"]
                             if waypoint < len(waypoints) - 1 and np.linalg.norm(state[:2] - waypoints[waypoint]) < .15:
                                 waypoint += 1
-                            action = np.clip(10. * (waypoints[waypoint] - state[:2]) - 3. * state[2:], -1., 1.)
+                            # The XML actuator gear is 100: use bounded PD force,
+                            # rather than saturating every step and overshooting turns.
+                            action = np.clip(.5 * (waypoints[waypoint] - state[:2]) - .2 * state[2:], -1., 1.)
                         elif condition == "white_noise":
                             action = np.tanh(rng.normal(size=2))
                         else:
