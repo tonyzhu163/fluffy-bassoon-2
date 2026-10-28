@@ -1,0 +1,14 @@
+--- a/rlinf/models/embodiment/openpi/checkpoint.py
++++ b/rlinf/models/embodiment/openpi/checkpoint.py
+@@ -248,7 +248,10 @@
+         _load_safetensors_state_dict(safetensors_path),
+         safetensors_path,
+     )
+-    incompatible = model.load_state_dict(state_dict, strict=False)
++    from fluffy_bassoon.rl.rlinf_checkpoint_compat import map_legacy_noise_head
++
++    state_dict = map_legacy_noise_head(state_dict, model.state_dict())
++    incompatible = model.load_state_dict(state_dict, strict=True)
+     unexpected = list(incompatible.unexpected_keys)
+     if not hasattr(model, "value_head"):
+         unused_value_keys = [key for key in unexpected if key.startswith("value_head.")]
