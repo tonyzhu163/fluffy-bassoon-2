@@ -1,7 +1,9 @@
 # Reward-driven adaptation inside a VLA's context
 
 Status: prototype implemented in `rl/pi05_context_policy.py` and the bounded
-`meta_rl.pi05_context_pilot` driver; runtime qualification and results pending.
+`meta_rl.pi05_context_pilot` driver. The real-model gradient/parity/replay gate
+has passed; end-to-end collection and learning qualification are tracked in
+[EVALUATION.md](../src/fluffy_bassoon/meta_rl/EVALUATION.md).
 This is a separate experimental arm alongside the existing frozen-motor CTM
 and Transformer-XL bridges. It tests whether the VLA can implement adaptation
 through its own attention, without a separate deployment-time learner.

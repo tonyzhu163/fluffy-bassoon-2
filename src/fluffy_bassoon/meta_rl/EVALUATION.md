@@ -262,3 +262,45 @@ used a different core and their checkpoints do not load at later sources. The
 "CTM control" in those screens is the CMM with its memory blocks removed, not
 the persistent CTM. The persistent-CTM bandit results (T1/T4 legacy and bounded
 synchronization) are summarized in fluffy-bassoon `outputs/coordination.md`.
+
+## Direct native VLA context interface (2026-10-28)
+
+The separate native-context arm inserts the eleven public scalar feedback
+fields as native prefix tokens and trains rank-four prefix-attention LoRA,
+feedback projection/type embeddings and a training-only value head. Its
+base pi0.5 and action expert stay frozen. The learner sees the current native
+observation and scalar history, without historical images or privileged theta.
+See [the contract](../../../docs/native-vla-context-icrl.md).
+
+Real-model admission passed on Baige `job-8kkjhb65px67`, source
+`b5d97b0a7c0f6aed29660a96e2ab10cce9610915`, one allocated RPBZZZ6.
+The CUDA probe passed, seven policy tests passed in 2.10 seconds, and the
+renderer was bound to the allocated PCI `0000:62:00.0` device.
+
+| Check | Observed result |
+| --- | --- |
+| Empty-history native four-Euler action parity | Exact; maximum error 0 |
+| Twelve fixed-example flow fitting updates | Loss 0.306293 to 0.230301, 9.18 seconds |
+| Final public-feedback projection gradient norm | 0.0134457, no nonfinite parameter gradients |
+| Joint stochastic velocity likelihood replay | Exact; maximum error 0 |
+| Frozen original motor tensors | Unchanged SHA256 `4191deb5458127d2d1939807f2f604f5c224bc27488e9a23ae3b08d3462bb0f8` |
+| Peak allocated CUDA memory at gate | 10,703,170,560 bytes |
+| Trainable adapter/critic parameters | 950,273 |
+
+This proves that the native conditioning path is trainable and replayable on
+one real observation. It does not prove live adaptation. The fitting weights
+were restored to their initialization after the gate.
+
+The same job stopped before completing collection: native action preparation
+returns CPU commands and the collector initially failed to move the previous
+command back to the GPU feedback buffer. The earlier r2 attempt had stopped
+at a nonfinite backward norm from zero-initialized history tokens; a nonzero
+learned history type embedding enabled the successful r3 gate. Both failures
+and their output identities are retained. The collector device fix and its
+CPU/CUDA integration regression are separate from the admitted r3 source.
+
+Raw admission and failure receipts:
+[r3 artifacts](../../../outputs/native-vla-context-pilot-20261028-r3/evidence/),
+[r2 failure](../../../outputs/native-vla-context-pilot-20261028-r2/RESULTS.md).
+No held-out adaptation, reward-use or architecture-comparison result is yet
+established by this arm.
