@@ -144,7 +144,7 @@ def plan(args):
     return manifest
 
 
-def load_manifest(path):
+def load_manifest(path, *, verify_source=True):
     path = Path(path).resolve()
     digest = sha256(path)
     if path.with_suffix(".sha256").read_text().strip() != digest:
@@ -153,7 +153,8 @@ def load_manifest(path):
     if (manifest.get("version") != 1 or not manifest.get("members")
             or [m["index"] for m in manifest["members"]] != list(range(len(manifest["members"])))):
         raise ValueError("Invalid screen manifest")
-    clean_source(manifest["source_commit"])
+    if verify_source:
+        clean_source(manifest["source_commit"])
     return path, digest, manifest
 
 
@@ -175,6 +176,7 @@ def cost_receipt(training_dir, manifest, member):
     evaluations = [r["timing"]["evaluation_seconds"] for r in updates
                    if "evaluation_seconds" in r.get("timing", {})]
     training = manifest["training"]
+    summary = json.loads((training_dir / "summary.json").read_text())
     estimate = None
     if durations:
         estimate = statistics.median(durations) * training["updates"]
@@ -184,6 +186,7 @@ def cost_receipt(training_dir, manifest, member):
                 median_rollout_and_update_seconds=None if not durations else statistics.median(durations),
                 median_evaluation_seconds=None if not evaluations else statistics.median(evaluations),
                 estimated_training_seconds_at_declared_updates=estimate,
+                cuda_memory=summary.get("cuda_memory"),
                 note="Pilot extrapolation excludes diagnostic evaluation, startup and checkpoint overhead",
                 policy_forward_samples_per_update=member["attempts"] * training["num_envs"]
                     * (1 + training["ppo_epochs"]))
@@ -256,6 +259,76 @@ def run_one(manifest_path, digest, manifest, index, attempt_id, resume=None):
     return receipt
 
 
+def report(args):
+    """Read receipts without constructing models or requiring an allocation."""
+    path, digest, manifest = load_manifest(args.manifest, verify_source=False)
+    if min(args.project_updates, args.project_seeds, args.workers) < 1:
+        raise ValueError("Projection updates, seeds and workers must be positive")
+    cells = []
+    estimates = []
+    complete = 0
+    for member in manifest["members"]:
+        roots = list((path.parent / "members").glob(f"{member['index']:03d}-*/*"))
+        attempts = []
+        for root in roots:
+            if not (root / "launch.json").exists():
+                continue
+            launch = json.loads((root / "launch.json").read_text())
+            if launch["manifest"]["sha256"] != digest:
+                raise ValueError("An execution receipt belongs to a changed manifest")
+            result = json.loads((root / "receipt.json").read_text()) if (root / "receipt.json").exists() else None
+            attempts.append((launch["allocation"]["utc"], root, result))
+        attempts.sort(key=lambda item: item[0])
+        completed = [item for item in attempts if item[2] and item[2]["completed"]]
+        selected = (completed or attempts)[-1] if attempts else None
+        row = dict(member=member, status="not_started", attempts=len(attempts))
+        if selected:
+            _, root, receipt = selected
+            row.update(attempt_path=str(root), status="running_or_interrupted")
+            if (root / "failure.json").exists():
+                row["status"] = "failed"
+            if receipt:
+                row.update(status="completed" if receipt["completed"] else "paused",
+                           iteration=receipt["training"]["iteration"], cost=receipt["cost"])
+                complete += int(receipt["completed"])
+                cost = receipt["cost"]
+                if cost["median_rollout_and_update_seconds"] is not None:
+                    training_seconds = cost["median_rollout_and_update_seconds"] * args.project_updates
+                    evaluation_seconds = cost["median_evaluation_seconds"]
+                    if evaluation_seconds is not None:
+                        training_seconds += evaluation_seconds * (math.ceil(args.project_updates / manifest["training"]["eval_every"]) + 1)
+                    saved_summary = json.loads((root / "training/summary.json").read_text())
+                    overhead = max(0., receipt["elapsed_seconds"] - saved_summary["elapsed_seconds"])
+                    row["projected_seconds_per_seed"] = training_seconds + overhead
+                    estimates.append((member["variant"], member["attempts"], row["projected_seconds_per_seed"]))
+        cells.append(row)
+    per_cell = {}
+    for variant, attempts, seconds in estimates:
+        per_cell.setdefault((variant, attempts), []).append(seconds)
+    projection = []
+    worker_seconds = [0.] * args.workers
+    for (variant, attempts), values in sorted(per_cell.items()):
+        seconds = statistics.median(values)
+        projection.append(dict(variant=variant, attempts=attempts, measured_seeds=len(values),
+                               estimated_seconds_per_seed=seconds,
+                               estimated_device_hours=seconds * args.project_seeds / 3600))
+        for _ in range(args.project_seeds):
+            worker = min(range(args.workers), key=worker_seconds.__getitem__)
+            worker_seconds[worker] += seconds
+    result = dict(manifest=dict(path=str(path), sha256=digest), source_commit=manifest["source_commit"],
+                  device=manifest["training"]["device"], completed=complete, members=len(cells), cells=cells,
+                  projection=dict(updates=args.project_updates, seeds=args.project_seeds, workers=args.workers,
+                                  estimated_cells=len(projection) * args.project_seeds,
+                                  expected_cells=len(manifest["variants"]) * len({m["attempts"] for m in manifest["members"]}) * args.project_seeds,
+                                  measured_configuration_groups=len(projection),
+                                  estimated_device_hours=sum(worker_seconds) / 3600,
+                                  estimated_balanced_worker_wall_hours=max(worker_seconds) / 3600,
+                                  configurations=projection,
+                                  note="Pilot extrapolation at the sealed batch/optimizer settings; missing groups are excluded"))
+    print(json.dumps(result, allow_nan=False), flush=True)
+    return result
+
+
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     commands = p.add_subparsers(dest="command", required=True)
@@ -290,6 +363,11 @@ def parser():
     q.add_argument("--shard-index", type=int, required=True)
     q.add_argument("--shards", type=int, required=True)
     q.add_argument("--indices", type=int, nargs="+", help="Optional bounded subset; default all members")
+    q = commands.add_parser("report", help="Read receipts and project measured costs without model computation")
+    q.add_argument("--manifest", type=Path, required=True)
+    q.add_argument("--project-updates", type=int, default=300)
+    q.add_argument("--project-seeds", type=int, default=5)
+    q.add_argument("--workers", type=int, default=1)
     return p
 
 
@@ -297,6 +375,8 @@ def main(argv=None):
     args = parser().parse_args(argv)
     if args.command == "plan":
         return plan(args)
+    if args.command == "report":
+        return report(args)
     path, digest, manifest = load_manifest(args.manifest)
     if args.command == "run":
         result = run_one(path, digest, manifest, args.index, args.attempt_id, args.resume)

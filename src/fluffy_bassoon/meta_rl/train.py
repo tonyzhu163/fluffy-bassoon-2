@@ -278,6 +278,9 @@ def main(argv=None):
                    source_commit=source, counters=counters, elapsed_seconds=time.monotonic() - started,
                    checkpoint=dict(path=str(args.output_dir / "latest.pt"), sha256=checkpoint_digest),
                    last_evaluation=last_evaluation)
+    if args.device == "cuda":
+        summary["cuda_memory"] = dict(peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                                     peak_reserved_bytes=torch.cuda.max_memory_reserved())
     write_json(args.output_dir / "summary.json", summary)
     return summary
 

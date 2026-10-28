@@ -315,6 +315,10 @@ time caps save the existing complete between-trial checkpoint; `run --resume`
 restores into a new attempt directory under the same source and training contract.
 The screening worker stops on an incomplete member so a partial result is never
 treated as a completed seed. Recovery does not overwrite the old attempt.
+CUDA summaries also retain peak allocated and reserved memory. `screen report`
+reads completed receipts without constructing models and projects measured
+update, evaluation and diagnostic costs to a declared update/seed budget. Missing
+configuration groups are explicitly excluded from the projection.
 
 Final diagnostics evaluate greedy actions and three independent policy-sampling
 seeds, each under normal memory, reset between attempts, and reward blinding.
