@@ -1,5 +1,9 @@
 # Native DPT warm-start recovery
 
+Completed with exit zero on 2026-10-28 at 18:46:56 Asia/Shanghai. See
+[RESULTS.md](RESULTS.md) for the audited candidate, frozen live diagnostics,
+one-step PPO transition and limitations. The launch contract below is preserved.
+
 This run executes only the already approved native stages of the
 [original pilot](../ctm-dpt-warmstart-20261028-r1/PLAN.md). Seven compact
 candidates from r1 are retained and are not retrained. The recovery corrects

@@ -2,6 +2,32 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Native DPT warm-start completion, 2026-10-28
+
+Baige `job-l3coajmm9noh`, source
+`79da19500f4e898d078539b4c562c150e610c16a`, completed with exit zero at 18:46:56
+Shanghai. The paired training-distribution label gate scored 6/16 successes for
+the frozen motor and 15/16 for the inverse-rotation oracle. The CTM then completed
+100 flow-matching updates, saving a native warm start and full recovery state.
+Validation flow loss fell .386777 to .333308, but the two training trials cover
+only +45/0 degrees and the two reserved validation trials only 0 degrees.
+
+Frozen held-out evaluation before PPO has two trials/four attempts per condition:
+normal 3/8 (37.5%), memory-wiped 2/8 (25%), reward-blind 3/8 (37.5%). Normal and
+reward-blind aggregate attempt curves also match, although individual outcomes
+differ. These tiny results do not establish useful reward-driven ICRL or a
+benefit over direct PPO; no candidate is promoted. The gate's frozen-motor score
+and the candidate's held-out score use different distributions and are not a
+matched comparison.
+
+PPO loaded the correct initializer, replayed stored likelihoods/values exactly,
+and took one optimizer step before its .05 KL guard stopped further epochs.
+The 7/8 success reported on that collection is pre-update training behavior,
+not a post-PPO evaluation. Motor fingerprints remained unchanged. The audit
+verified seven artifact hashes and five raw evaluation arrays; final summaries
+account for 6,400 simulator steps. Full provenance and candidate digest:
+[native completion audit](../../../outputs/ctm-dpt-warmstart-20261028-r2/RESULTS.md).
+
 ## DPT-inspired compact warm-start pilot, 2026-10-28
 
 Baige `job-qqijcsjw5rhu`, source
