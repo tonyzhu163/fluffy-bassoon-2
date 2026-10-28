@@ -6,6 +6,7 @@ import numpy as np
 
 class _TrialEnv(gym.Env):
     metadata = {"render_modes": []}
+    dense_reward = False  # Sparse tasks pay only at attempt ends; dense tasks pay on every step.
 
     def __init__(self, *, attempts, horizon, state_dim, action_space):
         for name, value in (("attempts", attempts), ("horizon", horizon)):
@@ -57,6 +58,7 @@ class _TrialEnv(gym.Env):
         if not self.action_space.contains(action):
             raise ValueError("Action must be finite and inside the declared action space")
         transition_state, success = self._transition(action)
+        attempt_success = self._attempt_success(success)
         if self._discrete:
             previous_action = np.zeros(self.action_space.n, dtype=np.float32)
             previous_action[int(action)] = 1.
@@ -64,7 +66,7 @@ class _TrialEnv(gym.Env):
             previous_action = action.copy()
         self._elapsed += 1
         attempt_end = self._elapsed == self.horizon
-        reward = float(success) if attempt_end else 0.
+        reward = float(success) if attempt_end or self.dense_reward else 0.
         acted_attempt = self._attempt
         self._done = attempt_end and self._attempt == self.attempts - 1
         self._state = transition_state
@@ -74,8 +76,11 @@ class _TrialEnv(gym.Env):
             self._state = self._start_attempt()
         observation = self._observation(transition_state, previous_action, reward, attempt_end)
         info = {"attempt_end": attempt_end, "attempt_index": acted_attempt,
-                "is_success": bool(success) if attempt_end else False}
+                "is_success": attempt_success if attempt_end else False}
         return observation, reward, self._done, False, info
+
+    def _attempt_success(self, success):
+        return bool(success)
 
 
 class HiddenRewardBandit(_TrialEnv):
@@ -110,6 +115,26 @@ class BernoulliBandit(HiddenRewardBandit):
         return self._state.copy(), self.np_random.random() < self._means[int(action)]
 
 
+class NonstationaryBernoulliBandit(BernoulliBandit):
+    """Bernoulli bandit whose arm probabilities are all redrawn before a pull with a fixed hazard."""
+
+    def __init__(self, *, attempts=64, arms=6, hazard=.05):
+        if not 0 < hazard < 1:
+            raise ValueError("hazard must lie strictly between zero and one")
+        self.hazard = float(hazard)
+        super().__init__(attempts=attempts, arms=arms)
+
+    def _sample_hidden(self):
+        super()._sample_hidden()
+        self._mean_history = np.empty((self.attempts, self.action_space.n))
+
+    def _start_attempt(self):
+        if self._attempt and self.np_random.random() < self.hazard:
+            self._means = self.np_random.uniform(0, 1, self.action_space.n)
+        self._mean_history[self._attempt] = self._means
+        return super()._start_attempt()
+
+
 class HiddenGainReach(_TrialEnv):
     """Planar reaching with a trial-fixed signed actuator gain and fresh starts/goals."""
 
@@ -138,3 +163,81 @@ class HiddenGainReach(_TrialEnv):
         goal = self._state[2:]
         state = np.concatenate((position, goal)).astype(np.float32)
         return state, np.linalg.norm(position - goal) <= self.tolerance
+
+
+class _GridTrial(_TrialEnv):
+    """Square grid with a centre start; the state is the agent cell scaled to [-1, 1]."""
+
+    dense_reward = True
+    MOVES = np.array([[0, 0], [0, 1], [0, -1], [-1, 0], [1, 0]])  # stay, up, down, left, right
+
+    def __init__(self, *, attempts, horizon, size):
+        if type(size) is not int or size < 3:
+            raise ValueError("size must be an integer of at least three")
+        self.size = size
+        super().__init__(attempts=attempts, horizon=horizon, state_dim=2,
+                         action_space=gym.spaces.Discrete(len(self.MOVES)))
+
+    def _random_cells(self, count):
+        return [np.array(divmod(int(cell), self.size))
+                for cell in self.np_random.choice(self.size ** 2, count, replace=False)]
+
+    def _encode(self):
+        return (2 * self._position / (self.size - 1) - 1).astype(np.float32)
+
+    def _at(self, cell):
+        return bool((self._position == cell).all())
+
+    def _start_attempt(self):
+        self._position = np.full(2, self.size // 2)
+        self._reset_progress()
+        return self._encode()
+
+    def _transition(self, action):
+        self._position = np.clip(self._position + self.MOVES[int(action)], 0, self.size - 1)
+        return self._encode(), self._reward()
+
+
+class DarkRoom(_GridTrial):
+    """Find a trial-fixed hidden goal cell; every step spent on it pays one."""
+
+    def __init__(self, *, attempts=4, horizon=20, size=9):
+        super().__init__(attempts=attempts, horizon=horizon, size=size)
+
+    def _sample_hidden(self):
+        self._goal, = self._random_cells(1)
+
+    def _reset_progress(self):
+        self._reached = False
+
+    def _reward(self):
+        self._reached |= self._at(self._goal)
+        return self._at(self._goal)
+
+    def _attempt_success(self, success):
+        return self._reached
+
+
+class KeyToDoor(_GridTrial):
+    """Collect a hidden key, then reach a hidden door; each pays one, once per attempt."""
+
+    def __init__(self, *, attempts=4, horizon=50, size=9):
+        super().__init__(attempts=attempts, horizon=horizon, size=size)
+
+    def _sample_hidden(self):
+        self._key, self._door = self._random_cells(2)
+
+    def _reset_progress(self):
+        self._has_key = self._opened = False
+
+    def _reward(self):
+        if not self._has_key and self._at(self._key):
+            self._has_key = True
+            return True
+        if self._has_key and not self._opened and self._at(self._door):
+            self._opened = True
+            return True
+        return False
+
+    def _attempt_success(self, success):
+        return self._opened

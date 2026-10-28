@@ -5,10 +5,13 @@ import numpy as np
 import pytest
 from gymnasium.utils.env_checker import check_env
 
-from fluffy_bassoon.meta_rl.environments import BernoulliBandit, HiddenGainReach, HiddenRewardBandit
+from fluffy_bassoon.meta_rl.environments import (BernoulliBandit, DarkRoom, HiddenGainReach,
+                                                 HiddenRewardBandit, KeyToDoor,
+                                                 NonstationaryBernoulliBandit)
 
 
-@pytest.mark.parametrize("factory", [HiddenRewardBandit, BernoulliBandit, HiddenGainReach])
+@pytest.mark.parametrize("factory", [HiddenRewardBandit, BernoulliBandit, HiddenGainReach,
+                                     NonstationaryBernoulliBandit, DarkRoom, KeyToDoor])
 def test_gymnasium_contract(factory):
     check_env(factory(), skip_render_check=True)
 
@@ -166,3 +169,80 @@ def test_bernoulli_probabilities_persist_and_are_not_observable():
         assert set(info) == {"attempt_end", "attempt_index", "is_success"}
     env.reset()
     assert ((env._means > 0) & (env._means < 1)).all()
+
+
+def test_nonstationary_bandit_records_the_probabilities_behind_each_pull():
+    env = NonstationaryBernoulliBandit(attempts=200, arms=3, hazard=.5)
+    env.reset(seed=3)
+    pulled = []
+    for _ in range(200):
+        pulled.append(env._means.copy())
+        env.step(0)
+    np.testing.assert_array_equal(env._mean_history, pulled)
+    changes = (np.diff(env._mean_history, axis=0) != 0).any(1).mean()
+    assert .35 < changes < .65
+    assert not ({"_means", "_mean_history"} & set(env.observation_space.spaces))
+    with pytest.raises(ValueError, match="hazard"):
+        NonstationaryBernoulliBandit(hazard=0)
+
+
+def walk(env, target):
+    """Oracle moves from the current cell to target; returns the per-step rewards."""
+    rewards = []
+    while not (env._position == target).all():
+        dx, dy = np.sign(target - env._position)
+        action = 4 if dx > 0 else 3 if dx < 0 else 1 if dy > 0 else 2
+        rewards.append(env.step(action)[1])
+    return rewards
+
+
+def test_dark_room_pays_on_goal_steps_and_keeps_the_goal_across_attempts():
+    env = DarkRoom(attempts=2, horizon=20)
+    observation, _ = env.reset(seed=5)
+    goal = env._goal.copy()
+    while (goal == 4).all():
+        observation, _ = env.reset()
+        goal = env._goal.copy()
+    np.testing.assert_array_equal(observation["state"], [0, 0])
+    rewards = walk(env, goal)
+    assert rewards[:-1] == [0.] * (len(rewards) - 1) and rewards[-1] == 1.
+    stay = [env.step(0) for _ in range(20 - len(rewards))]
+    assert all(reward == 1. for _, reward, *_ in stay)
+    observation, _, terminated, _, info = stay[-1]
+    assert info["attempt_end"] and info["is_success"] and not terminated
+    np.testing.assert_array_equal(observation["state"], [0, 0])
+    np.testing.assert_array_equal(env._goal, goal)
+    for step in range(20):
+        _, reward, terminated, _, info = env.step(0)
+        assert reward == 0.
+    assert terminated and not info["is_success"]
+
+
+def test_dark_room_clips_at_walls_and_never_exposes_the_goal():
+    env = DarkRoom(attempts=1, horizon=20, size=5)
+    env.reset(seed=0)
+    env._goal = np.array([4, 4])
+    for _ in range(4):
+        observation, *_ = env.step(3)
+    np.testing.assert_array_equal(observation["state"], [-1, 0])
+    np.testing.assert_array_equal(observation["previous_action"], [0, 0, 0, 1, 0])
+    assert set(observation) == set(env.observation_space.spaces)
+
+
+def test_key_to_door_pays_key_then_door_once_per_attempt():
+    env = KeyToDoor(attempts=2, horizon=50)
+    env.reset(seed=11)
+    key, door = env._key.copy(), env._door.copy()
+    assert not (key == door).all()
+    env._key, env._door = np.array([0, 0]), np.array([8, 8])
+    assert sum(walk(env, np.array([8, 8]))) == 0  # The door pays nothing before the key.
+    assert walk(env, np.array([0, 0]))[-1] == 1.
+    assert sum(walk(env, np.array([8, 0]))) == 0
+    rewards = walk(env, np.array([8, 8]))
+    assert rewards[-1] == 1. and sum(rewards) == 1.
+    used = 8 + 16 + 8 + 8
+    outcomes = [env.step(0) for _ in range(50 - used)]
+    assert all(reward == 0. for _, reward, *_ in outcomes)
+    assert outcomes[-1][-1]["is_success"]
+    env.step(0)
+    assert not env._has_key and not env._opened

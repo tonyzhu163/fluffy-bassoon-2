@@ -19,20 +19,28 @@ from fluffy_bassoon.evaluation_stages import sha256, write_json
 from fluffy_bassoon.gpu_execution import validate_execution
 from .checkpoint import restore_checkpoint, save_checkpoint, initialize_from_motor_checkpoint
 from .cmm import CMMCore
-from .environments import BernoulliBandit, HiddenGainReach, HiddenRewardBandit
+from .environments import (BernoulliBandit, DarkRoom, HiddenGainReach, HiddenRewardBandit, KeyToDoor,
+                           NonstationaryBernoulliBandit)
 from .transformer_xl import TransformerXLCore
 from .ppo import (GRUCore, LoopedTransformerCore, PersistentCTMVectorCore, RecurrentActorCritic,
                   collect_trials, update_ppo)
 
 
+BANDITS = {"bandit": HiddenRewardBandit, "bernoulli": BernoulliBandit,
+           "nonstationary": NonstationaryBernoulliBandit}
+GRIDS = {"darkroom": DarkRoom, "keydoor": KeyToDoor}
+DEFAULT_HORIZONS = {"reach": 8, "darkroom": 20, "keydoor": 50}
+
+
 def make_env(task, attempts, horizon, arms=2):
-    if task in ("bandit", "bernoulli"):
+    if task in BANDITS:
         if horizon != 1:
             raise ValueError("Bandits have exactly one decision per attempt")
-        factory = HiddenRewardBandit if task == "bandit" else BernoulliBandit
-        return factory(attempts=attempts, arms=arms)
+        return BANDITS[task](attempts=attempts, arms=arms)
     if task == "reach":
         return HiddenGainReach(attempts=attempts, horizon=horizon)
+    if task in GRIDS:
+        return GRIDS[task](attempts=attempts, horizon=horizon)
     raise ValueError("Unknown compact RL task")
 
 
@@ -58,17 +66,22 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
                       reset_each_attempt=reset_each_attempt,
                       deterministic=deterministic, policy_seed=None if deterministic else policy_seed,
                       normalize_clock=normalize_clock)
-        if task == "bernoulli":
+        if task in ("bernoulli", "nonstationary"):
             # Latent probabilities score evaluation only; PPO uses sampled rewards and public observations.
-            means = np.stack([env._means for env in envs])
-            actions = rollout["raw_actions"].cpu().numpy().T
-            expected = means[np.arange(len(envs))[:, None], actions]
-            regret = means.max(1, keepdims=True) - expected
+            means = np.stack([env._mean_history if task == "nonstationary"
+                              else np.broadcast_to(env._means, (attempts, env._means.size)) for env in envs])
+            actions = rollout["raw_actions"].cpu().numpy().T.astype(np.int64)
+            expected = np.take_along_axis(means, actions[..., None], 2)[..., 0]
+            regret = means.max(2) - expected
             trial_data["pseudo_regret"] = regret
             return dict(**common, reward_by_attempt=successes.mean(1).cpu().tolist(),
                         mean_reward=float(successes.mean()),
                         expected_regret_by_attempt=regret.mean(0).tolist(),
                         cumulative_expected_regret=float(regret.sum(1).mean())), trial_data
+        if task in GRIDS:
+            # Dense grid rewards sum to a per-attempt return, not a success label.
+            return dict(**common, reward_by_attempt=successes.mean(1).cpu().tolist(),
+                        mean_reward=float(successes.mean())), trial_data
         return dict(**common, success_by_attempt=successes.mean(1).cpu().tolist(),
                     mean_success=float(successes.mean())), trial_data
     finally:
@@ -78,7 +91,7 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
 
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--task", choices=("bandit", "bernoulli", "reach"), default="bandit")
+    p.add_argument("--task", choices=(*BANDITS, "reach", *GRIDS), default="bandit")
     p.add_argument("--core", choices=("gru", "ctm", "persistent_ctm", "cmm", "looped_transformer", "transformer_xl"),
                    default="gru", help="ctm is the CMM port without memory blocks; persistent_ctm is the robot CTM")
     p.add_argument("--output-dir", type=Path, required=True)
@@ -138,7 +151,7 @@ def main(argv=None):
         raise ValueError("Bounded action entropy requires continuous reaching actions")
     if (args.bounded_synchronisation or args.decay_per_observation) and args.core != "persistent_ctm":
         raise ValueError("Synchronization options apply only to the persistent_ctm core")
-    args.horizon = (8 if args.task == "reach" else 1) if args.horizon is None else args.horizon
+    args.horizon = DEFAULT_HORIZONS.get(args.task, 1) if args.horizon is None else args.horizon
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     if source != args.source_commit or subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise ValueError("Training requires the exact clean source commit")
@@ -179,7 +192,7 @@ def main(argv=None):
                         bounded_entropy=args.bounded_action_entropy)
     contract = dict(source_commit=source, task=args.task, attempts=args.attempts, horizon=args.horizon,
                     observation_encoding="clock_by_declared_max_v1",
-                    arms=None if args.task == "reach" else args.arms,
+                    arms=args.arms if args.task in BANDITS else None,
                     num_envs=args.num_envs, seed=args.seed, core=args.core, core_config=core_config,
                     mode=args.mode, device=args.device, dtype="float32", optimization=optimization,
                     optimizer=dict(name="AdamW", learning_rate=args.learning_rate, weight_decay=0.,

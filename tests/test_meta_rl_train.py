@@ -122,6 +122,26 @@ def test_bernoulli_cli_records_rewards_and_diagnostic_regret(tmp_path):
     assert normal["cumulative_expected_regret"] >= 0
 
 
+@pytest.mark.parametrize("task,attempts,horizon", [("nonstationary", 6, 1), ("darkroom", 2, 5), ("keydoor", 2, 6)])
+def test_phase_one_tasks_evaluate_with_rewards_or_regret(task, attempts, horizon):
+    from fluffy_bassoon.meta_rl.ppo import GRUCore, RecurrentActorCritic
+    from fluffy_bassoon.meta_rl.train import evaluate_trials, make_env
+    from gymnasium.spaces.utils import flatdim
+    torch.manual_seed(0)
+    env = make_env(task, attempts, horizon, arms=3)
+    policy = RecurrentActorCritic(GRUCore(int(flatdim(env.observation_space)), width=8, ticks=1), env.action_space)
+    summary, raw = evaluate_trials(policy, task, attempts, horizon, list(range(4)), arms=3)
+    assert summary["environment_steps"] == 4 * attempts * horizon
+    assert "success_by_attempt" not in summary and len(summary["reward_by_attempt"]) == attempts
+    assert raw["rewards"].shape == (4, attempts)
+    if task == "nonstationary":
+        assert raw["pseudo_regret"].shape == (4, attempts) and (raw["pseudo_regret"] >= 0).all()
+    else:
+        assert "cumulative_expected_regret" not in summary
+    with pytest.raises(ValueError, match="one decision"):
+        make_env("nonstationary", attempts, 2)
+
+
 @pytest.mark.skipif(not os.environ.get("SLURM_STEP_ID"), reason="CLI integration requires an allocated Linux step")
 def test_transformer_xl_cli_exact_resume_and_read_only_evaluation(tmp_path):
     from fluffy_bassoon.evaluation_stages import sha256

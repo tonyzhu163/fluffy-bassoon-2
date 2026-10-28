@@ -60,6 +60,27 @@ trial-fixed arm; private probabilities score evaluation only and never enter
 policy inputs, returns or PPO targets. Training and evaluation share the same
 prior but use disjoint reset seeds, so this is not an OOD test.
 
+`NonstationaryBernoulliBandit` (`--task nonstationary`, default 64 attempts, six
+arms) starts like `BernoulliBandit`. Before every pull after the first, with
+probability `hazard` (default 0.05), it redraws all arm probabilities from the
+same uniform prior. It records the probabilities behind each pull so that
+evaluation pseudo-regret is scored against the best arm at that pull. A learner
+that forgets stale evidence at the right rate should beat one that averages the
+whole trial.
+
+`DarkRoom` and `KeyToDoor` (`--task darkroom`, `--task keydoor`) follow the
+dark gridworlds of Algorithm Distillation. Both use a 9×9 grid, five actions
+(stay, up, down, left, right) with clipping at the walls, and a state holding
+only the agent's cell scaled to [-1, 1]. Each attempt starts in the centre. The
+hidden cells are sampled once per trial and persist across attempts. These two
+tasks pay **dense** reward: every step can pay, not only the attempt boundary,
+because a single end-of-attempt bit would test only one cell per attempt. In
+Dark Room (default horizon 20) every step on the goal pays one. In Key-to-Door
+(default horizon 50) reaching the key pays one, and reaching the door afterwards
+pays one; each pays at most once per attempt. `info["is_success"]` at an attempt
+end means "reached the goal" and "opened the door". Evaluation reports the
+per-attempt return as `reward_by_attempt`.
+
 `HiddenGainReach` has two-dimensional bounded actions and physical state
 `[x, y, goal_x, goal_y]`. A hidden signed gain stays fixed across attempts.
 Starts and goals are freshly sampled at each inner boundary. Position updates
