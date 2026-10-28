@@ -2,6 +2,58 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## ML10 controlled debugging: value weight and public clock, 2026-10-29
+
+CTM paired continuation `job-knyy09k3p6rr`, source
+`08a9700616bb4cbac70080f7d3462b03bd1bdd53`, completed exit0 in2430
+launcher-active seconds. Both branches restored the same complete10M parent,
+then each collected1.25M new transitions and used ten PPO epochs,500Adam
+steps and12.5M loss samples. First baseline rollout, policy and full Adam
+state exactly reproduced the independent diagnostic reference. All16raw
+evaluation conditions and both complete recovery checkpoint hashes were
+independently audited; each ends at iteration90/11.25Msteps/4500Adamsteps.
+
+Across two paired evaluation blocks, value_coef.5versus.005 gave train
+normal16.2versus16.0%, reset17.4versus17.0%; held-out normal.8versus2.0%,
+reset.4versus1.2%. The small held-out counts do not establish a generalization
+benefit. The lower coefficient reduced the measured initial shared-core
+critic/actor ratio142to1.42, but did not improve the prespecified training
+success endpoint. First-update cached logprob RMS drift increased.03564to
+.04899. Do not promote.005 on this evidence. This is a short continuation
+with inherited Adam moments, not a from-scratch coefficient comparison.
+Evidence: `outputs/metaworld-ppo-controls-baige-20261029-r1/audit.json`,
+`checkpoint-audit.json` and `value-control-success.png`.
+
+CMM's own optimizer diagnostic `job-eouydzi8z936`, source
+`0b05ddf5b460b353fa82ae18e3ed2100d1234b3e`, passed78tests and completed
+exit0 in291launcher-active seconds. Its shared-core critic/actor gradient
+ratio was131.3; cached logprob RMS drift after ten epochs was.04468.
+Smaller minibatch2 increased drift to.10835 and PPO time30.44to149.00s,
+at the same1.25M loss samples. Full normal/alternative optimizer/sampler/
+normalizer/RNG checkpoints were verified. This does not establish a useful
+CMM value-weight or minibatch change; CTM's control cannot prove transfer.
+
+Frozen CMM clock diagnostic `job-pgjw4p0j22ut`, source
+`a95271a453d70f3b965da7b0979cc1a623000c6a`, passed8allocated tests,
+completed exit0 in506launcher-active seconds and used1M evaluation
+transitions/zero training or optimizer steps. With the original10M checkpoint,
+capping only the normalized episode index at1 after training's five-episode
+range changed normal train success10.0to20.8%, reset22.8to24.8%; held-out
+normal22.4to20.8%, reset26.4to39.6%. The held-out reset gain is mostly
+drawer-open,32to98% within that family. Persistent memory still does not
+beat reset; this is not a learned adaptation or architecture win.
+
+All8raw clock conditions were independently recomputed. The original raw
+outcome/return/family arrays exactly reproduce the parent; all four clock
+pairs retain identical complete first-five-episode trajectory hashes.
+Policy and normalizer fingerprints stayed frozen, and the unchanged parent
+checkpoint hash was independently rechecked. Original comparison curves
+remain unchanged: capped clock is a separate input intervention. The first
+five train episodes score24% under either clock; later20change6.5to20.0%.
+Therefore out-of-range public-clock input explains much of this CMM decline.
+Evidence: `outputs/metaworld-clock-debug-baige-20261029-r1/audit.json`
+and `frozen-clock-success.png`. A matching CTM frozen check is pending.
+
 ## ML10 AMAGO completion, 2026-10-29
 
 Baige `job-dm64v27p0a30`, source
