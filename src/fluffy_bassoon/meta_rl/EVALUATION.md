@@ -260,6 +260,43 @@ allocation. This establishes native interface and zero-residual parity on this
 episode; it does not test trained adaptation. Evidence:
 `/mowenjie/fluffy-bassoon-2/outputs/pi05-feature-bridge-gate-baige-20261028-r1/`.
 
+## Privileged bounded steering capacity screen, 2026-10-28
+
+Baige `job-o16q3eimo8bq`, source
+`c2c47152303ccfc1ac469fd3e1ad1e1344201e42`, completed the prespecified
+tracker and repeated-control schedule in 826.63 driver seconds, exit 0.
+The actual allocation passed 151 focused Linux tests. The ManiSkill task
+was `PutOnPlateInScene25Main-v3`, objects 0/1, using the frozen RLinf
+ManiSkill-finetuned pi0.5 motor. Training scenes selected scalar gains;
+the held-out scenes were not used to tune them.
+
+The privileged tracker executed through the same four-Euler, seven-active-
+dimension, residual-bound-one sampler as the learner. Success at any point
+within each 80-step attempt was:
+
+| Hidden XY rotation | Bounded tracker | Zero bridge | External action oracle |
+| --- | ---: | ---: | ---: |
+| -45 degrees | 0/2 | 0/2 | 1/2 |
+| 0 degrees | 2/2 | 2/2 | 2/2 |
+| +45 degrees | 2/2 | 1/2 | 1/2 |
+| Total | 4/6 | 3/6 | 4/6 |
+
+All three zero repeats matched their complete 16-chunk trajectories and
+outcomes exactly, including native inputs, noise and commands. This is
+repeatability within this run; it does not explain the prior cross-method
+zero discrepancy. The frozen motor fingerprint remained unchanged.
+The prespecified capacity gate **did not pass**, because the tracker failed
+both negative-rotation scenes. The positive-rotation gain is descriptive
+evidence from two scenes, not learned competence or ICRL. Failure does not
+prove the intervention incapable. The crossed-history diagnostic was not
+admitted, and no further PPO ran.
+
+Actual cost: 2,880 simulator steps, 576 action chunks, 928 native prefix and
+3,712 suffix lane queries, including 96 external-label and 256 tracker-target
+motor calls. Complete raw trajectories and recovery state remain on Baige;
+small receipts and the independent audit are in the
+[dated result](../../../outputs/pi05-tracker-gate-baige-20261028-r2/RESULTS.md).
+
 ## CPU test suite after the split, 2026-10-28
 
 Secondary school cluster (thu2), job 48869, node01, 4 CPUs, 8 GiB, no GPU,
