@@ -10,7 +10,7 @@ import subprocess
 
 LOADER = 'rlinf/models/embodiment/openpi/checkpoint.py'
 ORIGINAL = '048b6d48a372775d6c2cff9dd6d95ffc54480999d9d6c6786b546ead3b24298a'
-PATCHED = 'f910e2160f1b506eec5953d931fd2fb7fec71d05ac6ab02a9f76d6e8109587bd'
+PATCHED = '01b8a68a0085cafb64ce3b0716732305e78921086b948654c2a4ce9edc5b71c9'
 
 
 def fingerprint(root):
