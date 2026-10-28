@@ -304,3 +304,10 @@ Raw admission and failure receipts:
 [r2 failure](../../../outputs/native-vla-context-pilot-20261028-r2/RESULTS.md).
 No held-out adaptation, reward-use or architecture-comparison result is yet
 established by this arm.
+
+The fixed collector subsequently passed both CPU and actual allocated-CUDA
+integration tests on Baige `job-lwpvhzys2vtc`, source `0d6dee3`. Its real
+gate repeated the above numerical results, and the first complete K4 base
+history (320 simulator steps / 64 action chunks) was saved and checksum
+recorded. Warm-start/PPO/held-out results remain pending; see the dated
+[launch verification](../../../outputs/native-vla-context-pilot-20261028-r4/STATUS-20261028-1933.md).
