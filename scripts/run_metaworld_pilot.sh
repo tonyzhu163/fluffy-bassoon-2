@@ -18,6 +18,10 @@ exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
 trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"' EXIT
 export PYTHONPATH="$TASK_WORKTREE/src" PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 export FLUFFY_GPU_EXECUTION=baige
+# Baige exposes its assigned GPU through NVIDIA_VISIBLE_DEVICES but does not
+# necessarily initialize CUDA_VISIBLE_DEVICES. Ordinal zero is inside that
+# scheduler-provided one-GPU container; never replace NVIDIA_VISIBLE_DEVICES.
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 export MUJOCO_GL=egl
 TASK_LAUNCH_STARTED=$(date +%s)
