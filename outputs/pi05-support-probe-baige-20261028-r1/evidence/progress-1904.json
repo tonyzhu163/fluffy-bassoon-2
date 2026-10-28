@@ -1,0 +1,156 @@
+{
+  "phases": {
+    "collection-1": {
+      "seconds": 219.14010364748538,
+      "replay": {
+        "max_joint_log_prob_error": 0.0,
+        "max_value_error": 0.0,
+        "log_prob_atol": 0.001
+      },
+      "outcomes": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "residual_headroom": {
+        "protocol": "native_bounded_flow_headroom_v1",
+        "residual_scale": 1.0,
+        "active_dims": 7,
+        "supervised_action_steps": [
+          5
+        ],
+        "histories": 1,
+        "policy_chunks": 384,
+        "scalar_count": 13440,
+        "target_residual_abs_mean": 0.40168477768165756,
+        "target_residual_abs_max": 6.07367742061615,
+        "zero_residual_flow_matching_loss": 0.39620720814095756,
+        "residual_excess_abs_mean": 0.05668498703959077,
+        "bounded_flow_matching_loss_floor": 0.0688105130218656,
+        "saturation_fraction": 0.0956845238095238,
+        "per_channel": [
+          {
+            "channel": 0,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.4001736187556768,
+            "target_residual_abs_max": 4.199482679367065,
+            "zero_residual_flow_matching_loss": 0.4179123041055908,
+            "residual_excess_abs_mean": 0.06342936314273781,
+            "bounded_flow_matching_loss_floor": 0.07976421659710628,
+            "saturation_fraction": 0.09635416666666667
+          },
+          {
+            "channel": 1,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.3581525433203448,
+            "target_residual_abs_max": 3.285873830318451,
+            "zero_residual_flow_matching_loss": 0.29029668614004145,
+            "residual_excess_abs_mean": 0.03396959599291828,
+            "bounded_flow_matching_loss_floor": 0.02917715553905872,
+            "saturation_fraction": 0.0734375
+          },
+          {
+            "channel": 2,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.5230713774753288,
+            "target_residual_abs_max": 4.262862920761108,
+            "zero_residual_flow_matching_loss": 0.5677407656375238,
+            "residual_excess_abs_mean": 0.08252753383324792,
+            "bounded_flow_matching_loss_floor": 0.09828662800121489,
+            "saturation_fraction": 0.14635416666666667
+          },
+          {
+            "channel": 3,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.3915739621557198,
+            "target_residual_abs_max": 4.17088770866394,
+            "zero_residual_flow_matching_loss": 0.34675976502913325,
+            "residual_excess_abs_mean": 0.045804463323050486,
+            "bounded_flow_matching_loss_floor": 0.046305678936072105,
+            "saturation_fraction": 0.0875
+          },
+          {
+            "channel": 4,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.3461415849660019,
+            "target_residual_abs_max": 3.3113231658935547,
+            "zero_residual_flow_matching_loss": 0.2681080017778551,
+            "residual_excess_abs_mean": 0.03110722644875447,
+            "bounded_flow_matching_loss_floor": 0.03143690029803612,
+            "saturation_fraction": 0.06197916666666667
+          },
+          {
+            "channel": 5,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.3162786838955071,
+            "target_residual_abs_max": 3.3131439685821533,
+            "zero_residual_flow_matching_loss": 0.25103050560983003,
+            "residual_excess_abs_mean": 0.03117022726898237,
+            "bounded_flow_matching_loss_floor": 0.026997511546820983,
+            "saturation_fraction": 0.06770833333333333
+          },
+          {
+            "channel": 6,
+            "scalar_count": 1920,
+            "target_residual_abs_mean": 0.4764016732030238,
+            "target_residual_abs_max": 6.07367742061615,
+            "zero_residual_flow_matching_loss": 0.6316024286867283,
+            "residual_excess_abs_mean": 0.10878649926744402,
+            "bounded_flow_matching_loss_floor": 0.1697055002347501,
+            "saturation_fraction": 0.13645833333333332
+          }
+        ],
+        "interpretation": "sample-wise optimistic flow-loss bound; live sampler success is required"
+      },
+      "peak_cuda_allocated_bytes": 8093062656,
+      "history": {
+        "file": "history-000001.pt",
+        "sha256": "a86a013c59fc6c1a17674510da5f82245962265847ac7ba4b57515ace60d8a02",
+        "iteration": 1,
+        "simulator_steps": 1920,
+        "policy_chunks": 384,
+        "additional_label_motor_calls": 384
+      }
+    }
+  },
+  "costs": {
+    "simulator_steps": 1920,
+    "policy_chunks": 384,
+    "additional_label_motor_calls": 384,
+    "additional_flow_matching_suffix_calls": 384,
+    "native_prefix_queries": 1152,
+    "native_suffix_queries": 3456,
+    "bridge_context_updates": 384
+  },
+  "elapsed_seconds": 321.5317482063547,
+  "source_commit": "5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a"
+}

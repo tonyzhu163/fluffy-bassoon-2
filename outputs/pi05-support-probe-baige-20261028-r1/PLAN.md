@@ -41,3 +41,24 @@ evidence or cross-task generalization.
 The driver stops between complete stages/attempts under its cap. Missing phases
 remain explicitly incomplete. Longer DPT→PPO fitting and paper-level matched
 seeds follow only after this interface/data/evaluation gate is audited.
+
+## Launch receipt
+
+Baige `job-37q79sp1o23m`, submitted 2026-10-28 18:56:16 Shanghai, source
+`5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a`. GPU admission passed; **78 tests
+passed in 18.02 seconds** in the allocation. The six-lane simulator initialized
+and its renderer bound to CUDA's allocated PCI `0000:a3:00.0`. The first balanced
+history is pending at the 18:58 check; these receipts establish execution
+admission, not bridge competence. Exact snapshots and allocation identity are
+in `LAUNCH.json`; raw probe/tests are in `evidence/`.
+
+At 19:03 Shanghai the first complete balanced six-lane history was saved:
+1,920 simulator steps /384 chunk decisions in219.14seconds, peak CUDA
+allocation8.09GB. Exact replay log-probability and value errors were both zero.
+The saved batch SHA256 is in LAUNCH.json; its raw receipt is preserved in
+evidence/progress-1904.json. The independent validation batch is collecting.
+Required CFM residuals exceed the mean bound on9.57%of active-prefix coordinates;
+this is an offline pointwise diagnostic and does not establish live sampler
+incompetence or success. Actual same-interface teachers and fresh probes remain
+pending. Reward-blind behavior is supported/tested by the evaluator but is not
+part of this bounded run's four executed probe conditions.

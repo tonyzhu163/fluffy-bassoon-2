@@ -1,0 +1,47 @@
+{
+  "cluster": "Baige",
+  "job_id": "job-37q79sp1o23m",
+  "submitted_at": "2026-10-28T18:56:16+08:00",
+  "source_commit": "5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a",
+  "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/pi05-support-probe-baige-20261028-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/pi05-support-probe-baige-20261028-r1",
+  "resources": {
+    "gpus": 1,
+    "gpu_type": "NVIDIA RPBZZZ6",
+    "cpus": 16,
+    "memory_gib": 64,
+    "shm_gib": 8,
+    "scheduler_minutes": 90,
+    "driver_seconds": 4800,
+    "retries": 0,
+    "auto_delete": false
+  },
+  "qualification": {
+    "tests_passed": 78,
+    "seconds": 18.02,
+    "skipped": 0,
+    "gpu_probe": "passed",
+    "nvml_uuid": "GPU-064df501-a3c5-5d81-584f-882f86f90738",
+    "cuda_uuid": "c2486158-7e46-e066-e263-96c33b1f983e",
+    "pci": "0000:a3:00.0"
+  },
+  "direct_references": {
+    "ctm_sha256": "32fb0ed5c9b21fdac8f09339199e9f567c66d8a040f473f5652ee03f7340f8f9",
+    "xl_sha256": "646b3df8346f9585cdc5bbc6e5d4143ad9972678650a3b8d44333dd808838ed8",
+    "parent_job": "job-61p1rncjnr1x",
+    "snapshot_kind": "atomic between-trial latest.pt copied; original run untouched"
+  },
+  "monitor": "ctm-fresh-probe-progress",
+  "last_check": "2026-10-28T19:03:43+08:00",
+  "state": "First balanced six-lane history complete; second validation batch collecting",
+  "started_at": "2026-10-28T18:56:32+08:00",
+  "collection_1": {
+    "simulator_steps": 1920,
+    "policy_chunks": 384,
+    "seconds": 219.14010364748538,
+    "peak_cuda_allocated_bytes": 8093062656,
+    "replay_logprob_error": 0.0,
+    "replay_value_error": 0.0,
+    "history_sha256": "a86a013c59fc6c1a17674510da5f82245962265847ac7ba4b57515ace60d8a02"
+  }
+}
