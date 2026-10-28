@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 import os
+from types import MethodType
 
 import pytest
 import torch
@@ -62,6 +63,68 @@ def test_batched_heads_preserve_serial_outputs_and_full_history_gradients(device
         assert (a.grad is None) == (b.grad is None)
         if a.grad is not None:
             torch.testing.assert_close(a.grad, b.grad, rtol=1e-7, atol=1e-9)
+
+
+@pytest.mark.parametrize("device", DEVICES)
+@pytest.mark.parametrize("bounded", [False, True])
+def test_ctm_accumulator_shortcut_preserves_memory_readouts_and_gradients(device, bounded):
+    torch.manual_seed(51)
+    env = HiddenGainReach(attempts=2, horizon=3)
+    fast = learner(env, "persistent_ctm", device)
+    fast.core.expert.bounded_synchronisation = bounded
+    original = deepcopy(fast)
+
+    def reference(self, activated, alpha, beta, decay, kind):
+        _, alpha, beta = self.compute_synchronisation(activated, alpha, beta, decay, kind)
+        return alpha, beta
+
+    original.core.expert._synchronisation_accumulators = MethodType(reference, original.core.expert)
+    inputs = torch.randn(6, 2, fast.core.input_dim, device=device, dtype=torch.float64)
+    losses = []
+    states = []
+    for model in (fast, original):
+        state, outputs = None, []
+        for row in inputs:
+            features, state = model.core(row, state)
+            outputs.append(features)
+        loss = torch.stack(outputs).square().mean()
+        loss.backward()
+        losses.append(loss)
+        states.append(state)
+    torch.testing.assert_close(losses[0], losses[1], rtol=0, atol=0)
+    for key in states[0]:
+        torch.testing.assert_close(states[0][key], states[1][key], rtol=0, atol=0)
+    for a, b in zip(fast.parameters(), original.parameters()):
+        assert (a.grad is None) == (b.grad is None)
+        if a.grad is not None:
+            torch.testing.assert_close(a.grad, b.grad, rtol=1e-8, atol=1e-10)
+
+
+@pytest.mark.parametrize("kind", ["gru", "persistent_ctm", "transformer_xl"])
+@pytest.mark.parametrize("reset_attempts", [False, True])
+def test_collector_skips_only_unused_resets(kind, reset_attempts):
+    envs = [HiddenGainReach(attempts=2, horizon=3) for _ in range(2)]
+    optimized = learner(envs[0], kind)
+    original = deepcopy(optimized)
+    step = original.step
+
+    def force_old_reset_work(self, observation, state=None, *, reset=None, **kwargs):
+        if reset is None:
+            reset = torch.zeros(len(observation), dtype=torch.bool, device=observation.device)
+        return step(observation, state, reset=reset, **kwargs)
+
+    original.step = MethodType(force_old_reset_work, original)
+    results = []
+    for model in (optimized, original):
+        torch.manual_seed(81)
+        results.append(collect_trials(model, envs, [12, 13], reset_each_attempt=reset_attempts,
+                                      record_states=True))
+    for key in results[0]:
+        if isinstance(results[0][key], dict):
+            for field in results[0][key]:
+                torch.testing.assert_close(results[0][key][field], results[1][key][field], rtol=0, atol=0)
+        else:
+            torch.testing.assert_close(results[0][key], results[1][key], rtol=0, atol=0)
 
 
 @pytest.mark.parametrize("device", DEVICES)

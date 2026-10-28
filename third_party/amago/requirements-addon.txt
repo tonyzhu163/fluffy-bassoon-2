@@ -1,0 +1,10 @@
+# Direct add-ons for a NEW --system-site-packages uv venv borrowing the
+# read-only qualified torch/numpy/gymnasium/metaworld/mujoco base runtime.
+# Do not install or upgrade the heavyweight base packages through this file.
+gin-config==0.5.0
+einops==0.8.1
+wandb==0.19.11
+tqdm==4.67.1
+gym==0.26.2
+# Qualification only; omit when an identical pytest is already borrowed.
+pytest==8.3.5
