@@ -1,6 +1,7 @@
 """Bounded live recurrent PPO on a frozen native pi0.5 feature/velocity bridge."""
 
 import argparse
+from dataclasses import fields, is_dataclass
 import hashlib
 import json
 import math
@@ -60,11 +61,54 @@ def feedback_batch(previous, rewards, attempt, chunk, attempts, *, reward_blind=
         attempts=attempts, chunks=CHUNKS) for lane in range(previous.shape[0])])
 
 
+def _trajectory_input_tree(value):
+    """Describe every actual input field by shape/type/digest, without its data."""
+    if isinstance(value, torch.Tensor):
+        copied = value.detach().cpu().contiguous()
+        raw = copied.reshape(-1).view(torch.uint8).numpy().tobytes()
+        return dict(kind="tensor", dtype=str(copied.dtype), shape=list(copied.shape),
+                    data_sha256=hashlib.sha256(raw).hexdigest())
+    if isinstance(value, np.ndarray):
+        return dict(kind="ndarray", dtype=str(value.dtype), shape=list(value.shape),
+                    data_sha256=hashlib.sha256(np.ascontiguousarray(value).tobytes()).hexdigest())
+    if is_dataclass(value) and not isinstance(value, type):
+        return dict(kind="object", fields={field.name: _trajectory_input_tree(getattr(value, field.name))
+                                           for field in fields(value)})
+    if isinstance(value, dict):
+        if any(not isinstance(key, str) for key in value):
+            raise ValueError("Trajectory input mappings require named fields")
+        return dict(kind="mapping", fields={key: _trajectory_input_tree(value[key]) for key in sorted(value)})
+    if isinstance(value, (tuple, list)):
+        return dict(kind="sequence", items=[_trajectory_input_tree(entry) for entry in value])
+    if value is None or isinstance(value, (str, int, float, bool, np.generic)):
+        scalar = value.item() if isinstance(value, np.generic) else value
+        raw = json.dumps(scalar, allow_nan=False, separators=(",", ":")).encode()
+        return dict(kind="scalar", data_sha256=hashlib.sha256(raw).hexdigest())
+    if hasattr(value, "__dict__"):
+        return dict(kind="object", fields={key: _trajectory_input_tree(entry)
+            for key, entry in sorted(vars(value).items()) if not key.startswith("_")})
+    raise ValueError(f"Unsupported native input field for trajectory audit: {type(value).__name__}")
+
+
+def _trajectory_fingerprint(value):
+    tree = _trajectory_input_tree(value)
+    digest = hashlib.sha256(json.dumps(tree, sort_keys=True, allow_nan=False,
+                                      separators=(",", ":")).encode()).hexdigest()
+    return digest, tree
+
+
 @torch.no_grad()
 def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=False,
                         lesion="normal", preprocess=None, prepare_actions=None,
-                        dpt_generator=None, execute_labels=False, diagnostic_callback=None):
-    """Collect one complete global batch; privileged plan never enters bridge inputs."""
+                        dpt_generator=None, execute_labels=False, diagnostic_callback=None,
+                        trajectory_audit_callback=None):
+    """Collect one global batch; optional JSON audits never enter bridge inputs.
+
+    trajectory_audit_callback receives each completed chunk's full actual input
+    fingerprints, same-sample native noise/commands and step outcomes. Auditing
+    adds hashing and CPU copies only, never policy samples or native queries.
+    Its issued commands are operator diagnostics, not public-history records.
+    """
     if lesion not in ("normal", "memory_wiped", "reward_blind"):
         raise ValueError("Unknown live evaluation lesion")
     if preprocess is None:
@@ -98,10 +142,33 @@ def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=Fa
             reset = torch.full((lanes,), lesion == "memory_wiped" and attempt > 0 and chunk_index == 0,
                                dtype=torch.bool, device=reference.device)
             observation = motor.env_obs_to_observation(obs)
+            trajectory = None
+            if trajectory_audit_callback is not None:
+                observation_hash, observation_tree = _trajectory_fingerprint(observation)
+                trajectory = dict(protocol="native_pi05_chunk_trajectory_audit_v1", attempt=attempt,
+                    chunk=chunk_index, reset_seed=int(plan["reset_seeds"][attempt]),
+                    observation_sha256=observation_hash, observation_fields=observation_tree,
+                    state_sha256=_trajectory_fingerprint(observation.state)[0],
+                    state=observation.state.detach().cpu().tolist(),
+                    feedback_sha256=_trajectory_fingerprint(feedback)[0], feedback=feedback.cpu().tolist(),
+                    generator_before_sha256=_trajectory_fingerprint(generator.get_state())[0],
+                    memory_before_sha256=_trajectory_fingerprint(memory)[0], reset_mask=reset.cpu().tolist())
             prepared = preprocess(observation)
+            if trajectory is not None:
+                prepared_hash, prepared_tree = _trajectory_fingerprint(prepared)
+                trajectory.update(prepared_observation_sha256=prepared_hash,
+                    prepared_observation_fields=prepared_tree,
+                    prepared_state_sha256=_trajectory_fingerprint(prepared.state)[0],
+                    prepared_state=prepared.state.detach().cpu().tolist())
             model_actions, memory, record = policy.sample_chunk(
                 motor, prepared, feedback, memory, rng=generator, deterministic=deterministic,
                 reset=reset, num_steps=4)
+            if trajectory is not None:
+                trajectory.update(initial_noise_sha256=_trajectory_fingerprint(record["noisy_actions"][0])[0],
+                    native_kv_sha256=_trajectory_fingerprint({key: record[key]
+                        for key in ("kv_key", "kv_value", "prefix_mask")})[0],
+                    generator_after_sha256=_trajectory_fingerprint(generator.get_state())[0],
+                    memory_after_sha256=_trajectory_fingerprint(memory)[0])
             diagnostic = (diagnostic_callback(motor, observation, model_actions, record, attempt, chunk_index)
                           if diagnostic_callback is not None else None)
             if dpt_generator is not None or execute_labels:
@@ -113,21 +180,38 @@ def collect_live_trials(policy, motor, env, plan, *, generator, deterministic=Fa
                     dpt_records.append(make_dpt_record(motor, prepared, feedback, label, generator=dpt_generator))
                 if execute_labels:
                     model_actions = label
+            if trajectory is not None:
+                trajectory["decode_state_sha256"] = _trajectory_fingerprint(observation.state)[0]
             decoded = motor.decode_actions(model_actions, observation.state)
+            if trajectory is not None:
+                trajectory.update(model_actions_sha256=_trajectory_fingerprint(model_actions)[0],
+                    decoded_actions_sha256=_trajectory_fingerprint(decoded)[0],
+                    decoded_actions=decoded.detach().cpu().tolist())
             public_command = prepare_actions(decoded)
             if public_command.shape != (lanes, ms.CHUNK, 7) or not torch.isfinite(public_command).all():
                 raise RuntimeError("Native action decoding did not produce a finite five-step 7D chunk")
             issued = ms.rotate_translation(public_command, plan["theta_degrees"])
             if not torch.equal(public_command[..., 2:], issued[..., 2:]):
                 raise RuntimeError("Hidden rotation changed non-translation action fields")
+            if trajectory is not None:
+                trajectory.update(prepared_commands_sha256=_trajectory_fingerprint(public_command)[0],
+                    issued_commands_sha256=_trajectory_fingerprint(issued)[0],
+                    prepared_commands=public_command.detach().cpu().tolist(),
+                    issued_commands=issued.detach().cpu().tolist())
             obs_list, _, _, _, infos = env.chunk_step(issued)
             if len(obs_list) != ms.CHUNK or len(infos) != ms.CHUNK:
                 raise RuntimeError("The live task must execute exactly five simulator steps per chunk")
+            success_per_step = []
             for info in infos:
                 observed = info["success"].detach().cpu().bool()
                 if observed.shape != (lanes,):
                     raise RuntimeError("Simulator success must have one value per lane")
                 success_once |= observed
+                if trajectory is not None:
+                    success_per_step.append(observed.tolist())
+            if trajectory is not None:
+                trajectory.update(success_per_step=success_per_step, success_once=success_once.tolist())
+                trajectory_audit_callback(trajectory)
             last = chunk_index == CHUNKS - 1
             reward = success_once.float() if last else torch.zeros(lanes)
             records.append(record)

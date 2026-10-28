@@ -72,6 +72,18 @@ known zero rotation it uses exactly zero residual. This controller incurs extra
 teacher-only native queries and is not a learned CTM or a student initialization.
 It helps distinguish intervention capacity from failure of a fitted teacher.
 
+Before interpreting a small capacity screen, repeat its zero-bridge controls on
+identical scenes, reset seeds, native-noise streams, weights and fresh learner
+state. Save raw outcomes and complete per-chunk trajectories; a divergent or
+incomplete repeat leaves the comparison unresolved. The optional
+`collect_live_trials(..., trajectory_audit_callback=...)` records full original
+and prepared native-input field hashes, numerical proprioception, initial noise,
+KV/feedback/state digests, actual decoded/prepared/issued commands and per-step
+outcomes. It reuses the single sampled action path and performs no extra native
+query. These hashes localize the first divergence; initial-prefix equality alone
+does not establish equality of the later trajectory. Issued-command diagnostics
+must remain separate from public-history artifacts and learner inputs.
+
 ## Held-out support and fresh probes
 
 `make_heldout_probe_plan` returns the evaluator wrapper: a three-attempt
