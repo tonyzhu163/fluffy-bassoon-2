@@ -1,0 +1,72 @@
+{
+  "checked_at_utc": "2026-10-28T13:46:50.047824+00:00",
+  "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "exit_code": 0,
+  "exit_code_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  "launcher_sha256": "6fe99e9e6521afee7c6e758c361f66c21b8c12aad412ce9a7b75cb232089b306",
+  "launcher_text": "#!/bin/bash\nset -euo pipefail\nbash /mowenjie/fluffy-bassoon-2/worktrees/pi05-support-probe-baige-20261028-r1/outputs/pi05-support-probe-baige-20261028-r1/launch.sh 5ac79dce8ec8bbc962a93d623cf0f56b5b74d73a pi05-support-probe-baige-20261028-r1\n",
+  "source_excerpts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/mani_skill/envs/sapien_env.py",
+      "sha256": "83066a0e68f8679b02aa7afc56b7f5fcea1e1886b31e9cf50e1aaa3758f56f2c",
+      "excerpts": [
+        {
+          "start": 877,
+          "end": 887,
+          "text": "        Note that ManiSkill always holds two RNG states, a main RNG, and an episode RNG. The main RNG is used purely to sample an episode seed which\n        helps with reproducibility of episodes and is for internal use only. The episode RNG is used by the environment/task itself to\n        e.g. randomize object positions, randomize assets etc. Episode RNG is accessible by using `self._batched_episode_rng` which is numpy based and `torch.rand`\n        which can be used to generate random data on the GPU directly and is seeded. Note that it is recommended to use `self._batched_episode_rng`\n        if you need to ensure during reconfiguration the same objects are loaded. Reproducibility and seeding when there is GPU and CPU simulation can be tricky and we recommend reading\n        the documentation for more recommendations and details on RNG https://maniskill.readthedocs.io/en/latest/user_guide/concepts/rng.html\n\n        Upon environment creation via gym.make, the main RNG is set with fixed seeds of 2022 to 2022 + num_envs - 1 (seed is just 2022 if there is only one environment)\n        During each reset call, if seed is None, main RNG is unchanged and an episode seed is sampled from the main RNG to create the episode RNG.\n        If seed is not None, main RNG is set to that seed and the episode seed is also set to that seed. This design means the main RNG determines\n        the episode RNG deterministically."
+        },
+        {
+          "start": 903,
+          "end": 915,
+          "text": "        self._set_main_rng(seed)\n\n        if reconfigure:\n            self._set_episode_rng(seed if seed is not None else self._batched_main_rng.randint(2**31), env_idx)\n            with torch.random.fork_rng():\n                torch.manual_seed(seed=self._episode_seed[0])\n                self._reconfigure(options)\n                self._after_reconfigure(options)\n            # Set the episode rng again after reconfiguration to guarantee seed reproducibility\n            self._set_episode_rng(self._episode_seed, env_idx)\n        else:\n            self._set_episode_rng(seed, env_idx)\n"
+        },
+        {
+          "start": 925,
+          "end": 947,
+          "text": "        self._clear_sim_state()\n        if self.reconfiguration_freq != 0:\n            self._reconfig_counter -= 1\n\n        if self.agent is not None:\n            self.agent.reset()\n\n        # we either reset to given env states or use the environment's defined _initialize_episode function to generate the initial state\n        reset_to_env_states_obs = None\n        if \"reset_to_env_states\" in options:\n            env_states = options[\"reset_to_env_states\"][\"env_states\"]\n            reset_to_env_states_obs = options[\"reset_to_env_states\"].get(\"obs\", None)\n            if isinstance(env_states, dict):\n                self.set_state_dict(env_states, env_idx)\n            else:\n                self.set_state(env_states, env_idx)\n        else:\n            if seed is not None or self._enhanced_determinism:\n                with torch.random.fork_rng():\n                    torch.manual_seed(self._episode_seed[0])\n                    self._initialize_episode(env_idx, options)\n            else:\n                self._initialize_episode(env_idx, options)"
+        },
+        {
+          "start": 976,
+          "end": 1012,
+          "text": "    def _set_main_rng(self, seed):\n        \"\"\"Set the main random generator which is only used to set the seed of the episode RNG to improve reproducibility.\n\n        Note that while _set_main_rng and _set_episode_rng are setting a seed and numpy random state, when using GPU sim\n        parallelization it is highly recommended to use torch random functions as they will make things run faster. The use\n        of torch random functions when building tasks in ManiSkill are automatically seeded via `torch.random.fork`\n        \"\"\"\n        if seed is None:\n            if self._main_seed is not None:\n                return\n            seed = np.random.RandomState().randint(2**31, size=(self.num_envs,))\n        if not np.iterable(seed):\n            seed = [seed]\n        self._main_seed = seed\n        self._main_rng = np.random.RandomState(self._main_seed[0])\n        if len(self._main_seed) == 1 and self.num_envs > 1:\n            self._main_seed = self._main_seed + np.random.RandomState(self._main_seed[0]).randint(2**31, size=(self.num_envs - 1,)).tolist()\n        self._batched_main_rng = BatchedRNG.from_seeds(self._main_seed, backend=self._batched_rng_backend)\n\n    def _set_episode_rng(self, seed: Union[None, list[int]], env_idx: torch.Tensor):\n        \"\"\"Set the random generator for current episode.\"\"\"\n        if seed is not None or self._enhanced_determinism:\n            env_idx = common.to_numpy(env_idx)\n            if seed is None:\n                self._episode_seed[env_idx] = self._batched_main_rng[env_idx].randint(2**31)\n            else:\n                if not np.iterable(seed):\n                    seed = [seed]\n                self._episode_seed = common.to_numpy(seed, dtype=np.int64)\n                if len(self._episode_seed) == 1 and self.num_envs > 1:\n                    self._episode_seed = np.concatenate((self._episode_seed, np.random.RandomState(self._episode_seed[0]).randint(2**31, size=(self.num_envs - 1,))))\n            # we keep _episode_rng for backwards compatibility but recommend using _batched_episode_rng for randomization\n            if seed is not None or self._batched_episode_rng is None:\n                self._batched_episode_rng = BatchedRNG.from_seeds(self._episode_seed, backend=self._batched_rng_backend)\n            else:\n                self._batched_episode_rng[env_idx] = BatchedRNG.from_seeds(self._episode_seed[env_idx], backend=self._batched_rng_backend)\n            self._episode_rng = self._batched_episode_rng[0]"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/mani_skill/utils/structs/types.py",
+      "sha256": "86451c45e986ce7f789e01edecaa9ba6c3f89a08c3960ddb212ca0cf4499e156",
+      "excerpts": [
+        {
+          "start": 43,
+          "end": 65,
+          "text": "    sleep_threshold: float = 0.005\n    contact_offset: float = 0.02\n    rest_offset: float = 0\n    solver_position_iterations: int = 15\n    solver_velocity_iterations: int = 1\n    enable_pcm: bool = True\n    enable_tgs: bool = True\n    enable_ccd: bool = False\n    enable_enhanced_determinism: bool = False\n    enable_friction_every_iteration: bool = True\n    cpu_workers: int = 0\n\n    def dict(self):\n        return {k: v for k, v in asdict(self).items()}\n\n    # cpu_workers=min(os.cpu_count(), 4) # NOTE (stao): use this if we use step_start and step_finish to enable CPU workloads between physx steps.\n    # NOTE (fxiang): PCM is enabled for GPU sim regardless.\n    # NOTE (fxiang): smaller contact_offset is faster as less contacts are considered, but some contacts may be missed if distance changes too fast\n    # NOTE (fxiang): solver iterations 15 is recommended to balance speed and accuracy. If stable grasps are necessary >= 20 is preferred.\n    # NOTE (fxiang): can try using more cpu_workers as it may also make it faster if there are a lot of collisions, collision filtering is on CPU\n    # NOTE (fxiang): enable_enhanced_determinism is for CPU probably. If there are 10 far apart sub scenes, this being True makes it so they do not impact each other at all\n\n"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1/rlinf/envs/sim/maniskill/maniskill_env.py",
+      "sha256": "efc1ab703f80698ec213864388b474eead7b8af8b50bc1e824b5d593232eecd4",
+      "excerpts": [
+        {
+          "start": 274,
+          "end": 295,
+          "text": "    def reset(\n        self,\n        *,\n        seed: Optional[Union[int, list[int]]] = None,\n        options: Optional[dict] = None,\n    ):\n        if options is None:\n            seed = self.seed\n            options = (\n                {\"episode_id\": self.reset_state_ids}\n                if self.use_fixed_reset_state_ids\n                else {}\n            )\n        raw_obs, infos = self.env.reset(seed=seed, options=options)\n        self._show_goal_site_visual()\n        extracted_obs = self._wrap_obs(raw_obs, infos=infos)\n        if \"env_idx\" in options:\n            env_idx = options[\"env_idx\"]\n            self._reset_metrics(env_idx)\n        else:\n            self._reset_metrics()\n        return extracted_obs, infos"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1/examples/embodiment/config/env/maniskill_put_on_plate_in_scene_25_main.yaml",
+      "sha256": "83bbb2d3294b246c7ac55c64242c7f24b77fa1fb3ad79ca43aa768b28a9b978c",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 35,
+          "text": "env_type: maniskill\n\ntotal_num_envs: null\n\nauto_reset: False\nignore_terminations: False\nuse_rel_reward: True\nseed: 0\ngroup_size: 1\nuse_fixed_reset_state_ids: True\nmax_steps_per_rollout_epoch: 80\nmax_episode_steps: 80 # max episode steps for truncation\n\nvideo_cfg:\n  save_video: False\n  info_on_video: True\n  video_base_dir: ${runner.logger.log_path}/video/train\n\nenable_offload: False\n\ninit_params:\n  id: PutOnPlateInScene25Main-v3\n  num_envs: null # will be set in ManiSkillEnv init\n  obs_mode: \"rgb+segmentation\"\n  control_mode: None\n  sim_backend: \"gpu\"\n  sim_config:\n    sim_freq: 500\n    control_freq: 5\n  max_episode_steps: ${..max_episode_steps} # max episode steps for truncation\n  sensor_configs:\n    shader_pack: \"default\"\n  render_mode: all\n  obj_set: train\n  use_multiple_plates: False   # turn to true for openpi experiments"
+        }
+      ]
+    }
+  ],
+  "actual_launcher_path": "/mowenjie/fluffy-bassoon-2/worktrees/pi05-support-probe-baige-20261028-r1/outputs/pi05-support-probe-baige-20261028-r1/launch.sh",
+  "actual_launcher_sha256": "d2b22014775db56c366d3da75e2ad8b00fa4964ec58f22a68eb412114d8119ef",
+  "actual_rlinf_root": "/mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1"
+}
