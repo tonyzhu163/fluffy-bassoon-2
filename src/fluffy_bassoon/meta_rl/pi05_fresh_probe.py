@@ -113,7 +113,7 @@ def _add_counts(total, addition):
 
 @torch.no_grad()
 def run_live_attempt(policy, motor, env, scenes, theta_degrees, reset_seed, state, *, generator,
-                     reward_blind=False, preprocess=None, prepare_actions=None):
+                     reward_blind=False, preprocess=None, prepare_actions=None, on_public_chunk=None):
     """Run one 80-step attempt and return its complete next boundary and raw outcomes.
 
     Hidden angles and scene IDs are private environment arguments. Public action
@@ -152,6 +152,11 @@ def run_live_attempt(policy, motor, env, scenes, theta_degrees, reset_seed, stat
         actions, memory, record = policy.sample_chunk(
             motor, prepared, feedback, memory, rng=generator, deterministic=True,
             reset=torch.zeros(lanes, device=reference.device, dtype=torch.bool), num_steps=DENOISE_STEPS)
+        if on_public_chunk is not None:
+            # Project before the callback: labels, private simulator plans and
+            # the collector's recurrent features are never exported as inputs.
+            on_public_chunk({key: record[key].detach().to("cpu", copy=True)
+                             for key in ("kv_key", "kv_value", "prefix_mask", "feedback")})
         if record.get("recurrence_updates") != 1 or record.get("num_steps") != DENOISE_STEPS:
             raise RuntimeError("Fresh probes require one bridge update and four native suffix passes per chunk")
         if chunk == 0:
