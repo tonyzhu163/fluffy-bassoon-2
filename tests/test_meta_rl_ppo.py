@@ -132,10 +132,13 @@ def test_episode_mode_preserves_the_recorded_attempt_reset_mask():
 
 def test_reward_blind_collector_zeros_only_feedback_and_keeps_true_scoring():
     envs = [HiddenRewardBandit(attempts=6) for _ in range(3)]
+    envs[0].reset(seed=3)
+    rewarded_action = envs[0]._target
     policy = actor(envs[0])
     with torch.no_grad():
         policy.actor.weight.zero_()
-        policy.actor.bias.copy_(torch.tensor([1., 0.]))
+        policy.actor.bias.zero_()
+        policy.actor.bias[rewarded_action] = 1.
     normal = collect_trials(policy, envs, [3, 4, 5], deterministic=True)
     blind = collect_trials(policy, envs, [3, 4, 5], deterministic=True, reward_blind=True)
     torch.testing.assert_close(normal["raw_actions"], blind["raw_actions"])
@@ -243,7 +246,7 @@ def test_single_trial_raw_advantages_match_terminal_reward_policy_gradient(devic
 def test_bounded_entropy_restores_mean_gradient_at_saturation_and_preserves_likelihood(device):
     if device=='cuda':
         from fluffy_bassoon.gpu_execution import validate_execution
-        validate_execution('slurm',os.environ)
+        validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION','slurm'),os.environ)
         assert torch.cuda.device_count()==1
     policy=actor(HiddenGainReach()).to(device).double().eval()
     with torch.no_grad():
