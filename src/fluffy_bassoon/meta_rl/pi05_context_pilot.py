@@ -202,6 +202,9 @@ def gate(policy,env,plan,generator,output,*,fit_steps=12):
         loss=policy.flow_loss(prepared,inputs,history,mask,target,fm_noise,time_sample)
         loss.backward()
         grad=float(policy.feedback.weight.grad.norm())
+        invalid=[name for name,p in policy.named_parameters() if p.grad is not None and not p.grad.isfinite().all()]
+        write_json(output/'gate-gradient.json',dict(update=len(losses),loss=float(loss.detach()),
+            feedback_gradient_norm=grad if np.isfinite(grad) else None,nonfinite_parameters=invalid))
         norm=torch.nn.utils.clip_grad_norm_([p for p in policy.parameters() if p.requires_grad],1.,error_if_nonfinite=True)
         optimizer.step()
         losses.append(float(loss.detach()))

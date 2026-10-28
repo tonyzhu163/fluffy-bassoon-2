@@ -16,10 +16,11 @@ class TinyAttention(nn.Module):
 
 
 class TinyLLM(nn.Module):
-    def __init__(self):
+    def __init__(self, *, depth=2, normalize=False):
         super().__init__()
         self.configs = [SimpleNamespace(width=8)]
-        self.layers = nn.ModuleList([nn.ModuleDict({"attn": TinyAttention()}) for _ in range(2)])
+        self.normalize = normalize
+        self.layers = nn.ModuleList([nn.ModuleDict({"attn": TinyAttention()}) for _ in range(depth)])
         # ModuleDict supports registration but native code uses layer.attn.
         for layer in self.layers:
             object.__setattr__(layer, "attn", layer["attn"])
@@ -29,7 +30,8 @@ class TinyLLM(nn.Module):
         caches = []
         for layer in self.layers:
             a = layer.attn
-            q, k, v = (getattr(a, n)[0](x) for n in ("q_proj", "k_proj", "v_proj"))
+            normalized = x*torch.rsqrt(x.square().mean(-1,keepdim=True)+1e-6) if self.normalize else x
+            q, k, v = (getattr(a, n)[0](normalized) for n in ("q_proj", "k_proj", "v_proj"))
             weights = ((q @ k.transpose(-1,-2))/8**.5).masked_fill(~mask, -1e6).softmax(-1)
             x = x + a.o_proj[0](weights @ v)
             caches.append((k, v))
@@ -155,3 +157,19 @@ def test_joint_velocity_replay_and_trainable_roundtrip():
     record['deterministic'] = True
     with pytest.raises(ValueError,match='stochastic'):
         policy.replay_chunk(None,inputs,history,mask,record)
+
+
+def test_zero_public_record_has_finite_deep_rmsnorm_gradients():
+    torch.manual_seed(9)
+    motor=TinyMotor()
+    motor.llm=TinyLLM(depth=18,normalize=True)
+    policy=NativeContextPi05(motor,rank=2)
+    inputs=(torch.randn(1,3,8),torch.ones(1,3,dtype=torch.bool),torch.zeros(3,dtype=torch.bool))
+    history=torch.zeros(1,1,11)
+    mask=torch.ones(1,1,dtype=torch.bool)
+    loss=policy.flow_loss(None,inputs,history,mask,torch.randn(1,8,8),torch.randn(1,8,8),torch.tensor([.5]))
+    loss.backward()
+    gradients=[p.grad for p in policy.parameters() if p.grad is not None]
+    assert all(g.isfinite().all() for g in gradients)
+    assert policy.feedback.bias.grad.norm()>0
+    assert torch.nn.utils.clip_grad_norm_([p for p in policy.parameters() if p.requires_grad],1.,error_if_nonfinite=True).isfinite()

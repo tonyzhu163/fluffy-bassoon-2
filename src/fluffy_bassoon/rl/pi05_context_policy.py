@@ -96,6 +96,11 @@ class NativeContextPi05(nn.Module):
         self.feedback = nn.Linear(FEEDBACK_DIM, width, device=reference.device)
         nn.init.normal_(self.feedback.weight, std=.02)
         nn.init.zeros_(self.feedback.bias)
+        # The initial public record is all zeros. A zero embedding stays zero
+        # through causal self-attention/FFNs and repeated RMSNorm Jacobians can
+        # overflow on backward. Give every history token a nonzero type vector
+        # at roughly the RMS scale of native language input embeddings.
+        self.history_type = nn.Parameter(torch.randn(width, device=reference.device))
         self.critic = nn.Linear(width, 1, device=reference.device)
         nn.init.zeros_(self.critic.weight)
         nn.init.zeros_(self.critic.bias)
@@ -149,7 +154,7 @@ class NativeContextPi05(nn.Module):
             raise ValueError("Native prefix and public history shapes/devices differ")
         if history.shape[1]:
             public = history.masked_fill(~history_mask[..., None], 0)
-            embedded = self.feedback(public.float()).to(tokens.dtype)
+            embedded = (self.feedback(public.float()) + self.history_type).to(tokens.dtype)
             tokens = torch.cat((embedded, tokens), 1)
             valid = torch.cat((history_mask, valid), 1)
             # Each older record is causal. All current image/language tokens
