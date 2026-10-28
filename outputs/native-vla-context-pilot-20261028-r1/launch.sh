@@ -39,6 +39,8 @@ TASK_GPU_UUID=$("$TASK_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1]
 export LYCO_BAIGE_ISOLATED_UUID="$TASK_GPU_UUID"
 CUDA_VISIBLE_DEVICES='' timeout 180 "$TASK_PYTHON" -m pytest -q -p no:cacheprovider \
   tests/test_pi05_context_policy.py > "$TASK_OUTPUT/qualification.log" 2>&1
+timeout 180 "$TASK_PYTHON" -m pytest -q -p no:cacheprovider \
+  tests/test_pi05_context_policy.py -k collector >> "$TASK_OUTPUT/qualification.log" 2>&1
 "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.pi05_context_pilot \
   --source-commit "$TASK_SOURCE" --rlinf-root "$TASK_RLINF" --model-path "$TASK_MODEL" \
   --norm-stats "$TASK_MODEL/assets/global_step_150/meta/norm_stats.json" \
