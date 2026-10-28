@@ -114,7 +114,8 @@ def env_config(rlinf_root, num_envs, seed):
         use_fixed_reset_state_ids=True, group_size=1, max_episode_steps=STEPS,
         max_steps_per_rollout_epoch=STEPS,
         video_cfg=dict(save_video=False, info_on_video=False, video_base_dir="unused"),
-        init_params=dict(obj_set="all", use_multiple_plates=False, max_episode_steps=STEPS)))
+        init_params=dict(obj_set="all", use_multiple_plates=False, max_episode_steps=STEPS,
+                         control_mode="arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos")))
     if os.environ.get('FLUFFY_GPU_EXECUTION') == 'baige':
         from fluffy_bassoon.baige_gpu import selected_device
         cfg.init_params.render_backend = 'pci:' + selected_device()['pci_bus_id']

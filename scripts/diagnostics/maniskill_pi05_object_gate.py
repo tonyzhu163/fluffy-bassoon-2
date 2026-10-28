@@ -65,12 +65,12 @@ def main():
     torch.manual_seed(args.seed)
     env = None
     try:
-        model = get_model(ms.model_config(args.model_path, args.norm_stats)).cuda().eval()
-        model.requires_grad_(False)
-        frozen_before = ms.model_fingerprint(model)
         env = ManiskillEnv(ms.env_config(args.rlinf_root, args.num_envs, args.seed), args.num_envs,
                            seed_offset=0, total_num_processes=1, worker_info=None, record_metrics=True)
         ms.record_renderer_binding(env, args.output_dir)
+        model = get_model(ms.model_config(args.model_path, args.norm_stats)).cuda().eval()
+        model.requires_grad_(False)
+        frozen_before = ms.model_fingerprint(model)
         base = env.env.unwrapped
         plan = ms.sample_scenes(base.basic_obj_infos, range(ms.OBJECTS), args.episodes_per_object,
                                 np.random.default_rng(args.seed))
@@ -84,6 +84,7 @@ def main():
             objects=object_names, train_objects=object_names[:ms.TRAIN_OBJECTS], overlays="training range 0-15",
             episodes_per_object=args.episodes_per_object, num_envs=args.num_envs, seed=args.seed,
             max_episode_steps=ms.STEPS, action_chunk=ms.CHUNK, denoise_steps=4,
+            control_mode=env.cfg.init_params.control_mode,
             sampler="RLinf eval-mode Euler ODE, seeded initial noise",
             gelu="RLinf e1a82eb exact GELU; checkpoint trained with tanh-approximate GELU (RLinf issue 1725)",
             outcome_fields=ms.OUTCOME_FIELDS,

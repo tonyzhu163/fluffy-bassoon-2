@@ -1,5 +1,6 @@
 """Finite native motor/headroom admission; no learner training or automatic retry."""
 import argparse
+import ast
 import hashlib
 import json
 import os
@@ -17,7 +18,8 @@ def write(path, value):
 
 
 NATIVE_TESTS = ('tests/test_core_imports.py', 'tests/test_maniskill_pi05.py',
-                'tests/test_rlinf_checkpoint_compat.py')
+                'tests/test_rlinf_checkpoint_compat.py', 'tests/test_maniskill_env_config.py',
+                'tests/test_native_load_proof.py')
 CORE_TESTS = (
     'tests/test_ctm_sync_options.py', 'tests/test_meta_rl_ppo.py',
     'tests/test_continuous_memory_machine.py', 'tests/test_meta_rl_cmm.py',
@@ -64,6 +66,35 @@ def reuse_core_cpu(root, qualified_root, receipt):
         files_sha256=hashes, previous=previous)
 
 
+def reuse_native_loads(root, qualified_root, receipt, loader_sha):
+    """An environment-only fix cannot invalidate byte-identical motor admission."""
+    previous = read(receipt)
+    qualified_source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=qualified_root, text=True).strip()
+    if not previous['completed'] or previous['source_commit'] != qualified_source or previous['loader_sha256'] != loader_sha:
+        raise ValueError('Require exact prior full native loader admission')
+    if [(c['name'], c['strict_load'], c['auxiliary_tensors']) for c in previous['cases']] != [('rl', True, 16), ('sft', True, 0)]:
+        raise ValueError('Require both complete immutable checkpoint loads')
+    paths = ('src/fluffy_bassoon/rl/rlinf_checkpoint_compat.py',
+             'scripts/diagnostics/qualify_maniskill_checkpoint_heads.py',
+             'patches/rlinf-e1a82ebf-flow-noise-keys.patch')
+    hashes = {}
+    for name in paths:
+        before, after = (qualified_root/name).read_bytes(), (root/name).read_bytes()
+        if before != after:
+            raise ValueError('Native loader admission dependencies changed: '+name)
+        hashes[name] = hashlib.sha256(after).hexdigest()
+    name = 'src/fluffy_bassoon/rl/maniskill_pi05.py'
+    def motor_ast(folder):
+        module = ast.parse((folder/name).read_text())
+        module.body = [node for node in module.body if not (isinstance(node, ast.FunctionDef) and node.name == 'env_config')]
+        return ast.dump(module, include_attributes=False)
+    if motor_ast(root) != motor_ast(qualified_root):
+        raise ValueError('Only environment configuration may differ from loaded motor proof')
+    return dict(reused=True, passed=True, receipt=str(receipt),
+        receipt_sha256=hashlib.sha256(receipt.read_bytes()).hexdigest(),
+        source_commit=qualified_source, files_sha256=hashes, previous=previous)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source-commit', required=True)
@@ -73,6 +104,8 @@ def main():
     p.add_argument('--scope', choices=('all', 'native', 'cmm'), default='all')
     p.add_argument('--qualified-core-worktree', type=Path)
     p.add_argument('--qualified-core-receipt', type=Path)
+    p.add_argument('--qualified-native-load-worktree', type=Path)
+    p.add_argument('--qualified-native-load-receipt', type=Path)
     args = p.parse_args()
     root = Path(__file__).resolve().parents[2]
     if (subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip() != args.source_commit
@@ -125,7 +158,14 @@ def main():
             tests['core_cpu'] = reuse_core_cpu(root, args.qualified_core_worktree, args.qualified_core_receipt)
         write(args.output_dir/'tests.json', tests)
         prepare_gpu(root, args.output_dir)
-        if args.scope != 'cmm':
+        if args.scope != 'cmm' and args.qualified_native_load_receipt:
+            if not args.qualified_native_load_worktree:
+                raise ValueError('Require the immutable qualified native source')
+            tests['native_loads'] = reuse_native_loads(root, args.qualified_native_load_worktree,
+                args.qualified_native_load_receipt, loader_sha)
+            write(args.output_dir/'native-loads-reuse.json', tests['native_loads'])
+            write(args.output_dir/'tests.json', tests)
+        elif args.scope != 'cmm':
             write(args.output_dir/'progress.json', dict(phase='strict-rl-sft-load', completed_phases=0, total_phases=4))
             with (args.output_dir/'strict-rl-sft-load.log').open('w') as stream:
                 subprocess.run([sys.executable, str(root/'scripts/diagnostics/qualify_maniskill_checkpoint_heads.py'),
