@@ -6,7 +6,8 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.environments import HiddenGainReach
-from fluffy_bassoon.meta_rl.metaworld_ppo_diagnose import critic_diagnostics, gradient_components, replay_drift
+from fluffy_bassoon.meta_rl.metaworld_ppo_diagnose import (
+    critic_diagnostics, gradient_components, replay_difference, replay_drift)
 from fluffy_bassoon.meta_rl.ppo import GRUCore, RecurrentActorCritic, collect_trials, update_ppo
 from gymnasium.spaces.utils import flatdim
 
@@ -70,3 +71,11 @@ def test_value_clip_measurement_identifies_a_flat_loss_despite_better_prediction
     clipped = old + (value-old).clamp(-.2, .2)
     torch.maximum((value-target).square(), (clipped-target).square()).mean().backward()
     torch.testing.assert_close(value.grad, torch.zeros(3))
+
+
+def test_mixed_replay_tolerance_accepts_small_fp32_roundoff_and_rejects_real_drift():
+    expected = torch.tensor([100., 1., .1])
+    ulp = torch.nextafter(expected, torch.full_like(expected, float('inf')))-expected
+    assert replay_difference(expected+8*ulp, expected)['maximum_scaled_error'] < 1
+    assert replay_difference(expected+.01, expected)['maximum_scaled_error'] > 1
+    assert replay_difference(torch.tensor([3e-5]), torch.zeros(1))['maximum_scaled_error'] > 1

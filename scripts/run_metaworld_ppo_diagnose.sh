@@ -27,13 +27,13 @@ git diff --quiet "$TASK_PARENT_SOURCE" "$TASK_SOURCE" -- \
   src/lerobot_policy_ctm
 mkdir "$TASK_OUTPUT"
 exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
-trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"' EXIT
+TASK_STARTED=$(date +%s)
+trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"; printf "%s\n" "$(($(date +%s)-TASK_STARTED))" > "$TASK_OUTPUT/allocation-active-seconds.txt"' EXIT
 export PYTHONPATH="$TASK_WORKTREE/src" PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MUJOCO_GL=egl WANDB_MODE=disabled
 export FLUFFY_META_RL_CUDA_QUALIFICATION=1
 export FLUFFY_METAWORLD_REAL_QUALIFICATION=1
-TASK_STARTED=$(date +%s)
 "$TASK_PYTHON" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 "$TASK_PYTHON" -m pytest -q -p no:cacheprovider tests/test_metaworld_ppo_diagnose.py \
@@ -42,4 +42,3 @@ TASK_STARTED=$(date +%s)
 timeout --signal=TERM --kill-after=30s 1500 "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.metaworld_ppo_diagnose \
   --source-commit "$TASK_SOURCE" --parent-dir "$TASK_PARENT" --output-dir "$TASK_OUTPUT/diagnosis" \
   --compare-minibatch-trials 2
-printf '%s\n' "$(($(date +%s)-TASK_STARTED))" > "$TASK_OUTPUT/allocation-active-seconds.txt"
