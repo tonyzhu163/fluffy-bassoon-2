@@ -56,6 +56,14 @@ teacher nor evidence that our learned bridge already controls the motor.
 Qualify actual bridge steering headroom against paired zero-bridge and external
 correction references before interpreting lower flow-matching loss.
 
+The privileged controller must use the student's residual bound, active channels,
+native decoder and four-Euler sampler. Private theta may select separately fitted
+teacher weights; it must not enter student observations or feedback. Compare live
+competence on paired fresh scenes. An unsuccessful bounded teacher fit leaves
+interface competence unresolved: it does not prove that the interface is
+incapable, nor isolate a memory or PPO failure. Pointwise flow-loss bounds and
+decoded-action distances help diagnose this gate but cannot replace live success.
+
 ## Held-out support and fresh probes
 
 `make_heldout_probe_plan` returns the evaluator wrapper: a three-attempt
@@ -89,6 +97,64 @@ theta, object, complete support-trial identity and probe replicate. Replicates
 branching from one support history are clustered observations, not independent
 training seeds. Four lanes and one learner seed qualify plumbing only; stronger
 claims need repeated independent histories, training seeds and grouped uncertainty.
+
+The reset-memory condition keeps the last public command and pending reward
+after ordinary support collection. It measures use of carried recurrent state;
+it is distinct from a trained static adapter or a collector reset throughout
+support. Opposite-condition histories must be valid complete histories. Their
+incidental scenes may also differ, so a performance drop alone does not prove
+correct hidden-condition inference. Require saved probe-prefix and native-noise
+pairing checks before interpreting any paired comparison.
+
+## Separate evidence collection from evidence use
+
+End-to-end support/probe success combines the collector, memory reader and probe
+controller. It cannot establish active experimentation by itself. Use a crossed
+collector-by-reader evaluation after qualifying the current interface:
+
+1. **Hold histories fixed to compare readers.** Save a complete public stream
+   from three support attempts: frozen native KV/masks, actual requested-action
+   feedback, rewards, boundaries and clocks. Replay that exact chronological
+   stream into each reader with frozen weights and fresh memory. Recompute the
+   reader's state; do not transplant a collector's architecture-specific memory.
+   Supply the same pending terminal reward and previous public command at the
+   fourth-attempt boundary, then use paired fresh probe scenes and noise.
+2. **Hold the reader fixed to compare collectors.** Collect three attempts under
+   each declared policy at matched theta/object and interaction budgets, pairing
+   initial support scenes/seeds where possible. Replay each resulting valid
+   stream into the same frozen reader checkpoint and evaluate identical fresh
+   probes. The reader's training mixture must cover the compared collection
+   policies; otherwise a difference may reflect unfamiliar histories.
+3. **Preserve the experimental units and costs.** Save collector and reader
+   checkpoint hashes, complete history identities, private simulator plans
+   separately from public streams, and raw directed probe effects. Group cloned
+   probes by support-history batch; account for every support and probe episode.
+   Under a common competent reader, a reproducible probe benefit from one
+   collector supports more useful evidence. A higher end-to-end score or a
+   wrong-history lesion alone does not establish that claim.
+
+The current bounded qualification uses shared offline histories for fitting CTM
+and XL, but their live supports are collected by their own policies. It does
+not implement this controlled collector-by-reader comparison and must not be
+reported as evidence for active experimentation. Do not modify an active run
+to add the comparison; use a fresh, pinned protocol after auditing the gate.
+
+## Measure the benefit of warm starts
+
+Compare DPT-only, direct PPO and DPT-to-PPO on the same task/interface and fresh
+probe plans. Match online interactions and PPO optimizer settings for the two
+PPO routes; record offline collection, privileged label queries and supervised
+updates separately rather than treating pretraining as free. Include the
+frozen motor and the existing XL reference, and retain actual training-seed,
+parameter, state-size and wall-time differences.
+
+Training and validation must each cover the declared perturbation/object cells,
+with complete histories held out and no label-only theta exposed to the reader.
+Balanced coverage is necessary but does not establish informative histories.
+Check live competence and state-dependent fresh-probe behavior; validation loss
+alone cannot promote a candidate. A DPT-only versus direct-PPO diagnostic does
+not establish the benefit of subsequent DPT-to-PPO training. Longer training
+should follow verified interface competence and the bounded evaluation audit.
 
 ## Admission
 
