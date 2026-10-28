@@ -1,13 +1,28 @@
 """Atomic learner snapshots taken only between complete meta-trials."""
 
 import os
+import random
 import re
 from pathlib import Path
 
+import numpy as np
 import torch
 
-from fluffy_bassoon.training.training_state import restore_rng, rng_state
 from fluffy_bassoon.evaluation_stages import sha256
+
+
+def rng_state():
+    return {"python": random.getstate(), "numpy": np.random.get_state(),
+            "torch": torch.get_rng_state(),
+            "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None}
+
+
+def restore_rng(state):
+    random.setstate(state["python"])
+    np.random.set_state(state["numpy"])
+    torch.set_rng_state(state["torch"])
+    if state["cuda"] is not None:
+        torch.cuda.set_rng_state_all(state["cuda"])
 
 
 def save_checkpoint(path, *, policy, optimizer, environment_rng, iteration, counters, contract):

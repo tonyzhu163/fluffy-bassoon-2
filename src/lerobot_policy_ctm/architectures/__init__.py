@@ -1,1 +1,1 @@
-"""Deterministic direct L1 and stochastic direct energy experts."""
+"""Recurrent cores and Transformer action experts used as matched learners."""

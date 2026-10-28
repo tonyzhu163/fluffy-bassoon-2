@@ -1,1 +1,1 @@
-"""PaliGemma LYCO LIBERO experiments."""
+"""CTM in-context reinforcement learning."""
