@@ -60,6 +60,15 @@ class PrivilegedTargetTracker(StochasticPi05BridgePolicy):
         self._theta_degrees = values
         return self
 
+    @torch.no_grad()
+    def set_gain(self, gain):
+        """Set a declared calibration candidate and keep its saved contract exact."""
+        if isinstance(gain, bool) or not math.isfinite(gain) or not 0 < gain <= 1:
+            raise ValueError("Require tracker gain in (0,1]")
+        self.gain = float(gain)
+        self.saved_tracker_gain.fill_(self.gain)
+        return self
+
     def _mean(self, native_velocity, suffix, noisy_actions, timestep, features):
         if native_velocity.dtype != torch.float32 or self._zero_theta is None:
             raise ValueError("Require float32 native flow and an active private tracker chunk")

@@ -145,3 +145,10 @@ def test_explicit_generator_is_consumed_once_and_gain_contract_is_guarded():
     assert torch.equal(first, second)
     with pytest.raises(RuntimeError, match="gain differs"):
         tracker(gain=.5).load_state_dict(policy.state_dict())
+    policy.set_gain(.25)
+    assert policy.gain == policy.saved_tracker_gain.item() == .25
+    assert policy.config()["gain"] == .25
+    tracker(gain=.25).load_state_dict(policy.state_dict())
+    with pytest.raises(ValueError, match="tracker gain"):
+        policy.set_gain(0)
+    assert policy.gain == .25
