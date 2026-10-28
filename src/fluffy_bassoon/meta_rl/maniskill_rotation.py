@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import random
+import re
 import signal
 import socket
 import subprocess
@@ -200,8 +201,10 @@ def main(argv=None):
         raise ValueError("Run the cached robot pilot only on allocated Linux resources")
     if os.environ.get("SLURM_JOB_ID"):
         validate_execution("slurm", os.environ)
-    elif not args.expected_hostname or socket.gethostname() != args.expected_hostname:
-        raise ValueError("Require the exact authorized allocated host or a Slurm step")
+    elif (not args.expected_hostname or socket.gethostname() != args.expected_hostname
+          or not re.fullmatch(r"job-[a-z0-9]+-master-0", socket.gethostname())
+          or not os.environ.get("KUBERNETES_SERVICE_HOST")):
+        raise ValueError("Require the exact scheduled Baige container or a Slurm step")
     # This pilot is CPU-only; do not initialize CUDA RNG state on a shared GPU host.
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
     if any(getattr(args, key) < 1 for key in ("width", "ticks", "attempts", "updates", "num_envs",
