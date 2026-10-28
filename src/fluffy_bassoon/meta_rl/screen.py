@@ -32,6 +32,11 @@ VARIANTS = (
     ("gru", "gru", 1),
     ("looped-transformer", "looped_transformer", 4),
 )
+# Bandit attempts are single pulls; grid attempts are full episodes, so trials are shorter.
+SCREEN_TASKS = {"bernoulli": dict(attempts=[64, 128], reward_offset=.5),
+                "nonstationary": dict(attempts=[64, 128], reward_offset=.5),
+                "darkroom": dict(attempts=[4, 16], reward_offset=0.),
+                "keydoor": dict(attempts=[4, 16], reward_offset=0.)}
 
 
 def allocation():
@@ -83,9 +88,25 @@ def training_options(args):
                 device=args.device)
 
 
+def resolve_task_defaults(args):
+    """Fill attempt lengths, horizon and reward offset from the task unless given explicitly."""
+    from .train import BANDITS, DEFAULT_HORIZONS
+    defaults = SCREEN_TASKS[args.task]
+    if args.attempts is None:
+        args.attempts = list(defaults["attempts"])
+    if args.reward_offset is None:
+        args.reward_offset = defaults["reward_offset"]
+    if args.horizon is None:
+        args.horizon = DEFAULT_HORIZONS.get(args.task, 1)
+    if args.task in BANDITS and args.horizon != 1:
+        raise ValueError("Bandits have exactly one decision per attempt")
+    return args.arms if args.task in BANDITS else None
+
+
 def plan(args):
     evidence = allocation()
     clean_source(args.source_commit)
+    arms = resolve_task_defaults(args)
     from .train import make_env
     import torch
     torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "1")))
@@ -94,7 +115,7 @@ def plan(args):
             raise ValueError(f"Require distinct {label}")
     positive = (args.parameter_budget, args.updates, args.num_envs, args.ppo_epochs,
                 args.minibatch_trials, args.eval_every, args.eval_trials, args.checkpoint_every,
-                args.arms, *args.attempts)
+                args.arms, args.horizon, *args.attempts)
     if (any(value < 1 for value in positive) or args.arms < 2
             or any(not 0 <= seed < 1_000_000_000 for seed in args.seeds)
             or not 0 < args.minimum_parameter_fraction <= 1
@@ -105,13 +126,14 @@ def plan(args):
         raise ValueError("Invalid screen budget or optimization settings")
     members = []
     variants = []
-    env = make_env("bernoulli", args.attempts[0], 1, args.arms)
+    env = make_env(args.task, args.attempts[0], args.horizon, args.arms)
     try:
         for label, core, ticks in VARIANTS:
             settings = dict(ticks=ticks, stm_length=32, ltm_tokens=32, synapse_depth=8,
                             bounded_synchronisation=core == "persistent_ctm",
                             decay_per_observation=core == "persistent_ctm",
-                            transformer_memory_length=max(args.attempts), transformer_layers=2,
+                            transformer_memory_length=max(args.attempts) * args.horizon,
+                            transformer_layers=2,
                             looped_memory_tokens=8)
             match = matching_width(core, env, settings, args.parameter_budget,
                                    args.minimum_parameter_fraction)
@@ -122,8 +144,9 @@ def plan(args):
     for attempts in args.attempts:
         for variant in variants:
             for seed in args.seeds:
-                members.append(dict(index=len(members), task="bernoulli", attempts=attempts,
-                                    arms=args.arms, horizon=1, seed=seed, variant=variant["label"]))
+                members.append(dict(index=len(members), task=args.task, attempts=attempts,
+                                    arms=arms, horizon=args.horizon, seed=seed,
+                                    variant=variant["label"]))
     manifest = dict(version=1, source_commit=args.source_commit, allocation=evidence,
                     parameter_budget=args.parameter_budget,
                     matching="largest width divisible by four within total policy parameter cap",
@@ -209,6 +232,8 @@ def run_one(manifest_path, digest, manifest, index, attempt_id, resume=None):
                    width=variant["width"], **variant["settings"], **manifest["training"])
     if resume is not None:
         options["resume"] = Path(resume).resolve()
+    if options["arms"] is None:
+        options.pop("arms")
     # Core-specific switches are rejected for other cores by the training CLI.
     if variant["core"] != "persistent_ctm":
         options.pop("bounded_synchronisation")
@@ -337,13 +362,16 @@ def parser():
     q.add_argument("--output-dir", type=Path, required=True)
     q.add_argument("--parameter-budget", type=int, default=100_000)
     q.add_argument("--minimum-parameter-fraction", type=float, default=.85)
-    q.add_argument("--attempts", type=int, nargs="+", default=[64, 128])
-    q.add_argument("--arms", type=int, default=6)
+    q.add_argument("--task", choices=tuple(SCREEN_TASKS), default="bernoulli")
+    q.add_argument("--attempts", type=int, nargs="+", help="Default depends on --task")
+    q.add_argument("--horizon", type=int, help="Decisions per attempt; default depends on --task")
+    q.add_argument("--arms", type=int, default=6, help="Arms for bandit tasks; ignored for grids")
     q.add_argument("--seeds", type=int, nargs="+", default=[1000, 1001, 1002, 1003, 1004])
     q.add_argument("--updates", type=int, default=300)
     q.add_argument("--num-envs", type=int, default=32)
     q.add_argument("--learning-rate", type=float, default=3e-4)
-    q.add_argument("--reward-offset", type=float, default=.5)
+    q.add_argument("--reward-offset", type=float,
+                   help="Return-fitting offset per attempt; default .5 for bandits, 0 for grids")
     q.add_argument("--value-coef", type=float, default=.01)
     q.add_argument("--ppo-epochs", type=int, default=4)
     q.add_argument("--minibatch-trials", type=int, default=16)
