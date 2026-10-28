@@ -1,0 +1,73 @@
+# fluffy-bassoon-2
+
+Can a Continuous Thought Machine (CTM) do in-context reinforcement learning?
+This repository holds the trial environments, the full-trial recurrent PPO
+trainer, the matched learners (persistent CTM, Continuous Memory Machine,
+Transformer-XL, GRU, looped Transformer), the CMM calibration task and the
+frozen pi0.5 ManiSkill motor used for the robot demonstration.
+
+It was split from `tonyzhu163/fluffy-bassoon` (branch `lycoreco_rl`) on
+2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied file and its
+source hash. Agents start with [AGENTS.md](AGENTS.md) and the live
+[coordination file](outputs/coordination.md).
+
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO, training and evaluation CLIs, Transformer-XL, CMM wrapper, Copy and few-shot regression tasks |
+| `src/fluffy_bassoon/rl/` | ManiSkill pi0.5 motor settings and rollout, RLinf checkpoint compatibility |
+| `src/lerobot_policy_ctm/` | Recurrent cores: persistent CTM, CMM, looped Transformer action experts, Sakana CTM reference components |
+| `src/fluffy_bassoon/{gpu_execution,baige_gpu,evaluation_stages}.py` | Execution-mode checks and receipt helpers |
+| `scripts/` | GPU probe and availability check, ManiSkill gate and headroom scripts, RLinf copy preparation |
+| `patches/` | RLinf flow-noise key patch, applied only to an isolated copy |
+| `docs/` | Method contracts and reviews ([index](docs/README.md)) |
+| `outputs/` | Coordination file and dated plans (tracked); run outputs (untracked) |
+
+The package names `fluffy_bassoon` and `lerobot_policy_ctm` are kept from the
+source repository so the copied code stays byte-identical; a rename can come
+later.
+
+## Environments and tests
+
+The compact learners need only PyTorch and NumPy:
+
+```bash
+uv sync
+uv run pytest
+```
+
+Run tests on allocated Linux resources, not macOS. `tests/test_meta_rl_cuda.py`
+runs inside a GPU step. The ManiSkill motor uses the separate RLinf
+environment in [docs/maniskill-pi05-icrl.md](docs/maniskill-pi05-icrl.md#environment).
+
+## Artifact retention
+
+For new runs, save checkpoints at required final and evaluation boundaries and
+at a fixed update interval declared in the run. Retain only checkpoints that the
+paper or live work cites: checkpoints behind reported results with their
+sources and initializers, checkpoints awaiting evaluation, checkpoints required
+by active or queued work, and the latest complete recovery checkpoint of each
+active lineage. Prune other checkpoint payloads after checking live
+dependencies. Keep all configurations, logs and evaluation records.
+
+`outputs/`, data, downloaded weights, run worktrees and caches are untracked.
+Keep method contracts beside implementations, verified results in
+`EVALUATION.md`, and raw evidence in each run's `outputs/<run-id>/`. Never commit
+credentials or machine-local authentication configuration.
+
+Planning documents are the tracked exception in `outputs/` (force-add them):
+
+- `outputs/coordination.md` is the single live coordination file: question,
+  ground rules, current state, job status and plan. Every agent and server
+  updates this file instead of starting another one.
+- Dated plans, handoffs and working notes live in `outputs/<run-id>/`.
+- Archive, do not delete. When a plan is superseded or retired, `git mv` its
+  tracked files to `outputs/archive/<run-id>/`, add a status line at the top
+  and update links to it. Cluster run directories and cited receipts keep their
+  original `outputs/<run-id>/` paths; only the tracked documents move.
+- Archive `coordination.md` when a phase closes, an item is retired or the file
+  passes about 300 lines: copy it to
+  `outputs/archive/coordination/coordination-<YYYYMMDD>.md` with links fixed
+  for the new location, then trim the live file to current work and point it
+  at the new snapshot.
