@@ -24,11 +24,11 @@ gives a142x ratio; their cosine was-.0353. This is a measured gradient
 imbalance, not a measured factor in Adam parameter step sizes. Global
 GAE-target value explained variance was.933, with substantial variation
 by family. Gaussian standard deviations.824–.866 and7.0% action saturation
-do not indicate collapsed exploration.
+show that the Gaussian sampling scale has not collapsed.
 
 Before updating, cached/full-prefix replay matched within mixed FP32
 atol2e-5/rtol2e-6. After ten PPO epochs, cached-versus-fresh saved-action
-log-probability RMS drift was.03564 and value RMS drift.2952.31.1% of
+log-probability RMS drift was0.03564 and value RMS drift0.2952;31.1% of
 value-loss positions selected an outside-clip, locally flat loss branch.
 These are diagnostic differences, not distribution KLs or causal learning
 effects. Output synchronization median positive half-life was152steps;
