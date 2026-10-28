@@ -167,11 +167,21 @@ class RecurrentActorCritic(nn.Module):
 
 @torch.no_grad()
 def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, deterministic=False, normalize_clock=True,
-                   reward_blind=False):
+                   reward_blind=False, reset_keys=None, clock_scale=None, record_states=False):
+    """`reset_keys` restricts attempt-boundary resets to those state entries (a component lesion).
+
+    `clock_scale` overrides the declared clock maximum, so a longer evaluation trial can keep its
+    training encoding. `record_states` keeps detached CPU state after every attempt's last step.
+    """
     if not envs or len(envs) != len(seeds):
         raise ValueError("Require one reset seed per environment")
     if type(normalize_clock) is not bool or type(reward_blind) is not bool:
         raise ValueError("Clock normalization and reward blinding must be boolean")
+    if reset_keys is not None:
+        initial = policy.core.initial_state(1)
+        if (not reset_each_attempt or not isinstance(initial, dict) or not reset_keys
+                or not set(reset_keys) <= initial.keys()):
+            raise ValueError("Component resets need attempt resets and named entries of a dict core state")
     first = envs[0]
     if any((env.attempts, env.horizon, env.observation_space, env.action_space) !=
            (first.attempts, first.horizon, first.observation_space, first.action_space) for env in envs):
@@ -185,7 +195,11 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
     records = {key: [] for key in ("observations", "raw_actions", "log_probs", "values",
                                    "rewards", "trial_ends", "attempt_ends", "resets", "action_mask", "settling_steps")}
     previous_settling = [0] * len(envs)
-    clock_scale = np.maximum(first.observation_space["clock"].high, 1) if normalize_clock else 1
+    if clock_scale is None:
+        clock_scale = np.maximum(first.observation_space["clock"].high, 1) if normalize_clock else 1
+    elif not normalize_clock:
+        raise ValueError("A clock scale override requires clock normalization")
+    states = []
     for step in range(first.attempts * first.horizon):
         inputs = torch.as_tensor(np.stack([flatten(first.observation_space,
                                                    dict(obs, clock=obs["clock"] / clock_scale,
@@ -195,8 +209,15 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
                                  dtype=reference.dtype, device=reference.device)
         resets = torch.tensor([reset_each_attempt and bool(obs["attempt_end"].item()) for obs in observations],
                               dtype=torch.bool, device=reference.device)
+        step_resets = resets
+        if reset_keys is not None:
+            if state is not None and resets.any():
+                initial = policy.core.initial_state(len(envs))
+                state = {key: torch.where(resets.reshape(-1, *([1] * (value.ndim - 1))), initial[key], value)
+                         if key in reset_keys else value for key, value in state.items()}
+            step_resets = torch.zeros_like(resets)
         action, raw_action, log_prob, _, value, state = policy.step(
-            inputs, state, reset=resets, deterministic=deterministic)
+            inputs, state, reset=step_resets, deterministic=deterministic)
         returned = [env.step(a) for env, a in zip(envs, action.cpu().numpy(), strict=True)]
         observations, rewards, ended, truncated, info = map(list, zip(*returned, strict=True))
         if any(truncated) or any(done != (step == first.attempts * first.horizon - 1) for done in ended):
@@ -216,7 +237,14 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
                       settling_steps=torch.tensor(increments, dtype=torch.int64, device=reference.device))
         for key in records:
             records[key].append(values[key])
-    return {key: torch.stack(value) for key, value in records.items()}
+        if record_states and (step + 1) % first.horizon == 0:
+            states.append({key: value.detach().cpu() for key, value in state.items()}
+                          if isinstance(state, dict) else dict(state=state.detach().cpu()))
+    result = {key: torch.stack(value) for key, value in records.items()}
+    if record_states:
+        # [attempts, batch, ...] per state entry, taken after each attempt's final decision.
+        result["attempt_states"] = {key: torch.stack([s[key] for s in states]) for key in states[0]}
+    return result
 
 
 @torch.no_grad()

@@ -61,9 +61,10 @@ each task under two objectives:
 Greedy and sampled, paired evaluation seeds.
 
 - Existing: normal, memory-wiped, reward-blind.
-- CMM-specific: zero LTM tokens at each attempt boundary; truncate the
-  short-term trace to the current step; reset only the synchronization
-  accumulators. Whichever lesion hurts locates the information.
+- CMM-specific, each applied at every attempt boundary while the rest of the
+  state carries: reset the long-term tokens; reset the short-term trace; reset
+  only the synchronization accumulators. Whichever lesion hurts locates the
+  information carried across attempts.
 - Linear probes after each attempt: decode the Dark Room goal cell (or bandit
   best arm) from LTM tokens and from synchronization features, fitted on
   training trials and scored on held-out trials. Decodability should rise with
@@ -92,20 +93,19 @@ their protocol, only after sections 2-4 give a clear answer.
 - AD with Transformer-XL reaches the published Dark Room level before any CMM
   comparison counts.
 
-## Code needed before launch
+## Code
 
-Checked against `main` at `1a21c86`:
+Implemented on `main` after `12d2fc9` (the grid screen is cherry-picked from
+`claude/icrl-grid-screen`):
 
-- `warmstart_train.py` accepts only `persistent_ctm`, `transformer_xl`, `gru`;
-  add `cmm` and `ctm`.
-- Its objectives are `dpt` and `behavior_cloning`; add an AD objective over
-  logged improving learning histories (for example single-task PPO or UCB
-  runs with failures kept).
-- `screen.py` covers only the Bernoulli bandit; extend the sealed matrix to
-  Dark Room and Key-to-Door with the attempt sweep.
-- `evaluate.py` has only normal, memory-wiped and reward-blind; add the three
-  CMM lesions, an attempt-count override for extrapolation, and probe-feature
-  export.
+- `screen plan --variant-set cmm-structure` with `--task darkroom|keydoor|bernoulli`
+  and an `--attempts` sweep; diagnostics add lesions, state export and
+  `--extrapolation-factors` (default 2 4).
+- `evaluate --lesions long_term trace synchronization`, `--attempts N`,
+  `--export-states`.
+- `python -m fluffy_bassoon.meta_rl.probe --archive <condition>.npz --output <json>`.
+- `warmstart_train --core cmm|ctm --stm-length --ltm-tokens --objective ad_noise`.
 
-Run CPU tests for each change on an allocated Linux node, then a small
-allocated qualification, then ask before the full matrix.
+Next: run the CPU tests (`tests/test_meta_rl_structure.py` plus the touched
+suites) on an allocated Linux node, then a small allocated qualification
+screen, then ask before the full matrix.

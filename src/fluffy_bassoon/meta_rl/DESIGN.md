@@ -336,6 +336,32 @@ The screen is an architecture selection experiment; a trained episode-reset
 control and grid-screen results remain necessary before stronger
 in-context learning or task-generalization claims.
 
+## CMM structure diagnostics
+
+`screen plan --variant-set cmm-structure` seals contrasts inside the one CMM
+implementation: full CMM at T1 and T4, `cmm-stm` (zero long-term tokens) and
+`ctm-control` (zero memory blocks), with Transformer-XL and GRU references,
+all under the same parameter cap. Its diagnostics add, per core, attempt-boundary
+component lesions (`evaluate --lesions`): `long_term`, `trace` and
+`synchronization` (CMM `alpha`/`beta`; persistent-CTM action and output banks)
+are each reset to their initial values at every attempt boundary while the other
+state entries carry. Resetting every entry equals the existing reset condition.
+
+They also evaluate the same checkpoint at 2x and 4x the trained attempts
+(`evaluate --attempts`, `--extrapolation-factors`). The clock keeps its trained
+encoding, so the trained attempts receive identical inputs and later attempts
+extrapolate the attempt clock. Transformer-XL retains only its sealed memory
+length. The greedy-reference check applies only at the trained length.
+
+`evaluate --export-states` saves, for greedy conditions, each state entry after
+every attempt's last decision as `state_<entry>[trial, attempt, ...]` and the
+private trial setting as `hidden_<label>` (goal cell, key/door cell, best arm,
+gain sign). These targets are read after the trial and never reach the policy.
+`python -m fluffy_bassoon.meta_rl.probe` fits a closed-form ridge classifier per
+entry and attempt on the first half of the trials and scores the second half,
+with the majority-class baseline. Probes show what is linearly readable, not
+what the policy uses; pair them with the lesions.
+
 The LIBERO robot learner sections (gain-trial wrapper, native-prefix interface,
 supervised warm start, robot PPO transition) stayed in fluffy-bassoon with their
 code; see [PROVENANCE.md](../../../PROVENANCE.md).

@@ -32,6 +32,20 @@ VARIANTS = (
     ("gru", "gru", 1),
     ("looped-transformer", "looped_transformer", 4),
 )
+# Contrasts inside one CMM implementation: full store, ticks, no long-term store, no memory blocks.
+CMM_STRUCTURE_VARIANTS = (
+    ("cmm-t1", "cmm", 1),
+    ("cmm-t4", "cmm", 4),
+    ("cmm-stm", "cmm", 1),
+    ("ctm-control", "ctm", 1),
+    ("transformer-xl", "transformer_xl", 1),
+    ("gru", "gru", 1),
+)
+VARIANT_SETS = {"default": VARIANTS, "cmm-structure": CMM_STRUCTURE_VARIANTS}
+VARIANT_OVERRIDES = {"cmm-stm": dict(ltm_tokens=0)}
+# Attempt-boundary component lesions the evaluator applies per core (see evaluate.LESIONS).
+CORE_LESIONS = {"cmm": ["long_term", "trace", "synchronization"], "ctm": ["trace", "synchronization"],
+                "persistent_ctm": ["trace", "synchronization"]}
 # Bandit attempts are single pulls; grid attempts are full episodes, so trials are shorter.
 SCREEN_TASKS = {"bernoulli": dict(attempts=[64, 128], reward_offset=.5),
                 "nonstationary": dict(attempts=[64, 128], reward_offset=.5),
@@ -96,6 +110,8 @@ def resolve_task_defaults(args):
         args.attempts = list(defaults["attempts"])
     if args.reward_offset is None:
         args.reward_offset = defaults["reward_offset"]
+    if args.extrapolation_factors is None:
+        args.extrapolation_factors = [2, 4] if args.variant_set == "cmm-structure" else []
     if args.horizon is None:
         args.horizon = DEFAULT_HORIZONS.get(args.task, 1)
     if args.task in BANDITS and args.horizon != 1:
@@ -110,31 +126,34 @@ def plan(args):
     from .train import make_env
     import torch
     torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "1")))
-    for values, label in ((args.attempts, "attempt lengths"), (args.seeds, "seeds")):
+    for values, label in ((args.attempts, "attempt lengths"), (args.seeds, "seeds"),
+                          (args.extrapolation_factors, "extrapolation factors")):
         if len(values) != len(set(values)):
             raise ValueError(f"Require distinct {label}")
     positive = (args.parameter_budget, args.updates, args.num_envs, args.ppo_epochs,
                 args.minibatch_trials, args.eval_every, args.eval_trials, args.checkpoint_every,
-                args.arms, args.horizon, *args.attempts)
+                args.arms, args.horizon, *args.attempts, *args.extrapolation_factors)
     if (any(value < 1 for value in positive) or args.arms < 2
             or any(not 0 <= seed < 1_000_000_000 for seed in args.seeds)
             or not 0 < args.minimum_parameter_fraction <= 1
             or not math.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0
             or not math.isfinite(args.learning_rate) or args.learning_rate <= 0
             or not math.isfinite(args.reward_offset) or not 0 <= args.reward_offset <= 1
-            or not math.isfinite(args.value_coef) or args.value_coef < 0):
+            or not math.isfinite(args.value_coef) or args.value_coef < 0
+            or any(factor < 2 for factor in args.extrapolation_factors)):
         raise ValueError("Invalid screen budget or optimization settings")
     members = []
     variants = []
     env = make_env(args.task, args.attempts[0], args.horizon, args.arms)
     try:
-        for label, core, ticks in VARIANTS:
+        for label, core, ticks in VARIANT_SETS[args.variant_set]:
             settings = dict(ticks=ticks, stm_length=32, ltm_tokens=32, synapse_depth=8,
                             bounded_synchronisation=core == "persistent_ctm",
                             decay_per_observation=core == "persistent_ctm",
                             transformer_memory_length=max(args.attempts) * args.horizon,
                             transformer_layers=2,
                             looped_memory_tokens=8)
+            settings.update(VARIANT_OVERRIDES.get(label, {}))
             match = matching_width(core, env, settings, args.parameter_budget,
                                    args.minimum_parameter_fraction)
             variant = dict(label=label, core=core, settings=settings, **match)
@@ -147,17 +166,22 @@ def plan(args):
                 members.append(dict(index=len(members), task=args.task, attempts=attempts,
                                     arms=arms, horizon=args.horizon, seed=seed,
                                     variant=variant["label"]))
+    diagnostics = dict(trials=args.eval_trials, device=args.device,
+                       environment_seed_start=1_000_000_000,
+                       policy_seeds=[2_000_000_000, 2_000_000_001, 2_000_000_002],
+                       conditions=["normal", "reset_between_attempts", "reward_blind"])
+    if args.variant_set != "default":
+        diagnostics.update(lesions={v["label"]: CORE_LESIONS.get(v["core"], []) for v in variants},
+                           export_states=True, extrapolation_factors=args.extrapolation_factors)
     manifest = dict(version=1, source_commit=args.source_commit, allocation=evidence,
+                    variant_set=args.variant_set,
                     parameter_budget=args.parameter_budget,
                     matching="largest width divisible by four within total policy parameter cap",
                     minimum_parameter_fraction=args.minimum_parameter_fraction,
                     matching_axes=["trainable parameters", "environment data", "PPO optimizer schedule"],
                     reported_unmatched_axes=["retained state bytes", "FLOPs", "wall time"],
                     training=training_options(args), variants=variants, members=members,
-                    diagnostics=dict(trials=args.eval_trials, device=args.device,
-                                     environment_seed_start=1_000_000_000,
-                                     policy_seeds=[2_000_000_000, 2_000_000_001, 2_000_000_002],
-                                     conditions=["normal", "reset_between_attempts", "reward_blind"]))
+                    diagnostics=diagnostics)
     args.output_dir.mkdir(parents=True, exist_ok=False)
     write_json(args.output_dir / "manifest.json", manifest)
     digest = sha256(args.output_dir / "manifest.json")
@@ -264,19 +288,31 @@ def run_one(manifest_path, digest, manifest, index, attempt_id, resume=None):
                    cost=cost_receipt(training_dir, manifest, member))
     if summary["completed"]:
         diagnostics = manifest["diagnostics"]
-        command = [sys.executable, "-m", "fluffy_bassoon.meta_rl.evaluate",
-                   "--source-commit", manifest["source_commit"], "--checkpoint", str(training_dir / "latest.pt"),
-                   "--output-dir", str(root / "diagnostics"), "--trials", str(diagnostics["trials"]),
-                   "--device", diagnostics["device"], "--reward-blind", "--policy-seeds",
-                   *map(str, diagnostics["policy_seeds"])]
-        with (root / "diagnostics.log").open("x") as log:
-            result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
-        if result.returncode:
-            write_json(root / "failure.json", dict(stage="diagnostics", returncode=result.returncode,
-                                                    elapsed_seconds=time.monotonic() - started))
-            raise RuntimeError(f"Screen member {index} diagnostics failed; inspect {root / 'diagnostics.log'}")
-        receipt["diagnostics"] = dict(command=command,
-                                       summary_sha256=sha256(root / "diagnostics/summary.json"))
+        extra = []
+        lesions = diagnostics.get("lesions", {}).get(variant["label"], [])
+        if lesions:
+            extra += ["--lesions", *lesions]
+        if diagnostics.get("export_states"):
+            extra.append("--export-states")
+        # The trained length first, then each longer evaluation; the greedy reference applies to the first.
+        runs = [("diagnostics", [])] + [(f"diagnostics-k{member['attempts'] * factor}",
+                                         ["--attempts", str(member["attempts"] * factor)])
+                                        for factor in diagnostics.get("extrapolation_factors", [])]
+        receipt["diagnostics"] = {}
+        for name, length in runs:
+            command = [sys.executable, "-m", "fluffy_bassoon.meta_rl.evaluate",
+                       "--source-commit", manifest["source_commit"], "--checkpoint", str(training_dir / "latest.pt"),
+                       "--output-dir", str(root / name), "--trials", str(diagnostics["trials"]),
+                       "--device", diagnostics["device"], "--reward-blind", "--policy-seeds",
+                       *map(str, diagnostics["policy_seeds"]), *extra, *length]
+            with (root / f"{name}.log").open("x") as log:
+                result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
+            if result.returncode:
+                write_json(root / "failure.json", dict(stage=name, returncode=result.returncode,
+                                                        elapsed_seconds=time.monotonic() - started))
+                raise RuntimeError(f"Screen member {index} {name} failed; inspect {root / (name + '.log')}")
+            receipt["diagnostics"][name] = dict(command=command,
+                                                summary_sha256=sha256(root / name / "summary.json"))
     receipt.update(completed=summary["completed"], elapsed_seconds=time.monotonic() - started)
     write_json(root / "receipt.json", receipt)
     print(json.dumps(dict(index=index, attempt_id=attempt_id, completed=receipt["completed"],
@@ -363,6 +399,10 @@ def parser():
     q.add_argument("--parameter-budget", type=int, default=100_000)
     q.add_argument("--minimum-parameter-fraction", type=float, default=.85)
     q.add_argument("--task", choices=tuple(SCREEN_TASKS), default="bernoulli")
+    q.add_argument("--variant-set", choices=tuple(VARIANT_SETS), default="default",
+                   help="cmm-structure adds component lesions, state export and longer evaluations")
+    q.add_argument("--extrapolation-factors", type=int, nargs="*",
+                   help="Also evaluate at these multiples of the trained attempts; default 2 4 for cmm-structure")
     q.add_argument("--attempts", type=int, nargs="+", help="Default depends on --task")
     q.add_argument("--horizon", type=int, help="Decisions per attempt; default depends on --task")
     q.add_argument("--arms", type=int, default=6, help="Arms for bandit tasks; ignored for grids")
