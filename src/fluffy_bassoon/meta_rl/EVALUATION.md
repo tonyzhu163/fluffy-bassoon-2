@@ -2,6 +2,69 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Meta-World execution admission, 2026-10-28
+
+Baige `job-x2x4kdpfn011`, source
+`adf741d6e955a624e9f785b9d1572dabf9ff4ab1`, passed the one-GPU training
+probe at 19:20:45 Shanghai. CUDA allocation and PID/PCI identity agree with
+the scheduler's single NVIDIA RPBZZZ6 allocation. Inside that allocation,
+`test_metaworld_pilot.py`, `test_meta_rl_ppo.py` and
+`test_meta_rl_checkpoint.py` passed 71 tests with two CUDA-marker skips in
+33.22 seconds. New checks include real two-episode ML1 Push and ML10
+simulator trials, goal visibility, terminal reward preservation, and exact
+next-update checkpoint recovery for CTM, GRU and Transformer-XL.
+
+This qualifies interfaces and recovery, not trained adaptation or benchmark
+performance. The bounded six-cell single-seed pilot remains a separate learning
+experiment. The initial r1 allocation `job-ikplxyvyh7p9` stopped at the missing
+CUDA-selector check before any model work; its worktree and failed receipt are
+preserved. Protocol and limits: [method contract](../../../docs/metaworld-ctm.md).
+Receipts: `outputs/metaworld-ctm-pilot-baige-20261028-r2/qualification.log`
+and `gpu-probe.json`, mirrored from the same run directory under
+`/mowenjie/fluffy-bassoon-2/outputs/`.
+
+## Meta-World bounded learning pilot, 2026-10-28
+
+The same Baige job/source finished all six single-seed cells with launcher
+exit zero at 21:17:41 Shanghai. Measured allocation was 7,023 seconds,
+**1.951 GPU-hours**, including qualification, plotting and setup. Each cell
+had a 900-second soft cap plus complete-update/final-evaluation overruns;
+all stopped before the 20-update target with full recovery checkpoints.
+
+| Benchmark | Core | Updates | Training steps | GPU-hours incl. evaluation | Fresh train-family success | Held-out success |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| ML1 Push | GRU | 13 | 325,000 | .295 | 10% | 20% |
+| ML1 Push | CTM T4 | 2 | 50,000 | .379 | 0% | 0% |
+| ML1 Push | Transformer-XL | 8 | 200,000 | .327 | 0% | 0% |
+| ML10 | GRU | 16 | 400,000 | .281 | 10% | 0% |
+| ML10 | CTM T4 | 2 | 50,000 | .342 | 0% | 0% |
+| ML10 | Transformer-XL | 9 | 225,000 | .305 | 10% | 0% |
+
+CTM median full-trial PPO optimization took 375–400 seconds per update,
+versus GRU 20–21 and XL 65–67 seconds. CUDA peak allocation was respectively
+1.591, .109 and .872 GiB. Optimization dominates CTM runtime; its lower-level
+cause remains unprofiled. Two CTM updates cannot determine learnability.
+These exploratory runtimes use a training-admission probe, whose
+`timing_comparison_eligible` flag is false; they support cost planning,
+without a hardware-normalized or cross-paper speed claim.
+
+No useful aggregate memory benefit is established. ML1 memory-reset and
+reward-blind scores equal normal for all cores. ML10 fresh train-family
+normal/reset/blind scores are GRU 10/12/10%, XL 10/10/10% and CTM 0/0/0%;
+all held-out scores and episode-success curves are zero. This is one seed
+and ten paired five-episode evaluation trials per condition, with unequal
+achieved updates. It qualifies execution and accounting, not convergence,
+an architecture ranking, a METTA reproduction or VLA readiness. Profile
+whole-trial PPO before proposing longer learning runs; no follow-on run was
+launched.
+
+The terminal audit independently recomputed all 96 saved evaluation
+conditions from raw binary outcomes with equal family/episode weighting,
+verified all six checkpoint hashes, and reconciled finite metrics and
+training/evaluation/time counters. Raw evidence and both PNG/PDF charts:
+`outputs/metaworld-ctm-pilot-baige-20261028-r2/RESULTS.md` and
+`AUDIT-20261028-2145.json`, mirrored from the same Baige output directory.
+
 ## Native DPT warm-start completion, 2026-10-28
 
 Baige `job-l3coajmm9noh`, source

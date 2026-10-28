@@ -7,4 +7,5 @@
 | [ManiSkill pi0.5 in-context RL](maniskill-pi05-icrl.md) | Frozen pi0.5 motor, hidden per-trial rotation, outcome cache, training stages, controls, environment, assets and launch commands |
 | [Native VLA context adaptation (proposal)](native-vla-context-icrl.md) | Direct reward-history conditioning inside pi0.5, training/replay requirements, latent-search comparison and paper decision gates |
 | [Trial environments and PPO](../src/fluffy_bassoon/meta_rl/DESIGN.md) | Trial lifetime and feedback, tasks, recurrent PPO, CTM control, looped Transformer |
+| [State-based Meta-World CTM qualification](metaworld-ctm.md) | ML1 Push and goal-visible ML10, recurrent baselines, success metrics, complete recovery and GPU-hour accounting |
 | [Continuous Memory Machine](../src/lerobot_policy_ctm/architectures/continuous_memory_machine/DESIGN.md) | The paper-aligned CMM core and its few-shot regression calibration |
