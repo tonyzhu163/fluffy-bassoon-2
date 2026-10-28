@@ -11,6 +11,9 @@ requires-python = ">=3.11,<3.13"
 # docs/maniskill-pi05-icrl.md (gymnasium, omegaconf, rlinf, mani-skill).
 dependencies = ["torch>=2.7", "numpy"]
 
+[project.optional-dependencies]
+metaworld = ["metaworld==3.1.1", "mujoco==3.3.0", "matplotlib>=3.10,<3.11"]
+
 [dependency-groups]
 dev = ["pytest>=8"]
 
