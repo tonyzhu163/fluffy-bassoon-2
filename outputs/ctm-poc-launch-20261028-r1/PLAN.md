@@ -90,8 +90,13 @@ Run the three scalar v2 CPU workers concurrently on the same allocation, with
 seeds 0/1/2 per core. The earlier standalone v2 draft was never submitted: the
 CPU queue rejects distributed-training jobs. Use a fresh r2 output identity.
 
-Implementation and independent static review are complete. Allocated CPU tests
-and actual simulator/PPO advancement are admission requirements. See
+Submitted as **Baige `job-61p1rncjnr1x`** at 16:45:46 Shanghai, running
+16:45:57. Exact source `c3e9cca68b93b6e777cbe5314e130bcaf85c8e14`.
+Parent two-GPU probe passed; all 32 new CPU tests passed in 3.71 seconds inside
+the allocation. Both live workers loaded the same frozen motor fingerprint and
+passed actual renderer binding on their distinct assigned GPUs. Optimizer
+advancement is being verified. [Launch receipt](../pi05-live-bridge-poc-baige-20261028-r1/LAUNCH.md).
+See
 `docs/pi05-live-bridge-ppo.md` for the durable method contract.
 
 ## Paper comparison and task priorities

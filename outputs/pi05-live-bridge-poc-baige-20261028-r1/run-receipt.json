@@ -1,0 +1,183 @@
+{
+  "run_id": "pi05-live-bridge-poc-baige-20261028-r1",
+  "source_commit": "c3e9cca68b93b6e777cbe5314e130bcaf85c8e14",
+  "environment": "Baige",
+  "job_id": "job-61p1rncjnr1x",
+  "submitted_at": "2026-10-28T16:45:46+08:00",
+  "scheduler_running_at": "2026-10-28T16:45:57+08:00",
+  "launch_evidence_checked_at": "2026-10-28T16:48:15+08:00",
+  "resources": {
+    "gpu_model": "NVIDIA RPBZZZ6",
+    "gpu_count": 2,
+    "cpu_count": 32,
+    "ram_gib": 128,
+    "shared_memory_gib": 16,
+    "wall_limit_minutes": 180
+  },
+  "launcher": {
+    "path": "/mowenjie/fluffy-bassoon-2/launchers/pi05-live-bridge-poc-baige-20261028-r1/launch.sh",
+    "sha256": "5436f9dc4b04341ec86ff04d865296e815e8122a0a9539da47fa439d61f2adaf"
+  },
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/pi05-live-bridge-poc-baige-20261028-r1",
+  "retry_policy": {
+    "automatic_retries": false,
+    "deletion": false
+  },
+  "admission": {
+    "parent_probe_status": "passed",
+    "parent_probe_created_at_utc": "2026-10-28T08:46:01.066492+00:00",
+    "parent_probe_sha256": "3be9b3c81a60aaa65bfb24437d00bd4d38475c285354f16c5cad7b7c85348438",
+    "qualification": {
+      "passed": 32,
+      "elapsed_seconds": 3.71,
+      "sha256": "936e140d14dd6fa373d3bdacc2fbf02a104c386966d3a6986dd3bf228a28af61"
+    },
+    "distinct_child_gpu_uuids": true,
+    "actual_renderer_pci_bindings_verified": true
+  },
+  "contract": {
+    "task": "PutOnPlateInScene25Main-v3",
+    "global_batch_trials_per_worker": 2,
+    "attempts": 4,
+    "episode_steps": 80,
+    "action_chunk": 5,
+    "denoise_steps": 4,
+    "active_model_action_dimensions": 7,
+    "train_theta_degrees": [
+      -45,
+      0,
+      45
+    ],
+    "evaluation_theta_degrees": [
+      -30,
+      30
+    ],
+    "evaluation_updates": [
+      0,
+      10,
+      50,
+      100
+    ],
+    "motor_sha256": "0adb5b40f064760ff245f53ae0a4e078b86680b65f77d1f5991a173543edd5a1",
+    "motor_fingerprint": "ed862a89a39052dad591d6542959ef0a72866b2c85eac2c84767bf55f52205dc",
+    "norm_stats_sha256": "930b816bf2f142f3e377d088d2252e5238b8d082ad8f0abceedfc6296be58852"
+  },
+  "workers": [
+    {
+      "name": "persistent_ctm-seed0",
+      "core": "persistent_ctm",
+      "seed": 0,
+      "parameters": 202055,
+      "retained_state_bytes_per_lane": 4864,
+      "visibility_token": "0",
+      "nvml_uuid": "GPU-efff128b-5cfb-dbb4-272f-be456ff19dac",
+      "cuda_uuid": "eeedbfc7-9ee4-32da-e050-2aacaeb3a609",
+      "pci_bus_id": "0000:62:00.0",
+      "target_updates": 100,
+      "training_cap_seconds": 9000.0,
+      "bridge": {
+        "core": "persistent_ctm",
+        "width": 64,
+        "ticks": 4,
+        "residual_scale": 1.0
+      },
+      "gaussian_policy": {
+        "protocol": "pi05_gaussian_flow_residual_v1",
+        "noise_scale": 0.05,
+        "active_dims": 7,
+        "residual_scale": 1.0,
+        "kv_layer": -1,
+        "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+        "entropy": "fixed sigma; constant entropy",
+        "dtype": "float32"
+      },
+      "optimization": {
+        "epochs": 4,
+        "clip": 0.2,
+        "value_coef": 0.01,
+        "reward_offset": 0.0,
+        "entropy_coef": 0.01,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.05
+      },
+      "renderer_pid": 440
+    },
+    {
+      "name": "transformer_xl-seed0",
+      "core": "transformer_xl",
+      "seed": 0,
+      "parameters": 264865,
+      "retained_state_bytes_per_lane": 16392,
+      "visibility_token": "1",
+      "nvml_uuid": "GPU-45c0bba8-4423-e3c6-1913-4d330e8bdc14",
+      "cuda_uuid": "8b3229bc-a6d8-11c2-1979-4b1d10226faa",
+      "pci_bus_id": "0000:a2:00.0",
+      "target_updates": 100,
+      "training_cap_seconds": 9000.0,
+      "bridge": {
+        "core": "transformer_xl",
+        "width": 64,
+        "ticks": 1,
+        "residual_scale": 1.0
+      },
+      "gaussian_policy": {
+        "protocol": "pi05_gaussian_flow_residual_v1",
+        "noise_scale": 0.05,
+        "active_dims": 7,
+        "residual_scale": 1.0,
+        "kv_layer": -1,
+        "likelihood": "joint Gaussian residual velocities; sum over passes, horizon and active channels",
+        "entropy": "fixed sigma; constant entropy",
+        "dtype": "float32"
+      },
+      "optimization": {
+        "epochs": 4,
+        "clip": 0.2,
+        "value_coef": 0.01,
+        "reward_offset": 0.0,
+        "entropy_coef": 0.01,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.05
+      },
+      "renderer_pid": 441
+    }
+  ],
+  "mirrored_artifacts": {
+    "gpu-probe.json": {
+      "sha256": "3be9b3c81a60aaa65bfb24437d00bd4d38475c285354f16c5cad7b7c85348438",
+      "bytes": 3727
+    },
+    "qualification.log": {
+      "sha256": "936e140d14dd6fa373d3bdacc2fbf02a104c386966d3a6986dd3bf228a28af61",
+      "bytes": 99
+    },
+    "worker-pids.tsv": {
+      "sha256": "9700485c9bf8ad852d746556dcd3536b91dee03f548ad727d2c7bd371acecfaf",
+      "bytes": 163
+    },
+    "worker-exit-codes.tsv": {
+      "sha256": "c308232a3cdfa23a8ec05de8ee398eb57b73464a52fedd420af2a458c2d7a526",
+      "bytes": 19
+    },
+    "gpu-uuids.tsv": {
+      "sha256": "be18778a426c9adac85dac04ee027fe6324758a60132e0030b2881d92c68c921",
+      "bytes": 82
+    },
+    "persistent_ctm-seed0/config.json": {
+      "sha256": "5019662221cfa6944877a68260c34de0e6534c565b3cc613df6030bf97d0318c",
+      "bytes": 3867
+    },
+    "persistent_ctm-seed0/renderer-binding.json": {
+      "sha256": "4dea64f39b60053f5a003955eed73d0345ac8e34d29ad17fd4ab33a2e172979a",
+      "bytes": 357
+    },
+    "transformer_xl-seed0/config.json": {
+      "sha256": "84024ec6fb3376dca24bab39cd50bbbfa2d4b1d301c02655f240e790a754cf16",
+      "bytes": 3868
+    },
+    "transformer_xl-seed0/renderer-binding.json": {
+      "sha256": "de6355588d49e7117f1bc568823b0ffea02698a74d010cbb9a5e04ba4519c28d",
+      "bytes": 357
+    }
+  }
+}
