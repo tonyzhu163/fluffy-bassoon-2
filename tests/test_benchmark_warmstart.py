@@ -1,6 +1,10 @@
 """Behavior/label separation, recurrent gradients and portable initialization gates."""
 
 from copy import deepcopy
+import json
+import os
+import subprocess
+import sys
 from types import SimpleNamespace
 
 import numpy as np
@@ -35,12 +39,14 @@ def test_labels_are_separate_from_real_history_and_reproducible(task):
         obs, _ = env.reset(seed=int(seed))
         for step in range(data["observations"].shape[0]):
             encoded = dict(obs, clock=obs["clock"] / np.maximum(env.observation_space["clock"].high, 1))
-            np.testing.assert_allclose(flatten(env.observation_space, encoded), data["observations"][step, lane])
+            # atanh/tanh serialization of continuous actions incurs float32 rounding.
+            np.testing.assert_allclose(flatten(env.observation_space, encoded), data["observations"][step, lane],
+                                       atol=2e-6, rtol=1e-5)
             action = data["raw_actions"][step, lane]
             if task == "reach":
                 action = np.tanh(action).astype(np.float32)
             obs, reward, _, _, _ = env.step(action)
-            assert reward == data["rewards"][step, lane]
+            assert reward == pytest.approx(float(data["rewards"][step, lane]), abs=2e-6)
 
 
 def test_grid_oracle_reaches_hidden_target_and_reach_oracle_uses_gain():
@@ -63,7 +69,7 @@ def test_supervised_update_uses_labels_and_trains_recurrence(core):
     data = generate_histories(factory, "bandit", np.arange(8))
     config = dict(width=8, ticks=1)
     if core == "persistent_ctm":
-        config.update(history_length=3, synapse_depth=1, bounded_synchronisation=True, decay_per_observation=True)
+        config.update(history_length=3, synapse_depth=2, bounded_synchronisation=True, decay_per_observation=True)
     policy = build_policy(core, config, factory()).eval()
     optimizer = torch.optim.AdamW(policy.parameters(), lr=.003)
     before = deepcopy(policy.core.state_dict())
@@ -165,3 +171,38 @@ def test_native_flow_loss_replays_context_and_does_not_feed_labels_to_recurrence
     update_distillation(policy, optimizer, data)
     assert any(not torch.equal(value, before[key]) for key, value in bridge.core.state_dict().items())
     assert all(parameter.grad is None for parameter in policy.critic.parameters())
+
+
+@pytest.mark.skipif(sys.platform != "linux" or not (
+    os.environ.get("SLURM_STEP_ID") or os.environ.get("KUBERNETES_SERVICE_HOST")),
+    reason="CLI warm-start qualification requires allocated Linux")
+def test_real_warmstart_cli_resumes_and_initializes_ppo(tmp_path):
+    source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    common = [sys.executable, "-m", "fluffy_bassoon.meta_rl.warmstart_train",
+        "--source-commit", source, "--expected-hostname", os.uname().nodename,
+        "--task", "bandit", "--core", "persistent_ctm", "--width", "8", "--ticks", "1",
+        "--attempts", "4", "--train-trials", "8", "--validation-trials", "4",
+        "--batch-trials", "2", "--eval-trials", "4", "--eval-every", "2", "--threads", "1"]
+    first, resumed, direct, ppo = (tmp_path / name for name in ("first", "resumed", "direct", "ppo"))
+    for output, updates, extra in ((first, 2, []), (resumed, 3,
+            ["--resume", str(first / "latest.pt"), "--dataset-dir", str(first)]), (direct, 3, [])):
+        result = subprocess.run(common + ["--output-dir", str(output), "--updates", str(updates)] + extra,
+                                capture_output=True, text=True, timeout=120)
+        assert result.returncode == 0, result.stdout + result.stderr
+    a = torch.load(resumed / "latest.pt", weights_only=False)
+    b = torch.load(direct / "latest.pt", weights_only=False)
+    torch.testing.assert_close(a["policy"], b["policy"], atol=0, rtol=0)
+    torch.testing.assert_close(a["optimizer"], b["optimizer"], atol=0, rtol=0)
+    result = subprocess.run([sys.executable, "-m", "fluffy_bassoon.meta_rl.train",
+        "--source-commit", source, "--output-dir", str(ppo), "--task", "bandit",
+        "--core", "persistent_ctm", "--width", "8", "--ticks", "1", "--attempts", "4",
+        "--bounded-synchronisation", "--decay-per-observation", "--updates", "1",
+        "--num-envs", "2", "--minibatch-trials", "2", "--ppo-epochs", "1",
+        "--eval-trials", "4", "--eval-every", "1", "--checkpoint-every", "1",
+        "--warmstart", str(resumed / "warmstart.pt"), "--warmstart-sha256", sha256(resumed / "warmstart.pt")],
+        capture_output=True, text=True, timeout=120,
+        env=dict(os.environ, CUDA_VISIBLE_DEVICES="0") if os.environ.get("KUBERNETES_SERVICE_HOST") else None)
+    assert result.returncode == 0, result.stdout + result.stderr
+    contract = json.loads((ppo / "config.json").read_text())["contract"]
+    assert contract["initialization"]["parent"]["iteration"] == 3
+    assert json.loads((ppo / "summary.json").read_text())["iteration"] == 1
