@@ -1,6 +1,7 @@
 """Isolated checkpoint diagnostics; never resume or modify a comparison run."""
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import math
@@ -12,7 +13,7 @@ import numpy as np
 import torch
 
 from fluffy_bassoon.evaluation_stages import write_json
-from .checkpoint import restore_checkpoint, save_checkpoint
+from .checkpoint import restore_checkpoint, restore_rng, rng_state, save_checkpoint
 from .metaworld_env import benchmark_pools, task_digest
 from .metaworld_policy import make_policy
 from .metaworld_workers import make_worker_lanes
@@ -171,7 +172,11 @@ def main(argv=None):
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--parent-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--compare-minibatch-trials", type=int, default=0,
+                        help="Optional paired PPO update on the identical saved rollout, with another minibatch size.")
     args = parser.parse_args(argv)
+    if args.compare_minibatch_trials < 0:
+        raise ValueError("Minibatch comparison must be nonnegative")
     evidence, source = allocation(), clean_source(args.source_commit)
     parent = args.parent_dir
     summary = json.loads((parent/"summary.json").read_text())
@@ -212,6 +217,8 @@ def main(argv=None):
         diagnostic_training_started = time.monotonic()
         seeds = sampler.integers(0, 1_000_000_000, size=50)
         rollout = collect_trials(policy, envs, seeds, replay_chunk_length=100)
+        postcollection_rng = rng_state()
+        postcollection_sampler = deepcopy(sampler.bit_generator.state)
         torch.save(rollout, args.output_dir/"diagnostic-rollout.pt")
         report["diagnostic_environment_steps"] = rollout["rewards"].numel()
         report["family_scales"] = family_scales(rollout, [e.family for e in envs], optimization)
@@ -244,12 +251,41 @@ def main(argv=None):
         report["diagnostic_checkpoint_sha256"] = save_checkpoint(args.output_dir/"diagnostic-after-update.pt",
             policy=policy, optimizer=optimizer, environment_rng=sampler, iteration=iteration+1,
             counters=counters, contract=diagnostic_contract)
+        if args.compare_minibatch_trials:
+            # Paired on-policy-at-initialization batch: same parent weights, full Adam
+            # state, normalization, sampled actions and post-collection RNG. Only
+            # optimizer minibatch membership/step count changes. No new interactions.
+            alt_iteration, alt_counters = restore_checkpoint(checkpoint, policy=policy, optimizer=optimizer,
+                environment_rng=sampler, contract=contract)
+            restore_rng(postcollection_rng)
+            sampler.bit_generator.state = postcollection_sampler
+            alternative = dict(optimization, minibatch_trials=args.compare_minibatch_trials)
+            alt = dict(optimization=alternative, diagnostic_environment_steps=0,
+                       interpretation="Paired optimizer diagnostic on the same125k behavior transitions; no convergence claim.")
+            before = time.monotonic()
+            alt["update"] = update_ppo(policy, optimizer, rollout, **alternative)
+            torch.cuda.synchronize()
+            alt["update_seconds"] = time.monotonic()-before
+            alt["replay_drift_after"] = replay_drift(policy, rollout, 100, alternative)
+            alt["gradient_components_after"] = gradient_components(policy, rollout, alternative)
+            policy.core.observe_after_update(rollout["observations"])
+            alt_counters["environment_steps"] += rollout["rewards"].numel()
+            alt_counters["optimizer_steps"] += alt["update"]["optimizer_steps"]
+            alt_counters["training_seconds"] += time.monotonic()-before
+            alt_counters["cumulative_elapsed_seconds"] += time.monotonic()-started
+            alt_contract = dict(diagnostic_contract, optimization=alternative,
+                                diagnostic_variant="paired_minibatch_comparison")
+            alt["checkpoint_sha256"] = save_checkpoint(args.output_dir/"diagnostic-alternative.pt", policy=policy,
+                optimizer=optimizer, environment_rng=sampler, iteration=alt_iteration+1,
+                counters=alt_counters, contract=alt_contract)
+            report["paired_minibatch_comparison"] = alt
         report["completed"] = True
         report["diagnostic_active_seconds"] = time.monotonic()-started
         report["cuda_peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         write_json(args.output_dir/"summary.json", report)
         print(json.dumps({"phase":"diagnostic_complete", "seconds":report["diagnostic_active_seconds"]}), flush=True)
     except BaseException as error:
+        write_json(args.output_dir/"progress.json", report)
         write_json(args.output_dir/"failure.json", dict(error=type(error).__name__, message=str(error), parent_preserved=True))
         raise
     finally:
