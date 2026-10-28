@@ -12,6 +12,26 @@ from lerobot_policy_ctm.shared.persistent_ctm import PersistentCTMCore
 from fluffy_bassoon.meta_rl.transformer_xl import TransformerXLCore
 
 
+def clone_generator(generator):
+    """Copy an inference noise stream without advancing its owner."""
+    return torch.Generator(device=generator.device).set_state(generator.get_state())
+
+
+def public_chunk_feedback(previous_action, *, previous_reward=0., attempt_end=False,
+                          attempt_index=0, chunk_index=0, attempts=8, chunks=16):
+    """Construct the eleven declared public fields; no environment object is accepted."""
+    if (previous_action.ndim != 2 or previous_action.shape[1] != 7
+            or not previous_action.is_floating_point() or not torch.isfinite(previous_action).all()
+            or type(attempts) is not int or attempts < 1 or type(chunks) is not int or chunks < 1
+            or type(attempt_index) is not int or not 0 <= attempt_index < attempts
+            or type(chunk_index) is not int or not 0 <= chunk_index < chunks
+            or previous_reward not in (0., 1.) or type(attempt_end) is not bool):
+        raise ValueError("Require finite previous actions [B,7], binary reward/boundary and public clocks")
+    extra = previous_action.new_tensor([previous_reward, float(attempt_end),
+                                         attempt_index / attempts, chunk_index / chunks])
+    return torch.cat((previous_action, extra[None].expand(previous_action.shape[0], -1)), dim=-1)
+
+
 def native_kv_tokens(kv_cache, prefix_mask, *, layer=-1):
     """Read a layer's RoPE keys and values as detached [B,P,2*KH*HD] tokens."""
     if (not isinstance(kv_cache, (list, tuple)) or not kv_cache
@@ -141,7 +161,7 @@ class Pi05FeatureBridge(nn.Module):
 
 @torch.no_grad()
 def sample_prepared_with_bridge(model, bridge, observation, feedback, memory=None, *, noise=None,
-                                rng=None, reset=None, num_steps=4):
+                                rng=None, reset=None, num_steps=4, audit=None):
     """Mirror native Euler inference on an already preprocessed RLinf Observation.
 
     This is an inference entry point, not a PPO likelihood implementation. The
@@ -158,11 +178,23 @@ def sample_prepared_with_bridge(model, bridge, observation, feedback, memory=Non
         raise ValueError("Initial noise differs from native motor action dimensions")
     _, prefix_mask, kv_cache = model.build_prefix_cache(observation)
     features, memory = bridge.read_context(kv_cache, prefix_mask, feedback, memory, reset=reset)
+    if audit is not None:
+        audit.update(kv_layers=len(kv_cache), kv_layer=bridge.kv_layer,
+                     kv_key_shape=list(kv_cache[bridge.kv_layer][0].shape),
+                     kv_value_shape=list(kv_cache[bridge.kv_layer][1].shape),
+                     prefix_mask_shape=list(prefix_mask.shape),
+                     valid_prefix_tokens=prefix_mask.sum(1).cpu().tolist(),
+                     feedback_shape=list(feedback.shape), features_shape=list(features.shape),
+                     memory_shapes={key: list(value.shape) for key, value in memory.items()},
+                     suffix_shapes=[], velocity_shapes=[], recurrence_updates=1)
     x_t, dt, time = noise, -1. / num_steps, 1.
     while time >= -dt / 2:
         timestep = torch.full((batch,), time, device=device, dtype=torch.float32)
         suffix = model.run_suffix(observation, x_t, timestep, kv_cache, prefix_mask)
         velocity = model.velocity_from_suffix(suffix)
+        if audit is not None:
+            audit["suffix_shapes"].append(list(suffix.shape))
+            audit["velocity_shapes"].append(list(velocity.shape))
         velocity = bridge.correct_velocity(velocity, suffix, x_t, timestep, features)
         x_t = x_t + dt * velocity
         time += dt
@@ -170,11 +202,13 @@ def sample_prepared_with_bridge(model, bridge, observation, feedback, memory=Non
 
 
 @torch.no_grad()
-def predict_action_batch_with_bridge(model, bridge, env_obs, feedback, memory=None, **kwargs):
+def predict_action_batch_with_bridge(model, bridge, env_obs, feedback, memory=None, *,
+                                     return_model_actions=False, **kwargs):
     """RLinf env transforms -> native KV bridge -> unchanged native action decoder."""
     from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
     observation = model.env_obs_to_observation(env_obs)
     prepared = preprocess_observation(observation, train=False)
     model_actions, memory = sample_prepared_with_bridge(
         model, bridge, prepared, feedback, memory, num_steps=model.num_steps, **kwargs)
-    return model.decode_actions(model_actions, observation.state), memory
+    actions = model.decode_actions(model_actions, observation.state)
+    return (actions, memory, model_actions) if return_model_actions else (actions, memory)

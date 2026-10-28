@@ -76,7 +76,23 @@ bridge adaptation curve alone cannot establish reward-driven in-context RL.
 On allocated Linux resources run `tests/test_pi05_feature_bridge.py`. Synthetic
 tests check exact zero-residual Euler parity, masking, lane reset, immutable
 incoming state, blocked gradients into native features and one recurrent update
-per chunk. Next run one allocated-GPU native episode with a zero bridge and the
-same seeded baseline; require exact action parity and matching outcomes, then
-qualify teacher residual training before a live trial learner. GPU launches
-require the repository's user approval and allocation-local probe.
+per chunk. `scripts/diagnostics/maniskill_pi05_feature_bridge_gate.py` runs one
+80-step native episode, checking both zero CTM and zero Transformer-XL bridges
+against native pi0.5 on each of its 16 live observations. It clones the CUDA
+generator before each query and demands exact equality of all 32-dimensional
+model actions, decoded actions, prepared simulator commands and resulting noise
+streams. All methods share the one proven-identical executed trajectory. This
+is motor preservation qualification, not three independent success trials or
+an adaptation test.
+
+The gate uses the same `--rlinf-root`, `--model-path`, `--norm-stats`,
+`--expected-model-sha256`, `--source-commit` and unique `--output-dir` arguments
+as the existing object gate. It writes an allocation-local GPU probe, actual
+renderer binding, source/runtime/motor hashes, public feedback, complete issued
+commands, native KV/suffix shapes and motor/bridge fingerprints before and
+after inference. Qualification intentionally computes a native pass and one
+pass per bridge on each observation; ordinary bridge inference uses one prefix
+pass. Continue with teacher residual training only after this gate passes.
+Launch GPU work within the user-approved task and resource scope once verified
+code and allocated resources are ready; ask before expanding scope or materially
+increasing the resource budget, as specified in AGENTS.md.

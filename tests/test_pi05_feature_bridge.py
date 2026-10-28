@@ -7,7 +7,8 @@ import torch
 from torch import nn
 
 from fluffy_bassoon.rl.pi05_feature_bridge import (
-    Pi05FeatureBridge, native_kv_tokens, sample_prepared_with_bridge,
+    Pi05FeatureBridge, clone_generator, native_kv_tokens, public_chunk_feedback,
+    sample_prepared_with_bridge,
 )
 
 
@@ -100,8 +101,12 @@ def test_zero_bridge_matches_every_native_euler_step_and_advances_memory_once(ki
         suffix = motor.run_suffix(observation, reference, timestep, cache, mask)
         reference = reference + dt * motor.velocity_from_suffix(suffix)
         time += dt
-    actions, state = sample_prepared_with_bridge(motor, module, observation, feedback, noise=noise)
+    audit = {}
+    actions, state = sample_prepared_with_bridge(motor, module, observation, feedback, noise=noise, audit=audit)
     assert torch.equal(actions, reference)
+    assert audit["kv_key_shape"] == [2, 5, 1, 8]
+    assert audit["suffix_shapes"] == [[2, 3, 12]] * 4
+    assert audit["recurrence_updates"] == 1
     _, once = module.read_context(cache, mask, feedback)
     for key in state:
         torch.testing.assert_close(state[key], once[key])
@@ -109,3 +114,28 @@ def test_zero_bridge_matches_every_native_euler_step_and_advances_memory_once(ki
         assert state["length"].tolist() == [1, 1]
     with pytest.raises(ValueError, match="eval-mode"):
         sample_prepared_with_bridge(motor.train(), module, observation, feedback, noise=noise)
+
+
+def test_cloned_noise_streams_advance_independently_and_reproduce_samples():
+    original = torch.Generator().manual_seed(52)
+    cloned = clone_generator(original)
+    before = original.get_state().clone()
+    expected = torch.randn(2, 3, generator=cloned)
+    assert torch.equal(original.get_state(), before)
+    actual = torch.randn(2, 3, generator=original)
+    assert torch.equal(actual, expected)
+    assert torch.equal(original.get_state(), cloned.get_state())
+
+
+def test_public_feedback_has_only_declared_history_fields():
+    previous = torch.arange(14, dtype=torch.float32).reshape(2, 7)
+    feedback = public_chunk_feedback(previous, previous_reward=1., attempt_end=True,
+                                     attempt_index=2, chunk_index=8)
+    assert feedback.shape == (2, 11)
+    torch.testing.assert_close(feedback[:, :7], previous)
+    torch.testing.assert_close(feedback[:, 7:], torch.tensor([[1., 1., .25, .5]]).expand(2, -1))
+    assert torch.equal(public_chunk_feedback(torch.zeros(1, 7)), torch.zeros(1, 11))
+    with pytest.raises(ValueError, match="public clocks"):
+        public_chunk_feedback(previous, chunk_index=16)
+    with pytest.raises(ValueError, match="previous actions"):
+        public_chunk_feedback(torch.zeros(2, 8))
