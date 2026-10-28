@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.environments import HiddenGainReach
-from fluffy_bassoon.meta_rl.metaworld_ppo_diagnose import gradient_components, replay_drift
+from fluffy_bassoon.meta_rl.metaworld_ppo_diagnose import critic_diagnostics, gradient_components, replay_drift
 from fluffy_bassoon.meta_rl.ppo import GRUCore, RecurrentActorCritic, collect_trials, update_ppo
 from gymnasium.spaces.utils import flatdim
 
@@ -59,3 +59,14 @@ def test_gradient_diagnostic_preserves_learner_rng_weights_and_grad_buffers():
     for name, value in policy.state_dict().items():
         torch.testing.assert_close(value, weights[name], rtol=0, atol=0)
     assert all(p.grad is None for p in policy.parameters())
+
+
+def test_value_clip_measurement_identifies_a_flat_loss_despite_better_predictions():
+    old, target = torch.zeros(3), torch.full((3,), 10.)
+    value = torch.full((3,), .3, requires_grad=True)
+    report = critic_diagnostics(value, old, target, .2)
+    assert report['new_value_mse'] < report['old_value_mse']
+    assert report['flat_clipped_loss_fraction'] == 1.
+    clipped = old + (value-old).clamp(-.2, .2)
+    torch.maximum((value-target).square(), (clipped-target).square()).mean().backward()
+    torch.testing.assert_close(value.grad, torch.zeros(3))
