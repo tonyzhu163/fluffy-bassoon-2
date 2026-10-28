@@ -52,7 +52,31 @@ remain unchanged: capped clock is a separate input intervention. The first
 five train episodes score24% under either clock; later20change6.5to20.0%.
 Therefore out-of-range public-clock input explains much of this CMM decline.
 Evidence: `outputs/metaworld-clock-debug-baige-20261029-r1/audit.json`
-and `frozen-clock-success.png`. A matching CTM frozen check is pending.
+and `frozen-clock-success.png`.
+
+Matching CTM clock diagnostic `job-vb7p9f0cz56n`, source
+`b790031791acf26309a5e6fcafa465e4a331e51f`, completed exit0,8tests,
+584launcher-active seconds and1M evaluation steps/zero training or optimizer
+steps. Original/capped train normal16.0/18.4%, reset18.4/18.8%; held-out
+normal0/1.6%, reset0/0%. All8raw conditions,4complete first-five-prefix
+hashes,12original-array checks and independent parent/frozen-model hashes
+passed. The clock correction does not explain most of CTM's low score.
+Failed qualification r2 `job-l6xdatciygju` is retained:6tests passed, two
+CMM test cases called a CLI preset missing from the old CTM runner; no
+evaluation ran. Corrected r3 explicitly provides the same constructor
+settings and retains all8cases without changing model/runtime code.
+
+The consolidated decision is to retainT1/value_coef.5/minibatch10, report
+first-five competence separately from long-trial clock extrapolation, and
+keep memory-reset controls. No T/depth/trace optimum or architecture win
+has been established. CTM/RL²/CMM first-five train scores are16/28/24%;
+ECET's incomplete30/80snapshot is38%. Original sampled training success
+also remains low, so the issue is not solely long-evaluation input drift.
+All interventions stay separate from original curves. Full decisions,
+32independently recomputed clock/control conditions, costs, retained failures
+and completion audit: `outputs/metaworld-ml10-debug-20261029-r1/RESULTS.md`
+and `completion-audit.json`. The original ECET monitor continues; no further
+tuning, seeds, sweeps or VLA work were launched.
 
 ## ML10 AMAGO completion, 2026-10-29
 
@@ -125,8 +149,8 @@ material drift; the learner is unchanged. Failed scheduler-pod time131s.
 Evidence: `outputs/metaworld-ml10-matched-baige-20261028-r1/ctm/`,
 `checks/20261029-0147/`, `outputs/metaworld-ppo-debug-baige-20261029-r3/audit.json`
 and `checkpoint-audit.json`. A bounded paired continuation control of value
-coefficient.5versus.005 is running as `job-knyy09k3p6rr`; no learning
-benefit is yet established. The unchanged first update exactly reproduced
+coefficient.5versus.005 completed as `job-knyy09k3p6rr`, with no measured
+train-success improvement. The unchanged first update exactly reproduced
 the diagnostic's rollout, policy and Adam reference state.
 
 ## ML10 RL²-PPO single-seed completion, 2026-10-29
