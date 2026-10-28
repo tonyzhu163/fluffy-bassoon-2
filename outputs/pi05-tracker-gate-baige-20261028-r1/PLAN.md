@@ -63,3 +63,6 @@ zero-head weights and every collector/reader/artifact hash are recorded.
 
 The paired DPT→PPO planner and trainer admission are tested but not launched:
 they require a separately reviewed live gate and compatible balanced parent.
+
+Staging at source `5193e27` was never submitted. Superseded before launch by
+[r2 with repeated controls](../pi05-tracker-gate-baige-20261028-r2/PLAN.md).
