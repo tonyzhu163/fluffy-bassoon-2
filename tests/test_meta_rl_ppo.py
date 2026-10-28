@@ -130,6 +130,29 @@ def test_episode_mode_preserves_the_recorded_attempt_reset_mask():
     torch.testing.assert_close(values, rollout["values"])
 
 
+def test_reward_blind_collector_zeros_only_feedback_and_keeps_true_scoring():
+    envs = [HiddenRewardBandit(attempts=6) for _ in range(3)]
+    policy = actor(envs[0])
+    with torch.no_grad():
+        policy.actor.weight.zero_()
+        policy.actor.bias.copy_(torch.tensor([1., 0.]))
+    normal = collect_trials(policy, envs, [3, 4, 5], deterministic=True)
+    blind = collect_trials(policy, envs, [3, 4, 5], deterministic=True, reward_blind=True)
+    torch.testing.assert_close(normal["raw_actions"], blind["raw_actions"])
+    torch.testing.assert_close(normal["rewards"], blind["rewards"])
+    assert normal["rewards"].sum() > 0
+    changed = False
+    for step in range(6):
+        for lane in range(3):
+            a = unflatten(envs[0].observation_space, normal["observations"][step, lane].numpy())
+            b = unflatten(envs[0].observation_space, blind["observations"][step, lane].numpy())
+            assert b["previous_reward"].item() == 0
+            changed |= a["previous_reward"].item() > 0
+            for key in a.keys() - {"previous_reward"}:
+                np.testing.assert_array_equal(a[key], b[key])
+    assert changed
+
+
 @pytest.mark.parametrize("attempts", [1, 4])
 def test_collector_scales_clock_by_public_bounds_without_changing_environment(attempts):
     env = HiddenGainReach(attempts=attempts, horizon=2)

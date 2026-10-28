@@ -166,11 +166,12 @@ class RecurrentActorCritic(nn.Module):
 
 
 @torch.no_grad()
-def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, deterministic=False, normalize_clock=True):
+def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, deterministic=False, normalize_clock=True,
+                   reward_blind=False):
     if not envs or len(envs) != len(seeds):
         raise ValueError("Require one reset seed per environment")
-    if type(normalize_clock) is not bool:
-        raise ValueError("Clock normalization selection must be boolean")
+    if type(normalize_clock) is not bool or type(reward_blind) is not bool:
+        raise ValueError("Clock normalization and reward blinding must be boolean")
     first = envs[0]
     if any((env.attempts, env.horizon, env.observation_space, env.action_space) !=
            (first.attempts, first.horizon, first.observation_space, first.action_space) for env in envs):
@@ -187,7 +188,9 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
     clock_scale = np.maximum(first.observation_space["clock"].high, 1) if normalize_clock else 1
     for step in range(first.attempts * first.horizon):
         inputs = torch.as_tensor(np.stack([flatten(first.observation_space,
-                                                   dict(obs, clock=obs["clock"] / clock_scale))
+                                                   dict(obs, clock=obs["clock"] / clock_scale,
+                                                        previous_reward=np.zeros_like(obs["previous_reward"])
+                                                        if reward_blind else obs["previous_reward"]))
                                           for obs in observations]),
                                  dtype=reference.dtype, device=reference.device)
         resets = torch.tensor([reset_each_attempt and bool(obs["attempt_end"].item()) for obs in observations],

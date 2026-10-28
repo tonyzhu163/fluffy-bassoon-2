@@ -1,4 +1,4 @@
-"""Read-only CPU evaluation of compact checkpoints with greedy and seeded exploration."""
+"""Read-only evaluation of compact checkpoints with frozen memory/reward ablations."""
 
 import argparse
 from copy import deepcopy
@@ -10,13 +10,10 @@ import sys
 
 import numpy as np
 import torch
-from gymnasium.spaces.utils import flatdim
 
 from fluffy_bassoon.evaluation_stages import sha256, write_json
 from fluffy_bassoon.gpu_execution import validate_execution
-from .cmm import CMMCore
-from .transformer_xl import TransformerXLCore
-from .ppo import GRUCore, LoopedTransformerCore, PersistentCTMVectorCore, RecurrentActorCritic
+from .cores import build_policy
 from .train import evaluate_trials, make_env
 
 
@@ -26,11 +23,19 @@ def main(argv=None):
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--trials", type=int)
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    parser.add_argument("--reward-blind", action="store_true",
+                        help="Also zero only previous_reward, preserving actions, observations and true scoring")
     parser.add_argument("--policy-seeds", type=int, nargs="+", default=[2_000_000_000, 2_000_000_001, 2_000_000_002])
     args = parser.parse_args(argv)
     if sys.platform != "linux":
         raise ValueError("Run checkpoint evaluation on allocated Linux resources")
-    validate_execution("slurm", os.environ)
+    execution = os.environ.get("FLUFFY_GPU_EXECUTION", "slurm")
+    if execution not in ("slurm", "baige"):
+        raise ValueError("Evaluation requires allocated Slurm or Baige execution")
+    validate_execution(execution, os.environ)
+    if args.device == "cuda" and torch.cuda.device_count() != 1:
+        raise ValueError("Evaluation requires exactly one allocated visible GPU")
     if (len(set(args.policy_seeds)) != len(args.policy_seeds)
             or any(not 0 <= seed < 2**32 for seed in args.policy_seeds)):
         raise ValueError("Require distinct valid policy seeds")
@@ -45,8 +50,8 @@ def main(argv=None):
     if (saved.get("version") != 1 or saved.get("boundary") != "between_trials"
             or saved["contract"] != contract or sha256(args.checkpoint) != digest):
         raise ValueError("Checkpoint/config mismatch or checkpoint changed while reading")
-    if contract["device"] != "cpu" or contract["dtype"] != "float32":
-        raise ValueError("This diagnostic supports saved CPU float32 compact policies")
+    if contract["device"] not in ("cpu", "cuda") or contract["dtype"] != "float32":
+        raise ValueError("This diagnostic supports saved float32 compact policies")
     encoding = contract.get("observation_encoding")
     if encoding not in (None, "clock_by_declared_max_v1"):
         raise ValueError("Unknown saved observation encoding")
@@ -54,10 +59,7 @@ def main(argv=None):
     task, attempts, horizon = (contract[key] for key in ("task", "attempts", "horizon"))
     arms = contract.get("arms") or 2
     env = make_env(task, attempts, horizon, arms)
-    factory = {"gru": GRUCore, "ctm": CMMCore, "cmm": CMMCore, "persistent_ctm": PersistentCTMVectorCore,
-               "looped_transformer": LoopedTransformerCore, "transformer_xl": TransformerXLCore}[contract["core"]]
-    policy = RecurrentActorCritic(factory(int(flatdim(env.observation_space)), **contract["core_config"]),
-                                   env.action_space)
+    policy = build_policy(contract["core"], contract["core_config"], env).to(args.device)
     env.close()
     policy.load_state_dict(saved["policy"], strict=True)
     before = deepcopy(policy.state_dict())
@@ -72,14 +74,16 @@ def main(argv=None):
                   checkpoint=dict(path=str(args.checkpoint), sha256=digest, iteration=saved["iteration"]),
                   observation_encoding="raw_legacy" if encoding is None else encoding,
                   trials=trials, seed_start=seed_start, policy_seeds=args.policy_seeds,
-                  job_id=os.environ["SLURM_JOB_ID"], hostname=os.uname().nodename,
+                  execution=execution, device=args.device,
+                  job_id=os.environ.get("SLURM_JOB_ID", os.uname().nodename), hostname=os.uname().nodename,
                   runtime=dict(torch=torch.__version__, numpy=np.__version__, python=sys.version),
                   conditions={}, evaluation_steps=0, completed_run_greedy_reference_matched=False)
     normal_reset = contract["mode"] == "episode"
-    def condition(name, deterministic, policy_seed, reset):
+    def condition(name, deterministic, policy_seed, reset, reward_blind=False):
         summary, raw = evaluate_trials(policy, task, attempts, horizon, seeds, arms=arms,
                          reset_each_attempt=reset, deterministic=deterministic,
-                         policy_seed=policy_seed, normalize_clock=normalize_clock)
+                         policy_seed=policy_seed, normalize_clock=normalize_clock,
+                         reward_blind=reward_blind)
         np.savez_compressed(args.output_dir / f"{name}.npz", **raw)
         result["conditions"][name] = summary
         result["evaluation_steps"] += summary["environment_steps"]
@@ -87,7 +91,8 @@ def main(argv=None):
         return summary
     greedy = condition("greedy", True, args.policy_seeds[0], normal_reset)
     summary_path = args.checkpoint.parent / "summary.json"
-    if summary_path.exists() and trials == contract["evaluation"]["trials"]:
+    if (summary_path.exists() and trials == contract["evaluation"]["trials"]
+            and args.device == contract["device"]):
         previous = json.loads(summary_path.read_text())
         if previous.get("completed") and previous["checkpoint"]["sha256"] == digest:
             expected = previous["last_evaluation"]["normal"]
@@ -98,13 +103,19 @@ def main(argv=None):
             result["completed_run_greedy_reference_matched"] = True
     if not normal_reset:
         condition("greedy_reset", True, args.policy_seeds[0], True)
+    if args.reward_blind:
+        condition("greedy_reward_blind", True, args.policy_seeds[0], normal_reset, True)
     for policy_seed in args.policy_seeds:
         condition(f"sampled-{policy_seed}", False, policy_seed, normal_reset)
         if not normal_reset:
             condition(f"sampled-{policy_seed}-reset", False, policy_seed, True)
+        if args.reward_blind:
+            condition(f"sampled-{policy_seed}-reward-blind", False, policy_seed, normal_reset, True)
     if any(not torch.equal(value, before[key]) for key, value in policy.state_dict().items()):
         raise RuntimeError("Evaluation modified a model tensor")
     result["model_tensors_unchanged"] = True
+    if sha256(args.checkpoint) != digest:
+        raise RuntimeError("Checkpoint changed during evaluation")
     result["completed"] = True
     write_json(args.output_dir / "summary.json", result)
     return result

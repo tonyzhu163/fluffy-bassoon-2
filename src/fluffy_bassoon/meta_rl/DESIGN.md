@@ -272,13 +272,56 @@ training samples. Raw observed reward remains the metric even with return
 centering. Greedy-only historical pilots do not establish whether the sampled
 policy learned an exploration strategy.
 
-`python -m fluffy_bassoon.meta_rl.evaluate` evaluates complete compact CPU/F32
+`python -m fluffy_bassoon.meta_rl.evaluate` evaluates complete compact F32
 checkpoints without changing any tensor. It records both training and evaluator
-source, checkpoint hash, policy seeds, interaction counts and per-trial arrays.
+source, checkpoint hash, device, policy seeds, interaction counts and per-trial arrays.
 The saved encoding chooses raw legacy clocks or the declared fixed scaling.
-When evaluation trial counts match a completed run, the greedy result must match
-its saved reference before interpreting stochastic results. A changed trial count
-or missing completed reference is recorded as an unchecked compatibility case.
+When evaluation device and trial counts match a completed run, the greedy result
+must match its saved reference before interpreting stochastic results. Checkpoints
+may also be evaluated on CPU after CUDA training; that cross-device case does not
+claim exact reference matching. The optional `--reward-blind` condition zeros only
+`previous_reward` in the policy input. Previous actions, environment transitions,
+clocks and actual reward scoring stay intact. Reward-blind policies can therefore
+still exploit any reward information independently exposed in state observations;
+the six-arm bandit exposes no such state channel.
+
+## Parameter-matched learner screen
+
+`python -m fluffy_bassoon.meta_rl.screen` seals a source-pinned matrix before
+execution. The seven configurations are the persistent CTM at T1/T4/T8, the
+consolidated CMM at T1, Transformer-XL, GRU, and the house looped Transformer
+at T4. The CTM uses bounded synchronization and decay once per observation;
+both CTM and CMM have length-32 short-term traces, and CMM has 32 long-term
+tokens. Transformer-XL retains the longest declared trial length, with two
+independent layers. The looped Transformer retains eight memory tokens.
+
+Each configuration uses the largest width divisible by four that fits the
+declared total policy parameter cap, including actor and critic. The default
+cap is 100,000 and the minimum accepted fraction is 85%. The comparison matches
+parameters, environment data, full-trial gradient lifetime and PPO optimizer
+schedule. Retained state bytes, tick count, wall time and FLOPs remain distinct
+axes and must be reported, rather than interpreted as matched compute. The
+default screen has two stationary six-arm Bernoulli tasks (K64 and K128), five
+training seeds, 32 trial lanes, 300 PPO updates, four epochs and minibatches of
+16 complete trials. Reward centering is .5 and value-loss weight is .01.
+
+Planning constructs candidate models only inside allocated Linux resources.
+A manifest SHA256, exact source and clean checkout are checked by every worker.
+Workers own disjoint index shards, with one model at a time per selected GPU.
+Every execution attempt receives a fresh directory. Launch and completion
+receipts bind cell identity, manifest and checkpoint hashes, runtime allocation,
+parameter/state counts, update timing and diagnostic artifacts. Signals and
+time caps save the existing complete between-trial checkpoint; `run --resume`
+restores into a new attempt directory under the same source and training contract.
+The screening worker stops on an incomplete member so a partial result is never
+treated as a completed seed. Recovery does not overwrite the old attempt.
+
+Final diagnostics evaluate greedy actions and three independent policy-sampling
+seeds, each under normal memory, reset between attempts, and reward blinding.
+These are frozen-checkpoint interventions, not independently trained controls.
+The screen is an architecture selection experiment; a trained episode-reset
+control and a non-bandit long-memory task remain necessary before stronger
+in-context learning or task-generalization claims.
 
 The LIBERO robot learner sections (gain-trial wrapper, native-prefix interface,
 supervised warm start, robot PPO transition) stayed in fluffy-bassoon with their

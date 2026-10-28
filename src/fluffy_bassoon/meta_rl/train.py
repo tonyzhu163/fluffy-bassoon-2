@@ -13,17 +13,14 @@ import time
 
 import numpy as np
 import torch
-from gymnasium.spaces.utils import flatdim
 
 from fluffy_bassoon.evaluation_stages import sha256, write_json
 from fluffy_bassoon.gpu_execution import validate_execution
 from .checkpoint import restore_checkpoint, save_checkpoint, initialize_from_motor_checkpoint
-from .cmm import CMMCore
+from .cores import CORE_NAMES, build_policy, core_config_from_args, policy_size
 from .environments import (BernoulliBandit, DarkRoom, HiddenGainReach, HiddenRewardBandit, KeyToDoor,
                            NonstationaryBernoulliBandit)
-from .transformer_xl import TransformerXLCore
-from .ppo import (GRUCore, LoopedTransformerCore, PersistentCTMVectorCore, RecurrentActorCritic,
-                  collect_trials, update_ppo)
+from .ppo import collect_trials, update_ppo
 
 
 BANDITS = {"bandit": HiddenRewardBandit, "bernoulli": BernoulliBandit,
@@ -46,7 +43,8 @@ def make_env(task, attempts, horizon, arms=2):
 
 @torch.no_grad()
 def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_each_attempt=False,
-                    deterministic=True, policy_seed=2_000_000_000, normalize_clock=True):
+                    deterministic=True, policy_seed=2_000_000_000, normalize_clock=True,
+                    reward_blind=False):
     if type(policy_seed) is not int or not 0 <= policy_seed < 2**32:
         raise ValueError("Policy evaluation seed must be an integer in [0, 2**32)")
     envs = [make_env(task, attempts, horizon, arms) for _ in seeds]
@@ -56,7 +54,8 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
         with torch.random.fork_rng(devices=devices):
             torch.manual_seed(policy_seed)
             rollout = collect_trials(policy, envs, seeds, reset_each_attempt=reset_each_attempt,
-                                      deterministic=deterministic, normalize_clock=normalize_clock)
+                                      deterministic=deterministic, normalize_clock=normalize_clock,
+                                      reward_blind=reward_blind)
         successes = rollout["rewards"].reshape(attempts, horizon, len(envs)).sum(1)
         trial_data = dict(rewards=successes.T.cpu().numpy(),
                           raw_actions=rollout["raw_actions"].transpose(0, 1).cpu().numpy())
@@ -65,7 +64,7 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
                       policy_steps=rollout["rewards"].numel(), settling_steps=int(rollout["settling_steps"].sum()),
                       reset_each_attempt=reset_each_attempt,
                       deterministic=deterministic, policy_seed=None if deterministic else policy_seed,
-                      normalize_clock=normalize_clock)
+                      normalize_clock=normalize_clock, reward_blind=reward_blind)
         if task in ("bernoulli", "nonstationary"):
             # Latent probabilities score evaluation only; PPO uses sampled rewards and public observations.
             means = np.stack([env._mean_history if task == "nonstationary"
@@ -92,7 +91,7 @@ def evaluate_trials(policy, task, attempts, horizon, seeds, *, arms=2, reset_eac
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--task", choices=(*BANDITS, "reach", *GRIDS), default="bandit")
-    p.add_argument("--core", choices=("gru", "ctm", "persistent_ctm", "cmm", "looped_transformer", "transformer_xl"),
+    p.add_argument("--core", choices=CORE_NAMES,
                    default="gru", help="ctm is the CMM port without memory blocks; persistent_ctm is the robot CTM")
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--source-commit", required=True)
@@ -106,6 +105,9 @@ def parser():
     p.add_argument("--stm-length", type=int, default=10)
     p.add_argument("--ltm-tokens", type=int, default=32)
     p.add_argument("--synapse-depth", type=int, default=8)
+    p.add_argument("--transformer-memory-length", type=int, default=64)
+    p.add_argument("--transformer-layers", type=int, default=2)
+    p.add_argument("--looped-memory-tokens", type=int, default=8)
     p.add_argument("--bounded-synchronisation", action="store_true",
                    help="persistent_ctm only: alpha/beta with RMS norm instead of alpha/sqrt(beta)")
     p.add_argument("--decay-per-observation", action="store_true",
@@ -135,7 +137,10 @@ def main(argv=None):
     args = parser().parse_args(argv)
     if sys.platform != "linux":
         raise ValueError("Model computation requires allocated Linux resources")
-    validate_execution("slurm", os.environ)
+    execution = os.environ.get("FLUFFY_GPU_EXECUTION", "slurm")
+    if execution not in ("slurm", "baige"):
+        raise ValueError("Training requires allocated Slurm or Baige execution")
+    validate_execution(execution, os.environ)
     if (args.motor_warmstart is None)!=(args.motor_warmstart_sha256 is None):
         raise ValueError("Motor warmstart requires both a path and its declared SHA256")
     for name in ("updates", "num_envs", "width", "attempts", "ticks", "eval_every",
@@ -163,28 +168,10 @@ def main(argv=None):
     torch.manual_seed(args.seed)
     environment_rng = np.random.default_rng(args.seed)
     envs = [make_env(args.task, args.attempts, args.horizon, args.arms) for _ in range(args.num_envs)]
-    core_config = dict(width=args.width, ticks=args.ticks)
-    if args.core == "transformer_xl":
-        core_config.update(memory_length=64, layers=2, heads=4)
-    elif args.core == "looped_transformer":
-        core_config.update(memory_tokens=8)
-    elif args.core == "persistent_ctm":
-        core_config.update(history_length=args.stm_length, synapse_depth=args.synapse_depth,
-                           bounded_synchronisation=args.bounded_synchronisation,
-                           decay_per_observation=args.decay_per_observation)
-    elif args.core != "gru":
-        core_config.update(stm_length=args.stm_length, ltm_tokens=args.ltm_tokens, synapse_depth=args.synapse_depth)
-        if args.core == "ctm":
-            core_config.update(layers=0, ltm_tokens=0)
-    inputs = int(flatdim(envs[0].observation_space))
-    factory = {"gru": GRUCore, "looped_transformer": LoopedTransformerCore, "persistent_ctm": PersistentCTMVectorCore,
-               "transformer_xl": TransformerXLCore}.get(args.core, CMMCore)
-    core = factory(inputs, **core_config)
-    policy = RecurrentActorCritic(core, envs[0].action_space).to(args.device)
+    core_config = core_config_from_args(args)
+    policy = build_policy(args.core, core_config, envs[0]).to(args.device)
     optimizer = torch.optim.AdamW(policy.parameters(), lr=args.learning_rate, weight_decay=0.)
-    initial_state = core.initial_state(1)
-    state_tensors = initial_state.values() if isinstance(initial_state, dict) else (initial_state,)
-    state_bytes = sum(value.numel() * value.element_size() for value in state_tensors)
+    size = policy_size(policy)
     optimization = dict(epochs=args.ppo_epochs, minibatch_trials=args.minibatch_trials,
                         clip=.2, gamma=1., gae_lambda=1., entropy_coef=.01,
                         value_coef=args.value_coef, max_grad_norm=1., episode_returns=args.mode == "episode",
@@ -214,11 +201,11 @@ def main(argv=None):
     args.output_dir.mkdir(parents=True, exist_ok=False)
     write_json(args.output_dir / "config.json", dict(contract=contract, target_updates=args.updates,
                max_elapsed_seconds=args.max_elapsed_seconds, eval_every=args.eval_every,
-               checkpoint_every=args.checkpoint_every, parameters=sum(p.numel() for p in policy.parameters()),
-               retained_state_bytes_per_lane=state_bytes,
+               checkpoint_every=args.checkpoint_every, **size,
                motor_warmstart_path=None if args.motor_warmstart is None else str(args.motor_warmstart),
                resumed_from=None if args.resume is None else dict(path=str(args.resume), sha256=sha256(args.resume)),
-               job_id=os.environ["SLURM_JOB_ID"], hostname=os.uname().nodename,
+               execution=execution, job_id=os.environ.get("SLURM_JOB_ID", os.uname().nodename),
+               hostname=os.uname().nodename,
                runtime=dict(torch=torch.__version__, numpy=np.__version__, python=sys.version)))
     stop = False
     def request_stop(signum, frame):
@@ -257,8 +244,12 @@ def main(argv=None):
                                    counters=dict(counters), elapsed_seconds=time.monotonic() - started), allow_nan=False) + "\n")
         while iteration < args.updates and not stop and time.monotonic() - started < args.max_elapsed_seconds:
             seeds = environment_rng.integers(0, 1_000_000_000, size=args.num_envs)
+            rollout_started = time.monotonic()
             rollout = collect_trials(policy, envs, seeds, reset_each_attempt=args.mode == "episode")
+            rollout_seconds = time.monotonic() - rollout_started
+            update_started = time.monotonic()
             metrics = update_ppo(policy, optimizer, rollout, **optimization)
+            update_seconds = time.monotonic() - update_started
             iteration += 1
             steps = rollout["rewards"].numel()
             counters["environment_steps"] += int(rollout["action_mask"].sum())
@@ -268,9 +259,12 @@ def main(argv=None):
             counters["optimizer_steps"] += metrics["optimizer_steps"]
             counters["active_action_update_samples"] += metrics["active_action_samples"]
             record = dict(iteration=iteration, training=metrics,
-                          trial_reward=float(rollout["rewards"].sum(0).mean()))
+                          trial_reward=float(rollout["rewards"].sum(0).mean()),
+                          timing=dict(rollout_seconds=rollout_seconds, update_seconds=update_seconds))
             if iteration % args.eval_every == 0 or iteration == args.updates:
+                evaluation_started = time.monotonic()
                 last_evaluation = evaluation()
+                record["timing"]["evaluation_seconds"] = time.monotonic() - evaluation_started
                 record["evaluation"] = last_evaluation
             if iteration % args.checkpoint_every == 0:
                 checkpoint_digest = checkpoint()
