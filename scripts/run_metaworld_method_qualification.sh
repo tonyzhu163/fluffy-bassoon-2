@@ -43,7 +43,7 @@ ctm)
     --eval-attempts 25 --eval-lanes 10 --max-elapsed-seconds 2400 --device cuda --env-workers 8 --allocated-cpus 16
   ;;
 rl2)
-  "$TASK_PYTHON" -m pytest -q -p no:cacheprovider tests/test_metaworld_rl2.py tests/test_metaworld_workers.py \
+  "$TASK_PYTHON" -m pytest -q -s -p no:cacheprovider tests/test_metaworld_rl2.py tests/test_metaworld_workers.py \
     > "$TASK_OUTPUT/qualification.log" 2>&1
   "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.metaworld_rl2 \
     --source-commit "$TASK_SOURCE" --output-dir "$TASK_OUTPUT/default-update" \

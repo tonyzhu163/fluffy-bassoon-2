@@ -150,7 +150,13 @@ credit assignment, stopped entropy gradients, baseline checkpoint buffers and
 exact next-update recovery including optimizer, sampler and all RNG states.
 Full-trial PPO uses the GRU's fused sequence operation with the same weights
 as one-step collection. Tests compare its outputs and parameter gradients
-against serial replay; episode-reset diagnostic replay uses the serial path.
+against a float64 CPU serial oracle constructed from the exact represented
+float32 inputs and weights. Float64 fused and serial gradients must also agree
+tightly. Both float32 implementations must meet a declared per-tensor normwise
+error budget, and tests emit maximum absolute and normalized L2 errors for raw
+evidence. Near-zero entries make pairwise elementwise relative-gradient errors
+unstable; agreement with an independent higher-precision calculation is the
+criterion. Episode-reset diagnostic replay uses the serial path.
 The common runner additionally verifies behavior likelihoods before its first
 optimizer step and records raw outcomes, family labels and native returns.
 

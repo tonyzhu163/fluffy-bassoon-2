@@ -4,6 +4,8 @@ Run inside an allocated Linux step, alongside the common Meta-World tests.
 """
 
 from collections import namedtuple
+from copy import deepcopy
+import json
 import pickle
 import sys
 
@@ -102,7 +104,7 @@ def test_gaussian_saves_preclip_likelihood_and_actor_has_no_state_bypass():
 
 
 @pytest.mark.parametrize("device", ["cpu", "cuda"])
-def test_fused_gru_replay_matches_serial_outputs_and_parameter_gradients(device):
+def test_fused_gru_replay_matches_serial_outputs_and_parameter_gradients(device, record_property):
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA qualification requires an allocated GPU")
     torch.manual_seed(5)
@@ -119,8 +121,49 @@ def test_fused_gru_replay_matches_serial_outputs_and_parameter_gradients(device)
     parameters = tuple(policy.parameters())
     fast_grad = torch.autograd.grad(fast[0].square().mean() + fast[1].mean(), parameters)
     serial_grad = torch.autograd.grad(serial[0].square().mean() + serial[1].mean(), parameters)
-    for actual, expected in zip(fast_grad, serial_grad, strict=True):
-        torch.testing.assert_close(actual, expected, rtol=2e-5, atol=2e-6)
+    # Use the exact represented FP32 weights/inputs in a CPU float64 oracle.
+    # A direct elementwise FP32-gradient comparison confounds correctness with
+    # CuDNN's different reduction order, especially for cancellation near zero.
+    reference = deepcopy(policy).cpu().double()
+    reference_observations, reference_actions = observations.cpu().double(), actions.cpu().double()
+    reference_resets, reference_initial = resets.cpu(), initial.cpu().double()
+    reference_serial = RecurrentActorCritic.evaluate_sequence(reference, reference_observations,
+        reference_actions, reference_resets, initial_state=reference_initial)
+    reference_fast = reference.evaluate_sequence(reference_observations, reference_actions,
+        reference_resets, initial_state=reference_initial)
+    reference_parameters = tuple(reference.parameters())
+    reference_grad = torch.autograd.grad(reference_serial[0].square().mean() + reference_serial[1].mean(),
+                                         reference_parameters)
+    reference_fast_grad = torch.autograd.grad(reference_fast[0].square().mean() + reference_fast[1].mean(),
+                                              reference_parameters)
+    for actual, expected in zip(reference_fast, reference_serial, strict=True):
+        torch.testing.assert_close(actual, expected, rtol=1e-11, atol=1e-12)
+    for actual, expected in zip(reference_fast_grad, reference_grad, strict=True):
+        torch.testing.assert_close(actual, expected, rtol=1e-10, atol=1e-11)
+    for outputs in (fast, serial):
+        for actual, expected in zip(outputs, reference_serial, strict=True):
+            torch.testing.assert_close(actual.cpu().double(), expected, rtol=1e-5, atol=2e-6)
+
+    # Normwise qualification measures the backward error at each parameter
+    # tensor's scale, avoiding unstable relative errors on near-zero entries.
+    # This is a declared numerical acceptance budget, not a formal stability
+    # theorem: four unit-roundoff budgets per input/recurrent/time dimension.
+    terms = observations.shape[-1] + policy.core.width + observations.shape[0]
+    error_budget = 4 * terms * torch.finfo(torch.float32).eps
+    diagnostics = []
+    for (name, _), oracle, fused_gradient, serial_gradient in zip(
+            policy.named_parameters(), reference_grad, fast_grad, serial_grad, strict=True):
+        scale = max(float(oracle.norm()), 1.)
+        item = dict(parameter=name, reference_l2=float(oracle.norm()), normalized_l2_budget=error_budget)
+        for label, gradient in (("fused", fused_gradient), ("serial", serial_gradient)):
+            error = gradient.cpu().double() - oracle
+            item[label] = dict(max_absolute_error=float(error.abs().max()),
+                               normalized_l2_error=float(error.norm()) / scale)
+        diagnostics.append(item)
+    record_property("fp32_backward_error_against_cpu_float64", json.dumps(diagnostics))
+    print(json.dumps(dict(device=device, fp32_backward_error_against_cpu_float64=diagnostics)), flush=True)
+    assert all(item[label]["normalized_l2_error"] <= error_budget
+               for item in diagnostics for label in ("fused", "serial")), diagnostics
 
 
 def test_trial_memory_feedback_and_frozen_behavior_replay():
