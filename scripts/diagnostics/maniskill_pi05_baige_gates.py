@@ -125,6 +125,16 @@ def main():
             tests['core_cpu'] = reuse_core_cpu(root, args.qualified_core_worktree, args.qualified_core_receipt)
         write(args.output_dir/'tests.json', tests)
         prepare_gpu(root, args.output_dir)
+        if args.scope != 'cmm':
+            write(args.output_dir/'progress.json', dict(phase='strict-rl-sft-load', completed_phases=0, total_phases=4))
+            with (args.output_dir/'strict-rl-sft-load.log').open('w') as stream:
+                subprocess.run([sys.executable, str(root/'scripts/diagnostics/qualify_maniskill_checkpoint_heads.py'),
+                    '--source-commit', args.source_commit, '--rlinf-root', str(rlinf),
+                    '--rlinf-loader-sha256', loader_sha,
+                    '--output-dir', str(args.output_dir/'strict-rl-sft-load')],
+                    cwd=root, stdout=stream, stderr=subprocess.STDOUT, check=True, timeout=600)
+            loads = read(args.output_dir/'strict-rl-sft-load/summary.json')
+            assert loads['completed'] and loads['source_commit'] == args.source_commit
         results = []
         for name, model, norm, expected, episodes, batch in ([] if args.scope == 'cmm' else phases):
             write(args.output_dir/'progress.json', dict(phase=name, completed_phases=len(results), total_phases=4))

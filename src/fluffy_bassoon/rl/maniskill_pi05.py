@@ -87,18 +87,19 @@ def sha256_file(path):
 def model_config(model_path, norm_stats_path):
     from pathlib import Path
     from omegaconf import OmegaConf
-    from .rlinf_checkpoint_compat import checkpoint_has_noise_head
+    from .rlinf_checkpoint_compat import checkpoint_has_noise_head, checkpoint_has_value_head
+    add_value_head = checkpoint_has_value_head(Path(model_path)/"model.safetensors")
     noise_method = ("flow_noise" if checkpoint_has_noise_head(Path(model_path)/"model.safetensors")
                     else "flow_ode")
     return OmegaConf.create(dict(
         model_type="openpi", model_path=str(model_path), precision=None, pi05=True,
         is_lora=False, num_action_chunks=CHUNK, action_dim=7, use_proprio=True, num_steps=4,
-        add_value_head=False, policy_setup="widowx_bridge",
+        add_value_head=add_value_head, policy_setup="widowx_bridge",
         openpi_data=dict(norm_stats_path=str(norm_stats_path)),
         openpi=dict(task="rl", config_name="pi05_maniskill", num_images_in_input=1,
                     noise_level=.5, noise_method=noise_method, noise_params=[.16, .12, 200],
                     joint_logprob=True, action_chunk=CHUNK, num_steps=4, train_expert_only=True,
-                    action_env_dim=7, add_value_head=False, value_after_vlm=True,
+                    action_env_dim=7, add_value_head=add_value_head, value_after_vlm=True,
                     value_vlm_mode="mean_token", detach_critic_input=False, model_action_dim=32,
                     paligemma_variant="gemma_2b", action_expert_variant="gemma_300m",
                     max_token_len=200, action_horizon=8, torch_compile=False)))

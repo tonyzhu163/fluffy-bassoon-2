@@ -5,9 +5,9 @@
          safetensors_path,
      )
 -    incompatible = model.load_state_dict(state_dict, strict=False)
-+    from fluffy_bassoon.rl.rlinf_checkpoint_compat import map_legacy_noise_head
++    from fluffy_bassoon.rl.rlinf_checkpoint_compat import map_legacy_rl_heads
 +
-+    state_dict = map_legacy_noise_head(state_dict, model.state_dict())
++    state_dict = map_legacy_rl_heads(state_dict, model.state_dict())
 +    incompatible = model.load_state_dict(state_dict, strict=True)
      unexpected = list(incompatible.unexpected_keys)
      if not hasattr(model, "value_head"):
