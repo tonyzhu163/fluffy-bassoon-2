@@ -2,6 +2,51 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Matched execution pilot and cached robot control, 2026-10-28
+
+Baige `job-uomh9zm3mpnd`, source
+`a3f18a8b576e1a81f7a926b5b7424b2a7ef5a55a`, completed all 14 pilot cells:
+bounded persistent CTM T1/T4/T8, consolidated CMM, Transformer-XL, GRU and looped
+Transformer, six-arm Bernoulli trials of 64/128 pulls, seed 1000. Each trained
+for only three PPO updates and completed twelve frozen normal/memory-wiped/
+reward-blind greedy/sampled diagnostic conditions. The allocation-local four-GPU
+probe passed; the test suite passed 256 tests, 13 skips and 27 subtests in 15.92 s.
+Policy parameter counts span 95,715–99,035. Maximum observed CUDA allocation was
+637,748,736 bytes. This qualifies execution, not architecture performance.
+
+The same allocation completed three 500-update CPU scalar rotation-cache fits
+(persistent CTM, Transformer-XL, GRU; one seed each; equal width, not matched
+capacity). All greedy normal, memory-wiped and reward-blind returns were exactly
+0.6640625, matching zero correction; there is no adaptation result. The source
+protocol used theta/phi ±30°, K8 and a development scene split of the existing
+headroom table. V2 ±45° is a separate protocol with more task headroom and a
+separately recorded PPO configuration; v1 results must not be relabeled.
+
+Saved artifacts and full recovery checkpoints remain at
+`/mowenjie/fluffy-bassoon-2/outputs/ctm-screen-pilot-baige-20261028-r2/` and
+`/mowenjie/fluffy-bassoon-2/outputs/robot-cache-poc-baige-20261028-r1/`.
+Small receipts and raw diagnostics were mirrored locally. The dated record is
+[the POC launch plan](../../../outputs/ctm-poc-launch-20261028-r1/PLAN.md).
+
+## Native frozen-pi0.5 KV bridge admission, 2026-10-28
+
+Baige `job-sr0t8ifv2fls`, source
+`44c5da3cd30c35daa3473f843d032d0a486ee238`, completed eight synthetic bridge
+tests and one real 80-step native motor episode. Native pi0.5, zero persistent
+CTM bridge and zero Transformer-XL bridge were compared on each of the same
+sixteen live observations with cloned CUDA generators. Model-space actions,
+decoded actions, prepared simulator commands and the advanced noise streams
+were exactly equal at every chunk. Recurrence advanced sixteen times per
+bridge, once per chunk. The common trajectory succeeded and remained successful
+at step 80; it is one episode, not three independent episodes.
+
+The allocation-local GPU probe and actual SAPIEN renderer binding passed.
+Motor fingerprint `ed862a89…` and both bridge fingerprints were unchanged.
+The gate took 158.76 s including setup/fingerprints, with 6.68 GiB peak CUDA
+allocation. This establishes native interface and zero-residual parity on this
+episode; it does not test trained adaptation. Evidence:
+`/mowenjie/fluffy-bassoon-2/outputs/pi05-feature-bridge-gate-baige-20261028-r1/`.
+
 ## CPU test suite after the split, 2026-10-28
 
 Secondary school cluster (thu2), job 48869, node01, 4 CPUs, 8 GiB, no GPU,
