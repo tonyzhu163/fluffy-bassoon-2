@@ -123,6 +123,19 @@ def critic_diagnostics(value, old_value, target, clip):
                     value_explained_variance=explained_variance(target, value))
 
 
+def replay_difference(observed, expected):
+    """A mixed FP32 tolerance handles learned values larger than initialization."""
+    difference = observed-expected
+    tolerance = 2e-5 + 2e-6*expected.abs()
+    worst = difference.abs().reshape(-1).argmax()
+    return dict(mean_absolute=float(difference.abs().mean()),
+                rms=float(difference.square().mean().sqrt()), maximum_absolute=float(difference.abs().max()),
+                maximum_scaled_error=float((difference.abs()/tolerance).max()),
+                maximum_error_reference=float(expected.reshape(-1)[worst]),
+                maximum_error_observed=float(observed.reshape(-1)[worst]),
+                atol=2e-5, rtol=2e-6)
+
+
 @torch.no_grad()
 def replay_drift(policy, rollout, chunk_length, optimization=None):
     """Fresh current-policy prefixes versus saved behavior-policy boundary states."""
@@ -132,9 +145,7 @@ def replay_drift(policy, rollout, chunk_length, optimization=None):
     result = {}
     for name, reference, observed in (("log_probability", full[0], cached[0]), ("value", full[2], cached[2])):
         expected = replay_windows(dict(rollout, diagnostic=reference), chunk_length)[0]["diagnostic"]
-        difference = observed-expected
-        result[name] = dict(mean_absolute=float(difference.abs().mean()),
-                            rms=float(difference.square().mean().sqrt()), maximum_absolute=float(difference.abs().max()))
+        result[name] = replay_difference(observed, expected)
     result["interpretation"] = "Saved-action log-probability difference, not distribution KL."
     if optimization is not None:
         _, _, targets = advantage_data(rollout, optimization)
@@ -163,7 +174,10 @@ def parameter_scales(policy):
         rates = value.detach().clamp(0, 15)
         positive = rates[rates > 1e-6]
         result[name] = dict(**tensor_stats(rates), fraction_at_zero=float((rates <= 1e-6).float().mean()),
-            positive_rate_half_life_steps=(tensor_stats(math.log(2)/positive) if positive.numel() else None))
+            positive_rate_half_life_steps=(tensor_stats(math.log(2)/positive) if positive.numel() else None),
+            median_positive_half_life_steps=(float((math.log(2)/positive).median()) if positive.numel() else None),
+            fraction_half_life_above={str(n):float((rates < math.log(2)/n).float().mean())
+                                      for n in (100, 500, 2500)})
     return result
 
 
@@ -229,7 +243,7 @@ def main(argv=None):
         report["fraction_abs_action_above_095"] = float((rollout["raw_actions"].tanh().abs() > .95).float().mean())
         report["gaussian_std"] = policy.log_std.detach().clamp(-5, 2).exp().cpu().tolist()
         report["replay_drift_before"] = replay_drift(policy, rollout, 100, optimization)
-        if max(report["replay_drift_before"][k]["maximum_absolute"] for k in ("log_probability", "value")) > 2e-5:
+        if max(report["replay_drift_before"][k]["maximum_scaled_error"] for k in ("log_probability", "value")) > 1:
             raise ValueError("Frozen cached/full-prefix replay mismatch")
         write_json(args.output_dir/"progress.json", report)
         print(json.dumps({"phase":"frozen_diagnostics_complete", "gradient":report["gradient_components_before"]}), flush=True)
