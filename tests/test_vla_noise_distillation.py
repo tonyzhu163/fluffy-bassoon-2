@@ -63,7 +63,7 @@ def test_collection_keeps_actual_mixtures_constant_source_and_no_schedule_inputs
     assert len(data["observations"]) == 4
     assert set(data["teacher_steps"]) == {31}
     np.testing.assert_array_equal(data["target_noise"], data["executed_noise"])
-    np.testing.assert_array_equal(data["executed_noise"][-1], [.8, -.8])
+    np.testing.assert_array_equal(data["executed_noise"][-1], np.array([.8, -.8], np.float32))
     assert trial_tokens(data).shape == (4, 3 + 2 + 3)
     validate_trial(data, objective="cnd")
     with pytest.raises(ValueError, match="learning trajectory"):
