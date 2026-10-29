@@ -29,7 +29,8 @@ export PYTHONPATH=$TASK_WORKTREE/src
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=$TASK_TEST:$TASK_WORKTREE/src \
   "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla_source40_subset_training.py \
-  tests/test_vla_source40_training.py tests/test_vla_history.py tests/test_gpu_probe.py \
+  tests/test_vla_source40_training.py tests/test_vla_source40_data_scales.py \
+  tests/test_vla_source40_campaign.py tests/test_vla_history.py tests/test_gpu_probe.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_CUDA:$TASK_WORKTREE/src
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_subset_training \
@@ -39,3 +40,8 @@ export PYTHONPATH=$TASK_CUDA:$TASK_WORKTREE/src
   --output "$TASK_OUTPUT/experiment" --scales 25 100 500 --seed 0 \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
   --max-controller-seconds 300 --max-total-seconds 1500
+"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_data_scales \
+  --qualification-subset \
+  --train-index "$TASK_ROOT/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/index.json" \
+  --validation-index "$TASK_ROOT/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/index.json" \
+  --output-dir "$TASK_OUTPUT/data-amount-scales" --case-counts 8 16 20
