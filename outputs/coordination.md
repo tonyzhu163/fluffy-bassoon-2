@@ -1,8 +1,8 @@
 # CTM in-context RL: coordination
 
-Live coordination for `fluffy-bassoon-2`, updated **2026-10-28 22:25
-Asia/Shanghai**. Keep current decisions and jobs here, method contracts in
-`docs/`, verified results in `EVALUATION.md`, and dated evidence in
+Live coordination for `fluffy-bassoon-2`, updated **2026-10-29
+Asia/Shanghai** (DSRL tests). Keep current decisions and jobs here, method
+contracts in `docs/`, verified results in `EVALUATION.md`, and dated evidence in
 `outputs/<run-id>/`. Follow [AGENTS.md](../AGENTS.md) and the
 [retention policy](../README.md#artifact-retention).
 
@@ -131,11 +131,65 @@ does not alone establish that a job remains running.
 | Direct native-context pilot r3 | Baige `job-8kkjhb65px67`; `b5d97b0a7c0f6aed29660a96e2ab10cce9610915` | **19:23: failed, exit 1.** Saved error: `Require finite public feedback, binary reward/boundary and normalized clocks`. No learning result. Next: diagnose feedback validation against saved evidence before a separately identified recovery; preserve r3. |
 | CMM full few-shot calibration | Secondary school cluster (thu2), **48876**, source `b6919d6`, K20 seed0 | **19:22 upstream check:** dev query accuracy **15.4% at epoch 350**, MSE .091; update 58.5k/157k. Keep running under the existing contract; about 7.5 hours remained at that check. [Full calibration record](#cmm-calibration). |
 | CMM decay diagnostics | Secondary school cluster (thu2), **48983 / 48984**, source `bd38dd0` | **19:22 upstream record:** queued (Priority), retained by the user. Two 50-epoch runs compare decay starts 1 and uniform[0,3]. Verify probes/tests after startup and compare matched-epoch metrics; leave 48876 untouched. [Full diagnostic record](#cmm-calibration). |
-| Noise-mode Stage 0 build | Local detached worktree `.claude/worktrees/noise-mode-stage0` from `16def97`; not committed | **2026-10-29:** RLinf `e1a82eb` eval already accepts explicit initial noise, so no patch is needed. Written: `ms.run_batch` per-env noise override with a fresh-noise (native) mask, `ms.arm_noise`, `ms.object_physics`, `scripts/diagnostics/maniskill_pi05_noise_cache.py`, `meta_rl/noise_screen.py` (G1–G4, determinism, mode effect) and `tests/test_maniskill_noise.py`. Compiles; pyflakes clean. Next: commit, run the CPU suite in a thu2 CPU job, then ask approval for the 2-GPU-hour S0a–S0c screen. [Plan](noise-mode-icrl-20261029-r1/PLAN.md#stage-0-interface-and-headroom-screen-gpu-approval-needed). |
+| DSRL tests (noise-mode Stage 0) | Code on `main` at `352edc4`; CPU suite: thu2 job **49206** (`fb2-cpu-tests-352edc4-20261029-r1`) | **2026-10-29: CPU suite passed**, exit 0 on node01 in 3 min 56 s: 458 passed, 17 skipped, 27 subtests in both `lycoreco-de5277f-r1` and `rlinf-pi05-maniskill-e1a82eb-r1`, including the 13 tests in `tests/test_maniskill_noise.py`.  GPU screen S0a–S0c not launched; it needs approval of one Baige GPU for at most 2 hours. [How to run](#dsrl-tests-how-to-run); [plan](noise-mode-icrl-20261029-r1/PLAN.md). |
 
 Check unfinished work on the existing 20-minute cadence, or earlier on a
 meaningful result/failure; use each owning monitor's current schedule. Preserve full
 optimizer/sampler/RNG recovery state and immutable run identities.
+
+## DSRL tests: how to run
+
+The DSRL tests are Stage 0 of the
+[noise-mode plan](noise-mode-icrl-20261029-r1/PLAN.md): is there headroom for
+reward-driven, fixed-weight selection among frozen pi0.5 noise arms, beyond
+what observation-conditioned DSRL could learn? They do not yet run DSRL
+itself; the DSRL static and per-condition baselines come after the gates pass.
+
+1. **CPU tests** (no ask needed). On thu2, pin a worktree to the commit and run
+   the suite in both existing environments, inside a CPU-only Slurm step:
+
+   ```bash
+   R=/cluster/nvme5/zhujiayang/fluffy-bassoon-2; ID=fb2-cpu-tests-<short>-<date>-r<N>
+   git -C $R/repo fetch origin && git -C $R/repo worktree add --detach $R/worktrees/$ID <commit>
+   sbatch -J $ID -p RTX3090 --ntasks=1 --cpus-per-task=4 --mem=8G --time=00:40:00 \
+     -o $R/outputs/$ID/slurm-%j.out --wrap "srun --ntasks=1 $R/outputs/$ID/run.sh"
+   ```
+
+   `run.sh` (copy from `outputs/fb2-cpu-tests-352edc4-20261029-r1/` on thu2)
+   checks the clean commit and runs `pytest -q tests` with
+   `envs/lycoreco-de5277f-r1` and `envs/rlinf-pi05-maniskill-e1a82eb-r1`
+   under `/cluster/nvme5/zhujiayang/fluffy-bassoon/`, writing
+   `pytest-<env>.log` and `exit-codes.txt`. The noise-specific tests are
+   `tests/test_maniskill_noise.py`.
+
+2. **GPU screen** (needs approval: one exclusive Baige GPU, at most 2 hours).
+   In the allocated container, create `/mowenjie/fluffy-bassoon-2/worktrees/<run-id>`
+   at the reviewed commit, then:
+
+   ```bash
+   bash outputs/noise-mode-icrl-20261029-r1/launch-s0.sh <40-hex commit> noise-mode-icrl-20261029-s0-r<N>
+   ```
+
+   [launch-s0.sh](noise-mode-icrl-20261029-r1/launch-s0.sh) checks the source
+   and the RLinf loader hash, then runs the noise and ManiSkill CPU tests in
+   the container. It then runs S0a (determinism, 68 rows), S0b (four hidden
+   friction:density variants, 1,088 rows) and S0c (object identity, 816
+   rows), with time budgets of 900 s, 3,600 s and 2,400 s, and finally the
+   gate analysis. Outputs go to `/mowenjie/fluffy-bassoon-2/outputs/<run-id>/`.
+
+3. **Read the result.** Each `s0*/gates.json` holds G1–G4 per condition and in
+   summary, plus `determinism` and `mode_effect`; `gate-failures.txt` lists
+   any analysis that errored. To rerun the analysis on CPU from saved files:
+
+   ```bash
+   python -m fluffy_bassoon.meta_rl.noise_screen --cache-dir <run>/s0b --condition variant \
+     --train 0,1,2,3 --evaluate 0,1,2,3 --output <run>/s0b/gates.json
+   ```
+
+   Proceed to Stage 1 only if S0a is deterministic, the arms change actions,
+   physics variants change success, and S0b (or S0c) passes all four
+   [gates](noise-mode-icrl-20261029-r1/PLAN.md#gates-fixed-before-any-learner-training).
+   Otherwise record the negative headroom result.
 
 ## CMM calibration
 

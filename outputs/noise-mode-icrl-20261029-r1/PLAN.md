@@ -1,7 +1,7 @@
 # In-context mode selection in a frozen pi0.5's noise space
 
-Status, 2026-10-29: **Stage 0 code written and statically checked, uncommitted;
-Linux CPU tests not yet run; no job approved.**
+Status, 2026-10-29: **Stage 0 code on `main` at `352edc4`; CPU suite passed in
+thu2 job 49206; GPU screen not approved.**
 CPU stages (code, tests, cached meta-training) need no ask under
 [AGENTS.md](../../AGENTS.md). The Stage 0 and Stage 2 GPU collections and the
 Stage 4 live evaluation need user approval of the stated budgets before launch.
@@ -66,7 +66,7 @@ the same allocation because it needs no simulator change.
 
 ## Stage 0: interface and headroom screen (GPU, approval needed)
 
-Code (built 2026-10-29; CPU tests still have to run on allocated Linux):
+Code (built 2026-10-29; CPU suite passed in thu2 job 49206):
 
 1. **Noise override.** At RLinf `e1a82eb`, `Pi0RL.predict_action_batch(...,
    mode="eval", noise=...)` passes the tensor to `sample_actions`, a
