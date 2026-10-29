@@ -1,0 +1,328 @@
+{
+  "run": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r2",
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "checkpoint_bytes_stream_hashed": 2528001706,
+  "arms": [
+    {
+      "seed": 1,
+      "method": "dsrl-na",
+      "gpu_ordinal": 0,
+      "gpu_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "pid": 1199,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 9600,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "motor_samples": 2305920,
+      "progress_records": 3,
+      "final_logged_primitive_steps": 27616,
+      "full_summary_completed": true,
+      "recovery": {
+        "manifest_sha256": "7d20318b2feb55b73c440b2b3db6c95177886243d0e5891c3fdc62f27d767f97",
+        "manifest": {
+          "directory": "checkpoints/chunks000001196-updates000005980",
+          "files": {
+            "recovery.zip": "c1e5299785a52a218ceba47d16a2f73d82e455e0705fc09ae09d792b459c83c7",
+            "replay.pkl": "95628933e8780e24f7ca5d139b0296974d1267e6433ef5383ceb3afebecd3840",
+            "runtime.pt": "9a36a540981caf3d15e76fec521dc800d96b39cfaf0e6a4fb3b2c4041e23158f"
+          }
+        },
+        "actual_files_sha256": {
+          "recovery.zip": "c1e5299785a52a218ceba47d16a2f73d82e455e0705fc09ae09d792b459c83c7",
+          "replay.pkl": "95628933e8780e24f7ca5d139b0296974d1267e6433ef5383ceb3afebecd3840",
+          "runtime.pt": "9a36a540981caf3d15e76fec521dc800d96b39cfaf0e6a4fb3b2c4041e23158f"
+        },
+        "optimizer_payloads_present": [
+          "policy.pth",
+          "actor.optimizer.pth",
+          "critic.optimizer.pth",
+          "critic_noise.pth",
+          "critic_noise.optimizer.pth",
+          "ent_coef_optimizer.pth",
+          "pytorch_variables.pth"
+        ],
+        "saved_chunk_transitions": 1196,
+        "saved_learner_updates": 5980
+      }
+    },
+    {
+      "seed": 1,
+      "method": "dsrl-na-retry",
+      "gpu_ordinal": 1,
+      "gpu_uuid": "GPU-519cdab3-b52b-1adc-e15c-136165b60260",
+      "pid": 1200,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 9600,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "motor_samples": 2305920,
+      "progress_records": 3,
+      "final_logged_primitive_steps": 27616,
+      "full_summary_completed": true,
+      "recovery": {
+        "manifest_sha256": "f48351a66ed62e7ea95b4264c9009befd5f813da45993005af0bfe6fe5dd3896",
+        "manifest": {
+          "directory": "checkpoints/chunks000001196-updates000005980",
+          "files": {
+            "recovery.zip": "c7377fdd1c513bc16b72fc68657a51cf66b26221b84b17555b36c9b69e7d9b03",
+            "replay.pkl": "085edf5a1a8098c14104447be45349ba16f728ac4adb7494b1fb284eb3e30eac",
+            "runtime.pt": "832524244f1238d72da3a284ae37b7faabedf5bfef8b9cd8b94c11b5da9e14d6"
+          }
+        },
+        "actual_files_sha256": {
+          "recovery.zip": "c7377fdd1c513bc16b72fc68657a51cf66b26221b84b17555b36c9b69e7d9b03",
+          "replay.pkl": "085edf5a1a8098c14104447be45349ba16f728ac4adb7494b1fb284eb3e30eac",
+          "runtime.pt": "832524244f1238d72da3a284ae37b7faabedf5bfef8b9cd8b94c11b5da9e14d6"
+        },
+        "optimizer_payloads_present": [
+          "policy.pth",
+          "actor.optimizer.pth",
+          "critic.optimizer.pth",
+          "critic_noise.pth",
+          "critic_noise.optimizer.pth",
+          "ent_coef_optimizer.pth",
+          "pytorch_variables.pth"
+        ],
+        "saved_chunk_transitions": 1196,
+        "saved_learner_updates": 5980
+      }
+    },
+    {
+      "seed": 1,
+      "method": "rl2",
+      "gpu_ordinal": 2,
+      "gpu_uuid": "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686",
+      "pid": 1201,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 28800,
+      "optimizer_steps": 24,
+      "motor_samples": 14400,
+      "progress_records": 6,
+      "final_logged_primitive_steps": 28800,
+      "full_summary_completed": true,
+      "recovery": {
+        "recovery_sha256": "fe318cc7f20a43f24a70183ca0c75b0b792d80f8e575e32acced85d415c93228",
+        "serialized_fields_present": [
+          "policy",
+          "optimizer",
+          "sampler",
+          "rng",
+          "updates",
+          "primitive_steps",
+          "contract",
+          "boundary"
+        ],
+        "serialized_plain_counters": {
+          "updates": 6,
+          "primitive_steps": 28800,
+          "boundary": "complete trial"
+        },
+        "inspection": "zip/pickle opcode metadata only; never unpickled tensors or model objects"
+      }
+    },
+    {
+      "seed": 1,
+      "method": "episode-reset",
+      "gpu_ordinal": 3,
+      "gpu_uuid": "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa",
+      "pid": 1202,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 28800,
+      "optimizer_steps": 24,
+      "motor_samples": 14400,
+      "progress_records": 6,
+      "final_logged_primitive_steps": 28800,
+      "full_summary_completed": true,
+      "recovery": {
+        "recovery_sha256": "bcf6e4e0056249c9592af7be53ac0424dde754f65d6d721fa4a0a668f2bda232",
+        "serialized_fields_present": [
+          "policy",
+          "optimizer",
+          "sampler",
+          "rng",
+          "updates",
+          "primitive_steps",
+          "contract",
+          "boundary"
+        ],
+        "serialized_plain_counters": {
+          "updates": 6,
+          "primitive_steps": 28800,
+          "boundary": "complete trial"
+        },
+        "inspection": "zip/pickle opcode metadata only; never unpickled tensors or model objects"
+      }
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na",
+      "gpu_ordinal": 4,
+      "gpu_uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+      "pid": 1203,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 9600,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "motor_samples": 2305920,
+      "progress_records": 3,
+      "final_logged_primitive_steps": 27616,
+      "full_summary_completed": true,
+      "recovery": {
+        "manifest_sha256": "b7bf1358181424401b764413ecf0feca72837aae7a37efea96076eb6f202c2cc",
+        "manifest": {
+          "directory": "checkpoints/chunks000001196-updates000005980",
+          "files": {
+            "recovery.zip": "bc133b7f97d3dfa1976124bcad03da57e0da2cae2bd5a05f49f3c5c4c445ff72",
+            "replay.pkl": "3ec13b23400753fdb449a696dd475cfca2998a73b97e4199ea85e0c9e543c7b3",
+            "runtime.pt": "5dfde162427d54b9e585a3f0dc510053b563e2241c6008a295d5caa71bef022b"
+          }
+        },
+        "actual_files_sha256": {
+          "recovery.zip": "bc133b7f97d3dfa1976124bcad03da57e0da2cae2bd5a05f49f3c5c4c445ff72",
+          "replay.pkl": "3ec13b23400753fdb449a696dd475cfca2998a73b97e4199ea85e0c9e543c7b3",
+          "runtime.pt": "5dfde162427d54b9e585a3f0dc510053b563e2241c6008a295d5caa71bef022b"
+        },
+        "optimizer_payloads_present": [
+          "policy.pth",
+          "actor.optimizer.pth",
+          "critic.optimizer.pth",
+          "critic_noise.pth",
+          "critic_noise.optimizer.pth",
+          "ent_coef_optimizer.pth",
+          "pytorch_variables.pth"
+        ],
+        "saved_chunk_transitions": 1196,
+        "saved_learner_updates": 5980
+      }
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na-retry",
+      "gpu_ordinal": 5,
+      "gpu_uuid": "GPU-3f9213bc-6cb1-959d-b5a7-ad0de33fe416",
+      "pid": 1204,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 9600,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "motor_samples": 2305920,
+      "progress_records": 3,
+      "final_logged_primitive_steps": 27616,
+      "full_summary_completed": true,
+      "recovery": {
+        "manifest_sha256": "b72108087fcd84ecf1797a545fa529075948d4cf9760f25b2979c14bf80b3b53",
+        "manifest": {
+          "directory": "checkpoints/chunks000001196-updates000005980",
+          "files": {
+            "recovery.zip": "94efed18feec7907e7547978abe97df9d7316d24cdcdd0d0bf0a6d38f7a9588c",
+            "replay.pkl": "1819a3e79138f9c3bbbcfce6889801d9dc62826ae5ace58a99ad2769a8ccaaa0",
+            "runtime.pt": "6638467946b5f24905a746652e751fa16d713a28ac622145ab631b79cd1aeb79"
+          }
+        },
+        "actual_files_sha256": {
+          "recovery.zip": "94efed18feec7907e7547978abe97df9d7316d24cdcdd0d0bf0a6d38f7a9588c",
+          "replay.pkl": "1819a3e79138f9c3bbbcfce6889801d9dc62826ae5ace58a99ad2769a8ccaaa0",
+          "runtime.pt": "6638467946b5f24905a746652e751fa16d713a28ac622145ab631b79cd1aeb79"
+        },
+        "optimizer_payloads_present": [
+          "policy.pth",
+          "actor.optimizer.pth",
+          "critic.optimizer.pth",
+          "critic_noise.pth",
+          "critic_noise.optimizer.pth",
+          "ent_coef_optimizer.pth",
+          "pytorch_variables.pth"
+        ],
+        "saved_chunk_transitions": 1196,
+        "saved_learner_updates": 5980
+      }
+    },
+    {
+      "seed": 2,
+      "method": "rl2",
+      "gpu_ordinal": 6,
+      "gpu_uuid": "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c",
+      "pid": 1205,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 28800,
+      "optimizer_steps": 24,
+      "motor_samples": 14400,
+      "progress_records": 6,
+      "final_logged_primitive_steps": 28800,
+      "full_summary_completed": true,
+      "recovery": {
+        "recovery_sha256": "85c6d6dab69472e74f287cc9b24feb1a3a4b044191f61bc4bc64ffd3a3b7a6c3",
+        "serialized_fields_present": [
+          "policy",
+          "optimizer",
+          "sampler",
+          "rng",
+          "updates",
+          "primitive_steps",
+          "contract",
+          "boundary"
+        ],
+        "serialized_plain_counters": {
+          "updates": 6,
+          "primitive_steps": 28800,
+          "boundary": "complete trial"
+        },
+        "inspection": "zip/pickle opcode metadata only; never unpickled tensors or model objects"
+      }
+    },
+    {
+      "seed": 2,
+      "method": "episode-reset",
+      "gpu_ordinal": 7,
+      "gpu_uuid": "GPU-3e26708f-1044-59e5-3ab6-3f01fac46206",
+      "pid": 1206,
+      "primitive_steps": 28800,
+      "evaluation_primitive_steps": 28800,
+      "optimizer_steps": 24,
+      "motor_samples": 14400,
+      "progress_records": 6,
+      "final_logged_primitive_steps": 28800,
+      "full_summary_completed": true,
+      "recovery": {
+        "recovery_sha256": "808472ab4b336172564292635f701c7ae903bc77e4352cabd49b89ec6a1bab7a",
+        "serialized_fields_present": [
+          "policy",
+          "optimizer",
+          "sampler",
+          "rng",
+          "updates",
+          "primitive_steps",
+          "contract",
+          "boundary"
+        ],
+        "serialized_plain_counters": {
+          "updates": 6,
+          "primitive_steps": 28800,
+          "boundary": "complete trial"
+        },
+        "inspection": "zip/pickle opcode metadata only; never unpickled tensors or model objects"
+      }
+    }
+  ],
+  "inspection_limitations": [
+    "Final recovery contents were hashed and serialization/optimizer payload metadata checked; no tensor unpickling or new resume test was performed.",
+    "Two matched training seeds and eight held-out scenes remain a small feasibility experiment; no additional statistical performance claim is made by this integrity audit.",
+    "Utilization remained telemetry-only under exclusive scheduling; results are not uncontended timing benchmarks."
+  ]
+}
