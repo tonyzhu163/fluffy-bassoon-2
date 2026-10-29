@@ -1,8 +1,13 @@
 """Accounting/reset tests; run on allocated Linux, not the editing host."""
+from contextlib import nullcontext
+from types import SimpleNamespace
+
 import numpy as np
 import pytest
 
-from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv
+from fluffy_bassoon.rl.robotwin_noise import (
+    RobotwinNoiseEnv, _reset_with_retry_limit, _setup_task_with_retry_limit,
+)
 
 
 class FakeBackend:
@@ -93,3 +98,73 @@ def test_explicit_inventory_and_seed_validation():
         env.reset("invented_task", 1)
     with pytest.raises(ValueError, match="nonnegative"):
         env.reset("handover_mic", -1)
+
+
+class UnstableScene(Exception):
+    pass
+
+
+def retry_fixture(failures):
+    attempts = []
+    closed = []
+
+    class Task:
+        def setup_demo(self, *, seed, now_ep_num, **kwargs):
+            assert seed == now_ep_num
+            attempts.append((seed, kwargs))
+            if len(attempts) <= len(failures):
+                raise failures[len(attempts) - 1]
+
+        def get_info(self):
+            return {"actual_seed": attempts[-1][0]}
+
+        def close_env(self, **kwargs):
+            closed.append(kwargs)
+
+    subenv = SimpleNamespace(
+        task=Task(), task_name="handover_mic", env_seed=7, args={"step_lim": 400},
+        global_lock=nullcontext(), lock=nullcontext(), reset_count=0,
+        clear_cache_freq=8, create_instruction=lambda: "pass the microphone",
+        close=lambda: None,
+    )
+    return subenv, Task, attempts, closed
+
+
+def test_setup_retry_guard_preserves_seed_order_and_success():
+    subenv, task, attempts, _ = retry_fixture([ValueError("bad scene")])
+    _setup_task_with_retry_limit(subenv, lambda name: task(), max_attempts=3)
+    assert [seed for seed, _ in attempts] == [7, 8]
+    assert all(kwargs["is_test"] for _, kwargs in attempts)
+    assert subenv.episode_info_list == [{"actual_seed": 8}]
+    assert subenv.env_seed == 7
+
+
+def test_setup_retry_guard_exposes_last_error_and_stops():
+    cause = FileNotFoundError("assets/objects/018_microphone/base0.glb")
+    subenv, task, attempts, _ = retry_fixture([cause] * 4)
+    with pytest.raises(RuntimeError, match="3 seeds.*018_microphone") as error:
+        _setup_task_with_retry_limit(subenv, lambda name: task(), max_attempts=3)
+    assert len(attempts) == 3 and error.value.__cause__ is cause
+    assert not hasattr(subenv, "episode_info_list")
+
+
+def test_reset_retry_guard_preserves_unstable_seed_selection_and_counters():
+    subenv, _, attempts, closed = retry_fixture([UnstableScene("unstable")])
+    _reset_with_retry_limit(subenv, UnstableScene, env_seed=11, max_attempts=3)
+    assert [seed for seed, _ in attempts] == [11, 12]
+    assert subenv.env_seed == 11 and subenv.reset_count == 1
+    assert subenv.task.step_lim == 400
+    assert subenv.task.run_steps == subenv.task.reward_step == 0
+    assert subenv.args["instruction"] == "pass the microphone"
+    assert closed == [{"clear_cache": False}, {"clear_cache": True}]
+
+
+def test_reset_retry_guard_bounds_instability_and_keeps_other_errors_immediate():
+    subenv, _, attempts, _ = retry_fixture([UnstableScene("unstable")] * 4)
+    with pytest.raises(RuntimeError, match="unstable for 3 seeds"):
+        _reset_with_retry_limit(subenv, UnstableScene, max_attempts=3)
+    assert len(attempts) == 3
+    subenv, _, attempts, _ = retry_fixture([FileNotFoundError("missing object")])
+    with pytest.raises(FileNotFoundError, match="missing object"):
+        _reset_with_retry_limit(subenv, UnstableScene, max_attempts=3)
+    assert len(attempts) == 1

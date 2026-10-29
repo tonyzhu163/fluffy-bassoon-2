@@ -4,8 +4,15 @@ set -euo pipefail
 TASK_COMMIT=${1:?40-hex source commit required}
 TASK_RUN=${2:?new output identity required}
 TASK_RESUME=${3:-}
+TASK_SLICE_MINUTES=${4:-43}
 [[ "$TASK_COMMIT" =~ ^[0-9a-f]{40}$ ]]
 [[ "$TASK_RUN" =~ ^robotwin-noise-matched-[a-zA-Z0-9-]+$ ]]
+[[ "$TASK_SLICE_MINUTES" =~ ^[0-9]+$ ]]
+(( TASK_SLICE_MINUTES >= 8 && TASK_SLICE_MINUTES <= 43 ))
+# Keep the original scientific recipe while fitting a measured remaining
+# allocation slice. Reserve tests/startup and a clean driver shutdown.
+TASK_DRIVER_SECONDS=$(( TASK_SLICE_MINUTES * 60 - 480 ))
+TASK_TIMEOUT_SECONDS=$(( TASK_SLICE_MINUTES * 60 - 300 ))
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
@@ -43,7 +50,7 @@ test -z "$(git status --porcelain)"
     --output "$TASK_OUTPUT/gpu-probe.json" --purpose training --baige-container
 export LYCO_BAIGE_GPU_MAP="$TASK_OUTPUT/gpu-probe.json"
 timeout 300 "$TASK_PYTHON" -m pytest -q \
-    tests/test_robotwin_noise.py tests/test_vla_noise_ppo.py tests/test_vla_noise_sac.py \
+    tests/test_robotwin_noise.py tests/test_robotwin_assets.py tests/test_vla_noise_ppo.py tests/test_vla_noise_sac.py \
     tests/test_vla_noise_ppo_review.py
 TASK_ARGS=(--source-commit "$TASK_COMMIT" --model-path "$TASK_MODEL" \
     --norm-stats "$TASK_NORM" --robotwin-root "$TASK_ROBOTWIN" --rlinf-root "$TASK_RLINF" \
@@ -52,9 +59,9 @@ TASK_ARGS=(--source-commit "$TASK_COMMIT" --model-path "$TASK_MODEL" \
     --methods ppo sac ppo_reset --native-horizon 32 --episode-limit 400 \
     --task-config-name demo_clean \
     --sac-warmup 500 --sac-batch-size 256 --sac-utd 20 \
-    --wall-seconds 2100 --boundary-reserve-seconds 180)
+    --wall-seconds "$TASK_DRIVER_SECONDS" --boundary-reserve-seconds 180)
 if [ -n "$TASK_RESUME" ]; then
     TASK_ARGS+=(--resume "$TASK_RESUME")
 fi
-timeout --signal=TERM --kill-after=30s 2280 "$TASK_PYTHON" \
+timeout --signal=TERM --kill-after=30s "$TASK_TIMEOUT_SECONDS" "$TASK_PYTHON" \
     scripts/diagnostics/robotwin_noise_compare.py "${TASK_ARGS[@]}"

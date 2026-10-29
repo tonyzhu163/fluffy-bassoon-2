@@ -1,0 +1,111 @@
+{
+  "source_commit": "ad49861bd4624d6564b53127edef508b70189050",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "eval_tasks": [
+    "adjust_bottle",
+    "move_stapler_pad",
+    "place_a2b_right",
+    "place_dual_shoes",
+    "place_empty_cup",
+    "stamp_seal"
+  ],
+  "methods": [
+    "ppo",
+    "sac",
+    "ppo_reset"
+  ],
+  "source_steps_per_learner": 10240000,
+  "train_episodes": 4,
+  "eval_episodes": 8,
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "episode_limit": 400,
+  "noise_shape": [
+    32,
+    32
+  ],
+  "observation_dim": 2062,
+  "native_horizon": 32,
+  "task_config_name": "demo_clean",
+  "action_limit": 1.5,
+  "source_sampling": "uniform shuffled task blocks",
+  "qualification_smoke": false,
+  "scope": "six-task source pretraining / declared target evaluation",
+  "source_budget": "exact executed primitive actions; external final collection cuts recorded",
+  "target_budget": "equal episode and horizon allowance; actual interactions reported",
+  "clock": "episode index clamped at training maximum during longer evaluation",
+  "source_checkpoint_transfer": "complete source learner independently restored; online target replay is fresh with replacement sampling from first target row",
+  "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+  "norm_stats": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+  "ppo": {
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300,
+    "gate_bias": 2.0,
+    "action_limit": 1.5,
+    "learning_rate": 0.0003,
+    "epochs": 5,
+    "minibatch_trials": 16,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "dual_clip": 3.0,
+    "value_clip": 0.2,
+    "huber_delta": 10.0,
+    "value_weight": 1.0,
+    "max_grad_norm": 1.0,
+    "train_episodes": 4,
+    "episode_limit": 400,
+    "reset_each_episode": false
+  },
+  "ppo_trials_per_update": 256,
+  "ppo_update_primitive_threshold": 0,
+  "sac": {
+    "hidden_dims": [
+      128,
+      128,
+      128
+    ],
+    "learning_rate": 0.0003,
+    "batch_size": 256,
+    "warmup_chunks": 500,
+    "utd": 20,
+    "replay_capacity": 100000,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "initial_temperature": 1.0,
+    "target_entropy": null,
+    "layer_norm": true,
+    "max_grad_norm": null
+  },
+  "runtime": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "native_horizon": 32,
+    "observation_dim": 2062,
+    "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+    "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+    "task_config_name": "demo_clean",
+    "appearance_randomization": false,
+    "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps"
+  }
+}

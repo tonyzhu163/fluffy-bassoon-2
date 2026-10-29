@@ -27,6 +27,95 @@ RLINF_COMMIT = "c605b9d55ed93a180119b099e6f836abff293b08"
 ROBOTWIN_COMMIT = "dca9ec682688821c42944eacd7f5dd9bfb15396f"
 MOTUS_REVISION = "effc6e1a99bd4d0edf9447e8ba313def67649cfe"
 FEATURE_DIM = 2048 + 14
+RESET_ATTEMPTS = 32
+
+
+def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS):
+    """Preserve RoboTwin setup's seed order but expose persistent failures.
+
+    The pinned upstream setup_task silently catches every Exception forever.
+    A missing object therefore creates hundreds of scenes instead of reporting
+    its cause. Successful setup and the first max_attempts seeds are unchanged.
+    """
+    subenv.close()
+    subenv.task = class_decorator(subenv.task_name)
+    with subenv.global_lock:
+        with subenv.lock:
+            first_seed = subenv.env_seed
+            last_error = None
+            for trial_seed in range(first_seed, first_seed + max_attempts):
+                task = class_decorator(subenv.task_name)
+                try:
+                    task.setup_demo(now_ep_num=trial_seed, seed=trial_seed,
+                                    is_test=True, **subenv.args)
+                    episode_info = task.get_info()
+                except Exception as error:
+                    last_error = error
+                    task.close_env()
+                    continue
+                task.close_env()
+                subenv.episode_info_list = [episode_info]
+                return
+            raise RuntimeError(
+                f"RoboTwin {subenv.task_name} setup failed for {max_attempts} seeds "
+                f"starting at {first_seed}; last error: {type(last_error).__name__}: "
+                f"{last_error}. Check assets under {os.environ.get('ASSETS_PATH', '<unset>')} "
+                "before retrying; no episode was collected."
+            ) from last_error
+
+
+def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
+                            max_attempts=RESET_ATTEMPTS):
+    """Match pinned reset semantics, with a bound on unstable-scene retries."""
+    with subenv.global_lock:
+        with subenv.lock:
+            if subenv.task is not None:
+                subenv.reset_count += 1
+                should_clear = subenv.reset_count % subenv.clear_cache_freq == 0
+                subenv.task.close_env(clear_cache=should_clear)
+            if env_seed is not None:
+                subenv.env_seed = env_seed
+            subenv.instruction = subenv.create_instruction()
+            subenv.args["instruction"] = subenv.instruction
+            first_seed = subenv.env_seed
+            last_error = None
+            for trial_seed in range(first_seed, first_seed + max_attempts):
+                try:
+                    subenv.task.setup_demo(now_ep_num=trial_seed, seed=trial_seed,
+                                          **subenv.args)
+                    subenv.task.step_lim = subenv.args["step_lim"]
+                    subenv.task.run_steps = 0
+                    subenv.task.reward_step = 0
+                    return
+                except unstable_error as error:
+                    last_error = error
+                    subenv.task.close_env(clear_cache=True)
+                except Exception:
+                    subenv.task.close_env(clear_cache=True)
+                    raise
+            raise RuntimeError(
+                f"RoboTwin {subenv.task_name} reset remained unstable for "
+                f"{max_attempts} seeds starting at {first_seed}; last error: "
+                f"{type(last_error).__name__}: {last_error}; no episode was collected."
+            ) from last_error
+
+
+def _install_reset_retry_limit():
+    """Patch only this process; external pinned source files remain unchanged."""
+    from robotwin.envs import vector_env
+
+    if getattr(vector_env.SubEnv, "_fb2_reset_attempts", None) == RESET_ATTEMPTS:
+        return
+
+    def setup_task(subenv):
+        return _setup_task_with_retry_limit(subenv, vector_env.class_decorator)
+
+    def reset(subenv, env_seed=None):
+        return _reset_with_retry_limit(subenv, vector_env.UnStableError, env_seed)
+
+    vector_env.SubEnv.setup_task = setup_task
+    vector_env.SubEnv.reset = reset
+    vector_env.SubEnv._fb2_reset_attempts = RESET_ATTEMPTS
 
 
 def _sha256(path):
@@ -163,6 +252,12 @@ class _RoboTwinBackend:
             dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True).strip()
             if dirty:
                 raise RuntimeError(f"External source is modified: {root}")
+        # Validate every sampled object variant before loading the 3.35B motor.
+        # Incomplete assets otherwise enter RoboTwin's silent setup retry loop.
+        from fluffy_bassoon.rl.robotwin_assets import validate_robotwin_assets
+
+        self.asset_receipt = validate_robotwin_assets(
+            robotwin_root, SOURCE_TASKS + HELDOUT_TASKS)
         sys.path[:0] = [str(Path(rlinf_root).resolve()), str(Path(robotwin_root).resolve())]
         import torch
         from rlinf.models import get_model
@@ -203,6 +298,7 @@ class _RoboTwinBackend:
             features="masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
             action_transform="ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
             task_config_name=task_config_name,
+            assets=self.asset_receipt, reset_max_attempts=RESET_ATTEMPTS,
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
@@ -263,6 +359,7 @@ class _RoboTwinBackend:
 
         # RoboTwin's task assets/configuration resolve paths relative to its root.
         os.chdir(self.robotwin_root)
+        _install_reset_retry_limit()
         if self.env is not None and self.task_name != task_name:
             self.env.venv.close()
             self.env = None
