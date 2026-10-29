@@ -91,10 +91,11 @@ GPU-hour expansion requires the repository's concrete-budget discussion.
 
 ## Targeted-experiment allocation amendment, 2026-10-30
 
-Before any full source-PPO launch, the full/reset caps are196k each rather
+Before any full source-PPO launch, the full/reset caps are188k each rather
 than200k. The490k PPO pool now retains19.5k prior qualification reservations,
-392k full/reset training,56k frozen source validation,14k evaluation-only
+376k full/reset training,56k frozen source validation,14k evaluation-only
 escrow for the paired AD/DPT target diagnostic,8k paired-memory replication,
+16k ordinary target-online DSRL comparison,
 and500 contingency. The
 general21,056 reserve funds21,046 further target actions and10 verified
 failed-qualification settling actions. All existing reservations and the
@@ -112,3 +113,11 @@ and states1–6 before observing outcomes, executes one actual support per case,
 then two real fresh queries with retained/erased context and the same query
 RNG. Count the shared support once and label the result a paired probe.
 See [replication contract](../../docs/frozen-vla-libero/PAIRED-MEMORY-REPLICATION.md).
+
+The16k target-online DSRL escrow reduces each future/unlaunched full/reset
+PPO cap equally from196k to188k, retaining published SAC settings for the
+required target-learning baseline. Two independently initialized target
+learners,15 complete training episodes and four frozen queries per target
+case,8k per case/16k joint. Source training receives none of these target
+observations. The initial one-GPU45-minute slice measures learning onset,
+not convergence. Existing reservations and the global1M ceiling are unchanged.

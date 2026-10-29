@@ -56,6 +56,17 @@ sensitive to these feedback inputs. No counterfactual physical success was
 measured, so this does not show a causal reward benefit.
 [Probe receipts](../../outputs/libero40-context-probe-audit-20261030-r1/README.md).
 
+Independent physical replication `job-8wtz8wd2dhbz`/source `3ab93f9` completed
+all six predeclared task0 states1–6: retained context1/6, reset context0/6.
+Every shared support failed. State6's retained-context query succeeded in111
+primitives; its reset query failed at400. All18 raw traces/context hashes,
+matching query RNG and initial public arrays, six distinct nominal-state
+hashes, full recovery and7,091 actual actions were independently checked.
+45 Linux tests passed. This is one repeat on the same goal, with low overall
+success, not a reliable or broad adaptation result. The original discovery
+case stays outside the replication denominator.
+[Replication receipts and per-method costs](../../outputs/libero40-memory-replication-audit-20261030-r1/README.md).
+
 A second source slot, LIBERO10 task0 `job-5ghfldksvvgn`/source `3944ff7`, also
 completed:28 episodes/27 successes,7 nominal states,809 chunks,6,620 SAC
 updates,7,985 primitives+290 settling=8,275 actions. Full recovery and paired

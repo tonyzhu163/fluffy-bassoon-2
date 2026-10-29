@@ -26,7 +26,9 @@ matched support/initial arrays/query RNG. Every other query failed. This is
 one controlled history effect, not reliable ICRL, reward causality or strong
 topline performance. Offline replay reproduces genuine proposals exactly and shows a small input
 response to terminal-reward flipping; it measures no counterfactual robot
-success. Six-state physical replication is running. Full40 collection, ordinary target-online DSRL, full-suite targets
+success. Six-state physical replication completed1/6 retained-context versus
+0/6 reset-context successes on the same goal; low performance, no broad claim.
+Full40 collection, ordinary target-online DSRL, full-suite targets
 and the RoboTwin learning comparison remain unfinished.
 
 ## Abstract scaffold
