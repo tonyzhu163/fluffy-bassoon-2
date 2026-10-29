@@ -1,0 +1,29 @@
+{
+  "cluster": "Baige",
+  "source_commit": "4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59",
+  "first_attempt": {
+    "run": "metaworld-pi05-noise-baige-20261029-r1",
+    "job_id": "job-amup9a8mp0ym",
+    "terminal": "failed",
+    "episodes": 0,
+    "exit_code": 1,
+    "scheduler_running_seconds": 130,
+    "scheduler_ended_at": "2026-10-29 18:28:05 Asia/Shanghai",
+    "budget_reserved_minutes": 5
+  },
+  "retry": {
+    "run": "metaworld-pi05-noise-baige-20261029-r2",
+    "job_id": "job-orgyjb0z9h6d",
+    "gpus": 1,
+    "cpus": 16,
+    "memory_gib": 96,
+    "shared_memory_gib": 8,
+    "maximum_minutes": 175,
+    "automatic_retries": false,
+    "eager_inference": true
+  },
+  "combined_ceiling_gpu_minutes": 180,
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/metaworld-3.1.1-r1",
+  "runtime_repair": "local Transformers4.53.2 installed with uv;5 OpenPI replacement files copied with independent inodes; shared base unchanged",
+  "monitor": "monitor-metaworld-pi05-noise-screen"
+}

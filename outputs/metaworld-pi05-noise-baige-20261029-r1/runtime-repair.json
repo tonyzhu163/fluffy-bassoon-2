@@ -1,0 +1,33 @@
+{
+  "failure": "r1 exited1 before any episode: missing standalone OpenPI transformers_replace compatibility check",
+  "shared_base_transformers_init_sha256": "5efaa3ce92877e69f244065682e43662d9464a2a135587228895308cad5365e7",
+  "protected_shared_base": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages",
+  "repair_target": "/mowenjie/fluffy-bassoon-2/envs/metaworld-3.1.1-r1",
+  "repair": "uv install local transformers==4.53.2, link-mode copy, apply the installed OpenPI model's exact transformers_replace source files locally",
+  "first_job_conservative_reserved_gpu_minutes": 5,
+  "retry_maximum_gpu_minutes": 175,
+  "repaired_at": "2026-10-29T18:33:41.199966+08:00",
+  "patches": [
+    {
+      "relative_path": "models/gemma/configuration_gemma.py",
+      "sha256": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6"
+    },
+    {
+      "relative_path": "models/gemma/modeling_gemma.py",
+      "sha256": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde"
+    },
+    {
+      "relative_path": "models/paligemma/modeling_paligemma.py",
+      "sha256": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c"
+    },
+    {
+      "relative_path": "models/siglip/check.py",
+      "sha256": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245"
+    },
+    {
+      "relative_path": "models/siglip/modeling_siglip.py",
+      "sha256": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b"
+    }
+  ],
+  "protected_shared_base_unchanged": true
+}
