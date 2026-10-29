@@ -1,0 +1,27 @@
+Downloading py-spy (2.8MiB)
+ Downloaded py-spy
+Installed 1 package in 8ms
+Process 1415: /mowenjie/fluffy-bassoon-2/envs/metaworld-3.1.1-r1/bin/python scripts/diagnostics/metaworld_pi05_noise_cache.py --rlinf-root /mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1 --model-path /mowenjie/fluffy-bassoon-2/inputs/rlinf-pi05-metaworld-sft-60b2d03-20261029-r1 --tasks reach-v3,push-v3 --visibility visible,hidden --scenes 4 --arms 16 --repeats 2 --time-budget-seconds 10090 --output /mowenjie/fluffy-bassoon-2/outputs/metaworld-pi05-noise-baige-20261029-r2/s0
+Python v3.11.17 (/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/bin/python3.11)
+
+Thread 1415 (active+gil): "MainThread"
+    forward (transformers/models/gemma/modeling_gemma.py:102)
+    _call_impl (torch/nn/modules/module.py:1790)
+    _wrapped_call_impl (torch/nn/modules/module.py:1779)
+    forward (transformers/models/gemma/modeling_gemma.py:376)
+    _call_impl (torch/nn/modules/module.py:1790)
+    _wrapped_call_impl (torch/nn/modules/module.py:1779)
+    __call__ (transformers/modeling_layers.py:83)
+    forward (transformers/models/gemma/modeling_gemma.py:526)
+    wrapper (transformers/utils/generic.py:943)
+    forward (gemma_pytorch.py:115)
+    denoise_step (pi0_pytorch.py:449)
+    sample_actions (pi0_pytorch.py:408)
+    decorate_context (torch/utils/_contextlib.py:124)
+    inner (torch/_dynamo/external_utils.py:69)
+    compile_wrapper (torch/_dynamo/eval_frame.py:1024)
+    infer (policy.py:94)
+    <lambda> (metaworld_pi05_noise_cache.py:114)
+    rollout (fluffy_bassoon/rl/metaworld_pi05.py:135)
+    main (metaworld_pi05_noise_cache.py:113)
+    <module> (metaworld_pi05_noise_cache.py:143)

@@ -1,0 +1,117 @@
+{
+  "model_path": "/mowenjie/fluffy-bassoon-2/inputs/rlinf-pi05-metaworld-sft-60b2d03-20261029-r1",
+  "model_sha256": "6e877ae8e2c9c33a2b8d1e3a8a60649ef39b0268da60a3ee71bc5e33cbca7221",
+  "model_fingerprint": "77a4e1f5b9a2f85614f918d8b5ad42bd78d1a719d5eaa82568790b741875873a",
+  "rlinf_root": "/mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1",
+  "tasks": [
+    "reach-v3",
+    "push-v3"
+  ],
+  "visibility": [
+    "visible",
+    "hidden"
+  ],
+  "goals": {
+    "reach-v3": [
+      [
+        -0.1,
+        0.8,
+        0.15
+      ],
+      [
+        0.1,
+        0.8,
+        0.15
+      ],
+      [
+        -0.1,
+        0.9,
+        0.25
+      ],
+      [
+        0.1,
+        0.9,
+        0.25
+      ]
+    ],
+    "push-v3": [
+      [
+        -0.1,
+        0.8,
+        0.01
+      ],
+      [
+        0.1,
+        0.8,
+        0.01
+      ],
+      [
+        -0.1,
+        0.9,
+        0.01
+      ],
+      [
+        0.1,
+        0.9,
+        0.01
+      ]
+    ]
+  },
+  "scenes": 4,
+  "scene_seed": 20261029,
+  "arm_seeds": [
+    4000320000,
+    4000320001,
+    4000320002,
+    4000320003,
+    4000320004,
+    4000320005,
+    4000320006,
+    4000320007,
+    4000320008,
+    4000320009,
+    4000320010,
+    4000320011,
+    4000320012,
+    4000320013,
+    4000320014,
+    4000320015
+  ],
+  "arm_noise_sha256": [
+    "269f0c7a134520eb194f4a44b27266ed7224c54305d114a26f11ebfb3f23c532",
+    "b255f534de4d3514e834e229fa954b09599af58839cce2b51d8ff732462b5441",
+    "22b44f4923871c54c206f76809c9106b3990ea68e5348e7c94aef59334df284d",
+    "4efc6e4bea92c1f5dfbe1891dad94b6248126686b1f85d821f5dc084ef613834",
+    "451329a58297e402542dae7fcc04b4106f748220187f1de391d655bf00a1cb61",
+    "1a21ed9924016505d738ada0bace3bfb1b33fc720a0b965510e7f29eb1accce2",
+    "004eced9b8097c3ac87f0d30929ee196ed6c33a70f0a710dd2f4f8edd2ca2abc",
+    "4afe30f05effe15635d2bc9625bf807d3327f395f1ba3230a002f2e703021b3b",
+    "56516a93852786a30fbe6a227f3a008c76d0a0670b54ec31fdbc7d27e48de3f1",
+    "2763a2c5da7db9feb1a3419d456064d13314dec4ae507a72ed372bb0cc86e113",
+    "eb9c0710087da89f7388c66d20c4a7bca0693934c9a115d19f7865ee2b585721",
+    "62df16bc08bdc4ddf91b83b15df4daaefa04a6ab47df8d6942ebad7e056b6df8",
+    "c4d110139eb1a523430db6b7d16323a57e6551815efb207c4c1921cf72232fd8",
+    "34e388bcc9bcfd550709ad595bd742eb6ad1eee45c6c73c312d8216d59ef37ee",
+    "a0820fd901d188832995c0333d504ae71564c7a21271d0016e71db89236baf16",
+    "f15b3cd4a396280c3453bd6b837794b779e990c94e12070e12f89d82984ff85b"
+  ],
+  "noise_shape": [
+    5,
+    32
+  ],
+  "native_arm": -1,
+  "repeats": 2,
+  "episode_seed": 7,
+  "camera_id": 2,
+  "camera_pos": [
+    0.75,
+    0.075,
+    0.7
+  ],
+  "resolution": 480,
+  "settle": 15,
+  "chunk": 5,
+  "steps": 160,
+  "flow_steps": 5,
+  "perturbation": "arm k passes arm_noise[k] as the initial noise of every chunk; arm -1 samples fresh noise every chunk from torch's generator seeded per episode"
+}

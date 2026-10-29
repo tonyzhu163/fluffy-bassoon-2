@@ -46,8 +46,15 @@ training precedes the first result.
 5. Later: our own motors (Stage M0 for LIBERO; a goal-hidden Meta-World
    fine-tune if the hidden-goal mode spread fails).
 
-If the hidden-goal mode spread fails, fine-tune the Meta-World motor on
-goal-hidden demonstrations before concluding that noise cannot steer it.
+Interpretation correction, 2026-10-29: the first screen tests a bank of 16
+random tensors held fixed across all chunks of an attempt. It does not train
+the observation-conditioned, continuous noise actor used by DSRL. G1–G4 and
+coverage qualify this finite-bank cached route only. Failure cannot establish
+that learned noise steering is ineffective or that the motor lacks all useful
+behaviors. Before attributing failure to the motor or choosing a goal-hidden
+fine-tune, compare with trained per-chunk noise steering while keeping the
+motor frozen. This requires a separately scoped and budgeted training run;
+the current no-training allocation and its gates remain unchanged.
 
 ## Motor and interface
 
@@ -100,9 +107,11 @@ Qualify it before any steering work:
   behaviors the motor already has, so L0 must find held-out tasks where some
   arms succeed. LIBERO-10 tasks reuse LIBERO-90 scenes and chain familiar
   subtasks, which makes that plausible; it still has to be measured.
-- If held-out success is zero for every arm, the motor lacks the support and
-  no noise controller can help. Then hold out fewer or easier tasks, or train
-  on more data, and record the choice.
+- If held-out success is zero for every tested arm, this finite bank has no
+  observed support for a selector. Sixteen random tensors do not establish
+  absence of support throughout the continuous noise space or under an
+  observation-conditioned sequence of noise choices. Diagnose that distinction
+  before changing the task split or training the motor on more data.
 
 ## Stage L0: headroom per perturbation type (GPU, approval needed)
 
@@ -114,12 +123,13 @@ with 2 repeats per (scene, arm) on paired scenes. Reuse G1–G4 from the
 with perturbation type × scene as the condition. Also record determinism of
 repeats and whether arms change executed actions.
 
-- Keep a perturbation type only if G1 (oracle arm beats native) and G3 (arm
-  rankings are consistent within a scene) pass. Perception failures, where no
-  arm helps, drop out here.
+- Keep a perturbation type for the finite-bank cached stage only if G1
+  (oracle arm beats native) and G3 (arm rankings are consistent within a scene)
+  pass. No arm helping does not by itself identify a perception failure.
 - G2 (per-scene oracle beats the best static arm) is the in-context RL gate.
-  If G2 fails for every type, a static selector solves LIBERO and the
-  meta-learning question moves to Meta-World only.
+  If G2 fails for every type, this bank supplies insufficient evidence of a
+  benefit from condition-specific selection. It does not establish that a
+  static controller solves LIBERO or exclude a richer steering interface.
 - Budget to fix with the user before launch: on the order of 6,000 episodes,
   one GPU on thu2 with the LIBERO environment already built for the
   LIBERO-Goal check.
@@ -241,9 +251,12 @@ Meta-World supplies a hidden variable the instruction cannot reveal.
   no pixel changes with the goal). Gates G1–G4 with goals as conditions, plus
   goal coverage: every goal reached by some arm and arms preferring more than
   one goal.
-- If hidden-goal coverage fails, the released motor has collapsed to one mode
-  without the marker. Then fine-tune it briefly on goal-hidden scripted
-  demonstrations (draft on branch `motor-sft-draft`) and rerun the screen.
+- If hidden-goal coverage fails, the tested bank does not span all goals.
+  This can reflect the small bank, reusing one tensor for every chunk, weak
+  motor competence, or the hidden-marker observation change; it does not
+  diagnose collapse to one mode. Test learned per-chunk steering before
+  deciding whether goal-hidden motor fine-tuning is necessary. The existing
+  fine-tune draft remains a later option, not an automatic consequence.
 - Then run the same L2 cached tests and T1–T5 on ML1, and ML10 if it
   qualifies. Compare against the existing state-based ML10 protocol in
   [metaworld-ml10-matched-baige-20261028-r1](../metaworld-ml10-matched-baige-20261028-r1/RESULTS.md),
