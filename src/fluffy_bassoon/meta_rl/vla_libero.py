@@ -588,18 +588,20 @@ def train_history(args, learner, contract, *, paths=None, artifact_prefix="histo
     return candidates
 
 
-def state_differences(expected, actual, *, path="state"):
+def state_differences(expected, actual, *, path="state", rtol=0., atol=0.):
     """Compare state leaves, independent of MsgPack mapping insertion order."""
     if isinstance(expected, dict) or isinstance(actual, dict):
         if not isinstance(expected, dict) or not isinstance(actual, dict) or set(expected) != set(actual):
             return [dict(path=path, error="mapping keys differ")]
         return [item for key in sorted(expected) for item in
-                state_differences(expected[key], actual[key], path=f"{path}/{key}")]
+                state_differences(expected[key], actual[key], path=f"{path}/{key}", rtol=rtol, atol=atol)]
     a, b = np.asarray(expected), np.asarray(actual)
     if a.shape != b.shape or a.dtype != b.dtype:
         return [dict(path=path, error="shape or dtype differs", expected_shape=list(a.shape),
                      actual_shape=list(b.shape), expected_dtype=str(a.dtype), actual_dtype=str(b.dtype))]
-    if not np.array_equal(a, b):
+    equal = (np.allclose(a, b, rtol=rtol, atol=atol, equal_nan=False)
+             if a.dtype.kind in "fc" and (rtol or atol) else np.array_equal(a, b))
+    if not equal:
         try:
             delta = float(np.max(np.abs(a.astype(np.float64) - b.astype(np.float64))))
         except (TypeError, ValueError):
@@ -633,7 +635,12 @@ def structure_digest(value):
 
 
 def qualify_recovery(args, learner, contract, obs):
-    """A separately constructed source learner must reproduce action and update."""
+    """Restore every saved leaf exactly; compare GPU updates numerically.
+
+    GPU convolution gradients need not be bitwise deterministic. An independent
+    replay on the original learner measures that floor, without changing the
+    fixed float32 comparison tolerance or weakening exact saved-state checks.
+    """
     from flax import serialization
     sampler = np.random.default_rng(391)
     path = args.output / "qualification-recovery.pkl"
@@ -657,17 +664,34 @@ def qualify_recovery(args, learner, contract, obs):
     actual_metrics = restored.update(args.batch_size, restored_sampler)
     updated_expected, updated_actual = complete_state(learner), complete_state(restored)
     after = state_differences(updated_expected, updated_actual)
-    write_json(args.output / "recovery-update-comparison.json", dict(differences=after[:20],
+    tolerance = dict(rtol=1e-5, atol=1e-6)
+    numerical = state_differences(updated_expected, updated_actual, **tolerance)
+    metrics = state_differences(expected_metrics, actual_metrics, **tolerance)
+    # A control reruns the original checkpoint, action and sampled update on the
+    # original learner. Its differences diagnose ordinary GPU execution noise.
+    learner.restore(path, sampler, contract)
+    repeated_action = learner.action(obs)
+    repeated_metrics = learner.update(args.batch_size, sampler)
+    repeated_state = complete_state(learner)
+    control = state_differences(updated_expected, repeated_state)
+    write_json(args.output / "recovery-update-comparison.json", dict(differences=after,
         total_differences=len(after), next_action_equal=np.array_equal(expected_action, actual_action),
         next_metrics_equal=expected_metrics == actual_metrics,
+        numerical_tolerance=tolerance, numerical_state_differences=numerical,
+        numerical_metric_differences=metrics, expected_metrics=expected_metrics, actual_metrics=actual_metrics,
+        original_replay_control=dict(action_equal=np.array_equal(expected_action, repeated_action),
+            state_differences=control, metric_differences=state_differences(expected_metrics, repeated_metrics),
+            numerical_state_differences=state_differences(updated_expected, repeated_state, **tolerance)),
         expected_sha256=structure_digest(updated_expected), actual_sha256=structure_digest(updated_actual)))
-    if (not np.array_equal(expected_action, actual_action) or expected_metrics != actual_metrics or after
+    if (not np.array_equal(expected_action, actual_action) or numerical or metrics
             or sampler.bit_generator.state != restored_sampler.bit_generator.state):
         raise RuntimeError("SAC recovery changed the next sampled action or optimizer update")
     learner.restore(path, sampler, contract)
     return dict(passed=True, recovery_sha256=sha256(path), separate_learner=True,
-                next_sampled_action_equal=True, next_update_equal=True,
-                actor_critic_target_temperature_optimizer_equal=True, replay_sampler_equal=True)
+                next_sampled_action_equal=True, next_update_numerically_equal=True,
+                next_update_bitwise_equal=not after and expected_metrics == actual_metrics,
+                numerical_tolerance=tolerance,
+                saved_actor_critic_target_temperature_optimizer_exact=True, replay_sampler_equal=True)
 
 
 def assert_same_context(first_path, second_path):

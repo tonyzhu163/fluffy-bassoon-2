@@ -113,3 +113,19 @@ def test_recovery_comparison_ignores_mapping_order_but_checks_leaf_values_and_dt
     actual["a"] = np.array([1., 2.], np.float32)
     actual["b"]["step"] = np.int64(3)
     assert state_differences(expected, actual)[0]["error"] == "shape or dtype differs"
+
+
+def test_gpu_update_tolerance_does_not_weaken_exact_restored_checkpoint_checks():
+    expected = dict(moment=np.array([.03117441], np.float32), step=np.int32(3680))
+    actual = dict(moment=np.array([.03117532], np.float32), step=np.int32(3680))
+    assert state_differences(expected, actual)  # Saved-state restoration stays exact.
+    assert not state_differences(expected, actual, rtol=1e-5, atol=1e-6)
+    actual["step"] += 1
+    assert state_differences(expected, actual, rtol=1e-5, atol=1e-6)[0]["path"] == "state/step"
+
+
+def test_gpu_update_comparison_rejects_material_and_nonfinite_differences():
+    expected = dict(weight=np.array([.1, .2], np.float32))
+    for values in ([.1, .201], [.1, float("nan")], [.1, float("inf")]):
+        actual = dict(weight=np.array(values, np.float32))
+        assert state_differences(expected, actual, rtol=1e-5, atol=1e-6)

@@ -32,8 +32,13 @@ bootstrap the source critic; terminal feedback still reaches the student.
 Every source episode has a raw trace and the behavior checkpoint's update
 identity. Complete boundary recovery contains actor, critic, target critic,
 temperature, all optimizer states, replay, source RNGs and minibatch sampler.
-Qualification constructs a separate learner from recovery and compares its
-next sampled action and complete optimizer update. Native noise replay and
+Qualification constructs a separate learner from recovery and requires exact
+saved state, replay, RNG and next sampled action. Its next optimizer update
+must agree numerically (float32 rtol1e-5/atol1e-6); integer counters, shapes and
+dtypes remain exact. A repeat update from the original checkpoint measures
+GPU execution variation independently, and all bitwise differences are saved.
+This does not assert bitwise reproducibility of GPU gradient reductions.
+Native noise replay and
 the frozen visual feature extractor also receive numerical parity checks.
 
 The student interface uses the final shared-prior SAC actor's frozen visual
