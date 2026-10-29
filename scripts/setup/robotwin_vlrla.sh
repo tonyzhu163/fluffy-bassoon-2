@@ -30,42 +30,11 @@ rm "$TASK_WRITE_PROBE"
 TASK_BASE_SITE=$("$TASK_BASE_PYTHON" -c 'import sysconfig; print(sysconfig.get_path("purelib"))')
 TASK_LOCAL_SITE=$("$TASK_ENV/bin/python" -c 'import sysconfig; print(sysconfig.get_path("purelib"))')
 printf '%s\n' "$TASK_BASE_SITE" > "$TASK_LOCAL_SITE/shared_runtime.pth"
-"$TASK_UV" pip install --python "$TASK_ENV/bin/python" --no-deps 'mplib==0.2.1'
+"$TASK_UV" pip install --python "$TASK_ENV/bin/python" 'mplib==0.2.1' 'open3d==0.19.0' 'numpy==1.26.4'
 export ROBOT_PLATFORM=ALOHA ASSETS_PATH="$TASK_ROBOTWIN" ROBOTWIN_PATH="$TASK_ROBOTWIN"
 export PYTHONPATH="$TASK_RLINF:$TASK_ROBOTWIN:$TASK_PROJECT/src"
 export PYTHONDONTWRITEBYTECODE=1
-"$TASK_ENV/bin/python" - "$TASK_PROJECT" "$TASK_OUTPUT" "$TASK_MODEL" "$TASK_ROBOTWIN" <<'PY'
-import hashlib
-import importlib
-import importlib.metadata as metadata
-import json
-from pathlib import Path
-import sys
-
-project, output, model, robotwin = map(Path, sys.argv[1:])
-protocol_path = project / "configs/robotwin_vlrla.json"
-protocol = json.loads(protocol_path.read_text())
-tasks = protocol["seen_tasks"] + protocol["unseen_tasks"]
-assert len(tasks) == len(set(tasks)) == 12
-assert metadata.version("sapien") == protocol["runtime"]["sapien_version"]
-assert metadata.version("mplib") == protocol["runtime"]["mplib_version"]
-importlib.import_module("mplib.sapien_utils")
-for task in tasks:
-    assert (robotwin / "envs" / f"{task}.py").is_file(), task
-    importlib.import_module(f"envs.{task}")
-importlib.import_module("rlinf.envs.sim.robotwin.robotwin_env")
-importlib.import_module("rlinf.models")
-for asset in ("assets/embodiments", "assets/objects", "task_config/demo_randomized.yml"):
-    assert (robotwin / asset).exists(), asset
-assert (model / "model.safetensors.index.json").is_file()
-assert (model / "physical-intelligence/robotwin/norm_stats.json").is_file()
-result = dict(cpu_imports_passed=True, tasks=tasks, executable=sys.executable,
-    packages={p: metadata.version(p) for p in ["torch", "numpy", "sapien", "mplib", "transformers", "rlinf-openpi"]},
-    protocol_sha256=hashlib.sha256(protocol_path.read_bytes()).hexdigest(),
-    model_path=str(model), gpu_work_performed=False, renderer_qualified=False,
-    model_loaded=False, classification="CPU setup only; real allocated simulator episode still required")
-(output / "setup.json").write_text(json.dumps(result, indent=2) + "\n")
-print(json.dumps(result))
-PY
+"$TASK_ENV/bin/python" "$TASK_PROJECT/scripts/diagnostics/robotwin_vlrla_inventory.py" \
+  --robotwin-root "$TASK_ROBOTWIN" --model-path "$TASK_MODEL" --output "$TASK_OUTPUT/setup.json"
 "$TASK_BASE_PYTHON" -c 'import importlib.metadata as m,json; print(json.dumps({p:m.version(p) for p in ["torch","numpy","sapien","mplib","transformers","rlinf-openpi"]},sort_keys=True))' > "$TASK_OUTPUT/shared-after.json"
 cmp "$TASK_OUTPUT/shared-before.json" "$TASK_OUTPUT/shared-after.json"

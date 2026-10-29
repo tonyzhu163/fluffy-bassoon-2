@@ -1,8 +1,11 @@
-# LIBERO first, RoboTwin prepared next
+# RoboTwin primary candidate; LIBERO transfer preparation retained
 
 Date: 2026-10-29, Asia/Shanghai. User authorized implementing the LIBERO
-transfer direction and preparing RoboTwin for the VLRLA setup; LIBERO is
-the starting benchmark. This work does not modify active runs or their splits.
+transfer direction and preparing RoboTwin for the VLRLA setup. Subsequent
+steering in this chat raised the lack of failures and asked to move to RoboTwin.
+Recommendation: prioritize a RoboTwin recoverability screen; retain LIBERO as
+a plumbing check and the separate audited transfer contract. This work does
+not modify active runs or their splits, or stop jobs owned by other chats.
 
 Reviewed main: `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`.
 Changes are in a new detached worktree. Main's uncommitted coordination
@@ -23,13 +26,20 @@ changes belong to ongoing work and must be preserved.
 ## First new GPU qualification, once preparation is verified
 
 Proposed envelope: one Baige GPU, at most two GPU-hours total, with at least
-128 GiB host RAM for RoboTwin. The first stage uses only LIBERO-40 development
-scenes to check native/steered behavior and useful headroom; the next uses a
-small RoboTwin runtime qualification with the cached adjust_bottle motor.
+128 GiB host RAM for RoboTwin. First qualify a real RoboTwin episode and
+rendering with the cached adjust_bottle motor. A source-task recoverability
+screen follows only with a verified suitable common motor. LIBERO collection
+and large AD/DPT training are not the next stage of this chat.
 Select concrete task/state/arm counts from measured startup and episode time
 before running; every episode, startup failure and retry counts toward the cap.
 Do not spend this budget on full multi-task training or the paper's eight-GPU
 collector. The new envelope is a proposal pending the user's budget approval.
+
+The small existing LIBERO corpus was at ceiling (clean 24/24 successful
+episodes); the augmented corpus 21/24 and Plus/Pro development native 8/8
+each also do not establish useful improving histories. A few failures alone
+do not validate a source algorithm. Require an independently measured
+ordinary steering improvement before broad teacher collection or meta-training.
 
 LIBERO-90 and final Plus/PRO data cannot influence recipe selection. Plus/PRO
 variants of source40 bases establish robustness only. A combined unseen-task

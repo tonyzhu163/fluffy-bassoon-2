@@ -82,7 +82,7 @@ success criteria, not a requirement that every experiment produce a win.
 
 ## RoboTwin follows qualification
 
-Use [the VLRLA setup contract](robotwin-vlrla.md) after the LIBERO pipeline
-demonstrates useful adaptation. Environment preparation can proceed now.
+Use [the VLRLA setup contract](robotwin-vlrla.md) for the primary RoboTwin
+candidate. LIBERO remains a plumbing check and a separate transfer experiment.
 GPU qualification and longer collections retain explicit resource budgets;
 an existing campaign's allocation is not a new experiment's allowance.

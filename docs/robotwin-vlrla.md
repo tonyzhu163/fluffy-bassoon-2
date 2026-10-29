@@ -1,7 +1,7 @@
 # RoboTwin setup for VLRLA-style adaptation
 
-Use LIBERO to establish the method, then RoboTwin 2.0 for the bimanual,
-multi-episode comparison. [VLRLA v1](https://arxiv.org/html/2610.19517v1)
+RoboTwin 2.0 is the primary candidate for a bimanual, multi-episode comparison;
+LIBERO can qualify shared plumbing. [VLRLA v1](https://arxiv.org/html/2610.19517v1)
 is the reference: section 5 supplies the six seen/six unseen task split,
 Appendix A.1 the bridge, and A.2.1 the PPO history collector. Machine-readable
 settings are in [configs/robotwin_vlrla.json](../configs/robotwin_vlrla.json).
@@ -17,7 +17,7 @@ and checkpoint files that earlier runs cite.
 
 `scripts/setup/robotwin_vlrla.sh` creates a fresh Python environment with uv.
 It reuses the shared runtime read-only through a recorded `.pth` and installs
-MPLib 0.2.1 locally, avoiding the shared MPLib 0.1.1 incompatibility. Its seven
+MPLib 0.2.1 and Open3D 0.19.0 locally, preserving NumPy 1.26.4. Its seven
 arguments are uv, base Python, new environment, new output directory, RLinf
 source, RoboTwin source and model directory. Run on allocated Linux resources.
 It verifies source pins, write access, dependency versions, all twelve task
@@ -64,3 +64,25 @@ Validate memory/reward controls and matched static/online steering on the
 same deployment interactions. A smaller resource configuration is an explicit
 reconstruction, pending evidence of comparable behavior. No official VLRLA
 implementation or matched multi-task checkpoint has been verified here.
+
+## Recoverability before meta-training
+
+Choose development tasks by measured scope for improvement, not benchmark
+difficulty alone. The gate is a competent common motor plus mixed, recoverable
+outcomes: steering or an ordinary online learner can improve over native
+behavior within the intended target budget. Sample enough paired independent
+scenes to distinguish this from random retry variation. Use source-task
+development scenes only; lock unseen-task evaluation.
+
+All-success histories carry little outcome-based evidence about recovery.
+All-failure histories can be equally unhelpful when steering cannot reach
+successful behavior. Do not create arbitrary action corruption just to obtain
+zeros and call it an improving source algorithm. Retain genuine attempted
+actions and rewards, show the source learner improves on independent probes,
+and only then distill complete chronological histories. Alternatively train
+recurrent meta-RL on its own trials; it still needs informative outcome
+variation and useful actions within the motor's behavioral support.
+
+Mixtures of easy and challenging scenes are allowed, but success-rate bins
+and development selection must be declared and reported. Retain the full
+predeclared test population, including ceiling and zero-success cases.
