@@ -1,0 +1,635 @@
+{
+  "format": "openpi_pi05_source40_subset_scales_v1",
+  "completed": true,
+  "qualification_subset": true,
+  "seed": 0,
+  "scales": [
+    {
+      "updates": 25,
+      "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000025/index.json",
+      "index_sha256": "66bdb13418114e343aef9eae88d5763c57080013d28b0a92745063232b0f5faa"
+    },
+    {
+      "updates": 100,
+      "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000100/index.json",
+      "index_sha256": "b8ac96ae624807ad0d74f313f5e58e487142c1b1ffaaf782d30b5115200964c2"
+    },
+    {
+      "updates": 500,
+      "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000500/index.json",
+      "index_sha256": "39c2475b9a8996340a70fad3733d9953c6ef0d1ccef4a644891998409252e09f"
+    }
+  ],
+  "assembly_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/assembly/assembly.json",
+  "assembly_sha256": "9cd4491d26501f48c0d55b34ad4d8d984277270fc5931bf91ea335430876d5fc",
+  "assembly_file_sha256": "b28c1095790c027e6e6322334c6cb562e0fa18c7cbff2a9dcafec677b3f2b0a4",
+  "frozen_source_sac": {
+    "task_key": "libero_spatial:00",
+    "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/index.json",
+    "index_sha256": "21836bacb78aa9c9d8b5fc7dab307c2c8e38ff7af535bc78b8d8dab767113fbd",
+    "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/case-00019-source.pkl",
+    "checkpoint_sha256": "63164bdba9e7da8cf8ede01e8ecb5888200e2d6ddba5e538cc88343cebf57f88",
+    "contract_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/contract.json",
+    "contract_sha256": "b02d9d45d414e8b0f32743449ff56810a15b87a71f03730cd649c7e5f0eb2bad",
+    "source_updates": 4920,
+    "source_generation_cost": {
+      "actual_primitive_steps": 7082,
+      "actual_settling_steps": 810,
+      "source_updates": 4920,
+      "charged_total_actions": 7892,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    },
+    "executed_history_chunks": 742,
+    "interface": "Official pixel-SAC image64/proprio8 actor; students use frozen VLA-prefix4104. Same frozen motor and latent-noise map.",
+    "status": "Frozen source actor candidate; no independent expert or improvement claim"
+  },
+  "source_collection_costs_count_once": {
+    "train": {
+      "actual_primitive_steps": 15067,
+      "actual_settling_steps": 1100,
+      "source_updates": 11540,
+      "charged_total_actions": 16167,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    },
+    "validation": {
+      "actual_primitive_steps": 16192,
+      "actual_settling_steps": 1060,
+      "source_updates": 13800,
+      "charged_total_actions": 17252,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    }
+  },
+  "unique_controller_optimizer_updates": 2000,
+  "elapsed_seconds": 1858.5823870897293,
+  "source_exposure": {
+    "training_task_keys": [
+      "libero_10:00",
+      "libero_spatial:00"
+    ],
+    "validation_task_keys": [
+      "libero_10:00",
+      "libero_spatial:00"
+    ],
+    "selected_source_histories": {
+      "train": [
+        {
+          "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-l00-train-r1/experiment/index.json",
+          "index_sha256": "9eb4c3716d0c71b2f07580d146a879ff6756d4639b75c0751a3163c3d16f5f93",
+          "task": "libero_10:00",
+          "history_id": "libero_10:00/train/seed-1",
+          "selected_publication": {
+            "status": "paired_ad_dpt",
+            "datasets": {
+              "ad": {
+                "path": "prefix-through-case-00006/ad.npz",
+                "sha256": "f787aeb7c2fc9311f91fc8a5c12884978ff72d80a1c15fe020d932339a9c22ba"
+              },
+              "dpt": {
+                "path": "prefix-through-case-00006/dpt.npz",
+                "sha256": "5f3d62d890a7b55ed6318ae019857c14ce6ab0ff18f1b495cb7ffc0790e52bcb"
+              }
+            },
+            "transitions": 809,
+            "episodes": 28,
+            "case_count": 7,
+            "through_case": 6,
+            "source_checkpoint": "case-00006-source.pkl",
+            "source_checkpoint_sha256": "f66bf972af0b3f5c215b856b6e8203a20c7aa8088d3ad3f5d7434d1d1e2f5ea0"
+          },
+          "episodes": 28,
+          "case_ids": [
+            "libero_10:00/train/case-00000",
+            "libero_10:00/train/case-00001",
+            "libero_10:00/train/case-00002",
+            "libero_10:00/train/case-00003",
+            "libero_10:00/train/case-00004",
+            "libero_10:00/train/case-00005",
+            "libero_10:00/train/case-00006"
+          ],
+          "task_initial_state_ids": [
+            [
+              "libero_10:00",
+              0
+            ],
+            [
+              "libero_10:00",
+              1
+            ],
+            [
+              "libero_10:00",
+              2
+            ],
+            [
+              "libero_10:00",
+              3
+            ],
+            [
+              "libero_10:00",
+              4
+            ],
+            [
+              "libero_10:00",
+              5
+            ],
+            [
+              "libero_10:00",
+              6
+            ]
+          ],
+          "task_nominal_state_hashes": [
+            [
+              "libero_10:00",
+              "376f48b75f50d4e1eff9e3f49f307de0bcfc44d2a081f5cb9c124cf985330c41"
+            ],
+            [
+              "libero_10:00",
+              "6929d3090ef9a3431c21b84539c99c3b481b09042bc6f3cf07ea0cc44fb65a70"
+            ],
+            [
+              "libero_10:00",
+              "747b653b2ca1feeae8f3bd994880ce743730993ea5ce4bd003623e877f26b3bd"
+            ],
+            [
+              "libero_10:00",
+              "75c57eac81a43b69380c91c42dbeab8fdf193145c3ca3d105f2ce95bb0d29a79"
+            ],
+            [
+              "libero_10:00",
+              "be0c23f82748baf99eea1ecc4ff28eb82163945bc0bfffb509eeef0decced138"
+            ],
+            [
+              "libero_10:00",
+              "cf85ed132ae09bfad8798a3126b14879071228e0e2e7bd17c3e9d20e519cdb5a"
+            ],
+            [
+              "libero_10:00",
+              "dcb524a280152c4b53390f6427c7bc70e6ead7595eeba6bf76e80c31a43fcf11"
+            ]
+          ]
+        },
+        {
+          "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/index.json",
+          "index_sha256": "21836bacb78aa9c9d8b5fc7dab307c2c8e38ff7af535bc78b8d8dab767113fbd",
+          "task": "libero_spatial:00",
+          "history_id": "libero_spatial:00/train/seed-1",
+          "selected_publication": {
+            "status": "paired_ad_dpt",
+            "datasets": {
+              "ad": {
+                "path": "prefix-through-case-00019/ad.npz",
+                "sha256": "945a61e68e71238edc03089b42a8ca487575bacdbf9cdab4bf7ea8dfff1cf27a"
+              },
+              "dpt": {
+                "path": "prefix-through-case-00019/dpt.npz",
+                "sha256": "0efcca88fb51664a167b55a0837d4aeaae361723701eb97053e771320b607ce4"
+              }
+            },
+            "transitions": 742,
+            "episodes": 80,
+            "case_count": 20,
+            "through_case": 19,
+            "source_checkpoint": "case-00019-source.pkl",
+            "source_checkpoint_sha256": "63164bdba9e7da8cf8ede01e8ecb5888200e2d6ddba5e538cc88343cebf57f88"
+          },
+          "episodes": 80,
+          "case_ids": [
+            "libero_spatial:00/train/case-00000",
+            "libero_spatial:00/train/case-00001",
+            "libero_spatial:00/train/case-00002",
+            "libero_spatial:00/train/case-00003",
+            "libero_spatial:00/train/case-00004",
+            "libero_spatial:00/train/case-00005",
+            "libero_spatial:00/train/case-00006",
+            "libero_spatial:00/train/case-00007",
+            "libero_spatial:00/train/case-00008",
+            "libero_spatial:00/train/case-00009",
+            "libero_spatial:00/train/case-00010",
+            "libero_spatial:00/train/case-00011",
+            "libero_spatial:00/train/case-00012",
+            "libero_spatial:00/train/case-00013",
+            "libero_spatial:00/train/case-00014",
+            "libero_spatial:00/train/case-00015",
+            "libero_spatial:00/train/case-00016",
+            "libero_spatial:00/train/case-00017",
+            "libero_spatial:00/train/case-00018",
+            "libero_spatial:00/train/case-00019"
+          ],
+          "task_initial_state_ids": [
+            [
+              "libero_spatial:00",
+              0
+            ],
+            [
+              "libero_spatial:00",
+              1
+            ],
+            [
+              "libero_spatial:00",
+              2
+            ],
+            [
+              "libero_spatial:00",
+              3
+            ],
+            [
+              "libero_spatial:00",
+              4
+            ],
+            [
+              "libero_spatial:00",
+              5
+            ],
+            [
+              "libero_spatial:00",
+              6
+            ],
+            [
+              "libero_spatial:00",
+              7
+            ],
+            [
+              "libero_spatial:00",
+              8
+            ],
+            [
+              "libero_spatial:00",
+              9
+            ],
+            [
+              "libero_spatial:00",
+              10
+            ],
+            [
+              "libero_spatial:00",
+              11
+            ],
+            [
+              "libero_spatial:00",
+              12
+            ],
+            [
+              "libero_spatial:00",
+              13
+            ],
+            [
+              "libero_spatial:00",
+              14
+            ],
+            [
+              "libero_spatial:00",
+              15
+            ],
+            [
+              "libero_spatial:00",
+              16
+            ],
+            [
+              "libero_spatial:00",
+              17
+            ],
+            [
+              "libero_spatial:00",
+              18
+            ],
+            [
+              "libero_spatial:00",
+              19
+            ]
+          ],
+          "task_nominal_state_hashes": [
+            [
+              "libero_spatial:00",
+              "18f349fb4d8b52566befcd2a80723d533717d8dd5dada90ecd7721d512b65e32"
+            ],
+            [
+              "libero_spatial:00",
+              "1f130e9178c4924cf8d24e175c2f0573a5e089299ddf6984b71265abf65bd4e0"
+            ],
+            [
+              "libero_spatial:00",
+              "2fd168faf38ffee7943a97f4f9589b8e4ed4acb89670c3004a6541dcc4925bc6"
+            ],
+            [
+              "libero_spatial:00",
+              "3f628d77bb395ff9ff2b248e18e5dea19d9b1103ed48b55df4eafa29188bd9f0"
+            ],
+            [
+              "libero_spatial:00",
+              "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed"
+            ],
+            [
+              "libero_spatial:00",
+              "504db0289ad1061538940e63d39bcfc82bf536dbf5f9083a1692a0e3a2852d79"
+            ],
+            [
+              "libero_spatial:00",
+              "51f7d2ae92042fec16a54dd5cd6823eac63f9c096a04bae00a5ec737d8db2cd8"
+            ],
+            [
+              "libero_spatial:00",
+              "63dbd6b627e35e377a62f3e791055bc9051a74cab6fef9eadce7892671160536"
+            ],
+            [
+              "libero_spatial:00",
+              "6c2936dc25a97728b811f9db579687d011cbd231d5472e985775a67ca9892cf8"
+            ],
+            [
+              "libero_spatial:00",
+              "6ccefe4bd69954c98ddc32f1acdcff81b5a66ed4304391089bbc027172b66d64"
+            ],
+            [
+              "libero_spatial:00",
+              "784dba596f01025199c62c3e262748c68f1f3b6ff92df2fd36aab8b5263bc0ce"
+            ],
+            [
+              "libero_spatial:00",
+              "a5d4b6d871eb48c276a3fc8499e1429ec1c59df278466aa82de44a93260087a0"
+            ],
+            [
+              "libero_spatial:00",
+              "a695298e9ef752b05e4d30c817ab1e2061a6136d65242dac7a2cce63f858b9fd"
+            ],
+            [
+              "libero_spatial:00",
+              "c12064bdc97da3ba4ca3675548ba9c76ed096ea772bbec9ca9422628c41b1588"
+            ],
+            [
+              "libero_spatial:00",
+              "c9c2f8022034e9a0705daab34a7f5bf9947ac939dfc5cf5a0ab493a377028a02"
+            ],
+            [
+              "libero_spatial:00",
+              "cf9d2825f843308d0880ee0d5e3099a43ae2395e616351f6bae4c046dd50198a"
+            ],
+            [
+              "libero_spatial:00",
+              "d297dd693cb3e13a607d16f211730e28c50b463f597f066ef2a424a8a036186c"
+            ],
+            [
+              "libero_spatial:00",
+              "db2c9ab25c6b23526efa6be860e4bd8330fab9a84131628f2dea6fe4062f993d"
+            ],
+            [
+              "libero_spatial:00",
+              "f6ce6f7f25326bedc23933bb436b5f6eb4810cef61184635c75395e557e1808f"
+            ],
+            [
+              "libero_spatial:00",
+              "f9b377d4c4ca5e3bef55b3eff2599229c22f2d944cd5df22c9a8b68882d9dc11"
+            ]
+          ]
+        }
+      ],
+      "validation": [
+        {
+          "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-l00-validation-r2/experiment/index.json",
+          "index_sha256": "6b49b3d642e3292d5fa9d18d190ebd7f2d6dbdad513ce9a715d8b9312fa08927",
+          "task": "libero_10:00",
+          "history_id": "libero_10:00/validation/seed-1",
+          "selected_publication": {
+            "status": "paired_ad_dpt",
+            "datasets": {
+              "ad": {
+                "path": "prefix-through-case-00008/ad.npz",
+                "sha256": "c54082854b421705ca6242cf38acc539e453b734c69271ca870e3127bf2c10d5"
+              },
+              "dpt": {
+                "path": "prefix-through-case-00008/dpt.npz",
+                "sha256": "c46a906214436277a69a86af2b32b311f1b83542133f31d80980ff6ee472b6f3"
+              }
+            },
+            "transitions": 1047,
+            "episodes": 36,
+            "case_count": 9,
+            "through_case": 8,
+            "source_checkpoint": "case-00008-source.pkl",
+            "source_checkpoint_sha256": "df56e22506e93c97d1b57dd386df88c01684e7d9d207c04a0db2d716da6d67d2"
+          },
+          "episodes": 36,
+          "case_ids": [
+            "libero_10:00/validation/case-00000",
+            "libero_10:00/validation/case-00001",
+            "libero_10:00/validation/case-00002",
+            "libero_10:00/validation/case-00003",
+            "libero_10:00/validation/case-00004",
+            "libero_10:00/validation/case-00005",
+            "libero_10:00/validation/case-00006",
+            "libero_10:00/validation/case-00007",
+            "libero_10:00/validation/case-00008"
+          ],
+          "task_initial_state_ids": [
+            [
+              "libero_10:00",
+              40
+            ],
+            [
+              "libero_10:00",
+              41
+            ],
+            [
+              "libero_10:00",
+              42
+            ],
+            [
+              "libero_10:00",
+              43
+            ],
+            [
+              "libero_10:00",
+              44
+            ],
+            [
+              "libero_10:00",
+              45
+            ],
+            [
+              "libero_10:00",
+              46
+            ],
+            [
+              "libero_10:00",
+              47
+            ],
+            [
+              "libero_10:00",
+              48
+            ]
+          ],
+          "task_nominal_state_hashes": [
+            [
+              "libero_10:00",
+              "71a5cb5ea5975160e8c84b7e13d73358fab88840e802084554c812f21532b04c"
+            ],
+            [
+              "libero_10:00",
+              "8abd1901c4f659508d5b1d8e3d5e3a25f87b5938643c34243bc774944f86a282"
+            ],
+            [
+              "libero_10:00",
+              "9cd69a5550ee4ba746ca2f395889ea221af7efb76a2aa388f8b8b2a776d4f117"
+            ],
+            [
+              "libero_10:00",
+              "a853cf265af29a73afb0523773f14c8dda94e42d345497dd8be894776e9cfbb7"
+            ],
+            [
+              "libero_10:00",
+              "a93a61650625d48ed3d872ae3b7edac69b45f535ded8b086da7f9cf9f41be411"
+            ],
+            [
+              "libero_10:00",
+              "cc8f8cb4e9756115e3a08d979ca26a841bcb758d4e9eaf1cf85e3f7ca3d22a05"
+            ],
+            [
+              "libero_10:00",
+              "e3686cf57ad431bac62431b43182245e05a0266e5bd421b5990739b70fa072b6"
+            ],
+            [
+              "libero_10:00",
+              "f38a6d717a2d2139762f15595a29efa62c8ad2f0197ed6f8542d98d76cad4fc1"
+            ],
+            [
+              "libero_10:00",
+              "f55f4c7562bca27be0326b7037f13125fda28006c49e846c033c54dcb841cd98"
+            ]
+          ]
+        },
+        {
+          "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/index.json",
+          "index_sha256": "976f969cc724d49ecb932b77933f0b1513b8cb6500c15a9242f012e8336b5ba7",
+          "task": "libero_spatial:00",
+          "history_id": "libero_spatial:00/validation/seed-0",
+          "selected_publication": {
+            "status": "paired_ad_dpt",
+            "datasets": {
+              "ad": {
+                "path": "prefix-through-case-00016/ad.npz",
+                "sha256": "7b1511c5ba1e6488c9c9f829cef892ba0a85839183e36f4b5e5496b03b3a5fc3"
+              },
+              "dpt": {
+                "path": "prefix-through-case-00016/dpt.npz",
+                "sha256": "efc0feac66471525a3d4551a07261e8d8164f300f2857afbf7e52c0773c7c9e0"
+              }
+            },
+            "transitions": 617,
+            "episodes": 68,
+            "case_count": 17,
+            "through_case": 16,
+            "source_checkpoint": "case-00016-source.pkl",
+            "source_checkpoint_sha256": "c188498866b7e2c5bee211813e5c9ae68d3cff5606f376675c1b76adeb6dee1f"
+          },
+          "episodes": 68,
+          "case_ids": [
+            "libero_spatial:00/validation/case-00000",
+            "libero_spatial:00/validation/case-00001",
+            "libero_spatial:00/validation/case-00002",
+            "libero_spatial:00/validation/case-00003",
+            "libero_spatial:00/validation/case-00004",
+            "libero_spatial:00/validation/case-00005",
+            "libero_spatial:00/validation/case-00006",
+            "libero_spatial:00/validation/case-00007",
+            "libero_spatial:00/validation/case-00008",
+            "libero_spatial:00/validation/case-00009",
+            "libero_spatial:00/validation/case-00010",
+            "libero_spatial:00/validation/case-00011",
+            "libero_spatial:00/validation/case-00012",
+            "libero_spatial:00/validation/case-00013",
+            "libero_spatial:00/validation/case-00014",
+            "libero_spatial:00/validation/case-00015",
+            "libero_spatial:00/validation/case-00016"
+          ],
+          "task_initial_state_ids": [
+            [
+              "libero_spatial:00",
+              40
+            ],
+            [
+              "libero_spatial:00",
+              41
+            ],
+            [
+              "libero_spatial:00",
+              42
+            ],
+            [
+              "libero_spatial:00",
+              43
+            ],
+            [
+              "libero_spatial:00",
+              44
+            ],
+            [
+              "libero_spatial:00",
+              45
+            ],
+            [
+              "libero_spatial:00",
+              46
+            ],
+            [
+              "libero_spatial:00",
+              47
+            ],
+            [
+              "libero_spatial:00",
+              48
+            ],
+            [
+              "libero_spatial:00",
+              49
+            ]
+          ],
+          "task_nominal_state_hashes": [
+            [
+              "libero_spatial:00",
+              "14331e45a001f601d1a68e2824d6d749ce477bcb0c29f127b12d5ac08087d57d"
+            ],
+            [
+              "libero_spatial:00",
+              "4f5e968e3f8a21ea074562fb9ce67e13dc39cfba572b37e5cc18e15d8f939a1f"
+            ],
+            [
+              "libero_spatial:00",
+              "54b3e75ce4b8126c50bc354ae6c534c6e9c2f6180a86a8cc97100a598c8082f1"
+            ],
+            [
+              "libero_spatial:00",
+              "73edd1cd3c0667f1be358d67fcdfc4b560825472796bf6aee53a762ba26a4c66"
+            ],
+            [
+              "libero_spatial:00",
+              "80d1403d4b3f6adeff4ed42fe0f4a5dc70b570e6d59ae52aa7f0afd3d91944be"
+            ],
+            [
+              "libero_spatial:00",
+              "82a2bae1656cc86cddc631b84746c5baa9eac8d87f1168ed5b813ccbbb7b8605"
+            ],
+            [
+              "libero_spatial:00",
+              "aeed457c3aaa84628169ec809ab31fea7d3baed43d4e0e68970d01485d8b4987"
+            ],
+            [
+              "libero_spatial:00",
+              "bc6923b7fe71c729548dee2786142701ea693c2393518b193fe72736fe21e3ad"
+            ],
+            [
+              "libero_spatial:00",
+              "cbb7e020f73c995a89981cf99c92ca59344493183d4ffe6ee75840444eeff19f"
+            ],
+            [
+              "libero_spatial:00",
+              "e5e5740072f7787db30d3b6108e23c17b2ae6e372c2bd441579d8674e4cc2b2a"
+            ]
+          ]
+        }
+      ]
+    },
+    "small_pilot": true,
+    "validation": "Source-local cases already used for NLL; subsequent robot probes on those cases are development evidence"
+  },
+  "interpretation": "Source subset development only; no full40 coverage, expert-label, new-task or adaptation claim"
+}

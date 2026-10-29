@@ -15,7 +15,9 @@ query recoveries and both final learner/replay/RNG recoveries were checked.
 This is a short learning-onset test, not converged DSRL. Identical initial
 observations and noise nevertheless produce first-action differences up to
 0.00415 versus earlier native controls; the exact cross-run pairing remains
-unresolved. A zero-action replay probe is measuring it.
+unresolved. The completed zero-action replay below rules out key type and
+the tested within-process initialization stages; it does not identify the
+cross-process cause.
 [DSRL results and limitations](../../outputs/libero40-target-online-dsrl-audit-20261030-r1/README.md).
 
 Baige `job-xla7geuytgau` completed four AD/DPT full/static controllers with
@@ -96,8 +98,28 @@ two-goal subset contains1,551 training and1,664 validation chunks on disjoint
 physical states. This supplies the second source-data scale, not full40.
 [Validation receipts](../../outputs/libero40-source-l00-validation-audit-20261030-r1/README.md).
 
-Full40 source coverage, ordinary DSRL comparison, reliable memory gains,
-full90/Plus/Pro evaluation and the RoboTwin learning comparison remain open.
+Two-source-goal training `job-ctqxbzx4bhhv`/`0c89764` is terminal exit0:
+four AD/DPT full/static controllers each completed500 updates, with all12
+25/100/500 policy/full-recovery pairs independently checked.79 Linux checks
+passed;2,000 unique optimizer steps took1858.58s, with zero new simulator
+actions. The1,551/1,664 train/validation chunks have shared source costs
+16,167/17,252 actions, counted once across controllers. This is two of40
+source goals. Different validation banks prevent a cross-run NLL claim about
+data scaling. [Training audit](../../outputs/libero40-two-goal-training-audit-20261030-r1/README.md).
+
+Motor replay `job-ptt7fgi29ebx`/`b517a91` is terminal exit0, five Linux checks:
+64 predictions,121.03s, no simulator actions/SGD. Typed/legacy keys, repeated
+identical inputs, saved input origins and plain/prefix-attached/qualified/SAC
+initialization stages all gave delta0 within one process. Full motor
+parameters stayed unchanged. The new process still differs from both saved
+reference chunks by up to0.00342, so the cross-process cause remains unproven.
+HLO fingerprint extraction was unavailable. The next robot comparison uses
+one motor process for both source banks, native and frozen final target-SAC.
+[Numerical replay audit](../../outputs/libero40-motor-replay-audit-20261030-r1/README.md),
+[common-runtime contract](COMMON-RUNTIME-SOURCE-COMPARISON.md).
+
+Full40 source coverage, converged ordinary DSRL comparison, reliable memory
+gains, full90/Plus/Pro evaluation and the RoboTwin learning comparison remain open.
 
 ## Capped source collection and fresh PPO qualification
 

@@ -28,12 +28,20 @@ topline performance. Offline replay reproduces genuine proposals exactly and sho
 response to terminal-reward flipping; it measures no counterfactual robot
 success. Six-state physical replication completed1/6 retained-context versus
 0/6 reset-context successes on the same goal; low performance, no broad claim.
-Fresh target-online DSRL has now completed2,400 updates on the first pilot
-case, but all four frozen queries failed; its second case remains running.
-Two-source-goal AD/DPT training is advancing on1,551train/1,664validation
-chunks. Validation banks differ across these source-data scales; compare robot
-queries on the common cases, not raw cross-run NLL. Full40 collection, full-suite
-targets and stable RoboTwin learning/performance remain unfinished.
+Fresh target-online DSRL completed15 training episodes/2,400 updates per
+pilot case; all eight frozen queries at0/1/13/15 training episodes failed.
+This is learning onset, not converged DSRL. Two-source-goal AD/DPT training
+completed500 updates per full/static controller on1,551train/1,664validation
+chunks, with all12 milestone policies/full recoveries checked. Validation
+banks differ across these source-data scales; compare common robot cases,
+not raw cross-run NLL. Exact-input replay found delta0 for key types and
+initialization stages within one motor process, but small cross-process
+motor action differences remain unexplained. A new shared-process robot
+comparison includes both source banks, native and frozen final target-SAC.
+Full40 collection, full-suite targets and stable RoboTwin learning/performance
+remain unfinished. RoboTwin uses6 source goals and6 controller-held-out goals;
+its current1024D independent noise interface differs from LIBERO's32D tied
+noise. Joint KL/clip diagnostics have not qualified its PPO update recipe.
 
 ## Abstract scaffold
 
