@@ -57,6 +57,25 @@ negative method result. Optimization cost, source cost and deployment cost
 remain separately reported. The training/evaluation launch must record its
 own concrete GPU/action ceilings before execution.
 
+The concrete offline training slice is one GPU/50 minutes, zero new simulator
+actions, four500-update trajectories and immutable25/100/500 exports. Keep
+128 width/two layers/four heads/context300/batch8/LR3e-4/window128/seed0 from
+the one-goal run. Model computation is bounded to2700 cumulative seconds;
+each controller retains its600-second ceiling and full resume state. One-goal
+training measured1863.26s; a second goal can change overhead and outcomes.
+The launcher requires the independently checked completed L00-validation
+index hash and all four original source indices, qualifies source contracts
+on allocated Linux, then calls the existing assembler/trainer:
+
+```sh
+bash scripts/diagnostics/vla_source40_two_goal_training.sh \
+  <exact-reviewed-SHA> <fresh-training-id> <completed-L00-validation-index-SHA256>
+```
+
+Append `--resume` only for the exact same source/run/data/configuration and
+cumulative ceilings. Existing actor snapshots and singular frozen-source-SAC
+metadata keep Spatial00 first; this is not a joint two-goal SAC baseline.
+
 The independent target-online DSRL driver is being prepared separately. It
 will retain published SAC settings, fresh target learners, true warmup cost
 and separately frozen query episodes. A short learning-onset comparison is
