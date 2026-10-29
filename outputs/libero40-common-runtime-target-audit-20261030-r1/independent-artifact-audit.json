@@ -1,0 +1,947 @@
+{
+  "read_only_saved_artifact_audit": true,
+  "completed": true,
+  "source_commit": "f5552d651eae7e10523e8f696fa09de58bf19d6b",
+  "completed_groups": 28,
+  "actual_episodes": 76,
+  "actual_chunks": 2976,
+  "complete_contexts_hashed": 76,
+  "charged_actions": 30505,
+  "runtime_ids": [
+    "job-7mznlehmgocq-master-0-810-1793300603436573296"
+  ],
+  "immutable_student_files_hashed": {
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/experiment/scales/update-000500/ad-full-seed-0/final.pt": "ce0b36abf18c33268335816eea34b3d4d329e40a34fa60f1c97da5cf8437e654",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/experiment/scales/update-000500/ad-static-seed-0/final.pt": "d6d8f72d3926909ae105ed35d3443abb99a3b887b75608ff2d4faa9aebc0444e",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/experiment/scales/update-000500/dpt-full-seed-0/final.pt": "fb5cf3a88bfa9d17cfa8dfd15454a8183b9c5cad219a382f304e7f9b7c1450c1",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/experiment/scales/update-000500/dpt-static-seed-0/final.pt": "f35298764971647f9aa9109ff154dad07a3820a19ccd013362409f8c4e1e84be",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000500/ad-full-seed-0/final.pt": "df85cc465c51f7ffa7b239d632f8a2acc418f1075b71b27fd401430b35d5fe5d",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000500/ad-static-seed-0/final.pt": "51ed422f1b7eabb2713782b3759a6202028fb2348b06ab362f8bd6f75c490884",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000500/dpt-full-seed-0/final.pt": "28b82db3eedee13544943be0663a48c215e2ae9158d1466f8f5f340297df05e8",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/experiment/scales/update-000500/dpt-static-seed-0/final.pt": "beb8349b6eb70bcdb73f2644ac2192390a8a511aaff7eaa692a3f3b1f2c59470"
+  },
+  "paired_memory_audits": [
+    {
+      "case_id": "libero90:00/state-0/seed-123",
+      "source": "source1",
+      "objective": "ad",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:00/state-0/seed-123",
+      "source": "source1",
+      "objective": "dpt",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:00/state-0/seed-123",
+      "source": "source2",
+      "objective": "ad",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:00/state-0/seed-123",
+      "source": "source2",
+      "objective": "dpt",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:01/state-0/seed-123",
+      "source": "source1",
+      "objective": "ad",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:01/state-0/seed-123",
+      "source": "source1",
+      "objective": "dpt",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:01/state-0/seed-123",
+      "source": "source2",
+      "objective": "ad",
+      "actual_support_and_empty_query_exact": true
+    },
+    {
+      "case_id": "libero90:01/state-0/seed-123",
+      "source": "source2",
+      "objective": "dpt",
+      "actual_support_and_empty_query_exact": true
+    }
+  ],
+  "groups": [
+    {
+      "group": 0,
+      "task_id": 0,
+      "source": "native",
+      "method": "native",
+      "charged_actions": 410,
+      "trials": [
+        {
+          "method": "native",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-native-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 1,
+      "task_id": 0,
+      "source": "target_online_final",
+      "method": "frozen_target_sac",
+      "charged_actions": 410,
+      "trials": [
+        {
+          "method": "frozen_target_sac",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-frozen_target_sac-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 2,
+      "task_id": 0,
+      "source": "source1",
+      "method": "ad_full",
+      "charged_actions": 1169,
+      "trials": [
+        {
+          "method": "ad_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_full",
+          "support_budget": 1,
+          "query_success": true,
+          "support_episode_ids": [
+            "trial-001-ad_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 339,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 3,
+      "task_id": 0,
+      "source": "source2",
+      "method": "ad_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 4,
+      "task_id": 0,
+      "source": "source1",
+      "method": "ad_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 5,
+      "task_id": 0,
+      "source": "source2",
+      "method": "ad_static",
+      "charged_actions": 636,
+      "trials": [
+        {
+          "method": "ad_static",
+          "support_budget": 0,
+          "query_success": true,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 103,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_static",
+          "support_budget": 1,
+          "query_success": true,
+          "support_episode_ids": [
+            "trial-001-ad_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 103,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 6,
+      "task_id": 0,
+      "source": "source1",
+      "method": "ad_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 7,
+      "task_id": 0,
+      "source": "source2",
+      "method": "ad_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 8,
+      "task_id": 0,
+      "source": "source1",
+      "method": "dpt_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 9,
+      "task_id": 0,
+      "source": "source2",
+      "method": "dpt_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 10,
+      "task_id": 0,
+      "source": "source1",
+      "method": "dpt_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 11,
+      "task_id": 0,
+      "source": "source2",
+      "method": "dpt_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 12,
+      "task_id": 0,
+      "source": "source1",
+      "method": "dpt_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 13,
+      "task_id": 0,
+      "source": "source2",
+      "method": "dpt_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 14,
+      "task_id": 1,
+      "source": "native",
+      "method": "native",
+      "charged_actions": 410,
+      "trials": [
+        {
+          "method": "native",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-native-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 15,
+      "task_id": 1,
+      "source": "target_online_final",
+      "method": "frozen_target_sac",
+      "charged_actions": 410,
+      "trials": [
+        {
+          "method": "frozen_target_sac",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-frozen_target_sac-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 16,
+      "task_id": 1,
+      "source": "source1",
+      "method": "ad_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 17,
+      "task_id": 1,
+      "source": "source2",
+      "method": "ad_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 18,
+      "task_id": 1,
+      "source": "source1",
+      "method": "ad_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 19,
+      "task_id": 1,
+      "source": "source2",
+      "method": "ad_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 20,
+      "task_id": 1,
+      "source": "source1",
+      "method": "ad_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 21,
+      "task_id": 1,
+      "source": "source2",
+      "method": "ad_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-ad_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "ad_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-ad_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-ad_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 22,
+      "task_id": 1,
+      "source": "source1",
+      "method": "dpt_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 23,
+      "task_id": 1,
+      "source": "source2",
+      "method": "dpt_full",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_full",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_full-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_full",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_full-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_full-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 24,
+      "task_id": 1,
+      "source": "source1",
+      "method": "dpt_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 25,
+      "task_id": 1,
+      "source": "source2",
+      "method": "dpt_static",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_static",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_static-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_static",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_static-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_static-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 26,
+      "task_id": 1,
+      "source": "source1",
+      "method": "dpt_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    },
+    {
+      "group": 27,
+      "task_id": 1,
+      "source": "source2",
+      "method": "dpt_episode_reset",
+      "charged_actions": 1230,
+      "trials": [
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 0,
+          "query_success": false,
+          "support_episode_ids": [],
+          "query_episode_id": "trial-000-dpt_episode_reset-support-0/query-000",
+          "support_primitive_steps": 0,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 0,
+          "query_settling_steps": 10
+        },
+        {
+          "method": "dpt_episode_reset",
+          "support_budget": 1,
+          "query_success": false,
+          "support_episode_ids": [
+            "trial-001-dpt_episode_reset-support-1/support-000"
+          ],
+          "query_episode_id": "trial-001-dpt_episode_reset-support-1/query-000",
+          "support_primitive_steps": 400,
+          "query_primitive_steps": 400,
+          "support_settling_steps": 10,
+          "query_settling_steps": 10
+        }
+      ]
+    }
+  ]
+}

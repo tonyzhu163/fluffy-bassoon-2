@@ -3,6 +3,49 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Shared-motor source-scale comparison completed
+
+Baige `job-7mznlehmgocq`, source`f5552d6`, exited0 after all28groups/76episodes:
+2,976steering chunks,29,745primitives+760settling=30,505actions within32k.
+52Linuxchecks passed. Both source banks, native and frozen final target-SAC
+shared one actual motor process with unchanged fullNNXparameter SHA256.
+An independent saved-data audit checked76traces/76completecontexts, every
+recovery/journal,8studentfiles,2finalSACrecoveries, actual paired initialarrays/
+queryRNG,8full-reset pairs and bitwise static K0/K1 queries.
+
+| Fixed500 candidate | K0 query successes | K1 query successes |
+| --- | ---: | ---: |
+| Native; frozen final target-SAC (each) |0/2|not rerun|
+| One-source AD full |0/2|1/2|
+| One-source AD static/episode-reset (each) |0/2|0/2|
+| Two-source AD full/episode-reset (each) |0/2|0/2|
+| Two-source AD static |1/2|1/2|
+| Either source bank, DPT full/static/reset (each) |0/2|0/2|
+
+On task0, one-source AD full succeeds339primitives after failed400support,
+while same-weight reset fails. Two-source AD static succeeds103primitives
+with or without support; both query trajectories match exactly. Task1 fails
+for every method. All24supports fail. Thus there is a source-trained steering
+benefit on one case without history, and no monotonic source-scale memory
+gain. No reliable/high-performance/broad adaptation claim follows. This
+remeasures the original discovery case; it is not another independent case
+for the six-state replication. SAC's original15episode/2,400update target
+training costs5,976/6,150actions remain separate from these frozen queries.
+Prefix-feature offline students versus fresh pixel-SAC do not isolate an
+architecture advantage. [Results and audit](../../outputs/libero40-common-runtime-target-audit-20261030-r1/README.md).
+
+The source-quality audit matched all3,215selected train/validation chunks and
+the exact4,000sampled windows in each of8controller recoveries. Source2train
+is65.2% Gaussian warmup; its two training failures and subsequent same-case
+recoveries occurred before any optimizer update. All37post-update training
+episodes succeeded, without a matched learned-improvement demonstration.
+Finite windows expose much recent feedback but not the entire replay-driven
+learning process. Final DPT actors were saved after the last update and have
+no subsequent source rollout in these histories. These are candidate teachers,
+not demonstrated experts. Selected source-generation cost33,419actions plus
+6,406unselected qualification actions is39,825counted once. No corruption or
+new admission gate was found. [Source-quality evidence](../../outputs/libero-source-bank-quality-20261030-r1/REPORT.md).
+
 ## Targeted subset training and first LIBERO90 robot comparison
 
 The fresh target-online DSRL onset comparison is now terminal:
@@ -113,8 +156,8 @@ identical inputs, saved input origins and plain/prefix-attached/qualified/SAC
 initialization stages all gave delta0 within one process. Full motor
 parameters stayed unchanged. The new process still differs from both saved
 reference chunks by up to0.00342, so the cross-process cause remains unproven.
-HLO fingerprint extraction was unavailable. The next robot comparison uses
-one motor process for both source banks, native and frozen final target-SAC.
+HLO fingerprint extraction was unavailable. The completed comparison above
+uses one motor process for both source banks, native and frozen final target-SAC.
 [Numerical replay audit](../../outputs/libero40-motor-replay-audit-20261030-r1/README.md),
 [common-runtime contract](COMMON-RUNTIME-SOURCE-COMPARISON.md).
 

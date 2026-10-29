@@ -37,7 +37,16 @@ banks differ across these source-data scales; compare common robot cases,
 not raw cross-run NLL. Exact-input replay found delta0 for key types and
 initialization stages within one motor process, but small cross-process
 motor action differences remain unexplained. A new shared-process robot
-comparison includes both source banks, native and frozen final target-SAC.
+comparison completed76episodes/30,505actions in one unchanged motor process:
+one-source ADfull K1 succeeds1/2; two-source ADstatic succeeds1/2 at bothK0/K1
+with identical query trajectories, while two-source ADfull/reset and allDPT
+queries fail. All methods fail the second case. This remeasures the original
+discovery case, not an independent replication. It shows a one-case benefit
+without history and no monotonic source-scale memory gain. Source audits
+matched all3,215selected chunks and exact training windows;65.2% of Source2
+train rows are warmup, and both training failures/recoveries preceded the
+first update. Final DPT actors lack subsequent source behavior. Candidate
+teacher quality and useful learning-history diversity remain unresolved.
 Full40 collection, full-suite targets and stable RoboTwin learning/performance
 remain unfinished. RoboTwin uses6 source goals and6 controller-held-out goals;
 its current1024D independent noise interface differs from LIBERO's32D tied
