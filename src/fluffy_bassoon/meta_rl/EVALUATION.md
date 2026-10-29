@@ -2,7 +2,33 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
-## Final single-seed ML10 method comparison, 2026-10-29
+## Common-PPO ML10 core controls, 2026-10-29
+
+This separate comparison uses GRU, Transformer-XL, CTM and CMM with a common
+250k parameter cap and the same PPO contract: seed 1000, 50 lanes, K5/H500,
+80 updates / 10M training interactions, ten PPO epochs, cached100 replay and
+4,000 optimizer steps. Actual parameter counts are approximately matched.
+
+| Core | Parameters | Train success | Held-out success | Training GPU h |
+| --- | ---: | ---: | ---: | ---: |
+| GRU | 245,757 | 20.8% | 0.8% | 0.3792 |
+| Transformer-XL | 232,361 | 20.0% | 8.8% | 0.8073 |
+| CTM | 237,347 | 16.0% | 0.0% | 1.2897 |
+| CMM | 249,095 | 10.0% | 22.4% | 1.1125 |
+
+GRU/XL were evaluated only initially and finally; CTM/CMM have intermediate
+evaluations. Endpoint plots therefore compare the completed 10M runs, and
+training GPU-hours exclude the unequal monitoring costs. Final evaluations
+use K25 with the original K5-trained clock. CMM held-out reset success is
+26.4%, above normal 22.4%, so the lead does not establish a memory benefit.
+One seed does not establish an architecture ranking.
+
+The [common-PPO result bundle](../../../outputs/metta-common-ppo-chart-20261029-r1/README.md)
+contains exact counts, sources, checkpoint hashes, endpoint CSV, figures and
+the saved audit. Its CTM run is the same checkpoint used below; the native
+RL²-PPO / ECET / AMAGO1 baselines are different from the common-head controls.
+
+## Native-method ML10 comparison, 2026-10-29
 
 All four original Baige jobs completed 80 rounds / 10M training transitions
 and 5M evaluation transitions per method at source

@@ -1,4 +1,10 @@
-# Final ML10 results
+# ML10 native-method comparison
+
+This set compares CTM, RL²-PPO, ECET and AMAGO1 at equal training-interaction
+budgets. Model sizes and training methods differ. For the separate GRU / XL /
+CTM / CMM comparison with a common PPO setup and approximately matched
+parameter counts, see [common-PPO core controls](../metta-common-ppo-chart-20261029-r1/README.md).
+The CTM checkpoint is shared between the two sets.
 
 [Full results and limitations](RESULTS.md) ·
 [Curve data (CSV)](figures/ml10-final-curves-20261029-0835.csv) ·

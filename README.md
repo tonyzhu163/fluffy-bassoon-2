@@ -13,11 +13,15 @@ source hash. Agents start with [AGENTS.md](AGENTS.md) and the live
 
 ## ML10 results
 
-The [final four-method ML10 comparison](outputs/metaworld-ml10-matched-baige-20261028-r1/README.md)
-contains the report, seven PNG/PDF plots, curve CSV, raw evaluation metrics and
-audit receipts for CTM, RL²-PPO, ECET and AMAGO1 at 10M training transitions
-per method. This is a single-seed method comparison; it does not establish a
-CTM advantage.
+There are two comparisons, each at 10M training transitions per run:
+
+| Comparison | Policies | What is matched | Plot coverage |
+| --- | --- | --- | --- |
+| [Common-PPO core controls](outputs/metta-common-ppo-chart-20261029-r1/README.md) | GRU, Transformer-XL, CTM, CMM | Common PPO setup and 250k parameter cap; actual counts 232,361–249,095 | Final 10M-step endpoints; GRU/XL have no intermediate evaluations |
+| [Native-method comparison](outputs/metaworld-ml10-matched-baige-20261028-r1/README.md) | CTM, RL²-PPO, ECET, AMAGO1 | Training interactions; model sizes and learners differ | Learning curves evaluated every 625k training steps |
+
+Both use seed 1000. The CTM checkpoint is shared across the comparisons;
+these are not two independent CTM runs. Neither establishes a CTM advantage.
 
 ## Layout
 
