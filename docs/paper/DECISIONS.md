@@ -11,13 +11,17 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
   VLAs**. A working title, not evidence that ICRL already works.
 - Main question: high robotic success with few deployment interactions and
   competitive final performance. Meta-RL/ICRL are means to that outcome.
-- Primary backbone: released frozen π₀.₅ on standard LIBERO; native action
-  horizon ten. π₀ teachers/checkpoints are incompatible with π₀.₅ source
-  training and cannot be silently migrated.
+- Primary backbone: frozen RLinf π₀.₅ LIBERO130 fullshot SFT release,
+  revision `6222623f635769bfc73c9472e29fab9b7fd8e027`; native horizon ten.
+  Original-130 base-task exposure disclosed. Older OpenPI/π₀ teachers and
+  feature datasets cannot be silently migrated to this motor.
+- Primary external test sets: **LIBERO-Plus and LIBERO-Pro**. Attachment
+  source corpus remains original LIBERO. The v1 original-task holdout stays
+  an auxiliary attachment-only transfer test; its frozen artifact is unchanged.
 - Steering interface: 32 bounded initial-noise coordinates broadcast over
   the frozen motor horizon; native full-noise and tied-noise references.
 - Shared public representation: one frozen motor receipt, tokenizer,
-  normalization assets and canonical feature-v2 coordinates across tasks.
+  normalization assets and backend-specific canonical feature coordinates across tasks.
   No per-task drifting source features in a pooled student corpus.
 - First source-data route: competent fixed teacher + continuous noise
   distillation. Paired DPT changes only query targets on the same actual
@@ -45,9 +49,19 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
 - No final-test task in source teacher training/collection, student
   gradients, normalization, curriculum or checkpoint selection. Validation
   teachers/data remain isolated; test-time online DSRL is evaluation only.
-- Plus/Pro locked for later tests, with base-family lineage. Training-base
+- Plus/Pro are primary external tests, with base-family lineage. Training-base
   perturbations measure robustness; held-out-base perturbations additionally
   measure task transfer. No final-test feedback for method selection.
+- Tiny development subset fixed before outcomes: original object task 1,
+  cream cheese → basket, matching training family 90:47; two official Plus
+  cases and two Pro cases. This family is reserved from blind final tests.
+  Original task 90:57 has no official Plus perturbation counterpart.
+- Keep first-attempt official-style scores separate from K1/2/4/8 adaptation;
+  record suite settings and coverage. Full official aggregates that include
+  development cases require an overlap disclosure and a blind excluded score.
+- [Evaluation protocol v2](../../outputs/libero-pi05-corpus-20261029-r2/EVALUATION-PROTOCOL.md)
+  records exact development cases/source pins and final-case exclusions.
+  It does not adopt a full 130-teacher collection or rewrite the v1 split.
 - Released VLA pretraining may include benchmark tasks. Claim only holdout
   from attachment/source-teacher training unless independently established.
 

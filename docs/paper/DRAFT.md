@@ -5,6 +5,11 @@ robot-performance claim is unproven.** Result placeholders are intentional.
 Durable choices: [DECISIONS.md](DECISIONS.md). Method contracts remain the
 implementation references; this outline does not replace them.
 
+Current evaluation roles: **original LIBERO supplies attachment training and
+validation; LIBERO-Plus and LIBERO-Pro are the two primary external tests**.
+The [v2 protocol](../../outputs/libero-pi05-corpus-20261029-r2/EVALUATION-PROTOCOL.md)
+adds these roles without rewriting the frozen v1 data split.
+
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes
@@ -12,9 +17,9 @@ implementation references; this outline does not replace them.
 - Approach: causal history → bounded latent-noise coordinate → frozen π₀.₅;
   pretrain using competent-teacher histories; compare data construction,
   supervision and direct meta-RL.
-- Evaluation: held-out LIBERO tasks; success against actual deployment
+- Evaluation: LIBERO-Plus and LIBERO-Pro; success against actual deployment
   interactions; ordinary DSRL; controls for representation, architecture,
-  memory, feedback and training cost.
+  memory, feedback and training cost. Original task holdouts: auxiliary.
 - **Results: TBD.** No percentage gains, efficiency factors or novelty claim yet.
 
 ## 1. Introduction / question
@@ -73,7 +78,8 @@ implementation references; this outline does not replace them.
   have distinct likelihood contracts.
 - Motor:
   \(a_{t:t+H}=\pi_{\bar\theta}(o_t,\ell;\operatorname{repeat}_H(z_t))\).
-  Released `pi05_libero`: native horizon \(H=10\); execute up to ten actions,
+  Target: frozen `RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT`, revision
+  `6222623f635769bfc73c9472e29fab9b7fd8e027`; native horizon ten; execute up to ten actions,
   stopping at simulator success/time limit. Record actual primitive steps.
 - Sparse chunk feedback: zero on achieved goal, otherwise −1; physical
   episode ends on success or time limit. Source critic timeout bootstrapping
@@ -136,8 +142,12 @@ implementation references; this outline does not replace them.
   [paired corpus](../frozen-vla-cnd-corpus.md), and
   [direct RL²](../frozen-vla-rl2.md).
 
-## 5. Dataset and evaluation protocol
+## 5. Dataset and two external evaluation protocols
 
+- Backbone release is trained on the original 130 LIBERO tasks. Externally
+  held-out perturbation cases are the main claim; original base tasks are
+  not held out from VLA pretraining. Pin weights, normalization and backend
+  together; older OpenPI teachers/features are a different contract.
 - Frozen [split specification](../../outputs/libero-pi05-corpus-20261029-r1/PLAN.md)
   and [machine-readable manifest](../../outputs/libero-pi05-corpus-20261029-r1/split.json):
   **78 training / 10 validation / 10 official LIBERO-10 test tasks**;
@@ -152,7 +162,7 @@ implementation references; this outline does not replace them.
 - All 100 canonical tasks: 50 verified initial states. Training tasks:
   states 0–39 source collection, 40–44 auxiliary familiar-task validation,
   45–49 auxiliary familiar-task test. Main validation: held-out validation
-  tasks; final task test: official ten tasks, all 50 states unless a smaller
+  tasks; auxiliary task test: official ten tasks, all 50 states unless a smaller
   pilot is declared before running it.
 - No official test or excluded-task data in **any source DSRL teacher
   collection/updates**, meta-gradients, normalization, label construction,
@@ -161,10 +171,22 @@ implementation references; this outline does not replace them.
 - Distinct claims: familiar-task new-state transfer; held-out full-task/goal
   transfer; later perturbation robustness. None implies absence from VLA
   pretraining.
-- Plus/Pro: locked future tests; record canonical base task/family and
+- Original LIBERO-10 remains an auxiliary attachment-only task-transfer test;
+  the v1 source exclusions and split remain unchanged.
+- Plus/Pro: the two primary external tests; record canonical base task/family and
   perturbation lineage; descendants inherit base partition. Training-base
   perturbations assess robustness; held-out-base variants additionally assess
-  task transfer. Final feedback cannot select models or methods.
+  task transfer. Final feedback cannot select models or methods. A separately
+  declared development subset is allowed for simulator/method selection.
+- Initial Plus/Pro development base: original object task 1, cream cheese →
+  basket, typed-goal family matching training task 90:47. Reserve this family
+  from blind final tests. Official Plus has no perturbed task 90:57 counterpart.
+- First-attempt official-style scores, with suite settings/coverage disclosed,
+  are separate from K-attempt adaptation. Disclose any development overlap in
+  a full official aggregate and also report its blind excluded subset.
+- Exact development cases, source/asset pins, final-case identity fields and
+  seed exclusions: [v2 manifest](../../outputs/libero-pi05-corpus-20261029-r2/protocol.json).
+  New final IDs await pinned inventories; no outcomes used to invent cases.
 
 ## 6. Baselines and mechanism controls
 
@@ -225,11 +247,12 @@ implementation references; this outline does not replace them.
 | --- | --- | --- |
 | Fig. 1: method and chronology | What changes during deployment? | Frozen motor/controller; history updates; actual action→outcome timing |
 | Fig. 2: success vs interactions | Does steering adapt faster while keeping high final success? | Ordinary DSRL, native, CND/DPT/AD/RL²; **TBD** |
-| Table 1: held-out LIBERO tasks | Does the process transfer beyond source tasks? | All official ten tasks; paired means/uncertainty; **TBD** |
+| Table 1: Plus and Pro first attempts | Does steering preserve external-suite competence? | Separate official-style settings, coverage and blind dev-excluded scores; **TBD** |
 | Table 2: same-history targets | Does supervision explain performance? | Paired CND vs DPT; AD separately with its own source cost; **TBD** |
 | Fig. 3: memory/feedback controls | Is improvement caused by useful history? | Trained static/reset, reward/history/clock interventions; **TBD** |
 | Fig. 4: data and amortization curves | How much meta-pretraining is needed, and when does it pay off? | Source-data/checkpoint scale; deployment vs total cost; **TBD** |
-| Table 3: Plus/Pro | Does robustness survive stronger distribution shifts? | Locked base-family-aware test; **pending** |
+| Table 3: Plus/Pro adaptation | Does own-history steering improve external-suite success efficiently? | K1/2/4/8, base/perturbation strata and source/deployment cost; **TBD** |
+| Appendix: original task holdouts | Does the attachment transfer to new full goals? | Immutable v1 ten-task bank; auxiliary; **TBD** |
 
 ## 8. Evidence and limits
 
@@ -238,10 +261,11 @@ implementation references; this outline does not replace them.
 - Verified technical interfaces: simulator execution, native-noise replay,
   and canonical feature extraction have qualification checks. These support
   running the experiment; they do not establish meta-learning performance.
-- Native π₀.₅ has reached the ceiling on a small task/scene probe. Treat this
+- The older OpenPI π₀.₅ motor reached the ceiling on a small task/scene probe. Treat this
   as headroom/runtime evidence; no adaptation benefit follows. Quantitative
   pilot counts belong in the consolidated LIBERO `EVALUATION.md` before use
-  in a paper table.
+  in a paper table. Those checks do not qualify the newly selected RLinf130
+  motor or establish its Plus/Pro results.
 - **Pending:** qualified π₀.₅ teacher corpus; trained frozen students;
   held-out-task own-history success; reliable memory/feedback benefit;
   competitive final success and sample efficiency; Plus/Pro.

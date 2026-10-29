@@ -1,0 +1,205 @@
+{
+  "format": "frozen_vla_external_evaluation_protocol_v2",
+  "status": "development_cases_predeclared_final_case_catalogs_pending",
+  "primary_external_test_sets": [
+    "LIBERO-Plus",
+    "LIBERO-Pro"
+  ],
+  "backbone": {
+    "repository": "RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "revision": "6222623f635769bfc73c9472e29fab9b7fd8e027",
+    "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+    "normalization_sha256": "dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1",
+    "receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+    "training_coverage_disclosure": "released LIBERO130 fullshot model; no original base-task novelty relative to VLA pretraining claimed",
+    "runtime_source_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+    "native_horizon": 10,
+    "feature_kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+    "older_openpi_data_compatible": false
+  },
+  "attachment_source": {
+    "benchmark": "original LIBERO",
+    "frozen_v1_manifest": "outputs/libero-pi05-corpus-20261029-r1/split.json",
+    "frozen_v1_metadata_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+    "counts": {
+      "train": 78,
+      "validation": 10,
+      "auxiliary_task_test": 10,
+      "excluded_auxiliary_tasks": 2
+    },
+    "v1_artifact_immutable": true,
+    "all130_teacher_collection_adopted": false,
+    "plus_pro_source_teacher_collection": false,
+    "plus_pro_meta_gradients": false,
+    "original_heldout_task_role": "auxiliary attachment-only task transfer"
+  },
+  "development_base": {
+    "suite": "libero_object",
+    "task_id": 1,
+    "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+    "train_task_key": "libero_90:47",
+    "goal_family": "full-goal-family-b2a798f45b2c57e3",
+    "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+    "source_task57_is_not_this_base": true
+  },
+  "development_only": true,
+  "development_initial_states": [
+    0
+  ],
+  "reserved_development_seeds": [
+    0,
+    1000
+  ],
+  "initial_adaptation_attempts": 4,
+  "reported_adaptation_attempts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "benchmarks": {
+    "plus": {
+      "repository": "https://github.com/sylvestf/LIBERO-plus",
+      "commit": "4976dc30028e805ff8094b55501d532c48fec182",
+      "classification_path": "libero/libero/benchmark/task_classification.json",
+      "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+      "task_map_sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac",
+      "classified_cases": 10030,
+      "runtime_index_rule": "task_order_index0: runtime_index=classification_id-1; all names verified",
+      "asset_status": "staged; final full-catalog asset receipt must be recorded before a full sweep",
+      "development_horizon": 280,
+      "development_settling_steps": 10,
+      "protocol_basis": "RLinf e1a82ebf toolkits/standalone_eval_scripts/openpi/libero_eval.py original object evaluator; development basis, not full Plus leaderboard equivalence",
+      "cases": [
+        {
+          "role": "development",
+          "suite": "libero_object",
+          "runtime_index": 667,
+          "classification_id": 668,
+          "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_115_0_0_initstate_0",
+          "category": "Camera Viewpoints",
+          "published_difficulty": 1,
+          "parameters": {
+            "view": [
+              0,
+              0,
+              115,
+              0,
+              0
+            ],
+            "robot_init_variant": 0
+          }
+        },
+        {
+          "role": "development",
+          "suite": "libero_object",
+          "runtime_index": 290,
+          "classification_id": 291,
+          "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_2",
+          "category": "Robot Initial States",
+          "published_difficulty": 2,
+          "parameters": {
+            "view": [
+              0,
+              0,
+              100,
+              0,
+              0
+            ],
+            "robot_init_variant": 2
+          }
+        }
+      ],
+      "resolved_base_bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+      "resolved_base_init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94"
+    },
+    "pro": {
+      "repository": "https://github.com/Zxy-MLlab/LIBERO-PRO",
+      "commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+      "asset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+      "development_file_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+      "assets_manifest_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+      "development_horizon": 280,
+      "development_settling_steps": 5,
+      "protocol_basis": "pinned Pro render utility; development basis, not asserted full leaderboard equivalence",
+      "cases": [
+        {
+          "role": "development",
+          "case_key": "pro_object_swap_init0",
+          "suite": "libero_object_swap",
+          "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+          "category": "position",
+          "initial_state": 0,
+          "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+          "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022"
+        },
+        {
+          "role": "development",
+          "case_key": "pro_object_appearance_init0",
+          "suite": "libero_object_object",
+          "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+          "category": "object",
+          "initial_state": 0,
+          "bddl_sha256": "2bdd42a7e444d5d02723901b7e11c2ee1a2964b5a4ba972b495d79fce7a0c4a5",
+          "init_sha256": "0c127f132eb2d4877b01daad923f00df8917c77f0a5a58cb6434cc5e62a553bd"
+        }
+      ]
+    }
+  },
+  "final_test": {
+    "case_catalog_status": "not_yet_enumerated_no_ids_invented",
+    "cases": [],
+    "exclude_development_goal_families": [
+      "full-goal-family-b2a798f45b2c57e3"
+    ],
+    "minimum_final_seed": 100000,
+    "selection_uses_final_outcomes": false,
+    "condition_identity_fields": [
+      "benchmark_commit",
+      "asset_receipt",
+      "base_goal_family",
+      "perturbation_generator",
+      "parameters_or_definition_hash",
+      "initial_state",
+      "seed"
+    ],
+    "strata": [
+      "attachment_training_base_family_perturbation_transfer",
+      "attachment_heldout_base_family_and_perturbation_transfer"
+    ],
+    "required_case_fields": [
+      "benchmark",
+      "source_commit",
+      "asset_receipt_sha256",
+      "canonical_base",
+      "goal_family",
+      "official_name",
+      "runtime_selector",
+      "perturbation_definition",
+      "initial_state",
+      "seed",
+      "role"
+    ],
+    "first_attempt_score": "report official-style first-attempt settings/coverage/denominator separately from multi-attempt adaptation; disclose any development overlap in full official aggregate and report blind excluded subset",
+    "adaptation": "one fixed declared perturbation condition per trial; actual reset variation recorded; prior feedback only; frozen motor/student parameters"
+  },
+  "cost_and_controls": {
+    "source_cost_counted": true,
+    "all_attempts_and_settling_actions_counted": true,
+    "baselines": [
+      "native",
+      "zero_noise",
+      "tied_gaussian",
+      "ordinary_dsrl_online"
+    ],
+    "current_meta_controller_evaluated": false,
+    "future_student_controls": [
+      "trained_static",
+      "trained_episode_reset",
+      "history_reset",
+      "numeric_reward_interventions",
+      "simple_noise_search"
+    ]
+  },
+  "metadata_sha256": "77ebc949c29a1b88e356ff69e4e5150ec75a3dc8a6c8846103874e838a15c0e0"
+}
