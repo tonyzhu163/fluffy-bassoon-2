@@ -65,6 +65,12 @@ def main():
         finally:
             sys.argv = saved_argv
         import torch
+        # The original motor constructor sets this process-global mode in
+        # pinned RLinf/openpi/pi0.py. Reproduce it without loading the VLA.
+        report["default_float32_matmul_precision"] = torch.get_float32_matmul_precision()
+        torch.set_float32_matmul_precision("high")
+        report["float32_matmul_precision"] = torch.get_float32_matmul_precision()
+        report["precision_source"] = "RLinf c605b9d:rlinf/models/embodiment/openpi/pi0.py:169"
         from fluffy_bassoon.meta_rl.vla_noise_ppo import PPOConfig, RecurrentNoisePPO
         payload = torch.load(args.input, map_location="cpu", weights_only=False)
         pending = payload["pending_rollouts"]
@@ -84,6 +90,8 @@ def main():
             payload["learner"]["noise_shape"], config=config, device="cuda")
         learner.load_state_dict(payload["learner"])
         errors = [learner.replay_error(rollout) for rollout, _ in pending]
+        report["behavior_replay"] = errors
+        write_json(args.output/"result.json", report)
         if any(not all(math.isfinite(value) for value in row.values())
                or row["log_prob_max_error"] > 2e-4 or row["value_max_error"] > 1e-5 for row in errors):
             raise RuntimeError("Saved behavior likelihood/value replay does not match the unchanged policy")
