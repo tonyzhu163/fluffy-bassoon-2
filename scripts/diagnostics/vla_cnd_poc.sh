@@ -4,6 +4,11 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact integrated source commit}
 TASK_RUN=${2:?fresh CND output identity}
+TASK_PHASE=${4:-cnd}
+if [ "$TASK_PHASE" != cnd ] && [ "$TASK_PHASE" != continuation ]; then
+  printf 'Unknown phase: %s\n' "$TASK_PHASE" >&2
+  exit 2
+fi
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_OLD=/mowenjie/fluffy-bassoon
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
@@ -56,7 +61,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST_
   "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
   tests/test_vla_retry_teacher.py tests/test_vla_performance_report.py tests/test_vla_libero.py \
   tests/test_vla_features.py tests/test_vla_multitask.py tests/test_vla_rl2.py \
-  tests/test_vla_noise_distillation.py tests/test_vla_cnd_run.py \
+  tests/test_vla_noise_distillation.py tests/test_vla_cnd_run.py tests/test_vla_teacher_continue.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps
 "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
@@ -74,14 +79,19 @@ if [ ! -e "$TASK_OUTPUT/simulator/simulator-ready.json" ]; then
   exit 2
 fi
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
-"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_cnd_run \
+TASK_DRIVER=fluffy_bassoon.meta_rl.vla_cnd_run
+TASK_DRIVER_ARGS=(--train-states 0 1 2 3 --validation-states 36 37 \
+  --min-episodes 4 --max-episodes 6 --anneal-decisions 35 55 --anneal-powers .5 1 2 \
+  --max-collection-steps 14400 --history-updates 500 --history-device cuda \
+  --eval-states 40 41 42 43 --attempts 4 --batch-size 32 --utd 20 --online-dsrl)
+if [ "$TASK_PHASE" = continuation ]; then
+  TASK_DRIVER=fluffy_bassoon.meta_rl.vla_teacher_continue
+  TASK_DRIVER_ARGS=(--additional-max-steps 20000)
+fi
+"$TASK_MODEL" -m "$TASK_DRIVER" \
   --output "$TASK_OUTPUT/experiment" --port 8765 --suite libero_90 --task-id 57 \
   --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --checkpoint "$TASK_CHECKPOINT" \
   --model-config pi0_libero --feature-interface sac --chunk 20 --horizon 400 \
   --source-commit "$TASK_SOURCE" --prior-recovery "$TASK_PRIOR/source-recovery.pkl" \
-  --prior-contract "$TASK_PRIOR/contract.json" --train-states 0 1 2 3 \
-  --validation-states 36 37 --calibration-states 24 25 26 27 28 29 30 31 \
-  --min-teacher-success .7 --min-episodes 4 --max-episodes 6 \
-  --anneal-decisions 35 55 --anneal-powers .5 1 2 --max-collection-steps 14400 \
-  --history-updates 500 --history-device cuda --eval-states 40 41 42 43 --attempts 4 \
-  --batch-size 32 --utd 20 --online-dsrl
+  --prior-contract "$TASK_PRIOR/contract.json" --calibration-states 24 25 26 27 28 29 30 31 \
+  --min-teacher-success .7 "${TASK_DRIVER_ARGS[@]}"

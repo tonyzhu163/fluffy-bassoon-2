@@ -148,10 +148,10 @@ def main(argv=None):
             raise ValueError("Requested CND task/horizon differs from the actual simulator")
         prior = json.loads(args.prior_contract.read_text())
         motor = FrozenOpenPI(args)
-        contract = dict(prior, source_commit=source,
+        contract = dict(prior, source_commit=source, chunk=args.chunk, horizon=args.horizon,
             simulator={key: value for key, value in sim.metadata.items() if key != "pid"}, motor=motor.metadata)
         compatible_prior(prior, contract)
-        contract["cnd_poc"] = dict(train_states=args.train_states, validation_states=args.validation_states,
+        contract["cnd_poc"] = dict(seed=args.seed, train_states=args.train_states, validation_states=args.validation_states,
             calibration_states=args.calibration_states, evaluation_states=args.eval_states,
             teacher_minimum_success=args.min_teacher_success, min_episodes=args.min_episodes,
             max_episodes=args.max_episodes, anneal_decisions=args.anneal_decisions,

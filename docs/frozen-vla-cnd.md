@@ -53,3 +53,23 @@ uses the student's own outcomes, and supplies no schedule or noise amount.
 Measure per-attempt robot success and environment interactions, not imitation
 loss alone. Teacher competence does not imply either CND improvement or OOD
 adaptation; those remain empirical questions.
+
+`meta_rl.vla_cnd_run` runs the same-task proof of concept with the qualified
+SAC feature interface. It measures the deterministic teacher on a declared
+calibration bank before collecting any histories; a failed competence gate
+retains receipts and exits without CND training. This calibration bank may be
+within the teacher's training scenes and is not evidence of task transfer.
+Deployment scenes remain excluded from teacher training and student datasets.
+
+If the teacher is weak, `meta_rl.vla_teacher_continue` restores the complete
+source state into a fresh run under an explicit migration contract and calls
+the existing ordinary DSRL training loop. It preserves the original training
+scene bank, batch size, UTD, optimizer, replay and RNG. Its additional-step
+ceiling reserves a full final episode, so completion rounding stays within
+the declared interaction budget. It then qualifies the new deterministic
+teacher again with the same fixed threshold. No VLA weights are updated.
+Teacher continuation and calibration are additional source costs; neither is
+student adaptation. `vla_teacher_continue.sh` uses the same allocation probe,
+runtime and simulator setup as `vla_cnd_poc.sh`. A qualified continuation's
+fresh experiment directory can be supplied as the latter launcher's third
+argument; the original active run and checkpoint remain untouched.
