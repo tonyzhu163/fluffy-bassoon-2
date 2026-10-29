@@ -3,6 +3,37 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Capped source collection and fresh PPO qualification
+
+The first physical-budget SAC stream and both fresh PPO qualification jobs
+completed on Baige with the same frozen official OpenPI40 motor. All physical
+costs below include qualification/reset settling and count inside the shared
+1M-action source campaign, once.
+
+| Run / job | Actual exposure | Episodes / successes | Query chunks | Updates | Total physical actions |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Capped SAC `job-p5we8pk45d8i` | Spatial00,20 distinct nominal states | 80 /79 | 742 | 4,920 SAC | 7,892 |
+| Single-task PPO `job-rg68oj4uy6mv` | Spatial00 | 32 /32 | 289 | 8 PPO /32 optimizer | 3,107 |
+| Shared PPO `job-b7u5ogwy6udu` | Spatial00/01/02, one shared learner | 12 /12 | 125 | 3 PPO /6 optimizer | 1,303 |
+
+SAC respected its9,500-action cap and completed every started K4 case, with
+paired final AD/DPT exports and full recovery. The shared PPO job retained
+one policy/optimizer across actual task switches and replayed every behavior
+likelihood with error0. It recorded task/instruction, raw public current/next
+observations, actual noise/actions/rewards/boundaries and PPO-specific samples,
+values/cache/policy versions, plus full learner/motor RNG recovery.
+
+The single-task PPO's3e-4/four-epoch recipe produced first-update KL13.76.
+A separately pinned shared pilot used1e-4/two epochs: KL.132/.026/.037.
+This changes the explicit pilot recipe; it does not demonstrate stable or
+sample-efficient learning. All source successes are near ceiling. No new
+held-out-target results, memory benefit, or improvement over ordinary DSRL
+follow from these runtime checks. Full source coverage remains unfinished.
+
+Compact receipts: [capped SAC](../../outputs/libero40-1m-sac-qualification-audit-20261029-r1/README.md),
+[single-task PPO](../../outputs/libero40-1m-ppo-qualification-audit-20261029-r1/README.md),
+[shared PPO](../../outputs/libero40-1m-shared-ppo-qualification-audit-20261029-r1/README.md).
+
 ## Completed official OpenPI40 source runtime qualification
 
 The new source40 collector completed independent train and validation streams

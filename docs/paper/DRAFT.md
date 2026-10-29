@@ -13,7 +13,13 @@ transfer, not a claim that every LIBERO90 goal is semantically unseen. Case/seed
 plans are declared before the comparison. Existing RLinf130
 runs, the 78/10/10 split and clean-versus-clean+Plus arms remain historical.
 The [source40/target90 protocol](../../outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
-is the current design; source scale and compute budget remain unspecified.
+is the current design. The user selected a1M executed-action source cap for
+LIBERO, shared across SAC/fresh PPO, validation, qualifications and retries;
+RoboTwin has its own1M cap. Full-campaign GPU-hour expansion remains pending.
+Current runtime evidence: one capped source stream80episodes/742chunks/
+4,920SAC updates; shared PPO12episodes over three source tasks, three PPO
+updates with behavior replay error0. Full40 collection and target performance
+are unfinished; these results establish no adaptation benefit.
 
 ## Abstract scaffold
 
