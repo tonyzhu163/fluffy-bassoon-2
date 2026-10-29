@@ -5,7 +5,7 @@ import pytest
 
 from fluffy_bassoon.meta_rl.vla_libero import sha256
 from fluffy_bassoon.meta_rl.vla_rlinf_candidate_eval import (
-    HISTORY_METHODS, NOISE_CONTRACT, checked_entry, validate_registry,
+    HISTORY_METHODS, NOISE_CONTRACT, checked_entry, history_callbacks, validate_registry,
 )
 
 
@@ -66,3 +66,42 @@ def test_candidate_hash_and_path_are_bound_to_registry(tmp_path):
     external.write_bytes(b"not in this arm")
     with pytest.raises(ValueError, match="registry path"):
         checked_entry(root, dict(path="../outside.pt", sha256=sha256(external)))
+
+
+def test_closed_loop_retains_actual_feedback_across_episode_reset():
+    import numpy as np
+    from fluffy_bassoon.meta_rl.vla_history import FrozenHistoryController, HistoryConfig, HistoryNoisePolicy
+    from fluffy_bassoon.meta_rl.vla_libero import run_episode
+
+    observation = dict(image=np.zeros((64, 64, 3), np.uint8),
+                       wrist=np.zeros((64, 64, 3), np.uint8), state=np.zeros(8, np.float32))
+
+    class Simulator:
+        metadata = dict(instruction="basket", task_id=1, suite="development", bddl_file="basket.bddl")
+
+        def reset(self, initial_state, scene_seed):
+            return dict(observation=observation, initial_observation_sha256="fixed")
+
+        def step(self, actions):
+            return dict(observation=observation, success=True, done=True,
+                        executed_actions=actions, rewards=[1.], primitive_steps=1)
+
+    motor = SimpleNamespace(horizon=10,
+        infer=lambda obs, instruction, noise: np.zeros((10, 7), np.float32))
+    policy = HistoryNoisePolicy(HistoryConfig(4, 32, width=8, layers=1, heads=2, context_length=16))
+    controller = FrozenHistoryController(policy, mode="full")
+    seen = []
+
+    def encoder(obs, instruction):
+        seen.append((obs, instruction))
+        return np.zeros(4, np.float32)
+
+    choose, feedback = history_callbacks(controller, encoder, "basket", deterministic=True)
+    for _ in range(2):
+        rows, result = run_episode(Simulator(), motor, choose, initial_state=0,
+            scene_seed=0, chunk=10, record_features=False, feedback=feedback)
+        assert result["success"] and controller.previous_done and not controller.pending
+        np.testing.assert_array_equal(controller.previous_noise, rows[-1]["executed_noise"])
+        assert controller.previous_reward == 0.
+    assert len(seen) == 2
+    assert controller.state is not None

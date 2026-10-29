@@ -33,12 +33,19 @@ not predicting a task ID or imitating arbitrary noise in isolation.
 - DPT-style supervision replaces only the query label with the final
   candidate actor's action. Historical actions and outcomes stay actual.
   The final actor is not called an expert without independent evaluation.
+- This POC trains the history controller by offline AD/DPT-style supervision.
+  An RL2-like input/trial structure does not make this the RL2 outer-loop
+  reinforcement-learning algorithm; that would be a separate training arm.
 - Full and static models within an arm use identical trials, labels,
   initialization seeds and optimization schedules. Source-SAC pretraining
   consumes the same training-only raw replay; it adds no robot interactions.
 - Report source collection, validation and deployment interactions
   separately. Reusing a dataset for several models does not multiply its
   unique collection cost. Adding Plus data does increase collection cost.
+- Official PixelSAC and the history controller have different feature
+  encoders. The separately trained static controller shares the history
+  controller's frozen VLA features and architecture, isolating context use.
+  Source-matched SAC is a performance baseline, not that isolation control.
 
 ## Distribution claims
 
@@ -53,6 +60,9 @@ not predicting a task ID or imitating arbitrary noise in isolation.
 These statements concern controller training. The released RLinf backbone
 is treated as exposed to all 130 original LIBERO tasks. Controller holdouts
 on original LIBERO do not establish unseen tasks for that backbone.
+Meta-learning itself can be tested on new trials drawn from the same task
+distribution. Out-of-distribution generalization is an additional question,
+not the definition of meta-learning.
 
 ## Current bounded smoke test
 

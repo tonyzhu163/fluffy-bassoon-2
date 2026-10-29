@@ -42,6 +42,16 @@ def checked_entry(root, entry):
     return path
 
 
+def history_callbacks(controller, encoder, instruction, *, deterministic):
+    def choose(observation):
+        return controller.act(encoder(observation, instruction), deterministic=deterministic)
+
+    def feedback(noise, reward, done):
+        controller.observe(executed_noise=noise, reward=reward, done=done)
+
+    return choose, feedback
+
+
 def validate_registry(registry, motor, *, students=True):
     if (registry.get("format") != "rlinf130_trained_arm_v1" or registry.get("completed") is not True
             or registry.get("arm") not in ("clean", "augmented")
@@ -171,14 +181,14 @@ def main(argv=None):
                 directory = args.output / f"case-{case_index:02d}" / method
                 directory.mkdir(parents=True)
                 rng, sampler = np.random.default_rng(scene_seed + 279011), np.random.default_rng(scene_seed)
-                learner, controller = None, None
+                learner, controller, feedback = None, None, None
                 if method in HISTORY_METHODS:
                     import torch
                     key, mode = HISTORY_METHODS[method]
                     generator = torch.Generator(device="cuda:0").manual_seed(scene_seed + 937)
                     controller = FrozenHistoryController(models[key], mode=mode, generator=generator)
-                    choose = lambda obs: controller.act(motor.feature_encoder(obs, sim.metadata["instruction"]),
-                                                       deterministic=not args.sample_history)
+                    choose, feedback = history_callbacks(controller, motor.feature_encoder,
+                        sim.metadata["instruction"], deterministic=not args.sample_history)
                 elif method in SAC_METHODS:
                     learner = OfficialSAC(args.dsrl_root, args.seed)
                     learner.restore(sac_checkpoint, sampler, source_contract)
@@ -191,10 +201,11 @@ def main(argv=None):
                 local_steps = 0
                 source_updates = 0 if learner is None else learner.updates
                 for attempt in range(1, 5):
+                    episode_started = time.monotonic()
                     updates_before = 0 if learner is None else learner.updates
                     rows, result = run_episode(sim, motor, choose, initial_state=0, scene_seed=scene_seed,
                         chunk=10, native=method == "native", rng=rng, record_features=False,
-                        feedback=None if controller is None else controller.observe)
+                        feedback=feedback)
                     primitive += result["primitive_steps"]
                     local_steps += result["primitive_steps"]
                     settling += sim.metadata["settle_steps"]
@@ -226,7 +237,8 @@ def main(argv=None):
                         cumulative_deployment_steps=local_steps, source_updates_before=updates_before,
                         source_updates_after=0 if learner is None else learner.updates,
                         deployment_optimizer_updates=0 if learner is None else learner.updates - source_updates,
-                        trace_sha256=sha256(trace), metrics=metrics, completed=True)
+                        trace_sha256=sha256(trace), metrics=metrics,
+                        elapsed_seconds=time.monotonic() - episode_started, completed=True)
                     episodes.append(receipt)
                     append_json(args.output / "episodes.jsonl", receipt)
                     write_json(args.output / "progress.json", dict(completed_episodes=len(episodes),
@@ -238,6 +250,8 @@ def main(argv=None):
                 del learner, controller
         write_json(args.output / "summary.json", dict(completed=True, episodes=len(episodes),
             primitive_steps=primitive, settling_steps=settling, elapsed_seconds=time.monotonic() - started,
+            motor_calls=motor.calls, feature_encoder_calls=motor.feature_encoder.calls,
+            feature_encoder_seconds=motor.feature_encoder.seconds,
             success_by_case_method={f"{i}/{m}": dict(episodes=4, successes=sum(
                 bool(r["success"]) for r in episodes if r["case_index"] == i and r["method"] == m))
                 for i in range(len(clients)) for m in args.methods}, scope=contract["scope"]))
