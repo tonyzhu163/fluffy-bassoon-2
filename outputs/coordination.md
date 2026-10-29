@@ -76,22 +76,24 @@ wrong-task controls, a bandit and static multitask DSRL at equal budget, and
 per-task DSRL as the gradient reference. Better held-out success alone counts
 as generalization, not meta-learning.
 
-**Run order (2026-10-29, user: Meta-World and LIBERO motor training may run
-concurrently):**
+**Run order (2026-10-29, user: Meta-World and LIBERO stages may run
+concurrently; released motors first):**
 
-1. Meta-World: fine-tune pi0.5 on goal-hidden ML1 scripted demos, then the
-   mode-spread check (success per goal × noise arm). This is the kill test for
-   the noise interface.
-2. In parallel, LIBERO Stage M0: fine-tune the pi0.5 base on the 78 training
-   tasks; select on the 10 validation tasks.
+1. Meta-World with the released `RLinf/RLinf-Pi05-MetaWorld-SFT`, no
+   training: noise-arm screen over four discrete goals with the marker visible
+   (headroom) and hidden (mode spread). This is the kill test for the noise
+   interface.
+2. In parallel, LIBERO L0 with the released RLinf LIBERO motor on LIBERO-Plus.
+   The released motors trained on all 130 LIBERO tasks, so the motor's
+   out-of-distribution test is LIBERO-Plus/PRO; held-out tasks are new to the
+   controller only.
 3. Meta-World cached arm tests (RL²/DPT selectors, T1–T5): the first
    meta-learning result.
-4. LIBERO L0 (headroom and support on held-out tasks with the M0 motor), then
-   L2 cached tests, then live per-chunk steering only if warranted.
+4. LIBERO L2 cached tests, then live per-chunk steering only if warranted.
+5. Later (user, 2026-10-29): our own motors, Stage M0 on the 78 training tasks
+   and, if hidden-goal mode spread fails, a goal-hidden Meta-World fine-tune.
 
-If the mode-spread check fails, fix the interface (noise diversity in
-fine-tuning, per-chunk steering) before further LIBERO spending; the M0 motor
-stays reusable. Each job's GPU budget is still fixed with the user at launch.
+Each job's GPU budget is still fixed with the user at launch.
 
 ### 2. Task-directed physical experimentation
 
@@ -160,7 +162,7 @@ does not alone establish that a job remains running.
 | Direct native-context pilot r3 | Baige `job-8kkjhb65px67`; `b5d97b0a7c0f6aed29660a96e2ab10cce9610915` | **19:23: failed, exit 1.** Saved error: `Require finite public feedback, binary reward/boundary and normalized clocks`. No learning result. Next: diagnose feedback validation against saved evidence before a separately identified recovery; preserve r3. |
 | CMM full few-shot calibration | Secondary school cluster (thu2), **48876**, source `b6919d6`, K20 seed0 | **19:22 upstream check:** dev query accuracy **15.4% at epoch 350**, MSE .091; update 58.5k/157k. Keep running under the existing contract; about 7.5 hours remained at that check. [Full calibration record](#cmm-calibration). |
 | CMM decay diagnostics | Secondary school cluster (thu2), **48983 / 48984**, source `bd38dd0` | **19:22 upstream record:** queued (Priority), retained by the user. Two 50-epoch runs compare decay starts 1 and uniform[0,3]. Verify probes/tests after startup and compare matched-epoch metrics; leave 48876 untouched. [Full diagnostic record](#cmm-calibration). |
-| LIBERO-Plus/PRO and Meta-World noise steering | Plan `libero-noise-icrl-20261029-r1`; no code yet | **2026-10-29: planned, no code yet.** Next, concurrently: Meta-World goal-hidden pi0.5 fine-tune and mode-spread check; LIBERO M0 motor on the 78 training tasks from the pi0.5 base. Before M0, link the task split audit and redo it per task × perturbation. Then Meta-World cached tests, then LIBERO L0 (~6,000 episodes, one thu2 GPU). Budgets fixed with the user at launch. [Plan](libero-noise-icrl-20261029-r1/PLAN.md). |
+| LIBERO-Plus/PRO and Meta-World noise steering | Plan `libero-noise-icrl-20261029-r1`; Meta-World screen code on `main`; SFT drafts on branch `motor-sft-draft` | **2026-10-29: Meta-World released-motor screen coded, CPU tests pass (9, incl. real Meta-World 3.1.1 env on macOS).** User decision: released RLinf motors first (`RLinf-Pi05-MetaWorld-SFT`, RLinf LIBERO SFT); own motors later. Next: Meta-World screen reach-v3 then push-v3, goal visible and hidden (needs approval of one GPU, ≤3 h), in parallel LIBERO-Plus L0 code with the released LIBERO motor. [Plan](libero-noise-icrl-20261029-r1/PLAN.md#running-the-meta-world-screen-gpu-approval-needed). |
 | DSRL tests (noise-mode Stage 0) | Code `352edc4`; CPU suite thu2 **49206**; Baige smoke **`job-gjkse1sb5gyj`** | **2026-10-29 12:59 Shanghai: terminal/audited.** Upstream thu2 suite reports 458 passed/17 skipped/27 subtests in both environments. Baige independently passed 31 focused Linux tests in 8.82 s and completed S0a 68/68 episodes, frozen motor unchanged. Only 4/32 fixed-arm trajectory pairs and 29/32 success outcomes match; 5/32 first chunks match. Noise and scene identity hashes verified. Deliberate exit 3 stopped S0b/S0c; no learner training or active job. Next: instrument initial observations and control reset seeds; budget repeated outcomes if variation persists. [Results and evidence](noise-mode-icrl-20261029-s0-r1/RESULTS.md); [how to run](#dsrl-tests-how-to-run). |
 
 Check unfinished work on the existing 20-minute cadence, or earlier on a

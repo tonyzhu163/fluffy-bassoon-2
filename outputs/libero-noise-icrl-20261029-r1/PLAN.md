@@ -1,6 +1,7 @@
 # In-context noise steering of a frozen pi0.5 on LIBERO-Plus/PRO and Meta-World
 
-Status, 2026-10-29: **planned; no code or runs yet.** CPU work (code, tests,
+Status, 2026-10-29: **Meta-World released-motor screen coded and CPU-tested; no GPU
+runs yet.** Released RLinf motors first; our own motors later (see Motor). CPU work (code, tests,
 cached meta-training) needs no ask under [AGENTS.md](../../AGENTS.md). Stage L0
 and every later GPU collection need user approval of the stated budget.
 This replaces ManiSkill as the benchmark for
@@ -32,37 +33,48 @@ it in-context RL.
 
 ## Order
 
-Meta-World runs first because its hidden goal makes a static shortcut
-impossible and its kill test is cheap; LIBERO M0 runs alongside it because it
-is the longest step and depends on no Meta-World result (concurrency approved
-by the user, 2026-10-29; budgets fixed at launch).
+Meta-World runs first because a hidden goal makes a static shortcut impossible
+and its check is cheap; LIBERO L0 runs alongside it (concurrency approved by the
+user, 2026-10-29; budgets fixed at launch). Both use released motors, so no
+training precedes the first result.
 
-1. Meta-World goal-hidden motor and mode-spread check.
-2. In parallel, LIBERO M0.
+1. Meta-World screen with the released motor: goal marker visible (headroom)
+   and hidden (mode spread), `scripts/diagnostics/metaworld_pi05_noise_cache.py`.
+2. In parallel, LIBERO L0 with the released LIBERO motor on LIBERO-Plus.
 3. Meta-World cached tests, T1–T5.
-4. LIBERO L0, then L1 and L2; L3 only if warranted.
+4. LIBERO L1 and L2; L3 only if warranted.
+5. Later: our own motors (Stage M0 for LIBERO; a goal-hidden Meta-World
+   fine-tune if the hidden-goal mode spread fails).
 
-If the mode-spread check fails, fix the noise interface before further LIBERO
-spending.
+If the hidden-goal mode spread fails, fine-tune the Meta-World motor on
+goal-hidden demonstrations before concluding that noise cannot steer it.
 
 ## Motor and interface
 
 | Item | Choice |
 | --- | --- |
-| Motor | Our own SFT of the pretrained pi0.5 base on the demonstrations of the 78 training tasks only (Stage M0), then frozen. Not an RLinf LIBERO checkpoint: those trained on all 130 tasks, including the held-out ones |
+| Motor, first | Released RLinf pi0.5 LIBERO SFT, frozen; pick the few-shot `RLinf-Pi05-LIBERO-SFT` or `RLinf-Pi05-LIBERO-130-fullshot-SFT` in L0 by headroom |
+| Motor, later | Our own SFT of the pi0.5 base on the 78 training tasks only (Stage M0); draft code on branch `motor-sft-draft` |
 | Inference | RLinf `e1a82eb` `pi05_libero` conventions, as in `src/fluffy_bassoon/rl/libero_goal.py` on branch `libero-goal-headroom`: 256 px views, 8-D state, 5 Euler steps, horizon 10 with 5 executed, 15 settle steps |
 | Steering action | The initial flow noise `[10, 32]` of a chunk. Per-attempt arms (one fixed tensor for every chunk of an attempt, M = 16, as in the noise-mode plan) first; per-chunk noise (DSRL actor) later |
 | Feedback | Binary success at attempt end and an attempt-boundary flag. No shaped reward |
 
-Neither the motor nor the controller sees validation or held-out tasks in
-training, so "held out" applies to the whole system. Verify, and record,
-whether the pi0.5 base pretraining mixture contains any LIBERO data.
+The released motors trained on all 130 LIBERO tasks, including LIBERO-10, so
+with them the held-out tasks are new to the controller only. Out-of-distribution
+conditions for the motor come from LIBERO-Plus and LIBERO-PRO: the controller
+meta-trains on training tasks (clean and kept LIBERO-Plus types) and is tested
+on held-out tasks under held-out perturbation types and on LIBERO-PRO. With our
+own M0 motor, "held out" applies to the whole system; verify whether the pi0.5
+base pretraining mixture contains LIBERO data.
 
 ## Splits and perturbations
 
 - Tasks: the audited split of 78 training, 10 validation and the official 10
   held-out (LIBERO-10) tasks; the two LIBERO-90 tasks whose goals duplicate
-  held-out tasks stay excluded. Link the audit artifact here before L0.
+  held-out tasks stay excluded. Frozen in
+  [split.json](../libero-pi05-corpus-20261029-r1/split.json), loaded and
+  hash-checked by `src/fluffy_bassoon/libero_split.py`; initial states 0–39 of
+  training tasks for training trials, 40–44 and 45–49 reserved.
 - Perturbations: redo the audit at the level of task × perturbation. Every
   LIBERO-Plus or LIBERO-PRO variant of a held-out or excluded task is held out.
 - Training uses LIBERO-Plus perturbation types that pass L0. Evaluation uses
@@ -72,7 +84,7 @@ whether the pi0.5 base pretraining mixture contains any LIBERO data.
   attempts (K = 16 for extrapolation). Each attempt resets to the same scene.
   Memory resets only between trials. Weights are frozen at evaluation.
 
-## Stage M0: train the motor on the 78 training tasks (GPU, approval needed)
+## Stage M0 (later): train the motor on the 78 training tasks (GPU, approval needed)
 
 Fine-tune the pretrained pi0.5 base on the LIBERO demonstrations of the 78
 training tasks only, following the openpi/RLinf LIBERO SFT recipe (inference
@@ -94,7 +106,7 @@ Qualify it before any steering work:
 
 ## Stage L0: headroom per perturbation type (GPU, approval needed)
 
-No training. With the M0 motor, for about 6 training and all 10 held-out
+No training. With the released motor (later also the M0 motor), for about 6 training and all 10 held-out
 tasks, clean and under each LIBERO-Plus perturbation type: native noise
 against the 16 arms,
 with 2 repeats per (scene, arm) on paired scenes. Reuse G1–G4 from the
@@ -175,18 +187,45 @@ success against attempt index for every method and control.
 
 Meta-World supplies a hidden variable the instruction cannot reveal.
 
-- Fine-tune pi0.5 on scripted-expert demonstrations of ML1 tasks where the goal
-  position varies and is neither visible nor named. The policy then becomes
-  multimodal over goals, and the initial noise selects the goal.
-- First check, before any controller: success for each (goal, arm) with the
-  cached arms. If outcomes do not spread across goals as the noise varies, the
-  motor has collapsed to one mode and noise cannot steer it; stop there.
+- Motor: released `RLinf/RLinf-Pi05-MetaWorld-SFT` (revision `60b2d03`),
+  few-shot SFT on `lerobot/metaworld_mt50`; RLinf reports 43.8% MT50 success.
+  It sees one 480 px camera with the goal marker visible, a 4-D hand state and
+  RLinf's task prompt; `src/fluffy_bassoon/rl/metaworld_pi05.py` reproduces
+  RLinf's evaluation conventions.
+- Conditions: four discrete goals per task (reach-v3, push-v3), at least 0.1
+  apart, so a success identifies the goal. Each scene fixes the object.
+- Screen, no training: success for each (goal, scene, arm, repeat) with the
+  marker **visible** (headroom on a seen task) and **hidden** (site alpha 0;
+  the goal is then absent from image, state and prompt; a CPU check confirms
+  no pixel changes with the goal). Gates G1–G4 with goals as conditions, plus
+  goal coverage: every goal reached by some arm and arms preferring more than
+  one goal.
+- If hidden-goal coverage fails, the released motor has collapsed to one mode
+  without the marker. Then fine-tune it briefly on goal-hidden scripted
+  demonstrations (draft on branch `motor-sft-draft`) and rerun the screen.
 - Then run the same L2 cached tests and T1–T5 on ML1, and ML10 if it
   qualifies. Compare against the existing state-based ML10 protocol in
   [metaworld-ml10-matched-baige-20261028-r1](../metaworld-ml10-matched-baige-20261028-r1/RESULTS.md),
   whose task pools were goal-visible.
-- Check first whether LeRobot's Meta-World support provides a starting
-  checkpoint or loader.
+
+### Running the Meta-World screen (GPU, approval needed)
+
+Needs an environment with RLinf `e1a82eb` (its vendored openpi) plus
+`metaworld==3.1.1`, the RLinf snapshot as `--rlinf-root` (its
+`toolkits/standalone_eval_scripts/openpi` loader) and the downloaded checkpoint.
+Inside an allocated single-GPU step (`FLUFFY_GPU_EXECUTION=slurm` or `baige`):
+
+```bash
+python scripts/diagnostics/metaworld_pi05_noise_cache.py --rlinf-root <RLinf-e1a82eb> \
+  --model-path <RLinf-Pi05-MetaWorld-SFT> --tasks reach-v3,push-v3 --visibility visible,hidden \
+  --scenes 4 --arms 16 --repeats 2 --time-budget-seconds 10800 --output <run>/s0
+```
+
+That is 2 tasks × 2 visibilities × 4 goals × 4 scenes × 17 arms × 2 repeats =
+2,176 episodes of at most 160 steps; throughput is unmeasured, so run reach-v3
+alone first and size the rest from it. Each `<task>-<visibility>/gates.json`
+holds G1–G4, determinism, mode effect and goal coverage; `summary.json`
+collects them. CPU tests: `tests/test_metaworld_pi05.py`, `tests/test_libero_split.py`.
 
 ## Relationship to existing work
 
