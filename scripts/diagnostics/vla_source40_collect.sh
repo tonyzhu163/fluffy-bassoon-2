@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run one source40 task/partition from an explicit complete-case plan.
+# Run one source40 task/partition from an explicit case/action-budget plan.
 # Requires an existing approved allocation; this script does not submit jobs.
 # Full-case wall time/storage must be measured and budgeted separately.
 set -Eeuo pipefail
@@ -76,7 +76,7 @@ import json, pathlib, shutil, sys
 from fluffy_bassoon.meta_rl.vla_source40_schedule import load_schedule, selected_partition_budget
 original, destination, key, partition, budget_path = sys.argv[1:]
 plan = load_schedule(original)
-assert plan.get('collection_mode') == 'complete_cases', 'Require explicit complete-case mode'
+assert plan.get('collection_mode') in ('complete_cases', 'physical_budget'), 'Require explicit case/action-budget mode'
 assert any(task['task_key'] == key for task in plan['tasks']), key
 if pathlib.Path(original).resolve() != pathlib.Path(destination).resolve():
     if pathlib.Path(destination).exists():
@@ -92,6 +92,13 @@ import json, pathlib, sys
 print(json.loads(pathlib.Path(sys.argv[1]).read_text())['maximum_primitive_steps'])
 PYBUDGET
 )
+TASK_TOTAL_ARGS=()
+TASK_TOTAL_CAP=$("$TASK_MODEL" - "$TASK_OUTPUT/budget.json" <<'PYTOTAL'
+import json, pathlib, sys
+print(json.loads(pathlib.Path(sys.argv[1]).read_text()).get('maximum_total_actions') or '')
+PYTOTAL
+)
+if [ -n "$TASK_TOTAL_CAP" ]; then TASK_TOTAL_ARGS=(--max-total-actions "$TASK_TOTAL_CAP"); fi
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 "$TASK_MODEL" - "$TASK_CHECKPOINT" <<'PY'
 import hashlib, json, pathlib, sys
@@ -132,4 +139,4 @@ if [ "$TASK_RESUME" = --resume ]; then TASK_RESUME_ARGS=(--resume); fi
   --schedule "$TASK_OUTPUT/schedule.json" --task-key "$TASK_KEY" --partition "$TASK_PARTITION" \
   --output "$TASK_OUTPUT/experiment" --port 8765 --openpi-root "$TASK_OPENPI" \
   --dsrl-root "$TASK_DSRL" --checkpoint "$TASK_CHECKPOINT" --source-commit "$TASK_SOURCE" \
-  --max-primitive-steps "$TASK_MAX_STEPS" "${TASK_RESUME_ARGS[@]}"
+  --max-primitive-steps "$TASK_MAX_STEPS" "${TASK_TOTAL_ARGS[@]}" "${TASK_RESUME_ARGS[@]}"

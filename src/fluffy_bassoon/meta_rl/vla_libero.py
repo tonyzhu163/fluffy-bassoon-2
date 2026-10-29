@@ -437,7 +437,11 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
                    native_initial_noise=noise, executed_actions=outcome["executed_actions"],
                    reward=reward, raw_rewards=outcome["rewards"],
                    done=outcome["done"], success=outcome["success"],
-                   primitive_steps=outcome["primitive_steps"])
+                   primitive_steps=outcome["primitive_steps"],
+                   terminated=bool(outcome["success"]),
+                   truncated=bool(outcome["done"]) and not bool(outcome["success"]),
+                   primitive_discount=float(.999 ** outcome["primitive_steps"]),
+                   requested_chunk_steps=len(action_chunk))
         rows.append(row)
         if public_features is not None:
             row["public_features"] = public_features
