@@ -13,6 +13,14 @@ by their predeclared campaign task IDs, not by target evaluation outcomes.
 
 ## Missing independent source validation
 
+Completed: Baige `job-aehuoen0j6a5`, exit0,36 episodes/32successes,
+1,047chunks/11,400updates/10,714actions;9 actual nominal states40–48.
+All36 traces, paired datasets and full recovery independently hashed.
+[Receipt](../libero40-source-l00-validation-audit-20261030-r1/README.md).
+The completed index SHA256 is
+`6b49b3d642e3292d5fa9d18d190ebd7f2d6dbdad513ce9a715d8b9312fa08927`.
+The launch contract below is retained as the original specification.
+
 Run one `libero_10:00/validation` campaign slot using the existing qualified
 collector and a fresh immutable identity:
 `libero40-1m-sac-20261030-l00-validation-r2`. The statically prepared unused

@@ -74,6 +74,15 @@ exports were independently hashed. This is mixed warmup/online collection
 behavior, not evidence that its final actor beats native or is an expert.
 [Source receipts](../../outputs/libero40-source-l00-audit-20261030-r1/README.md).
 
+Its independent validation stream `job-aehuoen0j6a5`/`261bd43` completed
+36 episodes/32 successes,9 nominal states40–48,1,047 chunks and11,400 SAC
+updates.10,344 primitives+370 settling=10,714 actions within12k.263 Linux
+checks passed/two JAX probe skips; raw/prefix/checkpoint/recovery hashes were
+independently checked. Together with the existing Spatial00 data, the next
+two-goal subset contains1,551 training and1,664 validation chunks on disjoint
+physical states. This supplies the second source-data scale, not full40.
+[Validation receipts](../../outputs/libero40-source-l00-validation-audit-20261030-r1/README.md).
+
 Full40 source coverage, ordinary DSRL comparison, reliable memory gains,
 full90/Plus/Pro evaluation and the RoboTwin learning comparison remain open.
 
