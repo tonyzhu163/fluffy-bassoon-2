@@ -3,6 +3,35 @@
 Record each result here with its source commit, cluster, job and receipt path.
 
 
+## METTA paper-network qualification, 2026-10-29
+
+Independent implementation of METTA v1's residual TTT-MLP memory and
+cross-episode attention is qualified at source
+`b8666986c99a38a46fab78c49908d50ff9f45991`, Baige
+`job-hruprb35xn12`, exit0. All36tests passed with no skips in38.27seconds:
+float64 independent inner/outer gradient oracle, causal chunk and episode
+memory/reset semantics, no-grad/inference-mode fast updates with frozen slow
+weights, attention/lesions, fresh-prefix PPO, exact CPU/CUDA next-update
+recovery, and real all-ten-family ML10 behavior replay at default width128,
+two layers and chunk128.
+
+The network has447,947parameters. A B10/L128 default-network forward and
+backward pass took2.229seconds, with1,200,845,312bytes (1.118GiB) peak CUDA
+allocation on one RPBZZZ6. This is a single-chunk capacity measurement;
+full K5/H500 PPO cost and learning are not qualified. Missing author
+architecture details and normalization/reward-scaling departures are
+explicit in `docs/metaworld-metta.md`. The code is paper-based and does not
+reproduce the authors' unreleased implementation or reported convergence.
+
+R1 `job-tmuzewc13ikp`/`34913a9` passed35checks and failed only because its
+simulator fixture requested two lanes from a ten-family balanced pool.
+R2 corrects the fixture to ten; network/PPO/runtime source files are
+byte-identical. The failure is preserved. Total59+42launcher-active seconds
+stayed below the original20minute qualification budget. No long training or
+VLA work was launched. Evidence:
+`outputs/metta-network-qual-baige-20261029-r2/{AUDIT.json,RESULTS.md,qualification/}`.
+
+
 ## Original four-method ML10 comparison complete, 2026-10-29
 
 All four original Baige runs at source
