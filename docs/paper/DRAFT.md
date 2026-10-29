@@ -28,8 +28,12 @@ topline performance. Offline replay reproduces genuine proposals exactly and sho
 response to terminal-reward flipping; it measures no counterfactual robot
 success. Six-state physical replication completed1/6 retained-context versus
 0/6 reset-context successes on the same goal; low performance, no broad claim.
-Full40 collection, ordinary target-online DSRL, full-suite targets
-and the RoboTwin learning comparison remain unfinished.
+Fresh target-online DSRL has now completed2,400 updates on the first pilot
+case, but all four frozen queries failed; its second case remains running.
+Two-source-goal AD/DPT training is advancing on1,551train/1,664validation
+chunks. Validation banks differ across these source-data scales; compare robot
+queries on the common cases, not raw cross-run NLL. Full40 collection, full-suite
+targets and stable RoboTwin learning/performance remain unfinished.
 
 ## Abstract scaffold
 
