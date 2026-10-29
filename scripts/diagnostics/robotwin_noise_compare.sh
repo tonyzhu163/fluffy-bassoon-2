@@ -21,6 +21,10 @@ trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"' E
 export PATH="$(dirname "$TASK_PYTHON"):$PATH"
 export PYTHONPATH="$TASK_WORKTREE/src:$TASK_RLINF:$TASK_ROBOTWIN"
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 FLUFFY_GPU_EXECUTION=baige
+# Baige may isolate one device with NVIDIA_VISIBLE_DEVICES while leaving the
+# CUDA variable unset. Preserve an existing allocation list; otherwise select
+# the sole container-local device, as in the qualified project launchers.
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export HF_HOME=/mowenjie/.cache/huggingface HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_XET=1
 export JAX_PLATFORMS=cpu XLA_PYTHON_CLIENT_PREALLOCATE=false
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MPLBACKEND=Agg
@@ -48,9 +52,9 @@ TASK_ARGS=(--source-commit "$TASK_COMMIT" --model-path "$TASK_MODEL" \
     --methods ppo sac ppo_reset --native-horizon 32 --episode-limit 400 \
     --task-config-name demo_clean \
     --sac-warmup 500 --sac-batch-size 256 --sac-utd 20 \
-    --wall-seconds 2220 --boundary-reserve-seconds 180)
+    --wall-seconds 2100 --boundary-reserve-seconds 180)
 if [ -n "$TASK_RESUME" ]; then
     TASK_ARGS+=(--resume "$TASK_RESUME")
 fi
-timeout --signal=TERM --kill-after=30s 2400 "$TASK_PYTHON" \
+timeout --signal=TERM --kill-after=30s 2280 "$TASK_PYTHON" \
     scripts/diagnostics/robotwin_noise_compare.py "${TASK_ARGS[@]}"
