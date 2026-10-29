@@ -3,9 +3,10 @@
 Independent saved-artifact audits: **2026-10-29 19:24 and 19:58 Asia/Shanghai**.
 Baige `job-orgyjb0z9h6d` remains active on its original scientific source
 `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`. Visible and hidden reach each
-closed with all **544 episodes**. The released motor does **not** qualify
-useful hidden-goal noise modes for this reach screen: selection fails the
-headroom and heterogeneity gates, and two of four goals are unreached.
+closed with all **544 episodes**. The tested **16 fixed random noise arms** fail the headroom and
+heterogeneity gates, and leave two of four goals unreached. This rejects
+using this bank for the proposed cached selector; it does not reject DSRL
+or establish that learned noise steering cannot improve this frozen motor.
 
 | Reach condition | Native success | Split-half noise selection | G1 gain (required ≥15pp) | G2 gain (required ≥10pp) | Goal coverage |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -15,7 +16,20 @@ headroom and heterogeneity gates, and two of four goals are unreached.
 Arm selection uses one half of the scenes and is scored on the other half,
 then reverses the halves. G2 compares against an arm selected using the other
 goals. The hidden-goal reference-selected static arm scores 37.5% on this
-procedure. Neither condition admits noise-arm learner training.
+procedure. Neither condition admits cached-selector training over this bank.
+
+Interpretation correction, 2026-10-29: this run supplies one of 16 Gaussian
+noise tensors to the flow sampler, reusing that same tensor for every chunk
+of the attempt. It trains no noise policy. [DSRL](https://diffusion-steering.github.io/)
+learns a policy over continuous noise using reward; its observation-conditioned
+choices can change from chunk to chunk while the base motor stays frozen.
+Our screen establishes sensitivity to noise and limited headroom for this bank,
+not the effectiveness of learned steering. Reusing one tensor across time is
+an additional restriction. The visible native score is also only 31.25%, and
+hiding the goal marker changes the motor's observation distribution. These
+are candidate explanations, not a diagnosed cause. The next discriminating
+experiment would train per-chunk noise steering with the motor frozen; no
+such training is authorized by or added to this allocation.
 
 | Goal | Visible native | Visible best fixed arm | Hidden native | Hidden best fixed arm |
 | --- | ---: | ---: | ---: | ---: |

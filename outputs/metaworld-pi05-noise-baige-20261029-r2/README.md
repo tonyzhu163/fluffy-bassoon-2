@@ -6,8 +6,9 @@ scheduler console. Both reach conditions completed and were audited:
 **1,088 episodes** in total. Visible-goal noise-arm selection gains 6.25 points
 over native sampling; hidden-goal selection scores **25% versus native
 28.125%**, a loss of 3.125 points. Both fail G1, G2 and goal coverage; two of
-four goals remain unreached in each condition. The released motor does not
-qualify useful hidden-goal noise modes for this reach screen.
+four goals remain unreached in each condition. This 16-arm bank does not qualify for the cached-selector route. The run
+trains no noise actor and does not establish whether learned DSRL steering
+can improve the frozen motor.
 
 A read-only snapshot confirms **245/544 visible-goal push episodes completed**
 (last row244), with the next rollout at step140. Its JSONL remains buffered;
