@@ -87,3 +87,44 @@ Evidence: [pilot-r3 audit](../../outputs/robomimic-can-dsrl-20261029-r1/pilot-r3
 and [mirrored raw JSON/hash manifest](../../outputs/robomimic-can-dsrl-20261029-r1/pilot-r3-analysis/raw/remote-manifest.json).
 The audit passed 277 metadata/hash/count validations over 33 mirrored files;
 it did not load checkpoint tensors or run models, tests or simulation.
+
+## Two-scene online-adaptation control
+
+The optional DSRL weight-adaptation control completed both predeclared scenes,
+2000000 and 2000001, with four attempts each. Compare it only with those same
+two scenes from the frozen evaluations:
+
+| Configuration | Any-step successes /8 | Release-logger successes /8 |
+|---|---:|---:|
+| Native frozen motor | 5 | 5 |
+| DSRL-NA frozen | 7 | 7 |
+| Retry DSRL-NA frozen | 1 | 1 |
+| RL² normal | 8 | 8 |
+| RL² memory reset | 8 | 8 |
+| RL² reward blind | 7 | 7 |
+| Trained reset normal | 8 | 8 |
+| DSRL-NA online adaptation | 4 | 4 |
+
+Online successes were [1, 1, 0, 0] and [1, 0, 1, 0] in scene order. This
+two-scene control shows no descriptive improvement over frozen DSRL; it is
+too small to establish a reliable effect or rank the methods generally.
+Learner, optimizer and replay state started afresh from the same training
+reference for each scene; updates persisted within its four attempts.
+
+The control used 2,400 new primitive interactions and 600 adaptation calls:
+12,000 actor, critic and entropy optimizer invocations each, plus 6,000
+noise-critic invocations (42,000 total). Its unchanged 20+10 update schedule
+ran after each single-lane chunk, giving four times the updates per new
+transition of the original four-lane training schedule. Deployment
+interactions are matched to the paired frozen evaluations; compute is not.
+The source reference, frozen motor and input hashes remained unchanged.
+
+Baige `job-060f4odvylld`, source
+`2a02e6c7b165e37199df81ba46308d82caffdde2`, completed with exit 0 in 523.569
+driver seconds (8.726 allocated GPU-minutes). The two-scene learner payload
+reported 436.977 seconds and 0.793 GiB peak allocated CUDA memory.
+All 131 metadata/hash/count audit checks passed, including independently
+streamed post-run reference and input hashes. No checkpoint tensors were
+loaded or copied to macOS for this audit.
+Evidence: [online control audit](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/AUDIT.md)
+and [derived paired results](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/RESULTS.json).

@@ -1,0 +1,36 @@
+{
+  "source_commit": "2a02e6c7b165e37199df81ba46308d82caffdde2",
+  "admitted": true,
+  "completed": true,
+  "reason": null,
+  "requested_scenes": 2,
+  "requested_episodes": 8,
+  "requested_primitive_steps": 2400,
+  "elapsed_seconds": 523.5690641403198,
+  "wall_budget_seconds": 900,
+  "allocated_gpu_minutes": 8.726151100794475,
+  "budget_gpu_minutes": {
+    "prior_failed_reserve": 6,
+    "qualification_reserve": 12,
+    "completed_pilot_reserve": 51,
+    "optional_online_cap": 15,
+    "total_ceiling": 84,
+    "authorized_initial_ceiling": 120
+  },
+  "comparison_metadata": {
+    "scope": "two paired held-out scenes only; eight complete retry episodes",
+    "interaction_budget": "same two scenes, K4 and2400 new primitive transitions as paired frozen evaluations",
+    "deployment": "stronger conventional test-time adaptation control with different optimizer compute",
+    "released_training_lanes": 4,
+    "online_adaptation_lanes": 1,
+    "gradient_steps_per_call": 20,
+    "noise_critic_steps_per_call": 10,
+    "online_updates_per_new_transition_relative_to_released_training": 4,
+    "update_ratio_note": "20+10 updates follow each single-lane chunk online; training uses20+10 per four-lane vector step",
+    "interpretation": "matched interaction budget; optimizer compute and update-to-data ratio differ"
+  },
+  "reference": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na",
+  "partial_artifacts_preserved": true,
+  "automatic_retry": false,
+  "finished_at": "2026-10-29T08:05:29.569097+00:00"
+}

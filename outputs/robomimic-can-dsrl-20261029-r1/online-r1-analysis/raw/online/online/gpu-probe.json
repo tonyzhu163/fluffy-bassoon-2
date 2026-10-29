@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "timing_comparison_eligible": false,
+  "allocation_type": "baige_container",
+  "hostname": "job-060f4odvylld-master-0",
+  "probe_pid": 2630,
+  "created_at_utc": "2026-10-29T07:58:10.563721+00:00",
+  "devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "97c88cce-251c-68c9-77a4-78af40d102d1",
+      "cuda_name": "NVIDIA GeForce RTX 4090",
+      "cuda_total_bytes": 25250627584,
+      "pci_bus_id": "0000:61:00.0",
+      "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_total_mib": 24564.0,
+        "memory_used_mib": 1.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:61:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "own_pid_gpu_uuids": [
+          "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+        ]
+      }
+    }
+  ],
+  "idle_utilization_required": true,
+  "gpu_identity_mapping": {
+    "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+    "assigned_nvml_uuids": [
+      "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+    ]
+  },
+  "compute_processes_before": [],
+  "compute_processes_after": [
+    {
+      "gpu_uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "pid": 2630,
+      "process_name": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+      "memory_used_mib": "448"
+    }
+  ],
+  "topology": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t0-55\t0\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks"
+}

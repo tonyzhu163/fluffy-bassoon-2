@@ -1,0 +1,274 @@
+{
+  "method": "original_dsrl_na_online_adaptation",
+  "reference": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na",
+  "reference_sha256": {
+    "recovery.zip": "0cc5ad244c8d72ad11e8cbe05dbd53efc5a7bc35256bb54d9ee98e99f4ddad56",
+    "replay.pkl": "a5620639bb129c550c63901aa21d60341d7ed80402ff89ccd5c32280490c05eb",
+    "runtime.pt": "fd9df31c86116197c2ae146446e645c47c939cd98ab363c0c011035c9b42cd98",
+    "recovery-manifest.json": "0b50793cdbcd7722c477fcfa4dfc72535c70703bc817edb109ef13000a70ee27"
+  },
+  "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+  "training_source_contract": {
+    "method": "dsrl-na",
+    "dsrl_root": "/mowenjie/fluffy-bassoon-2/deps/dsrl-can-20261029-r1/repo",
+    "robomimic_root": "/mowenjie/fluffy-bassoon-2/deps/robomimic-compat-20261029-r1/repo",
+    "checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/dsrl-can-8d21b9c-20261029-r1/state_5000.pt",
+    "normalization": "/mowenjie/fluffy-bassoon-2/inputs/dsrl-can-8d21b9c-20261029-r1/normalization.npz",
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na",
+    "source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+    "checkpoint_sha256": "61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b",
+    "normalization_sha256": "a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a",
+    "seed": 1,
+    "envs": 4,
+    "attempts": 4,
+    "steps": 28800,
+    "core": "gtrxl",
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300,
+    "eval_trials": 8,
+    "max_seconds": 761.0,
+    "resume": null,
+    "dsrl_reference": null,
+    "gpu_attestation": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/parent-gpu-probe.json",
+    "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+    "job": "job-6j2y16w9u33o-master-0",
+    "robomimic_commit": "8df6e8e482458befaf1decfcd9d635d68a7afcae",
+    "robomimic_env_sha256": "43b0f018be42f776eb76fca3e5a7a40318c112883be53ae200b82c45da1c7183",
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "numpy": "1.26.4",
+      "robomimic": "0.3.0",
+      "robosuite": "1.4.1",
+      "mujoco": "2.3.7"
+    },
+    "reward": "original sum(raw_success - 1) per four-step chunk",
+    "dynamics": "unchanged Can",
+    "trial": "same initial scene retried across attempts; no hidden-physics variation",
+    "baseline": "authors DSRL-NA; gtrxl whole-trial PPO; method comparison, not capacity matched"
+  },
+  "training_num_timesteps": 1196,
+  "training_learner_updates": 5980,
+  "scene_mode": "retry",
+  "requested_trials": 2,
+  "attempts": 4,
+  "scenes": [
+    {
+      "scene_seed": 2000000,
+      "rng_seed": 2000001,
+      "attempts": 4,
+      "attempt_records": [
+        {
+          "attempt": 1,
+          "success": true,
+          "release_logged_success": true,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+        },
+        {
+          "attempt": 2,
+          "success": true,
+          "release_logged_success": true,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+        },
+        {
+          "attempt": 3,
+          "success": false,
+          "release_logged_success": false,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+        },
+        {
+          "attempt": 4,
+          "success": false,
+          "release_logged_success": false,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+        }
+      ],
+      "successes": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "release_logged_successes": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "initial_observation_sha256": [
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02",
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02",
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02",
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+      ],
+      "primitive_steps": 1200,
+      "chunks": 300,
+      "adaptation_train_calls": 300,
+      "adaptation_learner_updates": 6000,
+      "adaptation_optimizer_updates": {
+        "actor": 6000,
+        "critic": 6000,
+        "noise_critic": 3000,
+        "entropy": 6000
+      },
+      "adaptation_optimizer_steps_total": 21000,
+      "completed": true,
+      "stop_reason": null,
+      "next_attempt_index": 4,
+      "elapsed_seconds": 163.62821563892066,
+      "deadline_overrun_seconds": 0.0,
+      "starting_learner_sha256": {
+        "actor": "87bfe6c248631bb296d5b0c0286f941cceeea6b03f8e3b6412db94c27e182e1f",
+        "critic": "127f27279f5af2042f14546f850b8facbee93e6212c7fce92a2b6bb36565e2f5",
+        "critic_target": "bf4ac181fdecdfe22b5163e704fe99f32dfbe3a2e6afdbb005a78793fcd3f686",
+        "critic_noise": "8a03921851c96dd538239e468bdadfd276e9e155cae2a9110f43ae7949ac7d36",
+        "optimizers": "48414e2e5daf896e3594c6a28aa13f8b0f7845a735087d669a5f578328b8e777",
+        "log_ent_coef": "30fd2b4e4427ae62c7a8b956c98bc349c2a1056993525cf191064762c7a1e267"
+      },
+      "starting_replay_transitions": 7200,
+      "final_learner_sha256": {
+        "actor": "efd358efaf2c162de3fccd0d0f6d2eaa8fed48e12816166d78151e5260b1a2b5",
+        "critic": "9e35ae9b8b134425ea26147d6472b77d8de612e1512b98a2c16e5ba8c31eb4df",
+        "critic_target": "cc69a737cc9c7b100ce97b3962a1f3be8b13af7b6046ae2b5ae5381f372f00e0",
+        "critic_noise": "3cb92b8eea1809b0d0ebbdfb9b27028cfd8eab3a01f3848944aa5a06f2071727",
+        "optimizers": "14394819d711a43b026f09ab65d7c1621ced03381fc16251530cc18bb7b4fae6",
+        "log_ent_coef": "db2c9064695853e55190932480a86c300ae8a716a173ad1533b926e6b4cde0a1"
+      }
+    },
+    {
+      "scene_seed": 2000001,
+      "rng_seed": 2000002,
+      "attempts": 4,
+      "attempt_records": [
+        {
+          "attempt": 1,
+          "success": true,
+          "release_logged_success": true,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+        },
+        {
+          "attempt": 2,
+          "success": false,
+          "release_logged_success": false,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+        },
+        {
+          "attempt": 3,
+          "success": true,
+          "release_logged_success": true,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+        },
+        {
+          "attempt": 4,
+          "success": false,
+          "release_logged_success": false,
+          "primitive_steps": 300,
+          "chunks": 75,
+          "episode_complete": true,
+          "adaptation_complete": true,
+          "initial_observation_sha256": "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+        }
+      ],
+      "successes": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "release_logged_successes": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "initial_observation_sha256": [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a",
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a",
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a",
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      "primitive_steps": 1200,
+      "chunks": 300,
+      "adaptation_train_calls": 300,
+      "adaptation_learner_updates": 6000,
+      "adaptation_optimizer_updates": {
+        "actor": 6000,
+        "critic": 6000,
+        "noise_critic": 3000,
+        "entropy": 6000
+      },
+      "adaptation_optimizer_steps_total": 21000,
+      "completed": true,
+      "stop_reason": null,
+      "next_attempt_index": 4,
+      "elapsed_seconds": 164.06111706467345,
+      "deadline_overrun_seconds": 0.0,
+      "starting_learner_sha256": {
+        "actor": "87bfe6c248631bb296d5b0c0286f941cceeea6b03f8e3b6412db94c27e182e1f",
+        "critic": "127f27279f5af2042f14546f850b8facbee93e6212c7fce92a2b6bb36565e2f5",
+        "critic_target": "bf4ac181fdecdfe22b5163e704fe99f32dfbe3a2e6afdbb005a78793fcd3f686",
+        "critic_noise": "8a03921851c96dd538239e468bdadfd276e9e155cae2a9110f43ae7949ac7d36",
+        "optimizers": "48414e2e5daf896e3594c6a28aa13f8b0f7845a735087d669a5f578328b8e777",
+        "log_ent_coef": "30fd2b4e4427ae62c7a8b956c98bc349c2a1056993525cf191064762c7a1e267"
+      },
+      "starting_replay_transitions": 7200,
+      "final_learner_sha256": {
+        "actor": "ad874e0a6d35a518608138b81329fa4811c69dbe3d4281dfbd3d3894c247a6ff",
+        "critic": "2a9b482b678b8d12514de831cdc05299ae3df3ed777cc8180a5047c62c80e496",
+        "critic_target": "c5ad5a2773261d4a994f8d737ef1e9016a801fe3e552243e92cd461329c844ca",
+        "critic_noise": "ad54ef0608ae23c6e719efde9e1485c773207dc55cf5305b470cb8a4c5747494",
+        "optimizers": "66078ad6f0519eec75d15987b8b2075de8b32cab20b78ac66b0bec9fd96b2001",
+        "log_ent_coef": "f95fd814cbbb11a4e7be8da6b58203a9c3f30bf6324447c5b71f4df6d99090e0"
+      }
+    }
+  ],
+  "primitive_steps": 2400,
+  "adaptation_learner_updates": 12000,
+  "adaptation_optimizer_steps_total": 42000,
+  "completed": true,
+  "rng_rule": "(scene_seed + training_seed) modulo 2**32, applied after learner load",
+  "update_schedule": {
+    "gradient_steps_per_chunk": 20,
+    "noise_critic_steps_per_chunk": 10,
+    "learning_rate_schedule": "preserved saved training progress"
+  },
+  "starting_learner_sha256": {
+    "actor": "87bfe6c248631bb296d5b0c0286f941cceeea6b03f8e3b6412db94c27e182e1f",
+    "critic": "127f27279f5af2042f14546f850b8facbee93e6212c7fce92a2b6bb36565e2f5",
+    "critic_target": "bf4ac181fdecdfe22b5163e704fe99f32dfbe3a2e6afdbb005a78793fcd3f686",
+    "critic_noise": "8a03921851c96dd538239e468bdadfd276e9e155cae2a9110f43ae7949ac7d36",
+    "optimizers": "48414e2e5daf896e3594c6a28aa13f8b0f7845a735087d669a5f578328b8e777",
+    "log_ent_coef": "30fd2b4e4427ae62c7a8b956c98bc349c2a1056993525cf191064762c7a1e267"
+  },
+  "reference_unchanged": true,
+  "motor_unchanged": true
+}
