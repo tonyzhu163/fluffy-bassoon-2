@@ -337,6 +337,8 @@ def main(argv=None):
         if state["steps"]>=args.source_steps: return
         guard(); task,seeds=state["schedule"].sample(args.train_episodes)
         trial_start=time.monotonic()
+        log("source_trial_start",method=method,task=task,seeds=seeds,
+            source_steps=state["steps"],optimizer_steps=learner.optimizer_steps)
         if method=="sac":
             result=sac_trial(learner,task,seeds,phase="source",source=True,
                              primitive_budget=args.source_steps-state["steps"])

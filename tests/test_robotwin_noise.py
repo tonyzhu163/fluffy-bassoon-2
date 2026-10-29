@@ -1,5 +1,6 @@
 """Accounting/reset tests; run on allocated Linux, not the editing host."""
 from contextlib import nullcontext
+import threading
 from types import SimpleNamespace
 
 import numpy as np
@@ -7,6 +8,7 @@ import pytest
 
 from fluffy_bassoon.rl.robotwin_noise import (
     RobotwinNoiseEnv, _reset_with_retry_limit, _setup_task_with_retry_limit,
+    _SynchronousExecutor, _install_synchronous_vector_executor,
 )
 
 
@@ -168,3 +170,51 @@ def test_reset_retry_guard_bounds_instability_and_keeps_other_errors_immediate()
     with pytest.raises(FileNotFoundError, match="missing object"):
         _reset_with_retry_limit(subenv, UnstableScene, max_attempts=3)
     assert len(attempts) == 1
+
+
+def test_single_environment_scene_calls_keep_owner_thread_and_future_api():
+    old_shutdown = []
+    old_pool = SimpleNamespace(shutdown=lambda **kwargs: old_shutdown.append(kwargs))
+    venv = SimpleNamespace(n_envs=1, env_thread_pool=old_pool)
+    owner = threading.get_ident()
+    _install_synchronous_vector_executor(venv)
+    pool = venv.env_thread_pool
+    assert old_shutdown == [{"wait": True, "cancel_futures": True}]
+    for operation in ("reset", "step", "close"):
+        future = pool.submit(lambda name: (name, threading.get_ident()), operation)
+        assert future.done() and future.result(timeout=1200) == (operation, owner)
+    _install_synchronous_vector_executor(venv)
+    assert venv.env_thread_pool is pool and len(old_shutdown) == 1
+
+
+def test_synchronous_scene_executor_propagates_errors_and_rejects_thread_migration():
+    pool = _SynchronousExecutor()
+    cause = FileNotFoundError("missing object")
+
+    def fail():
+        raise cause
+
+    future = pool.submit(fail)
+    assert future.exception() is cause
+    with pytest.raises(FileNotFoundError, match="missing object"):
+        future.result(timeout=1200)
+    errors = []
+
+    def wrong_thread():
+        try:
+            pool.submit(lambda: None)
+        except RuntimeError as error:
+            errors.append(str(error))
+
+    worker = threading.Thread(target=wrong_thread)
+    worker.start()
+    worker.join()
+    assert len(errors) == 1 and "owning thread" in errors[0]
+    pool.shutdown()
+    with pytest.raises(RuntimeError, match="shut down"):
+        pool.submit(lambda: None)
+
+
+def test_synchronous_scene_executor_requires_single_physical_environment():
+    with pytest.raises(RuntimeError, match="one physical environment"):
+        _install_synchronous_vector_executor(SimpleNamespace(n_envs=2))

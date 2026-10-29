@@ -7,6 +7,7 @@ with an injected backend on allocated Linux CPU resources.
 """
 from __future__ import annotations
 
+from concurrent.futures import Future
 import hashlib
 import json
 import os
@@ -14,6 +15,7 @@ from pathlib import Path
 import random
 import subprocess
 import sys
+import threading
 import time
 
 import numpy as np
@@ -28,6 +30,47 @@ ROBOTWIN_COMMIT = "dca9ec682688821c42944eacd7f5dd9bfb15396f"
 MOTUS_REVISION = "effc6e1a99bd4d0edf9447e8ba313def67649cfe"
 FEATURE_DIM = 2048 + 14
 RESET_ATTEMPTS = 32
+
+
+class _SynchronousExecutor:
+    """Future-compatible execution on the simulator scene's owning thread.
+
+    With one physical environment there is no parallel work to dispatch.
+    RoboTwin otherwise creates a scene on its executor worker, then destroys
+    that scene on the calling thread when switching tasks. SAPIEN's native
+    render/scene resources require a consistent lifecycle thread.
+    """
+    def __init__(self):
+        self.owner_thread = threading.get_ident()
+        self.closed = False
+
+    def submit(self, function, /, *args, **kwargs):
+        if self.closed:
+            raise RuntimeError("Cannot submit to a shut down simulator executor")
+        if threading.get_ident() != self.owner_thread:
+            raise RuntimeError("RoboTwin scene operations must stay on their owning thread")
+        future = Future()
+        try:
+            future.set_result(function(*args, **kwargs))
+        except BaseException as error:
+            future.set_exception(error)
+        return future
+
+    def shutdown(self, wait=True, *, cancel_futures=False):
+        self.closed = True
+
+
+def _install_synchronous_vector_executor(venv):
+    """Install immediately after construction, before the first reset/step."""
+    if venv.n_envs != 1:
+        raise RuntimeError("Synchronous RoboTwin adapter requires one physical environment")
+    if isinstance(venv.env_thread_pool, _SynchronousExecutor):
+        return
+    original = venv.env_thread_pool
+    # VectorEnv.__init__ creates SubEnv/setup_task synchronously; its executor
+    # has not received work yet. No native scene has crossed threads here.
+    original.shutdown(wait=True, cancel_futures=True)
+    venv.env_thread_pool = _SynchronousExecutor()
 
 
 def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS):
@@ -299,6 +342,7 @@ class _RoboTwinBackend:
             action_transform="ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
             task_config_name=task_config_name,
             assets=self.asset_receipt, reset_max_attempts=RESET_ATTEMPTS,
+            simulator_execution="one physical environment; scene setup/reset/step/close on calling thread",
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
@@ -368,6 +412,7 @@ class _RoboTwinBackend:
                                      self.episode_limit,
                                      task_config_name=self.task_config_name)
             self.env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
+            _install_synchronous_vector_executor(self.env.venv)
             self.task_name = task_name
         raw, _ = self.env.reset(env_seeds=[int(seed)])
         subenv = self.env.venv.envs[0]

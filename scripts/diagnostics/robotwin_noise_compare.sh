@@ -27,7 +27,7 @@ exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
 trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"' EXIT
 export PATH="$(dirname "$TASK_PYTHON"):$PATH"
 export PYTHONPATH="$TASK_WORKTREE/src:$TASK_RLINF:$TASK_ROBOTWIN"
-export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 FLUFFY_GPU_EXECUTION=baige
+export PYTHONUNBUFFERED=1 PYTHONFAULTHANDLER=1 PYTHONDONTWRITEBYTECODE=1 FLUFFY_GPU_EXECUTION=baige
 # Baige may isolate one device with NVIDIA_VISIBLE_DEVICES while leaving the
 # CUDA variable unset. Preserve an existing allocation list; otherwise select
 # the sole container-local device, as in the qualified project launchers.
