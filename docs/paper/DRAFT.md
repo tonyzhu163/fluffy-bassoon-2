@@ -24,8 +24,9 @@ two-case LIBERO90 test completed84 episodes: one AD500 query succeeded after
 failed support, while the same weights with memory erased failed on exactly
 matched support/initial arrays/query RNG. Every other query failed. This is
 one controlled history effect, not reliable ICRL, reward causality or strong
-topline performance. Independent replication and feedback-sensitivity checks
-are next. Full40 collection, ordinary target-online DSRL, full-suite targets
+topline performance. Offline replay reproduces genuine proposals exactly and shows a small input
+response to terminal-reward flipping; it measures no counterfactual robot
+success. Six-state physical replication is running. Full40 collection, ordinary target-online DSRL, full-suite targets
 and the RoboTwin learning comparison remain unfinished.
 
 ## Abstract scaffold

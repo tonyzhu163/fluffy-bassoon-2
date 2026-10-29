@@ -46,6 +46,16 @@ ordinary target-online DSRL, and it uses a different observation representation
 from prefix-feature students. That baseline comparison remains unfinished.
 [Robot results and paired-context audit](../../outputs/libero40-subset-target-audit-20261030-r1/README.md).
 
+The subsequent offline input-sensitivity probe `job-7hpkjw790zxm`/`3ab93f9`
+exited0 (six Linux checks), using zero new simulator actions. Genuine actual
+support/first-query proposals replayed with error0. With identical recorded
+observations/actions and paired Gaussian draws, erasing support changed the
+first-query mean by L2=1.28944; masking rewards to0 changed it by0.06592;
+flipping terminal failure reward−1→0 changed it by0.06569. The controller is
+sensitive to these feedback inputs. No counterfactual physical success was
+measured, so this does not show a causal reward benefit.
+[Probe receipts](../../outputs/libero40-context-probe-audit-20261030-r1/README.md).
+
 A second source slot, LIBERO10 task0 `job-5ghfldksvvgn`/source `3944ff7`, also
 completed:28 episodes/27 successes,7 nominal states,809 chunks,6,620 SAC
 updates,7,985 primitives+290 settling=8,275 actions. Full recovery and paired
