@@ -48,9 +48,10 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
 
 ## Source and target boundaries
 
-- All 40 documented release goals are eligible source tasks. Freeze disjoint
-  training/local-validation case lists after auditing actual scene diversity;
-  whole cases/trials remain together before window extraction.
+- Use all 40 documented release tasks as source and the full LIBERO90, Plus
+  and Pro suites as targets. No semantic-goal filtering or prior-development
+  exclusions. Declare disjoint source training/local-validation cases; whole
+  cases/trials stay together before window extraction.
 - Many cases per task means actual object/robot placements and conditions,
   not just many RNG seeds. Same saved initial state plus a new seed need not
   change placement. Record actual states and stochastic observations.
@@ -60,25 +61,22 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
 - No LIBERO90/Plus/Pro teacher collection, replay, labels, meta-gradients or
   normalization in this source40 arm. Older 90:57/90:47 and Plus 2387/1438
   histories remain excluded even when their goals alias a source40 goal.
-- LIBERO90 can support a new-goal claim only after comparing full typed goals,
-  object bindings and instruction families against **all 40** source tasks.
-  Exclude/report semantic duplicates; exact counts and final cases are pending.
-- Inspected LIBERO90 IDs 1/2/47/57 are development-only; reserve additional
-  aliases/families revealed by the audit. No claim that the suite name alone
-  makes all90 tasks semantically unseen.
-- Plus/Pro source-familiar base goals measure condition transfer. New-goal
-  transfer additionally requires held-out goal-family lineage. No Plus/Pro
-  source data, target-driven checkpoint selection or automatic OOD claim
-  from a benchmark name.
-- Previously inspected Plus development 667/290, historical source 2387/1438
-  and Pro development variants stay outside blind final cases, with aliases
-  and family exclusions frozen by the target protocol.
+- Claim full-suite transfer, not that every LIBERO90 task is semantically unseen.
+  Source-goal overlap and source-familiar Plus/Pro goals may remain. Suite
+  names alone do not establish new goals or strict distribution separation.
+- Prior 90:1/2/47/57 inspection, Plus 667/290/2387/1438 and Pro development
+  variants do not exclude them from full-suite evaluation. Disclose prior
+  inspection. Existing semantic audits are archival only; stop further
+  admission auditing and do not gate execution on those artifacts.
+- No LIBERO90/Plus/Pro histories enter source training, even though their
+  full evaluations include previously inspected tasks and variants.
 - Separate zero-support and 1/2/4/8-support query endpoints. Earlier K total
   attempt conventions cannot be relabeled as support-shot counts. Official
   first-attempt scores are another reporting protocol; disclose settings,
-  coverage and any development overlap plus a blind excluded score.
+  coverage and prior inspection. No blind excluded score is required.
 - No final-target feedback for curriculum, method/checkpoint selection or
-  corpus generation. Separately declared target development is disclosed.
+  corpus generation. Previously inspected target cases remain disclosed
+  within the full-suite results.
 - Prior [78/10/10 split](../../outputs/libero-pi05-corpus-20261029-r1/split.json)
   with exclusions 90:38/77 and
   [clean+Plus source arm](../../outputs/libero-pi05-corpus-20261029-r3/PLUS-SOURCE-PLAN.md)

@@ -7,9 +7,10 @@ implementation references; this outline does not replace them.
 
 Current design: **official OpenPI π₀.₅ LIBERO40 motor; source histories only
 from LIBERO40; one-support-episode adaptation on LIBERO90, LIBERO-Plus and
-LIBERO-Pro.** Source and target case identities are frozen before outcomes.
-LIBERO90 requires a full semantic-overlap audit against all 40 source tasks;
-Plus/Pro source-familiar goals test condition transfer. Existing RLinf130
+LIBERO-Pro.** Use all 40 source tasks and the full target suites, without
+semantic-goal filtering or prior-development exclusions. This is full-suite
+transfer, not a claim that every LIBERO90 goal is semantically unseen. Case/seed
+plans are declared before the comparison. Existing RLinf130
 runs, the 78/10/10 split and clean-versus-clean+Plus arms remain historical.
 The [source40/target90 protocol](../../outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
 is the current design; source scale and compute budget remain unspecified.
@@ -21,8 +22,8 @@ is the current design; source scale and compute budget remain unspecified.
 - Approach: causal history → bounded latent-noise coordinate → frozen π₀.₅;
   pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
-- Evaluation: LIBERO90 goal transfer after semantic exclusions; Plus/Pro
-  condition transfer. One actual support episode → a separate query episode,
+- Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
+  and LIBERO-Pro. One actual support episode → a separate query episode,
   fixed motor/controller weights; compare query success and full cost against
   ordinary DSRL and controls for representation, architecture and feedback.
 - **Results: TBD.** No percentage gains, efficiency factors or novelty claim yet.
@@ -174,8 +175,8 @@ is the current design; source scale and compute budget remain unspecified.
 
 ## 5. LIBERO40 source and three target evaluations
 
-- Source goals: **only LIBERO-Spatial, Object, Goal and LIBERO10**, ten tasks
-  each. Official checkpoint README → `pi05_libero` config → dataset
+- Source goals: **all 40 tasks in LIBERO-Spatial, Object, Goal and LIBERO10**,
+  ten tasks each. Official checkpoint README → `pi05_libero` config → dataset
   `physical-intelligence/libero`: 40 tasks / 1,693 demonstrations. This audits
   release fine-tuning, not every datum of foundation-model pretraining.
   [Provenance snapshot](../../outputs/pi05-libero40-provenance-20261029-r1/PROVENANCE.json).
@@ -188,10 +189,10 @@ is the current design; source scale and compute budget remain unspecified.
   cases. Thirty-two cases per task is a candidate scale, **not an approved
   budget or known sufficient meta-training amount**. Test data-scale curves.
 - Disjoint source training and local-validation cases; whole cases/trials stay
-  together before window extraction. Freeze actual state/case lists after the
-  audit. Older 0–39/40–44/45–49 rules are not automatically this arm's split.
+  together before window extraction. Declare actual state/case lists. Older
+  0–39/40–44/45–49 rules are not automatically this arm's split.
 - No LIBERO90, Plus or Pro histories enter source teachers, replay, student
-  gradients, normalization or labels. This includes older 90:57 and90:47
+  gradients, normalization or labels. This includes older 90:57 and 90:47
   teacher data and the previous Plus lighting/sensor source cases. Their
   goals may alias source40 tasks; their historical datasets still stay out.
 - Source teacher length and total collection scale remain to be declared.
@@ -201,26 +202,24 @@ is the current design; source scale and compute budget remain unspecified.
 
 | Target | Primary question | Boundary |
 | --- | --- | --- |
-| LIBERO90 | Does source40 meta-training support one-shot steering on new goals? | Audit normalized full goals/object bindings and instruction families against **all 40** source tasks; exclude/report semantic duplicates and inspected development families |
-| LIBERO-Plus | Can feedback steer under new conditions? | No Plus source data; goal novelty depends on base-task lineage; reserve development cases/families and held-out perturbation identities |
-| LIBERO-Pro | Can feedback steer under another benchmark's conditions? | No Pro source data; distinguish source-familiar from genuinely held-out goal families; reserve development cases/families |
+| LIBERO90 | Does source40 meta-training support one-shot transfer across the full 90-task suite? | Include all 90 tasks; no semantic filtering or prior-development exclusions |
+| LIBERO-Plus | Can feedback steer across the full shifted suite? | No Plus source data; include previously inspected variants; report actual coverage |
+| LIBERO-Pro | Can feedback steer across another full benchmark? | No Pro source data; include previously inspected variants; report actual coverage |
 
-- Do not claim all90 goals are unseen because of the suite name. Exact
-  duplicate counts and blind final task/case lists: **pending semantic audit**.
-  LIBERO90 IDs 1/2/47/57 have already been inspected and are development-only;
-  reserve additional aliases/families revealed by the audit.
-- Existing Plus development 667/290, historical Plus source 2387/1438 and Pro
-  development variants have been inspected. Keep them and any protocol-defined
-  aliases outside blind final-case selection. Prior outcomes cannot select
-  a new final subset. No automatic whole-suite OOD claim from its name.
+- Full-suite transfer is the current claim. Some 90 goals may overlap source40;
+  Plus/Pro may use source-familiar goals. Do not label every target a new goal
+  or infer distribution separation solely from a suite name.
+- Previously inspected 90:1/2/47/57, Plus 667/290/2387/1438 and Pro development
+  variants remain in their full-suite evaluations. Disclose earlier inspection;
+  no admission audit or new exclusion list is required. Existing semantic
+  audits are archival evidence only and do not gate this experiment.
 - The main target one-shot endpoint is **query success after one separate
   support episode**. Zero support and 2/4/8 supports are separate endpoints;
   all support/query interactions count. Official first-attempt suite scores
   remain a distinct reporting protocol with coverage/settings disclosed.
-- Held-out cases do not feed checkpoint or method selection. Original-source
-  development and separately reserved target development roles must be
-  disclosed. A full official aggregate including development cases needs
-  overlap disclosure and a blind dev-excluded score.
+- Target feedback does not feed source training or checkpoint selection.
+  Use full-suite aggregates with actual coverage/settings and prior inspection
+  disclosed; no blind dev-excluded score is required by this design.
 - Earlier [v1 split](../../outputs/libero-pi05-corpus-20261029-r1/split.json)
   (78/10/10 + two exclusions) and
   [clean+Plus arm](../../outputs/libero-pi05-corpus-20261029-r3/PLUS-SOURCE-PLAN.md)
@@ -295,7 +294,7 @@ is the current design; source scale and compute budget remain unspecified.
 | --- | --- | --- |
 | Fig. 1: method and chronology | What changes during deployment? | Frozen motor/controller; history updates; actual action→outcome timing |
 | Fig. 2: success vs interactions | Does steering adapt faster while keeping high final success? | Ordinary DSRL, native, CND/DPT/AD/RL²; **TBD** |
-| Table 1: zero-shot targets | Does steering preserve motor competence? | LIBERO90/Plus/Pro; semantic strata, coverage and blind dev-excluded scores; **TBD** |
+| Table 1: zero-shot targets | Does steering preserve motor competence? | Full LIBERO90/Plus/Pro; coverage and prior inspection disclosed; **TBD** |
 | Table 2: same-history targets | Does supervision explain performance? | Paired AD vs DPT-style labels; CND route kept separate; **TBD** |
 | Source scale study | How many diverse cases and source learning steps are useful? | LIBERO40 only; identical held-out query cases and cost accounting; **TBD** |
 | Fig. 3: memory/feedback controls | Is improvement caused by useful history? | Trained static/reset, reward/history/clock interventions; **TBD** |
@@ -319,8 +318,8 @@ is the current design; source scale and compute budget remain unspecified.
   Plus and Pro development each 8/8. See the ledger for exact costs, settings
   and hashes. These source datasets and prior clean+Plus comparison remain
   historical; they are excluded from the new source40 training arm.
-- **Pending under the new contract:** case/semantic audit, allocated runtime
-  requalification, useful steering headroom, qualified source learning,
+- **Pending under the new contract:** allocated runtime requalification,
+  useful steering headroom, qualified source learning,
   source40 corpus/controller training and separate-query one-shot evaluation.
   No frozen-controller robot result under this contract is established.
 - Independently qualified expert labels, context/feedback benefit, competitive
