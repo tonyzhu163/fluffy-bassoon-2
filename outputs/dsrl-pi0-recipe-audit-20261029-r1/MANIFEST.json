@@ -1,0 +1,32 @@
+{
+  "format": "dsrl_pi0_recipe_audit_v1",
+  "scope": "read-only source, paper, and previously verified pilot evidence; no model computation",
+  "official_repository": "https://github.com/nakamotoo/dsrl_pi0",
+  "official_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+  "official_tracked_files_clean": true,
+  "paper": "https://arxiv.org/html/2506.15799v2",
+  "pilot_source_commit": "42fd5176f484aa6b884e52881a2a3021ff18e258",
+  "files": [
+    {
+      "path": "AUDIT.md",
+      "sha256": "8653c96727db4255280a5049c075bf910c6cb2e4a1b3b46c1b636ecdd624d871"
+    },
+    {
+      "path": "source-evidence.json",
+      "sha256": "ef55f8b1b38b2193180f35d1d106584c098272c47398802d7b85f26dcc30c4ac"
+    }
+  ],
+  "decisive_unit_findings": {
+    "warmup": "strictly greater than500 replay query-chunk samples",
+    "max_steps": "optimizer update counter",
+    "updates": "20 per newly collected query chunk, between completed episodes",
+    "native_eval_noise": "independent50x32 Gaussian",
+    "warmup_noise": "one32D Gaussian coordinate repeated50times",
+    "minimum_maxlength_warmup_episodes": 26
+  },
+  "unresolved": [
+    "Published approximately10k online-sample plot unit not converted into primitive actions",
+    "Aloha native percentage not digitized",
+    "Exact plotted run configs can differ from released scripts"
+  ]
+}

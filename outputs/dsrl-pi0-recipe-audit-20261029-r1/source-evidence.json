@@ -1,0 +1,2814 @@
+{
+  "repository": "https://github.com/nakamotoo/dsrl_pi0",
+  "commit": "7f48937d4553e95244cd81c79236a3256df80597",
+  "tracked_status_porcelain": "",
+  "read_only": true,
+  "files": [
+    {
+      "path": "examples/scripts/run_libero.sh",
+      "sha256": "977e7c9a12acce237fe71a5d7d8c09996a3bd595736f1d7c596f473400827aef",
+      "excerpts": [
+        {
+          "first_line": 17,
+          "last_line": 34,
+          "lines": [
+            {
+              "line": 17,
+              "text": "python3 examples/launch_train_sim.py \\"
+            },
+            {
+              "line": 18,
+              "text": "--algorithm pixel_sac \\"
+            },
+            {
+              "line": 19,
+              "text": "--env libero \\"
+            },
+            {
+              "line": 20,
+              "text": "--prefix dsrl_pi0_libero \\"
+            },
+            {
+              "line": 21,
+              "text": "--wandb_project ${proj_name} \\"
+            },
+            {
+              "line": 22,
+              "text": "--batch_size 256 \\"
+            },
+            {
+              "line": 23,
+              "text": "--discount 0.999 \\"
+            },
+            {
+              "line": 24,
+              "text": "--seed 0 \\"
+            },
+            {
+              "line": 25,
+              "text": "--max_steps 500000  \\"
+            },
+            {
+              "line": 26,
+              "text": "--eval_interval 10000 \\"
+            },
+            {
+              "line": 27,
+              "text": "--log_interval 500 \\"
+            },
+            {
+              "line": 28,
+              "text": "--eval_episodes 10 \\"
+            },
+            {
+              "line": 29,
+              "text": "--multi_grad_step 20 \\"
+            },
+            {
+              "line": 30,
+              "text": "--start_online_updates 500 \\"
+            },
+            {
+              "line": 31,
+              "text": "--resize_image 64 \\"
+            },
+            {
+              "line": 32,
+              "text": "--action_magnitude 1.0 \\"
+            },
+            {
+              "line": 33,
+              "text": "--query_freq 20 \\"
+            },
+            {
+              "line": 34,
+              "text": "--hidden_dims 128 \\"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "examples/scripts/run_aloha.sh",
+      "sha256": "ea87666dd783b70a0df4ea587b5aaa682cd384bd8828bf55aaa598747353461f",
+      "excerpts": [
+        {
+          "first_line": 17,
+          "last_line": 35,
+          "lines": [
+            {
+              "line": 17,
+              "text": "python3 examples/launch_train_sim.py \\"
+            },
+            {
+              "line": 18,
+              "text": "--algorithm pixel_sac \\"
+            },
+            {
+              "line": 19,
+              "text": "--env aloha_cube \\"
+            },
+            {
+              "line": 20,
+              "text": "--prefix dsrl_pi0_aloha \\"
+            },
+            {
+              "line": 21,
+              "text": "--wandb_project ${proj_name} \\"
+            },
+            {
+              "line": 22,
+              "text": "--batch_size 256 \\"
+            },
+            {
+              "line": 23,
+              "text": "--discount 0.999 \\"
+            },
+            {
+              "line": 24,
+              "text": "--seed 0 \\"
+            },
+            {
+              "line": 25,
+              "text": "--max_steps 3000000  \\"
+            },
+            {
+              "line": 26,
+              "text": "--eval_interval 10000 \\"
+            },
+            {
+              "line": 27,
+              "text": "--log_interval 500 \\"
+            },
+            {
+              "line": 28,
+              "text": "--eval_episodes 10 \\"
+            },
+            {
+              "line": 29,
+              "text": "--multi_grad_step 20 \\"
+            },
+            {
+              "line": 30,
+              "text": "--start_online_updates 1000 \\"
+            },
+            {
+              "line": 31,
+              "text": "--resize_image 64 \\"
+            },
+            {
+              "line": 32,
+              "text": "--action_magnitude 2.0 \\"
+            },
+            {
+              "line": 33,
+              "text": "--query_freq 50 \\"
+            },
+            {
+              "line": 34,
+              "text": "--hidden_dims 128 \\"
+            },
+            {
+              "line": 35,
+              "text": "--target_entropy 0.0 "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "examples/launch_train_sim.py",
+      "sha256": "e9b98ec40f3cc794bdf9eb618441ba160c7afa92bdb878b905b11c55ccd4ef2e",
+      "excerpts": [
+        {
+          "first_line": 9,
+          "last_line": 55,
+          "lines": [
+            {
+              "line": 9,
+              "text": ""
+            },
+            {
+              "line": 10,
+              "text": "    parser.add_argument('--seed', default=42, help='Random seed.', type=int)"
+            },
+            {
+              "line": 11,
+              "text": "    parser.add_argument('--launch_group_id', default='', help='group id used to group runs on wandb.')"
+            },
+            {
+              "line": 12,
+              "text": "    parser.add_argument('--eval_episodes', default=10,help='Number of episodes used for evaluation.', type=int)"
+            },
+            {
+              "line": 13,
+              "text": "    parser.add_argument('--env', default='libero', help='name of environment')"
+            },
+            {
+              "line": 14,
+              "text": "    parser.add_argument('--log_interval', default=1000, help='Logging interval.', type=int)"
+            },
+            {
+              "line": 15,
+              "text": "    parser.add_argument('--eval_interval', default=5000, help='Eval interval.', type=int)"
+            },
+            {
+              "line": 16,
+              "text": "    parser.add_argument('--checkpoint_interval', default=-1, help='checkpoint interval.', type=int)"
+            },
+            {
+              "line": 17,
+              "text": "    parser.add_argument('--batch_size', default=16, help='Mini batch size.', type=int)"
+            },
+            {
+              "line": 18,
+              "text": "    parser.add_argument('--max_steps', default=int(1e6), help='Number of training steps.', type=int)"
+            },
+            {
+              "line": 19,
+              "text": "    parser.add_argument('--add_states', default=1, help='whether to add low-dim states to the obervations', type=int)"
+            },
+            {
+              "line": 20,
+              "text": "    parser.add_argument('--wandb_project', default='cql_sim_online', help='wandb project')"
+            },
+            {
+              "line": 21,
+              "text": "    parser.add_argument('--start_online_updates', default=1000, help='number of steps to collect before starting online updates', type=int)"
+            },
+            {
+              "line": 22,
+              "text": "    parser.add_argument('--algorithm', default='pixel_sac', help='type of algorithm')"
+            },
+            {
+              "line": 23,
+              "text": "    parser.add_argument('--prefix', default='', help='prefix to use for wandb')"
+            },
+            {
+              "line": 24,
+              "text": "    parser.add_argument('--suffix', default='', help='suffix to use for wandb')"
+            },
+            {
+              "line": 25,
+              "text": "    parser.add_argument('--multi_grad_step', default=1, help='Number of graident steps to take per environment step, aka UTD', type=int)"
+            },
+            {
+              "line": 26,
+              "text": "    parser.add_argument('--resize_image', default=-1, help='the size of image if need resizing', type=int)"
+            },
+            {
+              "line": 27,
+              "text": "    parser.add_argument('--query_freq', default=-1, help='query frequency', type=int)"
+            },
+            {
+              "line": 28,
+              "text": "    "
+            },
+            {
+              "line": 29,
+              "text": "    train_args_dict = dict("
+            },
+            {
+              "line": 30,
+              "text": "        actor_lr=1e-4,"
+            },
+            {
+              "line": 31,
+              "text": "        critic_lr= 3e-4,"
+            },
+            {
+              "line": 32,
+              "text": "        temp_lr=3e-4,"
+            },
+            {
+              "line": 33,
+              "text": "        hidden_dims= (128, 128, 128),"
+            },
+            {
+              "line": 34,
+              "text": "        cnn_features= (32, 32, 32, 32),"
+            },
+            {
+              "line": 35,
+              "text": "        cnn_strides= (2, 1, 1, 1),"
+            },
+            {
+              "line": 36,
+              "text": "        cnn_padding= 'VALID',"
+            },
+            {
+              "line": 37,
+              "text": "        latent_dim= 50,"
+            },
+            {
+              "line": 38,
+              "text": "        discount= 0.999,"
+            },
+            {
+              "line": 39,
+              "text": "        tau= 0.005,"
+            },
+            {
+              "line": 40,
+              "text": "        critic_reduction = 'mean',"
+            },
+            {
+              "line": 41,
+              "text": "        dropout_rate=0.0,"
+            },
+            {
+              "line": 42,
+              "text": "        aug_next=1,"
+            },
+            {
+              "line": 43,
+              "text": "        use_bottleneck=True,"
+            },
+            {
+              "line": 44,
+              "text": "        encoder_type='small',"
+            },
+            {
+              "line": 45,
+              "text": "        encoder_norm='group',"
+            },
+            {
+              "line": 46,
+              "text": "        use_spatial_softmax=True,"
+            },
+            {
+              "line": 47,
+              "text": "        softmax_temperature=-1,"
+            },
+            {
+              "line": 48,
+              "text": "        target_entropy='auto',"
+            },
+            {
+              "line": 49,
+              "text": "        num_qs=10,"
+            },
+            {
+              "line": 50,
+              "text": "        action_magnitude=1.0,"
+            },
+            {
+              "line": 51,
+              "text": "        num_cameras=1,"
+            },
+            {
+              "line": 52,
+              "text": "        )"
+            },
+            {
+              "line": 53,
+              "text": ""
+            },
+            {
+              "line": 54,
+              "text": "    variant, args = parse_training_args(train_args_dict, parser)"
+            },
+            {
+              "line": 55,
+              "text": "    print(variant)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "examples/train_sim.py",
+      "sha256": "c04305091efed27d0db2428e43d65802ec44a361392a97e9a2b62b7729c66ec2",
+      "excerpts": [
+        {
+          "first_line": 38,
+          "last_line": 46,
+          "lines": [
+            {
+              "line": 38,
+              "text": "def _get_libero_env(task, resolution, seed):"
+            },
+            {
+              "line": 39,
+              "text": "    \"\"\"Initializes and returns the LIBERO environment, along with the task description.\"\"\""
+            },
+            {
+              "line": 40,
+              "text": "    task_description = task.language"
+            },
+            {
+              "line": 41,
+              "text": "    task_bddl_file = pathlib.Path(get_libero_path(\"bddl_files\")) / task.problem_folder / task.bddl_file"
+            },
+            {
+              "line": 42,
+              "text": "    env_args = {\"bddl_file_name\": task_bddl_file, \"camera_heights\": resolution, \"camera_widths\": resolution}"
+            },
+            {
+              "line": 43,
+              "text": "    env = OffScreenRenderEnv(**env_args)"
+            },
+            {
+              "line": 44,
+              "text": "    env.seed(seed)  # IMPORTANT: seed seems to affect object positions even when using fixed initial state"
+            },
+            {
+              "line": 45,
+              "text": "    return env, task_description"
+            },
+            {
+              "line": 46,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "first_line": 63,
+          "last_line": 77,
+          "lines": [
+            {
+              "line": 63,
+              "text": ""
+            },
+            {
+              "line": 64,
+              "text": "    def __init__(self, variant):"
+            },
+            {
+              "line": 65,
+              "text": "        self.variant = variant"
+            },
+            {
+              "line": 66,
+              "text": "        self.image_shape = (variant.resize_image, variant.resize_image, 3 * variant.num_cameras, 1)"
+            },
+            {
+              "line": 67,
+              "text": "        obs_dict = {}"
+            },
+            {
+              "line": 68,
+              "text": "        obs_dict['pixels'] = Box(low=0, high=255, shape=self.image_shape, dtype=np.uint8)"
+            },
+            {
+              "line": 69,
+              "text": "        if variant.add_states:"
+            },
+            {
+              "line": 70,
+              "text": "            if variant.env == 'libero':"
+            },
+            {
+              "line": 71,
+              "text": "                state_dim = 8"
+            },
+            {
+              "line": 72,
+              "text": "            elif variant.env == 'aloha_cube':"
+            },
+            {
+              "line": 73,
+              "text": "                state_dim = 14"
+            },
+            {
+              "line": 74,
+              "text": "            obs_dict['state'] = Box(low=-1.0, high=1.0, shape=(state_dim, 1), dtype=np.float32)"
+            },
+            {
+              "line": 75,
+              "text": "        self.observation_space = Dict(obs_dict)"
+            },
+            {
+              "line": 76,
+              "text": "        self.action_space = Box(low=-1, high=1, shape=(1, 32,), dtype=np.float32) # 32 is the noise action space of pi 0"
+            },
+            {
+              "line": 77,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "first_line": 109,
+          "last_line": 164,
+          "lines": [
+            {
+              "line": 109,
+              "text": "    print('writing to output dir ', outputdir)"
+            },
+            {
+              "line": 110,
+              "text": "    "
+            },
+            {
+              "line": 111,
+              "text": "    if variant.env == 'libero':"
+            },
+            {
+              "line": 112,
+              "text": "        benchmark_dict = benchmark.get_benchmark_dict()"
+            },
+            {
+              "line": 113,
+              "text": "        task_suite = benchmark_dict[\"libero_90\"]()"
+            },
+            {
+              "line": 114,
+              "text": "        task_id = 57"
+            },
+            {
+              "line": 115,
+              "text": "        task = task_suite.get_task(task_id)"
+            },
+            {
+              "line": 116,
+              "text": "        env, task_description = _get_libero_env(task, 256, variant.seed)"
+            },
+            {
+              "line": 117,
+              "text": "        eval_env = env"
+            },
+            {
+              "line": 118,
+              "text": "        variant.task_description = task_description"
+            },
+            {
+              "line": 119,
+              "text": "        variant.env_max_reward = 1"
+            },
+            {
+              "line": 120,
+              "text": "        variant.max_timesteps = 400"
+            },
+            {
+              "line": 121,
+              "text": "    elif variant.env == 'aloha_cube':"
+            },
+            {
+              "line": 122,
+              "text": "        from gymnasium.envs.registration import register"
+            },
+            {
+              "line": 123,
+              "text": "        register("
+            },
+            {
+              "line": 124,
+              "text": "            id=\"gym_aloha/AlohaTransferCube-v0\","
+            },
+            {
+              "line": 125,
+              "text": "            entry_point=\"gym_aloha.env:AlohaEnv\","
+            },
+            {
+              "line": 126,
+              "text": "            max_episode_steps=400,"
+            },
+            {
+              "line": 127,
+              "text": "            nondeterministic=True,"
+            },
+            {
+              "line": 128,
+              "text": "            kwargs={\"obs_type\": \"pixels\", \"task\": \"transfer_cube\"},"
+            },
+            {
+              "line": 129,
+              "text": "        )"
+            },
+            {
+              "line": 130,
+              "text": "        env = gym.make(\"gym_aloha/AlohaTransferCube-v0\", obs_type=\"pixels_agent_pos\", render_mode=\"rgb_array\")"
+            },
+            {
+              "line": 131,
+              "text": "        eval_env = copy.deepcopy(env)"
+            },
+            {
+              "line": 132,
+              "text": "        variant.env_max_reward = 4"
+            },
+            {
+              "line": 133,
+              "text": "        variant.max_timesteps = 400"
+            },
+            {
+              "line": 134,
+              "text": "        "
+            },
+            {
+              "line": 135,
+              "text": ""
+            },
+            {
+              "line": 136,
+              "text": "    group_name = variant.prefix + '_' + variant.launch_group_id"
+            },
+            {
+              "line": 137,
+              "text": "    wandb_output_dir = tempfile.mkdtemp()"
+            },
+            {
+              "line": 138,
+              "text": "    wandb_logger = WandBLogger(variant.prefix != '', variant, variant.wandb_project, experiment_id=expname, output_dir=wandb_output_dir, group_name=group_name)"
+            },
+            {
+              "line": 139,
+              "text": ""
+            },
+            {
+              "line": 140,
+              "text": "    dummy_env = DummyEnv(variant)"
+            },
+            {
+              "line": 141,
+              "text": "    sample_obs = add_batch_dim(dummy_env.observation_space.sample())"
+            },
+            {
+              "line": 142,
+              "text": "    sample_action = add_batch_dim(dummy_env.action_space.sample())"
+            },
+            {
+              "line": 143,
+              "text": "    print('sample obs shapes', [(k, v.shape) for k, v in sample_obs.items()])"
+            },
+            {
+              "line": 144,
+              "text": "    print('sample action shape', sample_action.shape)"
+            },
+            {
+              "line": 145,
+              "text": "    "
+            },
+            {
+              "line": 146,
+              "text": ""
+            },
+            {
+              "line": 147,
+              "text": "    if variant.env == 'libero':"
+            },
+            {
+              "line": 148,
+              "text": "        config = openpi_config.get_config(\"pi0_libero\")"
+            },
+            {
+              "line": 149,
+              "text": "        checkpoint_dir = download.maybe_download(\"s3://openpi-assets/checkpoints/pi0_libero\")"
+            },
+            {
+              "line": 150,
+              "text": "    elif variant.env == 'aloha_cube':"
+            },
+            {
+              "line": 151,
+              "text": "        config = openpi_config.get_config(\"pi0_aloha_sim\")"
+            },
+            {
+              "line": 152,
+              "text": "        checkpoint_dir = download.maybe_download(\"s3://openpi-assets/checkpoints/pi0_aloha_sim\")"
+            },
+            {
+              "line": 153,
+              "text": "    else:"
+            },
+            {
+              "line": 154,
+              "text": "        raise NotImplementedError()"
+            },
+            {
+              "line": 155,
+              "text": "    agent_dp = policy_config.create_trained_policy(config, checkpoint_dir)"
+            },
+            {
+              "line": 156,
+              "text": "    print(\"Loaded pi0 policy from %s\", checkpoint_dir)"
+            },
+            {
+              "line": 157,
+              "text": "    agent = PixelSACLearner(variant.seed, sample_obs, sample_action, **kwargs)"
+            },
+            {
+              "line": 158,
+              "text": ""
+            },
+            {
+              "line": 159,
+              "text": "    online_buffer_size = variant.max_steps  // variant.multi_grad_step"
+            },
+            {
+              "line": 160,
+              "text": "    online_replay_buffer = ReplayBuffer(dummy_env.observation_space, dummy_env.action_space, int(online_buffer_size))"
+            },
+            {
+              "line": 161,
+              "text": "    replay_buffer = online_replay_buffer"
+            },
+            {
+              "line": 162,
+              "text": "    replay_buffer.seed(variant.seed)"
+            },
+            {
+              "line": 163,
+              "text": "    trajwise_alternating_training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_buffer, wandb_logger, shard_fn=shard_fn, agent_dp=agent_dp)"
+            },
+            {
+              "line": 164,
+              "text": " "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "examples/train_utils_sim.py",
+      "sha256": "3e17d9c7af179ed5abd46c2cfeed20e1f82b4a9bc005b9fc114618a0b379f614",
+      "excerpts": [
+        {
+          "first_line": 91,
+          "last_line": 160,
+          "lines": [
+            {
+              "line": 91,
+              "text": "def trajwise_alternating_training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_buffer, wandb_logger,"
+            },
+            {
+              "line": 92,
+              "text": "                                       perform_control_evals=True, shard_fn=None, agent_dp=None):"
+            },
+            {
+              "line": 93,
+              "text": "    replay_buffer_iterator = replay_buffer.get_iterator(variant.batch_size)"
+            },
+            {
+              "line": 94,
+              "text": "    if shard_fn is not None:"
+            },
+            {
+              "line": 95,
+              "text": "        replay_buffer_iterator = map(shard_fn, replay_buffer_iterator)"
+            },
+            {
+              "line": 96,
+              "text": ""
+            },
+            {
+              "line": 97,
+              "text": "    total_env_steps = 0"
+            },
+            {
+              "line": 98,
+              "text": "    i = 0"
+            },
+            {
+              "line": 99,
+              "text": "    wandb_logger.log({'num_online_samples': 0}, step=i)"
+            },
+            {
+              "line": 100,
+              "text": "    wandb_logger.log({'num_online_trajs': 0}, step=i)"
+            },
+            {
+              "line": 101,
+              "text": "    wandb_logger.log({'env_steps': 0}, step=i)"
+            },
+            {
+              "line": 102,
+              "text": "    "
+            },
+            {
+              "line": 103,
+              "text": "    with tqdm(total=variant.max_steps, initial=0) as pbar:"
+            },
+            {
+              "line": 104,
+              "text": "        while i <= variant.max_steps:"
+            },
+            {
+              "line": 105,
+              "text": "            traj = collect_traj(variant, agent, env, i, agent_dp)"
+            },
+            {
+              "line": 106,
+              "text": "            traj_id = online_replay_buffer._traj_counter"
+            },
+            {
+              "line": 107,
+              "text": "            add_online_data_to_buffer(variant, traj, online_replay_buffer)"
+            },
+            {
+              "line": 108,
+              "text": "            total_env_steps += traj['env_steps']"
+            },
+            {
+              "line": 109,
+              "text": "            print('online buffer timesteps length:', len(online_replay_buffer))"
+            },
+            {
+              "line": 110,
+              "text": "            print('online buffer num traj:', traj_id + 1)"
+            },
+            {
+              "line": 111,
+              "text": "            print('total env steps:', total_env_steps)"
+            },
+            {
+              "line": 112,
+              "text": "            "
+            },
+            {
+              "line": 113,
+              "text": "            if variant.get(\"num_online_gradsteps_batch\", -1) > 0:"
+            },
+            {
+              "line": 114,
+              "text": "                num_gradsteps = variant.num_online_gradsteps_batch"
+            },
+            {
+              "line": 115,
+              "text": "            else:"
+            },
+            {
+              "line": 116,
+              "text": "                num_gradsteps = len(traj[\"rewards\"])*variant.multi_grad_step"
+            },
+            {
+              "line": 117,
+              "text": ""
+            },
+            {
+              "line": 118,
+              "text": "            if len(online_replay_buffer) > variant.start_online_updates:"
+            },
+            {
+              "line": 119,
+              "text": "                for _ in range(num_gradsteps):"
+            },
+            {
+              "line": 120,
+              "text": "                    # perform first visualization before updating"
+            },
+            {
+              "line": 121,
+              "text": "                    if i == 0:"
+            },
+            {
+              "line": 122,
+              "text": "                        print('performing evaluation for initial checkpoint')"
+            },
+            {
+              "line": 123,
+              "text": "                        if perform_control_evals:"
+            },
+            {
+              "line": 124,
+              "text": "                            perform_control_eval(agent, eval_env, i, variant, wandb_logger, agent_dp)"
+            },
+            {
+              "line": 125,
+              "text": "                        if hasattr(agent, 'perform_eval'):"
+            },
+            {
+              "line": 126,
+              "text": "                            agent.perform_eval(variant, i, wandb_logger, replay_buffer, replay_buffer_iterator, eval_env)"
+            },
+            {
+              "line": 127,
+              "text": ""
+            },
+            {
+              "line": 128,
+              "text": "                    # online perform update once we have some amount of online trajs"
+            },
+            {
+              "line": 129,
+              "text": "                    batch = next(replay_buffer_iterator)"
+            },
+            {
+              "line": 130,
+              "text": "                    update_info = agent.update(batch)"
+            },
+            {
+              "line": 131,
+              "text": ""
+            },
+            {
+              "line": 132,
+              "text": "                    pbar.update()"
+            },
+            {
+              "line": 133,
+              "text": "                    i += 1"
+            },
+            {
+              "line": 134,
+              "text": "                        "
+            },
+            {
+              "line": 135,
+              "text": ""
+            },
+            {
+              "line": 136,
+              "text": "                    if i % variant.log_interval == 0:"
+            },
+            {
+              "line": 137,
+              "text": "                        update_info = {k: jax.device_get(v) for k, v in update_info.items()}"
+            },
+            {
+              "line": 138,
+              "text": "                        for k, v in update_info.items():"
+            },
+            {
+              "line": 139,
+              "text": "                            if v.ndim == 0:"
+            },
+            {
+              "line": 140,
+              "text": "                                wandb_logger.log({f'training/{k}': v}, step=i)"
+            },
+            {
+              "line": 141,
+              "text": "                            elif v.ndim <= 2:"
+            },
+            {
+              "line": 142,
+              "text": "                                wandb_logger.log_histogram(f'training/{k}', v, i)"
+            },
+            {
+              "line": 143,
+              "text": "                        # wandb_logger.log({'replay_buffer_size': len(online_replay_buffer)}, i)"
+            },
+            {
+              "line": 144,
+              "text": "                        wandb_logger.log({"
+            },
+            {
+              "line": 145,
+              "text": "                            'replay_buffer_size': len(online_replay_buffer),"
+            },
+            {
+              "line": 146,
+              "text": "                            'episode_return (exploration)': traj['episode_return'],"
+            },
+            {
+              "line": 147,
+              "text": "                            'is_success (exploration)': int(traj['is_success']),"
+            },
+            {
+              "line": 148,
+              "text": "                        }, i)"
+            },
+            {
+              "line": 149,
+              "text": ""
+            },
+            {
+              "line": 150,
+              "text": "                    if i % variant.eval_interval == 0:"
+            },
+            {
+              "line": 151,
+              "text": "                        wandb_logger.log({'num_online_samples': len(online_replay_buffer)}, step=i)"
+            },
+            {
+              "line": 152,
+              "text": "                        wandb_logger.log({'num_online_trajs': traj_id + 1}, step=i)"
+            },
+            {
+              "line": 153,
+              "text": "                        wandb_logger.log({'env_steps': total_env_steps}, step=i)"
+            },
+            {
+              "line": 154,
+              "text": "                        if perform_control_evals:"
+            },
+            {
+              "line": 155,
+              "text": "                            perform_control_eval(agent, eval_env, i, variant, wandb_logger, agent_dp)"
+            },
+            {
+              "line": 156,
+              "text": "                        if hasattr(agent, 'perform_eval'):"
+            },
+            {
+              "line": 157,
+              "text": "                            agent.perform_eval(variant, i, wandb_logger, replay_buffer, replay_buffer_iterator, eval_env)"
+            },
+            {
+              "line": 158,
+              "text": ""
+            },
+            {
+              "line": 159,
+              "text": "                    if variant.checkpoint_interval != -1 and i % variant.checkpoint_interval == 0:"
+            },
+            {
+              "line": 160,
+              "text": "                        agent.save_checkpoint(variant.outputdir, i, variant.checkpoint_interval)"
+            }
+          ]
+        },
+        {
+          "first_line": 163,
+          "last_line": 193,
+          "lines": [
+            {
+              "line": 163,
+              "text": "def add_online_data_to_buffer(variant, traj, online_replay_buffer):"
+            },
+            {
+              "line": 164,
+              "text": ""
+            },
+            {
+              "line": 165,
+              "text": "    discount_horizon = variant.query_freq"
+            },
+            {
+              "line": 166,
+              "text": "    actions = np.array(traj['actions']) # (T, chunk_size, action_dim )"
+            },
+            {
+              "line": 167,
+              "text": "    episode_len = len(actions)"
+            },
+            {
+              "line": 168,
+              "text": "    rewards = np.array(traj['rewards'])"
+            },
+            {
+              "line": 169,
+              "text": "    masks = np.array(traj['masks'])"
+            },
+            {
+              "line": 170,
+              "text": ""
+            },
+            {
+              "line": 171,
+              "text": "    for t in range(episode_len):"
+            },
+            {
+              "line": 172,
+              "text": "        obs = traj['observations'][t]"
+            },
+            {
+              "line": 173,
+              "text": "        next_obs = traj['observations'][t + 1]"
+            },
+            {
+              "line": 174,
+              "text": "        # remove batch dimension"
+            },
+            {
+              "line": 175,
+              "text": "        obs = {k: v[0] for k, v in obs.items()}"
+            },
+            {
+              "line": 176,
+              "text": "        next_obs = {k: v[0] for k, v in next_obs.items()}"
+            },
+            {
+              "line": 177,
+              "text": "        if not variant.add_states:"
+            },
+            {
+              "line": 178,
+              "text": "            obs.pop('state', None)"
+            },
+            {
+              "line": 179,
+              "text": "            next_obs.pop('state', None)"
+            },
+            {
+              "line": 180,
+              "text": "        "
+            },
+            {
+              "line": 181,
+              "text": "        insert_dict = dict("
+            },
+            {
+              "line": 182,
+              "text": "            observations=obs,"
+            },
+            {
+              "line": 183,
+              "text": "            next_observations=next_obs,"
+            },
+            {
+              "line": 184,
+              "text": "            actions=actions[t],"
+            },
+            {
+              "line": 185,
+              "text": "            next_actions=actions[t + 1] if t < episode_len - 1 else actions[t],"
+            },
+            {
+              "line": 186,
+              "text": "            rewards=rewards[t],"
+            },
+            {
+              "line": 187,
+              "text": "            masks=masks[t],"
+            },
+            {
+              "line": 188,
+              "text": "            discount=variant.discount ** discount_horizon"
+            },
+            {
+              "line": 189,
+              "text": "        )"
+            },
+            {
+              "line": 190,
+              "text": "        online_replay_buffer.insert(insert_dict)"
+            },
+            {
+              "line": 191,
+              "text": "    online_replay_buffer.increment_traj_counter()"
+            },
+            {
+              "line": 192,
+              "text": ""
+            },
+            {
+              "line": 193,
+              "text": "def collect_traj(variant, agent, env, i, agent_dp=None):"
+            }
+          ]
+        },
+        {
+          "first_line": 193,
+          "last_line": 299,
+          "lines": [
+            {
+              "line": 193,
+              "text": "def collect_traj(variant, agent, env, i, agent_dp=None):"
+            },
+            {
+              "line": 194,
+              "text": "    query_frequency = variant.query_freq"
+            },
+            {
+              "line": 195,
+              "text": "    max_timesteps = variant.max_timesteps"
+            },
+            {
+              "line": 196,
+              "text": "    env_max_reward = variant.env_max_reward"
+            },
+            {
+              "line": 197,
+              "text": ""
+            },
+            {
+              "line": 198,
+              "text": "    agent._rng, rng = jax.random.split(agent._rng)"
+            },
+            {
+              "line": 199,
+              "text": "    "
+            },
+            {
+              "line": 200,
+              "text": "    if 'libero' in variant.env:"
+            },
+            {
+              "line": 201,
+              "text": "        obs = env.reset()"
+            },
+            {
+              "line": 202,
+              "text": "    elif 'aloha' in variant.env:"
+            },
+            {
+              "line": 203,
+              "text": "        obs, _ = env.reset()"
+            },
+            {
+              "line": 204,
+              "text": "    "
+            },
+            {
+              "line": 205,
+              "text": "    image_list = [] # for visualization"
+            },
+            {
+              "line": 206,
+              "text": "    rewards = []"
+            },
+            {
+              "line": 207,
+              "text": "    action_list = []"
+            },
+            {
+              "line": 208,
+              "text": "    obs_list = []"
+            },
+            {
+              "line": 209,
+              "text": ""
+            },
+            {
+              "line": 210,
+              "text": "    for t in tqdm(range(max_timesteps)):"
+            },
+            {
+              "line": 211,
+              "text": "        curr_image = obs_to_img(obs, variant)"
+            },
+            {
+              "line": 212,
+              "text": "        "
+            },
+            {
+              "line": 213,
+              "text": "        qpos = obs_to_qpos(obs, variant)"
+            },
+            {
+              "line": 214,
+              "text": ""
+            },
+            {
+              "line": 215,
+              "text": "        if variant.add_states:"
+            },
+            {
+              "line": 216,
+              "text": "            obs_dict = {"
+            },
+            {
+              "line": 217,
+              "text": "                'pixels': curr_image[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 218,
+              "text": "                'state': qpos[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 219,
+              "text": "            }"
+            },
+            {
+              "line": 220,
+              "text": "        else:"
+            },
+            {
+              "line": 221,
+              "text": "            obs_dict = {"
+            },
+            {
+              "line": 222,
+              "text": "                'pixels': curr_image[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 223,
+              "text": "            }"
+            },
+            {
+              "line": 224,
+              "text": ""
+            },
+            {
+              "line": 225,
+              "text": "        if t % query_frequency == 0:"
+            },
+            {
+              "line": 226,
+              "text": ""
+            },
+            {
+              "line": 227,
+              "text": "            assert agent_dp is not None"
+            },
+            {
+              "line": 228,
+              "text": "            # we then use the noise to sample the action from diffusion model"
+            },
+            {
+              "line": 229,
+              "text": "            rng, key = jax.random.split(rng)"
+            },
+            {
+              "line": 230,
+              "text": "            obs_pi_zero = obs_to_pi_zero_input(obs, variant)"
+            },
+            {
+              "line": 231,
+              "text": "            if i == 0:"
+            },
+            {
+              "line": 232,
+              "text": "                # for initial round of data collection, we sample from standard gaussian noise"
+            },
+            {
+              "line": 233,
+              "text": "                noise = jax.random.normal(key, (1, *agent.action_chunk_shape))"
+            },
+            {
+              "line": 234,
+              "text": "                noise_repeat = jax.numpy.repeat(noise[:, -1:, :], 50 - noise.shape[1], axis=1)"
+            },
+            {
+              "line": 235,
+              "text": "                noise = jax.numpy.concatenate([noise, noise_repeat], axis=1)"
+            },
+            {
+              "line": 236,
+              "text": "                actions_noise = noise[0, :agent.action_chunk_shape[0], :]"
+            },
+            {
+              "line": 237,
+              "text": "            else:"
+            },
+            {
+              "line": 238,
+              "text": "                # sac agent predicts the noise for diffusion model"
+            },
+            {
+              "line": 239,
+              "text": "                actions_noise = agent.sample_actions(obs_dict)"
+            },
+            {
+              "line": 240,
+              "text": "                actions_noise = np.reshape(actions_noise, agent.action_chunk_shape)"
+            },
+            {
+              "line": 241,
+              "text": "                noise = np.repeat(actions_noise[-1:, :], 50 - actions_noise.shape[0], axis=0)"
+            },
+            {
+              "line": 242,
+              "text": "                noise = jax.numpy.concatenate([actions_noise, noise], axis=0)[None]"
+            },
+            {
+              "line": 243,
+              "text": "            "
+            },
+            {
+              "line": 244,
+              "text": "            actions = agent_dp.infer(obs_pi_zero, noise=noise)[\"actions\"]"
+            },
+            {
+              "line": 245,
+              "text": "            action_list.append(actions_noise)"
+            },
+            {
+              "line": 246,
+              "text": "            obs_list.append(obs_dict)"
+            },
+            {
+              "line": 247,
+              "text": "     "
+            },
+            {
+              "line": 248,
+              "text": "        action_t = actions[t % query_frequency]"
+            },
+            {
+              "line": 249,
+              "text": "        if 'libero' in variant.env:"
+            },
+            {
+              "line": 250,
+              "text": "            obs, reward, done, _ = env.step(action_t)"
+            },
+            {
+              "line": 251,
+              "text": "        elif 'aloha' in variant.env:"
+            },
+            {
+              "line": 252,
+              "text": "            obs, reward, terminated, truncated, _ = env.step(action_t)"
+            },
+            {
+              "line": 253,
+              "text": "            done = terminated or truncated"
+            },
+            {
+              "line": 254,
+              "text": "            "
+            },
+            {
+              "line": 255,
+              "text": "        rewards.append(reward)"
+            },
+            {
+              "line": 256,
+              "text": "        image_list.append(curr_image)"
+            },
+            {
+              "line": 257,
+              "text": "        if done:"
+            },
+            {
+              "line": 258,
+              "text": "            break"
+            },
+            {
+              "line": 259,
+              "text": ""
+            },
+            {
+              "line": 260,
+              "text": "    # add last observation"
+            },
+            {
+              "line": 261,
+              "text": "    curr_image = obs_to_img(obs, variant)"
+            },
+            {
+              "line": 262,
+              "text": "    qpos = obs_to_qpos(obs, variant)"
+            },
+            {
+              "line": 263,
+              "text": "    obs_dict = {"
+            },
+            {
+              "line": 264,
+              "text": "        'pixels': curr_image[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 265,
+              "text": "        'state': qpos[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 266,
+              "text": "    }"
+            },
+            {
+              "line": 267,
+              "text": "    obs_list.append(obs_dict)"
+            },
+            {
+              "line": 268,
+              "text": "    image_list.append(curr_image)"
+            },
+            {
+              "line": 269,
+              "text": "    "
+            },
+            {
+              "line": 270,
+              "text": "    # per episode"
+            },
+            {
+              "line": 271,
+              "text": "    rewards = np.array(rewards)"
+            },
+            {
+              "line": 272,
+              "text": "    episode_return = np.sum(rewards[rewards!=None])"
+            },
+            {
+              "line": 273,
+              "text": "    is_success = (reward == env_max_reward)"
+            },
+            {
+              "line": 274,
+              "text": "    print(f'Rollout Done: {episode_return=}, Success: {is_success}')"
+            },
+            {
+              "line": 275,
+              "text": "    "
+            },
+            {
+              "line": 276,
+              "text": "    "
+            },
+            {
+              "line": 277,
+              "text": "    '''"
+            },
+            {
+              "line": 278,
+              "text": "    We use sparse -1/0 reward to train the SAC agent."
+            },
+            {
+              "line": 279,
+              "text": "    '''"
+            },
+            {
+              "line": 280,
+              "text": "    if is_success:"
+            },
+            {
+              "line": 281,
+              "text": "        query_steps = len(action_list)"
+            },
+            {
+              "line": 282,
+              "text": "        rewards = np.concatenate([-np.ones(query_steps - 1), [0]])"
+            },
+            {
+              "line": 283,
+              "text": "        masks = np.concatenate([np.ones(query_steps - 1), [0]])"
+            },
+            {
+              "line": 284,
+              "text": "    else:"
+            },
+            {
+              "line": 285,
+              "text": "        query_steps = len(action_list)"
+            },
+            {
+              "line": 286,
+              "text": "        rewards = -np.ones(query_steps)"
+            },
+            {
+              "line": 287,
+              "text": "        masks = np.ones(query_steps)"
+            },
+            {
+              "line": 288,
+              "text": ""
+            },
+            {
+              "line": 289,
+              "text": "    return {"
+            },
+            {
+              "line": 290,
+              "text": "        'observations': obs_list,"
+            },
+            {
+              "line": 291,
+              "text": "        'actions': action_list,"
+            },
+            {
+              "line": 292,
+              "text": "        'rewards': rewards,"
+            },
+            {
+              "line": 293,
+              "text": "        'masks': masks,"
+            },
+            {
+              "line": 294,
+              "text": "        'is_success': is_success,"
+            },
+            {
+              "line": 295,
+              "text": "        'episode_return': episode_return,"
+            },
+            {
+              "line": 296,
+              "text": "        'images': image_list,"
+            },
+            {
+              "line": 297,
+              "text": "        'env_steps': t + 1 "
+            },
+            {
+              "line": 298,
+              "text": "    }"
+            },
+            {
+              "line": 299,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "first_line": 300,
+          "last_line": 389,
+          "lines": [
+            {
+              "line": 300,
+              "text": "def perform_control_eval(agent, env, i, variant, wandb_logger, agent_dp=None):"
+            },
+            {
+              "line": 301,
+              "text": "    query_frequency = variant.query_freq"
+            },
+            {
+              "line": 302,
+              "text": "    print('query frequency', query_frequency)"
+            },
+            {
+              "line": 303,
+              "text": "    max_timesteps = variant.max_timesteps"
+            },
+            {
+              "line": 304,
+              "text": "    env_max_reward = variant.env_max_reward"
+            },
+            {
+              "line": 305,
+              "text": "    episode_returns = []"
+            },
+            {
+              "line": 306,
+              "text": "    highest_rewards = []"
+            },
+            {
+              "line": 307,
+              "text": "    success_rates = []"
+            },
+            {
+              "line": 308,
+              "text": "    episode_lens = []"
+            },
+            {
+              "line": 309,
+              "text": ""
+            },
+            {
+              "line": 310,
+              "text": "    rng = jax.random.PRNGKey(variant.seed+456)"
+            },
+            {
+              "line": 311,
+              "text": ""
+            },
+            {
+              "line": 312,
+              "text": "    for rollout_id in range(variant.eval_episodes):"
+            },
+            {
+              "line": 313,
+              "text": "        if 'libero' in variant.env:"
+            },
+            {
+              "line": 314,
+              "text": "            obs = env.reset()"
+            },
+            {
+              "line": 315,
+              "text": "        elif 'aloha' in variant.env:"
+            },
+            {
+              "line": 316,
+              "text": "            obs, _ = env.reset()"
+            },
+            {
+              "line": 317,
+              "text": "            "
+            },
+            {
+              "line": 318,
+              "text": "        image_list = [] # for visualization"
+            },
+            {
+              "line": 319,
+              "text": "        rewards = []"
+            },
+            {
+              "line": 320,
+              "text": "        "
+            },
+            {
+              "line": 321,
+              "text": ""
+            },
+            {
+              "line": 322,
+              "text": "        for t in tqdm(range(max_timesteps)):"
+            },
+            {
+              "line": 323,
+              "text": "            curr_image = obs_to_img(obs, variant)"
+            },
+            {
+              "line": 324,
+              "text": ""
+            },
+            {
+              "line": 325,
+              "text": "            if t % query_frequency == 0:"
+            },
+            {
+              "line": 326,
+              "text": "                qpos = obs_to_qpos(obs, variant)"
+            },
+            {
+              "line": 327,
+              "text": "                if variant.add_states:"
+            },
+            {
+              "line": 328,
+              "text": "                    obs_dict = {"
+            },
+            {
+              "line": 329,
+              "text": "                        'pixels': curr_image[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 330,
+              "text": "                        'state': qpos[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 331,
+              "text": "                    }"
+            },
+            {
+              "line": 332,
+              "text": "                else:"
+            },
+            {
+              "line": 333,
+              "text": "                    obs_dict = {"
+            },
+            {
+              "line": 334,
+              "text": "                        'pixels': curr_image[np.newaxis, ..., np.newaxis],"
+            },
+            {
+              "line": 335,
+              "text": "                    }"
+            },
+            {
+              "line": 336,
+              "text": ""
+            },
+            {
+              "line": 337,
+              "text": "                rng, key = jax.random.split(rng)"
+            },
+            {
+              "line": 338,
+              "text": "                assert agent_dp is not None"
+            },
+            {
+              "line": 339,
+              "text": "                "
+            },
+            {
+              "line": 340,
+              "text": "                obs_pi_zero = obs_to_pi_zero_input(obs, variant)"
+            },
+            {
+              "line": 341,
+              "text": "                "
+            },
+            {
+              "line": 342,
+              "text": "                "
+            },
+            {
+              "line": 343,
+              "text": "                if i == 0:"
+            },
+            {
+              "line": 344,
+              "text": "                    # for initial evaluation, we sample from standard gaussian noise to evaluate the base policy's performance"
+            },
+            {
+              "line": 345,
+              "text": "                    noise = jax.random.normal(rng, (1, 50, 32))"
+            },
+            {
+              "line": 346,
+              "text": "                else:"
+            },
+            {
+              "line": 347,
+              "text": "                    actions_noise = agent.sample_actions(obs_dict)"
+            },
+            {
+              "line": 348,
+              "text": "                    actions_noise = np.reshape(actions_noise, agent.action_chunk_shape)"
+            },
+            {
+              "line": 349,
+              "text": "                    noise = np.repeat(actions_noise[-1:, :], 50 - actions_noise.shape[0], axis=0)"
+            },
+            {
+              "line": 350,
+              "text": "                    noise = jax.numpy.concatenate([actions_noise, noise], axis=0)[None]"
+            },
+            {
+              "line": 351,
+              "text": "                    "
+            },
+            {
+              "line": 352,
+              "text": "                actions = agent_dp.infer(obs_pi_zero, noise=noise)[\"actions\"]"
+            },
+            {
+              "line": 353,
+              "text": "              "
+            },
+            {
+              "line": 354,
+              "text": "            action_t = actions[t % query_frequency]"
+            },
+            {
+              "line": 355,
+              "text": "            "
+            },
+            {
+              "line": 356,
+              "text": "            if 'libero' in variant.env:"
+            },
+            {
+              "line": 357,
+              "text": "                obs, reward, done, _ = env.step(action_t)"
+            },
+            {
+              "line": 358,
+              "text": "            elif 'aloha' in variant.env:"
+            },
+            {
+              "line": 359,
+              "text": "                obs, reward, terminated, truncated, _ = env.step(action_t)"
+            },
+            {
+              "line": 360,
+              "text": "                done = terminated or truncated"
+            },
+            {
+              "line": 361,
+              "text": "                "
+            },
+            {
+              "line": 362,
+              "text": "            rewards.append(reward)"
+            },
+            {
+              "line": 363,
+              "text": "            image_list.append(curr_image)"
+            },
+            {
+              "line": 364,
+              "text": "            if done:"
+            },
+            {
+              "line": 365,
+              "text": "                break"
+            },
+            {
+              "line": 366,
+              "text": ""
+            },
+            {
+              "line": 367,
+              "text": "        # per episode"
+            },
+            {
+              "line": 368,
+              "text": "        episode_lens.append(t + 1)"
+            },
+            {
+              "line": 369,
+              "text": "        rewards = np.array(rewards)"
+            },
+            {
+              "line": 370,
+              "text": "        episode_return = np.sum(rewards)"
+            },
+            {
+              "line": 371,
+              "text": "        episode_returns.append(episode_return)"
+            },
+            {
+              "line": 372,
+              "text": "        episode_highest_reward = np.max(rewards)"
+            },
+            {
+              "line": 373,
+              "text": "        highest_rewards.append(episode_highest_reward)"
+            },
+            {
+              "line": 374,
+              "text": "        is_success = (reward == env_max_reward)"
+            },
+            {
+              "line": 375,
+              "text": "        success_rates.append(is_success)"
+            },
+            {
+              "line": 376,
+              "text": "                "
+            },
+            {
+              "line": 377,
+              "text": "        print(f'Rollout {rollout_id} : {episode_return=}, Success: {is_success}')"
+            },
+            {
+              "line": 378,
+              "text": "        video = np.stack(image_list).transpose(0, 3, 1, 2)"
+            },
+            {
+              "line": 379,
+              "text": "        wandb_logger.log({f'eval_video/{rollout_id}': wandb.Video(video, fps=50)}, step=i)"
+            },
+            {
+              "line": 380,
+              "text": ""
+            },
+            {
+              "line": 381,
+              "text": ""
+            },
+            {
+              "line": 382,
+              "text": "    success_rate = np.mean(np.array(success_rates))"
+            },
+            {
+              "line": 383,
+              "text": "    avg_return = np.mean(episode_returns)"
+            },
+            {
+              "line": 384,
+              "text": "    avg_episode_len = np.mean(episode_lens)"
+            },
+            {
+              "line": 385,
+              "text": "    summary_str = f'\\nSuccess rate: {success_rate}\\nAverage return: {avg_return}\\n\\n'"
+            },
+            {
+              "line": 386,
+              "text": "    wandb_logger.log({'evaluation/avg_return': avg_return}, step=i)"
+            },
+            {
+              "line": 387,
+              "text": "    wandb_logger.log({'evaluation/success_rate': success_rate}, step=i)"
+            },
+            {
+              "line": 388,
+              "text": "    wandb_logger.log({'evaluation/avg_episode_len': avg_episode_len}, step=i)"
+            },
+            {
+              "line": 389,
+              "text": "    for r in range(env_max_reward+1):"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "jaxrl2/agents/pixel_sac/pixel_sac_learner.py",
+      "sha256": "6f06c5d555e6c1fee748eeec6f8eb10c6f09f34130e209e961b97c520b142c49",
+      "excerpts": [
+        {
+          "first_line": 96,
+          "last_line": 231,
+          "lines": [
+            {
+              "line": 96,
+              "text": "class PixelSACLearner(Agent):"
+            },
+            {
+              "line": 97,
+              "text": ""
+            },
+            {
+              "line": 98,
+              "text": "    def __init__(self,"
+            },
+            {
+              "line": 99,
+              "text": "                 seed: int,"
+            },
+            {
+              "line": 100,
+              "text": "                 observations: Union[jnp.ndarray, DatasetDict],"
+            },
+            {
+              "line": 101,
+              "text": "                 actions: jnp.ndarray,"
+            },
+            {
+              "line": 102,
+              "text": "                 actor_lr: float = 3e-4,"
+            },
+            {
+              "line": 103,
+              "text": "                 critic_lr: float = 3e-4,"
+            },
+            {
+              "line": 104,
+              "text": "                 temp_lr: float = 3e-4,"
+            },
+            {
+              "line": 105,
+              "text": "                 decay_steps: Optional[int] = None,"
+            },
+            {
+              "line": 106,
+              "text": "                 hidden_dims: Sequence[int] = (256, 256),"
+            },
+            {
+              "line": 107,
+              "text": "                 cnn_features: Sequence[int] = (32, 32, 32, 32),"
+            },
+            {
+              "line": 108,
+              "text": "                 cnn_strides: Sequence[int] = (2, 1, 1, 1),"
+            },
+            {
+              "line": 109,
+              "text": "                 cnn_padding: str = 'VALID',"
+            },
+            {
+              "line": 110,
+              "text": "                 latent_dim: int = 50,"
+            },
+            {
+              "line": 111,
+              "text": "                 discount: float = 0.99,"
+            },
+            {
+              "line": 112,
+              "text": "                 tau: float = 0.005,"
+            },
+            {
+              "line": 113,
+              "text": "                 critic_reduction: str = 'mean',"
+            },
+            {
+              "line": 114,
+              "text": "                 dropout_rate: Optional[float] = None,"
+            },
+            {
+              "line": 115,
+              "text": "                 encoder_type='resnet_34_v1',"
+            },
+            {
+              "line": 116,
+              "text": "                 encoder_norm='group',"
+            },
+            {
+              "line": 117,
+              "text": "                 color_jitter = True,"
+            },
+            {
+              "line": 118,
+              "text": "                 use_spatial_softmax=True,"
+            },
+            {
+              "line": 119,
+              "text": "                 softmax_temperature=1,"
+            },
+            {
+              "line": 120,
+              "text": "                 aug_next=True,"
+            },
+            {
+              "line": 121,
+              "text": "                 use_bottleneck=True,"
+            },
+            {
+              "line": 122,
+              "text": "                 init_temperature: float = 1.0,"
+            },
+            {
+              "line": 123,
+              "text": "                 num_qs: int = 2,"
+            },
+            {
+              "line": 124,
+              "text": "                 target_entropy: float = None,"
+            },
+            {
+              "line": 125,
+              "text": "                 action_magnitude: float = 1.0,"
+            },
+            {
+              "line": 126,
+              "text": "                 num_cameras: int = 1"
+            },
+            {
+              "line": 127,
+              "text": "                 ):"
+            },
+            {
+              "line": 128,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 129,
+              "text": "        An implementation of the version of Soft-Actor-Critic described in https://arxiv.org/abs/1812.05905"
+            },
+            {
+              "line": 130,
+              "text": "        \"\"\""
+            },
+            {
+              "line": 131,
+              "text": ""
+            },
+            {
+              "line": 132,
+              "text": "        self.aug_next=aug_next"
+            },
+            {
+              "line": 133,
+              "text": "        self.color_jitter = color_jitter"
+            },
+            {
+              "line": 134,
+              "text": "        self.num_cameras = num_cameras"
+            },
+            {
+              "line": 135,
+              "text": ""
+            },
+            {
+              "line": 136,
+              "text": "        self.action_dim = np.prod(actions.shape[-2:])"
+            },
+            {
+              "line": 137,
+              "text": "        self.action_chunk_shape = actions.shape[-2:]"
+            },
+            {
+              "line": 138,
+              "text": ""
+            },
+            {
+              "line": 139,
+              "text": "        self.tau = tau"
+            },
+            {
+              "line": 140,
+              "text": "        self.discount = discount"
+            },
+            {
+              "line": 141,
+              "text": "        self.critic_reduction = critic_reduction"
+            },
+            {
+              "line": 142,
+              "text": ""
+            },
+            {
+              "line": 143,
+              "text": "        rng = jax.random.PRNGKey(seed)"
+            },
+            {
+              "line": 144,
+              "text": "        rng, actor_key, critic_key, temp_key = jax.random.split(rng, 4)"
+            },
+            {
+              "line": 145,
+              "text": ""
+            },
+            {
+              "line": 146,
+              "text": "        if encoder_type == 'small':"
+            },
+            {
+              "line": 147,
+              "text": "            encoder_def = Encoder(cnn_features, cnn_strides, cnn_padding)"
+            },
+            {
+              "line": 148,
+              "text": "        elif encoder_type == 'impala':"
+            },
+            {
+              "line": 149,
+              "text": "            print('using impala')"
+            },
+            {
+              "line": 150,
+              "text": "            encoder_def = ImpalaEncoder()"
+            },
+            {
+              "line": 151,
+              "text": "        elif encoder_type == 'impala_small':"
+            },
+            {
+              "line": 152,
+              "text": "            print('using impala small')"
+            },
+            {
+              "line": 153,
+              "text": "            encoder_def = SmallerImpalaEncoder()"
+            },
+            {
+              "line": 154,
+              "text": "        elif encoder_type == 'resnet_small':"
+            },
+            {
+              "line": 155,
+              "text": "            encoder_def = ResNetSmall(norm=encoder_norm, use_spatial_softmax=use_spatial_softmax, softmax_temperature=softmax_temperature)"
+            },
+            {
+              "line": 156,
+              "text": "        elif encoder_type == 'resnet_18_v1':"
+            },
+            {
+              "line": 157,
+              "text": "            encoder_def = ResNet18(norm=encoder_norm, use_spatial_softmax=use_spatial_softmax, softmax_temperature=softmax_temperature)"
+            },
+            {
+              "line": 158,
+              "text": "        elif encoder_type == 'resnet_34_v1':"
+            },
+            {
+              "line": 159,
+              "text": "            encoder_def = ResNet34(norm=encoder_norm, use_spatial_softmax=use_spatial_softmax, softmax_temperature=softmax_temperature)"
+            },
+            {
+              "line": 160,
+              "text": "        elif encoder_type == 'resnet_small_v2':"
+            },
+            {
+              "line": 161,
+              "text": "            encoder_def = ResNetV2Encoder(stage_sizes=(1, 1, 1, 1), norm=encoder_norm)"
+            },
+            {
+              "line": 162,
+              "text": "        elif encoder_type == 'resnet_18_v2':"
+            },
+            {
+              "line": 163,
+              "text": "            encoder_def = ResNetV2Encoder(stage_sizes=(2, 2, 2, 2), norm=encoder_norm)"
+            },
+            {
+              "line": 164,
+              "text": "        elif encoder_type == 'resnet_34_v2':"
+            },
+            {
+              "line": 165,
+              "text": "            encoder_def = ResNetV2Encoder(stage_sizes=(3, 4, 6, 3), norm=encoder_norm)"
+            },
+            {
+              "line": 166,
+              "text": "        else:"
+            },
+            {
+              "line": 167,
+              "text": "            raise ValueError('encoder type not found!')"
+            },
+            {
+              "line": 168,
+              "text": ""
+            },
+            {
+              "line": 169,
+              "text": "        if decay_steps is not None:"
+            },
+            {
+              "line": 170,
+              "text": "            actor_lr = optax.cosine_decay_schedule(actor_lr, decay_steps)"
+            },
+            {
+              "line": 171,
+              "text": ""
+            },
+            {
+              "line": 172,
+              "text": "        if len(hidden_dims) == 1:"
+            },
+            {
+              "line": 173,
+              "text": "            hidden_dims = (hidden_dims[0], hidden_dims[0], hidden_dims[0])"
+            },
+            {
+              "line": 174,
+              "text": "        "
+            },
+            {
+              "line": 175,
+              "text": "        policy_def = LearnedStdTanhNormalPolicy(hidden_dims, self.action_dim, dropout_rate=dropout_rate, low=-action_magnitude, high=action_magnitude)"
+            },
+            {
+              "line": 176,
+              "text": ""
+            },
+            {
+              "line": 177,
+              "text": "        actor_def = PixelMultiplexer(encoder=encoder_def,"
+            },
+            {
+              "line": 178,
+              "text": "                                     network=policy_def,"
+            },
+            {
+              "line": 179,
+              "text": "                                     latent_dim=latent_dim,"
+            },
+            {
+              "line": 180,
+              "text": "                                     use_bottleneck=use_bottleneck"
+            },
+            {
+              "line": 181,
+              "text": "                                     )"
+            },
+            {
+              "line": 182,
+              "text": "        print(actor_def)"
+            },
+            {
+              "line": 183,
+              "text": "        actor_def_init = actor_def.init(actor_key, observations)"
+            },
+            {
+              "line": 184,
+              "text": "        actor_params = actor_def_init['params']"
+            },
+            {
+              "line": 185,
+              "text": "        actor_batch_stats = actor_def_init['batch_stats'] if 'batch_stats' in actor_def_init else None"
+            },
+            {
+              "line": 186,
+              "text": ""
+            },
+            {
+              "line": 187,
+              "text": "        actor = TrainState.create(apply_fn=actor_def.apply,"
+            },
+            {
+              "line": 188,
+              "text": "                                  params=actor_params,"
+            },
+            {
+              "line": 189,
+              "text": "                                  tx=optax.adam(learning_rate=actor_lr),"
+            },
+            {
+              "line": 190,
+              "text": "                                  batch_stats=actor_batch_stats)"
+            },
+            {
+              "line": 191,
+              "text": ""
+            },
+            {
+              "line": 192,
+              "text": "        critic_def = StateActionEnsemble(hidden_dims, num_qs=num_qs)"
+            },
+            {
+              "line": 193,
+              "text": "        critic_def = PixelMultiplexer(encoder=encoder_def,"
+            },
+            {
+              "line": 194,
+              "text": "                                      network=critic_def,"
+            },
+            {
+              "line": 195,
+              "text": "                                      latent_dim=latent_dim,"
+            },
+            {
+              "line": 196,
+              "text": "                                      use_bottleneck=use_bottleneck"
+            },
+            {
+              "line": 197,
+              "text": "                                      )"
+            },
+            {
+              "line": 198,
+              "text": "        print(critic_def)"
+            },
+            {
+              "line": 199,
+              "text": "        critic_def_init = critic_def.init(critic_key, observations, actions)"
+            },
+            {
+              "line": 200,
+              "text": "        self._critic_init_params = critic_def_init['params']"
+            },
+            {
+              "line": 201,
+              "text": ""
+            },
+            {
+              "line": 202,
+              "text": "        critic_params = critic_def_init['params']"
+            },
+            {
+              "line": 203,
+              "text": "        critic_batch_stats = critic_def_init['batch_stats'] if 'batch_stats' in critic_def_init else None"
+            },
+            {
+              "line": 204,
+              "text": "        critic = TrainState.create(apply_fn=critic_def.apply,"
+            },
+            {
+              "line": 205,
+              "text": "                                   params=critic_params,"
+            },
+            {
+              "line": 206,
+              "text": "                                   tx=optax.adam(learning_rate=critic_lr),"
+            },
+            {
+              "line": 207,
+              "text": "                                   batch_stats=critic_batch_stats"
+            },
+            {
+              "line": 208,
+              "text": "                                   )"
+            },
+            {
+              "line": 209,
+              "text": "        target_critic_params = copy.deepcopy(critic_params)"
+            },
+            {
+              "line": 210,
+              "text": "        "
+            },
+            {
+              "line": 211,
+              "text": "        temp_def = Temperature(init_temperature)"
+            },
+            {
+              "line": 212,
+              "text": "        temp_params = temp_def.init(temp_key)['params']"
+            },
+            {
+              "line": 213,
+              "text": "        temp = TrainState.create(apply_fn=temp_def.apply,"
+            },
+            {
+              "line": 214,
+              "text": "                                 params=temp_params,"
+            },
+            {
+              "line": 215,
+              "text": "                                 tx=optax.adam(learning_rate=temp_lr),"
+            },
+            {
+              "line": 216,
+              "text": "                                 batch_stats=None)"
+            },
+            {
+              "line": 217,
+              "text": ""
+            },
+            {
+              "line": 218,
+              "text": ""
+            },
+            {
+              "line": 219,
+              "text": "        self._rng = rng"
+            },
+            {
+              "line": 220,
+              "text": "        self._actor = actor"
+            },
+            {
+              "line": 221,
+              "text": "        self._critic = critic"
+            },
+            {
+              "line": 222,
+              "text": "        self._target_critic_params = target_critic_params"
+            },
+            {
+              "line": 223,
+              "text": "        self._temp = temp"
+            },
+            {
+              "line": 224,
+              "text": "        if target_entropy is None or target_entropy == 'auto':"
+            },
+            {
+              "line": 225,
+              "text": "            self.target_entropy = -self.action_dim / 2"
+            },
+            {
+              "line": 226,
+              "text": "        else:"
+            },
+            {
+              "line": 227,
+              "text": "            self.target_entropy = float(target_entropy)"
+            },
+            {
+              "line": 228,
+              "text": "        print(f'target_entropy: {self.target_entropy}')"
+            },
+            {
+              "line": 229,
+              "text": "        print(self.critic_reduction)"
+            },
+            {
+              "line": 230,
+              "text": "        "
+            },
+            {
+              "line": 231,
+              "text": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "jaxrl2/agents/pixel_sac/critic_updater.py",
+      "sha256": "b8f093602ca6340baf2552b3532032d57a9ff537d6fd270bde4aec95249dbe18",
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 55,
+          "lines": [
+            {
+              "line": 1,
+              "text": "from typing import Dict, Tuple"
+            },
+            {
+              "line": 2,
+              "text": ""
+            },
+            {
+              "line": 3,
+              "text": "import jax"
+            },
+            {
+              "line": 4,
+              "text": "import jax.numpy as jnp"
+            },
+            {
+              "line": 5,
+              "text": "from flax.training.train_state import TrainState"
+            },
+            {
+              "line": 6,
+              "text": ""
+            },
+            {
+              "line": 7,
+              "text": "from jaxrl2.data.dataset import DatasetDict"
+            },
+            {
+              "line": 8,
+              "text": "from jaxrl2.types import Params, PRNGKey"
+            },
+            {
+              "line": 9,
+              "text": ""
+            },
+            {
+              "line": 10,
+              "text": ""
+            },
+            {
+              "line": 11,
+              "text": "def update_critic("
+            },
+            {
+              "line": 12,
+              "text": "        key: PRNGKey, actor: TrainState, critic: TrainState,"
+            },
+            {
+              "line": 13,
+              "text": "        target_critic: TrainState, temp: TrainState, batch: DatasetDict,"
+            },
+            {
+              "line": 14,
+              "text": "        discount: float, backup_entropy: bool = False,"
+            },
+            {
+              "line": 15,
+              "text": "        critic_reduction: str = 'min') -> Tuple[TrainState, Dict[str, float]]:"
+            },
+            {
+              "line": 16,
+              "text": "    dist = actor.apply_fn({'params': actor.params}, batch['next_observations'])"
+            },
+            {
+              "line": 17,
+              "text": "    next_actions, next_log_probs = dist.sample_and_log_prob(seed=key)"
+            },
+            {
+              "line": 18,
+              "text": "    next_qs = target_critic.apply_fn({'params': target_critic.params},"
+            },
+            {
+              "line": 19,
+              "text": "                                     batch['next_observations'], next_actions)"
+            },
+            {
+              "line": 20,
+              "text": "    if critic_reduction == 'min':"
+            },
+            {
+              "line": 21,
+              "text": "        next_q = next_qs.min(axis=0)"
+            },
+            {
+              "line": 22,
+              "text": "    elif critic_reduction == 'mean':"
+            },
+            {
+              "line": 23,
+              "text": "        next_q = next_qs.mean(axis=0)"
+            },
+            {
+              "line": 24,
+              "text": "    else:"
+            },
+            {
+              "line": 25,
+              "text": "        raise NotImplemented()"
+            },
+            {
+              "line": 26,
+              "text": ""
+            },
+            {
+              "line": 27,
+              "text": "    target_q = batch['rewards'] + batch[\"discount\"] * batch['masks'] * next_q"
+            },
+            {
+              "line": 28,
+              "text": ""
+            },
+            {
+              "line": 29,
+              "text": "    if backup_entropy:"
+            },
+            {
+              "line": 30,
+              "text": "        target_q -= batch[\"discount\"] * batch['masks'] * temp.apply_fn("
+            },
+            {
+              "line": 31,
+              "text": "            {'params': temp.params}) * next_log_probs"
+            },
+            {
+              "line": 32,
+              "text": ""
+            },
+            {
+              "line": 33,
+              "text": "    def critic_loss_fn("
+            },
+            {
+              "line": 34,
+              "text": "            critic_params: Params) -> Tuple[jnp.ndarray, Dict[str, float]]:"
+            },
+            {
+              "line": 35,
+              "text": "        qs = critic.apply_fn({'params': critic_params}, batch['observations'],"
+            },
+            {
+              "line": 36,
+              "text": "                             batch['actions'])"
+            },
+            {
+              "line": 37,
+              "text": "        critic_loss = ((qs - target_q)**2).mean()"
+            },
+            {
+              "line": 38,
+              "text": "        return critic_loss, {"
+            },
+            {
+              "line": 39,
+              "text": "            'critic_loss': critic_loss,"
+            },
+            {
+              "line": 40,
+              "text": "            'q': qs.mean(),"
+            },
+            {
+              "line": 41,
+              "text": "            'target_actor_entropy': -next_log_probs.mean(),"
+            },
+            {
+              "line": 42,
+              "text": "            'next_actions_sampled': next_actions.mean(),"
+            },
+            {
+              "line": 43,
+              "text": "            'next_log_probs': next_log_probs.mean(),"
+            },
+            {
+              "line": 44,
+              "text": "            'next_q_pi': next_qs.mean(),"
+            },
+            {
+              "line": 45,
+              "text": "            'target_q': target_q.mean(),"
+            },
+            {
+              "line": 46,
+              "text": "            'next_actions_mean': next_actions.mean(),"
+            },
+            {
+              "line": 47,
+              "text": "            'next_actions_std': next_actions.std(),"
+            },
+            {
+              "line": 48,
+              "text": "            'next_actions_min': next_actions.min(),"
+            },
+            {
+              "line": 49,
+              "text": "            'next_actions_max': next_actions.max(),"
+            },
+            {
+              "line": 50,
+              "text": "            'next_log_probs': next_log_probs.mean(),"
+            },
+            {
+              "line": 51,
+              "text": "            "
+            },
+            {
+              "line": 52,
+              "text": "        }"
+            },
+            {
+              "line": 53,
+              "text": ""
+            },
+            {
+              "line": 54,
+              "text": "    grads, info = jax.grad(critic_loss_fn, has_aux=True)(critic.params)"
+            },
+            {
+              "line": 55,
+              "text": "    new_critic = critic.apply_gradients(grads=grads)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "jaxrl2/utils/launch_util.py",
+      "sha256": "ef75c56373a506d318bf06d5cb397d2a8df19c6a1693b2bf4da9fe567bb4700b",
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 17,
+          "lines": [
+            {
+              "line": 1,
+              "text": "from jaxrl2.utils.general_utils import AttrDict"
+            },
+            {
+              "line": 2,
+              "text": ""
+            },
+            {
+              "line": 3,
+              "text": "def parse_training_args(train_args_dict, parser):"
+            },
+            {
+              "line": 4,
+              "text": "    for k, v in train_args_dict.items():"
+            },
+            {
+              "line": 5,
+              "text": "        if type(v) == tuple:"
+            },
+            {
+              "line": 6,
+              "text": "            parser.add_argument('--' + k, nargs=\"+\", default=v, type=type(v[0]))"
+            },
+            {
+              "line": 7,
+              "text": "        elif type(v) != bool:"
+            },
+            {
+              "line": 8,
+              "text": "            parser.add_argument('--' + k, default=v, type=type(v))"
+            },
+            {
+              "line": 9,
+              "text": "        else:"
+            },
+            {
+              "line": 10,
+              "text": "            parser.add_argument('--' + k, default=int(v), type=int)"
+            },
+            {
+              "line": 11,
+              "text": "    args = parser.parse_args()"
+            },
+            {
+              "line": 12,
+              "text": "    config = {}"
+            },
+            {
+              "line": 13,
+              "text": "    for key in train_args_dict.keys():"
+            },
+            {
+              "line": 14,
+              "text": "        config[key] = getattr(args, key)"
+            },
+            {
+              "line": 15,
+              "text": "    variant = AttrDict(vars(args))"
+            },
+            {
+              "line": 16,
+              "text": "    variant['train_kwargs'] = config"
+            },
+            {
+              "line": 17,
+              "text": "    return variant, args"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
