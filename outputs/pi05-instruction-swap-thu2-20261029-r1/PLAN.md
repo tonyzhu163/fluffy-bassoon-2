@@ -90,5 +90,12 @@ GPU probe inside the step (`ms.prepare_gpu`).
   `rlinf-pi05-maniskill-e1a82eb-r1` env, **59 passed in 3.87 s**
   (new instruction-swap, ManiSkill pi0.5, checkpoint-compat, env-config tests).
 
-Filled in after submission: commit, job IDs, nodes, outcomes. Raw outputs:
+- Launch source `8baf75b48fe21d1eacaae7c10a032b55dbd7f72d`, launcher copy
+  `launch-8baf75b.sbatch` (SHA256 `3e186fd4...6c9c`) on thu2.
+- RL: thu2 job **49180**, node02, submitted 04:04 UTC; complete, exit 0 in
+  21:27 (64 + 288 episodes). See [RESULTS.md](RESULTS.md).
+- SFT: thu2 job **49194**, submitted 04:28 UTC; **queued** (node02 RAM full,
+  no other free GPU), no start estimate at 04:40 UTC.
+
+Raw outputs:
 `/cluster/nvme5/zhujiayang/fluffy-bassoon-2/outputs/pi05-instruction-swap-thu2-20261029-r1/<ckpt>-job<id>/`.
