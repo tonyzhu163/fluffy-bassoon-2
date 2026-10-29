@@ -120,3 +120,7 @@ additional1M allowance.
 
 [Preparation-only tied32 implementation and fresh-data costs](TIED32-PREPARATION.md)
 records a separate possible arm; the current full1024 proposal is unchanged.
+
+[Source behavior/quality reporting](SOURCE-QUALITY.md) distinguishes actual
+warmup, pre-SGD and post-SGD rollouts and final-checkpoint execution coverage.
+It adds no data filters, qualification threshold or new robot episodes.
