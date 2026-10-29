@@ -65,7 +65,11 @@ printf -v TASK_KEY '%s:%02d' "$TASK_SUITE" "$TASK_NUMBER"
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 "$TASK_MODEL" - "$TASK_CHECKPOINT" <<'PY'
 import hashlib, json, pathlib, sys
+import pickle
+import jax
+import numpy as np
 from openpi.training import config
+from fluffy_bassoon.meta_rl.vla_source40_corpus import save_motor_rng, restore_motor_rng
 path = pathlib.Path(sys.argv[1])
 receipt = json.loads((path/'READY.json').read_text())
 assert hashlib.sha256((path/'READY.json').read_bytes()).hexdigest() == 'ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170'
@@ -75,6 +79,11 @@ assert model.pi05 and model.action_horizon == 10 and model.action_dim == 32
 assert hashlib.sha256((path/'assets/physical-intelligence/libero/norm_stats.json').read_bytes()).hexdigest() == 'b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84'
 for row in receipt['files']:
     assert (path/row['name']).stat().st_size == row['bytes']
+for key in (jax.random.key(17), jax.random.PRNGKey(17)):
+    restored = restore_motor_rng(pickle.loads(pickle.dumps(save_motor_rng(key))))
+    np.testing.assert_array_equal(jax.random.key_data(jax.random.split(restored)),
+                                  jax.random.key_data(jax.random.split(key)))
+print('Motor PRNG serialization round-trip passed for typed and legacy keys', flush=True)
 PY
 PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps \
   "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \

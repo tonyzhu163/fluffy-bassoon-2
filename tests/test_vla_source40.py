@@ -6,7 +6,7 @@ import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_schedule import case_plan, content_hash, load_schedule, FORMAT
 from fluffy_bassoon.meta_rl.vla_source40_corpus import (OnlineSourceSimulator, has_pending_case,
-    paired_arrays, physical_costs, validate_simulator)
+    paired_arrays, physical_costs, restore_motor_rng, save_motor_rng, validate_simulator)
 
 
 def test_many_seeded_cases_cover_each_bank_without_cross_partition_states():
@@ -112,6 +112,17 @@ def test_resume_charges_unresolved_execution_intent_conservatively(tmp_path):
     (tmp_path / "decision-2.json").write_text(json.dumps(dict(primitive_steps=2, trace_status="writing")))
     assert physical_costs(tmp_path) == dict(known_primitive_steps=9,
         uncertain_primitive_steps_ceiling=0, primitive_step_budget_charge=9)
+
+
+@pytest.mark.parametrize("typed", [False, True])
+def test_motor_rng_round_trip_preserves_next_random_draw(typed):
+    import pickle
+    jax = pytest.importorskip("jax")
+    key = jax.random.key(17) if typed else jax.random.PRNGKey(17)
+    saved = pickle.loads(pickle.dumps(save_motor_rng(key)))
+    restored = restore_motor_rng(saved)
+    np.testing.assert_array_equal(jax.random.key_data(jax.random.split(restored)),
+                                  jax.random.key_data(jax.random.split(key)))
 
 
 def test_recovery_reaching_target_mid_case_still_finishes_that_case():

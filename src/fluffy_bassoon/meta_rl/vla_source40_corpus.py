@@ -22,6 +22,26 @@ from .vla_source40_schedule import SOURCE_SUITES, content_hash, load_schedule
 PI05_RECEIPT = "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"
 
 
+def save_motor_rng(key):
+    import jax
+    names = {"fry": "threefry2x32", "threefry2x32": "threefry2x32",
+             "rbg": "rbg", "urbg": "unsafe_rbg", "unsafe_rbg": "unsafe_rbg"}
+    implementation = names.get(str(jax.random.key_impl(key)))
+    if implementation is None:
+        raise ValueError("Unsupported motor PRNG implementation")
+    return dict(format="jax_motor_key_v1", implementation=implementation,
+                key_data=np.asarray(jax.device_get(jax.random.key_data(key))).copy())
+
+
+def restore_motor_rng(saved):
+    import jax
+    import jax.numpy as jnp
+    if saved.get("format") != "jax_motor_key_v1":
+        raise ValueError("Require an explicitly encoded motor PRNG key")
+    return jax.random.wrap_key_data(jnp.asarray(saved["key_data"], dtype=jnp.uint32),
+                                    impl=saved["implementation"])
+
+
 class OnlineSourceSimulator:
     """Collect with fixed episode weights, then apply official SAC updates."""
     def __init__(self, sim, learner, sampler, observation_fn, *, warmup=500, batch=256, utd=20,
@@ -243,8 +263,7 @@ def main(argv=None):
             settling_steps=0, episode_receipts=[], publications=[])
         if args.resume:
             progress = learner.restore(recovery, sampler, contract)
-            import jax.numpy as jnp
-            motor.policy._rng = jnp.asarray(progress.pop("motor_rng"))
+            motor.policy._rng = restore_motor_rng(progress.pop("motor_rng"))
         physical_cost = physical_costs(journal)["primitive_step_budget_charge"]
         settling_cost = sum(json.loads(path.read_text())["settling_steps"] for path in journal.glob("reset-*.json"))
         inflight, reset_receipt = None, None
@@ -288,10 +307,9 @@ def main(argv=None):
                     case=cases[progress["case_index"]], episode_in_case=progress["episode_in_case"]), stream, protocol=5)
             write_json(journal / (event_id + ".json"), dict(receipt, trace_sha256=sha256(trace), trace_status="complete"))
         def save_boundary():
-            import jax
             progress["settling_steps"] = settling_cost
             learner.save(recovery, sampler, contract, **progress,
-                         motor_rng=np.asarray(jax.device_get(motor.policy._rng)))
+                         motor_rng=save_motor_rng(motor.policy._rng))
             write_json(args.output / "progress.json", dict(progress, source_updates=learner.updates,
                 replay_rows=len(learner.replay), latest_recovery_sha256=sha256(recovery)))
             costs = physical_costs(journal)
@@ -356,9 +374,8 @@ def main(argv=None):
                 print(json.dumps(dict(case_id=case["case_id"], episode_in_case=progress["episode_in_case"],
                     chunks=progress["chunks"], primitive_steps=progress["primitive_steps"], source_updates=learner.updates)), flush=True)
             checkpoint = args.output / f"case-{progress['case_index']:05d}-source.pkl"
-            import jax
             learner.save(checkpoint, sampler, contract, **progress,
-                         motor_rng=np.asarray(jax.device_get(motor.policy._rng)))
+                         motor_rng=save_motor_rng(motor.policy._rng))
             publication = publish_prefix(args.output, learner, contract, progress, sha256(checkpoint))
             progress["publications"].append(dict(publication, through_case=progress["case_index"],
                 source_checkpoint=checkpoint.name, source_checkpoint_sha256=sha256(checkpoint)))
