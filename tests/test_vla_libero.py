@@ -99,6 +99,9 @@ def test_retry_scene_leakage_and_budget_fail_before_model_loading():
     args.retry_validation_states = [1, 39]
     with pytest.raises(ValueError, match="overlap"):
         validate_trial_split(args, metadata)
+    args.retry_validation_states, args.retry_max_steps = [38, 39], 6399
+    with pytest.raises(ValueError, match="budget"):
+        validate_trial_split(args, metadata)
 
 
 def test_recovery_comparison_ignores_mapping_order_but_checks_leaf_values_and_dtypes():
@@ -110,6 +113,3 @@ def test_recovery_comparison_ignores_mapping_order_but_checks_leaf_values_and_dt
     actual["a"] = np.array([1., 2.], np.float32)
     actual["b"]["step"] = np.int64(3)
     assert state_differences(expected, actual)[0]["error"] == "shape or dtype differs"
-    args.retry_validation_states, args.retry_max_steps = [38, 39], 6399
-    with pytest.raises(ValueError, match="budget"):
-        validate_trial_split(args, metadata)

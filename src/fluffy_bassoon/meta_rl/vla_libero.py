@@ -601,8 +601,32 @@ def state_differences(expected, actual, *, path="state"):
                      actual_shape=list(b.shape), expected_dtype=str(a.dtype), actual_dtype=str(b.dtype))]
     if not np.array_equal(a, b):
         delta = float(np.max(np.abs(a.astype(np.float64) - b.astype(np.float64))))
-        return [dict(path=path, error="leaf values differ", maximum_delta=delta)]
+        return [dict(path=path, error="leaf values differ", maximum_delta=delta,
+                     expected_sha256=hashlib.sha256(a.tobytes()).hexdigest(),
+                     actual_sha256=hashlib.sha256(b.tobytes()).hexdigest(),
+                     expected_preview=repr(a.reshape(-1)[:3]), actual_preview=repr(b.reshape(-1)[:3]))]
     return []
+
+
+def structure_digest(value):
+    """Canonical hashes do not depend on mapping insertion order or device type."""
+    digest = hashlib.sha256()
+    def visit(item):
+        if isinstance(item, dict):
+            digest.update(b"mapping")
+            for key in sorted(item):
+                digest.update(str(key).encode())
+                visit(item[key])
+        elif isinstance(item, (list, tuple)):
+            digest.update(f"sequence:{len(item)}".encode())
+            for child in item:
+                visit(child)
+        else:
+            array = np.asarray(item)
+            digest.update(str(array.dtype).encode() + str(array.shape).encode())
+            digest.update(array.tobytes() if array.dtype.kind != "O" else repr(item).encode())
+    visit(value)
+    return digest.hexdigest()
 
 
 def qualify_recovery(args, learner, contract, obs):
@@ -614,20 +638,26 @@ def qualify_recovery(args, learner, contract, obs):
     restored = OfficialSAC(args.dsrl_root, args.seed)
     restored_sampler = np.random.default_rng()
     restored.restore(path, restored_sampler, contract)
-    before = state_differences(serialization.to_state_dict(learner.agent._save_dict),
-                               serialization.to_state_dict(restored.agent._save_dict))
+    def complete_state(source):
+        return dict(learning=serialization.to_state_dict(source.agent._save_dict),
+                    actor_rng=np.asarray(source.agent._rng), updates=np.int64(source.updates),
+                    replay_sha256=np.asarray(structure_digest(source.replay)))
+    initial_expected, initial_actual = complete_state(learner), complete_state(restored)
+    before = state_differences(initial_expected, initial_actual)
     write_json(args.output / "recovery-initial-comparison.json", dict(differences=before[:20],
-                                                                    total_differences=len(before)))
+        total_differences=len(before), expected_sha256=structure_digest(initial_expected),
+        actual_sha256=structure_digest(initial_actual)))
     if before:
         raise RuntimeError("SAC recovery changed an actor/critic/target/optimizer/temperature value")
     expected_action, actual_action = learner.action(obs), restored.action(obs)
     expected_metrics = learner.update(args.batch_size, sampler)
     actual_metrics = restored.update(args.batch_size, restored_sampler)
-    after = state_differences(serialization.to_state_dict(learner.agent._save_dict),
-                              serialization.to_state_dict(restored.agent._save_dict))
+    updated_expected, updated_actual = complete_state(learner), complete_state(restored)
+    after = state_differences(updated_expected, updated_actual)
     write_json(args.output / "recovery-update-comparison.json", dict(differences=after[:20],
         total_differences=len(after), next_action_equal=np.array_equal(expected_action, actual_action),
-        next_metrics_equal=expected_metrics == actual_metrics))
+        next_metrics_equal=expected_metrics == actual_metrics,
+        expected_sha256=structure_digest(updated_expected), actual_sha256=structure_digest(updated_actual)))
     if (not np.array_equal(expected_action, actual_action) or expected_metrics != actual_metrics or after
             or sampler.bit_generator.state != restored_sampler.bit_generator.state):
         raise RuntimeError("SAC recovery changed the next sampled action or optimizer update")
