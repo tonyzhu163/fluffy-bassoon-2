@@ -1,0 +1,27 @@
+{
+  "job_id": "job-6j2y16w9u33o",
+  "source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "scheduler_finished_at": "2026-10-29T15:23:49+08:00",
+  "exit_code": 0,
+  "complete": true,
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "training_steps_each": 28800,
+  "training_seeds": [
+    1
+  ],
+  "evaluation_scenes": 8,
+  "attempts_per_scene": 4,
+  "pilot_allocated_gpu_minutes": 50.963974,
+  "initial_cap_gpu_minutes": 120,
+  "initial_budget_used_conservative": 68.963974,
+  "remaining_before_online": 51.036026,
+  "independent_audit": "checks/20261029-1541-audit.json",
+  "descriptive_results": "pilot-r3-analysis/RESULTS.json",
+  "recovery_payload_location": "Baige immutable pilot-r3 recovery directories; no deletion or tensor loading in local audit",
+  "interpretation": "Execution qualified; one extra RL\u00b2 success over reset controls on one scene does not establish meaningful memory benefit."
+}

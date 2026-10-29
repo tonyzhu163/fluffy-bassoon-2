@@ -1,0 +1,242 @@
+[
+  {
+    "gpu": 1,
+    "method": "dsrl-na-retry",
+    "returncode": 0,
+    "phase_elapsed_seconds": 539.9656455228105,
+    "completed": true,
+    "summary": {
+      "primitive_steps": 28800,
+      "warmup_primitive_steps": 24016,
+      "learner_updates": 5980,
+      "evaluation_primitive_steps": 9600,
+      "budget_reached": false,
+      "training_motor_samples": 2303520,
+      "evaluation_motor_samples": 2400,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "trainable_parameters": 42623037,
+      "completed": true,
+      "elapsed_seconds": 529.9381418619305,
+      "motor_batch_calls": 13170,
+      "motor_samples": 2305920,
+      "peak_cuda_memory_gib": 0.7931919097900391
+    },
+    "initial_observation_sha256": {
+      "2000000": [
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+      ],
+      "2000001": [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      "2000002": [
+        "95e25ccb7a2d416edc72208fc2d07ef0b70a756b111d3accc5865e7dd4667eef"
+      ],
+      "2000003": [
+        "0df05bfcdb57c981da21f96e4d7436447b2d2ec4405dca6a57d8e2ccb8c6036e"
+      ],
+      "2000004": [
+        "57e04db49bb47db0662fc3353539f1df1763e1c09121359c2305ef406fd626b6"
+      ],
+      "2000005": [
+        "f4f426de6ec7a04f99376bc506c772d0d3b8815ba77f28b69510bd032c42eaec"
+      ],
+      "2000006": [
+        "5f45cf3ef0f4292fdeb184264b866f283c70a9af3fc21d9bf03a05ad1f4df969"
+      ],
+      "2000007": [
+        "1ad2af0d13cc5dcff45c9dc52a216268a1c806a3133a04ab58e90b3b80c62169"
+      ]
+    },
+    "recovery": {
+      "manifest_sha256": "949bda0e5587addd321e5654bb97b98f1029394eca0fd300a95d7b0df5361d7b",
+      "directory": "checkpoints/chunks000001196-updates000005980",
+      "files": {
+        "recovery.zip": "379e6e118b5f837611fd87bf36d63338b2a32e696a6d272fcb57401a1597b7ab",
+        "replay.pkl": "b44603863fed27fd50a41e538c4c560f2930ca0837babf9cca05b8236e514099",
+        "runtime.pt": "8a2d7a26fc405cab5ab7aab40ec6c01191dce0e0d5ee8bed7da95ef5b071f524"
+      }
+    },
+    "gpu_probe_sha256": "f0edd18d7acbc4d70b51152ca2564cd3be32385753830a554e9733d0f864e036",
+    "contract_sha256": "d8afe48b15704e2eef43c3bb12bf58e3d5097712805d323e6e976aadd57096d9",
+    "evaluation_sha256": "ab165537e9020c85679d138e1b75634189f69977e43d626be88a492a56d1f9e4"
+  },
+  {
+    "gpu": 0,
+    "method": "dsrl-na",
+    "returncode": 0,
+    "phase_elapsed_seconds": 540.6066134027205,
+    "completed": true,
+    "summary": {
+      "primitive_steps": 28800,
+      "warmup_primitive_steps": 24016,
+      "learner_updates": 5980,
+      "evaluation_primitive_steps": 9600,
+      "budget_reached": false,
+      "training_motor_samples": 2303520,
+      "evaluation_motor_samples": 2400,
+      "optimizer_steps": {
+        "actor": 5980,
+        "critic": 5980,
+        "noise_critic": 2990,
+        "entropy": 5980
+      },
+      "trainable_parameters": 42623037,
+      "completed": true,
+      "elapsed_seconds": 531.7756434381008,
+      "motor_batch_calls": 13170,
+      "motor_samples": 2305920,
+      "peak_cuda_memory_gib": 0.7931919097900391
+    },
+    "initial_observation_sha256": {
+      "2000000": [
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+      ],
+      "2000001": [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      "2000002": [
+        "95e25ccb7a2d416edc72208fc2d07ef0b70a756b111d3accc5865e7dd4667eef"
+      ],
+      "2000003": [
+        "0df05bfcdb57c981da21f96e4d7436447b2d2ec4405dca6a57d8e2ccb8c6036e"
+      ],
+      "2000004": [
+        "57e04db49bb47db0662fc3353539f1df1763e1c09121359c2305ef406fd626b6"
+      ],
+      "2000005": [
+        "f4f426de6ec7a04f99376bc506c772d0d3b8815ba77f28b69510bd032c42eaec"
+      ],
+      "2000006": [
+        "5f45cf3ef0f4292fdeb184264b866f283c70a9af3fc21d9bf03a05ad1f4df969"
+      ],
+      "2000007": [
+        "1ad2af0d13cc5dcff45c9dc52a216268a1c806a3133a04ab58e90b3b80c62169"
+      ]
+    },
+    "recovery": {
+      "manifest_sha256": "0b50793cdbcd7722c477fcfa4dfc72535c70703bc817edb109ef13000a70ee27",
+      "directory": "checkpoints/chunks000001196-updates000005980",
+      "files": {
+        "recovery.zip": "0cc5ad244c8d72ad11e8cbe05dbd53efc5a7bc35256bb54d9ee98e99f4ddad56",
+        "replay.pkl": "a5620639bb129c550c63901aa21d60341d7ed80402ff89ccd5c32280490c05eb",
+        "runtime.pt": "fd9df31c86116197c2ae146446e645c47c939cd98ab363c0c011035c9b42cd98"
+      }
+    },
+    "gpu_probe_sha256": "f888e301c2d998ddadb8d79450f1491a75c17ec33e16dd737ea7db44212722d1",
+    "contract_sha256": "ecf32e49312694696f8ec4648e6f978bd89cee6748da1d5b7a60470a69346984",
+    "evaluation_sha256": "e24d6890ed2295d4a12ccf5cf80abaf46b8874c4a641b5d6f62417c46a62a50b"
+  },
+  {
+    "gpu": 1,
+    "method": "episode-reset",
+    "returncode": 0,
+    "phase_elapsed_seconds": 877.6872916482389,
+    "completed": true,
+    "summary": {
+      "updates": 6,
+      "primitive_steps": 28800,
+      "parameters": 833465,
+      "training_motor_samples": 7200,
+      "evaluation_motor_samples": 7200,
+      "optimizer_steps": 24,
+      "evaluation_primitive_steps": 28800,
+      "budget_reached": false,
+      "completed": true,
+      "elapsed_seconds": 873.6880201888271,
+      "motor_batch_calls": 9000,
+      "motor_samples": 14400,
+      "peak_cuda_memory_gib": 1.5475702285766602
+    },
+    "initial_observation_sha256": {
+      "2000000": [
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+      ],
+      "2000001": [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      "2000002": [
+        "95e25ccb7a2d416edc72208fc2d07ef0b70a756b111d3accc5865e7dd4667eef"
+      ],
+      "2000003": [
+        "0df05bfcdb57c981da21f96e4d7436447b2d2ec4405dca6a57d8e2ccb8c6036e"
+      ],
+      "2000004": [
+        "57e04db49bb47db0662fc3353539f1df1763e1c09121359c2305ef406fd626b6"
+      ],
+      "2000005": [
+        "f4f426de6ec7a04f99376bc506c772d0d3b8815ba77f28b69510bd032c42eaec"
+      ],
+      "2000006": [
+        "5f45cf3ef0f4292fdeb184264b866f283c70a9af3fc21d9bf03a05ad1f4df969"
+      ],
+      "2000007": [
+        "1ad2af0d13cc5dcff45c9dc52a216268a1c806a3133a04ab58e90b3b80c62169"
+      ]
+    },
+    "recovery": {
+      "recovery_sha256": "8c92565c4783fa51504724bc5b37788d18b9ca0c6bd80ded8f2af99345be5dc4"
+    },
+    "gpu_probe_sha256": "0e7f817720dc1396836dd86b019420fd0e6d99713390b6c828b5701b20917bad",
+    "contract_sha256": "2a7a6c07d9e15933ff96c8654092f9cf722ae8eaee7f4804ca534ae6e32a5a99",
+    "evaluation_sha256": "d88a5ef1f78c222d984e4c9b81be44f2ed1f3395928ea0e0a1ef1e1fe8cfc5b1"
+  },
+  {
+    "gpu": 0,
+    "method": "rl2",
+    "returncode": 0,
+    "phase_elapsed_seconds": 881.7156534208916,
+    "completed": true,
+    "summary": {
+      "updates": 6,
+      "primitive_steps": 28800,
+      "parameters": 833465,
+      "training_motor_samples": 7200,
+      "evaluation_motor_samples": 7200,
+      "optimizer_steps": 24,
+      "evaluation_primitive_steps": 28800,
+      "budget_reached": false,
+      "completed": true,
+      "elapsed_seconds": 878.4120098962449,
+      "motor_batch_calls": 9000,
+      "motor_samples": 14400,
+      "peak_cuda_memory_gib": 1.5475702285766602
+    },
+    "initial_observation_sha256": {
+      "2000000": [
+        "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+      ],
+      "2000001": [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      "2000002": [
+        "95e25ccb7a2d416edc72208fc2d07ef0b70a756b111d3accc5865e7dd4667eef"
+      ],
+      "2000003": [
+        "0df05bfcdb57c981da21f96e4d7436447b2d2ec4405dca6a57d8e2ccb8c6036e"
+      ],
+      "2000004": [
+        "57e04db49bb47db0662fc3353539f1df1763e1c09121359c2305ef406fd626b6"
+      ],
+      "2000005": [
+        "f4f426de6ec7a04f99376bc506c772d0d3b8815ba77f28b69510bd032c42eaec"
+      ],
+      "2000006": [
+        "5f45cf3ef0f4292fdeb184264b866f283c70a9af3fc21d9bf03a05ad1f4df969"
+      ],
+      "2000007": [
+        "1ad2af0d13cc5dcff45c9dc52a216268a1c806a3133a04ab58e90b3b80c62169"
+      ]
+    },
+    "recovery": {
+      "recovery_sha256": "5d020a904821d86779d31ec9a03ec91bb40cabeb446dd4666ba6d63a7a057627"
+    },
+    "gpu_probe_sha256": "a82aaa371fa153b3d40d4ccdee6792a914daecb6fc6e8936451417b320bb0f28",
+    "contract_sha256": "a1e62e9e5ccb1e5e64ab1c1bff5486c09ea9bd115b0fbace8c9ed917b14855b3",
+    "evaluation_sha256": "3262aafb7eebe2e1643a6d34eded4885eb8bb8646b0ae71d7126768c731e40dd"
+  }
+]
