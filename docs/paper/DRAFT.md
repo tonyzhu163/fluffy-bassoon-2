@@ -5,14 +5,14 @@ robot-performance claim is unproven.** Result placeholders are intentional.
 Durable choices: [DECISIONS.md](DECISIONS.md). Method contracts remain the
 implementation references; this outline does not replace them.
 
-Current data arms: **original-LIBERO clean source versus the same source plus
-a declared Plus training partition**, with identical clean validation and
-held-out Plus/Pro evaluation cases. Plus is an unseen benchmark shift for the
-clean-only arm; for the augmented arm it is within-Plus case generalization.
-Pro remains absent from attachment pretraining in both arms.
-The [v2 protocol](../../outputs/libero-pi05-corpus-20261029-r2/EVALUATION-PROTOCOL.md)
-records evaluation roles; the explicit r3 source extension adds the approved
-Plus training partition without rewriting the frozen v1 data split.
+Current design: **official OpenPI π₀.₅ LIBERO40 motor; source histories only
+from LIBERO40; one-support-episode adaptation on LIBERO90, LIBERO-Plus and
+LIBERO-Pro.** Source and target case identities are frozen before outcomes.
+LIBERO90 requires a full semantic-overlap audit against all 40 source tasks;
+Plus/Pro source-familiar goals test condition transfer. Existing RLinf130
+runs, the 78/10/10 split and clean-versus-clean+Plus arms remain historical.
+The [source40/target90 protocol](../../outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
+is the current design; source scale and compute budget remain unspecified.
 
 ## Abstract scaffold
 
@@ -21,9 +21,10 @@ Plus training partition without rewriting the frozen v1 data split.
 - Approach: causal history → bounded latent-noise coordinate → frozen π₀.₅;
   pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
-- Evaluation: LIBERO-Plus and LIBERO-Pro; success against actual deployment
-  interactions; ordinary DSRL; controls for representation, architecture,
-  memory, feedback and training cost. Original task holdouts: auxiliary.
+- Evaluation: LIBERO90 goal transfer after semantic exclusions; Plus/Pro
+  condition transfer. One actual support episode → a separate query episode,
+  fixed motor/controller weights; compare query success and full cost against
+  ordinary DSRL and controls for representation, architecture and feedback.
 - **Results: TBD.** No percentage gains, efficiency factors or novelty claim yet.
 
 ## 1. Introduction / question
@@ -70,15 +71,22 @@ Plus training partition without rewriting the frozen v1 data split.
   Goal revelation does not imply the best noise coordinate is known; nor does
   defining a trial establish that history is useful.
   [Explicit meta-task contract](../frozen-vla-libero/META-TASK.md).
-- One trial: \(K\) complete episodes on the same declared task/initial state;
-  state and reset seed held fixed across attempts. New trial → empty history.
+- One trial fixes a goal and actual scene/perturbation case. Different trials
+  vary cases; within a trial preserve the case across support and query resets.
+  Record stochastic observation variation rather than assume identical pixels.
+- Primary one-shot evaluation: one complete support episode with actual
+  feedback, followed by a **separate query episode**. Zero-shot has no support;
+  also measure 2/4/8 support episodes. New trial → empty history. A query is
+  never counted as its own support; query success is reported separately.
 - Completed interaction history:
   \(H_t=\{(o_i,z_i,r_i,d_i)\}_{i<t}\). Current reward and target unavailable
   at query \(t\).
 - Frozen shared feature encoder \(x_t=\phi_{\bar\theta}(o_t,\ell)\).
-  Current implementation: visual mean 2048 + instruction mean 2048 + public
+  Intended shared interface: visual mean 2048 + instruction mean 2048 + public
   state 8 = 4104 dimensions; mask-aware float32 pooling of materialized native
-  prefix hidden states. One feature contract across all source tasks.
+  prefix hidden states. Requalify the OpenPI40 backend and bind its exact
+  feature/normalization receipt across all tasks. RLinf130 coordinates and
+  student checkpoints cannot be reused as though the motor were unchanged.
 - Token \(u_t=[x_t,z_{t-1},r_{t-1},d_{t-1},b_t]\); \(b_t\): episode start.
   Previous feedback zero only at a new trial; retained across episode resets.
 - Controller state and proposal:
@@ -88,9 +96,12 @@ Plus training partition without rewriting the frozen v1 data split.
   have distinct likelihood contracts.
 - Motor:
   \(a_{t:t+H}=\pi_{\bar\theta}(o_t,\ell;\operatorname{repeat}_H(z_t))\).
-  Target: frozen `RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT`, revision
-  `6222623f635769bfc73c9472e29fab9b7fd8e027`; native horizon ten; execute up to ten actions,
-  stopping at simulator success/time limit. Record actual primitive steps.
+  Primary motor: official OpenPI `gs://openpi-assets/checkpoints/pi05_libero`,
+  config `pi05_libero`, native horizon ten. Already staged checkpoint receipt
+  `ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170`;
+  qualification on the actual allocation remains required. Execute up to ten
+  actions, stopping on simulator success/time limit; count actual primitives.
+  No new VLA SFT is required for this design.
 - Sparse chunk feedback: zero on achieved goal, otherwise −1; physical
   episode ends on success or time limit. Source critic timeout bootstrapping
   and student episode-boundary feedback are distinct.
@@ -104,9 +115,10 @@ Plus training partition without rewriting the frozen v1 data split.
 
 ### Headroom and shortcut checks before a large corpus
 
-- Finish the bounded π₀.₅ technical/teacher pilot, then predeclare training/dev
-  task noise-headroom and repeatability checks. **Large teacher collection is
-  deferred until this evidence supports a useful steering/adaptation problem.**
+- Qualify the official LIBERO40 motor/runtime and measure source/dev headroom
+  across many actual cases per task. Its 40 training tasks may already be easy;
+  a different checkpoint does not guarantee useful failure/recovery histories.
+  **Large source collection is not yet a launch contract.**
 - Measure whether noise choices reproducibly change outcomes, how much native
   success leaves to improve, and whether a small search procedure already
   captures that gain. Ceiling results cannot establish sample-efficiency gains.
@@ -124,7 +136,7 @@ Plus training partition without rewriting the frozen v1 data split.
 | Route | Behavior used to collect context | Query target / outer objective | Interpretation |
 | --- | --- | --- | --- |
 | CND | Fixed competent teacher mixed with annealed bounded uniform noise | Actually executed mixture | Vintix-inspired noise distillation in steering space; not an improving teacher |
-| Paired DPT | **Same actual CND histories**, no extra rollouts | Already queried deterministic teacher coordinate | Change supervision while preserving all executed context/outcomes bitwise |
+| Paired DPT | Same actual CND or DSRL histories; identify the source route | Qualified teacher/final actor's query coordinate | Change supervision while preserving all executed context/outcomes bitwise; candidate labels are not assumed expert |
 | AD | Successive real DSRL policy checkpoints, updates between complete episodes | Original executed coordinate | Distill a source learning trajectory; a collection clock is not a teacher-update identity |
 | Direct RL² | Student's own complete multi-episode trials | Trial return, PPO in the present implementation | Meta-learn steering directly; compare additional interaction cost |
 
@@ -134,15 +146,19 @@ Plus training partition without rewriting the frozen v1 data split.
 - Anneal from random toward teacher over decisions spanning episode resets.
   Duration/power randomized per complete trial from declared options.
   Schedule, teacher identity and reset seed are audit metadata, never inputs.
-- Fixed-teacher competence gate: measured robot success on the exact
-  checkpoint/task/interface; current protocol defaults ≥70% over ≥8 episodes.
-  Gate choice is a collection criterion, not proof of student quality.
+- Fixed-teacher competence requires independent robot evaluation on the exact
+  task/checkpoint/interface. Source qualification criteria and sample size
+  must be declared for this arm; older pilot defaults are not an adopted
+  collection budget or proof of expert quality.
 - DPT labels cannot rewrite historical executed noise or its actual reward.
   Same source data and collection cost shared across CND/DPT.
-- Current pilot exports paired AD and **DPT-style final-candidate labels**
-  from the same fresh-DSRL learning histories. Those final actors have not
-  passed an independent expertise test; DPT's optimal-label assumptions are
-  not established. Scheduled CND remains a separate candidate data route.
+- Planned first source route: actual advancing DSRL learning histories with
+  paired AD and DPT-style query labels, preserving executed contexts bitwise.
+  Source teacher learning may require many more episodes than the deployment
+  shot budget. Published π₀ DSRL uses batch 256, replay warmup >500 query chunks
+  and UTD20; our earlier warmup 0/batch 32/K4 smoke is not that recipe.
+  Final actors remain candidates until independently qualified. Scheduled CND
+  and direct RL² remain separate routes, not silently combined objectives.
 - DPT is not observation-only BC by definition. In this particular dataset a
   student may ignore context; test that possibility against trained static
   policies rather than assume the answer from the objective name.
@@ -156,69 +172,61 @@ Plus training partition without rewriting the frozen v1 data split.
   [paired corpus](../frozen-vla-cnd-corpus.md), and
   [direct RL²](../frozen-vla-rl2.md).
 
-## 5. Dataset and two external evaluation protocols
+## 5. LIBERO40 source and three target evaluations
 
-- Approved data comparison: clean original LIBERO versus clean plus
-  predeclared Plus source cases. Hold validation, architecture, labels,
-  optimization budget and final evaluation cases fixed within the comparison.
-  Plus training adds real collection cost; it does not create a free data arm.
-- Scope of distribution claims: clean-only → Plus/Pro is unseen-benchmark
-  shift transfer for the attachment. Clean+Plus → disjoint Plus cases is
-  within-benchmark generalization; category/parameter/base-family holdouts
-  determine any stronger OOD claim. Pro has no attachment-pretraining data.
-- Backbone release is trained on the original 130 LIBERO tasks. Externally
-  held-out perturbation cases are the main claim; original base tasks are
-  not held out from VLA pretraining. Pin weights, normalization and backend
-  together; older OpenPI teachers/features are a different contract.
-- Frozen [split specification](../../outputs/libero-pi05-corpus-20261029-r1/PLAN.md)
-  and [machine-readable manifest](../../outputs/libero-pi05-corpus-20261029-r1/split.json):
-  **78 training / 10 validation / 10 official LIBERO-10 test tasks**;
-  two additional LIBERO-90 tasks excluded into an auxiliary test bank.
-- Excluded ID 38: right moka pot → stove; identical full goal/object bindings
-  to official test ID 2 despite different wording/initial stove state.
-  Excluded ID 77: book → back caddy compartment; same full goal and instruction
-  as official test ID 5 in another scene.
-- Semantic family = transitive equality of normalized full goal + referenced
-  object bindings, or full instruction. All siblings share a partition.
-  Shared physical scenes and atomic subgoals remain permitted.
-- All 100 canonical tasks: 50 verified initial states. Training tasks:
-  states 0–39 source collection, 40–44 auxiliary familiar-task validation,
-  45–49 auxiliary familiar-task test. Main validation: held-out validation
-  tasks; auxiliary task test: official ten tasks, all 50 states unless a smaller
-  pilot is declared before running it.
-- No official test or excluded-task data in **any source DSRL teacher
-  collection/updates**, meta-gradients, normalization, label construction,
-  curriculum or checkpoint selection. Validation-only teachers remain
-  isolated from training teachers/students.
-- Distinct claims: familiar-task new-state transfer; held-out full-task/goal
-  transfer; later perturbation robustness. None implies absence from VLA
-  pretraining.
-- Original LIBERO-10 remains an auxiliary attachment-only task-transfer test;
-  the v1 source exclusions and split remain unchanged.
-- Plus/Pro: the two primary external tests; record canonical base task/family and
-  perturbation lineage; descendants inherit base partition. Training-base
-  perturbations assess robustness; held-out-base variants additionally assess
-  task transfer. Final feedback cannot select models or methods. A separately
-  declared development subset is allowed for simulator/method selection.
-- Initial Plus/Pro development base: original object task 1, cream cheese →
-  basket, typed-goal family matching training task 90:47. Reserve this family
-  from blind final tests. Official Plus has no perturbed task 90:57 counterpart.
-- First-attempt official-style scores, with suite settings/coverage disclosed,
-  are separate from K-attempt adaptation. Disclose any development overlap in
-  a full official aggregate and also report its blind excluded subset.
-- Exact development cases, source/asset pins, final-case identity fields and
-  seed exclusions: [v2 manifest](../../outputs/libero-pi05-corpus-20261029-r2/protocol.json).
-  New final IDs await pinned inventories; no outcomes used to invent cases.
-- The approved Plus source partition is disjoint from the existing Plus
-  development cases667/290: lighting case2387 and sensor-noise case1438,
-  three source scenes each. See [source-arm declaration](../../outputs/libero-pi05-corpus-20261029-r3/PLUS-SOURCE-PLAN.md).
-- Current Plus source lighting/sensor cases and camera/robot development
-  cases occupy different categories. This narrow factor split is explicit;
-  it is not a claim that the augmented model has never seen Plus.
-- **Current corpus scale:** one goal family47, four clean training scenes,
-  two clean local-validation scenes and six Plus source trials. The planned
-  78-task bank has not been collected by this smoke test. No new-goal or broad
-  meta-task generalization follows from these data.
+- Source goals: **only LIBERO-Spatial, Object, Goal and LIBERO10**, ten tasks
+  each. Official checkpoint README → `pi05_libero` config → dataset
+  `physical-intelligence/libero`: 40 tasks / 1,693 demonstrations. This audits
+  release fine-tuning, not every datum of foundation-model pretraining.
+  [Provenance snapshot](../../outputs/pi05-libero40-provenance-20261029-r1/PROVENANCE.json).
+- The already staged official JAX release is preferred. Public ungated HF
+  `lerobot/pi05_libero_base`, revision
+  `5fcf06fc42b6717e22ab885fd381a096574b12c7`, is a candidate alternative;
+  no binary equivalence to OpenPI weights is claimed.
+- Many genuinely different initial scenes per source task; record actual
+  object/robot state and perturbation identity. Numeric seeds alone are not
+  cases. Thirty-two cases per task is a candidate scale, **not an approved
+  budget or known sufficient meta-training amount**. Test data-scale curves.
+- Disjoint source training and local-validation cases; whole cases/trials stay
+  together before window extraction. Freeze actual state/case lists after the
+  audit. Older 0–39/40–44/45–49 rules are not automatically this arm's split.
+- No LIBERO90, Plus or Pro histories enter source teachers, replay, student
+  gradients, normalization or labels. This includes older 90:57 and90:47
+  teacher data and the previous Plus lighting/sensor source cases. Their
+  goals may alias source40 tasks; their historical datasets still stay out.
+- Source teacher length and total collection scale remain to be declared.
+  First show informative native failures, recoverable steering alternatives
+  and source improvement on independent source-development cases. Many easy
+  successes or irrecoverable failures alone do not justify a large corpus.
+
+| Target | Primary question | Boundary |
+| --- | --- | --- |
+| LIBERO90 | Does source40 meta-training support one-shot steering on new goals? | Audit normalized full goals/object bindings and instruction families against **all 40** source tasks; exclude/report semantic duplicates and inspected development families |
+| LIBERO-Plus | Can feedback steer under new conditions? | No Plus source data; goal novelty depends on base-task lineage; reserve development cases/families and held-out perturbation identities |
+| LIBERO-Pro | Can feedback steer under another benchmark's conditions? | No Pro source data; distinguish source-familiar from genuinely held-out goal families; reserve development cases/families |
+
+- Do not claim all90 goals are unseen because of the suite name. Exact
+  duplicate counts and blind final task/case lists: **pending semantic audit**.
+  LIBERO90 IDs 1/2/47/57 have already been inspected and are development-only;
+  reserve additional aliases/families revealed by the audit.
+- Existing Plus development 667/290, historical Plus source 2387/1438 and Pro
+  development variants have been inspected. Keep them and any protocol-defined
+  aliases outside blind final-case selection. Prior outcomes cannot select
+  a new final subset. No automatic whole-suite OOD claim from its name.
+- The main target one-shot endpoint is **query success after one separate
+  support episode**. Zero support and 2/4/8 supports are separate endpoints;
+  all support/query interactions count. Official first-attempt suite scores
+  remain a distinct reporting protocol with coverage/settings disclosed.
+- Held-out cases do not feed checkpoint or method selection. Original-source
+  development and separately reserved target development roles must be
+  disclosed. A full official aggregate including development cases needs
+  overlap disclosure and a blind dev-excluded score.
+- Earlier [v1 split](../../outputs/libero-pi05-corpus-20261029-r1/split.json)
+  (78/10/10 + two exclusions) and
+  [clean+Plus arm](../../outputs/libero-pi05-corpus-20261029-r3/PLUS-SOURCE-PLAN.md)
+  remain immutable historical protocols. LIBERO10 is now source data; those
+  earlier holdout labels do not govern the new arm. The old RLinf130 motor,
+  source replay, student weights and feature coordinates do not migrate.
 
 ## 6. Baselines and mechanism controls
 
@@ -236,10 +244,12 @@ Plus training partition without rewriting the frozen v1 data split.
   held-out-task source pretraining.
 - Feature-matched SAC control: same shared VLA features as history student;
   needed to distinguish input-representation gains from learning-process gains.
-- Source-matched official PixelSAC instead uses its RGB/state encoder;
-  history/static students use RLinf4104 features. Matching raw training data
-  does not match representation or architecture. The separately trained
-  static student provides the current controlled test of history benefit.
+- Source-matched official PixelSAC uses its RGB/state encoder; history/static
+  students use the qualified OpenPI40 prefix features. Matching raw source
+  data does not match representation or architecture. A separately trained
+  static student with identical features supplies the context-use control.
+  Replay-only SAC source pretraining is not the online teacher-generation
+  recipe; report it as an additional shared-source baseline.
 - Expert-only BC; independently trained static Transformer with matched
   data/initialization/update budget; independently trained episode-reset
   controller. Resetting the full-trained policy only at evaluation is an
@@ -260,10 +270,12 @@ Plus training partition without rewriting the frozen v1 data split.
 
 ## 7. Measurements, figures and result slots
 
-- Predeclare \(K\in\{1,2,4,8\}\). Per-attempt success; cumulative success at
-  least once; first-attempt transfer; final-attempt success; full success curve
-  against actual primitive interactions. Extra attempts alone improve
-  success-once even without adaptation.
+- Predeclare support counts \(S\in\{0,1,2,4,8\}\). Primary one-shot:
+  query success after exactly one completed support episode. Report support
+  success, query success, first-attempt transfer and interactions separately.
+  At-least-once success across attempts is secondary; repeated stochastic
+  attempts can improve it without learning. Earlier K-attempt plots use a
+  different convention and must not be relabeled as support-shot results.
 - Pair task/initial-state/reset plans; preserve successes and failures;
   independently seed each method. Treat correlated attempts as one trial.
 - A fixed initial-state index with a new RNG seed does not automatically
@@ -283,13 +295,13 @@ Plus training partition without rewriting the frozen v1 data split.
 | --- | --- | --- |
 | Fig. 1: method and chronology | What changes during deployment? | Frozen motor/controller; history updates; actual action→outcome timing |
 | Fig. 2: success vs interactions | Does steering adapt faster while keeping high final success? | Ordinary DSRL, native, CND/DPT/AD/RL²; **TBD** |
-| Table 1: Plus and Pro first attempts | Does steering preserve external-suite competence? | Separate official-style settings, coverage and blind dev-excluded scores; **TBD** |
-| Table 2: same-history targets | Does supervision explain performance? | Current paired AD vs DPT-style labels; CND route kept separate; **TBD** |
-| Data-arm comparison | Does Plus-source exposure help, and where does it transfer? | Clean vs clean+Plus; identical clean validation and held-out Plus/Pro cases; **TBD** |
+| Table 1: zero-shot targets | Does steering preserve motor competence? | LIBERO90/Plus/Pro; semantic strata, coverage and blind dev-excluded scores; **TBD** |
+| Table 2: same-history targets | Does supervision explain performance? | Paired AD vs DPT-style labels; CND route kept separate; **TBD** |
+| Source scale study | How many diverse cases and source learning steps are useful? | LIBERO40 only; identical held-out query cases and cost accounting; **TBD** |
 | Fig. 3: memory/feedback controls | Is improvement caused by useful history? | Trained static/reset, reward/history/clock interventions; **TBD** |
 | Fig. 4: data and amortization curves | How much meta-pretraining is needed, and when does it pay off? | Source-data/checkpoint scale; deployment vs total cost; **TBD** |
-| Table 3: Plus/Pro adaptation | Does own-history steering improve external-suite success efficiently? | K1/2/4/8, base/perturbation strata and source/deployment cost; **TBD** |
-| Appendix: original task holdouts | Does the attachment transfer to new full goals? | Immutable v1 ten-task bank; auxiliary; **TBD** |
+| Table 3: one-shot target adaptation | Does support feedback improve a separate query efficiently? | LIBERO90/Plus/Pro; 0/1/2/4/8 supports, query success and source/deployment cost; **TBD** |
+| Appendix: source-familiar cases | Does adaptation transfer to new cases of source40 goals? | Disjoint source-local validation/test cases; separate from new-goal claims; **TBD** |
 
 ## 8. Evidence and limits
 
@@ -298,21 +310,21 @@ Plus training partition without rewriting the frozen v1 data split.
 - Verified technical interfaces: simulator execution, native-noise replay,
   and canonical feature extraction have qualification checks. These support
   running the experiment; they do not establish meta-learning performance.
-- The older OpenPI π₀.₅ motor reached the ceiling on a small task/scene probe. Treat this
-  as headroom/runtime evidence; no adaptation benefit follows. Quantitative
-  pilot counts belong in the consolidated LIBERO `EVALUATION.md` before use
-  in a paper table. Those checks do not qualify the newly selected RLinf130
-  motor or establish its Plus/Pro results.
-- **Pending:** independent expert qualification if fixed-teacher CND is pursued;
-  frozen-student robot-performance comparisons;
-  held-out-task own-history success; reliable memory/feedback benefit;
-  competitive final success and sample efficiency; Plus/Pro.
-- Audited RLinf source data and development baseline rollouts now exist;
-  see the evaluation ledger for counts, costs and hashes. Clean source
-  episodes have a success ceiling; the Plus source sequence is not monotonic;
-  native success also ceilings the selected Plus/Pro development cases.
-  None of these runs evaluated a frozen meta-controller. Candidate training
-  and held-out own-history comparisons remain separate result slots.
+- Earlier OpenPI40 qualification reached 8/8 native and 8/8 tied-noise success
+  on a tiny 90:57 development probe. This is runtime/headroom evidence, not
+  source40 meta-training or an adaptation result. It does not establish
+  headroom across the 40 source goals or qualify a new allocation automatically.
+- Historical RLinf130 smoke: clean source 24/24; Plus source 21/24, with all
+  six first attempts successful and non-monotonic later outcomes. Native
+  Plus and Pro development each 8/8. See the ledger for exact costs, settings
+  and hashes. These source datasets and prior clean+Plus comparison remain
+  historical; they are excluded from the new source40 training arm.
+- **Pending under the new contract:** case/semantic audit, allocated runtime
+  requalification, useful steering headroom, qualified source learning,
+  source40 corpus/controller training and separate-query one-shot evaluation.
+  No frozen-controller robot result under this contract is established.
+- Independently qualified expert labels, context/feedback benefit, competitive
+  final success and net sample efficiency remain open result slots.
 - Earlier non-VLA and older-backbone probes are engineering evidence only.
   They cannot fill any VLA result slot or establish the paper's claim.
 - Publication strength and novelty remain empirical/literature questions;
