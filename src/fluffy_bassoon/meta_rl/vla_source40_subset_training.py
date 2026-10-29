@@ -40,9 +40,10 @@ def training_command(args, assembly, *, objective, mode, updates, resume):
     """Every milestone continues the same controller directory and optimizer."""
     train, validation = (assembly['datasets'][partition][objective] for partition in ('train', 'validation'))
     output = args.output / 'students' / f'{objective}-{mode}-seed-{args.seed}'
+    dataset_root = args.assembly.parent if args.assembly is not None else args.output / 'dataset'
     command = [sys.executable, '-m', 'fluffy_bassoon.meta_rl.vla_history_train',
-        '--train-data', str(args.output / 'dataset' / train['path']), '--train-sha256', train['sha256'],
-        '--validation-data', str(args.output / 'dataset' / validation['path']), '--validation-sha256', validation['sha256'],
+        '--train-data', str(dataset_root / train['path']), '--train-sha256', train['sha256'],
+        '--validation-data', str(dataset_root / validation['path']), '--validation-sha256', validation['sha256'],
         '--output-dir', str(output), '--mode', mode, '--seed', str(args.seed), '--updates', str(updates),
         '--source-commit', args.source_commit, '--expected-hostname', args.expected_hostname,
         '--max-elapsed-seconds', str(args.max_controller_seconds)]
@@ -124,6 +125,8 @@ def parser():
     ap.add_argument('--train-index', type=Path, nargs='+', required=True)
     ap.add_argument('--validation-index', type=Path, nargs='+', required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--assembly', type=Path, help='Optional immutable subset-data assembly; original source indices/costs remain required')
+    ap.add_argument('--assembly-file-sha256')
     ap.add_argument('--scales', type=int, nargs='+', default=[25, 100, 500])
     ap.add_argument('--source-commit', required=True)
     ap.add_argument('--expected-hostname', required=True)
@@ -153,11 +156,28 @@ def main(argv=None):
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
     args.output = args.output.resolve()
+    if bool(args.assembly) != bool(args.assembly_file_sha256):
+        raise ValueError('A supplied subset assembly needs its explicit file checksum')
+    supplied = None
+    if args.assembly is not None:
+        args.assembly = args.assembly.resolve()
+        if file_sha256(args.assembly) != args.assembly_file_sha256:
+            raise ValueError('Supplied subset assembly checksum differs')
+        supplied = load_assembly(args.assembly, allow_small_pilot=True)
+        if supplied.get('small_pilot') is not True:
+            raise ValueError('This bounded route accepts only an explicitly marked subset assembly')
+        for partition, paths in (('train', args.train_index), ('validation', args.validation_index)):
+            expected = {(str(path.resolve()), file_sha256(path)) for path in paths}
+            if {(row['index_path'], row['index_sha256']) for row in supplied['selected_sources'][partition]} != expected:
+                raise ValueError('Subset assembly changed the original source exposure/cost bank')
+    assembly_path = args.assembly if args.assembly is not None else args.output / 'dataset/assembly.json'
     baseline = frozen_baseline(args.train_index[0])
     contract = dict(format=FORMAT, qualification_subset=True, source_commit=args.source_commit,
         train_indices=[dict(path=str(path.resolve()), sha256=file_sha256(path)) for path in args.train_index],
         validation_indices=[dict(path=str(path.resolve()), sha256=file_sha256(path)) for path in args.validation_index],
         scales=args.scales, seed=args.seed, frozen_source_sac=baseline,
+        provided_assembly=(dict(path=str(args.assembly), file_sha256=args.assembly_file_sha256,
+            assembly_sha256=supplied['assembly_sha256']) if supplied is not None else None),
         optimization={name: getattr(args, name) for name in ('batch_size', 'learning_rate', 'width', 'layers', 'heads',
             'context_length', 'max_window', 'eval_every', 'validation_batches', 'threads', 'device')},
         max_controller_seconds=args.max_controller_seconds, max_total_seconds=args.max_total_seconds,
@@ -170,12 +190,13 @@ def main(argv=None):
     if args.resume:
         if json.loads((args.output / 'contract.json').read_text()) != contract:
             raise ValueError('Subset scale resume contract differs')
-        assembly = load_assembly(args.output / 'dataset/assembly.json', allow_small_pilot=True)
+        assembly = supplied if supplied is not None else load_assembly(assembly_path, allow_small_pilot=True)
         old_progress = json.loads((args.output / 'progress.json').read_text())
         elapsed_before = old_progress['elapsed_seconds']
     else:
         write_json(args.output / 'contract.json', contract)
-        assembly = assemble(args.train_index, args.validation_index, args.output / 'dataset', allow_small_pilot=True)
+        assembly = supplied if supplied is not None else assemble(
+            args.train_index, args.validation_index, args.output / 'dataset', allow_small_pilot=True)
         elapsed_before = 0.
         write_json(args.output / 'progress.json', dict(elapsed_seconds=0., milestones=[]))
     exposure = dict(training_task_keys=assembly['source_task_keys'],
@@ -223,8 +244,8 @@ def main(argv=None):
     scales = [dict(updates=scale, index_path=str(args.output / 'scales' / f'update-{scale:06d}' / 'index.json'),
         index_sha256=file_sha256(args.output / 'scales' / f'update-{scale:06d}' / 'index.json')) for scale in args.scales]
     result = dict(format=FORMAT, completed=True, qualification_subset=True, seed=args.seed, scales=scales,
-        assembly_path=str(args.output / 'dataset/assembly.json'), assembly_sha256=assembly['assembly_sha256'],
-        assembly_file_sha256=file_sha256(args.output / 'dataset/assembly.json'), frozen_source_sac=baseline,
+        assembly_path=str(assembly_path), assembly_sha256=assembly['assembly_sha256'],
+        assembly_file_sha256=file_sha256(assembly_path), frozen_source_sac=baseline,
         source_collection_costs_count_once=assembly['collection_costs_count_once'],
         unique_controller_optimizer_updates=4 * args.scales[-1], elapsed_seconds=elapsed_before + time.monotonic() - started,
         source_exposure=exposure, interpretation=contract['interpretation'])

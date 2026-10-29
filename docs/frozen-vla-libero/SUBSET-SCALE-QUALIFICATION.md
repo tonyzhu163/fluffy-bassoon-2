@@ -24,6 +24,14 @@ They do not increase source-data diversity. The four controllers share
 architecture, optimizer, sampling and update budgets; static controls are
 trained separately. Source normalization is fit only on training data.
 
+To combine this optimizer axis with an independently prepared source-data
+prefix, supply `--assembly <subset-assembly.json> --assembly-file-sha256 <SHA>`
+to the Python module. Original train/validation source indices remain required
+and must exactly match that assembly's full-source provenance. The smaller
+prefix does not erase teacher generation costs or change the frozen baseline.
+Only AD-valid assemblies may enter matched AD/DPT training; raw fixed-teacher
+warmup prefixes remain BC/DPT data and are not silently relabeled as AD.
+
 ```sh
 bash scripts/diagnostics/vla_source40_subset_training.sh <exact-SHA> <fresh-run-id>
 ```

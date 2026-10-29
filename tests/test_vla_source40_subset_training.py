@@ -61,6 +61,14 @@ def test_full_static_and_ad_dpt_receive_matching_optimization_parameters(tmp_pat
     assert {command[command.index('--mode') + 1] for command in commands} == {'full', 'static'}
 
 
+def test_optional_data_scale_uses_hash_bound_assembly_directory(tmp_path):
+    args = arguments(tmp_path / 'students')
+    args.assembly = tmp_path / 'case16/assembly.json'
+    command = training_command(args, assembly(), objective='ad', mode='full', updates=500, resume=False)
+    assert command[command.index('--train-data') + 1] == str(tmp_path / 'case16/train-ad.npz')
+    assert command[command.index('--validation-data') + 1] == str(tmp_path / 'case16/validation-ad.npz')
+
+
 def test_immutable_copy_rejects_changed_milestone_bytes(tmp_path):
     source, destination = tmp_path / 'live.pt', tmp_path / 'scale/recovery.pt'
     source.write_bytes(b'complete saved optimizer and RNG bytes')
