@@ -622,7 +622,7 @@ def assert_same_context(first_path, second_path):
 
 
 def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0,
-             contract=None, label_prefix=""):
+             contract=None, label_prefix="", rl2_policy=None):
     from .vla_history import FrozenHistoryController
     evaluation = {}
     for method in methods:
@@ -643,6 +643,12 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                 torch.manual_seed(args.seed + state * 1000)
                 mode = {"history": "full", "reset": "episode", "static": "static"}[method]
                 controller = FrozenHistoryController(student["static" if method == "static" else "full"], mode=mode)
+            elif method in ("rl2", "rl2_reset"):
+                import torch
+                from .vla_rl2 import FrozenRL2Controller
+                torch.manual_seed(args.seed + state * 1000)
+                controller = FrozenRL2Controller(rl2_policy,
+                    mode="full" if method == "rl2" else "episode")
             attempts = []
             for attempt in range(args.attempts):
                 if controller:
@@ -659,7 +665,7 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                     scene_seed=args.seed + state * 1000, chunk=args.chunk,
                     native=method == "native", rng=rng, feedback=feedback,
                     bounded=method not in ("native", "tied_gaussian"),
-                    record_features=method in ("history", "reset", "static"))
+                    record_features=method in ("history", "reset", "static", "rl2", "rl2_reset"))
                 if online:
                     from .vla_retry_teacher import append_episode_to_replay
                     append_episode_to_replay(online, rows)
@@ -725,6 +731,9 @@ def main():
     parser.add_argument("--online-dsrl", action="store_true")
     parser.add_argument("--feature-interface", choices=("sac", "vla-prefix"), default="sac")
     parser.add_argument("--compare-supervised", action="store_true")
+    parser.add_argument("--rl2-updates", type=int, default=0)
+    parser.add_argument("--rl2-max-steps", type=int)
+    parser.add_argument("--rl2-max-seconds", type=float)
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
@@ -738,6 +747,9 @@ def main():
         raise ValueError("A migrated shared prior needs its original contract and cannot also resume")
     if args.compare_supervised and not args.retry_train_states:
         raise ValueError("A same-data AD/DPT comparison requires explicit same-scene retry teachers")
+    if args.rl2_updates and (not args.rl2_max_steps
+            or args.rl2_max_steps < args.attempts * args.horizon or not args.retry_train_states):
+        raise ValueError("RL2 needs explicit training scenes and a complete-trial interaction budget")
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -857,6 +869,30 @@ def main():
                         objective=objective)
                     evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
                         learner=learner, student=student, train_steps=train_steps, label_prefix=prefix))
+            if args.rl2_updates:
+                import torch
+                from .vla_history import load_dataset
+                from .vla_rl2 import RL2Config, make_rl2_policy, train_rl2
+                feature_fn = (lambda obs: motor.feature_encoder(obs, sim.metadata["instruction"])) if motor.feature_encoder is not None else learner.features
+                policy = make_rl2_policy(RL2Config(observation_dim=contract["feature_dim"]),
+                                         device=args.history_device, seed=args.seed)
+                # Identical frozen feature statistics for all three meta-training objectives.
+                normalization_data = retry_paths["ad"]["train"]
+                normalization_trials, _ = load_dataset(normalization_data,
+                    expected_sha256=sha256(normalization_data))
+                values = torch.as_tensor(np.concatenate([trial["observations"] for trial in normalization_trials]),
+                    device=args.history_device, dtype=torch.float32)
+                policy.set_feature_normalization(values.mean(0), values.std(0, unbiased=False).clamp(min=1e-4))
+                policy, rl2_summary = train_rl2(policy, sim, motor, feature_fn,
+                    train_states=args.retry_train_states, heldout_states=args.eval_states + args.retry_validation_states,
+                    attempts=args.attempts, chunk=args.chunk, episode_horizon=args.horizon,
+                    max_primitive_steps=args.rl2_max_steps, updates=args.rl2_updates,
+                    output_dir=args.output / "rl2", seed=args.seed,
+                    source_contract=dict(**contract, shared_teacher_primitive_steps=train_steps,
+                        feature_normalization_dataset_sha256=sha256(normalization_data)),
+                    max_elapsed_seconds=args.rl2_max_seconds)
+                evaluation.update(evaluate(args, sim, motor, ["rl2", "rl2_reset"], learner=learner,
+                    rl2_policy=policy, train_steps=train_steps + rl2_summary["counters"]["environment_steps"]))
         else:
             learner = None
         write_json(args.output / "summary.json", dict(completed=True, evaluation=evaluation,
