@@ -127,7 +127,7 @@ class RecurrentNoisePPO:
     @torch.no_grad()
     def collect_trial(self, env, task_name, episode_seeds, *, deterministic=False,
                       reset_memory=None, reward_blind=False, episode_callback=None,
-                      primitive_budget=None):
+                      primitive_budget=None, decision_callback=None):
         """Run complete episodes; sequential execution preserves causal adaptation.
 
         Environment step returns its exact primitive-step increment. This can be
@@ -174,6 +174,23 @@ class RecurrentNoisePPO:
                 action, raw, log_prob, _, value, state = self.policy.step(
                     tensor, state, reset=reset, deterministic=deterministic)
                 noise = action[0].cpu().numpy() * c.action_limit
+                if decision_callback is not None:
+                    # Publish the behavior-policy quantities before the real
+                    # action. This is fresh on-policy evidence, not SAC replay.
+                    decision_callback(dict(
+                        episode_index=episode, chunk_index=chunks,
+                        history_index=len(records["rewards"]),
+                        policy_update=int(self.updates),
+                        pre_squash_actions=raw[0].detach().cpu().numpy().copy(),
+                        old_log_prob=log_prob[0].detach().cpu().numpy().copy(),
+                        old_value=value[0].detach().cpu().numpy().copy(),
+                        policy_input=inputs.copy(),
+                        recurrent_reset_mask=reset[0].detach().cpu().numpy().copy(),
+                        previous_noise=previous_noise.copy(),
+                        previous_reward=float(previous_reward),
+                        episode_boundary=bool(not c.reset_each_episode and episode > 0 and chunks == 0),
+                        reset_episode_feedback=bool(c.reset_each_episode),
+                        reward_blind=bool(reward_blind)))
                 if primitive_budget is None:
                     following, reward, terminated, truncated, info = env.step(noise)
                 else:

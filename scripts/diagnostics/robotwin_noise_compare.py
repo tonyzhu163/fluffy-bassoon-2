@@ -19,6 +19,7 @@ from pathlib import Path
 import random
 import sys
 import time
+import weakref
 
 import numpy as np
 import torch
@@ -35,6 +36,145 @@ HELDOUT_TASKS = ("adjust_bottle", "move_stapler_pad", "place_a2b_right",
 
 class WallBudgetReached(RuntimeError):
     pass
+
+
+class CampaignBudgetReached(RuntimeError):
+    pass
+
+
+def validate_capture_qualification(path, *, model_path, norm_stats):
+    """Only a saved successful real comparison can enable final-only capture."""
+    receipt=json.loads(Path(path).read_text())
+    if not (receipt.get("passed") is True and receipt.get("status")=="passed"
+            and receipt.get("timing_comparison_eligible") is True
+            and receipt.get("same_unchanged_frozen_motor") is True):
+        raise ValueError("Final-only capture requires a passed allocated-runtime qualification")
+    modes=receipt.get("modes",{})
+    final=modes.get("final_only",{})
+    runtime=final.get("runtime_contract",{})
+    if (final.get("final_observation_only") is not True
+            or not final.get("native_noise_parity",{}).get("passed")
+            or Path(runtime.get("model_path","")).resolve()!=Path(model_path).resolve()
+            or Path(runtime.get("norm_stats_path","")).resolve()!=Path(norm_stats).resolve()):
+        raise ValueError("Capture qualification does not match the requested motor/runtime")
+    comparisons=receipt.get("comparisons",{})
+    if len(comparisons)<4 or not all(item.get("passed") is True for item in comparisons.values()):
+        raise ValueError("Incomplete capture qualification comparisons")
+    return dict(path=str(Path(path).resolve()),
+                sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
+                source_commit=receipt.get("source_commit"),runtime_contract=runtime,
+                frozen_fingerprint=final.get("frozen_before"))
+
+
+def validate_loaded_capture_runtime(qualification,runtime,frozen_fingerprint=None):
+    """Paths alone cannot admit a checkpoint that changed in place."""
+    expected=qualification["runtime_contract"]
+    for name in ("norm_stats_sha256","rlinf_commit","robotwin_commit"):
+        if not expected.get(name) or runtime.get(name)!=expected[name]:
+            raise ValueError(f"Loaded capture runtime differs from qualification: {name}")
+    if frozen_fingerprint is not None:
+        if (not qualification.get("frozen_fingerprint")
+                or frozen_fingerprint!=qualification["frozen_fingerprint"]):
+            raise ValueError("Loaded frozen motor differs from capture qualification")
+
+
+class CampaignEnv:
+    """Budget every real action before execution, without owning learner state."""
+    def __init__(self, env, budget, *, run_id):
+        self.env=env; self.budget=budget; self.run_id=run_id
+        self.context={}; self.episode=0; self.chunk=0; self.sequence=0
+
+    def __getattr__(self,name):
+        return getattr(self.env,name)
+
+    def set_recording_context(self, metadata):
+        self.context.update(metadata)
+        if hasattr(self.env,"set_recording_context"):
+            self.env.set_recording_context(metadata)
+
+    def record_decision_metadata(self, metadata):
+        if hasattr(self.env,"record_decision_metadata"):
+            self.env.record_decision_metadata(metadata)
+
+    def reset(self,task_name,seed):
+        if not all(self.context.get(k) for k in ("phase","method","trial_id","policy_version")):
+            raise RuntimeError("Campaign reset requires complete behavior context")
+        self.task=task_name; self.episode+=1; self.chunk=0
+        # The qualified adapter issues no policy motor commands during reset.
+        # A runtime that introduces settling commands needs a pre-reset bound
+        # and reservation; never charge unbounded work after it happened.
+        if getattr(self.env,"reset_policy_action_bound",0)!=0:
+            raise RuntimeError("Campaign runtime requires reserved reset-action accounting")
+        result=self.env.reset(task_name,seed)
+        if self.env.last_reset_info.get("reset_policy_actions",0)!=0:
+            raise RuntimeError("Unexpected unreserved reset motor actions")
+        return result
+
+    def step(self,noise,*,max_primitive_steps=None):
+        ordinary=min(self.env.native_horizon,self.env.episode_limit-self.env.elapsed_steps)
+        requested=ordinary
+        if max_primitive_steps is not None: requested=min(requested,max_primitive_steps)
+        if requested<1: raise CampaignBudgetReached("No episode/source action allowance remains")
+        decision_id=f"{self.run_id}:action:{self.sequence}"
+        self.sequence+=1
+        remaining=self.budget.remaining(phase=self.context["phase"],method=self.context["method"])
+        reservation=self.budget.reserve(decision_id,int(requested),
+            phase=self.context["phase"],method=self.context["method"],task=self.task,
+            episode=f"{self.context['trial_id']}:{self.episode}",chunk=self.chunk,
+            policy_version=self.context["policy_version"])
+        if not reservation.execute:
+            raise CampaignBudgetReached("A recorded/uncertain decision must not execute again")
+        if reservation.granted<1:
+            raise CampaignBudgetReached("The cumulative physical-action allowance is exhausted")
+        self.set_recording_context(dict(campaign_decision_id=decision_id,
+                                       campaign_reserved_actions=reservation.granted))
+        # Passing H32 as an external budget on every chunk would truncate every
+        # episode after one decision. Preserve the caller's full allowance,
+        # adding a smaller cap only at an actual campaign boundary.
+        actual_cap=(int(reservation.granted) if remaining<=ordinary
+                    or reservation.granted<requested else max_primitive_steps)
+        following,reward,end,trunc,info=(self.env.step(noise) if actual_cap is None
+            else self.env.step(noise,max_primitive_steps=actual_cap))
+        actual=int(info["primitive_steps"])
+        self.budget.resolve(decision_id,actual)
+        self.chunk+=1
+        info=dict(info,campaign_decision_id=decision_id,
+                  campaign_reserved_actions=reservation.granted)
+        return following,reward,end,trunc,info
+
+
+class BehaviorPolicyArchive:
+    """Immutable acting weights; full optimizer/replay recovery stays separate."""
+    def __init__(self,root):
+        self.root=Path(root); self.root.mkdir(parents=True,exist_ok=True)
+        self.index={}; self.owners={}; self.bytes_written=0; self.seconds=0.
+
+    def identify(self,learner,method):
+        if method=="sac" and learner.warming_up:
+            return dict(policy_version="bounded_uniform_warmup",behavior="bounded uniform",
+                        policy_checkpoint=None,policy_sha256=None,policy_checkpoint_sha256=None)
+        key=(id(learner),method,int(learner.updates))
+        if key in self.index and self.owners[id(learner)]() is learner: return self.index[key]
+        started=time.monotonic()
+        network=learner.actor if method=="sac" else learner.policy
+        state={name:value.detach().cpu().contiguous().clone()
+               for name,value in network.state_dict().items()}
+        digest=hashlib.sha256()
+        for name,value in sorted(state.items()):
+            digest.update(name.encode()+str(value.dtype).encode()+str(tuple(value.shape)).encode())
+            digest.update(value.reshape(-1).view(torch.uint8).numpy().tobytes())
+        sha=digest.hexdigest(); path=self.root/(sha+".pt")
+        if not path.exists():
+            temporary=path.with_suffix(".tmp")
+            torch.save(dict(kind="sac_actor" if method=="sac" else "ppo_actor_value",
+                            state_dict=state,parameter_sha256=sha),temporary)
+            temporary.replace(path); self.bytes_written+=path.stat().st_size
+        descriptor=dict(policy_version=f"{method}:update:{learner.updates}:{sha}",
+            policy_checkpoint=str(path.resolve()),policy_sha256=sha,
+            policy_checkpoint_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        self.owners[id(learner)]=weakref.ref(learner)
+        self.index[key]=descriptor; self.seconds+=time.monotonic()-started
+        return descriptor
 
 
 def write_json(path,value):
@@ -83,9 +223,9 @@ def parse_args(argv=None):
     p.add_argument("--source-tasks",nargs="+",default=list(SOURCE_TASKS))
     p.add_argument("--eval-tasks",nargs="+",default=list(HELDOUT_TASKS))
     p.add_argument("--methods",nargs="+",choices=("ppo","sac","ppo_reset"),default=["ppo","sac"])
-    p.add_argument("--source-steps",type=int,default=10_240_000)
+    p.add_argument("--source-steps",type=int)
     p.add_argument("--ppo-update-steps",type=int,default=0)
-    p.add_argument("--ppo-trials-per-update",type=int,default=256)
+    p.add_argument("--ppo-trials-per-update",type=int)
     p.add_argument("--checkpoint-steps",type=int,default=20_000)
     p.add_argument("--train-episodes",type=int,default=4)
     p.add_argument("--eval-episodes",type=int,default=8)
@@ -94,7 +234,15 @@ def parse_args(argv=None):
     p.add_argument("--task-config-name",choices=("demo_clean","demo_randomized"),default="demo_clean")
     p.add_argument("--seed",type=int,default=1)
     p.add_argument("--eval-trials",type=int,default=1)
-    p.add_argument("--native-episodes",type=int,default=2)
+    p.add_argument("--native-episodes",type=int)
+    p.add_argument("--source-validation-episodes",type=int)
+    p.add_argument("--campaign-root",type=Path)
+    p.add_argument("--campaign-id",default="robotwin-source-1m")
+    p.add_argument("--campaign-max-actions",type=int,default=1_000_000)
+    p.add_argument("--campaign-prior-receipts",type=Path)
+    p.add_argument("--record-corpus",action="store_true")
+    p.add_argument("--final-observation-only",action="store_true")
+    p.add_argument("--capture-qualification",type=Path)
     p.add_argument("--ppo-epochs",type=int,default=5)
     p.add_argument("--ppo-minibatch-trials",type=int,default=16)
     p.add_argument("--learning-rate",type=float,default=3e-4)
@@ -107,10 +255,15 @@ def parse_args(argv=None):
     p.add_argument("--qualification-smoke",action="store_true")
     p.add_argument("--resume",type=Path)
     args=p.parse_args(argv)
+    if args.source_steps is None: args.source_steps=272_000 if args.campaign_root else 10_240_000
+    if args.ppo_trials_per_update is None: args.ppo_trials_per_update=8 if args.campaign_root else 256
+    if args.native_episodes is None: args.native_episodes=1 if args.campaign_root else 2
+    if args.source_validation_episodes is None: args.source_validation_episodes=4 if args.campaign_root else 0
     if (any(getattr(args,k)<1 for k in ("source_steps","ppo_trials_per_update","checkpoint_steps","train_episodes",
         "eval_episodes","episode_limit","native_horizon","eval_trials","ppo_epochs",
         "ppo_minibatch_trials","sac_batch_size","sac_utd")) or args.native_episodes<0
-        or args.sac_warmup<0 or args.ppo_update_steps<0 or args.wall_seconds<=args.boundary_reserve_seconds):
+        or args.sac_warmup<0 or args.ppo_update_steps<0 or args.wall_seconds<=args.boundary_reserve_seconds
+        or args.source_validation_episodes<0 or args.campaign_max_actions<1):
         p.error("Invalid budget or batch settings")
     if not set(args.source_tasks)<=set(SOURCE_TASKS):
         p.error("Source tasks must remain inside the six VLRLA source tasks")
@@ -119,6 +272,14 @@ def parse_args(argv=None):
     if not set(args.eval_tasks)<=set(SOURCE_TASKS+HELDOUT_TASKS):
         p.error("Unknown evaluation task")
     if len(set(args.methods))!=len(args.methods): p.error("Duplicate method")
+    if args.campaign_root and not args.record_corpus:
+        p.error("Campaign collection requires --record-corpus")
+    if args.campaign_root and args.source_steps*len(args.methods)>args.campaign_max_actions:
+        p.error("Source allocations exceed the entire physical campaign allowance")
+    if args.campaign_prior_receipts and not args.campaign_root:
+        p.error("Prior receipts require --campaign-root")
+    if args.final_observation_only and not args.capture_qualification:
+        p.error("Final-only capture requires --capture-qualification")
     return args
 
 
@@ -132,12 +293,26 @@ def main(argv=None):
     started=time.monotonic()
     random.seed(args.seed); np.random.seed(args.seed); torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
+    capture_qualification=None
+    if args.final_observation_only:
+        capture_qualification=validate_capture_qualification(
+            args.capture_qualification,model_path=args.model_path,norm_stats=args.norm_stats)
+    corpus_writer=None
+    if args.record_corpus:
+        from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
+        corpus_writer=RobotwinCorpusWriter(args.output/"corpus",dict(
+            source_commit=args.source_commit,model_path=str(args.model_path),
+            norm_stats=str(args.norm_stats),source_tasks=args.source_tasks,
+            train_episodes=args.train_episodes,native_horizon=args.native_horizon))
     from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv
+    runtime_options={}
+    if args.final_observation_only: runtime_options["final_observation_only"]=True
+    if corpus_writer is not None: runtime_options["corpus_writer"]=corpus_writer
     env=RobotwinNoiseEnv(model_path=args.model_path,norm_stats=args.norm_stats,
                         robotwin_root=args.robotwin_root,rlinf_root=args.rlinf_root,
                         device="cuda",episode_limit=args.episode_limit,
                         action_horizon=args.native_horizon,output_dir=args.output/"runtime",
-                        task_config_name=args.task_config_name)
+                        task_config_name=args.task_config_name,**runtime_options)
     observation_dim=int(env.observation_dim); noise_shape=tuple(env.noise_shape)
     contract=dict(source_commit=args.source_commit,source_tasks=args.source_tasks,
                   eval_tasks=args.eval_tasks,methods=args.methods,source_steps_per_learner=args.source_steps,
@@ -162,6 +337,15 @@ def main(argv=None):
     contract["ppo_update_primitive_threshold"] = args.ppo_update_steps
     contract["sac"] = asdict(SACConfig(warmup_chunks=args.sac_warmup,
         batch_size=args.sac_batch_size,utd=args.sac_utd))
+    if args.campaign_root:
+        contract["campaign"]=dict(id=args.campaign_id,max_actions=args.campaign_max_actions,
+            source_caps={method:args.source_steps for method in args.methods},
+            source_validation_episodes=args.source_validation_episodes,
+            trained_reset_target_lesions=["normal"],
+            recipe="bounded three-arm pilot; smaller complete-trial PPO batch, not the 256-trial recipe",
+            raw_public_corpus=True,behavior_checkpoints="immutable acting weights at every used version")
+    if args.record_corpus: contract["corpus"]="lossless public RGB/proprio/language and actual decision/action/outcome records"
+    if capture_qualification: contract["capture_qualification"]=capture_qualification
     if hasattr(env,"contract"):
         value=env.contract
         runtime=value() if callable(value) else dict(value)
@@ -169,10 +353,36 @@ def main(argv=None):
         # address is evidence, not part of the resumable learning contract.
         write_json(args.output/"runtime-allocation.json",runtime)
         contract["runtime"]={k:v for k,v in runtime.items() if k!="actual_render_pci"}
+        if capture_qualification:
+            validate_loaded_capture_runtime(capture_qualification,runtime)
     write_json(args.output/"contract.json",contract)
+    budget=None
+    if args.campaign_root:
+        from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
+        budget=CampaignBudget(args.campaign_root,campaign_id=args.campaign_id,
+            total_actions=args.campaign_max_actions,
+            source_caps={method:args.source_steps for method in args.methods},
+            contract=contract,run_id=args.output.name,source_commit=args.source_commit)
+        budget.__enter__()
+        if args.campaign_prior_receipts:
+            for receipt in json.loads(args.campaign_prior_receipts.read_text()):
+                budget.import_receipt(**receipt)
+        env=CampaignEnv(env,budget,run_id=args.output.name)
+    policy_archive=BehaviorPolicyArchive(args.output/"corpus"/"policies") if args.record_corpus else None
+    def set_context(method,phase,trial_id,learner=None,**metadata):
+        behavior=(policy_archive.identify(learner,"sac" if isinstance(learner,NoiseSAC) else method)
+                  if policy_archive is not None and learner is not None else
+                  dict(policy_version="native_gaussian" if method=="native" else "preflight_no_action"))
+        context=dict(method=method,phase=phase,trial_id=trial_id,
+                     **dict(dict(policy_checkpoint=None,policy_sha256=None,
+                                 policy_checkpoint_sha256=None),**behavior),**metadata)
+        if hasattr(env,"set_recording_context"): env.set_recording_context(context)
+        return context
+    def decision_metadata(metadata):
+        if hasattr(env,"record_decision_metadata"): env.record_decision_metadata(metadata)
     episodes_path=args.output/"episodes.jsonl"
     updates_path=args.output/"updates.jsonl"
-    history=[]; trained={}; summaries={}
+    history=[]; trained={}; summaries={}; completed_units=set()
     def log(stage,**values):
         row=dict(stage=stage,elapsed_seconds=time.monotonic()-started,**values)
         print(json.dumps(row,allow_nan=False),flush=True)
@@ -208,10 +418,14 @@ def main(argv=None):
         rng=np.random.default_rng(args.seed+907)
         for task in args.eval_tasks:
             for index in range(args.native_episodes):
-                guard(); features=env.reset(task,args.seed+900_000+index)
+                unit=f"{phase}:native:{task}:{index}"
+                if args.campaign_root and unit in completed_units: continue
+                guard(); set_context("native",phase,f"{phase}:{task}:{index}")
+                features=env.reset(task,args.seed+900_000+index)
                 steps=0; chunks=0; success=False; reward_sum=0.; done=False
                 initial_hash=observation_hash(features)
                 while not done:
+                    decision_metadata(dict(noise_distribution="standard_gaussian",history_index=chunks))
                     _,reward,end,trunc,info=env.step(rng.normal(size=math.prod(noise_shape)).astype(np.float32))
                     steps+=int(info["primitive_steps"]); chunks+=1
                     success|=bool(info.get("success",False)); reward_sum+=float(reward); done=bool(end or trunc)
@@ -219,12 +433,24 @@ def main(argv=None):
                          seed=args.seed+900_000+index,success=success,return_=reward_sum,
                          primitive_steps=steps,chunks=chunks,initial_observation_sha256=initial_hash)
                 append_json(episodes_path,row); log("native_episode",**row)
+                if args.campaign_root:
+                    history.append(row); completed_units.add(unit); save_joint(force=True)
     def sac_trial(learner,task,seeds,*,phase,source=False,online=False,primitive_budget=None,method="sac"):
         total=0; rows=[]
         for episode,seed in enumerate(seeds):
             observation=np.asarray(env.reset(task,int(seed)),np.float32)
             initial_hash=observation_hash(observation); done=False; steps=chunks=0; success=False; reward_sum=0.
             while not done:
+                if policy_archive is not None:
+                    behavior=policy_archive.identify(learner,"sac")
+                    env.set_recording_context(behavior)
+                # Save the interaction RNG before consuming the actual sample.
+                decision_metadata(dict(episode_index=episode,chunk_index=chunks,
+                    history_index=learner.environment_steps,
+                    source_warmup=bool(source and learner.warming_up),
+                    interaction_numpy_rng=deepcopy(learner.rng.bit_generator.state),
+                    interaction_torch_rng=learner.torch_rng.get_state().cpu().numpy().copy(),
+                    optimizer_updates=int(learner.updates),online_updates=bool(source or online)))
                 action=(learner.sample_warmup(observation) if source and learner.warming_up
                         else learner.act(observation,deterministic=False))
                 if primitive_budget is None:
@@ -262,6 +488,9 @@ def main(argv=None):
         resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
         if resume_joint["contract"]!=contract:
             raise ValueError("Resume scientific/source contract changed")
+        if args.campaign_root:
+            completed_units.update(resume_joint.get("completed_units",[]))
+            history[:]=resume_joint.get("history",[])
     def initialize_sources():
         nonlocal next_method_index,last_joint_steps
         for method in args.methods:
@@ -300,6 +529,8 @@ def main(argv=None):
         temporary=path.with_suffix(".tmp")
         torch.save(dict(contract=contract,states=states,rng=capture_rng(),
                         next_method_index=next_method_index,boundary="completed source trial/update",
+                        completed_units=sorted(completed_units),history=history,
+                        resume_stage="source_or_completed_evaluation_unit",
                         elapsed_seconds=time.monotonic()-started),temporary)
         temporary.replace(path); last_joint_steps=total
     def save_state(method,force=False):
@@ -317,6 +548,11 @@ def main(argv=None):
                                    pending_trials=len(state["pending"]),
                                    pending_primitive_steps=sum(r["primitive_steps"] for _,r in state["pending"]))
             if method=="sac": summaries[method]["contract"]=learner.contract()
+            if budget is not None:
+                physical=budget.snapshot()["by_method"].get(f"source/{method}",0)
+                summaries[method].update(source_physical_charge=physical,
+                    retained_learning_actions=state["steps"],
+                    unretained_or_uncertain_source_charge=max(0,physical-state["steps"]))
     def maybe_ppo_update(method):
         state=source_states[method]; pending=state["pending"]
         if not pending: return
@@ -335,18 +571,25 @@ def main(argv=None):
         state=source_states[method]; learner=state["learner"]
         if method!="sac": maybe_ppo_update(method)
         if state["steps"]>=args.source_steps: return
-        guard(); task,seeds=state["schedule"].sample(args.train_episodes)
+        guard()
+        allowance=args.source_steps-state["steps"]
+        if budget is not None:
+            allowance=min(allowance,budget.remaining(phase="source",method=method))
+            if allowance<1: raise CampaignBudgetReached(f"No source allowance remains for {method}")
+        task,seeds=state["schedule"].sample(args.train_episodes)
+        set_context(method,"source",f"source:{method}:{state['schedule'].trials}",learner)
         trial_start=time.monotonic()
         log("source_trial_start",method=method,task=task,seeds=seeds,
             source_steps=state["steps"],optimizer_steps=learner.optimizer_steps)
         if method=="sac":
             result=sac_trial(learner,task,seeds,phase="source",source=True,
-                             primitive_budget=args.source_steps-state["steps"])
+                             primitive_budget=allowance)
             errors={}
         else:
             rollout,result=learner.collect_trial(env,task,seeds,
-                primitive_budget=args.source_steps-state["steps"],
-                episode_callback=record_episode(method,"source"))
+                primitive_budget=allowance,
+                episode_callback=record_episode(method,"source"),
+                decision_callback=decision_metadata if args.record_corpus else None)
             errors=learner.replay_error(rollout)
             if errors["log_prob_max_error"]>2e-4 or errors["value_max_error"]>1e-5:
                 raise RuntimeError(f"Old-policy replay failed: {errors}")
@@ -367,11 +610,14 @@ def main(argv=None):
         # deferred until source training is complete, avoiding first-allocation
         # benchmark cost before learning starts.
         preflight_task=args.source_tasks[0]
+        set_context("preflight","qualification","motor_noise_parity")
         env.reset(preflight_task,args.seed+777_000)
         parity=env.check_noise_parity(np.zeros(math.prod(noise_shape),np.float32))
         log("motor_noise_parity",task=preflight_task,**parity)
         write_json(args.output/"motor-parity.json",parity)
         frozen_before=env.frozen_fingerprint()
+        if capture_qualification:
+            validate_loaded_capture_runtime(capture_qualification,contract["runtime"],frozen_before)
         initialize_sources()
         for method in args.methods: save_state(method,force=True)
         # Interleave complete K4 trials so both learning arms advance in the
@@ -390,6 +636,28 @@ def main(argv=None):
         refresh_summaries()
         if len({summaries[m]["source_steps"] for m in args.methods})!=1:
             raise RuntimeError("Source interaction budgets do not match")
+        if args.source_validation_episodes:
+            for task_index,task in enumerate(args.source_tasks):
+                seeds=[3_000_000_000+task_index*10_000+i*997
+                       for i in range(args.source_validation_episodes)]
+                for method in args.methods:
+                    unit=f"source_validation:{method}:{task}"
+                    if args.campaign_root and unit in completed_units: continue
+                    guard()
+                    learner=new_sac() if method=="sac" else new_ppo(method=="ppo_reset")
+                    learner.load_state_dict(deepcopy(trained[method]))
+                    set_context(method,"source_validation",f"source-validation:{method}:{task}",learner)
+                    if method=="sac":
+                        result=sac_trial(learner,task,seeds,phase="source_validation",method=method)
+                    else:
+                        _,result=learner.collect_trial(env,task,seeds,
+                            episode_callback=record_episode(method,"source_validation"),
+                            decision_callback=decision_metadata if args.record_corpus else None)
+                    history.append(dict(result,method=method,phase="source_validation",task=task))
+                    log("source_validation_trial",method=method,task=task,
+                        successes=[row["success"] for row in result["episodes"]],updates=learner.updates)
+                    if args.campaign_root:
+                        completed_units.add(unit); save_joint(force=True)
         native("native_before_target")
         for task in args.eval_tasks:
             for repetition in range(args.eval_trials):
@@ -397,29 +665,52 @@ def main(argv=None):
                 for method in args.methods:
                     if method=="sac":
                         for online in (False,True):
-                            guard(); learner=new_sac(); learner.load_state_dict(deepcopy(trained["sac"]))
                             label="sac_online" if online else "sac_frozen"
+                            unit=f"target:{label}:{task}:{repetition}"
+                            if args.campaign_root and unit in completed_units: continue
+                            guard(); learner=new_sac(); learner.load_state_dict(deepcopy(trained["sac"]))
                             convention=(learner.begin_target_adaptation(replay_mode="fresh_target")
                                         if online else None)
+                            set_context(label,"target",f"target:{label}:{task}:{repetition}",learner)
                             result=sac_trial(learner,task,seeds,phase="target",online=online,method=label)
-                            history.append(dict(method=label,task=task,repetition=repetition,
+                            history.append(dict(method=label,phase="target",task=task,repetition=repetition,
                                 target_adaptation=convention,
                                 target_update_costs=learner.target_counters() if online else None,**result))
                             log("target_trial",method=label,task=task,successes=[r["success"] for r in result["episodes"]])
+                            if args.campaign_root:
+                                recovery=args.output/("target-"+hashlib.sha256(unit.encode()).hexdigest()+"-recovery.pt")
+                                temporary=recovery.with_suffix(".tmp")
+                                torch.save(dict(unit=unit,contract=contract,learner=learner.state_dict(),
+                                    result=result,rng=capture_rng(),boundary="completed target trial"),temporary)
+                                temporary.replace(recovery)
+                                history[-1]["target_recovery"]=str(recovery.resolve())
+                                history[-1]["target_recovery_sha256"]=hashlib.sha256(recovery.read_bytes()).hexdigest()
+                                completed_units.add(unit); save_joint(force=True)
                     else:
-                        for lesion in ("normal","memory_reset","reward_blind"):
+                        lesions=(("normal",) if args.campaign_root and method=="ppo_reset"
+                                 else ("normal","memory_reset","reward_blind"))
+                        for lesion in lesions:
+                            unit=f"target:{method}:{lesion}:{task}:{repetition}"
+                            if args.campaign_root and unit in completed_units: continue
                             guard(); learner=new_ppo(method=="ppo_reset")
                             learner.load_state_dict(deepcopy(trained[method]))
+                            set_context(method,"target",f"target:{method}:{lesion}:{task}:{repetition}",
+                                        learner,lesion=lesion)
                             _,result=learner.collect_trial(env,task,seeds,
                                 reset_memory=method=="ppo_reset" or lesion=="memory_reset",
                                 reward_blind=lesion=="reward_blind",
-                                episode_callback=record_episode(method,"target",lesion=lesion,repetition=repetition))
-                            history.append(dict(method=method,lesion=lesion,repetition=repetition,**result))
+                                episode_callback=record_episode(method,"target",lesion=lesion,repetition=repetition),
+                                decision_callback=decision_metadata if args.record_corpus else None)
+                            history.append(dict(method=method,phase="target",lesion=lesion,repetition=repetition,**result))
                             log("target_trial",method=method,lesion=lesion,task=task,
                                 successes=[r["success"] for r in result["episodes"]])
+                            if args.campaign_root:
+                                completed_units.add(unit); save_joint(force=True)
         native("native_after")
     except WallBudgetReached as exc:
         status="wall_budget_stop"; log(status,reason=str(exc))
+    except CampaignBudgetReached as exc:
+        status="campaign_budget_stop"; log(status,reason=str(exc))
     except Exception as exc:
         status="failed"; log(status,error_type=type(exc).__name__,reason=str(exc))
         raise
@@ -437,12 +728,25 @@ def main(argv=None):
                      source=summaries,target=history,contract=contract,
                      source_budget_match=len(summaries)==len(args.methods) and
                      all(x["source_steps"]==args.source_steps for x in summaries.values()))
+        if budget is not None: summary["campaign_budget"]=budget.snapshot()
+        if args.campaign_root:
+            summary["evaluation_history"]=history
+            summary["target"]=[row for row in history if row.get("phase")=="target"]
+            summary["source_validation"]=[row for row in history if row.get("phase")=="source_validation"]
+            summary["native"]=[row for row in history if row.get("method")=="native"]
+        if corpus_writer is not None: summary["corpus"]=corpus_writer.statistics()
+        if policy_archive is not None:
+            summary["behavior_policy_archive"]=dict(bytes_written=policy_archive.bytes_written,
+                io_seconds=policy_archive.seconds,acting_versions=len(policy_archive.index))
         if hasattr(env,"counters"):
             value=env.counters
             summary["runtime_counters"]=value() if callable(value) else value
         write_json(args.output/"summary.json",summary)
-        if hasattr(env,"close"): env.close()
-    return 0 if status in ("complete","wall_budget_stop") else 3
+        try:
+            if hasattr(env,"close"): env.close()
+        finally:
+            if budget is not None: budget.close()
+    return 0 if status in ("complete","wall_budget_stop","campaign_budget_stop") else 3
 
 
 if __name__=="__main__":

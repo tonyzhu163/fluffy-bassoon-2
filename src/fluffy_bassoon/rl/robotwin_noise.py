@@ -10,7 +10,8 @@ with an injected backend on allocated Linux CPU resources.
 from __future__ import annotations
 
 from concurrent.futures import Future
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -89,6 +90,24 @@ def _temporary_instance_method(instance, name, replacement):
             setattr(instance, name, previous)
         else:
             delattr(instance, name)
+
+
+@contextmanager
+def _capture_sparse_feedback(task):
+    """Observe native feedback without changing its values or adapter logic."""
+    native = task.gen_sparse_reward_data
+    feedback = {}
+
+    def collect(*args, **kwargs):
+        result = native(*args, **kwargs)
+        feedback.update(raw_rewards=deepcopy(result[0]),
+                        raw_terminations=deepcopy(result[1]),
+                        raw_truncations=deepcopy(result[2]),
+                        native_info=deepcopy(result[3]))
+        return result
+
+    with _temporary_instance_method(task, "gen_sparse_reward_data", collect):
+        yield feedback
 
 
 def _step_with_final_observation(subenv, actions, update_obs):
@@ -372,7 +391,7 @@ class _RoboTwinBackend:
     def __init__(self, model_path, norm_stats, robotwin_root, rlinf_root,
                  device="cuda", episode_limit=400, action_horizon=32,
                  num_steps=5, task_config_name="demo_clean", output_dir=None,
-                 final_observation_only=False):
+                 final_observation_only=False, corpus_writer=None):
         from fluffy_bassoon.gpu_execution import validate_execution
 
         mode = os.environ.get("FLUFFY_GPU_EXECUTION", "baige")
@@ -410,6 +429,8 @@ class _RoboTwinBackend:
         if final_observation_only and task_config_name != "demo_clean":
             raise ValueError("final_observation_only initially supports demo_clean only")
         self.final_observation_only = final_observation_only
+        self.corpus_writer = corpus_writer
+        self._decision_metadata = {}
         self.noise_shape = (int(action_horizon), 32)
         self.native_horizon = int(action_horizon)
         self.output_dir = Path(output_dir) if output_dir else None
@@ -446,6 +467,8 @@ class _RoboTwinBackend:
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
+        if corpus_writer is not None:
+            corpus_writer.register_runtime(self.contract)
 
     def _encode(self, raw):
         from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
@@ -528,12 +551,15 @@ class _RoboTwinBackend:
             raise RuntimeError("Task's actual renderer does not match allocated GPU")
         self._check_frozen()
         features = self._encode(raw)
-        return features, dict(task=task_name, requested_seed=int(seed), actual_seed=actual_seed,
+        reset_info = dict(task=task_name, requested_seed=int(seed), actual_seed=actual_seed,
                               instruction=list(raw["task_descriptions"]),
                               observation_sha256=_observation_hash(raw),
                               features_sha256=hashlib.sha256(features.tobytes()).hexdigest(),
                               actual_render_pci=actual_pci, reset_policy_actions=0,
                               reset_internal_physics_steps="not separately instrumented")
+        if self.corpus_writer is not None:
+            reset_info["corpus_episode_id"] = self.corpus_writer.begin_episode(raw, features, reset_info)
+        return features, reset_info
 
     def decode(self, noise):
         torch = self.torch
@@ -555,7 +581,15 @@ class _RoboTwinBackend:
     def step(self, noise, action_count):
         actions = self.decode(noise)[:action_count]
         torch = self.torch
-        obs, rewards, terms, truncs, infos = self.env.chunk_step(torch.from_numpy(actions[None]))
+        writer = self.corpus_writer
+        metadata, self._decision_metadata = self._decision_metadata, {}
+        if writer is not None:
+            writer.begin_decision(noise, actions, metadata)
+        started = time.monotonic()
+        capture = (_capture_sparse_feedback(self.env.venv.envs[0].task)
+                   if writer is not None else nullcontext())
+        with capture as native_feedback:
+            obs, rewards, terms, truncs, infos = self.env.chunk_step(torch.from_numpy(actions[None]))
         info = infos[-1]
         mask = info.get("valid_action_mask")
         if mask is None:
@@ -569,7 +603,15 @@ class _RoboTwinBackend:
         # The wrapper pads observations but the final public observation is real.
         raw = obs[-1]
         features = self._encode(raw)
-        return features, float(torch.as_tensor(rewards).sum()), terminal, truncated, dict(
+        reward = float(torch.as_tensor(rewards).sum())
+        if writer is not None:
+            writer.complete_native(next_raw=raw, next_features=features,
+                valid_action_mask=mask, reward=reward, terminated=terminal,
+                truncated=truncated, executed_steps=actual, success=success,
+                duration_seconds=time.monotonic() - started,
+                adapter_rewards=rewards, adapter_terminations=terms,
+                adapter_truncations=truncs, **native_feedback)
+        return features, reward, terminal, truncated, dict(
             primitive_steps=actual, issued_primitive_steps=action_count,
             success=success, motor_queries=1, prefix_calls=1,
             observation_sha256=_observation_hash(raw),
@@ -617,7 +659,7 @@ class RobotwinNoiseEnv:
     def __init__(self, model_path=None, norm_stats=None, robotwin_root=None, rlinf_root=None,
                  device="cuda", episode_limit=400, action_horizon=32, num_steps=5,
                  task_config_name="demo_clean", output_dir=None, *, backend=None,
-                 final_observation_only=False):
+                 final_observation_only=False, corpus_writer=None):
         if type(episode_limit) is not int or episode_limit < 1:
             raise ValueError("episode_limit must be a positive integer")
         if type(final_observation_only) is not bool:
@@ -627,7 +669,8 @@ class RobotwinNoiseEnv:
         self.backend = backend if backend is not None else _RoboTwinBackend(
             model_path, norm_stats, robotwin_root, rlinf_root, device, episode_limit,
             action_horizon, num_steps, task_config_name, output_dir,
-            final_observation_only=final_observation_only)
+            final_observation_only=final_observation_only, corpus_writer=corpus_writer)
+        self.corpus_writer = corpus_writer
         self.observation_dim = self.backend.observation_dim
         self.noise_shape = tuple(self.backend.noise_shape)
         self.native_horizon = int(self.noise_shape[0])
@@ -636,6 +679,16 @@ class RobotwinNoiseEnv:
         self.active = False
         self.last_reset_info = None
         self.contract = getattr(self.backend, "contract", {})
+
+    def set_recording_context(self, metadata):
+        """Set method/phase/trial/policy identity without changing the scene."""
+        if self.corpus_writer is not None:
+            self.corpus_writer.set_context(metadata)
+
+    def record_decision_metadata(self, metadata):
+        """Attach current policy inputs/log-probability/history to next step."""
+        if self.corpus_writer is not None:
+            self.backend._decision_metadata = deepcopy(metadata)
 
     def reset(self, task_name, seed):
         if task_name not in SOURCE_TASKS + HELDOUT_TASKS:
@@ -682,6 +735,11 @@ class RobotwinNoiseEnv:
         self.active = not (terminated or truncated)
         info = dict(info, episode_primitive_steps=self.elapsed_steps,
                     budget_truncated=bool(budget_truncated))
+        if self.corpus_writer is not None:
+            info["corpus_chunk"] = self.corpus_writer.finalize_learning_flags(
+                reward=reward, terminated=terminated, truncated=truncated,
+                budget_truncated=budget_truncated,
+                episode_primitive_steps=self.elapsed_steps)
         return self._features(features), float(reward), bool(terminated), truncated, info
 
     def check_noise_parity(self, noise):
