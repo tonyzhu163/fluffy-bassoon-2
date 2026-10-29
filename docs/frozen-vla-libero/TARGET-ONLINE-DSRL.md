@@ -1,5 +1,11 @@
 # Fresh target-online DSRL learning-onset diagnostic
 
+Each query reports both adaptation plus its current query cost and the full
+cumulative physical charge, including earlier frozen query measurements,
+qualification and interrupted attempts. Earlier query outcomes never enter
+replay or influence later training randomness. Evaluation overhead remains
+inside the joint action ledger even when plotted separately from adaptation.
+
 This baseline starts an independent pixel SAC actor, critic, optimizer, replay
 and sampler on each predeclared LIBERO90 target: task0/state0/scene seed123 and
 task1/state0/scene seed123. It uses the same frozen official OpenPI pi0.5 LIBERO40

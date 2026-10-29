@@ -53,6 +53,7 @@ export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   PYTHONPATH=$TASK_ROOT/envs/pytest-overlay-20261029-r1:$TASK_WT/src \
   "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla_target_online_dsrl.py \
+  tests/test_vla_source40_two_goal_qualification.py tests/test_vla_source40_training.py tests/test_gpu_probe.py \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 # Parent reviews this budget against the remaining shared pool before launch.
 # This target-only reservation never produces fresh source-PPO or source-SAC data.

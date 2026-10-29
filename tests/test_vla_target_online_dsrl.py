@@ -99,6 +99,8 @@ def test_exact_published_warmup_updates_and_independent_frozen_queries(tmp_path)
     assert [row['target_optimizer_updates'] for row in result['query_receipts']] == [0, 0, 800, 2400]
     assert [row['training_action_ceiling'] for row in result['query_receipts']] == [0, 410, 5330, 6150]
     assert [row['actual_training_actions'] for row in result['query_receipts']] == [0, 410, 5330, 6150]
+    assert [row['adaptation_plus_current_query_actions'] for row in result['query_receipts']] == [410, 820, 5740, 6560]
+    assert [row['cumulative_case_physical_actions'] for row in result['query_receipts']] == [410, 1230, 6560, 7790]
     assert [row['query_behavior'] for row in result['query_receipts']] == ['native', 'native', 'frozen_target_sac', 'frozen_target_sac']
     assert result['costs']['training']['known_actions'] == 6150
     assert result['costs']['query']['known_actions'] == 1640

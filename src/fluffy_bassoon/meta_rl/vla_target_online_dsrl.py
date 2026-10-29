@@ -184,6 +184,8 @@ def frozen_query(sim, motor, learner, target):
                 native_initial_noise=noise, behavior='native' if updates == 0 else 'frozen_target_sac', updates=updates)
             outcome = sim.step(actions)
             row = dict(motor_observation=observation, motor_next_observation=outcome['observation'],
+                instruction=str(sim.metadata['instruction']),
+                target_task_key=f"{target['suite']}:{target['task_id']:02d}",
                 sac_observation=sac_observation(observation), sac_next_observation=sac_observation(outcome['observation']),
                 proposed_noise=proposed, executed_noise=executed, native_initial_noise=noise,
                 executed_actions=outcome['executed_actions'], raw_rewards=outcome['rewards'],
@@ -314,6 +316,11 @@ def run_case(sim, motor, learner, sampler, *, target, output, root, contract, re
             actual_training_settling_steps=progress['training_settling_steps'],
             actual_training_actions=progress['training_primitive_steps'] + progress['training_settling_steps'],
             actual_training_chunks=progress['training_chunks'], query_data_added_to_replay=False,
+            adaptation_plus_current_query_actions=(progress['training_primitive_steps']
+                + progress['training_settling_steps'] + summary['primitive_steps'] + summary['settling_steps']),
+            cumulative_case_physical_actions=journaled.case_charge,
+            cumulative_joint_physical_actions=journaled.total_charge,
+            measurement_cost_note='Adaptation plus current query excludes earlier frozen query measurements; all measurements/qualification/retries remain in cumulative physical costs.',
             policy_signature=_signature(learner))
         progress['query_receipts'].append(save_trace(output, journaled.episode_id, rows, summary, contract))
         progress['next_milestone'] += 1
