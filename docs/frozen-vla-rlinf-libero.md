@@ -35,3 +35,28 @@ contract names this backend and checkpoint, independently of earlier OpenPI runs
 All construction and inference require an allocated Linux GPU. Existing
 environments and checkpoints are read in place. Real simulator qualification,
 same-noise parity and actual GPU bindings are required in each new runtime.
+
+## First source-corpus pilot
+
+`vla_rlinf_retry_corpus` collects four-attempt learning trials on original
+source-training scenes 0–3 and local validation scenes 36–37. Each scene
+restores the same complete fresh ordinary DSRL initialization. Batch size is
+32, UTD is 20, and updates start after the first complete episode (warmup zero).
+The six trials consume at most 9,600 primitive steps; reset settling is counted
+separately. The simulator must construct a fresh environment on each reset.
+
+All trials use one frozen RLinf prefix encoder. An immutable full SAC recovery
+checkpoint, sampler/RNG state and raw public images/actions are saved after
+every episode. Each completed trial is immediately published as paired AD and
+DPT datasets: AD targets actual executed noise; DPT queries the final candidate
+source actor on the same historical observations. Historical feedback and
+actions remain identical. The candidate actor is not called an expert, and
+the collection does not assume monotonic improvement or independently measured
+final-actor competence.
+
+`index.json` binds individual trial files to the original training task,
+checkpoint SHA and new RLinf feature kind. The completed pilot also exports
+local scene training/validation bundles. This assembler accepts only
+`rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1`
+with the exact model SHA above; old OpenPI/CND shards cannot enter it.
+No Plus/Pro rollout enters source-corpus training data.
