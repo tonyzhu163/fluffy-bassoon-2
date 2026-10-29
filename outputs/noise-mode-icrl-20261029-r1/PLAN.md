@@ -128,6 +128,11 @@ grid in Stage 2, not a claim.
 
 ### Gates (fixed before any learner training)
 
+These gates qualify selectors over this fixed random bank. They do not test
+DSRL's learned continuous, observation-conditioned per-chunk noise actor.
+Failure does not rule out that richer interface or establish that the frozen
+motor has no steerable support outside the tested bank.
+
 Per condition c, write `p(c, k)` for the arm-k success rate over that
 condition's poses. Estimate it on disjoint pose halves: select on one half
 and score on the other, so the oracle is not inflated by taking a max.
@@ -135,7 +140,7 @@ and score on the other, so the oracle is not inflated by taking a max.
 | Gate | Definition | Pass |
 | --- | --- | --- |
 | G1 headroom | Per-condition oracle arm minus native, scored on the held-out half | ≥ 15 pp on held-out conditions |
-| G2 heterogeneity | Per-condition oracle minus the best single static arm, chosen on training conditions | ≥ 10 pp. Otherwise a static selector solves it and there is no in-context RL question |
+| G2 heterogeneity | Per-condition oracle minus the best single static arm, chosen on training conditions | ≥ 10 pp. Otherwise this bank does not establish enough benefit from condition-specific selection |
 | G3 consistency | Split-half rank correlation of `p(c, ·)` within a condition | Spearman ≥ 0.5 averaged over conditions. Otherwise the arms are noise, and reward from one pose says nothing about the next |
 | G4 structure | Training-condition arm profiles predict held-out profiles better than a uniform prior (log score of a posterior over training profiles) | Positive gain. This is what a meta-learner can exploit beyond Thompson |
 
@@ -145,8 +150,9 @@ the held-out-like objects with the lowest native success and report that
 selection.
 
 **Kill:** if G1–G3 fail on both C1 and C2, record the negative headroom result.
-It is still a finding for the reward-only benchmark (idea 3) and for the
-claim that VLA failures are mode failures. Do not train learners.
+It is a negative result for this fixed-bank route, not a rejection of learned
+noise steering or a general test of whether VLA failures are mode failures.
+Do not train cached selectors on an unqualified bank.
 
 ## Stage 1: freeze the protocol
 
