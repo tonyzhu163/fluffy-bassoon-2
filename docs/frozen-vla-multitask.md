@@ -52,7 +52,12 @@ on the declared training scenes. It uses the same generic frozen feature space
 and training-only feature statistics; its own additional robot interactions are
 counted. RL² semantic multi-task scheduling must sample the declared training
 task bank and preserve one task/scene through each complete K-attempt trial;
-the initial CLI qualifies the real single-task PPO loop, not that broader claim.
+the initial CLI qualifies the real single-task PPO loop. `SimulatorTaskBank`
+routes complete trials across already allocated per-task workers, and
+`train_task_bank_rl2` samples only the manifest's training task/scene bank while
+retaining task and scene across every attempt of each trial. Validation/test
+episode identities are excluded from its sampler. The caller explicitly owns
+worker startup, allocation and cleanup; this helper does not create GPU jobs.
 
 Compare native full-noise sampling, tied-noise sampling, frozen ordinary DSRL,
 ordinary DSRL updating between held-out retries, AD, DPT and RL². For every

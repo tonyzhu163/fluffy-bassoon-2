@@ -438,6 +438,8 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
         if outcome["done"]:
             break
     return rows, dict(initial_state=int(initial_state), scene_seed=int(scene_seed),
+                      task_id=sim.metadata.get("task_id"), suite=sim.metadata.get("suite"),
+                      semantic_task=Path(sim.metadata.get("bddl_file", "")).stem,
                       success=bool(outcome["success"]), chunks=len(rows),
                       primitive_steps=sum(r["primitive_steps"] for r in rows),
                       raw_return=sum(sum(r["raw_rewards"]) for r in rows),
