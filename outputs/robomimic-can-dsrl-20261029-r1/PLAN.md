@@ -51,3 +51,16 @@ complete episode/trial boundaries. GPU-attestation helper migration adds
 support for a complete two-GPU parent probe; scientific source stays identical
 to qualification-r4 and helper fixtures plus real per-worker CUDA checks run
 inside the new allocation before model construction. Record this migration.
+
+The eight-card follow-on predeclares two execution geometries under the same
+one-hour/eight-GPU-hour cap: prefer four matched training seeds with16arms
+on eight balanced serial lanes; if their complete conservative workload does
+not fit, use two matched seeds with8arms, one independent method per GPU.
+All four methods, the complete verified common step target (at least28,800)
+and every8-scene/K4 evaluation condition remain required. Select the greatest
+feasible seed count from measured completed pilot phase costs, with the2xRTX
+timing-transfer reserve. Record both candidates and the selected design before
+training, and notify the actual selected seed count at launch. The user
+specified parallel matched seeds and resource/time limits; four seeds was an
+execution proposal. Do not drop trained-reset/retry controls or truncate arms
+to force four repetitions into the elapsed-time cap.

@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # One exclusive eight-RTX6000 Baige container, at most one hour / eight GPU-hours.
-# Four paired seeds; each GPU runs two methods serially. Never launch this before
-# the complete single-4090 pilot has passed the gates below.
+# Prefer four paired seeds with serial arms; fall back to two paired seeds with
+# one independent arm per GPU when required by the measured one-hour budget.
+# Never launch before the complete 4090 pilot passes the gates below.
 set -euo pipefail
 TASK_SOURCE=${1:?exact source commit}
 TASK_RUN=${2:?fresh eight-GPU run ID}
-TASK_PILOT_RUN=${3:?completed single-4090 pilot run ID}
+TASK_PILOT_RUN=${3:?completed 4090 pilot run ID}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
@@ -52,13 +53,19 @@ root, output, worktree = (Path(os.environ[name]) for name in ('TASK_ROOT', 'TASK
 pilot = root / 'outputs' / os.environ['TASK_PILOT_RUN']
 source, started = os.environ['TASK_SOURCE'], float(os.environ['TASK_ALLOCATION_STARTED'])
 METHODS = ['dsrl-na', 'dsrl-na-retry', 'rl2', 'episode-reset']
+PAIRS = [['dsrl-na', 'rl2'], ['dsrl-na-retry', 'episode-reset']]
+HELPER = 'src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py'
 WALL, FINAL, PROBE, TRANSFER = 3600, 180, 180, 2.0
 lock, records = threading.Lock(), []
 plan = dict(source_commit=source, run_id=os.environ['TASK_RUN'], pilot=str(pilot),
             hostname=socket.gethostname(), admitted=False, wall_budget_seconds=WALL,
             allocated_gpu_hours_ceiling=8, final_audit_reserve_seconds=FINAL,
             full_probe_reserve_seconds=PROBE, rtx6000_timing_factor=TRANSFER,
-            methods=METHODS, seeds=[1, 2, 3, 4], envs=4, attempts=4, eval_trials=8,
+            methods=METHODS, seeds=None, selected_seed_count=None,
+            envs=4, attempts=4, eval_trials=8, minimum_verified_target_steps=28800,
+            predeclared_designs=[dict(seed_count=4, required_arms=16, layout='balanced serial pairs'),
+                                 dict(seed_count=2, required_arms=8, layout='one independent arm per GPU')],
+            selection_rule='prefer four matched seeds if feasible; otherwise two matched seeds with every method and control',
             core=dict(core='gtrxl', width=128, layers=2, heads=4, memory_length=300))
 
 
@@ -147,8 +154,9 @@ def phase_estimate(method, target, measured, qualified):
         boundary = 4 * episode + 75 * update
     else:
         train = target / 4800 * positive(qualified['ppo_full_trial_total_seconds'])
-        one_episode = max(episode, positive(qualified['ppo_small_trial_seconds']) / 2,
-                          positive(qualified['ppo_full_trial_rollout_seconds']) / 4)
+        # The B1K2 proof measures serial evaluator episodes. Dividing the B4K4
+        # rollout by four would count a complete four-attempt lane as one episode.
+        one_episode = max(episode, positive(qualified['ppo_small_trial_seconds']) / 2)
         evaluate = 96 * one_episode
         boundary = positive(qualified['ppo_full_trial_total_seconds'])
     deadline = math.ceil(TRANSFER * train + 60)
@@ -160,12 +168,74 @@ def phase_estimate(method, target, measured, qualified):
                 measured_complete_4090_phase_seconds=measured)
 
 
+def helper_migration(old_plan, pilot_source, qualified_source):
+    """Validate the recorded count2-only runtime migration without reusing it blindly."""
+    migration = old_plan.get('helper_migration')
+    if not migration:
+        return None
+    if (migration.get('qualified_source_commit') != qualified_source
+            or migration.get('permitted_changed_source') != [HELPER]
+            or migration.get('cpu_tests', {}).get('passed') is not True):
+        raise ValueError('The helper-only compatibility migration is incomplete')
+    changes = subprocess.check_output(
+        ['git', 'diff', '--name-only', qualified_source, pilot_source, '--', 'src'],
+        cwd=worktree, text=True).splitlines()
+    if set(changes) != {HELPER}:
+        raise ValueError('The two-GPU compatibility migration changed scientific source')
+    previous = subprocess.check_output(['git', 'show', f'{qualified_source}:{HELPER}'], cwd=worktree)
+    pilot_helper = subprocess.check_output(['git', 'show', f'{pilot_source}:{HELPER}'], cwd=worktree)
+    current = digest(worktree / HELPER)
+    if (hashlib.sha256(previous).hexdigest() != migration['old_sha256']
+            or hashlib.sha256(pilot_helper).hexdigest() != migration['new_sha256']
+            or current != migration['new_sha256']):
+        raise ValueError('GPU helper source does not match the documented migration')
+    tests = migration['cpu_tests']
+    if (digest(pilot / 'runtime-tests.log') != tests['log_sha256']
+            or digest(worktree / 'tests/test_can_dsrl_gpu.py') != tests['source_sha256']):
+        raise ValueError('The allocation fixture proof or its source changed')
+    scientific = old_plan.get('scientific_source_sha256', {})
+    if not scientific or any(digest(worktree / name) != expected for name, expected in scientific.items()):
+        raise ValueError('The byte-identical scientific source manifest changed after the pilot')
+    parent = read(pilot / 'parent-gpu-probe.json')
+    parent_sha = digest(pilot / 'parent-gpu-probe.json')
+    assigned = parent.get('gpu_identity_mapping', {}).get('assigned_nvml_uuids', [])
+    if (parent_sha != old_plan['parent_probe_sha256'] or parent.get('status') != 'passed'
+            or parent.get('purpose') != 'training' or parent.get('allocation_type') != 'baige_container'
+            or parent.get('source_commit') != pilot_source
+            or parent.get('scientific_source_commit') != qualified_source
+            or parent.get('helper_sha256') != current or len(parent.get('devices', [])) != 2
+            or len(assigned) != 2 or set(assigned) != {row['uuid'] for row in parent['devices']}):
+        raise ValueError('The migration lacks its complete two-GPU parent qualification')
+    receipts = migration.get('actual_selected_gpu_probes')
+    if not isinstance(receipts, dict) or set(receipts) != set(METHODS):
+        raise ValueError('All four actual selected-GPU worker receipts are required')
+    for method in METHODS:
+        path = pilot / method / 'gpu-probe.json'
+        receipt = read(path)
+        selected = receipt.get('selected_device', {})
+        ordinal = int(receipt.get('cuda_visible_devices', '-1'))
+        if (digest(path) != receipts[method] or receipt.get('status') != 'passed'
+                or receipt.get('source_commit') != pilot_source or receipt.get('parent_gpu_count') != 2
+                or receipt.get('parent_probe_sha256') != parent_sha
+                or receipt.get('source_binding') != 'parent_and_worker'
+                or receipt.get('hostname') != parent['hostname']
+                or receipt.get('scheduler_nvidia_visible_devices') != assigned
+                or ordinal not in (0, 1) or selected.get('uuid') != parent['devices'][ordinal]['uuid']
+                or receipt.get('tensor_result') != 8192. or receipt.get('elements') != 4096
+                or receipt.get('pid_allocation', {}).get('available') is not True
+                or receipt['pid_allocation'].get('own_gpu_uuids') != [selected['uuid']]):
+            raise ValueError(f'Incomplete actual worker GPU migration evidence: {method}')
+    return dict(verified=True, qualified_source_commit=qualified_source, pilot_source_commit=pilot_source,
+                old_helper_sha256=migration['old_sha256'], helper_sha256=current,
+                cpu_tests=tests, parent_probe_sha256=parent_sha, worker_receipts=receipts)
+
+
 def admit():
     admission, old_plan = read(pilot / 'pilot-admission.json'), read(pilot / 'plan.json')
     if (admission.get('core_training_interactions_complete') is not True
             or old_plan.get('scene_pairing_verified') is not True
             or old_plan.get('admitted') is not True):
-        raise ValueError('All four paired single-4090 pilot arms must have completed')
+        raise ValueError('All four paired 4090 pilot arms must have completed')
     pilot_source, pilot_target = admission['source_commit'], int(admission['target_steps'])
     if old_plan['source_commit'] != pilot_source or old_plan['target_steps'] != pilot_target:
         raise ValueError('Pilot admission and predeclared plan disagree')
@@ -211,11 +281,18 @@ def admit():
         probe = read(directory / 'gpu-probe.json')
         devices = probe.get('devices', [probe.get('selected_device', {})])
         if len(devices) != 1 or re.search(r'RTX\s*4090', devices[0].get('cuda_name', ''), re.I) is None:
-            raise ValueError('Transfer estimates must come from an actual single-4090 pilot')
+            raise ValueError('Each measured pilot phase must use one selected actual4090')
         paired = evaluation(directory, method)
         if scene_hashes is not None and paired != scene_hashes:
             raise ValueError('Pilot methods did not evaluate the same scenes')
         scene_hashes, old_recoveries[method] = paired, recovery(directory, method)
+    qualified_contract = read(qual / 'qualification/contract.json')
+    migration_evidence = helper_migration(old_plan, pilot_source, qualified_contract['source_commit'])
+    scientific_changes = subprocess.check_output(
+        ['git', 'diff', '--name-only', qualified_contract['source_commit'], source, '--', 'src'],
+        cwd=worktree, text=True).splitlines()
+    if set(scientific_changes) - ({HELPER} if migration_evidence else set()):
+        raise ValueError('Scientific source changed after qualification')
     for directory in (qual / 'qualification', qual / 'native'):
         contract = read(directory / 'contract.json')
         if any(contract[key] != value for key, value in baseline.items()):
@@ -226,6 +303,8 @@ def admit():
             qualified_source = subprocess.check_output(
                 ['git', 'show', f'{contract["source_commit"]}:{name}'], cwd=worktree)
             if hashlib.sha256(qualified_source).hexdigest() != digest(worktree / name):
+                if name == HELPER and migration_evidence:
+                    continue
                 raise ValueError(f'Runtime source changed after qualification: {name}')
     current_runtime = {name: metadata.version(name) for name in baseline['runtime']}
     installed = metadata.distribution('robomimic').locate_file('robomimic/envs/env_robosuite.py')
@@ -243,19 +322,44 @@ def admit():
             raise ValueError('Current frozen input artifact differs from the pilot')
     qualified = dict(q, native_elapsed_seconds=native['elapsed_seconds'])
     candidates = []
-    for target in (48000, 28800):
-        if target > pilot_target:
-            continue
-        phases = {method: phase_estimate(method, target, stage[method]['phase_elapsed_seconds'], qualified) for method in METHODS}
-        longest = max(sum(phases[method]['total_seconds'] for method in METHODS[:2]),
-                      sum(phases[method]['total_seconds'] for method in METHODS[2:]))
-        candidates.append(dict(target_steps=target, phases=phases, longest_worker_seconds=longest))
     remaining = WALL - (time.time() - started) - PROBE - FINAL
-    chosen = next((candidate for candidate in candidates if candidate['longest_worker_seconds'] <= remaining), None)
+    for seed_count in (4, 2):
+        if seed_count == 4:
+            assignment = [dict(gpu=2*i+j, seed=i+1, methods=PAIRS[j])
+                          for i in range(4) for j in range(2)]
+            layout = 'balanced serial pairs'
+        else:
+            assignment = [dict(gpu=4*i+j, seed=i+1, methods=[method])
+                          for i in range(2) for j, method in enumerate(METHODS)]
+            layout = 'one independent arm per GPU'
+        for target in (48000, 28800):
+            if target > pilot_target or target < plan['minimum_verified_target_steps']:
+                continue
+            phases = {method: phase_estimate(method, target, stage[method]['phase_elapsed_seconds'], qualified)
+                      for method in METHODS}
+            longest = max(sum(phases[method]['total_seconds'] for method in lane['methods'])
+                          for lane in assignment)
+            fits = longest <= remaining
+            candidates.append(dict(seed_count=seed_count, seeds=list(range(1, seed_count+1)),
+                                   required_arms=seed_count*len(METHODS), layout=layout,
+                                   gpu_assignment=assignment, target_steps=target, phases=phases,
+                                   longest_worker_seconds=longest, available_worker_seconds=remaining,
+                                   fits=fits, admission_reason='fits measured one-hour envelope' if fits else
+                                       'complete worker workload plus reserves exceeds one-hour envelope'))
+    plan.update(candidates=candidates, candidate_available_worker_seconds=remaining)
+    chosen = next((candidate for candidate in candidates if candidate['fits']), None)
     if chosen is None:
-        raise ValueError('No common verified training target fits the conservative one-hour allocation')
+        raise ValueError('Neither predeclared seed geometry fits at the full verified target and controls')
+    selection_reason = ('Four matched seeds fit with every required method and control'
+                        if chosen['seed_count'] == 4 else
+                        'Four-seed serial lanes do not fit; two matched seeds preserve the full target, '
+                        'DSRL retry and trained-reset controls within one hour')
     plan.update(pilot_source_commit=pilot_source, runtime_identity=baseline, paired_scenes=scene_hashes,
                 pilot_recoveries=old_recoveries, candidates=candidates, estimate=chosen,
+                helper_migration_verification=migration_evidence,
+                selected_seed_count=chosen['seed_count'], seeds=chosen['seeds'],
+                selected_layout=chosen['layout'], selection_reason=selection_reason,
+                gpu_assignment=chosen['gpu_assignment'],
                 target_steps=chosen['target_steps'], pilot_artifact_sha256={name: digest(pilot / name)
                     for name in ('pilot-admission.json', 'plan.json')},
                 source_files_sha256={name: digest(worktree / name) for name in checked})
@@ -334,11 +438,11 @@ try:
     write(probe_path, probe)
     if WALL - (time.time() - started) < chosen['longest_worker_seconds'] + FINAL:
         raise ValueError('Startup/probe consumed the remaining full-campaign reserve')
-    plan.update(admitted=True, parent_probe_sha256=digest(probe_path),
-                gpu_assignment=[dict(gpu=2*i+j, seed=i+1, methods=METHODS[2*j:2*j+2])
-                                for i in range(4) for j in range(2)])
+    plan.update(admitted=True, parent_probe_sha256=digest(probe_path))
     write(output / 'plan.json', plan)
-    event('campaign_admitted', target_steps=chosen['target_steps'], gpu_assignment=plan['gpu_assignment'])
+    event('campaign_admitted', target_steps=chosen['target_steps'], seed_count=chosen['seed_count'],
+          required_arms=chosen['required_arms'], layout=chosen['layout'],
+          selection_reason=plan['selection_reason'], gpu_assignment=plan['gpu_assignment'])
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = [pool.submit(worker, row['gpu'], row['seed'], row['methods'], chosen, probe_path)
                    for row in plan['gpu_assignment']]
@@ -348,18 +452,22 @@ except Exception as error:
     reason, exit_code = f'{type(error).__name__}: {error}', 2
     event('campaign_refused_or_failed', reason=reason)
 finally:
-    expected = {(seed, method) for seed in range(1, 5) for method in METHODS}
+    expected = {(seed, method) for seed in (plan.get('seeds') or []) for method in METHODS}
     completed = {(row['seed'], row['method']) for row in records if row['completed']}
     matched = plan['admitted'] and completed == expected
     final = dict(source_commit=source, admitted=plan['admitted'], matched_training_interactions=matched,
-                 target_steps=plan.get('target_steps'), completed_arms=len(completed), required_arms=16,
+                 target_steps=plan.get('target_steps'), selected_seed_count=plan.get('selected_seed_count'),
+                 selected_layout=plan.get('selected_layout'), selection_reason=plan.get('selection_reason'),
+                 completed_arms=len(completed), required_arms=len(expected) if expected else None,
                  incomplete_arms=[dict(seed=seed, method=method) for seed, method in sorted(expected-completed)],
                  stage_records=records, elapsed_seconds=time.time()-started, wall_budget_seconds=WALL,
                  allocation_gpu_hours=(time.time()-started)*8/3600, reason=reason,
-                 comparison='four matched training seeds' if matched else 'incomplete; no matched comparison')
+                 comparison=f"{plan['selected_seed_count']} matched training seeds" if matched else
+                     ('incomplete; no matched comparison' if expected else 'not admitted; no geometry selected'))
     write(output / 'plan.json', plan)
     write(output / 'campaign-admission.json', final)
-    event('campaign_ended', matched_training_interactions=matched, completed_arms=len(completed), reason=reason)
+    event('campaign_ended', matched_training_interactions=matched, completed_arms=len(completed),
+          selected_seed_count=plan.get('selected_seed_count'), required_arms=final['required_arms'], reason=reason)
     if not matched:
         exit_code = exit_code or 3
 raise SystemExit(exit_code)
