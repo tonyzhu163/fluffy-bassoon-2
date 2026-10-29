@@ -542,7 +542,7 @@ def export_histories(args, learner, contract):
     return result
 
 
-def train_history(args, learner, contract, *, paths=None):
+def train_history(args, learner, contract, *, paths=None, artifact_prefix="history", objective=None):
     import torch
     from .vla_history import (HistoryConfig, HistoryNoisePolicy, load_dataset,
                               sample_batch, export_policy)
@@ -570,15 +570,16 @@ def train_history(args, learner, contract, *, paths=None):
                 row["validation_nll"] = validate(student, validation, mode=mode, batch_size=2,
                                                 batches=1, max_context=64)
                 print(json.dumps(dict(history_training=row)), flush=True)
-            append_json(args.output / "history-metrics.jsonl", row)
+            append_json(args.output / f"{artifact_prefix}-metrics.jsonl", row)
             if update % 10 == 0 or update == args.history_updates:
-                atomic_save(args.output / f"history-{mode}-recovery.pt",
+                atomic_save(args.output / f"{artifact_prefix}-{mode}-recovery.pt",
                     dict(policy=student.state_dict(), optimizer=optimizer.state_dict(),
                     update=update, torch_rng=torch.get_rng_state(), sampler=sampler.bit_generator.state,
                     source_commit=contract["source_commit"], dataset_sha256={k: sha256(v) for k, v in paths.items()},
                     cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []))
-        export_policy(args.output / f"history-{mode}-candidate.pt", student,
-                      manifest=dict(contract=contract, mode=mode, updates=args.history_updates,
+        export_policy(args.output / f"{artifact_prefix}-{mode}-candidate.pt", student,
+                      manifest=dict(contract=contract, mode=mode, objective=objective or args.history_objective,
+                                    updates=args.history_updates,
                                     dataset_sha256={k: sha256(v) for k, v in paths.items()}))
         candidates[mode] = student.eval().requires_grad_(False)
     return candidates
@@ -609,7 +610,18 @@ def qualify_recovery(args, learner, contract, obs):
                 actor_critic_target_temperature_optimizer_equal=True, replay_sampler_equal=True)
 
 
-def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0, contract=None):
+def assert_same_context(first_path, second_path):
+    from .vla_history import load_dataset
+    first, _ = load_dataset(first_path, expected_sha256=sha256(first_path))
+    second, _ = load_dataset(second_path, expected_sha256=sha256(second_path))
+    keys = ("observations", "executed_noise", "rewards", "dones", "episode_starts", "teacher_steps")
+    if len(first) != len(second) or any(not np.array_equal(a[k], b[k])
+        for a, b in zip(first, second, strict=True) for k in keys):
+        raise ValueError("AD/DPT comparison changed the actual context instead of only query labels")
+
+
+def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0,
+             contract=None, label_prefix=""):
     from .vla_history import FrozenHistoryController
     evaluation = {}
     for method in methods:
@@ -663,14 +675,14 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                                          source_updates_after=online.updates), stream, protocol=5)
                     summary.update(deployment_primitive_steps=online_steps, source_updates_before=updates_before,
                                    source_updates_after=online.updates, deployment_updates=online.updates - updates_before)
-                summary.update(attempt=attempt + 1, method=method, split="eval", task_id=args.task_id,
+                summary.update(attempt=attempt + 1, method=label_prefix + method, split="eval", task_id=args.task_id,
                                trial_seed=args.seed + state * 1000, cumulative_train_steps=train_steps,
                                elapsed_seconds=time.monotonic() - started, completed=True)
                 append_json(args.output / "episodes.jsonl", summary)
                 print(json.dumps(summary), flush=True)
                 attempts.append(summary)
             records.append(attempts)
-        evaluation[method] = dict(success_by_attempt=np.mean(
+        evaluation[label_prefix + method] = dict(success_by_attempt=np.mean(
             [[r["success"] for r in trial] for trial in records], axis=0).tolist(),
             cumulative_success_by_attempt=np.mean(np.maximum.accumulate(
                 [[r["success"] for r in trial] for trial in records], axis=1), axis=0).tolist(),
@@ -711,6 +723,7 @@ def main():
     parser.add_argument("--prior-contract", type=Path)
     parser.add_argument("--online-dsrl", action="store_true")
     parser.add_argument("--feature-interface", choices=("sac", "vla-prefix"), default="sac")
+    parser.add_argument("--compare-supervised", action="store_true")
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
@@ -722,6 +735,8 @@ def main():
         raise ValueError("Retry teaching requires explicit disjoint train/validation scenes and a resource budget")
     if bool(args.prior_recovery) != bool(args.prior_contract) or (args.resume and args.prior_recovery):
         raise ValueError("A migrated shared prior needs its original contract and cannot also resume")
+    if args.compare_supervised and not args.retry_train_states:
+        raise ValueError("A same-data AD/DPT comparison requires explicit same-scene retry teachers")
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -823,10 +838,18 @@ def main():
                     fixed_feature_contract=(None if motor.feature_encoder is None else motor.feature_encoder.contract))
                 train_steps = costs["total_source_primitive_steps"]
             if args.history_updates:
-                student = train_history(args, learner, contract,
-                    paths=None if retry_paths is None else retry_paths[args.history_objective])
-                evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
-                                           learner=learner, student=student, train_steps=train_steps))
+                objectives = ("ad", "dpt") if args.compare_supervised else (args.history_objective,)
+                if args.compare_supervised:
+                    for split in ("train", "validation"):
+                        assert_same_context(retry_paths["ad"][split], retry_paths["dpt"][split])
+                for objective in objectives:
+                    prefix = f"{objective}_" if args.compare_supervised else ""
+                    student = train_history(args, learner, contract,
+                        paths=None if retry_paths is None else retry_paths[objective],
+                        artifact_prefix=f"{objective}-history" if args.compare_supervised else "history",
+                        objective=objective)
+                    evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
+                        learner=learner, student=student, train_steps=train_steps, label_prefix=prefix))
         else:
             learner = None
         write_json(args.output / "summary.json", dict(completed=True, evaluation=evaluation,
