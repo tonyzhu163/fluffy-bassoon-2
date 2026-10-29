@@ -1,0 +1,2022 @@
+{
+  "generated_at": "2026-10-29T16:13:34.248672+08:00",
+  "source_commit": "2a02e6c7b165e37199df81ba46308d82caffdde2",
+  "reference_source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "reference_training_seed": 1,
+  "paired_scene_seeds": [
+    2000000,
+    2000001
+  ],
+  "inference_unit": "two paired initial scenes; one training seed; eight episodes are not independent trials",
+  "checks": [
+    {
+      "name": "mirror:online/exit-code.txt",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/online-admission.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/plan.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/online/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/online/gpu-probe.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/online/online-evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:online/online/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/pilot-admission.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/plan.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na/evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na-retry/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na-retry/evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na-retry/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/rl2/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/rl2/evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/rl2/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/episode-reset/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/episode-reset/evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/episode-reset/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:pilot/dsrl-na/recovery-manifest.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:qualification/native/contract.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:qualification/native/summary.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "mirror:qualification/native/evaluation.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "exit_zero",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_complete",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "requested_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "summary_evaluation_hashes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "summary_contains_same_evaluation",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "pilot_artifact_identity",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "recorded_source",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "reference_source",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/can_dsrl.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/can_dsrl_run.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/can_dsrl_compare.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/can_dsrl_parity.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/gtrxl.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:src/fluffy_bassoon/meta_rl/ppo.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "unchanged_source:scripts/[train]gpu_probe.py",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "gpu_allocation",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:checkpoint_sha256",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:normalization_sha256",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:frozen_motor_sha256",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:runtime",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:robomimic_commit",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "runtime_input_identity:robomimic_env_sha256",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "training_reference_contract",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "training_reference_counters",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "recorded_immutable_reference",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "reference_postrun_hash:recovery.zip",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "original_manifest:recovery.zip",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "reference_postrun_hash:replay.pkl",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "original_manifest:replay.pkl",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "reference_postrun_hash:runtime.pt",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "original_manifest:runtime.pt",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "reference_postrun_hash:recovery-manifest.json",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "frozen_input_postrun:state_5000.pt",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "frozen_input_postrun:normalization.npz",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:paired_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:matched_budget",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:scene_hash:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:scene_hash:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_seeds",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "fresh_start_each_scene",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_rng:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_trial_complete:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_reset_identity:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_updates:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_changed_fresh_copy:2000000",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_rng:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_trial_complete:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_reset_identity:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_updates:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_changed_fresh_copy:2000001",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online_total_updates",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "motor_query_count",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "fourfold_update_ratio",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online DSRL-NA:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "online DSRL-NA:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "native:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na/frozen:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "dsrl-na-retry/frozen:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/normal:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/memory_reset:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "rl2/reward_blind:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/normal:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/memory_reset:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:binary_shape:successes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "name": "episode-reset/reward_blind:binary_shape:release_logged_successes",
+      "passed": true,
+      "evidence": null
+    }
+  ],
+  "failed_checks": [],
+  "configurations": {
+    "online DSRL-NA": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "1100",
+          "1010"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          1,
+          0
+        ],
+        "per_scene_success_counts": [
+          2,
+          2
+        ],
+        "successes": 4,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.5,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "1100",
+          "1010"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          1,
+          0
+        ],
+        "per_scene_success_counts": [
+          2,
+          2
+        ],
+        "successes": 4,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.5,
+        "scenes_with_any_success": 2
+      }
+    },
+    "native": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "1101",
+          "1010"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          1,
+          1
+        ],
+        "per_scene_success_counts": [
+          3,
+          2
+        ],
+        "successes": 5,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.625,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "1101",
+          "1010"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          1,
+          1
+        ],
+        "per_scene_success_counts": [
+          3,
+          2
+        ],
+        "successes": 5,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.625,
+        "scenes_with_any_success": 2
+      }
+    },
+    "dsrl-na/frozen": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      }
+    },
+    "dsrl-na-retry/frozen": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            false,
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "0001",
+          "0000"
+        ],
+        "per_attempt_success_counts": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "per_scene_success_counts": [
+          1,
+          0
+        ],
+        "successes": 1,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.125,
+        "scenes_with_any_success": 1
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            false,
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "per_scene_bits": [
+          "0001",
+          "0000"
+        ],
+        "per_attempt_success_counts": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "per_scene_success_counts": [
+          1,
+          0
+        ],
+        "successes": 1,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.125,
+        "scenes_with_any_success": 1
+      }
+    },
+    "rl2/normal": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      }
+    },
+    "rl2/memory_reset": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      }
+    },
+    "rl2/reward_blind": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      }
+    },
+    "episode-reset/normal": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      }
+    },
+    "episode-reset/memory_reset": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1111"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          4
+        ],
+        "successes": 8,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 1.0,
+        "scenes_with_any_success": 2
+      }
+    },
+    "episode-reset/reward_blind": {
+      "successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      },
+      "release_logged_successes": {
+        "scene_seeds": [
+          2000000,
+          2000001
+        ],
+        "per_scene_attempt_matrix": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ]
+        ],
+        "per_scene_bits": [
+          "1111",
+          "1011"
+        ],
+        "per_attempt_success_counts": [
+          2,
+          1,
+          2,
+          2
+        ],
+        "per_scene_success_counts": [
+          4,
+          3
+        ],
+        "successes": 7,
+        "episodes_recorded": 8,
+        "descriptive_episode_success_rate": 0.875,
+        "scenes_with_any_success": 2
+      }
+    }
+  },
+  "online_minus_comparators": {
+    "native": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -1,
+          0
+        ],
+        "total_success_count_difference": -1,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          0,
+          -1
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -1,
+          0
+        ],
+        "total_success_count_difference": -1,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          0,
+          -1
+        ]
+      }
+    },
+    "dsrl-na/frozen": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      }
+    },
+    "dsrl-na-retry/frozen": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            1,
+            1,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          1,
+          2
+        ],
+        "total_success_count_difference": 3,
+        "per_attempt_success_count_difference": [
+          2,
+          1,
+          1,
+          -1
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            1,
+            1,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          1,
+          2
+        ],
+        "total_success_count_difference": 3,
+        "per_attempt_success_count_difference": [
+          2,
+          1,
+          1,
+          -1
+        ]
+      }
+    },
+    "rl2/normal": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      }
+    },
+    "rl2/memory_reset": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      }
+    },
+    "rl2/reward_blind": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      }
+    },
+    "episode-reset/normal": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      }
+    },
+    "episode-reset/memory_reset": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -2
+        ],
+        "total_success_count_difference": -4,
+        "per_attempt_success_count_difference": [
+          0,
+          -1,
+          -1,
+          -2
+        ]
+      }
+    },
+    "episode-reset/reward_blind": {
+      "successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      },
+      "release_logged_successes": {
+        "online_minus_comparator_by_scene_attempt": [
+          [
+            0,
+            0,
+            -1,
+            -1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "per_scene_success_count_difference": [
+          -2,
+          -1
+        ],
+        "total_success_count_difference": -3,
+        "per_attempt_success_count_difference": [
+          0,
+          0,
+          -1,
+          -2
+        ]
+      }
+    }
+  },
+  "compute": {
+    "new_primitive_steps": 2400,
+    "chunks": 600,
+    "train_calls": 600,
+    "actor_updates": 12000,
+    "critic_updates": 12000,
+    "entropy_updates": 12000,
+    "noise_critic_updates": 6000,
+    "total_optimizer_invocations": 42000,
+    "motor_batch_calls": 18600,
+    "motor_samples": 4608600,
+    "frozen_comparator_deployment_optimizer_invocations": 0,
+    "frozen_comparator_deployment_motor_samples": 600,
+    "online_relative_updates_per_new_transition_vs_training": 4,
+    "online_driver_elapsed_seconds": 436.9771853839047,
+    "allocation_elapsed_seconds": 523.5690641403198,
+    "allocated_gpu_minutes": 8.726151100794475,
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "peak_cuda_memory_gib": 0.7932262420654297
+  },
+  "fresh_scene_starting_learner_sha256": {
+    "actor": "87bfe6c248631bb296d5b0c0286f941cceeea6b03f8e3b6412db94c27e182e1f",
+    "critic": "127f27279f5af2042f14546f850b8facbee93e6212c7fce92a2b6bb36565e2f5",
+    "critic_target": "bf4ac181fdecdfe22b5163e704fe99f32dfbe3a2e6afdbb005a78793fcd3f686",
+    "critic_noise": "8a03921851c96dd538239e468bdadfd276e9e155cae2a9110f43ae7949ac7d36",
+    "optimizers": "48414e2e5daf896e3594c6a28aa13f8b0f7845a735087d669a5f578328b8e777",
+    "log_ent_coef": "30fd2b4e4427ae62c7a8b956c98bc349c2a1056993525cf191064762c7a1e267"
+  },
+  "starting_replay_transitions_per_scene": [
+    7200,
+    7200
+  ],
+  "immutable_reference_postrun": {
+    "recovery.zip": {
+      "remote_path": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na/checkpoints/chunks000001196-updates000005980/recovery.zip",
+      "bytes": 579699285,
+      "sha256": "0cc5ad244c8d72ad11e8cbe05dbd53efc5a7bc35256bb54d9ee98e99f4ddad56"
+    },
+    "replay.pkl": {
+      "remote_path": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na/checkpoints/chunks000001196-updates000005980/replay.pkl",
+      "bytes": 42001968,
+      "sha256": "a5620639bb129c550c63901aa21d60341d7ed80402ff89ccd5c32280490c05eb"
+    },
+    "runtime.pt": {
+      "remote_path": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na/checkpoints/chunks000001196-updates000005980/runtime.pt",
+      "bytes": 50469,
+      "sha256": "fd9df31c86116197c2ae146446e645c47c939cd98ab363c0c011035c9b42cd98"
+    },
+    "recovery-manifest.json": {
+      "remote_path": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na/recovery-manifest.json",
+      "bytes": 343,
+      "sha256": "0b50793cdbcd7722c477fcfa4dfc72535c70703bc817edb109ef13000a70ee27"
+    }
+  },
+  "analysis_script_sha256": "0e4160ddbc58ce30f83dd1ef3a2c6a661728539a4525294cca7e2130f8590fdb",
+  "raw_manifest_sha256": "1c838490fcb175d1534178d14aa4d1e3272039131ee3946c76cd6737d0558332",
+  "source_manifest_sha256": "5f577601696038f997fb644d0b2707d9e5702141454405f5c02e4a2d807bda5e",
+  "limitations": [
+    "Stdlib metadata/count/hash audit only; no model, tensor, replay, optimizer or simulator loaded.",
+    "Reference checkpoints were hashed on Baige without loading them and were not copied to macOS.",
+    "Fresh learner/optimizer/replay isolation is supported by runtime-recorded starting hashes and counts; replay transition contents were not independently inspected.",
+    "A common starting RNG seed does not couple later random draws: online optimizer work consumes RNG, and adaptation already occurs within attempt one.",
+    "Two scenes and one training seed do not establish a method ranking, statistical significance or a broad negative result for online adaptation.",
+    "Deployment interactions match, while online uses additional optimization and fourfold the released training update-to-data ratio."
+  ]
+}
