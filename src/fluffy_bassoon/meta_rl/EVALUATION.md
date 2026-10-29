@@ -2,6 +2,54 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+
+## Original four-method ML10 comparison complete, 2026-10-29
+
+All four original Baige runs at source
+`cd0128f03a060aff2d538a91f35058aa822df845` finished80rounds/10Mtraining
+transitions, exit0. The final audit independently recomputed all160saved
+raw evaluation conditions, verified full checkpoint hashes and recovery
+metadata, common task pools, work counters and measured costs. Earlier
+entries below record status at their respective audit times.
+
+| Method | Final train | Final held-out | Active GPU h | Training-only GPU h |
+| --- | ---: | ---: | ---: | ---: |
+| CTM T1/cached100 |16.0%|0%|2.0236|1.2897|
+| RL²-PPO/GRU64 |24.8%|0%|0.8367|0.4005|
+| ECET |24.8%|21.6%|9.0709|8.5437|
+| AMAGO1/ten replay passes |12.8%|0%|2.6583|1.2001|
+
+ECET `job-wrlr0utzsayo` completed6,251,200actor+critic optimizer steps,
+200Mforward samples and5Mevaluation transitions. Launcher-active cost was
+32660seconds/9.0722GPUh; peak CUDA allocation158,009,856bytes. Final
+normal/reset/reward-blind train24.8/30.0/23.2%, held-out21.6/21.2/6.4%.
+First-five normal train/held-out24/22%. Final checkpoint SHA256
+`824de988a0ac8c3c78aeb3d28d2d9e5ea77e919ce2a99697487a09bce331c80a`
+matched the complete policy, independent actor/critic optimizer, sampler
+and RNG recovery metadata and terminal counters. All80training rows and
+40ECETraw evaluation conditions passed saved-artifact checks.
+
+Active time includes collection and all evaluation on one RPBZZZ6per
+method; launcher overhead is reported separately. ECET ties RL²'s final
+train score at substantially higher cost and is the only method with
+nonzero final held-out success here. CTM does not beat RL² on final train
+performance or efficiency and has zero final held-out success. One seed,
+unequal parameter counts, method hyperparameters and gradient horizons,
+ECET's absent public clocks versus other methods' K5-to-K25clock
+extrapolation, and AMAGO's accepted replay adaptation prevent an
+architecture ranking or exact METTA reproduction claim. ECET's train
+memory reset outperforms normal memory; its held-out reset is similar.
+The screen does not establish a reliable persistent-memory advantage.
+
+Original K25curves retain their saved clock encoding; first-five companion
+scores, frozen-clock interventions and warm continuations remain separate.
+Final train/held-out versus active-time, training-only-time and environment
+steps, PDFs, curve CSV, hashes and full audit are under
+`outputs/metaworld-ml10-matched-baige-20261028-r1/figures/` and
+`checks/20261029-0835/`. Detailed results and limitations are in that run's
+`RESULTS.md`. All original runs are terminal; the narrow comparison
+monitor is closed after the final artifact audit and mirror.
+
 ## ML10 controlled debugging: value weight and public clock, 2026-10-29
 
 CTM paired continuation `job-knyy09k3p6rr`, source
