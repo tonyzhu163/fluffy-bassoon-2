@@ -168,6 +168,8 @@ def simulator_server(args):
                     bddl_file=str(task.bddl_file), problem_folder=str(task.problem_folder),
                     horizon=args.horizon, settle_steps=10, pid=os.getpid(),
                     observation="two RGB cameras and robot proprioception only")
+    if getattr(args, "fresh_environment_on_reset", False):
+        metadata["reset_protocol"] = "fresh environment per episode; seed before constructor and reset"
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
     write_json(args.output / "simulator-ready.json", metadata)
     startup("listener_ready")
@@ -187,6 +189,10 @@ def simulator_server(args):
                     raise ValueError("Invalid fixed initial state")
                 np.random.seed(seed)
                 random.seed(seed)
+                if getattr(args, "fresh_environment_on_reset", False):
+                    env.close()
+                    env = OffScreenRenderEnv(bddl_file_name=str(bddl), camera_heights=256,
+                        camera_widths=256, render_gpu_device_id=0)
                 env.seed(seed)
                 env.reset()
                 raw = env.set_init_state(states[index])
@@ -817,6 +823,7 @@ def main():
     parser.add_argument("--suite", default="libero_90")
     parser.add_argument("--task-id", type=int, default=57)
     parser.add_argument("--horizon", type=int, default=400)
+    parser.add_argument("--fresh-environment-on-reset", action="store_true")
     parser.add_argument("--chunk", type=int, default=5)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--openpi-root", type=Path)
