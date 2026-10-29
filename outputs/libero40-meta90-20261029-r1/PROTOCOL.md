@@ -1,8 +1,9 @@
 # LIBERO40 source, LIBERO90 and shifted-target meta-learning
 
 Status: user-selected full-suite design, 2026-10-29. No semantic filtering. Previous source data,
-splits and runs stay immutable. Corpus scale and resource budget are not yet
-a launch contract.
+splits and runs stay immutable. The user selected a shared cap of1M executed simulator actions per benchmark,
+including SAC, fresh PPO, validation, settling and retries. The current
+LIBERO campaign is `../libero40-source-1m-20261029-r1/`.
 
 ## Frozen backbone
 
@@ -32,9 +33,12 @@ a launch contract.
   at trial boundaries. Record stochastic observation variation explicitly.
 - Keep source training and local validation cases disjoint; all histories
   from a case remain together. Freeze exact state/case lists after audit.
-- Thirty-two cases per task is a candidate scale, not a claimed sufficient
-  amount or an approved collection budget. Test several data scales rather
-  than asserting that a particular number guarantees meta-learning.
+- Collect within a shared1M-action benchmark ceiling rather than require a
+  fixed episode count. Candidate seeded-case banks are not claimed coverage.
+  All40 goals remain source training; local validation uses eight fixed
+  source goals, task0/1 per suite, with independent learners and states40–49.
+  This saves cold-teacher warmup costs and is source-familiar case validation.
+  Test data scales without asserting a sufficient-count threshold.
 - A source SAC learning history can require far more than 4/8 episodes.
   Deployment shot budget and source-teacher training length are different.
 - Published DSRL's released pi0 script uses batch256 and replay warmup

@@ -1,6 +1,6 @@
 {
-  "format": "libero40_meta90_design_v2",
-  "status": "full_suite_design_user_selected_collection_implementation_in_progress",
+  "format": "libero40_meta90_design_v3",
+  "status": "user_selected_1m_actions_shared_by_sac_and_fresh_ppo_source_collection_started",
   "motor": {
     "checkpoint": "gs://openpi-assets/checkpoints/pi05_libero",
     "receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
@@ -61,11 +61,37 @@
     "libero90_teacher_data_allowed": false,
     "plus_teacher_data_allowed": false,
     "pro_teacher_data_allowed": false,
-    "cases_per_task_proposal": 32,
-    "case_list_frozen": false,
+    "case_list_frozen": true,
     "case_identity": "actual goal plus object/robot initial state and perturbation; a seed alone is insufficient",
     "teacher_training_length": "qualified source learning histories; not limited to deployment support budget",
-    "resource_budget": "not a collection launch contract"
+    "resource_budget": {
+      "maximum_total_actions_per_benchmark": 1000000,
+      "benchmarks": [
+        "LIBERO",
+        "RoboTwin"
+      ],
+      "shared_by": [
+        "SAC source train/validation",
+        "fresh PPO train/validation",
+        "settling",
+        "qualifications",
+        "retries and unresolved execution intents"
+      ],
+      "not_per_method": true,
+      "campaign": "outputs/libero40-source-1m-20261029-r1/campaign.json"
+    },
+    "case_schedule": "512 candidate seeded cases per task/partition; actual complete cases collected within immutable physical-action reservations",
+    "local_validation_task_keys": [
+      "libero_spatial:00",
+      "libero_spatial:01",
+      "libero_object:00",
+      "libero_object:01",
+      "libero_goal:00",
+      "libero_goal:01",
+      "libero_10:00",
+      "libero_10:01"
+    ],
+    "local_validation": "Eight source goals, task0/1 per suite chosen before outcomes; independent source SAC, initial states40..49. All40 goals remain in source training, states0..39."
   },
   "targets": {
     "libero90_task_ids": [
@@ -182,5 +208,5 @@
   },
   "historical_data_admission": "none from earlier RLinf130, original90 source teachers, or Plus source augmentation",
   "user_instruction": "Use40-90 plusPlusPro; no further semantic auditing or goal-based exclusions.",
-  "design_sha256": "cc813e4ca93a593465577b6a332c6c4c66fad490c9cbfeace5760813f303d453"
+  "design_sha256": "6ab1fb507a373d61718afdde303df3381376220b4ca9535232da896934d8a82d"
 }

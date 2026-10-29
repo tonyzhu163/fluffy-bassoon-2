@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "recovery_sha256": "1c75d511be019a03d63e3d88adcd8b1796f089008470dc17a553469195288a7d",
+  "restored_updates": 2220,
+  "checked_next_update": 2221,
+  "replay_rows": 606,
+  "source_unchanged": true,
+  "restored_states_exact": true,
+  "rng_and_sampler_exact": true,
+  "next_update_arrays": {
+    "exact": false,
+    "numerical": true,
+    "changed_arrays": 78,
+    "largest_changes": [
+      {
+        "key": "/actor/opt_state/0/mu/network/Dense_0/bias",
+        "maximum_absolute_delta": 3.647059202194214e-06,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/Dense_0/kernel",
+        "maximum_absolute_delta": 3.5855919122695923e-06,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/Dense_1/bias",
+        "maximum_absolute_delta": 1.280568540096283e-06,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/Dense_1/kernel",
+        "maximum_absolute_delta": 1.1879019439220428e-06,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/MLP_0/Dense_0/kernel",
+        "maximum_absolute_delta": 2.2415770217776299e-07,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/MLP_0/Dense_2/kernel",
+        "maximum_absolute_delta": 1.2543750926852226e-07,
+        "numerical": true
+      },
+      {
+        "key": "/actor/params/Dense_0/kernel",
+        "maximum_absolute_delta": 1.1362135410308838e-07,
+        "numerical": true
+      },
+      {
+        "key": "/actor/opt_state/0/mu/network/MLP_0/Dense_1/kernel",
+        "maximum_absolute_delta": 9.720679372549057e-08,
+        "numerical": true
+      }
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "next_update_metrics": {
+    "exact": false,
+    "numerical": true,
+    "changed_arrays": 2,
+    "largest_changes": [
+      {
+        "key": "/actor_loss",
+        "maximum_absolute_delta": 2.86102294921875e-06,
+        "numerical": true
+      },
+      {
+        "key": "/q_pi_in_actor",
+        "maximum_absolute_delta": 2.86102294921875e-06,
+        "numerical": true
+      }
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "serialized_bytes_equal": false,
+  "serialized_hashes": [
+    "b945ae8b65cc27a8e4bb343f2bbb98bebe2ecd521f6b42e98e47a32a849fce82",
+    "f951afa76b4ebf32ec4a6468235f3a8538aa4bb6f0fd4652e69a65bb99d1a2a6"
+  ],
+  "interpretation": "Saved state and RNG must restore exactly; independent GPU update compilations are checked numerically, without a bitwise continuation claim",
+  "compared": [
+    "actor/critic/target/temperature/optimizer state",
+    "SAC RNG",
+    "replay sampler",
+    "next motor PRNG split",
+    "finite update metrics"
+  ]
+}

@@ -32,6 +32,21 @@ on `libero_spatial:00`, with the official frozen OpenPI `pi05_libero` motor.
   contrast on this one task and establish no adaptation or memory advantage.
 - [Independent receipts, exact indices and interpretation](../../outputs/libero40-source-qualification-audit-20261029-r1/README.md).
 
+## Completed source40 controller and recovery integration
+
+Baige `job-jfsu3lm82kud`, run `libero40-pi05-history-integration-20261029-r3`,
+source `7c7a54f`, exited0. AD/DPT full/static each completed25 optimizer
+updates with fixed final exports and complete recoveries. The same606 train
+chunks and617 validation chunks were reused; this job collected no new
+simulator actions. Focused Linux tests153passed/2skipped.
+
+Saved SAC model/optimizer state and RNG restored exactly. Independent GPU
+next updates differed by at most3.65e-6 and passed the declared numerical
+rtol1e-4/atol1e-5 check; bitwise continuation is not claimed. Source input
+recovery hash stayed unchanged. Earlier byte-equality/tighter-tolerance
+failures remain preserved. [Exact receipts and limits](../../outputs/libero40-history-integration-audit-20261029-r1/README.md).
+No robot or adaptation benefit follows from this25-update technical check.
+
 ## Completed RLinf130 history-controller development smoke
 
 Baige Plus `job-immogbrrev71` and Pro `job-4cemq3xgqeiq`, immutable source

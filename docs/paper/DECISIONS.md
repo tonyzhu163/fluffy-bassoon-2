@@ -157,3 +157,9 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
   validation68/68 success, 1,223 actual chunks and4,620 source SAC updates.
   Paired AD/DPT exports and full recoveries are verified. This is execution
   evidence; it does not establish an improving teacher or meta-controller.
+
+- User selected an initial1M executed-action allowance per benchmark, shared
+  across SAC, fresh PPO, validation, settling and retries. All40 LIBERO source
+  training goals and six RoboTwin source goals remain. Source-local LIBERO
+  validation uses eight fixed goals on disjoint states. This is a scale pilot,
+  not a proven sufficient dataset or1M per method.
