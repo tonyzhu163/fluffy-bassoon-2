@@ -110,3 +110,10 @@ search dimension; this has not been tested here. Existing1024D actions,
 likelihoods and outcomes cannot be sliced, averaged or relabeled as fresh
 on-policy32D data. This ablation is **not implemented, substituted or launched**
 by the current proposal; discuss and freeze its contract and budget separately.
+
+Prepared source pin:`c3b6281c032e2c712a62191b03219b1e70e12947`, verified
+clean on the Baige development host. The runtime output and shared ledger do
+not yet exist. The scheduler form remains unsubmitted at120minutes/oneGPU,
+automatic retries disabled. Any prospective tied-noise arm shares the existing
+1M RoboTwin ceiling and requires a revised allocation; it does not create an
+additional1M allowance.
