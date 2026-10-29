@@ -5,6 +5,19 @@ Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
 ## Targeted subset training and first LIBERO90 robot comparison
 
+The fresh target-online DSRL onset comparison is now terminal:
+`job-hweficar0ilk`/source `0c89764`,59 Linux checks. Both original target cases
+completed15 training episodes and2,400 SAC updates; all eight frozen queries
+after0/1/13/15 training episodes failed. Total15,426 actions includes all30
+training/eight query episodes and qualification settling. Source teachers
+were not restored; queries never entered replay. All38 trace hashes, eight
+query recoveries and both final learner/replay/RNG recoveries were checked.
+This is a short learning-onset test, not converged DSRL. Identical initial
+observations and noise nevertheless produce first-action differences up to
+0.00415 versus earlier native controls; the exact cross-run pairing remains
+unresolved. A zero-action replay probe is measuring it.
+[DSRL results and limitations](../../outputs/libero40-target-online-dsrl-audit-20261030-r1/README.md).
+
 Baige `job-xla7geuytgau` completed four AD/DPT full/static controllers with
 500 optimizer updates each, preserving fixed25/100/500 exports and full
 recoveries. Source `1a41503`;71 Linux tests passed. The training reused742

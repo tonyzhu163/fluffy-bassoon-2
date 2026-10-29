@@ -16,11 +16,12 @@ started without its three-episode reservation. No SGD, native baseline or SAC
 actor is run. The source trainer's singular Spatial00 SAC compatibility field
 is ignored; this comparison does not construct or imply a joint SAC model.
 
-The launcher reads an **already existing** exact-run/source16k target
-evaluation reservation in the shared PPO ledger. It creates no reservation
-and changes no campaign budget. Fund that escrow from future unlaunched
-source PPO allocations before launching; the parent campaign retains the1M
-benchmark ceiling. Full40 collection approval remains separate.
+The parent funds the16k slice from future unlaunched source PPO allocations
+before launch, retaining the1M benchmark ceiling. After allocation GPU/tests
+pass, the launcher creates the exact-run/source escrow in the shared PPO
+ledger; the evaluator itself only reads and verifies it. A preflight failure
+therefore collects no actions and creates no action reservation. Full40
+collection approval remains separate.
 
 Run only after the two-goal scale manifest is completed and its file hash has
 been recorded. In a clean commit-pinned worktree inside one actual allocated
@@ -58,3 +59,11 @@ all groups, exact charged actions and their trace/context checksums. Compare
 these robot outcomes with the original one-goal fixed500 results while
 reporting source data and interaction costs separately. Two development goals
 and two target cases do not establish broad transfer or reliable superiority.
+
+Equal case/RNG identifiers alone do not establish numerical identity of the
+motor across separate allocations. The completed target-online DSRL run has
+matching initial arrays/noise but first-action deltas up to0.00415 versus the
+earlier native controls. A zero-action motor replay diagnostic is measuring
+that confound. Do not call cross-run comparisons exactly paired without the
+corresponding numerical evidence; within-run same-weight memory lesions
+remain separately auditable.
