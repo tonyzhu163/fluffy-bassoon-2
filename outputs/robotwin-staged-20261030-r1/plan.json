@@ -1,5 +1,5 @@
 {
-  "status": "validated_prepared_awaiting_resource_authorization",
+  "status": "unlaunched_superseded_optimizer_revision_required",
   "proposal_date_shanghai": "2026-10-30",
   "source_commit": "525d669e8fff3a995de444aee940d5e0db505197",
   "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
@@ -63,9 +63,12 @@
   "source_commit_pending_validation": false,
   "validation_job_id": "job-mjbpmea60ptq",
   "validation_tests": 86,
-  "initial_resource_accounted_seconds": 2600,
-  "initial_resource_remaining_seconds": 100,
+  "initial_resource_accounted_seconds": 2672,
+  "initial_resource_remaining_seconds": 28,
   "command": "bash /mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r1/scripts/diagnostics/robotwin_staged_train.sh 525d669e8fff3a995de444aee940d5e0db505197 robotwin-staged-20261030-r1",
   "code_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r1",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r1"
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r1",
+  "superseded_by": "robotwin-staged-20261030-r2",
+  "reason": "Real saved-batch3e-4update had analytic jointKL12.84; do not launch old command. Newproposal qualifies conservativeLR and has rollback guard.",
+  "actual_resource_accounting": true
 }

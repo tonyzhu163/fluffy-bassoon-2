@@ -377,3 +377,38 @@ under matched reset seeds, then budget repeated Bernoulli outcomes if
 variation persists.
 
 [Results and compact raw evidence](../../../outputs/noise-mode-icrl-20261029-s0-r1/RESULTS.md).
+
+
+## RoboTwin saved-controller optimizer diagnostics, 2026-10-30
+
+These verify optimizer execution on real saved source trajectories, not robot
+performance or successful meta-learning. The frozen Motus pi0.5 H32 motor was
+not instantiated; no new robot actions were collected. Twelve complete K4
+source episodes (4,273actions,140decisions; three of the six source tasks)
+were reused from r4. Restoring the motor's global high float32 matmul mode
+reproduced all original behavior likelihoods/values exactly.
+
+Baige`job-yem1ctw27j26`, source`98efb377c525ff2c101b7e9ec0f6eaf115299b66`,
+completed one independent batch3/five-epoch PPO update/five optimizer steps in
+5.58s and saved complete recovery. Its3e-4setting was unsafe: reported sampled
+KL8.86e19; subsequent exact Gaussian KL(old||post)12.8442, clipped joint ratios
+100%. Variance contributed only0.000841to KL; mean movement dominated.
+
+Baige`job-ypsxplhesd9x`, source`3e1de8e80d3f333adeba252884e173ce54f8b467`,
+completed two independent original-state forks at3e-5and3e-6(five steps each).
+Post analytic KL was0.43548/0.01065and post clipped fractions97.14%/75.00%.
+Neither passed the predeclared KL<=.02and clip-fraction<=.2gate, although3e-6
+reduced drift substantially. Repeat recurrent mean/log-probability reconstruction
+was exact for both. Full policy/optimizer/sampler/RNG and Gaussian diagnostics
+are retained. The three forks are not sequential source-training updates.
+SAC still has139warmup rows/0updates; the batch8main comparison remains
+unlaunched and has no robot-performance or adaptation result.
+
+[Diagnostics and raw evidence](../../../outputs/robotwin-saved-ppo-lr-20261030-r1/RESULTS.md).
+[Revised proposal, resource approval pending](../../../outputs/robotwin-staged-20261030-r2/PROTOCOL.md).
+
+The RoboTwin KL values above sum all1,024noise coordinates before averaging
+stored decisions. Its current fullH32×32interface differs from LIBERO's32D
+coordinate repeated over nativeH10. Within-RoboTwin arms share the interface;
+cross-benchmark steering dimensionality is not matched. No tied32D RoboTwin
+ablation has been launched or inferred from the existing1024D histories.

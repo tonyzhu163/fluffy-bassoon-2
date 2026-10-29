@@ -37,7 +37,12 @@ def main():
     parser.add_argument("--reference-post-sha256",required=True)
     parser.add_argument("--output",type=Path,required=True)
     parser.add_argument("--wall-seconds",type=int,default=45)
+    parser.add_argument("--learning-rates",type=float,nargs="+",default=list(RATES))
     args=parser.parse_args()
+    rates=tuple(args.learning_rates)
+    if (len(set(rates))!=len(rates)
+            or any(not math.isfinite(rate) or rate<=0 for rate in rates)):
+        parser.error("Learning rates must be finite, positive and unique")
     if sys.platform!="linux" or not 20<=args.wall_seconds<=45:
         raise ValueError("Allocated Linux diagnostic only, with <=45-second wall allowance")
     args.output.mkdir(parents=True,exist_ok=False)
@@ -45,7 +50,7 @@ def main():
         diagnostic="saved_source_PPO_batch3_learning_rates",main_comparison_advanced=False,
         executed_new_robot_actions=0,input_checkpoint=str(args.input),input_sha256=args.input_sha256,
         original_complete_recovery=str(args.input),reference_post=str(args.reference_post),
-        reference_post_sha256=args.reference_post_sha256,candidate_rates=list(RATES),candidates=[],
+        reference_post_sha256=args.reference_post_sha256,candidate_rates=list(rates),candidates=[],
         provisional_stability_rule=dict(mean_joint_analytic_kl_max=.02,post_clip_fraction_max=.2,
             additional_requirements="finite nonzero gradient, changed weights, one update/five optimizer steps"),
         scientific_scope="source-policy numerical stability only; no target selection or robot-performance claim")
@@ -222,9 +227,9 @@ def main():
             existing_update=True,new_optimizer_steps=0)
         write_json(args.output/"result.json",report)
 
-        for rate in RATES:
+        for rate in rates:
             if args.wall_seconds-(time.monotonic()-started)<12:
-                report["skipped_rates"]=list(RATES[len(report["candidates"]):])
+                report["skipped_rates"]=list(rates[len(report["candidates"]):])
                 break
             active_candidate=dict(learning_rate=rate,status="updating",retained_ppo_updates=0)
             report["active_candidate"]=active_candidate
@@ -284,7 +289,7 @@ def main():
             report.pop("active_candidate",None)
             active_candidate=None
             write_json(args.output/"result.json",report)
-        report["status"]="complete" if len(report["candidates"])==len(RATES) else "partial_completed_candidates"
+        report["status"]="complete" if len(report["candidates"])==len(rates) else "partial_completed_candidates"
     except Exception as error:
         report.update(status="wall_budget_stop" if isinstance(error,TimeoutError) else "failed",
                       error_type=type(error).__name__,reason=str(error),

@@ -1,0 +1,103 @@
+{
+  "status": "prepared_unlaunched_awaiting_2h_resource_approval",
+  "proposal_date_shanghai": "2026-10-30",
+  "source_commit": null,
+  "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "target_subset": [
+    "adjust_bottle",
+    "move_stapler_pad"
+  ],
+  "source_action_milestones_per_arm": [
+    32000,
+    64000,
+    128000
+  ],
+  "methods": [
+    "ppo",
+    "sac",
+    "ppo_reset"
+  ],
+  "source_actions_total": 384000,
+  "source_validation_max_actions_total": 86400,
+  "target_max_actions_total": 115200,
+  "native_max_actions_total": 4800,
+  "prior_executed_actions": 13026,
+  "planned_actions_including_prior": 603426,
+  "benchmark_action_ceiling": 1000000,
+  "unallocated_actions": 396574,
+  "nominal_train_episodes": 4,
+  "eval_episodes": 8,
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "ppo_trials_per_update": 8,
+  "sac_warmup_chunks": 500,
+  "sac_batch_size": 256,
+  "sac_utd": 20,
+  "intermediate_stage_cut": "external budget truncation with bootstrap; retain pending PPO; no forced intermediate update",
+  "source_validation_seed_domain_min": 3000000000,
+  "measured_qualification_actions_per_second": 26.954602297616557,
+  "new_planned_actions": 590400,
+  "collection_hours_at_qualification_rate": 6.084304201160541,
+  "first_stage_collection_hours_at_qualification_rate": 1.6983288149580915,
+  "throughput_limit": "two measured source scenes; optimizer, raw corpus I/O, startup and all-task variation excluded",
+  "proposed_scheduler_minutes": 120,
+  "gpus": 1,
+  "cpus": 16,
+  "memory_gib": 128,
+  "shared_memory_gib": 8,
+  "launch_authorization": "pending2h larger resource approval; no main source job submitted",
+  "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-one-million-20261029-r1",
+  "prior_proposal": "robotwin-staged-20261030-r1 at525d669; preserved and unlaunched, superseded because3e-4PPO update was unsafe",
+  "source_commit_pending_validation": true,
+  "validation_job_id": "job-mjbpmea60ptq",
+  "validation_tests": 86,
+  "initial_resource_accounted_seconds": 2672,
+  "initial_resource_remaining_seconds": 28,
+  "command": "pending exact source pin",
+  "code_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r2",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2",
+  "source_optimizer_learning_rate": "choose largest passing1e-6 or3e-7 from source-only calibration; no passing setting claimed yet",
+  "source_optimizer_epochs": 5,
+  "ppo_max_update_kl": 0.1,
+  "calibration": {
+    "candidate_rates": [
+      1e-06,
+      3e-07
+    ],
+    "batch_trials": 3,
+    "epochs": 5,
+    "mean_analytic_post_kl_max": 0.02,
+    "post_clip_fraction_max": 0.2,
+    "source": "same immutable12episodes/4273actions/140decisions; three source tasks only",
+    "weight_transfer_to_main": false,
+    "selection": "largest passing predeclared rate; if none, stop before any robot action",
+    "executed_on_resume": false
+  },
+  "source_module_validation": "last allocated baseline86tests passed at525d669; seven new rollback tests are static-only and run inside proposed allocation before calibration/collection",
+  "actual_resource_accounting": true,
+  "baseline_allocated_tests_passed": 86,
+  "new_guard_tests_pending": 7,
+  "guard_static_checks": "AST only; full suite runs first inside proposed allocation",
+  "steering_interface": {
+    "kind": "full_horizon_noise",
+    "motor_noise_shape": [
+      32,
+      32
+    ],
+    "policy_action_dim": 1024,
+    "action_limit": 1.5
+  },
+  "prospective_tied_noise_ablation": "discussion only; not substituted or authorized by this proposal; requires fresh data"
+}

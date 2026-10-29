@@ -1,0 +1,60 @@
+{
+  "status": "complete",
+  "source_commit": "98efb377c525ff2c101b7e9ec0f6eaf115299b66",
+  "diagnostic": "one_saved_fresh_PPO_update_batch3",
+  "main_comparison_batch_trials": 8,
+  "main_comparison_advanced": false,
+  "executed_new_robot_actions": 0,
+  "input_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-noise-matched-20261029-r4/experiment/ppo-recovery.pt",
+  "input_sha256": "722618543005ffcac5591593f67f2f8eaa3bd9fcc1be5cebf66995e9487306a9",
+  "complete_preupdate_recovery": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-noise-matched-20261029-r4/experiment/ppo-recovery.pt",
+  "retained_ppo_updates": 1,
+  "scientific_scope": "optimizer execution on three existing complete K4 source trials; no robot outcome or SAC comparison",
+  "default_float32_matmul_precision": "highest",
+  "float32_matmul_precision": "high",
+  "precision_source": "RLinf c605b9d:rlinf/models/embodiment/openpi/pi0.py:169",
+  "behavior_replay": [
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    },
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    },
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    }
+  ],
+  "source_actions": 4273,
+  "source_episodes": 12,
+  "chunks": 140,
+  "tasks": [
+    "place_phone_stand",
+    "place_object_stand",
+    "pick_diverse_bottles"
+  ],
+  "policy_before_sha256": "fed55ba3ea9e15fdf17fa6d3f96139c6f5c1a15c5b7a07b7cdf034cf304ecafb",
+  "preparation_seconds": 3.9656568598002195,
+  "optimizer_steps": 5,
+  "update_seconds": 5.580144690349698,
+  "metrics": {
+    "loss": -0.0011830568313598634,
+    "actor_loss": -0.044665223360061644,
+    "critic_loss": 0.04348216615617275,
+    "approximate_kl": 8.862768248725127e+19,
+    "clip_fraction": 0.7942857142857143,
+    "gradient_norm": 27.086987113952638,
+    "optimizer_steps": 5,
+    "chunks": 140,
+    "ppo_updates": 1
+  },
+  "policy_after_sha256": "55d368c411b6dfc46ae2211192188a6a119fa3281bb8e8e84a09fbeb3de1d093",
+  "recovery": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-saved-ppo-20261030-r2/diagnostic/diagnostic-recovery.pt",
+  "recovery_sha256": "c2f1fe3c7e21f1151ab453adab2e2520b5dafe2146936b8f31741091804bdcfb",
+  "optimizer_state_count": 63,
+  "consumed_trials": 3,
+  "pending_trials": 0,
+  "elapsed_seconds": 9.61977079231292
+}

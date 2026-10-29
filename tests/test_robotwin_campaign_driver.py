@@ -1,6 +1,7 @@
 """Pilot integration guards; execute on allocated Linux, not the editor host."""
 import importlib.util
 import json
+import random
 from copy import deepcopy
 from pathlib import Path
 
@@ -95,11 +96,87 @@ def test_pilot_defaults_are_separate_from_original_recipe():
     original=driver.parse_args(required)
     assert (original.source_steps,original.ppo_trials_per_update,original.native_episodes,
             original.source_validation_episodes)==(10_240_000,256,2,0)
+    assert original.ppo_max_update_kl is None
+    assert driver.parse_args(required+["--ppo-max-update-kl",".1"]).ppo_max_update_kl==.1
+    for value in ("0","-1","nan","inf"):
+        with pytest.raises(SystemExit): driver.parse_args(required+["--ppo-max-update-kl",value])
     pilot=driver.parse_args(required+["--campaign-root","/campaign","--record-corpus"])
     assert (pilot.source_steps,pilot.ppo_trials_per_update,pilot.native_episodes,
             pilot.source_validation_episodes)==(272_000,8,1,4)
     with pytest.raises(SystemExit): driver.parse_args(required+["--campaign-root","/campaign"])
     with pytest.raises(SystemExit): driver.parse_args(required+["--final-observation-only"])
+
+
+class GuardLearner:
+    """A partial optimizer step mutates weights, moments, counters and RNG."""
+    def __init__(self,metrics,fail=False):
+        self.weight=torch.tensor([1.])
+        self.updates=self.optimizer_steps=0
+        self.optimizer=dict(step=0,exp_avg=torch.tensor([0.]))
+        self.sampler=np.random.default_rng(41)
+        self.metrics=metrics; self.fail=fail
+    def state_dict(self):
+        return dict(weight=self.weight,updates=self.updates,optimizer_steps=self.optimizer_steps,
+                    optimizer=self.optimizer,sampler=self.sampler.bit_generator.state)
+    def load_state_dict(self,state):
+        self.weight=state["weight"].clone()
+        self.updates=state["updates"]; self.optimizer_steps=state["optimizer_steps"]
+        self.optimizer=deepcopy(state["optimizer"])
+        self.sampler.bit_generator.state=state["sampler"]
+    def update(self,rollouts):
+        self.weight.add_(2.)
+        self.updates+=1; self.optimizer_steps+=5
+        self.optimizer["step"]+=5; self.optimizer["exp_avg"].add_(7.)
+        random.random(); np.random.random(); torch.rand(1); self.sampler.random()
+        if self.fail: raise ArithmeticError("exception after a partial optimizer step")
+        return dict(self.metrics)
+
+
+@pytest.mark.parametrize("metrics,fail",[
+    ({"approximate_kl":.11,"gradient_norm":2.},False),
+    ({"approximate_kl":float("nan"),"gradient_norm":2.},False),
+    ({"approximate_kl":.01,"gradient_norm":float("inf")},False),
+    ({"gradient_norm":2.},False),
+    ({"approximate_kl":.01,"gradient_norm":2.},True),
+])
+def test_rejected_update_restores_complete_state_and_rng_and_retains_forensics(metrics,fail):
+    random.seed(17); np.random.seed(18); torch.manual_seed(19)
+    learner=GuardLearner(metrics,fail)
+    pending=[{"observations":torch.tensor([11.])}]
+    before=deepcopy(learner.state_dict())
+    process_rng=driver.capture_rng()
+    expected=(random.random(),np.random.random(),torch.rand(1))
+    driver.restore_rng(process_rng)
+    with pytest.raises(driver.PPOUpdateRejected) as rejected:
+        driver.guarded_ppo_update(learner,pending,max_kl=.1)
+    torch.testing.assert_close(learner.weight,before["weight"])
+    torch.testing.assert_close(learner.optimizer["exp_avg"],before["optimizer"]["exp_avg"])
+    assert learner.updates==learner.optimizer_steps==learner.optimizer["step"]==0
+    assert learner.sampler.bit_generator.state==before["sampler"]
+    assert random.random()==expected[0] and np.random.random()==expected[1]
+    torch.testing.assert_close(torch.rand(1),expected[2],rtol=0,atol=0)
+    assert len(pending)==1 and pending[0]["observations"].item()==11.
+    error=rejected.value
+    torch.testing.assert_close(error.rejected_state["weight"],torch.tensor([3.]))
+    assert error.rejected_state["updates"]==1 and error.rejected_state["optimizer_steps"]==5
+    assert error.rejected_state["optimizer"]["step"]==5
+    assert error.rejected_rng is not None
+    assert error.cause_type==("ArithmeticError" if fail else "ValueError")
+
+
+def test_guard_accepts_a_finite_update_at_the_declared_limit():
+    learner=GuardLearner({"approximate_kl":.1,"gradient_norm":2.})
+    result=driver.guarded_ppo_update(learner,[{}],max_kl=.1)
+    assert result["approximate_kl"]==.1
+    assert learner.weight.item()==3. and learner.updates==1 and learner.optimizer_steps==5
+    assert learner.optimizer["step"]==5
+
+
+def test_disabled_guard_preserves_original_update_without_snapshot_overhead():
+    class Original:
+        def state_dict(self): raise AssertionError("Disabled guard must not snapshot")
+        def update(self,rollouts): return {"approximate_kl":99.}
+    assert driver.guarded_ppo_update(Original(),[{}])=={"approximate_kl":99.}
 
 
 def test_capture_admission_requires_real_complete_matching_receipt(tmp_path):

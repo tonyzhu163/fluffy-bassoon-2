@@ -42,6 +42,50 @@ class CampaignBudgetReached(RuntimeError):
     pass
 
 
+class PPOUpdateRejected(RuntimeError):
+    """An attempted update was rolled back; rejected state is forensic only."""
+    def __init__(self,reason,*,metrics,rejected_state,rejected_rng,cause_type):
+        super().__init__(reason)
+        self.metrics=metrics
+        self.rejected_state=rejected_state
+        self.rejected_rng=rejected_rng
+        self.cause_type=cause_type
+
+
+def guarded_ppo_update(learner,rollouts,*,max_kl=None):
+    """Optionally halt unsafe updates without consuming their on-policy data."""
+    if max_kl is None:
+        return learner.update(rollouts)
+    if not math.isfinite(max_kl) or max_kl<=0:
+        raise ValueError("PPO update KL guard must be finite and positive")
+    before=deepcopy(learner.state_dict())
+    before_rng=deepcopy(capture_rng())
+    metrics=None
+    try:
+        metrics=learner.update(rollouts)
+        finite=all(math.isfinite(float(value)) for value in metrics.values())
+        approximate_kl=float(metrics.get("approximate_kl",float("nan")))
+        if not finite or not math.isfinite(approximate_kl) or approximate_kl>max_kl:
+            raise ValueError(f"PPO update reported approximate_kl={approximate_kl}, limit={max_kl}, finite={finite}")
+        return metrics
+    except BaseException as cause:
+        # Capture the rejected optimizer/policy/RNG before restoring the valid
+        # learner. The caller saves this separately from resumable training.
+        rejected=None; rejected_rng=None
+        try:
+            rejected=deepcopy(learner.state_dict())
+            rejected_rng=deepcopy(capture_rng())
+        except Exception as capture_error:
+            rejected=dict(forensic_capture_error=type(capture_error).__name__,
+                          reason=str(capture_error))
+        finally:
+            learner.load_state_dict(before)
+            restore_rng(before_rng)
+        raise PPOUpdateRejected(str(cause),metrics=deepcopy(metrics),
+            rejected_state=rejected,rejected_rng=rejected_rng,
+            cause_type=type(cause).__name__) from cause
+
+
 def validate_capture_qualification(path, *, model_path, norm_stats):
     """Only a saved successful real comparison can enable final-only capture."""
     receipt=json.loads(Path(path).read_text())
@@ -248,6 +292,7 @@ def parse_args(argv=None):
     p.add_argument("--ppo-epochs",type=int,default=5)
     p.add_argument("--ppo-minibatch-trials",type=int,default=16)
     p.add_argument("--learning-rate",type=float,default=3e-4)
+    p.add_argument("--ppo-max-update-kl",type=float)
     p.add_argument("--sac-warmup",type=int,default=500)
     p.add_argument("--sac-batch-size",type=int,default=256)
     p.add_argument("--sac-utd",type=int,default=20)
@@ -261,6 +306,9 @@ def parse_args(argv=None):
     if args.ppo_trials_per_update is None: args.ppo_trials_per_update=8 if args.campaign_root else 256
     if args.native_episodes is None: args.native_episodes=1 if args.campaign_root else 2
     if args.source_validation_episodes is None: args.source_validation_episodes=4 if args.campaign_root else 0
+    if args.ppo_max_update_kl is not None and (
+            not math.isfinite(args.ppo_max_update_kl) or args.ppo_max_update_kl<=0):
+        p.error("--ppo-max-update-kl must be finite and positive")
     if (any(getattr(args,k)<1 for k in ("source_steps","ppo_trials_per_update","checkpoint_steps","train_episodes",
         "eval_episodes","episode_limit","native_horizon","eval_trials","ppo_epochs",
         "ppo_minibatch_trials","sac_batch_size","sac_utd")) or args.native_episodes<0
@@ -353,6 +401,8 @@ def main(argv=None):
         episode_limit=args.episode_limit,action_limit=args.action_limit))
     contract["ppo_trials_per_update"] = args.ppo_trials_per_update
     contract["ppo_update_primitive_threshold"] = args.ppo_update_steps
+    if args.ppo_max_update_kl is not None:
+        contract["ppo_max_update_kl"] = args.ppo_max_update_kl
     contract["sac"] = asdict(SACConfig(warmup_chunks=args.sac_warmup,
         batch_size=args.sac_batch_size,utd=args.sac_utd))
     if args.campaign_root:
@@ -602,7 +652,32 @@ def main(argv=None):
         log("ppo_update_start",method=method,source_steps=state["steps"],
             trials=len(pending),primitive_steps=pending_steps,
             chunks=sum(r["chunks"] for _,r in pending))
-        metrics=state["learner"].update([r for r,_ in pending]); state["pending"]=[]
+        if args.ppo_max_update_kl is not None:
+            # Also retain a disk boundary before CUDA work, so an external
+            # interruption can restart the entire update from its old policy.
+            save_state(method,force=True)
+            save_joint(force=True)
+        try:
+            metrics=guarded_ppo_update(state["learner"],[r for r,_ in pending],
+                                       max_kl=args.ppo_max_update_kl)
+        except PPOUpdateRejected as exc:
+            directory=args.output/"rejected-ppo-updates"
+            directory.mkdir(exist_ok=True)
+            path=directory/f"{method}-source-{state['steps']}-rejected.pt"
+            temporary=path.with_suffix(".tmp")
+            torch.save(dict(contract=contract,method=method,source_steps=state["steps"],
+                max_update_kl=args.ppo_max_update_kl,rejection_reason=str(exc),
+                cause_type=exc.cause_type,metrics=exc.metrics,
+                rejected_learner=exc.rejected_state,rejected_rng=exc.rejected_rng,
+                pending_rollouts=pending,task_steps=state["task_steps"],
+                schedule=state["schedule"].state_dict(),
+                resumable_training=False,valid_learner_restored=True),temporary)
+            temporary.replace(path)
+            log("ppo_update_rejected",method=method,source_steps=state["steps"],
+                reason=str(exc),forensics=str(path),pending_trials=len(pending),
+                valid_learner_restored=True)
+            raise
+        state["pending"]=[]
         append_json(updates_path,dict(method=method,source_steps=state["steps"],**metrics))
         save_state(method,force=True)
         log("ppo_update",method=method,source_steps=state["steps"],**metrics)
@@ -844,6 +919,9 @@ def main(argv=None):
         status="wall_budget_stop"; log(status,reason=str(exc))
     except CampaignBudgetReached as exc:
         status="campaign_budget_stop"; log(status,reason=str(exc))
+    except PPOUpdateRejected as exc:
+        status="ppo_update_rejected"; log(status,reason=str(exc))
+        raise
     except Exception as exc:
         status="failed"; log(status,error_type=type(exc).__name__,reason=str(exc))
         raise
