@@ -4,9 +4,11 @@ import json
 import numpy as np
 import pytest
 
-from fluffy_bassoon.meta_rl.vla_source40_schedule import case_plan, content_hash, load_schedule, FORMAT
+from fluffy_bassoon.meta_rl.vla_source40_schedule import (case_plan, content_hash, load_schedule,
+    build_schedule, partition_budget, selected_partition_budget, FORMAT, LIBERO_COMMIT, SOURCE_SUITES)
 from fluffy_bassoon.meta_rl.vla_source40_corpus import (OnlineSourceSimulator, has_pending_case,
-    paired_arrays, physical_costs, restore_motor_rng, save_motor_rng, validate_simulator)
+    case_coverage, paired_arrays, physical_costs, publication_due,
+    restore_motor_rng, save_motor_rng, validate_simulator)
 
 
 def test_many_seeded_cases_cover_each_bank_without_cross_partition_states():
@@ -132,6 +134,90 @@ def test_recovery_reaching_target_mid_case_still_finishes_that_case():
     assert not has_pending_case(progress, 10, 600)
     progress.update(chunks=599)
     assert has_pending_case(progress, 10, 600)
+
+
+def test_complete_case_mode_cannot_stop_after_chunk_target_or_on_recovery():
+    progress = dict(case_index=3, episode_in_case=0, chunks=100000)
+    assert has_pending_case(progress, 10, None, "complete_cases")
+    progress.update(case_index=9, episode_in_case=4)
+    assert has_pending_case(progress, 10, None, "complete_cases")  # Final publication still pending.
+    progress.update(case_index=10, episode_in_case=0)
+    assert not has_pending_case(progress, 10, None, "complete_cases")
+
+
+def test_full_case_budgets_include_every_episode_and_partition_specific_ceiling():
+    train = partition_budget(80, 4, collection_mode="complete_cases", publish_every_cases=16)
+    validation = partition_budget(20, 4, collection_mode="complete_cases", publish_every_cases=16)
+    assert (train["maximum_cases"], train["maximum_episodes"], train["maximum_chunks"], train["maximum_primitive_steps"]) == (80, 320, 12800, 128000)
+    assert (validation["maximum_cases"], validation["maximum_episodes"], validation["maximum_chunks"], validation["maximum_primitive_steps"]) == (20, 80, 3200, 32000)
+    assert train["maximum_settling_steps"] == 3210
+    assert train["immutable_publication_case_numbers"] == [16, 32, 48, 64, 80]
+    assert validation["immutable_publication_case_numbers"] == [16, 20]
+    assert selected_partition_budget(dict(partition_budgets=dict(train=train, validation=validation)), "validation") == validation
+    assert train["storage_allowance"]["total_bytes_with_ten_percent_reserve"] > train["storage_allowance"]["raw_trace_and_journal_bytes"]
+    with pytest.raises(ValueError, match="cannot have a chunk"):
+        partition_budget(80, 4, collection_mode="complete_cases", target_chunks=600)
+    assert partition_budget(64, 4, collection_mode="chunk_target", target_chunks=600)["maximum_primitive_steps"] == 7600
+
+
+def test_full_all40_schedule_does_not_advertise_unvisited_cases_as_covered(tmp_path, monkeypatch):
+    mapping = {suite: [f"task_{i}" for i in range(10)] for suite in SOURCE_SUITES}
+    task_map = tmp_path / "libero/libero/benchmark/libero_suite_task_map.py"
+    task_map.parent.mkdir(parents=True)
+    task_map.write_text("libero_task_map = " + repr(mapping))
+    for suite, names in mapping.items():
+        for name in names:
+            for kind, suffix in (("bddl_files", ".bddl"), ("init_files", ".pruned_init")):
+                path = tmp_path / f"libero/libero/{kind}/{suite}/{name}{suffix}"
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"static fixture")
+    monkeypatch.setattr("fluffy_bassoon.meta_rl.vla_source40_schedule.subprocess.check_output",
+                        lambda *args, **kwargs: LIBERO_COMMIT + "\n")
+    plan = build_schedule(tmp_path, train_cases=80, validation_cases=20, episodes_per_case=4,
+        collection_mode="complete_cases", publish_every_cases=16)
+    assert len(plan["tasks"]) == 40 and plan["target_chunks_per_task_partition"] is None
+    assert plan["planned_requested_cases"] == 4000
+    assert plan["planned_requested_episodes"] == 16000
+    assert plan["planned_maximum_chunks"] == 640000
+    assert plan["planned_maximum_primitive_steps"] == 6400000
+    assert plan["planned_maximum_settling_steps"] == 160800
+    assert plan["planned_storage_allowance_bytes"] == 1795711565880
+    assert {task["suite"] for task in plan["tasks"]} == set(SOURCE_SUITES)
+    path = tmp_path / "plan.json"
+    path.write_text(json.dumps(plan))
+    assert load_schedule(path)["schedule_sha256"] == plan["schedule_sha256"]
+    # A rehashed file cannot silently delete requested cases while retaining
+    # its all-task budget and coverage claim.
+    plan["tasks"][0]["partitions"]["train"].pop()
+    plan["schedule_sha256"] = content_hash({k: v for k, v in plan.items() if k != "schedule_sha256"})
+    path.write_text(json.dumps(plan))
+    with pytest.raises(ValueError, match="full case count"):
+        load_schedule(path)
+
+
+def test_publication_cadence_never_skips_final_requested_case():
+    assert [i for i in range(1, 21) if publication_due(i, 20, 16)] == [16, 20]
+    assert publication_due(1, 1, 16)
+
+
+def test_actual_state_coverage_distinguishes_repeated_seeds_from_new_states():
+    cases = case_plan("libero_goal:00", "validation", 20, 4, 0)
+    receipts = [dict(case_id=case["case_id"], initial_state=case["initial_state"],
+        scene_seed=case["scene_seed"], initial_state_vector_sha256=f"state{case['initial_state']}")
+        for case in cases for _ in range(4)]
+    measured = case_coverage(cases, receipts)
+    assert measured["all_requested_cases_complete"]
+    assert measured["completed_cases"] == 20 and measured["completed_episodes"] == 80
+    assert measured["actual_distinct_initial_state_ids"] == 10
+    assert measured["actual_distinct_nominal_state_vectors"] == 10
+    assert measured["actual_distinct_state_seed_pairs"] == 20
+    assert set(measured["actual_seed_counts_per_initial_state"].values()) == {2}
+    assert measured["actual_repeat_episodes_beyond_first_per_seeded_case"] == 60
+    partial = case_coverage(cases, receipts[:5])
+    assert partial["completed_cases"] == 1 and partial["started_cases"] == 2
+    assert not partial["all_requested_cases_complete"]
+    with pytest.raises(ValueError, match="case identity"):
+        case_coverage(cases, [dict(receipts[0], scene_seed=17)])
 
 
 def test_paired_exports_keep_unbounded_executed_warmup_and_true_update_clock():

@@ -4,6 +4,7 @@ One invocation owns one task and one case partition. SAC is never reset at case
 boundaries. Train and validation invocations have independent replay/optimizers.
 """
 import argparse
+from collections import Counter
 import gzip
 import json
 import os
@@ -16,7 +17,7 @@ import traceback
 
 import numpy as np
 
-from .vla_source40_schedule import SOURCE_SUITES, content_hash, load_schedule
+from .vla_source40_schedule import SOURCE_SUITES, content_hash, load_schedule, selected_partition_budget
 
 
 PI05_RECEIPT = "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"
@@ -122,11 +123,48 @@ def paired_arrays(rows, labels):
                 dpt=dict(**base, target_noise=np.asarray(labels, np.float32)))
 
 
-def has_pending_case(progress, case_count, target_chunks):
+def has_pending_case(progress, case_count, target_chunks, collection_mode="chunk_target"):
     # A recovery can cross target mid-case. It must finish that same case and
     # publication before stopping, rather than silently dropping its tail.
-    return progress["case_index"] < case_count and (
-        progress["episode_in_case"] > 0 or progress["chunks"] < target_chunks)
+    if collection_mode not in ("chunk_target", "complete_cases"):
+        raise ValueError("Unknown source collection stopping mode")
+    if progress["case_index"] >= case_count:
+        return False
+    return collection_mode == "complete_cases" or progress["episode_in_case"] > 0 or progress["chunks"] < target_chunks
+
+
+def publication_due(completed_cases, requested_cases, interval):
+    return completed_cases == requested_cases or completed_cases % interval == 0
+
+
+def case_coverage(cases, receipts):
+    """Actual episode receipts, not the advertised schedule, determine coverage."""
+    expected = {case["case_id"]: case for case in cases}
+    counts = Counter()
+    pairs, hashes = set(), set()
+    for receipt in receipts:
+        case = expected.get(receipt["case_id"])
+        if (case is None or receipt["initial_state"] != case["initial_state"]
+                or receipt["scene_seed"] != case["scene_seed"]):
+            raise ValueError("Actual receipt changed its scheduled case identity")
+        counts[case["case_id"]] += 1
+        if counts[case["case_id"]] > case["episodes"]:
+            raise ValueError("A case contains more committed episodes than requested")
+        pairs.add((receipt["initial_state"], receipt["scene_seed"]))
+        if receipt.get("initial_state_vector_sha256"):
+            hashes.add(receipt["initial_state_vector_sha256"])
+    completed = [key for key, case in expected.items() if counts[key] == case["episodes"]]
+    states = sorted({state for state, _ in pairs})
+    return dict(requested_cases=len(cases), started_cases=sum(value > 0 for value in counts.values()),
+        completed_cases=len(completed), all_requested_cases_complete=len(completed) == len(cases),
+        requested_episodes=sum(case["episodes"] for case in cases), completed_episodes=len(receipts),
+        planned_distinct_initial_state_ids=len({case["initial_state"] for case in cases}),
+        actual_distinct_initial_state_ids=len(states), actual_initial_state_ids=states,
+        actual_distinct_nominal_state_vectors=len(hashes),
+        actual_distinct_state_seed_pairs=len(pairs),
+        actual_seed_counts_per_initial_state={str(state): sum(pair[0] == state for pair in pairs) for state in states},
+        actual_repeat_episodes_beyond_first_per_seeded_case=len(receipts) - len(pairs),
+        note="A repeated random seed on one nominal state is a distinct seeded case, not a new initial-state ID or nominal vector.")
 
 
 def publish_prefix(output, learner, contract, progress, checkpoint_sha256):
@@ -196,7 +234,7 @@ def main(argv=None):
     tasks = [row for row in schedule["tasks"] if row["task_key"] == args.task_key]
     if len(tasks) != 1:
         raise ValueError("Task absent from the source-only schedule")
-    if args.max_primitive_steps != schedule["maximum_primitive_steps_per_task_partition"]:
+    if args.max_primitive_steps != selected_partition_budget(schedule, args.partition)["maximum_primitive_steps"]:
         raise ValueError("Explicit job budget must equal the declared complete-case ceiling")
     if sys.platform != "linux":
         raise ValueError("Collection/model computation requires allocated Linux")
@@ -248,6 +286,9 @@ def main(argv=None):
             noise_contract="32D tied across native H10; warmup unbounded N(0,I), then SAC clipped[-1,1]; no rescaling",
             source_recipe=schedule["source_recipe"], learner_seed=seed,
             horizon=400, chunk=10, target_chunks=schedule["target_chunks_per_task_partition"],
+            collection_mode=schedule.get("collection_mode", "chunk_target"),
+            publish_every_cases=schedule.get("publish_every_cases", 1),
+            requested_case_count=len(cases), partition_budget=selected_partition_budget(schedule, args.partition),
             max_primitive_steps=args.max_primitive_steps,
             resets="Simulator resets each episode, same state/seed within case; SAC persists across all cases in this task+partition",
             source_generation_vs_deployment=schedule["deployment"],
@@ -317,6 +358,7 @@ def main(argv=None):
             write_json(args.output / "index.json", dict(progress,
                 format="openpi_pi05_libero40_source_history_index_v1", completed=False,
                 source_only=True, task_key=args.task_key, partition=args.partition,
+                collection_mode=contract["collection_mode"], case_coverage=case_coverage(cases, progress["episode_receipts"]),
                 schedule_sha256=schedule["schedule_sha256"], source_contract_sha256=content_hash(contract),
                 motor_receipt_sha256=motor.metadata["receipt_sha256"], feature_contract=motor.feature_encoder.contract,
                 noise_contract=contract["noise_contract"],
@@ -333,7 +375,7 @@ def main(argv=None):
         wrapped = OnlineSourceSimulator(sim, learner, sampler, sac_observation,
             before_step=before_step, after_outcome=after_outcome,
             before_reset=before_reset, after_reset=after_reset)
-        while has_pending_case(progress, len(cases), contract["target_chunks"]):
+        while has_pending_case(progress, len(cases), contract["target_chunks"], contract["collection_mode"]):
             case = cases[progress["case_index"]]
             stage = f"case_{progress['case_index']}"
             while progress["episode_in_case"] < case["episodes"]:
@@ -373,25 +415,31 @@ def main(argv=None):
                 save_boundary()
                 print(json.dumps(dict(case_id=case["case_id"], episode_in_case=progress["episode_in_case"],
                     chunks=progress["chunks"], primitive_steps=progress["primitive_steps"], source_updates=learner.updates)), flush=True)
-            checkpoint = args.output / f"case-{progress['case_index']:05d}-source.pkl"
-            learner.save(checkpoint, sampler, contract, **progress,
-                         motor_rng=save_motor_rng(motor.policy._rng))
-            publication = publish_prefix(args.output, learner, contract, progress, sha256(checkpoint))
-            progress["publications"].append(dict(publication, through_case=progress["case_index"],
-                source_checkpoint=checkpoint.name, source_checkpoint_sha256=sha256(checkpoint)))
+            terminating_chunk_target = contract["collection_mode"] == "chunk_target" and progress["chunks"] >= contract["target_chunks"]
+            if publication_due(progress["case_index"] + 1, len(cases), contract["publish_every_cases"]) or terminating_chunk_target:
+                checkpoint = args.output / f"case-{progress['case_index']:05d}-source.pkl"
+                learner.save(checkpoint, sampler, contract, **progress,
+                             motor_rng=save_motor_rng(motor.policy._rng))
+                publication = publish_prefix(args.output, learner, contract, progress, sha256(checkpoint))
+                progress["publications"].append(dict(publication, through_case=progress["case_index"],
+                    source_checkpoint=checkpoint.name, source_checkpoint_sha256=sha256(checkpoint)))
             progress["case_index"] += 1
             progress["episode_in_case"] = 0
             save_boundary()
         final = dict(json.loads((args.output / "index.json").read_text()), completed=True,
-            target_chunks_reached=progress["chunks"] >= contract["target_chunks"],
+            target_chunks_reached=(progress["chunks"] >= contract["target_chunks"]
+                                   if contract["collection_mode"] == "chunk_target" else None),
             source_updates=learner.updates, motor_calls=motor.calls,
             feature_calls=motor.feature_encoder.calls, feature_seconds=motor.feature_encoder.elapsed_seconds,
             elapsed_seconds=time.monotonic() - started, collection_cost_count_once=True,
             deployment_shots="one support plus query is a separate evaluation protocol")
-        final["smoke_qualified"] = bool(final["target_chunks_reached"] and learner.updates > 0
+        stopping_requirement = (final["target_chunks_reached"] if contract["collection_mode"] == "chunk_target"
+                                else final["case_coverage"]["all_requested_cases_complete"])
+        final["collection_qualified"] = bool(stopping_requirement and learner.updates > 0
             and any(publication["status"] == "paired_ad_dpt" for publication in progress["publications"]))
+        final["smoke_qualified"] = final["collection_qualified"] if contract["collection_mode"] == "chunk_target" else None
         write_json(args.output / "index.json", final)
-        return 0 if final["smoke_qualified"] else 3
+        return 0 if final["collection_qualified"] else 3
     except Exception as error:
         write_json(args.output / "failure.json", dict(stage=stage, error=repr(error),
             traceback=traceback.format_exc(), recovery="source-recovery.pkl is the last complete physical episode",
