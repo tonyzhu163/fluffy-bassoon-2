@@ -26,6 +26,7 @@ import numpy as np
 
 OPENPI_COMMIT = "215abfb217dbac7d5f1273282331b9b1866c0479"
 DSRL_COMMIT = "7f48937d4553e95244cd81c79236a3256df80597"
+LIBERO_COMMIT = "87edbd1b823e464bc66557d213cc45e9f88aa543"
 AUTHKEY = b"fluffy-libero-loopback-v1"
 NOISE_DIM, FEATURE_DIM = 32, 58
 
@@ -134,23 +135,42 @@ def validate_trial_split(args, metadata):
 
 
 def simulator_server(args):
+    import faulthandler
+    started = time.monotonic()
+    def startup(stage):
+        print(json.dumps(dict(simulator_startup=stage,
+                              elapsed_seconds=time.monotonic() - started)), flush=True)
+    faulthandler.enable()
+    faulthandler.dump_traceback_later(90, repeat=True)
+    startup("importing_libero")
     from libero.libero import benchmark, get_libero_path
     from libero.libero.envs import OffScreenRenderEnv
     from fluffy_bassoon.gpu_execution import validate_execution
+    startup("imports_complete")
+    libero_root = Path(benchmark.__file__).resolve().parents[3]
+    libero_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=libero_root, text=True).strip()
+    if libero_commit != LIBERO_COMMIT:
+        raise ValueError("Require the standard LIBERO commit pinned by the released DSRL example")
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     suite = benchmark.get_benchmark_dict()[args.suite]()
+    startup("suite_constructed")
     task = suite.get_task(args.task_id)
     states = suite.get_task_init_states(args.task_id)
+    startup("initial_states_loaded")
     bddl = Path(get_libero_path("bddl_files")) / task.problem_folder / task.bddl_file
     env = OffScreenRenderEnv(bddl_file_name=str(bddl), camera_heights=256,
                             camera_widths=256, render_gpu_device_id=0)
+    startup("environment_constructed")
     args.output.mkdir(parents=True, exist_ok=True)
     metadata = dict(suite=args.suite, task_id=args.task_id, instruction=task.language,
+                    libero_commit=libero_commit,
                     initial_states=len(states), bddl_sha256=sha256(bddl),
                     horizon=args.horizon, settle_steps=10, pid=os.getpid(),
                     observation="two RGB cameras and robot proprioception only")
-    write_json(args.output / "simulator-ready.json", metadata)
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
+    write_json(args.output / "simulator-ready.json", metadata)
+    startup("listener_ready")
+    faulthandler.cancel_dump_traceback_later()
     connection = listener.accept()
     count, success, raw = 0, False, None
     renderer_verified = False
@@ -513,6 +533,7 @@ def train_history(args, learner, contract, *, paths=None):
     from .vla_history import (HistoryConfig, HistoryNoisePolicy, load_dataset,
                               sample_batch, export_policy)
     from .vla_history_train import supervised_update, validate
+    from .warmstart import atomic_save
     paths = export_histories(args, learner, contract) if paths is None else paths
     train, _ = load_dataset(paths["train"], expected_sha256=sha256(paths["train"]))
     validation, _ = load_dataset(paths["validation"], expected_sha256=sha256(paths["validation"]))
@@ -537,11 +558,11 @@ def train_history(args, learner, contract, *, paths=None):
                 print(json.dumps(dict(history_training=row)), flush=True)
             append_json(args.output / "history-metrics.jsonl", row)
             if update % 10 == 0 or update == args.history_updates:
-                torch.save(dict(policy=student.state_dict(), optimizer=optimizer.state_dict(),
+                atomic_save(args.output / f"history-{mode}-recovery.pt",
+                    dict(policy=student.state_dict(), optimizer=optimizer.state_dict(),
                     update=update, torch_rng=torch.get_rng_state(), sampler=sampler.bit_generator.state,
                     source_commit=contract["source_commit"], dataset_sha256={k: sha256(v) for k, v in paths.items()},
-                    cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []),
-                    args.output / f"history-{mode}-recovery.pt")
+                    cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []))
         export_policy(args.output / f"history-{mode}-candidate.pt", student,
                       manifest=dict(contract=contract, mode=mode, updates=args.history_updates,
                                     dataset_sha256={k: sha256(v) for k, v in paths.items()}))
