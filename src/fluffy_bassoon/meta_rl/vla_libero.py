@@ -555,7 +555,7 @@ def qualify_recovery(args, learner, contract, obs):
                 actor_critic_target_temperature_optimizer_equal=True, replay_sampler_equal=True)
 
 
-def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0):
+def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0, contract=None):
     from .vla_history import FrozenHistoryController
     evaluation = {}
     for method in methods:
@@ -563,6 +563,14 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
         rng = np.random.default_rng(args.seed + 10000)
         for state in args.eval_states:
             controller = None
+            online, online_sampler, online_steps = None, None, 0
+            if method == "dsrl_online":
+                online = OfficialSAC(args.dsrl_root, args.seed + state * 1000)
+                online_sampler = np.random.default_rng(args.seed + state * 1000)
+                online.restore(args.output / "source-recovery.pkl", online_sampler, contract)
+                # Each independent deployment starts from the same entire source prior.
+                online_sampler = np.random.default_rng(args.seed + state * 1000)
+                (args.output / "online-dsrl" / f"state-{state}").mkdir(parents=True, exist_ok=False)
             if method in ("history", "reset", "static"):
                 import torch
                 torch.manual_seed(args.seed + state * 1000)
@@ -575,13 +583,30 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                     feedback = lambda noise, reward, done: controller.observe(
                         executed_noise=noise, reward=reward, done=done)
                 else:
-                    choose = learner.action if method == "dsrl" else lambda _: rng.standard_normal(32).astype(np.float32)
+                    choose = (online.action if online else learner.action) if method in ("dsrl", "dsrl_online") else lambda _: rng.standard_normal(32).astype(np.float32)
                     feedback = None
                 started = time.monotonic()
-                _, summary = run_episode(sim, motor, choose, initial_state=state,
+                updates_before = online.updates if online else None
+                rows, summary = run_episode(sim, motor, choose, initial_state=state,
                     scene_seed=args.seed + state * 1000, chunk=args.chunk,
                     native=method == "native", rng=rng, feedback=feedback,
                     bounded=method not in ("native", "tied_gaussian"))
+                if online:
+                    from .vla_retry_teacher import append_episode_to_replay
+                    append_episode_to_replay(online, rows)
+                    for _ in range(len(rows) * args.utd):
+                        online.update(args.batch_size, online_sampler)
+                    online_steps += summary["primitive_steps"]
+                    target = args.output / "online-dsrl" / f"state-{state}"
+                    online.save(target / "recovery.pkl", online_sampler,
+                        dict(parent=contract, heldout_state=state, method=method),
+                        episodes=attempt + 1, primitive_steps=online_steps,
+                        shared_prior_primitive_steps=train_steps)
+                    with (target / f"attempt-{attempt + 1:03d}.pkl").open("xb") as stream:
+                        pickle.dump(dict(rows=rows, summary=summary, source_updates_before=updates_before,
+                                         source_updates_after=online.updates), stream, protocol=5)
+                    summary.update(deployment_primitive_steps=online_steps, source_updates_before=updates_before,
+                                   source_updates_after=online.updates, deployment_updates=online.updates - updates_before)
                 summary.update(attempt=attempt + 1, method=method, split="eval", task_id=args.task_id,
                                trial_seed=args.seed + state * 1000, cumulative_train_steps=train_steps,
                                elapsed_seconds=time.monotonic() - started, completed=True)
@@ -626,6 +651,9 @@ def main():
     parser.add_argument("--retry-train-states", type=int, nargs="+")
     parser.add_argument("--retry-validation-states", type=int, nargs="+")
     parser.add_argument("--retry-max-steps", type=int)
+    parser.add_argument("--prior-recovery", type=Path)
+    parser.add_argument("--prior-contract", type=Path)
+    parser.add_argument("--online-dsrl", action="store_true")
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
@@ -634,6 +662,8 @@ def main():
         return
     if args.retry_train_states and (not args.retry_validation_states or not args.retry_max_steps):
         raise ValueError("Retry teaching requires explicit disjoint train/validation scenes and a resource budget")
+    if bool(args.prior_recovery) != bool(args.prior_contract) or (args.resume and args.prior_recovery):
+        raise ValueError("A migrated shared prior needs its original contract and cannot also resume")
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -684,12 +714,34 @@ def main():
             public_state_shape=list(qualification_obs["state"].shape)))
         evaluation = {} if args.resume else evaluate(args, sim, motor, ["native", "tied_gaussian"])
         if args.mode == "teacher":
-            learner = source_train(args, sim, motor, contract)
+            if args.prior_recovery:
+                learner = OfficialSAC(args.dsrl_root, args.seed)
+                prior_contract = json.loads(args.prior_contract.read_text())
+                # Loading a saved source learner is an explicit, recorded migration;
+                # neither its prior run directory nor checkpoint is changed.
+                for key in ("motor", "noise", "dsrl_commit", "chunk", "horizon", "simulator"):
+                    if prior_contract[key] != contract[key]:
+                        raise ValueError(f"Migrated source prior changed its scientific interface: {key}")
+                sampler = np.random.default_rng(args.seed)
+                progress = learner.restore(args.prior_recovery, sampler, prior_contract)
+                train_steps = int(progress["primitive_steps"])
+                migration = dict(prior_recovery_sha256=sha256(args.prior_recovery),
+                    original_source_commit=prior_contract["source_commit"], current_source_commit=actual,
+                    original_contract_sha256=sha256(args.prior_contract), shared_prior_primitive_steps=train_steps,
+                    source_weights_unchanged=True)
+                learner.save(args.output / "source-recovery.pkl", sampler, contract,
+                             **progress, migration=migration)
+                write_json(args.output / "prior-migration.json", migration)
+            else:
+                learner = source_train(args, sim, motor, contract)
+                train_steps = sum(json.loads(line)["primitive_steps"] for line in
+                                  (args.output / "progress.jsonl").read_text().splitlines())
             write_json(args.output / "feature-parity.json", learner.qualify_features(qualification_obs))
             write_json(args.output / "source-recovery-check.json", qualify_recovery(args, learner, contract, qualification_obs))
-            train_steps = sum(json.loads(line)["primitive_steps"] for line in
-                              (args.output / "progress.jsonl").read_text().splitlines())
             evaluation.update(evaluate(args, sim, motor, ["dsrl"], learner=learner, train_steps=train_steps))
+            if args.online_dsrl or args.retry_train_states:
+                evaluation.update(evaluate(args, sim, motor, ["dsrl_online"], learner=learner,
+                                           train_steps=train_steps, contract=contract))
             retry_paths = None
             if args.retry_train_states:
                 from .vla_retry_teacher import collect_retry_teachers

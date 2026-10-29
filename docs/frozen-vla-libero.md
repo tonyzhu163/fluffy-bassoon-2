@@ -55,6 +55,14 @@ The fixed shared-prior encoder serves every trial. Training and validation
 scene indices are disjoint from each other and the evaluation bank. Retain
 teacher generation cost separately from deployment interaction count.
 
+A completed prior can be reused with `--prior-recovery` and `--prior-contract`.
+This creates a new run identity and records the original source/checkpoint
+hashes and prior interaction cost. It verifies the motor, task, noise and chunk
+contracts before restoring; it never changes the prior run. Each held-out
+`dsrl_online` trial separately restores this same full prior, updates ordinary
+SAC between its K same-scene attempts, and records its actual deployment
+interactions, optimizer updates, wall time and resumable per-attempt state.
+
 Deployment freezes both motor and student weights. Evaluation pairs methods
 on initial states and scene seeds and reports per-attempt success plus success
 at least once. Comparators are the native motor, tied Gaussian motor, frozen
