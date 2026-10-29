@@ -131,8 +131,8 @@ def parser():
     ap.add_argument('--source-commit', required=True)
     ap.add_argument('--expected-hostname', required=True)
     ap.add_argument('--seed', type=int, default=0)
-    ap.add_argument('--max-controller-seconds', type=float, default=300.)
-    ap.add_argument('--max-total-seconds', type=float, default=1500.)
+    ap.add_argument('--max-controller-seconds', type=float, default=600.)
+    ap.add_argument('--max-total-seconds', type=float, default=2700.)
     for name, default in (('batch-size', 8), ('width', 128), ('layers', 2), ('heads', 4),
                           ('context-length', 300), ('max-window', 128), ('eval-every', 25),
                           ('validation-batches', 4), ('threads', 4)):
@@ -147,7 +147,7 @@ def main(argv=None):
     args = parser().parse_args(argv)
     validate_scales(args.scales)
     if (sys.platform != 'linux' or socket.gethostname() != args.expected_hostname
-            or not 0 < args.max_controller_seconds <= 300 or not 0 < args.max_total_seconds <= 1800):
+            or not 0 < args.max_controller_seconds <= 600 or not 0 < args.max_total_seconds <= 3000):
         raise ValueError('Require allocated Linux and bounded per-controller/total qualification time')
     root = Path(__file__).resolve().parents[3]
     if (subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip() != args.source_commit

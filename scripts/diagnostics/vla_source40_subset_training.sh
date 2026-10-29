@@ -39,7 +39,7 @@ export PYTHONPATH=$TASK_CUDA:$TASK_WORKTREE/src
   --validation-index "$TASK_ROOT/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/index.json" \
   --output "$TASK_OUTPUT/experiment" --scales 25 100 500 --seed 0 \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
-  --max-controller-seconds 300 --max-total-seconds 1500
+  --max-controller-seconds 600 --max-total-seconds 2700
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_data_scales \
   --qualification-subset \
   --train-index "$TASK_ROOT/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/index.json" \

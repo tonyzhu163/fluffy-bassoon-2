@@ -47,7 +47,7 @@ def test_milestones_continue_one_optimizer_identity_instead_of_retraining(tmp_pa
     assert all(command[command.index('--resume') + 1] == str(Path(outputs[0]) / 'latest.pt') for command in commands[1:])
     assert sum([25, 100 - 25, 500 - 100]) == 500
     for command in commands:
-        assert command[command.index('--max-elapsed-seconds') + 1] == '300.0'
+        assert command[command.index('--max-elapsed-seconds') + 1] == '600.0'
         assert command[command.index('--seed') + 1] == '0'
 
 

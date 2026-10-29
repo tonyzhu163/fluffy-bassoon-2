@@ -38,10 +38,13 @@ bash scripts/diagnostics/vla_source40_subset_training.sh <exact-SHA> <fresh-run-
 
 Run inside an allocated Linux GPU job. The launcher checks the exact clean
 commit, actual GPU allocation and focused Linux tests, then uses the qualified
-CUDA overlay for the Torch students. The module caps each controller at300
-cumulative training seconds and the overall operation at1500 seconds by
+CUDA overlay for the Torch students. The module caps each controller at600
+cumulative training seconds and the overall operation at2700 seconds by
 default, retaining partial recoveries on early stop. A resume uses the same
 output identity and contract via the Python module's `--resume` argument.
+The overall configured ceiling cannot exceed3000 seconds; request sufficient
+allocated wall time for tests/startup as well. A change to a completed or active
+run's timing contract requires a new explicitly pinned run or recorded migration.
 
 `experiment/scales.json` links each scale's matrix-compatible `index.json` and
 the common assembly, with exact hashes. It also records the original frozen
