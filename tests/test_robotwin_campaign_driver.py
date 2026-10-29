@@ -1,6 +1,7 @@
 """Pilot integration guards; execute on allocated Linux, not the editor host."""
 import importlib.util
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import numpy as np
@@ -254,3 +255,224 @@ def test_completed_validation_and_target_units_do_not_reexecute_on_resume(tmp_pa
     third=tmp_path/"run3"
     assert driver.main(common+["--output",str(third),"--resume",str(second)])==0
     assert len(executions)==16
+
+
+def test_stage_configuration_requires_exact_ordered_campaign_limits():
+    required=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--output","/new",
+        "--source-steps","128000","--source-milestones","32000","64000","128000",
+        "--eval-tasks","adjust_bottle","move_stapler_pad"]
+    with pytest.raises(SystemExit): driver.parse_args(required)
+    args=driver.parse_args(required+["--campaign-root","/campaign","--record-corpus"])
+    assert args.source_milestones==[32000,64000,128000]
+    assert args.ppo_trials_per_update==8 and args.source_validation_episodes==4
+    with pytest.raises(SystemExit):
+        driver.parse_args(required+["--campaign-root","/campaign","--record-corpus",
+            "--source-milestones","64000","32000","128000"])
+    with pytest.raises(SystemExit):
+        driver.parse_args(required+["--campaign-root","/campaign","--record-corpus",
+            "--source-milestones","32000","64000"])
+
+
+def test_exact_stage_barriers_preserve_pending_policy_rng_and_resumed_native_noise(tmp_path,monkeypatch):
+    import fluffy_bassoon.rl.robotwin_noise as runtime_module
+    stream=[0]
+    stop_after_first_native=[True]
+    source_tokens=[]
+    native_noise={}
+    current_phase=[None]
+    source_sac_metadata=[]
+
+    class Runtime(FakeEnv):
+        observation_dim=2
+        noise_shape=(4,2)
+        contract={}
+        def __init__(self,**kwargs):
+            super().__init__(); self.native_resets=0
+        def set_recording_context(self,context):
+            super().set_recording_context(context)
+            current_phase[0]=self.context["phase"]
+        def reset(self,task,seed):
+            self.task=task
+            if self.context["phase"]=="native_before_target":
+                if self.native_resets and stop_after_first_native[0]:
+                    raise driver.WallBudgetReached("Injected interruption after first completed native unit")
+                self.native_resets+=1
+            return super().reset(task,seed)
+        def step(self,noise,**kwargs):
+            if self.context["method"]=="native":
+                key=(self.context["stage_source_actions"],self.context["phase"],self.task,self.elapsed_steps)
+                assert key not in native_noise  # Completed units never execute twice.
+                native_noise[key]=np.asarray(noise).copy()
+                stream[0]+=1  # Evaluation is allowed to consume its own global stream.
+            return super().step(noise,**kwargs)
+        def record_decision_metadata(self,data):
+            if self.context["phase"]=="source" and self.context["method"]=="sac":
+                source_sac_metadata.append(deepcopy(data))
+        def check_noise_parity(self,noise): return dict(passed=True,max_abs_error=0.)
+        def frozen_fingerprint(self): return "motor-fixed"
+        def close(self): pass
+
+    class Collector:
+        def __init__(self,*args,**kwargs):
+            stream[0]+=10  # Cloning a controller must not perturb source sampling.
+            self.policy=torch.nn.Linear(2,2)
+            with torch.no_grad(): self.policy.weight.fill_(1.); self.policy.bias.zero_()
+            self.updates=self.optimizer_steps=self.primitive_steps=self.chunks=0
+        def state_dict(self):
+            return dict(updates=self.updates,optimizer_steps=self.optimizer_steps,
+                primitive_steps=self.primitive_steps,chunks=self.chunks,weights=self.policy.state_dict())
+        def load_state_dict(self,state):
+            self.policy.load_state_dict(state["weights"])
+            for key in ("updates","optimizer_steps","primitive_steps","chunks"): setattr(self,key,state[key])
+        def collect_trial(self,env,task,seeds,*,primitive_budget=None,episode_callback=None,
+                          decision_callback=None,**kwargs):
+            stream[0]+=1
+            if env.context["phase"]=="source": source_tokens.append(stream[0])
+            env.reset(task,seeds[0])
+            if decision_callback: decision_callback(dict(history_index=0))
+            _,reward,end,trunc,info=env.step(np.zeros(8),max_primitive_steps=primitive_budget)
+            row=dict(task=task,episode=1,seed=seeds[0],success=False,return_=reward,
+                primitive_steps=info["primitive_steps"],chunks=1)
+            if episode_callback: episode_callback(row)
+            return {"fake":torch.tensor([stream[0]])},dict(task=task,episodes=[row],chunks=1,
+                primitive_steps=info["primitive_steps"],budget_truncated=bool(info["budget_truncated"]))
+        def replay_error(self,rollout): return dict(log_prob_max_error=0.,value_max_error=0.)
+        def update(self,rollouts):
+            self.updates+=1; self.optimizer_steps+=1
+            with torch.no_grad(): self.policy.weight.add_(1.)
+            return dict(updates=self.updates)
+
+    class SACCollector:
+        """Small stateful dispatch fixture; real SAC math has independent tests."""
+        fixture_warmup=1
+        fixture_batch_size=1
+        def __init__(self,observation_dim,action_dim,*,config,seed=0,action_limit=1.5,**kwargs):
+            assert (config.warmup_chunks,config.batch_size,config.utd)==(500,256,20)
+            stream[0]+=10
+            self.actor=torch.nn.Linear(2,2)
+            with torch.no_grad(): self.actor.weight.fill_(1.); self.actor.bias.zero_()
+            self.config=config; self.action_dim=action_dim; self.action_limit=action_limit
+            self.environment_steps=self.primitive_steps=self.updates=0
+            self.replay=[]; self.target_mode=None; self.target_start=None
+            self.rng=np.random.default_rng(seed)
+            self.torch_rng=torch.Generator().manual_seed(seed)
+        @property
+        def optimizer_steps(self): return self.updates*3
+        @property
+        def warming_up(self):
+            return self.target_mode is None and self.environment_steps<self.fixture_warmup
+        def _sample(self,warmup):
+            stream[0]+=1
+            if current_phase[0]=="source": source_tokens.append(stream[0])
+            if warmup: return self.rng.uniform(-self.action_limit,self.action_limit,self.action_dim).astype(np.float32)
+            return np.tanh(self.rng.normal(size=self.action_dim)).astype(np.float32)*self.action_limit
+        def sample_warmup(self,observation): return self._sample(True)
+        def act(self,observation,deterministic=False): return self._sample(False)
+        def observe(self,observation,action,reward,following,end,trunc,*,primitive_steps):
+            self.environment_steps+=1; self.primitive_steps+=primitive_steps
+            self.replay.append(dict(reward=reward,primitive_steps=primitive_steps))
+        def update(self,gradient_steps):
+            assert gradient_steps==20  # Driver keeps the actual scientific recipe.
+            ready=(bool(self.replay) if self.target_mode else
+                   self.environment_steps>self.fixture_warmup and len(self.replay)>=self.fixture_batch_size)
+            if not ready: return {}
+            self.updates+=1  # One fake dispatch event, not simulated SAC math.
+            with torch.no_grad(): self.actor.weight.add_(.5)
+            return dict(updates=self.updates)
+        def state_dict(self):
+            return dict(actor=self.actor.state_dict(),environment_steps=self.environment_steps,
+                primitive_steps=self.primitive_steps,updates=self.updates,replay=deepcopy(self.replay),
+                target_mode=self.target_mode,target_start=deepcopy(self.target_start),
+                rng=deepcopy(self.rng.bit_generator.state),torch_rng=self.torch_rng.get_state())
+        def load_state_dict(self,state):
+            self.actor.load_state_dict(state["actor"])
+            for name in ("environment_steps","primitive_steps","updates","target_mode"):
+                setattr(self,name,state[name])
+            self.replay=deepcopy(state["replay"]); self.target_start=deepcopy(state["target_start"])
+            self.rng.bit_generator.state=deepcopy(state["rng"])
+            self.torch_rng.set_state(state["torch_rng"])
+        def contract(self): return dict(fixture=True,fixture_warmup=self.fixture_warmup)
+        def begin_target_adaptation(self,*,replay_mode):
+            self.target_mode=replay_mode
+            self.target_start=dict(updates=self.updates,environment_steps=self.environment_steps)
+            self.replay=[]
+            return dict(replay_mode=replay_mode)
+        def target_counters(self):
+            return dict(updates=self.updates-self.target_start["updates"],
+                        environment_steps=self.environment_steps-self.target_start["environment_steps"])
+
+    monkeypatch.setattr(runtime_module,"RobotwinNoiseEnv",Runtime)
+    monkeypatch.setattr(driver,"RecurrentNoisePPO",Collector)
+    monkeypatch.setattr(driver,"NoiseSAC",SACCollector)
+    monkeypatch.setattr(driver.torch.cuda,"is_available",lambda:True)
+    monkeypatch.setattr(driver.torch.cuda,"manual_seed_all",lambda seed:None)
+    monkeypatch.setattr(driver,"capture_rng",lambda:{"stream":stream[0]})
+    monkeypatch.setattr(driver,"restore_rng",lambda state:stream.__setitem__(0,state["stream"]))
+    common=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--methods","ppo","sac","ppo_reset",
+        "--source-steps","3","--source-milestones","1","2","3","--ppo-trials-per-update","8",
+        "--native-episodes","1","--eval-tasks","adjust_bottle","move_stapler_pad","--record-corpus"]
+    first=tmp_path/"interrupted1"
+    campaign=tmp_path/"interrupted-campaign"
+    assert driver.main(common+["--campaign-root",str(campaign),"--output",str(first)])==0
+    saved=torch.load(first/"coordinator-recovery.pt",map_location="cpu",weights_only=False)
+    assert saved["rng"]=={"stream":33}
+    assert len(saved["completed_units"])==19  # 18 validation units + one native episode.
+    assert all(len(s["pending_rollouts"])==1 and s["learner"]["updates"]==0
+               for method,s in saved["states"].items() if method!="sac")
+    assert saved["states"]["sac"]["learner"]["updates"]==0
+    assert len(saved["states"]["sac"]["learner"]["replay"])==1
+    stop_after_first_native[0]=False
+    second=tmp_path/"interrupted2"
+    assert driver.main(common+["--campaign-root",str(campaign),"--output",str(second),"--resume",str(first)])==0
+    completed=torch.load(second/"coordinator-recovery.pt",map_location="cpu",weights_only=False)
+    resumed_summary=json.loads((second/"summary.json").read_text())
+    for stage in (1,2,3):
+        report=completed["stages"][str(stage)]
+        assert report["status"]=="complete" and set(report["source_steps"].values())=={stage}
+        expected_updates=1 if stage==3 else 0
+        expected_pending=0 if stage==3 else stage
+        assert report["source_updates"]==dict(ppo=expected_updates,sac=stage-1,ppo_reset=expected_updates)
+        assert report["pending_trials"]==dict(ppo=expected_pending,sac=0,ppo_reset=expected_pending)
+        for method,snapshot in report["snapshots"].items():
+            point=torch.load(snapshot["path"],map_location="cpu",weights_only=False)
+            if method=="sac":
+                assert len(point["pending_rollouts"])==0
+                assert point["learner"]["updates"]==stage-1
+                assert point["learner"]["environment_steps"]==len(point["learner"]["replay"])==stage
+                torch.testing.assert_close(point["learner"]["actor"]["weight"],
+                                           torch.full((2,2),1.+.5*(stage-1)))
+                continue
+            assert len(point["pending_rollouts"])==expected_pending
+            torch.testing.assert_close(point["learner"]["weights"]["weight"],
+                                       torch.full((2,2),float(1+expected_updates)))
+    resumed_tokens=list(source_tokens)
+    resumed_noise={key:value.copy() for key,value in native_noise.items()}
+    assert resumed_tokens==list(range(31,40))
+    assert [row["source_warmup"] for row in source_sac_metadata]==[True,False,False]
+    assert [row["optimizer_updates"] for row in source_sac_metadata]==[0,0,1]
+    progress=[json.loads(line) for output in (first,second)
+              for line in (output/"progress.jsonl").read_text().splitlines()]
+    cuts=[(row["stage_source_actions"],row["external_stage_budget_cut"])
+          for row in progress if row["stage"]=="source_trial" and row["method"]=="sac"]
+    assert cuts==[(1,True),(2,True),(3,False)]
+    source_sac_rows=[json.loads(line) for output in (first,second)
+                     for line in (output/"episodes.jsonl").read_text().splitlines()
+                     if json.loads(line)["phase"]=="source" and json.loads(line)["method"]=="sac"]
+    assert [row["stage_source_actions"] for row in source_sac_rows]==[1,2,3]
+    online=[row for row in resumed_summary["target"] if row["method"]=="sac_online"]
+    frozen=[row for row in resumed_summary["target"] if row["method"]=="sac_frozen"]
+    assert len(online)==len(frozen)==6
+    assert all(row["target_update_costs"]["updates"]>0 for row in online)
+    assert all(row["target_update_costs"] is None for row in frozen)
+    stream[0]=0; source_tokens.clear(); native_noise.clear(); source_sac_metadata.clear()
+    baseline=tmp_path/"uninterrupted"
+    assert driver.main(common+["--campaign-root",str(tmp_path/"uninterrupted-campaign"),
+                              "--output",str(baseline)])==0
+    assert source_tokens==resumed_tokens and set(native_noise)==set(resumed_noise)
+    for key in native_noise: np.testing.assert_array_equal(native_noise[key],resumed_noise[key])
+    baseline_summary=json.loads((baseline/"summary.json").read_text())
+    assert baseline_summary["campaign_budget"]["actual_actions"]==resumed_summary["campaign_budget"]["actual_actions"]
+    assert len(baseline_summary["source_validation"])==54
+    assert len(baseline_summary["target"])==36

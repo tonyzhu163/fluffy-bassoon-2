@@ -7,8 +7,9 @@ TASK_SLICE_MINUTES=${3:-4}
 [[ "$TASK_COMMIT" =~ ^[0-9a-f]{40}$ ]]
 [[ "$TASK_RUN" =~ ^robotwin-campaign-tests-[a-zA-Z0-9-]+$ ]]
 [[ "$TASK_SLICE_MINUTES" =~ ^[0-9]+$ ]]
-(( TASK_SLICE_MINUTES == 4 ))
-# Remaining initial allocation allowance: at most four minutes.
+(( TASK_SLICE_MINUTES == 2 || TASK_SLICE_MINUTES == 4 ))
+# Choose a scheduler slice inside the remaining approved compute allowance.
+TASK_TEST_SECONDS=$(( TASK_SLICE_MINUTES * 60 - 40 ))
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
@@ -45,7 +46,7 @@ test -z "$(git status --porcelain)"
 "$TASK_PYTHON" "scripts/[train]gpu_probe.py" --expected-count 1 \
     --output "$TASK_OUTPUT/gpu-probe.json" --purpose training --baige-container
 export LYCO_BAIGE_GPU_MAP="$TASK_OUTPUT/gpu-probe.json"
-timeout --signal=TERM --kill-after=15s 180 "$TASK_PYTHON" -m pytest -q \
+timeout --signal=TERM --kill-after=15s "$TASK_TEST_SECONDS" "$TASK_PYTHON" -m pytest -q \
     tests/test_robotwin_noise.py tests/test_robotwin_assets.py \
     tests/test_robotwin_fast_observations.py tests/test_vla_noise_ppo.py \
     tests/test_vla_noise_sac.py tests/test_vla_noise_ppo_review.py \

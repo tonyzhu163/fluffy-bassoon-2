@@ -1,0 +1,64 @@
+{
+  "status": "prepared_awaiting_allocated_validation_and_resource_authorization",
+  "proposal_date_shanghai": "2026-10-30",
+  "source_commit": null,
+  "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "target_subset": [
+    "adjust_bottle",
+    "move_stapler_pad"
+  ],
+  "source_action_milestones_per_arm": [
+    32000,
+    64000,
+    128000
+  ],
+  "methods": [
+    "ppo",
+    "sac",
+    "ppo_reset"
+  ],
+  "source_actions_total": 384000,
+  "source_validation_max_actions_total": 86400,
+  "target_max_actions_total": 115200,
+  "native_max_actions_total": 4800,
+  "prior_executed_actions": 13026,
+  "planned_actions_including_prior": 603426,
+  "benchmark_action_ceiling": 1000000,
+  "unallocated_actions": 396574,
+  "nominal_train_episodes": 4,
+  "eval_episodes": 8,
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "ppo_trials_per_update": 8,
+  "sac_warmup_chunks": 500,
+  "sac_batch_size": 256,
+  "sac_utd": 20,
+  "intermediate_stage_cut": "external budget truncation with bootstrap; retain pending PPO; no forced intermediate update",
+  "source_validation_seed_domain_min": 3000000000,
+  "measured_qualification_actions_per_second": 26.954602297616557,
+  "new_planned_actions": 590400,
+  "collection_hours_at_qualification_rate": 6.084304201160541,
+  "first_stage_collection_hours_at_qualification_rate": 1.6983288149580915,
+  "throughput_limit": "two measured source scenes; optimizer, raw corpus I/O, startup and all-task variation excluded",
+  "proposed_scheduler_minutes": 120,
+  "gpus": 1,
+  "cpus": 16,
+  "memory_gib": 128,
+  "shared_memory_gib": 8,
+  "launch_authorization": "pending larger resource approval; no training job submitted",
+  "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-one-million-20261029-r1",
+  "prior_proposal": "robotwin-campaign-1m-20261029-r1; preserved, not launched, superseded as next-run plan",
+  "source_commit_pending_validation": true
+}
