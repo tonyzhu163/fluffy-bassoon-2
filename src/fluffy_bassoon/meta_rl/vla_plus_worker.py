@@ -1,4 +1,4 @@
-"""Two predeclared LIBERO-Plus development cases; allocation-local simulator RPC.
+"""Disjoint predeclared LIBERO-Plus development and source cases; local RPC.
 
 Uses official virtual case names and wrapper perturbations. Does not import the
 expanded benchmark task registry, construct new perturbations, or load a motor.
@@ -34,12 +34,20 @@ CASES = {
     290: dict(classification_id=291, category="Robot Initial States", difficulty_level=2,
               name=BASE_NAME + "_view_0_0_100_0_0_initstate_2"),
 }
+SOURCE_TRAINING_CASES = {
+    2387: dict(classification_id=2388, category="Light Conditions", difficulty_level=5,
+               name=BASE_NAME + "_light_11"),
+    1438: dict(classification_id=1439, category="Sensor Noise", difficulty_level=2,
+               name=BASE_NAME + "_view_0_0_100_0_0_initstate_0_noise_1"),
+}
+LIGHT_BDDL_SHA256 = "59caa81c79b99659143b2880107ae8ed315d836ecf4efe3fb49602c8e9ad06b2"
 
 
-def case_contract(root, case_index):
+def case_contract(root, case_index, *, role="development"):
     root = Path(root)
-    if case_index not in CASES:
-        raise ValueError("Only the two predeclared Plus development cases are allowed")
+    allowed = CASES if role == "development" else SOURCE_TRAINING_CASES if role == "source_training" else {}
+    if case_index not in allowed:
+        raise ValueError("Only the cases predeclared for this explicit development/source-training role are allowed")
     folder = root / "libero/libero/benchmark"
     classification, task_map = folder / "task_classification.json", folder / "libero_suite_task_map.py"
     if sha256(classification) != CLASSIFICATION_SHA256 or sha256(task_map) != TASK_MAP_SHA256:
@@ -47,7 +55,7 @@ def case_contract(root, case_index):
     rows = json.loads(classification.read_text())["libero_object"]
     mapping = ast.literal_eval(ast.parse(task_map.read_text()).body[0].value)["libero_object"]
     selected = [row for row in rows if row["id"] == case_index + 1]
-    expected = CASES[case_index]
+    expected = allowed[case_index]
     if (len(selected) != 1 or selected[0] != dict(id=expected["classification_id"],
             name=expected["name"], category=expected["category"], difficulty_level=expected["difficulty_level"])
             or mapping[case_index] != expected["name"]):
@@ -57,15 +65,22 @@ def case_contract(root, case_index):
     init = base / "init_files/libero_object" / (BASE_NAME + ".pruned_init")
     if sha256(bddl) != BASE_BDDL_SHA256 or sha256(init) != BASE_INIT_SHA256:
         raise ValueError("Pinned Plus base task or initial states changed")
-    return dict(benchmark="LIBERO-Plus", split="development", runtime_index=case_index,
+    resolved_name = expected["name"] if case_index == 2387 else BASE_NAME
+    resolved_sha = LIGHT_BDDL_SHA256 if case_index == 2387 else BASE_BDDL_SHA256
+    if sha256(base / "bddl_files/libero_object" / (resolved_name + ".bddl")) != resolved_sha:
+        raise ValueError("Pinned Plus perturbation BDDL changed")
+    return dict(benchmark="LIBERO-Plus", split=role, role=role, runtime_index=case_index,
+        suite="libero_object", case_id=f"plus:libero_object:{case_index}",
         task_order_index=0, **expected, source_commit=PLUS_COMMIT,
+        resolved_bddl_name=resolved_name, resolved_bddl_sha256=resolved_sha,
         classification_sha256=CLASSIFICATION_SHA256, task_map_sha256=TASK_MAP_SHA256,
         original_base=dict(suite="libero_object", task_id=1, semantic_task=BASE_NAME,
             bddl_sha256=BASE_BDDL_SHA256, init_sha256=BASE_INIT_SHA256),
         attachment_train_lineage=dict(task_key="libero_90:47",
             family="full-goal-family-b2a798f45b2c57e3",
             goal_binding_sha256="0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d"),
-        scope="Development perturbations of a training-goal family; not final external-test results")
+        scope=("Development perturbations of a training-goal family; not final external-test results"
+               if role == "development" else "Approved Plus source-training perturbations; excluded from validation/final tests"))
 
 
 def main(argv=None):
@@ -73,7 +88,8 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--libero-root", type=Path, required=True)
-    parser.add_argument("--case-index", type=int, choices=tuple(CASES), required=True)
+    parser.add_argument("--case-index", type=int, choices=tuple(CASES) + tuple(SOURCE_TRAINING_CASES), required=True)
+    parser.add_argument("--source-training", action="store_true")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--horizon", type=int, default=280)
     parser.add_argument("--settle-steps", type=int, default=10)
@@ -89,7 +105,8 @@ def main(argv=None):
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.libero_root, text=True).strip()
     if actual != PLUS_COMMIT:
         raise ValueError("Require the pinned staged LIBERO-Plus source")
-    case = case_contract(args.libero_root, args.case_index)
+    case = case_contract(args.libero_root, args.case_index,
+                         role="source_training" if args.source_training else "development")
     args.output.mkdir(parents=True, exist_ok=False)
     config = args.output / "libero-config"
     config.mkdir()
@@ -107,15 +124,17 @@ def main(argv=None):
     # The official wrapper resolves _view_/_initstate_ virtual names itself.
     virtual = base / "bddl_files/libero_object" / (case["name"] + ".bddl")
     instruction = " ".join(re.search(r"\(:language\s+([^)]*)\)",
-        (base / "bddl_files/libero_object" / (BASE_NAME + ".bddl")).read_text()).group(1).split())
-    metadata = dict(benchmark_kind="plus", development=True,
+        (base / "bddl_files/libero_object" / (case["resolved_bddl_name"] + ".bddl")).read_text()).group(1).split())
+    metadata = dict(benchmark_kind="plus", development=not args.source_training,
+        source_training=args.source_training, role=case["role"],
         origin_base=dict(case["original_base"], train_task_key="libero_90:47"),
         suite="libero_object", task_id=args.case_index, instruction=instruction,
-        libero_commit=PLUS_COMMIT, initial_states=len(states), bddl_sha256=BASE_BDDL_SHA256,
+        libero_commit=PLUS_COMMIT, initial_states=len(states), bddl_sha256=case["resolved_bddl_sha256"],
         bddl_file=virtual.name, problem_folder="libero_object", horizon=args.horizon,
         settle_steps=args.settle_steps, pid=os.getpid(), hostname=socket.gethostname(), plus_case=case,
         observation="two RGB cameras and eight robot proprioception values only",
-        protocol="Development object horizon280/settle10 from pinned RLinf standalone OpenPI libero_eval.py; not an asserted full Plus leaderboard protocol",
+        protocol="Declared object horizon280/settle10 from pinned RLinf standalone OpenPI libero_eval.py; not an asserted full Plus leaderboard protocol",
+        fresh_environment_on_reset=True,
         reset_protocol="fresh environment per reset; seed before constructor and reset; actual initial observations hashed")
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
     write_json(args.output / "simulator-ready.json", metadata)
