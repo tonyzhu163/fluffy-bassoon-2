@@ -1,0 +1,61 @@
+{
+  "cluster": "Baige",
+  "submission_surface": "\u5206\u5e03\u5f0f\u8bad\u7ec3",
+  "job_id": "job-6j2y16w9u33o",
+  "name": "mwj_1029_can_pilot_4090_g2_r3_103e0f5",
+  "submitted_at": "2026-10-29T14:57:44+08:00",
+  "running_at": "2026-10-29T14:58:19+08:00",
+  "source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "run_id": "robomimic-can-dsrl-baige-20261029-pilot-r3",
+  "qualification_run": "robomimic-can-dsrl-baige-20261029-qual-r4",
+  "qualified_scientific_source": "c1032117b953acd94592336629a1d28c4f563d62",
+  "resources": {
+    "gpus": 2,
+    "gpu_type": "NVIDIA GeForce RTX4090",
+    "cpus": 32,
+    "ram_gib": 128,
+    "shm_gib": 16
+  },
+  "queue": "aihcq-chqrelndaaj4",
+  "maximum_runtime_minutes": 50,
+  "automatic_retry": false,
+  "prelaunch_validation": "Independent source/budget review, staticAST andbashsyntax passed. ActualGPUhelperfixtures/full2GPUprobe andperworkerrealCUDAchecks executeinsideallocation.",
+  "budget": {
+    "total_approved_gpu_minutes": 120,
+    "old_failed_qualification_reserve": 6,
+    "qualification_r4_reserve": 12,
+    "new_pilot_ceiling": 100,
+    "total_ceiling": 118
+  },
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "training_seed": 1,
+  "common_training_steps": 28800,
+  "lanes": {
+    "0": [
+      "dsrl-na",
+      "rl2"
+    ],
+    "1": [
+      "dsrl-na-retry",
+      "episode-reset"
+    ]
+  },
+  "evaluation": "8 pairedheldoutscenesK4; bothsuccessmetrics; recurrentnormal/reset/blind",
+  "online_dsrl": "deferred under initialcap",
+  "helper_migration": "Support complete2GPUparentreport; scientificcode byteidenticaltoc103. Requalifyfixturesandphysicalworkeridentityinsideallocation.",
+  "next_stage": "8RTX6000cards/1hour/fourmatchedtrainingseeds remainsconditionaloncompletepilot",
+  "proof": "two4090-pilot-submission.png",
+  "last_artifact_check": "2026-10-29T15:00:02+08:00",
+  "runtime_tests": {
+    "passed": 16,
+    "seconds": 0.15
+  },
+  "parent_gpu_probe": "passed complete2RTX4090allocation",
+  "admission": "passed; target28800; predicted2473s perlane",
+  "progress": "bothDSRLphasesstarted15:00:01; learnerupdatespending"
+}
