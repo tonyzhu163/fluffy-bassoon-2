@@ -54,10 +54,10 @@ export MAGICK_CODER_MODULE_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagic
 export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export PYTHONPATH=$TASK_WORKTREE/src
 "$TASK_TORCH" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
-  --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
+  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST_OVERLAY:$TASK_WORKTREE/src" \
-  "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla*.py \
+  "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 "$TASK_MODEL" - "$TASK_CHECKPOINT" "$TASK_OUTPUT/configuration-qualification.json" <<'PY'
