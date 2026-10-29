@@ -105,3 +105,29 @@ def test_teacher_mutation_is_rejected_even_after_real_collection(tmp_path):
     with pytest.raises(RuntimeError, match="changed its fixed source"):
         collect_noise_distillation(**kwargs)
     assert not list(kwargs["output_dir"].glob("cnd-*.npz"))
+
+
+def test_paired_dpt_export_only_changes_query_targets_without_extra_rollouts(tmp_path):
+    import json
+    kwargs = arguments(tmp_path)
+    kwargs.update(export_paired_dpt=True, benchmark_contract=dict(suite="libero_90", task_id=57,
+        semantic_task="cream_cheese_to_tray", bddl_sha256="b" * 64, teacher_contract_sha256="c" * 64))
+    calls = []
+    def counted_episode(*args, **kw):
+        calls.append(kw["initial_state"])
+        return fake_episode(*args, **kw)
+    kwargs["episode_runner"] = counted_episode
+    paths = collect_noise_distillation(**kwargs)
+    assert set(paths) == {"train", "validation"}
+    assert calls == [0, 0, 1, 1]
+    paired = json.loads((kwargs["output_dir"] / "paired-collections.json").read_text())
+    for split in ("train", "validation"):
+        cnd, cm = load_dataset(paths[split])
+        dpt, dm = load_dataset(paired["datasets"]["dpt"][split]["path"])
+        assert cm["objective"] == "cnd" and dm["objective"] == "dpt"
+        assert cm["metadata"]["benchmark_contract"] == kwargs["benchmark_contract"]
+        for field in cnd[0]:
+            if field != "target_noise":
+                assert cnd[0][field].tobytes() == dpt[0][field].tobytes()
+        np.testing.assert_array_equal(dpt[0]["target_noise"], np.tile([.8, -.8], (4, 1)).astype(np.float32))
+        assert not np.array_equal(cnd[0]["target_noise"], dpt[0]["target_noise"])

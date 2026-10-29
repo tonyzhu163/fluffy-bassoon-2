@@ -6,6 +6,7 @@ Allocation, simulator workers and teacher construction are caller-owned.
 """
 
 from dataclasses import asdict, dataclass
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -14,7 +15,7 @@ import sys
 
 import numpy as np
 
-from .vla_history import file_sha256, save_dataset
+from .vla_history import file_sha256, load_dataset, save_dataset
 
 
 @dataclass(frozen=True)
@@ -50,13 +51,18 @@ def _json(path, value):
     temporary.replace(path)
 
 
+def contract_sha256(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
 def collect_noise_distillation(*, teacher_action, teacher_fingerprint, teacher_checkpoint,
         teacher_steps, teacher_primitive_steps, teacher_evaluation, motor_sha256, feature_contract, noise_contract, scenes,
         output_dir, min_episodes, max_episodes, episode_horizon, chunk,
         anneal_decisions, anneal_powers=(1.,), seed=0, max_primitive_steps,
         heldout_initial_states=(), min_teacher_success_rate=.7,
         min_teacher_evaluation_episodes=8, noise_dim=32, sim=None, motor=None,
-        episode_runner=None, row_feature_encoder=None):
+        episode_runner=None, row_feature_encoder=None, export_paired_dpt=False,
+        benchmark_contract=None):
     """Collect complete multi-episode CND trials with a fixed qualified teacher.
 
     scenes has trial_id/split/initial_state/scene_seed dictionaries. The two
@@ -73,9 +79,23 @@ def collect_noise_distillation(*, teacher_action, teacher_fingerprint, teacher_c
     teacher_evaluation supplies successes/completed_episodes/checkpoint_sha256
     from real episodes on this task/interface; source learning alone is not an
     expert qualification. The caller declares the minimum acceptable competence.
+    Return the original flat CND split/path mapping. export_paired_dpt also writes
+    paired-collections.json and DPT labels from the expert actions ALREADY queried
+    at each real observation; actual context arrays are unchanged. A benchmark
+    contract binds suite/task/semantic_task/bddl_sha256/teacher_contract_sha256.
     """
     if sys.platform != "linux":
         raise ValueError("CND collection and tests require allocated Linux resources")
+    if type(export_paired_dpt) is not bool:
+        raise ValueError("Paired export must be explicitly boolean")
+    if benchmark_contract is not None:
+        benchmark_contract = json.loads(json.dumps(benchmark_contract, allow_nan=False))
+        if (not isinstance(benchmark_contract, dict)
+                or not {"suite", "task_id", "semantic_task", "bddl_sha256", "teacher_contract_sha256"}.issubset(benchmark_contract)
+                or not all(isinstance(benchmark_contract.get(k), str) and benchmark_contract[k]
+                           for k in ("suite", "semantic_task", "bddl_sha256", "teacher_contract_sha256"))
+                or type(benchmark_contract.get("task_id")) is not int or benchmark_contract["task_id"] < 0):
+            raise ValueError("Require actual benchmark identity and teacher full-contract hash")
     if (not scenes or min_episodes < 2 or max_episodes < min_episodes
             or episode_horizon < 1 or chunk < 1 or max_primitive_steps < 1
             or noise_dim < 1 or type(teacher_steps) is not int or teacher_steps < 0
@@ -134,9 +154,14 @@ def collect_noise_distillation(*, teacher_action, teacher_fingerprint, teacher_c
         adaptation="Vintix CND convex mixture in frozen-VLA steering coordinates, not physical actions",
         target="actual executed noisy steering coordinate; schedule never enters student inputs",
         schedule="epsilon=(1-min(1,decision/(duration-1)))**power; clock spans episode resets")
+    if benchmark_contract is not None:
+        contract["benchmark_contract"] = benchmark_contract
+    if export_paired_dpt:
+        contract["paired_dpt_export"] = "same actual contexts; deterministic expert label at actual pre-action query"
     output_dir.mkdir(parents=True, exist_ok=False)
     _json(output_dir / "contract.json", contract)
     datasets = {split: [] for split in banks}
+    dpt_datasets = {split: [] for split in banks}
     trial_ids = {split: [] for split in banks}
     rng = np.random.default_rng(seed)
     receipts, total_steps, settling_steps = [], 0, 0
@@ -209,6 +234,9 @@ def collect_noise_distillation(*, teacher_action, teacher_fingerprint, teacher_c
                 episode_starts=np.asarray(starts, bool),
                 teacher_steps=np.full(len(rows), teacher_steps, np.int64))
             datasets[scene["split"]].append(trial)
+            if export_paired_dpt:
+                dpt_datasets[scene["split"]].append(dict(trial,
+                    target_noise=np.stack(expert_actions).astype(np.float32)))
             trial_ids[scene["split"]].append(scene["trial_id"])
             receipts.append(dict(scene=scene, schedule=asdict(schedule), episodes=episode_receipts,
                                  steering_decisions=decision, epsilon_last=epsilons[-1]))
@@ -220,18 +248,34 @@ def collect_noise_distillation(*, teacher_action, teacher_fingerprint, teacher_c
             checkpoint_sha256=checkpoint_digest))
         if not unchanged:
             raise RuntimeError("CND changed its fixed source teacher or checkpoint")
-    paths = {}
+    paths, paired = {}, {objective: {} for objective in ("cnd", "dpt")}
     for split in banks:
         path = output_dir / f"cnd-{split}.npz"
         save_dataset(path, datasets[split], objective="cnd", metadata=dict(
             trial_ids=trial_ids[split], motor_sha256=motor_sha256, feature_contract=feature_contract,
             noise_contract=noise_contract,
+            benchmark_contract=benchmark_contract, source_contract_sha256=contract_sha256(contract),
             source_contract=contract, scene_receipts=receipts, collection_primitive_steps=total_steps,
             collection_settling_steps=settling_steps,
             teacher_primitive_steps=teacher_primitive_steps,
             total_source_primitive_steps=teacher_primitive_steps + total_steps,
             source_rule="fixed deterministic teacher; annealed uniform noise; targets equal executed mixtures"))
         paths[split] = path
+        paired["cnd"][split] = dict(path=str(path.resolve()), sha256=file_sha256(path))
+        if export_paired_dpt:
+            dpt_path = output_dir / f"dpt-{split}.npz"
+            _, cnd_metadata = load_dataset(path)
+            metadata = dict(cnd_metadata["metadata"],
+                source_rule="fixed deterministic expert labels at actual noisy-history queries; executed contexts unchanged")
+            save_dataset(dpt_path, dpt_datasets[split], objective="dpt", metadata=metadata)
+            paired["dpt"][split] = dict(path=str(dpt_path.resolve()), sha256=file_sha256(dpt_path))
+    if export_paired_dpt:
+        _json(output_dir / "paired-collections.json", dict(format="frozen_vla_cnd_paired_collection_v1",
+            benchmark_contract=benchmark_contract, source_contract_sha256=contract_sha256(contract),
+            motor_sha256=motor_sha256, feature_contract_sha256=contract_sha256(feature_contract),
+            noise_contract_sha256=contract_sha256(noise_contract), chunk=chunk,
+            trials={split: [scene for scene in scenes if scene["split"] == split] for split in banks},
+            datasets=paired))
     _json(output_dir / "summary.json", dict(completed=True, collection_primitive_steps=total_steps,
         teacher_primitive_steps=teacher_primitive_steps, total_source_primitive_steps=teacher_primitive_steps + total_steps,
         collection_settling_steps=settling_steps, trials=receipts,
