@@ -45,4 +45,5 @@ Append `--resume` to the launcher only for the same source, run and ledger.
 The result reports paired full/reset successes, shared support outcomes,
 committed and interrupted costs, initial-array equality and frozen parameters.
 A complete six-case result addresses the use of composite support context on
-one goal. It does not establish numeric-reward causality, broad task transfer,+or reliable sample-efficiency/topline superiority over DSRL.
+one goal. It does not establish numeric-reward causality, broad task transfer,
+or reliable sample-efficiency/topline superiority over DSRL.
