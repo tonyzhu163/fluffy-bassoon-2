@@ -1,13 +1,16 @@
 """Frozen pi0.5 RoboTwin noise interface for both recurrent PPO and DSRL.
 
-The real backend requires an allocated Linux GPU.  No parameters, observations,
-action conventions, or task rewards are modified.  The module imports only
+The real backend requires an allocated Linux GPU. No parameters, action
+conventions, or task rewards are modified. An opt-in observation-capture mode
+defers camera reads to the end of each chunk; image equivalence requires a
+separate allocated-runtime check. The module imports only
 NumPy until that backend is constructed, so accounting contracts can be checked
 with an injected backend on allocated Linux CPU resources.
 """
 from __future__ import annotations
 
 from concurrent.futures import Future
+from contextlib import contextmanager
 import hashlib
 import json
 import os
@@ -71,6 +74,91 @@ def _install_synchronous_vector_executor(venv):
     # has not received work yet. No native scene has crossed threads here.
     original.shutdown(wait=True, cancel_futures=True)
     venv.env_thread_pool = _SynchronousExecutor()
+
+
+@contextmanager
+def _temporary_instance_method(instance, name, replacement):
+    """Restore the exact instance/class lookup even when native calls fail."""
+    had_override = name in vars(instance)
+    previous = vars(instance).get(name)
+    setattr(instance, name, replacement)
+    try:
+        yield
+    finally:
+        if had_override:
+            setattr(instance, name, previous)
+        else:
+            delattr(instance, name)
+
+
+def _step_with_final_observation(subenv, actions, update_obs):
+    """Use the unmodified native full-observation loop for exact accounting.
+
+    Native collect_obs=False omits executed_action_count, including when an
+    action is only partly executed at early success. Keep collect_obs=True
+    and its count/boundary logic, replacing only intermediate camera reads
+    with placeholders. Each replaced get_obs still performs its original
+    _update_render, preserving pose synchronization and lighting RNG calls.
+    The one deferred real get_obs skips that already-performed update.
+
+    This is restricted to the explicit tasks whose success checks use scene
+    state, not intermediate now_obs. Ray-tracer temporal state and pixels are
+    not assumed equivalent merely because physical/accounting traces match.
+    """
+    if subenv.get_instruction() is None:
+        subenv.reset(env_seed=None)
+    actions = np.asarray(actions)
+    if actions.ndim == 1:
+        actions = actions[None, :]
+    if actions.ndim != 2 or actions.shape[0] < 1:
+        raise ValueError("Require a nonempty RoboTwin action chunk")
+    with subenv.lock:
+        task = subenv.task
+        if getattr(task, "crazy_random_light", False):
+            raise RuntimeError("Final-observation capture does not support randomized lights")
+        original_get_obs = task.get_obs
+        original_update_render = task._update_render
+
+        def deferred_observation():
+            original_update_render()
+            return None  # Native code uses only list length until returning.
+
+        with _temporary_instance_method(task, "get_obs", deferred_observation):
+            reward, termination, truncation, info, placeholders = (
+                task.gen_sparse_reward_data(actions, collect_obs=True)
+            )
+        count = info.get("executed_action_count")
+        if (isinstance(count, (bool, np.bool_))
+                or not isinstance(count, (int, np.integer))
+                or not 0 <= count <= len(actions)):
+            raise RuntimeError("Native RoboTwin loop must report an exact executed_action_count")
+        if len(placeholders) != len(actions):
+            raise RuntimeError("Native RoboTwin full-observation padding changed")
+        # The native loop already called _update_render at every original
+        # observation boundary. Do not add a new lighting/RNG transition.
+        with _temporary_instance_method(task, "_update_render", lambda: None):
+            raw_obs = original_get_obs()
+        obs = update_obs(raw_obs)
+        obs["instruction"] = task.get_instruction()
+    return dict(obs=obs, reward=reward, terminated=termination,
+                truncated=truncation, info=info)
+
+
+def _install_final_observation_capture(venv, update_obs=None):
+    """Patch only this single synchronous vector instance; opt-in only."""
+    if venv.n_envs != 1 or not isinstance(venv.env_thread_pool, _SynchronousExecutor):
+        raise RuntimeError("Final-observation capture requires one synchronous physical environment")
+    if update_obs is None:
+        from robotwin.envs.vector_env import update_obs
+    for subenv in venv.envs:
+        if getattr(subenv, "_fb2_final_observation_only", False):
+            continue
+
+        def step(actions, _subenv=subenv):
+            return _step_with_final_observation(_subenv, actions, update_obs)
+
+        subenv.step = step
+        subenv._fb2_final_observation_only = True
 
 
 def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS):
@@ -209,11 +297,13 @@ def model_config(rlinf_root, model_path, norm_stats, action_horizon=32, num_step
 
 
 def environment_config(rlinf_root, robotwin_root, task_name, seed, episode_limit,
-                       *, task_config_name="demo_clean"):
+                       *, task_config_name="demo_clean", final_observation_only=False):
     from omegaconf import OmegaConf
 
     if task_config_name not in ("demo_clean", "demo_randomized"):
         raise ValueError("task_config_name must be demo_clean or demo_randomized")
+    if final_observation_only and task_config_name != "demo_clean":
+        raise ValueError("final_observation_only initially supports demo_clean only")
     randomize_appearance = task_config_name == "demo_randomized"
     root = Path(rlinf_root)
     cfg = OmegaConf.load(root / "examples/embodiment/config/env/robotwin_adjust_bottle.yaml")
@@ -221,9 +311,9 @@ def environment_config(rlinf_root, robotwin_root, task_name, seed, episode_limit
         total_num_envs=1, auto_reset=False, ignore_terminations=False,
         seed=int(seed), group_size=1, use_fixed_reset_state_ids=True,
         seeds_path=None, assets_path=str(robotwin_root), center_crop=False,
-        # Full observations expose actual completed/partly executed actions.
-        # The fast sparse path does not report their count on early success.
-        skip_intermediate_renders=False, is_eval=False,
+        # The optional fast step still invokes the native full-observation
+        # loop for exact counts, while returning only its final camera read.
+        skip_intermediate_renders=bool(final_observation_only), is_eval=False,
         max_episode_steps=episode_limit, max_steps_per_rollout_epoch=episode_limit,
         reward_coef=1.0, use_custom_reward=True, use_rel_reward=True,
         video_cfg=dict(save_video=False, info_on_video=False, video_base_dir="unused"),
@@ -281,7 +371,8 @@ class _RoboTwinBackend:
 
     def __init__(self, model_path, norm_stats, robotwin_root, rlinf_root,
                  device="cuda", episode_limit=400, action_horizon=32,
-                 num_steps=5, task_config_name="demo_clean", output_dir=None):
+                 num_steps=5, task_config_name="demo_clean", output_dir=None,
+                 final_observation_only=False):
         from fluffy_bassoon.gpu_execution import validate_execution
 
         mode = os.environ.get("FLUFFY_GPU_EXECUTION", "baige")
@@ -314,6 +405,11 @@ class _RoboTwinBackend:
         if task_config_name not in ("demo_clean", "demo_randomized"):
             raise ValueError("task_config_name must be demo_clean or demo_randomized")
         self.task_config_name = task_config_name
+        if type(final_observation_only) is not bool:
+            raise ValueError("final_observation_only must be a bool")
+        if final_observation_only and task_config_name != "demo_clean":
+            raise ValueError("final_observation_only initially supports demo_clean only")
+        self.final_observation_only = final_observation_only
         self.noise_shape = (int(action_horizon), 32)
         self.native_horizon = int(action_horizon)
         self.output_dir = Path(output_dir) if output_dir else None
@@ -343,6 +439,10 @@ class _RoboTwinBackend:
             task_config_name=task_config_name,
             assets=self.asset_receipt, reset_max_attempts=RESET_ATTEMPTS,
             simulator_execution="one physical environment; scene setup/reset/step/close on calling thread",
+            observation_capture=("final camera read per chunk; native full-observation action accounting"
+                                 if final_observation_only else "native camera read at every action boundary"),
+            capture_image_equivalence=("unqualified; requires paired allocated-runtime check"
+                                       if final_observation_only else "native reference"),
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
@@ -410,9 +510,12 @@ class _RoboTwinBackend:
         if self.env is None:
             cfg = environment_config(self.rlinf_root, self.robotwin_root, task_name, seed,
                                      self.episode_limit,
-                                     task_config_name=self.task_config_name)
+                                     task_config_name=self.task_config_name,
+                                     final_observation_only=self.final_observation_only)
             self.env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
             _install_synchronous_vector_executor(self.env.venv)
+            if self.final_observation_only:
+                _install_final_observation_capture(self.env.venv)
             self.task_name = task_name
         raw, _ = self.env.reset(env_seeds=[int(seed)])
         subenv = self.env.venv.envs[0]
@@ -513,12 +616,18 @@ class RobotwinNoiseEnv:
 
     def __init__(self, model_path=None, norm_stats=None, robotwin_root=None, rlinf_root=None,
                  device="cuda", episode_limit=400, action_horizon=32, num_steps=5,
-                 task_config_name="demo_clean", output_dir=None, *, backend=None):
+                 task_config_name="demo_clean", output_dir=None, *, backend=None,
+                 final_observation_only=False):
         if type(episode_limit) is not int or episode_limit < 1:
             raise ValueError("episode_limit must be a positive integer")
+        if type(final_observation_only) is not bool:
+            raise ValueError("final_observation_only must be a bool")
+        if final_observation_only and task_config_name != "demo_clean":
+            raise ValueError("final_observation_only initially supports demo_clean only")
         self.backend = backend if backend is not None else _RoboTwinBackend(
             model_path, norm_stats, robotwin_root, rlinf_root, device, episode_limit,
-            action_horizon, num_steps, task_config_name, output_dir)
+            action_horizon, num_steps, task_config_name, output_dir,
+            final_observation_only=final_observation_only)
         self.observation_dim = self.backend.observation_dim
         self.noise_shape = tuple(self.backend.noise_shape)
         self.native_horizon = int(self.noise_shape[0])
