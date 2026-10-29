@@ -104,6 +104,7 @@ def main(argv=None):
         raise ValueError("Declared BDDL omitted its language instruction")
     metadata = dict(benchmark_kind="pro", development=True, suite=spec["family"], task_id=1,
         case_id=spec["case_id"], dimension=spec["dimension"], condition=spec["condition"],
+        pro_case=dict(spec, initial_state=0),
         origin_base=ORIGIN_BASE, instruction=language.group(1).strip(),
         semantic_task=TASK_STEM, libero_commit=PRO_COMMIT, pro_commit=PRO_COMMIT,
         dataset_repo="zhouxueyang/LIBERO-Pro", dataset_revision=DATA_REVISION,
