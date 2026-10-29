@@ -34,6 +34,14 @@ Compact receipts: [capped SAC](../../outputs/libero40-1m-sac-qualification-audit
 [single-task PPO](../../outputs/libero40-1m-ppo-qualification-audit-20261029-r1/README.md),
 [shared PPO](../../outputs/libero40-1m-shared-ppo-qualification-audit-20261029-r1/README.md).
 
+A separately pinned width128/two-layer/context300 shared PPO check also
+completed: `job-y48o6pc3928k`, source `3944ff7`,221 Linux tests passed/two
+JAX probe-environment skips. Eight episodes/two tasks,80 query chunks,
+two PPO iterations/four optimizer steps,834 total physical actions.
+Behavior replay error0; KL.190/.0346. Full raw/behavior/recovery hashes
+independently inspected. This qualifies the larger architecture's execution,
+not improved performance. [Receipts](../../outputs/libero40-1m-shared-ppo-width128-audit-20261029-r1/README.md).
+
 ## Completed official OpenPI40 source runtime qualification
 
 The new source40 collector completed independent train and validation streams
