@@ -23,7 +23,7 @@ from .warmstart import atomic_save, checked_load, validate_weights
 DATA_FORMAT = "frozen_vla_history_dataset_v1"
 MODEL_FORMAT = "frozen_vla_history_policy_v1"
 MODES = ("full", "episode", "static")
-OBJECTIVES = ("ad", "dpt", "behavior_cloning")
+OBJECTIVES = ("ad", "dpt", "behavior_cloning", "cnd")
 FIELDS = ("observations", "executed_noise", "target_noise", "rewards", "dones", "episode_starts", "teacher_steps")
 
 
@@ -59,8 +59,8 @@ def validate_trial(trial, *, objective):
     steps = np.asarray(trial["teacher_steps"])
     if steps.dtype != np.int64 or steps.shape != (length,) or (steps < 0).any() or (np.diff(steps) < 0).any():
         raise ValueError("Require chronological nonnegative int64 teacher checkpoint/update identities")
-    if objective in ("ad", "behavior_cloning") and not np.array_equal(executed, target):
-        raise ValueError("AD/behavior-cloning targets must equal the actually executed noise")
+    if objective in ("ad", "behavior_cloning", "cnd") and not np.array_equal(executed, target):
+        raise ValueError("AD/behavior-cloning/CND targets must equal the actually executed noise")
     if objective == "ad" and steps[-1] == steps[0]:
         raise ValueError("AD requires a learning trajectory; a fixed teacher is behavior cloning")
     return length, obs.shape[1], executed.shape[1]
