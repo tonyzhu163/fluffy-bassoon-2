@@ -47,7 +47,7 @@ export PYTHONPATH=$TASK_WORKTREE/src
 "$TASK_TORCH" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
-"$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
+CUDA_VISIBLE_DEVICES='' "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
   tests/test_vla_performance_report.py tests/test_vla_libero.py > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_WORKTREE/src:$TASK_PLUS:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps
 "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
@@ -65,5 +65,5 @@ export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$
   --output "$TASK_OUTPUT/experiment" --port 8765 --suite libero_90 --task-id 57 \
   --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --checkpoint "$TASK_CHECKPOINT" \
   --model-config pi0_libero --chunk 20 --horizon 400 --source-commit "$TASK_SOURCE" \
-  --max-steps 2000 --warmup-chunks 32 --batch-size 32 --utd 20 \
+  --max-steps 4000 --warmup-chunks 32 --batch-size 32 --utd 20 \
   --eval-states 40 --attempts 2 --history-updates 10 --history-device cpu --history-objective ad
