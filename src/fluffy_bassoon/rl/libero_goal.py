@@ -174,17 +174,19 @@ def policy_obs(obs):
 
 
 def _worker(conn, goal_states):
-    env, current = None, None
+    # Each worker keeps the environment of its first task for its lifetime. All ten
+    # LIBERO-Goal BDDLs compile to the same seeded scene (sim-check), so rebuilding per
+    # source task would change nothing but would churn EGL contexts (~456 MiB each).
+    # Native success therefore refers to env_task, the BDDL this worker was built from.
+    env, env_task = None, None
     try:
         while True:
             command, payload = conn.recv()
             if command == "close":
                 break
             if command == "reset":
-                if payload["bddl"] != current:
-                    if env is not None:
-                        env.close()
-                    env, current = make_env(payload["bddl"]), payload["bddl"]
+                if env is None:
+                    env, env_task = make_env(payload["bddl"]), payload["task"]
                 # Seeding before reset fixes LIBERO's fixture placement (re-sampled on every
                 # hard reset); identical across all ten tasks for the same seed.
                 env.seed(payload["seed"])
@@ -198,7 +200,7 @@ def _worker(conn, goal_states):
                 state_sha = hashlib.sha256(np.ascontiguousarray(env.sim.get_state().flatten()).tobytes()).hexdigest()
                 conn.send(("ok", dict(obs=policy_obs(obs), goals=goal_vector(env, goal_states),
                                       native_success=bool(done), pid=os.getpid(), model_xml_sha256=xml_sha,
-                                      settled_state_sha256=state_sha)))
+                                      settled_state_sha256=state_sha, env_task=env_task)))
             elif command == "step":
                 goals, native = [], []
                 for action in payload:
@@ -279,6 +281,7 @@ class GoalTrace:
     """Per-episode first-achieved step, end state and native-success parity of all goals."""
 
     def __init__(self, n_goals, initial, source_task, native_initial):
+        """source_task: the goal index whose predicate LIBERO reports as native success."""
         self.n, self.step, self.source = n_goals, 0, source_task
         self.initial = list(initial)
         self.first = [-1] * n_goals
@@ -305,18 +308,19 @@ class GoalTrace:
                     native_parity_mismatches=self.parity_mismatches)
 
 
-def run_batch(model, pool, rows, tasks, suite, *, base_seed, device):
-    """Synchronized 320-step episodes for one batch of plan rows."""
+def run_batch(model, pool, rows, tasks, suite, *, base_seed, device, chunks=STEPS // CHUNK):
+    """Synchronized 320-step episodes for one batch of plan rows (fewer chunks: smoke only)."""
     import torch
     languages = [t["language"] for t in tasks]
     goal_count = len(tasks)
-    payloads = [dict(bddl=tasks[r["source_task"]]["bddl"], seed=env_seed(r),
+    payloads = [dict(bddl=tasks[r["source_task"]]["bddl"], task=r["source_task"], seed=env_seed(r),
                      init_state=suite.get_task_init_states(r["source_task"])[r["trial"]]) for r in rows]
     states = initial = pool.reset(payloads)
     prompts = [instruction(r, languages) for r in rows]
-    traces = [GoalTrace(goal_count, s["goals"], r["source_task"], s["native_success"])
-              for s, r in zip(states, rows)]
-    for chunk in range(STEPS // CHUNK):
+    # Parity: the checker's goal for the worker's own BDDL must equal LIBERO's native success.
+    traces = [GoalTrace(goal_count, s["goals"], s["env_task"], s["native_success"])
+              for s in states]
+    for chunk in range(chunks):
         noise = chunk_noise(rows, chunk, base_seed, device)
         with torch.no_grad():
             actions, _ = model.predict_action_batch(model_obs(states, prompts), mode="eval", noise=noise)
@@ -330,7 +334,8 @@ def run_batch(model, pool, rows, tasks, suite, *, base_seed, device):
     out = []
     for r, prompt, trace, first in zip(rows, prompts, traces, initial):
         rec = dict(r, instruction=prompt, env_seed=env_seed(r), model_xml_sha256=first["model_xml_sha256"],
-                   settled_state_sha256=first["settled_state_sha256"], **trace.row())
+                   settled_state_sha256=first["settled_state_sha256"], env_bddl_task=first["env_task"],
+                   worker_pid=first["pid"], **trace.row())
         g = r["instructed_goal"]
         rec["instructed_success"] = None if g is None else rec["goals_first_step"][g] >= 0
         out.append(rec)

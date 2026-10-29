@@ -182,7 +182,7 @@ def model_check(args):
         if pool is None:
             states = [fake, fake]
         else:
-            states = pool.reset([dict(bddl=tasks[1]["bddl"], seed=lg.env_seed(rows[0]),
+            states = pool.reset([dict(bddl=tasks[1]["bddl"], task=1, seed=lg.env_seed(rows[0]),
                                       init_state=suite.get_task_init_states(1)[0])] * 2)
         if device == "cuda" and pool is not None:
             gpu_receipt(out, pool.pids)
@@ -234,7 +234,10 @@ def run(args):
                   plan_counts={c: sum(r["condition"] == c for r in plan) for c in ("explicit", "vague", "swap")})
     lg.write_json(out / "config.json", config)
     lg.write_json(out / "plan.json", plan)
-    model, digest = load_model(args, "cuda")
+    device = args.device
+    if args.smoke_chunks and device == "cuda":
+        raise SystemExit("--smoke-chunks is a CPU pipeline smoke test only")
+    model, digest = load_model(args, device)
     fingerprint = lg.model_fingerprint(model)
     pool = lg.EnvPool(args.batch_size, [t["goal_state"] for t in tasks])
     records, batches = [], []
@@ -247,18 +250,23 @@ def run(args):
                 break
             rows = plan[begin:begin + args.batch_size]
             tic = time.monotonic()
-            result = lg.run_batch(model, pool, rows, tasks, suite, base_seed=args.base_seed, device="cuda")
-            if begin == 0:
+            result = lg.run_batch(model, pool, rows, tasks, suite, base_seed=args.base_seed, device=device,
+                                  chunks=args.smoke_chunks or lg.STEPS // lg.CHUNK)
+            if begin == 0 and device == "cuda":
                 gpu_receipt(out, pool.pids)
             with (out / "episodes.jsonl").open("a") as stream:
                 for rec in result:
                     stream.write(json.dumps(rec) + "\n")
             records += result
+            free, total = torch.cuda.mem_get_info() if device == "cuda" else (-2**20, -2**20)
             batches.append(dict(index=begin // args.batch_size, episodes=len(rows),
-                                seconds=time.monotonic() - tic, finished=now()))
+                                seconds=time.monotonic() - tic, finished=now(),
+                                gpu_free_mib=free // 2**20, gpu_total_mib=total // 2**20,
+                                torch_max_allocated_mib=(torch.cuda.max_memory_allocated() // 2**20
+                                                         if device == "cuda" else -1)))
             done = sum(r["instructed_success"] for r in result if r["instructed_success"] is not None)
             print(f"batch {batches[-1]['index']} {len(rows)} episodes {batches[-1]['seconds']:.0f}s "
-                  f"instructed successes {done}", flush=True)
+                  f"instructed successes {done} gpu free {batches[-1]['gpu_free_mib']} MiB", flush=True)
     finally:
         pool.close()
     fingerprint_after = lg.model_fingerprint(model)
@@ -296,6 +304,8 @@ def main():
     parser.add_argument("--paired-trials", type=int, default=2)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--synthetic-obs", action="store_true", help="model-check without a renderer")
+    parser.add_argument("--smoke-chunks", type=int, default=0,
+                        help="CPU pipeline smoke only: stop episodes after this many chunks (incomplete)")
     parser.add_argument("--max-elapsed-seconds", type=float, default=2700)
     parser.add_argument("--episodes")
     parser.add_argument("--output")
