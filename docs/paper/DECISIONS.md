@@ -71,6 +71,24 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
 
 ## Hypotheses and unresolved choices
 
+- Before a large teacher corpus: finish the bounded strong-backbone pilot;
+  predeclare training/dev steering headroom and repeatability measurements;
+  then test a small corpus against static/reset and simple bandit/search
+  controls. Large collection remains deferred until these checks justify it.
+- A goal-revealing instruction need not reveal the best noise coordinate.
+  Artificial hidden physics is not necessary and is outside the agreed scope.
+- Scheduled CND can teach a clock shortcut. Reward-dependent corruption is
+  only an ablation candidate; no adoption without evidence. Square-root
+  mixtures do not preserve a Gaussian law when teacher coordinates are
+  bounded, selected or otherwise non-Gaussian.
+- DPT is not BC by definition; contextual versus observation-only behavior
+  is empirical. Matching a simple bandit weakens a complex-controller
+  contribution without negating the meta-learning definition.
+- Reward shuffling probes numeric-reward dependence, not all feedback use;
+  visual outcomes may remain informative. No single reward/history/bandit
+  intervention is a universal ICRL gate or sufficient proof by itself.
+- Same initial-state index + different RNG seed does not imply a new object
+  placement. Verify actual resets and distinguish distinct states/repetitions.
 - Hypothesis: pretraining across useful histories yields a reusable process
   that outperforms ordinary DSRL at low deployment budgets without losing
   final success. **Untested on the planned held-out task bank.**
@@ -91,4 +109,5 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
   controlled robot-performance evidence and a complete related-work audit.
 - Runtime checks, native ceiling probes and non-VLA engineering pilots are
   not evidence for the central adaptation claim. Do not promote their
-  success counts into meta-learning result tables.
+  success counts into meta-learning result tables. Verified quantitative
+  evidence: [LIBERO evaluation ledger](../frozen-vla-libero/EVALUATION.md).

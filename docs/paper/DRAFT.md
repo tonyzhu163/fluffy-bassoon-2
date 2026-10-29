@@ -86,6 +86,25 @@ implementation references; this outline does not replace them.
 
 ## 4. Learning the steering process
 
+### Headroom and shortcut checks before a large corpus
+
+- Finish the bounded π₀.₅ technical/teacher pilot, then predeclare training/dev
+  task noise-headroom and repeatability checks. **Large teacher collection is
+  deferred until this evidence supports a useful steering/adaptation problem.**
+- Measure whether noise choices reproducibly change outcomes, how much native
+  success leaves to improve, and whether a small search procedure already
+  captures that gain. Ceiling results cannot establish sample-efficiency gains.
+- A public instruction may identify the goal while leaving the best steering
+  choice uncertain. Artificial hidden physics is unnecessary for this question
+  and is not part of the agreed experiment.
+- Next learning comparison: small corpus against trained static/reset policies
+  and a simple declared noise-bandit/search baseline at the same interaction
+  budget. This precedes expanding the full task bank.
+- Scheduled CND remains a candidate. A learned annealing clock is a possible
+  shortcut; reward-dependent corruption is an unadopted ablation candidate,
+  not an established remedy. Square-root mixing does not guarantee Gaussian
+  noise for bounded or selected teacher coordinates.
+
 | Route | Behavior used to collect context | Query target / outer objective | Interpretation |
 | --- | --- | --- | --- |
 | CND | Fixed competent teacher mixed with annealed bounded uniform noise | Actually executed mixture | Vintix-inspired noise distillation in steering space; not an improving teacher |
@@ -104,6 +123,9 @@ implementation references; this outline does not replace them.
   Gate choice is a collection criterion, not proof of student quality.
 - DPT labels cannot rewrite historical executed noise or its actual reward.
   Same source data and collection cost shared across CND/DPT.
+- DPT is not observation-only BC by definition. In this particular dataset a
+  student may ignore context; test that possibility against trained static
+  policies rather than assume the answer from the objective name.
 - GTrXL is the current causal controller. Width/depth/context/data scale and
   pretraining duration: validation-selected, **final settings TBD**.
 - Normalize using global training observations only; whole-trial partition
@@ -148,6 +170,9 @@ implementation references; this outline does not replace them.
 
 - Native π₀.₅ independent Gaussian noise; separate tied Gaussian baseline
   to isolate the dimensionality/tying change.
+- Simple noise-bandit/search baseline with predeclared arms/proposals and
+  charged interactions. Matching it would weaken the need for a complex
+  controller, while remaining compatible with a learned meta-RL process.
 - Ordinary official DSRL: SAC steering policy with its published MLP/visual
   encoder; frozen/offline prior and online deployment adaptation reported
   separately. Every held-out online trial gets an independent initialization
@@ -166,6 +191,9 @@ implementation references; this outline does not replace them.
 - Reward-blind/reward-permuted and history-shuffled/reset interventions;
   clock/no-history schedule control. Distinguish feedback use from annealing,
   repeated stochastic attempts, architecture and additional training.
+- Reward shuffling tests dependence on numeric rewards; visual outcomes can
+  carry feedback too. Neither this intervention nor a bandit comparison is
+  a universal definition/proof of ICRL; interpret alongside trained controls.
 - MLP is an implementation choice in the reference, not a requirement of
   DSRL/SAC. A Transformer-versus-MLP architecture claim requires matched
   objective, critics, optimizer, representation, parameters and budgets.
@@ -180,6 +208,9 @@ implementation references; this outline does not replace them.
   success-once even without adaptation.
 - Pair task/initial-state/reset plans; preserve successes and failures;
   independently seed each method. Treat correlated attempts as one trial.
+- A fixed initial-state index with a new RNG seed does not automatically
+  generate a new object placement. Verify actual initial observations/states;
+  count distinct declared initial states separately from repeated resets.
 - Uncertainty: paired task/trial clustering; multiple training seeds;
   task-level aggregates alongside per-task results. Seed count and confidence
   procedure finalized before the full test, not after observed gains.
@@ -202,6 +233,8 @@ implementation references; this outline does not replace them.
 
 ## 8. Evidence and limits
 
+- Quantitative verified pilot evidence:
+  [LIBERO evaluation ledger](../frozen-vla-libero/EVALUATION.md).
 - Verified technical interfaces: simulator execution, native-noise replay,
   and canonical feature extraction have qualification checks. These support
   running the experiment; they do not establish meta-learning performance.
