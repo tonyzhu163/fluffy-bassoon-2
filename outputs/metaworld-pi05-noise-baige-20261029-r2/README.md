@@ -1,12 +1,13 @@
 # Meta-World released pi0.5 noise screen
 
-Status checked 2026-10-29 19:08 Asia/Shanghai: Baige
-`job-orgyjb0z9h6d` running; both GPU probes and all nine focused Linux checks
-passed, with zero skips. The motor and its own checkpoint normalization loaded.
-Read-only inspection of the worker confirmed **440 completed episodes** in
-memory (last row 439), with row 440 at simulator step 145. The earlier
-18:56 snapshot recorded 250 episodes, confirming advancing counters. This verifies real
-progress; final success rates and gates remain unaudited.
+Status checked 2026-10-29 19:24 Asia/Shanghai: Baige
+`job-orgyjb0z9h6d` running. The visible-goal reach condition completed all
+**544 episodes**, independently audited. Native success is 31.25%; split-half
+noise-arm selection reaches 37.5%, a 6.25-point gain below the 15-point gate.
+Two of four goals remain unreached by any arm. The hidden-goal condition has
+started. [Partial results and limits](PARTIAL-RESULTS.md); the overall screen
+and final motor fingerprint remain pending. Both GPU probes and all nine
+focused Linux checks previously passed, with zero skips.
 
 Scientific source: `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`, reviewed from
 main and deployed through verified Git bundles into a fresh detached worktree.

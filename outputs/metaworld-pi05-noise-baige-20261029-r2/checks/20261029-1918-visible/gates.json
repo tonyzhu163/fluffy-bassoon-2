@@ -1,0 +1,150 @@
+{
+  "condition": "variant",
+  "arms": [
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "train": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "evaluate": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "per_condition": [
+    {
+      "condition": 0,
+      "scenes": 4,
+      "static_arm": 4,
+      "native": 0.25,
+      "best_arm_all_scenes": 0.5,
+      "g1_headroom": 0.25,
+      "g2_heterogeneity": 0.0,
+      "g3_consistency": 0.8320502943378436,
+      "g4_structure": 0.05580310788352871
+    },
+    {
+      "condition": 1,
+      "scenes": 4,
+      "static_arm": 4,
+      "native": 0.0,
+      "best_arm_all_scenes": 0.0,
+      "g1_headroom": 0.0,
+      "g2_heterogeneity": 0.0,
+      "g3_consistency": NaN,
+      "g4_structure": 0.3649926212763571
+    },
+    {
+      "condition": 2,
+      "scenes": 4,
+      "static_arm": 4,
+      "native": 1.0,
+      "best_arm_all_scenes": 1.0,
+      "g1_headroom": 0.0,
+      "g2_heterogeneity": 0.0,
+      "g3_consistency": 0.8855099015790012,
+      "g4_structure": -0.4224946871686172
+    },
+    {
+      "condition": 3,
+      "scenes": 4,
+      "static_arm": 4,
+      "native": 0.0,
+      "best_arm_all_scenes": 0.0,
+      "g1_headroom": 0.0,
+      "g2_heterogeneity": 0.0,
+      "g3_consistency": NaN,
+      "g4_structure": 0.3649926212763572
+    }
+  ],
+  "summary": {
+    "g1_headroom": {
+      "mean": 0.0625,
+      "threshold": 0.15,
+      "undefined_conditions": 0,
+      "passed": false
+    },
+    "g2_heterogeneity": {
+      "mean": 0.0,
+      "threshold": 0.1,
+      "undefined_conditions": 0,
+      "passed": false
+    },
+    "g3_consistency": {
+      "mean": 0.8587800979584224,
+      "threshold": 0.5,
+      "undefined_conditions": 2,
+      "passed": true
+    },
+    "g4_structure": {
+      "mean": 0.09082341581690645,
+      "threshold": 0.0,
+      "undefined_conditions": 0,
+      "passed": true
+    }
+  },
+  "all_passed": false,
+  "determinism": {
+    "repeated_groups": 256,
+    "trajectory_matched": 0,
+    "outcome_matched": 256,
+    "groups_in_distinct_slots": 0,
+    "deterministic": false
+  },
+  "mode_effect": {
+    "first_chunk_distance_between_arms": 0.42668864358759795,
+    "first_chunk_distance_native_repeats": 0.29950564075261354,
+    "pairs": 1920
+  },
+  "goal_coverage": {
+    "per_goal": [
+      {
+        "goal": 0,
+        "best_arm_success": 0.5,
+        "arms_reaching": 3,
+        "native": 0.25
+      },
+      {
+        "goal": 1,
+        "best_arm_success": 0.0,
+        "arms_reaching": 0,
+        "native": 0.0
+      },
+      {
+        "goal": 2,
+        "best_arm_success": 1.0,
+        "arms_reaching": 7,
+        "native": 1.0
+      },
+      {
+        "goal": 3,
+        "best_arm_success": 0.0,
+        "arms_reaching": 0,
+        "native": 0.0
+      }
+    ],
+    "goals_preferred_by_some_arm": 1,
+    "threshold": 0.5,
+    "passed": false
+  }
+}
