@@ -1,0 +1,66 @@
+{
+  "files": {
+    "plan.json": {
+      "size_bytes": 14782,
+      "sha256": "19cd535eeb951ee22c2424ef7cc032c8527156b3906a988f1e3e3c81be95360e"
+    },
+    "campaign-admission.json": {
+      "size_bytes": 1566,
+      "sha256": "b34992989a7960763a83bf49ebd57aec647847781353bdf90f0ad3b7e6465ee0"
+    },
+    "parent-gpu-probe.json": {
+      "size_bytes": 2691,
+      "sha256": "2beb4ba37c820630162542ead0fefbdfd89b213ecbd8f58e15278fe2f577e894"
+    },
+    "console.log": {
+      "size_bytes": 4402,
+      "sha256": "1427b1c3a4c8658ae3c820de8323557ffd5503383cca811066d53a02306adbe7"
+    },
+    "stages.jsonl": {
+      "size_bytes": 1223,
+      "sha256": "afac9dd710deb951b5b49fb3e09271d1dd7b28c576bbd00ddc816a017e6cea20"
+    },
+    "exit-code.txt": {
+      "size_bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    }
+  },
+  "all_output_files": [
+    "campaign-admission.json",
+    "console.log",
+    "exit-code.txt",
+    "parent-gpu-probe.json",
+    "plan.json",
+    "stages.jsonl"
+  ],
+  "stage_names": [
+    "campaign_refused_or_failed",
+    "campaign_ended"
+  ],
+  "stages": [
+    {
+      "stage": "campaign_refused_or_failed",
+      "time": "2026-10-29T08:18:45.721962+00:00",
+      "elapsed_seconds": 30.722012758255005,
+      "reason": "CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python', '/mowenjie/fluffy-bassoon-2/worktrees/robomimic-can-dsrl-baige-20261029-eight-r1/scripts/[train]gpu_probe.py', '--expected-count', '8', '--output', '/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r1/parent-gpu-probe.json', '--purpose', 'training', '--baige-container']' returned non-zero exit status 1."
+    },
+    {
+      "stage": "campaign_ended",
+      "time": "2026-10-29T08:18:45.725036+00:00",
+      "elapsed_seconds": 30.725045680999756,
+      "matched_training_interactions": false,
+      "completed_arms": 0,
+      "selected_seed_count": 2,
+      "required_arms": 8,
+      "reason": "CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python', '/mowenjie/fluffy-bassoon-2/worktrees/robomimic-can-dsrl-baige-20261029-eight-r1/scripts/[train]gpu_probe.py', '--expected-count', '8', '--output', '/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r1/parent-gpu-probe.json', '--purpose', 'training', '--baige-container']' returned non-zero exit status 1."
+    }
+  ],
+  "source_commit": "77d72f748d948c7b744cad39de20582ee37cab56",
+  "source_clean": true,
+  "source_hashes": {
+    "scripts/[train]gpu_probe.py": "b1db1d3e306cfb7e637f0d5d5befab7b54339014f755fe4c4793d39caaca5c2e",
+    "scripts/diagnostics/can_dsrl_eight_gpu.sh": "ebd8fe42e39baec9edb039445209873d288c1d8fa6b8f6c5b2cc7d11247c4860",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py": "ce123bad4c7b9984b732767199914b66081558abd6cf4d9bb82269afccc1f30e",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3"
+  }
+}

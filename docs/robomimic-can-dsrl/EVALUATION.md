@@ -128,3 +128,15 @@ streamed post-run reference and input hashes. No checkpoint tensors were
 loaded or copied to macOS for this audit.
 Evidence: [online control audit](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/AUDIT.md)
 and [derived paired results](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/RESULTS.json).
+
+## First eight-card allocation
+
+Baige `job-8blx7x2ib4uu`, source
+`77d72f748d948c7b744cad39de20582ee37cab56`, failed its parent GPU admission
+before any training worker or arm started. All eight allocated cards reported
+100% utilization with 0–3 MiB of memory in use. The probe rejected this
+utilization reading before its real tensor and own-PID checks; those checks
+therefore remain unqualified for this allocation. No new learning result was
+produced. The scheduler reported 69 seconds of running time; the driver
+recorded 30.725 seconds. The failure evidence is retained in
+[the allocation audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r1-failure-audit/audit.json).
