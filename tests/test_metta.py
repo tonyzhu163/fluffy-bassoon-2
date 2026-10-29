@@ -244,14 +244,14 @@ def test_exact_checkpoint_next_update_recovery(tmp_path,device):
 @pytest.mark.skipif(os.environ.get('FLUFFY_METAWORLD_REAL_QUALIFICATION')!='1',reason='Allocated real simulator only')
 def test_real_ml10_episode_summary_and_likelihood_replay():
     from fluffy_bassoon.meta_rl.metaworld_env import benchmark_pools,make_lanes
-    envs=make_lanes(benchmark_pools('ml10')['train'],2,benchmark='ml10',attempts=2,horizon=500)
+    envs=make_lanes(benchmark_pools('ml10')['train'],10,benchmark='ml10',attempts=2,horizon=500)
     try:
         policy=MettaActorCritic(envs[0]).cuda()
-        r=collect_trials(policy,envs,[101,102],record_states=True)
+        r=collect_trials(policy,envs,np.arange(101,111),record_states=True)
         with torch.no_grad():log,_,value=policy.evaluate_sequence(r['observations'],r['raw_actions'],r['resets'])
         torch.testing.assert_close(log,r['log_probs'],rtol=2e-5,atol=2e-5)
         torch.testing.assert_close(value,r['values'],rtol=2e-5,atol=2e-5)
-        assert r['attempt_ends'].sum().item()==4 and all(len(e.outcomes)==2 for e in envs)
+        assert r['attempt_ends'].sum().item()==20 and all(len(e.outcomes)==2 for e in envs)
         assert r['attempt_states']['summaries'][:,0].tolist()==[0,1]
         assert r['attempt_states']['layer0_position'][:,0].tolist()==[116,116]
     finally:
