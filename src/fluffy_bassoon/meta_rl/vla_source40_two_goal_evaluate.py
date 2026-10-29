@@ -86,6 +86,10 @@ class RecordingController:
         self.output, self.method, self.trial_index = Path(output), method, trial_index
         self.motor_rng_state, self.next_episode, self.contexts = motor_rng_state, 0, []
 
+    @property
+    def public_observation_input(self):
+        return bool(getattr(self.controller, 'public_observation_input', False))
+
     def set_episode_seed(self, seed):
         self.seed = seed
         _episode_rng(self.controller, seed)

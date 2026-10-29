@@ -29,7 +29,7 @@ from .vla_source40_training import NOISE_CONTRACT, load_assembly
 SUPPORT_BUDGETS = (0, 1, 2, 4, 8)
 METHODS = ("native", "tied_gaussian", "ad_full", "ad_episode_reset", "ad_static",
            "dpt_full", "dpt_episode_reset", "dpt_static")
-SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'zero')
+SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'frozen_target_sac', 'zero')
 FORMAT = "openpi_pi05_source40_support_query_v1"
 
 
