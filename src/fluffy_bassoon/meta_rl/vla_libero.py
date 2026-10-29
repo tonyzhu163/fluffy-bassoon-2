@@ -730,7 +730,7 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                 torch.manual_seed(args.seed + state * 1000)
                 mode = {"history": "full", "reset": "episode", "static": "static"}[method]
                 controller = FrozenHistoryController(student["static" if method == "static" else "full"], mode=mode)
-            elif method in ("rl2", "rl2_reset"):
+            elif method in ("rl2", "rl2_reset", "rl2_trained_reset"):
                 import torch
                 from .vla_rl2 import FrozenRL2Controller
                 torch.manual_seed(args.seed + state * 1000)
@@ -752,7 +752,7 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                     scene_seed=args.seed + state * 1000, chunk=args.chunk,
                     native=method == "native", rng=rng, feedback=feedback,
                     bounded=method not in ("native", "tied_gaussian"),
-                    record_features=method in ("history", "reset", "static", "rl2", "rl2_reset"))
+                    record_features=method in ("history", "reset", "static", "rl2", "rl2_reset", "rl2_trained_reset"))
                 if online:
                     from .vla_retry_teacher import append_episode_to_replay
                     append_episode_to_replay(online, rows)
@@ -821,6 +821,7 @@ def main():
     parser.add_argument("--rl2-updates", type=int, default=0)
     parser.add_argument("--rl2-max-steps", type=int)
     parser.add_argument("--rl2-max-seconds", type=float)
+    parser.add_argument("--rl2-trained-reset", action="store_true")
     parser.add_argument("--candidate-full", type=Path)
     parser.add_argument("--candidate-full-sha256")
     parser.add_argument("--candidate-static", type=Path)
@@ -843,6 +844,8 @@ def main():
     if args.rl2_updates and (not args.rl2_max_steps
             or args.rl2_max_steps < args.attempts * args.horizon or not args.retry_train_states):
         raise ValueError("RL2 needs explicit training scenes and a complete-trial interaction budget")
+    if args.rl2_trained_reset and not args.rl2_updates:
+        raise ValueError("A separately trained episode-reset control requires an explicit RL2 training budget")
     external = (args.candidate_full, args.candidate_full_sha256, args.candidate_static, args.candidate_static_sha256)
     if any(external) and not all(external):
         raise ValueError("External comparison needs hash-bound full and separately trained static candidates")
@@ -991,6 +994,25 @@ def main():
                     max_elapsed_seconds=args.rl2_max_seconds)
                 evaluation.update(evaluate(args, sim, motor, ["rl2", "rl2_reset"], learner=learner,
                     rl2_policy=policy, train_steps=train_steps + rl2_summary["counters"]["environment_steps"]))
+                if args.rl2_trained_reset:
+                    # Match initialization, scene sampler, optimizer and nominal
+                    # trial/update budget; retain only within-episode state.
+                    reset_policy = make_rl2_policy(RL2Config(observation_dim=contract["feature_dim"]),
+                                                   device=args.history_device, seed=args.seed)
+                    reset_policy.set_feature_normalization(values.mean(0),
+                        values.std(0, unbiased=False).clamp(min=1e-4))
+                    reset_policy, reset_summary = train_rl2(reset_policy, sim, motor, feature_fn,
+                        train_states=args.retry_train_states,
+                        heldout_states=args.eval_states + args.retry_validation_states,
+                        attempts=args.attempts, chunk=args.chunk, episode_horizon=args.horizon,
+                        max_primitive_steps=args.rl2_max_steps, updates=args.rl2_updates,
+                        output_dir=args.output / "rl2-trained-reset", seed=args.seed, mode="episode",
+                        source_contract=dict(**contract, shared_teacher_primitive_steps=train_steps,
+                            feature_normalization_dataset_sha256=sha256(normalization_data)),
+                        max_elapsed_seconds=args.rl2_max_seconds)
+                    evaluation.update(evaluate(args, sim, motor, ["rl2_trained_reset"], learner=learner,
+                        rl2_policy=reset_policy,
+                        train_steps=train_steps + reset_summary["counters"]["environment_steps"]))
         else:
             learner = None
         if args.candidate_full:

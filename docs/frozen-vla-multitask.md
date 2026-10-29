@@ -50,7 +50,14 @@ same-data AD/DPT training and paired full-history/static/reset evaluations in on
 run. `--rl2-updates N --rl2-max-steps BUDGET` adds direct complete-trial RL²/PPO
 on the declared training scenes. It uses the same generic frozen feature space
 and training-only feature statistics; its own additional robot interactions are
-counted. RL² semantic multi-task scheduling must sample the declared training
+counted.
+`--rl2-trained-reset` additionally trains an independent episode-reset PPO
+controller with the same initialization, scene sampler, K, optimizer, nominal
+trial/update budget and feature normalization. Its actual interactions and
+recovery state are separate. This trained comparator is reported in addition
+to resetting the full-history model at evaluation time.
+
+RL² semantic multi-task scheduling must sample the declared training
 task bank and preserve one task/scene through each complete K-attempt trial;
 the initial CLI qualifies the real single-task PPO loop. `SimulatorTaskBank`
 routes complete trials across already allocated per-task workers, and
