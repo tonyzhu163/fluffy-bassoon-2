@@ -588,6 +588,23 @@ def train_history(args, learner, contract, *, paths=None, artifact_prefix="histo
     return candidates
 
 
+def state_differences(expected, actual, *, path="state"):
+    """Compare state leaves, independent of MsgPack mapping insertion order."""
+    if isinstance(expected, dict) or isinstance(actual, dict):
+        if not isinstance(expected, dict) or not isinstance(actual, dict) or set(expected) != set(actual):
+            return [dict(path=path, error="mapping keys differ")]
+        return [item for key in sorted(expected) for item in
+                state_differences(expected[key], actual[key], path=f"{path}/{key}")]
+    a, b = np.asarray(expected), np.asarray(actual)
+    if a.shape != b.shape or a.dtype != b.dtype:
+        return [dict(path=path, error="shape or dtype differs", expected_shape=list(a.shape),
+                     actual_shape=list(b.shape), expected_dtype=str(a.dtype), actual_dtype=str(b.dtype))]
+    if not np.array_equal(a, b):
+        delta = float(np.max(np.abs(a.astype(np.float64) - b.astype(np.float64))))
+        return [dict(path=path, error="leaf values differ", maximum_delta=delta)]
+    return []
+
+
 def qualify_recovery(args, learner, contract, obs):
     """A separately constructed source learner must reproduce action and update."""
     from flax import serialization
@@ -597,14 +614,21 @@ def qualify_recovery(args, learner, contract, obs):
     restored = OfficialSAC(args.dsrl_root, args.seed)
     restored_sampler = np.random.default_rng()
     restored.restore(path, restored_sampler, contract)
-    before = serialization.to_bytes(learner.agent._save_dict)
-    if before != serialization.to_bytes(restored.agent._save_dict):
+    before = state_differences(serialization.to_state_dict(learner.agent._save_dict),
+                               serialization.to_state_dict(restored.agent._save_dict))
+    write_json(args.output / "recovery-initial-comparison.json", dict(differences=before[:20],
+                                                                    total_differences=len(before)))
+    if before:
         raise RuntimeError("SAC recovery changed an actor/critic/target/optimizer/temperature value")
     expected_action, actual_action = learner.action(obs), restored.action(obs)
     expected_metrics = learner.update(args.batch_size, sampler)
     actual_metrics = restored.update(args.batch_size, restored_sampler)
-    if (not np.array_equal(expected_action, actual_action) or expected_metrics != actual_metrics
-            or serialization.to_bytes(learner.agent._save_dict) != serialization.to_bytes(restored.agent._save_dict)
+    after = state_differences(serialization.to_state_dict(learner.agent._save_dict),
+                              serialization.to_state_dict(restored.agent._save_dict))
+    write_json(args.output / "recovery-update-comparison.json", dict(differences=after[:20],
+        total_differences=len(after), next_action_equal=np.array_equal(expected_action, actual_action),
+        next_metrics_equal=expected_metrics == actual_metrics))
+    if (not np.array_equal(expected_action, actual_action) or expected_metrics != actual_metrics or after
             or sampler.bit_generator.state != restored_sampler.bit_generator.state):
         raise RuntimeError("SAC recovery changed the next sampled action or optimizer update")
     learner.restore(path, sampler, contract)
