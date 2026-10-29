@@ -1,7 +1,7 @@
 # In-context noise steering of a frozen pi0.5 on LIBERO-Plus/PRO and Meta-World
 
-Status, 2026-10-29: **Meta-World released-motor screen coded and CPU-tested; no GPU
-runs yet.** Released RLinf motors first; our own motors later (see Motor). CPU work (code, tests,
+Status, 2026-10-29: **Meta-World and LIBERO-Plus/PRO released-motor screens coded and
+CPU-tested; launches delegated to coordination; no GPU runs yet.** Released RLinf motors first; our own motors later (see Motor). CPU work (code, tests,
 cached meta-training) needs no ask under [AGENTS.md](../../AGENTS.md). Stage L0
 and every later GPU collection need user approval of the stated budget.
 This replaces ManiSkill as the benchmark for
@@ -123,6 +123,47 @@ repeats and whether arms change executed actions.
 - Budget to fix with the user before launch: on the order of 6,000 episodes,
   one GPU on thu2 with the LIBERO environment already built for the
   LIBERO-Goal check.
+
+### LIBERO-Plus/PRO contents and the L0 screen
+
+Both packages perturb LIBERO-10, Spatial, Object and Goal; their LIBERO-90 suites
+are the originals. So the 78 training tasks have **no** Plus/PRO variants, and every
+Plus/PRO variant of LIBERO-10 belongs to a held-out task. Per held-out task:
+
+- LIBERO-Plus (`rlinf-liberoplus`, 2,519 LIBERO-10 variants): camera 419, robot
+  initial state 393, sensor noise 449, language 383, light 274, background 289,
+  layout 173, level 139; at least 4 of each type for each of the 10 tasks.
+- LIBERO-PRO (`rlinf-liberopro`): language, object, position (swap), task and
+  distractor variants, one per task per directory (60 distractor files).
+
+Training conditions for the controller therefore cannot be LIBERO-Plus types on
+training tasks. Options, to decide after L0: train on Spatial/Object/Goal
+variants (outside the frozen split, so audit their goals against LIBERO-10
+first), or apply the name-encoded Plus perturbations (camera, robot initial
+state, sensor noise) to LIBERO-90 training tasks, since the Plus env parses
+them from any task name.
+
+The L0 screen (`scripts/diagnostics/libero_variants_noise_cache.py`,
+`src/fluffy_bassoon/rl/libero_variants.py`) uses the released
+`RLinf-Pi05-LIBERO-130-fullshot-SFT` (SHA256 `4d9089c9…6529d6683`, as qualified
+on branch `libero-goal-headroom`). Per package it picks 2 variants of every
+perturbation type, spread over held-out tasks, plus 2 clean base tasks, and
+runs 4 initial states × (native + 8 arms): about 650 Plus and 430 PRO episodes
+of at most 520 steps. Per type, `gates.json` reports native and best-arm
+success and G1–G4 with variants as conditions.
+
+```bash
+MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=<allocated> python scripts/diagnostics/libero_variants_noise_cache.py \
+  --kinds plus,pro --model-path <RLinf-Pi05-LIBERO-130-fullshot-SFT> \
+  --norm-stats <physical-intelligence/libero/norm_stats.json> \
+  --expected-model-sha256 4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683 \
+  --per-category 2 --scenes 4 --arms 8 --num-envs 16 --time-budget-seconds 21600 --output <run>/l0
+```
+
+Needs RLinf `e1a82eb` with `rlinf-libero==0.1.3`, `rlinf-liberoplus>=0.1.3`,
+`rlinf-liberopro` and their assets (`liberoplus-download-assets`,
+`liberopro-download-assets`, as RLinf's installer does). CPU tests:
+`tests/test_libero_variants.py`; its real-package test must pass in that env.
 
 ## Stage L1: references (GPU, approval needed)
 
