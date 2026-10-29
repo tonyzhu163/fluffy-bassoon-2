@@ -124,6 +124,45 @@ def reserve_ppo(campaign, ledger, *, run, commit, action_cap, resume=False):
     return record
 
 
+def reserve_diagnostic(campaign, ledger, *, run, commit, action_cap, resume=False):
+    """Escrow a bounded evaluation inside the unassigned benchmark allowance.
+
+    Evaluation traces remain separate from source pretraining. This does not
+    change any existing SAC/PPO slot or permit another source collection run.
+    """
+    value = load_campaign(campaign)
+    if (type(action_cap) is not int or action_cap < 410
+            or not run or not all(c.isalnum() or c == '-' for c in run)
+            or len(commit) != 40 or any(c not in '0123456789abcdef' for c in commit)):
+        raise ValueError('Require an explicit diagnostic action reservation and exact identity')
+    ledger = Path(ledger)
+    ledger.parent.mkdir(parents=True, exist_ok=True)
+    record = dict(run_id=run, source_commit=commit, maximum_total_actions=action_cap,
+        campaign_sha256=value['campaign_sha256'], pool='unassigned_reserve_actions',
+        purpose='controller_subset_transfer_evaluation', source_pretraining_data=False,
+        total_benchmark_cap_unchanged=True)
+    with ledger.with_suffix('.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        data = json.loads(ledger.read_text()) if ledger.exists() else dict(
+            campaign_sha256=value['campaign_sha256'], pool='unassigned_reserve_actions', reservations={})
+        if data.get('campaign_sha256') != value['campaign_sha256'] or data.get('pool') != 'unassigned_reserve_actions':
+            raise ValueError('Diagnostic ledger belongs to another campaign or budget pool')
+        previous = data['reservations'].get(run)
+        if previous is not None:
+            if not resume or previous != record:
+                raise ValueError('Diagnostic already reserved; exact pinned resume required')
+        elif resume:
+            raise ValueError('Diagnostic resume has no reservation')
+        else:
+            if sum(row['maximum_total_actions'] for row in data['reservations'].values()) + action_cap > value['unassigned_reserve_actions']:
+                raise ValueError('Diagnostic would exceed the shared benchmark reserve')
+            data['reservations'][run] = record
+            temporary = ledger.with_suffix('.tmp')
+            temporary.write_text(json.dumps(data, indent=2) + '\n')
+            temporary.replace(ledger)
+    return record
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest='operation', required=True)
@@ -143,6 +182,13 @@ def main():
     ppo.add_argument('--commit', required=True)
     ppo.add_argument('--action-cap', type=int, required=True)
     ppo.add_argument('--resume', action='store_true')
+    diagnostic = sub.add_parser('reserve-diagnostic')
+    diagnostic.add_argument('--campaign', type=Path, required=True)
+    diagnostic.add_argument('--ledger', type=Path, required=True)
+    diagnostic.add_argument('--run', required=True)
+    diagnostic.add_argument('--commit', required=True)
+    diagnostic.add_argument('--action-cap', type=int, required=True)
+    diagnostic.add_argument('--resume', action='store_true')
     args = ap.parse_args()
     if args.operation == 'make':
         data = make_campaign(args.schedule)
@@ -152,9 +198,12 @@ def main():
     elif args.operation == 'reserve':
         data = reserve(args.campaign, args.schedule, args.ledger, task=args.task,
             partition=args.partition, run=args.run, commit=args.commit, resume=args.resume)
-    else:
+    elif args.operation == 'reserve-ppo':
         data = reserve_ppo(args.campaign, args.ledger, run=args.run, commit=args.commit,
                            action_cap=args.action_cap, resume=args.resume)
+    else:
+        data = reserve_diagnostic(args.campaign, args.ledger, run=args.run, commit=args.commit,
+                                 action_cap=args.action_cap, resume=args.resume)
     print(json.dumps(data, indent=2))
 
 

@@ -4,7 +4,7 @@ import json
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_campaign import (ALL_TASKS, VALIDATION_TASKS,
-    load_campaign, reserve, reserve_ppo, FORMAT)
+    load_campaign, reserve, reserve_ppo, reserve_diagnostic, FORMAT)
 from fluffy_bassoon.meta_rl.vla_source40_schedule import content_hash
 
 
@@ -59,3 +59,30 @@ def test_ppo_fresh_rollout_reservations_share_cap_and_cannot_duplicate(tmp_path,
     assert reserve_ppo(path, ledger, **kwargs, resume=True) == record
     with pytest.raises(ValueError, match='exceed'):
         reserve_ppo(path, ledger, run='ppo-r2', commit='b' * 40, action_cap=490000)
+
+
+def test_target_diagnostic_escrow_preserves_source_slots_and_total_cap(tmp_path, monkeypatch):
+    path, ledger = fixture(tmp_path, monkeypatch)
+    before = path.read_bytes()
+    kwargs = dict(run='subset-eval-r1', commit='a' * 40, action_cap=20000)
+    record = reserve_diagnostic(path, ledger, **kwargs)
+    assert record['source_pretraining_data'] is False
+    assert record['pool'] == 'unassigned_reserve_actions'
+    assert reserve_diagnostic(path, ledger, **kwargs, resume=True) == record
+    assert path.read_bytes() == before
+    with pytest.raises(ValueError, match='already reserved'):
+        reserve_diagnostic(path, ledger, **kwargs)
+    with pytest.raises(ValueError, match='already reserved'):
+        reserve_diagnostic(path, ledger, **dict(kwargs, action_cap=19000), resume=True)
+    with pytest.raises(ValueError, match='exceed'):
+        reserve_diagnostic(path, ledger, run='other-r1', commit='b' * 40, action_cap=1057)
+
+
+def test_diagnostic_rejects_unreserved_resume_and_wrong_pool(tmp_path, monkeypatch):
+    path, ledger = fixture(tmp_path, monkeypatch)
+    kwargs = dict(run='subset-eval-r1', commit='a' * 40, action_cap=20000)
+    with pytest.raises(ValueError, match='no reservation'):
+        reserve_diagnostic(path, ledger, **kwargs, resume=True)
+    reserve_ppo(path, ledger, run='ppo-r1', commit='a' * 40, action_cap=9500)
+    with pytest.raises(ValueError, match='another campaign or budget pool'):
+        reserve_diagnostic(path, ledger, **kwargs)
