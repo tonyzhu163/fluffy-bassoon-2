@@ -19,6 +19,7 @@ import socket
 import subprocess
 import sys
 import time
+import xml.etree.ElementTree as ET
 
 import numpy as np
 
@@ -44,6 +45,38 @@ def append_json(path, value):
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def attest_process_gpu(output, *, graphics):
+    """Prove the process's actual C/G contexts belong to the allocation."""
+    report = dict(pid=os.getpid(), kind="graphics" if graphics else "compute", verified=False)
+    try:
+        probe = json.loads(Path(os.environ["LYCO_BAIGE_GPU_MAP"]).read_text())
+        if probe["status"] != "passed" or len(probe["devices"]) != 1:
+            raise ValueError("Require the successful single-GPU allocation probe")
+        expected = probe["devices"][0]["uuid"]
+        report["expected_uuid"] = expected
+        xml = subprocess.check_output(["nvidia-smi", "-q", "-x"], text=True, timeout=25)
+        start = next((i for i in (xml.find("<?xml"), xml.find("<nvidia_smi_log")) if i >= 0), -1)
+        if start < 0:
+            raise ValueError("NVIDIA inventory omitted XML")
+        records = []
+        for gpu in ET.fromstring(xml[start:]).findall("gpu"):
+            for process in gpu.findall("./processes/process_info"):
+                if process.findtext("pid", "").strip() == str(os.getpid()):
+                    records.append(dict(uuid=gpu.findtext("uuid"), type=process.findtext("type", "")))
+        report["processes"] = records
+        required = "G" if graphics else "C"
+        if (not records or {r["uuid"] for r in records} != {expected}
+                or not any(required in r["type"].upper() for r in records)):
+            raise RuntimeError("Own process GPU contexts do not attest the allocated device")
+        report["verified"] = True
+    except Exception as exc:
+        report["error"] = str(exc)
+        raise
+    finally:
+        write_json(output, report)
+    return report
 
 
 def quat_axis_angle(quat):
@@ -101,6 +134,7 @@ def simulator_server(args):
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
     connection = listener.accept()
     count, success, raw = 0, False, None
+    renderer_verified = False
     try:
         while True:
             request = connection.recv()
@@ -118,6 +152,9 @@ def simulator_server(args):
                 raw = env.set_init_state(states[index])
                 for _ in range(10):
                     raw, _, _, _ = env.step([0.] * 6 + [-1.])
+                if not renderer_verified:
+                    attest_process_gpu(args.output / "renderer-binding.json", graphics=True)
+                    renderer_verified = True
                 count, success = 0, False
                 obs = public_observation(raw)
                 connection.send(dict(observation=obs, initial_state=index,
@@ -193,6 +230,7 @@ class FrozenOpenPI:
         self.policy = policy_config.create_trained_policy(conf, args.checkpoint,
                                                          sample_kwargs=dict(num_steps=10))
         self.calls = 0
+        self.output = args.output
         self.metadata = dict(openpi_commit=actual, checkpoint=ready["checkpoint"],
                              receipt_sha256=sha256(args.checkpoint / "READY.json"),
                              flow_steps=10, predicted_horizon=self.horizon, action_dim=32,
@@ -207,6 +245,8 @@ class FrozenOpenPI:
                    "observation/state": obs["state"], "prompt": str(instruction)}
         self.calls += 1
         actions = np.asarray(self.policy.infer(element, noise=np.asarray(noise, np.float32))["actions"])
+        if self.calls == 1:
+            attest_process_gpu(self.output / "motor-binding.json", graphics=False)
         if actions.shape != (self.horizon, 7) or not np.isfinite(actions).all():
             raise ValueError(f"Unexpected native motor output {actions.shape}")
         return actions
@@ -490,6 +530,31 @@ def train_history(args, learner, contract):
     return candidates
 
 
+def qualify_recovery(args, learner, contract, obs):
+    """A separately constructed source learner must reproduce action and update."""
+    from flax import serialization
+    sampler = np.random.default_rng(391)
+    path = args.output / "qualification-recovery.pkl"
+    learner.save(path, sampler, contract, episodes=0, primitive_steps=0)
+    restored = OfficialSAC(args.dsrl_root, args.seed)
+    restored_sampler = np.random.default_rng()
+    restored.restore(path, restored_sampler, contract)
+    before = serialization.to_bytes(learner.agent._save_dict)
+    if before != serialization.to_bytes(restored.agent._save_dict):
+        raise RuntimeError("SAC recovery changed an actor/critic/target/optimizer/temperature value")
+    expected_action, actual_action = learner.action(obs), restored.action(obs)
+    expected_metrics = learner.update(args.batch_size, sampler)
+    actual_metrics = restored.update(args.batch_size, restored_sampler)
+    if (not np.array_equal(expected_action, actual_action) or expected_metrics != actual_metrics
+            or serialization.to_bytes(learner.agent._save_dict) != serialization.to_bytes(restored.agent._save_dict)
+            or sampler.bit_generator.state != restored_sampler.bit_generator.state):
+        raise RuntimeError("SAC recovery changed the next sampled action or optimizer update")
+    learner.restore(path, sampler, contract)
+    return dict(passed=True, recovery_sha256=sha256(path), separate_learner=True,
+                next_sampled_action_equal=True, next_update_equal=True,
+                actor_critic_target_temperature_optimizer_equal=True, replay_sampler_equal=True)
+
+
 def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0):
     from .vla_history import FrozenHistoryController
     evaluation = {}
@@ -616,6 +681,7 @@ def main():
         if args.mode == "teacher":
             learner = source_train(args, sim, motor, contract)
             write_json(args.output / "feature-parity.json", learner.qualify_features(qualification_obs))
+            write_json(args.output / "source-recovery-check.json", qualify_recovery(args, learner, contract, qualification_obs))
             train_steps = sum(json.loads(line)["primitive_steps"] for line in
                               (args.output / "progress.jsonl").read_text().splitlines())
             evaluation.update(evaluate(args, sim, motor, ["dsrl"], learner=learner, train_steps=train_steps))
