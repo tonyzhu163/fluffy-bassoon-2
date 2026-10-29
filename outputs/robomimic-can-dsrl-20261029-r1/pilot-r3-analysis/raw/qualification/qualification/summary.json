@@ -1,0 +1,254 @@
+{
+  "passed": true,
+  "real_trial": {
+    "successes": [
+      [
+        true,
+        true
+      ]
+    ],
+    "release_logged_successes": [
+      [
+        true,
+        true
+      ]
+    ],
+    "initial_observation_sha256": [
+      [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ],
+      [
+        "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+      ]
+    ],
+    "scene_seeds": [
+      2000001
+    ],
+    "attempts": 2,
+    "scene_mode": "retry",
+    "primitive_steps": 600
+  },
+  "ppo": {
+    "loss": 4136.59033203125,
+    "actor_loss": -8.106231774718253e-08,
+    "critic_loss": 8273.6953125,
+    "exploration_entropy": 25.73027801513672,
+    "approximate_kl": 0.0,
+    "clip_fraction": 0.0,
+    "gradient_norm": 132.4370880126953,
+    "optimizer_steps": 1,
+    "forward_samples": 150,
+    "active_action_samples": 150
+  },
+  "likelihood_replay_max_error": 0.0,
+  "dsrl_optimizer_updates": 22,
+  "motor_unchanged": true,
+  "sampler_parity_max_error": 0.0,
+  "released_batch_update_seconds": 0.46095669316127896,
+  "released_batch_update_motor_samples": 7680,
+  "ppo_recovery_roundtrip": {
+    "passed": true,
+    "recovery_sha256": "b4fbb9a30522491f51e4c44a2d20ddfdd3f4798b6de95e41eab2b6ccafa2db43",
+    "next_scene_seeds": [
+      473188
+    ],
+    "next_trial_actions_identical": true,
+    "next_trial_observations_rewards_identical": true,
+    "next_optimizer_state_identical": true,
+    "next_rng_identical": true
+  },
+  "ppo_small_trial_seconds": 12.987695527728647,
+  "ppo_full_trial_geometry": {
+    "lanes": 4,
+    "attempts": 4,
+    "chunks": 300,
+    "epochs": 4,
+    "minibatch_trials": 4
+  },
+  "ppo_full_trial_rollout_seconds": 60.582957815844566,
+  "ppo_full_trial_replay_seconds": 0.8548706602305174,
+  "ppo_full_trial_update_seconds": 10.468917893711478,
+  "ppo_full_trial_total_seconds": 71.90674863569438,
+  "ppo_full_trial_peak_cuda_memory_gib": 1.547619342803955,
+  "ppo_full_trial_metrics": {
+    "loss": 98310.53515625,
+    "actor_loss": -0.0015078809298572082,
+    "critic_loss": 196621.59375,
+    "exploration_entropy": 25.72942352294922,
+    "approximate_kl": 0.007870891073253006,
+    "clip_fraction": 0.10687500279163942,
+    "gradient_norm": 633.3622970581055,
+    "optimizer_steps": 4,
+    "forward_samples": 4800,
+    "active_action_samples": 4800
+  },
+  "ppo_full_trial_likelihood_replay_max_error": 0.0,
+  "ppo_full_real_trial": {
+    "successes": [
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        true,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ]
+    ],
+    "release_logged_successes": [
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        true,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false
+      ]
+    ],
+    "initial_observation_sha256": [
+      [
+        "441c38702e25c779795892ad575b3457e6b3a6860caa8d8e862268a493bb3791",
+        "09381b5384e1d68cd2462d131e368ac5905ceed6f105c0c28dce389816a9dac2",
+        "590e6f2208e172026db48c106904dfcf607d6f87e2838ad33532062980a72e39",
+        "f4be8f41f092cefc812653d4fb2cfd8ecb636f9ca8aebd14a4ebec021ee5547a"
+      ],
+      [
+        "441c38702e25c779795892ad575b3457e6b3a6860caa8d8e862268a493bb3791",
+        "09381b5384e1d68cd2462d131e368ac5905ceed6f105c0c28dce389816a9dac2",
+        "590e6f2208e172026db48c106904dfcf607d6f87e2838ad33532062980a72e39",
+        "f4be8f41f092cefc812653d4fb2cfd8ecb636f9ca8aebd14a4ebec021ee5547a"
+      ],
+      [
+        "441c38702e25c779795892ad575b3457e6b3a6860caa8d8e862268a493bb3791",
+        "09381b5384e1d68cd2462d131e368ac5905ceed6f105c0c28dce389816a9dac2",
+        "590e6f2208e172026db48c106904dfcf607d6f87e2838ad33532062980a72e39",
+        "f4be8f41f092cefc812653d4fb2cfd8ecb636f9ca8aebd14a4ebec021ee5547a"
+      ],
+      [
+        "441c38702e25c779795892ad575b3457e6b3a6860caa8d8e862268a493bb3791",
+        "09381b5384e1d68cd2462d131e368ac5905ceed6f105c0c28dce389816a9dac2",
+        "590e6f2208e172026db48c106904dfcf607d6f87e2838ad33532062980a72e39",
+        "f4be8f41f092cefc812653d4fb2cfd8ecb636f9ca8aebd14a4ebec021ee5547a"
+      ]
+    ],
+    "scene_seeds": [
+      2000020,
+      2000021,
+      2000022,
+      2000023
+    ],
+    "attempts": 4,
+    "scene_mode": "retry",
+    "primitive_steps": 4800
+  },
+  "environment_parity": {
+    "passed": true,
+    "reference": "released ObservationWrapperRobomimic + ActionChunkWrapper",
+    "reset_pairing": "NumPy seed before released reset; seed option through local adapter",
+    "observation_comparison": "exact float32 policy inputs; release normalization may start as float64",
+    "success_metrics": "simulator success at any primitive; release logger requires chunk reward > -1",
+    "scenes": [
+      {
+        "scene_seed": 3473188,
+        "primitive_steps_per_environment": 300,
+        "chunks": 75,
+        "initial_observation_sha256": "c21b5f972a757553fd12384b926b0eb26723c784350167ebe1d61c1997ab4bc9",
+        "primitive_actions_sha256": "d8821ec0019c51e00f667a5d0aeb1c90adf11124e3ae1a25196b376c07c3a7b6",
+        "primitive_observations_sha256": "ba238d60d8d66e90eb88a54e103d595c80e4d2d876d862590040fbce219c9439",
+        "primitive_rewards_sha256": "a0ee989ed2a0a2e3626520afa4032e06144865c8c8f6357293c9f4cd2069eaf2",
+        "raw_reward_sum": 0.0,
+        "shifted_reward_sum": -300.0,
+        "simulator_success_once": false,
+        "release_logged_success": false,
+        "exact_float32_observations": true,
+        "exact_primitive_actions": true,
+        "exact_raw_rewards": true,
+        "exact_chunk_rewards": true,
+        "exact_horizon": true,
+        "final_terminated": true,
+        "final_truncated": false
+      },
+      {
+        "scene_seed": 3511821,
+        "primitive_steps_per_environment": 300,
+        "chunks": 75,
+        "initial_observation_sha256": "cd653d14cb9523277d984a0b9a295b4cb20001f544f6b5c26e007acaf5836118",
+        "primitive_actions_sha256": "26360c77544692ae33452943e8524052a57724461653fd5592a4f8f0e0602355",
+        "primitive_observations_sha256": "4e8e9bd73609a791a1ec9bb0dc79370831bb1c96348e9e84b2157d1800e36b26",
+        "primitive_rewards_sha256": "a0ee989ed2a0a2e3626520afa4032e06144865c8c8f6357293c9f4cd2069eaf2",
+        "raw_reward_sum": 0.0,
+        "shifted_reward_sum": -300.0,
+        "simulator_success_once": false,
+        "release_logged_success": false,
+        "exact_float32_observations": true,
+        "exact_primitive_actions": true,
+        "exact_raw_rewards": true,
+        "exact_chunk_rewards": true,
+        "exact_horizon": true,
+        "final_terminated": true,
+        "final_truncated": false
+      },
+      {
+        "scene_seed": 3473188,
+        "primitive_steps_per_environment": 300,
+        "chunks": 75,
+        "initial_observation_sha256": "c21b5f972a757553fd12384b926b0eb26723c784350167ebe1d61c1997ab4bc9",
+        "primitive_actions_sha256": "975c4043e37d3d53b318e2ce58f92c03be061b3c19aa5e0ea33fc821cacc873d",
+        "primitive_observations_sha256": "1ec96c1b4b9e94b8af5687afa04b4dc8f2b54e716120878709c8bd2d8e03ecec",
+        "primitive_rewards_sha256": "a0ee989ed2a0a2e3626520afa4032e06144865c8c8f6357293c9f4cd2069eaf2",
+        "raw_reward_sum": 0.0,
+        "shifted_reward_sum": -300.0,
+        "simulator_success_once": false,
+        "release_logged_success": false,
+        "exact_float32_observations": true,
+        "exact_primitive_actions": true,
+        "exact_raw_rewards": true,
+        "exact_chunk_rewards": true,
+        "exact_horizon": true,
+        "final_terminated": true,
+        "final_truncated": false
+      }
+    ],
+    "distinct_scenes": 2,
+    "repeated_scene": 3473188,
+    "primitive_steps": 1800,
+    "decoder_samples": 225
+  },
+  "dsrl_recovery_roundtrip": true,
+  "completed": true,
+  "elapsed_seconds": 270.7948016477749,
+  "motor_batch_calls": 1116,
+  "motor_samples": 9897,
+  "peak_cuda_memory_gib": 1.547619342803955
+}

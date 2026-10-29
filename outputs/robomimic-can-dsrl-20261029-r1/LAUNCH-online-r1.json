@@ -1,0 +1,40 @@
+{
+  "cluster": "Baige",
+  "submission_surface": "分布式训练",
+  "automatic_retry": false,
+  "job_id": "job-060f4odvylld",
+  "name": "mwj_1029_can_online_g1_r1_2a02e6c",
+  "submitted_at": "2026-10-29T15:56:36+08:00",
+  "running_at": "2026-10-29T15:56:47+08:00",
+  "source_commit": "2a02e6c7b165e37199df81ba46308d82caffdde2",
+  "run_id": "robomimic-can-dsrl-baige-20261029-online-r1",
+  "status": "running",
+  "queue": "aihcq-chqrelndaaj4",
+  "resources": {
+    "gpus": 1,
+    "gpu_type": "RTX4090",
+    "cpus": 16,
+    "ram_gib": 64,
+    "shm_gib": 8
+  },
+  "maximum_runtime_minutes": 15,
+  "cli_max_seconds": 660,
+  "reference_run": "robomimic-can-dsrl-baige-20261029-pilot-r3/dsrl-na",
+  "evaluation_scene_seeds": [
+    2000000,
+    2000001
+  ],
+  "attempts": 4,
+  "total_new_primitive_steps": 2400,
+  "comparison": "Two-scene feasibility control for conventional online DSRL weight updates; unchanged 20+10 per single-lane chunk implies four times optimizer updates per new transition versus four-lane training. Equal interactions, different compute.",
+  "source_validation": "Latest main reviewed; independent static review; shell syntax and embedded Python AST passed; no scientific src files changed; Git bundle deployment and clean pinned checkout verified.",
+  "budget_gpu_minutes": {
+    "prior_failure_reserve": 6,
+    "qualification_reserve": 12,
+    "completed_pilot": 50.963974,
+    "online_cap": 15,
+    "total_ceiling": 83.963974,
+    "authorized_total": 120
+  },
+  "proof": "online-r1-running.png"
+}

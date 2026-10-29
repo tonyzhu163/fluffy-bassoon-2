@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "timing_comparison_eligible": false,
+  "allocation_type": "baige_container",
+  "hostname": "job-6j2y16w9u33o-master-0",
+  "probe_pid": 1632,
+  "created_at_utc": "2026-10-29T06:59:48.063161+00:00",
+  "devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "97c88cce-251c-68c9-77a4-78af40d102d1",
+      "cuda_name": "NVIDIA GeForce RTX 4090",
+      "cuda_total_bytes": 25250627584,
+      "pci_bus_id": "0000:61:00.0",
+      "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_total_mib": 24564.0,
+        "memory_used_mib": 1.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:61:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "own_pid_gpu_uuids": [
+          "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+        ]
+      }
+    },
+    {
+      "allocation_ordinal": 1,
+      "visibility_token": "1",
+      "cuda_uuid": "09e18258-98a6-3230-4efe-308af4f0ff49",
+      "cuda_name": "NVIDIA GeForce RTX 4090",
+      "cuda_total_bytes": 25250627584,
+      "pci_bus_id": "0000:62:00.0",
+      "uuid": "GPU-09e18258-98a6-3230-4efe-308af4f0ff49",
+      "inventory": {
+        "index": 1,
+        "uuid": "GPU-09e18258-98a6-3230-4efe-308af4f0ff49",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_total_mib": 24564.0,
+        "memory_used_mib": 1.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:62:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "own_pid_gpu_uuids": [
+          "GPU-09e18258-98a6-3230-4efe-308af4f0ff49",
+          "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+        ]
+      }
+    }
+  ],
+  "idle_utilization_required": true,
+  "gpu_identity_mapping": {
+    "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+    "assigned_nvml_uuids": [
+      "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "GPU-09e18258-98a6-3230-4efe-308af4f0ff49"
+    ]
+  },
+  "compute_processes_before": [],
+  "compute_processes_after": [
+    {
+      "gpu_uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "pid": 1632,
+      "process_name": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+      "memory_used_mib": "448"
+    },
+    {
+      "gpu_uuid": "GPU-09e18258-98a6-3230-4efe-308af4f0ff49",
+      "pid": 1632,
+      "process_name": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+      "memory_used_mib": "448"
+    }
+  ],
+  "topology": "\t\u001b[4mGPU0\tGPU1\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\t0-55\t0\t\tN/A\nGPU1\tPHB\t X \t0-55\t0\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks",
+  "source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "scientific_source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+  "source_files_sha256": {
+    "src/fluffy_bassoon/__init__.py": "f9359013aaa2b01ea95417eb78040ceeea5238863c39615e7d4e9942dff54b93",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/evaluation_stages.py": "c7d3b2435c47ac38034d89d196b6ecb7a433ea8d19e93fbcf9633f6752f72c3c",
+    "src/fluffy_bassoon/gpu_execution.py": "3c00c74984101dc7c487c193cd7abe95042e746fb8f8fc5dd4025a08b1f9bfc1",
+    "src/fluffy_bassoon/meta_rl/__init__.py": "5041bc98128b672c71265c4fa8429e8800ecdaeed91de80fbe3fdeec7f3ce2a4",
+    "src/fluffy_bassoon/meta_rl/bridge_distillation.py": "a6cf383cf64f22ad2d07e86543181dc9a8c634f3006fc61d8a271ccad47357d3",
+    "src/fluffy_bassoon/meta_rl/can_dsrl.py": "080786da7ff0c23e2da589b4538dcccaa85c20a68b20543f7cc82148db612757",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_compare.py": "d43b875b52ac21e607716e93f0f202c81ee3669f91ead4ecc73a486804bfa2df",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_parity.py": "9777a1f943e978b2e66d45af2e0c1dc9bae81e0f5fea0be3cf8583e5bd7500ac",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_run.py": "24b6527801f7256c4ae91d839e7a14d8499a2b317a5e6bdcb996002336e550b8",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/cmm.py": "07685dce29f8441ed9ac72e83572f105d963f56b0b0cf070d7c484b691418e2b",
+    "src/fluffy_bassoon/meta_rl/copy_task.py": "f10d0bf25744eeda1cb8cb2e3231df37945b959dc59e416205521bd85834d228",
+    "src/fluffy_bassoon/meta_rl/cores.py": "f7ab6c04d86f243ca61e602926a6dfb04a6b8baa21834eec84ea28838c832f3c",
+    "src/fluffy_bassoon/meta_rl/diagnostics.py": "13de194b9dfcec0713ad427b7865d26c49c7a83860b5d54f877645097e10cafd",
+    "src/fluffy_bassoon/meta_rl/environments.py": "a407b24691194f879e391942f37b70e7a119055a493d2ff400401ba2f04ed37e",
+    "src/fluffy_bassoon/meta_rl/evaluate.py": "3bc9f288a12dc2739cacdc7ca016d62a8fb9dd6466f95864a7780dbb028e5ee4",
+    "src/fluffy_bassoon/meta_rl/fewshot_regression.py": "ca808eca604996a1abaeecdc5e2b953b9ee0a41ad10e0c9ae04d0e526268aa08",
+    "src/fluffy_bassoon/meta_rl/gtrxl.py": "e77a7711def27162a994d8ec81893724db04abd70a1bea0059fd34aa91c5471c",
+    "src/fluffy_bassoon/meta_rl/maniskill_rotation.py": "43d7637c3516e0e5d643f0833aa85d7a9cab2f4ce64034d6c2f1940a7977ed72",
+    "src/fluffy_bassoon/meta_rl/noise_screen.py": "f85d72fe28affad331cb59671200793ad8b93324eadff75d1092bd24c6c268a5",
+    "src/fluffy_bassoon/meta_rl/pi05_balanced_plan.py": "703a0399925f5720e0089fc5b436d6ba7960d2823d14336970dccc02d3d61e9f",
+    "src/fluffy_bassoon/meta_rl/pi05_bridge_train.py": "22f7a29c6dc1225ce466978db6eef4f84554733734299dc42ec438dd43cb93be",
+    "src/fluffy_bassoon/meta_rl/pi05_crossed_probe.py": "aab390fd4e26ead6f4708a896c71cafb612d0484906c10ab32d7f718e407f681",
+    "src/fluffy_bassoon/meta_rl/pi05_fresh_probe.py": "0fb5727970c88e2015bad60939484435b120dad54f25ae66c6780d54f6ac8148",
+    "src/fluffy_bassoon/meta_rl/pi05_interface_gate.py": "433ca7f712789961bc3fb80a871c7843040345373871ee37433f675f1a758749",
+    "src/fluffy_bassoon/meta_rl/pi05_paired_ppo_plan.py": "68741ac11136f922b87d8c5f7c509c435e24099cceea7eee934f38ac679fa357",
+    "src/fluffy_bassoon/meta_rl/pi05_privileged_tracker.py": "d1b9ef2ce668a968e4c41e27bc7d55507c46c3cd3675103c83cd2e414e6610ea",
+    "src/fluffy_bassoon/meta_rl/pi05_public_history.py": "e0bb55d2e0733e8cefa78e6686bc51c6bd83296a57421742597b114182f7b148",
+    "src/fluffy_bassoon/meta_rl/pi05_support_probe_run.py": "ac809b2e4077a037e073432bb586c102afab59f31f86159cb1c8bcd8974e03ae",
+    "src/fluffy_bassoon/meta_rl/pi05_tracker_gate.py": "d3609ec9b30af8f30c038e881bfb18a2a8ffe328c91e1b2d6a3e5ea7e2190d32",
+    "src/fluffy_bassoon/meta_rl/pi05_warmstart_train.py": "d78efe5cb43670c4a2921cf66fe530e3f45c974839a3f0241d52357d2961538d",
+    "src/fluffy_bassoon/meta_rl/ppo.py": "6135153207b6a442ea8c3ac4831596281cb419066f1536614cf70a691cc99344",
+    "src/fluffy_bassoon/meta_rl/probe.py": "6203944a16c7697bd2cb8f7f1a8aff665365b8011900572cb4e500b4650ea4bc",
+    "src/fluffy_bassoon/meta_rl/screen.py": "d0089bf9fa94bae021b504def05d3c6df05b87be7c4d16b3bcb6510d19d30a9b",
+    "src/fluffy_bassoon/meta_rl/teachers.py": "3d7ad1731f894ce9273c9c4683ec46895a53afdbec94a241554f7508606e261c",
+    "src/fluffy_bassoon/meta_rl/train.py": "abd0192d0ed566445f9312f3209da9683ce909c5d81a41e85a5cf733d4384c51",
+    "src/fluffy_bassoon/meta_rl/transformer_xl.py": "bff7c77050656ec1073db88b6c53e24f4bd2941852116ebafb719cab4bb73386",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/meta_rl/warmstart_train.py": "1b1388958abc4bbc53184d970e6553e336cc3a42dc69b5640a9cd5aa10d6c845",
+    "src/fluffy_bassoon/rl/__init__.py": "588ec56fed6f81fab1f2dedf4fd52540de0b76789d9aab3b321dd12c7c636d0c",
+    "src/fluffy_bassoon/rl/maniskill_pi05.py": "ee2d4cbe6c8385a1d9d103e31ece909f5c3eff871258d62ec4a46c5ff2f60602",
+    "src/fluffy_bassoon/rl/pi05_bridge_policy.py": "84c6fb95672b1af2fbce2d269310cdfd3001bc76bdbc0ded76f3960d45002858",
+    "src/fluffy_bassoon/rl/pi05_feature_bridge.py": "e22b334d89b686893d6cbc051edf1561a0b7e169afb92061821fcd0e575f82b2",
+    "src/fluffy_bassoon/rl/rlinf_checkpoint_compat.py": "ff98a3b38c911210c3a2147a7ed8fd8f62331b7d61ea23f6336af51ffd5af841",
+    "src/lerobot_policy_ctm/__init__.py": "d89a5685d6b8934ce11ad2f3ede6c3f0754f096bdc09dd4f16e2a8eaf05a6bbb",
+    "src/lerobot_policy_ctm/architectures/__init__.py": "309e2eac6a4f44d8270dd3361a05993b065358d2d5ea4978cb8118b822268f19",
+    "src/lerobot_policy_ctm/architectures/continuous_memory_machine/__init__.py": "6f479f956483bc16ec57bfbe491e2ca75bec5c5eb7f0ae5da5062f0299d38fd5",
+    "src/lerobot_policy_ctm/architectures/continuous_memory_machine/core.py": "3a74c6b5ce1bb9f8641773ebd4807594e83b146bedcf21dd328c729a3078a76e",
+    "src/lerobot_policy_ctm/architectures/persistent_transformer_control/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lerobot_policy_ctm/architectures/persistent_transformer_control/action_expert.py": "2a7bbc14d63f442b66d44a5f8232731d0ec8cb07a5223b1271cea684f4640fcd",
+    "src/lerobot_policy_ctm/architectures/recurrent_transformer_control/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lerobot_policy_ctm/architectures/recurrent_transformer_control/action_expert.py": "28357d96be7ada6104277f182c3b3da16d954947524b35672780898c288771f9",
+    "src/lerobot_policy_ctm/shared/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lerobot_policy_ctm/shared/attention.py": "d7ff4a4ec77dcfae66955b98dcbd2e068b8b8977e72f11f78c7c41932f3a4c53",
+    "src/lerobot_policy_ctm/shared/persistent_ctm.py": "9d7009772b40072e7c16c516da59eee8ad5ad0a1d36cdb1fc14cf58612e2a197",
+    "src/lerobot_policy_ctm/shared/sakana_reference.py": "0c6081be9eac4b7a6414ea8c776abc7a1bfc2e87ba7734da17f173699b66415c",
+    "src/lerobot_policy_ctm/shared/token_ctm.py": "06f9980b8d2739c07b98254ec45831caa22d0a4d78aea74b6ad8b13c9b667e3f",
+    "src/lerobot_policy_ctm/shared/transformer_expert.py": "67b3c34967655a72fdd98188f266ecccbcdffab0e29e0593c44086ee1a6670db"
+  },
+  "helper_sha256": "ce123bad4c7b9984b732767199914b66081558abd6cf4d9bb82269afccc1f30e"
+}

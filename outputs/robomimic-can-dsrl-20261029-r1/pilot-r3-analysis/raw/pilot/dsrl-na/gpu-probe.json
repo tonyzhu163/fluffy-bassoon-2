@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "allocation_type": "baige_prequalified_worker",
+  "hostname": "job-6j2y16w9u33o-master-0",
+  "source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "parent_probe": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3/parent-gpu-probe.json",
+  "parent_probe_sha256": "235dd860c59ea2fc4130406783457ee7d021d709cdf78c1deed45c3df519610e",
+  "parent_gpu_count": 2,
+  "source_binding": "parent_and_worker",
+  "scheduler_nvidia_visible_devices": [
+    "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+    "GPU-09e18258-98a6-3230-4efe-308af4f0ff49"
+  ],
+  "cuda_visible_devices": "0",
+  "selected_device": {
+    "allocation_ordinal": 0,
+    "visibility_token": "0",
+    "cuda_uuid": "97c88cce-251c-68c9-77a4-78af40d102d1",
+    "cuda_name": "NVIDIA GeForce RTX 4090",
+    "cuda_total_bytes": 25250627584,
+    "pci_bus_id": "0000:61:00.0",
+    "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+    "inventory": {
+      "index": 0,
+      "uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+      "name": "NVIDIA GeForce RTX 4090",
+      "memory_total_mib": 24564.0,
+      "memory_used_mib": 1.0,
+      "utilization_percent": 0.0,
+      "pci_bus_id": "00000000:61:00.0"
+    },
+    "allocation_check": {
+      "elements": 1048576,
+      "result": 2097152.0,
+      "own_pid_gpu_uuids": [
+        "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+      ]
+    }
+  },
+  "elements": 4096,
+  "tensor_result": 8192.0,
+  "pid_allocation": {
+    "available": true,
+    "own_pid": 2973,
+    "own_gpu_uuids": [
+      "GPU-97c88cce-251c-68c9-77a4-78af40d102d1"
+    ],
+    "selected_gpu_processes": [
+      {
+        "gpu_uuid": "GPU-97c88cce-251c-68c9-77a4-78af40d102d1",
+        "pid": 2973,
+        "process_name": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+        "memory_used_mib": "450"
+      }
+    ]
+  },
+  "created_at_utc": "2026-10-29T07:00:10.225574+00:00",
+  "timing_comparison_eligible": false
+}

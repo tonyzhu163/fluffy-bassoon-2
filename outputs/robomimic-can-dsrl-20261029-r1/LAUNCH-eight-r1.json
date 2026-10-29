@@ -1,0 +1,50 @@
+{
+  "cluster": "Baige",
+  "submission_surface": "分布式训练",
+  "automatic_retry": false,
+  "job_id": "job-8blx7x2ib4uu",
+  "name": "mwj_1029_can_seeds_g8_r1_77d72f7",
+  "submitted_at": "2026-10-29T15:51:36+08:00",
+  "source_commit": "77d72f748d948c7b744cad39de20582ee37cab56",
+  "run_id": "robomimic-can-dsrl-baige-20261029-eight-r1",
+  "status": "queued; queue admission closed",
+  "queue": "aihcq-rh0wwk9muei4",
+  "resources": {
+    "gpus": 8,
+    "gpu_type": "NVIDIA RPBZZZ6",
+    "containers": 1,
+    "cpus": 128,
+    "ram_gib": 512,
+    "shm_gib": 64
+  },
+  "maximum_runtime_minutes": 60,
+  "maximum_allocated_gpu_hours": 8,
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "training_seeds": [
+    1,
+    2
+  ],
+  "common_training_primitive_steps": 28800,
+  "design": "one independent seed/method per GPU; no DDP",
+  "design_selection": {
+    "four_seeds_prediction_seconds": 4001,
+    "two_seeds_prediction_seconds": 2374,
+    "usable_allowance_seconds": 3240,
+    "transfer_margin": 2,
+    "reason": "Preserve all four methods, complete matched training and all eight-scene K4 controls within one hour; four-seed serial design refused."
+  },
+  "pilot_gate": "Completed pilot-r3; 70 independent metadata/integrity checks passed; exact launcher metadata-only admission passed. Full eight-GPU probe and actual selected-device worker checks remain allocation-time gates.",
+  "queue_evidence": {
+    "idle_cards": 70,
+    "max_cards": 416,
+    "physical_capacity": "seven nodes with eight idle cards; two with seven",
+    "admission": "closed",
+    "alternative_queue": "aihcq-3rlzpoivhidj rejects distributed-training workload type"
+  },
+  "proof": "eight-r1-queued.png"
+}
