@@ -58,7 +58,7 @@ def validate_trial(trial, *, objective):
         raise ValueError("Require complete episodes, with each next start exactly after done")
     steps = np.asarray(trial["teacher_steps"])
     if steps.dtype != np.int64 or steps.shape != (length,) or (steps < 0).any() or (np.diff(steps) < 0).any():
-        raise ValueError("Require chronological nonnegative int64 teacher environment-step identities")
+        raise ValueError("Require chronological nonnegative int64 teacher checkpoint/update identities")
     if objective in ("ad", "behavior_cloning") and not np.array_equal(executed, target):
         raise ValueError("AD/behavior-cloning targets must equal the actually executed noise")
     if objective == "ad" and steps[-1] == steps[0]:

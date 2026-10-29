@@ -19,7 +19,7 @@ arrays per trial, with no privileged state in the observation feature vector:
 | `rewards` | `[T]`, float32 | Actual reward after executing this row |
 | `dones` | `[T]`, bool | Episode ended, including time limit |
 | `episode_starts` | `[T]`, bool | First row and each row immediately after done |
-| `teacher_steps` | `[T]`, int64 | Nondecreasing source teacher environment steps |
+| `teacher_steps` | `[T]`, int64 | Nondecreasing source teacher checkpoint/update identity |
 
 At query t the token contains only `observations[t]`, `executed_noise[t-1]`,
 `rewards[t-1]`, `dones[t-1]`, and the current episode-start indicator. Previous
@@ -32,8 +32,9 @@ transition cost, and source commit. A metadata field is not an input feature.
 DPT uses separate teacher targets on actual imperfect behavior contexts.
 Behavior cloning uses the executed coordinate as its target. AD additionally
 requires a chronological learning trajectory with multiple teacher-step
-identities within each trial; fixed-teacher cloning is not labeled AD. This
-schema checks chronology and label equality, but whether the teacher actually
+identities within each trial. This identity stays constant while the behavior
+weights stay fixed; increasing the collection clock alone does not count.
+Fixed-teacher cloning is not labeled AD. This schema checks chronology and label equality, but whether the teacher actually
 improves must be established from its recorded robot outcomes.
 
 `save_dataset` writes concatenated ragged trials to NPZ and a hash-bound JSON
