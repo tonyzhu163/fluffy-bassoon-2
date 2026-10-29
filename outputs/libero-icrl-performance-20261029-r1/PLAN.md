@@ -25,10 +25,10 @@ does not imply low total training cost.
   staged pi0.5 LIBERO remains available for the stronger-backbone comparison.
   Verify the checkpoint's actual action horizon, execution chunk and task
   observations; do not silently substitute a ManiSkill motor.
-- Ordinary SAC in initial-noise space generates teachers and their actual
-  learning histories. A Torch port is explicitly a DSRL-style implementation,
-  not a reproduction of published pi0/JAX numbers. Record departures from the
-  official implementation before interpreting results.
+- The authors' pinned, unchanged JAX PixelSACLearner in initial-noise space
+  generates teachers and their actual learning histories. Record driver,
+  checkpoint, batch and warmup departures before interpreting results; using
+  the official optimizer does not reproduce the full published experiment.
 - A modest causal Transformer predicts stochastic noise decisions. AD uses
   actual chronological next decisions of an improving source learner; DPT
   labels query observations with a strong saved teacher while retaining the
@@ -120,3 +120,38 @@ integrates and reviews the exact launch commit. Deploy through Git (bundle if
 needed), verify source and dependency pins on Baige, and retain all raw learning
 and evaluation records plus a complete resumable checkpoint. Check initial
 progress after launch, then on the repository's 20-minute cadence.
+
+## RTX6000 continuation and objective comparison
+
+User requests RTX6000 resources at 16:11 Shanghai. Latest reviewed main is
+`01dcad8`, merged into the new source. Use one exclusive RTX6000/16CPU/96GiB/
+8GiB shared memory/45-minute container first, followed by independent jobs
+only after the newly added real GPU paths pass. Existing Can jobs are separate
+and must not be stopped or changed.
+
+Completed r3 (`job-zeec9gyms4d6`, `fe0b495`) retained 4,064 source interactions,
+3,680 SAC updates and four successes in twelve training episodes. Standard
+LIBERO starts in 17.8 seconds; native noise replay and physical motor/renderer
+GPU binding passed. The run stopped before student/evaluation at a recovery
+guard comparing serialization bytes. A new source compares exact numeric
+leaves, dtypes, shapes, RNG, replay hashes and the next sampled action/update;
+it does not weaken numerical equality. Preserve r3 and migrate its complete
+checkpoint under an explicit old/new-source contract instead of recollecting it.
+
+RTX6000 comparison r4 keeps task57, pi0 H50/chunk20/H400, UTD20 and batch32.
+Use K2, retry teacher train scenes0–3, validation38–39, evaluation40–43. The
+retry collection ceiling is4,800 primitive steps. Train AD and DPT on identical
+actual contexts,200 updates each for full/static controllers, then evaluate
+their own trajectories and episode-reset lesions. Direct RL2 and an independently
+trained episode-reset PPO control each have4 updates and at most3,200 primitive
+steps. Shared features are the frozen VLA's visual/instruction prefix means plus
+public proprioception; qualify them against the exact native prefix computation.
+Report the representation difference relative to the original RGB/state DSRL.
+
+This is a same-task implementation and timing comparison, not a sufficient
+meta-pretraining budget or semantic task-generalization claim. The follow-on
+uses an explicit task bank, greater dataset/training budgets and validation-task
+checkpoint selection. The user also requests investigating Vintix-style
+continuous noise distillation to replace costly improving-RL traces; retain
+that as a separate, clearly labeled data-source comparison, with actual noisy
+actions/outcomes and a validated competent demonstrator.
