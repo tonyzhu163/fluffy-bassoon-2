@@ -4,7 +4,7 @@ import json
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_campaign import (ALL_TASKS, VALIDATION_TASKS,
-    load_campaign, reserve, FORMAT)
+    load_campaign, reserve, reserve_ppo, FORMAT)
 from fluffy_bassoon.meta_rl.vla_source40_schedule import content_hash
 
 
@@ -48,3 +48,14 @@ def test_no_duplicate_stream_or_identity_and_exact_resume_only(tmp_path, monkeyp
         reserve(path, 'schedule', ledger, **dict(kwargs, task='libero_spatial:01'))
     with pytest.raises(ValueError, match='no matching'):
         reserve(path, 'schedule', ledger, **dict(kwargs, task='libero_spatial:02', partition='validation'))
+
+
+def test_ppo_fresh_rollout_reservations_share_cap_and_cannot_duplicate(tmp_path, monkeypatch):
+    path, ledger = fixture(tmp_path, monkeypatch)
+    kwargs = dict(run='ppo-r1', commit='a' * 40, action_cap=9500)
+    record = reserve_ppo(path, ledger, **kwargs)
+    with pytest.raises(ValueError, match='already reserved'):
+        reserve_ppo(path, ledger, **kwargs)
+    assert reserve_ppo(path, ledger, **kwargs, resume=True) == record
+    with pytest.raises(ValueError, match='exceed'):
+        reserve_ppo(path, ledger, run='ppo-r2', commit='b' * 40, action_cap=490000)

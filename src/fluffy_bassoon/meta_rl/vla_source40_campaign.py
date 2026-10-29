@@ -95,6 +95,35 @@ def reserve(campaign, schedule, ledger, *, task, partition, run, commit, resume=
     return record
 
 
+def reserve_ppo(campaign, ledger, *, run, commit, action_cap, resume=False):
+    value = load_campaign(campaign)
+    if type(action_cap) is not int or action_cap < 1650 or len(commit) != 40:
+        raise ValueError('Require an explicit complete-trial PPO reservation and commit')
+    ledger = Path(ledger)
+    ledger.parent.mkdir(parents=True, exist_ok=True)
+    record = dict(run_id=run, source_commit=commit, maximum_total_actions=action_cap,
+                  campaign_sha256=value['campaign_sha256'])
+    with ledger.with_suffix('.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        data = json.loads(ledger.read_text()) if ledger.exists() else dict(campaign_sha256=value['campaign_sha256'], reservations={})
+        if data['campaign_sha256'] != value['campaign_sha256']:
+            raise ValueError('PPO ledger belongs to another campaign')
+        previous = data['reservations'].get(run)
+        if previous is not None:
+            if not resume or previous != record:
+                raise ValueError('PPO run already reserved; exact pinned resume required')
+        elif resume:
+            raise ValueError('PPO resume has no reservation')
+        else:
+            if sum(row['maximum_total_actions'] for row in data['reservations'].values()) + action_cap > value['ppo_maximum_total_actions']:
+                raise ValueError('Fresh PPO reservation would exceed its shared benchmark cap')
+            data['reservations'][run] = record
+            temporary = ledger.with_suffix('.tmp')
+            temporary.write_text(json.dumps(data, indent=2) + '\n')
+            temporary.replace(ledger)
+    return record
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest='operation', required=True)
@@ -107,15 +136,25 @@ def main():
     for name in ('task', 'partition', 'run', 'commit'):
         take.add_argument('--' + name, required=True)
     take.add_argument('--resume', action='store_true')
+    ppo = sub.add_parser('reserve-ppo')
+    ppo.add_argument('--campaign', type=Path, required=True)
+    ppo.add_argument('--ledger', type=Path, required=True)
+    ppo.add_argument('--run', required=True)
+    ppo.add_argument('--commit', required=True)
+    ppo.add_argument('--action-cap', type=int, required=True)
+    ppo.add_argument('--resume', action='store_true')
     args = ap.parse_args()
     if args.operation == 'make':
         data = make_campaign(args.schedule)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open('x') as stream:
             stream.write(json.dumps(data, indent=2) + '\n')
-    else:
+    elif args.operation == 'reserve':
         data = reserve(args.campaign, args.schedule, args.ledger, task=args.task,
             partition=args.partition, run=args.run, commit=args.commit, resume=args.resume)
+    else:
+        data = reserve_ppo(args.campaign, args.ledger, run=args.run, commit=args.commit,
+                           action_cap=args.action_cap, resume=args.resume)
     print(json.dumps(data, indent=2))
 
 
