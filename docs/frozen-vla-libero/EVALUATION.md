@@ -3,6 +3,41 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Completed RLinf130 history-controller development smoke
+
+Baige Plus `job-immogbrrev71` and Pro `job-4cemq3xgqeiq`, immutable source
+`041678bd896669be87f34b8716d32d705a85dbb6`, both exited0 after72 episodes.
+Each allocation passed121 focused Linux tests, including the actual
+controller/feedback integration check, and qualified motor/features on GPU.
+Four clean-source models completed500 optimizer updates each; their primary
+exports are final-update500, not validation-selected intermediate weights.
+Source-replay SAC completed5000 updates on the same training interactions.
+
+| Controller | Plus | Pro |
+| --- | --- | --- |
+| Native frozen motor | 8/8 | 8/8 |
+| AD full / episode-reset / trained static | 8/8 each | 8/8 each |
+| DPT full / episode-reset / trained static | 8/8 each | 8/8 each |
+| Source-replay SAC, frozen | 8/8 | 8/8 |
+| Source-replay SAC, target online updates | 8/8 | 7/8 |
+
+- Two development variants per suite, one nominal scene each, four attempts.
+  One goal family; these are not a blind benchmark or new-goal evaluation.
+- Meta-controller optimizer updates during deployment: zero. Context lesions
+  reuse full-history weights; trained static models use separate matched training.
+- Plus evaluation:8,976 primitive+740 settling actions, worker712.52s.
+  Pro:10,976 primitive+370 settling, worker757.42s. Source costs are separate.
+- No success advantage or memory benefit established; native and static
+  baselines are already at ceiling. This does not test the proposed method's
+  capability on an informative population or with a substantive corpus.
+- The offline source-replay SAC phase is an additional data-matched control,
+  not the published online DSRL source recipe. Frozen SAC uses its mean and
+  online SAC uses stochastic actions; their difference does not isolate SGD.
+- Augmented-arm models also completed500 updates each, with identical clean
+  validation hashes, but robot evaluations were deferred after the user's
+  instruction to prioritize genuine failures and the new source40 protocol.
+- [Audited compact results and source receipts](../../outputs/libero-rlinf130-candidates-audit-20261029-r1/RESULTS.json).
+
 ## RLinf130 clean corpus and Plus/Pro development probes
 
 Frozen `RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT`, revision

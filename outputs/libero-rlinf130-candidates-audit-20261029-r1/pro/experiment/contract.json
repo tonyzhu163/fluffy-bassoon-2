@@ -1,0 +1,749 @@
+{
+  "format": "rlinf130_candidate_development_eval_v1",
+  "source_commit": "041678bd896669be87f34b8716d32d705a85dbb6",
+  "benchmark": "pro",
+  "arm": "clean",
+  "arm_registry_sha256": "388e343fc32c91bb6f886d3c5079f97698501bee3795c365b442bf25b85b4722",
+  "source_sac_registry_sha256": "3bfa2bd594dde81befb1786646a1c72bdcf7f64567b9656a72a73ff6078577fd",
+  "collection_cost": {
+    "sources": [
+      {
+        "kind": "clean",
+        "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+        "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+        "collection_primitive_steps": 3371,
+        "training_primitive_steps": 2243,
+        "validation_primitive_steps": 1128,
+        "settling_steps": 250
+      }
+    ],
+    "collection_primitive_steps": 3371,
+    "training_primitive_steps": 2243,
+    "validation_primitive_steps": 1128,
+    "settling_steps": 250,
+    "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+  },
+  "candidates": {
+    "ad_full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-students-clean-20261029-r1/experiment/models/ad-full/final-candidate.pt",
+      "sha256": "528b89da1522225a086101f1af811cdd2f8cca1698358a9249a5a4539037e6c6",
+      "manifest": {
+        "contract": {
+          "source_commit": "ea1d54c8a1dfd72ab436f48898437fb5a8bbb469",
+          "config": {
+            "observation_dim": 4104,
+            "noise_dim": 32,
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300,
+            "initial_std": 0.5
+          },
+          "mode": "full",
+          "objective": "ad",
+          "train_sha256": "bec6ba2a5fcbe6ae606c0e5f5ce3b7e298cf098f4568f027663466042f03137a",
+          "validation_sha256": "f9837524e2ae3199d540b5303246932735029648567ff18ba3d084157c1a66d3",
+          "train_metadata": {
+            "trial_ids": [
+              "train-state-0",
+              "train-state-1",
+              "train-state-2",
+              "train-state-3"
+            ],
+            "case_ids": [
+              "original:libero_90:47:state-0",
+              "original:libero_90:47:state-1",
+              "original:libero_90:47:state-2",
+              "original:libero_90:47:state-3"
+            ],
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "arm": "clean",
+            "task_key": "libero_90:47",
+            "global_task_split": "train",
+            "local_scene_split": "train",
+            "total_source_primitive_steps": 3371,
+            "collection_cost": {
+              "sources": [
+                {
+                  "kind": "clean",
+                  "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                  "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+                  "collection_primitive_steps": 3371,
+                  "training_primitive_steps": 2243,
+                  "validation_primitive_steps": 1128,
+                  "settling_steps": 250
+                }
+              ],
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250,
+              "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+            },
+            "source_indices": [
+              {
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                "sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474"
+              }
+            ]
+          },
+          "validation_metadata": {
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "task_key": "libero_90:47",
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "frozen_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+            "global_task_split": "train",
+            "local_scene_split": "validation",
+            "trial_ids": [
+              "validation-state-36",
+              "validation-state-37"
+            ],
+            "total_source_primitive_steps": 3371,
+            "actual_settling_steps": 250,
+            "scope": "local scenes of one original-LIBERO source training task; not semantic task OOD"
+          },
+          "seed": 0,
+          "batch_size": 4,
+          "max_context": 64,
+          "learning_rate": 0.0003,
+          "supervised_objective": "Gaussian target-noise NLL; motor adapter applies its fixed noise map",
+          "status": "candidate; imitation NLL does not establish robot performance"
+        },
+        "update": 500,
+        "selection": "final_update",
+        "data_arm": "clean",
+        "collection_cost": {
+          "sources": [
+            {
+              "kind": "clean",
+              "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+              "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250
+            }
+          ],
+          "collection_primitive_steps": 3371,
+          "training_primitive_steps": 2243,
+          "validation_primitive_steps": 1128,
+          "settling_steps": 250,
+          "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+        }
+      }
+    },
+    "ad_static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-students-clean-20261029-r1/experiment/models/ad-static/final-candidate.pt",
+      "sha256": "07e3919bb22715feeb1e0bedac03c1da855a8408d48fa4d1df3100954e76bb01",
+      "manifest": {
+        "contract": {
+          "source_commit": "ea1d54c8a1dfd72ab436f48898437fb5a8bbb469",
+          "config": {
+            "observation_dim": 4104,
+            "noise_dim": 32,
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300,
+            "initial_std": 0.5
+          },
+          "mode": "static",
+          "objective": "ad",
+          "train_sha256": "bec6ba2a5fcbe6ae606c0e5f5ce3b7e298cf098f4568f027663466042f03137a",
+          "validation_sha256": "f9837524e2ae3199d540b5303246932735029648567ff18ba3d084157c1a66d3",
+          "train_metadata": {
+            "trial_ids": [
+              "train-state-0",
+              "train-state-1",
+              "train-state-2",
+              "train-state-3"
+            ],
+            "case_ids": [
+              "original:libero_90:47:state-0",
+              "original:libero_90:47:state-1",
+              "original:libero_90:47:state-2",
+              "original:libero_90:47:state-3"
+            ],
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "arm": "clean",
+            "task_key": "libero_90:47",
+            "global_task_split": "train",
+            "local_scene_split": "train",
+            "total_source_primitive_steps": 3371,
+            "collection_cost": {
+              "sources": [
+                {
+                  "kind": "clean",
+                  "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                  "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+                  "collection_primitive_steps": 3371,
+                  "training_primitive_steps": 2243,
+                  "validation_primitive_steps": 1128,
+                  "settling_steps": 250
+                }
+              ],
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250,
+              "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+            },
+            "source_indices": [
+              {
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                "sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474"
+              }
+            ]
+          },
+          "validation_metadata": {
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "task_key": "libero_90:47",
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "frozen_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+            "global_task_split": "train",
+            "local_scene_split": "validation",
+            "trial_ids": [
+              "validation-state-36",
+              "validation-state-37"
+            ],
+            "total_source_primitive_steps": 3371,
+            "actual_settling_steps": 250,
+            "scope": "local scenes of one original-LIBERO source training task; not semantic task OOD"
+          },
+          "seed": 0,
+          "batch_size": 4,
+          "max_context": 64,
+          "learning_rate": 0.0003,
+          "supervised_objective": "Gaussian target-noise NLL; motor adapter applies its fixed noise map",
+          "status": "candidate; imitation NLL does not establish robot performance"
+        },
+        "update": 500,
+        "selection": "final_update",
+        "data_arm": "clean",
+        "collection_cost": {
+          "sources": [
+            {
+              "kind": "clean",
+              "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+              "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250
+            }
+          ],
+          "collection_primitive_steps": 3371,
+          "training_primitive_steps": 2243,
+          "validation_primitive_steps": 1128,
+          "settling_steps": 250,
+          "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+        }
+      }
+    },
+    "dpt_full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-students-clean-20261029-r1/experiment/models/dpt-full/final-candidate.pt",
+      "sha256": "93241dfda94ad0c1b3ae0cff0d6ee8499b571a5f0429fd9f3d408df00f7ef033",
+      "manifest": {
+        "contract": {
+          "source_commit": "ea1d54c8a1dfd72ab436f48898437fb5a8bbb469",
+          "config": {
+            "observation_dim": 4104,
+            "noise_dim": 32,
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300,
+            "initial_std": 0.5
+          },
+          "mode": "full",
+          "objective": "dpt",
+          "train_sha256": "bbef6c3482219cb0fbc06b9a2b83cec431b9178232de2af279c6fb483268829a",
+          "validation_sha256": "0118c6092bcc02db566d258a5fbf26db6f021d0de83a483afc2e79e6679bb4fc",
+          "train_metadata": {
+            "trial_ids": [
+              "train-state-0",
+              "train-state-1",
+              "train-state-2",
+              "train-state-3"
+            ],
+            "case_ids": [
+              "original:libero_90:47:state-0",
+              "original:libero_90:47:state-1",
+              "original:libero_90:47:state-2",
+              "original:libero_90:47:state-3"
+            ],
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "arm": "clean",
+            "task_key": "libero_90:47",
+            "global_task_split": "train",
+            "local_scene_split": "train",
+            "total_source_primitive_steps": 3371,
+            "collection_cost": {
+              "sources": [
+                {
+                  "kind": "clean",
+                  "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                  "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+                  "collection_primitive_steps": 3371,
+                  "training_primitive_steps": 2243,
+                  "validation_primitive_steps": 1128,
+                  "settling_steps": 250
+                }
+              ],
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250,
+              "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+            },
+            "source_indices": [
+              {
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                "sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474"
+              }
+            ]
+          },
+          "validation_metadata": {
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "task_key": "libero_90:47",
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "frozen_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+            "global_task_split": "train",
+            "local_scene_split": "validation",
+            "trial_ids": [
+              "validation-state-36",
+              "validation-state-37"
+            ],
+            "total_source_primitive_steps": 3371,
+            "actual_settling_steps": 250,
+            "scope": "local scenes of one original-LIBERO source training task; not semantic task OOD"
+          },
+          "seed": 0,
+          "batch_size": 4,
+          "max_context": 64,
+          "learning_rate": 0.0003,
+          "supervised_objective": "Gaussian target-noise NLL; motor adapter applies its fixed noise map",
+          "status": "candidate; imitation NLL does not establish robot performance"
+        },
+        "update": 500,
+        "selection": "final_update",
+        "data_arm": "clean",
+        "collection_cost": {
+          "sources": [
+            {
+              "kind": "clean",
+              "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+              "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250
+            }
+          ],
+          "collection_primitive_steps": 3371,
+          "training_primitive_steps": 2243,
+          "validation_primitive_steps": 1128,
+          "settling_steps": 250,
+          "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+        }
+      }
+    },
+    "dpt_static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-students-clean-20261029-r1/experiment/models/dpt-static/final-candidate.pt",
+      "sha256": "c8a24d91f98d45e89c9ba46f214df64d231775cf16fa7d9808ed0c530622d6a4",
+      "manifest": {
+        "contract": {
+          "source_commit": "ea1d54c8a1dfd72ab436f48898437fb5a8bbb469",
+          "config": {
+            "observation_dim": 4104,
+            "noise_dim": 32,
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300,
+            "initial_std": 0.5
+          },
+          "mode": "static",
+          "objective": "dpt",
+          "train_sha256": "bbef6c3482219cb0fbc06b9a2b83cec431b9178232de2af279c6fb483268829a",
+          "validation_sha256": "0118c6092bcc02db566d258a5fbf26db6f021d0de83a483afc2e79e6679bb4fc",
+          "train_metadata": {
+            "trial_ids": [
+              "train-state-0",
+              "train-state-1",
+              "train-state-2",
+              "train-state-3"
+            ],
+            "case_ids": [
+              "original:libero_90:47:state-0",
+              "original:libero_90:47:state-1",
+              "original:libero_90:47:state-2",
+              "original:libero_90:47:state-3"
+            ],
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "arm": "clean",
+            "task_key": "libero_90:47",
+            "global_task_split": "train",
+            "local_scene_split": "train",
+            "total_source_primitive_steps": 3371,
+            "collection_cost": {
+              "sources": [
+                {
+                  "kind": "clean",
+                  "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                  "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+                  "collection_primitive_steps": 3371,
+                  "training_primitive_steps": 2243,
+                  "validation_primitive_steps": 1128,
+                  "settling_steps": 250
+                }
+              ],
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250,
+              "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+            },
+            "source_indices": [
+              {
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+                "sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474"
+              }
+            ]
+          },
+          "validation_metadata": {
+            "feature_contract": {
+              "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+              "model_config": "rlinf_pi05_libero130",
+              "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+              "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+              "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+              "native_config_name": "pi05_libero",
+              "hidden_width": 2048,
+              "feature_dim": 4104,
+              "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+            },
+            "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+            "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+            "task_key": "libero_90:47",
+            "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+            "frozen_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+            "global_task_split": "train",
+            "local_scene_split": "validation",
+            "trial_ids": [
+              "validation-state-36",
+              "validation-state-37"
+            ],
+            "total_source_primitive_steps": 3371,
+            "actual_settling_steps": 250,
+            "scope": "local scenes of one original-LIBERO source training task; not semantic task OOD"
+          },
+          "seed": 0,
+          "batch_size": 4,
+          "max_context": 64,
+          "learning_rate": 0.0003,
+          "supervised_objective": "Gaussian target-noise NLL; motor adapter applies its fixed noise map",
+          "status": "candidate; imitation NLL does not establish robot performance"
+        },
+        "update": 500,
+        "selection": "final_update",
+        "data_arm": "clean",
+        "collection_cost": {
+          "sources": [
+            {
+              "kind": "clean",
+              "index": "/mowenjie/fluffy-bassoon-2/outputs/libero-rlinf130-corpus-clean-20261029-r1/experiment/index.json",
+              "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+              "collection_primitive_steps": 3371,
+              "training_primitive_steps": 2243,
+              "validation_primitive_steps": 1128,
+              "settling_steps": 250
+            }
+          ],
+          "collection_primitive_steps": 3371,
+          "training_primitive_steps": 2243,
+          "validation_primitive_steps": 1128,
+          "settling_steps": 250,
+          "rule": "count each source collection once; AD/DPT and model copies share these interactions"
+        }
+      }
+    }
+  },
+  "motor": {
+    "backend": "rlinf_pi05_libero130_torch",
+    "checkpoint": "RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "revision": "6222623f635769bfc73c9472e29fab9b7fd8e027",
+    "receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+    "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+    "normalization_sha256": "dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1",
+    "source_proof": {
+      "commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+      "tree": "0bb0da449ff13778084839c22509fee2119e80cb",
+      "verified_motor_files": 71,
+      "receipt_sha256": "58d6d1667073b69d1c167604a3bc902ed2640d75a4ca3549f17b6ac79b3bab0e"
+    },
+    "strict_loading": {
+      "strict": true,
+      "loaded_tensors": 667,
+      "missing_keys": [],
+      "unexpected_keys": []
+    },
+    "openpi_package": "rlinf-openpi 0.1.1",
+    "openpi_package_root": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/openpi",
+    "flow_steps": 10,
+    "predicted_horizon": 10,
+    "action_dim": 32,
+    "environment_action_dim": 7,
+    "weights_frozen": true,
+    "trainable_parameters": 0,
+    "torch_version": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "native_sampler": "RLinf Pi0Eval deterministic Euler ODE; explicit noise before denoising",
+    "normalization_path": "/mowenjie/fluffy-bassoon-2/inputs/rlinf-pi05-libero130-sft-6222623f-20261029-r1/physical-intelligence/libero/norm_stats.json",
+    "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566"
+  },
+  "feature_contract": {
+    "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+    "model_config": "rlinf_pi05_libero130",
+    "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+    "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+    "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+    "native_config_name": "pi05_libero",
+    "hidden_width": 2048,
+    "feature_dim": 4104,
+    "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+  },
+  "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+  "methods": [
+    "native",
+    "ad_full",
+    "ad_episode",
+    "ad_static",
+    "dpt_full",
+    "dpt_episode",
+    "dpt_static",
+    "source_sac_frozen",
+    "source_sac_online"
+  ],
+  "seed": 0,
+  "attempts": 4,
+  "horizon": 280,
+  "chunk": 10,
+  "max_primitive_steps": 20160,
+  "selection": "final-update500; development results do not select blind-test models",
+  "history_action_selection": "deterministic Gaussian mean",
+  "source_sac_action_selection": "frozen: deterministic mean; online: conventional stochastic SAC",
+  "source_sac_migration": "Independent per-case source checkpoint clone, retaining source replay/optimizer/RNG; new target contract records migration",
+  "history_deployment": "Weights frozen; context reset per case; full retains across K4; episode clears at episode boundaries; trained static clears every query",
+  "scope": "One-goal-family development smoke; no broad meta-learning or blind-test performance claim",
+  "cases": [
+    {
+      "benchmark_kind": "pro",
+      "development": true,
+      "suite": "libero_object_swap",
+      "task_id": 1,
+      "case_id": "pro_object_swap_init0",
+      "dimension": "position",
+      "condition": "Official position swap of cream cheese and alphabet soup",
+      "pro_case": {
+        "case_id": "pro_object_swap_init0",
+        "family": "libero_object_swap",
+        "dimension": "position",
+        "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+        "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+        "condition": "Official position swap of cream cheese and alphabet soup",
+        "initial_state": 0
+      },
+      "origin_base": {
+        "suite": "libero_object",
+        "task_id": 1,
+        "train_task_key": "libero_90:47",
+        "split": "train",
+        "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+        "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+        "variant_base_family": "full-goal-family-b2a798f45b2c57e3",
+        "lineage": "Original base has identical full goal and typed bindings to TRAIN 90:47; appearance variant inherits this base lineage"
+      },
+      "instruction": "Pick the cream cheese and place it in the basket",
+      "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "libero_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+      "pro_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+      "dataset_repo": "zhouxueyang/LIBERO-Pro",
+      "dataset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+      "dataset_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+      "assets_receipt_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+      "bddl_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/bddl_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+      "init_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/init_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.pruned_init",
+      "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+      "initial_states": 50,
+      "development_initial_state_indices": [
+        0
+      ],
+      "problem_folder": "libero_object_swap",
+      "horizon": 280,
+      "settle_steps": 5,
+      "settling_action": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "settling_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:benchmark_scripts/render_single_task.py:22,66; official rendering utility, development POC",
+      "horizon_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:README.md TASK_MAX_STEPS LIBERO_OBJECT_* = 280",
+      "reset": "Fresh environment per episode; RNG seeded before construction and reset; official state installed before settling",
+      "observation": "two RGB cameras and robot proprioception only"
+    },
+    {
+      "benchmark_kind": "pro",
+      "development": true,
+      "suite": "libero_object_object",
+      "task_id": 1,
+      "case_id": "pro_object_appearance_init0",
+      "dimension": "object",
+      "condition": "Official red cream cheese and red basket appearance variant",
+      "pro_case": {
+        "case_id": "pro_object_appearance_init0",
+        "family": "libero_object_object",
+        "dimension": "object",
+        "bddl_sha256": "2bdd42a7e444d5d02723901b7e11c2ee1a2964b5a4ba972b495d79fce7a0c4a5",
+        "init_sha256": "0c127f132eb2d4877b01daad923f00df8917c77f0a5a58cb6434cc5e62a553bd",
+        "condition": "Official red cream cheese and red basket appearance variant",
+        "initial_state": 0
+      },
+      "origin_base": {
+        "suite": "libero_object",
+        "task_id": 1,
+        "train_task_key": "libero_90:47",
+        "split": "train",
+        "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+        "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+        "variant_base_family": "full-goal-family-b2a798f45b2c57e3",
+        "lineage": "Original base has identical full goal and typed bindings to TRAIN 90:47; appearance variant inherits this base lineage"
+      },
+      "instruction": "Pick the cream cheese and place it in the basket",
+      "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "libero_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+      "pro_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+      "dataset_repo": "zhouxueyang/LIBERO-Pro",
+      "dataset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+      "dataset_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+      "assets_receipt_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+      "bddl_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/bddl_files/libero_object_object/pick_up_the_cream_cheese_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "2bdd42a7e444d5d02723901b7e11c2ee1a2964b5a4ba972b495d79fce7a0c4a5",
+      "init_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/init_files/libero_object_object/pick_up_the_cream_cheese_and_place_it_in_the_basket.pruned_init",
+      "init_sha256": "0c127f132eb2d4877b01daad923f00df8917c77f0a5a58cb6434cc5e62a553bd",
+      "initial_states": 50,
+      "development_initial_state_indices": [
+        0
+      ],
+      "problem_folder": "libero_object_object",
+      "horizon": 280,
+      "settle_steps": 5,
+      "settling_action": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "settling_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:benchmark_scripts/render_single_task.py:22,66; official rendering utility, development POC",
+      "horizon_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:README.md TASK_MAX_STEPS LIBERO_OBJECT_* = 280",
+      "reset": "Fresh environment per episode; RNG seeded before construction and reset; official state installed before settling",
+      "observation": "two RGB cameras and robot proprioception only"
+    }
+  ]
+}

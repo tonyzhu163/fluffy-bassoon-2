@@ -86,3 +86,29 @@ reduce the steering module's learning burden. That is a transfer rationale,
 not a measured reduction established by these papers. Required case diversity,
 learning-history quality, and data scale must be measured for the chosen motor
 and robotic task distribution.
+
+## Robotics comparisons
+
+[VLRLA](https://arxiv.org/html/2610.19517v1), Appendix A.2.1, reports a
+simulation source run with 25 PPO iterations, four rollout rounds, 256 parallel
+environments and eight chunk slots per round/environment: 204,800 nominal
+chunk slots. Post-termination slots are masked; this is not 204,800 distinct
+valid samples. Appendix A.2.2's narrower real-robot curriculum has 391 episodes
+across six subtasks, 4,692 chunk decisions, and stage success proportions
+35.35/55.79/80.81/92.86%. It trains the bridge for 1,680 updates at global
+batch 64. This shows that a focused demonstration can use thousands of
+decisions when its histories have structured feedback and behavior changes;
+it does not establish broad new-task generalization from that quantity.
+
+[Vintix](https://arxiv.org/html/2501.19400v2), Table 1, reports 670,000 episodes /
+67 million transitions for its 45 Meta-World training tasks; the full 87-task
+cross-domain bank totals about1.6 million episodes / 222.7 million transitions.
+These are state-based control data, not VLA steering chunks or a required
+minimum for a frozen-VLA attachment.
+
+The completed RLinf130 technical pilot has 16 clean training episodes /
+230 unique steering chunks. Adding the declared Plus source partition yields
+40 training episodes /608 chunks, all in one goal family. Ten independent
+training trials and 500 repeated optimizer updates per model do not establish
+a substantive meta-learning corpus. The new source40 protocol must measure
+distinct cases, learning-history quality and scale separately.

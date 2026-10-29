@@ -4,6 +4,11 @@ The research target is robotic success and interaction efficiency with a
 frozen pi0.5 motor. The meta-learning task is a repeated-attempt robot trial,
 not predicting a task ID or imitating arbitrary noise in isolation.
 
+The primary design now uses the official OpenPI40-task pi0.5 release, source
+histories from those40 tasks, and target LIBERO90/Plus/Pro trials. See the
+[source/target protocol](../../outputs/libero40-meta90-20261029-r1/PROTOCOL.md).
+The earlier RLinf130 pilot and its data arms remain separate evidence.
+
 ## Trial and adaptation
 
 - A trial fixes the instruction/goal, initial scene state, perturbation and
@@ -49,6 +54,14 @@ not predicting a task ID or imitating arbitrary noise in isolation.
 
 ## Distribution claims
 
+In the primary design, LIBERO90 is a candidate new-goal target only after
+auditing semantic overlaps with all40 source tasks. Plus/Pro cases based on
+source-familiar goals test new conditions. One-shot means one support episode
+with actual feedback followed by a separate query episode; both have fixed
+controller weights, and support interactions count toward deployment cost.
+
+The following table describes the earlier RLinf130 source-data arms:
+
 | Source corpus | Target | Interpretation |
 | --- | --- | --- |
 | Original LIBERO only | Plus or Pro variants absent from source | Transfer to benchmark shifts unseen by the controller |
@@ -64,9 +77,9 @@ Meta-learning itself can be tested on new trials drawn from the same task
 distribution. Out-of-distribution generalization is an additional question,
 not the definition of meta-learning.
 
-## Current bounded smoke test
+## Earlier bounded smoke test
 
-The first corpus uses one cream-cheese-to-basket goal family, four original
+The RLinf130 corpus uses one cream-cheese-to-basket goal family, four original
 training scenes, two original local validation scenes, and an optional six
 Plus training trials. This checks collection, training and closed-loop
 deployment. It cannot establish broad task-level meta-learning.
