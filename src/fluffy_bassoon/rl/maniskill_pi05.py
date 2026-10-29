@@ -3,8 +3,11 @@
 Model and environment settings follow RLinf's own pi05_maniskill evaluation. Norm
 stats are always passed explicitly: the SFT and RL checkpoints store them at
 different relative paths, and RLinf silently skips normalization when its default
-lookup misses. The rotation hook implements docs/maniskill-pi05-icrl.md.
+lookup misses. The rotation hook implements docs/maniskill-pi05-icrl.md; the
+initial-noise arms and object-physics variants implement
+outputs/noise-mode-icrl-20261029-r1/PLAN.md.
 """
+from contextlib import contextmanager
 import hashlib
 import math
 import json
@@ -20,6 +23,7 @@ import torch
 
 TRAIN_OBJECTS, TRAIN_OVERLAYS, OBJECTS = 16, 16, 25
 CHUNK, STEPS = 5, 80
+NOISE_SHAPE = (8, 32)  # openpi action_horizon x model_action_dim in model_config
 
 
 def execution_mode():
@@ -168,6 +172,55 @@ def rotate_translation(chunk, angles_degrees):
     return rotated
 
 
+def arm_noise(seeds):
+    """One fixed initial-noise tensor per arm seed, [arms, *NOISE_SHAPE] float32.
+
+    Drawn on CPU from a generator per seed, so an arm is the same tensor on every
+    device, batch layout and slot.
+    """
+    if not seeds or any(type(seed) is not int or not 0 <= seed < 2**63 for seed in seeds):
+        raise ValueError("Require integer arm seeds in [0, 2**63)")
+    return torch.stack([torch.randn(NOISE_SHAPE, generator=torch.Generator().manual_seed(seed),
+                                    dtype=torch.float32) for seed in seeds])
+
+
+def tensor_sha256(tensor):
+    return hashlib.sha256(tensor.detach().cpu().contiguous().numpy().tobytes()).hexdigest()
+
+
+@contextmanager
+def object_physics(env_class, friction_scale=1.0, density_scale=1.0):
+    """Scale source-object friction and density for envs built inside the block.
+
+    RLinf's PutOnPlateInScene25 builds every object once at env construction through
+    _build_actor_helper, so each physical variant needs its own env. Only names in
+    model_db_carrot (the source objects) change; plates and the arena keep RLinf's values.
+    """
+    scales = (friction_scale, density_scale)
+    if any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x <= 0
+           for x in scales):
+        raise ValueError("Require positive finite friction and density scales")
+    helper = env_class.__dict__.get("_build_actor_helper")
+    if helper is None:
+        raise ValueError("Pass the class that defines _build_actor_helper")
+
+    def build(self, name, path, density, scale, pose):
+        if name not in self.model_db_carrot:
+            return helper(self, name, path, density, scale, pose)
+        self.obj_static_friction = type(self).obj_static_friction * friction_scale
+        self.obj_dynamic_friction = type(self).obj_dynamic_friction * friction_scale
+        try:
+            return helper(self, name, path, density * density_scale, scale, pose)
+        finally:
+            del self.obj_static_friction, self.obj_dynamic_friction
+
+    env_class._build_actor_helper = build
+    try:
+        yield
+    finally:
+        env_class._build_actor_helper = helper
+
+
 OUTCOME_FIELDS = dict(
     success_once="success at any step", success_at_end="success at step 80",
     first_success_step="first step with success, -1 if none",
@@ -223,9 +276,29 @@ class EpisodeOutcomes:
 
 
 @torch.no_grad()
-def run_batch(model, env, rows, *, seed, generator, angles_degrees=None, audit_path=None):
-    """One synchronized batch of 80-step episodes; returns per-row outcome fields."""
+def run_batch(model, env, rows, *, seed, generator, angles_degrees=None, audit_path=None,
+              initial_noise=None, fresh_noise=None, issued=None):
+    """One synchronized batch of 80-step episodes; returns per-row outcome fields.
+
+    initial_noise: optional [envs, *NOISE_SHAPE] tensor used as the initial noise of
+    every chunk, so each env's actions do not depend on its slot or the generator.
+    fresh_noise: optional [envs] bool mask, with initial_noise; masked rows instead draw
+    new N(0, I) noise from the seeded generator at every chunk (native sampling).
+    issued: optional list that receives each issued [envs, CHUNK, 7] chunk on CPU.
+    """
     from rlinf.envs.action_utils import prepare_actions
+    fixed = None
+    if initial_noise is not None:
+        if (not isinstance(initial_noise, torch.Tensor) or initial_noise.shape != (len(rows), *NOISE_SHAPE)
+                or not torch.isfinite(initial_noise).all()):
+            raise ValueError(f"Require finite initial noise of shape {(len(rows), *NOISE_SHAPE)}")
+        fresh = torch.zeros(len(rows), dtype=torch.bool) if fresh_noise is None else torch.as_tensor(fresh_noise)
+        if fresh.dtype != torch.bool or fresh.shape != (len(rows),):
+            raise ValueError("Require one boolean fresh-noise flag per env")
+        device = next(model.parameters()).device
+        fixed, fresh = initial_noise.to(device=device, dtype=torch.float32), fresh.to(device)
+    elif fresh_noise is not None:
+        raise ValueError("fresh_noise requires initial_noise")
     base = env.env.unwrapped
     ids = torch.tensor([row["episode_id"] for row in rows], device=env.device)
     obs, _ = env.reset(seed=seed, options={"episode_id": ids})
@@ -236,7 +309,13 @@ def run_batch(model, env, rows, *, seed, generator, angles_degrees=None, audit_p
     generator.manual_seed(seed)
     step = 0
     for _ in range(STEPS // CHUNK):
-        actions, _ = model.predict_action_batch(obs, mode="eval", rng=generator)
+        noise = {}
+        if fixed is not None:
+            noise["noise"] = fixed.clone()
+            if fresh.any():
+                noise["noise"][fresh] = torch.randn((int(fresh.sum()), *NOISE_SHAPE), device=fixed.device,
+                                                    dtype=torch.float32, generator=generator)
+        actions, _ = model.predict_action_batch(obs, mode="eval", rng=generator, **noise)
         chunk = prepare_actions(raw_chunk_actions=actions, env_type="maniskill", model_type="openpi",
                                 num_action_chunks=CHUNK, action_dim=7, policy="widowx_bridge")
         original = chunk
@@ -259,6 +338,8 @@ def run_batch(model, env, rows, *, seed, generator, angles_degrees=None, audit_p
                 positions = base.agent.robot.links_map['ee_gripper_link'].pose.p.detach().cpu()
                 for i, witness in zip(witnesses, record['rotation_witnesses']):
                     witness['ee_position_before_chunk'] = positions[i].tolist()
+        if issued is not None:
+            issued.append(chunk.detach().cpu().clone())
         obs_list, _, _, _, infos_list = env.chunk_step(chunk)
         if audit_path is not None:
             if witnesses:

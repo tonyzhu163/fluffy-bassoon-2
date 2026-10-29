@@ -55,6 +55,15 @@ reward-bearing recurrent adaptation. The proposed contribution must concern
 efficient exploration, avoiding repeated failures and transfer of evidence,
 rather than simply combining memory with latent steering.
 
+Concrete plan (2026-10-29): [noise-mode selection over frozen
+pi0.5](noise-mode-icrl-20261029-r1/PLAN.md). Fixed initial-noise arms under a
+hidden per-trial condition, with headroom, heterogeneity, consistency and
+transfer gates before any learner training. Hidden object physics (C2) is the
+primary condition, because only a condition the observation does not reveal
+separates in-context RL from observation-conditioned
+[DSRL](https://diffusion-steering.github.io/). DSRL static and DSRL
+per-condition fine-tuning at K = 8 are required baselines.
+
 ### 2. Task-directed physical experimentation
 
 **Strongest scientific target.** Learn when an interaction is worth its cost
@@ -122,6 +131,7 @@ does not alone establish that a job remains running.
 | Direct native-context pilot r3 | Baige `job-8kkjhb65px67`; `b5d97b0a7c0f6aed29660a96e2ab10cce9610915` | **19:23: failed, exit 1.** Saved error: `Require finite public feedback, binary reward/boundary and normalized clocks`. No learning result. Next: diagnose feedback validation against saved evidence before a separately identified recovery; preserve r3. |
 | CMM full few-shot calibration | Secondary school cluster (thu2), **48876**, source `b6919d6`, K20 seed0 | **19:22 upstream check:** dev query accuracy **15.4% at epoch 350**, MSE .091; update 58.5k/157k. Keep running under the existing contract; about 7.5 hours remained at that check. [Full calibration record](#cmm-calibration). |
 | CMM decay diagnostics | Secondary school cluster (thu2), **48983 / 48984**, source `bd38dd0` | **19:22 upstream record:** queued (Priority), retained by the user. Two 50-epoch runs compare decay starts 1 and uniform[0,3]. Verify probes/tests after startup and compare matched-epoch metrics; leave 48876 untouched. [Full diagnostic record](#cmm-calibration). |
+| Noise-mode Stage 0 build | Local detached worktree `.claude/worktrees/noise-mode-stage0` from `16def97`; not committed | **2026-10-29:** RLinf `e1a82eb` eval already accepts explicit initial noise, so no patch is needed. Written: `ms.run_batch` per-env noise override with a fresh-noise (native) mask, `ms.arm_noise`, `ms.object_physics`, `scripts/diagnostics/maniskill_pi05_noise_cache.py`, `meta_rl/noise_screen.py` (G1–G4, determinism, mode effect) and `tests/test_maniskill_noise.py`. Compiles; pyflakes clean. Next: commit, run the CPU suite in a thu2 CPU job, then ask approval for the 2-GPU-hour S0a–S0c screen. [Plan](noise-mode-icrl-20261029-r1/PLAN.md#stage-0-interface-and-headroom-screen-gpu-approval-needed). |
 
 Check unfinished work on the existing 20-minute cadence, or earlier on a
 meaningful result/failure; use each owning monitor's current schedule. Preserve full
