@@ -13,6 +13,32 @@ import numpy as np
 
 
 FEATURE_KIND = "openpi_final_prefix_visual_mean_language_mean_public_state_v1"
+QUALIFICATION_MAX_DELTA = 2e-4
+
+
+def difference_metrics(reference, candidate):
+    """Exact shape/finite checks and numerical errors, without choosing a tolerance."""
+    reference, candidate = np.asarray(reference), np.asarray(candidate)
+    if reference.shape != candidate.shape or not reference.size:
+        raise ValueError("Require matching nonempty numerical arrays")
+    if not np.isfinite(reference).all() or not np.isfinite(candidate).all():
+        raise ValueError("Non-finite feature diagnostic arrays")
+    difference = candidate.astype(np.float64) - reference.astype(np.float64)
+    norm = float(np.linalg.norm(reference.astype(np.float64).reshape(-1)))
+    return dict(maximum_absolute_error=float(np.max(np.abs(difference))),
+                rms_error=float(np.sqrt(np.mean(difference ** 2))),
+                relative_l2_error=float(np.linalg.norm(difference.reshape(-1)) / max(norm, 1e-12)),
+                exactly_equal=bool(np.array_equal(reference, candidate)),
+                reference_dtype=str(reference.dtype), candidate_dtype=str(candidate.dtype))
+
+
+def partition_differences(reference, candidate, hidden_width):
+    if np.asarray(reference).shape != (hidden_width * 2 + 8,):
+        raise ValueError("Feature diagnostic requires visual, language and eight state coordinates")
+    return {name: difference_metrics(reference[start:end], candidate[start:end])
+            for name, start, end in (("visual", 0, hidden_width),
+                                     ("language", hidden_width, hidden_width * 2),
+                                     ("state", hidden_width * 2, hidden_width * 2 + 8))}
 
 
 def pool_prefix(hidden, mask, prompt_length, public_state, *, xp=np):
@@ -111,7 +137,46 @@ class FrozenOpenPIPrefixFeatures:
             observation.tokenized_prompt.shape[-1], np.asarray(obs["state"])[None])[0]
         actual = self(obs, instruction)
         delta = float(np.max(np.abs(expected - actual)))
-        if delta > 2e-4:
+        if delta > QUALIFICATION_MAX_DELTA:
             raise RuntimeError("Pooled feature path differs from native final-prefix hidden states")
         return dict(passed=True, maximum_delta=delta, final_prefix_shape=list(hidden.shape),
                     public_feature_shape=list(actual.shape), feature_contract=self.contract)
+
+    def diagnose(self, obs, instruction):
+        """Isolate model-fusion differences from reduction differences; never relax qualification."""
+        import jax
+        import jax.numpy as jnp
+        from openpi.shared import nnx_utils
+        started = time.monotonic()
+        observation = self.prepared(obs, instruction)
+        state = jnp.asarray(obs["state"], dtype=jnp.float32)[None]
+        prompt_length = observation.tokenized_prompt.shape[-1]
+        reference = nnx_utils.module_jit(types.MethodType(native_prefix_hidden, self.policy._model))
+        hidden, mask = reference(observation)
+        hidden_host, mask_host = np.asarray(hidden), np.asarray(mask)
+        host = pool_prefix(hidden_host, mask_host, prompt_length, np.asarray(obs["state"])[None])[0]
+        # Both reductions consume the SAME materialized standalone hidden tensor.
+        jax_pool = jax.jit(lambda h, m, s: pool_prefix(h, m, prompt_length, s, xp=jnp))
+        same_hidden_jax = np.asarray(jax_pool(hidden, mask, state))[0]
+        # Direct calls deliberately bypass __call__'s observation-identity cache.
+        fused_first = np.asarray(self.apply(observation, state))[0]
+        fused_repeat = np.asarray(self.apply(observation, state))[0]
+        width = hidden_host.shape[-1]
+        comparisons = {
+            "same_hidden_numpy_vs_jax_pool": partition_differences(host, same_hidden_jax, width),
+            "standalone_hidden_numpy_pool_vs_fused_model_pool": partition_differences(host, fused_first, width),
+            "standalone_hidden_jax_pool_vs_fused_model_pool": partition_differences(same_hidden_jax, fused_first, width),
+            "identical_fused_feature_repeat": partition_differences(fused_first, fused_repeat, width),
+        }
+        delta = difference_metrics(host, fused_first)["maximum_absolute_error"]
+        deterministic = bool(np.array_equal(fused_first, fused_repeat))
+        return dict(completed=True, original_qualification_passed=delta <= QUALIFICATION_MAX_DELTA,
+            original_qualification_max_delta=QUALIFICATION_MAX_DELTA, maximum_delta=delta,
+            identical_feature_function_deterministic=deterministic,
+            comparisons=comparisons, hidden_dtype=str(hidden_host.dtype), hidden_shape=list(hidden_host.shape),
+            mask_dtype=str(mask_host.dtype), token_mask=mask_host.astype(bool).tolist(),
+            prompt_length=prompt_length, visual_token_count=int(mask_host[:, :-prompt_length].sum()),
+            language_token_count=int(mask_host[:, -prompt_length:].sum()),
+            prompt_token_mask=np.asarray(observation.tokenized_prompt_mask).astype(bool).tolist(),
+            feature_contract=self.contract, elapsed_seconds=time.monotonic() - started,
+            interpretation="Diagnostics do not relax the original qualification threshold or establish feature correctness.")
