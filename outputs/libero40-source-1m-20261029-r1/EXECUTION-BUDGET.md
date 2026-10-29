@@ -64,8 +64,9 @@ The490k PPO pool is divided before full launches:
 |New width128 qualification |4,000 |
 |Full-memory training |196,000 |
 |Separately trained episode-reset control |196,000 |
-|Frozen source validation,8×2×4,000 |64,000 |
+|Frozen source validation,8×2×3,500 |56,000 |
 |Targeted controller evaluation escrow, no target data in source training |14,000 |
+|Six-state paired memory replication, evaluation only |8,000 |
 |Remaining PPO contingency |500 |
 
 Original qualification reservations remain retained even when actual cost
@@ -73,6 +74,16 @@ was lower. Settling, qualifications, failed/recollected attempts and unknown
 RPC intents all count. A run starts another case/trial only if its entire
 worst-case action reserve fits; final unused remainders are expected. No
 extra source data is generated merely to hit exactly1M.
+
+The six-state replication is funded before launch by reducing future frozen
+PPO validation slots from4,000 to3,500 actions. No existing reservation or
+active run changes. Each slot still fits two complete worst-case K4 trials
+plus initial qualification: `2×4×410+10=3290`. Full/reset training remain
+196k each. Joint accounting is488,944 SAC +392,000 source PPO +56,000 frozen
+validation +19,500 retained qualifications +35,046 first target comparison
++8,000 replication +10 prior failed qualification +500 contingency=1M.
+The model-only context probe consumes zero simulator actions. Both targeted
+checks precede the pending full32-GPU-hour collection request.
 
 ## Executable immutable workers
 

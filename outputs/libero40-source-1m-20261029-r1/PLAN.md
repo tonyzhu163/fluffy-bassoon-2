@@ -93,8 +93,9 @@ GPU-hour expansion requires the repository's concrete-budget discussion.
 
 Before any full source-PPO launch, the full/reset caps are196k each rather
 than200k. The490k PPO pool now retains19.5k prior qualification reservations,
-392k full/reset training,64k frozen source validation,14k evaluation-only
-escrow for the paired AD/DPT target diagnostic, and500 contingency. The
+392k full/reset training,56k frozen source validation,14k evaluation-only
+escrow for the paired AD/DPT target diagnostic,8k paired-memory replication,
+and500 contingency. The
 general21,056 reserve funds21,046 further target actions and10 verified
 failed-qualification settling actions. All existing reservations and the
 benchmark1M ceiling stay unchanged; target observations never enter source
@@ -102,3 +103,12 @@ pretraining. The joint35,046-action target cap covers28 primary method/case
 groups including AD/DPT fixed-weight memory lesions. See
 [the diagnostic protocol](../libero40-subset-target-20261030-r1/PROTOCOL.md).
 The larger32GPU-hour request remains pending, and targeted results come first.
+
+The extra8k replication escrow comes from reducing the16 future frozen PPO
+validation slots from4,000 to3,500 actions each. Each still guarantees two
+complete worst-case K4 trials plus qualification (`3290` actions). No active
+run or existing reservation changes. The replication fixes one LIBERO90 goal
+and states1–6 before observing outcomes, executes one actual support per case,
+then two real fresh queries with retained/erased context and the same query
+RNG. Count the shared support once and label the result a paired probe.
+See [replication contract](../../docs/frozen-vla-libero/PAIRED-MEMORY-REPLICATION.md).

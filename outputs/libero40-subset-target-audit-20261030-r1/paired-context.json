@@ -1,0 +1,46 @@
+{
+  "same_frozen_policy_sha256": "ce0b36abf18c33268335816eea34b3d4d329e40a34fa60f1c97da5cf8437e654",
+  "support_trajectories_exactly_equal": true,
+  "empty_history_queries_exactly_equal": true,
+  "support_success": false,
+  "support_steps": 400,
+  "full_query_success": true,
+  "full_query_steps": 329,
+  "reset_query_success": false,
+  "reset_query_steps": 400,
+  "query_random_seed_equal": true,
+  "all_nominal_states_equal": true,
+  "full_query_first_noise_delta_vs_reset": 0.4024807810783386,
+  "weights_unchanged": true,
+  "read_only_artifact_audit": true,
+  "controls": {
+    "0": {
+      "method": "native",
+      "query_trajectories_equal": true,
+      "query_seed_equal": true
+    },
+    "1": {
+      "method": "tied_gaussian",
+      "query_trajectories_equal": true,
+      "query_seed_equal": true
+    },
+    "2": {
+      "method": "zero",
+      "query_trajectories_equal": true,
+      "query_seed_equal": true
+    },
+    "3": {
+      "method": "frozen_source_sac",
+      "query_trajectories_equal": true,
+      "query_seed_equal": true
+    },
+    "9": {
+      "method": "ad_static",
+      "query_trajectories_equal": true,
+      "query_seed_equal": true
+    }
+  },
+  "interpretation": "One paired case suggests a history effect; no repeated-seed or reward-causal benefit established",
+  "all_initial_public_camera_proprio_observations_exactly_equal": true,
+  "prior_audit_sha256": "4ef941c5038a277f15c7ef6593070d9acc7cab7aa02688cc8115a34fe53cb294"
+}

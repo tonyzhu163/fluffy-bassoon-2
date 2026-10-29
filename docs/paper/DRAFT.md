@@ -16,10 +16,17 @@ The [source40/target90 protocol](../../outputs/libero40-meta90-20261029-r1/PROTO
 is the current design. The user selected a1M executed-action source cap for
 LIBERO, shared across SAC/fresh PPO, validation, qualifications and retries;
 RoboTwin has its own1M cap. Full-campaign GPU-hour expansion remains pending.
-Current runtime evidence: one capped source stream80episodes/742chunks/
-4,920SAC updates; shared PPO12episodes over three source tasks, three PPO
-updates with behavior replay error0. Full40 collection and target performance
-are unfinished; these results establish no adaptation benefit.
+Current evidence: capped source streams on Spatial00 and LIBERO10:00;
+fresh shared PPO qualified. Four AD/DPT full/static models trained500 updates
+each on the Spatial00 subset. AD's within-objective validation loss worsened;
+AD/DPT raw losses cannot be compared across different targets. A predeclared
+two-case LIBERO90 test completed84 episodes: one AD500 query succeeded after
+failed support, while the same weights with memory erased failed on exactly
+matched support/initial arrays/query RNG. Every other query failed. This is
+one controlled history effect, not reliable ICRL, reward causality or strong
+topline performance. Independent replication and feedback-sensitivity checks
+are next. Full40 collection, ordinary target-online DSRL, full-suite targets
+and the RoboTwin learning comparison remain unfinished.
 
 ## Abstract scaffold
 

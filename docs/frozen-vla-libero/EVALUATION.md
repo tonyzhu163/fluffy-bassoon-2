@@ -3,6 +3,59 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Targeted subset training and first LIBERO90 robot comparison
+
+Baige `job-xla7geuytgau` completed four AD/DPT full/static controllers with
+500 optimizer updates each, preserving fixed25/100/500 exports and full
+recoveries. Source `1a41503`;71 Linux tests passed. The training reused742
+chunks from one source goal (Spatial00,80 episodes/20 nominal states) and617
+independent same-goal validation chunks. It generated no simulator actions.
+The2,000 unique optimizer updates took1863.26s; every milestone policy and
+recovery hash and Adam step was independently checked. AD's own validation
+loss worsened while its training loss fell. DPT's own loss improved; their
+raw losses have different target entropies and cannot rank robot performance.
+[Training receipts](../../outputs/libero40-subset-scale-audit-20261030-r1/README.md).
+
+The robot comparison `job-mjadtzoxnmy6`, source `cbd7064`, completed28 primary
+method/case groups,84 episodes,34,369 physical actions within35,046. It used
+LIBERO90 tasks0/1, nominal state0, scene seed123, declared before outcomes.
+Every group had an empty-context query and an independent trial with one
+actual support followed by a separate query; deployment weights stayed fixed.
+250 Linux tests passed/two probe-environment JAX skips. All84 raw trace hashes
+and their primitive costs were independently checked.
+
+| Method | Zero-support query successes | One-support query successes |
+| --- | ---: | ---: |
+| Native, tied Gaussian, zero noise, frozen source pixel-SAC (each) |0/2|0/2|
+| AD full,25 or100 updates (each) |0/2|0/2|
+| AD full,500 updates |0/2|1/2|
+| AD trained static,25/100/500 updates (each) |0/2|0/2|
+| AD500 same weights, episode-reset |0/2|0/2|
+| DPT500 full/static/episode-reset (each) |0/2|0/2|
+
+The single successful query closed task0's top drawer in329 primitives after
+a failed400-primitive support. Same-weight episode-reset failed. Their actual
+support trajectories, empty-history queries, query RNG and nominal-state
+hashes matched exactly; all initial RGB/wrist/proprio arrays also matched.
+The first query noise changed by max0.402480781 with retained context. This
+is a controlled one-case history effect, not reliable adaptation, scalar-reward
+causality, high topline performance or full-suite transfer. The second case
+failed throughout. Most of this84-episode pilot failed; more source diversity
+and independent replications are needed. The frozen source pixel-SAC is not
+ordinary target-online DSRL, and it uses a different observation representation
+from prefix-feature students. That baseline comparison remains unfinished.
+[Robot results and paired-context audit](../../outputs/libero40-subset-target-audit-20261030-r1/README.md).
+
+A second source slot, LIBERO10 task0 `job-5ghfldksvvgn`/source `3944ff7`, also
+completed:28 episodes/27 successes,7 nominal states,809 chunks,6,620 SAC
+updates,7,985 primitives+290 settling=8,275 actions. Full recovery and paired
+exports were independently hashed. This is mixed warmup/online collection
+behavior, not evidence that its final actor beats native or is an expert.
+[Source receipts](../../outputs/libero40-source-l00-audit-20261030-r1/README.md).
+
+Full40 source coverage, ordinary DSRL comparison, reliable memory gains,
+full90/Plus/Pro evaluation and the RoboTwin learning comparison remain open.
+
 ## Capped source collection and fresh PPO qualification
 
 The first physical-budget SAC stream and both fresh PPO qualification jobs
@@ -26,9 +79,9 @@ values/cache/policy versions, plus full learner/motor RNG recovery.
 The single-task PPO's3e-4/four-epoch recipe produced first-update KL13.76.
 A separately pinned shared pilot used1e-4/two epochs: KL.132/.026/.037.
 This changes the explicit pilot recipe; it does not demonstrate stable or
-sample-efficient learning. All source successes are near ceiling. No new
-held-out-target results, memory benefit, or improvement over ordinary DSRL
-follow from these runtime checks. Full source coverage remains unfinished.
+sample-efficient learning. All source successes are near ceiling. No target
+benefit or improvement over ordinary DSRL follows from these runtime checks.
+The later robot comparison is above; full source coverage remains unfinished.
 
 Compact receipts: [capped SAC](../../outputs/libero40-1m-sac-qualification-audit-20261029-r1/README.md),
 [single-task PPO](../../outputs/libero40-1m-ppo-qualification-audit-20261029-r1/README.md),
@@ -66,8 +119,8 @@ on `libero_spatial:00`, with the official frozen OpenPI `pi05_libero` motor.
   actual OpenPI typed/legacy PRNG round-trips passed. Actual hardware was
   NVIDIA RPBZZZ6, not a verified RTX6000; worker times642.16/666.66s.
 - These bounded chunk-target runs do not cover all40 tasks or exhaust their
-  schedules. No controller robot result under the new source40/target90
-  contract exists yet. The 127/128 source successes leave little failure
+  schedules. The later subset controller comparison is reported above.
+  The 127/128 source successes leave little failure
   contrast on this one task and establish no adaptation or memory advantage.
 - [Independent receipts, exact indices and interpretation](../../outputs/libero40-source-qualification-audit-20261029-r1/README.md).
 
