@@ -106,6 +106,15 @@ warmup, small batch, one evaluation scene and tiny supervised budget are explici
 qualification/pilot departures, not a published-result reproduction or a final
 performance experiment. The measured path determines the next admitted budget.
 
+Qualification r1 (`job-c5gr93qs030i`, source `d64053e`) passed the allocated
+4090/CUDA/own-PID probe, then exited before model/simulator work because the
+LeRobot environment lacked pytest. Preserve its artifacts. A new pure-Python
+pytest 8.4.2 overlay fixes test execution without modifying shared environments;
+the corrected source and fresh r2 identity are used for the retry. Main advanced
+during UI submission to `77d72f7`; its two changes only affect the unrelated Can
+eight-GPU launcher and plan. That diff was reviewed, the r1 source stayed
+immutable, and the latest main was merged before the new r2 source.
+
 Runtime, learner and integration subagents operate independently; the parent
 integrates and reviews the exact launch commit. Deploy through Git (bundle if
 needed), verify source and dependency pins on Baige, and retain all raw learning

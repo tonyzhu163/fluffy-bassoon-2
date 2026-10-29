@@ -14,6 +14,7 @@ TASK_PLUS=$TASK_OLD/third_party/libero-plus-4976dc3-r3
 TASK_MODEL=$TASK_OLD/envs/openpi-215abfb/bin/python
 TASK_SIM=/mowenjie/envs/wam-libero-plus-py310/bin/python
 TASK_TORCH=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
+TASK_TEST_OVERLAY=$TASK_ROOT/envs/pytest-overlay-20261029-r1
 TASK_CHECKPOINT=$TASK_ROOT/inputs/pi0-libero-openpi-g1748456809412170-20261029-r1
 test ! -e "$TASK_OUTPUT"
 mkdir -p "$TASK_OUTPUT"
@@ -47,7 +48,8 @@ export PYTHONPATH=$TASK_WORKTREE/src
 "$TASK_TORCH" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
-CUDA_VISIBLE_DEVICES='' "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
+CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST_OVERLAY:$TASK_WORKTREE/src" \
+  "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
   tests/test_vla_retry_teacher.py tests/test_vla_performance_report.py tests/test_vla_libero.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_WORKTREE/src:$TASK_PLUS:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps
