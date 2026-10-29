@@ -138,7 +138,7 @@ def test_postwarmup_checks_actual_behavior_and_complete_recovery(histories):
     missing_behavior = deepcopy(index)
     for row in missing_behavior["episode_receipts"]:
         row["source_stages"] = dict(warmup_gaussian=row["chunks"])
-    with pytest.raises(ValueError, match="not only final actor"):
+    with pytest.raises(ValueError, match="fixed behavior-stage receipts"):
         module.postwarmup_evidence(source, missing_behavior, contract)
     source["datasets"]["ad"]["teacher_steps"][:] = 0
     with pytest.raises(ValueError, match="chronological postwarmup"):
