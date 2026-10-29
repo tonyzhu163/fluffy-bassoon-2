@@ -1,0 +1,68 @@
+{
+  "accounting": "actual scheduler runtime; original45GPU-minute envelope",
+  "jobs": [
+    {
+      "name": "r1 startup",
+      "job_id": "job-c6u3tk8cf2y7",
+      "seconds": 49,
+      "gpus": 1
+    },
+    {
+      "name": "r2 assets failure",
+      "job_id": "job-jrjmcfwezo2d",
+      "seconds": 889,
+      "gpus": 1
+    },
+    {
+      "name": "r3 native thread failure",
+      "job_id": "job-okladnmlfk8l",
+      "seconds": 169,
+      "gpus": 1
+    },
+    {
+      "name": "r4 source collection",
+      "job_id": "job-tgjz72b93hes",
+      "seconds": 1011,
+      "gpus": 1
+    },
+    {
+      "name": "camera parity",
+      "job_id": "job-lspkxidy3haj",
+      "seconds": 271,
+      "gpus": 1
+    },
+    {
+      "name": "campaign tests",
+      "job_id": "job-ytyeswlw54wg",
+      "seconds": 70,
+      "gpus": 1
+    },
+    {
+      "name": "staged tests",
+      "job_id": "job-mjbpmea60ptq",
+      "seconds": 70,
+      "gpus": 1
+    },
+    {
+      "name": "saved PPO r1",
+      "job_id": "job-p0zpb6ugu2pm",
+      "seconds": 61,
+      "gpus": 1
+    },
+    {
+      "name": "saved PPO corrected numerics",
+      "job_id": "job-yem1ctw27j26",
+      "seconds": 32,
+      "gpus": 1
+    }
+  ],
+  "actual_used_seconds": 2622,
+  "ceiling_seconds": 2700,
+  "remaining_seconds": 78,
+  "previous_startup_reserve_seconds": 120,
+  "verified_actual_startup_seconds": 49,
+  "released_unused_startup_reserve_seconds": 71,
+  "evidence": "startup-actual-49s.png verifies r1 runtime; previous terminal audits supply other rows",
+  "proposed_retry_scheduler_minutes": 1,
+  "proposed_retry_script_wall_seconds": 45
+}
