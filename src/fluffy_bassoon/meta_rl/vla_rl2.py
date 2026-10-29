@@ -19,7 +19,7 @@ import numpy as np
 import torch
 from torch import nn
 
-from .checkpoint import restore_checkpoint, save_checkpoint
+from .checkpoint import restore_checkpoint, save_checkpoint, rng_state
 from .gtrxl import GatedTransformerXLCore
 from .ppo import RecurrentActorCritic, update_ppo
 from .vla_history import FrozenHistoryController, file_sha256
@@ -84,7 +84,7 @@ def make_rl2_policy(config=None, *, device="cpu", seed=0):
 
 @torch.no_grad()
 def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, scene_seed,
-        attempts, chunk, mode="full", deterministic=False, episode_runner=None):
+        attempts, chunk, mode="full", deterministic=False, episode_runner=None, episode_sink=None):
     """One real K-attempt scene trial; terminal feedback is consumed next episode.
 
     `feature_encoder` consumes the current full public observation and returns
@@ -108,6 +108,8 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
     pending = None
     for attempt in range(attempts):
         records_before = len(records["observations"])
+        episode_state = (None if state is None else
+                         {key: value.detach().cpu().clone() for key, value in state.items()})
         def choose(observation):
             nonlocal state, pending, previous_noise, previous_reward, previous_done
             if pending is not None:
@@ -158,6 +160,13 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
         elif summary["initial_observation_sha256"] != initial_hash:
             raise RuntimeError("Same-scene RL² retry changed its initial observation")
         summaries.append(dict(attempt=attempt + 1, **summary))
+        if episode_sink is not None:
+            # Keep raw cameras, proprioception, next observations, actual VLA
+            # actions/noises/rewards outside the compact PPO tensor batch.
+            episode_sink(attempt=attempt + 1, rows=rows, summary=summary,
+                behavior={key: torch.stack(values[records_before:]).detach().cpu()
+                          for key, values in records.items()},
+                initial_recurrent_state=episode_state)
     rollout = {key: torch.stack(values) for key, values in records.items()}
     if not rollout["trial_ends"][-1].all() or int(rollout["attempt_ends"].sum()) != attempts:
         raise RuntimeError("RL² trial terminal masks do not match the actual completed episodes")
@@ -165,6 +174,19 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
         primitive_steps=sum(int(summary["primitive_steps"]) for summary in summaries),
         settling_steps=int(getattr(sim, "metadata", {}).get("settle_steps", 0)) * attempts,
         mode=mode, decisions=len(rollout["observations"]))
+
+
+def _save_rl2_recovery(path, *, policy, optimizer, sampler, iteration, counters, contract,
+                       runtime_state=None):
+    if runtime_state is None:
+        return save_checkpoint(path, policy=policy, optimizer=optimizer, environment_rng=sampler,
+            iteration=iteration, counters=counters, contract=contract)
+    # One atomic payload binds the policy/optimizer and all simulator-adapter
+    # runtime RNG. A sidecar written later would permit a mixed recovery.
+    return atomic_save(path, dict(version=1, boundary="between_trials", contract=contract,
+        iteration=iteration, counters=dict(counters), policy=policy.state_dict(),
+        optimizer=optimizer.state_dict(), environment_rng=sampler.bit_generator.state,
+        rng=rng_state(), runtime=runtime_state()))
 
 
 class _DeploymentAdapter(nn.Module):
@@ -208,7 +230,9 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
         episode_horizon, max_primitive_steps, updates, output_dir, source_contract,
         mode="full", seed=0, learning_rate=3e-4, epochs=4, gamma=1., gae_lambda=1.,
         entropy_coef=.01, value_coef=.5, clip=.2, max_grad_norm=1.,
-        max_elapsed_seconds=None, resume=None, episode_runner=None, save_rollouts=True, heldout_states=()):
+        max_elapsed_seconds=None, resume=None, episode_runner=None, save_rollouts=True, heldout_states=(),
+        max_total_actions=None, physical_cost=None, episode_sink=None,
+        runtime_state=None, restore_runtime=None):
     """Direct meta-RL from real simulator trials, with one full-trial PPO batch.
 
     The caller owns allocation/probe and clean-source qualification. The budget
@@ -231,6 +255,10 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
             or not math.isfinite(value_coef) or value_coef < 0
             or not math.isfinite(max_grad_norm) or max_grad_norm <= 0
             or (max_elapsed_seconds is not None and (not math.isfinite(max_elapsed_seconds) or max_elapsed_seconds <= 0))
+            or (max_total_actions is not None and (type(max_total_actions) is not int
+                or max_total_actions < attempts * (episode_horizon + int(sim.metadata.get("settle_steps", 0)))
+                or not callable(physical_cost)))
+            or bool(runtime_state) != bool(restore_runtime)
             or not re.fullmatch(r"[0-9a-f]{40}", source_contract.get("source_commit", ""))):
         raise ValueError("Require explicit source, complete-trial resource budget and valid RL² settings")
     contract = dict(format="frozen_vla_rl2_training_v1", source=source_contract,
@@ -246,6 +274,13 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
         credit="complete K-attempt trial; episode done does not terminate RL² return",
         backpropagation="complete unpadded scene trial; no TBPTT",
         feature_normalization="fixed buffers; identity unless explicitly set before training")
+    if max_total_actions is not None:
+        contract["resource_budget"]["max_total_actions"] = max_total_actions
+        contract["physical_cost"] = "All primitive/settling and unresolved RPC ceilings, including interrupted trials"
+    if episode_sink is not None:
+        contract["raw_rollout_schema"] = "frozen_vla_ppo_episode_v1"
+    if runtime_state is not None:
+        contract["runtime_recovery"] = "Atomic motor RNG and adapter state with policy/optimizer/sampler/Torch RNG"
     output_dir = Path(output_dir)
     random.seed(seed)
     np.random.seed(seed)
@@ -262,29 +297,62 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
             raise ValueError("Resume must preserve the original output identity")
         iteration, counters = restore_checkpoint(resume, policy=policy, optimizer=optimizer,
             environment_rng=sampler, contract=contract)
+        if restore_runtime is not None:
+            payload = torch.load(resume, map_location="cpu", weights_only=False)
+            if "runtime" not in payload:
+                raise ValueError("Source recovery omitted the required runtime/motor RNG")
+            restore_runtime(payload["runtime"])
     else:
         output_dir.mkdir(parents=True, exist_ok=False)
         (output_dir / "traces").mkdir()
         (output_dir / "contract.json").write_text(json.dumps(contract, indent=2, allow_nan=False) + "\n")
+        if runtime_state is not None:
+            _save_rl2_recovery(output_dir / "latest.pt", policy=policy, optimizer=optimizer,
+                sampler=sampler, iteration=iteration, counters=counters, contract=contract,
+                runtime_state=runtime_state)
     started, last_metrics = time.monotonic(), None
     while iteration < updates and counters["environment_steps"] + attempts * episode_horizon <= max_primitive_steps:
+        if max_total_actions is not None and physical_cost() + attempts * (
+                episode_horizon + int(sim.metadata.get("settle_steps", 0))) > max_total_actions:
+            break
         if max_elapsed_seconds is not None and time.monotonic() - started >= max_elapsed_seconds:
             break
         state = int(sampler.choice(train_states))
         scene_seed = int(sampler.integers(0, 2**31 - 1))
         before = time.monotonic()
+        behavior_rng = rng_state() if episode_sink is not None else None
+        behavior_sha = None
+        if episode_sink is not None:
+            behavior_path = output_dir / "traces" / f"behavior-{iteration:06d}.pt"
+            if behavior_path.exists():
+                behavior_path.rename(behavior_path.with_name(behavior_path.name + f"-uncommitted-{time.time_ns()}"))
+            behavior_sha = export_rl2_policy(behavior_path, policy, manifest=dict(
+                training_contract=contract, behavior_update=iteration, source_commit=source_contract["source_commit"],
+                status="Behavior policy before the paired on-policy rollout"))
+        def save_episode(**episode):
+            return episode_sink(trial=iteration + 1, behavior_update=iteration,
+                behavior_policy_sha256=behavior_sha, **episode)
         rollout, receipt = collect_rl2_trial(policy, sim, motor, feature_encoder,
             initial_state=state, scene_seed=scene_seed, attempts=attempts, chunk=chunk,
-            mode=mode, episode_runner=episode_runner)
+            mode=mode, episode_runner=episode_runner,
+            episode_sink=save_episode if episode_sink is not None else None)
         with torch.no_grad():
             replay, _, _ = policy.evaluate_sequence(rollout["observations"], rollout["raw_actions"], rollout["resets"])
             replay_error = float((replay - rollout["log_probs"]).abs().max())
         if replay_error > 1e-4:
             raise RuntimeError("RL² behavior-policy likelihood replay failed before its optimizer update")
         if save_rollouts:
-            atomic_save(output_dir / "traces" / f"trial-{iteration + 1:06d}.pt",
+            trace_path = output_dir / "traces" / f"trial-{iteration + 1:06d}.pt"
+            if episode_sink is not None and trace_path.exists():
+                trace_path.rename(trace_path.with_name(trace_path.name + f"-uncommitted-{time.time_ns()}"))
+            atomic_save(trace_path,
                 dict(rollout={key: value.cpu() for key, value in rollout.items()}, receipt=receipt,
-                     behavior_update=iteration, source_commit=source_contract["source_commit"]))
+                     behavior_update=iteration, source_commit=source_contract["source_commit"],
+                     **(dict(behavior_policy_sha256=behavior_sha,
+                         initial_recurrent_state="zero", terminal_trial_bootstrap_value=0.,
+                         behavior_rng=behavior_rng,
+                         likelihood="log_probs are squashed-coordinate likelihoods; raw_actions are pre-tanh samples")
+                        if episode_sink is not None else {})))
         metrics = update_ppo(policy, optimizer, rollout, minibatch_trials=1, epochs=epochs, clip=clip,
             gamma=gamma, gae_lambda=gae_lambda, entropy_coef=entropy_coef, value_coef=value_coef,
             max_grad_norm=max_grad_norm, bounded_entropy=True, episode_returns=False)
@@ -307,8 +375,9 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
                     split="train", trial=iteration, cumulative_train_steps=counters["environment_steps"],
                     **row), allow_nan=False) + "\n")
         print(json.dumps(dict(rl2_training=last_metrics), allow_nan=False), flush=True)
-        save_checkpoint(output_dir / "latest.pt", policy=policy, optimizer=optimizer,
-            environment_rng=sampler, iteration=iteration, counters=counters, contract=contract)
+        _save_rl2_recovery(output_dir / "latest.pt", policy=policy, optimizer=optimizer,
+            sampler=sampler, iteration=iteration, counters=counters, contract=contract,
+            runtime_state=runtime_state)
     if iteration < 1:
         raise RuntimeError("RL² resource limits allowed no complete training trial")
     digest = export_rl2_policy(output_dir / "candidate.pt", policy,
