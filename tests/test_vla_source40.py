@@ -193,6 +193,18 @@ def test_full_all40_schedule_does_not_advertise_unvisited_cases_as_covered(tmp_p
     path.write_text(json.dumps(plan))
     with pytest.raises(ValueError, match="full case count"):
         load_schedule(path)
+    physical = build_schedule(tmp_path, train_cases=512, validation_cases=512, episodes_per_case=4,
+        collection_mode="physical_budget", train_action_budget=10000, validation_action_budget=8750,
+        publish_every_cases=16)
+    assert physical["planned_maximum_total_actions"] == 750000
+    assert physical["planned_requested_cases"] is None
+    path.write_text(json.dumps(physical))
+    assert load_schedule(path)["planned_maximum_total_actions"] == 750000
+    physical["planned_maximum_total_actions"] += 1
+    physical["schedule_sha256"] = content_hash({k: v for k, v in physical.items() if k != "schedule_sha256"})
+    path.write_text(json.dumps(physical))
+    with pytest.raises(ValueError, match="Aggregate physical-action budget"):
+        load_schedule(path)
 
 
 def test_publication_cadence_never_skips_final_requested_case():
@@ -240,3 +252,59 @@ def test_collector_requires_fresh_original_source_task():
         validate_simulator(dict(task, suite="libero_90"), dict(metadata, suite="libero_90"))
     with pytest.raises(ValueError, match="reset"):
         validate_simulator(task, dict(metadata, fresh_environment_on_reset=False))
+
+
+def test_physical_budget_reserves_joint_actions_and_does_not_request_whole_seed_bank():
+    budget = partition_budget(512, 4, collection_mode="physical_budget",
+        total_action_budget=10000, publish_every_cases=16)
+    assert budget["maximum_total_actions"] == 10000
+    assert budget["available_seeded_cases"] == 512
+    assert budget["requested_cases"] is None and budget["requested_episodes"] is None
+    assert budget["maximum_chunks"] == 999
+    assert budget["maximum_episodes"] == 908
+    assert not budget["warmup_clearing_guaranteed_by_episode_count"]
+    assert budget["additional_terminal_chunk_target_export_allowance"] == 1
+    with pytest.raises(ValueError, match="qualification plus one complete"):
+        partition_budget(512, 4, collection_mode="physical_budget", total_action_budget=1649)
+    with pytest.raises(ValueError, match="cannot have a chunk"):
+        partition_budget(512, 4, collection_mode="physical_budget", total_action_budget=10000, target_chunks=600)
+    with pytest.raises(ValueError, match="requires physical_budget"):
+        partition_budget(10, 4, collection_mode="complete_cases", total_action_budget=10000)
+
+
+def test_physical_budget_stops_before_case_and_retains_partial_recovery():
+    from fluffy_bassoon.meta_rl.vla_source40_corpus import physical_case_allowed
+    cursor = dict(case_index=2, episode_in_case=0)
+    assert physical_case_allowed(cursor, 512, charged_actions=8360, total_budget=10000, episodes_per_case=4)
+    assert not physical_case_allowed(cursor, 512, charged_actions=8361, total_budget=10000, episodes_per_case=4)
+    # Final publication/recovery of an already started case cannot be skipped.
+    assert physical_case_allowed(dict(cursor, episode_in_case=4), 512,
+        charged_actions=9990, total_budget=10000, episodes_per_case=4)
+    assert not physical_case_allowed(dict(case_index=512, episode_in_case=0), 512,
+        charged_actions=100, total_budget=10000, episodes_per_case=4)
+    with pytest.raises(RuntimeError, match="exceeds"):
+        physical_case_allowed(cursor, 512, charged_actions=10001, total_budget=10000, episodes_per_case=4)
+
+
+def test_physical_ledger_includes_failed_settling_and_unresolved_step_intents(tmp_path):
+    from fluffy_bassoon.meta_rl.vla_source40_corpus import physical_action_charge
+    (tmp_path / "intent-1.json").write_text(json.dumps(dict(maximum_primitive_steps=10)))
+    (tmp_path / "decision-1.json").write_text(json.dumps(dict(primitive_steps=4)))
+    (tmp_path / "intent-2.json").write_text(json.dumps(dict(maximum_primitive_steps=10)))
+    (tmp_path / "reset-qualification-1.json").write_text(json.dumps(dict(settling_steps=10, returned=True)))
+    (tmp_path / "reset-episode-1.json").write_text(json.dumps(dict(settling_steps=10, returned=False)))
+    assert physical_action_charge(tmp_path) == 34
+
+
+def test_physical_case_bank_coverage_reports_actual_complete_cases_without_false_request():
+    from fluffy_bassoon.meta_rl.vla_source40_corpus import physical_case_coverage
+    cases = case_plan("libero_goal:00", "validation", 512, 4, 0)
+    receipts = [dict(case_id=case["case_id"], initial_state=case["initial_state"],
+        scene_seed=case["scene_seed"], initial_state_vector_sha256=f"state{case['initial_state']}")
+        for case in cases[:3] for _ in range(4)]
+    coverage = physical_case_coverage(cases, receipts)
+    assert coverage["available_cases"] == 512 and coverage["completed_cases"] == 3
+    assert coverage["all_started_cases_complete"] and not coverage["candidate_bank_exhausted"]
+    assert "requested_cases" not in coverage and "all_requested_cases_complete" not in coverage
+    assert not physical_case_coverage(cases, receipts + [dict(receipts[0], case_id=cases[3]["case_id"],
+        initial_state=cases[3]["initial_state"], scene_seed=cases[3]["scene_seed"])])["all_started_cases_complete"]

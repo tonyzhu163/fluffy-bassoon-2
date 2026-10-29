@@ -112,6 +112,42 @@ def physical_costs(journal):
                 primitive_step_budget_charge=known + uncertain)
 
 
+def physical_action_charge(journal):
+    """Charge every action intent, settling reset and repeat qualification."""
+    primitive = physical_costs(journal)["primitive_step_budget_charge"]
+    settling = sum(json.loads(path.read_text())["settling_steps"] for path in journal.glob("reset-*.json"))
+    return primitive + settling
+
+
+def physical_case_allowed(progress, case_count, *, charged_actions, total_budget,
+                          episodes_per_case, horizon=400, settling_per_episode=10):
+    """Reserve a whole worst-case case before starting any of its actions."""
+    if (any(type(value) is not int or value < 0 for value in
+            (charged_actions, total_budget, case_count, episodes_per_case))
+            or episodes_per_case < 2 or horizon != 400 or settling_per_episode != 10):
+        raise ValueError("Require a nonnegative physical ledger and native complete-case limits")
+    if charged_actions > total_budget:
+        raise RuntimeError("Physical action ledger exceeds its immutable reservation")
+    if progress["case_index"] >= case_count:
+        return False
+    # A resumed case is finished or fails its per-RPC guard; never silently
+    # call a partial case complete when interrupted attempts consume reserve.
+    if progress["episode_in_case"] > 0:
+        return True
+    return charged_actions + episodes_per_case * (horizon + settling_per_episode) <= total_budget
+
+
+def physical_case_coverage(cases, receipts):
+    coverage = case_coverage(cases, receipts)
+    coverage["available_cases"] = coverage.pop("requested_cases")
+    coverage["available_episode_slots"] = coverage.pop("requested_episodes")
+    coverage["candidate_bank_exhausted"] = coverage.pop("all_requested_cases_complete")
+    coverage["all_started_cases_complete"] = coverage["started_cases"] == coverage["completed_cases"]
+    coverage["case_bank_role"] = "Candidate seeds; unused entries are not missing required collection"
+    coverage["receipt_scope"] = "Case counts cover committed episode receipts; interrupted/uncommitted attempts remain separately charged and are not padded into learning histories"
+    return coverage
+
+
 def paired_arrays(rows, labels):
     starts = np.asarray([i == 0 or rows[i - 1]["done"] for i in range(len(rows))], bool)
     base = dict(observations=np.stack([row["public_features"] for row in rows]).astype(np.float32),
@@ -126,11 +162,11 @@ def paired_arrays(rows, labels):
 def has_pending_case(progress, case_count, target_chunks, collection_mode="chunk_target"):
     # A recovery can cross target mid-case. It must finish that same case and
     # publication before stopping, rather than silently dropping its tail.
-    if collection_mode not in ("chunk_target", "complete_cases"):
+    if collection_mode not in ("chunk_target", "complete_cases", "physical_budget"):
         raise ValueError("Unknown source collection stopping mode")
     if progress["case_index"] >= case_count:
         return False
-    return collection_mode == "complete_cases" or progress["episode_in_case"] > 0 or progress["chunks"] < target_chunks
+    return collection_mode in ("complete_cases", "physical_budget") or progress["episode_in_case"] > 0 or progress["chunks"] < target_chunks
 
 
 def publication_due(completed_cases, requested_cases, interval):
@@ -227,6 +263,7 @@ def main(argv=None):
     ap.add_argument("--partition", choices=("train", "validation"), required=True)
     ap.add_argument("--source-commit", required=True)
     ap.add_argument("--max-primitive-steps", type=int, required=True)
+    ap.add_argument("--max-total-actions", type=int)
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--resume", action="store_true")
     args = ap.parse_args(argv)
@@ -234,7 +271,11 @@ def main(argv=None):
     tasks = [row for row in schedule["tasks"] if row["task_key"] == args.task_key]
     if len(tasks) != 1:
         raise ValueError("Task absent from the source-only schedule")
-    if args.max_primitive_steps != selected_partition_budget(schedule, args.partition)["maximum_primitive_steps"]:
+    budget = selected_partition_budget(schedule, args.partition)
+    total_action_budget = budget.get("maximum_total_actions")
+    if args.max_total_actions != total_action_budget:
+        raise ValueError("Explicit total action ceiling must equal the physical-budget reservation")
+    if args.max_primitive_steps != budget["maximum_primitive_steps"]:
         raise ValueError("Explicit job budget must equal the declared complete-case ceiling")
     if sys.platform != "linux":
         raise ValueError("Collection/model computation requires allocated Linux")
@@ -257,6 +298,8 @@ def main(argv=None):
     started, stage, sim = time.monotonic(), "connecting", SimulatorClient(args.port)
     try:
         validate_simulator(task, sim.metadata)
+        if total_action_budget is not None and sim.metadata.get("settle_steps") != 10:
+            raise ValueError("Physical-budget proof requires exactly10 settling actions per reset")
         if sha256(args.checkpoint / "READY.json") != PI05_RECEIPT:
             raise ValueError("Require the exact official OpenPI pi05_libero checkpoint")
         args.model_config, args.feature_interface = "pi05_libero", "vla-prefix"
@@ -264,6 +307,8 @@ def main(argv=None):
         motor = FrozenOpenPI(args)
         journal = args.output / "raw" / "decision-journal"
         journal.mkdir(exist_ok=True)
+        if total_action_budget is not None and physical_action_charge(journal) + int(sim.metadata["settle_steps"]) > total_action_budget:
+            raise RuntimeError("Qualification settling would exceed the physical action reservation")
         qualification_reset = journal / f"reset-qualification-{time.time_ns()}.json"
         write_json(qualification_reset, dict(kind="qualification", returned=False,
                    settling_steps=int(sim.metadata["settle_steps"])))
@@ -293,6 +338,10 @@ def main(argv=None):
             resets="Simulator resets each episode, same state/seed within case; SAC persists across all cases in this task+partition",
             source_generation_vs_deployment=schedule["deployment"],
             validation="Independent SAC/replay on disjoint validation cases; no validation interactions enter train replay or student gradients")
+        if total_action_budget is not None:
+            contract.update(maximum_total_actions=total_action_budget, requested_case_count=None,
+                available_seeded_case_count=len(cases),
+                case_bank_role="Candidate seeds, actual complete cases are determined by the physical-action ceiling")
         if args.resume:
             if json.loads((args.output / "contract.json").read_text()) != contract:
                 raise ValueError("Resumed source contract changed")
@@ -310,6 +359,8 @@ def main(argv=None):
         inflight, reset_receipt = None, None
         def before_reset(initial_state, scene_seed):
             nonlocal settling_cost, reset_receipt
+            if total_action_budget is not None and physical_cost + settling_cost + int(sim.metadata["settle_steps"]) > total_action_budget:
+                raise RuntimeError("Episode settling would exceed the physical action reservation")
             reset_receipt = journal / f"reset-episode-{time.time_ns()}.json"
             write_json(reset_receipt, dict(kind="episode", returned=False,
                 case_id=cases[progress["case_index"]]["case_id"], initial_state=initial_state,
@@ -325,6 +376,8 @@ def main(argv=None):
             nonlocal physical_cost, inflight
             if physical_cost + len(actions) > args.max_primitive_steps:
                 raise RuntimeError("Physical cost including interrupted attempts would exceed the job ceiling")
+            if total_action_budget is not None and physical_cost + settling_cost + len(actions) > total_action_budget:
+                raise RuntimeError("Execution would exceed the combined primitive and settling reservation")
             inflight = dict(event_id=str(time.time_ns()), maximum_primitive_steps=len(actions))
             write_json(journal / f"intent-{inflight['event_id']}.json", dict(inflight,
                 case_id=cases[progress["case_index"]]["case_id"],
@@ -358,12 +411,16 @@ def main(argv=None):
             write_json(args.output / "index.json", dict(progress,
                 format="openpi_pi05_libero40_source_history_index_v1", completed=False,
                 source_only=True, task_key=args.task_key, partition=args.partition,
-                collection_mode=contract["collection_mode"], case_coverage=case_coverage(cases, progress["episode_receipts"]),
+                collection_mode=contract["collection_mode"],
+                case_coverage=(physical_case_coverage(cases, progress["episode_receipts"])
+                    if total_action_budget is not None else case_coverage(cases, progress["episode_receipts"])),
                 schedule_sha256=schedule["schedule_sha256"], source_contract_sha256=content_hash(contract),
                 motor_receipt_sha256=motor.metadata["receipt_sha256"], feature_contract=motor.feature_encoder.contract,
                 noise_contract=contract["noise_contract"],
                 actual_primitive_steps=costs["known_primitive_steps"],
                 physical_cost_accounting=costs,
+                total_action_budget_charge=costs["primitive_step_budget_charge"] + settling_cost,
+                maximum_total_actions=total_action_budget,
                 committed_learning_history_primitive_steps=progress["primitive_steps"],
                 actual_settling_steps=sum(p["settling_steps"] for p in resets if p["returned"]),
                 settling_step_budget_charge=settling_cost,
@@ -375,7 +432,11 @@ def main(argv=None):
         wrapped = OnlineSourceSimulator(sim, learner, sampler, sac_observation,
             before_step=before_step, after_outcome=after_outcome,
             before_reset=before_reset, after_reset=after_reset)
-        while has_pending_case(progress, len(cases), contract["target_chunks"], contract["collection_mode"]):
+        def case_allowed(cursor):
+            return total_action_budget is None or physical_case_allowed(cursor, len(cases),
+                charged_actions=physical_cost + settling_cost, total_budget=total_action_budget,
+                episodes_per_case=schedule["episodes_per_case"])
+        while has_pending_case(progress, len(cases), contract["target_chunks"], contract["collection_mode"]) and case_allowed(progress):
             case = cases[progress["case_index"]]
             stage = f"case_{progress['case_index']}"
             while progress["episode_in_case"] < case["episodes"]:
@@ -416,7 +477,9 @@ def main(argv=None):
                 print(json.dumps(dict(case_id=case["case_id"], episode_in_case=progress["episode_in_case"],
                     chunks=progress["chunks"], primitive_steps=progress["primitive_steps"], source_updates=learner.updates)), flush=True)
             terminating_chunk_target = contract["collection_mode"] == "chunk_target" and progress["chunks"] >= contract["target_chunks"]
-            if publication_due(progress["case_index"] + 1, len(cases), contract["publish_every_cases"]) or terminating_chunk_target:
+            next_case = dict(progress, case_index=progress["case_index"] + 1, episode_in_case=0)
+            terminating_physical_budget = total_action_budget is not None and not case_allowed(next_case)
+            if publication_due(progress["case_index"] + 1, len(cases), contract["publish_every_cases"]) or terminating_chunk_target or terminating_physical_budget:
                 checkpoint = args.output / f"case-{progress['case_index']:05d}-source.pkl"
                 learner.save(checkpoint, sampler, contract, **progress,
                              motor_rng=save_motor_rng(motor.policy._rng))
@@ -433,8 +496,15 @@ def main(argv=None):
             feature_calls=motor.feature_encoder.calls, feature_seconds=motor.feature_encoder.elapsed_seconds,
             elapsed_seconds=time.monotonic() - started, collection_cost_count_once=True,
             deployment_shots="one support plus query is a separate evaluation protocol")
-        stopping_requirement = (final["target_chunks_reached"] if contract["collection_mode"] == "chunk_target"
-                                else final["case_coverage"]["all_requested_cases_complete"])
+        if total_action_budget is not None:
+            final.update(stopping_reason="candidate_bank_exhausted" if progress["case_index"] >= len(cases) else "physical_action_budget",
+                all_started_cases_complete=final["case_coverage"]["all_started_cases_complete"],
+                unused_action_reservation=total_action_budget - final["total_action_budget_charge"])
+            stopping_requirement = (not case_allowed(progress) and final["all_started_cases_complete"]
+                and final["total_action_budget_charge"] <= total_action_budget)
+        else:
+            stopping_requirement = (final["target_chunks_reached"] if contract["collection_mode"] == "chunk_target"
+                                    else final["case_coverage"]["all_requested_cases_complete"])
         final["collection_qualified"] = bool(stopping_requirement and learner.updates > 0
             and any(publication["status"] == "paired_ad_dpt" for publication in progress["publications"]))
         final["smoke_qualified"] = final["collection_qualified"] if contract["collection_mode"] == "chunk_target" else None
