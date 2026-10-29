@@ -117,3 +117,6 @@ not yet exist. The scheduler form remains unsubmitted at120minutes/oneGPU,
 automatic retries disabled. Any prospective tied-noise arm shares the existing
 1M RoboTwin ceiling and requires a revised allocation; it does not create an
 additional1M allowance.
+
+[Preparation-only tied32 implementation and fresh-data costs](TIED32-PREPARATION.md)
+records a separate possible arm; the current full1024 proposal is unchanged.
