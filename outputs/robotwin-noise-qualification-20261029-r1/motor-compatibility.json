@@ -1,0 +1,58 @@
+{
+  "model": "motus-robotics/pi0.5_robotwin2",
+  "revision": "effc6e1a99bd4d0edf9447e8ba313def67649cfe",
+  "native_action_horizon": 32,
+  "model_action_dim": 32,
+  "environment_action_dim": 14,
+  "declared_training_task_count": 50,
+  "training_exposure": "clean50 plus randomized500 per task, source model card",
+  "header_sha256": "0d519b38032634080d1108809dba7f2817d9d89273a75ff9a81184a1f8b46901",
+  "tensor_keys": 812,
+  "reference_tensor_keys": 821,
+  "common_keys": 812,
+  "only_candidate": [],
+  "only_reference": [
+    "paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight",
+    "value_head.mlp.0.bias",
+    "value_head.mlp.0.weight",
+    "value_head.mlp.2.bias",
+    "value_head.mlp.2.weight",
+    "value_head.mlp.4.bias",
+    "value_head.mlp.4.weight",
+    "value_head.mlp.6.bias",
+    "value_head.mlp.6.weight"
+  ],
+  "static_only": true,
+  "runtime_qualified": false,
+  "delta_conventions": {
+    "candidate_adapt_to_pi": true,
+    "candidate_delta_joint_actions": true,
+    "rlinf_extra_delta_transform": true,
+    "rlinf_adapt_to_pi": true,
+    "mask": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "capacity_check": {
+    "filesystem_available_bytes": 1387136024576,
+    "write_probe": "passed",
+    "quota": "quota command unavailable"
+  },
+  "paths": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json"
+  }
+}

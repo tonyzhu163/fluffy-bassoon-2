@@ -28,6 +28,19 @@ Ordinary DSRL is the practical gradient-based reference. Use a separately
 trained episode-reset controller to isolate benefit from across-episode
 memory under the same recurrent architecture and optimizer.
 
+The source-pretrained DSRL baseline receives the same total source-interaction
+budget across the same six tasks. It trains one reactive, feature-conditioned
+noise actor/critic with SAC, rather than comparing a meta-pretrained learner
+against a DSRL learner denied source experience. Transfer learned weights to
+each independent target trial and report source and target costs separately.
+Frozen and target-updating SAC evaluations share the same action-sampling
+convention. For target adaptation, use target-only replay sampled with
+replacement from its first transition, retain the pretrained networks and
+optimizer state and do not repeat source warmup. Restore independently for
+every target trial. This explicit convention prevents source replay from
+diluting target evidence or the batch-size threshold from blocking all target
+updates within an eight-episode budget.
+
 An RL²-style controller receives current observation features and previous
 noise, reward and boundary flags. It produces the noise passed to the frozen
 VLA. Training samples tasks/conditions, runs several episodes per trial with
