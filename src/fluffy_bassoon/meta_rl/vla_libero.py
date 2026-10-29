@@ -432,6 +432,8 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
         # The exact executed primitive rewards and count are also retained.
         reward = 0. if outcome["success"] else -1.
         row = dict(motor_observation=obs, motor_next_observation=next_obs,
+                   instruction=str(sim.metadata["instruction"]),
+                   source_task_key=f"{sim.metadata.get('suite')}:{sim.metadata.get('task_id', 0):02d}",
                    sac_observation=sac_observation(obs), sac_next_observation=sac_observation(next_obs),
                    proposed_noise=proposal, executed_noise=actual,
                    native_initial_noise=noise, executed_actions=outcome["executed_actions"],
@@ -451,6 +453,7 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
         if outcome["done"]:
             break
     summary = dict(initial_state=int(initial_state), scene_seed=int(scene_seed),
+                      instruction=str(sim.metadata["instruction"]),
                       task_id=sim.metadata.get("task_id"), suite=sim.metadata.get("suite"),
                       semantic_task=Path(sim.metadata.get("bddl_file", "")).stem,
                       success=bool(outcome["success"]), chunks=len(rows),
