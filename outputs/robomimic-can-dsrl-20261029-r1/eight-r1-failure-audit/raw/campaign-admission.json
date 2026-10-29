@@ -1,0 +1,51 @@
+{
+  "source_commit": "77d72f748d948c7b744cad39de20582ee37cab56",
+  "admitted": false,
+  "matched_training_interactions": false,
+  "target_steps": 28800,
+  "selected_seed_count": 2,
+  "selected_layout": "one independent arm per GPU",
+  "selection_reason": "Four-seed serial lanes do not fit; two matched seeds preserve the full target, DSRL retry and trained-reset controls within one hour",
+  "completed_arms": 0,
+  "required_arms": 8,
+  "incomplete_arms": [
+    {
+      "seed": 1,
+      "method": "dsrl-na"
+    },
+    {
+      "seed": 1,
+      "method": "dsrl-na-retry"
+    },
+    {
+      "seed": 1,
+      "method": "episode-reset"
+    },
+    {
+      "seed": 1,
+      "method": "rl2"
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na"
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na-retry"
+    },
+    {
+      "seed": 2,
+      "method": "episode-reset"
+    },
+    {
+      "seed": 2,
+      "method": "rl2"
+    }
+  ],
+  "stage_records": [],
+  "elapsed_seconds": 30.723023176193237,
+  "wall_budget_seconds": 3600,
+  "allocation_gpu_hours": 0.06827338642544216,
+  "reason": "CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python', '/mowenjie/fluffy-bassoon-2/worktrees/robomimic-can-dsrl-baige-20261029-eight-r1/scripts/[train]gpu_probe.py', '--expected-count', '8', '--output', '/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r1/parent-gpu-probe.json', '--purpose', 'training', '--baige-container']' returned non-zero exit status 1.",
+  "comparison": "incomplete; no matched comparison"
+}

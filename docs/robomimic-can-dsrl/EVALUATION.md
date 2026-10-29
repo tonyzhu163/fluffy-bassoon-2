@@ -128,3 +128,26 @@ streamed post-run reference and input hashes. No checkpoint tensors were
 loaded or copied to macOS for this audit.
 Evidence: [online control audit](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/AUDIT.md)
 and [derived paired results](../../outputs/robomimic-can-dsrl-20261029-r1/online-r1-analysis/RESULTS.json).
+
+## First eight-card allocation
+
+Baige `job-8blx7x2ib4uu`, source
+`77d72f748d948c7b744cad39de20582ee37cab56`, failed its parent GPU admission
+before any training worker or arm started. All eight allocated cards reported
+100% utilization with 0–3 MiB of memory in use. The probe rejected this
+utilization reading before its real tensor and own-PID checks; those checks
+therefore remain unqualified for this allocation. No new learning result was
+produced. The scheduler reported 69 seconds of running time; the driver
+recorded 30.725 seconds. The failure evidence is retained in
+[the allocation audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r1-failure-audit/audit.json).
+
+The fresh allocation `job-lrdwz9x2s3kk`, source
+`b9829df25eeee7cd59d0345fbc4e114b68e0b49f`, passed 55 CPU tests and 27
+subtests, followed by the full eight-card CUDA/PCI/own-PID probe. Its explicit
+Baige training admission records utilization as telemetry while retaining
+allocation, memory, process-ownership and real tensor checks. All eight
+actual worker GPU/PID proofs and frozen-model contracts passed an independent
+33-check metadata audit over 20 hash-verified files. This establishes runtime
+qualification; completed learning comparisons require the final matched
+training and evaluation artifacts.
+Evidence: [retry launch audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-launch-check/audit.json).

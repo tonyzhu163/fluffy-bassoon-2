@@ -1,0 +1,152 @@
+{
+  "audited_at_client": "2026-10-29 Asia/Shanghai",
+  "audit_mode": "Read-only metadata and static source analysis; no GPU compute, model/simulator imports, tests, launch, job termination or source changes.",
+  "failed_job": "job-8blx7x2ib4uu-master-0",
+  "run_id": "robomimic-can-dsrl-baige-20261029-eight-r1",
+  "source_commit": "77d72f748d948c7b744cad39de20582ee37cab56",
+  "source_clean": true,
+  "raw_mirror": {
+    "plan.json": {
+      "size_bytes": 14782,
+      "sha256": "19cd535eeb951ee22c2424ef7cc032c8527156b3906a988f1e3e3c81be95360e"
+    },
+    "campaign-admission.json": {
+      "size_bytes": 1566,
+      "sha256": "b34992989a7960763a83bf49ebd57aec647847781353bdf90f0ad3b7e6465ee0"
+    },
+    "parent-gpu-probe.json": {
+      "size_bytes": 2691,
+      "sha256": "2beb4ba37c820630162542ead0fefbdfd89b213ecbd8f58e15278fe2f577e894"
+    },
+    "console.log": {
+      "size_bytes": 4402,
+      "sha256": "1427b1c3a4c8658ae3c820de8323557ffd5503383cca811066d53a02306adbe7"
+    },
+    "stages.jsonl": {
+      "size_bytes": 1223,
+      "sha256": "afac9dd710deb951b5b49fb3e09271d1dd7b28c576bbd00ddc816a017e6cea20"
+    },
+    "exit-code.txt": {
+      "size_bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    }
+  },
+  "raw_mirror_verified": true,
+  "all_remote_output_files": [
+    "campaign-admission.json",
+    "console.log",
+    "exit-code.txt",
+    "parent-gpu-probe.json",
+    "plan.json",
+    "stages.jsonl"
+  ],
+  "stages": [
+    {
+      "stage": "campaign_refused_or_failed",
+      "time": "2026-10-29T08:18:45.721962+00:00",
+      "elapsed_seconds": 30.722012758255005,
+      "reason": "CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python', '/mowenjie/fluffy-bassoon-2/worktrees/robomimic-can-dsrl-baige-20261029-eight-r1/scripts/[train]gpu_probe.py', '--expected-count', '8', '--output', '/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r1/parent-gpu-probe.json', '--purpose', 'training', '--baige-container']' returned non-zero exit status 1."
+    },
+    {
+      "stage": "campaign_ended",
+      "time": "2026-10-29T08:18:45.725036+00:00",
+      "elapsed_seconds": 30.725045680999756,
+      "matched_training_interactions": false,
+      "completed_arms": 0,
+      "selected_seed_count": 2,
+      "required_arms": 8,
+      "reason": "CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python', '/mowenjie/fluffy-bassoon-2/worktrees/robomimic-can-dsrl-baige-20261029-eight-r1/scripts/[train]gpu_probe.py', '--expected-count', '8', '--output', '/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r1/parent-gpu-probe.json', '--purpose', 'training', '--baige-container']' returned non-zero exit status 1."
+    }
+  ],
+  "static_source_sha256": {
+    "scripts/[train]gpu_probe.py": "b1db1d3e306cfb7e637f0d5d5befab7b54339014f755fe4c4793d39caaca5c2e",
+    "scripts/diagnostics/can_dsrl_eight_gpu.sh": "ebd8fe42e39baec9edb039445209873d288c1d8fa6b8f6c5b2cc7d11247c4860",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py": "ce123bad4c7b9984b732767199914b66081558abd6cf4d9bb82269afccc1f30e",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3"
+  },
+  "outcome": {
+    "exit_code": 2,
+    "admitted": false,
+    "completed_arms": 0,
+    "required_arms": 8,
+    "training_launched": false,
+    "worker_phase_started_events": 0,
+    "worker_output_directories": 0,
+    "source_of_training_absence": "Only six top-level output files exist; stage records are empty and stages contain only campaign_refused_or_failed/campaign_ended. The launcher starts workers only after the failed parent probe succeeds.",
+    "cuda_allocation_proof_completed": false,
+    "cuda_initialization_may_have_occurred": true,
+    "failure_stage": "run_baige_probe training utilization admission, before the first torch.ones tensor allocation/proof.",
+    "elapsed_driver_seconds": 30.725045680999756,
+    "failure_time_shanghai": "2026-10-29 16:18:45"
+  },
+  "observed_telemetry": {
+    "first_error_device_ordinal": 0,
+    "first_error_name": "NVIDIA RPBZZZ6",
+    "first_error_uuid": "GPU-e51ccd8a-b63c-bb77-bc63-963e32ed3c86",
+    "initial_error_memory_used_mib": 0,
+    "final_inventory_device_count": 8,
+    "final_inventory_memory_used_mib_each": 3,
+    "final_inventory_utilization_percent_each": 100,
+    "source_failure_condition": "memory_used_mib > 256 OR (purpose == training AND utilization_percent > 5)"
+  },
+  "ownership_and_isolation_evidence": {
+    "direct_saved_facts": [
+      "The failed probe status is failed; no allocation_check, passed devices, successful worker receipt or CUDA tensor result was saved.",
+      "All eight failure-inventory entries have unique UUIDs and distinct PCI addresses, 100% utilization, and 3 MiB memory.",
+      "CUDA_VISIBLE_DEVICES contains ordinals 0 through 7; no SLURM job/step identifiers were present."
+    ],
+    "source_path_inferences": [
+      "This exact utilization exception is reached only after the source validates the scheduled Baige container and explicit NVIDIA UUID allocation.",
+      "An empty initial compute-process query is a prerequisite; a nonempty query would raise a different earlier error.",
+      "CUDA availability/device count/property collection and CUDA/NVML/scheduler UUID-set + PCI bijection + name equality were prerequisites to reaching this exception."
+    ],
+    "inference_limits": [
+      "Those prerequisites were not serialized into a passed receipt, so they are source-path inferences rather than independently reusable qualification evidence.",
+      "100% utilization with 0-to-3 MiB memory does not establish foreign work or GPU health. It can be rejected as telemetry by policy without proving allocation contamination.",
+      "The 3 MiB change may reflect driver/property-query contexts; its owner is not proven by the failed report."
+    ],
+    "conclusion": "Utilization-only admission rejection. Foreign ownership/isolation failure is not established; the allocation remains unqualified until fresh real CUDA and PID/PCI/UUID proof passes."
+  },
+  "hardware_authorization": {
+    "accepted_raw_sku": "NVIDIA RPBZZZ6",
+    "source": "Parent confirms the human explicitly supplied this SKU in a prior image for Baige queue 算法Z组 aihcq-rh0wwk9muei4, then requested the RTX6000 work.",
+    "action": "Accept only this exact user-approved raw alias alongside approved RTX6000-family names, preserving the raw string and provenance; retain CUDA/NVML name agreement.",
+    "prohibited_inference": "Do not decode the alias to a marketing GPU model or identify it from 97887 MiB memory alone."
+  },
+  "budget": {
+    "total_eight_gpu_hours_ceiling": 8,
+    "parent_ui_evidence": {
+      "scheduler_running_start_shanghai": "2026-10-29 16:18:17",
+      "scheduler_anomaly_shanghai": "2026-10-29 16:19:26",
+      "scheduler_final_shanghai": "2026-10-29 16:19:27",
+      "scheduler_elapsed_upper_seconds": 70,
+      "pod_elapsed_seconds": 57,
+      "source": "Parent's authenticated UI observation; not independently queried by this metadata-only subagent."
+    },
+    "driver_reported_gpu_hours": 0.06827338642544216,
+    "driver_timing_is_allocation_charge": false,
+    "ui_elapsed_upper_gpu_hours": 0.15555555555555556,
+    "conservative_failed_allocation_reserve_seconds": 120,
+    "conservative_failed_allocation_reserve_gpu_hours": 0.26666666666666666,
+    "maximum_retry_minutes_at_eight_gpus": 58,
+    "retry_wall_seconds_ceiling": 3480,
+    "retry_gpu_hours_ceiling": 7.733333333333333,
+    "combined_reserved_gpu_hours": 8,
+    "rejected_59_minute_retry_combined_gpu_hours": 8.133333333333333,
+    "requirement": "Parent must set a 58-minute hard cap from actual scheduler allocation start, including container startup and cleanup; no full extra 60-minute attempt and no further 4090 allocation.",
+    "note": "Any additional failure consumes the same original eight-GPU-hour ceiling; recompute remaining budget from scheduler timestamps before a later retry."
+  },
+  "fresh_identity_retry_constraints": [
+    "Preserve failed eight-r1 worktree and all six raw artifacts unchanged; use fresh run ID eight-r2, fresh outputs and a verified clean commit for the probe-only migration.",
+    "Keep scheduler NVIDIA_VISIBLE_DEVICES authoritative; verify all eight UUIDs via CUDA/NVML PCI bijection, unique identities and raw name equality.",
+    "For explicitly exclusive Baige training, permit utilization telemetry to be recorded without making it the sole rejection criterion; retain the initial memory ceiling and empty foreign compute-process checks.",
+    "Require a real CUDA tensor allocation/result, synchronization, own PID GPU UUID accounting for all eight parent devices, and a fresh distinct per-worker selected-GPU receipt before any learner.",
+    "Record utilization readings and the explicit exclusive-training admission policy; do not reuse the failed parent probe as a passed receipt or classify timing as uncontended measurement.",
+    "Accept literal NVIDIA RPBZZZ6 only with recorded human SKU/queue authorization; do not weaken UUID, PCI, name equality, memory or process-owner checks.",
+    "Keep scientific source, frozen inputs, two paired seeds, all four methods, 28800 training steps and full eight-scene K4 controls unchanged.",
+    "Set script WALL=3480 and authenticated scheduler hard cap=58 minutes; verify aggregate failed-plus-retry allocation charge stays at most eight GPU-hours.",
+    "If any identity/memory/foreign PID/CUDA proof fails, preserve evidence and refuse worker launch; do not terminate unrelated jobs.",
+    "No additional 4090 jobs."
+  ],
+  "pending": "Final stable migration independently reviewed with no static blocker; see retry-static-review.json. Allocated CPU fixtures and fresh parent/worker CUDA proofs remain required. This subagent has not launched or approved a GPU job."
+}

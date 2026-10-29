@@ -1,0 +1,320 @@
+{
+  "captured_at_utc": "2026-10-29T08:43:55.416041+00:00",
+  "captured_at_shanghai": "2026-10-29 16:43:55",
+  "remote_root": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r2",
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "job": "job-lrdwz9x2s3kk-master-0",
+  "audit_mode": "Single metadata-only SSH4952 snapshot; no model/simulator imports, tests, GPU computation, source changes, launch or job termination.",
+  "checks": {
+    "admitted_source_geometry": true,
+    "allocation_budget_and_raw_sku": true,
+    "cpu_fixture_receipt": true,
+    "parent_hash_and_policy": true,
+    "parent_full_eight_gpu_identity": true,
+    "parent_real_cuda_proofs": true,
+    "parent_no_foreign_compute": true,
+    "eight_phase_started": true,
+    "seed1/dsrl-na_physical_gpu_proof": true,
+    "seed1/dsrl-na_frozen_contract": true,
+    "seed1/dsrl-na_no_failure_artifact": true,
+    "seed1/dsrl-na-retry_physical_gpu_proof": true,
+    "seed1/dsrl-na-retry_frozen_contract": true,
+    "seed1/dsrl-na-retry_no_failure_artifact": true,
+    "seed1/rl2_physical_gpu_proof": true,
+    "seed1/rl2_frozen_contract": true,
+    "seed1/rl2_no_failure_artifact": true,
+    "seed1/episode-reset_physical_gpu_proof": true,
+    "seed1/episode-reset_frozen_contract": true,
+    "seed1/episode-reset_no_failure_artifact": true,
+    "seed2/dsrl-na_physical_gpu_proof": true,
+    "seed2/dsrl-na_frozen_contract": true,
+    "seed2/dsrl-na_no_failure_artifact": true,
+    "seed2/dsrl-na-retry_physical_gpu_proof": true,
+    "seed2/dsrl-na-retry_frozen_contract": true,
+    "seed2/dsrl-na-retry_no_failure_artifact": true,
+    "seed2/rl2_physical_gpu_proof": true,
+    "seed2/rl2_frozen_contract": true,
+    "seed2/rl2_no_failure_artifact": true,
+    "seed2/episode-reset_physical_gpu_proof": true,
+    "seed2/episode-reset_frozen_contract": true,
+    "seed2/episode-reset_no_failure_artifact": true,
+    "eight_distinct_worker_gpu_and_pid": true
+  },
+  "failures": [],
+  "launch_evidence_passed": true,
+  "training_progress_status": "first_updates_pending",
+  "parent_probe_sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+  "raw_gpu_sku": "NVIDIA RPBZZZ6",
+  "utilization_telemetry": {
+    "GPU-5321a03d-b105-c290-1e56-96906faa6675": 100,
+    "GPU-519cdab3-b52b-1adc-e15c-136165b60260": 100,
+    "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686": 100,
+    "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa": 100,
+    "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7": 100,
+    "GPU-3f9213bc-6cb1-959d-b5a7-ad0de33fe416": 100,
+    "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c": 100,
+    "GPU-3e26708f-1044-59e5-3ab6-3f01fac46206": 100
+  },
+  "worker_count": 8,
+  "workers": [
+    {
+      "seed": 1,
+      "method": "dsrl-na",
+      "gpu_ordinal": 0,
+      "gpu_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "pid": 1199,
+      "gpu_receipt_sha256": "6ee1187ff583ee15231b3796d9eaca43eb9d784284b1cb2075452d894fbd8b8f",
+      "contract_sha256": "8e69e44314b0231e793b1e4eeae323b383deafd52dcaf35285619fb09b686d04",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 1,
+      "method": "dsrl-na-retry",
+      "gpu_ordinal": 1,
+      "gpu_uuid": "GPU-519cdab3-b52b-1adc-e15c-136165b60260",
+      "pid": 1200,
+      "gpu_receipt_sha256": "01f9e589e14187438800fdec39883589d4322e126bd2dd6779f63f43f00e3bb7",
+      "contract_sha256": "f02625b66513b7f8ef6ffe23e5132431876c17806f5b8d2c5b7cddcab100dfca",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 1,
+      "method": "rl2",
+      "gpu_ordinal": 2,
+      "gpu_uuid": "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686",
+      "pid": 1201,
+      "gpu_receipt_sha256": "ce907a4b01998f0b2e1b16df0e40c5a74dc3a665ea27db3464ca60bb3fe03669",
+      "contract_sha256": "cec1cbb2f95705d1e8ba679d7d06e3aa41cd7aabe013bd64a5e2b59bad7a0196",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 1,
+      "method": "episode-reset",
+      "gpu_ordinal": 3,
+      "gpu_uuid": "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa",
+      "pid": 1202,
+      "gpu_receipt_sha256": "eb5415163b28a451c66b2d3023ae61030526165643401269a01c5541dc5c7e2b",
+      "contract_sha256": "2a47f069efaf1645f9cc87416b1ef97a361308e647de67d56bfe2f590c637dca",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na",
+      "gpu_ordinal": 4,
+      "gpu_uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+      "pid": 1203,
+      "gpu_receipt_sha256": "41f813b359d5e0385e6b0baa8022e76056691e906eb7365c8bad21a0ff391cdb",
+      "contract_sha256": "4878fe6d93ab1f841525c807af4966762ac5e167d215e905d96f144351c7e804",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 2,
+      "method": "dsrl-na-retry",
+      "gpu_ordinal": 5,
+      "gpu_uuid": "GPU-3f9213bc-6cb1-959d-b5a7-ad0de33fe416",
+      "pid": 1204,
+      "gpu_receipt_sha256": "f1835aabf56cb4224b9664b09bd3e42cb55a2e1704ee5a24eefe81d521e5cf92",
+      "contract_sha256": "3c7f955ff108bcb8be1acfd19e0aa4c6814c0def93fcac4e2d4eb7fd13d4f696",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 2,
+      "method": "rl2",
+      "gpu_ordinal": 6,
+      "gpu_uuid": "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c",
+      "pid": 1205,
+      "gpu_receipt_sha256": "0303b2ec1f7d3f7b5b3109b39aaace3cff97dd5985d2a3b298fed7df38903252",
+      "contract_sha256": "cd26c0da74d1b87f049b6dcac388d0bb788972c7cc96bf4ff28953f59e949768",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    },
+    {
+      "seed": 2,
+      "method": "episode-reset",
+      "gpu_ordinal": 7,
+      "gpu_uuid": "GPU-3e26708f-1044-59e5-3ab6-3f01fac46206",
+      "pid": 1206,
+      "gpu_receipt_sha256": "a3fc4abe070ef0f4242ab7d4784980dfd350d981a03dfe2cf6f97fdc5d7c36eb",
+      "contract_sha256": "3f345ffe40b1dab30e790705bc13e11cd32ef02d7fa9e956bf1ca745e9abe25b",
+      "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+      "progress_status": "pending_first_update",
+      "updates_count": 0,
+      "latest_update": null,
+      "complete_summary_present": false
+    }
+  ],
+  "missing_at_capture": [
+    "campaign-admission.json",
+    "exit-code.txt",
+    "seed1/dsrl-na/updates.jsonl",
+    "seed1/dsrl-na/summary.json",
+    "seed1/dsrl-na/failure.json",
+    "seed1/dsrl-na/recovery-manifest.json",
+    "seed1/dsrl-na-retry/updates.jsonl",
+    "seed1/dsrl-na-retry/summary.json",
+    "seed1/dsrl-na-retry/failure.json",
+    "seed1/dsrl-na-retry/recovery-manifest.json",
+    "seed1/rl2/updates.jsonl",
+    "seed1/rl2/summary.json",
+    "seed1/rl2/failure.json",
+    "seed1/rl2/recovery-manifest.json",
+    "seed1/episode-reset/updates.jsonl",
+    "seed1/episode-reset/summary.json",
+    "seed1/episode-reset/failure.json",
+    "seed1/episode-reset/recovery-manifest.json",
+    "seed2/dsrl-na/updates.jsonl",
+    "seed2/dsrl-na/summary.json",
+    "seed2/dsrl-na/failure.json",
+    "seed2/dsrl-na/recovery-manifest.json",
+    "seed2/dsrl-na-retry/updates.jsonl",
+    "seed2/dsrl-na-retry/summary.json",
+    "seed2/dsrl-na-retry/failure.json",
+    "seed2/dsrl-na-retry/recovery-manifest.json",
+    "seed2/rl2/updates.jsonl",
+    "seed2/rl2/summary.json",
+    "seed2/rl2/failure.json",
+    "seed2/rl2/recovery-manifest.json",
+    "seed2/episode-reset/updates.jsonl",
+    "seed2/episode-reset/summary.json",
+    "seed2/episode-reset/failure.json",
+    "seed2/episode-reset/recovery-manifest.json"
+  ],
+  "manifest": {
+    "plan.json": {
+      "sha256": "6b8ef29a10d26ed0dd1e3ec807210e106abdd9769e49ca0c1997bb1ac5fc6ddf",
+      "size_bytes": 17293,
+      "mtime_epoch": 1793263371.221888
+    },
+    "parent-gpu-probe.json": {
+      "sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+      "size_bytes": 18138,
+      "mtime_epoch": 1793263371.220821
+    },
+    "stages.jsonl": {
+      "sha256": "ce909ecdfc34907feb445b6ffeac22abdfb820316208fd5a1b1d70bd89268d8a",
+      "size_bytes": 11693,
+      "mtime_epoch": 1793263371.2371778
+    },
+    "runtime-probe-tests.log": {
+      "sha256": "aec93133e6ae61e683b35964eaf85e567b06a7970de79c6737f179d9446e7957",
+      "size_bytes": 172,
+      "mtime_epoch": 1793263359.624975
+    },
+    "seed1/dsrl-na/gpu-probe.json": {
+      "sha256": "6ee1187ff583ee15231b3796d9eaca43eb9d784284b1cb2075452d894fbd8b8f",
+      "size_bytes": 2343,
+      "mtime_epoch": 1793263378.7699697
+    },
+    "seed1/dsrl-na/contract.json": {
+      "sha256": "8e69e44314b0231e793b1e4eeae323b383deafd52dcaf35285619fb09b686d04",
+      "size_bytes": 1823,
+      "mtime_epoch": 1793263411.2451777
+    },
+    "seed1/dsrl-na-retry/gpu-probe.json": {
+      "sha256": "01f9e589e14187438800fdec39883589d4322e126bd2dd6779f63f43f00e3bb7",
+      "size_bytes": 2447,
+      "mtime_epoch": 1793263378.747829
+    },
+    "seed1/dsrl-na-retry/contract.json": {
+      "sha256": "f02625b66513b7f8ef6ffe23e5132431876c17806f5b8d2c5b7cddcab100dfca",
+      "size_bytes": 1835,
+      "mtime_epoch": 1793263411.2454987
+    },
+    "seed1/rl2/gpu-probe.json": {
+      "sha256": "ce907a4b01998f0b2e1b16df0e40c5a74dc3a665ea27db3464ca60bb3fe03669",
+      "size_bytes": 2551,
+      "mtime_epoch": 1793263378.7858653
+    },
+    "seed1/rl2/contract.json": {
+      "sha256": "cec1cbb2f95705d1e8ba679d7d06e3aa41cd7aabe013bd64a5e2b59bad7a0196",
+      "size_bytes": 1814,
+      "mtime_epoch": 1793263411.2456305
+    },
+    "seed1/episode-reset/gpu-probe.json": {
+      "sha256": "eb5415163b28a451c66b2d3023ae61030526165643401269a01c5541dc5c7e2b",
+      "size_bytes": 2655,
+      "mtime_epoch": 1793263378.7828958
+    },
+    "seed1/episode-reset/contract.json": {
+      "sha256": "2a47f069efaf1645f9cc87416b1ef97a361308e647de67d56bfe2f590c637dca",
+      "size_bytes": 1834,
+      "mtime_epoch": 1793263411.2459185
+    },
+    "seed2/dsrl-na/gpu-probe.json": {
+      "sha256": "41f813b359d5e0385e6b0baa8022e76056691e906eb7365c8bad21a0ff391cdb",
+      "size_bytes": 2759,
+      "mtime_epoch": 1793263378.7696145
+    },
+    "seed2/dsrl-na/contract.json": {
+      "sha256": "4878fe6d93ab1f841525c807af4966762ac5e167d215e905d96f144351c7e804",
+      "size_bytes": 1823,
+      "mtime_epoch": 1793263411.2451174
+    },
+    "seed2/dsrl-na-retry/gpu-probe.json": {
+      "sha256": "f1835aabf56cb4224b9664b09bd3e42cb55a2e1704ee5a24eefe81d521e5cf92",
+      "size_bytes": 2863,
+      "mtime_epoch": 1793263378.7473376
+    },
+    "seed2/dsrl-na-retry/contract.json": {
+      "sha256": "3c7f955ff108bcb8be1acfd19e0aa4c6814c0def93fcac4e2d4eb7fd13d4f696",
+      "size_bytes": 1835,
+      "mtime_epoch": 1793263411.2453756
+    },
+    "seed2/rl2/gpu-probe.json": {
+      "sha256": "0303b2ec1f7d3f7b5b3109b39aaace3cff97dd5985d2a3b298fed7df38903252",
+      "size_bytes": 2967,
+      "mtime_epoch": 1793263378.6661477
+    },
+    "seed2/rl2/contract.json": {
+      "sha256": "cd26c0da74d1b87f049b6dcac388d0bb788972c7cc96bf4ff28953f59e949768",
+      "size_bytes": 1814,
+      "mtime_epoch": 1793263411.2454093
+    },
+    "seed2/episode-reset/gpu-probe.json": {
+      "sha256": "a3fc4abe070ef0f4242ab7d4784980dfd350d981a03dfe2cf6f97fdc5d7c36eb",
+      "size_bytes": 3071,
+      "mtime_epoch": 1793263378.7583122
+    },
+    "seed2/episode-reset/contract.json": {
+      "sha256": "3f345ffe40b1dab30e790705bc13e11cd32ef02d7fa9e956bf1ca745e9abe25b",
+      "size_bytes": 1834,
+      "mtime_epoch": 1793263411.2456374
+    }
+  },
+  "interpretation": "All eight workers have passed real selected-GPU ownership proof and loaded identical frozen motor/runtime contracts. At this single snapshot no updates.jsonl had yet been written, so advancing optimizer updates are pending rather than verified. The parent allocation proof is eligible for exclusive training, not an uncontended timing comparison.",
+  "next_action": "Parent will inspect advancing updates after bookkeeping; this subagent will not poll again without a new request.",
+  "budget": {
+    "scheduler_hard_cap_minutes": 58,
+    "prior_failed_reserve_minutes": 2,
+    "gpu_count": 8,
+    "combined_gpu_hours_ceiling": 8
+  },
+  "no_failure_artifact_present": true
+}

@@ -1,0 +1,46 @@
+{
+  "reviewed_at_client_date": "2026-10-29",
+  "review_scope": "Final stable probe-only retry migration after failed eight-r1. Static source, source hashes and protected AST only; no tests, model/simulator imports, GPU compute, launch, source edits or job termination.",
+  "result": "no_static_blocker_found",
+  "file_sha256": {
+    "scripts/[train]gpu_probe.py": "f441331456e5f26d19b237d1e1037b8fb64c6725f640f28d61cada7ed6f66117",
+    "tests/test_gpu_probe.py": "256d2467aa54e2fc458b99b806b4eb037a29879e69379fbb0c2cd2b4c09fbf00",
+    "scripts/diagnostics/can_dsrl_eight_gpu.sh": "1daabf69ac63b9aec7e5483637e8ab691c3a140fece05341520d7733372664c5"
+  },
+  "baseline_probe_sha256": "b1db1d3e306cfb7e637f0d5d5befab7b54339014f755fe4c4793d39caaca5c2e",
+  "protected_probe_ast_equal": true,
+  "protected_probe_ast_sha256_same_interpreter": "10bc9d3fd7e3f5bd1201803b50676329a2ee40ae535ffafb8b863f07a5dce277",
+  "ast_note": "AST dumps differ across Python versions; both old and new source were parsed under one interpreter for this comparison.",
+  "inspected_contracts": {
+    "explicit_opt_in": "--baige-exclusive-training requires --baige-container --purpose training; no direct/Slurm opt-in path",
+    "strict_defaults": "Default training utilization threshold remains strict for Baige, Slurm and direct probes",
+    "allocation_checks": "Initial empty compute-process inventory, <=256MiB initial memory, scheduler UUID-set/CUDA-NVML PCI/name bijection, each real CUDA result, no foreign PIDs, touched<=own<=assigned, final own==all assigned",
+    "recorded_telemetry": "Utilization retained as telemetry only in the explicit exclusive Baige training mode; timing_comparison_eligible stays false",
+    "hardware_identity": "Exact NVIDIA RPBZZZ6 is accepted as the human-approved raw Baige SKU; homogeneous eight-card raw name required and no marketing model inferred",
+    "launcher": "Metadata/source admission then mocked CPU fixtures <=60 seconds within combined180-second qualification reserve, then full actual eight-GPU training probe, then per-worker selected-GPU proof",
+    "source_migration": "Known original b1db1d3… probe hash required; all AST nodes outside run_baige_probe/main unchanged; scientific source and input identities protected",
+    "scientific_scope": "Two paired seeds, all four methods, 28800 training primitive steps, eight held-out scenes times four attempts, all PPO memory/reward controls preserved",
+    "budget": "WALL3480 seconds plus authenticated scheduler58-minute hard cap; conservative prior2-minute allocation reserve at8GPUs gives exactly8GPU-hours aggregate",
+    "gpu_model_restriction": "No additional4090 jobs"
+  },
+  "test_review": {
+    "execution": "not_run_by_this_subagent",
+    "static_coverage": [
+      "100%-utilization telemetry explicit opt-in",
+      "Default strict training rejection",
+      "Lazy and eager own CUDA contexts",
+      "Memory and foreign PID before/during/final rejection",
+      "Missing touched card, outside GPU, bad tensor result, PCI and scheduler allocation rejection",
+      "Strict Slurm/direct paths retained",
+      "Invalid CLI mode rejection",
+      "Exact approved raw SKU and unknown/mixed SKU rejection"
+    ]
+  },
+  "remaining_requirements": [
+    "Allocated CPU fixtures must pass in the fresh retry container.",
+    "Actual full parent and per-worker CUDA/PID/UUID/PCI proof must pass before learner work.",
+    "Parent must confirm the external scheduler58-minute hard cap from allocation start; wrapper elapsed time alone is not allocation charge.",
+    "Use a fresh run/output identity and preserve failed eight-r1 artifacts; recompute remaining aggregate allocation budget after any further failure."
+  ],
+  "no_launch_performed": true
+}

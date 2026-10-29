@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# One exclusive eight-RTX6000 Baige container, at most one hour / eight GPU-hours.
+# One exclusive eight-card Baige container; scheduler must cap this retry at58min.
+# Prior failed preflight reserves2min*8GPUs; (2+58)*8/60 =8GPU-hours total.
 # Prefer four paired seeds with serial arms; fall back to two paired seeds with
 # one independent arm per GPU when required by the measured one-hour budget.
 # Never launch before the complete 4090 pilot passes the gates below.
@@ -37,6 +38,7 @@ export TASK_SOURCE TASK_RUN TASK_PILOT_RUN TASK_ROOT TASK_WORKTREE TASK_OUTPUT T
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from importlib import metadata
+import ast
 import hashlib
 import json
 import math
@@ -55,11 +57,15 @@ source, started = os.environ['TASK_SOURCE'], float(os.environ['TASK_ALLOCATION_S
 METHODS = ['dsrl-na', 'dsrl-na-retry', 'rl2', 'episode-reset']
 PAIRS = [['dsrl-na', 'rl2'], ['dsrl-na-retry', 'episode-reset']]
 HELPER = 'src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py'
-WALL, FINAL, PROBE, TRANSFER = 3600, 180, 180, 2.0
+PROBE_SCRIPT = 'scripts/[train]gpu_probe.py'
+WALL, FINAL, PROBE, TRANSFER = 3480, 180, 180, 2.0
 lock, records = threading.Lock(), []
 plan = dict(source_commit=source, run_id=os.environ['TASK_RUN'], pilot=str(pilot),
             hostname=socket.gethostname(), admitted=False, wall_budget_seconds=WALL,
             allocated_gpu_hours_ceiling=8, final_audit_reserve_seconds=FINAL,
+            required_scheduler_wall_minutes=58, prior_failed_allocation_reserve_seconds=120,
+            allocation_budget=dict(prior_reserved_gpu_minutes=16,new_gpu_minutes_ceiling=464,
+                                   combined_gpu_minutes_ceiling=480,combined_gpu_hours_ceiling=8),
             full_probe_reserve_seconds=PROBE, rtx6000_timing_factor=TRANSFER,
             methods=METHODS, seeds=None, selected_seed_count=None,
             envs=4, attempts=4, eval_trials=8, minimum_verified_target_steps=28800,
@@ -100,6 +106,53 @@ def positive(value):
     if not math.isfinite(value) or value <= 0:
         raise ValueError('Pilot timing must be finite and positive')
     return value
+
+
+def approved_baige_sku(devices):
+    """Use the user-approved raw SKU without guessing its marketing model."""
+    names = [row['cuda_name'] for row in devices]
+    if len(names) != 8 or len(set(names)) != 1:
+        raise ValueError('Require eight cards with the same approved raw Baige SKU')
+    name = names[0]
+    if name == 'NVIDIA RPBZZZ6':
+        return dict(raw_name=name, raw_names=names, queue='user-approved Pro6K queue',
+                    identity_basis='exact raw SKU in the user-provided Baige screenshot and explicit eight-card approval',
+                    marketing_model_decoded=False)
+    if re.search(r'RTX\s*(?:PRO\s*)?6000', name, re.I):
+        return dict(raw_name=name, raw_names=names, queue='user-approved Pro6K queue',
+                    identity_basis='existing RTX6000-family CUDA/NVML name rule',
+                    marketing_model_decoded=False)
+    raise ValueError(f'Unapproved raw GPU SKU: {name}')
+
+
+def runtime_probe_migration(pilot_source, qualified_source):
+    """Allow only the explicit Baige admission change, protecting every other probe helper."""
+    previous = subprocess.check_output(['git', 'show', f'{qualified_source}:{PROBE_SCRIPT}'], cwd=worktree)
+    trained = subprocess.check_output(['git', 'show', f'{pilot_source}:{PROBE_SCRIPT}'], cwd=worktree)
+    current = (worktree / PROBE_SCRIPT).read_bytes()
+    if previous != trained:
+        raise ValueError('Qualification and pilot used different allocation probes')
+    if hashlib.sha256(previous).hexdigest() != 'b1db1d3e306cfb7e637f0d5d5befab7b54339014f755fe4c4793d39caaca5c2e':
+        raise ValueError('Unreviewed original allocation-probe baseline')
+    old_tree, new_tree = ast.parse(previous), ast.parse(current)
+    allowed = {'run_baige_probe', 'main'}
+    protected_old = ast.Module(body=[node for node in old_tree.body
+        if not (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name in allowed)], type_ignores=[])
+    protected_new = ast.Module(body=[node for node in new_tree.body
+        if not (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name in allowed)], type_ignores=[])
+    old_dump, new_dump = ast.dump(protected_old), ast.dump(protected_new)
+    if old_dump != new_dump:
+        raise ValueError('Probe migration changed protected Slurm/direct/shared probe code')
+    if previous == current:
+        raise ValueError('Expected an explicit reviewed Baige training-admission migration')
+    return dict(qualified_source_commit=qualified_source, pilot_source_commit=pilot_source,
+                path=PROBE_SCRIPT, old_sha256=hashlib.sha256(previous).hexdigest(),
+                new_sha256=hashlib.sha256(current).hexdigest(),
+                permitted_changed_functions=sorted(allowed),
+                protected_probe_ast_sha256=hashlib.sha256(new_dump.encode()).hexdigest(),
+                science_changed=False, purpose='training', opt_in='--baige-exclusive-training',
+                rule='exclusive scheduler UUID+PCI+CUDA+ownPID+memory; utilization is retained telemetry',
+                cpu_fixtures='pending', full_eight_gpu_cuda_probe='pending')
 
 
 def recovery(directory, method):
@@ -288,6 +341,7 @@ def admit():
         scene_hashes, old_recoveries[method] = paired, recovery(directory, method)
     qualified_contract = read(qual / 'qualification/contract.json')
     migration_evidence = helper_migration(old_plan, pilot_source, qualified_contract['source_commit'])
+    probe_migration = runtime_probe_migration(pilot_source, qualified_contract['source_commit'])
     scientific_changes = subprocess.check_output(
         ['git', 'diff', '--name-only', qualified_contract['source_commit'], source, '--', 'src'],
         cwd=worktree, text=True).splitlines()
@@ -357,12 +411,13 @@ def admit():
     plan.update(pilot_source_commit=pilot_source, runtime_identity=baseline, paired_scenes=scene_hashes,
                 pilot_recoveries=old_recoveries, candidates=candidates, estimate=chosen,
                 helper_migration_verification=migration_evidence,
+                runtime_probe_migration=probe_migration,
                 selected_seed_count=chosen['seed_count'], seeds=chosen['seeds'],
                 selected_layout=chosen['layout'], selection_reason=selection_reason,
                 gpu_assignment=chosen['gpu_assignment'],
                 target_steps=chosen['target_steps'], pilot_artifact_sha256={name: digest(pilot / name)
                     for name in ('pilot-admission.json', 'plan.json')},
-                source_files_sha256={name: digest(worktree / name) for name in checked})
+                source_files_sha256={name: digest(worktree / name) for name in checked + [PROBE_SCRIPT]})
     return chosen
 
 
@@ -394,7 +449,7 @@ def worker(ordinal, seed, methods, chosen, parent_probe):
         event('phase_started', gpu=ordinal, seed=seed, method=method, command=command)
         phase_start = time.monotonic()
         # No timeout/signal is sent to a model process. The CLI stops at a
-        # complete resumable boundary; the scheduler owns its one-hour cap.
+        # complete resumable boundary; the scheduler owns its58-minute cap.
         with (directory.parent / f'{method}.console.log').open('x') as log:
             process = subprocess.run(command, env=env, stdout=log, stderr=subprocess.STDOUT, check=False)
         record = dict(gpu=ordinal, seed=seed, method=method, returncode=process.returncode,
@@ -405,9 +460,17 @@ def worker(ordinal, seed, methods, chosen, parent_probe):
                 raise ValueError('Phase failed or stopped below the common target')
             if any(contract[key] != value for key, value in plan['runtime_identity'].items()):
                 raise ValueError('Phase changed qualified runtime or frozen motor identity')
+            worker_probe = read(directory / 'gpu-probe.json')
+            if (worker_probe.get('status') != 'passed' or worker_probe.get('parent_gpu_count') != 8
+                    or worker_probe.get('source_commit') != source
+                    or worker_probe.get('parent_probe_sha256') != plan['parent_probe_sha256']
+                    or worker_probe.get('cuda_visible_devices') != str(ordinal)
+                    or worker_probe.get('pid_allocation', {}).get('available') is not True):
+                raise ValueError('Worker lost its complete parent allocation and selected-GPU proof')
             record.update(completed=True, summary=summary, paired_scenes=evaluation(directory, method),
                           recovery=recovery(directory, method), contract_sha256=digest(directory / 'contract.json'),
-                          evaluation_sha256=digest(directory / 'evaluation.json'))
+                          evaluation_sha256=digest(directory / 'evaluation.json'),
+                          gpu_probe_sha256=digest(directory / 'gpu-probe.json'))
             if record['paired_scenes'] != plan['paired_scenes']:
                 raise ValueError('Phase changed the paired held-out scenes')
         except Exception as error:
@@ -425,24 +488,51 @@ def worker(ordinal, seed, methods, chosen, parent_probe):
 exit_code, reason = 0, None
 try:
     chosen = admit()
+    write(output / 'plan.json', plan)
+    runtime_started = time.monotonic()
+    fixture_paths = ['tests/test_gpu_probe.py', 'tests/test_gpu_identity_mapping.py', 'tests/test_can_dsrl_gpu.py']
+    fixture_env = dict(os.environ, CUDA_VISIBLE_DEVICES='')
+    with (output / 'runtime-probe-tests.log').open('x') as log:
+        subprocess.run([sys.executable, '-m', 'pytest', '-q', '-p', 'no:cacheprovider', *fixture_paths],
+                       env=fixture_env, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60)
+    plan['runtime_probe_migration']['cpu_fixtures'] = dict(passed=True,
+        log_sha256=digest(output / 'runtime-probe-tests.log'),
+        test_source_sha256={name: digest(worktree / name) for name in fixture_paths},
+        timeout_seconds=60, elapsed_seconds=time.monotonic()-runtime_started)
+    write(output / 'plan.json', plan)
+    remaining_probe = PROBE - (time.monotonic()-runtime_started)
+    if remaining_probe <= 0:
+        raise ValueError('CPU fixtures exhausted the combined runtime qualification reserve')
     probe_path = output / 'parent-gpu-probe.json'
     subprocess.run([sys.executable, str(worktree / 'scripts/[train]gpu_probe.py'), '--expected-count', '8',
-                    '--output', str(probe_path), '--purpose', 'training', '--baige-container'], check=True, timeout=PROBE)
+                    '--output', str(probe_path), '--purpose', 'training', '--baige-container',
+                    '--baige-exclusive-training'], check=True, timeout=remaining_probe)
     probe = read(probe_path)
-    if any(re.search(r'RTX\s*(?:PRO\s*)?6000', row['cuda_name'], re.I) is None for row in probe['devices']):
-        raise ValueError('Eight-GPU campaign requires eight actual RTX6000-family GPUs')
+    if (probe.get('status') != 'passed' or probe.get('purpose') != 'training'
+            or probe.get('exclusive_training_admission') is not True
+            or probe.get('admission_policy') != 'exclusive_scheduler_cuda_pci_pid_memory'
+            or probe.get('utilization_role') != 'telemetry_only'):
+        raise ValueError('Full eight-GPU training admission did not use the reviewed explicit policy')
+    resource_identity = approved_baige_sku(probe['devices'])
     assigned = os.environ['NVIDIA_VISIBLE_DEVICES'].split(',')
     if len(assigned) != 8 or set(assigned) != {row['uuid'] for row in probe['devices']}:
         raise ValueError('Complete scheduler NVIDIA allocation changed during parent probe')
-    probe.update(source_commit=source, source_files_sha256=plan['source_files_sha256'])
+    probe.update(source_commit=source, source_files_sha256=plan['source_files_sha256'],
+                 approved_resource_identity=resource_identity,
+                 runtime_probe_migration={key: value for key,value in plan['runtime_probe_migration'].items()
+                                          if key != 'full_eight_gpu_cuda_probe'})
     write(probe_path, probe)
     if WALL - (time.time() - started) < chosen['longest_worker_seconds'] + FINAL:
         raise ValueError('Startup/probe consumed the remaining full-campaign reserve')
-    plan.update(admitted=True, parent_probe_sha256=digest(probe_path))
+    parent_sha256 = digest(probe_path)
+    plan['runtime_probe_migration']['full_eight_gpu_cuda_probe'] = dict(passed=True,
+        parent_probe_sha256=parent_sha256, combined_fixture_and_probe_seconds=time.monotonic()-runtime_started)
+    plan.update(admitted=True, parent_probe_sha256=parent_sha256, resource_identity=resource_identity)
     write(output / 'plan.json', plan)
     event('campaign_admitted', target_steps=chosen['target_steps'], seed_count=chosen['seed_count'],
           required_arms=chosen['required_arms'], layout=chosen['layout'],
-          selection_reason=plan['selection_reason'], gpu_assignment=plan['gpu_assignment'])
+          selection_reason=plan['selection_reason'], gpu_assignment=plan['gpu_assignment'],
+          raw_gpu_sku=resource_identity['raw_name'])
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = [pool.submit(worker, row['gpu'], row['seed'], row['methods'], chosen, probe_path)
                    for row in plan['gpu_assignment']]
@@ -462,6 +552,10 @@ finally:
                  incomplete_arms=[dict(seed=seed, method=method) for seed, method in sorted(expected-completed)],
                  stage_records=records, elapsed_seconds=time.time()-started, wall_budget_seconds=WALL,
                  allocation_gpu_hours=(time.time()-started)*8/3600, reason=reason,
+                 allocation_budget=plan['allocation_budget'],
+                 combined_gpu_hours_with_prior_reserve=((time.time()-started)+120)*8/3600,
+                 resource_identity=plan.get('resource_identity'),
+                 runtime_probe_migration=plan.get('runtime_probe_migration'),
                  comparison=f"{plan['selected_seed_count']} matched training seeds" if matched else
                      ('incomplete; no matched comparison' if expected else 'not admitted; no geometry selected'))
     write(output / 'plan.json', plan)

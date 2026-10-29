@@ -485,10 +485,12 @@ def run_probe(expected_count, max_idle_memory_mib=256, *, purpose="measurement",
             "note": "Probe process exits before model processes start; CUDA contexts then release."}
 
 
-def run_baige_probe(expected_count, max_idle_memory_mib, purpose):
+def run_baige_probe(expected_count, max_idle_memory_mib, purpose, *, exclusive_training=False):
     from fluffy_bassoon.baige_gpu import validate_container, cuda_pci, map_devices
     if sys.platform != 'linux' or purpose not in ('training', 'evaluation'):
         raise ValueError('Baige container probe requires allocated Linux training/evaluation')
+    if exclusive_training and purpose != 'training':
+        raise ValueError('Exclusive Baige training admission requires training purpose')
     assigned = validate_container(os.environ, socket.gethostname())
     tokens = visible_tokens(os.environ)
     if len(tokens) != expected_count or len(assigned) != expected_count:
@@ -507,12 +509,14 @@ def run_baige_probe(expected_count, max_idle_memory_mib, purpose):
             cuda_uuid=str(props.uuid), cuda_name=props.name, cuda_total_bytes=props.total_memory,
             pci_bus_id=cuda_pci(ordinal)))
     devices = map_devices(cuda, inventory, assigned)
+    utilization_required = purpose == 'training' and not exclusive_training
     for row in devices:
         gpu = row['inventory']
-        # Baige's scheduler allocation is exclusive. Evaluation admission uses
-        # real CUDA/PID/PCI evidence below rather than an idle utilization sample,
-        # which can report100% with no memory or compute process on this runtime.
-        if gpu['memory_used_mib'] > max_idle_memory_mib or (purpose == 'training' and gpu['utilization_percent'] > 5):
+        # The explicit training opt-in uses the exclusive scheduler allocation
+        # and the CUDA/PCI/PID proof below. Utilization can report100% with only
+        # 0-3MiB and no process, so that sample remains telemetry in this mode.
+        # Memory and process occupancy checks remain mandatory in every mode.
+        if gpu['memory_used_mib'] > max_idle_memory_mib or (utilization_required and gpu['utilization_percent'] > 5):
             raise RuntimeError(f'Baige GPU is not idle: {gpu}')
         with torch.cuda.device(row['allocation_ordinal']):
             value = torch.ones((1024, 1024), device='cuda')
@@ -525,18 +529,33 @@ def run_baige_probe(expected_count, max_idle_memory_mib, purpose):
                 raise RuntimeError('Foreign compute process appeared during Baige probe')
             own = {x['gpu_uuid'] for x in processes if x['pid'] == os.getpid()}
             expected = {x['uuid'] for x in devices[:row['allocation_ordinal'] + 1]}
-            if own != expected:
+            # Driver/property initialization may create this process's contexts
+            # eagerly on assigned cards. Require each touched card, forbid any
+            # unassigned card, and require the full set after all tensor checks.
+            if not expected <= own <= set(assigned):
                 raise RuntimeError('CUDA allocation PID accounting disagrees with the PCI mapping')
-            row['allocation_check'] = dict(elements=value.numel(), result=observed, own_pid_gpu_uuids=sorted(own))
+            row['allocation_check'] = dict(elements=value.numel(), result=observed,
+                touched_gpu_uuids=sorted(expected), own_pid_gpu_uuids=sorted(own))
             del value
             torch.cuda.empty_cache()
+    after = compute_processes()
+    if any(row['pid'] != os.getpid() for row in after):
+        raise RuntimeError('Foreign compute process appeared after Baige CUDA checks')
+    if {row['gpu_uuid'] for row in after if row['pid'] == os.getpid()} != set(assigned):
+        raise RuntimeError('Final own-PID allocation differs from the complete scheduler UUID set')
     return dict(status='passed', purpose=purpose, timing_comparison_eligible=False,
         allocation_type='baige_container', hostname=socket.gethostname(), probe_pid=os.getpid(),
         created_at_utc=datetime.now(timezone.utc).isoformat(), devices=devices,
-        idle_utilization_required=purpose != 'evaluation',
+        idle_utilization_required=utilization_required,
+        exclusive_training_admission=exclusive_training,
+        admission_policy=('exclusive_scheduler_cuda_pci_pid_memory' if exclusive_training else
+                          ('strict_idle_training' if purpose == 'training' else 'exclusive_scheduler_evaluation')),
+        utilization_role='idle_admission' if utilization_required else 'telemetry_only',
+        utilization_telemetry={row['uuid']: row['inventory']['utilization_percent'] for row in devices},
+        maximum_initial_memory_mib=max_idle_memory_mib,
         gpu_identity_mapping=dict(method='scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation',
             assigned_nvml_uuids=assigned), compute_processes_before=before,
-        compute_processes_after=compute_processes(), topology=nvidia_query(['nvidia-smi', 'topo', '-m']))
+        compute_processes_after=after, topology=nvidia_query(['nvidia-smi', 'topo', '-m']))
 
 
 def main():
@@ -547,6 +566,8 @@ def main():
     parser.add_argument("--purpose", choices=("measurement", "training", "evaluation"), default="measurement")
     parser.add_argument("--direct-hostname", help="Explicit standalone host only; requires full GPU UUID visibility and no SLURM")
     parser.add_argument('--baige-container', action='store_true', help='Attest scheduled Baige container by PCI identity')
+    parser.add_argument('--baige-exclusive-training', action='store_true',
+                        help='Exclusive Baige training: utilization is telemetry; require scheduler/CUDA/PCI/PID/memory proof')
     parser.add_argument("--allow-step-subset", action="store_true",
                         help="Probe only the selected GPUs within the recorded SLURM step (training/evaluation only)")
     args = parser.parse_args()
@@ -554,11 +575,14 @@ def main():
         parser.error('Evaluation admission is specific to an exclusive Baige scheduler container')
     if args.baige_container and (args.direct_hostname or args.allow_step_subset):
         parser.error("Baige container attestation cannot replace direct/SLURM attestation")
+    if args.baige_exclusive_training and (not args.baige_container or args.purpose != 'training'):
+        parser.error('Exclusive training admission requires --baige-container --purpose training')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     if args.output.exists():
         parser.error("Use a new probe output path")
     try:
-        result = (run_baige_probe(args.expected_count, args.max_idle_memory_mib, args.purpose)
+        result = (run_baige_probe(args.expected_count, args.max_idle_memory_mib, args.purpose,
+                                  exclusive_training=args.baige_exclusive_training)
                   if args.baige_container else run_probe(args.expected_count, args.max_idle_memory_mib,
                   purpose=args.purpose, direct_hostname=args.direct_hostname, allow_step_subset=args.allow_step_subset))
     except Exception as exc:
