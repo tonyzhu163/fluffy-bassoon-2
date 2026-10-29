@@ -623,7 +623,7 @@ def assert_same_context(first_path, second_path):
         raise ValueError("AD/DPT comparison changed the actual context instead of only query labels")
 
 
-def external_candidates(args, sim, motor):
+def external_candidates(args, sim, motor, contract):
     from .vla_history import load_policy
     if motor.feature_encoder is None:
         raise ValueError("Cross-task candidate evaluation requires the common frozen VLA feature interface")
@@ -633,7 +633,10 @@ def external_candidates(args, sim, motor):
         policy, manifest = load_policy(path, expected_sha256=digest, device=args.history_device)
         source = manifest["contract"]
         metadata = source.get("train_metadata", source)
-        if metadata["feature_contract"] != motor.feature_encoder.contract or policy.config.observation_dim != 4104:
+        if (metadata["feature_contract"] != motor.feature_encoder.contract or policy.config.observation_dim != 4104
+                or policy.config.noise_dim != 32
+                or metadata.get("noise_contract", metadata.get("noise")) != contract["noise"]
+                or manifest.get("mode", source.get("mode")) != mode):
             raise ValueError("Candidate feature interface differs from the shared frozen VLA encoder")
         if args.semantic_test:
             tasks = metadata.get("task_manifest", {}).get("tasks", [])
@@ -934,7 +937,7 @@ def main():
         else:
             learner = None
         if args.candidate_full:
-            candidates, source_cost = external_candidates(args, sim, motor)
+            candidates, source_cost = external_candidates(args, sim, motor, contract)
             evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
                 student=candidates, train_steps=source_cost, label_prefix=args.candidate_label))
         write_json(args.output / "summary.json", dict(completed=True, evaluation=evaluation,
