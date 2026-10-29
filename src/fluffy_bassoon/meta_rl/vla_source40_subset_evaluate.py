@@ -22,6 +22,8 @@ from .vla_source40_schedule import LIBERO_COMMIT, content_hash
 from .vla_source40_evaluate import (CostLedger, TargetCase, evaluate_case, load_candidates)
 from .vla_libero import FrozenOpenPI, OfficialSAC, SimulatorClient, write_json
 
+MAX_DIAGNOSTIC_ACTIONS = 21046  # General21,056 reserve minus verified prior10 actions.
+
 
 def comparison_plan():
     groups = []
@@ -30,10 +32,12 @@ def comparison_plan():
             suite='libero_90', task_id=task, initial_state=0, scene_seed=123)
         variants = [('native', None), ('frozen_source_sac', None)]
         variants += [(f'ad_{mode}', scale) for scale in (25, 100, 500) for mode in ('full', 'static')]
+        if task == 0:
+            variants.append(('ad_episode_reset', 500))
         groups += [dict(case=case, method=method, updates=updates, primary=True) for method, updates in variants]
     # Additional controls never replace a primary method/case group.
     for method, updates in [('ad_episode_reset', 500), ('tied_gaussian', None)]:
-        for task in (0, 1):
+        for task in ((1,) if method == 'ad_episode_reset' else (0, 1)):
             groups.append(dict(case=dict(benchmark='libero90', case_id=f'libero90:{task:02d}/state-0/seed-123',
                 suite='libero_90', task_id=task, initial_state=0, scene_seed=123),
                 method=method, updates=updates, primary=False))
@@ -43,7 +47,7 @@ def comparison_plan():
 def charged_actions(directory):
     total = 0
     for journal in Path(directory).glob('group-*/physical-journal'):
-        costs = CostLedger(journal, max_primitive_steps=20000, max_settling_steps=20000).costs()
+        costs = CostLedger(journal, max_primitive_steps=MAX_DIAGNOSTIC_ACTIONS, max_settling_steps=MAX_DIAGNOSTIC_ACTIONS).costs()
         total += sum(row[name] for row in costs.values() for name in
             ('primitive_steps', 'uncertain_primitive_steps_ceiling', 'settling_steps', 'uncertain_settling_steps_ceiling'))
     return total
@@ -187,7 +191,7 @@ def parser():
         ap.add_argument('--' + name, type=Path, required=True)
     for name in ('simulator-pythonpath', 'scales-sha256', 'source-commit', 'expected-hostname'):
         ap.add_argument('--' + name, required=True)
-    ap.add_argument('--max-total-actions', type=int, default=20000)
+    ap.add_argument('--max-total-actions', type=int, default=MAX_DIAGNOSTIC_ACTIONS)
     ap.add_argument('--max-elapsed-seconds', type=float, required=True)
     ap.add_argument('--history-device', default='cuda:0')
     ap.add_argument('--port', type=int, default=8768)
@@ -199,9 +203,9 @@ def main(argv=None):
     args = parser().parse_args(argv)
     if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname:
         raise ValueError('Evaluate only on the explicitly identified allocated Linux host')
-    if (not 0 < args.max_total_actions <= 20000 or not np.isfinite(args.max_elapsed_seconds)
+    if (not 0 < args.max_total_actions <= MAX_DIAGNOSTIC_ACTIONS or not np.isfinite(args.max_elapsed_seconds)
             or args.max_elapsed_seconds <= 0):
-        raise ValueError('Subset target comparison requires its explicit <=20k physical reservation')
+        raise ValueError('Subset target comparison exceeds the explicit remaining diagnostic reservation')
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -218,7 +222,7 @@ def main(argv=None):
         target_population='Predeclared LIBERO90 tasks0/1, state0, seed123; no semantic or outcome filtering',
         frozen_source_sac='Same-corpus source-trained pixel SAC; not ordinary target-online DSRL',
         dpt='Trained source candidates retained; DPT robotic comparison deferred in this slice',
-        primary_episode_ceiling=48, primary_action_ceiling=19680,
+        primary_episode_ceiling=51, primary_action_ceiling=20910,
         interpretation='Small development diagnostic, not full40 transfer or a negative test of meta-learning')
     args.output.mkdir(parents=True, exist_ok=args.resume)
     import fcntl
@@ -261,7 +265,8 @@ def main(argv=None):
                 break
             local_cost = 0
             if path.exists():
-                costs = CostLedger(path / 'physical-journal', max_primitive_steps=20000, max_settling_steps=20000).costs()
+                costs = CostLedger(path / 'physical-journal', max_primitive_steps=MAX_DIAGNOSTIC_ACTIONS,
+                    max_settling_steps=MAX_DIAGNOSTIC_ACTIONS).costs()
                 local_cost = sum(row[name] for row in costs.values() for name in
                     ('primitive_steps', 'uncertain_primitive_steps_ceiling', 'settling_steps', 'uncertain_settling_steps_ceiling'))
             other_cost = charged_actions(args.output) - local_cost
@@ -313,7 +318,7 @@ def main(argv=None):
         if server is not None:
             server.close()
     primary = sum(row['group']['primary'] for row in completed)
-    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 16,
+    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 17,
         completed_primary_groups=primary, completed_groups=completed, stop_reason=stop_reason,
         charged_total_actions=charged_actions(args.output),
         support_query_separate=True, deployment_optimizer_updates=0))

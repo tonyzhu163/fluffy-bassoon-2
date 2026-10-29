@@ -30,16 +30,18 @@ Primary robot diagnostic: predeclared LIBERO90 tasks0 and1, state0, seed123,
 with native frozen motor, frozen same-corpus source-SAC and AD full/static
 at25/100/500 updates. Each method/case receives an independent zero-support
 query and one actual support episode followed by a separate query, with
-paired case/role randomness. Eight methods×two cases×three episodes=48
-episodes, worst-case19,680 actions including settling. No deployment SGD.
-Optional AD500 episode-reset and tied-Gaussian groups run only after every
+paired case/role randomness. Eight methods×two cases×three episodes plus
+a mandatory AD500 episode-reset group on target0 give51 primary episodes,
+worst-case20,910 actions including settling. No deployment SGD. This adds
+one direct fixed-weight memory lesion before any optional groups. Target1's
+AD500 episode-reset and both tied-Gaussian groups run only after every
 primary group, in fixed order, if a full worst-case group reserve fits.
 DPT models are preserved but DPT robotic comparison is deferred in this slice.
 
-The diagnostic escrows20,000 actions from the campaign's21,056 previously
+The diagnostic escrows21,046 actions from the campaign's21,056 previously
 unassigned actions through the canonical `general-ledger.json`; the earlier
 failed typed-JAX qualification's10 settling actions remain charged, leaving
-1,046 unassigned. The original SAC/PPO reservations and1M benchmark total
+zero unassigned. The original SAC/PPO reservations and1M benchmark total
 are unchanged. Target costs are reported separately and target traces remain
 evaluation-only. The original campaign's source-only data contract remains
 unchanged; this is an explicitly accounted diagnostic allocation.

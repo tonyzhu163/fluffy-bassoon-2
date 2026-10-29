@@ -89,3 +89,12 @@ def test_diagnostic_rejects_unreserved_resume_and_wrong_pool(tmp_path, monkeypat
     reserve_ppo(path, ledger, run='ppo-r1', commit='a' * 40, action_cap=9500)
     with pytest.raises(ValueError, match='another campaign or budget pool'):
         reserve_diagnostic(path, ledger, **kwargs)
+
+
+def test_diagnostic_can_use_remaining_reserve_without_increasing_benchmark_cap(tmp_path, monkeypatch):
+    path, ledger = fixture(tmp_path, monkeypatch)
+    reserve_diagnostic(path, ledger, run='target-r1', commit='a' * 40, action_cap=21046, prior_action_charge=10)
+    value = json.loads(ledger.read_text())
+    assert sum(row['maximum_total_actions'] for row in value['reservations'].values()) + value['prior_action_charge'] == 21056
+    with pytest.raises(ValueError, match='exceed'):
+        reserve_diagnostic(path, ledger, run='target-r2', commit='a' * 40, action_cap=410, prior_action_charge=10)

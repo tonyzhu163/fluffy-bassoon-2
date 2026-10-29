@@ -58,7 +58,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-diagnostic \
   --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/general-ledger.json" \
-  --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 20000 --prior-action-charge 10 \
+  --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 21046 --prior-action-charge 10 \
   "${TASK_RESUME_ARGS[@]}" > "$TASK_ATTEMPT/reservation.json"
 TASK_SCALES_SHA=$(sha256sum "$TASK_SCALES" | cut -d' ' -f1)
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
@@ -76,4 +76,4 @@ timeout --signal=INT --kill-after=30s 2100 "$TASK_MODEL" \
   --simulator-python /mowenjie/envs/wam-libero-plus-py310/bin/python \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
-  --max-total-actions 20000 --max-elapsed-seconds 1800 "${TASK_RESUME_ARGS[@]}"
+  --max-total-actions 21046 --max-elapsed-seconds 1800 "${TASK_RESUME_ARGS[@]}"

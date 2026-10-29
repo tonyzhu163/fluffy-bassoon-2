@@ -11,11 +11,15 @@ for each. There is no semantic or outcome-based admission filter. The primary
 methods are native frozen pi0.5, frozen source pixel-SAC, and AD full/static at
 each of25/100/500 updates. Each method/case receives an independent0-support
 query and one actual support episode followed by a separate reset/query.
-Thus16 method/case groups require48 episodes and at most19,680 simulator
-actions at the400-action horizon plus10 settling actions per episode.
+One additional mandatory AD500 episode-reset group on task0 isolates memory
+with the same full-controller weights. Thus17 primary method/case groups
+require51 episodes and at most20,910 simulator actions at the400-action
+horizon plus10 settling actions per episode.
 
-The single joint reservation is20,000 actions, funded from the campaign's
-general diagnostic reserve rather than source training. There are zero motor,
+The single joint reservation is21,046 actions, funded from the campaign's
+21,056 previously unassigned actions after retaining10 earlier failed-qualification
+settling actions. The benchmark1M total and all existing source reservations
+are unchanged; target data remain evaluation-only. There are zero motor,
 controller or critic optimizer updates at deployment. Query randomness is paired
 across methods/support budgets and is independent of the number of random
 support actions. Motor and controller parameters are checked unchanged. Only
@@ -24,7 +28,7 @@ controller uses its own matched optimization; the episode-reset lesion reuses
 the full-controller weights and clears memory at episode boundaries.
 
 Only after every primary group finishes may the predeclared additional controls
-run:500-update AD episode-reset on task0 then1, followed by tied-Gaussian noise
+run:500-update AD episode-reset on task1, followed by tied-Gaussian noise
 on task0 then1. A new0/1 group requires a complete worst-case1,230-action
 reservation. Optional groups never displace a primary comparison. Baselines
 are collected once per target case and reused as the reference at all scales;
@@ -58,7 +62,7 @@ python -m fluffy_bassoon.meta_rl.vla_source40_subset_evaluate \
   --libero-root <pinned-original-libero> --simulator-python <sim-python> \
   --simulator-pythonpath <explicit-simulator-paths> \
   --source-commit <exact-clean-commit> --expected-hostname <allocated-host> \
-  --max-total-actions 20000 --max-elapsed-seconds 1800
+  --max-total-actions 21046 --max-elapsed-seconds 1800
 ```
 
 Use the same arguments and final `--resume` to continue its original output
