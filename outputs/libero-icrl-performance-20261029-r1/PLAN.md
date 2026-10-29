@@ -155,3 +155,12 @@ checkpoint selection. The user also requests investigating Vintix-style
 continuous noise distillation to replace costly improving-RL traces; retain
 that as a separate, clearly labeled data-source comparison, with actual noisy
 actions/outcomes and a validated competent demonstrator.
+
+RTX6000 r4 (`job-5xk9ga3miq96`, `dc1c114`) passed all38 focused Linux tests,
+the actual allocation probe and model loading, then stopped before episodes at
+the newly added pooled-VLA feature/reference check. Preserve its6m10s allocation
+and diagnostics. Do not infer learning performance from this failure. The r5
+comparison uses the independently qualified fixed shared-prior SAC encoder58D;
+it is intentionally a same-task process POC. A separate bounded GPU diagnostic
+will identify the native-VLA numerical discrepancy before semantic task transfer.
+All method data, source cost and trained reset/static controls otherwise remain.

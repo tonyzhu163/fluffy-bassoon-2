@@ -79,7 +79,7 @@ if [ "$TASK_PHASE" = comparison ]; then
   TASK_TRAIN_ARGS=(--max-steps 4000 --warmup-chunks 32 --batch-size 32 --utd 20
     --prior-recovery "$TASK_PRIOR/source-recovery.pkl" --prior-contract "$TASK_PRIOR/contract.json"
     --eval-states 40 41 42 43 --attempts 2 --history-updates 200 --history-device cuda
-    --feature-interface vla-prefix --retry-train-states 0 1 2 3
+    --feature-interface sac --retry-train-states 0 1 2 3
     --retry-validation-states 38 39 --retry-max-steps 4800 --compare-supervised --online-dsrl
     --rl2-updates 4 --rl2-max-steps 3200 --rl2-max-seconds 300 --rl2-trained-reset)
 elif [ "$TASK_PHASE" != qualification ]; then
