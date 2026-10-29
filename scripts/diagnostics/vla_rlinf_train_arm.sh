@@ -6,18 +6,27 @@ TASK_RUN=${2:?fresh training output identity}
 TASK_ARM=${3:?clean or augmented}
 TASK_CLEAN=${4:?completed original-LIBERO corpus index}
 TASK_PLUS=${5:--}
+TASK_PHASE=${6:-supervised}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_OLD=/mowenjie/fluffy-bassoon
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_MODEL=$TASK_OLD/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/bin/python
 TASK_PROBE=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
+TASK_DSRL=$TASK_ROOT/deps/dsrl-pi0-7f48937-20261029-r1/repo
+TASK_OVERLAY=$TASK_ROOT/envs/dsrl-pi0-overlay-20261029-r1
 cd "$TASK_WORKTREE"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"
 test -f "$TASK_CLEAN"
 test ! -e "$TASK_OUTPUT"
-TASK_ARGS=()
+TASK_ARGS=(--phase "$TASK_PHASE")
+if [ "$TASK_PHASE" = source-sac ] || [ "$TASK_PHASE" = all ]; then
+  TASK_ARGS+=(--dsrl-root "$TASK_DSRL")
+elif [ "$TASK_PHASE" != supervised ]; then
+  printf 'Unknown training phase: %s\n' "$TASK_PHASE" >&2
+  exit 2
+fi
 if [ "$TASK_ARM" = augmented ]; then
   test "$TASK_PLUS" != -
   test -f "$TASK_PLUS"
@@ -41,6 +50,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   PYTHONPATH="$TASK_ROOT/envs/pytest-overlay-20261029-r1:$TASK_WORKTREE/src" \
   "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
+export PYTHONPATH=$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OVERLAY
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_rlinf_train_arm \
   --output "$TASK_OUTPUT/experiment" --source-commit "$TASK_SOURCE" --arm "$TASK_ARM" \
   --clean-index "$TASK_CLEAN" "${TASK_ARGS[@]}"

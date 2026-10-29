@@ -5,10 +5,13 @@ once per collection; adding Plus data is explicitly additional source data.
 """
 
 import argparse
+import gzip
 import hashlib
 import json
 import os
 from pathlib import Path
+import pickle
+import random
 import shutil
 import socket
 import subprocess
@@ -221,6 +224,110 @@ def train_supervised(args, assembled, registry):
             torch.cuda.empty_cache()
 
 
+def training_replay(assembled):
+    """Verify raw training episodes against the exact meta-learning contexts."""
+    from .vla_history import file_sha256, load_dataset
+    from .vla_retry_teacher import append_episode_to_replay
+    from types import SimpleNamespace
+    source = SimpleNamespace(replay=[])
+    provenance, steps, episodes = [], 0, 0
+    for entry in assembled["training_trials"]:
+        root, trial = Path(entry["source_root"]).resolve(), entry["trial"]
+        if trial["scene"]["split"] != "train":
+            raise ValueError("Validation interactions cannot enter source SAC replay")
+        data, manifest = load_dataset(entry["datasets"]["ad"]["path"],
+            expected_sha256=entry["datasets"]["ad"]["sha256"])
+        all_rows, traces = [], []
+        for receipt in trial["episodes"]:
+            relative = receipt.get("trace") or str(Path(trial["source_checkpoint"]).parent /
+                f"episode-{receipt['attempt']:03d}.pkl.gz")
+            path = (root / relative).resolve()
+            if not path.is_relative_to(root) or file_sha256(path) != receipt["trace_sha256"]:
+                raise ValueError("Raw source episode path/hash changed")
+            with gzip.open(path, "rb") as stream:
+                saved = pickle.load(stream)  # Trusted local rollouts, never downloaded pickle metadata.
+            rows, summary = saved["rows"], saved["summary"]
+            if (not rows or not rows[-1]["done"] or any(row["done"] for row in rows[:-1])
+                    or summary["initial_state"] != trial["scene"]["initial_state"]
+                    or summary["scene_seed"] != trial["scene"]["scene_seed"]
+                    or sum(row["primitive_steps"] for row in rows) != receipt["primitive_steps"]):
+                raise ValueError("Raw episode differs from its declared complete source trial")
+            all_rows.extend(rows)
+            append_episode_to_replay(source, rows)
+            steps += int(receipt["primitive_steps"])
+            episodes += 1
+            traces.append(dict(path=str(path), sha256=receipt["trace_sha256"],
+                               primitive_steps=receipt["primitive_steps"]))
+        expected = data[0]
+        actual = dict(observations=np.stack([r["public_features"] for r in all_rows]).astype(np.float32),
+            executed_noise=np.stack([r["executed_noise"] for r in all_rows]).astype(np.float32),
+            rewards=np.asarray([r["reward"] for r in all_rows], np.float32),
+            dones=np.asarray([r["done"] for r in all_rows], bool))
+        if any(actual[key].shape != expected[key].shape or actual[key].tobytes() != expected[key].tobytes() for key in actual):
+            raise ValueError("Source SAC replay is not the same real training interaction stream as the students")
+        provenance.append(dict(source_index=entry["source_index"], source_index_sha256=entry["source_index_sha256"],
+            trial_id=trial["trial_id"], traces=traces, dataset=entry["datasets"]["ad"],
+            original_source_contract=manifest["metadata"]["source_contract"]))
+    if steps != assembled["collection_cost"]["training_primitive_steps"] or not source.replay:
+        raise ValueError("Source training interaction accounting differs from the shared dataset")
+    return source.replay, provenance, steps, episodes
+
+
+def train_source_sac(args, assembled, registry):
+    import torch
+    import jax
+    from .vla_history import file_sha256
+    from .vla_libero import DSRL_COMMIT, OfficialSAC, append_json, write_json
+    if args.dsrl_root is None:
+        raise ValueError("Source SAC pretraining requires the pinned original DSRL source")
+    if len(jax.devices("gpu")) != 1 or jax.default_backend() != "gpu":
+        raise ValueError("Source SAC must compute on the single allocated JAX GPU")
+    random.seed(0)
+    np.random.seed(0)
+    torch.manual_seed(0)
+    directory = args.output / "source-sac"
+    directory.mkdir()
+    learner = OfficialSAC(args.dsrl_root, 0)
+    replay, provenance, training_steps, episodes = training_replay(assembled)
+    learner.replay = replay
+    sampler = np.random.default_rng(0)
+    contract = dict(format="rlinf130_offline_source_sac_v1", source_commit=args.source_commit,
+        arm=args.arm, dsrl_commit=DSRL_COMMIT, seed=0, batch_size=32, requested_updates=5000,
+        model_sha256=MODEL_SHA256, motor_receipt_sha256=assembled["common"]["motor_receipt_sha256"],
+        feature_contract=assembled["common"]["feature_contract"], noise_contract=assembled["common"]["noise_contract"],
+        task_key=assembled["common"]["task_key"], replay_rows=len(replay),
+        training_primitive_steps=training_steps, collection_cost=assembled["collection_cost"],
+        source_training_provenance=provenance, training_datasets=assembled["paths"], additional_environment_interactions=0,
+        source_policy="fresh official SAC offline updates on the same train-only real replay as full/static students",
+        limitation="one goal family; raw RGB/state actor does not solve future multi-task instruction conditioning")
+    write_json(directory / "contract.json", contract)
+    registry["source_sac"] = dict(checkpoint=None, contract=dict(
+        path=str((directory / "contract.json").relative_to(args.output)), sha256=file_sha256(directory / "contract.json")),
+        updates=0, requested_updates=5000, replay_rows=len(replay), training_primitive_steps=training_steps,
+        additional_environment_interactions=0, seed=0, batch_size=32, offline=True)
+    write_json(args.output / "registry.json", registry)
+    started = time.monotonic()
+    for update in range(1, 5001):
+        metrics = learner.update(32, sampler)
+        terminal = update == 5000 or time.monotonic() - started >= 600
+        if update == 1 or update % 250 == 0 or terminal:
+            record = dict(update=update, elapsed_seconds=time.monotonic() - started, **metrics)
+            append_json(directory / "metrics.jsonl", record)
+            print(json.dumps(dict(source_sac_training=record)), flush=True)
+            path = directory / "source-recovery.pkl"
+            learner.save(path, sampler, contract, episodes=episodes, primitive_steps=training_steps,
+                offline_updates=update, elapsed_seconds=record["elapsed_seconds"],
+                runtime_rng=dict(torch=torch.get_rng_state(), cuda=torch.cuda.get_rng_state_all()))
+            registry["source_sac"].update(updates=update, checkpoint=dict(
+                path=str(path.relative_to(args.output)), sha256=file_sha256(path)),
+                elapsed_seconds=record["elapsed_seconds"])
+            write_json(args.output / "registry.json", registry)
+        if terminal:
+            break
+    if learner.updates != 5000:
+        raise RuntimeError("Source SAC reached its time bound before 5000 updates; complete recovery retained")
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, required=True)
@@ -228,6 +335,8 @@ def main(argv=None):
     p.add_argument("--arm", choices=("clean", "augmented"), required=True)
     p.add_argument("--clean-index", type=Path, required=True)
     p.add_argument("--plus-index", type=Path)
+    p.add_argument("--phase", choices=("supervised", "source-sac", "all"), default="supervised")
+    p.add_argument("--dsrl-root", type=Path)
     args = p.parse_args(argv)
     if sys.platform != "linux":
         raise ValueError("Train models only on allocated Linux")
@@ -249,6 +358,7 @@ def main(argv=None):
         torch.ones(4, device="cuda").sum().item()
         attest_process_gpu(args.output / "student-binding.json", graphics=False)
         registry = dict(format="rlinf130_trained_arm_v1", arm=args.arm, completed=False,
+            phase=args.phase,
             source_commit=args.source_commit, model_sha256=MODEL_SHA256,
             feature_contract=assembled["common"]["feature_contract"],
             noise_contract=assembled["common"]["noise_contract"], models={},
@@ -256,7 +366,10 @@ def main(argv=None):
             runtime=dict(torch=torch.__version__, cuda=torch.version.cuda, hostname=socket.gethostname()),
             scope="single original goal family; local technical pilot, not broad task generalization")
         write_json(args.output / "registry.json", registry)
-        train_supervised(args, assembled, registry)
+        if args.phase in ("supervised", "all"):
+            train_supervised(args, assembled, registry)
+        if args.phase in ("source-sac", "all"):
+            train_source_sac(args, assembled, registry)
         registry.update(completed=True, elapsed_seconds=time.monotonic() - started)
         write_json(args.output / "registry.json", registry)
         return 0
