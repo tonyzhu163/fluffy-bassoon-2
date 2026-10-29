@@ -439,6 +439,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--method", choices=["qualify", "native", "dsrl-na", "dsrl-na-retry", "dsrl-online", "rl2", "episode-reset"], required=True)
     parser.add_argument("--dsrl-root", type=Path, required=True)
+    parser.add_argument("--robomimic-root", type=Path, required=True,
+                        help="Clean upstream MuJoCo import compatibility source")
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--normalization", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -474,6 +476,17 @@ def main():
         raise ValueError("Run worktree must be clean")
     if sha256(args.checkpoint) != args.checkpoint_sha256 or sha256(args.normalization) != args.normalization_sha256:
         raise ValueError("Frozen input artifact hash differs")
+    compatibility_commit = "8df6e8e482458befaf1decfcd9d635d68a7afcae"
+    if subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.robomimic_root, text=True).strip() != compatibility_commit:
+        raise ValueError("RoboMimic compatibility source commit differs")
+    if subprocess.check_output(["git", "status", "--porcelain"], cwd=args.robomimic_root, text=True).strip():
+        raise ValueError("RoboMimic compatibility source must stay clean")
+    from importlib.util import find_spec
+    installed_env_source = Path(find_spec("robomimic").origin).parent / "envs/env_robosuite.py"
+    source_env = args.robomimic_root / "robomimic/envs/env_robosuite.py"
+    expected_env_sha256 = "43b0f018be42f776eb76fca3e5a7a40318c112883be53ae200b82c45da1c7183"
+    if sha256(installed_env_source) != expected_env_sha256 or sha256(source_env) != expected_env_sha256:
+        raise ValueError("Installed RoboMimic environment differs from the pinned compatibility source")
     args.output.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
     random.seed(args.seed)
@@ -487,6 +500,7 @@ def main():
         motor, config = load_motor(args.dsrl_root, args.checkpoint, args.normalization)
         contract = {key: str(value) if isinstance(value, Path) else value for key, value in vars(args).items()}
         contract.update(frozen_motor_sha256=fingerprint(motor.base_policy), job=socket.gethostname(),
+                        robomimic_commit=compatibility_commit, robomimic_env_sha256=expected_env_sha256,
                         runtime={name: version(name) for name in ("torch", "numpy", "robomimic", "robosuite", "mujoco")},
                         reward="original sum(raw_success - 1) per four-step chunk", dynamics="unchanged Can",
                         trial="same initial scene retried across attempts; no hidden-physics variation",

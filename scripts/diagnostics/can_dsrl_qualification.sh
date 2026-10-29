@@ -6,8 +6,9 @@ TASK_RUN=${2:?fresh run ID}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
 TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
-TASK_PYTHON=$TASK_ROOT/envs/dsrl-can-20261029-r1/bin/python
+TASK_PYTHON=$TASK_ROOT/envs/dsrl-can-20261029-r2/bin/python
 TASK_DSRL=$TASK_ROOT/deps/dsrl-can-20261029-r1/repo
+TASK_ROBOMIMIC=$TASK_ROOT/deps/robomimic-compat-20261029-r1/repo
 TASK_INPUT=$TASK_ROOT/inputs/dsrl-can-8d21b9c-20261029-r1
 [[ $TASK_SOURCE =~ ^[0-9a-f]{40}$ ]]
 [[ $TASK_RUN =~ ^robomimic-can-dsrl-baige-20261029-qual-r[0-9]+$ ]]
@@ -30,7 +31,7 @@ export WANDB_MODE=disabled
 mkdir -p "$NUMBA_CACHE_DIR"
 CUDA_VISIBLE_DEVICES='' "$TASK_PYTHON" -m pytest -q -p no:cacheprovider \
   tests/test_can_dsrl.py tests/test_can_dsrl_compare.py > "$TASK_OUTPUT/tests.log" 2>&1
-TASK_COMMON=(--dsrl-root "$TASK_DSRL" --checkpoint "$TASK_INPUT/state_5000.pt"
+TASK_COMMON=(--dsrl-root "$TASK_DSRL" --robomimic-root "$TASK_ROBOMIMIC" --checkpoint "$TASK_INPUT/state_5000.pt"
   --normalization "$TASK_INPUT/normalization.npz" --source-commit "$TASK_SOURCE"
   --checkpoint-sha256 61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b
   --normalization-sha256 a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a)

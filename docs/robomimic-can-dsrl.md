@@ -6,6 +6,12 @@ not a VLA experiment. Use the released DSRL repository at
 `86ce51834055c02f9013e60dd4c4275606d82df7`, and SB3 submodule
 `10e5d311b5c42fe571ff3eeb72f622ca616a149d`. External sources stay clean.
 
+Pin RoboMimic to upstream `8df6e8e482458befaf1decfcd9d635d68a7afcae`:
+the minimal upstream fix makes the unused legacy `mujoco_py` import optional
+when Robosuite 1.4.1 uses modern MuJoCo. Validate the installed environment
+module against that clean source and record both hashes. This avoids changing
+Can physics, observations or controllers to repair package compatibility.
+
 The motor is the released Can EMA checkpoint `state_5000.pt`, with its own
 normalization statistics, 23 observation dimensions, 7 primitive action
 dimensions, four-action chunks, and eight deterministic DDIM denoising steps.
