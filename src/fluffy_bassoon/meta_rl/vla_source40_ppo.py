@@ -19,7 +19,7 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from .vla_source40_schedule import SOURCE_SUITES
+from .vla_source40_schedule import LIBERO_COMMIT, SOURCE_SUITES
 
 
 FORMAT = "frozen_vla_ppo_episode_v1"
@@ -191,6 +191,7 @@ def main(argv=None):
     args.model_config, args.feature_interface = 'pi05_libero', 'vla-prefix'
     sim = JournaledSimulator(SimulatorClient(args.port), args.output / 'execution-journal', args.max_total_actions)
     if (sim.metadata.get('suite') != args.suite or sim.metadata.get('task_id') != args.task_id
+            or sim.metadata.get('libero_commit') != LIBERO_COMMIT
             or sim.metadata.get('horizon') != 400 or sim.metadata.get('initial_states') != 50
             or sim.metadata.get('fresh_environment_on_reset') is not True
             or int(sim.metadata.get('settle_steps', -1)) != 10):

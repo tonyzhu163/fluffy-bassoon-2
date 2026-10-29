@@ -108,7 +108,7 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
     pending = None
     for attempt in range(attempts):
         records_before = len(records["observations"])
-        episode_state = (None if state is None else
+        episode_state = (None if state is None or episode_sink is None else
                          {key: value.detach().cpu().clone() for key, value in state.items()})
         def choose(observation):
             nonlocal state, pending, previous_noise, previous_reward, previous_done
