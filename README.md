@@ -1,6 +1,11 @@
-# fluffy-bassoon-2
+# Learning to Steer: In-Context Reinforcement Learning for Frozen VLAs
 
-Can a Continuous Thought Machine (CTM) do in-context reinforcement learning?
+Can a history-conditioned steering policy adapt a frozen vision-language-action
+model to held-out robotic tasks with high sample efficiency and strong final
+performance? We start with LIBERO and compare against ordinary DSRL.
+
+Earlier work asks whether a Continuous Thought Machine (CTM) can do in-context
+reinforcement learning.
 This repository holds the trial environments, the full-trial recurrent PPO
 trainer, the matched learners (persistent CTM, Continuous Memory Machine,
 Transformer-XL, GRU, looped Transformer), the CMM calibration task and the
