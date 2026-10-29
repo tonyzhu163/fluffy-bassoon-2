@@ -80,7 +80,7 @@ def build_schedule(root, *, train_cases, validation_cases, episodes_per_case, ta
         budget_status="Schedule only; creating this file does not authorize full collection",
         learner_rule="Fresh SAC once per task+partition; actor/critic/replay/optimizer persist across cases and episodes; no cross-partition replay",
         source_recipe=dict(warmup_chunks=500, warmup="unbounded tied32D N(0,I), independently sampled per decision",
-            batch_size=256, utd=20, update_timing="after each actual source decision when replay size >500",
+            batch_size=256, utd=20, update_timing="fixed weights/stage during each episode; after a completed episode with replay>500, new_chunks*20 updates",
             sparse_reward="0 success, -1 otherwise per decision", gamma_per_primitive=.999),
         case_split_rule="Whole cases; train states0..39 and validation states40..49; deterministic independent seeds; no source data from targets",
         deployment="Separate evaluation: one support episode plus one query episode; source generation history lengths are not deployment shots")

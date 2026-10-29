@@ -23,25 +23,29 @@ PI05_RECEIPT = "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170
 
 
 class OnlineSourceSimulator:
-    """Insert the unchanged official SAC update after each actual decision."""
+    """Collect with fixed episode weights, then apply official SAC updates."""
     def __init__(self, sim, learner, sampler, observation_fn, *, warmup=500, batch=256, utd=20,
-                 before_step=None, after_outcome=None, after_reset=None):
+                 before_step=None, after_outcome=None, before_reset=None, after_reset=None):
         self.sim, self.metadata = sim, sim.metadata
         self.learner, self.sampler, self.observation_fn = learner, sampler, observation_fn
         self.warmup, self.batch, self.utd = warmup, batch, utd
         self.before_step, self.after_outcome = before_step, after_outcome
         self.after_reset = after_reset
+        self.before_reset = before_reset
         self.provenance = []
 
     def reset(self, initial_state, scene_seed):
         self.provenance = []
+        self.warming = self.learner.updates == 0
+        if self.before_reset:
+            self.before_reset(initial_state, scene_seed)
         result = self.sim.reset(initial_state, scene_seed)
         if self.after_reset:
             self.after_reset(initial_state, scene_seed, result)
         return result
 
     def choose(self, observation):
-        warming = len(self.learner.replay) < self.warmup
+        warming = self.warming
         noise = (self.sampler.standard_normal(32).astype(np.float32) if warming else
                  np.clip(self.learner.action(observation), -1., 1.).astype(np.float32))
         self.pending = dict(observation=observation, noise=noise,
@@ -62,15 +66,29 @@ class OnlineSourceSimulator:
             actions=pending["noise"][None].copy(), next_actions=pending["noise"][None].copy(),
             rewards=reward, masks=np.float32(not outcome["success"]),
             discount=np.float32(.999 ** outcome["primitive_steps"])))
-        metrics = {}
-        if len(self.learner.replay) > self.warmup:
-            for _ in range(self.utd):
-                metrics = self.learner.update(self.batch, self.sampler)
         self.provenance.append(dict(source_stage=pending["stage"],
             source_updates_before=pending["updates_before"], source_updates_after=self.learner.updates,
             source_replay_before=pending["replay_before"], source_replay_after=len(self.learner.replay),
-            source_update_metrics=metrics))
+            source_update_metrics={}))
         return outcome
+
+    def finish_episode(self):
+        metrics = {}
+        if len(self.learner.replay) > self.warmup:
+            for _ in range(len(self.provenance) * self.utd):
+                metrics = self.learner.update(self.batch, self.sampler)
+        return metrics
+
+
+def physical_costs(journal):
+    """Known outcomes plus conservative charges for unresolved RPC intents."""
+    outcomes = {p.stem: json.loads(p.read_text()) for p in journal.glob("decision-*.json")}
+    known = sum(row["primitive_steps"] for row in outcomes.values())
+    uncertain = sum(json.loads(p.read_text())["maximum_primitive_steps"]
+                    for p in journal.glob("intent-*.json")
+                    if "decision-" + p.stem[len("intent-"):] not in outcomes)
+    return dict(known_primitive_steps=known, uncertain_primitive_steps_ceiling=uncertain,
+                primitive_step_budget_charge=known + uncertain)
 
 
 def paired_arrays(rows, labels):
@@ -186,7 +204,14 @@ def main(argv=None):
         args.model_config, args.feature_interface = "pi05_libero", "vla-prefix"
         stage = "motor_qualification"
         motor = FrozenOpenPI(args)
+        journal = args.output / "raw" / "decision-journal"
+        journal.mkdir(exist_ok=True)
+        qualification_reset = journal / f"reset-qualification-{time.time_ns()}.json"
+        write_json(qualification_reset, dict(kind="qualification", returned=False,
+                   settling_steps=int(sim.metadata["settle_steps"])))
         initial = sim.reset(cases[0]["initial_state"], cases[0]["scene_seed"])["observation"]
+        write_json(qualification_reset, dict(kind="qualification", returned=True,
+                   settling_steps=int(sim.metadata["settle_steps"])))
         zeros = np.zeros((10, 32), np.float32)
         a, b = motor.infer(initial, sim.metadata["instruction"], zeros), motor.infer(initial, sim.metadata["instruction"], zeros.copy())
         delta = float(np.max(np.abs(a - b)))
@@ -220,29 +245,36 @@ def main(argv=None):
             progress = learner.restore(recovery, sampler, contract)
             import jax.numpy as jnp
             motor.policy._rng = jnp.asarray(progress.pop("motor_rng"))
-        journal = args.output / "raw" / "decision-journal"
-        journal.mkdir(exist_ok=True)
-        events = sorted(journal.glob("decision-*.json"))
-        physical_cost = sum(json.loads(path.read_text())["primitive_steps"] for path in events)
-        write_json(journal / f"reset-qualification-{time.time_ns()}.json",
-                   dict(kind="qualification", settling_steps=int(sim.metadata["settle_steps"])))
+        physical_cost = physical_costs(journal)["primitive_step_budget_charge"]
         settling_cost = sum(json.loads(path.read_text())["settling_steps"] for path in journal.glob("reset-*.json"))
+        inflight, reset_receipt = None, None
+        def before_reset(initial_state, scene_seed):
+            nonlocal settling_cost, reset_receipt
+            reset_receipt = journal / f"reset-episode-{time.time_ns()}.json"
+            write_json(reset_receipt, dict(kind="episode", returned=False,
+                case_id=cases[progress["case_index"]]["case_id"], initial_state=initial_state,
+                scene_seed=scene_seed, settling_steps=int(sim.metadata["settle_steps"])))
+            settling_cost += int(sim.metadata["settle_steps"])
         def after_reset(initial_state, scene_seed, result):
-            nonlocal settling_cost
-            write_json(journal / f"reset-episode-{time.time_ns()}.json", dict(kind="episode",
+            write_json(reset_receipt, dict(kind="episode", returned=True,
                 case_id=cases[progress["case_index"]]["case_id"], initial_state=initial_state,
                 scene_seed=scene_seed, initial_state_vector_sha256=result.get("initial_state_vector_sha256"),
                 initial_observation_sha256=result["initial_observation_sha256"],
                 settling_steps=int(sim.metadata["settle_steps"])))
-            settling_cost += int(sim.metadata["settle_steps"])
         def before_step(actions):
+            nonlocal physical_cost, inflight
             if physical_cost + len(actions) > args.max_primitive_steps:
                 raise RuntimeError("Physical cost including interrupted attempts would exceed the job ceiling")
+            inflight = dict(event_id=str(time.time_ns()), maximum_primitive_steps=len(actions))
+            write_json(journal / f"intent-{inflight['event_id']}.json", dict(inflight,
+                case_id=cases[progress["case_index"]]["case_id"],
+                episode_in_case=progress["episode_in_case"]))
+            physical_cost += len(actions)
         def after_outcome(pending, outcome):
             nonlocal physical_cost
             # Persist actual outcomes before an optimizer failure can discard
             # the incomplete episode. These are never padded into AD trials.
-            event_id = f"decision-{time.time_ns()}"
+            event_id = f"decision-{inflight['event_id']}"
             trace = journal / (event_id + ".pkl.gz")
             receipt = dict(primitive_steps=int(outcome["primitive_steps"]),
                 success=bool(outcome["success"]), done=bool(outcome["done"]),
@@ -250,7 +282,7 @@ def main(argv=None):
                 source_updates_before=pending["updates_before"], trace=trace.name, trace_sha256=None,
                 trace_status="writing")
             write_json(journal / (event_id + ".json"), receipt)
-            physical_cost += int(outcome["primitive_steps"])
+            physical_cost += int(outcome["primitive_steps"]) - inflight["maximum_primitive_steps"]
             with gzip.open(trace, "wb", compresslevel=1) as stream:
                 pickle.dump(dict(pending=pending, outcome=outcome,
                     case=cases[progress["case_index"]], episode_in_case=progress["episode_in_case"]), stream, protocol=5)
@@ -262,19 +294,27 @@ def main(argv=None):
                          motor_rng=np.asarray(jax.device_get(motor.policy._rng)))
             write_json(args.output / "progress.json", dict(progress, source_updates=learner.updates,
                 replay_rows=len(learner.replay), latest_recovery_sha256=sha256(recovery)))
+            costs = physical_costs(journal)
+            resets = [json.loads(p.read_text()) for p in journal.glob("reset-*.json")]
             write_json(args.output / "index.json", dict(progress,
                 format="openpi_pi05_libero40_source_history_index_v1", completed=False,
                 source_only=True, task_key=args.task_key, partition=args.partition,
                 schedule_sha256=schedule["schedule_sha256"], source_contract_sha256=content_hash(contract),
                 motor_receipt_sha256=motor.metadata["receipt_sha256"], feature_contract=motor.feature_encoder.contract,
-                noise_contract=contract["noise_contract"], actual_primitive_steps=physical_cost,
+                noise_contract=contract["noise_contract"],
+                actual_primitive_steps=costs["known_primitive_steps"],
+                physical_cost_accounting=costs,
                 committed_learning_history_primitive_steps=progress["primitive_steps"],
-                actual_settling_steps=progress["settling_steps"], source_updates=learner.updates,
+                actual_settling_steps=sum(p["settling_steps"] for p in resets if p["returned"]),
+                settling_step_budget_charge=settling_cost,
+                uncertain_settling_steps_ceiling=sum(p["settling_steps"] for p in resets if not p["returned"]),
+                source_updates=learner.updates,
                 latest_recovery_sha256=sha256(recovery), collection_cost_count_once=True))
         if not args.resume:
             save_boundary()
         wrapped = OnlineSourceSimulator(sim, learner, sampler, sac_observation,
-            before_step=before_step, after_outcome=after_outcome, after_reset=after_reset)
+            before_step=before_step, after_outcome=after_outcome,
+            before_reset=before_reset, after_reset=after_reset)
         while has_pending_case(progress, len(cases), contract["target_chunks"]):
             case = cases[progress["case_index"]]
             stage = f"case_{progress['case_index']}"
@@ -285,9 +325,11 @@ def main(argv=None):
                 if (not rows or not rows[-1]["done"] or len(rows) != len(wrapped.provenance)
                         or summary["primitive_steps"] > 400 or any(row["public_features"].shape != (4104,) for row in rows)):
                     raise RuntimeError("Require complete real episodes and every shared prefix feature")
+                update_metrics = wrapped.finish_episode()
                 for row, provenance in zip(rows, wrapped.provenance):
                     row.update(provenance, case_id=case["case_id"], source_partition=args.partition,
-                               source_episode_in_case=progress["episode_in_case"])
+                               source_episode_in_case=progress["episode_in_case"],
+                               source_updates_after_episode=learner.updates)
                 previous = [receipt for receipt in progress["episode_receipts"] if receipt["case_id"] == case["case_id"]]
                 if not isinstance(summary.get("initial_state_vector_sha256"), str):
                     raise RuntimeError("Fresh simulator omitted the actual nominal state-vector hash")
@@ -307,6 +349,7 @@ def main(argv=None):
                 progress["episode_receipts"].append(dict(summary, case_id=case["case_id"],
                     episode_in_case=progress["episode_in_case"], trace=str(trace.relative_to(args.output)),
                     trace_sha256=sha256(trace), source_updates=learner.updates,
+                    source_update_metrics=update_metrics,
                     source_stages=dict(__import__("collections").Counter(row["source_stage"] for row in rows))))
                 progress["episode_in_case"] += 1
                 save_boundary()

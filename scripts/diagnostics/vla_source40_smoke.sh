@@ -55,7 +55,7 @@ export PYTHONPATH=$TASK_WORKTREE/src
   --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST_OVERLAY:$TASK_WORKTREE/src" \
-  "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_source40.py \
+  "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 printf -v TASK_KEY '%s:%02d' "$TASK_SUITE" "$TASK_NUMBER"
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_schedule \

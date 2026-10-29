@@ -6,7 +6,7 @@ import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_schedule import case_plan, content_hash, load_schedule, FORMAT
 from fluffy_bassoon.meta_rl.vla_source40_corpus import (OnlineSourceSimulator, has_pending_case,
-    paired_arrays, validate_simulator)
+    paired_arrays, physical_costs, validate_simulator)
 
 
 def test_many_seeded_cases_cover_each_bank_without_cross_partition_states():
@@ -66,14 +66,52 @@ def test_sac_persists_across_resets_and_updates_only_after_real_warmup():
         collector.reset(episode, 100 + episode)
         noises.append(collector.choose(dict(state=episode)))
         collector.step(None)
+        collector.finish_episode()
         assert len(learner.replay) == episode + 1
     assert learner.updates == 40 and learner.batches == [256] * 40
     assert np.abs(noises[0]).max() > 1  # Warmup is preserved, not silently clipped.
-    np.testing.assert_array_equal(noises[2], np.ones(32))
+    np.testing.assert_array_equal(noises[3], np.ones(32))
     assert collector.provenance[0]["source_updates_before"] == 20
-    assert collector.provenance[0]["source_updates_after"] == 40
+    assert collector.provenance[0]["source_updates_after"] == 20
     assert learner.replay[-1]["masks"] == 1  # Time-limit transitions bootstrap.
     assert learner.replay[-1]["discount"] == pytest.approx(.999 ** 7)
+
+
+def test_crossing_warmup_keeps_gaussian_and_weights_fixed_until_episode_end():
+    class FourDecisionSimulator(Simulator):
+        decisions = 0
+
+        def step(self, actions):
+            self.decisions += 1
+            return dict(super().step(actions), done=self.decisions == 4)
+
+    learner = Learner()
+    collector = OnlineSourceSimulator(FourDecisionSimulator(), learner, np.random.default_rng(0),
+        lambda observation: observation, warmup=2, batch=256, utd=20)
+    collector.reset(0, 0)
+    for decision in range(4):
+        collector.choose(dict(state=decision))
+        collector.step(None)
+        assert learner.updates == 0
+    assert all(row["source_stage"] == "warmup_gaussian" for row in collector.provenance)
+    assert all(row["source_updates_before"] == row["source_updates_after"] == 0
+               for row in collector.provenance)
+    collector.finish_episode()
+    assert learner.updates == 80
+    collector.reset(1, 1)
+    np.testing.assert_array_equal(collector.choose(dict(state=1)), np.ones(32))
+
+
+def test_resume_charges_unresolved_execution_intent_conservatively(tmp_path):
+    (tmp_path / "intent-1.json").write_text(json.dumps(dict(maximum_primitive_steps=10)))
+    (tmp_path / "decision-1.json").write_text(json.dumps(dict(primitive_steps=7)))
+    (tmp_path / "intent-2.json").write_text(json.dumps(dict(maximum_primitive_steps=10)))
+    assert physical_costs(tmp_path) == dict(known_primitive_steps=7,
+        uncertain_primitive_steps_ceiling=10, primitive_step_budget_charge=17)
+    # Receipt persistence resolves the charge even if its bulky trace write was interrupted.
+    (tmp_path / "decision-2.json").write_text(json.dumps(dict(primitive_steps=2, trace_status="writing")))
+    assert physical_costs(tmp_path) == dict(known_primitive_steps=9,
+        uncertain_primitive_steps_ceiling=0, primitive_step_budget_charge=9)
 
 
 def test_recovery_reaching_target_mid_case_still_finishes_that_case():
