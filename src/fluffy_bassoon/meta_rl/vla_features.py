@@ -12,7 +12,7 @@ import types
 import numpy as np
 
 
-FEATURE_KIND = "openpi_final_prefix_visual_mean_language_mean_public_state_v1"
+FEATURE_KIND = "openpi_final_prefix_visual_mean_language_mean_public_state_v2"
 QUALIFICATION_MAX_DELTA = 2e-4
 
 
@@ -70,6 +70,7 @@ def native_prefix_hidden(model, observation):
 
 
 def native_prefix_features(model, observation, public_state):
+    """Legacy fused model/pooling path, retained only for numerical diagnostics."""
     import jax.numpy as jnp
     hidden, mask = native_prefix_hidden(model, observation)
     return pool_prefix(hidden, mask, observation.tokenized_prompt.shape[-1], public_state, xp=jnp)
@@ -89,16 +90,19 @@ class FrozenOpenPIPrefixFeatures:
     def __init__(self, policy, *, checkpoint_receipt_sha256, openpi_commit, model_config):
         from openpi.shared import nnx_utils
         self.policy = policy
-        self.apply = nnx_utils.module_jit(types.MethodType(native_prefix_features, policy._model))
+        self.hidden_apply = nnx_utils.module_jit(types.MethodType(native_prefix_hidden, policy._model))
+        self.fused_apply = nnx_utils.module_jit(types.MethodType(native_prefix_features, policy._model))
         self.calls, self.cache_hits, self.elapsed_seconds = 0, 0, 0.
         self._last_obs, self._last_instruction, self._last_features = None, None, None
         self.contract = dict(kind=FEATURE_KIND, checkpoint_receipt_sha256=checkpoint_receipt_sha256,
             openpi_commit=openpi_commit, model_config=model_config,
             observation_dim=4104, visual_dim=2048, instruction_dim=2048, public_state_dim=8,
-            pooling="separate mask-weighted means of final VLM visual and instruction tokens",
+            pooling="separate NumPy float32 mask-weighted means after native hidden materialization",
             normalization="raw frozen hidden values; student fits normalization on training tasks only",
             trainable_feature_parameters=0, kv_cache_retained=False,
-            execution="native prefix recomputed for features and motor; both costs recorded")
+            execution="standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+            hidden_materialization="standalone module_jit output transferred to host before reduction",
+            pooling_dtype="float32")
 
     def prepared(self, obs, instruction):
         import jax
@@ -116,10 +120,14 @@ class FrozenOpenPIPrefixFeatures:
         if self._last_obs is obs and self._last_instruction == instruction:
             self.cache_hits += 1
             return self._last_features.copy()
-        import jax.numpy as jnp
         started = time.monotonic()
         observation = self.prepared(obs, instruction)
-        result = np.asarray(self.apply(observation, jnp.asarray(obs["state"], dtype=jnp.float32)[None]))[0]
+        # Keep the model output boundary explicit. Fusing pooling into the model
+        # changed BF16 results on the qualified runtime; host transfer prevents
+        # that reduction from being compiled into the native prefix function.
+        hidden, mask = self.hidden_apply(observation)
+        result = pool_prefix(np.asarray(hidden), np.asarray(mask),
+            observation.tokenized_prompt.shape[-1], np.asarray(obs["state"])[None])[0]
         if result.shape != (4104,) or not np.isfinite(result).all():
             raise ValueError("Native pooled VLA feature shape or values differ from the declared contract")
         self.calls += 1
@@ -136,7 +144,7 @@ class FrozenOpenPIPrefixFeatures:
         expected = pool_prefix(np.asarray(hidden), np.asarray(mask),
             observation.tokenized_prompt.shape[-1], np.asarray(obs["state"])[None])[0]
         actual = self(obs, instruction)
-        delta = float(np.max(np.abs(expected - actual)))
+        delta = difference_metrics(expected, actual)["maximum_absolute_error"]
         if delta > QUALIFICATION_MAX_DELTA:
             raise RuntimeError("Pooled feature path differs from native final-prefix hidden states")
         return dict(passed=True, maximum_delta=delta, final_prefix_shape=list(hidden.shape),
@@ -159,20 +167,31 @@ class FrozenOpenPIPrefixFeatures:
         jax_pool = jax.jit(lambda h, m, s: pool_prefix(h, m, prompt_length, s, xp=jnp))
         same_hidden_jax = np.asarray(jax_pool(hidden, mask, state))[0]
         # Direct calls deliberately bypass __call__'s observation-identity cache.
-        fused_first = np.asarray(self.apply(observation, state))[0]
-        fused_repeat = np.asarray(self.apply(observation, state))[0]
+        fused_first = np.asarray(self.fused_apply(observation, state))[0]
+        fused_repeat = np.asarray(self.fused_apply(observation, state))[0]
+        canonical_first = self(obs, instruction)
+        # A new mapping bypasses the observation-identity cache while retaining
+        # exactly the same public input arrays and instruction.
+        canonical_repeat = self(dict(obs), instruction)
         width = hidden_host.shape[-1]
         comparisons = {
             "same_hidden_numpy_vs_jax_pool": partition_differences(host, same_hidden_jax, width),
             "standalone_hidden_numpy_pool_vs_fused_model_pool": partition_differences(host, fused_first, width),
             "standalone_hidden_jax_pool_vs_fused_model_pool": partition_differences(same_hidden_jax, fused_first, width),
             "identical_fused_feature_repeat": partition_differences(fused_first, fused_repeat, width),
+            "standalone_hidden_numpy_pool_vs_canonical_features": partition_differences(host, canonical_first, width),
+            "identical_canonical_feature_repeat": partition_differences(canonical_first, canonical_repeat, width),
         }
-        delta = difference_metrics(host, fused_first)["maximum_absolute_error"]
-        deterministic = bool(np.array_equal(fused_first, fused_repeat))
+        delta = difference_metrics(host, canonical_first)["maximum_absolute_error"]
+        fused_delta = difference_metrics(host, fused_first)["maximum_absolute_error"]
+        deterministic = bool(np.array_equal(canonical_first, canonical_repeat))
         return dict(completed=True, original_qualification_passed=delta <= QUALIFICATION_MAX_DELTA,
             original_qualification_max_delta=QUALIFICATION_MAX_DELTA, maximum_delta=delta,
             identical_feature_function_deterministic=deterministic,
+            identical_fused_feature_function_deterministic=bool(np.array_equal(fused_first, fused_repeat)),
+            legacy_fused_maximum_delta=fused_delta,
+            legacy_fused_original_qualification_passed=fused_delta <= QUALIFICATION_MAX_DELTA,
+            canonical_repeat_bypassed_observation_cache=True,
             comparisons=comparisons, hidden_dtype=str(hidden_host.dtype), hidden_shape=list(hidden_host.shape),
             mask_dtype=str(mask_host.dtype), token_mask=mask_host.astype(bool).tolist(),
             prompt_length=prompt_length, visual_token_count=int(mask_host[:, :-prompt_length].sum()),
