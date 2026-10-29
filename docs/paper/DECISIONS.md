@@ -153,3 +153,7 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
   OpenPI40 native 8/8 + tied 8/8 checks are runtime/headroom evidence only.
   These scores stay in the [evaluation ledger](../frozen-vla-libero/EVALUATION.md),
   outside the new experiment's result slots.
+- Source40 runtime qualification is complete on one task: train59/60 and
+  validation68/68 success, 1,223 actual chunks and4,620 source SAC updates.
+  Paired AD/DPT exports and full recoveries are verified. This is execution
+  evidence; it does not establish an improving teacher or meta-controller.

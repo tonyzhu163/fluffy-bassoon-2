@@ -9,6 +9,8 @@ TASK_SCHEDULE=${3:?reviewed complete-case schedule path}
 TASK_SUITE=${4:?source suite}
 TASK_NUMBER=${5:?source task index}
 TASK_PARTITION=${6:?source partition}
+TASK_RESUME=${7:-}
+case "$TASK_RESUME" in ''|--resume) ;; *) exit 2;; esac
 case "$TASK_SUITE" in libero_spatial|libero_object|libero_goal|libero_10) ;; *) exit 2;; esac
 case "$TASK_PARTITION" in train|validation) ;; *) exit 2;; esac
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
@@ -24,12 +26,20 @@ TASK_SIM=/mowenjie/envs/wam-libero-plus-py310/bin/python
 TASK_TORCH=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
 TASK_TEST_OVERLAY=$TASK_ROOT/envs/pytest-overlay-20261029-r1
 TASK_CHECKPOINT=$TASK_OLD/inputs/pi05-libero-openpi-20261027-r1
-test ! -e "$TASK_OUTPUT"
-mkdir -p "$TASK_OUTPUT"
+if [ "$TASK_RESUME" = --resume ]; then
+  test -f "$TASK_OUTPUT/experiment/source-recovery.pkl"
+  test -f "$TASK_OUTPUT/schedule.json"
+  cmp "$TASK_SCHEDULE" "$TASK_OUTPUT/schedule.json"
+else
+  test ! -e "$TASK_OUTPUT"
+  mkdir -p "$TASK_OUTPUT"
+fi
+TASK_ATTEMPT=$TASK_OUTPUT/attempts/$(date -u +%Y%m%dT%H%M%S)-$$
+mkdir -p "$TASK_ATTEMPT"
 cd "$TASK_WORKTREE"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"
-exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
+exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
 TASK_SIM_PID=
 task_cleanup() {
   TASK_RC=$?
@@ -38,6 +48,7 @@ task_cleanup() {
     kill "$TASK_SIM_PID" 2>/dev/null || true
     wait "$TASK_SIM_PID" 2>/dev/null || true
   fi
+  printf '%s\n' "$TASK_RC" > "$TASK_ATTEMPT/exit-code.txt"
   printf '%s\n' "$TASK_RC" > "$TASK_OUTPUT/exit-code.txt"
   exit "$TASK_RC"
 }
@@ -54,11 +65,11 @@ export MAGICK_CODER_MODULE_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagic
 export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export PYTHONPATH=$TASK_WORKTREE/src
 "$TASK_TORCH" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
-  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
-export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
+  --baige-container --baige-exclusive-training --output "$TASK_ATTEMPT/gpu-probe.json"
+export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST_OVERLAY:$TASK_WORKTREE/src" \
   "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
-  > "$TASK_OUTPUT/focused-tests.log" 2>&1
+  > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 printf -v TASK_KEY '%s:%02d' "$TASK_SUITE" "$TASK_NUMBER"
 "$TASK_MODEL" - "$TASK_SCHEDULE" "$TASK_OUTPUT/schedule.json" "$TASK_KEY" "$TASK_PARTITION" "$TASK_OUTPUT/budget.json" <<'PYPLAN'
 import json, pathlib, shutil, sys
@@ -67,7 +78,11 @@ original, destination, key, partition, budget_path = sys.argv[1:]
 plan = load_schedule(original)
 assert plan.get('collection_mode') == 'complete_cases', 'Require explicit complete-case mode'
 assert any(task['task_key'] == key for task in plan['tasks']), key
-shutil.copyfile(original, destination)
+if pathlib.Path(original).resolve() != pathlib.Path(destination).resolve():
+    if pathlib.Path(destination).exists():
+        assert pathlib.Path(original).read_bytes() == pathlib.Path(destination).read_bytes()
+    else:
+        shutil.copyfile(original, destination)
 budget = selected_partition_budget(plan, partition)
 pathlib.Path(budget_path).write_text(json.dumps(budget, indent=2) + '\n')
 print(json.dumps(dict(task=key, partition=partition, schedule_sha256=plan['schedule_sha256'], budget=budget), indent=2), flush=True)
@@ -102,17 +117,19 @@ print('Motor PRNG serialization round-trip passed for typed and legacy keys', fl
 PY
 PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps \
   "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
-  --output "$TASK_OUTPUT/simulator" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_NUMBER" \
-  --horizon 400 --fresh-environment-on-reset > "$TASK_OUTPUT/simulator.log" 2>&1 &
+  --output "$TASK_ATTEMPT/simulator" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_NUMBER" \
+  --horizon 400 --fresh-environment-on-reset > "$TASK_ATTEMPT/simulator.log" 2>&1 &
 TASK_SIM_PID=$!
 for TASK_POLL in $(seq 1 600); do
-  if [ -e "$TASK_OUTPUT/simulator/simulator-ready.json" ]; then break; fi
+  if [ -e "$TASK_ATTEMPT/simulator/simulator-ready.json" ]; then break; fi
   kill -0 "$TASK_SIM_PID"
   sleep 1
 done
-test -e "$TASK_OUTPUT/simulator/simulator-ready.json"
+test -e "$TASK_ATTEMPT/simulator/simulator-ready.json"
+TASK_RESUME_ARGS=()
+if [ "$TASK_RESUME" = --resume ]; then TASK_RESUME_ARGS=(--resume); fi
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_corpus \
   --schedule "$TASK_OUTPUT/schedule.json" --task-key "$TASK_KEY" --partition "$TASK_PARTITION" \
   --output "$TASK_OUTPUT/experiment" --port 8765 --openpi-root "$TASK_OPENPI" \
   --dsrl-root "$TASK_DSRL" --checkpoint "$TASK_CHECKPOINT" --source-commit "$TASK_SOURCE" \
-  --max-primitive-steps "$TASK_MAX_STEPS"
+  --max-primitive-steps "$TASK_MAX_STEPS" "${TASK_RESUME_ARGS[@]}"

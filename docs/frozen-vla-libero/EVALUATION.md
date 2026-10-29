@@ -3,6 +3,35 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Completed official OpenPI40 source runtime qualification
+
+The new source40 collector completed independent train and validation streams
+on `libero_spatial:00`, with the official frozen OpenPI `pi05_libero` motor.
+
+| Source partition / Baige job | Episodes / successes | Query chunks | SAC updates | Primitive + settling actions |
+| --- | ---: | ---: | ---: | ---: |
+| Train `job-f0gv7b32ers5` | 60 / 59 | 606 | 2,220 | 5,796 + 610 |
+| Validation `job-1g94ufvin6wa` | 68 / 68 | 617 | 2,400 | 5,848 + 690 |
+
+- Both exited0 and saved paired AD/DPT datasets, source checkpoints and full
+  recovery states; final file hashes were independently verified. Train uses
+  fifteen nominal states0–14; validation uses ten states40–49 across seventeen
+  seeded cases, with four episodes/case. Repeated seeds do not create new
+  nominal placements. Learners/replays are independent across partitions.
+- Published-recipe warmup exceeds500 query chunks, batch256/UTD20, with
+  updates between episodes. Actual SAC-behavior chunks:103 train/112 validation.
+  Finite source losses and advancing updates qualify execution, not an
+  improving policy or a competent deterministic expert.
+- Train source `b48b3da`; validation source `1650ae2`. Focused Linux tests:
+  133/138 passed respectively, with two JAX skips in the probe environment;
+  actual OpenPI typed/legacy PRNG round-trips passed. Actual hardware was
+  NVIDIA RPBZZZ6, not a verified RTX6000; worker times642.16/666.66s.
+- These bounded chunk-target runs do not cover all40 tasks or exhaust their
+  schedules. No controller robot result under the new source40/target90
+  contract exists yet. The 127/128 source successes leave little failure
+  contrast on this one task and establish no adaptation or memory advantage.
+- [Independent receipts, exact indices and interpretation](../../outputs/libero40-source-qualification-audit-20261029-r1/README.md).
+
 ## Completed RLinf130 history-controller development smoke
 
 Baige Plus `job-immogbrrev71` and Pro `job-4cemq3xgqeiq`, immutable source

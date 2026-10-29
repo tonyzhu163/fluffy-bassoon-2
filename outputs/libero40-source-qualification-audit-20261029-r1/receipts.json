@@ -1,0 +1,180 @@
+{
+  "format": "libero40_source_qualification_receipt_v1",
+  "audited_at_utc": "2026-10-29T14:26:44.597462+00:00",
+  "source_only": true,
+  "partitions": [
+    {
+      "run": "libero40-pi05-source-smoke-20261029-s00-train-r2",
+      "job": "job-f0gv7b32ers5",
+      "source_commit": "b48b3da95021d369f2cc9ede7cec8b5d07db7a83",
+      "index_sha256": "ab6d2c77c6d5036c22161ccc6639766ed1bc9011fcb68005f30158e5e451b3fb",
+      "exit_code": 0,
+      "episodes": 60,
+      "successes": 59,
+      "cases": 15,
+      "chunks": 606,
+      "primitive_steps": 5796,
+      "settling_steps": 610,
+      "source_updates": 2220,
+      "worker_seconds": 642.156886043027,
+      "initial_state_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "distinct_nominal_state_vectors": 15,
+      "distinct_seeded_cases": 15,
+      "observed_stage_chunks": {
+        "warmup_gaussian": 503,
+        "sac_online": 103
+      },
+      "terminal_source_loss": {
+        "actor_loss": -7.84986686706543,
+        "critic_loss": 0.12981930375099182
+      },
+      "tests": "133 passed, 2 skipped in 5.58s",
+      "verified_files": [
+        {
+          "kind": "ad",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-train-r2/experiment/prefix-through-case-00014/ad.npz",
+          "sha256": "8cb45a645229a9437f9bef0807ac2301ccb1fb4dea6325a96f794cf3e074d59c",
+          "bytes": 8987230
+        },
+        {
+          "kind": "dpt",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-train-r2/experiment/prefix-through-case-00014/dpt.npz",
+          "sha256": "ac11771d119172ea91779df9f6b5c0aa988c2094ce5e4a4556b9abdca57682ab",
+          "bytes": 8982642
+        },
+        {
+          "kind": "source_checkpoint",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-train-r2/experiment/case-00014-source.pkl",
+          "sha256": "e214a7feb9dbf175e4a1c581afa623e4f03c1a5a9e5c8a3696c0e30de8c9858c",
+          "bytes": 51983127
+        },
+        {
+          "kind": "full_recovery",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-train-r2/experiment/source-recovery.pkl",
+          "sha256": "1c75d511be019a03d63e3d88adcd8b1796f089008470dc17a553469195288a7d",
+          "bytes": 51983523
+        }
+      ],
+      "motor_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+      "feature_contract": {
+        "kind": "openpi_final_prefix_visual_mean_language_mean_public_state_v2",
+        "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+        "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+        "model_config": "pi05_libero",
+        "observation_dim": 4104,
+        "visual_dim": 2048,
+        "instruction_dim": 2048,
+        "public_state_dim": 8,
+        "pooling": "separate NumPy float32 mask-weighted means after native hidden materialization",
+        "normalization": "raw frozen hidden values; student fits normalization on training tasks only",
+        "trainable_feature_parameters": 0,
+        "kv_cache_retained": false,
+        "execution": "standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+        "hidden_materialization": "standalone module_jit output transferred to host before reduction",
+        "pooling_dtype": "float32"
+      },
+      "noise_contract": "32D tied across native H10; warmup unbounded N(0,I), then SAC clipped[-1,1]; no rescaling"
+    },
+    {
+      "run": "libero40-pi05-source-smoke-20261029-s00-validation-r1",
+      "job": "job-1g94ufvin6wa",
+      "source_commit": "1650ae2075646c5748ced929032e5fc0df06c10b",
+      "index_sha256": "976f969cc724d49ecb932b77933f0b1513b8cb6500c15a9242f012e8336b5ba7",
+      "exit_code": 0,
+      "episodes": 68,
+      "successes": 68,
+      "cases": 17,
+      "chunks": 617,
+      "primitive_steps": 5848,
+      "settling_steps": 690,
+      "source_updates": 2400,
+      "worker_seconds": 666.6644609691575,
+      "initial_state_ids": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "distinct_nominal_state_vectors": 10,
+      "distinct_seeded_cases": 17,
+      "observed_stage_chunks": {
+        "warmup_gaussian": 505,
+        "sac_online": 112
+      },
+      "terminal_source_loss": {
+        "actor_loss": -7.982638359069824,
+        "critic_loss": 0.08221440762281418
+      },
+      "tests": "138 passed, 2 skipped in 6.82s",
+      "verified_files": [
+        {
+          "kind": "ad",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/prefix-through-case-00016/ad.npz",
+          "sha256": "7b1511c5ba1e6488c9c9f829cef892ba0a85839183e36f4b5e5496b03b3a5fc3",
+          "bytes": 9149823
+        },
+        {
+          "kind": "dpt",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/prefix-through-case-00016/dpt.npz",
+          "sha256": "efc0feac66471525a3d4551a07261e8d8164f300f2857afbf7e52c0773c7c9e0",
+          "bytes": 9143984
+        },
+        {
+          "kind": "source_checkpoint",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/case-00016-source.pkl",
+          "sha256": "c188498866b7e2c5bee211813e5c9ae68d3cff5606f376675c1b76adeb6dee1f",
+          "bytes": 52266284
+        },
+        {
+          "kind": "full_recovery",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/source-recovery.pkl",
+          "sha256": "b325dc33e73810bb628ac741df58ab78f4dd954069cfd6faf57693785bd958cd",
+          "bytes": 52266680
+        }
+      ],
+      "motor_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+      "feature_contract": {
+        "kind": "openpi_final_prefix_visual_mean_language_mean_public_state_v2",
+        "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+        "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+        "model_config": "pi05_libero",
+        "observation_dim": 4104,
+        "visual_dim": 2048,
+        "instruction_dim": 2048,
+        "public_state_dim": 8,
+        "pooling": "separate NumPy float32 mask-weighted means after native hidden materialization",
+        "normalization": "raw frozen hidden values; student fits normalization on training tasks only",
+        "trainable_feature_parameters": 0,
+        "kv_cache_retained": false,
+        "execution": "standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+        "hidden_materialization": "standalone module_jit output transferred to host before reduction",
+        "pooling_dtype": "float32"
+      },
+      "noise_contract": "32D tied across native H10; warmup unbounded N(0,I), then SAC clipped[-1,1]; no rescaling"
+    }
+  ],
+  "disjoint_initial_state_ids": true,
+  "interpretation": "Runtime and real source updates qualified; one easy source task, no frozen-controller or adaptation benefit established"
+}

@@ -11,7 +11,7 @@ separate budgets.
 ## Exact interaction and state schedule
 
 The reviewed complete-case plan is
-[`../libero40-all 40-plan-20261029-r1/schedule.json`](../libero40-all 40-plan-20261029-r1/schedule.json),
+[`../libero40-all40-plan-20261029-r1/schedule.json`](../libero40-all40-plan-20261029-r1/schedule.json),
 content hash `06cdf07de074da60cf8619d21013e7364f9ee80c47b1e2e757531a3aefb1bd67`.
 It uses source generator/collector code `1650ae2075646c5748ced929032e5fc0df06c10b`.
 
@@ -134,9 +134,10 @@ allowance. No existing data needs to be deleted or moved.
 The collector already persists a complete recovery at episode boundaries and
 journals execution intents before each physical RPC. An unresolved intent is
 conservatively charged on resume. Preserve the exact source worktree, schedule,
-output identity and complete recovery. The fresh-run `vla_source40_collect.sh`
-rejects an existing output; resume must invoke the pinned collector's `--resume`
-path rather than rerunning that fresh-output launcher.
+output identity and complete recovery. The integrated `vla_source40_collect.sh` accepts a final `--resume` argument
+for the same pinned output; it preserves per-attempt logs and launches a fresh
+simulator. The allocated numerical recovery check is pending. An actual
+interrupted full-collection continuation remains to be qualified.
 
 The40/20episode budget cannot guarantee500 query chunks on a task solved in
 very few decisions. Record whether each source teacher actually updates and

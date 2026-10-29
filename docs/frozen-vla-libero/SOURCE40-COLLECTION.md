@@ -86,3 +86,24 @@ whether a changing-policy AD/DPT prefix exists. A raw-only history is retained
 honestly. Interrupted actions consume the write-ahead physical budget; a run
 that cannot finish within its cap fails with partial coverage rather than
 claiming that every scheduled case was visited.
+
+## Resume the same pinned source stream
+
+The launcher accepts a final `--resume` argument. Reuse the exact source commit,
+worktree, schedule and output identity; a new scheduler allocation may run it.
+It retains previous attempt logs and GPU/test receipts under `attempts/`, starts
+a fresh simulator process and restores the last complete episode's full SAC,
+replay, optimizer, sampler and motor RNG state. The collector charges interrupted
+physical actions separately. Do not increase the source ceiling while resuming;
+failure to finish within the declared ceiling remains partial coverage.
+
+```sh
+bash scripts/diagnostics/vla_source40_collect.sh <same-SHA> <same-run-id> \
+  /mowenjie/fluffy-bassoon-2/outputs/<same-plan-id>/schedule.json \
+  libero_spatial 0 train --resume
+```
+
+An allocated numerical diagnostic in `vla_source40_training_smoke.sh` checks
+that two restorations reproduce the same next real SAC update and motor PRNG
+split without changing the source recovery. This does not substitute for an
+interrupted full-collection continuation test or authorize a larger run.

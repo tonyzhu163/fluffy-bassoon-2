@@ -318,8 +318,12 @@ is the current design; source scale and compute budget remain unspecified.
   Plus and Pro development each 8/8. See the ledger for exact costs, settings
   and hashes. These source datasets and prior clean+Plus comparison remain
   historical; they are excluded from the new source40 training arm.
-- **Pending under the new contract:** allocated runtime requalification,
-  useful steering headroom, qualified source learning,
+- **Runtime qualified under the new contract:** one source40 task, independent
+  train/validation streams, 128 episodes/127 successes, 1,223 query chunks and
+  4,620 actual source SAC updates; complete recoveries and paired AD/DPT
+  exports. This qualifies execution, not an improving teacher or adaptation.
+- **Pending under the new contract:** useful steering headroom, source-policy
+  competence,
   source40 corpus/controller training and separate-query one-shot evaluation.
   No frozen-controller robot result under this contract is established.
 - Independently qualified expert labels, context/feedback benefit, competitive
