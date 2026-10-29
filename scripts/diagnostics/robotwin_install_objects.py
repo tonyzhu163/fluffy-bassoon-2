@@ -53,7 +53,9 @@ def install(archive, root):
                 if relative.parts[0] != "objects" or len(relative.parts) < 2:
                     raise ValueError(f"Unexpected archive root: {member.filename}")
                 relative = Path(*relative.parts[1:])
-                if relative.name == ".DS_Store":
+                # Root README/scripts are not model assets and the manifest
+                # intentionally inventories object-family files only.
+                if len(relative.parts) < 2 or relative.name == ".DS_Store":
                     continue
                 if (member.external_attr >> 16) & 0o170000 == 0o120000:
                     raise ValueError(f"Symlink in archive: {member.filename}")
