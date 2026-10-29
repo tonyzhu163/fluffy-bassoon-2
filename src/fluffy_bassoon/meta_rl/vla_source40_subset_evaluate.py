@@ -22,7 +22,7 @@ from .vla_source40_schedule import LIBERO_COMMIT, content_hash
 from .vla_source40_evaluate import (CostLedger, TargetCase, evaluate_case, load_candidates)
 from .vla_libero import FrozenOpenPI, OfficialSAC, SimulatorClient, write_json
 
-MAX_DIAGNOSTIC_ACTIONS = 21046  # General21,056 reserve minus verified prior10 actions.
+MAX_DIAGNOSTIC_ACTIONS = 33046  # General21,046 plus an explicit12k PPO-pool evaluation escrow.
 
 
 def comparison_plan():
@@ -30,17 +30,17 @@ def comparison_plan():
     for task in (0, 1):
         case = dict(benchmark='libero90', case_id=f'libero90:{task:02d}/state-0/seed-123',
             suite='libero_90', task_id=task, initial_state=0, scene_seed=123)
-        variants = [('native', None), ('frozen_source_sac', None)]
+        variants = [('native', None), ('tied_gaussian', None), ('frozen_source_sac', None)]
         variants += [(f'ad_{mode}', scale) for scale in (25, 100, 500) for mode in ('full', 'static')]
-        if task == 0:
-            variants.append(('ad_episode_reset', 500))
+        variants += [('ad_episode_reset', 500), ('dpt_full', 500), ('dpt_static', 500), ('dpt_episode_reset', 500)]
         groups += [dict(case=case, method=method, updates=updates, primary=True) for method, updates in variants]
     # Additional controls never replace a primary method/case group.
-    for method, updates in [('ad_episode_reset', 500), ('tied_gaussian', None)]:
-        for task in ((1,) if method == 'ad_episode_reset' else (0, 1)):
-            groups.append(dict(case=dict(benchmark='libero90', case_id=f'libero90:{task:02d}/state-0/seed-123',
-                suite='libero_90', task_id=task, initial_state=0, scene_seed=123),
-                method=method, updates=updates, primary=False))
+    for updates in (25, 100):
+        for method in ('dpt_full', 'dpt_static'):
+            for task in (0, 1):
+                groups.append(dict(case=dict(benchmark='libero90', case_id=f'libero90:{task:02d}/state-0/seed-123',
+                    suite='libero_90', task_id=task, initial_state=0, scene_seed=123),
+                    method=method, updates=updates, primary=False))
     return groups
 
 
@@ -221,8 +221,8 @@ def main(argv=None):
         source_population='One source goal; fixed25/100/500 optimizer-update scales on the same actual corpus',
         target_population='Predeclared LIBERO90 tasks0/1, state0, seed123; no semantic or outcome filtering',
         frozen_source_sac='Same-corpus source-trained pixel SAC; not ordinary target-online DSRL',
-        dpt='Trained source candidates retained; DPT robotic comparison deferred in this slice',
-        primary_episode_ceiling=51, primary_action_ceiling=20910,
+        dpt='DPT500 full/static/episode-reset are primary; DPT25/100 are optional after all primary groups',
+        primary_episode_ceiling=78, primary_action_ceiling=31980,
         interpretation='Small development diagnostic, not full40 transfer or a negative test of meta-learning')
     args.output.mkdir(parents=True, exist_ok=args.resume)
     import fcntl
@@ -318,7 +318,7 @@ def main(argv=None):
         if server is not None:
             server.close()
     primary = sum(row['group']['primary'] for row in completed)
-    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 17,
+    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 26,
         completed_primary_groups=primary, completed_groups=completed, stop_reason=stop_reason,
         charged_total_actions=charged_actions(args.output),
         support_query_separate=True, deployment_optimizer_updates=0))

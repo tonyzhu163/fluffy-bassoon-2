@@ -17,8 +17,8 @@ Behavior likelihood replay error0, finite losses, full recovery saved.
 | Work | Initial allocation shape | Maximum GPU-hours |
 | --- | --- | ---: |
 |48 SAC source slots, one already completed | Eight independent1GPU workers, up to2h each;6 slots/worker |16 |
-|Shared full-memory PPO,200k actions | One1GPU worker, up to6h cumulative |6 |
-|Separately trained episode-reset PPO,200k actions | One1GPU worker, up to6h cumulative |6 |
+|Shared full-memory PPO,197k actions | One1GPU worker, up to6h cumulative |6 |
+|Separately trained episode-reset PPO,197k actions | One1GPU worker, up to6h cumulative |6 |
 |Frozen source validation of both PPO models,8 goals each | Up to4h cumulative; zero optimizer updates |4 |
 |Total new allocation ceiling | Existing bounded qualifications excluded and recorded separately |32 |
 
@@ -62,10 +62,11 @@ The490k PPO pool is divided before full launches:
 | --- | ---: |
 |Original single/shared qualification reservations |15,500 |
 |New width128 qualification |4,000 |
-|Full-memory training |200,000 |
-|Separately trained episode-reset control |200,000 |
+|Full-memory training |197,000 |
+|Separately trained episode-reset control |197,000 |
 |Frozen source validation,8×2×4,000 |64,000 |
-|Remaining PPO contingency |6,500 |
+|Targeted controller evaluation escrow, no target data in source training |12,000 |
+|Remaining PPO contingency |500 |
 
 Original qualification reservations remain retained even when actual cost
 was lower. Settling, qualifications, failed/recollected attempts and unknown
@@ -96,9 +97,9 @@ The full/reset PPO runs use separate fresh pinned worktrees and equal caps:
 
 ```sh
 bash scripts/diagnostics/vla_source40_multitask_ppo_collect.sh \
-  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-full-20261029-r1 200000 100000 full 3600
+  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-full-20261029-r1 197000 100000 full 3600
 bash scripts/diagnostics/vla_source40_multitask_ppo_collect.sh \
-  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-reset-20261029-r1 200000 100000 episode 3600
+  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-reset-20261029-r1 197000 100000 episode 3600
 ```
 
 Subsequent equal-sized PPO slices pass `--resume` on the exact same source,

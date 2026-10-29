@@ -1,3 +1,8 @@
+**Allocation amendment2026-10-30:** the unlaunched full/reset caps are now197k
+each, equally reduced to support a12k evaluation-only escrow inside the490k
+PPO pool. See [current budget](../libero40-source-1m-20261029-r1/EXECUTION-BUDGET.md).
+The200k examples below are the original proposal, not current launch commands.
+
 # Shared all40 PPO pilot: prepared continuation plan
 
 Status: executable preparation only. No source extension, reset-control run or

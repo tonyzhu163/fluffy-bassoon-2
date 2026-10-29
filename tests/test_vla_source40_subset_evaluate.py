@@ -9,18 +9,18 @@ from fluffy_bassoon.meta_rl.vla_source40_subset_evaluate import comparison_plan,
 from test_vla_source40_evaluate import Simulator, Motor, Policy
 
 
-def test_primary_target_grid_guarantees_one_reset_lesion_within_remaining_reserve():
+def test_primary_grid_compares_ad_dpt_and_memory_lesions_in_accounted_reserve():
     plan = comparison_plan()
     primary = [row for row in plan if row['primary']]
-    assert len(primary) == 17
-    assert sum(3 * 410 for row in primary) == 20910 < 21046
+    assert len(primary) == 26
+    assert sum(3 * 410 for row in primary) == 31980 < 33046
     assert {row['case']['task_id'] for row in primary} == {0, 1}
     assert {row['case']['initial_state'] for row in primary} == {0}
     assert {row['case']['scene_seed'] for row in primary} == {123}
     assert {row['updates'] for row in primary if row['method'] == 'ad_full'} == {25, 100, 500}
-    assert not any(row['method'].startswith('dpt') for row in primary)
-    assert [(row['case']['task_id'], row['updates']) for row in primary if row['method'] == 'ad_episode_reset'] == [(0, 500)]
-    assert all(row['primary'] for row in plan[:17]) and all(not row['primary'] for row in plan[17:])
+    assert {row['method'] for row in primary if row['method'].startswith('dpt')} == {'dpt_full','dpt_static','dpt_episode_reset'}
+    assert [(row['case']['task_id'], row['updates']) for row in primary if row['method'] == 'ad_episode_reset'] == [(0, 500),(1,500)]
+    assert all(row['primary'] for row in plan[:26]) and all(not row['primary'] for row in plan[26:])
 
 
 def test_joint_physical_cap_includes_settling_and_unresolved_execution(tmp_path):

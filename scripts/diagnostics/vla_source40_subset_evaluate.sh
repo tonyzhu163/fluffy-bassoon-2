@@ -60,6 +60,10 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/general-ledger.json" \
   --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 21046 --prior-action-charge 10 \
   "${TASK_RESUME_ARGS[@]}" > "$TASK_ATTEMPT/reservation.json"
+"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-ppo \
+  --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/ppo-ledger.json" \
+  --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 12000 --purpose target_evaluation \
+  "${TASK_RESUME_ARGS[@]}" > "$TASK_ATTEMPT/ppo-pool-evaluation-escrow.json"
 TASK_SCALES_SHA=$(sha256sum "$TASK_SCALES" | cut -d' ' -f1)
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1
@@ -68,7 +72,7 @@ export MAGICK_HOME=/mowenjie/libs/libero-plus-imagemagick
 export MAGICK_CODER_MODULE_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.11/modules-Q16/coders
 export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export PYTHONPATH=$TASK_CUDA:$TASK_OVERLAY:$TASK_WT/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
-timeout --signal=INT --kill-after=30s 2100 "$TASK_MODEL" \
+timeout --signal=INT --kill-after=30s 2700 "$TASK_MODEL" \
   -m fluffy_bassoon.meta_rl.vla_source40_subset_evaluate \
   --scales "$TASK_SCALES" --scales-sha256 "$TASK_SCALES_SHA" --output "$TASK_OUT/experiment" \
   --checkpoint "$TASK_OLD/inputs/pi05-libero-openpi-20261027-r1" --openpi-root "$TASK_OPENPI" \
@@ -76,4 +80,4 @@ timeout --signal=INT --kill-after=30s 2100 "$TASK_MODEL" \
   --simulator-python /mowenjie/envs/wam-libero-plus-py310/bin/python \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
-  --max-total-actions 21046 --max-elapsed-seconds 1800 "${TASK_RESUME_ARGS[@]}"
+  --max-total-actions 33046 --max-elapsed-seconds 2400 "${TASK_RESUME_ARGS[@]}"

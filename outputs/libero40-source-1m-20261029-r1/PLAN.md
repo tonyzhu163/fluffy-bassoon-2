@@ -88,3 +88,17 @@ Measure source improvement, informative feedback, robot query success and
 equal-interaction controls. Report source/deployment cost separately. Source
 training compute and target evaluation remain separately metered; a material
 GPU-hour expansion requires the repository's concrete-budget discussion.
+
+## Targeted-experiment allocation amendment, 2026-10-30
+
+Before any full source-PPO launch, the full/reset caps are197k each rather
+than200k. The490k PPO pool now retains19.5k prior qualification reservations,
+394k full/reset training,64k frozen source validation,12k evaluation-only
+escrow for the paired AD/DPT target diagnostic, and500 contingency. The
+general21,056 reserve funds21,046 further target actions and10 verified
+failed-qualification settling actions. All existing reservations and the
+benchmark1M ceiling stay unchanged; target observations never enter source
+pretraining. The joint33,046-action target cap covers26 primary method/case
+groups including AD/DPT fixed-weight memory lesions. See
+[the diagnostic protocol](../libero40-subset-target-20261030-r1/PROTOCOL.md).
+The larger32GPU-hour request remains pending, and targeted results come first.

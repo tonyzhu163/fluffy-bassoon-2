@@ -98,3 +98,15 @@ def test_diagnostic_can_use_remaining_reserve_without_increasing_benchmark_cap(t
     assert sum(row['maximum_total_actions'] for row in value['reservations'].values()) + value['prior_action_charge'] == 21056
     with pytest.raises(ValueError, match='exceed'):
         reserve_diagnostic(path, ledger, run='target-r2', commit='a' * 40, action_cap=410, prior_action_charge=10)
+
+
+def test_target_evaluation_escrow_shares_ppo_cap_without_becoming_source_data(tmp_path, monkeypatch):
+    path, ledger = fixture(tmp_path, monkeypatch)
+    kwargs = dict(run='transfer-r1', commit='a' * 40, action_cap=12000, purpose='target_evaluation')
+    record = reserve_ppo(path, ledger, **kwargs)
+    assert record['source_pretraining_data'] is False and record['fresh_ppo_training_data'] is False
+    assert reserve_ppo(path, ledger, **kwargs, resume=True) == record
+    with pytest.raises(ValueError, match='exact pinned resume'):
+        reserve_ppo(path, ledger, **dict(kwargs, purpose='fresh_source'), resume=True)
+    with pytest.raises(ValueError, match='exceed'):
+        reserve_ppo(path, ledger, run='full-ppo', commit='a' * 40, action_cap=479000)

@@ -95,14 +95,16 @@ def reserve(campaign, schedule, ledger, *, task, partition, run, commit, resume=
     return record
 
 
-def reserve_ppo(campaign, ledger, *, run, commit, action_cap, resume=False):
+def reserve_ppo(campaign, ledger, *, run, commit, action_cap, resume=False, purpose='fresh_source'):
     value = load_campaign(campaign)
-    if type(action_cap) is not int or action_cap < 1650 or len(commit) != 40:
+    if type(action_cap) is not int or action_cap < 1650 or len(commit) != 40 or purpose not in ('fresh_source', 'target_evaluation'):
         raise ValueError('Require an explicit complete-trial PPO reservation and commit')
     ledger = Path(ledger)
     ledger.parent.mkdir(parents=True, exist_ok=True)
     record = dict(run_id=run, source_commit=commit, maximum_total_actions=action_cap,
                   campaign_sha256=value['campaign_sha256'])
+    if purpose == 'target_evaluation':
+        record.update(purpose=purpose, source_pretraining_data=False, fresh_ppo_training_data=False)
     with ledger.with_suffix('.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         data = json.loads(ledger.read_text()) if ledger.exists() else dict(campaign_sha256=value['campaign_sha256'], reservations={})
@@ -186,6 +188,7 @@ def main():
     ppo.add_argument('--commit', required=True)
     ppo.add_argument('--action-cap', type=int, required=True)
     ppo.add_argument('--resume', action='store_true')
+    ppo.add_argument('--purpose', choices=('fresh_source', 'target_evaluation'), default='fresh_source')
     diagnostic = sub.add_parser('reserve-diagnostic')
     diagnostic.add_argument('--campaign', type=Path, required=True)
     diagnostic.add_argument('--ledger', type=Path, required=True)
@@ -205,7 +208,7 @@ def main():
             partition=args.partition, run=args.run, commit=args.commit, resume=args.resume)
     elif args.operation == 'reserve-ppo':
         data = reserve_ppo(args.campaign, args.ledger, run=args.run, commit=args.commit,
-                           action_cap=args.action_cap, resume=args.resume)
+                           action_cap=args.action_cap, resume=args.resume, purpose=args.purpose)
     else:
         data = reserve_diagnostic(args.campaign, args.ledger, run=args.run, commit=args.commit,
                                  action_cap=args.action_cap, resume=args.resume,

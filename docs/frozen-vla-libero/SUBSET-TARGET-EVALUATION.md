@@ -3,23 +3,26 @@
 This development diagnostic uses an explicit one-goal source corpus and its
 matched AD/DPT controller exports at25/100/500 optimizer updates. These are
 **optimization scales on the same data**, not three source dataset sizes and
-not full40 meta-training. DPT candidates are trained and retained; their robot
-comparison is deferred from the present action slice.
+not full40 meta-training. DPT500 is compared in the primary robot slice;
+DPT25/100 remain optional after all primary groups.
 
 Targets are predeclared LIBERO90 tasks0 and1, initial-state ID0 and scene seed123
 for each. There is no semantic or outcome-based admission filter. The primary
-methods are native frozen pi0.5, frozen source pixel-SAC, and AD full/static at
-each of25/100/500 updates. Each method/case receives an independent0-support
+methods are native frozen pi0.5, tied Gaussian noise, frozen source pixel-SAC,
+AD full/static at25/100/500 updates, DPT full/static at500, and fixed-weight
+AD500/DPT500 episode-reset lesions. Each method/case receives an independent0-support
 query and one actual support episode followed by a separate reset/query.
-One additional mandatory AD500 episode-reset group on task0 isolates memory
-with the same full-controller weights. Thus17 primary method/case groups
-require51 episodes and at most20,910 simulator actions at the400-action
+The reset lesions isolate memory with the same full-controller weights.
+Thus26 primary method/case groups require78 episodes and at most31,980
+simulator actions at the400-action
 horizon plus10 settling actions per episode.
 
-The single joint reservation is21,046 actions, funded from the campaign's
-21,056 previously unassigned actions after retaining10 earlier failed-qualification
-settling actions. The benchmark1M total and all existing source reservations
-are unchanged; target data remain evaluation-only. There are zero motor,
+The single joint reservation is33,046 actions:21,046 from the general reserve
+after retaining10 earlier failed-qualification actions, plus12,000 explicitly
+escrowed from the490k PPO pool. Future, unlaunched full/reset PPO allocations
+are reduced equally from200k to197k each;500 PPO actions remain unassigned.
+The benchmark1M total and every active/completed reservation remain unchanged;
+target data remain evaluation-only. There are zero motor,
 controller or critic optimizer updates at deployment. Query randomness is paired
 across methods/support budgets and is independent of the number of random
 support actions. Motor and controller parameters are checked unchanged. Only
@@ -28,8 +31,8 @@ controller uses its own matched optimization; the episode-reset lesion reuses
 the full-controller weights and clears memory at episode boundaries.
 
 Only after every primary group finishes may the predeclared additional controls
-run:500-update AD episode-reset on task1, followed by tied-Gaussian noise
-on task0 then1. A new0/1 group requires a complete worst-case1,230-action
+run:DPT full/static at25 then100 updates on task0 then1. A new0/1 group
+requires a complete worst-case1,230-action
 reservation. Optional groups never displace a primary comparison. Baselines
 are collected once per target case and reused as the reference at all scales;
 plot reuse is not counted as new interactions.
@@ -62,7 +65,7 @@ python -m fluffy_bassoon.meta_rl.vla_source40_subset_evaluate \
   --libero-root <pinned-original-libero> --simulator-python <sim-python> \
   --simulator-pythonpath <explicit-simulator-paths> \
   --source-commit <exact-clean-commit> --expected-hostname <allocated-host> \
-  --max-total-actions 21046 --max-elapsed-seconds 1800
+  --max-total-actions 33046 --max-elapsed-seconds 2400
 ```
 
 Use the same arguments and final `--resume` to continue its original output

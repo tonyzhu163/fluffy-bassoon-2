@@ -27,22 +27,24 @@ learning clocks. Every DPT scale retains the final20-case teacher and its
 complete generation cost; this is not a DPT source-interaction saving.
 
 Primary robot diagnostic: predeclared LIBERO90 tasks0 and1, state0, seed123,
-with native frozen motor, frozen same-corpus source-SAC and AD full/static
-at25/100/500 updates. Each method/case receives an independent zero-support
+with native frozen motor, tied Gaussian noise, frozen same-corpus source-SAC,
+AD full/static at25/100/500, DPT full/static at500, and AD500/DPT500
+episode-reset lesions. Each method/case receives an independent zero-support
 query and one actual support episode followed by a separate query, with
-paired case/role randomness. Eight methods×two cases×three episodes plus
-a mandatory AD500 episode-reset group on target0 give51 primary episodes,
-worst-case20,910 actions including settling. No deployment SGD. This adds
-one direct fixed-weight memory lesion before any optional groups. Target1's
-AD500 episode-reset and both tied-Gaussian groups run only after every
-primary group, in fixed order, if a full worst-case group reserve fits.
-DPT models are preserved but DPT robotic comparison is deferred in this slice.
+paired case/role randomness. Thirteen methods×two cases×three episodes give
+78 primary episodes, worst-case31,980 actions including settling. No
+deployment SGD. Both AD and DPT receive direct fixed-weight memory lesions.
+DPT25/100 full/static groups run only after all primary groups, in fixed
+order, if a full worst-case group reserve fits.
 
-The diagnostic escrows21,046 actions from the campaign's21,056 previously
-unassigned actions through the canonical `general-ledger.json`; the earlier
-failed typed-JAX qualification's10 settling actions remain charged, leaving
-zero unassigned. The original SAC/PPO reservations and1M benchmark total
-are unchanged. Target costs are reported separately and target traces remain
+The diagnostic escrows33,046 actions:21,046 from the general reserve through
+`general-ledger.json`, with the failed typed-JAX qualification's10 settling
+actions retained, plus12,000 explicitly marked evaluation-only in the PPO
+pool. The future full/reset PPO reservations drop equally from200k to197k;
+PPO pool allocation becomes19,500 original qualification +394,000 newsource
+training +64,000 sourcevalidation +12,000 targetdiagnostic +500 contingency
+=490,000. No active/completed reservation or1M benchmark total changes.
+Target costs are reported separately and target traces remain
 evaluation-only. The original campaign's source-only data contract remains
 unchanged; this is an explicitly accounted diagnostic allocation.
 
