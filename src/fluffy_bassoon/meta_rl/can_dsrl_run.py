@@ -94,7 +94,7 @@ def scalar_evaluation(actor, envs, seeds, *, attempts, native=False, motor=None,
     for scene_seed in seeds:
         seed_scene(scene_seed, seed)
         batch, lanes = [scene_seed], envs[:1]
-        successes, hashes = [], []
+        successes, release_successes, hashes = [], [], []
         for _ in range(attempts):
             obs = np.stack([e.reset(seed=int(s))[0] for e, s in zip(lanes, batch, strict=True)])
             import hashlib
@@ -109,7 +109,9 @@ def scalar_evaluation(actor, envs, seeds, *, attempts, native=False, motor=None,
                 result = [e.step(a) for e, a in zip(lanes, actions, strict=True)]
                 obs = np.stack([r[0] for r in result])
             successes.append([r[4]["success_once"] for r in result])
+            release_successes.append([r[4]["release_logged_success"] for r in result])
         rows.append(dict(scene_seeds=list(map(int, batch)), successes=np.asarray(successes).T.tolist(),
+                         release_logged_successes=np.asarray(release_successes).T.tolist(),
                          initial_observation_sha256=hashes, attempts=attempts,
                          primitive_steps=len(batch) * attempts * HORIZON))
     return rows
@@ -413,8 +415,21 @@ def qualify(args, motor, config, contract):
             vec.close()
         if fingerprint(motor.base_policy) != frozen:
             raise RuntimeError("Frozen motor changed")
+        from .can_dsrl_parity import qualify_environment
+        environment_parity = qualify_environment(args, motor)
+        # Measure the released batch size and complete 20+10 update schedule,
+        # rather than extrapolating from the small recovery fixture above.
+        torch.cuda.synchronize()
+        full_update_started = time.monotonic()
+        samples_before = motor.samples
+        agent.train(gradient_steps=20, batch_size=256)
+        torch.cuda.synchronize()
+        full_update_seconds = time.monotonic() - full_update_started
         return dict(passed=True, real_trial=row, ppo=metrics, likelihood_replay_max_error=error,
-                    dsrl_optimizer_updates=2, motor_unchanged=True, sampler_parity_max_error=sampler_error,
+                    dsrl_optimizer_updates=22, motor_unchanged=True, sampler_parity_max_error=sampler_error,
+                    released_batch_update_seconds=full_update_seconds,
+                    released_batch_update_motor_samples=motor.samples - samples_before,
+                    environment_parity=environment_parity,
                     dsrl_recovery_roundtrip=True)
     finally:
         env.close()

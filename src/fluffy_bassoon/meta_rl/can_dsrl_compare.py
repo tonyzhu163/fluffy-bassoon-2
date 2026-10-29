@@ -153,7 +153,7 @@ def run_online_trial(agent, env, *, scene_seed, attempts, deadline, seed=1,
         initial_hash = hashlib.sha256(obs.tobytes()).hexdigest()
         if rows and initial_hash != rows[0]["initial_observation_sha256"]:
             raise RuntimeError("Retry reset did not reproduce the initial scene")
-        row = dict(attempt=attempt + 1, success=False, primitive_steps=0, chunks=0,
+        row = dict(attempt=attempt + 1, success=False, release_logged_success=False, primitive_steps=0, chunks=0,
                    episode_complete=False, adaptation_complete=False,
                    initial_observation_sha256=initial_hash)
         rows.append(row)
@@ -174,6 +174,7 @@ def run_online_trial(agent, env, *, scene_seed, attempts, deadline, seed=1,
             row["chunks"] += 1
             row["primitive_steps"] += primitive
             row["success"] = bool(info["success_once"])
+            row["release_logged_success"] = bool(info["release_logged_success"])
             row["episode_complete"] = done
             # `train()` uses saved training progress for its learning-rate
             # schedule. Do not restart that schedule with `_setup_learn()`.
@@ -199,6 +200,7 @@ def run_online_trial(agent, env, *, scene_seed, attempts, deadline, seed=1,
     return dict(scene_seed=int(scene_seed), rng_seed=paired_rng_seed, attempts=attempts,
                 attempt_records=rows,
                 successes=[row["success"] if row["episode_complete"] else None for row in rows],
+                release_logged_successes=[row["release_logged_success"] if row["episode_complete"] else None for row in rows],
                 initial_observation_sha256=[row["initial_observation_sha256"] for row in rows],
                 primitive_steps=steps, chunks=chunks, adaptation_train_calls=train_calls,
                 adaptation_learner_updates=int(agent._n_updates) - learner_updates_before,

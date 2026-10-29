@@ -13,6 +13,10 @@ Record both input hashes and the loaded motor hash. Freeze all motor parameters.
 An episode lasts 300 primitive steps, with unchanged Can dynamics and goals.
 The release shifts each raw success reward by -1 and sums over a chunk; preserve
 that training reward and separately measure true simulator success at any step.
+Also report the release logger's `chunk_reward > -1` success criterion. With
+four primitive actions this requires all four rewards in a chunk to equal one;
+it can differ from success at any primitive step. Paper-logger comparisons use
+that companion metric rather than silently equating the two definitions.
 
 ## Trial and claim
 
@@ -62,6 +66,15 @@ training cost separately; this pilot does not match optimizer or model size.
 The first pilot uses stochastic evaluation; a deterministic companion is a
 later diagnostic and must be reported separately. Scene-level pairing
 and independent training seeds are needed before interpreting advantages.
+
+This is the authors' DSRL-NA learner in a common comparison harness. The harness
+plumbs explicit reset seeds (the outer release wrapper ignores `reset(seed)`),
+uses terminal observations for warmup replay rather than the release helper's
+auto-reset next observation, and continues from the final warmup state rather
+than discarding that partial episode with an uncounted reset. These are recorded
+driver differences; a full reproduction of the released training driver remains
+a separate check. A complete shared-action trajectory is checked against the
+released environment wrappers before learning comparisons are admitted.
 
 ## Qualification and recovery
 

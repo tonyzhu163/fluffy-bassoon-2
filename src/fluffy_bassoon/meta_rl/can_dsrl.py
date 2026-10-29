@@ -110,6 +110,7 @@ class CanChunkEnv(gym.Env):
         self.stream = np.random.default_rng(seed)
         self.retries, self.retries_left, self.retry_seed = retries, 0, None
         self.count, self.success, self.scene_seed = 0, False, None
+        self.release_logged_success = False
         self.previous_observation = None
 
     def reset(self, *, seed=None, options=None):
@@ -124,6 +125,7 @@ class CanChunkEnv(gym.Env):
         # The upstream lowdim wrapper deliberately ignores reset(seed=...).
         obs = self.low.reset(options={"seed": self.scene_seed})["state"]
         self.count, self.success = 0, False
+        self.release_logged_success = False
         self.previous_observation = np.asarray(obs, dtype=np.float32).reshape(OBS_DIM)
         return self.previous_observation.copy(), {"scene_seed": self.scene_seed}
 
@@ -141,7 +143,12 @@ class CanChunkEnv(gym.Env):
             self.success |= bool(r > 0)
             self.count += 1
         self.previous_observation = np.asarray(obs["state"], dtype=np.float32).reshape(OBS_DIM)
-        info = dict(success_once=self.success, raw_reward=raw_reward, primitive_steps=CHUNK,
+        # Preserve the authors' LoggingCallback threshold alongside true
+        # simulator success: its chunk_reward > -reward_offset requires all
+        # four binary-success primitive rewards in the same chunk.
+        self.release_logged_success |= reward > -1.
+        info = dict(success_once=self.success, release_logged_success=self.release_logged_success,
+                    raw_reward=raw_reward, primitive_steps=CHUNK,
                     scene_seed=self.scene_seed)
         return self.previous_observation.copy(), reward, self.count == HORIZON, False, info
 
@@ -192,7 +199,7 @@ def collect_trial(policy, motor, envs, seeds, *, attempts=4, reset_memory=False,
     state, previous_noise, previous_reward = None, np.zeros((n, NOISE_DIM)), np.zeros(n)
     records = {key: [] for key in ("observations", "raw_actions", "log_probs", "values", "rewards",
                                    "trial_ends", "attempt_ends", "resets")}
-    successes, initial_hashes = [], []
+    successes, release_successes, initial_hashes = [], [], []
     policy.eval()
     for attempt in range(attempts):
         if reset_memory:
@@ -223,8 +230,11 @@ def collect_trial(policy, motor, envs, seeds, *, attempts=4, reset_memory=False,
             for key, value in values_to_store.items():
                 records[key].append(value.detach())
         successes.append([r[4]["success_once"] for r in result])
+        release_successes.append([r[4]["release_logged_success"] for r in result])
     rollout = {key: torch.stack(value) for key, value in records.items()}
-    return rollout, dict(successes=np.asarray(successes).T.tolist(), initial_observation_sha256=initial_hashes,
+    return rollout, dict(successes=np.asarray(successes).T.tolist(),
+                         release_logged_successes=np.asarray(release_successes).T.tolist(),
+                         initial_observation_sha256=initial_hashes,
                          scene_seeds=list(map(int, seeds)), attempts=attempts, scene_mode=scene_mode,
                          primitive_steps=n * attempts * HORIZON)
 

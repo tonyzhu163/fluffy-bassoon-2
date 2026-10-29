@@ -122,7 +122,8 @@ class FakeEnv:
     def step(self, action):
         self.count += can_dsrl.CHUNK
         return (np.full(23, self.count, np.float32), -4., self.count == can_dsrl.HORIZON, False,
-                dict(primitive_steps=can_dsrl.CHUNK, success_once=bool(action[0] > 0)))
+                dict(primitive_steps=can_dsrl.CHUNK, success_once=bool(action[0] > 0),
+                     release_logged_success=False))
 
     def close(self):
         self.closed.append(self.scene)

@@ -47,10 +47,12 @@ def test_unchanged_chunk_reward_and_true_success():
     assert np.all(obs == 194 % 11)
     _, reward, terminated, truncated, info = env.step(np.zeros(NOISE_DIM))
     assert reward == -3 and info["raw_reward"] == 1 and info["success_once"]
+    assert not info["release_logged_success"]
     assert info["primitive_steps"] == 4 and not terminated and not truncated
     for _ in range(HORIZON // CHUNK - 1):
         _, _, terminated, _, info = env.step(np.zeros(NOISE_DIM))
     assert terminated and info["success_once"]
+    assert not info["release_logged_success"]
     with pytest.raises(RuntimeError, match="Reset"):
         env.step(np.zeros(NOISE_DIM))
 
