@@ -165,6 +165,7 @@ def simulator_server(args):
     metadata = dict(suite=args.suite, task_id=args.task_id, instruction=task.language,
                     libero_commit=libero_commit,
                     initial_states=len(states), bddl_sha256=sha256(bddl),
+                    bddl_file=str(task.bddl_file), problem_folder=str(task.problem_folder),
                     horizon=args.horizon, settle_steps=10, pid=os.getpid(),
                     observation="two RGB cameras and robot proprioception only")
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
@@ -798,7 +799,13 @@ def main():
                 # Loading a saved source learner is an explicit, recorded migration;
                 # neither its prior run directory nor checkpoint is changed.
                 for key in ("motor", "noise", "dsrl_commit", "chunk", "horizon", "simulator"):
-                    if prior_contract[key] != contract[key]:
+                    before, after = prior_contract[key], contract[key]
+                    if key == "simulator":
+                        # Older qualified runs already record the BDDL bytes hash.
+                        # Added readable names do not alter that scientific contract.
+                        after = {k: v for k, v in after.items()
+                                 if k in before or k not in ("bddl_file", "problem_folder")}
+                    if before != after:
                         raise ValueError(f"Migrated source prior changed its scientific interface: {key}")
                 sampler = np.random.default_rng(args.seed)
                 progress = learner.restore(args.prior_recovery, sampler, prior_contract)
