@@ -1,0 +1,128 @@
+{
+  "checked_at": "2026-10-29T19:58:10.594938+08:00",
+  "condition": "reach-v3-hidden",
+  "expected_rows": 544,
+  "audited_rows": 544,
+  "successes": 88,
+  "native_successes": 9,
+  "native_episodes": 32,
+  "per_goal": [
+    {
+      "goal": 0,
+      "native": 0.375,
+      "best_fixed": 0.75,
+      "g1": -0.125,
+      "g2": -0.5,
+      "g3": 0.5163977794943223,
+      "g4": 0.056059458502900075
+    },
+    {
+      "goal": 1,
+      "native": 0.0,
+      "best_fixed": 0.0,
+      "g1": 0.0,
+      "g2": 0.0,
+      "g3": null,
+      "g4": 0.36499095378057
+    },
+    {
+      "goal": 2,
+      "native": 0.75,
+      "best_fixed": 1.0,
+      "g1": 0.0,
+      "g2": 0.0,
+      "g3": 0.8825300198871953,
+      "g4": 0.11198075645875044
+    },
+    {
+      "goal": 3,
+      "native": 0.0,
+      "best_fixed": 0.0,
+      "g1": 0.0,
+      "g2": 0.0,
+      "g3": null,
+      "g4": 0.3649909537805701
+    }
+  ],
+  "gates": {
+    "g1_headroom": {
+      "mean": -0.03125,
+      "undefined_conditions": 0,
+      "threshold": 0.15,
+      "passed": false
+    },
+    "g2_heterogeneity": {
+      "mean": -0.125,
+      "undefined_conditions": 0,
+      "threshold": 0.1,
+      "passed": false
+    },
+    "g3_consistency": {
+      "mean": 0.6994638996907587,
+      "undefined_conditions": 2,
+      "threshold": 0.5,
+      "passed": true
+    },
+    "g4_structure": {
+      "mean": 0.22450553063069767,
+      "undefined_conditions": 0,
+      "threshold": 0.0,
+      "passed": true
+    }
+  },
+  "determinism": {
+    "repeated_groups": 256,
+    "outcome_matched": 255,
+    "trajectory_matched": 0
+  },
+  "goal_coverage": {
+    "per_goal": [
+      {
+        "goal": 0,
+        "best_arm_success": 0.75,
+        "arms_reaching": 4
+      },
+      {
+        "goal": 1,
+        "best_arm_success": 0.0,
+        "arms_reaching": 0
+      },
+      {
+        "goal": 2,
+        "best_arm_success": 1.0,
+        "arms_reaching": 7
+      },
+      {
+        "goal": 3,
+        "best_arm_success": 0.0,
+        "arms_reaching": 0
+      }
+    ],
+    "preferred_goals": 2,
+    "passed": false
+  },
+  "fixed_repeat_first_chunk_distance": {
+    "mean": 0.02789325264893705,
+    "maximum": 0.07165561616420746
+  },
+  "model_fingerprint_before": "77a4e1f5b9a2f85614f918d8b5ad42bd78d1a719d5eaa82568790b741875873a",
+  "final_motor_fingerprint_pending": true,
+  "files": {
+    "s0/reach-v3-hidden/outcomes.jsonl": {
+      "bytes": 137074,
+      "sha256": "da34e377252d7d16916f1f257ef05201e5d72b433651e66ee68f19268537a66c"
+    },
+    "s0/reach-v3-hidden/gates.json": {
+      "bytes": 2907,
+      "sha256": "188322025c6a3351bc2fe6ac21a9336f5f50223556388d8f230b899476870cb2"
+    },
+    "s0/reach-v3-hidden/trajectories/first-chunks.npz": {
+      "bytes": 23575,
+      "sha256": "25b0b8b9ab1383b92e546ff1dfb9ffbfc08c17f9134576554b2fef042b79f772"
+    },
+    "s0/contract.json": {
+      "bytes": 2914,
+      "sha256": "9850c0ff5fb7fbb8d68c3cfab57fa2eb8568c7de264875dc84dbc9d7446a157b"
+    }
+  }
+}

@@ -1,16 +1,21 @@
 # Meta-World released pi0.5 noise screen
 
-Status checked 2026-10-29 19:42 Asia/Shanghai: Baige
-`job-orgyjb0z9h6d` running. The visible-goal reach condition completed all
-**544 episodes**, independently audited. Native success is 31.25%; split-half
-noise-arm selection reaches 37.5%, a 6.25-point gain below the 15-point gate.
-Two of four goals remain unreached by any arm. A read-only snapshot of the owned worker confirms **425/544 hidden-goal
-episodes completed** (last row424), with the next rollout at step155. Its
-JSONL remains buffered until the condition closes; no exit code is present. [Partial results and limits](PARTIAL-RESULTS.md); the overall screen
-and final motor fingerprint remain pending. Both GPU probes and all nine
-focused Linux checks previously passed, with zero skips.
+Status checked 2026-10-29 19:59 Asia/Shanghai: Baige
+`job-orgyjb0z9h6d` running, independently confirmed in the authenticated
+scheduler console. Both reach conditions completed and were audited:
+**1,088 episodes** in total. Visible-goal noise-arm selection gains 6.25 points
+over native sampling; hidden-goal selection scores **25% versus native
+28.125%**, a loss of 3.125 points. Both fail G1, G2 and goal coverage; two of
+four goals remain unreached in each condition. The released motor does not
+qualify useful hidden-goal noise modes for this reach screen.
 
-The authenticated WebShell produced the closed [19:42 worker receipt](checks/worker-progress-194207.json). A separate scheduler-detail read became unavailable when the browser connection closed; this check therefore relies on actual owned-worker progress and saved artifacts.
+A read-only snapshot confirms **245/544 visible-goal push episodes completed**
+(last row244), with the next rollout at step140. Its JSONL remains buffered;
+no exit code or final summary is present. [Partial results and limits](PARTIAL-RESULTS.md)
+record the reach audits; the overall screen and final motor fingerprint remain
+pending. Both GPU probes and all nine focused Linux checks previously passed,
+with zero skips. The [scheduler receipt](checks/scheduler-20261029-1958.json)
+and [19:59 worker receipt](checks/worker-progress-195927.json) preserve this check.
 
 Scientific source: `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`, reviewed from
 main and deployed through verified Git bundles into a fresh detached worktree.
