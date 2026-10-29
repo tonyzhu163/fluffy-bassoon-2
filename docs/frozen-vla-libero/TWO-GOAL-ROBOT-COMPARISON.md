@@ -1,5 +1,9 @@
 # Fixed500 two-goal robot comparison
 
+Status: prepared but not launched/reserved. Superseded by the common-runtime
+comparison of both source banks and controls in one frozen motor process;
+see the current [campaign plan](../../outputs/libero40-source-1m-20261029-r1/PLAN.md).
+
 Use the completed Spatial00 + LIBERO10:00 source assembly and its four
 fixed500 AD/DPT full/static candidates. Evaluate each objective's full and
 trained static controllers plus an episode-reset intervention using exactly

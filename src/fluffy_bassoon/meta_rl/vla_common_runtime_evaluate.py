@@ -351,8 +351,9 @@ def main(argv=None):
             raise RuntimeError('Common-runtime same-noise motor qualification failed')
         write_json(attempt / 'qualification.json', dict(same_noise_max_delta=float(np.abs(a-b).max()),
             features=motor.feature_encoder.qualify(observation, server.metadata['instruction']), extra_physical_resets=0))
+    result = None
     try:
-        run_common(motor, banks, targets, output=args.output, contract=contract, provenance=provenance,
+        result = run_common(motor, banks, targets, output=args.output, contract=contract, provenance=provenance,
             runtime_id=runtime_id, resume=args.resume, reset_motor_rng=reset_motor_rng,
             motor_rng_state=lambda: save_motor_rng(motor.policy._rng), qualify=qualify, deadline=deadline,
             server_factory=lambda case: TargetServer(task_id=case.task_id, python=args.simulator_python,
@@ -363,6 +364,13 @@ def main(argv=None):
         write_json(attempt / 'motor-parameters-after.json', dict(before=before, after=after,
             equal=before == after, reference_probe_sha256='c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9',
             matches_reference=after['sha256'] == 'c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9'))
+        if result is not None:
+            result.update(motor_parameters_unchanged=before == after,
+                motor_parameters_before_sha256=before['sha256'], motor_parameters_after_sha256=after['sha256'])
+            result['strict_common_runtime_primary_eligible'] &= before == after
+            write_json(args.output / 'index.json', result)
+        if before != after:
+            raise RuntimeError('Frozen motor parameter state changed during the common-runtime comparison')
 
 
 if __name__ == '__main__':

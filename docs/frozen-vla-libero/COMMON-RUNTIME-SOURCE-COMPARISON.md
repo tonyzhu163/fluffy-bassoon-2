@@ -26,11 +26,12 @@ original receipts. The new queries perform zero updates and add no replay.
 The full design is28 groups and76 real episodes:72 student episodes plus4
 control queries. At410 actions per episode, its nominal ceiling is31,160.
 The joint32,000-action cap also charges settling, retries and unknown RPCs.
-The driver reads an existing exact-run/source32k target-evaluation escrow;
-it neither reserves resources nor changes the1M campaign. The unlaunched16k
+After GPU/tests pass, the launcher reserves the parent-funded exact-run/source
+32k target-evaluation slice; the driver only reads it and does not change the
+1M campaign. A preflight failure creates no action reservation. The unlaunched16k
 two-goal-only plan is superseded, while its prepared artifacts remain intact.
 
-After funding the32k escrow, use a fresh clean commit-pinned worktree in one
+After funding the32k slice in the campaign plan, use a fresh clean pinned worktree in one
 allocated GPU for at most40 minutes:
 
 ```bash
@@ -50,8 +51,9 @@ trace/context helpers retain actual observations/actions/noises/rewards and
 boundaries, pre-RPC inputs, sampler/global/controller/motor RNG and complete
 episode/group cursors. Initial nominal states and actual RGB/wrist/state
 arrays must match across banks and controls. The qualified sequential motor
-parameter hash is recorded before/after; equality and its probe reference
-are reported without adding an unrelated admission gate.
+parameter hash is recorded before/after. A changed parameter state makes the
+result non-primary and fails the run; equality with the earlier replay-probe
+reference is also reported.
 
 An invocation ID is attached to each executed group attempt. Exact-source
 `--resume` preserves all recoveries and physical charges. If physical episodes

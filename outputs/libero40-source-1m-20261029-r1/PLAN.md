@@ -91,12 +91,12 @@ GPU-hour expansion requires the repository's concrete-budget discussion.
 
 ## Targeted-experiment allocation amendment, 2026-10-30
 
-Before any full source-PPO launch, the full/reset caps are180k each rather
+Before any full source-PPO launch, the full/reset caps are172k each rather
 than200k. The490k PPO pool now retains19.5k prior qualification reservations,
-360k full/reset training,56k frozen source validation,14k evaluation-only
+344k full/reset training,56k frozen source validation,14k evaluation-only
 escrow for the paired AD/DPT target diagnostic,8k paired-memory replication,
 16k ordinary target-online DSRL comparison,
-16k fixed500 two-goal student robot comparison,
+32k common-runtime source-data/robot comparison,
 and500 contingency. The
 general21,056 reserve funds21,046 further target actions and10 verified
 failed-qualification settling actions. All existing reservations and the
@@ -123,11 +123,18 @@ case,8k per case/16k joint. Source training receives none of these target
 observations. The initial one-GPU45-minute slice measures learning onset,
 not convergence. Existing reservations and the global1M ceiling are unchanged.
 
-Before the fixed500 two-source-goal student robot comparison, another16k
-evaluation escrow is funded by equally reducing future/unlaunched full/reset
-PPO caps188k→180k. The twelve method/case groups use the same task0/1 cases,
-six AD/DPT full/static/episode-reset methods and0/1 actual supports, at most
-36 episodes/14,760 nominal actions under a16k joint ceiling. OneGPU25min,
-no target SGD and no target trajectories in source pretraining. Source40 and
-all final target suites remain unchanged. Existing reservations and active
-contracts are preserved. [Contract](../../docs/frozen-vla-libero/TWO-GOAL-ROBOT-COMPARISON.md).
+The prepared16k two-goal-only robot comparison was not launched or reserved.
+After exact-input replay exposed cross-run numerical motor differences, it
+is superseded by a32k common-runtime comparison. Future/unlaunched source-PPO
+full/reset caps therefore reduce188k→172k equally, funding32k in total for
+this comparison. No existing reservation or active contract changes.
+
+One shared frozen motor evaluates both original one-goal and new two-goal
+fixed500 AD/DPT full/static/episode-reset candidates on the same task0/1 cases
+and0/1 actual supports:24 groups/72 episodes/29,520 nominal actions. Native
+K0 and frozen final target-online SAC K0 queries add four episodes/1,640 actions,
+for76 episodes/31,160 nominal actions under32k. OneGPU40min, zero target SGD,
+unchanged source40/final target suites; no target data enters source training.
+This directly compares source scales without the observed cross-process
+motor confound. Any interrupted continuation in another process is retained
+with full costs/recoveries but cannot count as a strict one-process comparison.

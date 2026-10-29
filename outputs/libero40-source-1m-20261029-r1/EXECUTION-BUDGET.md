@@ -17,8 +17,8 @@ Behavior likelihood replay error0, finite losses, full recovery saved.
 | Work | Initial allocation shape | Maximum GPU-hours |
 | --- | --- | ---: |
 |48 SAC source slots, one already completed | Eight independent1GPU workers, up to2h each;6 slots/worker |16 |
-|Shared full-memory PPO,180k actions | One1GPU worker, up to6h cumulative |6 |
-|Separately trained episode-reset PPO,180k actions | One1GPU worker, up to6h cumulative |6 |
+|Shared full-memory PPO,172k actions | One1GPU worker, up to6h cumulative |6 |
+|Separately trained episode-reset PPO,172k actions | One1GPU worker, up to6h cumulative |6 |
 |Frozen source validation of both PPO models,8 goals each | Up to4h cumulative; zero optimizer updates |4 |
 |Total new allocation ceiling | Existing bounded qualifications excluded and recorded separately |32 |
 
@@ -62,13 +62,13 @@ The490k PPO pool is divided before full launches:
 | --- | ---: |
 |Original single/shared qualification reservations |15,500 |
 |New width128 qualification |4,000 |
-|Full-memory training |180,000 |
-|Separately trained episode-reset control |180,000 |
+|Full-memory training |172,000 |
+|Separately trained episode-reset control |172,000 |
 |Frozen source validation,8×2×3,500 |56,000 |
 |Targeted controller evaluation escrow, no target data in source training |14,000 |
 |Six-state paired memory replication, evaluation only |8,000 |
 |Ordinary target-online DSRL learning-onset comparison, evaluation only |16,000 |
-|Two-goal fixed500 student robot comparison, evaluation only |16,000 |
+|Common-runtime source-scale/meta/native/frozen-target-SAC robot comparison |32,000 |
 |Remaining PPO contingency |500 |
 
 Original qualification reservations remain retained even when actual cost
@@ -81,10 +81,10 @@ The six-state replication is funded before launch by reducing future frozen
 PPO validation slots from4,000 to3,500 actions. No existing reservation or
 active run changes. Each slot still fits two complete worst-case K4 trials
 plus initial qualification: `2×4×410+10=3290`. Full/reset training remain
-180k each after the separately declared target-comparison amendments below.
-Joint accounting is488,944 SAC +360,000 source PPO +56,000 frozen
+172k each after the separately declared target-comparison amendments below.
+Joint accounting is488,944 SAC +344,000 source PPO +56,000 frozen
 validation +19,500 retained qualifications +35,046 first target comparison
-+8,000 replication +16,000 target-online DSRL +16,000 two-goal robot comparison +10 prior failed qualification
++8,000 replication +16,000 target-online DSRL +32,000 common-runtime robot comparison +10 prior failed qualification
 +500 contingency=1M.
 The model-only context probe consumes zero simulator actions. Both targeted
 checks precede the pending full32-GPU-hour collection request.
@@ -99,13 +99,16 @@ qualification, settling and all uncertain costs. This measures learning onset,
 not converged DSRL. One GPU/45 minutes is the bounded initial slice; preserve
 exact recovery if incomplete. No target trajectories enter source training.
 
-The fixed500 two-goal student comparison is funded before launch by equally
-reducing future/unlaunched full/reset source-PPO188k→180k. It uses16k actions,
-oneGPU25min, and12 complete method/case groups, each an independent0/1-support
-comparison on the same original two target cases. No new source data, target
-SGD, baseline substitution or active-contract change. The motor numerical
-replay diagnostic consumes zero simulator actions; interpret any cross-run
-comparison only after checking that runtime confound.
+The unreserved/unlaunched16k two-goal-only plan is superseded by a32k shared
+motor comparison, funded by equally reducing future/unlaunched source-PPO
+188k→172k. Both fixed500 source banks and all six AD/DPT full/static/reset
+methods run in one motor process on both original cases. Native K0 and
+frozen final target-online SAC K0 are included; the latter retains its actual
+15-episode training cost, without adding training data or SGD.76 episodes,
+31,160 nominal actions,32k cap,oneGPU40min. Same source/target task banks and
+all existing reservations/active contracts stay fixed. Cross-process resumes
+retain recovery and charged actions but lose the strict shared-process claim.
+The completed numerical replay consumed zero simulator actions.
 
 ## Executable immutable workers
 
@@ -130,9 +133,9 @@ The full/reset PPO runs use separate fresh pinned worktrees and equal caps:
 
 ```sh
 bash scripts/diagnostics/vla_source40_multitask_ppo_collect.sh \
-  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-full-20261029-r1 180000 100000 full 3600
+  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-full-20261029-r1 172000 100000 full 3600
 bash scripts/diagnostics/vla_source40_multitask_ppo_collect.sh \
-  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-reset-20261029-r1 180000 100000 episode 3600
+  3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf libero40-pi05-ppo-reset-20261029-r1 172000 100000 episode 3600
 ```
 
 Subsequent equal-sized PPO slices pass `--resume` on the exact same source,

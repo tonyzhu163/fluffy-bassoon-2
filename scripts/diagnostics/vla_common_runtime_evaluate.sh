@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One allocated GPU <=40min. Reads existing32k escrow; never changes budgets.
+# One allocated GPU <=40min. Parent funds32k; escrow follows successful tests.
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact reviewed common-runtime commit}
 TASK_RUN=${2:?fresh common-runtime run identity}
@@ -58,6 +58,11 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   tests/test_vla_common_runtime_evaluate.py tests/test_vla_source40_evaluate.py \
   tests/test_vla_source40_two_goal_evaluate.py tests/test_vla_source40_subset_evaluate.py tests/test_gpu_probe.py \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
+"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-ppo \
+  --campaign "$TASK_ROOT/outputs/libero40-source-1m-20261029-r1/campaign.json" \
+  --ledger "$TASK_LEDGER" --run "$TASK_RUN" --commit "$TASK_SOURCE" \
+  --action-cap 32000 --purpose target_evaluation "${TASK_RESUME_ARGS[@]}" \
+  > "$TASK_ATTEMPT/reservation.json"
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1
 export OPENPI_DATA_HOME=$TASK_OLD/cache/openpi-215abfb
