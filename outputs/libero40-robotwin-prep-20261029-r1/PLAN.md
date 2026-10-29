@@ -58,4 +58,8 @@ and shift claim requires a declared auxiliary base-family holdout.
 
 Contracts: [LIBERO](../../docs/libero-transfer.md),
 [RoboTwin](../../docs/robotwin-vlrla.md).
-Verified preparation results and receipts will be linked here when complete.
+Verified preparation: [results and receipts](RESULTS.md). The static LIBERO
+audit produced 40 source tasks, 68 strict targets and 22 overlap controls;
+three Linux regressions passed. The isolated RoboTwin CPU environment passes
+all twelve task imports; GPU rendering and a common multi-task motor remain
+unqualified. No new GPU jobs were launched by this preparation.
