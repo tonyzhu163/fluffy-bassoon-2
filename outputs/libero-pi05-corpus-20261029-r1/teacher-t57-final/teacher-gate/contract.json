@@ -1,0 +1,104 @@
+{
+  "source_commit": "6ec4fff88390041fea6bb23a8fd6fb7e70a7125c",
+  "seed": 0,
+  "simulator": {
+    "suite": "libero_90",
+    "task_id": 57,
+    "instruction": "pick up the cream cheese and put it in the tray",
+    "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+    "initial_states": 50,
+    "bddl_sha256": "394de660979995c9dd1131bdbfa5fb25eb824828e60dee25a5b80c3cbfd5155a",
+    "bddl_file": "LIVING_ROOM_SCENE3_pick_up_the_cream_cheese_and_put_it_in_the_tray.bddl",
+    "problem_folder": "libero_90",
+    "horizon": 400,
+    "settle_steps": 10,
+    "observation": "two RGB cameras and robot proprioception only"
+  },
+  "motor": {
+    "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint": "gs://openpi-assets/checkpoints/pi05_libero",
+    "receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "flow_steps": 10,
+    "predicted_horizon": 10,
+    "action_dim": 32,
+    "weights_frozen": true,
+    "jax_devices": [
+      "cuda:0"
+    ]
+  },
+  "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+  "noise": "32D repeated over native H; initial source/tied baseline Gaussian unbounded; SAC/student clip[-1,1]",
+  "feature_dim": 4104,
+  "feature_contract": {
+    "kind": "openpi_final_prefix_visual_mean_language_mean_public_state_v2",
+    "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "model_config": "pi05_libero",
+    "observation_dim": 4104,
+    "visual_dim": 2048,
+    "instruction_dim": 2048,
+    "public_state_dim": 8,
+    "pooling": "separate NumPy float32 mask-weighted means after native hidden materialization",
+    "normalization": "raw frozen hidden values; student fits normalization on training tasks only",
+    "trainable_feature_parameters": 0,
+    "kv_cache_retained": false,
+    "execution": "standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+    "hidden_materialization": "standalone module_jit output transferred to host before reduction",
+    "pooling_dtype": "float32"
+  },
+  "chunk": 10,
+  "train_states": 40,
+  "horizon": 400,
+  "warmup_chunks": 32,
+  "batch_size": 32,
+  "utd": 20,
+  "scope": "native OpenPI LIBERO with official DSRL SAC learner; checkpoint/chunk differ unless explicitly matched",
+  "cnd_poc": {
+    "seed": 0,
+    "train_states": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "validation_states": [
+      36,
+      37
+    ],
+    "calibration_states": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "evaluation_states": [
+      40,
+      41,
+      42,
+      43
+    ],
+    "teacher_minimum_success": 0.7,
+    "min_episodes": 4,
+    "max_episodes": 6,
+    "anneal_decisions": [
+      35,
+      55
+    ],
+    "anneal_powers": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "max_collection_steps": 14400,
+    "history_updates": 500,
+    "evaluation_attempts": 4,
+    "evaluation_online_dsrl": false,
+    "online_batch_size": 32,
+    "online_utd": 20,
+    "qualification_only": true
+  }
+}

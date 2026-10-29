@@ -4,6 +4,10 @@ Can a history-conditioned steering policy adapt a frozen vision-language-action
 model to held-out robotic tasks with high sample efficiency and strong final
 performance? We start with LIBERO and compare against ordinary DSRL.
 
+[Paper draft](docs/paper/DRAFT.md) · [Research decisions](docs/paper/DECISIONS.md) ·
+[Verified LIBERO results](docs/frozen-vla-libero/EVALUATION.md) ·
+[Frozen corpus split](outputs/libero-pi05-corpus-20261029-r1/PLAN.md)
+
 Earlier work asks whether a Continuous Thought Machine (CTM) can do in-context
 reinforcement learning.
 This repository holds the trial environments, the full-trial recurrent PPO
