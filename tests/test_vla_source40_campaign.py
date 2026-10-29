@@ -64,7 +64,7 @@ def test_ppo_fresh_rollout_reservations_share_cap_and_cannot_duplicate(tmp_path,
 def test_target_diagnostic_escrow_preserves_source_slots_and_total_cap(tmp_path, monkeypatch):
     path, ledger = fixture(tmp_path, monkeypatch)
     before = path.read_bytes()
-    kwargs = dict(run='subset-eval-r1', commit='a' * 40, action_cap=20000)
+    kwargs = dict(run='subset-eval-r1', commit='a' * 40, action_cap=20000, prior_action_charge=10)
     record = reserve_diagnostic(path, ledger, **kwargs)
     assert record['source_pretraining_data'] is False
     assert record['pool'] == 'unassigned_reserve_actions'
@@ -75,7 +75,10 @@ def test_target_diagnostic_escrow_preserves_source_slots_and_total_cap(tmp_path,
     with pytest.raises(ValueError, match='already reserved'):
         reserve_diagnostic(path, ledger, **dict(kwargs, action_cap=19000), resume=True)
     with pytest.raises(ValueError, match='exceed'):
-        reserve_diagnostic(path, ledger, run='other-r1', commit='b' * 40, action_cap=1057)
+        reserve_diagnostic(path, ledger, run='other-r1', commit='b' * 40, action_cap=1047, prior_action_charge=10)
+    with pytest.raises(ValueError, match='remain fixed'):
+        reserve_diagnostic(path, ledger, **dict(kwargs, prior_action_charge=0), resume=True)
+    reserve_diagnostic(path, ledger, run='other-r1', commit='b' * 40, action_cap=1046, prior_action_charge=10)
 
 
 def test_diagnostic_rejects_unreserved_resume_and_wrong_pool(tmp_path, monkeypatch):
