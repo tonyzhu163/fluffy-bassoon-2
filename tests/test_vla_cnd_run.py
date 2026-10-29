@@ -15,8 +15,17 @@ def test_cnd_driver_defaults_use_qualified_sac_features_and_prespecified_budgets
         "--prior-recovery", "/tmp/prior", "--prior-contract", "/tmp/contract"])
     assert args.feature_interface == "sac" and args.history_updates == 500 and args.attempts == 4
     assert args.anneal_decisions == [35, 55] and args.min_teacher_success == .7
+    assert not args.qualify_only
     validate_scene_banks(args.train_states, args.validation_states, args.calibration_states,
                          args.eval_states, initial_states=50)
+
+
+def test_pi05_qualification_can_stop_before_automatic_cnd_collection():
+    args = parser().parse_args(["--output", "/tmp/pi05-gate", "--source-commit", "a" * 40,
+        "--openpi-root", "/tmp/openpi", "--dsrl-root", "/tmp/dsrl", "--checkpoint", "/tmp/pi05",
+        "--prior-recovery", "/tmp/pi05-teacher", "--prior-contract", "/tmp/contract",
+        "--model-config", "pi05_libero", "--chunk", "10", "--qualify-only"])
+    assert args.qualify_only and args.model_config == "pi05_libero" and args.chunk == 10
 
 
 def test_calibration_and_deployment_must_not_share_scenes():

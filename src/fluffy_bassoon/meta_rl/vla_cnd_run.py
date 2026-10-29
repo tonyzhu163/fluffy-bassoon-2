@@ -115,6 +115,8 @@ def parser():
     p.add_argument("--history-device", default="cuda")
     p.add_argument("--attempts", type=int, default=4)
     p.add_argument("--online-dsrl", action="store_true")
+    p.add_argument("--qualify-only", action="store_true",
+                   help="Measure fixed teacher competence and stop before CND collection/training")
     return p
 
 
@@ -157,7 +159,8 @@ def main(argv=None):
             max_episodes=args.max_episodes, anneal_decisions=args.anneal_decisions,
             anneal_powers=args.anneal_powers, max_collection_steps=args.max_collection_steps,
             history_updates=args.history_updates, evaluation_attempts=args.attempts,
-            evaluation_online_dsrl=args.online_dsrl, online_batch_size=args.batch_size, online_utd=args.utd)
+            evaluation_online_dsrl=args.online_dsrl, online_batch_size=args.batch_size, online_utd=args.utd,
+            qualification_only=args.qualify_only)
         learner = OfficialSAC(args.dsrl_root, args.seed)
         sampler = np.random.default_rng(args.seed)
         progress = learner.restore(args.prior_recovery, sampler, prior)
@@ -177,6 +180,12 @@ def main(argv=None):
         write_json(args.output / "feature-parity.json", learner.qualify_features(obs))
         stage = "teacher_qualification"
         teacher = qualify_teacher(args, sim, motor, learner, args.output / "source-recovery.pkl")
+        if args.qualify_only:
+            write_json(args.output / "summary.json", dict(completed=True, qualification_only=True,
+                teacher_qualified=teacher["qualified"], teacher=teacher, prior_training_steps=prior_cost,
+                elapsed_seconds=time.monotonic() - started,
+                scope="fixed teacher competence only; no CND histories or student training"))
+            return 0 if teacher["qualified"] else 2
         if not teacher["qualified"]:
             write_json(args.output / "summary.json", dict(completed=False, stage=stage,
                 reason="fixed teacher below predeclared competence threshold; no CND data/training ran",

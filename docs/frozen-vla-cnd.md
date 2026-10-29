@@ -73,3 +73,12 @@ student adaptation. `vla_teacher_continue.sh` uses the same allocation probe,
 runtime and simulator setup as `vla_cnd_poc.sh`. A qualified continuation's
 fresh experiment directory can be supplied as the latter launcher's third
 argument; the original active run and checkpoint remain untouched.
+
+`vla_pi05_pilot.sh <commit> <fresh-run> [suite] [task-id] [teacher|teacher-gate]`
+qualifies the released OpenPI pi0.5 checkpoint and its native horizon ten,
+then trains a fresh ordinary DSRL teacher. It never migrates a pi0 teacher.
+The default phase stops after the bounded teacher pilot. The optional
+`teacher-gate` phase runs the eight-episode competence gate and stops there,
+even if it passes (`vla_cnd_run --qualify-only`). Neither phase generates
+CND histories or trains students. Native prefix parity, same-noise motor
+parity and native simulator episodes run before teacher optimization.
