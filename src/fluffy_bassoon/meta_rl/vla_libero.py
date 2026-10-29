@@ -114,6 +114,25 @@ def expand_noise(noise, horizon):
     return np.repeat(noise[None], horizon, axis=0)
 
 
+def validate_trial_split(args, metadata):
+    """Reject scene leakage and oversize source plans before loading the VLA."""
+    if (args.attempts < 1 or args.horizon < 1 or args.chunk < 1 or args.history_updates < 0
+            or args.max_steps < 1 or args.batch_size < 1 or args.utd < 1 or args.warmup_chunks < 0
+            or args.horizon != metadata["horizon"] or args.task_id != metadata["task_id"]
+            or args.suite != metadata["suite"] or not 0 < args.train_states <= metadata["initial_states"]
+            or not args.eval_states or len(set(args.eval_states)) != len(args.eval_states)
+            or any(not args.train_states <= state < metadata["initial_states"] for state in args.eval_states)):
+        raise ValueError("Invalid task, interaction budget or disjoint held-out scene bank")
+    if args.retry_train_states:
+        train, validation, heldout = map(set, (args.retry_train_states,
+            args.retry_validation_states, args.eval_states))
+        if (args.attempts < 2 or train & validation or (train | validation) & heldout
+                or len(train) != len(args.retry_train_states) or len(validation) != len(args.retry_validation_states)
+                or any(not 0 <= state < metadata["initial_states"] for state in train | validation)
+                or (len(train) + len(validation)) * args.attempts * args.horizon > args.retry_max_steps):
+            raise ValueError("Retry teacher scene banks overlap or exceed their explicit interaction budget")
+
+
 def simulator_server(args):
     from libero.libero import benchmark, get_libero_path
     from libero.libero.envs import OffScreenRenderEnv
@@ -680,12 +699,11 @@ def main():
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     np.random.seed(args.seed)
     random.seed(args.seed)
-    sim, motor = SimulatorClient(args.port), FrozenOpenPI(args)
-    if (not 1 <= args.chunk <= motor.horizon or args.horizon != sim.metadata["horizon"]
-            or args.task_id != sim.metadata["task_id"] or args.suite != sim.metadata["suite"]
-            or not 0 < args.train_states <= sim.metadata["initial_states"]
-            or any(not args.train_states <= state < sim.metadata["initial_states"] for state in args.eval_states)):
-        raise ValueError("Motor chunk, simulator task, horizon or held-out scene split differs")
+    sim = SimulatorClient(args.port)
+    validate_trial_split(args, sim.metadata)
+    motor = FrozenOpenPI(args)
+    if args.chunk > motor.horizon:
+        raise ValueError("Executed chunk exceeds the native motor horizon")
     contract = dict(source_commit=actual, seed=args.seed,
                     simulator={k: v for k, v in sim.metadata.items() if k != "pid"},
                     motor=motor.metadata, dsrl_commit=DSRL_COMMIT,

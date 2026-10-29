@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_libero import (expand_noise, public_observation,
-                                               run_episode, sac_observation)
+                                               run_episode, sac_observation, validate_trial_split)
 
 
 def observation():
@@ -85,3 +85,19 @@ def test_native_and_tied_gaussian_keep_their_distinct_noise_distributions():
         initial_state=0, scene_seed=4, bounded=False)
     assert not np.array_equal(native.noises[0][0], native.noises[0][1])
     assert np.array_equal(tied.noises[0], np.full((10, 32), 3.))
+
+
+def test_retry_scene_leakage_and_budget_fail_before_model_loading():
+    from types import SimpleNamespace
+    args = SimpleNamespace(attempts=4, horizon=400, chunk=20, history_updates=10,
+        max_steps=4000, batch_size=32, utd=20, warmup_chunks=32, task_id=57,
+        suite="libero_90", train_states=40, eval_states=[40, 41],
+        retry_train_states=[0, 1], retry_validation_states=[38, 39], retry_max_steps=6400)
+    metadata = dict(horizon=400, task_id=57, suite="libero_90", initial_states=50)
+    validate_trial_split(args, metadata)
+    args.retry_validation_states = [1, 39]
+    with pytest.raises(ValueError, match="overlap"):
+        validate_trial_split(args, metadata)
+    args.retry_validation_states, args.retry_max_steps = [38, 39], 6399
+    with pytest.raises(ValueError, match="budget"):
+        validate_trial_split(args, metadata)
