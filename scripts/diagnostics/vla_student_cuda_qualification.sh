@@ -26,8 +26,12 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 WANDB_MODE=dis
 export OPENPI_DATA_HOME=$TASK_OLD/cache/openpi-215abfb
 export PYTHONPATH=$TASK_WORKTREE/src
 "$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
-  --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
+  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
+CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+  PYTHONPATH="$TASK_ROOT/envs/pytest-overlay-20261029-r1:$TASK_WORKTREE/src" \
+  "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
+  > "$TASK_OUTPUT/focused-tests.log" 2>&1
 TASK_CUDA_OVERLAY=$TASK_OUTPUT/cu128-overlay
 "$TASK_PROBE" - "$TASK_CUDA_PACKAGES" "$TASK_CUDA_OVERLAY" "$TASK_OUTPUT/overlay.json" <<'PY'
 import json, pathlib, sys

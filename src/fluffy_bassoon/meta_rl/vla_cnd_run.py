@@ -96,7 +96,7 @@ def parser():
     p.add_argument("--dsrl-root", type=Path, required=True)
     p.add_argument("--checkpoint", type=Path, required=True)
     p.add_argument("--model-config", choices=("pi0_libero", "pi05_libero"), default="pi0_libero")
-    p.add_argument("--feature-interface", choices=("sac",), default="sac")
+    p.add_argument("--feature-interface", choices=("sac", "vla-prefix"), default="sac")
     p.add_argument("--prior-recovery", type=Path, required=True)
     p.add_argument("--prior-contract", type=Path, required=True)
     p.add_argument("--batch-size", type=int, default=32)
@@ -115,6 +115,10 @@ def parser():
     p.add_argument("--history-device", default="cuda")
     p.add_argument("--attempts", type=int, default=4)
     p.add_argument("--online-dsrl", action="store_true")
+    p.add_argument("--collect-only", action="store_true",
+                   help="Export complete histories without student training or held-out evaluation")
+    p.add_argument("--export-paired-dpt", action="store_true",
+                   help="Save expert query labels alongside the same actual CND histories")
     p.add_argument("--qualify-only", action="store_true",
                    help="Measure fixed teacher competence and stop before CND collection/training")
     return p
@@ -127,7 +131,9 @@ def main(argv=None):
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     if (not math.isfinite(args.min_teacher_success) or not 0 <= args.min_teacher_success <= 1
-            or len(args.calibration_states) < 8 or args.attempts < 1 or args.history_updates < 1):
+            or len(args.calibration_states) < 8 or args.attempts < 1
+            or (args.history_updates < 1 and not (args.collect_only or args.qualify_only))
+            or (args.collect_only and args.qualify_only)):
         raise ValueError("Require predeclared teacher qualification and positive train/evaluation budgets")
     root = Path(__file__).resolve().parents[3]
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
@@ -160,7 +166,8 @@ def main(argv=None):
             anneal_powers=args.anneal_powers, max_collection_steps=args.max_collection_steps,
             history_updates=args.history_updates, evaluation_attempts=args.attempts,
             evaluation_online_dsrl=args.online_dsrl, online_batch_size=args.batch_size, online_utd=args.utd,
-            qualification_only=args.qualify_only)
+            qualification_only=args.qualify_only, collection_only=args.collect_only,
+            paired_dpt=args.export_paired_dpt)
         learner = OfficialSAC(args.dsrl_root, args.seed)
         sampler = np.random.default_rng(args.seed)
         progress = learner.restore(args.prior_recovery, sampler, prior)
@@ -224,10 +231,24 @@ def main(argv=None):
             anneal_decisions=args.anneal_decisions, anneal_powers=args.anneal_powers, seed=args.seed,
             max_primitive_steps=args.max_collection_steps, heldout_initial_states=args.eval_states,
             min_teacher_success_rate=args.min_teacher_success, min_teacher_evaluation_episodes=8,
+            export_paired_dpt=args.export_paired_dpt,
+            benchmark_contract=dict(suite=sim.metadata["suite"], task_id=sim.metadata["task_id"],
+                semantic_task=Path(sim.metadata["bddl_file"]).stem,
+                bddl_sha256=sim.metadata["bddl_sha256"],
+                teacher_contract_sha256=sha256(args.output / "contract.json")),
             sim=sim, motor=motor, row_feature_encoder=(
                 None if motor.feature_encoder is not None else lambda row: learner.features(row["sac_observation"])))
         _, dataset = load_dataset(paths["train"], expected_sha256=sha256(paths["train"]))
         total_source = dataset["metadata"]["total_source_primitive_steps"]
+        if args.collect_only:
+            write_json(args.output / "summary.json", dict(completed=True, stage="corpus_exported",
+                prior_training_steps=prior_cost, teacher_calibration_steps=teacher["primitive_steps"],
+                total_source_steps=total_source, datasets={key: str(path) for key, path in paths.items()},
+                paired_collection_manifest=(str(args.output / "cnd-data" / "paired-collections.json")
+                    if args.export_paired_dpt else None),
+                elapsed_seconds=time.monotonic() - started,
+                scope="source corpus only; no student training or held-out test rollouts"))
+            return 0
         stage = "student_training"
         args.history_objective = "cnd"
         student = train_history(args, learner, contract, paths=paths, artifact_prefix="cnd-history", objective="cnd")

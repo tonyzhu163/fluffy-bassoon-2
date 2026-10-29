@@ -423,7 +423,8 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
         # Source SAC uses one -1/0 sparse reward per steering decision.
         # The exact executed primitive rewards and count are also retained.
         reward = 0. if outcome["success"] else -1.
-        row = dict(sac_observation=sac_observation(obs), sac_next_observation=sac_observation(next_obs),
+        row = dict(motor_observation=obs, motor_next_observation=next_obs,
+                   sac_observation=sac_observation(obs), sac_next_observation=sac_observation(next_obs),
                    proposed_noise=proposal, executed_noise=actual,
                    native_initial_noise=noise, executed_actions=outcome["executed_actions"],
                    reward=reward, raw_rewards=outcome["rewards"],
