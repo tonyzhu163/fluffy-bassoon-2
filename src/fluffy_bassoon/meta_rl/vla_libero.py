@@ -274,6 +274,12 @@ class FrozenOpenPI:
                              receipt_sha256=sha256(args.checkpoint / "READY.json"),
                              flow_steps=10, predicted_horizon=self.horizon, action_dim=32,
                              weights_frozen=True, jax_devices=list(map(str, jax.devices("gpu"))))
+        self.feature_encoder = None
+        if args.feature_interface == "vla-prefix":
+            from .vla_features import FrozenOpenPIPrefixFeatures
+            self.feature_encoder = FrozenOpenPIPrefixFeatures(self.policy,
+                checkpoint_receipt_sha256=self.metadata["receipt_sha256"],
+                openpi_commit=actual, model_config=args.model_config)
 
     def infer(self, obs, instruction, noise):
         from openpi_client import image_tools
@@ -399,10 +405,13 @@ class OfficialSAC:
 
 
 def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
-                native=False, rng=None, feedback=None, bounded=True):
+                native=False, rng=None, feedback=None, bounded=True, record_features=True):
     start = sim.reset(initial_state, scene_seed)
     obs, rows = start["observation"], []
     while True:
+        feature_encoder = getattr(motor, "feature_encoder", None)
+        public_features = (feature_encoder(obs, sim.metadata["instruction"])
+                           if feature_encoder is not None and record_features else None)
         proposal = np.asarray(choose_noise(obs), np.float32)
         actual = np.clip(proposal, -1., 1.) if bounded else proposal
         noise = (rng.standard_normal((motor.horizon, 32)).astype(np.float32) if native
@@ -420,6 +429,8 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
                    done=outcome["done"], success=outcome["success"],
                    primitive_steps=outcome["primitive_steps"])
         rows.append(row)
+        if public_features is not None:
+            row["public_features"] = public_features
         if feedback:
             feedback(actual, reward, outcome["done"])
         obs = next_obs
@@ -497,7 +508,9 @@ def export_histories(args, learner, contract):
             rows.extend(episode["rows"])
             starts.extend([True] + [False] * (len(episode["rows"]) - 1))
             source_steps.extend([episode["source_updates_before"]] * len(episode["rows"]))
-        observations = np.stack([learner.features(r["sac_observation"]) for r in rows])
+        has_native_features = "public_features" in rows[0]
+        observations = np.stack([r["public_features"] if has_native_features
+                                 else learner.features(r["sac_observation"]) for r in rows])
         if args.history_objective == "ad" and len(set(source_steps)) < 2:
             # A fixed policy's repetitions are BC, not a source learning history.
             continue
@@ -513,8 +526,9 @@ def export_histories(args, learner, contract):
     if len(trials) < 2:
         raise ValueError("Need two disjoint source learning histories with advancing teacher updates")
     common = dict(motor_sha256=contract["motor"]["receipt_sha256"],
-        feature_contract=dict(kind="fixed final official SAC actor visual bottleneck50 + robot state8",
-                              recovery_sha256=sha256(args.output / "source-recovery.pkl")),
+        feature_contract=(contract["feature_contract"] if args.feature_interface == "vla-prefix" else
+                          dict(kind="fixed final official SAC actor visual bottleneck50 + robot state8",
+                               recovery_sha256=sha256(args.output / "source-recovery.pkl"))),
         noise_contract=contract["noise"], source_steps_cost=sum(
             json.loads(line)["primitive_steps"] for line in (args.output / "progress.jsonl").read_text().splitlines()),
         split="whole disjoint chronological multi-episode groups; one task; smoke data only")
@@ -542,7 +556,7 @@ def train_history(args, learner, contract, *, paths=None):
     for mode in ("full", "static"):
         # Matched initialization, data, update count and optimization for static baseline.
         torch.manual_seed(args.seed)
-        student = HistoryNoisePolicy(HistoryConfig(58, 32, width=128, layers=2,
+        student = HistoryNoisePolicy(HistoryConfig(train[0]["observations"].shape[-1], 32, width=128, layers=2,
                                       heads=4, context_length=300)).to(args.history_device)
         student.fit_observation_normalization(train)
         optimizer = torch.optim.AdamW(student.parameters(), lr=3e-4, weight_decay=0.)
@@ -619,7 +633,8 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
             attempts = []
             for attempt in range(args.attempts):
                 if controller:
-                    choose = lambda obs: controller.act(learner.features(obs))
+                    choose = lambda obs: controller.act(motor.feature_encoder(obs, sim.metadata["instruction"])
+                        if motor.feature_encoder is not None else learner.features(obs))
                     feedback = lambda noise, reward, done: controller.observe(
                         executed_noise=noise, reward=reward, done=done)
                 else:
@@ -630,7 +645,8 @@ def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_ste
                 rows, summary = run_episode(sim, motor, choose, initial_state=state,
                     scene_seed=args.seed + state * 1000, chunk=args.chunk,
                     native=method == "native", rng=rng, feedback=feedback,
-                    bounded=method not in ("native", "tied_gaussian"))
+                    bounded=method not in ("native", "tied_gaussian"),
+                    record_features=method in ("history", "reset", "static"))
                 if online:
                     from .vla_retry_teacher import append_episode_to_replay
                     append_episode_to_replay(online, rows)
@@ -694,6 +710,7 @@ def main():
     parser.add_argument("--prior-recovery", type=Path)
     parser.add_argument("--prior-contract", type=Path)
     parser.add_argument("--online-dsrl", action="store_true")
+    parser.add_argument("--feature-interface", choices=("sac", "vla-prefix"), default="sac")
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
@@ -730,7 +747,10 @@ def main():
                     simulator={k: v for k, v in sim.metadata.items() if k != "pid"},
                     motor=motor.metadata, dsrl_commit=DSRL_COMMIT,
                     noise="32D repeated over native H; initial source/tied baseline Gaussian unbounded; SAC/student clip[-1,1]",
-                    feature_dim=FEATURE_DIM, chunk=args.chunk, train_states=args.train_states,
+                    feature_dim=FEATURE_DIM if motor.feature_encoder is None else 4104,
+                    feature_contract=(dict(kind="fixed final SAC actor encoder") if motor.feature_encoder is None
+                                      else motor.feature_encoder.contract),
+                    chunk=args.chunk, train_states=args.train_states,
                     horizon=args.horizon, warmup_chunks=args.warmup_chunks,
                     batch_size=args.batch_size, utd=args.utd,
                     scope="native OpenPI LIBERO with official DSRL SAC learner; checkpoint/chunk differ unless explicitly matched")
@@ -743,6 +763,9 @@ def main():
                                                    simulator_pid=sim.metadata["pid"], resume=bool(args.resume)))
     try:
         qualification_obs = sim.reset(args.eval_states[0], args.seed + 100000)["observation"]
+        if motor.feature_encoder is not None:
+            write_json(args.output / "common-feature-parity.json",
+                       motor.feature_encoder.qualify(qualification_obs, sim.metadata["instruction"]))
         zeros = expand_noise(np.zeros(32, np.float32), motor.horizon)
         first = motor.infer(qualification_obs, sim.metadata["instruction"], zeros)
         second = motor.infer(qualification_obs, sim.metadata["instruction"], zeros.copy())
@@ -795,7 +818,9 @@ def main():
                     batch_size=args.batch_size, utd=args.utd, chunk=args.chunk,
                     output_dir=args.output / "retry-teachers", seed=args.seed,
                     episode_horizon=args.horizon, max_primitive_steps=args.retry_max_steps,
-                    heldout_initial_states=args.eval_states, sim=sim, motor=motor)
+                    heldout_initial_states=args.eval_states, sim=sim, motor=motor,
+                    row_feature_encoder=(None if motor.feature_encoder is None else lambda row: row["public_features"]),
+                    fixed_feature_contract=(None if motor.feature_encoder is None else motor.feature_encoder.contract))
                 train_steps = costs["total_source_primitive_steps"]
             if args.history_updates:
                 student = train_history(args, learner, contract,
@@ -805,7 +830,8 @@ def main():
         else:
             learner = None
         write_json(args.output / "summary.json", dict(completed=True, evaluation=evaluation,
-                                                      motor_calls=motor.calls))
+            motor_calls=motor.calls, feature_calls=0 if motor.feature_encoder is None else motor.feature_encoder.calls,
+            feature_seconds=0 if motor.feature_encoder is None else motor.feature_encoder.elapsed_seconds))
     finally:
         sim.close()
 
