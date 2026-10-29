@@ -461,6 +461,59 @@ transient recurrent state at each new trial. Keep direct reinforcement
 pretraining as a comparison to any supervised warm start; include all teacher
 and data-generation costs.
 
+## Language steering of pi0.5
+
+Snapshot: 29 October 2026. This bears on any hidden-target task that changes
+the instruction (Option B, VLRLA's underspecified-instruction relabels). The
+evidence is consistent: pi0.5 encodes the instruction but rarely lets it pick
+the target when the scene implies another one.
+
+- **Target swap, fixed scene.** [Encoded but Not in Control](https://arxiv.org/html/2610.06235v1)
+  changes only the target noun among visible LIBERO-Object objects. pi0.5
+  approaches the instructed target in 13.0% of episodes (11.5% success) and the
+  original target in 86.5% (69.5% success); on a real arm, 10.8% versus 80.8%.
+  Linear probes recover the instructed target near ceiling, so the failure is
+  control, not encoding. Instruction tokens carry about 26–28% of
+  attention-based action contribution on LIBERO and about 1.7% on RoboTwin.
+  No fix is tested.
+- **Same finding elsewhere.** [BAS-VLA](https://arxiv.org/html/2609.23650)
+  reports OpenPI pi0.5 on LIBERO-Object at 98.5% clean and 34.0% under target
+  swap, with new-target success near 0% on several swaps.
+  [LIBERO-PRO](https://arxiv.org/abs/2510.03827) reports nearly unchanged
+  trajectories under corrupted or nonsense instructions, and
+  [LIBERO-Plus](https://openaccess.thecvf.com/content/CVPR2026/html/Fei_LIBERO-Plus_A_Progressive_Robustness_Benchmark_for_Visual-Language-Action_Models_CVPR_2026_paper.html)
+  that models tend to ignore language; neither abstract isolates pi0.5's
+  language result.
+- **Residual on a frozen pi0.5.** BAS-VLA trains a small residual on matched
+  clean, control and semantic-breaking instruction triplets. New-target success
+  on four easy swaps rises from 2.3% to 68.5%; a norm-matched random residual
+  gives 1.5%. This is the closest analogue to a bridge residual steering a
+  frozen motor.
+- **Inference-time contrast.** [CAG](https://arxiv.org/abs/2602.17659)
+  contrasts the VLA with a language-unconditioned vision-action branch. With
+  pi0.5 on LIBERO-CF it adds 9.7 points of language following training-free,
+  or 15.5 with a trained vision-action module (abstract figures).
+- **Activation injection.** [Not All Features Are Created Equal](https://arxiv.org/abs/2603.19233)
+  injects task A's action-expert activations while pi0.5 views task B's scene;
+  pi0.5 executes task A in 99.6% of episodes. On a real arm the injected program
+  grasps at recorded coordinates even after the object moves. Action-expert
+  steering is strong but scene-blind. [Häon et al.](https://proceedings.mlr.press/v305/haon25a.html)
+  steer pi0 and OpenVLA through sparse feed-forward directions.
+- **Training-side fixes.** Counterfactual instruction labels or negatives
+  ([CAST](https://arxiv.org/abs/2508.13446),
+  [CIG](https://github.com/SeeYooLeo/CIG-RoboCasa-Kitchen),
+  [FineVLA](https://arxiv.org/abs/2605.27284)) improve fine-grained following.
+  CIG self-reports pi0.5 on RoboCasa at 65.8% to 71.3%; CAST and FineVLA
+  abstracts do not name pi0.5.
+
+Implications here: changing the prompt will not by itself move the frozen
+RLinf pi0.5 motor to a new target, so a language hidden-variable task needs the
+learner to steer through a residual (KV or action expert) and a target-swap
+check of the base motor first. When the scene alone identifies the goal, vision
+dominates, which supports keeping the PoC's hidden variable in the action
+rotation. The pi0.5 paper ([arXiv 2504.16054](https://arxiv.org/abs/2504.16054))
+reports better language following than pi0; its numbers were not checked here.
+
 ## Current state in this repository
 
 The supervised line (`lycoreco_main`) is behavior cloning only. A persistent
