@@ -77,3 +77,24 @@ trained noise policy, independently trained static student, and full-history
 student. Report success versus deployment environment steps/episodes, final
 success, and the data/training cost used to produce each controller. Persistence
 alone does not demonstrate feedback-based adaptation or better robot performance.
+
+## Same-scene source adaptation
+
+`vla_retry_teacher.collect_retry_teachers` branches independent full source
+learners from one immutable shared DSRL checkpoint, including critic, replay,
+optimizer and sampler/actor RNG. Every branch learns across K episodes on exactly
+the same initial state and reset seed; initial observation hashes must match.
+Training, supervised-validation and final-evaluation initial-state indices are
+disjoint. Each source episode is saved with the behavior update identity before
+collection, update identity afterward, actual executed noise/rewards and a
+complete learning checkpoint. An explicit worst-case additional interaction
+budget is checked before collection. The shared prior's training cost is counted
+once and added to actual retry-teacher transitions.
+
+AD labels each row with its original executed noise. DPT labels the same rows
+with the branch's final scene-adapted teacher. Both retain the original past
+noise and outcome fields. Every branch's observations must be encoded by the
+same fixed shared-prior encoder; scene-adapted feature encoders would create
+inconsistent input coordinates. Deployment uses that same shared-prior encoder.
+This helper produces source data; held-out robot success versus K deployment
+episodes remains the test of whether a frozen student acquired a useful process.
