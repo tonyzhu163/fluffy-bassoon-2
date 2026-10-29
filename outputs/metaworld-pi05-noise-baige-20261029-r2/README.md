@@ -1,13 +1,16 @@
 # Meta-World released pi0.5 noise screen
 
-Status checked 2026-10-29 19:24 Asia/Shanghai: Baige
+Status checked 2026-10-29 19:42 Asia/Shanghai: Baige
 `job-orgyjb0z9h6d` running. The visible-goal reach condition completed all
 **544 episodes**, independently audited. Native success is 31.25%; split-half
 noise-arm selection reaches 37.5%, a 6.25-point gain below the 15-point gate.
-Two of four goals remain unreached by any arm. The hidden-goal condition has
-started. [Partial results and limits](PARTIAL-RESULTS.md); the overall screen
+Two of four goals remain unreached by any arm. A read-only snapshot of the owned worker confirms **425/544 hidden-goal
+episodes completed** (last row424), with the next rollout at step155. Its
+JSONL remains buffered until the condition closes; no exit code is present. [Partial results and limits](PARTIAL-RESULTS.md); the overall screen
 and final motor fingerprint remain pending. Both GPU probes and all nine
 focused Linux checks previously passed, with zero skips.
+
+The authenticated WebShell produced the closed [19:42 worker receipt](checks/worker-progress-194207.json). A separate scheduler-detail read became unavailable when the browser connection closed; this check therefore relies on actual owned-worker progress and saved artifacts.
 
 Scientific source: `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`, reviewed from
 main and deployed through verified Git bundles into a fresh detached worktree.
