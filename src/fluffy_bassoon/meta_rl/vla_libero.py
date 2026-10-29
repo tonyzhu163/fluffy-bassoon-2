@@ -489,12 +489,12 @@ def export_histories(args, learner, contract):
     return result
 
 
-def train_history(args, learner, contract):
+def train_history(args, learner, contract, *, paths=None):
     import torch
     from .vla_history import (HistoryConfig, HistoryNoisePolicy, load_dataset,
                               sample_batch, export_policy)
     from .vla_history_train import supervised_update, validate
-    paths = export_histories(args, learner, contract)
+    paths = export_histories(args, learner, contract) if paths is None else paths
     train, _ = load_dataset(paths["train"], expected_sha256=sha256(paths["train"]))
     validation, _ = load_dataset(paths["validation"], expected_sha256=sha256(paths["validation"]))
     torch.set_num_threads(4)
@@ -623,12 +623,17 @@ def main():
     parser.add_argument("--history-updates", type=int, default=0)
     parser.add_argument("--history-device", default="cpu")
     parser.add_argument("--history-objective", choices=("ad", "dpt"), default="ad")
+    parser.add_argument("--retry-train-states", type=int, nargs="+")
+    parser.add_argument("--retry-validation-states", type=int, nargs="+")
+    parser.add_argument("--retry-max-steps", type=int)
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
     if args.mode == "env-server":
         simulator_server(args)
         return
+    if args.retry_train_states and (not args.retry_validation_states or not args.retry_max_steps):
+        raise ValueError("Retry teaching requires explicit disjoint train/validation scenes and a resource budget")
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -685,8 +690,24 @@ def main():
             train_steps = sum(json.loads(line)["primitive_steps"] for line in
                               (args.output / "progress.jsonl").read_text().splitlines())
             evaluation.update(evaluate(args, sim, motor, ["dsrl"], learner=learner, train_steps=train_steps))
+            retry_paths = None
+            if args.retry_train_states:
+                from .vla_retry_teacher import collect_retry_teachers
+                scenes = [dict(trial_id=f"{split}-state-{state}", split=split,
+                    initial_state=state, scene_seed=args.seed + state * 1000)
+                    for split, bank in (("train", args.retry_train_states),
+                                        ("validation", args.retry_validation_states)) for state in bank]
+                retry_paths, costs = collect_retry_teachers(source_root=args.dsrl_root,
+                    shared_prior_path=args.output / "source-recovery.pkl", prior_contract=contract,
+                    fixed_encoder=learner.features, scenes=scenes, attempts=args.attempts,
+                    batch_size=args.batch_size, utd=args.utd, chunk=args.chunk,
+                    output_dir=args.output / "retry-teachers", seed=args.seed,
+                    episode_horizon=args.horizon, max_primitive_steps=args.retry_max_steps,
+                    heldout_initial_states=args.eval_states, sim=sim, motor=motor)
+                train_steps = costs["total_source_primitive_steps"]
             if args.history_updates:
-                student = train_history(args, learner, contract)
+                student = train_history(args, learner, contract,
+                    paths=None if retry_paths is None else retry_paths[args.history_objective])
                 evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
                                            learner=learner, student=student, train_steps=train_steps))
         else:
