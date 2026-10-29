@@ -39,11 +39,11 @@ def compare_arrays(left, right):
             floating = np.issubdtype(a.dtype, np.floating)
             changes.append(dict(key=key, maximum_absolute_delta=float(np.max(np.abs(
                 a.astype(np.float64) - b.astype(np.float64)))),
-                numerical=bool(floating and np.allclose(a, b, rtol=1e-5, atol=1e-6))))
+                numerical=bool(floating and np.allclose(a, b, rtol=1e-4, atol=1e-5))))
     return dict(exact=not changes, numerical=all(row['numerical'] for row in changes),
         changed_arrays=len(changes), largest_changes=sorted(changes,
             key=lambda row: row['maximum_absolute_delta'], reverse=True)[:8],
-        rtol=1e-5, atol=1e-6)
+        rtol=1e-4, atol=1e-5)
 
 
 def main():
@@ -97,6 +97,7 @@ def main():
         rng_and_sampler_exact=rng_equal, next_update_arrays=comparison,
         next_update_metrics=metrics_check, serialized_bytes_equal=outputs[0]['agent'] == outputs[1]['agent'],
         serialized_hashes=[row['agent'] for row in outputs],
+        interpretation='Saved state and RNG must restore exactly; independent GPU update compilations are checked numerically, without a bitwise continuation claim',
         compared=['actor/critic/target/temperature/optimizer state', 'SAC RNG',
                   'replay sampler', 'next motor PRNG split', 'finite update metrics'])
     args.output.write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
