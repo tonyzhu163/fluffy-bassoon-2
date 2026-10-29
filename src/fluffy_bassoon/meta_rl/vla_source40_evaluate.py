@@ -259,6 +259,8 @@ def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, epis
     ledger.returned(reset_event, sim.metadata["settle_steps"])
     if not initial.get("initial_observation_sha256"):
         raise ValueError("Real reset must expose the actual initial-observation identity")
+    if not isinstance(initial.get('initial_state_vector_sha256'), str) or not initial['initial_state_vector_sha256']:
+        raise ValueError('Real reset must expose the actual nominal physical-state identity')
     seed = _seed(case, role, ordinal)
     reset_motor_rng(seed)
     if controller is not None:
@@ -390,6 +392,8 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
             hook = qualify if qualification_pending else None
             rows, receipt, sampler = rollout_episode(sim, motor, controller, case=case, method=method,
                 role=role, ordinal=ordinal, episode_id=episode_id, ledger=ledger, reset_motor_rng=reset_motor_rng, qualify=hook, deadline=deadline)
+            if records and receipt['initial_state_vector_sha256'] != records[0]['initial_state_vector_sha256']:
+                raise RuntimeError('The declared support/query case changed its nominal physical state')
             if hook:
                 qualification_pending = False
             trace = traces / (episode_id.replace("/", "-") + f"-{time.time_ns()}.pkl.gz")

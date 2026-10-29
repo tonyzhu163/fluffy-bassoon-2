@@ -282,7 +282,12 @@ def main(argv=None):
                 if group['method'] == 'frozen_source_sac' else candidates[group['updates']])
             source = dict(provenance[25 if group['updates'] is None else group['updates']],
                 group_maximum_total_actions=group_cap, optimizer_update_scale=group['updates'],
-                frozen_source_sac=scales['frozen_source_sac'], dataset_scale='Same corpus at every optimizer scale')
+                frozen_source_sac=scales['frozen_source_sac'], dataset_scale='Same corpus at every optimizer scale',
+                method_source_cost_role=('Native/tied controls require zero steering-source interactions; shared corpus costs here are experiment provenance'
+                    if group['method'] in ('native', 'tied_gaussian') else
+                    'Frozen SAC uses the source training teacher; its source validation and student optimization costs are not required by this baseline'
+                    if group['method'] == 'frozen_source_sac' else
+                    'AD uses the declared source training/validation corpus and its own cumulative controller optimizer budget'))
             def factory(spec):
                 return spec['policy'] if spec.get('kind') == 'source_sac' else FrozenHistoryController(spec['policy'], mode=spec['mode'])
             def reset_motor_rng(seed):
