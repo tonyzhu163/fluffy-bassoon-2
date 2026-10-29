@@ -1,7 +1,7 @@
 # CTM in-context RL: coordination
 
 Live coordination for `fluffy-bassoon-2`, updated **2026-10-29
-Asia/Shanghai** (DSRL tests). Keep current decisions and jobs here, method
+Asia/Shanghai** (DSRL smoke audited at 12:59). Keep current decisions and jobs here, method
 contracts in `docs/`, verified results in `EVALUATION.md`, and dated evidence in
 `outputs/<run-id>/`. Follow [AGENTS.md](../AGENTS.md) and the
 [retention policy](../README.md#artifact-retention).
@@ -131,7 +131,7 @@ does not alone establish that a job remains running.
 | Direct native-context pilot r3 | Baige `job-8kkjhb65px67`; `b5d97b0a7c0f6aed29660a96e2ab10cce9610915` | **19:23: failed, exit 1.** Saved error: `Require finite public feedback, binary reward/boundary and normalized clocks`. No learning result. Next: diagnose feedback validation against saved evidence before a separately identified recovery; preserve r3. |
 | CMM full few-shot calibration | Secondary school cluster (thu2), **48876**, source `b6919d6`, K20 seed0 | **19:22 upstream check:** dev query accuracy **15.4% at epoch 350**, MSE .091; update 58.5k/157k. Keep running under the existing contract; about 7.5 hours remained at that check. [Full calibration record](#cmm-calibration). |
 | CMM decay diagnostics | Secondary school cluster (thu2), **48983 / 48984**, source `bd38dd0` | **19:22 upstream record:** queued (Priority), retained by the user. Two 50-epoch runs compare decay starts 1 and uniform[0,3]. Verify probes/tests after startup and compare matched-epoch metrics; leave 48876 untouched. [Full diagnostic record](#cmm-calibration). |
-| DSRL tests (noise-mode Stage 0) | Code on `main` at `352edc4`; CPU suite: thu2 job **49206** (`fb2-cpu-tests-352edc4-20261029-r1`) | **2026-10-29: CPU suite passed**, exit 0 on node01 in 3 min 56 s: 458 passed, 17 skipped, 27 subtests in both `lycoreco-de5277f-r1` and `rlinf-pi05-maniskill-e1a82eb-r1`, including the 13 tests in `tests/test_maniskill_noise.py`.  GPU screen S0a–S0c not launched; it needs approval of one Baige GPU for at most 2 hours. [How to run](#dsrl-tests-how-to-run); [plan](noise-mode-icrl-20261029-r1/PLAN.md). |
+| DSRL tests (noise-mode Stage 0) | Code `352edc4`; CPU suite thu2 **49206**; Baige smoke **`job-gjkse1sb5gyj`** | **2026-10-29 12:59 Shanghai: terminal/audited.** Upstream thu2 suite reports 458 passed/17 skipped/27 subtests in both environments. Baige independently passed 31 focused Linux tests in 8.82 s and completed S0a 68/68 episodes, frozen motor unchanged. Only 4/32 fixed-arm trajectory pairs and 29/32 success outcomes match; 5/32 first chunks match. Noise and scene identity hashes verified. Deliberate exit 3 stopped S0b/S0c; no learner training or active job. Next: instrument initial observations and control reset seeds; budget repeated outcomes if variation persists. [Results and evidence](noise-mode-icrl-20261029-s0-r1/RESULTS.md); [how to run](#dsrl-tests-how-to-run). |
 
 Check unfinished work on the existing 20-minute cadence, or earlier on a
 meaningful result/failure; use each owning monitor's current schedule. Preserve full

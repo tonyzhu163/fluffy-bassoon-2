@@ -1,7 +1,9 @@
 # In-context mode selection in a frozen pi0.5's noise space
 
 Status, 2026-10-29: **Stage 0 code on `main` at `352edc4`; CPU suite passed in
-thu2 job 49206; GPU screen not approved.**
+thu2 job 49206. Baige S0a `job-gjkse1sb5gyj` completed 68 episodes but failed
+repeat determinism (4/32 trajectories identical; three success flips). S0b/S0c
+were held.** See [audited results](../noise-mode-icrl-20261029-s0-r1/RESULTS.md).
 CPU stages (code, tests, cached meta-training) need no ask under
 [AGENTS.md](../../AGENTS.md). The Stage 0 and Stage 2 GPU collections and the
 Stage 4 live evaluation need user approval of the stated budgets before launch.

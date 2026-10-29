@@ -352,3 +352,28 @@ used a different core and their checkpoints do not load at later sources. The
 "CTM control" in those screens is the CMM with its memory blocks removed, not
 the persistent CTM. The persistent-CTM bandit results (T1/T4 legacy and bounded
 synchronization) are summarized in fluffy-bassoon `outputs/coordination.md`.
+
+## Frozen pi0.5 noise-arm Stage 0 qualification, 2026-10-29
+
+The focused software tests pass, but the deterministic-cache prerequisite is
+unresolved. At source `352edc407738ce14b6a0adb9100732326ca40902`, Baige
+`job-gjkse1sb5gyj` passed 31 Linux tests and completed the 68-episode S0a smoke
+(two objects, one scene each; 16 fixed initial-noise arms plus native; two
+repeats). Only 4/32 fixed-arm pairs have identical complete trajectories,
+5/32 have identical first chunks, and 29/32 have identical success outcomes.
+Scene identities and input-noise hashes agree; the frozen motor fingerprint
+is unchanged. The three outcome-flipping pairs already differ in the first
+chunk. Initial observation hashes were not saved, and many repeats change
+both reset seed and batch slot, so the saved evidence cannot isolate the
+source of the variation.
+
+Between-arm first-chunk action distance is 0.05155 versus native-repeat
+0.03860. Native succeeds 4/4 and pooled fixed arms 59/64; these tiny nominal
+counts establish no held-out headroom. The smoke used 5,440 task actions,
+1,088 motor chunk queries, 228.90 driver seconds and 12.31 GiB peak Torch CUDA
+allocation. A deliberate exit 3 stopped S0b/S0c after the failed admission;
+there is no DSRL training or ICRL result. Next: audit initial observations
+under matched reset seeds, then budget repeated Bernoulli outcomes if
+variation persists.
+
+[Results and compact raw evidence](../../../outputs/noise-mode-icrl-20261029-s0-r1/RESULTS.md).

@@ -1,0 +1,102 @@
+{
+  "source_commit": "352edc407738ce14b6a0adb9100732326ca40902",
+  "rlinf_root": "/mowenjie/fluffy-bassoon/third_party/rlinf-e1a82ebf-complete-heads-fd8ce503-20261028-r1",
+  "rlinf_checkpoint_loader_sha256": "01b8a68a0085cafb64ce3b0716732305e78921086b948654c2a4ce9edc5b71c9",
+  "rlinf_task_sha256": "8edd0c50ae205fb3cb441b8c0c341102fdfc466b0c8f663b236c86b0cef0f9aa",
+  "model_path": "/mowenjie/fluffy-bassoon/inputs/rlinf-pi05-maniskill-rl-a0cbb898-20261028-r1/checkpoints/global_step_150/actor",
+  "model_sha256": "0adb5b40f064760ff245f53ae0a4e078b86680b65f77d1f5991a173543edd5a1",
+  "norm_stats": "/mowenjie/fluffy-bassoon/inputs/rlinf-pi05-maniskill-rl-a0cbb898-20261028-r1/checkpoints/global_step_150/actor/assets/global_step_150/meta/norm_stats.json",
+  "norm_stats_sha256": "930b816bf2f142f3e377d088d2252e5238b8d082ad8f0abceedfc6296be58852",
+  "task": "PutOnPlateInScene25Main-v3",
+  "objects": [
+    "001_carrot_simpler",
+    "002_kitchen shovel_1"
+  ],
+  "object_indices": [
+    0,
+    1
+  ],
+  "scenes_per_object": 1,
+  "overlays": "training range 0-15",
+  "variants": [
+    {
+      "friction_scale": 1.0,
+      "density_scale": 1.0
+    }
+  ],
+  "arms": 16,
+  "arm_seeds": [
+    3000320000,
+    3000320001,
+    3000320002,
+    3000320003,
+    3000320004,
+    3000320005,
+    3000320006,
+    3000320007,
+    3000320008,
+    3000320009,
+    3000320010,
+    3000320011,
+    3000320012,
+    3000320013,
+    3000320014,
+    3000320015
+  ],
+  "arm_noise_sha256": [
+    "b6df54e07b4b9d3c8e663cb7f0d6afee418ba0501faff1a31ed73068c8d3043e",
+    "e57666d1e5a7261d162042361a1ff4bec90966dc8c423121fddb627c43903e00",
+    "17137351733f49559d5ede0b10d617ff23107ffba370825f31c2859a0d28d54b",
+    "d5977e4656c762710e5ef04b81ad5bf4486a76a50808828c32b339a973a79ad5",
+    "17a4290b966df322b5e9550b4bf9b0935d9e7191422d690067f8545739203909",
+    "e7b74018bd50c571ce94d65d65396be9460051e70660de711ac072be8961ca8b",
+    "a023060510aec3f94942ceaa7473ba9f3c9c671ad797b2507a80fea0525b347b",
+    "c0bcbd144d8e4f297696b99e248831c77e6914a68b7a80250a489f46d65fc673",
+    "fec985e2cbc846bc7f9d1056bf716d4b7e5c01874a4613dd29a34c64754a4cde",
+    "3a81ec7e85f2f3128b97c511096bcfd4ed7ccd29b152f2113538c8f0ea562aea",
+    "84f553cccd4cf442cee144d8edbd37fa1871635dd16154714194d1cedcac7217",
+    "fa948d8708e29eafd30962bccb6c61f082b79c9231dc3229c5e1c20e4aa6ee34",
+    "73167c64a9642b697385467e7459534ecaf9ef8ce8dcbbb967fc5c9aa0369b05",
+    "cf2380c3e0b1bd4fb6d8569dd994126b51d1d6b1d7bbca16d64c715720f5482a",
+    "8a8e5875d471268ba547b80ef70d645532afe2c043d510c32259730fdf8284a2",
+    "eaa13fafb71629dfb648b1293f4033f8e742168470977257507feca2d4ba9290"
+  ],
+  "noise_shape": [
+    8,
+    32
+  ],
+  "native_arm": -1,
+  "repeats": 2,
+  "num_envs": 34,
+  "seed": 3000330000,
+  "rows": 68,
+  "time_budget_seconds": 900.0,
+  "max_episode_steps": 80,
+  "action_chunk": 5,
+  "denoise_steps": 4,
+  "control_mode": "arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos",
+  "perturbation": "none; arm k passes arm_noise[k] as the initial noise of every chunk, arm -1 draws fresh N(0, I) noise from the batch generator every chunk",
+  "physics": "source-object friction and density scaled at env construction (ms.object_physics); plates and arena unchanged",
+  "sampler": "RLinf eval-mode Euler ODE; the initial noise is its only stochastic input",
+  "outcome_fields": {
+    "success_once": "success at any step",
+    "success_at_end": "success at step 80",
+    "first_success_step": "first step with success, -1 if none",
+    "grasped_once": "RLinf is_src_obj_grasped at any step",
+    "stable_grasp_once": "RLinf consecutive_grasp (5 grasped steps in a row) at any step",
+    "first_grasp_step": "first step with is_src_obj_grasped, -1 if none",
+    "object_plate_distance_end_m": "RLinf carrot_plate_dist (object-to-plate centre, metres) at step 80",
+    "object_plate_distance_min_m": "minimum carrot_plate_dist over the episode"
+  },
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "mani-skill": "3.0.0b22",
+    "sapien": "3.0.1",
+    "rlinf-openpi": "0.1.1",
+    "jax": "0.5.3"
+  },
+  "job_id": "job-gjkse1sb5gyj",
+  "execution": "baige",
+  "frozen_model_sha256": "ed862a89a39052dad591d6542959ef0a72866b2c85eac2c84767bf55f52205dc",
+  "role": "frozen pi0.5 noise-arm headroom screen/outcome cache; no training"
+}
