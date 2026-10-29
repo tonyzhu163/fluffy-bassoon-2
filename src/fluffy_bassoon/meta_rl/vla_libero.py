@@ -679,7 +679,8 @@ def main():
     if args.mode == "env-server":
         simulator_server(args)
         return
-    if args.retry_train_states and (not args.retry_validation_states or not args.retry_max_steps):
+    if (bool(args.retry_train_states) != bool(args.retry_validation_states)
+            or (args.retry_train_states and not args.retry_max_steps)):
         raise ValueError("Retry teaching requires explicit disjoint train/validation scenes and a resource budget")
     if bool(args.prior_recovery) != bool(args.prior_contract) or (args.resume and args.prior_recovery):
         raise ValueError("A migrated shared prior needs its original contract and cannot also resume")
@@ -746,9 +747,9 @@ def main():
                 migration = dict(prior_recovery_sha256=sha256(args.prior_recovery),
                     original_source_commit=prior_contract["source_commit"], current_source_commit=actual,
                     original_contract_sha256=sha256(args.prior_contract), shared_prior_primitive_steps=train_steps,
-                    source_weights_unchanged=True)
-                learner.save(args.output / "source-recovery.pkl", sampler, contract,
-                             **progress, migration=migration)
+                    source_weights_unchanged=True, previous_migration=progress.get("migration"))
+                progress = dict(progress, migration=migration)
+                learner.save(args.output / "source-recovery.pkl", sampler, contract, **progress)
                 write_json(args.output / "prior-migration.json", migration)
             else:
                 learner = source_train(args, sim, motor, contract)
