@@ -621,6 +621,31 @@ def assert_same_context(first_path, second_path):
         raise ValueError("AD/DPT comparison changed the actual context instead of only query labels")
 
 
+def external_candidates(args, sim, motor):
+    from .vla_history import load_policy
+    if motor.feature_encoder is None:
+        raise ValueError("Cross-task candidate evaluation requires the common frozen VLA feature interface")
+    candidates, costs = {}, []
+    for mode, path, digest in (("full", args.candidate_full, args.candidate_full_sha256),
+                               ("static", args.candidate_static, args.candidate_static_sha256)):
+        policy, manifest = load_policy(path, expected_sha256=digest, device=args.history_device)
+        source = manifest["contract"]
+        metadata = source.get("train_metadata", source)
+        if metadata["feature_contract"] != motor.feature_encoder.contract or policy.config.observation_dim != 4104:
+            raise ValueError("Candidate feature interface differs from the shared frozen VLA encoder")
+        if args.semantic_test:
+            tasks = metadata.get("task_manifest", {}).get("tasks", [])
+            match = [task for task in tasks if task["suite"] == args.suite and task["task_id"] == args.task_id
+                     and task["semantic_task"] == Path(sim.metadata["bddl_file"]).stem]
+            if len(match) != 1 or match[0]["split"] != "test":
+                raise ValueError("Current semantic task is not in the candidate's declared held-out test bank")
+        candidates[mode] = policy
+        costs.append(int(metadata.get("total_source_primitive_steps", 0)))
+    if len(set(costs)) != 1:
+        raise ValueError("Full/static candidates do not share the same source interaction cost")
+    return candidates, costs[0]
+
+
 def evaluate(args, sim, motor, methods, *, learner=None, student=None, train_steps=0,
              contract=None, label_prefix="", rl2_policy=None):
     from .vla_history import FrozenHistoryController
@@ -734,6 +759,12 @@ def main():
     parser.add_argument("--rl2-updates", type=int, default=0)
     parser.add_argument("--rl2-max-steps", type=int)
     parser.add_argument("--rl2-max-seconds", type=float)
+    parser.add_argument("--candidate-full", type=Path)
+    parser.add_argument("--candidate-full-sha256")
+    parser.add_argument("--candidate-static", type=Path)
+    parser.add_argument("--candidate-static-sha256")
+    parser.add_argument("--candidate-label", default="external_")
+    parser.add_argument("--semantic-test", action="store_true")
     args = parser.parse_args()
     if sys.platform != "linux":
         raise ValueError("Run models, simulator and tests on allocated Linux")
@@ -750,6 +781,11 @@ def main():
     if args.rl2_updates and (not args.rl2_max_steps
             or args.rl2_max_steps < args.attempts * args.horizon or not args.retry_train_states):
         raise ValueError("RL2 needs explicit training scenes and a complete-trial interaction budget")
+    external = (args.candidate_full, args.candidate_full_sha256, args.candidate_static, args.candidate_static_sha256)
+    if any(external) and not all(external):
+        raise ValueError("External comparison needs hash-bound full and separately trained static candidates")
+    if args.semantic_test and not all(external):
+        raise ValueError("Semantic test evaluation requires declared external candidates")
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get("FLUFFY_GPU_EXECUTION", "baige"), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -895,6 +931,10 @@ def main():
                     rl2_policy=policy, train_steps=train_steps + rl2_summary["counters"]["environment_steps"]))
         else:
             learner = None
+        if args.candidate_full:
+            candidates, source_cost = external_candidates(args, sim, motor)
+            evaluation.update(evaluate(args, sim, motor, ["history", "reset", "static"],
+                student=candidates, train_steps=source_cost, label_prefix=args.candidate_label))
         write_json(args.output / "summary.json", dict(completed=True, evaluation=evaluation,
             motor_calls=motor.calls, feature_calls=0 if motor.feature_encoder is None else motor.feature_encoder.calls,
             feature_seconds=0 if motor.feature_encoder is None else motor.feature_encoder.elapsed_seconds))

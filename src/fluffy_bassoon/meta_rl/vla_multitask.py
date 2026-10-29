@@ -101,6 +101,8 @@ def merge_collections(manifest, output):
             save_dataset(path, collections[objective][split], objective=objective,
                 metadata=dict(**common, trial_ids=identities[split], task_manifest=manifest,
                               source_collections=sources,
+                              total_source_primitive_steps=sum(source["manifests"]["ad"]["metadata"][
+                                  "total_source_primitive_steps"] for source in sources),
                               split="whole semantic tasks before any training windows"))
             paths[objective][split] = str(path)
     (output / "collections.json").write_text(json.dumps(paths, indent=2) + "\n")
