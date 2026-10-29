@@ -1,0 +1,54 @@
+{
+  "cluster": "Baige",
+  "submission_surface": "分布式训练",
+  "job_id": "job-lrdwz9x2s3kk",
+  "name": "mwj_1029_can_seeds_g8_r2_b9829df",
+  "submitted_at": "2026-10-29T16:42:11+08:00",
+  "running_at": "2026-10-29T16:42:22+08:00",
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "run_id": "robomimic-can-dsrl-baige-20261029-eight-r2",
+  "queue": "aihcq-rh0wwk9muei4",
+  "resources": {
+    "containers": 1,
+    "gpus": 8,
+    "raw_gpu_name": "NVIDIA RPBZZZ6",
+    "marketing_model_decoded": false,
+    "cpus": 128,
+    "ram_gib": 512,
+    "shm_gib": 64
+  },
+  "maximum_runtime_minutes": 58,
+  "automatic_retry": false,
+  "budget": {
+    "authorized_total_gpu_hours": 8,
+    "prior_failed_job": "job-8blx7x2ib4uu",
+    "prior_reserved_elapsed_seconds": 120,
+    "prior_reserved_gpu_hours": 0.26666666666666666,
+    "retry_ceiling_gpu_hours": 7.733333333333333,
+    "combined_ceiling_gpu_hours": 8
+  },
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "training_seeds": [
+    1,
+    2
+  ],
+  "common_training_steps": 28800,
+  "evaluation": "Eight paired held-out scenes times K4, both success metrics, normal/reset/reward-blind recurrent controls.",
+  "parallelism": "One independent method and seed per GPU; no DDP",
+  "prelaunch_validation": "Latest main reviewed, independent static review and shell/AST checks passed; protected Slurm/direct probe AST unchanged; scientific src files unchanged; exact Git commit deployed to clean fresh worktree.",
+  "runtime_validation": {
+    "cpu_tests_passed": 55,
+    "cpu_subtests_passed": 27,
+    "cpu_seconds": 0.18,
+    "parent_eight_gpu_probe": "passed",
+    "all_eight_phases_started_at": "2026-10-29T16:42:51+08:00",
+    "worker_attestations": "pending individual receipt audit",
+    "learner_progress": "pending first advancing updates"
+  },
+  "proof": "eight-r2-running.png"
+}
