@@ -47,6 +47,68 @@ def assert_context_equal(ad, dpt):
         raise ValueError("AD and DPT must share exact executed contexts; only targets may change")
 
 
+class SimulatorTaskBank:
+    """Route whole trials among already allocated, pinned simulator workers.
+
+    No task index enters policy observations. An internal episode identity maps
+    to one semantic task and one benchmark initial-state index. Resetting that
+    identity for the next attempt keeps the task, instruction and scene fixed.
+    The caller launches workers and owns their resource/allocation lifecycle.
+    """
+    def __init__(self, manifest, clients):
+        self.tasks = validate_manifest(manifest)
+        if set(clients) != {task["task_key"] for task in self.tasks}:
+            raise ValueError("Provide exactly the declared semantic task workers")
+        self.clients, self.episodes, self.split_episodes = clients, [], {k: [] for k in ("train", "validation", "test")}
+        self.active = None
+        for task in self.tasks:
+            client = clients[task["task_key"]]
+            if (client.metadata["suite"] != task["suite"] or client.metadata["task_id"] != task["task_id"]
+                    or Path(client.metadata["bddl_file"]).stem != task["semantic_task"]):
+                raise ValueError("Simulator worker task differs from its semantic manifest")
+            states = task.get("initial_states")
+            if (not states or len(set(states)) != len(states)
+                    or any(type(s) is not int or not 0 <= s < client.metadata["initial_states"] for s in states)):
+                raise ValueError("Declare each task's unique benchmark initial-state bank")
+            for state in states:
+                self.split_episodes[task["split"]].append(len(self.episodes))
+                self.episodes.append((task["task_key"], state))
+
+    @property
+    def metadata(self):
+        if self.active is None:
+            raise RuntimeError("Select a task by resetting its episode identity first")
+        return self.active.metadata
+
+    def reset(self, initial_state, scene_seed):
+        if type(initial_state) is not int or not 0 <= initial_state < len(self.episodes):
+            raise ValueError("Unknown declared task/scene episode")
+        task_key, benchmark_state = self.episodes[initial_state]
+        self.active = self.clients[task_key]
+        return self.active.reset(benchmark_state, scene_seed)
+
+    def step(self, actions):
+        if self.active is None:
+            raise RuntimeError("Reset a task before stepping")
+        return self.active.step(actions)
+
+
+def train_task_bank_rl2(policy, bank, motor, common_encoder, *, attempts, chunk,
+                       max_primitive_steps, updates, output_dir, source_contract, **kwargs):
+    from .vla_rl2 import train_rl2
+    maximum_horizon = max(bank.clients[task["task_key"]].metadata["horizon"]
+                          for task in bank.tasks if task["split"] == "train")
+    return train_rl2(policy, bank, motor,
+        lambda obs: common_encoder(obs, bank.metadata["instruction"]),
+        train_states=bank.split_episodes["train"],
+        heldout_states=bank.split_episodes["validation"] + bank.split_episodes["test"],
+        attempts=attempts, chunk=chunk, episode_horizon=maximum_horizon,
+        max_primitive_steps=max_primitive_steps, updates=updates, output_dir=output_dir,
+        source_contract=dict(**source_contract, semantic_tasks=bank.tasks,
+            episode_map=bank.episodes, schedule="uniform declared training task/scene episodes; one task per complete trial"),
+        **kwargs)
+
+
 def merge_collections(manifest, output):
     from .vla_history import file_sha256, load_dataset, save_dataset
     tasks = validate_manifest(manifest)
