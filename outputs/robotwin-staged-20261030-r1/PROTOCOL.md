@@ -103,3 +103,9 @@ source-learning credit. The old feature/hash artifacts cannot reconstruct raw
 images. The new collector records raw RGB/proprioception, actual noise and
 motor targets, rewards and termination/duration flags, policy snapshots and
 fresh PPO behavior metadata. No new data or learning results are claimed here.
+
+Staged verification subsequently passed on Baige job-mjbpmea60ptq, source
+`525d669e8fff3a995de444aee940d5e0db505197`:86tests in18.73seconds, exit0,
+scheduler1m10s. Initial compute accounting is now43m20s/45minutes, with100s
+remaining. The source-learning command is pinned and prepared; its two-hour
+allocation remains unsubmitted. See [test evidence](../robotwin-campaign-tests-20261030-r1/RESULTS.md).

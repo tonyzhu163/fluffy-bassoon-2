@@ -1,5 +1,5 @@
 {
-  "status": "prepared_awaiting_resource_authorization",
+  "status": "unlaunched_superseded_by_staged_proposal",
   "source_commit": "065777ceccf1c52a69d7def92399e35774b4bddd",
   "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
   "proposed_scheduler_minutes": 120,
@@ -19,5 +19,8 @@
   "remaining_collection_hours_estimate": 10.2,
   "estimate_excludes": "optimizer, raw recording and all-task variance",
   "command": "bash /mowenjie/fluffy-bassoon-2/worktrees/robotwin-campaign-1m-20261029-r1/scripts/diagnostics/robotwin_campaign_train.sh 065777ceccf1c52a69d7def92399e35774b4bddd robotwin-campaign-1m-20261029-r1",
-  "resource_reason": "A two-hour slice exceeds the initial 45 GPU-minute envelope; AGENTS.md requires approval for materially larger resource budgets."
+  "resource_reason": "A two-hour slice exceeds the initial 45 GPU-minute envelope; AGENTS.md requires approval for materially larger resource budgets.",
+  "superseded_by": "robotwin-staged-20261030-r1",
+  "supersession_date_shanghai": "2026-10-30",
+  "note": "Original272k-per-arm proposal preserved; neither training command has been submitted. Use the validated525d669 staged plan only after larger resource approval."
 }
