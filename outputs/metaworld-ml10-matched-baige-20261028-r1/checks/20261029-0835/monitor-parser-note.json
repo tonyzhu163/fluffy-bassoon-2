@@ -1,0 +1,6 @@
+{
+  "event": "Monitoring parser reached the final-only metrics row and expected a training key.",
+  "impact": "Artifact inspection only; ECET training had already completed exit0. No job retry, optimizer update, source change or new allocation occurred.",
+  "resolution": "Terminal audit reads training rows separately from the final paired-evaluation row and verifies the documented method-specific checkpoint schemas.",
+  "final_audit": "completion-audit.json"
+}

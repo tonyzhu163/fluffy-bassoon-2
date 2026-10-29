@@ -11,6 +11,14 @@ It was split from `tonyzhu163/fluffy-bassoon` (branch `lycoreco_rl`) on
 source hash. Agents start with [AGENTS.md](AGENTS.md) and the live
 [coordination file](outputs/coordination.md).
 
+## ML10 results
+
+The [final four-method ML10 comparison](outputs/metaworld-ml10-matched-baige-20261028-r1/README.md)
+contains the report, seven PNG/PDF plots, curve CSV, raw evaluation metrics and
+audit receipts for CTM, RL²-PPO, ECET and AMAGO1 at 10M training transitions
+per method. This is a single-seed method comparison; it does not establish a
+CTM advantage.
+
 ## Layout
 
 | Path | Contents |
@@ -22,7 +30,7 @@ source hash. Agents start with [AGENTS.md](AGENTS.md) and the live
 | `scripts/` | GPU probe and availability check, ManiSkill gate and headroom scripts, RLinf copy preparation |
 | `patches/` | RLinf flow-noise key patch, applied only to an isolated copy |
 | `docs/` | Method contracts and reviews ([index](docs/README.md)) |
-| `outputs/` | Coordination file and dated plans (tracked); run outputs (untracked) |
+| `outputs/` | Coordination, dated plans and selected result bundles (tracked); other run outputs (untracked) |
 
 The package names `fluffy_bassoon` and `lerobot_policy_ctm` are kept from the
 source repository so the copied code stays byte-identical; a rename can come
@@ -56,7 +64,11 @@ Keep method contracts beside implementations, verified results in
 `EVALUATION.md`, and raw evidence in each run's `outputs/<run-id>/`. Never commit
 credentials or machine-local authentication configuration.
 
-Planning documents are the tracked exception in `outputs/` (force-add them):
+Planning documents and selected compact result bundles are tracked exceptions
+in `outputs/` (force-add them). Published bundles retain reports, figures,
+curve data and audit evidence; checkpoints and bulk run outputs stay untracked.
+
+For planning documents:
 
 - `outputs/coordination.md` is the single live coordination file: question,
   ground rules, current state, job status and plan. Every agent and server

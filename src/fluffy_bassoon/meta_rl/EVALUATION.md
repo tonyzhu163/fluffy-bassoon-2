@@ -2,6 +2,33 @@
 
 Record each result here with its source commit, cluster, job and receipt path.
 
+## Final single-seed ML10 method comparison, 2026-10-29
+
+All four original Baige jobs completed 80 rounds / 10M training transitions
+and 5M evaluation transitions per method at source
+`cd0128f03a060aff2d538a91f35058aa822df845` (seed 1000).
+The final saved-artifact audit completed at 08:38:51 Asia/Shanghai.
+
+| Method | Baige job | Train success | Held-out success | Active GPU h |
+| --- | --- | ---: | ---: | ---: |
+| CTM T1 / cached100 | `job-rczwk9dd1v1e` | 16.0% | 0.0% | 2.0236 |
+| RL²-PPO / GRU64 | `job-j400lp4d3m6m` | 24.8% | 0.0% | 0.8367 |
+| ECET | `job-wrlr0utzsayo` | 24.8% | 21.6% | 9.0709 |
+| AMAGO1 / 10 replay passes | `job-dm64v27p0a30` | 12.8% | 0.0% | 2.6583 |
+
+Active GPU-hours include collection, optimization and evaluation on one
+RPBZZZ6 per method. Evaluation uses ten balanced lanes and 25 episodes.
+ECET held-out normal/reset/blind success is 21.6/21.2/6.4%; this does not
+demonstrate a persistent-memory advantage. Different model sizes, learners,
+clocks and replay schedules preclude an architecture-only ranking. CTM does
+not establish an advantage in performance, generalization or efficiency.
+First-K5 companion curves disclose the K5-training/K25-evaluation clock limit.
+
+The [result bundle](../../../outputs/metaworld-ml10-matched-baige-20261028-r1/README.md)
+includes the full report, original plots, raw evaluation outcomes and curve CSV.
+The [completion audit](../../../outputs/metaworld-ml10-matched-baige-20261028-r1/checks/20261029-0835/completion-audit.json)
+records all 160 recomputed evaluation conditions, counters and checkpoint hashes.
+
 ## Native DPT warm-start completion, 2026-10-28
 
 Baige `job-l3coajmm9noh`, source

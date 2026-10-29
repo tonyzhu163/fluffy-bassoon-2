@@ -1,0 +1,3083 @@
+{
+  "check_time_shanghai": "2026-10-29T08:38:51.974111+08:00",
+  "cluster": "Baige",
+  "source": "cd0128f03a060aff2d538a91f35058aa822df845",
+  "state": "all four original methods complete and independently audited",
+  "shared_worktree_clean": true,
+  "common_pool_hashes": {
+    "train": "f3c5061ee5c18ce392d27042bfca62d72d7c1f92e75c27101ae82676c54e11ca",
+    "train_eval": "c469dfc02b258d29eb20c18579e49735ad9d6a2cc0d07dc37af6b8b6bb12e861",
+    "test": "30c5982500fb72ead3b5decba6233827e7ab400a2c20ec28761ccc9491638325"
+  },
+  "families": {
+    "train_eval": [
+      "basketball-v3",
+      "button-press-topdown-v3",
+      "door-open-v3",
+      "drawer-close-v3",
+      "peg-insert-side-v3",
+      "pick-place-v3",
+      "push-v3",
+      "reach-v3",
+      "sweep-v3",
+      "window-open-v3"
+    ],
+    "test": [
+      "door-close-v3",
+      "drawer-open-v3",
+      "lever-pull-v3",
+      "shelf-place-v3",
+      "sweep-into-v3"
+    ]
+  },
+  "inspection": "Saved artifacts only; restricted inert metadata unpickler; no Torch import, tensor storage reads, model computation or tests.",
+  "records": {
+    "ctm": {
+      "training_timer_overhead_seconds": 0.2631614925339818,
+      "job": "job-rczwk9dd1v1e",
+      "completed": true,
+      "iteration": 80,
+      "environment_steps": 10000000,
+      "evaluation_steps": 5000000,
+      "optimizer_steps": 4000,
+      "sampled_or_forward_transitions": 100000000,
+      "learner_active_gpu_hours": 2.023584500399884,
+      "training_only_gpu_hours": 1.2897399403685186,
+      "launcher_active_seconds": 7290,
+      "launcher_active_gpu_hours": 2.025,
+      "cuda_peak_allocated_bytes": 1811326976,
+      "parameters": 237347,
+      "trainable_parameters": 237347,
+      "checkpoint_sha256": "a34dff8decfef013bde1f74310c67709b5ae0689a2b1f89ed49848db51a58b18",
+      "checkpoint_bytes": 3006429,
+      "recovery_keys_verified": [
+        "environment_rng",
+        "optimizer",
+        "policy",
+        "rng"
+      ],
+      "rng_keys_verified": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "checkpoint_counters_match_summary": true,
+      "qualification_source": "metaworld-method-qual-baige-20261028-r1 6448495ddd6837a9f7b6e9db101175da0129ae30",
+      "raw_conditions_recomputed": 40,
+      "final_success": {
+        "train_eval": {
+          "normal": 0.16,
+          "memory_reset": 0.18400000000000002,
+          "reward_blind": 0.14
+        },
+        "test": {
+          "normal": 0.0,
+          "memory_reset": 0.0,
+          "reward_blind": 0.0
+        }
+      },
+      "raw_evaluations": [
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.10400000000000001,
+          "first5": 0.060000000000000005,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.84,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.2,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.076,
+          "first5": 0.060000000000000005,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.6,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.048,
+          "first5": 0.04,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.04,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.04,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.032,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.08,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.08
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.132,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.08,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.96,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.02
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14400000000000002,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.96,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.48,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.016,
+          "first5": 0.060000000000000005,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.02,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.06
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14400000000000002,
+          "first5": 0.18000000000000002,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.44,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.02,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.1
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.028,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.02,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.12
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.136,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.36,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.02,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.1
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.028,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.02,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.12
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14800000000000002,
+          "first5": 0.2,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.48,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.024,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.04,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.08
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14800000000000002,
+          "first5": 0.18000000000000002,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.48,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.02,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.04
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14400000000000002,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.44,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.036000000000000004,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.18
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.152,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.52,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.024,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.04,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.08
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.156,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.56,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.024,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.1,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.02
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.17600000000000002,
+          "first5": 0.18000000000000002,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.76,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.02,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.1,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.16,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.6,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.16,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.6,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "memory_reset",
+          "success": 0.184,
+          "first5": 0.2,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.04,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.8,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "reward_blind",
+          "success": 0.14,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "memory_reset",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "reward_blind",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        }
+      ],
+      "normalization": "running state moments updated only after each complete PPO update",
+      "counter_summary": {
+        "environment_steps": 10000000,
+        "optimizer_steps": 4000,
+        "evaluation_steps": 5000000,
+        "training_seconds": 4643.063785326667,
+        "evaluation_seconds": 2606.8833339093253,
+        "cumulative_elapsed_seconds": 7284.918593624607
+      }
+    },
+    "rl2": {
+      "training_timer_overhead_seconds": 0.01440510991960764,
+      "job": "job-j400lp4d3m6m",
+      "completed": true,
+      "iteration": 80,
+      "environment_steps": 10000000,
+      "evaluation_steps": 5000000,
+      "optimizer_steps": 1600,
+      "sampled_or_forward_transitions": 100000000,
+      "learner_active_gpu_hours": 0.8367413939253634,
+      "training_only_gpu_hours": 0.40054417357236766,
+      "launcher_active_seconds": 3018,
+      "launcher_active_gpu_hours": 0.8383333333333334,
+      "cuda_peak_allocated_bytes": 717506560,
+      "parameters": 21960,
+      "trainable_parameters": 21960,
+      "checkpoint_sha256": "a9634a8124ffb129211c00ea43d80028b3abdb2c6a97ddd8d0901d737bb03de3",
+      "checkpoint_bytes": 291910,
+      "recovery_keys_verified": [
+        "environment_rng",
+        "optimizer",
+        "policy",
+        "rng"
+      ],
+      "rng_keys_verified": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "checkpoint_counters_match_summary": true,
+      "qualification_source": "metaworld-method-qual-baige-20261028-r2 3a029b6199458f9eb99b2b872c603a5eeb8c2b1a",
+      "raw_conditions_recomputed": 40,
+      "final_success": {
+        "train_eval": {
+          "normal": 0.248,
+          "memory_reset": 0.228,
+          "reward_blind": 0.16
+        },
+        "test": {
+          "normal": 0.0,
+          "memory_reset": 0.0,
+          "reward_blind": 0.0
+        }
+      },
+      "raw_evaluations": [
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0.02,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.12,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.10800000000000001,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.08,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.02
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14,
+          "first5": 0.18000000000000002,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0.02,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.14,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.156,
+          "first5": 0.24,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.24,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.32,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.12400000000000001,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.24,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.168,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.04,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.64,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.188,
+          "first5": 0.2,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.36,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.52,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.20400000000000001,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.48,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.56,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.252,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.68,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.84,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.236,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.68,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.68,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.24,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.56,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.84,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.236,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.72,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.64,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.24,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.6,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.8,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.244,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.72,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.72,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.26,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.8,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.8,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.248,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.64,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.84,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.248,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.64,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.84,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "memory_reset",
+          "success": 0.228,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.64,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.64,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "reward_blind",
+          "success": 0.16,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.08,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.52,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "memory_reset",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "reward_blind",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        }
+      ],
+      "normalization": "none; public clocks retain the common fixed normalization",
+      "counter_summary": {
+        "environment_steps": 10000000,
+        "optimizer_steps": 1600,
+        "evaluation_steps": 5000000,
+        "training_seconds": 1441.9590248605236,
+        "evaluation_seconds": 1536.137749233283,
+        "cumulative_elapsed_seconds": 3012.2707804888487
+      }
+    },
+    "ecet": {
+      "training_timer_overhead_seconds": 0.9057380426675081,
+      "job": "job-wrlr0utzsayo",
+      "completed": true,
+      "iteration": 80,
+      "environment_steps": 10000000,
+      "evaluation_steps": 5000000,
+      "optimizer_steps": 6251200,
+      "sampled_or_forward_transitions": 200000000,
+      "learner_active_gpu_hours": 9.070887666690526,
+      "training_only_gpu_hours": 8.543687154957507,
+      "launcher_active_seconds": 32660,
+      "launcher_active_gpu_hours": 9.072222222222223,
+      "cuda_peak_allocated_bytes": 158009856,
+      "parameters": 69194,
+      "trainable_parameters": 69194,
+      "checkpoint_sha256": "824de988a0ac8c3c78aeb3d28d2d9e5ea77e919ce2a99697487a09bce331c80a",
+      "checkpoint_bytes": 915063,
+      "recovery_keys_verified": [
+        "environment_rng",
+        "optimizer",
+        "policy",
+        "rng"
+      ],
+      "rng_keys_verified": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "checkpoint_counters_match_summary": true,
+      "qualification_source": "metaworld-method-qual-baige-20261028-r1 6448495ddd6837a9f7b6e9db101175da0129ae30",
+      "raw_conditions_recomputed": 40,
+      "final_success": {
+        "train_eval": {
+          "normal": 0.248,
+          "memory_reset": 0.3,
+          "reward_blind": 0.23199999999999998
+        },
+        "test": {
+          "normal": 0.21600000000000003,
+          "memory_reset": 0.21200000000000002,
+          "reward_blind": 0.064
+        }
+      },
+      "raw_evaluations": [
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.084,
+          "first5": 0.060000000000000005,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.52,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0.04
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.008,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0.04,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.036000000000000004,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.08,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.02,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.228,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.24,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0.04
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.096,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0.42,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.152,
+          "first5": 0.2,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 1,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.52,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.284,
+          "first5": 0.32,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.72,
+            "door-open-v3": 0.08,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0.04
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.296,
+          "first5": 0.38,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.76,
+            "door-open-v3": 0.04,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.96,
+            "sweep-v3": 0,
+            "window-open-v3": 0.2
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.076,
+          "first5": 0.08,
+          "family_success": {
+            "door-close-v3": 0.32,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.296,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.96,
+            "door-open-v3": 0.08,
+            "drawer-close-v3": 0.92,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.188,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 0.88,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.272,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.72,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.16,
+          "first5": 0.18,
+          "family_success": {
+            "door-close-v3": 0.74,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.324,
+          "first5": 0.38,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.48,
+            "door-open-v3": 0.76,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.20400000000000001,
+          "first5": 0.18,
+          "family_success": {
+            "door-close-v3": 0.96,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.248,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.96,
+            "door-open-v3": 0.12,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.4,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.20400000000000001,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 0.92,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.04
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.32,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 1,
+            "door-open-v3": 0.2,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.21200000000000002,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 1,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.356,
+          "first5": 0.34,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.88,
+            "door-open-v3": 0.76,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.92,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.084,
+          "first5": 0.24,
+          "family_success": {
+            "door-close-v3": 0.34,
+            "drawer-open-v3": 0.02,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.292,
+          "first5": 0.27999999999999997,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.88,
+            "door-open-v3": 0.12,
+            "drawer-close-v3": 0.92,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.20800000000000002,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 0.96,
+            "drawer-open-v3": 0.02,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.256,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.64,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.92,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.156,
+          "first5": 0.18,
+          "family_success": {
+            "door-close-v3": 0.54,
+            "drawer-open-v3": 0.18,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.17600000000000002,
+          "first5": 0.18000000000000002,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.76,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.028,
+          "first5": 0.060000000000000005,
+          "family_success": {
+            "door-close-v3": 0.02,
+            "drawer-open-v3": 0.04,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.02
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.248,
+          "first5": 0.24,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.52,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.96,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.216,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 0.98,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.04
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.248,
+          "first5": 0.24,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.52,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.96,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "memory_reset",
+          "success": 0.3,
+          "first5": 0.3,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.96,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 1,
+            "sweep-v3": 0.04,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "reward_blind",
+          "success": 0.232,
+          "first5": 0.24,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0.36,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.96,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.216,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 0.98,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.04
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "memory_reset",
+          "success": 0.21200000000000002,
+          "first5": 0.22,
+          "family_success": {
+            "door-close-v3": 1,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "reward_blind",
+          "success": 0.064,
+          "first5": 0.2,
+          "family_success": {
+            "door-close-v3": 0.22,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.06,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0.04
+          }
+        }
+      ],
+      "normalization": "none",
+      "counter_summary": {
+        "environment_steps": 10000000,
+        "optimizer_steps": 6251200,
+        "evaluation_steps": 5000000,
+        "training_seconds": 30757.273757847026,
+        "evaluation_seconds": 1863.5840170988813,
+        "cumulative_elapsed_seconds": 32655.19887802191
+      },
+      "optimizer_recovery": {
+        "actor": {
+          "state_entries": 49,
+          "parameter_groups": 1
+        },
+        "critic": {
+          "state_entries": 7,
+          "parameter_groups": 1
+        }
+      }
+    },
+    "amago": {
+      "training_timer_overhead_seconds": null,
+      "job": "job-dm64v27p0a30",
+      "completed": true,
+      "iteration": 80,
+      "environment_steps": 10000000,
+      "evaluation_steps": 5000000,
+      "optimizer_steps": 2083,
+      "sampled_or_forward_transitions": 99984000,
+      "learner_active_gpu_hours": 2.6583240908167016,
+      "training_only_gpu_hours": 1.2000740533689451,
+      "launcher_active_seconds": 9585,
+      "launcher_active_gpu_hours": 2.6625,
+      "cuda_peak_allocated_bytes": 30006626816,
+      "parameters": 5403181,
+      "trainable_parameters": 4179817,
+      "checkpoint_sha256": "e0ea9c8d542adfded6fdc656bd3fea5f3bfd21e1d75d5399ee8627026fd31532",
+      "checkpoint_bytes": 56257315,
+      "recovery_keys_verified": [
+        "exploration_numpy_rng",
+        "exploration_steps",
+        "optimizer",
+        "policy",
+        "replay",
+        "rng",
+        "sampler",
+        "scaler",
+        "scheduler"
+      ],
+      "rng_keys_verified": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "checkpoint_counters_match_summary": true,
+      "qualification_source": "metaworld-method-qual-baige-20261028-r1 6448495ddd6837a9f7b6e9db101175da0129ae30",
+      "raw_conditions_recomputed": 40,
+      "final_success": {
+        "train_eval": {
+          "normal": 0.128,
+          "memory_reset": 0.12,
+          "reward_blind": 0.11200000000000003
+        },
+        "test": {
+          "normal": 0.0,
+          "memory_reset": 0.0,
+          "reward_blind": 0.0
+        }
+      },
+      "raw_evaluations": [
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.060000000000000005,
+          "first5": 0,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.6,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 0,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0.02,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.04,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 5,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.028,
+          "first5": 0.02,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 10,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.02,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.1,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.008,
+          "first5": 0,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.08,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 15,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.12,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 20,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.036000000000000004,
+          "first5": 0.04,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0.08
+          }
+        },
+        {
+          "iteration": 25,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.136,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.08,
+            "sweep-v3": 0,
+            "window-open-v3": 0.28
+          }
+        },
+        {
+          "iteration": 30,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0.02,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0.02,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.124,
+          "first5": 0.04,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.72,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.2,
+            "sweep-v3": 0,
+            "window-open-v3": 0.32
+          }
+        },
+        {
+          "iteration": 35,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.128,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 40,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.136,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.28,
+            "sweep-v3": 0,
+            "window-open-v3": 0.08
+          }
+        },
+        {
+          "iteration": 45,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.128,
+          "first5": 0.16,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.24,
+            "sweep-v3": 0,
+            "window-open-v3": 0.04
+          }
+        },
+        {
+          "iteration": 50,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.008,
+          "first5": 0.04,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0.04,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.12000000000000001,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.2,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 55,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.008,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0.04,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.1,
+          "first5": 0.04,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.8,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.2,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 60,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.004,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0.02,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.12400000000000001,
+          "first5": 0.14,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.24,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 65,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.044000000000000004,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0.22,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.116,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 1,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0
+          }
+        },
+        {
+          "iteration": 70,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.128,
+          "first5": 0.1,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.96,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0.16
+          }
+        },
+        {
+          "iteration": 75,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0.012,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0.06,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.128,
+          "first5": 0.1,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.92,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0.2
+          }
+        },
+        {
+          "iteration": 80,
+          "final": false,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "normal",
+          "success": 0.128,
+          "first5": 0.1,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.92,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0.2
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "memory_reset",
+          "success": 0.12000000000000001,
+          "first5": 0.1,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.8,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.16,
+            "sweep-v3": 0,
+            "window-open-v3": 0.24
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "train_eval",
+          "condition": "reward_blind",
+          "success": 0.112,
+          "first5": 0.12000000000000001,
+          "family_success": {
+            "basketball-v3": 0,
+            "button-press-topdown-v3": 0,
+            "door-open-v3": 0,
+            "drawer-close-v3": 0.84,
+            "peg-insert-side-v3": 0,
+            "pick-place-v3": 0,
+            "push-v3": 0,
+            "reach-v3": 0.12,
+            "sweep-v3": 0,
+            "window-open-v3": 0.16
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "normal",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "memory_reset",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        },
+        {
+          "iteration": 80,
+          "final": true,
+          "split": "test",
+          "condition": "reward_blind",
+          "success": 0,
+          "first5": 0,
+          "family_success": {
+            "door-close-v3": 0,
+            "drawer-open-v3": 0,
+            "lever-pull-v3": 0,
+            "shelf-place-v3": 0,
+            "sweep-into-v3": 0
+          }
+        }
+      ],
+      "normalization": "official FFTstepEncoder InputNorm updated during gradient steps; PopArt",
+      "counter_summary": {
+        "environment_steps": 10000000,
+        "optimizer_steps": 2083,
+        "evaluation_steps": 5000000,
+        "sampled_replay_transitions": 99984000,
+        "target_sampled_replay_transitions": 100000000,
+        "collection_seconds": 3560.799201976508,
+        "optimization_seconds": 759.4671018663794,
+        "training_seconds": 4320.266592128202,
+        "evaluation_seconds": 5195.267408238724,
+        "cumulative_elapsed_seconds": 9569.970329635777
+      }
+    }
+  }
+}
