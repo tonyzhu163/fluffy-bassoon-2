@@ -85,5 +85,10 @@ GPU probe inside the step (`ms.prepare_gpu`).
 
 ## Execution record
 
+- CPU tests at `5c99e39` (code identical to the launch commit; only the
+  launcher changed after it): thu2 job **49179**, node01, CPU-only step,
+  `rlinf-pi05-maniskill-e1a82eb-r1` env, **59 passed in 3.87 s**
+  (new instruction-swap, ManiSkill pi0.5, checkpoint-compat, env-config tests).
+
 Filled in after submission: commit, job IDs, nodes, outcomes. Raw outputs:
 `/cluster/nvme5/zhujiayang/fluffy-bassoon-2/outputs/pi05-instruction-swap-thu2-20261029-r1/<ckpt>-job<id>/`.

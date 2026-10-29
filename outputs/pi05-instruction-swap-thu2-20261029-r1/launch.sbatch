@@ -56,10 +56,13 @@ COMMON=(--rlinf-root "$RLINF" --model-path "$M" --norm-stats "$NORM" --expected-
   --source-commit "$TASK_SOURCE" --checkpoint-label "$TASK_CKPT" --num-envs 32 --seed 2910290000)
 S=scripts/diagnostics/maniskill_pi05_instruction_swap.py
 "$P" "$S" --mode single "${COMMON[@]}" --objects 0,9,12,13 --per-object 16 \
-  --max-elapsed-seconds 600 --output-dir "$O/single" > "$O/single.log" 2>&1
+  --max-elapsed-seconds 600 --output-dir "$O/single" > "$O/single.log" 2>&1 || SINGLE_EXIT=$?
+echo "single exit=${SINGLE_EXIT:-0}" >> "$O/step-exits.txt"
 # Leave ~6 minutes of the 60-minute allocation for checkpoint hashing and the final fingerprint.
 REMAIN=$(( TASK_START + 3240 - $(date +%s) ))
 "$P" "$S" --mode multi "${COMMON[@]}" --pairs 0:9,12:13,0:13,9:12 --per-pair 24 \
-  --max-elapsed-seconds "$REMAIN" --output-dir "$O/multi" > "$O/multi.log" 2>&1
+  --max-elapsed-seconds "$REMAIN" --output-dir "$O/multi" > "$O/multi.log" 2>&1 || MULTI_EXIT=$?
+echo "multi exit=${MULTI_EXIT:-0}" >> "$O/step-exits.txt"
+test -z "${SINGLE_EXIT:-}${MULTI_EXIT:-}"
 "$P" "$S" --mode summarize --single-dir "$O/single" --multi-dir "$O/multi" --output-dir "$O" > "$O/summarize.log" 2>&1
 STEP
