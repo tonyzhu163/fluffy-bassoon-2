@@ -1,22 +1,12 @@
 # Meta-World released pi0.5 noise screen
 
-Status checked 2026-10-29 19:59 Asia/Shanghai: Baige
-`job-orgyjb0z9h6d` running, independently confirmed in the authenticated
-scheduler console. Both reach conditions completed and were audited:
-**1,088 episodes** in total. Visible-goal noise-arm selection gains 6.25 points
-over native sampling; hidden-goal selection scores **25% versus native
-28.125%**, a loss of 3.125 points. Both fail G1, G2 and goal coverage; two of
-four goals remain unreached in each condition. This 16-arm bank does not qualify for the cached-selector route. The run
-trains no noise actor and does not establish whether learned DSRL steering
-can improve the frozen motor.
-
-A read-only snapshot confirms **245/544 visible-goal push episodes completed**
-(last row244), with the next rollout at step140. Its JSONL remains buffered;
-no exit code or final summary is present. [Partial results and limits](PARTIAL-RESULTS.md)
-record the reach audits; the overall screen and final motor fingerprint remain
-pending. Both GPU probes and all nine focused Linux checks previously passed,
-with zero skips. The [scheduler receipt](checks/scheduler-20261029-1958.json)
-and [19:59 worker receipt](checks/worker-progress-195927.json) preserve this check.
+**Paused by the user, 2026-10-29.** Baige `job-orgyjb0z9h6d` was stopped
+at **20:17:43 Shanghai**, releasing its GPU. Its monitor is paused. Three
+conditions closed with544rows each; push-hidden is incomplete. The final
+motor fingerprint and overall summary were not produced. See [pause record](PAUSED.md)
+and [partial reach results](PARTIAL-RESULTS.md). The user redirected work to
+[learned steering on LIBERO and RoboTwin](../libero-robotwin-focus-20261029-r1/README.md).
+This fixed-bank screen does not establish the effectiveness of learned DSRL.
 
 Scientific source: `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`, reviewed from
 main and deployed through verified Git bundles into a fresh detached worktree.
@@ -64,6 +54,5 @@ and [worker-progress-190813.json](worker-progress-190813.json) preserve the
 observed counters. Full raw outcomes must be audited once the
 condition files close. The active scientific worktree was not modified.
 
-The chat heartbeat `monitor-metaworld-pi05-noise-screen` checks every 20 minutes,
-reports meaningful results or failures, and stops after final audit. Other
+The chat heartbeat `monitor-metaworld-pi05-noise-screen` is paused by the user. Other
 chats' LIBERO allocations have separate ownership.
