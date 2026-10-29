@@ -5,17 +5,21 @@ robot-performance claim is unproven.** Result placeholders are intentional.
 Durable choices: [DECISIONS.md](DECISIONS.md). Method contracts remain the
 implementation references; this outline does not replace them.
 
-Current evaluation roles: **original LIBERO supplies attachment training and
-validation; LIBERO-Plus and LIBERO-Pro are the two primary external tests**.
+Current data arms: **original-LIBERO clean source versus the same source plus
+a declared Plus training partition**, with identical clean validation and
+held-out Plus/Pro evaluation cases. Plus is an unseen benchmark shift for the
+clean-only arm; for the augmented arm it is within-Plus case generalization.
+Pro remains absent from attachment pretraining in both arms.
 The [v2 protocol](../../outputs/libero-pi05-corpus-20261029-r2/EVALUATION-PROTOCOL.md)
-adds these roles without rewriting the frozen v1 data split.
+records evaluation roles; the explicit r3 source extension adds the approved
+Plus training partition without rewriting the frozen v1 data split.
 
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
 - Approach: causal history → bounded latent-noise coordinate → frozen π₀.₅;
-  pretrain using competent-teacher histories; compare data construction,
+  pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
 - Evaluation: LIBERO-Plus and LIBERO-Pro; success against actual deployment
   interactions; ordinary DSRL; controls for representation, architecture,
@@ -60,6 +64,12 @@ adds these roles without rewriting the frozen v1 data split.
 
 - Task \(m\); public instruction \(\ell\); observation \(o_t\): two RGB views
   and eight robot-proprioceptive coordinates. No object-state oracle.
+- Meta-task: goal/instruction, environment/perturbation condition and nominal
+  scene. A trial keeps this condition fixed across attempts; the learned
+  controller uses its own prior outcomes to choose subsequent steering.
+  Goal revelation does not imply the best noise coordinate is known; nor does
+  defining a trial establish that history is useful.
+  [Explicit meta-task contract](../frozen-vla-libero/META-TASK.md).
 - One trial: \(K\) complete episodes on the same declared task/initial state;
   state and reset seed held fixed across attempts. New trial → empty history.
 - Completed interaction history:
@@ -129,6 +139,10 @@ adds these roles without rewriting the frozen v1 data split.
   Gate choice is a collection criterion, not proof of student quality.
 - DPT labels cannot rewrite historical executed noise or its actual reward.
   Same source data and collection cost shared across CND/DPT.
+- Current pilot exports paired AD and **DPT-style final-candidate labels**
+  from the same fresh-DSRL learning histories. Those final actors have not
+  passed an independent expertise test; DPT's optimal-label assumptions are
+  not established. Scheduled CND remains a separate candidate data route.
 - DPT is not observation-only BC by definition. In this particular dataset a
   student may ignore context; test that possibility against trained static
   policies rather than assume the answer from the objective name.
@@ -144,6 +158,14 @@ adds these roles without rewriting the frozen v1 data split.
 
 ## 5. Dataset and two external evaluation protocols
 
+- Approved data comparison: clean original LIBERO versus clean plus
+  predeclared Plus source cases. Hold validation, architecture, labels,
+  optimization budget and final evaluation cases fixed within the comparison.
+  Plus training adds real collection cost; it does not create a free data arm.
+- Scope of distribution claims: clean-only → Plus/Pro is unseen-benchmark
+  shift transfer for the attachment. Clean+Plus → disjoint Plus cases is
+  within-benchmark generalization; category/parameter/base-family holdouts
+  determine any stronger OOD claim. Pro has no attachment-pretraining data.
 - Backbone release is trained on the original 130 LIBERO tasks. Externally
   held-out perturbation cases are the main claim; original base tasks are
   not held out from VLA pretraining. Pin weights, normalization and backend
@@ -187,6 +209,16 @@ adds these roles without rewriting the frozen v1 data split.
 - Exact development cases, source/asset pins, final-case identity fields and
   seed exclusions: [v2 manifest](../../outputs/libero-pi05-corpus-20261029-r2/protocol.json).
   New final IDs await pinned inventories; no outcomes used to invent cases.
+- The approved Plus source partition is disjoint from the existing Plus
+  development cases667/290: lighting case2387 and sensor-noise case1438,
+  three source scenes each. See [source-arm declaration](../../outputs/libero-pi05-corpus-20261029-r3/PLUS-SOURCE-PLAN.md).
+- Current Plus source lighting/sensor cases and camera/robot development
+  cases occupy different categories. This narrow factor split is explicit;
+  it is not a claim that the augmented model has never seen Plus.
+- **Current corpus scale:** one goal family47, four clean training scenes,
+  two clean local-validation scenes and six Plus source trials. The planned
+  78-task bank has not been collected by this smoke test. No new-goal or broad
+  meta-task generalization follows from these data.
 
 ## 6. Baselines and mechanism controls
 
@@ -204,6 +236,10 @@ adds these roles without rewriting the frozen v1 data split.
   held-out-task source pretraining.
 - Feature-matched SAC control: same shared VLA features as history student;
   needed to distinguish input-representation gains from learning-process gains.
+- Source-matched official PixelSAC instead uses its RGB/state encoder;
+  history/static students use RLinf4104 features. Matching raw training data
+  does not match representation or architecture. The separately trained
+  static student provides the current controlled test of history benefit.
 - Expert-only BC; independently trained static Transformer with matched
   data/initialization/update budget; independently trained episode-reset
   controller. Resetting the full-trained policy only at evaluation is an
@@ -248,7 +284,8 @@ adds these roles without rewriting the frozen v1 data split.
 | Fig. 1: method and chronology | What changes during deployment? | Frozen motor/controller; history updates; actual action→outcome timing |
 | Fig. 2: success vs interactions | Does steering adapt faster while keeping high final success? | Ordinary DSRL, native, CND/DPT/AD/RL²; **TBD** |
 | Table 1: Plus and Pro first attempts | Does steering preserve external-suite competence? | Separate official-style settings, coverage and blind dev-excluded scores; **TBD** |
-| Table 2: same-history targets | Does supervision explain performance? | Paired CND vs DPT; AD separately with its own source cost; **TBD** |
+| Table 2: same-history targets | Does supervision explain performance? | Current paired AD vs DPT-style labels; CND route kept separate; **TBD** |
+| Data-arm comparison | Does Plus-source exposure help, and where does it transfer? | Clean vs clean+Plus; identical clean validation and held-out Plus/Pro cases; **TBD** |
 | Fig. 3: memory/feedback controls | Is improvement caused by useful history? | Trained static/reset, reward/history/clock interventions; **TBD** |
 | Fig. 4: data and amortization curves | How much meta-pretraining is needed, and when does it pay off? | Source-data/checkpoint scale; deployment vs total cost; **TBD** |
 | Table 3: Plus/Pro adaptation | Does own-history steering improve external-suite success efficiently? | K1/2/4/8, base/perturbation strata and source/deployment cost; **TBD** |
@@ -266,9 +303,16 @@ adds these roles without rewriting the frozen v1 data split.
   pilot counts belong in the consolidated LIBERO `EVALUATION.md` before use
   in a paper table. Those checks do not qualify the newly selected RLinf130
   motor or establish its Plus/Pro results.
-- **Pending:** qualified π₀.₅ teacher corpus; trained frozen students;
+- **Pending:** independent expert qualification if fixed-teacher CND is pursued;
+  frozen-student robot-performance comparisons;
   held-out-task own-history success; reliable memory/feedback benefit;
   competitive final success and sample efficiency; Plus/Pro.
+- Audited RLinf source data and development baseline rollouts now exist;
+  see the evaluation ledger for counts, costs and hashes. Clean source
+  episodes have a success ceiling; the Plus source sequence is not monotonic;
+  native success also ceilings the selected Plus/Pro development cases.
+  None of these runs evaluated a frozen meta-controller. Candidate training
+  and held-out own-history comparisons remain separate result slots.
 - Earlier non-VLA and older-backbone probes are engineering evidence only.
   They cannot fill any VLA result slot or establish the paper's claim.
 - Publication strength and novelty remain empirical/literature questions;

@@ -3,6 +3,99 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## RLinf130 clean corpus and Plus/Pro development probes
+
+Frozen `RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT`, revision
+`6222623f635769bfc73c9472e29fab9b7fd8e027`; native horizon ten. Strict loading
+matched all 667 tensors with no missing/unexpected keys. This is a different
+motor/feature contract from the older OpenPI pilot below.
+
+The completed clean corpus contains **six K4 trials, 24/24 successful source
+episodes**, all in one cream-cheese-to-basket goal family, original training
+task 90:47. Four source scenes supply 16 training episodes; two other scenes
+supply 8 local-validation episodes. These are local scene splits of one
+training goal, not the planned held-out semantic-task validation bank.
+
+| Clean source partition | Episodes | Executed primitive actions | SAC updates |
+| --- | --- | --- | --- |
+| Training scenes0–3 | 16 | 2,243 | 4,600 |
+| Local validation scenes36–37 | 8 | 1,128 | 2,320 |
+| Shared generation total | 24 | 3,371 | 6,920 |
+
+- Actual settling/qualification reset actions: 250; total physical simulator
+  actions: 3,621. Worker wall time 441.59s; allocation/setup time is additional.
+- Fresh common SAC initialization restored independently per trial; batch 32,
+  UTD 20, warmup 0. Source optimizer updates advance, but source episode success
+  is already at its ceiling; a useful improving algorithm is not established.
+- Paired AD/DPT exports have bitwise-identical context arrays. AD labels equal
+  executed noise. DPT-style labels come from the final **candidate** actor;
+  its deterministic competence was not independently measured. Source success
+  does not make that candidate an expert.
+- One nominal-state-vector hash and one initial public-observation hash per
+  complete trial in these six saved trials. Shared 4104D RLinf features remain fixed.
+- Source generation is counted once across both objectives. It is not a new
+  3,371-action cost for every student trained on the same corpus.
+
+The disjoint Plus training partition also completed six K4 trials:
+**21/24 successful source episodes**, 3,692 primitive +260 settling actions
+=3,952 simulator actions, 7,560 SAC updates, worker 603.58s. Light case 2387 succeeded 9/12;
+sensor-noise case 1438 succeeded 12/12. All six first attempts succeeded;
+aggregate successes by attempt were 6/6, 4/6, 5/6, 6/6. These are not monotonic
+teacher improvements, and the final deterministic actors remain unqualified
+as experts. Cases 667/290 and all Pro cases are absent from these source data.
+
+The augmented training bank therefore has 2,243+3,692=5,935 primitive source
+actions; common clean validation adds 1,128. Counting shared generation once,
+clean-only costs 3,371 primitive +250 settling, while clean+Plus costs 7,063
+primitive +510 settling. Student optimization and later deployment costs
+must be reported separately. Paired context equality is verified for both
+source collections.
+
+The separate Plus/Pro probes used two declared development variants each,
+one nominal scene per variant and K4 attempts per method. All share this
+same goal family. They evaluate baseline execution and ordinary online SAC;
+**no frozen meta-controller was evaluated**.
+
+| Development method | Plus successes / episodes | Plus primitive actions | Pro successes / episodes | Pro primitive actions |
+| --- | --- | --- | --- | --- |
+| Native independent Gaussian | 8/8 | 1,034 | 8/8 | 1,159 |
+| Zero noise | 8/8 | 1,000 | 8/8 | 1,068 |
+| Tied Gaussian | 4/8 | 1,865 | 4/8 | 1,817 |
+| Zero-first simple search | 8/8 | 1,000 | 8/8 | 1,068 |
+| Fresh ordinary DSRL online | 6/8 | 1,474 | 4/8 | 1,828 |
+
+- Search starts at zero and retains a successful arm; it never needed to
+  leave zero in these probes. No search advantage over zero is established.
+- Online DSRL uses batch 32/UTD 20/warmup 32 and no source-pretrained prior.
+  Its fourth attempts succeeded in both cases of each suite, while the native
+  policy already succeeded throughout. This does not establish an improvement
+  over the frozen motor or a meta-learning benefit.
+- Plus: 40 episodes across all five methods, 6,373 primitive +420 settling
+  actions =6,793 simulator actions; worker 604.51s. Pro: 40 episodes,
+  6,940 +210 =7,150 simulator actions; worker 627.68s. Settling includes motor
+  qualification resets. These are development costs, not student pretraining
+  costs or final benchmark scores.
+- Only two correlated trials per method/suite. Native8/8 leaves weak success
+  headroom on these selected cases; the clean 24/24 supplies little
+  failure/recovery contrast. Duration/reward variation still exists, but
+  neither outcome establishes useful history-dependent adaptation.
+- The one-goal smoke test cannot establish new-goal or broad meta-task
+  generalization, even if a student later matches these successes.
+
+Clean source pin: `d6a981037b424eb27a38c06ce5c6a240818954e5`;
+Plus source: `42fd5176f484aa6b884e52881a2a3021ff18e258`;
+both development probes: `b3d1df4a9b77c66650c011e1e70c17f8cdb6a8f1`.
+The [independent audit and compact raw receipts](../../outputs/libero-rlinf130-evidence-audit-20261029-r1/AUDIT.md)
+verify 168 expected dataset/trace/checkpoint hashes, source costs and per-trial
+paired-context equality without model computation. Large checkpoints and raw
+image traces remain on Baige.
+
+Adding the declared Plus training partition changes the distribution claim:
+clean-only → Plus/Pro tests concerns shifts unseen by the attachment;
+clean+Plus → disjoint Plus cases is within-Plus generalization, with any
+stronger perturbation-family holdout stated explicitly. Pro remains absent
+from pretraining in both arms. See [meta-task contract](META-TASK.md).
+
 ## Released π₀.₅ technical pilot
 
 Frozen official OpenPI `pi05_libero`; native horizon10, execution chunk10,
