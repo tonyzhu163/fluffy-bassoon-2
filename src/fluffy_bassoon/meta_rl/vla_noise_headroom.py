@@ -203,7 +203,8 @@ def main(argv=None):
         if (sim.metadata["suite"] != args.suite or sim.metadata["task_id"] != args.task_id
                 or sim.metadata["bddl_sha256"] != task["bddl_sha256"]
                 or Path(sim.metadata["bddl_file"]).stem != task["semantic_task"]
-                or sim.metadata["horizon"] != 400 or sim.metadata["initial_states"] < 2):
+                or sim.metadata["horizon"] != 400
+                or sim.metadata["initial_states"] != task["initial_states"]["count"]):
             raise ValueError("Actual simulator differs from the frozen declared task")
         arms = make_arms(args.arm_seed)
         np.save(args.output / "arms.npy", arms, allow_pickle=False)
@@ -277,6 +278,11 @@ def main(argv=None):
         result.update(source_commit=args.source_commit, task=task, frozen_split_sha256=split["metadata_sha256"],
             elapsed_seconds=time.monotonic() - started, motor_calls=motor.calls,
             qualification_reset_settling_steps=sim.metadata["settle_steps"])
+        result["actual_cost"].update(
+            qualification_settling_steps=sim.metadata["settle_steps"],
+            total_settling_steps=result["actual_cost"]["settling_steps"] + sim.metadata["settle_steps"],
+            total_simulator_steps=result["actual_cost"]["primitive_steps"]
+                + result["actual_cost"]["settling_steps"] + sim.metadata["settle_steps"])
         write_json(args.output / "analysis.json", result)
         write_json(args.output / "summary.json", dict(completed=True, **result["actual_cost"],
             elapsed_seconds=result["elapsed_seconds"], analysis="analysis.json"))
