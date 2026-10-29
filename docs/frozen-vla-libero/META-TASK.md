@@ -54,9 +54,11 @@ The earlier RLinf130 pilot and its data arms remain separate evidence.
 
 ## Distribution claims
 
-In the primary design, LIBERO90 is a candidate new-goal target only after
-auditing semantic overlaps with all40 source tasks. Plus/Pro cases based on
-source-familiar goals test new conditions. One-shot means one support episode
+In the primary design, all40 tasks supply source data and the full90-task
+LIBERO90 suite plusPlus/Pro supply target evaluation. The user requested no
+semantic filtering or prior-development task exclusions. Report full-suite
+transfer without claiming every90 task is semantically novel. Plus/Pro cases
+based on source-familiar goals test new conditions. One-shot means one support episode
 with actual feedback followed by a separate query episode; both have fixed
 controller weights, and support interactions count toward deployment cost.
 

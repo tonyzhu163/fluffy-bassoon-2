@@ -1,6 +1,6 @@
 # LIBERO40 source, LIBERO90 and shifted-target meta-learning
 
-Status: user-selected design, 2026-10-29; goal audit complete. New protocol; previous source data,
+Status: user-selected full-suite design, 2026-10-29. No semantic filtering. Previous source data,
 splits and runs stay immutable. Corpus scale and resource budget are not yet
 a launch contract.
 
@@ -48,24 +48,18 @@ a launch contract.
 
 ## Target roles
 
-| Target | What it tests | Required exclusions |
-| --- | --- | --- |
-| LIBERO90 | New task families for the controller; also absent from the documented 40-task fine-tuning set | Audit full goals/bindings against all40 source tasks; separate exact semantic duplicates; reserve inspected development tasks |
-| LIBERO-Plus | New perturbations of source-familiar tasks unless the goal is separately held out | Keep target cases/perturbation families out of source collection and selection |
-| LIBERO-Pro | New benchmark conditions; task novelty depends on the base goal | No Pro source histories; separate development and blind cases |
-
-- Previously inspected LIBERO90 IDs1,2,47,57 are development, not blind tests.
-  Exact aliases may require reserving more cases/families after the audit.
-- Do not claim all90 tasks are semantically unseen simply because their
-  suite is named90. The [full goal audit](goals/AUDIT.md) finds 22 typed overlaps and 3 additional
-  ambiguous fixture-family overlaps. Conservatively reserving all 25 plus
-  the inspected development families leaves 63 candidate task IDs. These are
-  candidates, not 63 proven distinct goals or a selected final test set.
-- Plus/Pro source-familiar goals support condition adaptation, not an
-  automatic new-goal claim. Benchmark absence alone is not a mathematical
-  guarantee of distribution separation.
-- Existing 78/10/10 protocol does not govern this new source40 arm. In
-  particular, LIBERO10 is now source data; preserve the old split as history.
+- Meta-training: all40 original tasks in Spatial/Object/Goal/LIBERO10.
+- Evaluation: the complete90-task LIBERO90 suite, plus LIBERO-Plus and
+  LIBERO-Pro. No goal-family exclusions or prior-development task exclusions.
+- User explicitly requested no further semantic auditing. Earlier audit files
+  are archival evidence, not an admission or launch gate for this protocol.
+- Report the full-suite result as source40-to-target90 transfer. Do not assert
+  that every target task is semantically novel. Plus/Pro source-familiar goals
+  test condition transfer rather than automatically establishing new-goal transfer.
+- No target90/Plus/Pro trajectories enter source pretraining. Dataset/seed
+  roles and source/deployment costs remain explicit.
+- Existing78/10/10 and earlier clean/augmented data protocols stay immutable.
+  They do not control the new source40 arm; LIBERO10 is now source data.
 
 ## Shots, controls and decision
 
