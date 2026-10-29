@@ -2,6 +2,8 @@
 
 | Guide | Contents |
 | --- | --- |
+| [LIBERO transfer](libero-transfer.md) | Independent LIBERO-40 to strict LIBERO-90 split, Plus/PRO claim boundaries and adaptation controls |
+| [RoboTwin VLRLA setup](robotwin-vlrla.md) | Pinned runtime setup, six seen/six unseen tasks and bridge/history reproduction requirements |
 | [In-context RL review](in-context-rl-review.md) | Literature review (RL², AD, PEARL, MELD, AMAGO, TrMRL, Vintix, ECET, VLRLA, survey), pi0.5 language steering, and the proposed CTM in-context RL loop |
 | [CTM in-context RL audit](ctm-icrl-audit.md) | Audit written in fluffy-bassoon: gaps, synchronization/tick risks and the recommended CTM adapter. File paths in it refer to fluffy-bassoon at the time |
 | [ManiSkill pi0.5 in-context RL](maniskill-pi05-icrl.md) | Frozen pi0.5 motor, hidden per-trial rotation, outcome cache, training stages, controls, environment, assets and launch commands |
