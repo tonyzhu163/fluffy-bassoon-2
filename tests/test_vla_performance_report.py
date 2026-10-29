@@ -50,3 +50,41 @@ def test_unequal_budgets_not_pooled_and_training_not_retry_trials():
         row["split"] = "train"
     result = report(data)
     assert next(iter(result["cells"].values()))["completed_episodes"] == 4
+
+
+def test_namespaced_history_pairs_dsrl_despite_different_source_costs():
+    history = rows("ad_history", [[0, 1], [1, 1]])
+    source = rows("dsrl", [[0, 0], [1, 0]])
+    static = rows("ad_static", [[0, 0], [1, 1]])
+    reset = rows("ad_reset", [[0, 0], [1, 0]])
+    for row in history + static + reset:
+        row["cumulative_train_steps"] = 8854
+    for row in source:
+        row["cumulative_train_steps"] = 4064
+    paired = report(history + source + static + reset)["paired"]
+    dsrl = paired["ad_history-dsrl/eval/train_steps=8854"]
+    assert dsrl["mean_trial_success_difference"] == .5
+    assert dsrl["candidate_cumulative_train_steps"] == 8854
+    assert dsrl["reference_cumulative_train_steps"] == 4064
+    assert paired["ad_history-ad_static/eval/train_steps=8854"]["mean_trial_success_difference"] == .25
+    assert paired["ad_history-ad_reset/eval/train_steps=8854"]["independent_scenes"] == 2
+
+
+def test_rl2_pairs_online_dsrl_and_separately_trained_reset():
+    data = sum([rows(method, [[0, 1], [1, 1]]) for method in
+                ("rl2", "rl2_reset", "rl2_trained_reset", "dsrl_online")], [])
+    paired = report(data)["paired"]
+    for reference in ("rl2_reset", "rl2_trained_reset", "dsrl_online"):
+        assert paired[f"rl2-{reference}/eval/train_steps=1000"]["mean_trial_success_difference"] == 0.
+
+
+def test_ambiguous_reference_checkpoints_are_not_selected_by_training_cost():
+    history = rows("dpt_history", [[0, 1], [1, 1]])
+    source = rows("dsrl", [[0, 0], [1, 0]])
+    other_checkpoint = rows("dsrl", [[1, 1], [1, 1]])
+    for row in other_checkpoint:
+        row["cumulative_train_steps"] = 4000
+    result = report(history + source + other_checkpoint)["paired"]["dpt_history-dsrl/eval/train_steps=1000"]
+    assert "Ambiguous" in result["unpaired"]
+    assert result["reference_cumulative_train_steps"] == [1000, 4000]
+    assert "mean_trial_success_difference" not in result

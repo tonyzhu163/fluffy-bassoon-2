@@ -7,7 +7,6 @@ success-once are not substituted for per-attempt robotic success.
 import argparse
 from collections import defaultdict
 import json
-import math
 from pathlib import Path
 import random
 
@@ -127,19 +126,40 @@ def report(rows):
     for (method, split, checkpoint), values in cells.items():
         if split == "train" or method in ("native", "tied_gaussian"):
             continue
-        for reference in ("native", "static", "reset"):
-            candidates = [(key, reference_rows) for key, reference_rows in cells.items()
-                          if key[0] == reference and key[1] == split
-                          and key[2] in (checkpoint, 0)]
-            if len(candidates) != 1:
+        references = ["native", "dsrl", "dsrl_online"]
+        if method == "rl2":
+            references.extend(("rl2_reset", "rl2_trained_reset"))
+        elif method == "history" or method.endswith("_history"):
+            prefix = method[:-len("history")]
+            references.extend((prefix + "static", prefix + "reset"))
+        for reference in references:
+            if reference == method:
                 continue
+            label = f"{method}-{reference}/{split}/train_steps={checkpoint}"
+            candidates = [(key, reference_rows) for key, reference_rows in cells.items()
+                          if key[0] == reference and key[1] == split]
+            if not candidates:
+                continue
+            # Source training cost is a reported axis, not the deployment
+            # pairing identity. AD/DPT can reuse a 4k-step SAC prior and spend
+            # additional source interactions teaching adaptation. Pair their
+            # held-out scenes with that prior without hiding either cost.
+            if len(candidates) != 1:
+                comparisons[label] = dict(unpaired="Ambiguous reference checkpoints; select one explicitly",
+                    candidate_cumulative_train_steps=checkpoint,
+                    reference_cumulative_train_steps=[key[2] for key, _ in sorted(candidates)])
+                continue
+            reference_key, reference_rows = candidates[0]
+            costs = dict(candidate_cumulative_train_steps=checkpoint,
+                         reference_cumulative_train_steps=reference_key[2])
             try:
-                comparisons[f"{method}-{reference}/{split}/train_steps={checkpoint}"] = paired_comparison(
-                    values, candidates[0][1])
+                comparisons[label] = dict(**paired_comparison(values, reference_rows), **costs)
             except ValueError as error:
-                comparisons[f"{method}-{reference}/{split}/train_steps={checkpoint}"] = dict(unpaired=str(error))
+                comparisons[label] = dict(unpaired=str(error), **costs)
     return dict(cells=summary, paired=comparisons,
-        interpretation="Episode success uses paired scenes. Retry success-once alone does not establish learning.")
+        interpretation="Episode success uses paired scenes at identical deployment attempt budgets. "
+                       "Training costs are reported separately and need not match. "
+                       "Retry success-once alone does not establish learning.")
 
 
 def plot_curves(rows, output):
