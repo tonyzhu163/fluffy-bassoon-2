@@ -95,10 +95,10 @@ def evaluate(policy, pools, benchmark, *, attempts, horizon, lane_count,
     return records
 
 
-def parser():
+def parser(*, core_choices=("persistent_ctm", "gru", "transformer_xl")):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--benchmark", choices=("ml1-push", "ml10"), required=True)
-    p.add_argument("--core", choices=("persistent_ctm", "gru", "transformer_xl"), required=True)
+    p.add_argument("--core", choices=core_choices, required=True)
     p.add_argument("--source-commit", required=True)
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--seed", type=int, default=1000)
@@ -128,7 +128,8 @@ def parser():
 
 
 def main(argv=None, *, learner=None):
-    argument_parser = parser()
+    argument_parser = (parser(core_choices=(learner["core_name"],))
+                       if learner is not None and "core_name" in learner else parser())
     if learner is not None:
         argument_parser.set_defaults(**learner.get("defaults", {}))
     args = argument_parser.parse_args(argv)
