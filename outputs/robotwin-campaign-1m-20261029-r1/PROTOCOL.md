@@ -77,8 +77,12 @@ all-task variability and startup. Allow roughly10–14hours before measuring
 the added learning and corpus overhead; no full-run compute authorization is
 implied by the interaction cap.
 
-First finish and run the budget/corpus/driver integration checks within the
-remaining4minutes of initial compute allowance. The proposed next training
+Budget/corpus/driver integration checks passed:84tests in12.67seconds on
+Baige job-ytyeswlw54wg, source065777ceccf1c52a69d7def92399e35774b4bddd.
+The test allocation ended23:27:28 Shanghai after1m10s; conservative combined
+initial compute accounting is42m10s, below45minutes. Raw images are roughly
+24GB uncompressed at this action cap, plus about20GB worst-case immutable
+SAC acting snapshots; reserve60GB working headroom before collection. The proposed next training
 allocation is a **two-hour, one-GPU resumable slice**, with the same ledger and
 source recipe, full recoveries at boundaries, and actual optimizer/throughput
 measurements. Launch that materially larger time budget only after user
