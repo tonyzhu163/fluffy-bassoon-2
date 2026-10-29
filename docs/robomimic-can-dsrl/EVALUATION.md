@@ -140,3 +140,14 @@ therefore remain unqualified for this allocation. No new learning result was
 produced. The scheduler reported 69 seconds of running time; the driver
 recorded 30.725 seconds. The failure evidence is retained in
 [the allocation audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r1-failure-audit/audit.json).
+
+The fresh allocation `job-lrdwz9x2s3kk`, source
+`b9829df25eeee7cd59d0345fbc4e114b68e0b49f`, passed 55 CPU tests and 27
+subtests, followed by the full eight-card CUDA/PCI/own-PID probe. Its explicit
+Baige training admission records utilization as telemetry while retaining
+allocation, memory, process-ownership and real tensor checks. All eight
+actual worker GPU/PID proofs and frozen-model contracts passed an independent
+33-check metadata audit over 20 hash-verified files. This establishes runtime
+qualification; completed learning comparisons require the final matched
+training and evaluation artifacts.
+Evidence: [retry launch audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-launch-check/audit.json).
