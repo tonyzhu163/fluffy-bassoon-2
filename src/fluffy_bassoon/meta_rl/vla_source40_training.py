@@ -22,6 +22,8 @@ ASSEMBLY_FORMAT = "openpi_pi05_libero40_training_assembly_v1"
 FEATURE_KIND = "openpi_final_prefix_visual_mean_language_mean_public_state_v2"
 NOISE_CONTRACT = "32D tied across native H10; warmup unbounded N(0,I), then SAC clipped[-1,1]; no rescaling"
 ALL_TASKS = {f"{suite}:{i:02d}" for suite in SOURCE_SUITES for i in range(10)}
+BUDGET_VALIDATION_TASKS = {f"{suite}:{i:02d}" for suite in SOURCE_SUITES for i in (0, 1)}
+CAMPAIGN_FORMAT = "libero40_source_1m_campaign_v1"
 OBJECTIVES = ("ad", "dpt")
 MODES = ("full", "static")
 
@@ -34,6 +36,23 @@ def _write(path, value):
     Path(path).write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
+def load_campaign(path=None, expected_sha256=None):
+    if path is None and expected_sha256 is None:
+        return None
+    if path is None or expected_sha256 is None or file_sha256(path) != expected_sha256:
+        raise ValueError("Campaign file requires its matching explicit SHA256")
+    value = _json(path)
+    train, validation = value.get("source_training_task_keys", []), value.get("source_validation_task_keys", [])
+    if (value.get("format") != CAMPAIGN_FORMAT or value.get("maximum_total_actions") != 1_000_000
+            or value.get("campaign_sha256") != content_hash({k: v for k, v in value.items() if k != "campaign_sha256"})
+            or len(train) != len(ALL_TASKS) or set(train) != ALL_TASKS
+            or len(validation) != len(BUDGET_VALIDATION_TASKS) or set(validation) != BUDGET_VALIDATION_TASKS):
+        raise ValueError("Require the hash-bound all40-training/fixed8-validation 1M-action campaign")
+    return dict(path=str(Path(path).resolve()), file_sha256=expected_sha256,
+        campaign_sha256=value["campaign_sha256"], maximum_total_actions=value["maximum_total_actions"],
+        source_training_task_keys=train, source_validation_task_keys=validation)
+
+
 def _member(root, relative):
     path = Path(relative)
     if path.is_absolute() or not path.parts or ".." in path.parts:
@@ -42,6 +61,32 @@ def _member(root, relative):
     if not resolved.is_relative_to(root.resolve()):
         raise ValueError("Source artifact escapes its history directory")
     return resolved
+
+
+def _validate_physical_budget(index, contract):
+    """Verify the physical ledger, independent of advertised candidate-bank size."""
+    cap = contract.get("maximum_total_actions")
+    costs = index.get("physical_cost_accounting", {})
+    fields = {name: costs.get(name) for name in
+              ("known_primitive_steps", "uncertain_primitive_steps_ceiling", "primitive_step_budget_charge")}
+    fields.update({name: index.get(name) for name in
+        ("actual_primitive_steps", "actual_settling_steps", "settling_step_budget_charge",
+         "uncertain_settling_steps_ceiling", "total_action_budget_charge")})
+    if (type(cap) is not int or cap < 1 or index.get("maximum_total_actions") != cap
+            or any(type(value) is not int or value < 0 for value in fields.values())):
+        raise ValueError("Physical-budget history requires matching explicit action cap and ledger counts")
+    if (fields["known_primitive_steps"] != fields["actual_primitive_steps"]
+            or fields["primitive_step_budget_charge"] != fields["known_primitive_steps"] + fields["uncertain_primitive_steps_ceiling"]
+            or fields["settling_step_budget_charge"] != fields["actual_settling_steps"] + fields["uncertain_settling_steps_ceiling"]
+            or fields["total_action_budget_charge"] != fields["primitive_step_budget_charge"] + fields["settling_step_budget_charge"]
+            or fields["total_action_budget_charge"] > cap
+            or index.get("unused_action_reservation") != cap - fields["total_action_budget_charge"]):
+        raise ValueError("Physical-budget ledger omits or exceeds charged primitive/settling actions")
+    coverage = index.get("case_coverage", {})
+    if (index.get("all_started_cases_complete") is not True
+            or coverage.get("all_started_cases_complete") is not True
+            or index.get("stopping_reason") not in ("physical_action_budget", "candidate_bank_exhausted")):
+        raise ValueError("Physical-budget history must stop at complete actual case boundaries")
 
 
 def load_source(path, partition, *, allow_small_pilot=False):
@@ -55,8 +100,9 @@ def load_source(path, partition, *, allow_small_pilot=False):
             or index.get("partition") != partition or index.get("source_updates", 0) <= 0
             or not (index.get("collection_qualified") or index.get("smoke_qualified"))):
         raise ValueError("Require a completed qualified source40 history in the declared partition")
-    if (not allow_small_pilot and (index.get("collection_mode") != "complete_cases"
-            or index.get("case_coverage", {}).get("all_requested_cases_complete") is not True)):
+    mode = index.get("collection_mode")
+    if (not allow_small_pilot and (mode not in ("complete_cases", "physical_budget")
+            or (mode == "complete_cases" and index.get("case_coverage", {}).get("all_requested_cases_complete") is not True))):
         raise ValueError("Full collection requires actual complete-case coverage; smoke needs --allow-small-pilot")
     feature = index.get("feature_contract", {})
     if (index.get("motor_receipt_sha256") != PI05_RECEIPT
@@ -74,6 +120,10 @@ def load_source(path, partition, *, allow_small_pilot=False):
             or contract.get("motor", {}).get("receipt_sha256") != PI05_RECEIPT
             or contract.get("motor", {}).get("weights_frozen") is not True):
         raise ValueError("History index and hash-bound source contract differ")
+    if mode == "physical_budget":
+        if contract.get("collection_mode") != mode:
+            raise ValueError("Physical-budget collection mode differs from its hash-bound contract")
+        _validate_physical_budget(index, contract)
     paired = [row for row in index.get("publications", []) if row.get("status") == "paired_ad_dpt"]
     if not paired or len({row["through_case"] for row in paired}) != len(paired):
         raise ValueError("Require unique committed paired-prefix versions")
@@ -88,8 +138,19 @@ def load_source(path, partition, *, allow_small_pilot=False):
         raise ValueError("Source actor checkpoint checksum differs")
     cases = contract["cases"][:selected["through_case"] + 1]
     if (len(cases) != selected["case_count"] or len({case["case_id"] for case in cases}) != len(cases)
-            or (not allow_small_pilot and len(cases) != len(contract["cases"]))):
+            or (not allow_small_pilot and mode == "complete_cases" and len(cases) != len(contract["cases"]))):
         raise ValueError("Invalid complete source case identities")
+    if mode == "physical_budget":
+        coverage = index["case_coverage"]
+        if (coverage.get("started_cases") != len(cases) or coverage.get("completed_cases") != len(cases)
+                or coverage.get("available_cases") != len(contract["cases"])
+                or (index["stopping_reason"] == "candidate_bank_exhausted" and len(cases) != len(contract["cases"]))):
+            raise ValueError("Physical-budget actual case coverage differs from selected complete prefix")
+        if index["stopping_reason"] == "physical_action_budget" and len(cases) < len(contract["cases"]):
+            next_case = contract["cases"][len(cases)]
+            required = next_case["episodes"] * (contract["horizon"] + 10)
+            if index["unused_action_reservation"] >= required:
+                raise ValueError("Physical-budget history stopped before exhausting its next complete-case reservation")
     expected = {case["case_id"]: case for case in cases}
     if [(row["case_id"], row["episode_in_case"]) for row in receipts] != [
             (case["case_id"], episode) for case in cases for episode in range(case["episodes"])]:
@@ -138,27 +199,41 @@ def load_source(path, partition, *, allow_small_pilot=False):
     for field in set(FIELDS) - {"target_noise"}:
         if not np.array_equal(datasets["ad"][field], datasets["dpt"][field]):
             raise ValueError("AD/DPT must share identical actual histories; only target labels may differ")
-    return dict(task=task, history_id=contract["history_id"], index_path=str(path), index_sha256=file_sha256(path),
+    return dict(task=task, history_id=contract["history_id"], collection_mode=mode,
+        index_path=str(path), index_sha256=file_sha256(path),
         feature_contract=feature, selected=selected, datasets=datasets, manifests=manifests,
         states=states, state_hashes=state_hashes, case_ids=set(expected),
-        costs={key: index.get(key) for key in ("actual_primitive_steps", "actual_settling_steps", "source_updates")},
+        costs={**{key: index.get(key) for key in ("actual_primitive_steps", "actual_settling_steps", "source_updates")},
+            "charged_total_actions": index.get("total_action_budget_charge", index["actual_primitive_steps"] + index["actual_settling_steps"]),
+            "uncertain_primitive_steps_ceiling": index.get("physical_cost_accounting", {}).get("uncertain_primitive_steps_ceiling", 0),
+            "uncertain_settling_steps_ceiling": index.get("uncertain_settling_steps_ceiling", 0)},
         episodes=len(receipts))
 
 
-def assemble(train_indices, validation_indices, output, *, allow_small_pilot=False):
+def assemble(train_indices, validation_indices, output, *, allow_small_pilot=False,
+             campaign_path=None, campaign_sha256=None):
     """Join different tasks, never different prefix versions of one history."""
+    campaign = load_campaign(campaign_path, campaign_sha256)
+    expected_tasks = {"train": ALL_TASKS,
+        "validation": BUDGET_VALIDATION_TASKS if campaign is not None else ALL_TASKS}
     groups = {partition: [load_source(path, partition, allow_small_pilot=allow_small_pilot) for path in paths]
               for partition, paths in (("train", train_indices), ("validation", validation_indices))}
     for partition, sources in groups.items():
         tasks = [row["task"] for row in sources]
         if not tasks or len(set(tasks)) != len(tasks):
             raise ValueError("Provide exactly one source index per task and partition; prefixes cannot be concatenated")
-        if not allow_small_pilot and set(tasks) != ALL_TASKS:
-            raise ValueError("Default assembly requires all40 source tasks in both partitions")
+        if not allow_small_pilot and set(tasks) != expected_tasks[partition]:
+            raise ValueError("Default assembly requires all40 training tasks and the campaign's complete validation task set")
         groups[partition] = sorted(sources, key=lambda row: row["task"])
-    if {row["task"] for row in groups["train"]} != {row["task"] for row in groups["validation"]}:
-        raise ValueError("Train and validation must cover the same source task set")
+    train_tasks, validation_tasks = ({row["task"] for row in groups[partition]} for partition in ("train", "validation"))
+    if (not validation_tasks.issubset(train_tasks)
+            or (campaign is None and train_tasks != validation_tasks)):
+        raise ValueError("Different validation task coverage requires the declared all40/fixed8 campaign")
     sources = groups["train"] + groups["validation"]
+    if not allow_small_pilot and campaign is None and any(row["collection_mode"] == "physical_budget" for row in sources):
+        raise ValueError("Full physical-budget assembly requires the explicit 1M-action campaign")
+    if campaign is not None and sum(row["costs"]["charged_total_actions"] for row in sources) > campaign["maximum_total_actions"]:
+        raise ValueError("Source histories exceed the campaign's total physical-action ceiling")
     if len({content_hash(row["feature_contract"]) for row in sources}) != 1:
         raise ValueError("Frozen feature contracts differ across source histories")
     for key in ("history_id", "case_ids", "states", "state_hashes"):
@@ -172,6 +247,7 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
     result = dict(format=ASSEMBLY_FORMAT, source_only=True, motor_sha256=PI05_RECEIPT,
         feature_contract=sources[0]["feature_contract"], noise_contract=NOISE_CONTRACT,
         small_pilot=allow_small_pilot, source_task_keys=[row["task"] for row in groups["train"]],
+        validation_task_keys=[row["task"] for row in groups["validation"]], campaign=campaign,
         datasets={}, selected_sources={}, collection_costs_count_once={},
         interpretation="Source imitation candidates only; no claim of robot gain or in-context adaptation")
     for partition, rows in groups.items():
@@ -182,7 +258,8 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
             task_nominal_state_hashes=[list(value) for value in sorted(row["state_hashes"])]) for row in rows]
         result["selected_sources"][partition] = selected_sources
         result["collection_costs_count_once"][partition] = {key: sum(row["costs"][key] for row in rows)
-            for key in ("actual_primitive_steps", "actual_settling_steps", "source_updates")}
+            for key in ("actual_primitive_steps", "actual_settling_steps", "source_updates", "charged_total_actions",
+                        "uncertain_primitive_steps_ceiling", "uncertain_settling_steps_ceiling")}
         result["datasets"][partition] = {}
         for objective in OBJECTIVES:
             path = output / f"{partition}-{objective}.npz"
@@ -190,7 +267,7 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
                 metadata=dict(motor_sha256=PI05_RECEIPT, feature_contract=result["feature_contract"],
                     noise_contract=NOISE_CONTRACT, global_task_split="source40", local_scene_split=partition,
                     trial_ids=[row["history_id"] for row in rows], source_case_ids=[case for row in rows for case in sorted(row["case_ids"])],
-                    source_task_keys=result["source_task_keys"], selected_source_histories=selected_sources,
+                    source_task_keys=[row["task"] for row in rows], campaign=campaign, selected_source_histories=selected_sources,
                     small_pilot=allow_small_pilot, publication_rule="One latest complete paired prefix per task; overlapping versions excluded",
                     teacher_status="Source SAC candidates; no expert/optimality claim"))
             result["datasets"][partition][objective] = dict(path=path.name, sha256=manifest["sha256"],
@@ -211,6 +288,16 @@ def load_assembly(path, *, allow_small_pilot=False):
         raise ValueError("Small technical corpus requires explicit --allow-small-pilot")
     if not value.get("small_pilot") and set(value["source_task_keys"]) != ALL_TASKS:
         raise ValueError("Full assembly must cover all40 source tasks")
+    campaign = value.get("campaign")
+    expected_validation = BUDGET_VALIDATION_TASKS if campaign is not None else ALL_TASKS
+    validation_tasks = value.get("validation_task_keys", value["source_task_keys"])
+    if not value.get("small_pilot") and set(validation_tasks) != expected_validation:
+        raise ValueError("Assembly validation task set differs from its declared campaign")
+    if campaign is not None:
+        # The campaign must remain independently available and hash-bound when
+        # the assembled data are admitted for controller training.
+        if load_campaign(campaign["path"], campaign["file_sha256"]) != campaign:
+            raise ValueError("Assembly campaign provenance differs")
     for partition in ("train", "validation"):
         for objective in OBJECTIVES:
             item = value["datasets"][partition][objective]
@@ -219,7 +306,8 @@ def load_assembly(path, *, allow_small_pilot=False):
                     or manifest["metadata"].get("motor_sha256") != value["motor_sha256"]
                     or manifest["metadata"].get("feature_contract") != value["feature_contract"]
                     or manifest["metadata"].get("noise_contract") != value["noise_contract"]
-                    or manifest["metadata"].get("source_task_keys") != value["source_task_keys"]
+                    or manifest["metadata"].get("source_task_keys") != (value["source_task_keys"] if partition == "train" else validation_tasks)
+                    or manifest["metadata"].get("campaign") != campaign
                     or manifest["metadata"].get("selected_source_histories") != value["selected_sources"][partition]
                     or manifest["metadata"].get("trial_ids") != [row["history_id"] for row in value["selected_sources"][partition]]):
                 raise ValueError("Assembled dataset contract differs")
@@ -316,6 +404,8 @@ def parser():
     assemble_parser.add_argument("--validation-index", type=Path, nargs="+", required=True)
     assemble_parser.add_argument("--output-dir", type=Path, required=True)
     assemble_parser.add_argument("--allow-small-pilot", action="store_true")
+    assemble_parser.add_argument("--campaign", type=Path)
+    assemble_parser.add_argument("--campaign-sha256")
     train = sub.add_parser("train")
     train.add_argument("--assembly", type=Path, required=True)
     train.add_argument("--output-dir", type=Path, required=True)
@@ -338,7 +428,8 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     if args.operation == "assemble":
-        assemble(args.train_index, args.validation_index, args.output_dir, allow_small_pilot=args.allow_small_pilot)
+        assemble(args.train_index, args.validation_index, args.output_dir, allow_small_pilot=args.allow_small_pilot,
+                 campaign_path=args.campaign, campaign_sha256=args.campaign_sha256)
     else:
         args.assembly, args.output_dir = args.assembly.resolve(), args.output_dir.resolve()
         train_matrix(args)

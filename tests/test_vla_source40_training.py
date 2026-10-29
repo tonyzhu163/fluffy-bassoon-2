@@ -10,24 +10,28 @@ from fluffy_bassoon.meta_rl.vla_history import FIELDS, file_sha256, load_dataset
 from fluffy_bassoon.meta_rl.vla_source40_corpus import PI05_RECEIPT
 from fluffy_bassoon.meta_rl.vla_source40_schedule import case_plan, content_hash
 from fluffy_bassoon.meta_rl.vla_source40_training import (ASSEMBLY_FORMAT, FEATURE_KIND, INDEX_FORMAT,
-    NOISE_CONTRACT, assemble, load_assembly, load_source, parser, training_commands)
+    NOISE_CONTRACT, ALL_TASKS, BUDGET_VALIDATION_TASKS, CAMPAIGN_FORMAT,
+    assemble, load_assembly, load_campaign, load_source, parser, training_commands)
 
 
 def write(path, value):
     path.write_text(json.dumps(value))
 
 
-def source(root, partition, *, task="libero_spatial:00", state_hash=None):
+def source(root, partition, *, task="libero_spatial:00", state_hash=None, physical_budget=False):
     root.mkdir()
     suite, number = task.split(":")
     feature = dict(kind=FEATURE_KIND, checkpoint_receipt_sha256=PI05_RECEIPT,
         model_config="pi05_libero", observation_dim=4104)
-    cases = case_plan(task, partition, 2, 2, 0)
+    case_bank = case_plan(task, partition, 4 if physical_budget else 2, 2, 0)
+    cases = case_bank[:2]
     contract = dict(format="openpi_pi05_libero40_persistent_source_v1", source_only=True,
         source_data_from_targets=False, task=dict(task_key=task, suite=suite, task_id=int(number)),
-        partition=partition, history_id=f"{task}/{partition}/seed-0", cases=cases,
+        partition=partition, history_id=f"{task}/{partition}/seed-0", cases=case_bank,
         motor=dict(receipt_sha256=PI05_RECEIPT, weights_frozen=True),
         feature_contract=feature, noise_contract=NOISE_CONTRACT)
+    if physical_budget:
+        contract.update(collection_mode="physical_budget", maximum_total_actions=864, horizon=400)
     write(root / "contract.json", contract)
     receipts = []
     for case in cases:
@@ -67,6 +71,14 @@ def source(root, partition, *, task="libero_spatial:00", state_hash=None):
         case_coverage=dict(all_requested_cases_complete=True), source_contract_sha256=content_hash(contract),
         feature_contract=feature, motor_receipt_sha256=PI05_RECEIPT, noise_contract=NOISE_CONTRACT,
         episode_receipts=receipts, publications=publications, actual_primitive_steps=32, actual_settling_steps=40)
+    if physical_budget:
+        index.update(collection_mode="physical_budget", maximum_total_actions=864,
+            physical_cost_accounting=dict(known_primitive_steps=32, uncertain_primitive_steps_ceiling=0,
+                                         primitive_step_budget_charge=32),
+            settling_step_budget_charge=40, uncertain_settling_steps_ceiling=0, total_action_budget_charge=72,
+            unused_action_reservation=792, all_started_cases_complete=True,
+            stopping_reason="physical_action_budget",
+            case_coverage=dict(available_cases=4, started_cases=2, completed_cases=2, all_started_cases_complete=True))
     path = root / "index.json"
     write(path, index)
     return path
@@ -145,6 +157,95 @@ def test_noncovering_smoke_needs_explicit_pilot_flag(tmp_path):
     with pytest.raises(ValueError, match="complete-case coverage"):
         load_source(path, "train")
     assert load_source(path, "train", allow_small_pilot=True)["episodes"] == 4
+
+
+def campaign(path):
+    value = dict(format=CAMPAIGN_FORMAT, maximum_total_actions=1_000_000,
+        source_training_task_keys=sorted(ALL_TASKS), source_validation_task_keys=sorted(BUDGET_VALIDATION_TASKS))
+    value["campaign_sha256"] = content_hash(value)
+    write(path, value)
+    return file_sha256(path)
+
+
+def test_budget_prefix_admits_complete_actual_cases_without_claiming_candidate_bank_exhaustion(tmp_path):
+    path = source(tmp_path / "source", "train", physical_budget=True)
+    result = load_source(path, "train")
+    assert result["episodes"] == 4 and result["selected"]["case_count"] == 2
+    assert result["costs"]["charged_total_actions"] == 72
+    assert len(result["case_ids"]) == 2  # Four candidates exist; only two were actually visited.
+
+
+@pytest.mark.parametrize("change,match", [
+    (lambda value: value.update(total_action_budget_charge=71), "ledger"),
+    (lambda value: value.update(maximum_total_actions=865), "action cap"),
+    (lambda value: value.update(uncertain_settling_steps_ceiling=1), "ledger"),
+    (lambda value: value.update(stopping_reason="candidate_bank_exhausted"), "actual case coverage"),
+    (lambda value: value.update(all_started_cases_complete=False), "boundaries"),
+])
+def test_budget_admission_does_not_hide_cost_or_partial_coverage(tmp_path, change, match):
+    path = source(tmp_path / "source", "train", physical_budget=True)
+    value = json.loads(path.read_text())
+    change(value)
+    write(path, value)
+    with pytest.raises(ValueError, match=match):
+        load_source(path, "train", allow_small_pilot=True)
+
+
+def test_budget_admission_rejects_stopping_with_room_for_another_complete_case(tmp_path):
+    path = source(tmp_path / "source", "train", physical_budget=True)
+    index = json.loads(path.read_text())
+    contract_path = path.parent / "contract.json"
+    contract = json.loads(contract_path.read_text())
+    contract["maximum_total_actions"] = 1000
+    write(contract_path, contract)
+    # This check runs before loading paired arrays, so the early-stop ledger
+    # rejects the history before its dataset provenance needs rebinding.
+    index.update(maximum_total_actions=1000, unused_action_reservation=928,
+                 source_contract_sha256=content_hash(contract))
+    write(path, index)
+    with pytest.raises(ValueError, match="next complete-case reservation"):
+        load_source(path, "train")
+
+
+def test_campaign_pins_all40_train_and_fixed8_validation_without_semantic_selection(tmp_path):
+    path = tmp_path / "campaign.json"
+    sha = campaign(path)
+    value = load_campaign(path, sha)
+    assert set(value["source_training_task_keys"]) == ALL_TASKS
+    assert set(value["source_validation_task_keys"]) == BUDGET_VALIDATION_TASKS
+    with pytest.raises(ValueError, match="matching explicit SHA256"):
+        load_campaign(path, "0" * 64)
+    changed = json.loads(path.read_text())
+    changed["source_validation_task_keys"][0] = "libero_90:00"
+    changed["campaign_sha256"] = content_hash({key: item for key, item in changed.items() if key != "campaign_sha256"})
+    write(path, changed)
+    with pytest.raises(ValueError, match="fixed8-validation"):
+        load_campaign(path, file_sha256(path))
+
+
+def test_full_campaign_requires_every_training_task_and_each_fixed_validation_goal(tmp_path, monkeypatch):
+    # Small numeric fixtures exercise the complete default partition admission
+    # path without loading forty large VLA arrays in a unit check.
+    import fluffy_bassoon.meta_rl.vla_source40_training as module
+    monkeypatch.setattr(module, "ALL_TASKS", {"libero_spatial:00", "libero_object:00"})
+    monkeypatch.setattr(module, "BUDGET_VALIDATION_TASKS", {"libero_spatial:00"})
+    train = [source(tmp_path / "train-spatial", "train", physical_budget=True),
+             source(tmp_path / "train-object", "train", task="libero_object:00", physical_budget=True)]
+    validation = source(tmp_path / "validation", "validation", physical_budget=True)
+    path = tmp_path / "campaign.json"
+    value = dict(format=CAMPAIGN_FORMAT, maximum_total_actions=1_000_000,
+        source_training_task_keys=sorted(module.ALL_TASKS), source_validation_task_keys=sorted(module.BUDGET_VALIDATION_TASKS))
+    value["campaign_sha256"] = content_hash(value)
+    write(path, value)
+    assembled = assemble(train, [validation], tmp_path / "assembled", campaign_path=path, campaign_sha256=file_sha256(path))
+    assert assembled["source_task_keys"] == sorted(module.ALL_TASKS)
+    assert assembled["validation_task_keys"] == ["libero_spatial:00"]
+    assert not assembled["small_pilot"]
+    assert load_assembly(tmp_path / "assembled/assembly.json") == assembled
+    with pytest.raises(ValueError, match="all40 training"):
+        assemble(train[:1], [validation], tmp_path / "missing-task", campaign_path=path, campaign_sha256=file_sha256(path))
+    with pytest.raises(ValueError, match="one source index"):
+        assemble(train, [], tmp_path / "missing-validation", campaign_path=path, campaign_sha256=file_sha256(path))
 
 
 def test_actual_ad_dpt_context_mismatch_rejected(tmp_path):
