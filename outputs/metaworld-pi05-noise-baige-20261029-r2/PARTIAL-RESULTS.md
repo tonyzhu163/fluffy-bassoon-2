@@ -1,5 +1,9 @@
 # Meta-World noise screen: reach conditions
 
+**Paused by the user at20:17:43 Shanghai on2026-10-29.** The completed
+reach results below remain valid; push-hidden is incomplete and the final
+motor fingerprint is unavailable. See [pause record](PAUSED.md).
+
 Independent saved-artifact audits: **2026-10-29 19:24 and 19:58 Asia/Shanghai**.
 Baige `job-orgyjb0z9h6d` remains active on its original scientific source
 `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`. Visible and hidden reach each
@@ -71,12 +75,12 @@ At **19:59 Shanghai**, the authenticated scheduler still reports Running,
 one GPU, no worker restart, and the original 175-minute cap. The owned-worker
 [progress receipt](checks/worker-progress-195927.json) confirms **245/544
 visible-goal push episodes** completed, with the next rollout at step140.
-The current output remains buffered until its condition closes. Continue
-the authorized push conditions within the same deadline; no learner, motor
-fine-tune or new allocation is launched.
+At that check the current output remained buffered. Push-visible later
+closed544rows and was preserved before the user-requested stop; push-hidden
+did not close. No learner, motor fine-tune or new allocation was launched.
 
 This is one frozen motor on four predeclared goals and four fixed scenes per
 goal. It establishes a partial interface-screen result; it does not establish
 meta-learning, held-out task transfer or an architecture comparison. The final
-motor fingerprint and overall screen summary remain pending until the job
-ends. Reach failure alone does not establish the result for push-v3.
+motor fingerprint and overall screen summary were not produced before the
+user-requested stop. Reach failure alone does not establish the result for push-v3.

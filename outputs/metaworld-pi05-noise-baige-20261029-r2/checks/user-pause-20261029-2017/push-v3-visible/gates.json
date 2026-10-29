@@ -1,0 +1,150 @@
+{
+  "condition": "variant",
+  "arms": [
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "train": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "evaluate": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "per_condition": [
+    {
+      "condition": 0,
+      "scenes": 4,
+      "static_arm": 5,
+      "native": 0.625,
+      "best_arm_all_scenes": 1.0,
+      "g1_headroom": 0.25,
+      "g2_heterogeneity": 0.25,
+      "g3_consistency": 0.16441417618306012,
+      "g4_structure": 0.10563298063645865
+    },
+    {
+      "condition": 1,
+      "scenes": 4,
+      "static_arm": 10,
+      "native": 0.75,
+      "best_arm_all_scenes": 1.0,
+      "g1_headroom": 0.0,
+      "g2_heterogeneity": 0.0,
+      "g3_consistency": 0.43438269684287173,
+      "g4_structure": -0.029531445062114803
+    },
+    {
+      "condition": 2,
+      "scenes": 4,
+      "static_arm": 4,
+      "native": 0.75,
+      "best_arm_all_scenes": 1.0,
+      "g1_headroom": -0.25,
+      "g2_heterogeneity": -0.25,
+      "g3_consistency": 0.13552618543578768,
+      "g4_structure": 0.0919674470407853
+    },
+    {
+      "condition": 3,
+      "scenes": 4,
+      "static_arm": 10,
+      "native": 0.875,
+      "best_arm_all_scenes": 1.0,
+      "g1_headroom": -0.375,
+      "g2_heterogeneity": -0.5,
+      "g3_consistency": 0.4363562767313721,
+      "g4_structure": 0.1121801033340647
+    }
+  ],
+  "summary": {
+    "g1_headroom": {
+      "mean": -0.09375,
+      "threshold": 0.15,
+      "undefined_conditions": 0,
+      "passed": false
+    },
+    "g2_heterogeneity": {
+      "mean": -0.125,
+      "threshold": 0.1,
+      "undefined_conditions": 0,
+      "passed": false
+    },
+    "g3_consistency": {
+      "mean": 0.29266983379827294,
+      "threshold": 0.5,
+      "undefined_conditions": 0,
+      "passed": false
+    },
+    "g4_structure": {
+      "mean": 0.07006227148729846,
+      "threshold": 0.0,
+      "undefined_conditions": 0,
+      "passed": true
+    }
+  },
+  "all_passed": false,
+  "determinism": {
+    "repeated_groups": 256,
+    "trajectory_matched": 0,
+    "outcome_matched": 246,
+    "groups_in_distinct_slots": 0,
+    "deterministic": false
+  },
+  "mode_effect": {
+    "first_chunk_distance_between_arms": 0.5184164615774838,
+    "first_chunk_distance_native_repeats": 0.6846726657822728,
+    "pairs": 1920
+  },
+  "goal_coverage": {
+    "per_goal": [
+      {
+        "goal": 0,
+        "best_arm_success": 1.0,
+        "arms_reaching": 14,
+        "native": 0.625
+      },
+      {
+        "goal": 1,
+        "best_arm_success": 1.0,
+        "arms_reaching": 15,
+        "native": 0.75
+      },
+      {
+        "goal": 2,
+        "best_arm_success": 1.0,
+        "arms_reaching": 15,
+        "native": 0.75
+      },
+      {
+        "goal": 3,
+        "best_arm_success": 1.0,
+        "arms_reaching": 15,
+        "native": 0.875
+      }
+    ],
+    "goals_preferred_by_some_arm": 4,
+    "threshold": 0.5,
+    "passed": true
+  }
+}
