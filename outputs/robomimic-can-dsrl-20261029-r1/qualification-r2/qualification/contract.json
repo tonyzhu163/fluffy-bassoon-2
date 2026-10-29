@@ -1,0 +1,32 @@
+{
+  "method": "qualify",
+  "dsrl_root": "/mowenjie/fluffy-bassoon-2/deps/dsrl-can-20261029-r1/repo",
+  "checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/dsrl-can-8d21b9c-20261029-r1/state_5000.pt",
+  "normalization": "/mowenjie/fluffy-bassoon-2/inputs/dsrl-can-8d21b9c-20261029-r1/normalization.npz",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-qual-r2/qualification",
+  "source_commit": "c37ec48143bf2eadb81539f2b8748f64e45f2eab",
+  "checkpoint_sha256": "61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b",
+  "normalization_sha256": "a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a",
+  "seed": 1,
+  "envs": 4,
+  "attempts": 4,
+  "steps": 48000,
+  "width": 128,
+  "eval_trials": 8,
+  "max_seconds": 600.0,
+  "resume": null,
+  "dsrl_reference": null,
+  "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845",
+  "job": "job-9pi2eysq5lcx-master-0",
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "numpy": "1.26.4",
+    "robomimic": "0.3.0",
+    "robosuite": "1.4.1",
+    "mujoco": "2.3.7"
+  },
+  "reward": "original sum(raw_success - 1) per four-step chunk",
+  "dynamics": "unchanged Can",
+  "trial": "same initial scene retried across attempts; no hidden-physics variation",
+  "baseline": "authors DSRL-NA; GRU whole-trial PPO; method comparison, not capacity matched"
+}
