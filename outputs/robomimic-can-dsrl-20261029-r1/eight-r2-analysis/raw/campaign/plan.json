@@ -1,0 +1,586 @@
+{
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "run_id": "robomimic-can-dsrl-baige-20261029-eight-r2",
+  "pilot": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-pilot-r3",
+  "hostname": "job-lrdwz9x2s3kk-master-0",
+  "admitted": true,
+  "wall_budget_seconds": 3480,
+  "allocated_gpu_hours_ceiling": 8,
+  "final_audit_reserve_seconds": 180,
+  "required_scheduler_wall_minutes": 58,
+  "prior_failed_allocation_reserve_seconds": 120,
+  "allocation_budget": {
+    "prior_reserved_gpu_minutes": 16,
+    "new_gpu_minutes_ceiling": 464,
+    "combined_gpu_minutes_ceiling": 480,
+    "combined_gpu_hours_ceiling": 8
+  },
+  "full_probe_reserve_seconds": 180,
+  "rtx6000_timing_factor": 2.0,
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "seeds": [
+    1,
+    2
+  ],
+  "selected_seed_count": 2,
+  "envs": 4,
+  "attempts": 4,
+  "eval_trials": 8,
+  "minimum_verified_target_steps": 28800,
+  "predeclared_designs": [
+    {
+      "seed_count": 4,
+      "required_arms": 16,
+      "layout": "balanced serial pairs"
+    },
+    {
+      "seed_count": 2,
+      "required_arms": 8,
+      "layout": "one independent arm per GPU"
+    }
+  ],
+  "selection_rule": "prefer four matched seeds if feasible; otherwise two matched seeds with every method and control",
+  "core": {
+    "core": "gtrxl",
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300
+  },
+  "candidates": [
+    {
+      "seed_count": 4,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "required_arms": 16,
+      "layout": "balanced serial pairs",
+      "gpu_assignment": [
+        {
+          "gpu": 0,
+          "seed": 1,
+          "methods": [
+            "dsrl-na",
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 1,
+          "seed": 1,
+          "methods": [
+            "dsrl-na-retry",
+            "episode-reset"
+          ]
+        },
+        {
+          "gpu": 2,
+          "seed": 2,
+          "methods": [
+            "dsrl-na",
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 3,
+          "seed": 2,
+          "methods": [
+            "dsrl-na-retry",
+            "episode-reset"
+          ]
+        },
+        {
+          "gpu": 4,
+          "seed": 3,
+          "methods": [
+            "dsrl-na",
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 5,
+          "seed": 3,
+          "methods": [
+            "dsrl-na-retry",
+            "episode-reset"
+          ]
+        },
+        {
+          "gpu": 6,
+          "seed": 4,
+          "methods": [
+            "dsrl-na",
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 7,
+          "seed": 4,
+          "methods": [
+            "dsrl-na-retry",
+            "episode-reset"
+          ]
+        }
+      ],
+      "target_steps": 28800,
+      "phases": {
+        "dsrl-na": {
+          "training_deadline_seconds": 1181,
+          "total_seconds": 1627,
+          "evaluation_reserve_seconds": 282,
+          "boundary_reserve_seconds": 105,
+          "measured_complete_4090_phase_seconds": 540.6066134027205
+        },
+        "dsrl-na-retry": {
+          "training_deadline_seconds": 1181,
+          "total_seconds": 1627,
+          "evaluation_reserve_seconds": 282,
+          "boundary_reserve_seconds": 105,
+          "measured_complete_4090_phase_seconds": 539.9656455228105
+        },
+        "rl2": {
+          "training_deadline_seconds": 923,
+          "total_seconds": 2374,
+          "evaluation_reserve_seconds": 1247,
+          "boundary_reserve_seconds": 144,
+          "measured_complete_4090_phase_seconds": 881.7156534208916
+        },
+        "episode-reset": {
+          "training_deadline_seconds": 923,
+          "total_seconds": 2374,
+          "evaluation_reserve_seconds": 1247,
+          "boundary_reserve_seconds": 144,
+          "measured_complete_4090_phase_seconds": 877.6872916482389
+        }
+      },
+      "longest_worker_seconds": 4001,
+      "available_worker_seconds": 3105.133933067322,
+      "fits": false,
+      "admission_reason": "complete worker workload plus reserves exceeds one-hour envelope"
+    },
+    {
+      "seed_count": 2,
+      "seeds": [
+        1,
+        2
+      ],
+      "required_arms": 8,
+      "layout": "one independent arm per GPU",
+      "gpu_assignment": [
+        {
+          "gpu": 0,
+          "seed": 1,
+          "methods": [
+            "dsrl-na"
+          ]
+        },
+        {
+          "gpu": 1,
+          "seed": 1,
+          "methods": [
+            "dsrl-na-retry"
+          ]
+        },
+        {
+          "gpu": 2,
+          "seed": 1,
+          "methods": [
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 3,
+          "seed": 1,
+          "methods": [
+            "episode-reset"
+          ]
+        },
+        {
+          "gpu": 4,
+          "seed": 2,
+          "methods": [
+            "dsrl-na"
+          ]
+        },
+        {
+          "gpu": 5,
+          "seed": 2,
+          "methods": [
+            "dsrl-na-retry"
+          ]
+        },
+        {
+          "gpu": 6,
+          "seed": 2,
+          "methods": [
+            "rl2"
+          ]
+        },
+        {
+          "gpu": 7,
+          "seed": 2,
+          "methods": [
+            "episode-reset"
+          ]
+        }
+      ],
+      "target_steps": 28800,
+      "phases": {
+        "dsrl-na": {
+          "training_deadline_seconds": 1181,
+          "total_seconds": 1627,
+          "evaluation_reserve_seconds": 282,
+          "boundary_reserve_seconds": 105,
+          "measured_complete_4090_phase_seconds": 540.6066134027205
+        },
+        "dsrl-na-retry": {
+          "training_deadline_seconds": 1181,
+          "total_seconds": 1627,
+          "evaluation_reserve_seconds": 282,
+          "boundary_reserve_seconds": 105,
+          "measured_complete_4090_phase_seconds": 539.9656455228105
+        },
+        "rl2": {
+          "training_deadline_seconds": 923,
+          "total_seconds": 2374,
+          "evaluation_reserve_seconds": 1247,
+          "boundary_reserve_seconds": 144,
+          "measured_complete_4090_phase_seconds": 881.7156534208916
+        },
+        "episode-reset": {
+          "training_deadline_seconds": 923,
+          "total_seconds": 2374,
+          "evaluation_reserve_seconds": 1247,
+          "boundary_reserve_seconds": 144,
+          "measured_complete_4090_phase_seconds": 877.6872916482389
+        }
+      },
+      "longest_worker_seconds": 2374,
+      "available_worker_seconds": 3105.133933067322,
+      "fits": true,
+      "admission_reason": "fits measured one-hour envelope"
+    }
+  ],
+  "candidate_available_worker_seconds": 3105.133933067322,
+  "pilot_source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+  "runtime_identity": {
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "numpy": "1.26.4",
+      "robomimic": "0.3.0",
+      "robosuite": "1.4.1",
+      "mujoco": "2.3.7"
+    },
+    "robomimic_commit": "8df6e8e482458befaf1decfcd9d635d68a7afcae",
+    "robomimic_env_sha256": "43b0f018be42f776eb76fca3e5a7a40318c112883be53ae200b82c45da1c7183",
+    "checkpoint_sha256": "61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b",
+    "normalization_sha256": "a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a",
+    "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845"
+  },
+  "paired_scenes": {
+    "2000000": [
+      "7929886a1635eb4e92cb025dde6f6a358f633d685bb439e1b3f154b23b549a02"
+    ],
+    "2000001": [
+      "c129917d4d6d23481590af5bd497570bd64827ce46e9545c8da3d8dd86664d7a"
+    ],
+    "2000002": [
+      "95e25ccb7a2d416edc72208fc2d07ef0b70a756b111d3accc5865e7dd4667eef"
+    ],
+    "2000003": [
+      "0df05bfcdb57c981da21f96e4d7436447b2d2ec4405dca6a57d8e2ccb8c6036e"
+    ],
+    "2000004": [
+      "57e04db49bb47db0662fc3353539f1df1763e1c09121359c2305ef406fd626b6"
+    ],
+    "2000005": [
+      "f4f426de6ec7a04f99376bc506c772d0d3b8815ba77f28b69510bd032c42eaec"
+    ],
+    "2000006": [
+      "5f45cf3ef0f4292fdeb184264b866f283c70a9af3fc21d9bf03a05ad1f4df969"
+    ],
+    "2000007": [
+      "1ad2af0d13cc5dcff45c9dc52a216268a1c806a3133a04ab58e90b3b80c62169"
+    ]
+  },
+  "pilot_recoveries": {
+    "dsrl-na": {
+      "manifest_sha256": "0b50793cdbcd7722c477fcfa4dfc72535c70703bc817edb109ef13000a70ee27",
+      "directory": "checkpoints/chunks000001196-updates000005980",
+      "files": {
+        "recovery.zip": "0cc5ad244c8d72ad11e8cbe05dbd53efc5a7bc35256bb54d9ee98e99f4ddad56",
+        "replay.pkl": "a5620639bb129c550c63901aa21d60341d7ed80402ff89ccd5c32280490c05eb",
+        "runtime.pt": "fd9df31c86116197c2ae146446e645c47c939cd98ab363c0c011035c9b42cd98"
+      }
+    },
+    "dsrl-na-retry": {
+      "manifest_sha256": "949bda0e5587addd321e5654bb97b98f1029394eca0fd300a95d7b0df5361d7b",
+      "directory": "checkpoints/chunks000001196-updates000005980",
+      "files": {
+        "recovery.zip": "379e6e118b5f837611fd87bf36d63338b2a32e696a6d272fcb57401a1597b7ab",
+        "replay.pkl": "b44603863fed27fd50a41e538c4c560f2930ca0837babf9cca05b8236e514099",
+        "runtime.pt": "8a2d7a26fc405cab5ab7aab40ec6c01191dce0e0d5ee8bed7da95ef5b071f524"
+      }
+    },
+    "rl2": {
+      "recovery_sha256": "5d020a904821d86779d31ec9a03ec91bb40cabeb446dd4666ba6d63a7a057627"
+    },
+    "episode-reset": {
+      "recovery_sha256": "8c92565c4783fa51504724bc5b37788d18b9ca0c6bd80ded8f2af99345be5dc4"
+    }
+  },
+  "estimate": {
+    "seed_count": 2,
+    "seeds": [
+      1,
+      2
+    ],
+    "required_arms": 8,
+    "layout": "one independent arm per GPU",
+    "gpu_assignment": [
+      {
+        "gpu": 0,
+        "seed": 1,
+        "methods": [
+          "dsrl-na"
+        ]
+      },
+      {
+        "gpu": 1,
+        "seed": 1,
+        "methods": [
+          "dsrl-na-retry"
+        ]
+      },
+      {
+        "gpu": 2,
+        "seed": 1,
+        "methods": [
+          "rl2"
+        ]
+      },
+      {
+        "gpu": 3,
+        "seed": 1,
+        "methods": [
+          "episode-reset"
+        ]
+      },
+      {
+        "gpu": 4,
+        "seed": 2,
+        "methods": [
+          "dsrl-na"
+        ]
+      },
+      {
+        "gpu": 5,
+        "seed": 2,
+        "methods": [
+          "dsrl-na-retry"
+        ]
+      },
+      {
+        "gpu": 6,
+        "seed": 2,
+        "methods": [
+          "rl2"
+        ]
+      },
+      {
+        "gpu": 7,
+        "seed": 2,
+        "methods": [
+          "episode-reset"
+        ]
+      }
+    ],
+    "target_steps": 28800,
+    "phases": {
+      "dsrl-na": {
+        "training_deadline_seconds": 1181,
+        "total_seconds": 1627,
+        "evaluation_reserve_seconds": 282,
+        "boundary_reserve_seconds": 105,
+        "measured_complete_4090_phase_seconds": 540.6066134027205
+      },
+      "dsrl-na-retry": {
+        "training_deadline_seconds": 1181,
+        "total_seconds": 1627,
+        "evaluation_reserve_seconds": 282,
+        "boundary_reserve_seconds": 105,
+        "measured_complete_4090_phase_seconds": 539.9656455228105
+      },
+      "rl2": {
+        "training_deadline_seconds": 923,
+        "total_seconds": 2374,
+        "evaluation_reserve_seconds": 1247,
+        "boundary_reserve_seconds": 144,
+        "measured_complete_4090_phase_seconds": 881.7156534208916
+      },
+      "episode-reset": {
+        "training_deadline_seconds": 923,
+        "total_seconds": 2374,
+        "evaluation_reserve_seconds": 1247,
+        "boundary_reserve_seconds": 144,
+        "measured_complete_4090_phase_seconds": 877.6872916482389
+      }
+    },
+    "longest_worker_seconds": 2374,
+    "available_worker_seconds": 3105.133933067322,
+    "fits": true,
+    "admission_reason": "fits measured one-hour envelope"
+  },
+  "helper_migration_verification": {
+    "verified": true,
+    "qualified_source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+    "pilot_source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+    "old_helper_sha256": "6246e78aa48185f1c1682f41a6acf99886826b762fcf657b62762a57a156f47b",
+    "helper_sha256": "ce123bad4c7b9984b732767199914b66081558abd6cf4d9bb82269afccc1f30e",
+    "cpu_tests": {
+      "passed": true,
+      "log_sha256": "77c084426ebce9d626cb345c17453df9d150ece707d2baacabddf8855763fefb",
+      "source_sha256": "31b9c06ceaf97b3a7a7339547f9422b524f590014f0c30f82873e907519ca09b"
+    },
+    "parent_probe_sha256": "235dd860c59ea2fc4130406783457ee7d021d709cdf78c1deed45c3df519610e",
+    "worker_receipts": {
+      "dsrl-na": "f888e301c2d998ddadb8d79450f1491a75c17ec33e16dd737ea7db44212722d1",
+      "dsrl-na-retry": "f0edd18d7acbc4d70b51152ca2564cd3be32385753830a554e9733d0f864e036",
+      "rl2": "a82aaa371fa153b3d40d4ccdee6792a914daecb6fc6e8936451417b320bb0f28",
+      "episode-reset": "0e7f817720dc1396836dd86b019420fd0e6d99713390b6c828b5701b20917bad"
+    }
+  },
+  "runtime_probe_migration": {
+    "qualified_source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+    "pilot_source_commit": "103e0f5a1a58d2b7f09756ea74e81605d72cbcf6",
+    "path": "scripts/[train]gpu_probe.py",
+    "old_sha256": "b1db1d3e306cfb7e637f0d5d5befab7b54339014f755fe4c4793d39caaca5c2e",
+    "new_sha256": "f441331456e5f26d19b237d1e1037b8fb64c6725f640f28d61cada7ed6f66117",
+    "permitted_changed_functions": [
+      "main",
+      "run_baige_probe"
+    ],
+    "protected_probe_ast_sha256": "10bc9d3fd7e3f5bd1201803b50676329a2ee40ae535ffafb8b863f07a5dce277",
+    "science_changed": false,
+    "purpose": "training",
+    "opt_in": "--baige-exclusive-training",
+    "rule": "exclusive scheduler UUID+PCI+CUDA+ownPID+memory; utilization is retained telemetry",
+    "cpu_fixtures": {
+      "passed": true,
+      "log_sha256": "aec93133e6ae61e683b35964eaf85e567b06a7970de79c6737f179d9446e7957",
+      "test_source_sha256": {
+        "tests/test_gpu_probe.py": "256d2467aa54e2fc458b99b806b4eb037a29879e69379fbb0c2cd2b4c09fbf00",
+        "tests/test_gpu_identity_mapping.py": "1a48c026e9049e53d01e86f34ccbaa3f4c87b41ef59df22e9a27f113c59bd61f",
+        "tests/test_can_dsrl_gpu.py": "31b9c06ceaf97b3a7a7339547f9422b524f590014f0c30f82873e907519ca09b"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 5.87181753013283
+    },
+    "full_eight_gpu_cuda_probe": {
+      "passed": true,
+      "parent_probe_sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+      "combined_fixture_and_probe_seconds": 17.352610954083502
+    }
+  },
+  "selected_layout": "one independent arm per GPU",
+  "selection_reason": "Four-seed serial lanes do not fit; two matched seeds preserve the full target, DSRL retry and trained-reset controls within one hour",
+  "gpu_assignment": [
+    {
+      "gpu": 0,
+      "seed": 1,
+      "methods": [
+        "dsrl-na"
+      ]
+    },
+    {
+      "gpu": 1,
+      "seed": 1,
+      "methods": [
+        "dsrl-na-retry"
+      ]
+    },
+    {
+      "gpu": 2,
+      "seed": 1,
+      "methods": [
+        "rl2"
+      ]
+    },
+    {
+      "gpu": 3,
+      "seed": 1,
+      "methods": [
+        "episode-reset"
+      ]
+    },
+    {
+      "gpu": 4,
+      "seed": 2,
+      "methods": [
+        "dsrl-na"
+      ]
+    },
+    {
+      "gpu": 5,
+      "seed": 2,
+      "methods": [
+        "dsrl-na-retry"
+      ]
+    },
+    {
+      "gpu": 6,
+      "seed": 2,
+      "methods": [
+        "rl2"
+      ]
+    },
+    {
+      "gpu": 7,
+      "seed": 2,
+      "methods": [
+        "episode-reset"
+      ]
+    }
+  ],
+  "target_steps": 28800,
+  "pilot_artifact_sha256": {
+    "pilot-admission.json": "d7ad993d6d4e3a8fe81daf28ee0c00e1d0559090c38c890c7e0674d3152e63d1",
+    "plan.json": "f690a20cc96a89bf7cd1f1ee7377b985a80ca63eca598a89e3c1b0cd00c96907"
+  },
+  "source_files_sha256": {
+    "src/fluffy_bassoon/meta_rl/can_dsrl.py": "080786da7ff0c23e2da589b4538dcccaa85c20a68b20543f7cc82148db612757",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_run.py": "24b6527801f7256c4ae91d839e7a14d8499a2b317a5e6bdcb996002336e550b8",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_compare.py": "d43b875b52ac21e607716e93f0f202c81ee3669f91ead4ecc73a486804bfa2df",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_parity.py": "9777a1f943e978b2e66d45af2e0c1dc9bae81e0f5fea0be3cf8583e5bd7500ac",
+    "src/fluffy_bassoon/meta_rl/can_dsrl_gpu.py": "ce123bad4c7b9984b732767199914b66081558abd6cf4d9bb82269afccc1f30e",
+    "src/fluffy_bassoon/meta_rl/ppo.py": "6135153207b6a442ea8c3ac4831596281cb419066f1536614cf70a691cc99344",
+    "src/fluffy_bassoon/meta_rl/gtrxl.py": "e77a7711def27162a994d8ec81893724db04abd70a1bea0059fd34aa91c5471c",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/gpu_execution.py": "3c00c74984101dc7c487c193cd7abe95042e746fb8f8fc5dd4025a08b1f9bfc1",
+    "scripts/[train]gpu_probe.py": "f441331456e5f26d19b237d1e1037b8fb64c6725f640f28d61cada7ed6f66117"
+  },
+  "parent_probe_sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+  "resource_identity": {
+    "raw_name": "NVIDIA RPBZZZ6",
+    "raw_names": [
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6",
+      "NVIDIA RPBZZZ6"
+    ],
+    "queue": "user-approved Pro6K queue",
+    "identity_basis": "exact raw SKU in the user-provided Baige screenshot and explicit eight-card approval",
+    "marketing_model_decoded": false
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "audited_at_utc": "2026-10-29T09:14:55.980049+00:00",
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "job": "job-lrdwz9x2s3kk-master-0",
+  "remote_run": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r2",
+  "audit_mode": "Independent stdlib metadata/source/zip-opcode and streamed SHA256 audit; no torch/simulator imports, tests, GPU computation, checkpoint download or artifact/source mutation.",
+  "checks_passed": 139,
+  "checks_total": 139,
+  "failures": [],
+  "completed_arms": 8,
+  "training_seeds": [
+    1,
+    2
+  ],
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "common_training_primitive_steps_per_arm": 28800,
+  "held_out_scenes": 8,
+  "attempts_per_scene": 4,
+  "recurrent_controls": [
+    "normal",
+    "memory_reset",
+    "reward_blind"
+  ],
+  "full_optimizer_budget": {
+    "dsrl_na_per_arm": {
+      "native_warmup_primitive_steps": 24016,
+      "post_warmup_chunk_transitions": 1196,
+      "train_calls": 299,
+      "actor_updates": 5980,
+      "critic_updates": 5980,
+      "noise_critic_updates": 2990,
+      "entropy_updates": 5980
+    },
+    "ppo_per_arm": {
+      "whole_trial_updates": 6,
+      "optimizer_steps": 24,
+      "all_old_policy_replay_errors": 0
+    }
+  },
+  "frozen_identity": {
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "numpy": "1.26.4",
+      "robomimic": "0.3.0",
+      "robosuite": "1.4.1",
+      "mujoco": "2.3.7"
+    },
+    "robomimic_commit": "8df6e8e482458befaf1decfcd9d635d68a7afcae",
+    "robomimic_env_sha256": "43b0f018be42f776eb76fca3e5a7a40318c112883be53ae200b82c45da1c7183",
+    "checkpoint_sha256": "61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b",
+    "normalization_sha256": "a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a",
+    "frozen_motor_sha256": "60f0af92647981f71a716a3a52420b71d208911a6c0386499a5a100f92242845"
+  },
+  "parent_probe_sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+  "checkpoint_bytes_stream_hashed": 2528001706,
+  "checkpoint_files_downloaded": 0,
+  "cpu_fixture_summary": "55 passed, 27 subtests passed in 0.18s",
+  "budget": {
+    "driver_elapsed_seconds": 808.6030156612396,
+    "driver_reported_gpu_hours": 1.7968955919477674,
+    "prior_conservative_gpu_hours": 0.26666666666666666,
+    "driver_plus_prior_gpu_hours": 2.0635622628529866,
+    "authorized_ceiling_gpu_hours": 8,
+    "actual_scheduler_allocation_pending_parent_ui": true,
+    "warning": "Driver timer excludes some scheduler/container lifecycle time; it is not final allocation billing."
+  },
+  "limitations": [
+    "Final recovery contents were hashed and serialization/optimizer payload metadata checked; no tensor unpickling or new resume test was performed.",
+    "Two matched training seeds and eight held-out scenes remain a small feasibility experiment; no additional statistical performance claim is made by this integrity audit.",
+    "Utilization remained telemetry-only under exclusive scheduling; results are not uncontended timing benchmarks."
+  ],
+  "reports": {
+    "checks": "checks.json",
+    "recovery_metadata": "recovery-metadata.json",
+    "raw_hashes": "raw-hashes.json",
+    "thin_raw": "raw/"
+  },
+  "no_source_or_artifact_changes_outside_audit_folder": true
+}

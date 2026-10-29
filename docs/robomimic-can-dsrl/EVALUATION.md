@@ -1,12 +1,90 @@
 # Can DSRL / RL² evaluation
 
-Pilot-r3 completed all four methods at 28,800 training primitive steps each.
-The comparison is executable and interaction-budget matched. It does not yet
-establish a substantial memory benefit: RL² normal gains one successful
-attempt over both its memory-reset lesion and the separately trained reset
-controller, on one of eight paired scenes.
+The completed two-seed eight-card comparison scored 41/64 any-step successes
+for RL² and 31/64 for frozen DSRL-NA at equal training interactions. Clearing
+RL²'s memory between attempts still scored 40/64, and a controller trained
+with that reset scored 39/64. The higher GTrXL/PPO controller score therefore
+does not establish a substantial benefit from learning across attempts.
 
-## Verified pilot results
+## Final two-seed comparison
+
+All eight arms completed 28,800 primitive training steps: seeds 1 and 2 for
+DSRL-NA, retry DSRL-NA, persistent RL² and trained episode-reset GTrXL. Each
+evaluation used the same eight held-out initial scenes, seeds
+2000000–2000007, with four attempts per scene and frozen weights. Normal,
+memory-reset and reward-blind recurrent evaluations all completed. These are
+two training seeds crossed with eight shared scenes, with attempts nested
+within each cell; the 64 episode records are not 64 independent tasks.
+Counts and differences below are descriptive, without a significance claim.
+
+| Configuration | Seed 1 any /32 | Seed 2 any /32 | Any total /64 | Release total /64 | Scenes with any success, seed 1 / seed 2, each /8 |
+|---|---:|---:|---:|---:|---|
+| DSRL-NA frozen | 15 | 16 | 31 | 31 | 5 / 5 |
+| Retry DSRL-NA frozen | 14 | 15 | 29 | 28 | 5 / 7 |
+| RL² normal | 20 | 21 | 41 | 41 | 6 / 7 |
+| RL² memory reset | 20 | 20 | 40 | 40 | 6 / 7 |
+| RL² reward blind | 21 | 18 | 39 | 39 | 7 / 6 |
+| Trained reset normal | 20 | 19 | 39 | 39 | 6 / 7 |
+| Trained reset memory reset | 20 | 19 | 39 | 39 | 6 / 7 |
+| Trained reset reward blind | 20 | 18 | 38 | 38 | 6 / 6 |
+
+Any-step success means success at any primitive step. The released logger
+requires a complete four-action chunk of success reward. Only seed 1 retry
+DSRL differs between metrics: scene 2000004, attempt 1 succeeds by the first
+definition but not the second. Both metrics give the same main comparison.
+
+RL² exceeds DSRL by five successful attempts in each seed, a descriptive
+15.625 percentage-point difference overall. The memory lesion has no effect
+in seed 1 and removes one success in seed 2, on scene 2000004, attempt 3.
+The trained-reset comparison ties in seed 1; in seed 2 RL² adds successes on
+scene 2000002, attempt 4 and scene 2000004, attempt 3. Thus the memory gap is
+1/64 and the trained-reset gap is 2/64. Reward history has mixed effects:
+normal minus reward-blind is −1 success in seed 1 and +3 in seed 2.
+
+RL² normal successes by attempt are [5, 5, 5, 5]/8 in seed 1 and
+[6, 4, 6, 5]/8 in seed 2, or [11, 9, 11, 10]/16 when counted across seeds.
+There is no increasing retry-success curve. Together with the reset controls,
+this provides little evidence that the score gain comes from meta-learning
+across attempts. It remains consistent with a better controller under this
+short training protocol. Parameter counts, optimizers and decoder queries
+also differ, as recorded below; interactions alone are matched. Only six PPO
+updates per recurrent arm were run, and DSRL spent 24,016 of its 28,800 steps
+in its released warmup. This is neither a convergence comparison nor a VLA
+or cross-task generalization result.
+
+The earlier native motor result remains a separate 4090 qualification
+reference: 15/32 any-step and 14/32 released successes, covering all eight
+scenes. No new seed-2 native evaluation was measured. It is not duplicated
+into a /64 baseline. The earlier 4090 pilot below is also kept separate;
+its repeated seed 1 is not an independent third training seed, and no
+bitwise equivalence across these hardware executions is claimed.
+
+Baige `job-lrdwz9x2s3kk`, source
+`b9829df25eeee7cd59d0345fbc4e114b68e0b49f`, completed with driver exit 0
+at 16:55:47 Shanghai on 2026-10-29. Eight independent GPU lanes ran in one
+exclusive scheduler container, using the user-approved raw device identifier
+`NVIDIA RPBZZZ6`, with no DDP. The campaign recorded 230,400 training and
+153,600 evaluation primitive steps. Its 808.603 driver seconds correspond
+to 1.797 GPU-hours at eight cards; adding the conservative two-minute,
+eight-card reserve for the earlier preflight failure gives 2.064 GPU-hours
+on this driver-duration accounting. The exact scheduler release timestamp
+was not independently observed. The enforced 58-minute retry cap plus the
+two-minute reserve bounded this campaign by the authorized eight GPU-hours.
+
+All training/evaluation counts, paired scenes, both success metrics and
+controls passed 441 metadata/hash/count checks. An independent integrity
+audit passed 139 checks and streamed hashes over 2,528,001,706 recovery
+payload bytes. All four recurrent arms recorded six finite PPO
+updates with zero likelihood replay error. Final complete policy, optimizer,
+sampler and RNG recovery payloads remain on Baige, with independently
+streamed SHA256 receipts; they were not downloaded or deserialized on macOS.
+Runtime/source/input/frozen-motor identities and actual GPU worker receipts
+were checked against the qualification migrations. Evidence:
+[derived results and count audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/AUDIT.md),
+[full per-scene results](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/RESULTS.json),
+and [independent integrity audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/audit.json).
+
+## Earlier single-seed 4090 pilot
 
 Training seed 1 was used for all four arms. Evaluation used the same eight
 initial scenes, seeds 2000000–2000007, with four retries per scene and frozen
@@ -148,6 +226,6 @@ Baige training admission records utilization as telemetry while retaining
 allocation, memory, process-ownership and real tensor checks. All eight
 actual worker GPU/PID proofs and frozen-model contracts passed an independent
 33-check metadata audit over 20 hash-verified files. This establishes runtime
-qualification; completed learning comparisons require the final matched
-training and evaluation artifacts.
+qualification. The completed matched comparison and final audits are
+reported above.
 Evidence: [retry launch audit](../../outputs/robomimic-can-dsrl-20261029-r1/eight-r2-launch-check/audit.json).

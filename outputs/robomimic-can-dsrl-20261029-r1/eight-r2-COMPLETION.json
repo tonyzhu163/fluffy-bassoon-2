@@ -1,0 +1,376 @@
+{
+  "status": "complete_and_audited",
+  "recorded_at_utc": "2026-10-29T09:19:04.578010+00:00",
+  "job": "job-lrdwz9x2s3kk",
+  "run_id": "robomimic-can-dsrl-baige-20261029-eight-r2",
+  "immutable_run_source": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "campaign_ended_utc": "2026-10-29T08:55:47.608881+00:00",
+  "driver_exit_code": 0,
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "training_seeds": [
+    1,
+    2
+  ],
+  "completed_arms": 8,
+  "training_primitive_steps_per_arm": 28800,
+  "evaluation_scene_seeds": [
+    2000000,
+    2000001,
+    2000002,
+    2000003,
+    2000004,
+    2000005,
+    2000006,
+    2000007
+  ],
+  "attempts_per_scene": 4,
+  "paired_recurrent_conditions": [
+    "normal",
+    "memory_reset",
+    "reward_blind"
+  ],
+  "count_checks_passed": 441,
+  "independent_integrity_checks_passed": 139,
+  "recovery_bytes_independently_hashed": 2528001706,
+  "final_descriptive_counts": {
+    "dsrl-na/frozen": {
+      "successes": 31,
+      "release_logged_successes": 31
+    },
+    "dsrl-na-retry/frozen": {
+      "successes": 29,
+      "release_logged_successes": 28
+    },
+    "rl2/normal": {
+      "successes": 41,
+      "release_logged_successes": 41
+    },
+    "rl2/memory_reset": {
+      "successes": 40,
+      "release_logged_successes": 40
+    },
+    "rl2/reward_blind": {
+      "successes": 39,
+      "release_logged_successes": 39
+    },
+    "episode-reset/normal": {
+      "successes": 39,
+      "release_logged_successes": 39
+    },
+    "episode-reset/memory_reset": {
+      "successes": 39,
+      "release_logged_successes": 39
+    },
+    "episode-reset/reward_blind": {
+      "successes": 38,
+      "release_logged_successes": 38
+    }
+  },
+  "driver_based_resource_accounting": {
+    "training_primitive_steps": 230400,
+    "evaluation_primitive_steps": 153600,
+    "optimizer_invocations": 83816,
+    "training_motor_samples": 9242880,
+    "driver_elapsed_seconds": 808.6030156612396,
+    "driver_stages_end_elapsed_seconds": 808.6088924407959,
+    "driver_based_gpu_hours": 1.7968955919477674,
+    "combined_driver_gpu_hours_with_prior_budget_reserve": 2.0635622628529866,
+    "scheduler_billing_or_terminal_timestamp_established": false
+  },
+  "resource_limit": {
+    "failed_prior_reserve_elapsed_seconds": 120,
+    "retry_scheduler_cap_elapsed_seconds": 3480,
+    "gpu_count": 8,
+    "combined_maximum_gpu_hours": 8,
+    "no_further_jobs_authorized_by_this_receipt": true
+  },
+  "conclusion": "Higher short-run GTrXL/PPO controller score; no established substantial benefit from cross-attempt memory or reward history.",
+  "limitations": [
+    "Only stdlib artifact metadata/counts/hashes used; no model/tensor/replay/optimizer/simulator/test execution.",
+    "Checkpoint payload hashes were independently streamed on Baige and no checkpoint was downloaded or deserialized.",
+    "Two seeds and eight shared scenes are too few for broad method rankings; no independence assumption or significance test on 64 episode records.",
+    "The earlier 4090 pilot repeats seed1 with another source/hardware execution. It is not pooled as an independent third training seed and no bitwise reproducibility claim is made.",
+    "The historical native reference is separate and has no matching newly measured seed2 native evaluation.",
+    "All training interaction budgets match at 28800, but optimizer, parameter and motor-query budgets differ; recurrent policies have only six PPO updates.",
+    "Frozen motor identity is contract/qualified-driver workflow evidence; source checkpoint hashes agree but no independent model-tensor inspection was performed.",
+    "Raw hardware identifier is NVIDIA RPBZZZ6 in the user-approved Pro6K queue; no marketing model decoding is asserted.",
+    "GPU-hours are computed from eight GPUs times the driver elapsed clock, not an independently established scheduler allocation/billing interval.",
+    "This is unchanged low-dimensional Can, not VLA evidence, convergence evidence, cross-task meta-learning, or an online DSRL evaluation."
+  ],
+  "retention": "Keep all cited complete recovery payloads and source/initializer/runtime on Baige. Thin reports, raw metadata and SHA256 receipts are mirrored here. No checkpoint download or pruning.",
+  "files": {
+    "docs/robomimic-can-dsrl/EVALUATION.md": {
+      "bytes": 13678,
+      "sha256": "cdaf317572ecdd08c65115f814f93a1ab41a567fa6baf72e389cd126485e2519"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/AUDIT.md": {
+      "bytes": 8389,
+      "sha256": "464d05da8c612bb08dfe0e3df892961cd79d104879fad8bc8907f3ad69715731"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/RESULTS.json": {
+      "bytes": 153901,
+      "sha256": "31665e02e5e352a241539521e27f3e1468084da5e134f54cbbe2c2e23e7adc6e"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/derive_results.py": {
+      "bytes": 18554,
+      "sha256": "92fed64091ab4cf0f1a5ad0ac4fab8cb415b97c4f96cbd46fa45667ed36ab27b"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/campaign-admission.json": {
+      "bytes": 21030,
+      "sha256": "c40a72a64b95922282186613a13dbfaab74e18b5cb7a4a658be6f35266f2416d"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/parent-gpu-probe.json": {
+      "bytes": 18138,
+      "sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/phase-records.json": {
+      "bytes": 17105,
+      "sha256": "dbb3abe8d3c8dd76267f6a8928c251f0c6e6dbd6cdd0c0c07be1577064ea2729"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/plan.json": {
+      "bytes": 17293,
+      "sha256": "6b8ef29a10d26ed0dd1e3ec807210e106abdd9769e49ca0c1997bb1ac5fc6ddf"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/runtime-probe-tests.log": {
+      "bytes": 172,
+      "sha256": "aec93133e6ae61e683b35964eaf85e567b06a7970de79c6737f179d9446e7957"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/contract.json": {
+      "bytes": 1823,
+      "sha256": "8e69e44314b0231e793b1e4eeae323b383deafd52dcaf35285619fb09b686d04"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/evaluation.json": {
+      "bytes": 6383,
+      "sha256": "667e7205f1aa3dc071e999e3d5eeaaa566f00b694e5383f9250b29198d37c66d"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/gpu-probe.json": {
+      "bytes": 2343,
+      "sha256": "6ee1187ff583ee15231b3796d9eaca43eb9d784284b1cb2075452d894fbd8b8f"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/recovery-manifest.json": {
+      "bytes": 343,
+      "sha256": "7d20318b2feb55b73c440b2b3db6c95177886243d0e5891c3fdc62f27d767f97"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/summary.json": {
+      "bytes": 546,
+      "sha256": "63328cd0b0cd15fea14f3cfdd25a4a5469cd97d3795073f2ad1e11b576aff8fc"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na/updates.jsonl": {
+      "bytes": 998,
+      "sha256": "e1d29f38793faaa64c360bcab059aa2ef72a81551e733fa25e8bbe74b79efc73"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/contract.json": {
+      "bytes": 1835,
+      "sha256": "f02625b66513b7f8ef6ffe23e5132431876c17806f5b8d2c5b7cddcab100dfca"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/evaluation.json": {
+      "bytes": 6386,
+      "sha256": "8da776459866d854bad35a04de3d3a66d1b579cfa71bc1b99b3be6770964b659"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/gpu-probe.json": {
+      "bytes": 2447,
+      "sha256": "01f9e589e14187438800fdec39883589d4322e126bd2dd6779f63f43f00e3bb7"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/recovery-manifest.json": {
+      "bytes": 343,
+      "sha256": "f48351a66ed62e7ea95b4264c9009befd5f813da45993005af0bfe6fe5dd3896"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/summary.json": {
+      "bytes": 546,
+      "sha256": "302e26f450e2a07a7f95a35e5b9beb55d95906b0f7b076a8f5443e3e9e33ee42"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/dsrl-na-retry/updates.jsonl": {
+      "bytes": 999,
+      "sha256": "70b1cdb2f9f2a38379537b74be24fa9ff4000f0b8ab5f95a2940773804460ae1"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/episode-reset/contract.json": {
+      "bytes": 1834,
+      "sha256": "2a47f069efaf1645f9cc87416b1ef97a361308e647de67d56bfe2f590c637dca"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/episode-reset/evaluation.json": {
+      "bytes": 20637,
+      "sha256": "d88a5ef1f78c222d984e4c9b81be44f2ed1f3395928ea0e0a1ef1e1fe8cfc5b1"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/episode-reset/gpu-probe.json": {
+      "bytes": 2655,
+      "sha256": "eb5415163b28a451c66b2d3023ae61030526165643401269a01c5541dc5c7e2b"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/episode-reset/summary.json": {
+      "bytes": 394,
+      "sha256": "4f7e3f651520cc92d8d5c7f95ca929fb400105127e234c52d465f28595ab7d00"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/episode-reset/updates.jsonl": {
+      "bytes": 2432,
+      "sha256": "b27e9b48f7143181447165f0034a72d99a3e9e05d9e37b6db54f9a133d119221"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/rl2/contract.json": {
+      "bytes": 1814,
+      "sha256": "cec1cbb2f95705d1e8ba679d7d06e3aa41cd7aabe013bd64a5e2b59bad7a0196"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/rl2/evaluation.json": {
+      "bytes": 20651,
+      "sha256": "f09ad9f86ba68b3c5b5765b045ef9d73dd8a2f1d0c985af02097895c9787054a"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/rl2/gpu-probe.json": {
+      "bytes": 2551,
+      "sha256": "ce907a4b01998f0b2e1b16df0e40c5a74dc3a665ea27db3464ca60bb3fe03669"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/rl2/summary.json": {
+      "bytes": 394,
+      "sha256": "288434131a79d256f8d356a5f9113cf3f4b9f230fbc3d3d10449a32f191a648d"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed1/rl2/updates.jsonl": {
+      "bytes": 2444,
+      "sha256": "e0571b1bc9aef51c168b505a2bef2fbe09958b0454ee9ff0aa24dc9883d48997"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/contract.json": {
+      "bytes": 1823,
+      "sha256": "4878fe6d93ab1f841525c807af4966762ac5e167d215e905d96f144351c7e804"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/evaluation.json": {
+      "bytes": 6381,
+      "sha256": "02d2d3e64588464c392a3ab825fbd54fa36646222ad0becd44a5a66a88039a8a"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/gpu-probe.json": {
+      "bytes": 2759,
+      "sha256": "41f813b359d5e0385e6b0baa8022e76056691e906eb7365c8bad21a0ff391cdb"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/recovery-manifest.json": {
+      "bytes": 343,
+      "sha256": "b7bf1358181424401b764413ecf0feca72837aae7a37efea96076eb6f202c2cc"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/summary.json": {
+      "bytes": 546,
+      "sha256": "6b379cef564729f8165b4039b314ae32fe655abb513c32d626153484fda99c08"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na/updates.jsonl": {
+      "bytes": 1001,
+      "sha256": "6864f736d9c79d6110bffe180db33d207eb3efff703d3ccd55ff493516c497c8"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/contract.json": {
+      "bytes": 1835,
+      "sha256": "3c7f955ff108bcb8be1acfd19e0aa4c6814c0def93fcac4e2d4eb7fd13d4f696"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/evaluation.json": {
+      "bytes": 6383,
+      "sha256": "333152fb02d78bcbd91b1271d756b775b3b9d652f74e8ac801e7579447f24c85"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/gpu-probe.json": {
+      "bytes": 2863,
+      "sha256": "f1835aabf56cb4224b9664b09bd3e42cb55a2e1704ee5a24eefe81d521e5cf92"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/recovery-manifest.json": {
+      "bytes": 343,
+      "sha256": "b72108087fcd84ecf1797a545fa529075948d4cf9760f25b2979c14bf80b3b53"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/summary.json": {
+      "bytes": 545,
+      "sha256": "7e4844a180939ee23e388b25944029f99bcef3ab72294edac1c4bb64b2870627"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/dsrl-na-retry/updates.jsonl": {
+      "bytes": 993,
+      "sha256": "a70327a8178e5242a7c319d66bf59d81eeaf3fa26a1d32e263aecc369c45fbed"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/episode-reset/contract.json": {
+      "bytes": 1834,
+      "sha256": "3f345ffe40b1dab30e790705bc13e11cd32ef02d7fa9e956bf1ca745e9abe25b"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/episode-reset/evaluation.json": {
+      "bytes": 20645,
+      "sha256": "502de4b3ca9d81541a55884622b9ce0c9dc1af53ceae67f82a17d8c90f4978a8"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/episode-reset/gpu-probe.json": {
+      "bytes": 3071,
+      "sha256": "a3fc4abe070ef0f4242ab7d4784980dfd350d981a03dfe2cf6f97fdc5d7c36eb"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/episode-reset/summary.json": {
+      "bytes": 394,
+      "sha256": "ea33c1704571fbb354a9a5fd9faac948fd04809b5705f7fbafa0d619ae986232"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/episode-reset/updates.jsonl": {
+      "bytes": 2435,
+      "sha256": "4b166096a6e078ec4daf69659c12be3fe48f923ccf6f79a9c1eb26571f39b6d7"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/rl2/contract.json": {
+      "bytes": 1814,
+      "sha256": "cd26c0da74d1b87f049b6dcac388d0bb788972c7cc96bf4ff28953f59e949768"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/rl2/evaluation.json": {
+      "bytes": 20655,
+      "sha256": "b3349c98e3e89874e800ba6d748be3fba02f000d187d52663c2b0dbb2f058dbd"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/rl2/gpu-probe.json": {
+      "bytes": 2967,
+      "sha256": "0303b2ec1f7d3f7b5b3109b39aaace3cff97dd5985d2a3b298fed7df38903252"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/rl2/summary.json": {
+      "bytes": 394,
+      "sha256": "eb807f9adbd9ad850e22f371bbb9bbd25090ca1dfb6a07908b18496aa8395293"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/seed2/rl2/updates.jsonl": {
+      "bytes": 2433,
+      "sha256": "5255f44dd17f643be723fad50b6928aa1ee94f746468edb16bac9658f12e79ab"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/campaign/stages.jsonl": {
+      "bytes": 26852,
+      "sha256": "2cf296dd313a360b0bfaf8d22e5a40413d789baaf21617bd8bc53fb78f8bbdc0"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/native-qual-r4/contract.json": {
+      "bytes": 1716,
+      "sha256": "f01abf42b51dffda6dedfd319389ff4506f1e01d70062a143d9985c7ee199167"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/native-qual-r4/evaluation.json": {
+      "bytes": 6384,
+      "sha256": "01a6d75b0119e74fd60c783cdf3eb748478926b10b24b8f886ca120e6ebd853c"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/native-qual-r4/summary.json": {
+      "bytes": 212,
+      "sha256": "8e1efc726c11830af34a2e8c2843f06d55d8975d16b228f4e7ec2f03048af56e"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-analysis/raw/remote-manifest.json": {
+      "bytes": 25248,
+      "sha256": "24e79c7bf6586c1d98414aa94dddc62c9abe2665bc226996979442fde72a1504"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/audit.json": {
+      "bytes": 3323,
+      "sha256": "ee090a6785435bd9255f0a1c75d2705c171d8321d32fd2c50298fdccb8b22fcd"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/checks.json": {
+      "bytes": 7322,
+      "sha256": "d27959b1fe713f57df87a98fa7bd4dfd4efecaec484efe3f9ad591d2948e17c8"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/raw/campaign-admission.json": {
+      "bytes": 21030,
+      "sha256": "c40a72a64b95922282186613a13dbfaab74e18b5cb7a4a658be6f35266f2416d"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/raw/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/raw/plan.json": {
+      "bytes": 17293,
+      "sha256": "6b8ef29a10d26ed0dd1e3ec807210e106abdd9769e49ca0c1997bb1ac5fc6ddf"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/raw/runtime-probe-tests.log": {
+      "bytes": 172,
+      "sha256": "aec93133e6ae61e683b35964eaf85e567b06a7970de79c6737f179d9446e7957"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/raw-hashes.json": {
+      "bytes": 34879,
+      "sha256": "ec3315560197d9067644e5cda646a1868cb28f2db933bb17dcfe325841bd214c"
+    },
+    "outputs/robomimic-can-dsrl-20261029-r1/eight-r2-integrity/recovery-metadata.json": {
+      "bytes": 11692,
+      "sha256": "ec0104e9828a6fbb09495444155f6db24ad384e6d0442811d30c4a4a7e0a6a18"
+    }
+  }
+}

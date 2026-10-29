@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "allocation_type": "baige_prequalified_worker",
+  "hostname": "job-lrdwz9x2s3kk-master-0",
+  "source_commit": "b9829df25eeee7cd59d0345fbc4e114b68e0b49f",
+  "parent_probe": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-eight-r2/parent-gpu-probe.json",
+  "parent_probe_sha256": "3bbffb014a0def7d5c39f2b72b242f29c5658d8f28a1daa70566be5ece31a0ce",
+  "parent_gpu_count": 8,
+  "source_binding": "parent_and_worker",
+  "scheduler_nvidia_visible_devices": [
+    "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+    "GPU-3f9213bc-6cb1-959d-b5a7-ad0de33fe416",
+    "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c",
+    "GPU-3e26708f-1044-59e5-3ab6-3f01fac46206",
+    "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+    "GPU-519cdab3-b52b-1adc-e15c-136165b60260",
+    "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686",
+    "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa"
+  ],
+  "cuda_visible_devices": "3",
+  "selected_device": {
+    "allocation_ordinal": 3,
+    "visibility_token": "3",
+    "cuda_uuid": "02abffdf-8520-db54-bf60-4f2f63c9226b",
+    "cuda_name": "NVIDIA RPBZZZ6",
+    "cuda_total_bytes": 101973950464,
+    "pci_bus_id": "0000:64:00.0",
+    "uuid": "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa",
+    "inventory": {
+      "index": 3,
+      "uuid": "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa",
+      "name": "NVIDIA RPBZZZ6",
+      "memory_total_mib": 97887.0,
+      "memory_used_mib": 0.0,
+      "utilization_percent": 100.0,
+      "pci_bus_id": "00000000:64:00.0"
+    },
+    "allocation_check": {
+      "elements": 1048576,
+      "result": 2097152.0,
+      "touched_gpu_uuids": [
+        "GPU-519cdab3-b52b-1adc-e15c-136165b60260",
+        "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+        "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686",
+        "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa"
+      ],
+      "own_pid_gpu_uuids": [
+        "GPU-519cdab3-b52b-1adc-e15c-136165b60260",
+        "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+        "GPU-a8d5a65b-2abd-ef0e-55e1-a8680bd37686",
+        "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa"
+      ]
+    }
+  },
+  "elements": 4096,
+  "tensor_result": 8192.0,
+  "pid_allocation": {
+    "available": true,
+    "own_pid": 1202,
+    "own_gpu_uuids": [
+      "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa"
+    ],
+    "selected_gpu_processes": [
+      {
+        "gpu_uuid": "GPU-cb42c844-1d58-a4a6-28ac-67ce2470aeaa",
+        "pid": 1202,
+        "process_name": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+        "memory_used_mib": "642"
+      }
+    ]
+  },
+  "created_at_utc": "2026-10-29T08:42:58.782318+00:00",
+  "timing_comparison_eligible": false
+}
