@@ -1,0 +1,60 @@
+{
+  "cluster": "Baige",
+  "submission_surface": "\u5206\u5e03\u5f0f\u8bad\u7ec3",
+  "job_id": "job-pnesyoazimd0",
+  "name": "mwj_1029_can_gtrxl_4090_r1_c103211",
+  "submitted_at": "2026-10-29T14:32:43+08:00",
+  "running_at": "2026-10-29T14:32:54+08:00",
+  "source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+  "qualification_run": "robomimic-can-dsrl-baige-20261029-qual-r4",
+  "pilot_run": "robomimic-can-dsrl-baige-20261029-pilot-r2",
+  "root": "/mowenjie/fluffy-bassoon-2",
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/dsrl-can-20261029-r2/bin/python",
+  "queue": "aihcq-chqrelndaaj4",
+  "pool": "aihc-sw5hua6i3hyv",
+  "resources": {
+    "gpus": 1,
+    "gpu_type": "NVIDIA GeForce RTX 4090",
+    "cpus": 16,
+    "ram_gib": 64,
+    "shm_gib": 8
+  },
+  "maximum_runtime_minutes": 110,
+  "automatic_retry": false,
+  "core": {
+    "core": "gtrxl",
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300
+  },
+  "validation": "Independent static audit, Python/embedded AST, bash syntax and diff checks passed; actual Linux CPU/CUDA/simulator tests pending in allocation",
+  "training_admission": "Full K4/B4/four-epoch GTrXL timing/recovery; released simulator and sampler parity; native headroom; all four methods fit conservative remaining budget",
+  "pilot_methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "pilot_target_rule": "largest of48000,28800 fitting measured budget, equal for all arms",
+  "evaluation": "8 paired held-out scenes/K4; normal/memory_reset/reward_blind recurrent conditions; separately trained reset resets in every condition",
+  "small_test_allocated_budget_hours": 2,
+  "prior_failed_qualification_reserved_minutes": 6,
+  "monitor": "can-dsrl-rl-comparison every20minutes",
+  "next_authorized_stage": {
+    "gpus": 8,
+    "gpu_family": "RTX6000",
+    "elapsed_time_cap_seconds": 3600,
+    "allocated_gpu_hour_cap": 8,
+    "mode": "parallel matched seeds",
+    "training_seeds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "requires": "Complete qualified4090pilot before launch",
+    "lane_layout": "one DSRLstandard\u2192retry GPU and one GTrXLpersistent\u2192trainedreset GPU per seed"
+  },
+  "proof": "gtrxl-4090-running.png"
+}

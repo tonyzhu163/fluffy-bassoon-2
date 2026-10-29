@@ -1,0 +1,366 @@
+#!/usr/bin/env bash
+# One exclusive eight-RTX6000 Baige container, at most one hour / eight GPU-hours.
+# Four paired seeds; each GPU runs two methods serially. Never launch this before
+# the complete single-4090 pilot has passed the gates below.
+set -euo pipefail
+TASK_SOURCE=${1:?exact source commit}
+TASK_RUN=${2:?fresh eight-GPU run ID}
+TASK_PILOT_RUN=${3:?completed single-4090 pilot run ID}
+TASK_ROOT=/mowenjie/fluffy-bassoon-2
+TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
+TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
+TASK_PYTHON=$TASK_ROOT/envs/dsrl-can-20261029-r2/bin/python
+TASK_DSRL=$TASK_ROOT/deps/dsrl-can-20261029-r1/repo
+TASK_ROBOMIMIC=$TASK_ROOT/deps/robomimic-compat-20261029-r1/repo
+TASK_INPUT=$TASK_ROOT/inputs/dsrl-can-8d21b9c-20261029-r1
+TASK_ALLOCATION_STARTED=$(date +%s)
+[[ $TASK_SOURCE =~ ^[0-9a-f]{40}$ ]]
+[[ $TASK_RUN =~ ^robomimic-can-dsrl-baige-20261029-eight-r[0-9]+$ ]]
+[[ $TASK_PILOT_RUN =~ ^robomimic-can-dsrl-baige-20261029-pilot-r[0-9]+$ ]]
+[[ $(hostname) =~ ^job-[a-z0-9]+-master-0$ ]]
+test -n "${KUBERNETES_SERVICE_HOST:-}"
+test -n "${NVIDIA_VISIBLE_DEVICES:-}"
+cd "$TASK_WORKTREE"
+test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
+test -z "$(git status --porcelain)"
+mkdir "$TASK_OUTPUT"
+exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
+trap 'TASK_EXIT=$?; printf "%s\n" "$TASK_EXIT" > "$TASK_OUTPUT/exit-code.txt"' EXIT
+export PYTHONPATH="$TASK_WORKTREE/src:$TASK_DSRL:$TASK_DSRL/dppo:$TASK_DSRL/stable-baselines3"
+export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 FLUFFY_GPU_EXECUTION=baige
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
+export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl WANDB_MODE=disabled NCCL_P2P_DISABLE=1
+export TASK_SOURCE TASK_RUN TASK_PILOT_RUN TASK_ROOT TASK_WORKTREE TASK_OUTPUT TASK_DSRL TASK_ROBOMIMIC TASK_INPUT TASK_ALLOCATION_STARTED
+"$TASK_PYTHON" - <<'PY'
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
+from importlib import metadata
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import socket
+import subprocess
+import sys
+import threading
+import time
+
+root, output, worktree = (Path(os.environ[name]) for name in ('TASK_ROOT', 'TASK_OUTPUT', 'TASK_WORKTREE'))
+pilot = root / 'outputs' / os.environ['TASK_PILOT_RUN']
+source, started = os.environ['TASK_SOURCE'], float(os.environ['TASK_ALLOCATION_STARTED'])
+METHODS = ['dsrl-na', 'dsrl-na-retry', 'rl2', 'episode-reset']
+WALL, FINAL, PROBE, TRANSFER = 3600, 180, 180, 2.0
+lock, records = threading.Lock(), []
+plan = dict(source_commit=source, run_id=os.environ['TASK_RUN'], pilot=str(pilot),
+            hostname=socket.gethostname(), admitted=False, wall_budget_seconds=WALL,
+            allocated_gpu_hours_ceiling=8, final_audit_reserve_seconds=FINAL,
+            full_probe_reserve_seconds=PROBE, rtx6000_timing_factor=TRANSFER,
+            methods=METHODS, seeds=[1, 2, 3, 4], envs=4, attempts=4, eval_trials=8,
+            core=dict(core='gtrxl', width=128, layers=2, heads=4, memory_length=300))
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def write(path, value):
+    pending = path.with_suffix(path.suffix + '.tmp')
+    pending.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
+    pending.replace(path)
+
+
+def digest(path):
+    h = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1 << 20), b''):
+            h.update(block)
+    return h.hexdigest()
+
+
+def event(stage, **details):
+    row = dict(stage=stage, time=datetime.now(timezone.utc).isoformat(), elapsed_seconds=time.time() - started, **details)
+    with lock:
+        with (output / 'stages.jsonl').open('a') as stream:
+            stream.write(json.dumps(row, allow_nan=False) + '\n')
+        print(json.dumps(row, allow_nan=False), flush=True)
+
+
+def positive(value):
+    value = float(value)
+    if not math.isfinite(value) or value <= 0:
+        raise ValueError('Pilot timing must be finite and positive')
+    return value
+
+
+def recovery(directory, method):
+    if method.startswith('dsrl-'):
+        manifest = read(directory / 'recovery-manifest.json')
+        payload = (directory / manifest['directory']).resolve()
+        if not payload.is_relative_to(directory.resolve()):
+            raise ValueError('Recovery generation escaped its run directory')
+        if set(manifest['files']) != {'recovery.zip', 'replay.pkl', 'runtime.pt'}:
+            raise ValueError('Incomplete DSRL recovery generation')
+        for name, expected in manifest['files'].items():
+            if digest(payload / name) != expected:
+                raise ValueError('DSRL recovery payload hash differs')
+        return dict(manifest_sha256=digest(directory / 'recovery-manifest.json'), **manifest)
+    return dict(recovery_sha256=digest(directory / 'recovery.pt'))
+
+
+def evaluation(directory, method):
+    data, paired = read(directory / 'evaluation.json'), {}
+    conditions = ['frozen'] if method.startswith('dsrl-') else ['normal', 'memory_reset', 'reward_blind']
+    for condition in conditions:
+        rows = data[condition]
+        if len(rows) != 8:
+            raise ValueError('All eight held-out scenes are required')
+        for index, row in enumerate(rows):
+            scene = 2_000_000 + index
+            if (row['scene_seeds'] != [scene] or row['attempts'] != 4 or row['primitive_steps'] != 1200
+                    or len(row['successes']) != 1 or len(row['successes'][0]) != 4
+                    or len(row['release_logged_successes']) != 1 or len(row['release_logged_successes'][0]) != 4):
+                raise ValueError('Incomplete paired retry evaluation or success metrics')
+            if not method.startswith('dsrl-'):
+                expected_reset = method == 'episode-reset' or condition == 'memory_reset'
+                if row.get('reset_each_attempt') is not expected_reset:
+                    raise ValueError('Evaluation changed the declared episode memory reset rule')
+            initial = row['initial_observation_sha256']
+            if len(initial) != 4 or any(item != initial[0] for item in initial):
+                raise ValueError('Retry evaluation changed its initial scene')
+            if str(scene) in paired and paired[str(scene)] != initial[0]:
+                raise ValueError('Evaluation controls changed the paired scene')
+            paired[str(scene)] = initial[0]
+    return paired
+
+
+def phase_estimate(method, target, measured, qualified):
+    # Both the real complete pilot phase and qualification micro-timings bound
+    # each phase. A smaller candidate never discounts fixed evaluation costs.
+    episode = positive(qualified['native_elapsed_seconds']) / 32
+    update = positive(qualified['released_batch_update_seconds'])
+    if method.startswith('dsrl-'):
+        train = target / 300 * episode + (target - 24016) / 16 * update
+        evaluate = 32 * episode
+        boundary = 4 * episode + 75 * update
+    else:
+        train = target / 4800 * positive(qualified['ppo_full_trial_total_seconds'])
+        one_episode = max(episode, positive(qualified['ppo_small_trial_seconds']) / 2,
+                          positive(qualified['ppo_full_trial_rollout_seconds']) / 4)
+        evaluate = 96 * one_episode
+        boundary = positive(qualified['ppo_full_trial_total_seconds'])
+    deadline = math.ceil(TRANSFER * train + 60)
+    total = max(math.ceil(TRANSFER * (positive(measured) + 60)),
+                math.ceil(deadline + TRANSFER * (evaluate + boundary) + 60))
+    return dict(training_deadline_seconds=deadline, total_seconds=total,
+                evaluation_reserve_seconds=math.ceil(TRANSFER * evaluate),
+                boundary_reserve_seconds=math.ceil(TRANSFER * boundary),
+                measured_complete_4090_phase_seconds=measured)
+
+
+def admit():
+    admission, old_plan = read(pilot / 'pilot-admission.json'), read(pilot / 'plan.json')
+    if (admission.get('core_training_interactions_complete') is not True
+            or old_plan.get('scene_pairing_verified') is not True
+            or old_plan.get('admitted') is not True):
+        raise ValueError('All four paired single-4090 pilot arms must have completed')
+    pilot_source, pilot_target = admission['source_commit'], int(admission['target_steps'])
+    if old_plan['source_commit'] != pilot_source or old_plan['target_steps'] != pilot_target:
+        raise ValueError('Pilot admission and predeclared plan disagree')
+    qual = Path(old_plan['qualification'])
+    for name, expected in old_plan['qualification_artifact_sha256'].items():
+        if digest(qual / name) != expected:
+            raise ValueError('Qualification evidence changed after the pilot admission')
+    q, native = read(qual / 'qualification/summary.json'), read(qual / 'native/summary.json')
+    native_rows = read(qual / 'native/evaluation.json')['native']
+    outcomes = [value for row in native_rows for trial in row['successes'] for value in trial]
+    if (q.get('passed') is not True or q['environment_parity'].get('passed') is not True
+            or q['ppo_recovery_roundtrip'].get('passed') is not True
+            or q.get('dsrl_recovery_roundtrip') is not True or native.get('completed') is not True
+            or len(outcomes) != 32 or sum(outcomes) / len(outcomes) >= .95):
+        raise ValueError('Qualified simulator/recovery/complete native headroom evidence required')
+    if q['ppo_full_trial_geometry'] != dict(lanes=4, attempts=4, chunks=300, epochs=4, minibatch_trials=4):
+        raise ValueError('Pilot qualification did not measure the declared GTrXL update geometry')
+    checked = ['src/fluffy_bassoon/meta_rl/' + name for name in
+               ('can_dsrl.py', 'can_dsrl_run.py', 'can_dsrl_compare.py', 'can_dsrl_parity.py', 'can_dsrl_gpu.py', 'ppo.py', 'gtrxl.py')]
+    checked += ['src/fluffy_bassoon/baige_gpu.py', 'src/fluffy_bassoon/gpu_execution.py']
+    for name in checked:
+        previous = subprocess.check_output(['git', 'show', f'{pilot_source}:{name}'], cwd=worktree)
+        if hashlib.sha256(previous).hexdigest() != digest(worktree / name):
+            raise ValueError(f'Runtime source changed after pilot: {name}')
+    stage = {row['method']: row for row in admission['stage_records'] if row['method'] in METHODS}
+    baseline, scene_hashes, old_recoveries = None, None, {}
+    for method in METHODS:
+        if stage.get(method, {}).get('completed') is not True:
+            raise ValueError('A required pilot arm is missing or incomplete')
+        directory = pilot / method
+        summary, contract = read(directory / 'summary.json'), read(directory / 'contract.json')
+        if summary.get('completed') is not True or summary['primitive_steps'] != pilot_target:
+            raise ValueError('Pilot arms did not meet one common training target')
+        if contract['source_commit'] != pilot_source or contract['seed'] != 1:
+            raise ValueError('Pilot run contract does not match its admission')
+        if any(contract[key] != value for key, value in plan['core'].items()):
+            raise ValueError('Pilot must use the predeclared GTrXL architecture')
+        identity = {key: contract[key] for key in ('runtime', 'robomimic_commit', 'robomimic_env_sha256',
+                    'checkpoint_sha256', 'normalization_sha256', 'frozen_motor_sha256')}
+        if baseline is not None and baseline != identity:
+            raise ValueError('Pilot arms used different frozen inputs or runtime identities')
+        baseline = identity
+        probe = read(directory / 'gpu-probe.json')
+        devices = probe.get('devices', [probe.get('selected_device', {})])
+        if len(devices) != 1 or re.search(r'RTX\s*4090', devices[0].get('cuda_name', ''), re.I) is None:
+            raise ValueError('Transfer estimates must come from an actual single-4090 pilot')
+        paired = evaluation(directory, method)
+        if scene_hashes is not None and paired != scene_hashes:
+            raise ValueError('Pilot methods did not evaluate the same scenes')
+        scene_hashes, old_recoveries[method] = paired, recovery(directory, method)
+    for directory in (qual / 'qualification', qual / 'native'):
+        contract = read(directory / 'contract.json')
+        if any(contract[key] != value for key, value in baseline.items()):
+            raise ValueError('Qualification and pilot used different runtime or frozen motor identities')
+        if any(contract[key] != value for key, value in plan['core'].items()):
+            raise ValueError('Qualification architecture differs from the pilot architecture')
+        for name in checked:
+            qualified_source = subprocess.check_output(
+                ['git', 'show', f'{contract["source_commit"]}:{name}'], cwd=worktree)
+            if hashlib.sha256(qualified_source).hexdigest() != digest(worktree / name):
+                raise ValueError(f'Runtime source changed after qualification: {name}')
+    current_runtime = {name: metadata.version(name) for name in baseline['runtime']}
+    installed = metadata.distribution('robomimic').locate_file('robomimic/envs/env_robosuite.py')
+    compatibility_source = Path(os.environ['TASK_ROBOMIMIC'])
+    if (current_runtime != baseline['runtime']
+            or digest(installed) != baseline['robomimic_env_sha256']
+            or digest(compatibility_source / 'robomimic/envs/env_robosuite.py') != baseline['robomimic_env_sha256']
+            or subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=compatibility_source, text=True).strip()
+               != baseline['robomimic_commit']
+            or subprocess.check_output(['git', 'status', '--porcelain'], cwd=compatibility_source, text=True).strip()):
+        raise ValueError('Current runtime differs from the qualified compatibility source')
+    for name, expected in (('state_5000.pt', baseline['checkpoint_sha256']),
+                           ('normalization.npz', baseline['normalization_sha256'])):
+        if digest(Path(os.environ['TASK_INPUT']) / name) != expected:
+            raise ValueError('Current frozen input artifact differs from the pilot')
+    qualified = dict(q, native_elapsed_seconds=native['elapsed_seconds'])
+    candidates = []
+    for target in (48000, 28800):
+        if target > pilot_target:
+            continue
+        phases = {method: phase_estimate(method, target, stage[method]['phase_elapsed_seconds'], qualified) for method in METHODS}
+        longest = max(sum(phases[method]['total_seconds'] for method in METHODS[:2]),
+                      sum(phases[method]['total_seconds'] for method in METHODS[2:]))
+        candidates.append(dict(target_steps=target, phases=phases, longest_worker_seconds=longest))
+    remaining = WALL - (time.time() - started) - PROBE - FINAL
+    chosen = next((candidate for candidate in candidates if candidate['longest_worker_seconds'] <= remaining), None)
+    if chosen is None:
+        raise ValueError('No common verified training target fits the conservative one-hour allocation')
+    plan.update(pilot_source_commit=pilot_source, runtime_identity=baseline, paired_scenes=scene_hashes,
+                pilot_recoveries=old_recoveries, candidates=candidates, estimate=chosen,
+                target_steps=chosen['target_steps'], pilot_artifact_sha256={name: digest(pilot / name)
+                    for name in ('pilot-admission.json', 'plan.json')},
+                source_files_sha256={name: digest(worktree / name) for name in checked})
+    return chosen
+
+
+def worker(ordinal, seed, methods, chosen, parent_probe):
+    worker_records = []
+    for index, method in enumerate(methods):
+        budgets = chosen['phases']
+        required = sum(budgets[name]['total_seconds'] for name in methods[index:]) + FINAL
+        if WALL - (time.time() - started) < required:
+            event('phase_refused', gpu=ordinal, seed=seed, method=method, reason='complete remaining phases no longer fit')
+            break
+        directory = output / f'seed{seed}' / method
+        env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(ordinal), LYCO_BAIGE_GPU_MAP=str(parent_probe),
+                   NUMBA_CACHE_DIR=str(root / 'cache' / f'{os.environ["TASK_RUN"]}-gpu{ordinal}'))
+        env.pop('LYCO_BAIGE_ISOLATED_UUID', None)
+        Path(env['NUMBA_CACHE_DIR']).mkdir(parents=True, exist_ok=False) if index == 0 else None
+        command = [sys.executable, '-m', 'fluffy_bassoon.meta_rl.can_dsrl_run', '--method', method,
+                   '--dsrl-root', os.environ['TASK_DSRL'], '--robomimic-root', os.environ['TASK_ROBOMIMIC'],
+                   '--checkpoint', str(Path(os.environ['TASK_INPUT']) / 'state_5000.pt'),
+                   '--normalization', str(Path(os.environ['TASK_INPUT']) / 'normalization.npz'),
+                   '--source-commit', source, '--gpu-attestation', str(parent_probe),
+                   '--checkpoint-sha256', plan['runtime_identity']['checkpoint_sha256'],
+                   '--normalization-sha256', plan['runtime_identity']['normalization_sha256'],
+                   '--output', str(directory), '--seed', str(seed), '--envs', '4', '--attempts', '4',
+                   '--core', 'gtrxl', '--width', '128', '--layers', '2', '--heads', '4', '--memory-length', '300',
+                   '--steps', str(chosen['target_steps']), '--eval-trials', '8',
+                   '--max-seconds', str(budgets[method]['training_deadline_seconds'])]
+        directory.parent.mkdir(parents=True, exist_ok=True)
+        event('phase_started', gpu=ordinal, seed=seed, method=method, command=command)
+        phase_start = time.monotonic()
+        # No timeout/signal is sent to a model process. The CLI stops at a
+        # complete resumable boundary; the scheduler owns its one-hour cap.
+        with (directory.parent / f'{method}.console.log').open('x') as log:
+            process = subprocess.run(command, env=env, stdout=log, stderr=subprocess.STDOUT, check=False)
+        record = dict(gpu=ordinal, seed=seed, method=method, returncode=process.returncode,
+                      phase_elapsed_seconds=time.monotonic() - phase_start, completed=False)
+        try:
+            summary, contract = read(directory / 'summary.json'), read(directory / 'contract.json')
+            if process.returncode or summary.get('completed') is not True or summary['primitive_steps'] != chosen['target_steps']:
+                raise ValueError('Phase failed or stopped below the common target')
+            if any(contract[key] != value for key, value in plan['runtime_identity'].items()):
+                raise ValueError('Phase changed qualified runtime or frozen motor identity')
+            record.update(completed=True, summary=summary, paired_scenes=evaluation(directory, method),
+                          recovery=recovery(directory, method), contract_sha256=digest(directory / 'contract.json'),
+                          evaluation_sha256=digest(directory / 'evaluation.json'))
+            if record['paired_scenes'] != plan['paired_scenes']:
+                raise ValueError('Phase changed the paired held-out scenes')
+        except Exception as error:
+            record.update(completed=False, error=f'{type(error).__name__}: {error}')
+        worker_records.append(record)
+        with lock:
+            records.append(record)
+            write(output / 'phase-records.json', records)
+        event('phase_ended', **record)
+        if not record['completed']:
+            break
+    return worker_records
+
+
+exit_code, reason = 0, None
+try:
+    chosen = admit()
+    probe_path = output / 'parent-gpu-probe.json'
+    subprocess.run([sys.executable, str(worktree / 'scripts/[train]gpu_probe.py'), '--expected-count', '8',
+                    '--output', str(probe_path), '--purpose', 'training', '--baige-container'], check=True, timeout=PROBE)
+    probe = read(probe_path)
+    if any(re.search(r'RTX\s*(?:PRO\s*)?6000', row['cuda_name'], re.I) is None for row in probe['devices']):
+        raise ValueError('Eight-GPU campaign requires eight actual RTX6000-family GPUs')
+    assigned = os.environ['NVIDIA_VISIBLE_DEVICES'].split(',')
+    if len(assigned) != 8 or set(assigned) != {row['uuid'] for row in probe['devices']}:
+        raise ValueError('Complete scheduler NVIDIA allocation changed during parent probe')
+    probe.update(source_commit=source, source_files_sha256=plan['source_files_sha256'])
+    write(probe_path, probe)
+    if WALL - (time.time() - started) < chosen['longest_worker_seconds'] + FINAL:
+        raise ValueError('Startup/probe consumed the remaining full-campaign reserve')
+    plan.update(admitted=True, parent_probe_sha256=digest(probe_path),
+                gpu_assignment=[dict(gpu=2*i+j, seed=i+1, methods=METHODS[2*j:2*j+2])
+                                for i in range(4) for j in range(2)])
+    write(output / 'plan.json', plan)
+    event('campaign_admitted', target_steps=chosen['target_steps'], gpu_assignment=plan['gpu_assignment'])
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(worker, row['gpu'], row['seed'], row['methods'], chosen, probe_path)
+                   for row in plan['gpu_assignment']]
+        for future in futures:
+            future.result()
+except Exception as error:
+    reason, exit_code = f'{type(error).__name__}: {error}', 2
+    event('campaign_refused_or_failed', reason=reason)
+finally:
+    expected = {(seed, method) for seed in range(1, 5) for method in METHODS}
+    completed = {(row['seed'], row['method']) for row in records if row['completed']}
+    matched = plan['admitted'] and completed == expected
+    final = dict(source_commit=source, admitted=plan['admitted'], matched_training_interactions=matched,
+                 target_steps=plan.get('target_steps'), completed_arms=len(completed), required_arms=16,
+                 incomplete_arms=[dict(seed=seed, method=method) for seed, method in sorted(expected-completed)],
+                 stage_records=records, elapsed_seconds=time.time()-started, wall_budget_seconds=WALL,
+                 allocation_gpu_hours=(time.time()-started)*8/3600, reason=reason,
+                 comparison='four matched training seeds' if matched else 'incomplete; no matched comparison')
+    write(output / 'plan.json', plan)
+    write(output / 'campaign-admission.json', final)
+    event('campaign_ended', matched_training_interactions=matched, completed_arms=len(completed), reason=reason)
+    if not matched:
+        exit_code = exit_code or 3
+raise SystemExit(exit_code)
+PY
