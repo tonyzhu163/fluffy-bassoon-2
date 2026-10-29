@@ -149,6 +149,13 @@ def main(argv=None):
             sac_checkpoint = checked_entry(args.sac_registry.parent, sac_registry["source_sac"]["checkpoint"])
             source_contract_path = checked_entry(args.sac_registry.parent, sac_registry["source_sac"]["contract"])
             source_contract = json.loads(source_contract_path.read_text())
+            if (source_contract.get("format") != "rlinf130_offline_source_sac_v1"
+                    or any(source_contract.get(key) != registry[key] for key in
+                           ("arm", "model_sha256", "feature_contract", "noise_contract", "collection_cost"))
+                    or source_contract.get("motor_receipt_sha256") != motor.metadata["receipt_sha256"]
+                    or source_contract.get("requested_updates") != 5000
+                    or source_contract.get("additional_environment_interactions") != 0):
+                raise ValueError("Saved source SAC contract differs from its registered source arm")
         contract = dict(format="rlinf130_candidate_development_eval_v1", source_commit=args.source_commit,
             benchmark=args.benchmark, arm=registry["arm"], arm_registry_sha256=sha256(args.arm_registry),
             source_sac_registry_sha256=None if args.sac_registry is None else sha256(args.sac_registry),
@@ -192,6 +199,8 @@ def main(argv=None):
                 elif method in SAC_METHODS:
                     learner = OfficialSAC(args.dsrl_root, args.seed)
                     learner.restore(sac_checkpoint, sampler, source_contract)
+                    if learner.updates != 5000:
+                        raise ValueError("Restored source SAC has not completed5000updates")
                     write_json(directory / "source-migration.json", dict(checkpoint_sha256=sha256(sac_checkpoint),
                         source_contract=source_contract, target_contract_sha256=sha256(args.output / "contract.json"),
                         source_updates=learner.updates, retained_source_replay_rows=len(learner.replay)))
