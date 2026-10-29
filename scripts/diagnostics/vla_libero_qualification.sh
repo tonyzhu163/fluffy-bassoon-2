@@ -48,7 +48,8 @@ export PYTHONPATH=$TASK_WORKTREE/src
   --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla_history.py \
-  tests/test_vla_performance_report.py tests/test_vla_libero.py > "$TASK_OUTPUT/focused-tests.log" 2>&1
+  tests/test_vla_retry_teacher.py tests/test_vla_performance_report.py tests/test_vla_libero.py \
+  > "$TASK_OUTPUT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_WORKTREE/src:$TASK_PLUS:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps
 "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
   --output "$TASK_OUTPUT/simulator" --port 8765 --suite libero_90 --task-id 57 \

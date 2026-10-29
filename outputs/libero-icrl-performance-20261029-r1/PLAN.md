@@ -19,8 +19,10 @@ does not imply low total training cost.
 - Standard LIBERO tasks, original rewards, observations and physics. Initial
   integration task: LIBERO-90 task 57, also used by the released DSRL example.
   This single-task qualification is not evidence of cross-task meta-learning.
-- Reuse the staged OpenPI pi0.5 LIBERO checkpoint and native initial-noise
-  interface, with exact source, checkpoint and normalization hashes recorded.
+- Use the released OpenPI pi0 LIBERO checkpoint and native initial-noise
+  interface first, with exact source, checkpoint and normalization hashes recorded.
+  The pi0 checkpoint was downloaded directly and verified object by object;
+  staged pi0.5 LIBERO remains available for the stronger-backbone comparison.
   Verify the checkpoint's actual action horizon, execution chunk and task
   observations; do not silently substitute a ManiSkill motor.
 - Ordinary SAC in initial-noise space generates teachers and their actual
@@ -32,6 +34,12 @@ does not imply low total training cost.
   labels query observations with a strong saved teacher while retaining the
   actions and outcomes actually executed in the context. Never relabel failed
   historical actions while preserving their old rewards.
+- For the scientific retry test, branch the complete shared source prior
+  independently for each training scene and record K same-scene attempts with
+  SAC updates between attempts. Encode every branch with the same immutable
+  shared-prior feature encoder. Hold out validation and evaluation scene banks.
+  Global source-learning history groups only qualify the implementation path;
+  they do not match the repeated-scene deployment distribution.
 - Keep observation, executed noise, executed action chunk, actual reward,
   termination, reset/scene seed, teacher update and source identifiers. Query
   labels and current/future outcomes are not student inputs. Split complete
@@ -90,6 +98,13 @@ and static review is complete. Use the allocation as the GPU boundary, run the
 repository GPU probe in that container, then real LIBERO rollouts and actual
 learner updates. Measure throughput and capacity before admitting the complete
 teacher/student comparison. Preserve active unrelated jobs and environments.
+
+The first bounded run uses original pi0 horizon 50, execution chunk 20, task 57,
+4,000 source primitive steps, source warmup 32 chunks, batch 32, UTD 20, K=2
+and 10 supervised updates each for history and static controllers. The short
+warmup, small batch, one evaluation scene and tiny supervised budget are explicit
+qualification/pilot departures, not a published-result reproduction or a final
+performance experiment. The measured path determines the next admitted budget.
 
 Runtime, learner and integration subagents operate independently; the parent
 integrates and reviews the exact launch commit. Deploy through Git (bundle if
