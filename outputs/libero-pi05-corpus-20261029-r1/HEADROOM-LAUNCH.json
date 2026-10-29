@@ -1,0 +1,44 @@
+{
+  "source_commit": "1e9967860ffa9e20e11c959e7f2fd07580adf02d",
+  "cluster": "Baige",
+  "checked_at": "2026-10-29 17:35 Asia/Shanghai",
+  "per_job": {
+    "gpus": 1,
+    "gpu_family": "RTX6000 / RPBZZZ6",
+    "cpus": 16,
+    "memory_gib": 96,
+    "shared_memory_gib": 8,
+    "wall_minutes": 30,
+    "maximum_episodes": 36,
+    "maximum_rollout_primitive_steps": 14400
+  },
+  "jobs": [
+    {
+      "task_id": 1,
+      "split": "train",
+      "run_id": "libero-pi05-headroom-20261029-t01-r1",
+      "job_id": "job-33uf05gw3ton",
+      "completed_episodes_at_check": 2
+    },
+    {
+      "task_id": 2,
+      "split": "validation",
+      "run_id": "libero-pi05-headroom-20261029-t02-r1",
+      "job_id": "job-tta8xlc8ovlx",
+      "completed_episodes_at_check": 10
+    },
+    {
+      "task_id": 57,
+      "split": "train",
+      "run_id": "libero-pi05-headroom-20261029-t57-r1",
+      "job_id": "job-xfj60i8dcvwt",
+      "completed_episodes_at_check": 21
+    }
+  ],
+  "all_gpu_probes_passed": true,
+  "focused_tests_per_job": 90,
+  "actual_motor_binding_and_noise_replay_passed": true,
+  "state": "All three have actual advancing robot episodes; final analysis pending",
+  "monitor_id": "continue-frozen-pi05-libero-poc",
+  "next_action": "Audit complete paired-repeat outcomes and search costs before admitting corpus expansion."
+}
