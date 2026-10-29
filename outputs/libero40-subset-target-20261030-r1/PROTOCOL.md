@@ -27,22 +27,22 @@ learning clocks. Every DPT scale retains the final20-case teacher and its
 complete generation cost; this is not a DPT source-interaction saving.
 
 Primary robot diagnostic: predeclared LIBERO90 tasks0 and1, state0, seed123,
-with native frozen motor, tied Gaussian noise, frozen same-corpus source-SAC,
+with native frozen motor, tied Gaussian noise, zero noise, frozen same-corpus source-SAC,
 AD full/static at25/100/500, DPT full/static at500, and AD500/DPT500
 episode-reset lesions. Each method/case receives an independent zero-support
 query and one actual support episode followed by a separate query, with
-paired case/role randomness. Thirteen methods×two cases×three episodes give
-78 primary episodes, worst-case31,980 actions including settling. No
+paired case/role randomness. Fourteen methods×two cases×three episodes give
+84 primary episodes, worst-case34,440 actions including settling. No
 deployment SGD. Both AD and DPT receive direct fixed-weight memory lesions.
 DPT25/100 full/static groups run only after all primary groups, in fixed
 order, if a full worst-case group reserve fits.
 
-The diagnostic escrows33,046 actions:21,046 from the general reserve through
+The diagnostic escrows35,046 actions:21,046 from the general reserve through
 `general-ledger.json`, with the failed typed-JAX qualification's10 settling
-actions retained, plus12,000 explicitly marked evaluation-only in the PPO
-pool. The future full/reset PPO reservations drop equally from200k to197k;
-PPO pool allocation becomes19,500 original qualification +394,000 newsource
-training +64,000 sourcevalidation +12,000 targetdiagnostic +500 contingency
+actions retained, plus14,000 explicitly marked evaluation-only in the PPO
+pool. The future full/reset PPO reservations drop equally from200k to196k;
+PPO pool allocation becomes19,500 original qualification +392,000 newsource
+training +64,000 sourcevalidation +14,000 targetdiagnostic +500 contingency
 =490,000. No active/completed reservation or1M benchmark total changes.
 Target costs are reported separately and target traces remain
 evaluation-only. The original campaign's source-only data contract remains

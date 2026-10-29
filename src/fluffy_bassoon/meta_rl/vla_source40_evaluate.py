@@ -29,7 +29,7 @@ from .vla_source40_training import NOISE_CONTRACT, load_assembly
 SUPPORT_BUDGETS = (0, 1, 2, 4, 8)
 METHODS = ("native", "tied_gaussian", "ad_full", "ad_episode_reset", "ad_static",
            "dpt_full", "dpt_episode_reset", "dpt_static")
-SUPPORTED_METHODS = METHODS + ('frozen_source_sac',)
+SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'zero')
 FORMAT = "openpi_pi05_source40_support_query_v1"
 
 
@@ -284,6 +284,9 @@ def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, epis
                 raise ValueError("Controller must return a finite32D steering coordinate")
             executed = np.clip(proposed, -1., 1.).astype(np.float32)
             noise = expand_noise(executed, motor.horizon)
+        elif method == 'zero':
+            proposed = executed = np.zeros(32, np.float32)
+            noise = expand_noise(executed, motor.horizon)
         elif method == "native":
             proposed = executed = None
             noise = rng.standard_normal((motor.horizon, 32)).astype(np.float32)
@@ -340,7 +343,7 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
             or max_primitive_steps < 1 or max_settling_steps < 0
             or not np.isfinite(max_elapsed_seconds) or max_elapsed_seconds <= 0):
         raise ValueError("Invalid native horizon, method, support grid or physical budget")
-    if any(method not in candidates for method in methods if method not in ("native", "tied_gaussian")):
+    if any(method not in candidates for method in methods if method not in ("native", "tied_gaussian", 'zero')):
         raise ValueError("Every learned method needs a declared fixed controller")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)

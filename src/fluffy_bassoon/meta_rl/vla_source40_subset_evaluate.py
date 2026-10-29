@@ -22,7 +22,7 @@ from .vla_source40_schedule import LIBERO_COMMIT, content_hash
 from .vla_source40_evaluate import (CostLedger, TargetCase, evaluate_case, load_candidates)
 from .vla_libero import FrozenOpenPI, OfficialSAC, SimulatorClient, write_json
 
-MAX_DIAGNOSTIC_ACTIONS = 33046  # General21,046 plus an explicit12k PPO-pool evaluation escrow.
+MAX_DIAGNOSTIC_ACTIONS = 35046  # General21,046 plus an explicit14k PPO-pool evaluation escrow.
 
 
 def comparison_plan():
@@ -30,7 +30,7 @@ def comparison_plan():
     for task in (0, 1):
         case = dict(benchmark='libero90', case_id=f'libero90:{task:02d}/state-0/seed-123',
             suite='libero_90', task_id=task, initial_state=0, scene_seed=123)
-        variants = [('native', None), ('tied_gaussian', None), ('frozen_source_sac', None)]
+        variants = [('native', None), ('tied_gaussian', None), ('zero', None), ('frozen_source_sac', None)]
         variants += [(f'ad_{mode}', scale) for scale in (25, 100, 500) for mode in ('full', 'static')]
         variants += [('ad_episode_reset', 500), ('dpt_full', 500), ('dpt_static', 500), ('dpt_episode_reset', 500)]
         groups += [dict(case=case, method=method, updates=updates, primary=True) for method, updates in variants]
@@ -222,7 +222,7 @@ def main(argv=None):
         target_population='Predeclared LIBERO90 tasks0/1, state0, seed123; no semantic or outcome filtering',
         frozen_source_sac='Same-corpus source-trained pixel SAC; not ordinary target-online DSRL',
         dpt='DPT500 full/static/episode-reset are primary; DPT25/100 are optional after all primary groups',
-        primary_episode_ceiling=78, primary_action_ceiling=31980,
+        primary_episode_ceiling=84, primary_action_ceiling=34440,
         interpretation='Small development diagnostic, not full40 transfer or a negative test of meta-learning')
     args.output.mkdir(parents=True, exist_ok=args.resume)
     import fcntl
@@ -282,14 +282,14 @@ def main(argv=None):
                     pythonpath=args.simulator_pythonpath, output=attempt / f'server-{case.task_id}-{time.time_ns()}',
                     port=args.port, libero_root=args.libero_root)
                 connected = case.task_id
-            selected = {} if group['method'] in ('native', 'tied_gaussian') else (
+            selected = {} if group['method'] in ('native', 'tied_gaussian', 'zero') else (
                 {'frozen_source_sac': dict(policy=sac, kind='source_sac', sha256=scales['frozen_source_sac']['checkpoint_sha256'])}
                 if group['method'] == 'frozen_source_sac' else candidates[group['updates']])
             source = dict(provenance[25 if group['updates'] is None else group['updates']],
                 group_maximum_total_actions=group_cap, optimizer_update_scale=group['updates'],
                 frozen_source_sac=scales['frozen_source_sac'], dataset_scale='Same corpus at every optimizer scale',
-                method_source_cost_role=('Native/tied controls require zero steering-source interactions; shared corpus costs here are experiment provenance'
-                    if group['method'] in ('native', 'tied_gaussian') else
+                method_source_cost_role=('Native/tied/zero controls require zero steering-source interactions; shared corpus costs here are experiment provenance'
+                    if group['method'] in ('native', 'tied_gaussian', 'zero') else
                     'Frozen SAC uses the source training teacher; its source validation and student optimization costs are not required by this baseline'
                     if group['method'] == 'frozen_source_sac' else
                     'AD uses the declared source training/validation corpus and its own cumulative controller optimizer budget'))
@@ -318,7 +318,7 @@ def main(argv=None):
         if server is not None:
             server.close()
     primary = sum(row['group']['primary'] for row in completed)
-    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 26,
+    write_json(args.output / 'index.json', dict(contract=contract, completed=primary == 28,
         completed_primary_groups=primary, completed_groups=completed, stop_reason=stop_reason,
         charged_total_actions=charged_actions(args.output),
         support_query_separate=True, deployment_optimizer_updates=0))

@@ -8,19 +8,19 @@ DPT25/100 remain optional after all primary groups.
 
 Targets are predeclared LIBERO90 tasks0 and1, initial-state ID0 and scene seed123
 for each. There is no semantic or outcome-based admission filter. The primary
-methods are native frozen pi0.5, tied Gaussian noise, frozen source pixel-SAC,
+methods are native frozen pi0.5, tied Gaussian noise, zero noise, frozen source pixel-SAC,
 AD full/static at25/100/500 updates, DPT full/static at500, and fixed-weight
 AD500/DPT500 episode-reset lesions. Each method/case receives an independent0-support
 query and one actual support episode followed by a separate reset/query.
 The reset lesions isolate memory with the same full-controller weights.
-Thus26 primary method/case groups require78 episodes and at most31,980
+Thus28 primary method/case groups require84 episodes and at most34,440
 simulator actions at the400-action
 horizon plus10 settling actions per episode.
 
-The single joint reservation is33,046 actions:21,046 from the general reserve
-after retaining10 earlier failed-qualification actions, plus12,000 explicitly
+The single joint reservation is35,046 actions:21,046 from the general reserve
+after retaining10 earlier failed-qualification actions, plus14,000 explicitly
 escrowed from the490k PPO pool. Future, unlaunched full/reset PPO allocations
-are reduced equally from200k to197k each;500 PPO actions remain unassigned.
+are reduced equally from200k to196k each;500 PPO actions remain unassigned.
 The benchmark1M total and every active/completed reservation remain unchanged;
 target data remain evaluation-only. There are zero motor,
 controller or critic optimizer updates at deployment. Query randomness is paired
@@ -65,7 +65,7 @@ python -m fluffy_bassoon.meta_rl.vla_source40_subset_evaluate \
   --libero-root <pinned-original-libero> --simulator-python <sim-python> \
   --simulator-pythonpath <explicit-simulator-paths> \
   --source-commit <exact-clean-commit> --expected-hostname <allocated-host> \
-  --max-total-actions 33046 --max-elapsed-seconds 2400
+  --max-total-actions 35046 --max-elapsed-seconds 2400
 ```
 
 Use the same arguments and final `--resume` to continue its original output

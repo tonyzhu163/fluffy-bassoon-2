@@ -12,15 +12,30 @@ from test_vla_source40_evaluate import Simulator, Motor, Policy
 def test_primary_grid_compares_ad_dpt_and_memory_lesions_in_accounted_reserve():
     plan = comparison_plan()
     primary = [row for row in plan if row['primary']]
-    assert len(primary) == 26
-    assert sum(3 * 410 for row in primary) == 31980 < 33046
+    assert len(primary) == 28
+    assert sum(3 * 410 for row in primary) == 34440 < 35046
     assert {row['case']['task_id'] for row in primary} == {0, 1}
     assert {row['case']['initial_state'] for row in primary} == {0}
     assert {row['case']['scene_seed'] for row in primary} == {123}
     assert {row['updates'] for row in primary if row['method'] == 'ad_full'} == {25, 100, 500}
     assert {row['method'] for row in primary if row['method'].startswith('dpt')} == {'dpt_full','dpt_static','dpt_episode_reset'}
     assert [(row['case']['task_id'], row['updates']) for row in primary if row['method'] == 'ad_episode_reset'] == [(0, 500),(1,500)]
-    assert all(row['primary'] for row in plan[:26]) and all(not row['primary'] for row in plan[26:])
+    assert {row['method'] for row in primary if row['updates'] is None} == {'native','tied_gaussian','zero','frozen_source_sac'}
+    assert all(row['primary'] for row in plan[:28]) and all(not row['primary'] for row in plan[28:])
+
+
+def test_zero_noise_control_uses_no_learned_policy(tmp_path):
+    import gzip
+    import pickle
+    result = evaluate_case(Simulator(), Motor(), {},
+        case=TargetCase('libero90', 'declared', 'libero_90', 57, 0, 123), output=tmp_path,
+        provenance=dict(group_maximum_total_actions=100), max_primitive_steps=100,
+        max_settling_steps=100, support_budgets=(0,1), methods=('zero',))
+    assert len(result['episodes']) == 3 and result['weights_unchanged']
+    for receipt in result['episodes']:
+        with gzip.open(tmp_path / receipt['trace'], 'rb') as stream:
+            rows = pickle.load(stream)
+        assert all(np.array_equal(row['native_initial_noise'],np.zeros((10,32),np.float32)) for row in rows)
 
 
 def test_joint_physical_cap_includes_settling_and_unresolved_execution(tmp_path):

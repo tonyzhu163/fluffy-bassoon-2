@@ -62,7 +62,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   "${TASK_RESUME_ARGS[@]}" > "$TASK_ATTEMPT/reservation.json"
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-ppo \
   --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/ppo-ledger.json" \
-  --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 12000 --purpose target_evaluation \
+  --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap 14000 --purpose target_evaluation \
   "${TASK_RESUME_ARGS[@]}" > "$TASK_ATTEMPT/ppo-pool-evaluation-escrow.json"
 TASK_SCALES_SHA=$(sha256sum "$TASK_SCALES" | cut -d' ' -f1)
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
@@ -80,4 +80,4 @@ timeout --signal=INT --kill-after=30s 2700 "$TASK_MODEL" \
   --simulator-python /mowenjie/envs/wam-libero-plus-py310/bin/python \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
-  --max-total-actions 33046 --max-elapsed-seconds 2400 "${TASK_RESUME_ARGS[@]}"
+  --max-total-actions 35046 --max-elapsed-seconds 2400 "${TASK_RESUME_ARGS[@]}"
