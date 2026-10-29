@@ -178,7 +178,8 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
         selected_sources = [dict(index_path=row["index_path"], index_sha256=row["index_sha256"],
             task=row["task"], history_id=row["history_id"], selected_publication=row["selected"],
             episodes=row["episodes"], case_ids=sorted(row["case_ids"]),
-            task_initial_state_ids=sorted(row["states"]), task_nominal_state_hashes=sorted(row["state_hashes"])) for row in rows]
+            task_initial_state_ids=[list(value) for value in sorted(row["states"])],
+            task_nominal_state_hashes=[list(value) for value in sorted(row["state_hashes"])]) for row in rows]
         result["selected_sources"][partition] = selected_sources
         result["collection_costs_count_once"][partition] = {key: sum(row["costs"][key] for row in rows)
             for key in ("actual_primitive_steps", "actual_settling_steps", "source_updates")}
