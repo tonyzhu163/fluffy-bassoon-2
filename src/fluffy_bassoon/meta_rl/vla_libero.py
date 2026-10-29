@@ -170,6 +170,7 @@ def simulator_server(args):
                     observation="two RGB cameras and robot proprioception only")
     if getattr(args, "fresh_environment_on_reset", False):
         metadata["reset_protocol"] = "fresh environment per episode; seed before constructor and reset"
+        metadata["fresh_environment_on_reset"] = True
     listener = Listener(("127.0.0.1", args.port), authkey=AUTHKEY)
     write_json(args.output / "simulator-ready.json", metadata)
     startup("listener_ready")
@@ -204,6 +205,7 @@ def simulator_server(args):
                 count, success = 0, False
                 obs = public_observation(raw)
                 connection.send(dict(observation=obs, initial_state=index,
+                                     initial_state_vector_sha256=hashlib.sha256(np.asarray(states[index]).tobytes()).hexdigest(),
                                      initial_observation_sha256=hashlib.sha256(
                                          b"".join(obs[k].tobytes() for k in ("image", "wrist", "state"))).hexdigest()))
             elif command == "step":
@@ -444,13 +446,16 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
         obs = next_obs
         if outcome["done"]:
             break
-    return rows, dict(initial_state=int(initial_state), scene_seed=int(scene_seed),
+    summary = dict(initial_state=int(initial_state), scene_seed=int(scene_seed),
                       task_id=sim.metadata.get("task_id"), suite=sim.metadata.get("suite"),
                       semantic_task=Path(sim.metadata.get("bddl_file", "")).stem,
                       success=bool(outcome["success"]), chunks=len(rows),
                       primitive_steps=sum(r["primitive_steps"] for r in rows),
                       raw_return=sum(sum(r["raw_rewards"]) for r in rows),
                       initial_observation_sha256=start["initial_observation_sha256"])
+    if "initial_state_vector_sha256" in start:
+        summary["initial_state_vector_sha256"] = start["initial_state_vector_sha256"]
+    return rows, summary
 
 
 def source_train(args, sim, motor, contract):

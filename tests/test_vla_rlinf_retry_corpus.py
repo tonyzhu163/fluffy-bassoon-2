@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_rlinf_retry_corpus import (assemble_local_pilot, scenes,
-    trial_arrays, validate_source_task)
+    trial_arrays, validate_source_task, reset_consistency)
 
 
 def test_corpus_plan_has_six_disjoint_source_scenes_with_a_complete_episode_ceiling():
@@ -43,3 +43,11 @@ def test_local_assembler_rejects_old_openpi_features_before_opening_datasets(tmp
     with pytest.raises(ValueError, match="explicit shared RLinf-130"):
         assemble_local_pilot(dict(format="rlinf130_retry_corpus_index_v1",
             model_sha256="different", feature_contract=dict(kind="old-openpi")), tmp_path)
+
+
+def test_nominal_scene_must_stay_fixed_but_render_variation_is_measured():
+    first = dict(initial_state_vector_sha256="same-scene", initial_observation_sha256="frame-a")
+    assert reset_consistency(None, first)
+    assert not reset_consistency(first, dict(first, initial_observation_sha256="frame-b"))
+    with pytest.raises(ValueError, match="nominal initial-state"):
+        reset_consistency(first, dict(first, initial_state_vector_sha256="other-scene"))

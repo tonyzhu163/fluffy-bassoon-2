@@ -47,6 +47,16 @@ def trial_arrays(rows, starts, teacher_steps, candidate_actions):
                 dpt=dict(**base, target_noise=np.asarray(candidate_actions, np.float32)))
 
 
+def reset_consistency(first, current):
+    """Keep the declared nominal scene fixed; measure rendered replay variation."""
+    nominal = current.get("initial_state_vector_sha256")
+    if not isinstance(nominal, str) or not nominal:
+        raise ValueError("Corpus reset omitted its actual nominal initial-state identity")
+    if first and nominal != first["initial_state_vector_sha256"]:
+        raise ValueError("The nominal initial-state vector changed within one trial")
+    return not first or current["initial_observation_sha256"] == first["initial_observation_sha256"]
+
+
 def assemble_local_pilot(index, root):
     """A single task's local scene splits; never merge a different backbone."""
     if (index.get("format") != "rlinf130_retry_corpus_index_v1" or index.get("model_sha256") != MODEL_SHA256
@@ -190,8 +200,7 @@ def main(argv=None):
                         or len(recorder.observations) != len(rows) + 1
                         or any(row["public_features"].shape != (4104,) for row in rows)):
                     raise ValueError("Require a complete episode with real shared RLinf features")
-                if receipts and result["initial_observation_sha256"] != receipts[0]["initial_observation_sha256"]:
-                    raise RuntimeError("Retry scene changed under the same initial state/seed")
+                reset_matches = reset_consistency(receipts[0] if receipts else None, result)
                 trial_steps += int(result["primitive_steps"])
                 total_steps += int(result["primitive_steps"])
                 total_settling += int(sim.metadata["settle_steps"])
@@ -210,7 +219,8 @@ def main(argv=None):
                         summary=result, attempt=attempt + 1, source_updates_before=updates_before,
                         source_updates_after=learner.updates, source_checkpoint_sha256=sha256(recovery)), stream, protocol=5)
                 receipt = dict(result, attempt=attempt + 1, source_updates_before=updates_before,
-                    source_updates_after=learner.updates, trace_sha256=sha256(trace), metrics=metrics)
+                    source_updates_after=learner.updates, trace_sha256=sha256(trace), metrics=metrics,
+                    initial_observation_matches_first=reset_matches)
                 receipts.append(receipt)
                 all_rows.extend(rows)
                 starts.extend([True] + [False] * (len(rows) - 1))
