@@ -31,6 +31,17 @@ previous noise action, previous reward, episode boundary and normalized clocks.
 It never observes scene seeds or simulator state. Noise has 28 dimensions and
 is decoded by the identical frozen motor used by DSRL-NA.
 
+The default controller is a compact Gated Transformer-XL: width 128, two layers,
+four attention heads and 300 prior observation tokens per layer, with one
+recurrent transition per action chunk. Each episode contributes 75 tokens;
+the cache therefore covers an entire four-attempt trial. Relative attention,
+pre-normalization and GRU residual gates follow the GTrXL construction. There
+is no dropout or in-trial cache detachment. Whole-trial PPO backpropagates
+through the history; this differs from the paper's detached training segments.
+Use `--core gtrxl --width 128 --layers 2 --heads 4 --memory-length 300`.
+`--core gru` remains an explicit
+architecture control; it must not be labeled GTrXL.
+
 The first pilot retries a sampled initial scene over K=4 complete episodes.
 Only memory changes between attempts at evaluation. Training and evaluation
 scene seeds are disjoint. Iid scene resets are a later diagnostic.
@@ -50,9 +61,16 @@ the results. Longer training or a new task distribution needs a separate plan.
   noise-critic distillation, and warmup from the released Can configuration.
 - A separate DSRL-NA retry-sampling condition, matching the recurrent learner's
   four attempts per initial scene. Keep the original iid-sampling row separate.
-- GRU noise controller trained with whole-trial PPO, and a separately trained
+- GTrXL noise controller trained with whole-trial PPO, and a separately trained
   episode-reset controller with the same architecture and interaction budget.
 - Frozen normal, memory-reset and reward-blind evaluations on paired scenes.
+
+The primary recurrent comparison uses RL² `normal`, which retains memory across
+attempts, against the separately trained episode-reset arm's `normal`, which
+resets memory and boundary feedback every attempt during both training and
+evaluation. All three evaluations of that trained reset arm preserve its reset
+contract; its `memory_reset` condition is therefore an identity control. The
+RL² `memory_reset` condition is a separate evaluation-time memory lesion.
 
 DSRL-NA in the released code obtains noise bounds from the original action
 space [-1,1]; the `action_magnitude=1.5` setting is used by its DSRL-SAC wrapper
@@ -64,8 +82,8 @@ authors' runtime for this pilot instead of silently replacing that baseline.
 
 Report environment steps (including warmup, adaptation and evaluation), motor
 queries, optimizer steps, wall time, GPU time, and actual parameter counts.
-The first bounded pilot uses a 100,000-transition replay capacity; its 48,000
-primitive-step target cannot fill it, so this changes storage allocation without
+The first bounded pilot uses a 100,000-transition replay capacity. Its predeclared
+48,000 or 28,800 primitive-step target cannot fill it, so this changes storage allocation without
 changing replay samples. A longer reproduction must revisit capacity before
 the buffer wraps. Match deployment interaction budgets when comparing adaptation. Report total
 training cost separately; this pilot does not match optimizer or model size.
@@ -88,6 +106,25 @@ Run tests on allocated Linux only. Before training: attest the actual allocated
 GPU; execute real Can episodes; verify reset scene identity, sampler parity,
 finite actions, frozen weights and old-policy likelihood replay. If Can's
 native success is near ceiling, retain the result and do not claim headroom.
+
+Qualification runs the actual selected GTrXL on Can, then checks complete
+policy, Adam, scene sampler and Python/NumPy/Torch/CUDA RNG recovery by comparing
+the next sampled trial's actions, observations and rewards and the next optimizer
+update. It also measures a complete four-lane, four-attempt rollout, its
+likelihood replay and all four PPO epochs at memory length300, including peak
+allocated CUDA memory. Shortened sequences or detached caches cannot qualify
+the full trial. The corresponding GRU and small GTrXL mock tests run only on
+allocated Linux resources.
+
+The initial one-GPU test accepts 4090 or RTX 6000-family hardware. The launcher
+admits 48,000 steps only when measured DSRL updates, full GTrXL trial/update time,
+eight-scene frozen evaluation for each arm, two online scenes and startup,
+checkpoint and boundary reserves fit 80 minutes after a 1.75 timing allowance.
+Otherwise it tries 28,800 steps, or declines training. A 90-minute pilot cap plus
+a 20-minute qualification and 6-minute prior qualification reserve stays below
+two GPU-hours. The target is selected from timing, before any arm trains.
+The separately authorized run on eight RTX 6000 GPUs uses parallel matched seeds and
+has its own one-hour elapsed budget; it is not launched by this initial script.
 
 Save complete recovery at initial-episode boundaries after all pending optimizer
 updates (complete trials for PPO): policy and all optimizers,

@@ -30,9 +30,11 @@ export NUMBA_CACHE_DIR="$TASK_ROOT/cache/dsrl-can-numba-r1"
 export WANDB_MODE=disabled
 mkdir -p "$NUMBA_CACHE_DIR"
 CUDA_VISIBLE_DEVICES='' "$TASK_PYTHON" -m pytest -q -p no:cacheprovider \
-  tests/test_can_dsrl.py tests/test_can_dsrl_compare.py > "$TASK_OUTPUT/tests.log" 2>&1
+  tests/test_can_dsrl.py tests/test_can_dsrl_compare.py tests/test_meta_rl_gtrxl.py \
+  tests/test_can_dsrl_gpu.py > "$TASK_OUTPUT/tests.log" 2>&1
 TASK_COMMON=(--dsrl-root "$TASK_DSRL" --robomimic-root "$TASK_ROBOMIMIC" --checkpoint "$TASK_INPUT/state_5000.pt"
   --normalization "$TASK_INPUT/normalization.npz" --source-commit "$TASK_SOURCE"
+  --core gtrxl --width 128 --layers 2 --heads 4 --memory-length 300
   --checkpoint-sha256 61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b
   --normalization-sha256 a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a)
 "$TASK_PYTHON" -m fluffy_bassoon.meta_rl.can_dsrl_run --method qualify "${TASK_COMMON[@]}" \
@@ -47,6 +49,8 @@ rows = json.loads((p/'native/evaluation.json').read_text())['native']
 success = [x for row in rows for trial in row['successes'] for x in trial]
 result = dict(qualified=q['passed'], native_success=sum(success)/len(success),
               native_episodes=len(success), training_launched=False,
+              recurrent_core='gtrxl', ppo_full_trial_total_seconds=q['ppo_full_trial_total_seconds'],
+              ppo_full_trial_peak_cuda_memory_gib=q['ppo_full_trial_peak_cuda_memory_gib'],
               next_action='Review learning headroom and measured simulator/update cost before bounded pilot')
 (p/'admission.json').write_text(json.dumps(result, indent=2)+'\n')
 print(json.dumps(result), flush=True)

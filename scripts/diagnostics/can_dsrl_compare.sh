@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Submit through Baige distributed training on one RTX 6000-family GPU.
+# Initial small test on one 4090 or RTX 6000 GPU; later eight-GPU work is separate.
 # Scheduler cap:110 minutes; prior failed qualification used <6 minutes.
 set -euo pipefail
 TASK_SOURCE=${1:?exact source commit}
@@ -12,7 +12,7 @@ TASK_ROOT=/mowenjie/fluffy-bassoon-2/worktrees
 TASK_QUAL_START=$SECONDS
 bash "$TASK_ROOT/$TASK_QUAL_RUN/scripts/diagnostics/can_dsrl_qualification.sh" "$TASK_SOURCE" "$TASK_QUAL_RUN"
 if (( SECONDS - TASK_QUAL_START > 1200 )); then
-  echo 'Qualification exceeded20minutes; refusing the90minute pilot to preserve the total budget.'
+  echo 'Qualification exceeded 20 minutes; refusing the 90-minute pilot to preserve the total budget.'
   exit 4
 fi
 bash "$TASK_ROOT/$TASK_PILOT_RUN/scripts/diagnostics/can_dsrl_pilot.sh" "$TASK_SOURCE" "$TASK_PILOT_RUN" "$TASK_QUAL_RUN"

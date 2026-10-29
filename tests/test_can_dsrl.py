@@ -1,5 +1,6 @@
 """Meaningful contract checks, run on allocated Linux with the Can runtime."""
 from copy import deepcopy
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -9,7 +10,7 @@ from fluffy_bassoon.meta_rl.can_dsrl import (
     ACTION_DIM, CHUNK, HORIZON, NOISE_DIM, OBS_DIM, CanChunkEnv,
     collect_trial, fingerprint, rng_state, restore_rng, trial_inputs,
 )
-from fluffy_bassoon.meta_rl.can_dsrl_run import make_policy, save_ppo
+from fluffy_bassoon.meta_rl.can_dsrl_run import make_policy, qualify_ppo_recovery, save_ppo, validate_resume
 from fluffy_bassoon.meta_rl.ppo import generalized_advantages, update_ppo
 
 
@@ -96,10 +97,12 @@ def test_full_trial_returns_cross_episode_boundary():
 
 
 @pytest.mark.parametrize("reset_memory", [False, True])
-def test_trial_boundaries_replay_and_real_update(tmp_path, reset_memory):
+@pytest.mark.parametrize("core", ["gru", "gtrxl"])
+def test_trial_boundaries_replay_and_real_update(tmp_path, reset_memory, core):
     torch.manual_seed(7)
     envs = [CanChunkEnv(low_env=FakeLow()) for _ in range(2)]
-    policy = make_policy(width=16, device="cpu")
+    settings = dict(width=16, device="cpu", core=core, layers=1, heads=2, memory_length=8)
+    policy = make_policy(**settings)
     rollout, row = collect_trial(policy, motor, envs, [17, 18], attempts=2, reset_memory=reset_memory)
     assert row["primitive_steps"] == 1200
     assert row["initial_observation_sha256"][0] == row["initial_observation_sha256"][1]
@@ -122,7 +125,7 @@ def test_trial_boundaries_replay_and_real_update(tmp_path, reset_memory):
     sampler = np.random.default_rng(77)
     save_ppo(path, policy, optimizer, sampler, 1, 1200, {"test": True})
     saved = torch.load(path, weights_only=False)
-    restored = make_policy(width=16, device="cpu")
+    restored = make_policy(**settings)
     restored.load_state_dict(saved["policy"])
     restored_optimizer = torch.optim.Adam(restored.parameters(), lr=1e-4)
     restored_optimizer.load_state_dict(saved["optimizer"])
@@ -133,12 +136,59 @@ def test_trial_boundaries_replay_and_real_update(tmp_path, reset_memory):
     np.testing.assert_array_equal(sampler.integers(1000, size=8), sampler2.integers(1000, size=8))
 
 
-def test_rng_recovery_and_reward_blind():
+@pytest.mark.parametrize("core", ["gru", "gtrxl"])
+def test_rng_recovery_and_reward_blind(core):
     torch.manual_seed(13)
-    policy = make_policy(width=16, device="cpu")
+    policy = make_policy(width=16, device="cpu", core=core, layers=1, heads=2, memory_length=8)
     state = rng_state()
     roll, _ = collect_trial(policy, motor, [CanChunkEnv(low_env=FakeLow())], [9], attempts=2, reward_blind=True)
     restore_rng(state)
     repeated, _ = collect_trial(policy, motor, [CanChunkEnv(low_env=FakeLow())], [9], attempts=2, reward_blind=True)
     torch.testing.assert_close(roll["raw_actions"], repeated["raw_actions"], rtol=0, atol=0)
     assert not roll["observations"][..., OBS_DIM + NOISE_DIM].any()
+
+
+@pytest.mark.parametrize("core", ["gru", "gtrxl"])
+def test_complete_ppo_recovery_reproduces_next_trial_and_update(tmp_path, monkeypatch, core):
+    from fluffy_bassoon.meta_rl import can_dsrl, can_dsrl_run
+    monkeypatch.setattr(can_dsrl, "HORIZON", 8)
+    monkeypatch.setattr(can_dsrl_run, "HORIZON", 8)
+    args = SimpleNamespace(core=core, width=16, layers=1, heads=2, memory_length=8, output=tmp_path)
+    policy = make_policy(width=16, device="cpu", core=core, layers=1, heads=2, memory_length=8)
+    optimizer = torch.optim.Adam(policy.parameters(), lr=3e-4)
+    envs = [CanChunkEnv(low_env=FakeLow())]
+    rollout, _ = collect_trial(policy, motor, envs, [11], attempts=2)
+    update_ppo(policy, optimizer, rollout, epochs=1, minibatch_trials=1)
+    contract = dict(source_commit="test", method="rl2", checkpoint_sha256="motor", normalization_sha256="stats",
+                    seed=1, envs=1, attempts=2, core=core, width=16, layers=1, heads=2, memory_length=8)
+    proof = qualify_ppo_recovery(args, policy, optimizer, np.random.default_rng(17), motor, envs, contract)
+    assert proof["passed"] and proof["next_trial_actions_identical"] and proof["next_optimizer_state_identical"]
+    assert proof["next_rng_identical"]
+
+
+@pytest.mark.parametrize("key", ["core", "width", "layers", "heads", "memory_length"])
+def test_resume_rejects_changed_recurrent_architecture(key):
+    contract = dict(source_commit="test", method="rl2", checkpoint_sha256="motor", normalization_sha256="stats",
+                    seed=1, envs=4, attempts=4, core="gtrxl", width=128, layers=2, heads=4, memory_length=300)
+    changed = dict(contract)
+    changed[key] = "gru" if key == "core" else contract[key] + 1
+    with pytest.raises(ValueError, match=key):
+        validate_resume(contract, changed)
+
+
+@pytest.mark.parametrize("trained_reset", [False, True])
+def test_evaluation_respects_trained_episode_reset_in_every_condition(monkeypatch, trained_reset):
+    from fluffy_bassoon.meta_rl import can_dsrl_run
+    calls = []
+
+    def collect(policy, decoder, envs, seeds, **kwargs):
+        calls.append(kwargs)
+        return {}, {"scene_seeds": seeds}
+
+    monkeypatch.setattr(can_dsrl_run, "collect_trial", collect)
+    rows = can_dsrl_run.evaluate_ppo(None, None, [object()], [2_000_000], 4,
+                                      reset_each_attempt=trained_reset)
+    expected = [True, True, True] if trained_reset else [False, True, False]
+    assert [call["reset_memory"] for call in calls] == expected
+    assert [call["reward_blind"] for call in calls] == [False, False, True]
+    assert [rows[name][0]["reset_each_attempt"] for name in ("normal", "memory_reset", "reward_blind")] == expected

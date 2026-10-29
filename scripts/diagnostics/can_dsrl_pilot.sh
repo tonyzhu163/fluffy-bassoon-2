@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One exclusive RTX 6000-family GPU, at most 90 minutes after qualification.
+# Initial small test: one 4090 or RTX 6000 GPU, at most 90 minutes after qualification.
 set -euo pipefail
 TASK_SOURCE=${1:?exact source commit}
 TASK_RUN=${2:?fresh pilot run ID}
@@ -59,7 +59,8 @@ plan = dict(source_commit=source, run_id=os.environ['TASK_RUN'], qualification=s
             finalization_reserve_seconds=120, admitted=False, target_steps=None,
             methods=methods, seed=1, envs=4, attempts=4, eval_trials=8,
             selection_rule='largest of 48000,28800 whose full timing estimate fits 80 minutes',
-            timing_factor=1.75, ppo_update_reserve_seconds=60,
+            timing_factor=1.75,
+            recurrent_core=dict(core='gtrxl', width=128, layers=2, heads=4, memory_length=300),
             startup_io_reserve_per_phase_seconds=60,
             native_success_threshold=.95, online_requested_trials=2,
             scene_pairing_verified=False)
@@ -101,15 +102,15 @@ def positive(value, name):
     return value
 
 
-def estimates(target, episode, update):
+def estimates(target, episode, update, ppo_trial, ppo_episode):
     dsrl_calls = (target - 24016) // 16
     ppo_updates = target // 4800
     phases = {}
     for method in methods:
         dsrl = method.startswith('dsrl-')
-        train = target / 300 * episode + (dsrl_calls * update if dsrl else ppo_updates * 60)
-        evaluation = (32 if dsrl else 96) * episode
-        boundary = 4 * episode + 75 * update if dsrl else 16 * episode + 60
+        train = target / 300 * episode + dsrl_calls * update if dsrl else ppo_updates * ppo_trial
+        evaluation = 32 * episode if dsrl else 96 * ppo_episode
+        boundary = 4 * episode + 75 * update if dsrl else ppo_trial
         # CLI deadlines include startup. Its unbounded frozen evaluation and
         # one whole episode/trial overrun are reserved after that deadline.
         training_deadline = math.ceil(train + 30)
@@ -140,6 +141,10 @@ def validate_evaluation(method, directory):
                     or row['primitive_steps'] != 1200 or len(row['successes']) != 1
                     or len(row['successes'][0]) != 4):
                 raise ValueError(f'{method}/{condition}: incomplete retry trial')
+            if not method.startswith('dsrl-'):
+                expected_reset = method == 'episode-reset' or condition == 'memory_reset'
+                if row.get('reset_each_attempt') is not expected_reset:
+                    raise ValueError(f'{method}/{condition}: recurrent reset contract differs')
             initial = row['initial_observation_sha256']
             if len(initial) != 4 or any(item != initial[0] for item in initial):
                 raise ValueError(f'{method}/{condition}: retry scene changed')
@@ -160,6 +165,7 @@ def run_phase(method, budget, target):
                '--checkpoint-sha256', '61851045e6b516807826e3bda4270c9e4a086023f2dd85af00eadb59d9b98a1b',
                '--normalization-sha256', 'a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a',
                '--output', str(directory), '--seed', '1', '--envs', '4', '--attempts', '4',
+               '--core', 'gtrxl', '--width', '128', '--layers', '2', '--heads', '4', '--memory-length', '300',
                '--steps', str(target), '--eval-trials', '2' if method == 'dsrl-online' else '8',
                '--max-seconds', str(budget['training_deadline_seconds'])]
     if method == 'dsrl-online':
@@ -193,8 +199,8 @@ def main():
     try:
         gpu_lines = subprocess.check_output(
             ['nvidia-smi', '--query-gpu=name,uuid', '--format=csv,noheader'], text=True).strip().splitlines()
-        if len(gpu_lines) != 1 or not re.search(r'RTX\s*(?:PRO\s*)?6000', gpu_lines[0], re.I):
-            raise ValueError(f'Pilot requires exactly one RTX 6000-family GPU: {gpu_lines}')
+        if len(gpu_lines) != 1 or not re.search(r'RTX\s*(?:4090|(?:PRO\s*)?6000)', gpu_lines[0], re.I):
+            raise ValueError(f'Small pilot requires exactly one RTX 4090 or RTX 6000-family GPU: {gpu_lines}')
         plan['gpu'] = gpu_lines[0]
         admission = read_json(qual / 'admission.json')
         qualification = read_json(qual / 'qualification' / 'summary.json')
@@ -212,7 +218,8 @@ def main():
         # A launcher-only commit can follow qualification. A model/environment
         # change requires a fresh qualification rather than reusing old timing.
         qualified_source = contract['source_commit']
-        for key in ('source_commit', 'checkpoint_sha256', 'normalization_sha256'):
+        for key in ('source_commit', 'checkpoint_sha256', 'normalization_sha256',
+                    'core', 'width', 'layers', 'heads', 'memory_length'):
             if native_contract[key] != contract[key]:
                 raise ValueError(f'Qualification and native contracts disagree: {key}')
         for key, expected in (
@@ -220,19 +227,39 @@ def main():
                 ('normalization_sha256', 'a4bb04c498625bfad0ee6faae21674c0a06879cd9f9614bbd2da41a7d0dc1c1a')):
             if contract[key] != expected:
                 raise ValueError(f'Qualified inputs differ from pilot inputs: {key}')
+        if any(contract[key] != value for key, value in plan['recurrent_core'].items()):
+            raise ValueError('Qualification must use the declared full GTrXL architecture')
         checked = ['src/fluffy_bassoon/meta_rl/' + name for name in
-                   ('can_dsrl.py', 'can_dsrl_run.py', 'can_dsrl_compare.py', 'can_dsrl_parity.py', 'ppo.py')]
+                   ('can_dsrl.py', 'can_dsrl_run.py', 'can_dsrl_compare.py', 'can_dsrl_parity.py',
+                    'can_dsrl_gpu.py', 'ppo.py', 'gtrxl.py')]
         for name in checked:
             qualified = subprocess.check_output(['git', 'show', f'{qualified_source}:{name}'], cwd=worktree)
             if hashlib.sha256(qualified).hexdigest() != file_hash(worktree / name):
                 raise ValueError(f'Runtime changed after qualification: {name}')
         full_update = positive(qualification['released_batch_update_seconds'], 'released batch update')
         native_elapsed = positive(native['elapsed_seconds'], 'native elapsed')
+        full_ppo = positive(qualification['ppo_full_trial_total_seconds'], 'full PPO trial and update')
+        ppo_rollout = positive(qualification['ppo_full_trial_rollout_seconds'], 'full PPO rollout')
+        small_ppo = positive(qualification['ppo_small_trial_seconds'], 'single-lane PPO proof')
+        positive(qualification['ppo_full_trial_update_seconds'], 'full four-epoch PPO update')
+        if (qualification['ppo_full_trial_geometry'] !=
+                dict(lanes=4, attempts=4, chunks=300, epochs=4, minibatch_trials=4)
+                or qualification['ppo_recovery_roundtrip'].get('passed') is not True):
+            raise ValueError('Complete GTrXL training geometry and recovery proof required')
         episode, update = 1.75 * native_elapsed / 32, 1.75 * full_update
-        candidates = [estimates(target, episode, update) for target in (48000, 28800)]
+        ppo_trial = 1.75 * full_ppo
+        # Frozen evaluation is serial by scene. Reserve up to four times the
+        # batched per-episode rollout cost, as well as the measured B1 proof.
+        ppo_episode = 1.75 * max(native_elapsed / 32, small_ppo / 2, ppo_rollout / 4)
+        candidates = [estimates(target, episode, update, ppo_trial, ppo_episode) for target in (48000, 28800)]
         plan.update(qualification_source_commit=qualified_source, native_success=native_success,
                     measured_native_elapsed_seconds=native_elapsed,
                     measured_released_batch_update_seconds=full_update,
+                    measured_ppo_full_trial_total_seconds=full_ppo,
+                    measured_ppo_full_trial_rollout_seconds=ppo_rollout,
+                    measured_ppo_full_trial_update_seconds=qualification['ppo_full_trial_update_seconds'],
+                    measured_ppo_full_trial_peak_cuda_memory_gib=qualification['ppo_full_trial_peak_cuda_memory_gib'],
+                    conservative_ppo_trial_seconds=ppo_trial, conservative_ppo_episode_seconds=ppo_episode,
                     conservative_episode_seconds=episode, conservative_update_seconds=update,
                     timing_note='1.75 factor covers timing transfer from qualification hardware and runtime variation',
                     qualification_artifact_sha256={name: file_hash(qual / name) for name in

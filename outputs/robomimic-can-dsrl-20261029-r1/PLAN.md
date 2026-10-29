@@ -1,32 +1,41 @@
 # Original Can DSRL / RL² pilot
 
 2026-10-29, user approved: start on the released low-dimensional RoboMimic Can
-benchmark on Baige. Do not change physics or claim a VLA result. Method contract:
+benchmark on Baige. Keep the released physics. Method contract:
 [docs/robomimic-can-dsrl.md](../../docs/robomimic-can-dsrl.md).
 
-First qualify the new runtime and learner interface on one exclusive GPU,
-16 CPUs, 64 GiB RAM, with a 20-minute scheduler cap. Run the two focused CPU
-test modules in that allocation; then a real two-attempt PPO trajectory, an
-original DSRL-NA optimizer step, motor sampler parity and complete recovery
-continuation. Follow with 8 native trials, K=4 (32 episodes). Preserve all
-artifacts on failure. No automatic retry and no learner campaign admitted by
-a failed qualification.
+The user selected GTrXL after the initial GRU implementation. The GRU job
+`job-glohz29446yg` was stopped at14:19:03 Shanghai without ever receiving a
+GPU or producing training results. Use fresh qualification-r4/pilot-r2 IDs.
 
-After qualification, use measured throughput to admit a pilot within the
-remaining original two-GPU-hour test envelope. Targets: original iid DSRL-NA,
-retry-sampled DSRL-NA, RL²/GRU and separately trained episode-reset GRU, one
-training seed, 48,000 primitive training steps each including DSRL warmup.
-Evaluate on the same 8 held-out initial-scene seeds and K=4 attempts. Compare
-frozen and online-updated DSRL on the same interaction budget, and normal,
-memory-reset and reward-blind GRU. A deadline produces a partial result and a
-complete recovery, not a successful learning claim. No new jobs above the
-two-hour test envelope without a separate resource decision.
+First qualify on one exclusive RTX4090,16 CPUs,64GiB RAM. The combined job
+has a110-minute scheduler cap; a qualification exceeding20minutes refuses
+the90-minute pilot. Together with the prior failed qualification's conservative
+six-minute charge, allocated usage stays below the original two-GPU-hour cap.
+No automatic retry. Run focused CPU tests inside the allocation, real Can
+sampler/environment parity, nonzero PPO and original DSRL updates, complete
+optimizer/sampler/RNG continuation and the actual GTrXL four-lane/K4/four-epoch
+PPO update with peak CUDA memory and timing. Evaluate32 native episodes.
 
-The pilot establishes runtime and learning-signal feasibility. It is far
-shorter than the authors' full learning experiments. Do not label it a curve
-reproduction, a significant method win or cross-task meta-learning. Longer
-learning curves and multiple training seeds are separate follow-on work.
+Admit all four methods only if qualification, native headroom and measured
+cost fit: original iid DSRL-NA, retry-sampled DSRL-NA, persistent RL²/GTrXL and
+separately trained episode-reset GTrXL. Choose48,000 or28,800 primitive training
+steps using qualification timing only, identically for all methods, including
+DSRL warmup. Evaluate the same eight held-out scenes and K4 attempts, including
+memory and feedback controls. A deadline yields a complete recovery and a
+partial result. This short pilot establishes feasibility and learning signal;
+it cannot establish a method win or a VLA/cross-task meta-learning claim.
 
-Source code is reviewed against the current `main` before each launch and
-committed; record the exact source in every run receipt. Keep run worktrees
-immutable. The main clone remains on main and concurrent edits are preserved.
+The user separately approved the follow-on: eight RTX6000-family GPUs for
+parallel matched seeds, at most one hour elapsed/eight allocated GPU-hours.
+Launch only after the complete4090pilot and its artifacts qualify. Use four
+training seeds with a paired DSRL lane and GTrXL lane per seed; each lane runs
+the corresponding persistent/retry or trained-reset arms serially. Fix the
+common step target from measured throughput before launch, preserving complete
+boundary checkpoints and time for frozen evaluation. Do not silently switch to
+joint distributed optimization or expand time/cards.
+
+Review current main before each launch, commit and record its exact source,
+and deploy through Git into fresh immutable run worktrees. Preserve concurrent
+edits and unrelated jobs. Live status belongs in outputs/coordination.md;
+verified findings belong in docs/robomimic-can-dsrl/EVALUATION.md.
