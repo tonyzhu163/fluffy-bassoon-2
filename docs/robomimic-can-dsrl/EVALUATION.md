@@ -13,3 +13,12 @@ Raw evidence is preserved in
 [`qualification-r2`](../../outputs/robomimic-can-dsrl-20261029-r1/qualification-r2/).
 Runtime repair provenance and new submission receipts are in the parent run
 directory. Current job state belongs in `outputs/coordination.md`.
+
+The GTrXL qualification on Baige `job-pnesyoazimd0`, source
+`c1032117b953acd94592336629a1d28c4f563d62`, passed all69 focused CPU tests
+in132.51seconds inside its allocated RTX4090 container. The complete CUDA
+allocation probe and real tensor/own-PID worker attestation also passed. These
+check architecture equations, replay, resets and recovery contracts; they do
+not establish Can simulator parity, learner performance or a memory benefit.
+Those real-simulator and learning checks remain pending at the14:37 Shanghai
+artifact audit. Evidence: `qualification-r4/` in the parent run directory.
