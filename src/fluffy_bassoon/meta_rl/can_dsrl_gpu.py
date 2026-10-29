@@ -37,8 +37,8 @@ def _parent_report(path, source_commit, assigned, hostname):
             or report.get("hostname") != hostname):
         raise ValueError("Require a passed parent training probe from this Baige allocation")
     devices = report.get("devices", [])
-    if len(devices) not in (1, 8) or len(devices) != len(assigned):
-        raise ValueError("Can workers require a complete one- or eight-GPU parent probe")
+    if len(devices) not in (1, 2, 8) or len(devices) != len(assigned):
+        raise ValueError("Can workers require a complete one-, two- or eight-GPU parent probe")
     if ({row["uuid"] for row in devices} != set(assigned)
             or set(report["gpu_identity_mapping"]["assigned_nvml_uuids"]) != set(assigned)
             or [row["allocation_ordinal"] for row in devices] != list(range(len(devices)))
@@ -46,7 +46,7 @@ def _parent_report(path, source_commit, assigned, hostname):
         raise ValueError("Parent GPU probe differs from the complete scheduler UUID allocation")
     recorded_source = report.get("source_commit")
     # The initial one-GPU qualification exercises this API on the generic
-    # probe output. The eight-GPU launcher always binds its probe to Git first.
+    # probe output. Parallel launchers always bind their probe to Git first.
     if recorded_source != source_commit and not (len(devices) == 1 and recorded_source is None):
         raise ValueError("Parent GPU probe source differs from the worker source")
     created = datetime.fromisoformat(report["created_at_utc"])
@@ -92,7 +92,7 @@ def validate_prequalified_worker(path, source_commit, output):
 
     Call inside the actual worker, before motor construction. ``output`` must
     be fresh and distinct from ``path``. The initial qualification may pass a
-    generic one-GPU probe; eight-GPU probes must record ``source_commit``.
+    generic one-GPU probe; two/eight-GPU probes must record ``source_commit``.
     """
     if sys.platform != "linux":
         raise RuntimeError("Worker CUDA qualification requires allocated Linux")

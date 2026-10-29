@@ -1,0 +1,146 @@
+{
+  "source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+  "run_id": "robomimic-can-dsrl-baige-20261029-pilot-r2",
+  "qualification": "/mowenjie/fluffy-bassoon-2/outputs/robomimic-can-dsrl-baige-20261029-qual-r4",
+  "hostname": "job-pnesyoazimd0-master-0",
+  "gpu_count": 1,
+  "wall_budget_seconds": 5400,
+  "qualification_budget_seconds": 1200,
+  "admission_ceiling_seconds": 4800,
+  "allocation_slack_seconds": 600,
+  "prior_failed_qualification_reserve_seconds": 360,
+  "finalization_reserve_seconds": 120,
+  "admitted": false,
+  "target_steps": null,
+  "methods": [
+    "dsrl-na",
+    "dsrl-na-retry",
+    "rl2",
+    "episode-reset"
+  ],
+  "seed": 1,
+  "envs": 4,
+  "attempts": 4,
+  "eval_trials": 8,
+  "selection_rule": "largest of 48000,28800 whose full timing estimate fits 80 minutes",
+  "timing_factor": 1.75,
+  "recurrent_core": {
+    "core": "gtrxl",
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300
+  },
+  "startup_io_reserve_per_phase_seconds": 60,
+  "native_success_threshold": 0.95,
+  "online_requested_trials": 2,
+  "scene_pairing_verified": false,
+  "gpu": "NVIDIA GeForce RTX 4090, GPU-8a719f7e-f399-52ec-9aea-0a5162057241",
+  "qualification_source_commit": "c1032117b953acd94592336629a1d28c4f563d62",
+  "native_success": 0.46875,
+  "measured_native_elapsed_seconds": 140.79873363906518,
+  "measured_released_batch_update_seconds": 0.46095669316127896,
+  "measured_ppo_full_trial_total_seconds": 71.90674863569438,
+  "measured_ppo_full_trial_rollout_seconds": 60.582957815844566,
+  "measured_ppo_full_trial_update_seconds": 10.468917893711478,
+  "measured_ppo_full_trial_peak_cuda_memory_gib": 1.547619342803955,
+  "conservative_ppo_trial_seconds": 125.83681011246517,
+  "conservative_ppo_episode_seconds": 26.505044044431997,
+  "conservative_episode_seconds": 7.699930745886377,
+  "conservative_update_seconds": 0.8066742130322382,
+  "timing_note": "1.75 factor covers timing transfer from qualification hardware and runtime variation",
+  "qualification_artifact_sha256": {
+    "admission.json": "8071e4b2acfb7907e785851d837e5df5327aeaa0a6ad651a4f94d6020a999a33",
+    "qualification/summary.json": "28c2646ff8865e22cd1c20626d4989cb6322983593a79dff4a0b06ce9cd3889b",
+    "qualification/contract.json": "b422a130ed7821cf4babeec1a75430adb8a427005474b6a2784a0a4b6d0dda5b",
+    "native/summary.json": "8e1efc726c11830af34a2e8c2843f06d55d8975d16b228f4e7ec2f03048af56e",
+    "native/contract.json": "f01abf42b51dffda6dedfd319389ff4506f1e01d70062a143d9985c7ee199167",
+    "native/evaluation.json": "01a6d75b0119e74fd60c783cdf3eb748478926b10b24b8f886ca120e6ebd853c"
+  },
+  "candidates": [
+    {
+      "target_steps": 48000,
+      "dsrl_training_calls": 1499,
+      "ppo_updates": 10,
+      "phases": {
+        "dsrl-na": {
+          "training_estimate_seconds": 2441.1935646771453,
+          "evaluation_reserve_seconds": 246.39778386836406,
+          "boundary_reserve_seconds": 91.30028896096337,
+          "training_deadline_seconds": 2472,
+          "total_seconds": 2840
+        },
+        "dsrl-na-retry": {
+          "training_estimate_seconds": 2441.1935646771453,
+          "evaluation_reserve_seconds": 246.39778386836406,
+          "boundary_reserve_seconds": 91.30028896096337,
+          "training_deadline_seconds": 2472,
+          "total_seconds": 2840
+        },
+        "rl2": {
+          "training_estimate_seconds": 1258.3681011246517,
+          "evaluation_reserve_seconds": 2544.4842282654718,
+          "boundary_reserve_seconds": 125.83681011246517,
+          "training_deadline_seconds": 1289,
+          "total_seconds": 3990
+        },
+        "episode-reset": {
+          "training_estimate_seconds": 1258.3681011246517,
+          "evaluation_reserve_seconds": 2544.4842282654718,
+          "boundary_reserve_seconds": 125.83681011246517,
+          "training_deadline_seconds": 1289,
+          "total_seconds": 3990
+        },
+        "dsrl-online": {
+          "work_estimate_seconds": 545.6039737864339,
+          "training_deadline_seconds": 576,
+          "boundary_reserve_seconds": 68.20049672330424,
+          "total_seconds": 674
+        }
+      },
+      "total_seconds": 14454
+    },
+    {
+      "target_steps": 28800,
+      "dsrl_training_calls": 299,
+      "ppo_updates": 6,
+      "phases": {
+        "dsrl-na": {
+          "training_estimate_seconds": 980.3889413017314,
+          "evaluation_reserve_seconds": 246.39778386836406,
+          "boundary_reserve_seconds": 91.30028896096337,
+          "training_deadline_seconds": 1011,
+          "total_seconds": 1379
+        },
+        "dsrl-na-retry": {
+          "training_estimate_seconds": 980.3889413017314,
+          "evaluation_reserve_seconds": 246.39778386836406,
+          "boundary_reserve_seconds": 91.30028896096337,
+          "training_deadline_seconds": 1011,
+          "total_seconds": 1379
+        },
+        "rl2": {
+          "training_estimate_seconds": 755.020860674791,
+          "evaluation_reserve_seconds": 2544.4842282654718,
+          "boundary_reserve_seconds": 125.83681011246517,
+          "training_deadline_seconds": 786,
+          "total_seconds": 3487
+        },
+        "episode-reset": {
+          "training_estimate_seconds": 755.020860674791,
+          "evaluation_reserve_seconds": 2544.4842282654718,
+          "boundary_reserve_seconds": 125.83681011246517,
+          "training_deadline_seconds": 786,
+          "total_seconds": 3487
+        },
+        "dsrl-online": {
+          "work_estimate_seconds": 545.6039737864339,
+          "training_deadline_seconds": 576,
+          "boundary_reserve_seconds": 68.20049672330424,
+          "total_seconds": 674
+        }
+      },
+      "total_seconds": 10526
+    }
+  ]
+}

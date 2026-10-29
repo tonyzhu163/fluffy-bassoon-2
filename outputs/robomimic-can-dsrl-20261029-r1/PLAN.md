@@ -39,3 +39,15 @@ Review current main before each launch, commit and record its exact source,
 and deploy through Git into fresh immutable run worktrees. Preserve concurrent
 edits and unrelated jobs. Live status belongs in outputs/coordination.md;
 verified findings belong in docs/robomimic-can-dsrl/EVALUATION.md.
+
+Qualification-r4 passed on4090 and native success was15/32. The serial pilot-r2
+held training on timing admission. Fresh pilot-r3 therefore uses2RTX4090s in
+one exclusive container for at most50minutes (100GPU-minutes), with balanced
+lanes: GPU0 original DSRL→persistentGTrXL; GPU1 retryDSRL→trained-resetGTrXL.
+All four arms retain seed1, equal28,800 training interactions, eight held-out
+scenes/K4 and all recurrent evaluation conditions. No optional online phase.
+The1.25timing factor uses actual same-hardware qualification costs and saves
+complete episode/trial boundaries. GPU-attestation helper migration adds
+support for a complete two-GPU parent probe; scientific source stays identical
+to qualification-r4 and helper fixtures plus real per-worker CUDA checks run
+inside the new allocation before model construction. Record this migration.

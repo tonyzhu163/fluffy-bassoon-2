@@ -42,6 +42,28 @@ Use `--core gtrxl --width 128 --layers 2 --heads 4 --memory-length 300`.
 `--core gru` remains an explicit
 architecture control; it must not be labeled GTrXL.
 
+The current initialization uses PyTorch's default random `Linear` weights and,
+where present, biases for the input projection, attention, feedforward, gate
+transforms, actor and value heads. LayerNorm starts with unit scale and zero
+bias. Relative-attention content and position biases start at zero. Each
+learned GRU update-gate bias starts at 2 and is subtracted inside the sigmoid,
+favoring the residual input at initialization without making the block an
+exact identity. Relative positions are fixed sinusoidal buffers.
+
+A new trial starts with zero attention memories and valid history length zero;
+all prior positions are masked, while the current observation remains visible.
+The stored memories are each layer's input representations, from which its
+attention keys and values are projected. RL² carries these memories across
+attempts within a trial. The episode-reset control clears them at each attempt.
+The actor's trainable per-noise-coordinate log standard deviation starts at
+-0.5, giving pre-squash standard deviation `exp(-0.5)`; sampled Gaussian actions
+are squashed through `tanh` into [-1,1].
+
+Only the frozen motor starts from pretrained weights. The trainable GTrXL and
+its actor/value heads have no DPT pretraining or teacher-policy warm start in
+this implementation. This initialization is a specified starting condition,
+not an empirically established optimum.
+
 The first pilot retries a sampled initial scene over K=4 complete episodes.
 Only memory changes between attempts at evaluation. Training and evaluation
 scene seeds are disjoint. Iid scene resets are a later diagnostic.

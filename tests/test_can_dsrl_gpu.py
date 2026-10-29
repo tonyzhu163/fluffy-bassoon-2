@@ -32,7 +32,7 @@ def validate(tmp_path, report, assigned, source=SOURCE, hostname=HOST):
     return result
 
 
-@pytest.mark.parametrize("count", [1, 8])
+@pytest.mark.parametrize("count", [1, 2, 8])
 def test_complete_parent_allocation(tmp_path, count):
     report, assigned = fixture_report(count)
     assert validate(tmp_path, report, assigned) == report
@@ -42,13 +42,14 @@ def test_generic_initial_qualification_is_bound_by_worker_source(tmp_path):
     report, assigned = fixture_report(1)
     del report["source_commit"]
     assert validate(tmp_path, report, assigned) == report
-    report, assigned = fixture_report(8)
-    del report["source_commit"]
-    with pytest.raises(ValueError, match="source"):
-        validate(tmp_path, report, assigned)
+    for count in (2, 8):
+        report, assigned = fixture_report(count)
+        del report["source_commit"]
+        with pytest.raises(ValueError, match="source"):
+            validate(tmp_path, report, assigned)
 
 
-@pytest.mark.parametrize("count", [1, 8])
+@pytest.mark.parametrize("count", [1, 2, 8])
 def test_recorded_source_must_match(tmp_path, count):
     report, assigned = fixture_report(count)
     report["source_commit"] = "b" * 40
