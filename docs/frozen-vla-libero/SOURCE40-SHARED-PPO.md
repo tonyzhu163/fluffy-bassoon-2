@@ -38,8 +38,11 @@ saved runtime so qualification cannot advance the source task schedule.
 Interrupted trials may be recollected and remain physically charged. The
 complete-trial learner recovery does not claim mid-episode simulator recovery.
 
-The driver reuses the declared pilot PPO batch (one full trial/update) and
-records its optimizer settings. It does not silently adopt VLRLA's much larger
+The driver uses one full trial/update and explicit `--learning-rate`/`--epochs`
+settings. Defaults are learning rate1e-4 and two epochs, an explicit revised
+pilot recipe after a one-goal runtime check showed large early KL with3e-4
+and four epochs. These revised defaults still require allocated qualification;
+they are not an established stable learning configuration. It does not adopt VLRLA's much larger
 parallel rollout batch. A separately trained reset controller needs its own
 on-policy interaction reservation; its cost is not free reuse of full-memory
 rollouts. Frozen validation on source states40–49 can use the single-task PPO
@@ -54,6 +57,7 @@ python -m fluffy_bassoon.meta_rl.vla_source40_multitask_ppo \
   --simulator-python <qualified-simulator-python> \
   --simulator-pythonpath <explicit-simulator-module-paths> \
   --source-commit <exact-clean-commit> --expected-hostname <allocated-host> \
+  --learning-rate 1e-4 --epochs 2 \
   --max-total-actions <PPO-reservation-within-the-shared-1M> \
   --max-elapsed-seconds <invocation-cap> --updates <requested-updates>
 ```

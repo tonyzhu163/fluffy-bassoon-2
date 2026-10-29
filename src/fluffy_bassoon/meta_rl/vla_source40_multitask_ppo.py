@@ -215,6 +215,8 @@ def parser():
     ap.add_argument('--layers', type=int, default=2)
     ap.add_argument('--heads', type=int, default=4)
     ap.add_argument('--context-length', type=int, default=300)
+    ap.add_argument('--learning-rate', type=float, default=1e-4)
+    ap.add_argument('--epochs', type=int, default=2)
     ap.add_argument('--memory-mode', choices=('full', 'episode'), default='full')
     ap.add_argument('--device', default='cuda:0')
     ap.add_argument('--resume', action='store_true')
@@ -225,7 +227,8 @@ def main(argv=None):
     args = parser().parse_args(argv)
     if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname:
         raise ValueError('Model computation requires the explicitly allocated Linux host')
-    if (args.attempts < 1 or args.updates < 1 or not 0 <= args.seed < 2**32
+    if (args.attempts < 1 or args.updates < 1 or args.epochs < 1 or not 0 <= args.seed < 2**32
+            or not math.isfinite(args.learning_rate) or args.learning_rate <= 0
             or args.max_total_actions < args.attempts * 410 + 10
             or args.max_elapsed_seconds <= 0 or not math.isfinite(args.max_elapsed_seconds)):
         raise ValueError('Invalid complete-trial source action/compute reservation')
@@ -263,6 +266,8 @@ def main(argv=None):
             motor=motor.metadata, feature_contract=motor.feature_encoder.contract,
             noise_contract='32D squashed Gaussian coordinate repeated over native H10; executed coordinate unchanged',
             algorithm='Shared on-policy RL2/GTrXL PPO noise policy; one optimizer across all40 source tasks',
+            optimization=dict(learning_rate=args.learning_rate, epochs=args.epochs,
+                rollout_batch='one complete K-attempt trial; explicit pilot recipe'),
             task_schedule='Outcome-independent round robin; one task per complete K-attempt trial',
             training_initial_state_ids=list(range(40)), maximum_total_actions=args.max_total_actions,
             memory_mode=args.memory_mode, seed=args.seed,
@@ -300,6 +305,7 @@ def main(argv=None):
             physical_cost=lambda: physical_charge(sim.journal)['total_action_charge'],
             updates=args.updates, output_dir=args.output / 'learner', source_contract=contract,
             seed=args.seed, mode=args.memory_mode, max_elapsed_seconds=args.max_elapsed_seconds,
+            learning_rate=args.learning_rate, epochs=args.epochs,
             resume=args.output / 'learner/latest.pt' if args.resume else None,
             episode_sink=episode_sink(args.output / 'raw', contract=contract),
             runtime_state=snapshot, restore_runtime=restore)
