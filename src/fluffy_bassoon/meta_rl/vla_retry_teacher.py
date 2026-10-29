@@ -35,7 +35,7 @@ def collect_retry_teachers(*, source_root, shared_prior_path, prior_contract, fi
         scenes, attempts, batch_size, utd, chunk, output_dir, seed=0,
         objectives=("ad", "dpt"), episode_horizon=400, max_primitive_steps,
         heldout_initial_states=(), learner_factory=None, episode_runner=None,
-        sim=None, motor=None):
+        sim=None, motor=None, row_feature_encoder=None, fixed_feature_contract=None):
     """Collect independent K-attempt learning trials on explicitly split scenes.
 
     scenes contains dicts with `trial_id`, `split` (train/validation),
@@ -47,6 +47,9 @@ def collect_retry_teachers(*, source_root, shared_prior_path, prior_contract, fi
     The fixed_encoder callback accepts one saved SAC observation and returns
     a public feature vector. It must belong to the shared prior, never a
     scene-adapted teacher. Source models/replay are restored independently.
+    Alternatively row_feature_encoder accepts each full saved row (for fixed
+    native VLA camera/instruction features); fixed_feature_contract then records
+    that frozen representation rather than the shared SAC prior encoder.
     """
     if sys.platform != "linux":
         raise ValueError("Retry teaching requires allocated Linux resources")
@@ -80,8 +83,13 @@ def collect_retry_teachers(*, source_root, shared_prior_path, prior_contract, fi
     shared_prior_path, output_dir = Path(shared_prior_path), Path(output_dir)
     prior_digest = file_sha256(shared_prior_path)
     output_dir.mkdir(parents=True, exist_ok=False)
+    feature_contract = (dict(kind="fixed shared-prior SAC actor bottleneck and public proprioception",
+        shared_prior_sha256=prior_digest) if fixed_feature_contract is None else
+        json.loads(json.dumps(fixed_feature_contract, allow_nan=False)))
+    if not feature_contract or (row_feature_encoder is not None and fixed_feature_contract is None):
+        raise ValueError("A row feature encoder requires its explicit fixed representation contract")
     contract = dict(format="frozen_vla_retry_teachers_v1", shared_prior_sha256=prior_digest,
-        prior_contract=prior_contract, fixed_feature_encoder="immutable shared-prior actor encoder",
+        prior_contract=prior_contract, fixed_feature_encoder=feature_contract,
         scenes=scenes, attempts=attempts, batch_size=batch_size, utd=utd, chunk=chunk,
         episode_horizon=episode_horizon, max_primitive_steps=max_primitive_steps, seed=seed,
         objectives=list(objectives), heldout_initial_states=list(heldout_initial_states),
@@ -149,7 +157,8 @@ def collect_retry_teachers(*, source_root, shared_prior_path, prior_contract, fi
             source_steps.extend([before] * len(rows))
             _json(trial_dir / "progress.json", dict(episodes=episode_receipts,
                 primitive_steps=trial_steps, total_source_steps=total_steps))
-        observations = np.stack([fixed_encoder(row["sac_observation"]) for row in all_rows]).astype(np.float32)
+        observations = np.stack([fixed_encoder(row["sac_observation"]) if row_feature_encoder is None
+                                 else row_feature_encoder(row) for row in all_rows]).astype(np.float32)
         executed = np.stack([row["executed_noise"] for row in all_rows]).astype(np.float32)
         base = dict(observations=observations, executed_noise=executed,
             rewards=np.asarray([row["reward"] for row in all_rows], np.float32),
@@ -170,8 +179,7 @@ def collect_retry_teachers(*, source_root, shared_prior_path, prior_contract, fi
     if file_sha256(shared_prior_path) != prior_digest:
         raise RuntimeError("Shared prior checkpoint changed during retry teaching")
     metadata = dict(motor_sha256=prior_contract["motor"]["receipt_sha256"],
-        feature_contract=dict(kind="fixed shared-prior SAC actor bottleneck and public proprioception",
-                              shared_prior_sha256=prior_digest),
+        feature_contract=feature_contract,
         noise_contract=prior_contract["noise"], source_commit=prior_contract["source_commit"],
         source_prior_training_contract=prior_contract, extra_source_primitive_steps=total_steps,
         extra_source_updates=total_updates, shared_prior_primitive_steps=prior_primitive_steps,

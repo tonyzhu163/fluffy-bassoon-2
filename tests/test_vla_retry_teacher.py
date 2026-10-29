@@ -113,3 +113,15 @@ def test_same_state_reset_must_reproduce_initial_observation(tmp_path):
     kwargs["episode_runner"] = changed_reset
     with pytest.raises(ValueError, match="initial observation"):
         collect_retry_teachers(**kwargs)
+
+
+def test_fixed_native_row_features_keep_their_explicit_contract(tmp_path):
+    kwargs = arguments(tmp_path)
+    kwargs["fixed_feature_contract"] = dict(kind="frozen native visual and instruction prefix", motor="fixed")
+    kwargs["row_feature_encoder"] = lambda row: np.asarray([.25, .5, .75], np.float32)
+    paths, metadata = collect_retry_teachers(**kwargs)
+    data, manifest = load_dataset(paths["ad"]["train"])
+    assert data[0]["observations"].shape == (4, 3)
+    assert np.array_equal(data[0]["observations"][0], [.25, .5, .75])
+    assert metadata["feature_contract"] == kwargs["fixed_feature_contract"]
+    assert manifest["metadata"]["feature_contract"] == kwargs["fixed_feature_contract"]
