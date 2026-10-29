@@ -81,21 +81,25 @@ destination.write_text(json.dumps(dict(model_config='pi05_libero', native_horizo
     feature_kind=FEATURE_KIND, fresh_teacher=True,
     scope='same-task technical pilot; no semantic OOD claim'), indent=2) + '\n')
 PY
-export PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps
-"$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
-  --output "$TASK_OUTPUT/simulator" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_TASK" \
-  --horizon 400 > "$TASK_OUTPUT/simulator.log" 2>&1 &
-TASK_SIM_PID=$!
-for TASK_POLL in $(seq 1 600); do
-  if [ -e "$TASK_OUTPUT/simulator/simulator-ready.json" ]; then break; fi
-  kill -0 "$TASK_SIM_PID"
-  sleep 1
-done
-if [ ! -e "$TASK_OUTPUT/simulator/simulator-ready.json" ]; then
-  tail -n 100 "$TASK_OUTPUT/simulator.log"
-  printf 'Simulator failed readiness after 600 seconds\n' >&2
-  exit 2
-fi
+task_start_simulator() {
+  local TASK_SIM_NAME=$1
+  PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps \
+    "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_libero --mode env-server \
+    --output "$TASK_OUTPUT/$TASK_SIM_NAME" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_TASK" \
+    --horizon 400 > "$TASK_OUTPUT/$TASK_SIM_NAME.log" 2>&1 &
+  TASK_SIM_PID=$!
+  for TASK_POLL in $(seq 1 600); do
+    if [ -e "$TASK_OUTPUT/$TASK_SIM_NAME/simulator-ready.json" ]; then break; fi
+    kill -0 "$TASK_SIM_PID"
+    sleep 1
+  done
+  if [ ! -e "$TASK_OUTPUT/$TASK_SIM_NAME/simulator-ready.json" ]; then
+    tail -n 100 "$TASK_OUTPUT/$TASK_SIM_NAME.log"
+    printf 'Simulator failed readiness after 600 seconds\n' >&2
+    exit 2
+  fi
+}
+task_start_simulator simulator
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_libero --mode teacher \
   --output "$TASK_OUTPUT/experiment" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_TASK" \
@@ -109,6 +113,11 @@ export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$
 if [ "$TASK_PHASE" = teacher-gate ]; then
   # Only evaluate the completed fresh pi0.5 teacher. A passing gate does not
   # authorize this launcher to generate the separate corpus or train students.
+  # The first driver closes its single-client simulator on exit. Reap that
+  # owned worker, then start a fresh worker/readiness receipt for the gate.
+  wait "$TASK_SIM_PID"
+  TASK_SIM_PID=
+  task_start_simulator simulator-gate
   "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_cnd_run --qualify-only \
     --output "$TASK_OUTPUT/teacher-gate" --port 8765 --suite "$TASK_SUITE" --task-id "$TASK_TASK" \
     --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --checkpoint "$TASK_CHECKPOINT" \
