@@ -600,7 +600,10 @@ def state_differences(expected, actual, *, path="state"):
         return [dict(path=path, error="shape or dtype differs", expected_shape=list(a.shape),
                      actual_shape=list(b.shape), expected_dtype=str(a.dtype), actual_dtype=str(b.dtype))]
     if not np.array_equal(a, b):
-        delta = float(np.max(np.abs(a.astype(np.float64) - b.astype(np.float64))))
+        try:
+            delta = float(np.max(np.abs(a.astype(np.float64) - b.astype(np.float64))))
+        except (TypeError, ValueError):
+            delta = None
         return [dict(path=path, error="leaf values differ", maximum_delta=delta,
                      expected_sha256=hashlib.sha256(a.tobytes()).hexdigest(),
                      actual_sha256=hashlib.sha256(b.tobytes()).hexdigest(),
