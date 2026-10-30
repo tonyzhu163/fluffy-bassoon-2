@@ -37,6 +37,29 @@ def validate_trained_parallel_arguments(args, checkpoint):
         _require(str(getattr(args,argument))==contract[argument],f"frozen {argument} changed")
 
 
+def validate_lineage_parent(path, sha256, *, checkpoint, campaign_root, native_episodes):
+    """Bind the first scalar handoff to the original campaign's canonical root."""
+    path=Path(path)
+    _require(file_sha256(path)==sha256,"original parent manifest hash differs")
+    parent=json.loads(path.read_text());contract=checkpoint["contract"];method,=contract["methods"]
+    _require(parent["format"]=="robotwin_parallel_whole_trial_campaign_v1"
+             and parent["source_commit"]==contract["source_commit"],"original parent lineage differs")
+    worker=parent["workers"][method]
+    _require(native_episodes==worker["native_episodes"],"original native evaluation allowance changed")
+    _require(Path(worker["ledger_root"]).resolve()==Path(campaign_root).resolve(),
+             "canonical worker ledger root differs from original parent")
+    _require(worker["campaign_id"]==contract["campaign"]["id"]
+             and worker["source_safety_actions"]==contract["source_steps_per_learner"]
+             and worker["maximum_actions"]==contract["campaign"]["max_actions"],
+             "original worker physical allowances differ")
+    _require(parent["source_iterations"]==contract["source_iterations"]["count"]
+             and parent["source_eval_iterations"]==contract["source_iterations"]["evaluation_iterations"]
+             and parent["trials_per_iteration"]==contract["ppo_trials_per_update"]
+             and parent["train_episodes"]==contract["train_episodes"],
+             "original parent source/evaluation schedule differs")
+    return dict(path=str(path.resolve()),sha256=sha256,canonical_root=str(Path(campaign_root).resolve()))
+
+
 def continuation_campaign_fence(manifest_path, campaign_root):
     """Use the hash-bound predecessor ledger without opening a live ledger."""
     manifest=json.loads(Path(manifest_path).read_text())

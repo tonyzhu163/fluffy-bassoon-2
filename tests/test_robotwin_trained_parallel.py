@@ -36,8 +36,13 @@ def trained_boundary(tmp_path,recovery_runtime,monkeypatch):
     checkpoint=torch.load(checkpoint_path,map_location="cpu",weights_only=False)
     continuation=load_trial_continuation(manifest_path,file_sha256(manifest_path),
         checkpoint_path=checkpoint_path,checkpoint=checkpoint,execution_commit="b"*40,lineage_commit="a"*40)
+    parent=dict(format="robotwin_parallel_whole_trial_campaign_v1",source_commit="a"*40,
+        source_iterations=3,source_eval_iterations=[1,2,3],trials_per_iteration=6,train_episodes=4,
+        workers=dict(ppo=dict(ledger_root=str(tmp_path/"campaign"),campaign_id="robotwin-source-1m",
+            source_safety_actions=72,maximum_actions=1_000_000,native_episodes=0)))
+    parent_path=tmp_path/"original-parent.json";parent_path.write_text(json.dumps(parent))
     return dict(args=args,output=output,checkpoint=checkpoint,manifest=manifest_path,
-        continuation=continuation,root=tmp_path/"campaign",state=recovery_runtime)
+        continuation=continuation,root=tmp_path/"campaign",state=recovery_runtime,parent=parent_path)
 
 
 def test_genuinely_trained_update_boundary_preserves_adam_and_all_streams(trained_boundary):
@@ -91,6 +96,7 @@ def parallel_args(b,output):
     return b["args"]+["--source-commit","b"*40,"--output",str(output),"--resume",str(b["output"]),
         "--resume-trial-manifest",str(b["manifest"]),
         "--resume-trial-manifest-sha256",file_sha256(b["manifest"]),"--lineage-source-commit","a"*40,
+        "--lineage-parent-manifest",str(b["parent"]),"--lineage-parent-manifest-sha256",file_sha256(b["parent"]),
         "--collector-lanes","6","--collector-group-seconds","1","--recycle-at-round-boundary"]
 
 
@@ -104,6 +110,15 @@ def test_trained_scientific_argument_changes_fail_before_cuda(trained_boundary,m
     monkeypatch.setattr(driver.torch.cuda,"is_available",no_cuda)
     with pytest.raises(ValueError,match="Trained parallel migration"):
         driver.main(parallel_args(b,b["output"].parent.parent/"changed"/"experiment")+change)
+
+
+def test_cloned_canonical_ledger_root_is_rejected_before_cuda(trained_boundary,tmp_path,monkeypatch):
+    import shutil
+    b=trained_boundary;clone=tmp_path/"cloned-ledger";shutil.copytree(b["root"],clone)
+    def no_cuda():raise AssertionError("CUDA gate must not be reached")
+    monkeypatch.setattr(driver.torch.cuda,"is_available",no_cuda)
+    with pytest.raises(ValueError,match="canonical worker ledger root"):
+        driver.main(parallel_args(b,tmp_path/"cloned-run")+["--campaign-root",str(clone)])
 
 
 def test_trained_n6_execution_preserves_contract_and_stops_before_due_evaluation(

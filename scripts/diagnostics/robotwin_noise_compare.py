@@ -398,6 +398,8 @@ def parse_args(argv=None):
     p.add_argument("--resume-trial-manifest",type=Path)
     p.add_argument("--resume-trial-manifest-sha256")
     p.add_argument("--lineage-source-commit")
+    p.add_argument("--lineage-parent-manifest",type=Path)
+    p.add_argument("--lineage-parent-manifest-sha256")
     p.add_argument("--max-source-trials-per-process",type=int,default=0)
     p.add_argument("--recycle-at-round-boundary",action="store_true")
     args=p.parse_args(argv)
@@ -413,6 +415,9 @@ def parse_args(argv=None):
         p.error("Episode-boundary migration requires resume, bound manifest/SHA, explicit lineage and a whole-trial campaign")
     if args.max_source_trials_per_process<0:
         p.error("Process trial lifetime must be nonnegative")
+    if (args.lineage_parent_manifest or args.lineage_parent_manifest_sha256) and not (
+            args.lineage_source_commit and args.collector_lanes>1):
+        p.error("Original parent binding is only used for trained parallel migration")
     if args.recycle_at_round_boundary and len(args.methods)!=1:
         p.error("Round-boundary process recycling requires one independently supervised source arm")
     if args.ppo_max_update_kl is not None and (
@@ -449,6 +454,9 @@ def parse_args(argv=None):
                 or args.methods[0] not in ("ppo","ppo_reset")
                 or args.max_source_trials_per_process!=6 or not args.recycle_at_round_boundary):
             p.error("Trained parallel migration requires one N6 update per process and round-boundary recycling")
+        if args.lineage_source_commit and (not args.lineage_parent_manifest
+                or not re.fullmatch(r"[0-9a-f]{64}",args.lineage_parent_manifest_sha256 or "")):
+            p.error("Trained parallel migration requires the hash-bound original parent manifest")
     elif args.collector_group_seconds is not None:
         p.error("collector-group-seconds requires parallel collection")
     if args.campaign_root and not args.record_corpus:
@@ -500,7 +508,7 @@ def main(argv=None):
     if args.collector_lanes>1:
         for name in ("model_path","norm_stats","robotwin_root","rlinf_root","output",
                      "campaign_root","campaign_prior_receipts","capture_qualification","resume",
-                     "resume_trial_manifest"):
+                     "resume_trial_manifest","lineage_parent_manifest"):
             value=getattr(args,name)
             if value is not None:setattr(args,name,value.resolve())
     resume_joint=None;resume_path=None;trial_continuation=None;trained_parallel_admission=None
@@ -527,10 +535,13 @@ def main(argv=None):
         execution_run_id=f"{args.output.parent.name}:{args.output.name}:{output_identity}"
         if args.collector_lanes>1:
             from fluffy_bassoon.meta_rl.robotwin_trained_parallel import (
-                validate_trained_parallel_boundary,validate_trained_parallel_arguments)
+                validate_trained_parallel_boundary,validate_trained_parallel_arguments,validate_lineage_parent)
             validate_trained_parallel_arguments(args,resume_joint)
+            parent_binding=validate_lineage_parent(args.lineage_parent_manifest,args.lineage_parent_manifest_sha256,
+                checkpoint=resume_joint,campaign_root=args.campaign_root,native_episodes=args.native_episodes)
             trained_parallel_admission=validate_trained_parallel_boundary(trial_continuation,resume_joint,
                 manifest_path=args.resume_trial_manifest,campaign_root=args.campaign_root)
+            trained_parallel_admission["original_parent_manifest"]=parent_binding
     elif args.collector_lanes>1 and args.resume and not parallel:
         raise ValueError("Trained parallel collection requires a hash-bound complete-update manifest")
     if sys.platform!="linux" or not torch.cuda.is_available():
