@@ -5,3 +5,5 @@
 Keep the original1024D steering arm, frozen motor, three-method matched-action protocol and1M combined RoboTwin action cap. This authorization is separate from LIBERO. Cumulative RoboTwin authorized compute: original45minutes plus120additionalminutes; measured prior use44m32s. Automatic scheduler retries disabled.
 
 Reviewed latest origin/main acca706d5e75d1da099ff7ce6fddd727dace0fba, unchanged from prepared source review. Source c3b6281c032e2c712a62191b03219b1e70e12947 remains immutable. Remote clean worktree and fresh output/ledger verified; PFS free1492031373312bytes and write probe passed. New tests and source-only optimizer calibration run first in the actual allocated container, before simulator actions.
+
+Superseded resource ceiling: the human subsequently removed the two-hour overall limit and instructed quota-driven continuation. See [current continuation authorization](CONTINUATION.md). Original bounded-approval details above are retained as dated history.
