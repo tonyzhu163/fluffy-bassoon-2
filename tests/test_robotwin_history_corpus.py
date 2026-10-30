@@ -304,3 +304,17 @@ def test_source_validation_is_explicit_fixed_policy_bc_dpt_and_never_ad(tmp_path
     assert all(case['actual_seed']>=3_000_000_000 for trial in result['source_trials'] for case in trial['cases'])
     with pytest.raises(ValueError,match='Fixed-policy source validation'):
         export_corpus(root,tmp_path/'invalid',**args)
+
+
+def test_source_validation_cannot_substitute_warmup_for_frozen_actor(tmp_path):
+    root,args=fixture(tmp_path,'sac',partition='validation')
+    path=root/'episodes/trial1-ep0/chunks/000001.json'
+    value=json.loads(path.read_text())
+    value['context'].update(policy_version='bounded_uniform_warmup',policy_checkpoint=None,
+        policy_sha256=None,policy_checkpoint_sha256=None)
+    value['decision_metadata']['source_warmup']=True
+    write_json(path,value)
+    manifest=path.parent.parent/'manifest.json'
+    value=json.loads(manifest.read_text());value['chunks'][0]['sha256']=file_sha256(path);write_json(manifest,value)
+    with pytest.raises(ValueError,match='frozen source actor, not warmup'):
+        export_corpus(root,tmp_path/'invalid',objectives=('dpt',),**args)

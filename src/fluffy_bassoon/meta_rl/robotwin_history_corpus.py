@@ -252,7 +252,8 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False, partition='train
             if metadata.get('episode_limit', horizon) != horizon or metadata.get('chunk_index') != index:
                 raise ValueError('Recorded horizon/chunk clock differs from native source contract')
             noise = decision['sampled_noise'].reshape(-1)
-            if noise.dtype != np.float32 or noise.shape != (1024,) or (np.abs(noise) > 1.5 + 1e-6).any():
+            if (noise.dtype != np.float32 or noise.shape != (1024,) or not np.isfinite(noise).all()
+                    or (np.abs(noise) > 1.5 + 1e-6).any()):
                 raise ValueError('Require physical1024D noise bounded at1.5')
             native, learning = chunk['native_result'], chunk['learning_result']
             duration = native['executed_primitive_steps']
@@ -271,6 +272,8 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False, partition='train
             if type(update) is not int or update < 0:
                 raise ValueError('Missing actual pre-action source optimizer clock')
             if version == 'bounded_uniform_warmup':
+                if partition == 'validation':
+                    raise ValueError('Source validation requires its frozen source actor, not warmup')
                 if method != 'sac' or not metadata.get('source_warmup') or ctx.get('policy_checkpoint') is not None:
                     raise ValueError('Warmup cannot be attributed to a trained actor')
             else:
