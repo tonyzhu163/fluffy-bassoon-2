@@ -16,21 +16,45 @@ from test_robotwin_trained_pair_audit import audited_round
 
 diagnostics=Path(__file__).parents[1]/"scripts/diagnostics"
 sys.path.insert(0,str(diagnostics))
+import robotwin_trained_pair_preflight as preflight
 spec=importlib.util.spec_from_file_location("continuation_tests",diagnostics/"robotwin_trained_pair_continuation.py")
 continuation=importlib.util.module_from_spec(spec);spec.loader.exec_module(continuation)
 pytestmark=pytest.mark.skipif(sys.platform!="linux",reason="Allocated Linux CPU only")
 
 
 def checkpoint(iteration,units=()):
-    return dict(contract=dict(methods=["ppo"],noise_shape=(32,32)),rng=dict(source="unchanged"),
+    if not units:units=[f"stage:iteration:{number}:complete" for number in (10,25,50,100) if number<iteration]
+    source=dict(handover_mic=600,pick_diverse_bottles=400,place_a2b_left=400,
+        place_object_stand=400,place_phone_stand=400,scan_object=500)
+    targets=dict(adjust_bottle=400,move_stapler_pad=400)
+    value=dict(contract=dict(methods=["ppo"],noise_shape=(32,32),source_tasks=list(source),eval_tasks=list(targets),
+            task_episode_limits=dict(source,**targets),eval_episodes=8,campaign=dict(source_validation_episodes=4),
+            source_iterations=dict(evaluation_iterations=[10,25,50,100])),
+        rng=dict(source="unchanged"),next_method_index=0,
         states=dict(ppo=dict(completed_source_iterations=iteration,completed_source_trials=6*iteration,
             source_steps=24*iteration,task_steps=dict(task=24*iteration),pending_rollouts=[],
             schedule=dict(trials=6*iteration,rng="unchanged"),learner=dict(
                 policy=dict(weight=torch.tensor([1.])),optimizer=dict(moment=torch.tensor([.1])),
-                sampler=dict(state=1),config=dict(reset_each_episode=False),updates=iteration,
+                sampler=dict(state=1),rng=dict(captured="source"),config=dict(reset_each_episode=False),updates=iteration,
                 optimizer_steps=5*iteration,primitive_steps=24*iteration,chunks=24*iteration))),
-        completed_units=list(units),history=[],stages={f"iteration:{number}":dict(status="complete")
+        completed_units=list(units),history=[],stages={f"iteration:{number}":dict(status="complete",source_rng_restored=True)
             for number in (10,25,50,100) if f"stage:iteration:{number}:complete" in units})
+    for number in (10,25,50,100):
+        if f"stage:iteration:{number}:complete" in units:
+            value["completed_units"].extend(row["unit"] for row in unit_plan(value,number))
+    return value
+
+
+def unit_plan(value,number):
+    return preflight.evaluation_unit_plan(value,dict(workers=dict(ppo=dict(native_episodes=1))),number)
+
+
+def history_result(row):
+    value=dict(row["history_selector"],chunks=1,primitive_steps=1)
+    if not row["native"]:
+        value.update(episodes=[dict(seed=index,chunks=1,primitive_steps=1,budget_truncated=False)
+            for index in range(row["episodes"])],primitive_steps=row["episodes"],budget_truncated=False)
+    return value
 
 
 def summary(value,*,trials,status="wall_budget_stop"):
@@ -54,6 +78,11 @@ def test_long_authority_includes_initial_subslice_and_preserves_goal(tmp_path):
                         ("qualification_capacity_reused",True),("maximum_driver_seconds",46800)):
         changed=deepcopy(authority);changed[field]=value
         with pytest.raises(ValueError):continuation.validate_authority(changed,ref)
+    smaller=deepcopy(authority);smaller["maximum_driver_seconds"]=2700
+    smaller["resources"]["scheduler_cap_seconds"]=2700
+    with pytest.raises(ValueError):continuation.validate_authority(smaller,ref)
+    smaller["resources"]["scheduler_cap_seconds"]=2880
+    continuation.validate_authority(smaller,ref)
 
 
 @pytest.mark.parametrize("start",[52,54])
@@ -67,7 +96,9 @@ def test_round100_requires_a_fresh_final_evaluation_child_then_retires():
     before=checkpoint(99,units);at100=checkpoint(100,units)
     assert continuation.classify_progress(before,at100,summary(at100,trials=6),"ppo")=="source_round"
     finished=deepcopy(at100);finished["completed_units"].append("stage:iteration:100:complete")
-    finished["stages"]["iteration:100"]=dict(status="complete")
+    finished["completed_units"].extend(row["unit"] for row in unit_plan(finished,100))
+    finished["history"].extend(history_result(row) for row in unit_plan(finished,100))
+    finished["stages"]["iteration:100"]=dict(status="complete",source_rng_restored=True)
     assert continuation.classify_progress(at100,finished,summary(finished,trials=0,status="complete"),"ppo")=="complete"
     too_far=checkpoint(101)
     with pytest.raises(ValueError,match="over-goal"):
@@ -76,8 +107,10 @@ def test_round100_requires_a_fresh_final_evaluation_child_then_retires():
 
 def test_eval_only_requires_closed_unit_progress_and_exact_source_identity():
     before=checkpoint(50);after=deepcopy(before)
-    after["completed_units"].append("stage:iteration:50:target:one-complete-K8")
-    after["history"].append(dict(complete=True))
+    unit=next(row for row in unit_plan(before,50) if row["phase"]=="target")
+    after["completed_units"].append(unit["unit"])
+    after["history"].append(history_result(unit))
+    after["states"]["ppo"]["learner"]["rng"]=dict(captured="legitimate evaluation-global snapshot")
     assert continuation.classify_progress(before,after,summary(after,trials=0),"ppo")=="evaluation_progress"
     with pytest.raises(ValueError,match="no completed"):
         continuation.classify_progress(before,before,summary(before,trials=0),"ppo")
@@ -87,13 +120,42 @@ def test_eval_only_requires_closed_unit_progress_and_exact_source_identity():
     changed=deepcopy(after);changed["states"]["ppo"]["pending_rollouts"]=["partial"]
     with pytest.raises(ValueError,match="partial"):
         continuation.classify_progress(before,changed,summary(changed,trials=0),"ppo")
+    changed=deepcopy(after);changed["completed_units"][-1]="stage:iteration:50:target:invented"
+    with pytest.raises(ValueError,match="unknown"):
+        continuation.classify_progress(before,changed,summary(changed,trials=0),"ppo")
+    changed=deepcopy(after);changed["history"][0]["episodes"].pop()
+    with pytest.raises(ValueError,match="K4/K8"):
+        continuation.classify_progress(before,changed,summary(changed,trials=0),"ppo")
+    changed=deepcopy(after);changed["next_method_index"]=1
+    with pytest.raises(ValueError,match="method cursor"):
+        continuation.classify_progress(before,changed,summary(changed,trials=0),"ppo")
+
+
+def test_fake_unit_growth_without_closed_raw_evidence_is_rejected(tmp_path):
+    before=checkpoint(50);after=deepcopy(before);unit=unit_plan(before,50)[0]
+    after["completed_units"].append(unit["unit"]);after["history"].append(history_result(unit))
+    changes=continuation.evaluation_changes(before,after,"ppo")
+    with pytest.raises(ValueError,match="raw corpus units"):continuation.verify_evaluation_raw(tmp_path,changes)
+
+
+def test_legal_stage_only_closure_needs_all_units_and_completed_report():
+    before=checkpoint(100,[f"stage:iteration:{number}:complete" for number in (10,25,50)])
+    before["completed_units"].extend(row["unit"] for row in unit_plan(before,100))
+    final=deepcopy(before);final["completed_units"].append("stage:iteration:100:complete")
+    final["stages"]["iteration:100"]=dict(status="complete",source_rng_restored=True)
+    assert continuation.classify_progress(before,final,summary(final,trials=0,status="complete"),"ppo")=="complete"
+    final["stages"]["iteration:100"]["status"]="evaluating"
+    with pytest.raises(ValueError,match="stage marker"):
+        continuation.classify_progress(before,final,summary(final,trials=0,status="complete"),"ppo")
 
 
 def test_cleanup_subset_keeps_other_live_arm_untouched(tmp_path,monkeypatch):
     module=sys.modules[continuation._Guardian.__module__]
     live={101:[dict(pid=101)],202:[dict(pid=202)]};signals=[]
     monkeypatch.setattr(module,"session_members",lambda identity:live[identity["pid"]])
-    def signal(identity,number,**kwargs):signals.append(identity["pid"]);live[identity["pid"]]=[]
+    def signal(identity,number,**kwargs):
+        assert guardian.sessions==[first,other]  # Fatal cleanup always retains the full registry.
+        signals.append(identity["pid"]);live[identity["pid"]]=[]
     monkeypatch.setattr(module,"_signal",signal)
     class Process:
         def poll(self):return 0
@@ -105,6 +167,19 @@ def test_cleanup_subset_keeps_other_live_arm_untouched(tmp_path,monkeypatch):
     receipt=guardian.cleanup_subset([first])
     assert receipt["clean"] and signals==[101] and live[202]==[dict(pid=202)]
     assert guardian.sessions==[other] and receipt["sessions"][0]["name"]=="ppo"
+
+
+def test_interrupted_subset_cleanup_retains_both_arms_for_fatal_cleanup(tmp_path,monkeypatch):
+    module=sys.modules[continuation._Guardian.__module__]
+    monkeypatch.setattr(module,"session_members",lambda identity:[dict(pid=identity["pid"])])
+    def interrupted(*args,**kwargs):raise KeyboardInterrupt("test signal during subset cleanup")
+    monkeypatch.setattr(module,"_signal",interrupted)
+    first=dict(name="ppo",identity=dict(pid=101));other=dict(name="ppo_reset",identity=dict(pid=202))
+    guardian=object.__new__(continuation.ContinuationGuardian)
+    guardian.sessions=[first,other];guardian.deadline=time.monotonic()+30
+    guardian.output=tmp_path;guardian.failed=False;guardian.cleanup_number=0
+    with pytest.raises(KeyboardInterrupt):guardian.cleanup_subset([first])
+    assert guardian.sessions==[first,other] and guardian.failed
 
 
 def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeypatch):
@@ -126,7 +201,9 @@ def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeyp
             events.append(request["purpose"])
             if request["purpose"]=="cpu_preflight":
                 (self.output/"initial-preflight.json").write_text(json.dumps(dict(status="passed",cuda_initialized=False,
-                    plan=continuation.binding(plan))))
+                    plan=continuation.binding(plan),allow_source_goal_boundary=True,methods={method:dict(
+                        checkpoint=ref,completed_units=[],stage_statuses={},source_goal_complete=False,has_pending_eval=False)
+                        for method in continuation.METHODS})))
             else:
                 self.probe=dict(devices=[dict(cuda_total_bytes=96*(1<<30))]);self.probe_binding=dict(uuid="GPU-test")
         def launch(self,name,command,cwd,environment,log):
@@ -136,9 +213,10 @@ def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeyp
                 kind="complete" if number==100 else "source_round";new=number if number==100 else number+1
                 item=None if kind=="complete" else dict(manifest=ref,checkpoint=ref,frozen_motor=ref,iteration=new)
                 (directory/"audit.json").write_text(json.dumps(dict(status="passed_owned_child",method=method,
-                    kind=kind,iteration=new,next_input=item)))
+                    kind=kind,iteration=new,next_input=item,final_checkpoint=ref,completed_units=[],stage_statuses={})))
             else:events.append((method,number));assert command[command.index("--max-source-trials-per-process")+1]=="6"
-            entry=dict(name=name,process=Process(0 if method=="ppo" else 2));self.sessions.append(entry);return entry
+            identity=dict(pid=len(events)+10,sid=len(events)+10,pgid=len(events)+10,start_ticks=123,uid=0)
+            entry=dict(name=name,identity=identity,process=Process(0 if method=="ppo" else 2));self.sessions.append(entry);return entry
         def cleanup_subset(self,entries):
             for entry in entries:self.sessions.remove(entry)
             return dict(clean=True)
@@ -151,6 +229,45 @@ def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeyp
     assert [event[1] for event in events if isinstance(event,tuple) and event[0]=="ppo"]==[99,100]
     assert [event[1] for event in events if isinstance(event,tuple) and event[0]=="ppo_reset"]==[97,98,99,100]
     assert result["arms"]["ppo"]["children"]==2 and result["arms"]["ppo_reset"]["children"]==4
+    launch=json.loads((output/"ppo/slice-001/launch.json").read_text())
+    assert launch["identity"]["start_ticks"]==123 and launch["runtime_commit"]==continuation.RUNTIME
+    assert launch["prior_audit"]["sha256"]==continuation.sha(output/"ppo/slice-000/audit.json")
+    for name in ("child-cleanup.json","audit-cleanup.json","audit-launch.json"):
+        assert (output/"ppo/slice-000"/name).is_file()
+    assert not (output/"ppo/slice-000/owned-cleanup.json").exists()
+
+
+def test_initial_goal100_can_retire_one_arm_or_require_final_evaluation():
+    initial=dict(methods={method:dict(checkpoint="bound") for method in continuation.METHODS})
+    admitted=dict(methods={method:dict(source_goal_complete=True,has_pending_eval=method=="ppo_reset",
+        checkpoint="bound",completed_units=[],stage_statuses={}) for method in continuation.METHODS})
+    states=continuation.initial_arm_states(initial,admitted)
+    assert states["ppo"]["complete"] and states["ppo"]["input"] is None
+    assert not states["ppo_reset"]["complete"] and states["ppo_reset"]["input"]==initial["methods"]["ppo_reset"]
+
+
+def test_fresh_deadline_check_after_other_arm_cleanup(monkeypatch):
+    arms=dict(ppo=dict(entry=None),ppo_reset=dict(entry=object(),stage="audit",deadline=10.))
+    monkeypatch.setattr(continuation.time,"monotonic",lambda:11.)
+    with pytest.raises(TimeoutError,match="audit deadline"):continuation.check_active_deadlines(arms)
+
+
+def test_initially_complete_pair_exits_before_probe_or_any_model(tmp_path):
+    initial=dict(worktree=str(tmp_path),methods={method:dict(checkpoint="bound") for method in continuation.METHODS})
+    plan=tmp_path/"plan.json";plan.write_text(json.dumps(initial));output=tmp_path/"output";output.mkdir()
+    class Guardian(continuation.ContinuationGuardian):
+        def bounded(self,request):
+            assert request["purpose"]=="cpu_preflight"
+            (self.output/"initial-preflight.json").write_text(json.dumps(dict(status="passed",cuda_initialized=False,
+                plan=continuation.binding(plan),allow_source_goal_boundary=True,methods={method:dict(
+                    source_goal_complete=True,has_pending_eval=False,checkpoint="bound",completed_units=[],stage_statuses={})
+                    for method in continuation.METHODS})))
+        def launch(self,*args,**kwargs):raise AssertionError("No model launch for completed goals")
+        def sample_gpu(self,*args):raise AssertionError("No GPU query/probe for completed goals")
+    guardian=Guardian(dict(parent_pid=1,output=str(output),deadline=time.monotonic()+10000,cleanup_reserve=180))
+    result=guardian.continuation(dict(initial_plan=continuation.binding(plan),launcher=str(tmp_path),env={}))
+    assert result["no_gpu_needed"] and result["probe"] is None
+    assert all(row["complete"] and row["children"]==0 for row in result["arms"].values())
 
 
 def test_continuation_reuses_real_one_round_c353_audit(audited_round,monkeypatch):
@@ -162,3 +279,5 @@ def test_continuation_reuses_real_one_round_c353_audit(audited_round,monkeypatch
     assert result["kind"]=="source_round" and result["iteration"]==2
     assert result["audit"]["optimizer_step_increment"]==5 and result["audit"]["source_actions"]==24
     assert result["next_input"]["checkpoint"]==result["audit"]["checkpoint"]
+    assert result["final_checkpoint"]==result["audit"]["checkpoint"]
+    assert result["stage_statuses"]["iteration:1"]=="complete"

@@ -77,6 +77,43 @@ def input_due_evaluation(checkpoint):
     return due
 
 
+def evaluation_unit_plan(checkpoint,parent,iteration):
+    """Original570 evaluation keys, case IDs and indivisible result shapes."""
+    contract=checkpoint["contract"];method,=contract["methods"]
+    limits=contract["task_episode_limits"];native_episodes=parent["workers"][method]["native_episodes"]
+    prefix=f"stage:iteration:{iteration}:";units=[]
+    def add(unit,trial_id,phase,task,episodes,*,native=False,**selector):
+        if episodes:
+            units.append(dict(unit=unit,trial_id=trial_id,phase=phase,task=task,episodes=episodes,native=native,
+                maximum_actions=episodes*limits[task],history_selector=dict(phase=phase,task=task,
+                    stage_source_iteration=iteration,**selector)))
+    for task in contract["source_tasks"]:
+        add(prefix+f"source_validation:{method}:{task}",prefix+f"source-validation:{method}:{task}",
+            "source_validation",task,contract["campaign"]["source_validation_episodes"],method=method)
+    for task in contract["eval_tasks"]:
+        for phase in ("native_before_target","native_after"):
+            for index in range(native_episodes):
+                add(prefix+f"{phase}:native:{task}:{index}",prefix+f"{phase}:{task}:{index}",
+                    phase,task,1,native=True,method="native",episode=index+1)
+        for lesion in (("normal",) if method=="ppo_reset" else ("normal","memory_reset","reward_blind")):
+            unit=prefix+f"target:{method}:{lesion}:{task}:0"
+            add(unit,unit,"target",task,contract["eval_episodes"],method=method,lesion=lesion,repetition=0)
+    return units
+
+
+def remaining_evaluation_units(checkpoint,parent):
+    """Exact worst-case allowance for original units not already committed."""
+    completed=set(checkpoint.get("completed_units",[]))
+    return [row for iteration in input_due_evaluation(checkpoint)
+        for row in evaluation_unit_plan(checkpoint,parent,iteration) if row["unit"] not in completed]
+
+
+def source_goal_admission(cursor,*,allow_source_goal_boundary=False):
+    require(type(cursor) is int and 0<cursor<=100 and (allow_source_goal_boundary or cursor<100),
+            "source stream already reached its original goal")
+    return 0 if cursor==100 else 10800
+
+
 def ledger_view(root,*,expected_snapshot):
     """Read an already locked canonical ledger; no ledger constructor/writer."""
     path=root/"snapshot.json";snapshot=json.loads(path.read_text())
@@ -117,7 +154,7 @@ def runtime_evidence(args,parent,checkpoint):
     return refs
 
 
-def run_preflight(plan_path,plan_sha256):
+def run_preflight(plan_path,plan_sha256,*,allow_source_goal_boundary=False):
     require(os.environ.get("CUDA_VISIBLE_DEVICES")=="","CUDA_VISIBLE_DEVICES must be explicitly empty")
     plan_path=bound(dict(path=str(Path(plan_path).resolve()),sha256=plan_sha256))
     plan=json.loads(plan_path.read_text())
@@ -175,7 +212,8 @@ def run_preflight(plan_path,plan_sha256):
         audit=validate_trained_parallel_boundary(continuation,checkpoint,manifest_path=manifest_path,campaign_root=root)
         runtime_refs=runtime_evidence(args,parent,checkpoint)
         artifact_refs.extend(runtime_refs.values())
-        require(audit["completed_source_iterations"]<100,"source stream already reached its original goal")
+        cursor=audit["completed_source_iterations"]
+        required_source=source_goal_admission(cursor,allow_source_goal_boundary=allow_source_goal_boundary)
         motor=json.loads(motor_path.read_text());fingerprint=checkpoint["contract"]["capture_qualification"]["frozen_fingerprint"]
         require(motor.get("unchanged") is True and motor.get("before")==motor.get("after")==fingerprint,
                 "frozen motor differs from qualified lineage")
@@ -195,12 +233,17 @@ def run_preflight(plan_path,plan_sha256):
                 "bound predecessor header differs from original worker/contract")
         snapshots[method]=previous_snapshot
         due=input_due_evaluation(checkpoint)
+        remaining_units=remaining_evaluation_units(checkpoint,parent) if allow_source_goal_boundary else None
         rows[method]=dict(manifest=item["manifest"],checkpoint=item["checkpoint"],frozen_motor=item["frozen_motor"],
             output=str(output),canonical_root=str(root),trained_boundary=audit,input_due_evaluations=due,
             runtime_evidence=runtime_refs,
-            maximum_input_due_evaluation_actions=(31600 if method=="ppo" else 17200) if due else 0,
-            completed_units=checkpoint.get("completed_units",[]),command=command,
-            collector_lanes=6,new_source_trials=6,episodes_per_trial=4,new_optimizer_steps=5,
+            maximum_input_due_evaluation_actions=(sum(unit["maximum_actions"] for unit in remaining_units)
+                if remaining_units is not None else (31600 if method=="ppo" else 17200) if due else 0),
+            source_goal_complete=cursor==100,has_pending_eval=bool(due),remaining_evaluation_units=remaining_units,
+            required_source_actions=required_source,completed_units=checkpoint.get("completed_units",[]),
+            stage_statuses={key:value["status"] for key,value in checkpoint.get("stages",{}).items()},command=command,
+            collector_lanes=6,new_source_trials=0 if cursor==100 else 6,episodes_per_trial=4,
+            new_optimizer_steps=0 if cursor==100 else 5,
             original_goal=100,original_evaluation_iterations=[10,25,50,100])
     require(roots["ppo"]!=roots["ppo_reset"],"independent learners require distinct original ledgers")
     require(Path(plan["methods"]["ppo"]["output"]).resolve()!=Path(plan["methods"]["ppo_reset"]["output"]).resolve(),
@@ -225,7 +268,8 @@ def run_preflight(plan_path,plan_sha256):
             rows[method]["owner_released_head"]=released_head
             source_remaining=view["source_caps"][method]-view["by_method"].get("source/"+method,0)
             total_remaining=view["total_action_cap"]-view["charged_actions"]
-            required_source=10800;required_evaluation=rows[method]["maximum_input_due_evaluation_actions"]
+            required_source=rows[method]["required_source_actions"]
+            required_evaluation=rows[method]["maximum_input_due_evaluation_actions"]
             require(source_remaining>=required_source and total_remaining>=required_source+required_evaluation,
                     "original residual physical allowance cannot fit full N6 and input-due evaluation")
             rows[method]["physical_admission"]=dict(remaining_source_actions=source_remaining,
@@ -246,6 +290,7 @@ def run_preflight(plan_path,plan_sha256):
         owner_release=plan["owner_release"],compute_binding=plan["compute_binding"],methods=rows,
         ledger_before=before,ledger_after=after,cuda_visible_devices="",cuda_initialized=False,
         campaign_budget_constructed=False,source_mutations=False,
+        allow_source_goal_boundary=allow_source_goal_boundary,
         policy="root launcher separately validates release/compute authorization and bounds this process externally")
 
 
@@ -255,9 +300,11 @@ def main(argv=None):
     parser.add_argument("--plan-sha256",required=True)
     parser.add_argument("--receipt",type=Path,required=True)
     parser.add_argument("--mode",choices=("before",),default="before")
+    parser.add_argument("--allow-source-goal-boundary",action="store_true",
+        help="Future production continuation only; permit completed source100 with remaining original evaluation")
     args=parser.parse_args(argv)
     require(not args.receipt.exists(),"receipt must be fresh")
-    try:receipt=run_preflight(args.plan,args.plan_sha256)
+    try:receipt=run_preflight(args.plan,args.plan_sha256,allow_source_goal_boundary=args.allow_source_goal_boundary)
     except BaseException as error:
         receipt=dict(schema="robotwin_trained_pair_preflight_v1",mode=args.mode,status="rejected",
             plan=dict(path=str(args.plan.resolve()),sha256=args.plan_sha256),

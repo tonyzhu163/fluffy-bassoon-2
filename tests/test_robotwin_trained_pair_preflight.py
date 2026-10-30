@@ -123,6 +123,36 @@ def test_fixed_production_pins_have_no_cli_overrides():
     assert preflight.PARENT_SHA256=="1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
 
 
+def test_goal_boundary_admission_is_explicit_and_default_remains_one_round():
+    assert preflight.source_goal_admission(53)==10800
+    with pytest.raises(ValueError,match="original goal"):preflight.source_goal_admission(100)
+    assert preflight.source_goal_admission(100,allow_source_goal_boundary=True)==0
+    with pytest.raises(ValueError):preflight.source_goal_admission(101,allow_source_goal_boundary=True)
+
+
+@pytest.mark.parametrize("method,native,maximum",[("ppo",1,31600),("ppo_reset",0,17200)])
+def test_partial_final_evaluation_reserves_only_uncommitted_original_units(method,native,maximum):
+    source=dict(handover_mic=600,pick_diverse_bottles=400,place_a2b_left=400,
+        place_object_stand=400,place_phone_stand=400,scan_object=500)
+    targets=dict(adjust_bottle=400,move_stapler_pad=400)
+    ck=dict(contract=dict(methods=[method],source_iterations=dict(evaluation_iterations=[10,25,50,100]),
+        task_episode_limits=dict(source,**targets),source_tasks=list(source),eval_tasks=list(targets),
+        eval_episodes=8,campaign=dict(source_validation_episodes=4)),
+        states={method:dict(completed_source_iterations=100)},
+        completed_units=[f"stage:iteration:{number}:complete" for number in (10,25,50)],
+        stages={f"iteration:{number}":dict(status="complete") for number in (10,25,50)})
+    parent=dict(workers={method:dict(native_episodes=native)})
+    remaining=preflight.remaining_evaluation_units(ck,parent)
+    assert sum(row["maximum_actions"] for row in remaining)==maximum
+    ck["completed_units"] +=[f"stage:iteration:100:source_validation:{method}:handover_mic",
+        f"stage:iteration:100:target:{method}:normal:adjust_bottle:0"]
+    if native:ck["completed_units"].append("stage:iteration:100:native_before_target:native:adjust_bottle:0")
+    remaining=preflight.remaining_evaluation_units(ck,parent)
+    assert sum(row["maximum_actions"] for row in remaining)==maximum-2400-3200-400*native
+    ck["completed_units"].append("stage:iteration:100:complete");ck["stages"]["iteration:100"]=dict(status="complete")
+    assert preflight.remaining_evaluation_units(ck,parent)==[]
+
+
 def test_complete_pair_passes_without_ledger_mutation_or_cuda(prepared_pair):
     receipt=execute(prepared_pair)
     assert receipt["status"]=="passed" and receipt["ledger_before"]==receipt["ledger_after"]

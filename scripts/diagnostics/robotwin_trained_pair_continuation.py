@@ -4,6 +4,9 @@
 One fresh admission plan, one initial idle probe, and independent fresh570
 children. Every child still loads its motor and performs native parity. No
 allocation, source-owner control, fresh learner, or automatic failed retry.
+An already complete arm needs an OWNER-ISSUED current whole-boundary manifest
+for its final post-evaluation checkpoint/head.570 produces no final manifest;
+never reuse the earlier source100 pre-evaluation manifest after its head moved.
 """
 from __future__ import annotations
 
@@ -37,6 +40,30 @@ MINIMUM_CHILD_REMAINING=1200
 def binding(path):return dict(path=str(Path(path).resolve()),sha256=sha(path))
 
 
+def initial_arm_states(initial,admitted):
+    states={}
+    for method in METHODS:
+        row=admitted["methods"][method]
+        complete=row["source_goal_complete"] and not row["has_pending_eval"]
+        states[method]=dict(input=None if complete else initial["methods"][method],number=0,entry=None,
+            complete=complete,parked=False,final_checkpoint=row["checkpoint"],
+            completed_units=row["completed_units"],stage_statuses=row["stage_statuses"])
+    return states
+
+
+def arm_result(state):
+    return dict(complete=state["complete"],children=state["number"],next_input=state["input"],
+        last_audit=state.get("last_audit"),final_checkpoint=state.get("final_checkpoint"),
+        completed_units=state.get("completed_units",[]),stage_statuses=state.get("stage_statuses",{}))
+
+
+def check_active_deadlines(arms):
+    now=time.monotonic()
+    for state in arms.values():
+        if state.get("entry") is not None and now>=state["deadline"]:
+            raise TimeoutError("Owned "+state["stage"]+" deadline; no automatic retry")
+
+
 def validate_authority(value,initial_ref):
     require(value["schema"]=="robotwin_trained_pair_continuation_authority_v1"
         and value["runtime_commit"]==RUNTIME and value["lineage_commit"]==LINEAGE
@@ -49,7 +76,7 @@ def validate_authority(value,initial_ref):
     require({key:resources[key] for key in ("gpus","cpus","memory_gib","shared_memory_gib")}
         =={key:RESOURCES[key] for key in ("gpus","cpus","memory_gib","shared_memory_gib")}
         and type(resources["scheduler_cap_seconds"]) is int
-        and 2700<=resources["scheduler_cap_seconds"]<=MAX_ALLOCATION,
+        and 2880<=resources["scheduler_cap_seconds"]<=MAX_ALLOCATION,
         "continuation resource/operational ceiling differs")
     require(type(value["maximum_driver_seconds"]) is int
         and 2700<=value["maximum_driver_seconds"]<=min(MAX_DRIVER,resources["scheduler_cap_seconds"]-180)
@@ -73,6 +100,7 @@ def classify_progress(before,final,summary,method):
     units=set(final["completed_units"]);old_units=set(before["completed_units"])
     require(old_units<=units and final["history"][:len(before["history"])]==before["history"],
         "completed evaluation state regressed")
+    require(final["next_method_index"]==before["next_method_index"],"coordinator method cursor changed")
     for key,stage in before["stages"].items():
         if stage.get("status")=="complete":require(final["stages"].get(key)==stage,"completed stage changed")
     delta=new["completed_source_iterations"]-old["completed_source_iterations"]
@@ -89,6 +117,7 @@ def classify_progress(before,final,summary,method):
             "evaluation altered trained source learner: "+key)
     require(artifact_digest(new["schedule"])==artifact_digest(old["schedule"])
         and artifact_digest(final["rng"])==artifact_digest(before["rng"]),"evaluation consumed source RNG/task stream")
+    evaluation_changes(before,final,method)
     if summary["status"]=="complete":
         require(new["completed_source_iterations"]==100 and all(
             f"stage:iteration:{number}:complete" in units for number in (10,25,50,100)),
@@ -97,6 +126,66 @@ def classify_progress(before,final,summary,method):
     require(summary["status"]=="wall_budget_stop" and units>old_units,
         "zero-source child made no completed evaluation-unit progress")
     return "evaluation_progress"
+
+
+def evaluation_changes(before,final,method):
+    """Match only original completed units to their newly committed results."""
+    from robotwin_trained_pair_preflight import evaluation_unit_plan
+    cursor=before["states"][method]["completed_source_iterations"]
+    parent=dict(workers={method:dict(native_episodes=1 if method=="ppo" else 0)})
+    plans={number:evaluation_unit_plan(before,parent,number)
+        for number in before["contract"]["source_iterations"]["evaluation_iterations"]}
+    units=set(final["completed_units"]);old=set(before["completed_units"])
+    allowed={row["unit"]:row for row in plans.get(cursor,[])}
+    marker=f"stage:iteration:{cursor}:complete"
+    require(units-old<=set(allowed)|{marker},"unknown or out-of-order evaluation unit")
+    for number,plan in plans.items():
+        if f"stage:iteration:{number}:complete" in units:
+            stage=final["stages"].get(f"iteration:{number}",{})
+            require(stage.get("status")=="complete" and stage.get("source_rng_restored") is True
+                and {row["unit"] for row in plan}<=units,"stage marker lacks completed original units/report")
+    histories=final["history"][len(before["history"]):];changes=[]
+    new_physical=units-old-{marker}
+    require(len(histories)==len(new_physical),"evaluation unit/history count differs")
+    for unit in sorted(new_physical):
+        row=allowed[unit];selector=row["history_selector"]
+        matches=[history for history in histories if all(history.get(key)==value for key,value in selector.items())]
+        require(len(matches)==1,"completed evaluation unit has no unique result history")
+        history=matches[0]
+        if row["native"]:
+            require(history.get("chunks",0)>0 and 0<=history["primitive_steps"]<=row["maximum_actions"],
+                "native evaluation result is not a complete physical episode")
+        else:
+            episodes=history.get("episodes",[])
+            require(len(episodes)==row["episodes"] and not history.get("budget_truncated",False)
+                and all(episode.get("chunks",0)>0 and not episode.get("budget_truncated",False) for episode in episodes)
+                and history["primitive_steps"]==sum(episode["primitive_steps"] for episode in episodes)
+                and 0<=history["primitive_steps"]<=row["maximum_actions"],"evaluation result lost a whole K4/K8 unit")
+        changes.append(dict(row,history=history))
+    return changes
+
+
+def verify_evaluation_raw(output,changes):
+    """Whole closed corpus episodes must exactly cover new result units."""
+    grouped={}
+    for path in (Path(output)/"corpus/episodes").glob("*/reset.json"):
+        reset=json.loads(path.read_text());manifest=json.loads((path.parent/"manifest.json").read_text())
+        if manifest["completed_chunks"]:
+            context=reset["context"];grouped.setdefault(context["trial_id"],[]).append((reset,manifest))
+    require(set(grouped)=={row["trial_id"] for row in changes},"new raw corpus units differ from completed evaluation results")
+    for row in changes:
+        episodes=grouped[row["trial_id"]]
+        require(len(episodes)==row["episodes"] and all(reset["reset_info"]["task"]==row["task"]
+            and reset["context"]["phase"]==row["phase"]
+            and reset["context"]["method"]==row["history_selector"]["method"] for reset,_ in episodes),
+            "raw evaluation unit task/method/episode count differs")
+        history=row["history"]
+        require(sum(manifest["executed_primitive_steps"] for _,manifest in episodes)==history["primitive_steps"],
+            "raw/result evaluation action count differs")
+        if not row["native"]:
+            require(sorted((reset["reset_info"]["requested_seed"],manifest["executed_primitive_steps"])
+                for reset,manifest in episodes)==sorted((episode["seed"],episode["primitive_steps"])
+                for episode in history["episodes"]),"raw evaluation episode seed/count provenance differs")
 
 
 def audit_child(request):
@@ -123,6 +212,12 @@ def audit_child(request):
         normal=audit_arm(plan,method)  # Qualifiedc353 full corpus/replay/ACK/case/phase audit.
         next_ref=normal["next_manifest"]
     else:
+        migration=json.loads((output/"execution-migration.json").read_text())
+        require(migration["execution_source_commit"]==RUNTIME and migration["lineage_source_commit"]==LINEAGE
+            and migration["manifest_sha256"]==arm["manifest"]["sha256"]
+            and migration["checkpoint"]==arm["checkpoint"]
+            and Path(migration["manifest_path"]).resolve()==Path(arm["manifest"]["path"]).resolve(),
+            "evaluation migration ancestry differs")
         assert_resume_allowed(path,checkpoint=final)
         assert_campaign_checkpoint_fence(ledger_root(method),final)
         require(not list((output/"production-vector").glob("group-*.json")),"evaluation child dispatched a source group")
@@ -136,6 +231,7 @@ def audit_child(request):
             delta=current["by_phase"].get(phase,0)-old_ledger["by_phase"].get(phase,0)
             require(0<=delta<=maximum.get(phase,0),"evaluation borrowed another original phase")
         corpus=audit_corpus(output/"corpus")
+        verify_evaluation_raw(output,evaluation_changes(before,final,method))
         require(corpus["actual_actions"]==current["actual_actions"]-old_ledger["actual_actions"]
             and corpus["source_actions"]==0,"evaluation raw/physical action totals differ")
         next_ref=summary.get("continuation_manifest")
@@ -160,6 +256,8 @@ def audit_child(request):
         fcntl.flock(lock.fileno(),fcntl.LOCK_UN)
     return dict(status="passed_owned_child",kind=kind,method=method,output=str(output),
         iteration=final["states"][method]["completed_source_iterations"],audit=normal,canonical_view=view,
+        final_checkpoint=binding(path),completed_units=final["completed_units"],
+        stage_statuses={key:value["status"] for key,value in final["stages"].items()},
         next_input=None if kind=="complete" else dict(manifest=next_ref,
             checkpoint=read_ref(next_ref)["checkpoint"],frozen_motor=binding(output/"frozen-motor.json")))
 
@@ -167,12 +265,20 @@ def audit_child(request):
 class ContinuationGuardian(_Guardian):
     """One independent guardian owns every fresh child and bounded CPU helper."""
     def cleanup_subset(self,entries):
-        all_entries=self.sessions;selected={id(entry) for entry in entries}
-        self.sessions=[entry for entry in all_entries if id(entry) in selected]
-        try:result=super().cleanup(graceful=False)
+        selected={id(entry) for entry in entries}
+        require(selected<={id(entry) for entry in self.sessions},"cleanup includes an unowned entry")
+        # Keep the canonical registry intact even if TERM/INT interrupts any
+        # instruction below. A separate view applies the passed cleanup logic
+        # only to the selected SIDs; fatal outer cleanup still sees BOTH arms.
+        view=object.__new__(_Guardian)
+        view.sessions=list(entries);view.deadline=self.deadline;view.output=self.output
+        self.cleanup_number+=1  # Reserve even if a fatal signal interrupts the proxy.
+        view.failed=False;view.cleanup_number=self.cleanup_number-1
+        try:result=view.cleanup(graceful=False)
         except BaseException:
-            self.sessions=all_entries;raise
-        self.sessions=[entry for entry in all_entries if id(entry) not in selected]
+            self.failed=True;raise
+        finally:self.cleanup_number=max(self.cleanup_number,view.cleanup_number)
+        self.sessions=[entry for entry in self.sessions if id(entry) not in selected]
         return result
 
     def continuation(self,request):
@@ -181,19 +287,27 @@ class ContinuationGuardian(_Guardian):
         preflight=self.output/"initial-preflight.json"
         self.bounded(dict(purpose="cpu_preflight",command=[str(PYTHON),str(launcher/"scripts/diagnostics/robotwin_trained_pair_preflight.py"),
             "--plan",request["initial_plan"]["path"],"--plan-sha256",request["initial_plan"]["sha256"],
-            "--receipt",str(preflight),"--mode","before"],cwd=str(launcher),env=environment,
+            "--receipt",str(preflight),"--mode","before","--allow-source-goal-boundary"],cwd=str(launcher),env=environment,
             log_path=str(self.output/"initial-preflight.log"),timeout_seconds=90))
         admitted=json.loads(preflight.read_text());require(admitted["status"]=="passed" and not admitted["cuda_initialized"]
-            and admitted["plan"]["sha256"]==request["initial_plan"]["sha256"],
+            and admitted["plan"]["sha256"]==request["initial_plan"]["sha256"]
+            and admitted["allow_source_goal_boundary"] is True,
             "full initial CPU admission failed")
+        arms=initial_arm_states(initial,admitted)
+        for method,state in arms.items():
+            if state["complete"]:atom(self.output/(method+"-latest.json"),arm_result(state))
+        if all(state["complete"] for state in arms.values()):
+            return dict(status="complete",arms={method:arm_result(state) for method,state in arms.items()},
+                probe=None,final_gpu=None,automatic_failed_retries=0,no_gpu_needed=True)
         self.probe_path=self.output/"gpu-probe.json"
         self.bounded(dict(purpose="gpu_probe",command=[str(PYTHON),str(worktree/"scripts/[train]gpu_probe.py"),
             "--expected-count","1","--purpose","training","--baige-container","--output",str(self.probe_path)],
             cwd=str(worktree),env=environment,log_path=str(self.output/"gpu-probe.log"),timeout_seconds=90))
         environment.update(LYCO_BAIGE_GPU_MAP=str(self.probe_path),LYCO_BAIGE_ISOLATED_UUID=self.probe_binding["uuid"])
         require(90*(1<<30)<=self.probe["devices"][0]["cuda_total_bytes"]<=100*(1<<30),"reviewed96GB GPU required")
-        arms={method:dict(input=initial["methods"][method],number=0,entry=None,complete=False,parked=False) for method in METHODS}
         def start_child(method,state):
+            if state["complete"]:return
+            check_active_deadlines(arms)
             if self.work_deadline-time.monotonic()<MINIMUM_CHILD_REMAINING:
                 state["parked"]=True;return
             plan=deepcopy(initial)
@@ -208,34 +322,58 @@ class ContinuationGuardian(_Guardian):
             state["request"]=dict(method=method,input=state["input"],output=str(output),worktree=str(worktree))
             atom(directory/"input.json",state["request"])
             env=dict(environment,FB2_ROBOTWIN_RENDER_RECORDS=str(output/"renderer-bindings"))
-            state.update(entry=self.launch(method,command,str(worktree),env,directory/"console.log"),stage="child",
-                deadline=min(self.work_deadline-90,time.monotonic()+plan["child_wall_seconds"]+120),directory=directory)
+            deadline=min(self.work_deadline-90,time.monotonic()+plan["child_wall_seconds"]+120)
+            prior=state.get("last_audit_ref")
+            if prior:require(sha(prior["path"])==prior["sha256"],"prior owned audit changed before respawn")
+            launch=dict(status="dispatch_pending",runtime_commit=RUNTIME,method=method,slice=state["number"],
+                command=command,input=state["input"],input_receipt=binding(directory/"input.json"),
+                initial_admission=binding(preflight),prior_audit=prior,authority=request.get("authority"),
+                wall_seconds=plan["child_wall_seconds"],deadline=deadline,identity=None)
+            atom(directory/"launch.json",launch)  # Durable exact intent precedes Popen.
+            check_active_deadlines(arms)
+            entry=self.launch(f"{method}-slice-{state['number']:03d}",command,str(worktree),env,directory/"console.log")
+            launch.update(status="running",identity=entry["identity"]);atom(directory/"launch.json",launch)
+            state.update(entry=entry,stage="child",deadline=deadline,directory=directory)
         for method,state in arms.items():start_child(method,state)
         with (self.output/"gpu-memory.jsonl").open("x",buffering=1) as trace:
             while any(state["entry"] is not None for state in arms.values()):
-                self.parent_alive();now=time.monotonic()
+                self.parent_alive()
                 for method,state in arms.items():
                     entry=state["entry"]
                     if entry is None:continue
                     code=entry["process"].poll()
-                    if now>=state["deadline"]:raise TimeoutError("Owned "+state["stage"]+" deadline; no automatic retry")
+                    if time.monotonic()>=state["deadline"]:raise TimeoutError("Owned "+state["stage"]+" deadline; no automatic retry")
                     if code is None:continue
                     require(code==0,"owned child/audit failed; no automatic retry")
                     cleanup=self.cleanup_subset([entry])
+                    state["entry"]=None
+                    check_active_deadlines(arms)
                     if state["stage"]=="child":
+                        require(time.monotonic()+90<=self.work_deadline,"no complete CPU audit window remains")
+                        atom(state["directory"]/"child-cleanup.json",cleanup)
+                        state["request"].update(owned_launch=binding(state["directory"]/"launch.json"),
+                            owned_cleanup=binding(state["directory"]/"child-cleanup.json"))
+                        atom(state["directory"]/"audit-input.json",state["request"])
                         receipt=state["directory"]/"audit.json"
                         command=[str(PYTHON),str(Path(__file__).resolve()),"--audit-child",
-                            str(state["directory"]/"input.json"),"--receipt",str(receipt)]
-                        state.update(entry=self.launch(method+"-audit",command,str(launcher),
-                            dict(environment,CUDA_VISIBLE_DEVICES=""),state["directory"]/"audit.log"),
+                            str(state["directory"]/"audit-input.json"),"--receipt",str(receipt)]
+                        check_active_deadlines(arms)
+                        audit_entry=self.launch(f"{method}-slice-{state['number']:03d}-audit",command,str(launcher),
+                            dict(environment,CUDA_VISIBLE_DEVICES=""),state["directory"]/"audit.log")
+                        atom(state["directory"]/"audit-launch.json",dict(command=command,identity=audit_entry["identity"],
+                            runtime_commit=RUNTIME,source_launch=state["request"]["owned_launch"]))
+                        state.update(entry=audit_entry,
                             stage="audit",deadline=min(self.work_deadline,time.monotonic()+90))
                     else:
                         result=json.loads((state["directory"]/"audit.json").read_text())
                         require(result["status"]=="passed_owned_child" and result["method"]==method,"child audit identity differs")
-                        atom(state["directory"]/"owned-cleanup.json",cleanup)
+                        atom(state["directory"]/"audit-cleanup.json",cleanup)
                         state.update(entry=None,input=result["next_input"],number=state["number"]+1,
-                            complete=result["kind"]=="complete",last_audit=result)
-                        atom(self.output/(method+"-latest.json"),dict(complete=state["complete"],next_input=state["input"],audit=result))
+                            complete=result["kind"]=="complete",last_audit=result,
+                            last_audit_ref=binding(state["directory"]/"audit.json"),
+                            final_checkpoint=result["final_checkpoint"],completed_units=result["completed_units"],
+                            stage_statuses=result["stage_statuses"])
+                        atom(self.output/(method+"-latest.json"),arm_result(state))
                         if not state["complete"]:start_child(method,state)
                 sample=self.sample_gpu(self.probe_binding["uuid"]);trace.write(json.dumps(sample)+"\n")
                 require(sample["used_bytes"]<=min(85*(1<<30),.9*sample["total_bytes"]),"memory headroom exceeded")
@@ -245,8 +383,7 @@ class ContinuationGuardian(_Guardian):
             time.sleep(.2);final_gpu=self.sample_gpu(self.probe_binding["uuid"])
         require(final_gpu["used_bytes"]<=256*(1<<20),"owned GPU contexts remain after all children exited")
         return dict(status="complete" if all(state["complete"] for state in arms.values()) else "allocation_boundary",
-            arms={method:dict(complete=state["complete"],children=state["number"],next_input=state["input"],
-                last_audit=state.get("last_audit")) for method,state in arms.items()},probe=self.probe_binding,
+            arms={method:arm_result(state) for method,state in arms.items()},probe=self.probe_binding,
             final_gpu=final_gpu,automatic_failed_retries=0,fresh_motor_load_and_native_parity_per_child=True)
 
 
@@ -304,7 +441,8 @@ def main(argv=None):
     result=None
     try:
         with ContinuationRuntime(initial["worktree"],args.output,authority["maximum_driver_seconds"]) as runtime:
-            result=runtime._request(dict(initial_plan=initial_ref,launcher=str(launcher),env=runtime_environment(initial["worktree"])))
+            result=runtime._request(dict(initial_plan=initial_ref,authority=authority_ref,launcher=str(launcher),
+                env=runtime_environment(initial["worktree"])))
         return 0
     finally:
         atom(args.output/"continuation-result.json",dict(result=result,runtime_commit=RUNTIME,authority=authority_ref,
@@ -317,5 +455,11 @@ if __name__=="__main__":
         parser=argparse.ArgumentParser();parser.add_argument("--audit-child",type=Path,required=True)
         parser.add_argument("--receipt",type=Path,required=True);args=parser.parse_args()
         require(not args.receipt.exists(),"fresh child audit receipt required")
-        atom(args.receipt,audit_child(json.loads(args.audit_child.read_text())))
+        request=json.loads(args.audit_child.read_text())
+        require("owned_launch" in request and "owned_cleanup" in request,"owned process receipts required")
+        launch=read_ref(request["owned_launch"]);cleanup=read_ref(request["owned_cleanup"])
+        require(launch["status"]=="running" and launch["runtime_commit"]==RUNTIME and cleanup["clean"] is True
+            and any(row["identity"]==launch["identity"] and row["returncode"]==0 for row in cleanup["sessions"]),
+            "owned source session was not cleanly reaped")
+        atom(args.receipt,audit_child(request))
     else:raise SystemExit(main())
