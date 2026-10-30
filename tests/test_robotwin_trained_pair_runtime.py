@@ -8,6 +8,7 @@ import socket
 import subprocess
 import sys
 import time
+from types import SimpleNamespace
 from datetime import datetime, timezone
 
 import pytest
@@ -141,3 +142,15 @@ def test_probe_identity_or_idle_failure_is_not_accepted(tmp_path,reason):
 def test_runtime_never_expands_the_scheduler_envelope(tmp_path):
     with pytest.raises(ValueError,match="2520"):
         runtime.TrainedPairRuntime(tmp_path,tmp_path/"run",maximum_seconds=2700)
+
+
+def test_guardian_final_cleanup_failure_cannot_return_success(tmp_path,monkeypatch):
+    def fail(): raise RuntimeError("owned command remains unkillable")
+    guardian=SimpleNamespace(output=tmp_path,parent=os.getppid(),deadline=time.monotonic()+10,cleanup=fail)
+    values=iter(["{}",None])
+    monkeypatch.setattr(runtime,"_control_line",lambda *args:next(values))
+    monkeypatch.setattr(runtime,"_Guardian",lambda configuration:guardian)
+    monkeypatch.setattr(runtime.signal,"signal",lambda *args:None)
+    with pytest.raises(RuntimeError,match="unkillable"):
+        runtime._guardian_main()
+    assert json.loads((tmp_path/"cleanup-failure.json").read_text())["clean"] is False

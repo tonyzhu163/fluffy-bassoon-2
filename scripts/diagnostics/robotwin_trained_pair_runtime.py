@@ -346,7 +346,9 @@ def _guardian_main():
         # Do not let repeated INT/TERM interrupt the final bounded escalation.
         signal.signal(signal.SIGTERM,signal.SIG_IGN); signal.signal(signal.SIGINT,signal.SIG_IGN)
         try: guardian.cleanup()
-        except BaseException as error: _write(guardian.output/"cleanup-failure.json",dict(clean=False,error=str(error)))
+        except BaseException as error:
+            _write(guardian.output/"cleanup-failure.json",dict(clean=False,error=str(error)))
+            raise
 
 
 class TrainedPairRuntime:
