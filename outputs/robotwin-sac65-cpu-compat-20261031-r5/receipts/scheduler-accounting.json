@@ -1,0 +1,132 @@
+{
+  "schema": "robotwin_separate_cpu_gate_scheduler_accounting_v1",
+  "allocation_id": "job-ykpoq2b043kr",
+  "code_commit": "2d1629b841d52ed96712552dee6f5a8387460cd8",
+  "scheduler_state": "Failed",
+  "exit_code": 1,
+  "gpus": 0,
+  "cpus": 8,
+  "memory_gib": 64,
+  "shm_gib": 2,
+  "scheduler_running_start_shanghai": "2026-10-31 07:08:03",
+  "scheduler_abnormal_shanghai": "2026-10-31 07:09:14",
+  "scheduler_failed_shanghai": "2026-10-31 07:09:15",
+  "scheduler_running_seconds": 71,
+  "cpu_core_seconds": 568,
+  "gpu_seconds": 0,
+  "driver_elapsed_seconds": 36.59757255483419,
+  "pod_reported_seconds": 71,
+  "phases": [
+    {
+      "phase": "tests",
+      "status": "failed",
+      "cap_seconds": 180,
+      "elapsed_before": 36.48876015841961,
+      "returncode": 1,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "tests",
+            "identity": {
+              "pid": 1211,
+              "state": "R",
+              "pgid": 1211,
+              "sid": 1211,
+              "start_ticks": 566924613,
+              "uid": 0
+            },
+            "returncode": 1
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.0025125304237008095,
+        "deadline": 5670909.642203002,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 361,
+            "sid": 361,
+            "start_ticks": 566921708,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 365,
+            "sid": 365,
+            "start_ticks": 566921718,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 398,
+            "sid": 398,
+            "start_ticks": 566921781,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 1211,
+            "sid": 1211,
+            "start_ticks": 566924613,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "seconds": 0.09003627579659224,
+      "log_sha256": "7f1a7659ce3f91c787b779ec3781262d0c6c3cf4f991d3b5741652d282c9891e"
+    }
+  ],
+  "fixture_tests_executed": 0,
+  "full_projection": false,
+  "paired_export": false,
+  "actual_robot_actions": 0,
+  "actual_VLA_queries": 0,
+  "actual_SGD": 0,
+  "old_envelope": {
+    "status": "CLOSED",
+    "actual_seconds": 620,
+    "unused_sealed_seconds": 1180
+  },
+  "separate_new_grant": {
+    "original_scheduler_cap": 1800,
+    "charged_seconds": 71,
+    "arithmetic_residual_seconds": 1729,
+    "next_recovery_admitted": false
+  },
+  "capture_one_CUA_ms": 22784,
+  "bootstrap_wait_seconds": 7.098809784278274,
+  "automatic_artifact_delivery_passed": true,
+  "failure": "ModuleNotFoundError torch: -S worker inserted only venvsite, omitting literal existing shared_runtime.pth target; no .pth execution authorized",
+  "proof": [
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r5/receipts/terminal-ui.jpg",
+      "sha256": "29ecdfa4212cafd856a45c9c62a5003ff0a9e1ecef4d69c327086ac6fee69ec6"
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r5/receipts/terminal-ui.txt",
+      "sha256": "05d568a5b53fbf7ef544fddcc23cf5b393ff2613b24c6cb80973861653176db2"
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r5/receipts/runtime/tests.log",
+      "sha256": "7f1a7659ce3f91c787b779ec3781262d0c6c3cf4f991d3b5741652d282c9891e"
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r5/receipts/runtime/terminal.json",
+      "sha256": "ea6a106817bc59eb15ed92a6ebfe068e501b159e46726e8bf56ae805f6ce1a78"
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r5/receipts/shared-runtime-path-metadata.json",
+      "sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322"
+    }
+  ]
+}
