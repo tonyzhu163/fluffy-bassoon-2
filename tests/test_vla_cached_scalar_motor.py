@@ -192,13 +192,13 @@ def test_source_sac_unbounded_gaussian_warmup_noise_is_not_clipped_or_rescaled(m
     assert case.backend.splits==case.backend.decodes==1
 
 
-def test_source_sac_post_infer_feature_reads_reuse_host_features_without_extra_prefix(make):
+def test_post_infer_feature_reads_reuse_host_features_without_extra_prefix(make):
     case=make()
     initial=case.motor.feature_encoder(case.obs,case.instruction)
     case.motor.infer(case.obs,case.instruction,case.noise)
     assert not case.motor.cache_pending
-    # OnlineSourceSimulator.step requests pending-observation features after
-    # motor inference, before encoding the next public observation.
+    # Generic feature consumers may reread the preceding public observation
+    # after motor inference, before encoding the following observation.
     retained=case.motor.feature_encoder(deepcopy(case.obs),case.instruction)
     np.testing.assert_array_equal(retained,initial)
     assert case.backend.prepares==1 and not case.motor.cache_pending
