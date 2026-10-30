@@ -1,9 +1,12 @@
-# Cached-prefix B1 qualification proposal — no reservation
+# Cached-prefix B1 qualification — deferred, no reservation
 
 This preparation is static code and prepared tests only. It creates no hold,
 allocation, source actions or learner updates. The execution owner controls
 the remaining original32GPU-hour LIBERO budget and must reconcile/fund any
 actual qualification before launch. Neither closed systems hold is reopened.
+The human deferred the optional GPU comparison so required collection can
+continue first. The prepared CLI and unfunded template create no authority
+to execute it. See `HANDOFF.md` for the exact prepared scope.
 
 The owner's measured native batch14 run at9bc9c9c, jobccniwh46yq9w, completed
 14K4trials/56episodes,8,313actions,795valid chunks and two SGD steps. Reported
@@ -13,7 +16,7 @@ and value replay errors were0, and full frozen-motor hashes were unchanged.
 All56episodes were already successful; this establishes no adaptation benefit.
 These are owner-reported preparation inputs, not a new measurement here.
 
-## First proposed actual comparison
+## Prepared recorded-input comparison
 
 Propose one exclusive GPU with at most600schedulerGPU-seconds, including
 startup, compilation, reading, parity, full model hashes and cleanup. This is
@@ -26,9 +29,11 @@ the measured batch14 run, preserving each current public observation, actual
 instruction, explicit native initial noise, original features and generated
 actions. Compare newly executed native and cached B1 inference on those same
 inputs. Retain source/root/record hashes, exact original model checkpoint and
-OpenPI/runtime pins, GPU probe and before/after full parameter hashes. Add a
-small predeclared hash-bound set of existing SAC records including unbounded
-warmup coordinates; never modify a training sampling scheme to make the test.
+OpenPI/runtime pins, GPU probe and before/after full parameter hashes. The CLI
+selects first/middle/last per goal, giving42actual records over14goals; it
+does not replay all795. It also pairs14fixed synthetic float32 ramps from-4
+to4, repeated over H10. These test unbounded-noise handling, not actual SAC
+records or a training sampling scheme. They do not qualify source SAC adoption.
 
 No simulator, robot action, PPO/SAC update or new case collection is needed
 for this recorded-input kernel gate. Count and report every actual native and
@@ -45,9 +50,8 @@ native-versus-original-artifact differences separately from cached-versus-native
 differences. Cross-hardware native drift is diagnostic, never silently blamed
 on caching or accepted by loosening thresholds.
 
-Exercise both real scalar call orders: repeated PPO frozen-feature reads before
-decoding, and SAC's recorded frozen-feature→infer calls with its separate
-pixel actor/replay adapter. Also verify generic repeated host-feature reads
+Exercise repeated PPO frozen-feature reads before decoding and generic
+frozen-feature→infer calls. Also verify repeated host-feature reads
 after decoding without reusing consumed KV; do not label that additional
 interface check as measured source-SAC replay cost.
 Keep public feature/observation/instruction identity and one-time KV
@@ -55,8 +59,10 @@ consumption; clearing/restoring a complete-boundary key must reproduce the next
 feature/action/RNG result without serializing KV. Include invalid-input and
 failed-decode ordering through prepared CPU fakes before model qualification.
 
-Report matched native/cached model-phase medians and total funded cost with
-their limits. This does not establish a whole-source speedup, live cached
+Report diagnostic native/cached model-phase medians and total funded cost with
+their limits. The cached feature phase includes an additional duplicate-read
+check, so these medians are not a matched-work speedup. This does not establish
+a whole-source speedup, live cached
 trajectory equivalence, general reset compatibility or robot benefit. A later
 already-funded actual source continuation can measure collection time and
 complete-batch replay/update behavior after the owner qualifies/adopts the

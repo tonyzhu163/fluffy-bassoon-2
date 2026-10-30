@@ -5,6 +5,8 @@
 qualified atc6f46e8, keeping B1 model kernels. It changes neither the controller,
 simulator order, H10/32D noise, trial RNG, PPO batches nor SAC update schedule.
 It is a candidate until its exact code passes an allocated runtime comparison.
+The optional comparison is currently deferred; production collectors have not
+adopted this wrapper.
 
 The native policy object stays accessible as `motor.policy`, including
 `policy._model` for frozen-parameter hashes and `policy._rng` for existing
@@ -77,10 +79,19 @@ once-per-decode identical native motor RNG progression and unchanged full model
 parameter hashes. Make a cached feature call before each cached decode; the
 initial native-fallback infer calls alone do not qualify the cached path.
 
-The gate must include actual PPO and SAC call orders, bounded PPO coordinates and
-unbounded SAC warmup noise, all available source suites, cache identity errors,
+An adoption gate must cover the actual intended PPO or SAC call order, original
+bounded PPO coordinates and, for SAC, actual unbounded warmup noise, the intended
+source suites, cache identity errors,
 qualification/reset/complete-boundary restoration and serial replay. Report
 model-path time separately from loading, compilation, input I/O and audit
 overhead. A matched recorded-observation comparison establishes kernel/feature
 compatibility; it does not establish live collection throughput, reset identity
 on additional cases, PPO improvement or robot adaptation.
+
+The prepared `vla_cached_scalar_qualification` CLI covers42actual PPO records
+from14goals in the measured795-record batch14 population,14synthetic unbounded
+noise probes, repeated feature/one-time consumption and28stale-input probes.
+Its native/cached timings are diagnostic because the cached feature phase also
+checks a duplicate read. This limited gate does not qualify actual SAC source
+records, live continuations or a source speedup. Its funding template remains
+unfunded; see `outputs/libero-cached-prefix-b1-20261031-r1/HANDOFF.md`.
