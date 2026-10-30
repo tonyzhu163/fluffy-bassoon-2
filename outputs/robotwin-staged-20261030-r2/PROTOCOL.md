@@ -1,6 +1,6 @@
 # Revised two-hour RoboTwin comparison proposal
 
-2026-10-30 Asia/Shanghai. **Unlaunched; larger resource approval is pending.**
+2026-10-30 Asia/Shanghai. **Authorized by the human on2026-10-30; submitting the prepared two-hour allocation.** See [authorization](AUTHORIZATION.md).
 This replaces the earlier prepared525d669/3e-4PPO command. The common motor,
 all six source tasks, K4 training/K8 evaluation, two fixed target tasks,
 32k/64k/128k matched source-action milestones and1M shared benchmark cap remain
@@ -36,7 +36,7 @@ predeclared conservative gate. See [diagnostic evidence](../robotwin-saved-ppo-l
 
 ## Initial allocation and source admission
 
-Request the same pending **oneGPU,120-minute hard scheduler slice**. Its first
+Use the now-authorized **oneGPU,120-minute hard scheduler slice**. Its first
 steps are the focused allocated Linux checks, including seven newly added
 rollback tests, then a source-only optimizer calibration at1e-6and3e-7. Each
 candidate uses the original unchanged weights/optimizer/RNG and same three
@@ -81,8 +81,8 @@ be measured explicitly. No strong robot-performance result exists yet.
 The original45GPU-minute envelope is almost exhausted; see the final measured
 accounting in the [LR diagnostic](../robotwin-saved-ppo-lr-20261030-r1/COMPUTE-ACCOUNTING.json).
 [AGENTS.md](../../AGENTS.md) requires approval for a “materially larger resource
-budget.” This proposal and its conditional launcher are prepared; it is not
-an allocation authorization. New guard/configuration changes have AST/shell
+budget.” The human has now authorized this concrete allocation in this chat; see the
+authorization receipt. New guard/configuration changes have AST/shell
 checks only; their Linux tests run first inside the proposed approved slice.
 
 ## Steering interface across benchmarks
@@ -113,7 +113,7 @@ by the current proposal; discuss and freeze its contract and budget separately.
 
 Prepared source pin:`c3b6281c032e2c712a62191b03219b1e70e12947`, verified
 clean on the Baige development host. The runtime output and shared ledger do
-not yet exist. The scheduler form remains unsubmitted at120minutes/oneGPU,
+not yet exist. The scheduler form uses120minutes/oneGPU,
 automatic retries disabled. Any prospective tied-noise arm shares the existing
 1M RoboTwin ceiling and requires a revised allocation; it does not create an
 additional1M allowance.
