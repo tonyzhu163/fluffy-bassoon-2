@@ -1,0 +1,24 @@
+{
+  "checked_at_utc": "2026-10-30T18:23:39.095237+00:00",
+  "reviewed_origin_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "production_runtime": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "candidate_continuation_launcher": "0c16c2b794f8de5b78603206917e72195083c265",
+  "decision": "Retain original qualified scientific runtime and explicitly migrate only allocation supervisor after passed actual Linux CPU gate; origin/main unchanged since prior reviewed launch. Latest admitted inputs must be R5 final57/59, not old R4 or scalar52/54.",
+  "source_rounds_remaining": {
+    "ppo": 43,
+    "ppo_reset": 41
+  },
+  "maximum_remaining_source_actions": 907200,
+  "maximum_original_final_eval_actions": 48800,
+  "conservative_source_estimate_seconds": 19350,
+  "conservative_source_estimate_gpu_hours": 5.375,
+  "estimate_basis": "43 intervals times measured conservative450GPU-seconds trained paired round; actual R1-R5=450/391/371/431/371; excludes final evaluation, journal growth, task variation and failures. No causal scalar speedup claim.",
+  "requested_operational_scheduler_seconds": 46800,
+  "requested_operational_driver_seconds": 43200,
+  "original_source_goal_rounds": 100,
+  "known_terminal_gpu_seconds": 77333,
+  "full_cumulative_gpu_seconds": null,
+  "unknowns": "Active separate SAC, historical reported630optimizationGPU-seconds not independently terminal reconciled here.",
+  "overall_time_ceiling": null,
+  "qualification_capacity_reused": false
+}
