@@ -1,5 +1,13 @@
 # Native source export qualification preparation
 
+**Update, 2026-10-30 17:19 Shanghai:** qualification is complete at corrected
+pin `9c27e027ffed1f66a5d56c79e142e7a55faba717`, CPU job `job-2j83ht020h15`.
+All 34 focused tests and the real SAC AD/DPT export passed. See
+[results](../robotwin-native-export-20261030-r2/RESULTS.md). The unsubmitted-form
+notes below are historical and superseded: tab 89096665 now displays the failed
+r1 allocation, not a pending form. Do not resubmit that old command. The sole
+exporter owner continues native trainer/deployment work.
+
 2026-10-30 17:04 Shanghai. No qualification job has been submitted.
 
 The sole exporter owner is preparing a correction to candidate

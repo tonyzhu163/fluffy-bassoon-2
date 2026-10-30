@@ -82,12 +82,14 @@ were a fixed teacher or source prefix.
 ## Implementation status
 
 Current RoboTwin source SAC and direct persistent/reset PPO are qualified and
-running. The exporter owner has implemented a native adapter candidate
-`9ee7fc27a31d1c8a7d2f5fa8f26f07962264bb32`; allocated Linux qualification is
-pending. Static review found its full runtime comparison rejects the intentional
-allocation-only `actual_render_pci` difference. The owner is correcting that
-before the saved-data check. No independent supervised static/reset student or
-bound-1.5 deployment adapter is qualified yet. LIBERO's 4,104-feature,
+running. The exporter's native adapter at
+`9c27e027ffed1f66a5d56c79e142e7a55faba717` passed 34 allocated Linux tests and
+a real SAC saved-data export: 30 complete K4 trials, 120 episodes and 47,602
+source actions. Allocation-only runtime identity, acting tensor digests and
+frozen source/task counter checks are verified. See
+[results](../robotwin-native-export-20261030-r2/RESULTS.md). No independent
+supervised static/reset student or bound-1.5 deployment adapter is qualified
+yet. LIBERO's 4,104-feature,
 tied-32D/H10, bound-1 exporter/student cannot be force-cast into this format.
 Metadata conversion and teacher/student inference must run on allocated Linux;
 development SSH is only for setup, transfers and read-only artifact inspection.
