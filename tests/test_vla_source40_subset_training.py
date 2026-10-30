@@ -9,7 +9,7 @@ import torch
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy, file_sha256, load_policy
 from fluffy_bassoon.meta_rl.vla_history_train import RESUME_FORMAT, _rng_state
 from fluffy_bassoon.meta_rl.vla_source40_subset_training import (
-    archive_scale, immutable_copy, parser, training_command, validate_scales)
+    admit_assembly, archive_scale, immutable_copy, parser, training_command, validate_scales)
 
 
 def arguments(tmp_path):
@@ -69,6 +69,24 @@ def test_optional_data_scale_uses_hash_bound_assembly_directory(tmp_path):
     assert command[command.index('--validation-data') + 1] == str(tmp_path / 'case16/validation-ad.npz')
 
 
+def test_all40_route_requires_a_strict_campaign_assembly_and_cannot_admit_pilot_data(tmp_path, monkeypatch):
+    args = parser().parse_args(['--all40-source', '--train-index', '/train', '--validation-index', '/validation',
+        '--output', str(tmp_path / 'students'), '--source-commit', 'a' * 40, '--expected-hostname', 'allocated-host'])
+    with pytest.raises(ValueError, match='independently assembled'):
+        admit_assembly(args)
+    args.assembly = tmp_path / 'assembly.json'
+    args.assembly.write_text('{}')
+    args.assembly_file_sha256 = file_sha256(args.assembly)
+    calls = []
+    def loader(path, *, allow_small_pilot):
+        calls.append(allow_small_pilot)
+        return dict(small_pilot=True)
+    monkeypatch.setattr('fluffy_bassoon.meta_rl.vla_source40_subset_training.load_assembly', loader)
+    with pytest.raises(ValueError, match='scope differs'):
+        admit_assembly(args)
+    assert calls == [False]
+
+
 def test_immutable_copy_rejects_changed_milestone_bytes(tmp_path):
     source, destination = tmp_path / 'live.pt', tmp_path / 'scale/recovery.pt'
     source.write_bytes(b'complete saved optimizer and RNG bytes')
@@ -79,7 +97,8 @@ def test_immutable_copy_rejects_changed_milestone_bytes(tmp_path):
     assert destination.read_bytes() == b'complete saved optimizer and RNG bytes'
 
 
-def test_policy_export_comes_from_exact_full_milestone_recovery(tmp_path):
+@pytest.mark.parametrize('small_pilot', [True, False])
+def test_policy_export_comes_from_exact_full_milestone_recovery(tmp_path, small_pilot):
     config = HistoryConfig(2, 2, width=8, layers=1, heads=2, context_length=4)
     policy = HistoryNoisePolicy(config)
     optimizer = torch.optim.AdamW(policy.parameters(), lr=3e-4)
@@ -90,7 +109,7 @@ def test_policy_export_comes_from_exact_full_milestone_recovery(tmp_path):
         rng=_rng_state(np.random.default_rng(0)), contract=contract, best_validation_nll=1., elapsed_seconds=3.)
     source = tmp_path / 'latest.pt'
     torch.save(saved, source)
-    exposure = dict(training_task_keys=['libero_spatial:00'], small_pilot=True)
+    exposure = dict(training_task_keys=['libero_spatial:00'], small_pilot=small_pilot)
     row = archive_scale(source, tmp_path / 'scale25', updates=25, assembly_sha256='a' * 64, exposure=exposure)
     recovered = torch.load(row['full_recovery_path'], map_location='cpu', weights_only=False)
     assert recovered['update'] == 25 and recovered['optimizer']['state']
@@ -98,7 +117,7 @@ def test_policy_export_comes_from_exact_full_milestone_recovery(tmp_path):
     assert row['full_recovery_sha256'] == file_sha256(source)
     candidate, manifest = load_policy(row['final_path'], expected_sha256=row['final_sha256'])
     assert manifest['selection'] == 'fixed requested final update'
-    assert manifest['qualification_subset'] and manifest['source_exposure'] == exposure
+    assert manifest['qualification_subset'] is small_pilot and manifest['source_exposure'] == exposure
     assert all(torch.equal(value, candidate.state_dict()[key]) for key, value in policy.state_dict().items())
     assert archive_scale(source, tmp_path / 'scale25', updates=25,
         assembly_sha256='a' * 64, exposure=exposure) == row
