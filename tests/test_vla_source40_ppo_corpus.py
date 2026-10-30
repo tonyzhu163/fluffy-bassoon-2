@@ -18,7 +18,7 @@ from fluffy_bassoon.meta_rl.vla_source40_schedule import SOURCE_SUITES
 from fluffy_bassoon.meta_rl.warmstart import atomic_save
 
 
-def make_source(tmp_path, *, updates=2, mode='full', shared=False):
+def make_source(tmp_path, *, updates=2, mode='full', shared=False, legacy=False):
     run = tmp_path / 'source'
     run.mkdir()
     source = dict(format='openpi_pi05_source40_ppo_stream_v1', source_only=True,
@@ -35,7 +35,11 @@ def make_source(tmp_path, *, updates=2, mode='full', shared=False):
         nonlocal calls
         task = (calls // 2) % 2 if shared else 0
         calls += 1
-        return recorded_episode(choose, feedback, initial_state, scene_seed, task)
+        rows, summary = recorded_episode(choose, feedback, initial_state, scene_seed, task)
+        if legacy:
+            for row in rows:
+                row.pop('source_task_key')
+        return rows, summary
     policy = make_rl2_policy(RL2Config(observation_dim=4104, width=8, layers=1, heads=2, context_length=8))
     _, _ = train_rl2(policy, SimpleNamespace(metadata=dict(settle_steps=10)), None,
         lambda obs: obs['features'], train_states=[0, 1], heldout_states=[40], attempts=2,
@@ -111,8 +115,9 @@ def test_single_fixed_policy_trial_is_dpt_or_bc_not_ad(tmp_path):
     assert set(result['datasets']) == {'dpt', 'behavior_cloning'}
 
 
-def test_shared_stream_groups_same_task_across_updates_without_mixing_goals(tmp_path):
-    run = make_source(tmp_path, updates=4, shared=True)
+@pytest.mark.parametrize('legacy', [False, True])
+def test_shared_stream_groups_same_task_across_updates_without_mixing_goals(tmp_path, legacy):
+    run = make_source(tmp_path, updates=4, shared=True, legacy=legacy)
     result = export_corpus(run, tmp_path / 'paired', **export_args(run))
     ad, manifest = load_dataset(result['datasets']['ad']['path'])
     assert manifest['metadata']['task_keys'] == ['libero_spatial:00', 'libero_spatial:01']
@@ -171,6 +176,17 @@ def test_export_ignores_uncommitted_tail_and_requires_pinned_recovery(tmp_path):
     result = export_corpus(run, tmp_path / 'valid', **args)
     assert result['datasets']['ad']['transitions'] == 8
     assert not any('000003' in path for path in result['metadata']['input_sha256'])
+
+
+def test_rewrapped_recovery_cannot_turn_one_history_into_disjoint_splits(tmp_path):
+    run = make_source(tmp_path)
+    first = export_corpus(run, tmp_path / 'first', **export_args(run))
+    recovery = run / 'learner/latest.pt'
+    saved = torch.load(recovery, weights_only=False)
+    saved['audit_note'] = 'Same committed trials; only the checkpoint wrapper changed'
+    atomic_save(recovery, saved)
+    second = export_corpus(run, tmp_path / 'second', **export_args(run))
+    assert first['metadata']['trial_ids'] == second['metadata']['trial_ids']
 
 
 def test_validation_exports_dpt_without_optimizer_updates_or_false_ad(tmp_path):

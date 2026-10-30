@@ -142,7 +142,9 @@ def load_committed_trials(run, recovery_sha256):
                     or dict(summary, attempt=attempt) != receipt['attempts'][attempt - 1]
                     or summary.get('initial_state') not in states
                     or key not in keys or (task_key is not None and task_key != key)
-                    or not actual or any(row.get('source_task_key') != key for row in actual)
+                    # Older records have no per-row task key. Their exact raw
+                    # summary is still bound to the committed trial receipt.
+                    or not actual or any('source_task_key' in row and row['source_task_key'] != key for row in actual)
                     or not actual[-1]['done'] or any(row['done'] for row in actual[:-1])):
                 raise ValueError('Raw PPO episode changed task, case, boundary or provenance')
             task_key = key
