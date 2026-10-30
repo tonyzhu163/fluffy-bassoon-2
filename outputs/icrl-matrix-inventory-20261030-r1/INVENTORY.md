@@ -20,6 +20,10 @@ stage50 evaluation; final100-round source endpoints remain open.
 The [first trained N6 execution amendment](AMENDMENT-20261031-ROBOTWIN-TRAINED-N6-R1.md)
 records one additional source round per original PPO arm and complete recovery;
 it adds execution evidence rather than another scientific evaluation.
+The [next final-source100 offline handoff](../robotwin-finalbank-offline-plan-20261031-r1/PLAN.md)
+is STATIC preparation only: multi-root compatibility/assembly, source-only
+teacher measurement/residual requests and four fixed500-update fits. No final
+bank, teacher reservation, new label, fit or allocation is admitted by it.
 
 The human's coordination authorization was verified in coordinator chat
 `01a18be4-a6ab-79a2-af3d-13f76308e253`: “can you coordinate all the other
