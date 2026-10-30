@@ -1,0 +1,54 @@
+{
+  "schema": "robotwin_trained_pair_continuation_authority_v1",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "lineage_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "parent_manifest_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+  "initial_admission_plan": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/compiled-plan.json",
+    "sha256": "c4a7bdf0f18e33538b660b3a4102f5cacabb60d1c33f22003b584b404f57e62d"
+  },
+  "source_goal_rounds": 100,
+  "original_total_compute_ceiling_seconds": null,
+  "qualification_capacity_reused": false,
+  "automatic_failed_retries": false,
+  "resources": {
+    "gpus": 1,
+    "cpus": 32,
+    "memory_gib": 192,
+    "shared_memory_gib": 16,
+    "scheduler_cap_seconds": 46800
+  },
+  "maximum_driver_seconds": 43200,
+  "child_wall_seconds": 3600,
+  "initial_subslice_seconds": 2700,
+  "initial_subslice_included": true,
+  "authority": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/authority.json",
+    "sha256": "9028ca4d3043529c655f30f0937986cfd37dd46a3204805c5b814fb559b77b00"
+  },
+  "prior_charge_and_physical_snapshot": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/prior-charge-and-physical-snapshot.json",
+    "sha256": "b4e9b7df12aa44d1813435c1bc5162660b101808706a151099060e8300e48807"
+  },
+  "cpu_software_gate": {
+    "summary": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-summary.json",
+      "sha256": "55aeb39f1c3b6f534c7cb553739940ceebbf3c52f04ac9fcab5494720e9993e2"
+    },
+    "independent_junit_readback": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-independent-junit-readback.json",
+      "sha256": "85deff3c4c2c4e96294ea6f4e0fe2752d6861fded47022fab7fd17bebf33401d"
+    },
+    "scheduler_terminal": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-scheduler-terminal.json",
+      "sha256": "141d6ba1913ee8d716f9b823b751f258dbbacefbed3092fa6de8cd29f7537e0e"
+    },
+    "status": "passed",
+    "production_commit": "0c16c2b794f8de5b78603206917e72195083c265",
+    "production_cases": 67,
+    "libero_cpu_fake_cases": 43,
+    "gpus": 0,
+    "scheduler_cpu_seconds": 131
+  },
+  "status": "qualified_source_ready_pending_owner_review_not_submitted"
+}

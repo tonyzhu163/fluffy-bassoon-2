@@ -1,0 +1,77 @@
+{
+  "schema": "robotwin_trained_pair_actual_charges_snapshot_v1",
+  "owner_release": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/owner-release.json",
+    "sha256": "4c7b94dd5cb760c944de6c862907c041842ef2a50dded3005c1c6559e811b70f"
+  },
+  "known_terminal_gpu_seconds_before_R5": 76962,
+  "R5_terminal_scheduler_gpu_seconds": 371,
+  "known_terminal_gpu_seconds_including_predecessor_pair": 77333,
+  "full_cumulative_gpu_seconds": null,
+  "unknowns": "Active separate SAC continuation is not terminal charged; old reported630GPU-s optimization has not been independently timed. Both remain excluded from77333 known terminal seconds.",
+  "qualification_capacity_reused": false,
+  "original_source_goal_rounds": 100,
+  "methods": {
+    "ppo": {
+      "source_rounds": 57,
+      "source_actions": 546458,
+      "optimizer_steps": 285,
+      "pending_ppo_rollouts": 0,
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "canonical_head": {
+        "journal_events": 40452,
+        "journal_sha256": "6be2a98a3bff903ad9ed09e27acdbd1f1c3dea2df5a9f3b9945c39687a318a30",
+        "charged_actions": 624210,
+        "decision_count": 20216
+      },
+      "source_safety_cap": 1100000,
+      "total_cap": 1226400,
+      "remaining_total_actions": 602190,
+      "remaining_source_safety_actions": 553542,
+      "remaining_source_rounds": 43
+    },
+    "ppo_reset": {
+      "source_rounds": 59,
+      "source_actions": 564658,
+      "optimizer_steps": 295,
+      "pending_ppo_rollouts": 0,
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "canonical_head": {
+        "journal_events": 39385,
+        "journal_sha256": "f9f3c85a18cb38d13c9e05b3b7a9221d97ef38aa64db04cf459bc269d81e3956",
+        "charged_actions": 608045,
+        "decision_count": 19682
+      },
+      "source_safety_cap": 1100000,
+      "total_cap": 1168800,
+      "remaining_total_actions": 560755,
+      "remaining_source_safety_actions": 535342,
+      "remaining_source_rounds": 41
+    }
+  },
+  "separate_active_sac_allocation": "job-gv77bzhyeroo",
+  "previous_unused_gpu_seconds_sealed": 2329,
+  "cpu_gate": {
+    "summary": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-summary.json",
+      "sha256": "55aeb39f1c3b6f534c7cb553739940ceebbf3c52f04ac9fcab5494720e9993e2"
+    },
+    "independent_junit_readback": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-independent-junit-readback.json",
+      "sha256": "85deff3c4c2c4e96294ea6f4e0fe2752d6861fded47022fab7fd17bebf33401d"
+    },
+    "scheduler_terminal": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-continuation-20261031-r1/cpu-gate-scheduler-terminal.json",
+      "sha256": "141d6ba1913ee8d716f9b823b751f258dbbacefbed3092fa6de8cd29f7537e0e"
+    },
+    "status": "passed",
+    "production_commit": "0c16c2b794f8de5b78603206917e72195083c265",
+    "production_cases": 67,
+    "libero_cpu_fake_cases": 43,
+    "gpus": 0,
+    "scheduler_cpu_seconds": 131
+  },
+  "continuation_funded_once": true
+}
