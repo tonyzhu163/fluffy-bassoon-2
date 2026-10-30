@@ -11,12 +11,33 @@ TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_PYTHON=$TASK_ROOT/envs/robotwin-vlrla-20261029-r1/bin/python
 TASK_NATIVE=$TASK_ROOT/sources/robotwin-baseline-smoke-20261028-r1
 test ! -e "$TASK_OUTPUT"
-mkdir -p "$TASK_OUTPUT"
+mkdir "$TASK_OUTPUT"
 exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
 trap 'TASK_RC=$?; printf "%s\n" "$TASK_RC" > "$TASK_OUTPUT/exit-code.txt"' EXIT
 cd "$TASK_WORKTREE"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"
+# This directly authorized test has its own single-use reservation. It never
+# borrows or reopens a previous qualification's action/GPU envelope.
+"$TASK_PYTHON" - "$TASK_ROOT/campaigns/$TASK_RUN/reservation.json" "$TASK_SOURCE" "$TASK_RUN" <<'PYRESERVATION'
+from pathlib import Path
+import fcntl,json,os,socket,sys
+path,source,run=Path(sys.argv[1]),sys.argv[2],sys.argv[3]
+with path.with_suffix('.lock').open('a+') as lock:
+    fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+    value=json.loads(path.read_text())
+    assert value['run_id']==run and value['source_commit']==source
+    assert value['maximum_new_source_actions']==21600 and value['maximum_gpu_seconds']==2700
+    assert value['status']=='reserved' and value['active_production_modified'] is False
+    value.update(status='admitted',allocation_hostname=socket.gethostname())
+    temporary=path.with_suffix('.tmp')
+    with temporary.open('w') as stream:
+        stream.write(json.dumps(value,indent=2)+'\n');stream.flush();os.fsync(stream.fileno())
+    temporary.replace(path)
+    descriptor=os.open(path.parent,os.O_RDONLY)
+    try:os.fsync(descriptor)
+    finally:os.close(descriptor)
+PYRESERVATION
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export PYTHONPATH=$TASK_WORKTREE/src:$TASK_NATIVE/RLinf:$TASK_NATIVE/RoboTwin

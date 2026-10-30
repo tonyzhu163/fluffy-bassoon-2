@@ -22,7 +22,7 @@ export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONNOUSERSITE=1
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 export PYTHONPATH=$TASK_WORKTREE/src
 export TMPDIR=/dev/shm
-timeout 240 "$TASK_PYTHON" -m pytest -q -x --tb=short -p no:cacheprovider \
+timeout 360 "$TASK_PYTHON" -m pytest -q -x --tb=short -p no:cacheprovider \
   --basetemp "/dev/shm/$TASK_RUN" \
   tests/test_robotwin_noise.py tests/test_robotwin_assets.py \
   tests/test_robotwin_fast_observations.py tests/test_vla_noise_ppo.py \
@@ -30,4 +30,5 @@ timeout 240 "$TASK_PYTHON" -m pytest -q -x --tb=short -p no:cacheprovider \
   tests/test_robotwin_campaign_budget.py tests/test_robotwin_corpus.py \
   tests/test_robotwin_campaign_driver.py tests/test_robotwin_parallel_campaign.py \
   tests/test_vla_noise_batched_collection.py tests/test_collection_admission.py \
-  tests/test_robotwin_production_dispatch.py tests/test_robotwin_production_vector.py
+  tests/test_robotwin_production_dispatch.py tests/test_robotwin_production_vector.py \
+  tests/test_robotwin_packed_ppo_probe.py
