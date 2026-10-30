@@ -17,6 +17,9 @@ receipt alone qualifies the future parent-death guard or changes a live source
 run. A later [stage50 and allocated guard amendment](AMENDMENT-20261031-ROBOTWIN-STAGE50-GUARD.md)
 records the separate31-test guard qualification and completed direct-policy
 stage50 evaluation; final100-round source endpoints remain open.
+The [first trained N6 execution amendment](AMENDMENT-20261031-ROBOTWIN-TRAINED-N6-R1.md)
+records one additional source round per original PPO arm and complete recovery;
+it adds execution evidence rather than another scientific evaluation.
 
 The human's coordination authorization was verified in coordinator chat
 `01a18be4-a6ab-79a2-af3d-13f76308e253`: “can you coordinate all the other
@@ -96,6 +99,7 @@ does not necessarily remove information in visual/dynamics observations.
 | RoboTwin native integration and first frozen panel | Integration `82c4d8c006db064096549538e9cbab0c2f05facd` CPU `job-tmtbmt14kl6w`; live `2fd2096906e52aabeaeb984f333fe1aaa6c4e196`, Baige `job-ekg1ivu6j8pg` |151 integration tests plus5 actual CPU admissions;22 live-wrapper tests. Panel COMPLETE18 K8/144 episodes,47137 actions,2951 scheduler GPU-seconds, zero SGD/pending/uncertain. Owner independent audit22135 checks passed; native parity0.0 in all18 units |
 | RoboTwin direct-policy stage50 | Scientific lineage `db0184089fa88a5f96c153f9b80029bb91b77def`; execution `e825821a7c2231952bcf1042162f3470bd8ecdea`; saved owner audit checked00:56:17 Shanghai on2026-10-31 | Three source snapshots each300 complete K4 trials;24 source cases match across3 arms and16 target cases across6 conditions. Source counters unchanged during evaluation, RNG restoration reported, snapshot hashes match. Exact counters, target SGD and scope in stage50 amendment |
 | Future panel parent-death guard | `c166171b847ada9a20a9629a07d5a0100b517097`; Baige0GPU `job-k1upj2ycy60q`; evidence owner `80943996d033155e17e242b045f82904c255b89f` |31 focused Linux CPU tests PASS, exit0; joint gate123 tests/71 scheduler seconds/0 GPU-seconds. Software qualification only; later admission/deployment is not inferred. Completed2fd panel unchanged |
+| RoboTwin first trained N6 continuation | Runtime `57016ba08eed79043fd67bf8b085bd6d42e6d766`, launcher `c353970a316837b13277ec65587e58e5cb25ce56`; Baige `job-fcxa9mm1mh84`; owner evidence `48461f4cae4a95f498efa4be50d8c941d1258961` | COMPLETE: original persistent PPO52→53 and trained reset54→55,18879 new source actions/12 K4/48 episodes/2 real PPO updates,450 scheduler GPU-seconds. Full recovery/clean teardown,611 native-mask decisions and all12 replay checks pass; sampled peak65.55GiB/70.39GB. No paired scalar speedup or algorithmic win inferred |
 
 Owner updates are authoritative for later status. No source teacher is called
 expert solely from optimizer counts, a final filename or a finite export.
