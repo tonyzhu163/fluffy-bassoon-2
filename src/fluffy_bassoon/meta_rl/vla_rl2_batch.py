@@ -142,6 +142,7 @@ def receipt_counts(receipts):
             entry[field] = sorted(set(entry[field]) | {
                 attempt[field] for attempt in row['attempts'] if attempt.get(field) is not None})
     return dict(trials=len(receipts), episodes=sum(len(row['attempts']) for row in receipts),
+        committed_collection_seconds=sum(float(row.get('collection_seconds', 0.)) for row in receipts),
         successes=sum(pattern.count('S') for pattern in patterns), failures=sum(pattern.count('F') for pattern in patterns),
         all_success_trials=sum('F' not in pattern for pattern in patterns),
         fail_then_success_trials=sum(recovers(pattern) for pattern in patterns),

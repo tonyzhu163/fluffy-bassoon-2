@@ -55,6 +55,22 @@ def batch_plan(tasks, cursor, sampler):
     return plan
 
 
+def setup_only_restart(output):
+    """No learner recovery may be replaced after ANY executed training action."""
+    output = Path(output)
+    cost = physical_charge(output / 'execution-journal')
+    if (cost['known_primitive_steps'] or cost['unresolved_primitive_ceiling']
+            or any((output / 'raw').glob('*.pkl.gz'))
+            or any((output / 'raw-rpc').rglob('*.pkl.gz'))):
+        raise ValueError('Missing learner recovery after source execution; preserve evidence and diagnose')
+    learner = output / 'learner'
+    if learner.exists():
+        learner.rename(learner.with_name('learner-uncommitted-setup-' + str(time.time_ns())))
+    write_json(output / f'setup-restart-{time.time_ns()}.json', dict(
+        reason='No valid learner checkpoint and zero known/uncertain primitive actions',
+        preserved_physical_charge=cost, fresh_seeded_learner=True, source_history_discarded=False))
+
+
 class NativeOwnedSimulator(OwnedSimulator):
     """Reuse owned-process reset/step/close while launching the suite's horizon."""
     def __init__(self, task, *, python, pythonpath, output, port, timeout=180.):
@@ -187,7 +203,10 @@ def main(argv=None):
             support_query_protocol='Source K4 trials do not set deployment support-shot budgets')
         path = args.output / 'source-contract.json'
         if args.resume:
-            if json.loads(path.read_text()) != contract:
+            if not path.exists():
+                setup_only_restart(args.output)
+                write_json(path, contract)
+            elif json.loads(path.read_text()) != contract:
                 raise ValueError('Native batch14 continuation contract differs')
         else:
             write_json(path, contract)
@@ -220,8 +239,17 @@ def main(argv=None):
                 raise ValueError('Planned complete source trial differs from the committed task cursor')
             def save_episode(**kwargs):
                 sink(trial=trial, behavior_update=update, behavior_policy_sha256=behavior_sha, **kwargs)
-            rollout, receipt = collect_rl2_trial(current, sim, motor,
-                lambda observation: motor.feature_encoder(observation, sim.metadata['instruction']),
+            # Complete-episode PPO traces remain compact. Keep raw inference
+            # inputs/outcomes as well, so an interrupted episode retains its
+            # actual observations/noises/actions alongside conservative charges.
+            from .vla_source40_memory_replication import CaptureMotor, CaptureSimulator
+            raw = args.output / 'raw-rpc' / f'trial-{trial:06d}-{time.time_ns()}'
+            raw.mkdir(parents=True)
+            captured_motor = CaptureMotor(motor, raw)
+            captured_sim = CaptureSimulator(sim, captured_motor, raw)
+            started = time.monotonic()
+            rollout, receipt = collect_rl2_trial(current, captured_sim, captured_motor,
+                lambda observation: captured_motor.feature_encoder(observation, sim.metadata['instruction']),
                 initial_state=descriptor['initial_state'], scene_seed=descriptor['scene_seed'],
                 attempts=4, chunk=10, mode=args.memory_mode, episode_sink=save_episode,
                 reset_identity=RESET_IDENTITY)
@@ -229,7 +257,10 @@ def main(argv=None):
                     or receipt['primitive_steps'] + receipt['settling_steps'] > descriptor['maximum_actions']):
                 raise RuntimeError('Actual complete source trial exceeded its declared task/action boundary')
             return rollout, dict(receipt, descriptor=descriptor, behavior_update=update,
-                behavior_policy_sha256=behavior_sha)
+                behavior_policy_sha256=behavior_sha, collection_seconds=time.monotonic()-started)
+        training_resume = args.resume and (args.output / 'learner/latest.pt').is_file()
+        if args.resume and not training_resume:
+            setup_only_restart(args.output)
         if args.resume:
             for partial in args.output.rglob('*.partial'):
                 partial.rename(partial.with_name(partial.name + f'-uncommitted-{time.time_ns()}'))
@@ -238,7 +269,7 @@ def main(argv=None):
             physical_cost=lambda: physical_charge(sim.journal)['total_action_charge'],
             output=args.output / 'learner', source_contract=contract, updates=args.updates,
             max_total_actions=args.max_total_actions, seed=args.seed, mode=args.memory_mode,
-            learning_rate=1e-4, epochs=2, stop_unix=args.stop_unix, resume=args.resume)
+            learning_rate=1e-4, epochs=2, stop_unix=args.stop_unix, resume=training_resume)
         exposure = cycle.state_dict()
         write_json(args.output / 'index.json', dict(source_contract=contract, summary=summary,
             committed_task_exposure=exposure, actual_tasks_with_committed_episodes=sum(

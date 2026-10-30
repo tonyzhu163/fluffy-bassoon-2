@@ -1,11 +1,12 @@
 """Native source-only planning and complete-trial cursor qualification."""
 import copy
+import json
 
 import numpy as np
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_batch14 import (
-    NATIVE_HORIZONS, NativeTaskCycle, batch_plan, native_source_tasks, validate_native_metadata)
+    NATIVE_HORIZONS, NativeTaskCycle, batch_plan, native_source_tasks, setup_only_restart, validate_native_metadata)
 from fluffy_bassoon.meta_rl.vla_source40_schedule import LIBERO_COMMIT, SOURCE_SUITES
 
 
@@ -103,3 +104,20 @@ def test_task_cursor_only_advances_after_fixed_k4_and_survives_recovery():
     assert resumed.metadata['suite'] == 'libero_10' and resumed.metadata['horizon'] == 520
     assert all(client.closed for client in clients[:-1])
     resumed.close()
+
+
+def test_setup_only_retry_preserves_settling_and_rejects_lost_training_recovery(tmp_path):
+    output = tmp_path/'setup'
+    journal = output/'execution-journal'
+    journal.mkdir(parents=True)
+    (journal/'reset-1.json').write_text(json.dumps(dict(settling_steps=10, returned=False)))
+    learner = output/'learner'
+    learner.mkdir()
+    (learner/'initial-uncommitted.tmp').write_bytes(b'failed setup state retained')
+    setup_only_restart(output)
+    assert not learner.exists()
+    assert len(list(output.glob('learner-uncommitted-setup-*'))) == 1
+    assert (journal/'reset-1.json').exists()
+    (journal/'intent-2.json').write_text(json.dumps(dict(maximum_primitive_steps=10)))
+    with pytest.raises(ValueError, match='Missing learner recovery'):
+        setup_only_restart(output)
