@@ -163,7 +163,18 @@ def test_recurrent_teacher_replays_its_own_resets_not_behavior_cache(tmp_path):
     before={key:value.clone() for key,value in teacher.state_dict().items()}
     full=teacher_labels(teacher,'ppo',rows,reset_each_episode=False)
     episode=teacher_labels(teacher,'ppo_reset',rows,reset_each_episode=True)
-    np.testing.assert_array_equal(episode[0],episode[2])
+    # Resetting memory does not erase the public episode-index clock. Compare
+    # each actual episode against an independent fresh-state replay of its OWN
+    # tokens rather than assuming episode0 and episode1 have identical inputs.
+    expected=[]
+    state=None
+    with torch.no_grad():
+        for row,token in zip(rows,native_tokens(rows,reset_each_episode=True),strict=True):
+            if row['episode_start']:
+                state=None
+            proposal,_,_,_,_,state=teacher.step(torch.as_tensor(token[None]),state,deterministic=True)
+            expected.append(1.5*proposal[0].numpy())
+    np.testing.assert_array_equal(episode,np.stack(expected))
     assert not np.array_equal(full[2:],episode[2:])
     changed=[dict(row) for row in rows]
     changed[1]['reward']=19.
