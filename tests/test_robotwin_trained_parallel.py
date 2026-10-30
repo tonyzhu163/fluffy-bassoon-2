@@ -94,6 +94,18 @@ def parallel_args(b,output):
         "--collector-lanes","6","--collector-group-seconds","1","--recycle-at-round-boundary"]
 
 
+@pytest.mark.parametrize("change",[
+    ["--learning-rate","2e-6"],["--stage-source-validation-only"],
+    ["--source-validation-episodes","0"],["--ppo-epochs","4"],
+])
+def test_trained_scientific_argument_changes_fail_before_cuda(trained_boundary,monkeypatch,change):
+    b=trained_boundary
+    def no_cuda():raise AssertionError("CUDA gate must not be reached")
+    monkeypatch.setattr(driver.torch.cuda,"is_available",no_cuda)
+    with pytest.raises(ValueError,match="Trained parallel migration"):
+        driver.main(parallel_args(b,b["output"].parent.parent/"changed"/"experiment")+change)
+
+
 def test_trained_n6_execution_preserves_contract_and_stops_before_due_evaluation(
         tmp_path,trained_boundary,monkeypatch):
     import fluffy_bassoon.rl.robotwin_production_vector as vector_module
