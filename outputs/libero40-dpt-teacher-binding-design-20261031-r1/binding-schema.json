@@ -1,0 +1,78 @@
+{
+  "format": "source40_dpt_label_teacher_binding_schema_proposal_v1",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "target_manifest_format": "source40_dpt_label_teacher_binding_v1",
+  "primary_metric": "heldout_state_same_train_teacher",
+  "fallback_metric": "teacher_transfer",
+  "generation_fields": {
+    "generation_id": "Fresh immutable identity",
+    "verification_status": "PROPOSED or VERIFIED; only VERIFIED permits primary metric",
+    "source_snapshot": "Path+file/content SHA of existing all40/fixed8 immutable admission",
+    "selection": "Latest complete published TRAIN prefix per goal, frozen before labels/fits/targets; no performance selection",
+    "train_dataset_catalog": "40 original TRAIN dataset/sidecar hashes and behavior-stream cost references",
+    "validation_dataset_catalog": "8 original VAL behavior references plus derived DPT targets and output hashes",
+    "goal_bindings": "Exactly8 matching source goals, each linking the same TRAIN teacher to TRAIN and VAL label roles",
+    "legacy_reference": "Immutable legacy100 generation/VAL DPT dataset hashes and teacher_transfer metric identity",
+    "reporting": "Never compare NLL across different generation/teacher/label/window identities as the same metric"
+  },
+  "behavior_stream_fields": {
+    "task_key": "Original source goal",
+    "partition": "train or validation",
+    "source_contract": "Original producer path+SHA, history ID, actual case/episode/decision ordering",
+    "terminal_stream_checkpoint": "Original behavior-learning-run checkpoint path+SHA; NOT one actor that generated every historical action",
+    "raw_episode_catalog": "Immutable complete episode paths+trace SHAs, recorded sac_observation and row order",
+    "unchanged_fields": [
+      "observations",
+      "executed_noise",
+      "rewards",
+      "dones",
+      "episode_starts",
+      "teacher_steps",
+      "lengths"
+    ],
+    "raw_preservation": "All raw frames, motor actions, primitive rewards, outcomes and boundaries remain verbatim",
+    "cost_ref": "Unique original behavior-stream resource-cost ID; include VALbehavior cost once"
+  },
+  "label_teacher_fields": {
+    "task_key": "Same source goal as the behavior stream",
+    "source_partition": "train ONLY",
+    "publication": "Preselected TRAIN source index/publication/contract paths+SHAs and update clock",
+    "full_checkpoint": "Full immutable source checkpoint path+SHA",
+    "pure_actor_params_digest": {
+      "algorithm": "Existing vla_libero.structure_digest on serialization.to_state_dict(learner.agent._actor.params)",
+      "scope": "All actor parameters including pixel encoder/normalization and action head; exclude optimizer, critic, replay, RNG and counters",
+      "verification": "Derive/check on allocated resources; before/after label inference unchanged; do not substitute full-checkpoint SHA for pure-actor SHA"
+    },
+    "implementation_identity": "Exact producer source pin, official DSRL pin, actor/input/noise configuration",
+    "inference": "Existing deterministic eval_actions on recorded pixel64/proprio8 SAC observations; no VLA inference, SGD, sampling or simulator",
+    "full_training_cost_ref": "Unique TRAIN teacher-stream cost ID counted once globally, not once per labeled split"
+  },
+  "derived_label_fields": {
+    "objective": "dpt",
+    "target_noise": "Finite chronological[N,32] eval_actions outputs",
+    "input_row_identity": "Original behavior trace SHA/case/episode/decision ordinal; no reorder/filter/padding",
+    "parent_dataset": "Original VAL DPT dataset+sidecar hashes retained",
+    "nonlabel_field_hashes": "Exact equality to original VAL arrays for every unchanged field",
+    "teacher_binding_sha256": "Hash of the frozen per-goal teacher catalog",
+    "new_dataset": "Fresh path+SHA+sidecar; never overwrite original source publications"
+  },
+  "semantic_checks": [
+    "All8 TRAIN/VAL label roles point to the same verified TRAIN full-checkpoint and pure-actor digest pergoal.",
+    "Behavior provenance and per-row behavior clock are independent from the fixed label-teacher clock.",
+    "Reuse TRAIN DPT targets only when original publication teacher checkpoint equals the preselected TRAIN binding.",
+    "Legacy source_actor_checkpoint_sha256 assumptions require an explicit derived-label admission adapter, never silent metadata reinterpretation.",
+    "No source collection or fixed500 selection gate depends on this optional label-generation stage."
+  ],
+  "cost_accounting": {
+    "source_actions": 0,
+    "optimizer_updates": 0,
+    "VLA_inferences": 0,
+    "maximum_label_prep_gpu_seconds": 600,
+    "source_phase_seconds": 90000,
+    "planned_components_seconds": 89480,
+    "remaining_contingency_seconds": 520,
+    "rule": "Full TRAIN teacher cost and all8 VAL behavior costs retained once; existing48-stream+shared-overhead accounting is not duplicated by teacher reuse.",
+    "authority": "Design only; existing combined29.5h/150GB request remains pending and unchanged."
+  },
+  "fallback": "If no VERIFIED same-teacher corpus exists within the bound, fit fixed500 on the explicit teacher_transfer generation; never silently claim same teacher."
+}
