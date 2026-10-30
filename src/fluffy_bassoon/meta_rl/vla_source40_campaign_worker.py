@@ -7,6 +7,7 @@ This module never changes a stream's action cap or migrates its recovery.
 import argparse
 from contextlib import contextmanager
 import fcntl
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -25,6 +26,7 @@ FORMAT = 'libero40_sac_campaign_worker_v1'
 DEFAULT_ROOT = Path('/mowenjie/fluffy-bassoon-2')
 PLAN_ID = 'libero40-source-1m-20261029-r1'
 LAUNCHER = Path('scripts/diagnostics/vla_source40_campaign_collect.sh')
+MAX_WORKER_SECONDS = 7140
 SUITE_SHORT = dict(libero_spatial='s', libero_object='o', libero_goal='g', libero_10='l')
 
 
@@ -76,10 +78,19 @@ def read_ledger(path, campaign):
     return data['reservations']
 
 
-def stream_record(slot, campaign, reservations, source_commit):
+def valid_prefix(prefix):
+    if prefix is not None and (len(prefix) > 80 or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', prefix)):
+        raise ValueError('Fresh source run prefix must be a lowercase hyphenated identity of at most80 characters')
+    return prefix
+
+
+def stream_record(slot, campaign, reservations, source_commit, fresh_run_prefix=None):
+    valid_prefix(fresh_run_prefix)
     record = reservations.get(slot_key(slot))
     if record is None:
-        return dict(slot, run_id='libero40-1m-sac-20261029-' + slot_name(slot) + '-r1',
+        name = (fresh_run_prefix + '-' + slot_name(slot) if fresh_run_prefix is not None else
+                'libero40-1m-sac-20261029-' + slot_name(slot) + '-r1')
+        return dict(slot, run_id=name,
             source_commit=source_commit, campaign_sha256=campaign['campaign_sha256'],
             source_schedule_sha256=campaign['source_schedule_sha256']), False
     expected = dict(slot, campaign_sha256=campaign['campaign_sha256'],
@@ -89,6 +100,29 @@ def stream_record(slot, campaign, reservations, source_commit):
             or not re.fullmatch(r'[0-9a-f]{40}', record.get('source_commit', ''))):
         raise ValueError('Existing source reservation changed task, cap or provenance')
     return record, True
+
+
+def file_sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def validate_preflight(path, *, source_commit, worker, hostname, seconds, now=None):
+    """Admission is from this allocation's completed probe/tests, not old logs."""
+    if path is None:
+        raise ValueError('Allocated worker requires its own outer preflight receipt before any child reservation')
+    value = json.loads(Path(path).read_text())
+    probe = json.loads(Path(value['probe_path']).read_text())
+    elapsed = (time.time() if now is None else now) - value['allocation_started_unix']
+    if (value.get('source_commit') != source_commit or value.get('worker') != worker
+            or value.get('hostname') != hostname or value.get('tests_exit_code') != 0
+            or probe.get('status') != 'passed' or probe.get('purpose') != 'training'
+            or len(probe.get('devices', [])) != 1
+            or file_sha(value['probe_path']) != value['probe_sha256']
+            or file_sha(value['tests_path']) != value['tests_sha256']
+            or not 0 < value.get('maximum_outer_seconds', 0) <= MAX_WORKER_SECONDS
+            or elapsed < 0 or seconds + elapsed > value['maximum_outer_seconds'] - 20):
+        raise ValueError('Worker preflight source, GPU, tests or remaining allocation time differs')
+    return value
 
 
 def verify_worktree(path, source_commit):
@@ -234,17 +268,27 @@ def main(argv=None):
     ap.add_argument('--workers', type=int, default=8)
     ap.add_argument('--output', type=Path, required=True, help='Fresh worker attempt receipt directory')
     ap.add_argument('--expected-hostname')
-    ap.add_argument('--max-elapsed-seconds', type=int, default=14400)
+    ap.add_argument('--fresh-run-prefix', help='Only unreserved slots use this fresh identity; existing reservations are unchanged')
+    ap.add_argument('--preflight-receipt', type=Path)
+    ap.add_argument('--max-elapsed-seconds', type=int, default=MAX_WORKER_SECONDS)
     ap.add_argument('--child-timeout-seconds', type=int, default=2400)
     args = ap.parse_args(argv)
     if not re.fullmatch(r'[0-9a-f]{40}', args.source_commit):
         raise ValueError('Require the exact reviewed source commit')
     verify_worktree(Path(__file__).resolve().parents[3], args.source_commit)
-    if not 60 <= args.child_timeout_seconds <= 2400 or not 60 <= args.max_elapsed_seconds <= 14400:
-        raise ValueError('Worker ceilings are at most4h total and40min per child')
+    valid_prefix(args.fresh_run_prefix)
+    if not 60 <= args.child_timeout_seconds <= 2400 or not 60 <= args.max_elapsed_seconds <= MAX_WORKER_SECONDS:
+        raise ValueError('Worker ceilings are at most7140s total and40min per child within an approved2h allocation')
     if args.operation == 'run' and (sys.platform != 'linux' or socket.gethostname() != args.expected_hostname
                                    or args.project_root != DEFAULT_ROOT):
         raise ValueError('Execute only on the explicitly identified allocated Linux host and Baige project')
+    preflight = None
+    if args.operation == 'run':
+        from fluffy_bassoon.gpu_execution import validate_execution
+        validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
+        preflight = validate_preflight(args.preflight_receipt, source_commit=args.source_commit,
+            worker=args.worker, hostname=args.expected_hostname, seconds=args.max_elapsed_seconds)
+    started = time.monotonic()
     plan = args.project_root / 'outputs' / PLAN_ID
     campaign, schedule = load_campaign(plan / 'campaign.json'), load_schedule(plan / 'schedule.json')
     if campaign['source_schedule_sha256'] != schedule['schedule_sha256']:
@@ -255,9 +299,11 @@ def main(argv=None):
         campaign_sha256=campaign['campaign_sha256'], source_schedule_sha256=schedule['schedule_sha256'],
         worker=args.worker, workers=args.workers, slots=slots,
         max_elapsed_seconds=args.max_elapsed_seconds, child_timeout_seconds=args.child_timeout_seconds,
+        fresh_run_prefix=args.fresh_run_prefix, allocation_preflight=preflight,
+        compute_role='LIBERO approved32GPUh pool: this one of8 SAC workers uses at most2h; no RoboTwin allocation',
         action_cap='Each child retains its original campaign reservation; no new per-worker action budget')
     write_json(args.output / 'contract.json', contract)
-    started, rows = time.monotonic(), []
+    rows = []
     with file_lock(plan / 'worker-locks' / f'worker-{args.worker:02d}.lock', blocking=False) as owner:
         if not owner:
             raise RuntimeError('This campaign worker shard is already owned')
@@ -269,7 +315,7 @@ def main(argv=None):
                     rows.append(dict(slot=slot_key(slot), status='skip_worker_owned'))
                     continue
                 reservations = read_ledger(plan / 'ledger.json', campaign)
-                record, reserved = stream_record(slot, campaign, reservations, args.source_commit)
+                record, reserved = stream_record(slot, campaign, reservations, args.source_commit, args.fresh_run_prefix)
                 output = args.project_root / 'outputs' / record['run_id']
                 status_path = plan / 'worker-status' / (slot_name(slot) + '.json')
                 previous = json.loads(status_path.read_text()) if status_path.exists() else None

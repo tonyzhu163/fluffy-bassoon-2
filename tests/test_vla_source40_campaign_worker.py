@@ -6,7 +6,8 @@ import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_campaign import ALL_TASKS, VALIDATION_TASKS
 from fluffy_bassoon.meta_rl.vla_source40_campaign_worker import (
-    action_charge, assigned_slots, child_command, prepare_stream, stream_action, stream_record)
+    action_charge, assigned_slots, child_command, file_sha, prepare_stream,
+    stream_action, stream_record, validate_preflight)
 
 
 def campaign():
@@ -142,3 +143,60 @@ def test_fresh_stream_output_collision_cannot_silently_restart(tmp_path):
     current = record()
     with pytest.raises(ValueError, match='collides'):
         stream_action(tmp_path, current, False)
+
+
+def test_fresh_prefix_changes_only_unreserved_stream_identities():
+    value = campaign()
+    prefix = 'libero40-1m-sac-20261030-bulk-r1'
+    fresh = [stream_record(slot, value, {}, 'a' * 40, prefix)[0] for slot in value['sac_slots']]
+    legacy = [stream_record(slot, value, {}, 'a' * 40)[0] for slot in value['sac_slots']]
+    assert len({row['run_id'] for row in fresh}) == 48
+    assert not {row['run_id'] for row in fresh} & {row['run_id'] for row in legacy}
+    assert all(row['run_id'].startswith(prefix + '-') and row['source_commit'] == 'a' * 40 for row in fresh)
+    previous = dict(legacy[0], source_commit='b' * 40)
+    selected, reserved = stream_record(value['sac_slots'][0], value,
+        {'libero_spatial:00/train': previous}, 'a' * 40, prefix)
+    assert reserved and selected == previous
+    assert child_command('/project', selected, 'resume')[2:4] == ['b' * 40, previous['run_id']]
+
+
+@pytest.mark.parametrize('prefix', ['', '../old', 'UPPER', 'bad_name', 'a' * 81])
+def test_unsafe_fresh_prefix_rejected_before_preparation(prefix):
+    value = campaign()
+    with pytest.raises(ValueError, match='Fresh source run prefix'):
+        stream_record(value['sac_slots'][0], value, {}, 'a' * 40, prefix)
+
+
+def preflight(tmp_path):
+    probe, tests, path = tmp_path / 'gpu.json', tmp_path / 'tests.log', tmp_path / 'receipt.json'
+    write(probe, dict(status='passed', purpose='training', devices=[dict(index=0)]))
+    tests.write_text('all relevant allocated Linux tests passed')
+    row = dict(source_commit='a' * 40, worker=0, hostname='allocated-host', tests_exit_code=0,
+        allocation_started_unix=1000, maximum_outer_seconds=7140,
+        probe_path=str(probe), probe_sha256=file_sha(probe), tests_path=str(tests), tests_sha256=file_sha(tests))
+    write(path, row)
+    return path, row
+
+
+def test_preflight_and_shutdown_time_are_inside_the_same_two_hour_worker_cap(tmp_path):
+    path, row = preflight(tmp_path)
+    assert validate_preflight(path, source_commit='a' * 40, worker=0, hostname='allocated-host',
+        seconds=7000, now=1100) == row
+    # The100 seconds already spent on setup/probe/tests cannot be reclaimed.
+    with pytest.raises(ValueError, match='remaining allocation time'):
+        validate_preflight(path, source_commit='a' * 40, worker=0, hostname='allocated-host',
+            seconds=7140, now=1100)
+    with pytest.raises(ValueError, match='remaining allocation time'):
+        validate_preflight(path, source_commit='a' * 40, worker=0, hostname='allocated-host',
+            seconds=60, now=9000)
+
+
+def test_missing_wrong_source_or_tampered_preflight_cannot_admit_a_child(tmp_path):
+    path, row = preflight(tmp_path)
+    with pytest.raises(ValueError, match='own outer preflight'):
+        validate_preflight(None, source_commit='a' * 40, worker=0, hostname='allocated-host', seconds=7000, now=1100)
+    with pytest.raises(ValueError, match='preflight source'):
+        validate_preflight(path, source_commit='b' * 40, worker=0, hostname='allocated-host', seconds=7000, now=1100)
+    Path(row['tests_path']).write_text('changed after verification')
+    with pytest.raises(ValueError, match='preflight source'):
+        validate_preflight(path, source_commit='a' * 40, worker=0, hostname='allocated-host', seconds=7000, now=1100)
