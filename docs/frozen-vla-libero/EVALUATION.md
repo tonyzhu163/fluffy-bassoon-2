@@ -3,6 +3,27 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## All40 source collection complete; performance evaluation pending
+
+The canonical40 training/8 validation SAC streams are terminal, exit0 and
+collection-qualified:527 complete K4 training cases/2,108 episodes/326,277
+simulator actions,146 validation cases/584 episodes/85,301 actions. The
+411,578 selected actions exclude12,944 separately spent source-qualification
+actions. State/seed repetition is explicit in the receipts. Target data did
+not enter this source corpus. Offline AD/DPT fitting is the next step; corpus
+quantity and successful SAC updates establish neither useful meta-learning
+nor strong robot performance. [Receipts and costs](../../outputs/libero40-bulk-approved-20261030-r1/README.md).
+
+Both shared PPO modes reached40 iterations/80 optimizer steps/160 complete
+episodes across all40 goals, then stopped on a repeated-scene observation
+consistency check. Full recoveries are preserved. Both fresh-process reset probes reproduced the observation mismatch before
+any further optimizer update. Full-arm arrays show exact simulator state,
+proprio and main camera; only two wrist-image channel values differ by1/255.
+A source40-specific quantization tolerance is being prepared without changing
+raw observations or physical identity. AD-full has already reached500 offline
+updates on the all40 corpus. These remain incomplete performance experiments,
+not method failures or final PPO policies.
+
 ## Shared-motor source-scale comparison completed
 
 Baige `job-7mznlehmgocq`, source`f5552d6`, exited0 after all28groups/76episodes:

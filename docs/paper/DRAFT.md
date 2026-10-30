@@ -13,9 +13,11 @@ transfer, not a claim that every LIBERO90 goal is semantically unseen. Case/seed
 plans are declared before the comparison. Existing RLinf130
 runs, the 78/10/10 split and clean-versus-clean+Plus arms remain historical.
 The [source40/target90 protocol](../../outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
-is the current design. The user selected a1M executed-action source cap for
-LIBERO, shared across SAC/fresh PPO, validation, qualifications and retries;
-RoboTwin has its own1M cap. Full-campaign GPU-hour expansion remains pending.
+is the current design. The original campaign used a1M combined-action cap per benchmark. Later human
+steering accepted approximately1M source actions per learner on both, with
+complete episodes/trials and benchmark-appropriate horizons. Existing runs
+retain their original contracts; future expansion costs stay explicit. The
+32 additional LIBERO GPU-hour pool is approved.
 Current evidence: capped source streams on Spatial00 and LIBERO10:00;
 fresh shared PPO qualified. Four AD/DPT full/static models trained500 updates
 each on the Spatial00 subset. AD's within-objective validation loss worsened;
@@ -47,16 +49,20 @@ matched all3,215selected chunks and exact training windows;65.2% of Source2
 train rows are warmup, and both training failures/recoveries preceded the
 first update. Final DPT actors lack subsequent source behavior. Candidate
 teacher quality and useful learning-history diversity remain unresolved.
-Full40 collection, full-suite targets and stable RoboTwin learning/performance
-remain unfinished. RoboTwin uses6 source goals and6 controller-held-out goals;
+All40 source SAC collection is complete:527 K4 training cases/2,108 episodes
+and146 validation cases/584 episodes,411,578 selected simulator actions.
+All40 offline AD/DPT training and full-suite target comparisons remain unfinished. RoboTwin uses6 source goals and6 controller-held-out goals;
 its current1024D independent noise interface differs from LIBERO's32D tied
-noise. Joint KL/clip diagnostics have not qualified its PPO update recipe.
+noise. Its source-only LR1e-6 PPO calibration passed, but useful robot improvement
+remains unproven.
 
-The approved bulk source campaign is now running: eight independent SAC
-workers and two fresh shared full/reset PPO workers. Source generation and
-PPO optimization proceed in parallel; actual coverage/costs and useful
-learning behavior remain measured outcomes. Both benchmarks now collect
-fresh data under their respective human approvals. Runtime progress does
+The bulk SAC collection is terminal and qualified; AD/DPT fitting can proceed
+while PPO is repaired. Shared full/reset PPO each completed40 iterations and
+80 optimizer steps, then stopped at a same-scene observation guard. Preserve
+these incomplete runs and costs; they are neither final policies nor negative
+method results. RoboTwin's latest completed slice has81 complete source K4
+groups/328 source episodes/118,805 actions, with3 PPO iterations per PPO arm
+and15,560 SAC steps; owner-reported, separate costs. Runtime/data quantity does
 not change the unproven central robot-performance claim.
 
 ## Abstract scaffold

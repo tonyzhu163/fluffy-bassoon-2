@@ -1,0 +1,259 @@
+{
+  "verified_at_utc": "2026-10-30T08:11:51.109219+00:00",
+  "migrations": [
+    {
+      "source_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r1",
+      "destination_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2",
+      "original_source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+      "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
+      "original_checkpoint_sha256": "bdd038ad7a7f1c3d3fb74a855ef03360c5710751ff7aa047ad3dd8667733e898",
+      "initial_checkpoint_sha256": "bef08f9d2bf0d681d9dbf8613c54c7ac18efa7803ecc56cd9acf8ad033277ff3",
+      "iteration": 40,
+      "counters": {
+        "environment_steps": 25103,
+        "settling_steps": 1600,
+        "rollout_forward_samples": 2576,
+        "update_forward_samples": 5152,
+        "optimizer_steps": 80
+      },
+      "state_sha256_before": "9b7d3494e3d324f0a497eb31c2421d5a32088a5cb39ef796c14314ebb21e8c2a",
+      "state_sha256_after": "9b7d3494e3d324f0a497eb31c2421d5a32088a5cb39ef796c14314ebb21e8c2a",
+      "numerical_state_unchanged": true,
+      "original_reservation_id": "libero40-ppo-full-20261030-r1",
+      "reservation_sha256": "c74186b334f5906c9c23152f53a47acd6173c3122ac37df26ff50de55c61ad9d",
+      "maximum_total_actions": 172000,
+      "worker_seconds": 21600,
+      "carried_time_seconds": 1738,
+      "carried_physical_cost": {
+        "known_primitive_steps": 25289,
+        "unresolved_primitive_ceiling": 0,
+        "settling_step_charge": 1630,
+        "known_settling_steps": 1630,
+        "total_action_charge": 26919
+      },
+      "next_case": {
+        "task_key": "libero_spatial:00",
+        "initial_state": 19,
+        "scene_seed": 1916071045
+      },
+      "migration_file_sha256": "b7be3e79ce417fb02b722f9c78149c6b35ba1ccbd73a723eb2ca05732cc10e16",
+      "copied_journal_counts": {
+        "execution-journal": 5353,
+        "task-resets": 163
+      },
+      "worker_time": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
+          "run_id": "libero40-ppo-full-20261030-r2",
+          "maximum_total_actions": 172000,
+          "updates": 100000,
+          "memory_mode": "full",
+          "maximum_driver_seconds": 21600,
+          "campaign_sha256": "640cab4248609b03e71ebbe6470f993884ab0c8ea002b8c127933892c76c2720",
+          "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+          "architecture": {
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300
+          },
+          "optimizer": {
+            "learning_rate": 0.0001,
+            "epochs": 2
+          },
+          "seed": 2,
+          "status": "Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified"
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r1/attempts/1793329414804465-0000",
+            "started_unix": 1793329414.804465,
+            "slice_seconds": 21480,
+            "reserved_seconds": 21540,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793331092.4854336,
+            "exit_code": 1,
+            "charged_seconds": 1738,
+            "slice_overrun": false
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2/attempts/1793347236709247-0001",
+            "started_unix": 1793347236.7092474,
+            "slice_seconds": 19740,
+            "reserved_seconds": 19800,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793347363.287437,
+            "exit_code": 1,
+            "charged_seconds": 187,
+            "slice_overrun": false
+          }
+        ],
+        "prior_contract": {
+          "source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+          "run_id": "libero40-ppo-full-20261030-r1",
+          "maximum_total_actions": 172000,
+          "updates": 100000,
+          "memory_mode": "full",
+          "maximum_driver_seconds": 21600,
+          "campaign_sha256": "640cab4248609b03e71ebbe6470f993884ab0c8ea002b8c127933892c76c2720",
+          "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+          "architecture": {
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300
+          },
+          "optimizer": {
+            "learning_rate": 0.0001,
+            "epochs": 2
+          },
+          "seed": 2,
+          "status": "Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified"
+        },
+        "migration": {
+          "source_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r1",
+          "original_time_sha256": "da9dc6c6c8b193854eaefcd42457a14731ff08d1ab1bf8e2a78b510c3009c14e",
+          "original_time_charge_seconds": 1738
+        }
+      },
+      "repair_probe_exit_code": "1",
+      "actual_reset_payloads": [
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2/attempts/1793347236709247-0001/reset-probe/reset-03.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2/attempts/1793347236709247-0001/reset-probe/reset-01.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2/attempts/1793347236709247-0001/reset-probe/reset-00.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r2/attempts/1793347236709247-0001/reset-probe/reset-02.pkl.gz"
+      ]
+    },
+    {
+      "source_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r1",
+      "destination_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2",
+      "original_source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+      "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
+      "original_checkpoint_sha256": "b8ac34fb82724845fb43265f9720dcbe41d2a2fc4d9bce67c8b2c8a84cda3b74",
+      "initial_checkpoint_sha256": "1688da6e07c72397f6df32ffdc1970b48a66770e42e2628c93741a988828029a",
+      "iteration": 40,
+      "counters": {
+        "environment_steps": 25279,
+        "settling_steps": 1600,
+        "rollout_forward_samples": 2590,
+        "update_forward_samples": 5180,
+        "optimizer_steps": 80
+      },
+      "state_sha256_before": "2cd6f92ccaa7f58d8745d091b6d30ad6d6bf2eb679381f8317260517d1ca1a6d",
+      "state_sha256_after": "2cd6f92ccaa7f58d8745d091b6d30ad6d6bf2eb679381f8317260517d1ca1a6d",
+      "numerical_state_unchanged": true,
+      "original_reservation_id": "libero40-ppo-reset-20261030-r1",
+      "reservation_sha256": "b8b205c21d53489149cad08dcdc384da04f89c369b62ce9db33d3aea427b21aa",
+      "maximum_total_actions": 172000,
+      "worker_seconds": 21600,
+      "carried_time_seconds": 1739,
+      "carried_physical_cost": {
+        "known_primitive_steps": 25435,
+        "unresolved_primitive_ceiling": 0,
+        "settling_step_charge": 1630,
+        "known_settling_steps": 1630,
+        "total_action_charge": 27065
+      },
+      "next_case": {
+        "task_key": "libero_spatial:00",
+        "initial_state": 19,
+        "scene_seed": 1916071045
+      },
+      "migration_file_sha256": "72e438d18bd0f78538dff56bcfc04eb401d687067fcd73507aa5a2a27460568c",
+      "copied_journal_counts": {
+        "execution-journal": 5375,
+        "task-resets": 163
+      },
+      "worker_time": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
+          "run_id": "libero40-ppo-reset-20261030-r2",
+          "maximum_total_actions": 172000,
+          "updates": 100000,
+          "memory_mode": "episode",
+          "maximum_driver_seconds": 21600,
+          "campaign_sha256": "640cab4248609b03e71ebbe6470f993884ab0c8ea002b8c127933892c76c2720",
+          "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+          "architecture": {
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300
+          },
+          "optimizer": {
+            "learning_rate": 0.0001,
+            "epochs": 2
+          },
+          "seed": 2,
+          "status": "Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified"
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r1/attempts/1793329493314464-0000",
+            "started_unix": 1793329493.3144646,
+            "slice_seconds": 21480,
+            "reserved_seconds": 21540,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793331171.6471848,
+            "exit_code": 1,
+            "charged_seconds": 1739,
+            "slice_overrun": false
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2/attempts/1793347396408801-0001",
+            "started_unix": 1793347396.4088018,
+            "slice_seconds": 19740,
+            "reserved_seconds": 19800,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793347516.7819068,
+            "exit_code": 1,
+            "charged_seconds": 181,
+            "slice_overrun": false
+          }
+        ],
+        "prior_contract": {
+          "source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+          "run_id": "libero40-ppo-reset-20261030-r1",
+          "maximum_total_actions": 172000,
+          "updates": 100000,
+          "memory_mode": "episode",
+          "maximum_driver_seconds": 21600,
+          "campaign_sha256": "640cab4248609b03e71ebbe6470f993884ab0c8ea002b8c127933892c76c2720",
+          "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+          "architecture": {
+            "width": 128,
+            "layers": 2,
+            "heads": 4,
+            "context_length": 300
+          },
+          "optimizer": {
+            "learning_rate": 0.0001,
+            "epochs": 2
+          },
+          "seed": 2,
+          "status": "Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified"
+        },
+        "migration": {
+          "source_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r1",
+          "original_time_sha256": "21a486cb5b90a180eada0fc2356a327efae417d192e085a9f693a8288041d17e",
+          "original_time_charge_seconds": 1739
+        }
+      },
+      "repair_probe_exit_code": "1",
+      "actual_reset_payloads": [
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2/attempts/1793347396408801-0001/reset-probe/reset-03.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2/attempts/1793347396408801-0001/reset-probe/reset-01.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2/attempts/1793347396408801-0001/reset-probe/reset-00.pkl.gz",
+        "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2/attempts/1793347396408801-0001/reset-probe/reset-02.pkl.gz"
+      ]
+    }
+  ]
+}
