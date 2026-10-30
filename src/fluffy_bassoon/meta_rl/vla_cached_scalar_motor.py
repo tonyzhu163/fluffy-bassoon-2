@@ -275,6 +275,7 @@ class CachedScalarMotor:
             if cached[0] != (_content(obs), str(instruction)) or cached[2] is not self.policy._rng:
                 raise ValueError("Prepared scalar prefix is stale or belongs to another observation/instruction")
             self.clear_cache()
+            self.cached_infer_calls += 1
             self.native.calls += 1
             self.policy._rng, _ = self._backend.split_rng(self.policy._rng)
             actions = np.asarray(self._backend.decode(cached[1], noise))
@@ -282,7 +283,6 @@ class CachedScalarMotor:
                 self._backend.attest_first_call()
             if actions.shape != (10, 7) or not np.isfinite(actions).all():
                 raise ValueError("Unexpected native cached motor output")
-            self.cached_infer_calls += 1
             return actions
         finally:
             self.clear_cache()
