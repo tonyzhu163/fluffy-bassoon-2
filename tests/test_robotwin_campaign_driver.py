@@ -351,6 +351,243 @@ def test_stage_configuration_requires_exact_ordered_campaign_limits():
             "--source-milestones","32000","64000"])
 
 
+def test_fixed_iterations_require_whole_trials_and_separate_sparse_evaluation():
+    required=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--output","/new",
+        "--campaign-root","/campaign","--record-corpus","--source-steps","1100000",
+        "--source-iterations","100","--ppo-trials-per-update","6",
+        "--source-eval-iterations","10","25","50","100","--benchmark-episode-limits"]
+    args=driver.parse_args(required)
+    assert args.source_iterations==100 and args.ppo_trials_per_update==6
+    assert args.source_eval_iterations==[10,25,50,100] and args.benchmark_episode_limits
+    for extra in (["--source-iterations","0"],["--ppo-update-steps","10000"],
+                  ["--source-milestones","1100000"],["--train-episodes","2"],
+                  ["--source-eval-iterations","25","10","100"],
+                  ["--source-eval-iterations","10","25"]):
+        with pytest.raises(SystemExit): driver.parse_args(required+extra)
+
+
+@pytest.fixture
+def fixed_round_driver(monkeypatch):
+    """Complete physical K4 fixtures; no substitute for independent learner math tests."""
+    import fluffy_bassoon.rl.robotwin_noise as runtime_module
+    state=dict(actions=[],metadata=[],interrupt=None,validation_resets=0)
+    limits={task:(6 if task=="handover_mic" else 5 if task=="scan_object" else 4)
+            for task in driver.SOURCE_TASKS+driver.HELDOUT_TASKS}
+
+    class Runtime:
+        observation_dim=2
+        noise_shape=(1,2)
+        native_horizon=1
+        contract={}
+        last_reset_info={"reset_policy_actions":0}
+        def __init__(self,*,task_episode_limits=None,**kwargs):
+            self.task_episode_limits=task_episode_limits or limits
+            self.episode_limit=max(self.task_episode_limits.values())
+        def set_recording_context(self,context):
+            self.context=dict(getattr(self,"context",{}),**context)
+        def episode_limit_for_task(self,task): return self.task_episode_limits[task]
+        def reset(self,task,seed):
+            self.task=task;self.seed=seed;self.elapsed_steps=0
+            self.episode_limit=self.episode_limit_for_task(task)
+            if self.context["phase"]=="source_validation" and self.context.get("stage_source_iteration")==10:
+                if state["interrupt"]=="evaluation" and state["validation_resets"]==4:
+                    state["interrupt"]=None
+                    raise driver.WallBudgetReached("Between completed frozen validation trials")
+                state["validation_resets"]+=1
+            return np.zeros(2,np.float32)
+        def step(self,noise,*,max_primitive_steps=None):
+            assert max_primitive_steps is None  # Whole-trial reservations must prevent all action cuts.
+            self.elapsed_steps+=1
+            method=self.context["method"]
+            duration={"ppo":1,"ppo_reset":2,"sac":3}[method]
+            end=self.elapsed_steps==duration
+            state["actions"].append((self.context["phase"],method,self.task,self.seed,self.elapsed_steps))
+            return np.zeros(2,np.float32),float(end),end,False,dict(
+                primitive_steps=1,success=end,budget_truncated=False)
+        def record_decision_metadata(self,data):
+            state["metadata"].append((self.context["phase"],self.context.get("source_iteration"),
+                                      data.get("optimizer_updates")))
+        def check_noise_parity(self,noise): return dict(passed=True,max_abs_error=0.)
+        def frozen_fingerprint(self): return "fixed-motor"
+        def close(self): pass
+
+    class Collector:
+        def __init__(self,*args,config,**kwargs):
+            self.config=config;self.policy=torch.nn.Linear(2,2)
+            with torch.no_grad(): self.policy.weight.fill_(1.);self.policy.bias.zero_()
+            self.updates=self.optimizer_steps=self.primitive_steps=self.chunks=0
+        def state_dict(self):
+            return dict(weights=self.policy.state_dict(),updates=self.updates,
+                optimizer_steps=self.optimizer_steps,primitive_steps=self.primitive_steps,chunks=self.chunks)
+        def load_state_dict(self,saved):
+            self.policy.load_state_dict(saved["weights"])
+            for key in ("updates","optimizer_steps","primitive_steps","chunks"):setattr(self,key,saved[key])
+        def collect_trial(self,env,task,seeds,*,primitive_budget=None,episode_callback=None,
+                          decision_callback=None,**kwargs):
+            assert primitive_budget is None
+            rows=[];total=chunks=0
+            for index,seed in enumerate(seeds):
+                env.reset(task,seed);done=False;steps=0
+                while not done:
+                    _,reward,end,trunc,info=env.step(np.zeros(2))
+                    steps+=info["primitive_steps"];chunks+=1;done=end or trunc
+                row=dict(task=task,episode=index+1,seed=seed,success=True,return_=reward,
+                         primitive_steps=steps,chunks=steps,budget_truncated=False)
+                if episode_callback:episode_callback(row)
+                rows.append(row);total+=steps
+            return dict(rewards=torch.zeros(chunks),episodes=len(rows)),dict(
+                episodes=rows,chunks=chunks,primitive_steps=total,budget_truncated=False)
+        def replay_error(self,rollout):return dict(log_prob_max_error=0.,value_max_error=0.)
+        def update(self,rollouts):
+            assert len(rollouts)==6 and all(r["episodes"]==4 for r in rollouts)
+            self.updates+=1;self.optimizer_steps+=self.config.epochs
+            with torch.no_grad():self.policy.weight.add_(1.)
+            return dict(ppo_updates=self.updates,optimizer_steps=self.config.epochs)
+
+    class SACCollector:
+        def __init__(self,observation_dim,action_dim,*,config,seed=0,**kwargs):
+            assert (config.warmup_chunks,config.batch_size,config.utd)==(500,256,20)
+            self.actor=torch.nn.Linear(2,2)
+            with torch.no_grad():self.actor.weight.fill_(1.);self.actor.bias.zero_()
+            self.rng=np.random.default_rng(seed);self.torch_rng=torch.Generator().manual_seed(seed)
+            self.updates=self.environment_steps=self.primitive_steps=0;self.replay=[]
+        @property
+        def warming_up(self):return self.environment_steps<1
+        @property
+        def optimizer_steps(self):return self.updates*3
+        def act(self,*args,**kwargs):return np.zeros(2,np.float32)
+        sample_warmup=act
+        def observe(self,*args,primitive_steps,**kwargs):
+            self.environment_steps+=1;self.primitive_steps+=primitive_steps
+            self.replay.append(primitive_steps)
+        def update(self,gradient_steps):
+            assert gradient_steps==20
+            if self.environment_steps<2:return {}
+            self.updates+=1
+            with torch.no_grad():self.actor.weight.add_(.01)
+            return dict(updates=self.updates)
+        def state_dict(self):
+            return dict(actor=self.actor.state_dict(),updates=self.updates,
+                environment_steps=self.environment_steps,primitive_steps=self.primitive_steps,replay=list(self.replay))
+        def load_state_dict(self,saved):
+            self.actor.load_state_dict(saved["actor"])
+            for key in ("updates","environment_steps","primitive_steps"):setattr(self,key,saved[key])
+            self.replay=list(saved["replay"])
+        def contract(self):return dict(dispatch_fixture=True)
+
+    class Archive:
+        # Exact actor-file hashing has independent coverage above; thousands
+        # of tiny policy exports are irrelevant to this scheduling test.
+        def __init__(self,*args):self.index={};self.bytes_written=0;self.seconds=0.
+        def identify(self,learner,method):
+            version=f"{method}:{learner.updates}"
+            self.index[(id(learner),version)]=version
+            return dict(policy_version=version)
+
+    original_append=driver.append_json
+    def append(path,row):
+        original_append(path,row)
+        if Path(path).name!="progress.jsonl":return
+        before=(state["interrupt"]=="before_update" and row["stage"]=="source_trial"
+                and row.get("method")=="ppo" and row.get("source_iteration")==1
+                and row.get("trial_in_iteration")==6)
+        after=(state["interrupt"]=="after_update" and row["stage"]=="source_iteration_complete"
+               and row["method"]=="ppo" and row["source_iteration"]==1)
+        if before or after:
+            state["interrupt"]=None
+            raise driver.WallBudgetReached("Injected exact completed-trial/update boundary")
+    monkeypatch.setattr(runtime_module,"RobotwinNoiseEnv",Runtime)
+    monkeypatch.setattr(runtime_module,"load_benchmark_episode_limits",lambda root,tasks:dict(limits))
+    monkeypatch.setattr(driver,"RecurrentNoisePPO",Collector)
+    monkeypatch.setattr(driver,"NoiseSAC",SACCollector)
+    monkeypatch.setattr(driver,"BehaviorPolicyArchive",Archive)
+    monkeypatch.setattr(driver,"append_json",append)
+    monkeypatch.setattr(driver.torch.cuda,"is_available",lambda:True)
+    monkeypatch.setattr(driver.torch.cuda,"manual_seed_all",lambda seed:None)
+    monkeypatch.setattr(driver,"capture_rng",lambda:{"fixture":True})
+    monkeypatch.setattr(driver,"restore_rng",lambda saved:None)
+    return state
+
+
+def test_one_hundred_complete_trial_iterations_resume_exactly_once_with_sparse_evaluation(tmp_path,fixed_round_driver):
+    state=fixed_round_driver
+    common=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--methods","ppo","sac","ppo_reset",
+        "--source-steps","11000","--source-iterations","100","--ppo-trials-per-update","6",
+        "--source-eval-iterations","10","25","50","100","--benchmark-episode-limits",
+        "--native-episodes","0","--stage-source-validation-only","--record-corpus"]
+    campaign=tmp_path/"campaign";previous=None;outputs=[]
+    for index,interruption in enumerate(("before_update","after_update","evaluation",None)):
+        state["interrupt"]=interruption;output=tmp_path/f"run{index}";outputs.append(output)
+        args=common+["--campaign-root",str(campaign),"--output",str(output)]
+        if previous is not None:args +=["--resume",str(previous)]
+        assert driver.main(args)==0
+        saved=torch.load(output/"coordinator-recovery.pt",map_location="cpu",weights_only=False)
+        if index==0:
+            point=saved["states"]["ppo"]
+            assert point["completed_source_trials"]==6 and point["completed_source_iterations"]==0
+            assert len(point["pending_rollouts"])==6 and point["learner"]["updates"]==0
+        if index==1:
+            point=saved["states"]["ppo"]
+            assert point["completed_source_iterations"]==point["learner"]["updates"]==1
+            assert point["pending_rollouts"]==[]
+        if index==2:
+            assert "stage:iteration:10:source_validation:ppo:handover_mic" in saved["completed_units"]
+        previous=output
+    summary=json.loads((outputs[-1]/"summary.json").read_text())
+    assert summary["status"]=="complete" and summary["source_budget_match"]
+    assert not summary["source_action_counts_match"]  # Early success differs by controller.
+    assert set(summary["stages"])=={f"iteration:{i}" for i in (10,25,50,100)}
+    for method,expected_actions in (("ppo",2400),("sac",7200),("ppo_reset",4800)):
+        source=summary["source"][method]
+        assert source["completed_source_iterations"]==100 and source["completed_source_trials"]==600
+        assert source["source_steps"]==expected_actions<11000
+        point=saved["states"][method]
+        if method!="sac":assert point["learner"]["updates"]==100 and point["learner"]["optimizer_steps"]==500
+        else:assert point["learner"]["updates"]==7199  # SAC SGD is online, not100updates.
+    updates=[json.loads(line) for output in outputs if (output/"updates.jsonl").exists()
+             for line in (output/"updates.jsonl").read_text().splitlines()
+             if json.loads(line).get("method") in ("ppo","ppo_reset")]
+    for method in ("ppo","ppo_reset"):
+        assert [row["ppo_updates"] for row in updates if row["method"]==method]==list(range(1,101))
+    resumed_actions=list(state["actions"])
+    state.update(actions=[],metadata=[],interrupt=None,validation_resets=0)
+    baseline=tmp_path/"baseline"
+    assert driver.main(common+["--campaign-root",str(tmp_path/"baseline-campaign"),"--output",str(baseline)])==0
+    assert state["actions"]==resumed_actions  # No repeated completed source/update/evaluation units.
+    baseline_summary=json.loads((baseline/"summary.json").read_text())
+    assert baseline_summary["campaign_budget"]["actual_actions"]==summary["campaign_budget"]["actual_actions"]
+    progress=[json.loads(line) for output in outputs
+              for line in (output/"progress.jsonl").read_text().splitlines()]
+    for method in ("ppo","sac","ppo_reset"):
+        for iteration in range(1,101):
+            trials=[row for row in progress if row["stage"]=="source_trial"
+                    and row["method"]==method and row["source_iteration"]==iteration]
+            assert len(trials)==6 and {row["task"] for row in trials}==set(driver.SOURCE_TASKS)
+            assert all(row["episodes"]==4 and not row["external_stage_budget_cut"] for row in trials)
+
+
+def test_fixed_iteration_reserves_a_complete_trial_before_any_source_action(tmp_path,fixed_round_driver):
+    prior=tmp_path/"prior.json"
+    prior.write_text(json.dumps([dict(import_id="prior-cost",actual_actions=100,
+        receipt_sha256="b"*64,phase="source",method="ppo")]))
+    output=tmp_path/"run"
+    args=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--methods","ppo",
+        "--source-steps","110","--source-iterations","1","--ppo-trials-per-update","6",
+        "--benchmark-episode-limits","--native-episodes","0","--source-validation-episodes","0",
+        "--campaign-root",str(tmp_path/"campaign"),"--campaign-prior-receipts",str(prior),
+        "--record-corpus","--output",str(output)]
+    assert driver.main(args)==0
+    summary=json.loads((output/"summary.json").read_text())
+    assert summary["status"]=="campaign_budget_stop" and fixed_round_driver["actions"]==[]
+    assert summary["source"]["ppo"]["completed_source_trials"]==0
+    saved=torch.load(output/"coordinator-recovery.pt",map_location="cpu",weights_only=False)
+    assert saved["states"]["ppo"]["schedule"]["trials"]==0
+    assert saved["states"]["ppo"]["pending_rollouts"]==[]
+
+
 def test_exact_stage_barriers_preserve_pending_policy_rng_and_resumed_native_noise(tmp_path,monkeypatch):
     import fluffy_bassoon.rl.robotwin_noise as runtime_module
     stream=[0]

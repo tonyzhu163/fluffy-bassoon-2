@@ -3,7 +3,10 @@
 
 Source learners receive the same *actual primitive-step* ceiling. Source
 collection can cut its final trial/chunk at that ceiling; PPO bootstraps the
-external cut. Target trials have equal episode/horizon allowances and record
+external cut. Optional fixed-iteration training instead matches complete K4
+trial counts, reserves full task-native horizons, and reports differing actual
+action totals without cutting episodes to meet an action target.
+Target trials have equal episode/horizon allowances and record
 actual costs. Tiny source-subset pilots are qualification, never held-out
 generalization results. No checkpoint is downloaded by this command.
 """
@@ -268,6 +271,9 @@ def parse_args(argv=None):
     p.add_argument("--eval-tasks",nargs="+",default=list(HELDOUT_TASKS))
     p.add_argument("--methods",nargs="+",choices=("ppo","sac","ppo_reset"),default=["ppo","sac"])
     p.add_argument("--source-steps",type=int)
+    p.add_argument("--source-iterations",type=int)
+    p.add_argument("--source-eval-iterations",type=int,nargs="+",default=[])
+    p.add_argument("--benchmark-episode-limits",action="store_true")
     p.add_argument("--ppo-update-steps",type=int,default=0)
     p.add_argument("--ppo-trials-per-update",type=int)
     p.add_argument("--checkpoint-steps",type=int,default=20_000)
@@ -330,6 +336,20 @@ def parse_args(argv=None):
         p.error("Prior receipts require --campaign-root")
     if args.final_observation_only and not args.capture_qualification:
         p.error("Final-only capture requires --capture-qualification")
+    if args.source_iterations is not None:
+        if args.source_iterations<1 or args.train_episodes!=4 or args.ppo_update_steps:
+            p.error("Fixed source iterations require positive count, complete K4 trials and no primitive update threshold")
+        if not args.campaign_root or not args.record_corpus:
+            p.error("Fixed source iterations require campaign accounting and raw corpus recording")
+        if args.source_milestones:
+            p.error("Whole-trial iterations cannot use exact action milestones")
+        if not args.source_eval_iterations: args.source_eval_iterations=[args.source_iterations]
+        if (args.source_eval_iterations!=sorted(set(args.source_eval_iterations))
+                or args.source_eval_iterations[0]<1
+                or args.source_eval_iterations[-1]!=args.source_iterations):
+            p.error("Evaluation iterations must increase strictly and finish at --source-iterations")
+    elif args.source_eval_iterations:
+        p.error("Evaluation iteration schedule requires --source-iterations")
     if args.source_milestones:
         if not args.campaign_root or not args.record_corpus:
             p.error("Source milestones require campaign accounting and raw corpus recording")
@@ -344,8 +364,8 @@ def parse_args(argv=None):
             p.error("Stage --eval-tasks must be the predeclared adjust_bottle move_stapler_pad pair")
         if not args.stage_source_validation_only and args.eval_episodes!=8:
             p.error("Stage target adaptation uses the declared K8 trials")
-    elif args.stage_source_validation_only:
-        p.error("Stage validation mode requires --source-milestones")
+    elif args.stage_source_validation_only and not args.source_iterations:
+        p.error("Stage validation mode requires action milestones or fixed source iterations")
     return args
 
 
@@ -372,6 +392,20 @@ def main(argv=None):
             train_episodes=args.train_episodes,native_horizon=args.native_horizon))
     from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv
     runtime_options={}
+    task_episode_limits=None
+    if args.benchmark_episode_limits:
+        from fluffy_bassoon.rl.robotwin_noise import load_benchmark_episode_limits
+        task_episode_limits=load_benchmark_episode_limits(args.robotwin_root,SOURCE_TASKS+HELDOUT_TASKS)
+        args.episode_limit=max(task_episode_limits.values())
+        runtime_options["task_episode_limits"]=task_episode_limits
+    if args.source_iterations:
+        # BalancedSchedule visits every task once per block. Reserve full
+        # benchmark episodes before starting a trial; never cut to hit a count.
+        limits=[(task_episode_limits or {}).get(task,args.episode_limit) for task in args.source_tasks]
+        blocks,remainder=divmod(args.source_iterations*args.ppo_trials_per_update,len(limits))
+        planned_source_max=args.train_episodes*(blocks*sum(limits)+remainder*max(limits))
+        if args.source_steps<planned_source_max:
+            raise ValueError("Source safety cap cannot fit the fixed complete-trial schedule")
     if args.final_observation_only: runtime_options["final_observation_only"]=True
     if corpus_writer is not None: runtime_options["corpus_writer"]=corpus_writer
     env=RobotwinNoiseEnv(model_path=args.model_path,norm_stats=args.norm_stats,
@@ -401,6 +435,15 @@ def main(argv=None):
         episode_limit=args.episode_limit,action_limit=args.action_limit))
     contract["ppo_trials_per_update"] = args.ppo_trials_per_update
     contract["ppo_update_primitive_threshold"] = args.ppo_update_steps
+    if task_episode_limits is not None:
+        contract["task_episode_limits"]=task_episode_limits
+    if args.source_iterations:
+        contract["source_budget"]="fixed complete K4 trials; actual actions reported; source steps are a safety reservation"
+        contract["source_iterations"]=dict(count=args.source_iterations,
+            trials_per_iteration=args.ppo_trials_per_update,episodes_per_trial=args.train_episodes,
+            evaluation_iterations=args.source_eval_iterations,planned_max_actions_per_learner=planned_source_max,
+            ppo_update_rule="one update after each complete iteration; no partial-trial action cuts",
+            sac_update_rule="online UTD unchanged; iterations count complete trial groups")
     if args.ppo_max_update_kl is not None:
         contract["ppo_max_update_kl"] = args.ppo_max_update_kl
     contract["sac"] = asdict(SACConfig(warmup_chunks=args.sac_warmup,
@@ -412,6 +455,8 @@ def main(argv=None):
             trained_reset_target_lesions=["normal"],
             recipe="bounded three-arm pilot; smaller complete-trial PPO batch, not the 256-trial recipe",
             raw_public_corpus=True,behavior_checkpoints="immutable acting weights at every used version")
+        if args.source_iterations:
+            contract["campaign"]["recipe"]="fixed complete-trial source iterations; physical-action safety caps"
     if args.record_corpus: contract["corpus"]="lossless public RGB/proprio/language and actual decision/action/outcome records"
     if args.source_milestones:
         contract["stages"]=dict(source_action_milestones=args.source_milestones,
@@ -483,15 +528,17 @@ def main(argv=None):
                         action_limit=args.action_limit,config=SACConfig(
                             warmup_chunks=args.sac_warmup,batch_size=args.sac_batch_size,
                             utd=args.sac_utd))
-    def checkpoint(method,learner,schedule,steps,task_steps,pending=None):
+    def checkpoint(method,learner,schedule,steps,task_steps,pending=None,*,iteration_state=None):
         path=args.output/(method+"-recovery.pt")
         temporary=path.with_suffix(".tmp")
-        torch.save(dict(contract=contract,method=method,learner=learner.state_dict(),
-                        schedule=schedule.state_dict(),source_steps=steps,task_steps=task_steps,
-                        pending_rollouts=pending or [],boundary="complete trial or declared budget cut",
-                        resume_stage="source",elapsed_seconds=time.monotonic()-started),temporary)
+        payload=dict(contract=contract,method=method,learner=learner.state_dict(),
+                     schedule=schedule.state_dict(),source_steps=steps,task_steps=task_steps,
+                     pending_rollouts=pending or [],boundary="complete trial or declared budget cut",
+                     resume_stage="source",elapsed_seconds=time.monotonic()-started)
+        if iteration_state is not None: payload.update(iteration_state)
+        torch.save(payload,temporary)
         temporary.replace(path)
-    def native(phase,*,unit_prefix="",stage=None,tasks=None):
+    def native(phase,*,unit_prefix="",stage=None,tasks=None,stage_iteration=None):
         rng=np.random.default_rng(args.seed+907)
         for task in args.eval_tasks if tasks is None else tasks:
             for index in range(args.native_episodes):
@@ -499,9 +546,9 @@ def main(argv=None):
                 if args.campaign_root and unit in completed_units: continue
                 unit_rng=(np.random.default_rng(np.random.SeedSequence([
                     args.seed+907,(SOURCE_TASKS+HELDOUT_TASKS).index(task),index]))
-                    if stage is not None else rng)
+                    if stage is not None or stage_iteration is not None else rng)
                 guard(); set_context("native",phase,f"{unit_prefix}{phase}:{task}:{index}",
-                                     stage_source_actions=stage)
+                                     stage_source_actions=stage,stage_source_iteration=stage_iteration)
                 features=env.reset(task,args.seed+900_000+index)
                 steps=0; chunks=0; success=False; reward_sum=0.; done=False
                 initial_hash=observation_hash(features)
@@ -514,10 +561,12 @@ def main(argv=None):
                          seed=args.seed+900_000+index,success=success,return_=reward_sum,
                          primitive_steps=steps,chunks=chunks,initial_observation_sha256=initial_hash)
                 if stage is not None: row["stage_source_actions"]=stage
+                if stage_iteration is not None: row["stage_source_iteration"]=stage_iteration
                 append_json(episodes_path,row); log("native_episode",**row)
                 if args.campaign_root:
                     history.append(row); completed_units.add(unit); save_joint(force=True)
-    def sac_trial(learner,task,seeds,*,phase,source=False,online=False,primitive_budget=None,method="sac",stage=None):
+    def sac_trial(learner,task,seeds,*,phase,source=False,online=False,primitive_budget=None,method="sac",stage=None,
+                  source_iteration=None,stage_iteration=None):
         total=0; rows=[]; external_cut=False
         for episode,seed in enumerate(seeds):
             observation=np.asarray(env.reset(task,int(seed)),np.float32)
@@ -560,6 +609,8 @@ def main(argv=None):
                      primitive_steps=steps,chunks=chunks,initial_observation_sha256=initial_hash,
                      budget_truncated=external_cut)
             if stage is not None: row["stage_source_actions"]=stage
+            if source_iteration is not None: row["source_iteration"]=source_iteration
+            if stage_iteration is not None: row["stage_source_iteration"]=stage_iteration
             append_json(episodes_path,dict(method=method,phase=phase,**row)); rows.append(row)
             if primitive_budget is not None and total>=primitive_budget: break
         return dict(episodes=rows,primitive_steps=total,chunks=sum(row["chunks"] for row in rows),
@@ -584,7 +635,8 @@ def main(argv=None):
             learner=new_sac() if method=="sac" else new_ppo(method=="ppo_reset")
             schedule=BalancedSchedule(args.source_tasks,args.seed+101)
             state=dict(learner=learner,schedule=schedule,steps=0,
-                       task_steps={task:0 for task in args.source_tasks},pending=[],last_checkpoint_steps=0)
+                       task_steps={task:0 for task in args.source_tasks},pending=[],last_checkpoint_steps=0,
+                       completed_trials=0,iterations=0)
             if resume_joint is not None:
                 saved=resume_joint["states"][method]
                 learner.load_state_dict(saved["learner"])
@@ -592,6 +644,16 @@ def main(argv=None):
                 state.update(steps=int(saved["source_steps"]),task_steps=saved["task_steps"],
                              pending=saved.get("pending_rollouts",[]),
                              last_checkpoint_steps=int(saved["source_steps"]))
+                if args.source_iterations:
+                    state.update(completed_trials=int(saved["completed_source_trials"]),
+                                 iterations=int(saved["completed_source_iterations"]))
+                    partial=state["completed_trials"]-state["iterations"]*args.ppo_trials_per_update
+                    if (not 0<=state["iterations"]<=args.source_iterations
+                            or not 0<=partial<=args.ppo_trials_per_update
+                            or state["steps"]>args.source_steps
+                            or (method!="sac" and (learner.updates!=state["iterations"]
+                                or len(state["pending"])!=partial))):
+                        raise ValueError("Fixed-iteration recovery counters are inconsistent")
             source_states[method]=state
             accepted_resume_steps[method]=state["steps"]
         if resume_joint is not None:
@@ -612,6 +674,9 @@ def main(argv=None):
             states[method]=dict(learner=state["learner"].state_dict(),
                 schedule=state["schedule"].state_dict(),source_steps=state["steps"],
                 task_steps=state["task_steps"],pending_rollouts=state["pending"])
+            if args.source_iterations:
+                states[method].update(completed_source_trials=state["completed_trials"],
+                                      completed_source_iterations=state["iterations"])
         path=args.output/"coordinator-recovery.pt"
         temporary=path.with_suffix(".tmp")
         torch.save(dict(contract=contract,states=states,
@@ -626,7 +691,10 @@ def main(argv=None):
         state=source_states[method]
         if force or state["steps"]-state["last_checkpoint_steps"]>=args.checkpoint_steps:
             checkpoint(method,state["learner"],state["schedule"],state["steps"],
-                       state["task_steps"],state["pending"])
+                       state["task_steps"],state["pending"],iteration_state=(
+                           dict(completed_source_trials=state["completed_trials"],
+                                completed_source_iterations=state["iterations"])
+                           if args.source_iterations else None))
             state["last_checkpoint_steps"]=state["steps"]
     def refresh_summaries():
         for method,state in source_states.items():
@@ -637,6 +705,10 @@ def main(argv=None):
                                    pending_trials=len(state["pending"]),
                                    pending_primitive_steps=sum(r["primitive_steps"] for _,r in state["pending"]))
             if method=="sac": summaries[method]["contract"]=learner.contract()
+            if args.source_iterations:
+                summaries[method].update(completed_source_trials=state["completed_trials"],
+                    completed_source_iterations=state["iterations"],
+                    source_action_safety_cap=args.source_steps)
             if budget is not None:
                 physical=budget.snapshot()["by_method"].get(f"source/{method}",0)
                 summaries[method].update(source_physical_charge=physical,
@@ -646,9 +718,15 @@ def main(argv=None):
         state=source_states[method]; pending=state["pending"]
         if not pending: return
         pending_steps=sum(r["primitive_steps"] for _,r in pending)
-        reached=(pending_steps>=args.ppo_update_steps if args.ppo_update_steps
-                 else len(pending)>=args.ppo_trials_per_update)
-        if not reached and state["steps"]<args.source_steps: return
+        if args.source_iterations:
+            trials=state["completed_trials"]-state["iterations"]*args.ppo_trials_per_update
+            if trials!=len(pending) or trials>args.ppo_trials_per_update:
+                raise RuntimeError("Fixed source iteration has inconsistent complete-trial data")
+            if trials<args.ppo_trials_per_update: return
+        else:
+            reached=(pending_steps>=args.ppo_update_steps if args.ppo_update_steps
+                     else len(pending)>=args.ppo_trials_per_update)
+            if not reached and state["steps"]<args.source_steps: return
         log("ppo_update_start",method=method,source_steps=state["steps"],
             trials=len(pending),primitive_steps=pending_steps,
             chunks=sum(r["chunks"] for _,r in pending))
@@ -678,40 +756,78 @@ def main(argv=None):
                 valid_learner_restored=True)
             raise
         state["pending"]=[]
+        if args.source_iterations: state["iterations"]+=1
         append_json(updates_path,dict(method=method,source_steps=state["steps"],**metrics))
         save_state(method,force=True)
         log("ppo_update",method=method,source_steps=state["steps"],**metrics)
+        if args.source_iterations: record_iteration_complete(method)
+    def record_iteration_complete(method):
+        state=source_states[method]
+        log("source_iteration_complete",method=method,source_iteration=state["iterations"],
+            completed_source_trials=state["completed_trials"],source_steps=state["steps"],
+            source_optimizer_updates=state["learner"].updates,
+            optimizer_steps=state["learner"].optimizer_steps)
+        save_state(method,force=True); save_joint(force=True)
+    def maybe_sac_iteration(method):
+        state=source_states[method]
+        if not args.source_iterations: return
+        trials=state["completed_trials"]-state["iterations"]*args.ppo_trials_per_update
+        if trials>args.ppo_trials_per_update:
+            raise RuntimeError("SAC fixed source iteration passed its complete-trial boundary")
+        if trials==args.ppo_trials_per_update:
+            state["iterations"]+=1
+            record_iteration_complete(method)
     def source_round(method):
         state=source_states[method]; learner=state["learner"]
         if method!="sac": maybe_ppo_update(method)
-        if state["steps"]>=args.source_steps: return
+        else: maybe_sac_iteration(method)
+        if args.source_iterations:
+            if state["iterations"]>=args.source_iterations: return
+        elif state["steps"]>=args.source_steps: return
         guard()
-        allowance=args.source_steps-state["steps"]
-        if active_milestone is not None:
+        allowance=None if args.source_iterations else args.source_steps-state["steps"]
+        if active_milestone is not None and not args.source_iterations:
             allowance=min(allowance,active_milestone-state["steps"])
             if allowance<1: return
-        if budget is not None:
+        if budget is not None and not args.source_iterations:
             allowance=min(allowance,budget.remaining(phase="source",method=method))
             if allowance<1: raise CampaignBudgetReached(f"No source allowance remains for {method}")
+        schedule_before=deepcopy(state["schedule"].state_dict()) if args.source_iterations else None
         task,seeds=state["schedule"].sample(args.train_episodes)
+        iteration_metadata={}
+        if args.source_iterations:
+            horizon=(env.episode_limit_for_task(task) if hasattr(env,"episode_limit_for_task") else args.episode_limit)
+            required=args.train_episodes*horizon
+            remaining=args.source_steps-state["steps"]
+            if budget is not None: remaining=min(remaining,budget.remaining(phase="source",method=method))
+            if remaining<required:
+                state["schedule"].load_state_dict(schedule_before)
+                raise CampaignBudgetReached("Insufficient reservation for a complete source K4 trial; no partial trial executed")
+            iteration_metadata=dict(source_iteration=state["iterations"]+1,
+                trial_in_iteration=state["completed_trials"]%args.ppo_trials_per_update+1)
         set_context(method,"source",f"source:{method}:{state['schedule'].trials}",learner,
-                    stage_source_actions=active_milestone)
+                    stage_source_actions=active_milestone,stage_source_iteration=None,**iteration_metadata)
         trial_start=time.monotonic()
         log("source_trial_start",method=method,task=task,seeds=seeds,
-            source_steps=state["steps"],optimizer_steps=learner.optimizer_steps)
+            source_steps=state["steps"],optimizer_steps=learner.optimizer_steps,**iteration_metadata)
         if method=="sac":
             result=sac_trial(learner,task,seeds,phase="source",source=True,
-                             primitive_budget=allowance,stage=active_milestone)
+                             primitive_budget=allowance,stage=active_milestone,
+                             source_iteration=iteration_metadata.get("source_iteration"))
             errors={}
         else:
             rollout,result=learner.collect_trial(env,task,seeds,
                 primitive_budget=allowance,
-                episode_callback=record_episode(method,"source"),
+                episode_callback=record_episode(method,"source",**iteration_metadata),
                 decision_callback=decision_metadata if args.record_corpus else None)
             errors=learner.replay_error(rollout)
             if errors["log_prob_max_error"]>2e-4 or errors["value_max_error"]>1e-5:
                 raise RuntimeError(f"Old-policy replay failed: {errors}")
-            state["pending"].append((rollout,result))
+        if args.source_iterations:
+            if len(result["episodes"])!=args.train_episodes or result.get("budget_truncated",False):
+                raise RuntimeError("Fixed source iterations require complete K4 trials without external cuts")
+            state["completed_trials"]+=1
+        if method!="sac": state["pending"].append((rollout,result))
         state["steps"]+=result["primitive_steps"]
         if active_milestone is not None:
             result["stage_source_actions"]=active_milestone
@@ -724,11 +840,14 @@ def main(argv=None):
             episodes=len(result["episodes"]),trial_seconds=time.monotonic()-trial_start,
             stage_source_actions=active_milestone,
             external_stage_budget_cut=result.get("external_stage_budget_cut",False),
-            **errors)
+            **iteration_metadata,**errors)
         if method!="sac": maybe_ppo_update(method)
+        else: maybe_sac_iteration(method)
         refresh_summaries()
-    def evaluate_frozen_sources(trained,*,stage=None,unit_prefix="",tasks=None):
+    def evaluate_frozen_sources(trained,*,stage=None,unit_prefix="",tasks=None,stage_iteration=None):
         targets=args.eval_tasks if tasks is None else tasks
+        stage_metadata=dict(stage_source_actions=stage)
+        if stage_iteration is not None: stage_metadata["stage_source_iteration"]=stage_iteration
         if args.source_validation_episodes:
             for task_index,task in enumerate(args.source_tasks):
                 seeds=[3_000_000_000+task_index*10_000+i*997
@@ -740,20 +859,21 @@ def main(argv=None):
                     learner=new_sac() if method=="sac" else new_ppo(method=="ppo_reset")
                     learner.load_state_dict(deepcopy(trained[method]))
                     set_context(method,"source_validation",f"{unit_prefix}source-validation:{method}:{task}",learner,
-                                stage_source_actions=stage)
+                                **stage_metadata)
                     if method=="sac":
-                        result=sac_trial(learner,task,seeds,phase="source_validation",method=method,stage=stage)
+                        result=sac_trial(learner,task,seeds,phase="source_validation",method=method,stage=stage,
+                                         stage_iteration=stage_iteration)
                     else:
                         _,result=learner.collect_trial(env,task,seeds,
-                            episode_callback=record_episode(method,"source_validation",stage_source_actions=stage),
+                            episode_callback=record_episode(method,"source_validation",**stage_metadata),
                             decision_callback=decision_metadata if args.record_corpus else None)
                     history.append(dict(result,method=method,phase="source_validation",task=task,
-                                        stage_source_actions=stage))
+                                        **stage_metadata))
                     log("source_validation_trial",method=method,task=task,
                         successes=[row["success"] for row in result["episodes"]],updates=learner.updates)
                     if args.campaign_root:
                         completed_units.add(unit); save_joint(force=True)
-        native("native_before_target",unit_prefix=unit_prefix,stage=stage,tasks=targets)
+        native("native_before_target",unit_prefix=unit_prefix,stage=stage,tasks=targets,stage_iteration=stage_iteration)
         for task in targets:
             for repetition in range(args.eval_trials):
                 seeds=[args.seed+2_000_000+repetition*100_000+i*997 for i in range(args.eval_episodes)]
@@ -767,10 +887,11 @@ def main(argv=None):
                             convention=(learner.begin_target_adaptation(replay_mode="fresh_target")
                                         if online else None)
                             set_context(label,"target",f"{unit_prefix}target:{label}:{task}:{repetition}",learner,
-                                        stage_source_actions=stage)
-                            result=sac_trial(learner,task,seeds,phase="target",online=online,method=label,stage=stage)
+                                        **stage_metadata)
+                            result=sac_trial(learner,task,seeds,phase="target",online=online,method=label,stage=stage,
+                                             stage_iteration=stage_iteration)
                             history.append(dict(method=label,phase="target",task=task,repetition=repetition,
-                                stage_source_actions=stage,
+                                **stage_metadata,
                                 target_adaptation=convention,
                                 target_update_costs=learner.target_counters() if online else None,**result))
                             log("target_trial",method=label,task=task,successes=[r["success"] for r in result["episodes"]])
@@ -792,53 +913,59 @@ def main(argv=None):
                             guard(); learner=new_ppo(method=="ppo_reset")
                             learner.load_state_dict(deepcopy(trained[method]))
                             set_context(method,"target",f"{unit_prefix}target:{method}:{lesion}:{task}:{repetition}",
-                                        learner,lesion=lesion,stage_source_actions=stage)
+                                        learner,lesion=lesion,**stage_metadata)
                             _,result=learner.collect_trial(env,task,seeds,
                                 reset_memory=method=="ppo_reset" or lesion=="memory_reset",
                                 reward_blind=lesion=="reward_blind",
                                 episode_callback=record_episode(method,"target",lesion=lesion,repetition=repetition,
-                                                                stage_source_actions=stage),
+                                                                **stage_metadata),
                                 decision_callback=decision_metadata if args.record_corpus else None)
                             history.append(dict(method=method,phase="target",lesion=lesion,repetition=repetition,
-                                                stage_source_actions=stage,**result))
+                                                **stage_metadata,**result))
                             log("target_trial",method=method,lesion=lesion,task=task,
                                 successes=[r["success"] for r in result["episodes"]])
                             if args.campaign_root:
                                 completed_units.add(unit); save_joint(force=True)
-        native("native_after",unit_prefix=unit_prefix,stage=stage,tasks=targets)
+        native("native_after",unit_prefix=unit_prefix,stage=stage,tasks=targets,stage_iteration=stage_iteration)
 
-    def evaluate_stage(milestone):
+    def evaluate_stage(milestone=None,*,source_iteration=None):
         nonlocal checkpoint_rng_override
-        prefix=f"stage:{milestone}:"
+        stage_key=str(milestone) if source_iteration is None else f"iteration:{source_iteration}"
+        prefix=f"stage:{stage_key}:"
         complete_key=prefix+"complete"
         if complete_key in completed_units: return
-        if any(state["steps"]!=milestone for state in source_states.values()):
-            raise RuntimeError("Every source arm must reach the exact stage action barrier")
+        if source_iteration is None:
+            if any(state["steps"]!=milestone for state in source_states.values()):
+                raise RuntimeError("Every source arm must reach the exact stage action barrier")
+        elif any(state["iterations"]!=source_iteration for state in source_states.values()):
+            raise RuntimeError("Every source arm must complete the declared iteration before evaluation")
         guard()
         stage_rng=capture_rng()
-        directory=args.output/"stages"/str(milestone)
+        directory=args.output/"stages"/(str(milestone) if source_iteration is None else f"iteration-{source_iteration}")
         directory.mkdir(parents=True,exist_ok=True)
-        report=stage_reports.get(str(milestone))
+        report=stage_reports.get(stage_key)
         if report is None:
             report=dict(source_action_milestone=milestone,status="evaluating",
                         snapshots={},source_steps={},source_updates={},pending_trials={})
+            if source_iteration is not None: report["source_iteration"]=source_iteration
             for method,state in source_states.items():
                 learner=state["learner"]
                 path=directory/(method+"-recovery.pt")
                 if path.exists(): raise FileExistsError("Stage source snapshots are immutable")
                 temporary=path.with_suffix(".tmp")
-                torch.save(dict(contract=contract,method=method,source_stage=milestone,
+                torch.save(dict(contract=contract,method=method,source_stage=milestone,source_iteration=source_iteration,
                     source_steps=state["steps"],task_steps=state["task_steps"],
                     learner=learner.state_dict(),schedule=state["schedule"].state_dict(),
                     pending_rollouts=state["pending"],rng=deepcopy(stage_rng),
-                    boundary="exact matched source milestone; pending PPO data retained"),temporary)
+                    boundary=("completed whole-trial source iteration" if source_iteration is not None
+                              else "exact matched source milestone; pending PPO data retained")),temporary)
                 temporary.replace(path)
                 report["snapshots"][method]=dict(path=str(path.resolve()),
                     sha256=hashlib.sha256(path.read_bytes()).hexdigest())
                 report["source_steps"][method]=state["steps"]
                 report["source_updates"][method]=learner.updates
                 report["pending_trials"][method]=len(state["pending"])
-            stage_reports[str(milestone)]=report
+            stage_reports[stage_key]=report
         else:
             for snapshot in report["snapshots"].values():
                 if hashlib.sha256(Path(snapshot["path"]).read_bytes()).hexdigest()!=snapshot["sha256"]:
@@ -850,11 +977,12 @@ def main(argv=None):
         frozen={method:deepcopy(state["learner"].state_dict())
                 for method,state in source_states.items()}
         log("source_stage_evaluation_start",source_action_milestone=milestone,
+            source_iteration=source_iteration,
             source_steps=report["source_steps"],source_updates=report["source_updates"],
             pending_trials=report["pending_trials"])
         try:
             evaluate_frozen_sources(frozen,stage=milestone,unit_prefix=prefix,
-                tasks=[] if args.stage_source_validation_only else args.eval_tasks)
+                tasks=[] if args.stage_source_validation_only else args.eval_tasks,stage_iteration=source_iteration)
         finally:
             # Cloning/evaluating controllers must not consume the source action
             # stream. Per-unit checkpoint RNG also uses this same source state.
@@ -870,10 +998,12 @@ def main(argv=None):
         report["reported_without_checkpoint_selection"]=True
         write_json(directory/"stage.json",report)
         write_json(directory/"evaluation.json",[row for row in history
-            if row.get("stage_source_actions")==milestone])
+            if (row.get("stage_source_actions")==milestone if source_iteration is None
+                else row.get("stage_source_iteration")==source_iteration)])
         completed_units.add(complete_key)
         save_joint(force=True)
         log("source_stage_complete",source_action_milestone=milestone,
+            source_iteration=source_iteration,
             source_steps=report["source_steps"],source_updates=report["source_updates"],
             pending_trials=report["pending_trials"],manifest=report["manifest_path"])
 
@@ -897,24 +1027,39 @@ def main(argv=None):
         # Interleave complete K4 trials so both learning arms advance in the
         # first allocation. Pending PPO trials retain sampled old-policy data.
         save_joint(force=True)
-        barriers=args.source_milestones or [args.source_steps]
-        for barrier in barriers:
-            active_milestone=barrier if args.source_milestones else None
-            while any(s["steps"]<barrier for s in source_states.values()):
-                method=args.methods[next_method_index]
-                previous_updates=source_states[method]["learner"].updates
-                if source_states[method]["steps"]<barrier: source_round(method)
-                next_method_index=(next_method_index+1)%len(args.methods)
-                save_joint(force=method!="sac" and source_states[method]["learner"].updates>previous_updates)
-            if args.source_milestones: evaluate_stage(barrier)
+        if args.source_iterations:
+            for iteration in range(1,args.source_iterations+1):
+                while any(s["iterations"]<iteration for s in source_states.values()):
+                    method=args.methods[next_method_index]
+                    if source_states[method]["iterations"]<iteration: source_round(method)
+                    next_method_index=(next_method_index+1)%len(args.methods)
+                    save_joint()
+                if iteration in args.source_eval_iterations: evaluate_stage(source_iteration=iteration)
+        else:
+            barriers=args.source_milestones or [args.source_steps]
+            for barrier in barriers:
+                active_milestone=barrier if args.source_milestones else None
+                while any(s["steps"]<barrier for s in source_states.values()):
+                    method=args.methods[next_method_index]
+                    previous_updates=source_states[method]["learner"].updates
+                    if source_states[method]["steps"]<barrier: source_round(method)
+                    next_method_index=(next_method_index+1)%len(args.methods)
+                    save_joint(force=method!="sac" and source_states[method]["learner"].updates>previous_updates)
+                if args.source_milestones: evaluate_stage(barrier)
         for method,state in source_states.items():
             if method!="sac": maybe_ppo_update(method)
             save_state(method,force=True)
             trained[method]=deepcopy(state["learner"].state_dict())
         refresh_summaries()
-        if len({summaries[m]["source_steps"] for m in args.methods})!=1:
+        if args.source_iterations:
+            if any(state["iterations"]!=args.source_iterations
+                    or state["completed_trials"]!=args.source_iterations*args.ppo_trials_per_update
+                    or (method!="sac" and (state["learner"].updates!=args.source_iterations or state["pending"]))
+                    for method,state in source_states.items()):
+                raise RuntimeError("Fixed source iterations did not complete their full trial/update schedule")
+        elif len({summaries[m]["source_steps"] for m in args.methods})!=1:
             raise RuntimeError("Source interaction budgets do not match")
-        if not args.source_milestones: evaluate_frozen_sources(trained)
+        if not args.source_milestones and not args.source_iterations: evaluate_frozen_sources(trained)
     except WallBudgetReached as exc:
         status="wall_budget_stop"; log(status,reason=str(exc))
     except CampaignBudgetReached as exc:
@@ -935,13 +1080,19 @@ def main(argv=None):
                 unchanged=frozen_before==frozen_after))
             if frozen_before!=frozen_after:
                 status="frozen_motor_changed"
+        source_complete=(len(summaries)==len(args.methods) and
+            (all(x["completed_source_iterations"]==args.source_iterations
+                 and x["completed_source_trials"]==args.source_iterations*args.ppo_trials_per_update
+                 for x in summaries.values()) if args.source_iterations
+             else all(x["source_steps"]==args.source_steps for x in summaries.values())))
         summary=dict(status=status,elapsed_seconds=time.monotonic()-started,
                      source=summaries,target=history,contract=contract,
-                     source_budget_match=len(summaries)==len(args.methods) and
-                     all(x["source_steps"]==args.source_steps for x in summaries.values()))
+                     source_budget_match=source_complete)
+        if args.source_iterations:
+            summary["source_action_counts_match"]=len({x["source_steps"] for x in summaries.values()})==1
         if budget is not None: summary["campaign_budget"]=budget.snapshot()
         if args.campaign_root:
-            if args.source_milestones: summary["stages"]=stage_reports
+            if args.source_milestones or args.source_iterations: summary["stages"]=stage_reports
             summary["evaluation_history"]=history
             summary["target"]=[row for row in history if row.get("phase")=="target"]
             summary["source_validation"]=[row for row in history if row.get("phase")=="source_validation"]
