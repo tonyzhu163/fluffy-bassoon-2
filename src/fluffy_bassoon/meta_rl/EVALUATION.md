@@ -412,3 +412,28 @@ stored decisions. Its current fullH32×32interface differs from LIBERO's32D
 coordinate repeated over nativeH10. Within-RoboTwin arms share the interface;
 cross-benchmark steering dimensionality is not matched. No tied32D RoboTwin
 ablation has been launched or inferred from the existing1024D histories.
+
+
+## RoboTwin complete PPO source100 endpoints, 2026-10-31
+
+Persistent and independently trained-reset GTrXL/PPO each completed100 rounds,
+600 whole K4 trials /2400 source episodes,100 PPO updates /500 Adam steps.
+Actual source actions were964875 and963759. Scientific lineage `db0184089fa88a5f96c153f9b80029bb91b77def`
+continued through runtime `57016ba08eed79043fd67bf8b085bd6d42e6d766` and supervisor
+`0c16c2b794f8de5b78603206917e72195083c265`; the common Motus pi0.5 motor stayed frozen.
+Baige `job-fji2xx8oq53h` finished source and all declared evaluation stages with
+exit0 /scheduler and pod Success. Its actual running cost was15451GPU-seconds;
+176 owned-cleanup receipts were clean and final GPU memory was0.
+
+Stage100 source validation: persistent2/24, trained reset3/24. Target bottle/stapler
+successes per K8 trial were persistent normal7/1, same-weight memory-reset6/1,
+reward-blind8/1, separately trained reset8/0. Actual case seeds, initial public
+features and raw observations match across controls. Source/final/stage100
+checkpoint SHA and263-member ZIP CRCs, unchanged motor/source RNG and zero
+pending/uncertain canonical heads passed independent audits.
+
+The small one-seed/two-development-task panels do not establish a memory or
+adaptation advantage. Native references use another seed bank and are unpaired;
+SAC remains an independent ongoing arm. No complete three-arm ranking is claimed.
+The [complete paired report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-PPO-RESULTS.md)
+contains exact checkpoint identities, episode1/2/4/8 traces, costs and audits.

@@ -1,0 +1,46 @@
+{
+  "schema": "robotwin_cpu_compat_execution_owner_admission_v1",
+  "recorded_at_utc": "2026-10-30T22:40:27.065779+00:00",
+  "status": "admitted_for_one_full_allocated_gate_after_static_pass",
+  "scientific_scope": "closed SAC65 compatibility only; no new robot/VLA/SGD/fits",
+  "code_commit": "57f37001e2009e051797b7639a11042ab0fd1e57",
+  "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r4-r2",
+  "prior_439_worktree": "preserved clean/unlaunched; not execution source",
+  "latest_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "main_compatibility": "fresh main unchanged; reviewed CPU-only delta; active GPU contracts untouched",
+  "reviewers": [
+    "optimization owner exact57f delta STATICPASS",
+    "root parallel_launch_plan exact57f filter correction STATICPASS",
+    "root source diff/runtime/budget review STATICPASS"
+  ],
+  "allocated_request": {
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "shm_gib": 2,
+    "scheduler_seconds": 1140,
+    "auto_fault_tolerance": false
+  },
+  "original_budget": {
+    "total": 1800,
+    "prior_actual": 449,
+    "new_maximum": 1140,
+    "sealed": 211
+  },
+  "clocks": {
+    "shared": 1090,
+    "TERM": 1110,
+    "KILL": 1120,
+    "cleanup_within_shared": 30,
+    "local_code_stage_within_shared": 30
+  },
+  "fixtures": {
+    "planned": 150,
+    "executed": 0,
+    "qualification": "unqualified until all phases pass"
+  },
+  "modern_local_python": "/Users/mowenjie/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "proof": "same single-CUA55s capture <=60s tool; authentic actual0GPU row before workload, modernPython dispatcher live beforeSubmit",
+  "prior_failed_outputs": "r1/r2/r3 immutable; actual149+150+150 seconds; no tests/data phases",
+  "runtime_output_fresh": true
+}
