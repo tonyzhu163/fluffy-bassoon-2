@@ -62,9 +62,10 @@ def test_qualification_and_four_retries_do_not_advance_to_another_task(tmp_path)
         sim.step(np.zeros((3, 7)))
         assert result['source_task_key'] == tasks[0]['task_key']
         assert sim.cursor == 1 and sim.remaining == 3 - attempt
-    assert len(clients) == 1
+    assert len(clients) == 5
+    assert all(client.closed for client in clients[:-1])
     sim.reset(1, 18)
-    assert clients[0].closed and len(clients) == 2
+    assert clients[0].closed and len(clients) == 6
     assert sim.metadata is metadata and metadata['instruction'] == 'instruction-' + tasks[1]['task_key']
     receipts = [json.loads(path.read_text()) for path in tmp_path.glob('reset-*.json')]
     assert len(receipts) == 6 and all(row['returned'] for row in receipts)
@@ -111,3 +112,23 @@ def test_original_simulator_metadata_is_bound_to_the_expected_task():
                     dict(fresh_environment_on_reset=False), dict(settle_steps=0)]:
         with pytest.raises(ValueError, match='declared original'):
             validate_task_metadata(selected, dict(metadata, **changes))
+
+
+def test_retries_each_follow_first_reset_path_of_a_fresh_owned_process():
+    class ProcessHistoryClient(Client):
+        def reset(self, state, seed):
+            result = super().reset(state, seed)
+            result['initial_observation_sha256'] = 'first-process-reset' if len(self.resets) == 1 else 'different-later-reset'
+            return result
+    clients = []
+    def factory(selected):
+        client = ProcessHistoryClient(selected)
+        clients.append(client)
+        return client
+    sim = TaskCycleSimulator([task('libero_spatial', 0)], 4, factory)
+    sim.begin_collection()
+    hashes = [sim.reset(19, 1916071045)['initial_observation_sha256'] for _ in range(4)]
+    assert hashes == ['first-process-reset'] * 4
+    assert sim.cursor == 1 and sim.remaining == 0
+    assert len(clients) == 5 and all(client.closed for client in clients[:-1])
+    sim.close()

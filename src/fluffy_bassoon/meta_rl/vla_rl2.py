@@ -155,10 +155,6 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
                 or len(records["observations"]) - records_before != len(rows)
                 or int(summary["primitive_steps"]) != sum(int(row["primitive_steps"]) for row in rows)):
             raise RuntimeError("RL² collection requires complete episodes and every actual feedback callback")
-        if initial_hash is None:
-            initial_hash = summary["initial_observation_sha256"]
-        elif summary["initial_observation_sha256"] != initial_hash:
-            raise RuntimeError("Same-scene RL² retry changed its initial observation")
         summaries.append(dict(attempt=attempt + 1, **summary))
         if episode_sink is not None:
             # Keep raw cameras, proprioception, next observations, actual VLA
@@ -167,6 +163,12 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
                 behavior={key: torch.stack(values[records_before:]).detach().cpu()
                           for key, values in records.items()},
                 initial_recurrent_state=episode_state)
+        # Retain the actual failed episode before rejecting its identity. No
+        # invalid trial reaches PPO, but its physical evidence must survive.
+        if initial_hash is None:
+            initial_hash = summary["initial_observation_sha256"]
+        elif summary["initial_observation_sha256"] != initial_hash:
+            raise RuntimeError("Same-scene RL² retry changed its initial observation")
     rollout = {key: torch.stack(values) for key, values in records.items()}
     if not rollout["trial_ends"][-1].all() or int(rollout["attempt_ends"].sum()) != attempts:
         raise RuntimeError("RL² trial terminal masks do not match the actual completed episodes")

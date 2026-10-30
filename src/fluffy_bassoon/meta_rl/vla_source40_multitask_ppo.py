@@ -113,8 +113,8 @@ class TaskCycleSimulator:
         self.exposure = {row['task_key']: dict(episodes=0, primitive_steps=0, trials_started=0) for row in tasks}
         self._connect(0)
 
-    def _connect(self, index):
-        if self.connected == index:
+    def _connect(self, index, *, force=False):
+        if self.connected == index and not force:
             return
         self.close()
         task = self.tasks[index]
@@ -144,7 +144,10 @@ class TaskCycleSimulator:
             if pair != self.active_pair:
                 raise ValueError('A task trial must keep the same state/seed across retry episodes')
             index = self.active_task
-        self._connect(index)
+        # Collection retries must follow the same first-reset process path.
+        # Fresh environment objects inside one process did not preserve exact
+        # initial observations on the failed state19 revisit.
+        self._connect(index, force=not self.qualifying)
         task = self.tasks[index]
         receipt = dict(task_key=task['task_key'], suite=task['suite'], task_id=task['task_id'],
             initial_state=pair[0], scene_seed=pair[1], bddl_sha256=task['bddl_sha256'],
@@ -158,7 +161,9 @@ class TaskCycleSimulator:
         if path is not None:
             write_json(path, dict(receipt, returned=True,
                 initial_state_vector_sha256=result['initial_state_vector_sha256'],
-                initial_observation_sha256=result['initial_observation_sha256']))
+                initial_observation_sha256=result['initial_observation_sha256'],
+                initial_simulator_state_sha256=result.get('initial_simulator_state_sha256'),
+                initial_public_observation_hashes=result.get('initial_public_observation_hashes')))
         if not self.qualifying:
             self.remaining -= 1
             self.exposure[task['task_key']]['episodes'] += 1

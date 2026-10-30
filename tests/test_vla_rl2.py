@@ -170,3 +170,18 @@ def test_invalid_budget_is_rejected_before_simulator_work(tmp_path):
     with pytest.raises(ValueError, match="complete-trial resource budget"):
         train_rl2(small_policy(), SIM, None, features, **kwargs)
     assert not kwargs["output_dir"].exists()
+
+
+def test_invalid_retry_identity_still_preserves_actual_completed_episode_evidence():
+    evidence, calls = [], 0
+    def changed(*args, **kwargs):
+        nonlocal calls
+        rows, summary = fake_episode(*args, **kwargs)
+        calls += 1
+        summary['initial_observation_sha256'] = f'actual-observation-{calls}'
+        return rows, summary
+    with pytest.raises(RuntimeError, match='changed its initial observation'):
+        collect_rl2_trial(small_policy(), SIM, None, features, initial_state=1, scene_seed=3,
+            attempts=2, chunk=1, episode_runner=changed, episode_sink=lambda **value: evidence.append(value))
+    assert len(evidence) == 2 and [value['attempt'] for value in evidence] == [1, 2]
+    assert all(value['rows'][-1]['done'] for value in evidence)

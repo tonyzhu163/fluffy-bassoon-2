@@ -9,6 +9,7 @@ TASK_MODE=${5:?full or episode}
 TASK_SLICE=${6:?allocated slice seconds, including setup and shutdown}
 shift 6
 TASK_RESUME=
+TASK_MIGRATION=
 TASK_WIDTH=128
 TASK_LAYERS=2
 TASK_HEADS=4
@@ -16,6 +17,7 @@ TASK_CONTEXT=300
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --resume) TASK_RESUME=--resume; shift ;;
+    --migration-receipt) TASK_MIGRATION=${2:?explicit repair migration receipt}; shift 2 ;;
     --width) TASK_WIDTH=${2:?width}; shift 2 ;;
     --layers) TASK_LAYERS=${2:?layers}; shift 2 ;;
     --heads) TASK_HEADS=${2:?heads}; shift 2 ;;
@@ -73,9 +75,16 @@ task_cleanup() {
   exit "$TASK_RC"
 }
 trap task_cleanup EXIT
+if [ -n "$TASK_MIGRATION" ]; then
+  test "$TASK_RESUME" = --resume
+  "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_ppo_migration validate \
+    --migration "$TASK_MIGRATION" --output-root "$TASK_OUTPUT" --source-commit "$TASK_SOURCE" \
+    --action-cap "$TASK_ACTIONS" --memory-mode "$TASK_MODE" --ledger "$TASK_PLAN/ppo-ledger.json"
+else
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-ppo \
   --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/ppo-ledger.json" \
   --run "$TASK_RUN" --commit "$TASK_SOURCE" --action-cap "$TASK_ACTIONS" "${TASK_RESUME_ARGS[@]}"
+fi
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
@@ -91,6 +100,18 @@ export OPENPI_DATA_HOME=$TASK_OLD/cache/openpi-215abfb
 export MAGICK_HOME=/mowenjie/libs/libero-plus-imagemagick
 export MAGICK_CODER_MODULE_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.11/modules-Q16/coders
 export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+# The explicit repair probe is allocation-only, after focused Linux checks.
+# It uses an isolated cursor and never loads/changes source policy or RNG.
+if [ -n "$TASK_MIGRATION" ] && [ ! -f "$TASK_OUTPUT/repair-reset-qualified.json" ]; then
+  PYTHONPATH=$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps \
+    "$TASK_SIM" -m fluffy_bassoon.meta_rl.vla_source40_reset_probe \
+    --migration "$TASK_MIGRATION" --schedule "$TASK_PLAN/schedule.json" \
+    --output "$TASK_ATTEMPT/reset-probe" --experiment "$TASK_OUTPUT/experiment" \
+    --simulator-python "$TASK_SIM" \
+    --simulator-pythonpath "$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
+    --expected-hostname "$(hostname)"
+  cp "$TASK_ATTEMPT/reset-probe/index.json" "$TASK_OUTPUT/repair-reset-qualified.json"
+fi
 export PYTHONPATH=$TASK_CUDA:$TASK_DSRL_OVERLAY:$TASK_WORKTREE/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 # Slice duration is per attempt. The scientific driver ceiling and action cap stay fixed.
 TASK_DRIVER_SECONDS=21600

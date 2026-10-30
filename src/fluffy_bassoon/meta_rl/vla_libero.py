@@ -204,7 +204,12 @@ def simulator_server(args):
                     renderer_verified = True
                 count, success = 0, False
                 obs = public_observation(raw)
+                actual_state = np.asarray(env.get_sim_state()).copy()
                 connection.send(dict(observation=obs, initial_state=index,
+                                     initial_simulator_state=actual_state,
+                                     initial_simulator_state_sha256=hashlib.sha256(actual_state.tobytes()).hexdigest(),
+                                     initial_public_observation_hashes={key: hashlib.sha256(obs[key].tobytes()).hexdigest()
+                                         for key in ('image', 'wrist', 'state')},
                                      initial_state_vector_sha256=hashlib.sha256(np.asarray(states[index]).tobytes()).hexdigest(),
                                      initial_observation_sha256=hashlib.sha256(
                                          b"".join(obs[k].tobytes() for k in ("image", "wrist", "state"))).hexdigest()))
@@ -462,6 +467,11 @@ def run_episode(sim, motor, choose_noise, *, initial_state, scene_seed, chunk=5,
                       initial_observation_sha256=start["initial_observation_sha256"])
     if "initial_state_vector_sha256" in start:
         summary["initial_state_vector_sha256"] = start["initial_state_vector_sha256"]
+    for key in ('initial_simulator_state_sha256', 'initial_public_observation_hashes'):
+        if key in start:
+            summary[key] = start[key]
+    if 'initial_simulator_state' in start:
+        summary['initial_simulator_state'] = np.asarray(start['initial_simulator_state']).tolist()
     return rows, summary
 
 
