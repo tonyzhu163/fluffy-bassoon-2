@@ -1,8 +1,8 @@
-"""Bounded source-subset optimizer-scale qualification, with immutable milestones.
+"""Bounded source-history optimizer-scale training, with immutable milestones.
 
 Four matched AD/DPT full/static controllers each follow one optimizer trajectory.
 25/100/500 are update checkpoints, not additional source interactions or three
-independent training runs. Full40 production admission is unchanged.
+independent training runs. Full40 uses the strict campaign assembly route.
 """
 import argparse
 import fcntl
@@ -20,6 +20,7 @@ from .vla_source40_training import assemble, load_assembly, load_source, OBJECTI
 
 
 FORMAT = 'openpi_pi05_source40_subset_scales_v1'
+FULL_FORMAT = 'openpi_pi05_source40_scales_v1'
 
 
 def write_json(path, value):
@@ -89,8 +90,9 @@ def archive_scale(recovery, output, *, updates, assembly_sha256, exposure):
     policy.load_state_dict(saved['policy'], strict=True)
     manifest = dict(contract=saved['contract'], update=updates, selection='fixed requested final update',
         assembly_sha256=assembly_sha256, full_recovery_sha256=recovery_sha,
-        qualification_subset=True, source_exposure=exposure,
-        status='Unvalidated subset robot-control candidate; optimizer scale is not source-data scale')
+        qualification_subset=exposure['small_pilot'], source_exposure=exposure,
+        status=('Unvalidated subset robot-control candidate; optimizer scale is not source-data scale'
+            if exposure['small_pilot'] else 'Unvalidated all40 robot-control candidate; imitation loss is not robot performance'))
     final_path = output / 'final.pt'
     if final_path.exists():
         previous, previous_manifest = load_policy(final_path, expected_sha256=file_sha256(final_path))
@@ -121,7 +123,9 @@ def frozen_baseline(index_path):
 
 def parser():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--qualification-subset', action='store_true', required=True)
+    scope = ap.add_mutually_exclusive_group(required=True)
+    scope.add_argument('--qualification-subset', action='store_true')
+    scope.add_argument('--all40-source', action='store_true', help='Strict production assembly with all40 train and campaign fixed8 validation')
     ap.add_argument('--train-index', type=Path, nargs='+', required=True)
     ap.add_argument('--validation-index', type=Path, nargs='+', required=True)
     ap.add_argument('--output', type=Path, required=True)
@@ -143,6 +147,30 @@ def parser():
     return ap
 
 
+def admit_assembly(args):
+    """Keep full production admission separate from the existing pilot route."""
+    if bool(args.assembly) != bool(args.assembly_file_sha256):
+        raise ValueError('A supplied assembly needs its explicit file checksum')
+    if args.all40_source and args.assembly is None:
+        raise ValueError('All40 milestones require an independently assembled hash-bound campaign corpus')
+    if args.assembly is None:
+        return None
+    args.assembly = args.assembly.resolve()
+    if file_sha256(args.assembly) != args.assembly_file_sha256:
+        raise ValueError('Supplied assembly checksum differs')
+    supplied = load_assembly(args.assembly, allow_small_pilot=args.qualification_subset)
+    if bool(supplied.get('small_pilot')) != args.qualification_subset:
+        raise ValueError('Assembly scope differs from the explicit subset/all40 route')
+    if args.all40_source and supplied.get('campaign') is None:
+        raise ValueError('All40 milestones require the declared all40/fixed8 campaign')
+    for partition, paths in (('train', args.train_index), ('validation', args.validation_index)):
+        expected = {(str(path.resolve()), file_sha256(path)) for path in paths}
+        if (len(expected) != len(paths)
+                or {(row['index_path'], row['index_sha256']) for row in supplied['selected_sources'][partition]} != expected):
+            raise ValueError('Assembly changed or duplicated the original source exposure/cost bank')
+    return supplied
+
+
 def main(argv=None):
     args = parser().parse_args(argv)
     validate_scales(args.scales)
@@ -156,23 +184,11 @@ def main(argv=None):
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
     args.output = args.output.resolve()
-    if bool(args.assembly) != bool(args.assembly_file_sha256):
-        raise ValueError('A supplied subset assembly needs its explicit file checksum')
-    supplied = None
-    if args.assembly is not None:
-        args.assembly = args.assembly.resolve()
-        if file_sha256(args.assembly) != args.assembly_file_sha256:
-            raise ValueError('Supplied subset assembly checksum differs')
-        supplied = load_assembly(args.assembly, allow_small_pilot=True)
-        if supplied.get('small_pilot') is not True:
-            raise ValueError('This bounded route accepts only an explicitly marked subset assembly')
-        for partition, paths in (('train', args.train_index), ('validation', args.validation_index)):
-            expected = {(str(path.resolve()), file_sha256(path)) for path in paths}
-            if {(row['index_path'], row['index_sha256']) for row in supplied['selected_sources'][partition]} != expected:
-                raise ValueError('Subset assembly changed the original source exposure/cost bank')
+    supplied = admit_assembly(args)
     assembly_path = args.assembly if args.assembly is not None else args.output / 'dataset/assembly.json'
     baseline = frozen_baseline(args.train_index[0])
-    contract = dict(format=FORMAT, qualification_subset=True, source_commit=args.source_commit,
+    format_name = FORMAT if args.qualification_subset else FULL_FORMAT
+    contract = dict(format=format_name, qualification_subset=args.qualification_subset, source_commit=args.source_commit,
         train_indices=[dict(path=str(path.resolve()), sha256=file_sha256(path)) for path in args.train_index],
         validation_indices=[dict(path=str(path.resolve()), sha256=file_sha256(path)) for path in args.validation_index],
         scales=args.scales, seed=args.seed, frozen_source_sac=baseline,
@@ -182,7 +198,10 @@ def main(argv=None):
             'context_length', 'max_window', 'eval_every', 'validation_batches', 'threads', 'device')},
         max_controller_seconds=args.max_controller_seconds, max_total_seconds=args.max_total_seconds,
         chronology='One uninterrupted optimizer trajectory per controller, resumed at milestones;500 final updates rather than25+100+500',
-        interpretation='Source subset development only; no full40 coverage, expert-label, new-task or adaptation claim')
+        interpretation=('Source subset development only; no full40 coverage, expert-label, new-task or adaptation claim'
+            if args.qualification_subset else
+            'All40 source histories with fixed8 source-local validation; candidate controllers, no expert or robot-adaptation claim'),
+        frozen_source_sac_role='Singular first-index actor reference only; not a jointly trained all40 SAC baseline')
     if not args.resume:
         args.output.mkdir(parents=True, exist_ok=False)
     lock = (args.output / 'run.lock').open('a')
@@ -190,7 +209,7 @@ def main(argv=None):
     if args.resume:
         if json.loads((args.output / 'contract.json').read_text()) != contract:
             raise ValueError('Subset scale resume contract differs')
-        assembly = supplied if supplied is not None else load_assembly(assembly_path, allow_small_pilot=True)
+        assembly = supplied if supplied is not None else load_assembly(assembly_path, allow_small_pilot=args.qualification_subset)
         old_progress = json.loads((args.output / 'progress.json').read_text())
         elapsed_before = old_progress['elapsed_seconds']
     else:
@@ -201,7 +220,7 @@ def main(argv=None):
         write_json(args.output / 'progress.json', dict(elapsed_seconds=0., milestones=[]))
     exposure = dict(training_task_keys=assembly['source_task_keys'],
         validation_task_keys=assembly.get('validation_task_keys', assembly['source_task_keys']),
-        selected_source_histories=assembly['selected_sources'], small_pilot=True,
+        selected_source_histories=assembly['selected_sources'], small_pilot=assembly['small_pilot'],
         validation='Source-local cases already used for NLL; subsequent robot probes on those cases are development evidence')
     started, archived = time.monotonic(), {}
     import torch
@@ -236,14 +255,14 @@ def main(argv=None):
                 scale_rows = [archived[(o, m, scale)] for o in OBJECTIVES for m in MODES if (o, m, scale) in archived]
                 matrix = dict(contract=dict(format='openpi_pi05_libero40_matched_training_v1',
                     assembly_sha256=assembly['assembly_sha256'], source_commit=args.source_commit,
-                    seeds=[args.seed], qualification_subset=True), completed=len(scale_rows) == 4,
+                    seeds=[args.seed], qualification_subset=args.qualification_subset), completed=len(scale_rows) == 4,
                     controllers=scale_rows, frozen_source_sac=baseline)
                 write_json(archive.parent / 'index.json', matrix)
                 write_json(args.output / 'progress.json', dict(elapsed_seconds=elapsed_before + time.monotonic() - started,
                     milestones=list(archived.values()), source_collection_costs_count_once=assembly['collection_costs_count_once']))
     scales = [dict(updates=scale, index_path=str(args.output / 'scales' / f'update-{scale:06d}' / 'index.json'),
         index_sha256=file_sha256(args.output / 'scales' / f'update-{scale:06d}' / 'index.json')) for scale in args.scales]
-    result = dict(format=FORMAT, completed=True, qualification_subset=True, seed=args.seed, scales=scales,
+    result = dict(format=format_name, completed=True, qualification_subset=args.qualification_subset, seed=args.seed, scales=scales,
         assembly_path=str(assembly_path), assembly_sha256=assembly['assembly_sha256'],
         assembly_file_sha256=file_sha256(assembly_path), frozen_source_sac=baseline,
         source_collection_costs_count_once=assembly['collection_costs_count_once'],
