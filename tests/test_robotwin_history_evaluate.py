@@ -9,7 +9,7 @@ import pytest
 from fluffy_bassoon.meta_rl.robotwin_history import NativeHistoryConfig,NativeHistoryPolicy,export_policy
 from fluffy_bassoon.meta_rl.robotwin_history_evaluate import (
     CONDITIONS,MODELS,TEACHER_SHA,TRAIN_PIN,ReferenceAgent,StudentAgent,assert_runtime,
-    case_bank,load_agent,run_trial,validate_plan,
+    canonical_sha,case_bank,load_agent,run_trial,validate_plan,
 )
 from fluffy_bassoon.meta_rl.vla_history import file_sha256
 
@@ -31,7 +31,10 @@ def plan():
 
 
 class Budget:
-    def __init__(self,deny=False): self.events=[]; self.actual=0; self.deny=deny
+    def __init__(self,deny=False):
+        self.events=[]; self.actual=0; self.deny=deny
+        self.header=dict(total_actions=57600,source_caps={},phase_caps=dict(target=57600),
+            contract=dict(evaluation_plan_sha256=canonical_sha(plan())))
     def remaining(self,**kwargs): return 57600-self.actual
     def reserve(self,decision,requested,**kwargs):
         self.events.append(('reserve',decision,requested))
@@ -122,6 +125,15 @@ def test_runtime_byte_identity_and_final_camera_contract_are_required():
         assert_runtime(env,dict(configuration,native_backend_sha256='0'*64))
     env.backend.final_observation_only=False
     with pytest.raises(ValueError,match='pinned qualified native backend'): assert_runtime(env,configuration)
+
+
+def test_source_or_unbound_budget_cannot_be_used_for_this_panel(tmp_path):
+    configuration=plan(); budget=Budget(); budget.header['source_caps']={'ppo':1100000}
+    env=Env(configuration,budget)
+    with pytest.raises(ValueError,match='separately admitted evaluation ledger'):
+        run_trial(env,budget,ReferenceAgent(),configuration,condition='native',task='adjust_bottle',
+            output=tmp_path/'wrong-ledger',run_id='test')
+    assert not env.resets and not budget.events
 
 
 def test_prior_or_unpaired_native_receipts_cannot_authorize_target_actions(tmp_path):

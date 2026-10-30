@@ -24,8 +24,10 @@ and resource proposals belong in the dated plan under `outputs/`.
    the real-episode qualification and as part of the declared panel. All
    startup, model loading, parity inference, resets and retries consume metered
    runtime, even when they execute no physical policy actions.
-4. Open a separately admitted ledger with the whole panel cap and its exact
-   plan contract. Pass the raw `RobotwinNoiseEnv`, not a `CampaignEnv` wrapper:
+4. Open a separately admitted ledger with total cap57,600, empty source caps,
+   `phase_caps={"target": 57600}`, and
+   `contract["evaluation_plan_sha256"]=canonical_sha(plan)`. The adapter checks
+   this exact identity before a reset. Pass the raw `RobotwinNoiseEnv`, not a `CampaignEnv` wrapper:
    `run_trial` owns the single pre-dispatch reservation for each native chunk.
    A wrapper would duplicate physical accounting and fails backend identity.
 
