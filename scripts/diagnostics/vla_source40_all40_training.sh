@@ -53,7 +53,7 @@ export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=$TASK_TEST:$TASK_WT/src \
   "$TASK_PROBE" -m pytest -q -p no:cacheprovider \
   tests/test_vla_source40_offline_pipeline.py tests/test_vla_source40_subset_training.py \
-  tests/test_vla_source40_training.py tests/test_vla_source40_corpus.py tests/test_vla_history.py tests/test_gpu_probe.py \
+  tests/test_vla_source40_training.py tests/test_vla_source40.py tests/test_vla_history.py tests/test_gpu_probe.py \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 export PYTHONPATH=$TASK_CUDA:$TASK_WT/src
 if [ "$TASK_RESUME" != --resume ]; then
