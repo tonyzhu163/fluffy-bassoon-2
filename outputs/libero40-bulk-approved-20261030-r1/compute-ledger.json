@@ -432,8 +432,8 @@
     },
     "source-ppo-warm-batch14-qualification": {
       "maximum_gpu_seconds": 1400,
-      "reserved_gpu_seconds": 1400,
-      "status": "terminal_exit0_complete_batch14_auditing_recovery",
+      "reserved_gpu_seconds": 960,
+      "status": "terminal_exit0_full_recovery_candidate_rng_verified",
       "run_id": "libero40-batch14-warm-qualification-20261031-r1",
       "source_commit": "376415e6915399436cb3fea214c50bd3e41f32d5",
       "maximum_new_simulator_actions": 20000,
@@ -442,7 +442,10 @@
       "submitted_shanghai": "2026-10-31 01:54:01",
       "actual_simulator_actions": 9272,
       "charged_gpu_seconds_conservative": 910,
-      "scheduler_terminal_duration_seconds": 871
+      "scheduler_terminal_duration_seconds": 871,
+      "additional_shutdown_margin_seconds": 50,
+      "released_unused_gpu_seconds": 440,
+      "audit_commit": "4a65f82c5dda2a21b5a8101df8f9fb129db74ec9"
     },
     "source-sac-topup-migration-qualification": {
       "maximum_gpu_seconds": 1000,
@@ -467,8 +470,10 @@
       "failed_attempt_charge_seconds": 146,
       "failed_attempt_simulator_actions": 0,
       "next_worker_seconds": 854,
-      "next_slice_seconds": 794,
-      "second_attempt_failure": "Testfixture omitted selected.slot; actualruntime plan supplies it"
+      "next_slice_seconds": 700,
+      "second_attempt_failure": "Testfixture omitted selected.slot; actualruntime plan supplies it",
+      "next_scheduler_max_minutes": 12,
+      "shared_ceiling_unchanged": 1000
     }
   },
   "allocations": [
@@ -737,5 +742,5 @@
     }
   ],
   "last_checkpoint_audit_at_shanghai": "2026-10-31 01:35",
-  "unassigned_gpu_seconds": 3489
+  "unassigned_gpu_seconds": 3929
 }

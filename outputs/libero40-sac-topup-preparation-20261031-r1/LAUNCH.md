@@ -20,3 +20,18 @@ exclusive one-GPU container. Actual allocated probe remains mandatory. The
 retry slice is864s plus60s allowance:76+864+60=1,000. It has a14-minute scheduler
 limit and no automatic retries. No fresh1,000s grant, source contract rewrite
 or active-worktree edit occurs.
+
+The second allocation job-68ino91bxbua passed the real GPU probe and stopped
+on a test-fixture omission:37 passed,2 skipped,1 failed. The fixture left out
+selected.slot before its intended rejection assertions; runtime selections
+include slot. It used70s and zero source actions. Original r1 clock retains
+146s across both failures; no experiment was created.
+
+Fresh repaired code cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b includes the
+fixture fix and in-script GPU fallback. A new r2 output/clock has worker854s,
+sharing the canonical qualification ledger with old146s. The launch slice is
+700s plus60s scheduler allowance under that854s worker hold, with a12-minute
+scheduler limit; the unused94s is not automatically spent. The aggregate
+1,000s bound is unchanged. qualification-r2.json binds the predecessor plan
+hashes and unchanged48 parents/slots/costs; only the execution source is rebound.
+No scientific collector, optimizer or case schedule change is introduced.
