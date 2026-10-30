@@ -53,9 +53,25 @@ def sample_gpu(uuid):
                 utilization_percent=utilization, used_gib=used/1024)
 
 
-def stop_owned(processes, output):
-    """Interrupt only Popen parents launched here; allow their forensic finally."""
+def owned_members(proc, output_token):
+    """A new session is retained by its descendants after its leader aborts."""
+    if str(output_token) not in ' '.join(map(str,proc.args)):
+        raise RuntimeError('Missing original owned-session identity token')
+    result=[]
+    listing=subprocess.check_output(['ps','-e','-o','pid=,sid=,pgid=,uid=,stat='],text=True)
+    for line in listing.splitlines():
+        pid,sid,pgid,uid,state=line.split()
+        if int(sid)==proc.pid and not state.startswith('Z'):
+            if int(uid)!=os.getuid() or int(pgid)!=proc.pid:
+                raise RuntimeError('Owned session identity changed; refusing signal')
+            result.append(int(pid))
+    return result
+
+
+def stop_owned(processes, output, *, grace_seconds=60, term_seconds=10):
+    """Clean only recorded new sessions, including orphaned native workers."""
     for method, proc in processes.items():
+        owned_members(proc,output/method)  # Validate before the first signal.
         if proc.poll() is None:
             try:
                 command = Path(f'/proc/{proc.pid}/cmdline').read_bytes().replace(b'\0', b' ')
@@ -65,17 +81,24 @@ def stop_owned(processes, output):
                 raise
             if str(output/method).encode() not in command:
                 raise RuntimeError('Owned-process identity changed; refusing signal')
-            os.kill(proc.pid, signal.SIGINT)
-    deadline = time.monotonic()+60
-    while any(proc.poll() is None for proc in processes.values()) and time.monotonic()<deadline:
-        time.sleep(.5)
-    for proc in processes.values():
-        if proc.poll() is None:
-            # Each Popen creates its own new session; its descendants are this
-            # test's native workers, never another allocation/user's processes.
-            if os.getpgid(proc.pid) != proc.pid:
-                raise RuntimeError('Owned process group changed; refusing signal')
-            os.killpg(proc.pid, signal.SIGTERM)
+            try:os.kill(proc.pid, signal.SIGINT)
+            except ProcessLookupError:pass
+    def remaining():
+        return [(method,proc) for method,proc in processes.items()
+                if owned_members(proc,output/method)]
+    def wait_until(seconds):
+        deadline=time.monotonic()+seconds
+        while remaining() and time.monotonic()<deadline:time.sleep(.1)
+    wait_until(grace_seconds)
+    for method,proc in remaining():
+        try:os.killpg(proc.pid,signal.SIGTERM)
+        except ProcessLookupError:pass
+    wait_until(term_seconds)
+    for method,proc in remaining():
+        try:os.killpg(proc.pid,signal.SIGKILL)
+        except ProcessLookupError:pass
+    wait_until(5)
+    if remaining():raise RuntimeError('Owned worker session survived forced cleanup')
 
 
 def main():
@@ -110,6 +133,9 @@ def main():
                 stdout=streams[method],stderr=subprocess.STDOUT,start_new_session=True)
         with (args.output/'gpu-memory.jsonl').open('w',buffering=1) as trace:
             while any(proc.poll() is None for proc in processes.values()):
+                failed=[method for method,proc in processes.items() if proc.poll() not in (None,0)]
+                if failed:
+                    reason='arm_failed:'+','.join(failed);break
                 row=sample_gpu(probe['devices'][0]['uuid'])
                 row.update(elapsed_seconds=time.monotonic()-started,
                     utc=datetime.now(timezone.utc).isoformat(),
@@ -124,8 +150,9 @@ def main():
         reason=f'{type(error).__name__}: {error}'
         raise
     finally:
-        if reason or any(proc.poll() is None for proc in processes.values()):
-            stop_owned(processes,args.output)
+        # A native parent abort can leave a live session even after poll()
+        # returns. Always inspect our sessions before releasing the allocation.
+        stop_owned(processes,args.output)
         for proc in processes.values():
             try:proc.wait(timeout=30)
             except subprocess.TimeoutExpired:pass
