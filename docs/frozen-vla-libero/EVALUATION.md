@@ -3,7 +3,29 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## All40 source collection complete; performance evaluation pending
+## All40 students: first broad target screen complete
+
+All six workers exited0:558 groups,626 episodes,189,051 actual simulator
+steps including settling and7,957 conservatively charged GPU seconds. All
+committed result hashes, unchanged motor hashes and actual initial-observation
+matches passed. Source-only fixed500 checkpoints; no deployment SGD.
+
+| K0 query | Native | AD full | AD static | DPT full | DPT static |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| LIBERO90, one initialization per goal |31/90|26/90|26/90|26/90|27/90|
+| Plus,4 development conditions |4/4|4/4|4/4|4/4|4/4|
+| Pro,4 seeded development conditions |4/4|4/4|4/4|4/4|4/4|
+
+On the predeclared nine-goal LIBERO90 K1 panel, AD and DPT each score6/9
+retaining support history versus5/9 erasing it. Both had5/9 atK0; native and
+AD-static already score6/9 atK0 on those same cases. The only memory discordance
+is task70 for both objectives, after successful support. No failure recovery
+or superiority over native is demonstrated. Plus/Pro remain ceiling panels
+at280-step development cutoffs, not exhaustive scores. One training seed and
+one initialization per L90 goal limit generalization. Ordinary DSRL/PPO were
+not part of this wave. [Full results/costs/integrity](../../outputs/libero40-target-firstwave-plan-20261030-r1/RESULTS.md).
+
+## All40 source collection and student fitting complete
 
 The canonical40 training/8 validation SAC streams are terminal, exit0 and
 collection-qualified:527 complete K4 training cases/2,108 episodes/326,277

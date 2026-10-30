@@ -1,3 +1,6 @@
+**Status: COMPLETE, all six workers exit0; final results audited21:35Shanghai.**
+[Final outcomes and limits](RESULTS.md).
+
 # Existing-model target first wave
 
 Direct human authorization was verified in coordinator chat
@@ -34,8 +37,9 @@ after counting offline3,200s and speed1,800s once. Total component holds
 115,086≤115,200seconds. Source contracts/caps/ledgers are unchanged.
 
 All6 allocations passed actual GPU/CUDA checks and77 focused Linux tests.
-Worker0 completed five initial query episodes at17:12Shanghai; no aggregate
-robot-performance result is established yet. All methods in each paired case
+All626 episodes completed by17:32Shanghai. The later final audit found native
+31/90 versus26–27/90 for the students; K1 retained6/9 versus reset5/9 merely
+matches native6/9 on the nine-case panel. No performance improvement established. All methods in each paired case
 share one actual motor. Raw observations, noises/actions, feedback, contexts,
 RNG/cursors, RPC costs and actual frame equality flags are retained. Frame
 mismatches preclude a strict causal-memory claim rather than being hidden.

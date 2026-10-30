@@ -52,10 +52,13 @@ teacher quality and useful learning-history diversity remain unresolved.
 All40 source SAC collection is complete:527 K4 training cases/2,108 episodes
 and146 validation cases/584 episodes,411,578 selected simulator actions.
 All40 AD/DPT full/static controllers completed500 fitting updates each.
-The first six-worker target screen is running: all90 LIBERO90 goals at one
-initialization each plus four Plus and four seeded Pro development conditions,
-with zero-support comparisons and a predeclared17-case one-support panel.
-No aggregate performance conclusion is available yet. RoboTwin uses6 source goals and6 controller-held-out goals;
+The first target screen completed626 episodes/189,051 simulator actions.
+Native pi0.5 scores31/90 atK0; AD full/static26/90, DPT full26/90 and static27/90.
+On the nine-case K1 panel AD/DPT retained history each score6/9 versus reset5/9,
+but native and AD-static already score6/9 atK0 on that panel. Task70 after a
+successful support is the sole memory discordance. Every method is4/4 on each
+tiny Plus/Pro development panel. No high-performance/sample-efficiency or
+reliable memory claim is established. RoboTwin uses6 source goals and6 controller-held-out goals;
 its current1024D independent noise interface differs from LIBERO's32D tied
 noise. Its source-only LR1e-6 PPO calibration passed, but useful robot improvement
 remains unproven.
