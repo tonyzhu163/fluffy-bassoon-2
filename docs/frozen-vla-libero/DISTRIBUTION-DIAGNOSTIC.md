@@ -74,3 +74,23 @@ The ledger format is `source40_distribution_diagnostic_budget_v1`, with
 The actual original all40 final500 matrix, all four source controller/recovery
 hashes and the assembly are verified; only full AD/DPT policies are intervened
 on. Separately trained static or reset weights are never substituted.
+
+After an attempt closes, read-only reporting is available separately from its
+immutable worker worktree:
+
+```sh
+python -m fluffy_bassoon.meta_rl.vla_distribution_report \
+  --run-root /absolute/diagnostic-run --plan /absolute/frozen-plan.json \
+  --read-arrays --output /absolute/new-report-outside-run.json
+```
+
+The reporter accepts a terminal **partial** panel and reports observed/declared
+denominators separately. It lists every completed task/method query, paired
+wins/losses and task IDs versus contemporaneous native and each objective's
+original controller. It records final/group index, full recovery, parameter
+check and original-equivalence artifact hashes. Optional array summaries are
+chunk-weighted descriptions of actual saved mean/std/epsilon/proposal/clipping;
+they are not a conditional-residual optimum or a checkpoint-selection rule.
+It imports no model/framework, waits for no process and writes nothing inside
+the worker. An active launcher lock is refused; missing outcomes are never
+counted as failures or extrapolated to63 complete queries.
