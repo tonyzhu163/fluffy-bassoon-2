@@ -362,7 +362,7 @@ class NativeReplayEngine:
             array = np.asarray(record[name])
             require(array.shape == shape and np.isfinite(array).all(), "Invalid captured " + name)
         require(np.asarray(record["native_initial_noise"]).dtype == np.float32
-                and float(np.abs(record["native_initial_noise"]).max()) <= 1.5 + 1e-6,
+                and float(np.abs(record["native_initial_noise"]).max()) <= 1.0 + 1e-6,
                 "Recorded bounded PPO noise contract differs")
         return record
 
