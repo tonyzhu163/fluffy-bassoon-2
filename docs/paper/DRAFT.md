@@ -392,3 +392,15 @@ rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
   faults under the same cumulative allowance. Optional diagnostics are deferred
   while source collection and fitting are prioritized. Larger source compute
   still needs approval; the central robotic-performance claim remains unproven.
+
+
+Source update03:43Shanghai: the continuation bank now contains583 complete
+K4 training cases/2,332 episodes/33,729 decisions across all40 goals, plus
+146 validation cases/584 episodes/8,202 decisions. All224 added qualification/
+bridge episodes succeeded. This supplies longer learned-policy histories,
+not recovery evidence or a demonstrated performance improvement. Immutable
+CPU assembly is complete. All four AD/DPT full/static interim100-update fits
+were submitted within the existing32h budget; no new target score yet.
+The cumulative1M-source/learner and full500-update/matched target phase remain
+unfinished. Optional diagnostic branches must not serialize collection and
+initial fitting again.

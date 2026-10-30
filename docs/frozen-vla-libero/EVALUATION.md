@@ -624,3 +624,19 @@ GPU-seconds. The cumulative prior+new resource cost is205,236, which includes
 validation/qualification overhead and is not dataset size. The SFSS pattern
 has no matched control and establishes no adaptation, memory or target gain.
 [Audit and exact hashes](../../outputs/libero40-batch14-warm-qualification-audit-20261031-r1/RESULT.md).
+
+
+## Source continuation snapshot, 2026-10-31
+
+Canonical source leaves now contain583 K4 training cases/2,332 episodes/
+33,729 decisions across all40 goals and146 cases/584 episodes/8,202 decisions
+in fixed disjoint source validation. Training all-in cost351,297 actions;
+validation85,301; historical source overhead21,253 once, total457,851.
+These are source collection counts, not target performance. All224 episodes
+added by the continuation qualification and two bridges succeeded, so they
+provide no additional failure-recovery evidence. See the
+[canonical counts](../../outputs/libero40-sac-source-bridge-audit-20261031-r1/canonical-counts.json).
+
+Real zero-GPU capture/assembly passed34 tests and25 saved-result checks and
+produced immutable paired inputs for fitting. No new robot result is yet
+available from this snapshot. [CPU receipt](../../outputs/libero40-source-pipeline-cpu-audit-20261031-r1/README.md).

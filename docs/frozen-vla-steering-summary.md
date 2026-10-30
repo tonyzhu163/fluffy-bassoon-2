@@ -347,3 +347,36 @@ the full bank. Existing source and warm PPO remain near ceiling, so more
 source actions are an experiment rather than a guaranteed recovery signal.
 Optional repeated-query/cache diagnostics remain deferred. Full source scale,
 matched target matrix and the robotic sample-efficiency claim are unfinished.
+
+
+## 2026-10-31 source continuation and overlapping fitting
+
+Both bounded SAC bridge collectors completed with full recovery and paired
+AD/DPT exports. The qualification and bridges added224 source episodes;
+all224 succeeded. This extends learned-policy histories without supplying new
+failure-recovery evidence. It does not reverse the earlier negative target
+result or establish a teacher improvement.
+
+Current valid training data: all40 streams,583 complete K4 cases,2,332 episodes,
+33,729 steering decisions and327,547 executed primitives. Including settling
+and stream charges, training costs351,297 actions. The disjoint fixed8
+validation streams contain146 cases/584 episodes/8,202 decisions/79,381
+primitives, costing85,301 all-in actions. Historical overhead21,253 is counted
+once: total SAC source resource charge457,851. Resource charges are not the
+number of training examples. [Canonical counts](../outputs/libero40-sac-source-bridge-audit-20261031-r1/canonical-counts.json).
+
+The CPU capture/assembly job completed all48 immutable complete prefixes,
+34 metadata tests and25 saved-result checks; zero GPU time or simulator
+actions,710 conservatively charged CPU-worker seconds. A mistaken3.10 runtime
+guard failed its first CPU attempt; actual qualified base is3.12.15 and the
+fresh corrected CPU job passed. The OpenPI student runtime remains3.11 with
+its qualified cu128 overlay. [CPU receipt](../outputs/libero40-source-pipeline-cpu-audit-20261031-r1/README.md).
+
+Decision: use the assembled snapshot immediately for all four AD/DPT full/static
+fits at25/100 updates, source2bc15da, Baige job-wbvs39zbt0pw. This uses1,800
+seconds of the original32h pool, with1second unassigned; no further actions
+are collected by fitting. The complete1M-source and500-update phase is still
+unfinished. A concrete25additionalGPU-hour/130GB source-topup plus final-fit
+phase is being prepared for approval; it is not running. Collection, frozen
+snapshot fitting and robot evaluation should overlap after bounded checks.
+Optional repeated-query/cache diagnostics remain deferred.
