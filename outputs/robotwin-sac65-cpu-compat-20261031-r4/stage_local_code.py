@@ -20,6 +20,15 @@ def require(value,message):
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def git_environment(environment):
+    selectors=('GIT_DIR','GIT_WORK_TREE','GIT_COMMON_DIR','GIT_INDEX_FILE',
+               'GIT_OBJECT_DIRECTORY','GIT_ALTERNATE_OBJECT_DIRECTORIES')
+    # GIT_CONFIG_COUNT/KEY_*/VALUE_* and GIT_CONFIG_PARAMETERS can also
+    # redirect core.worktree. Remove inherited config override channels.
+    return {key:value for key,value in environment.items()
+            if key not in selectors and not key.startswith('GIT_CONFIG')}
+
+
 def local_mount(path):
     candidates=[]
     for line in Path('/proc/self/mountinfo').read_text().splitlines():
@@ -45,9 +54,7 @@ def stage(source,pin,output,*,base=Path('/tmp'),bootstrap=BOOTSTRAP):
     logs=output/'local-code-logs';logs.mkdir()
     # Repository selectors inherited from a caller must not redirect checkout
     # or its index back into the protected original worktree.
-    selectors=('GIT_DIR','GIT_WORK_TREE','GIT_COMMON_DIR','GIT_INDEX_FILE',
-               'GIT_OBJECT_DIRECTORY','GIT_ALTERNATE_OBJECT_DIRECTORIES')
-    environment={key:value for key,value in os.environ.items() if key not in selectors}
+    environment=git_environment(os.environ)
     def git(name,arguments,cwd=None):
         path=logs/(name+'.log')
         with path.open('xb') as stream,(logs/(name+'.stderr')).open('xb') as error:

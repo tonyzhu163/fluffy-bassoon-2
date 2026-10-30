@@ -53,6 +53,8 @@ the test floor. It does not run a separate pilot or modify the source checkout.
    `git status --porcelain`**, including untracked files. There is no tracked-only
    shortcut. Compare original bootstrap files against their reviewed local Git
    blobs; a dirty deployed bootstrap is rejected without overwriting it.
+   The shared environment filter removes inherited repository selectors and
+   `GIT_CONFIG*` override channels from staging and all later Git consumers.
 4. Persist original/effective paths, both HEADs, full clean-status output/SHA,
    filesystem/capacity evidence and bootstrap hashes in `local-code.json` and
    persistent logs. All consumers import/run from the exact local checkout.

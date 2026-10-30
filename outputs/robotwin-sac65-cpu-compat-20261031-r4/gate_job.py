@@ -193,6 +193,13 @@ def main():
         stage_cap=min(30,deadline-time.monotonic()-960)
         require(stage_cap>=10,'Insufficient setup time to stage exact code while preserving test floor')
         staging=deployed_code/'outputs'/RUN/'stage_local_code.py'
+        stage_spec=importlib.util.spec_from_file_location('exact_local_git_environment',staging)
+        stage_module=importlib.util.module_from_spec(stage_spec);stage_spec.loader.exec_module(stage_module)
+        clean_environment=stage_module.git_environment(os.environ)
+        # Apply the same filter to qualified Git extraction and all later
+        # consumers, including Git invoked inside phase-worker libraries.
+        for key in tuple(os.environ):
+            if key not in clean_environment:os.environ.pop(key)
         result=runtime.run('local-code',[sys.executable,'-I','-B','-S',str(staging),
             '--source-code',str(deployed_code),'--code-commit',a.code_commit,'--output',str(out)],
             deployed_code,os.environ,out/'local-code-stage.log',stage_cap)
