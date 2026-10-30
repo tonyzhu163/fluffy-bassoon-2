@@ -1,0 +1,3398 @@
+{
+  "schema": "robotwin_stage50_saved_evaluation_audit_v1",
+  "checked_at_utc": "2026-10-30T16:56:17.368702+00:00",
+  "status": "all_three_stage50_evaluations_complete_saved_case_provenance_matches",
+  "scope": "Saved JSON/artifact hashes only; no model, tensor checkpoint load, tests, control, ledger access, ledger constructor or Git. Source checkpoint bytes were streamed and SHA256 compared. Initial case hashes are saved recorder metadata; raw frame blobs were not rehashed in this narrow audit.",
+  "inputs": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-input.json",
+      "sha256": "a40b594a43ccf5da470aa994e7fa8bc5b7c8c737a237c6ae506a5ef108328a64"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-identities.json",
+      "sha256": "ad0d4e9aac1b81003efaa14f5d25b03f832e275435c1bdc7539df1714b9d81d0"
+    }
+  ],
+  "scientific_lineage": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "execution_commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+  "methods": {
+    "ppo": {
+      "source_stage_iteration": 50,
+      "source_complete_trials": 300,
+      "source_complete_episodes": 1200,
+      "source_executed_policy_actions": 479674,
+      "source_learner_updates": 50,
+      "source_optimizer_steps_observed_after_stage": 250,
+      "source_counters_unchanged_during_evaluation": true,
+      "pending_source_trials": 0,
+      "source_rng_restored_reported": true,
+      "source_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/stages/iteration-50/ppo-recovery.pt",
+        "bytes": 16491360,
+        "recorded_sha256": "71f992a1856b05cd1f5763275a7b0b5f3154a22a0b4f315fe046432f1235c818",
+        "actual_sha256": "71f992a1856b05cd1f5763275a7b0b5f3154a22a0b4f315fe046432f1235c818",
+        "matches": true
+      },
+      "stage_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/stages/iteration-50/stage.json",
+        "bytes": 1805,
+        "sha256": "37d4a9a3f09cb4dafa161d9f0a79552eb41be08ba2594b996dddeae6eef28bee"
+      },
+      "evaluation_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/stages/iteration-50/evaluation.json",
+        "bytes": 39481,
+        "sha256": "792cdeed932125cc2364ae5915bef6194d235c327af1bf6dd6d891974ed68c60"
+      },
+      "stage_evaluation_wall_seconds": 906.7192107066512,
+      "source_validation": {
+        "successes": 4,
+        "episodes": 24,
+        "actual_policy_actions": 9763,
+        "tasks": [
+          {
+            "task": "handover_mic",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "pick_diverse_bottles",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              true,
+              false
+            ]
+          },
+          {
+            "task": "place_a2b_left",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              true,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_object_stand",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              true
+            ]
+          },
+          {
+            "task": "place_phone_stand",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              true,
+              false
+            ]
+          },
+          {
+            "task": "scan_object",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          }
+        ]
+      },
+      "native_reference_episodes": [
+        {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 50
+        },
+        {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 50
+        },
+        {
+          "method": "native",
+          "phase": "native_after",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 50
+        },
+        {
+          "method": "native",
+          "phase": "native_after",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 50
+        }
+      ],
+      "raw_stage_episode_count": 76,
+      "raw_stage_policy_actions": 25506,
+      "frozen_motor": {
+        "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "unchanged": true
+      }
+    },
+    "ppo_reset": {
+      "source_stage_iteration": 50,
+      "source_complete_trials": 300,
+      "source_complete_episodes": 1200,
+      "source_executed_policy_actions": 479895,
+      "source_learner_updates": 50,
+      "source_optimizer_steps_observed_after_stage": 250,
+      "source_counters_unchanged_during_evaluation": true,
+      "pending_source_trials": 0,
+      "source_rng_restored_reported": true,
+      "source_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/ppo_reset-recovery.pt",
+        "bytes": 16492938,
+        "recorded_sha256": "a693070c050daf24c0e63b5d2a15e4770b819a31525dea6140f14b0175c2ae62",
+        "actual_sha256": "a693070c050daf24c0e63b5d2a15e4770b819a31525dea6140f14b0175c2ae62",
+        "matches": true
+      },
+      "stage_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/stage.json",
+        "bytes": 1355,
+        "sha256": "64f7edce147b240b0c29f635f71a90372366d67b9081c3714e0882daec3692c9"
+      },
+      "evaluation_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/evaluation.json",
+        "bytes": 21495,
+        "sha256": "bced498473d7ef7bdf92a7cc078a134ecd7a550d4b3407de3e1b9824d3a544d0"
+      },
+      "stage_evaluation_wall_seconds": 510.72049693297595,
+      "source_validation": {
+        "successes": 2,
+        "episodes": 24,
+        "actual_policy_actions": 10295,
+        "tasks": [
+          {
+            "task": "handover_mic",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "pick_diverse_bottles",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_a2b_left",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              true,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_object_stand",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              true
+            ]
+          },
+          {
+            "task": "place_phone_stand",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "scan_object",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          }
+        ]
+      },
+      "native_reference_episodes": [],
+      "raw_stage_episode_count": 40,
+      "raw_stage_policy_actions": 14899,
+      "frozen_motor": {
+        "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "unchanged": true
+      }
+    },
+    "sac": {
+      "source_stage_iteration": 50,
+      "source_complete_trials": 300,
+      "source_complete_episodes": 1200,
+      "source_executed_policy_actions": 502356,
+      "source_learner_updates": 314500,
+      "source_optimizer_steps_observed_after_stage": 943500,
+      "source_counters_unchanged_during_evaluation": true,
+      "pending_source_trials": 0,
+      "source_rng_restored_reported": true,
+      "source_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/stages/iteration-50/sac-recovery.pt",
+        "bytes": 532001345,
+        "recorded_sha256": "5f6c30831bfcfff6442a8d20392fb158008c219936518f3d90c3a585330f1caa",
+        "actual_sha256": "5f6c30831bfcfff6442a8d20392fb158008c219936518f3d90c3a585330f1caa",
+        "matches": true
+      },
+      "stage_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/stages/iteration-50/stage.json",
+        "bytes": 1392,
+        "sha256": "2ffc319ee028fd08de6f4f497de101ac0becbd866424e679554a10f4a65f669f"
+      },
+      "evaluation_json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/stages/iteration-50/evaluation.json",
+        "bytes": 27238,
+        "sha256": "56f29768ec83243707eb09c0a4fe6aed49485be2c742f3654832f95c00bd5f3b"
+      },
+      "stage_evaluation_wall_seconds": 785.5033255759627,
+      "source_validation": {
+        "successes": 3,
+        "episodes": 24,
+        "actual_policy_actions": 9811,
+        "tasks": [
+          {
+            "task": "handover_mic",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              true
+            ]
+          },
+          {
+            "task": "pick_diverse_bottles",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_a2b_left",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              true,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_object_stand",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "place_phone_stand",
+            "successes": 0,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              false,
+              false,
+              false
+            ]
+          },
+          {
+            "task": "scan_object",
+            "successes": 1,
+            "episodes": 4,
+            "success_by_episode": [
+              false,
+              true,
+              false,
+              false
+            ]
+          }
+        ]
+      },
+      "native_reference_episodes": [],
+      "raw_stage_episode_count": 56,
+      "raw_stage_policy_actions": 20423,
+      "frozen_motor": null
+    }
+  },
+  "target_results": [
+    {
+      "condition": "ppo:normal",
+      "source_arm": "ppo",
+      "task": "adjust_bottle",
+      "successes": 7,
+      "episodes": 8,
+      "success_by_episode": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 1,
+        "2": 2,
+        "4": 4,
+        "8": 7
+      },
+      "success_at_episode": {
+        "1": true,
+        "2": true,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 1497,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo:memory_reset",
+      "source_arm": "ppo",
+      "task": "adjust_bottle",
+      "successes": 7,
+      "episodes": 8,
+      "success_by_episode": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 1,
+        "2": 2,
+        "4": 4,
+        "8": 7
+      },
+      "success_at_episode": {
+        "1": true,
+        "2": true,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 1560,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo:reward_blind",
+      "source_arm": "ppo",
+      "task": "adjust_bottle",
+      "successes": 7,
+      "episodes": 8,
+      "success_by_episode": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 1,
+        "2": 2,
+        "4": 4,
+        "8": 7
+      },
+      "success_at_episode": {
+        "1": true,
+        "2": true,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 1486,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo:normal",
+      "source_arm": "ppo",
+      "task": "move_stapler_pad",
+      "successes": 0,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": false,
+        "8": false
+      },
+      "actual_policy_actions": 3200,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo:memory_reset",
+      "source_arm": "ppo",
+      "task": "move_stapler_pad",
+      "successes": 0,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": false,
+        "8": false
+      },
+      "actual_policy_actions": 3200,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo:reward_blind",
+      "source_arm": "ppo",
+      "task": "move_stapler_pad",
+      "successes": 0,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": false,
+        "8": false
+      },
+      "actual_policy_actions": 3200,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo_reset:normal",
+      "source_arm": "ppo_reset",
+      "task": "adjust_bottle",
+      "successes": 7,
+      "episodes": 8,
+      "success_by_episode": [
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 1,
+        "2": 2,
+        "4": 3,
+        "8": 7
+      },
+      "success_at_episode": {
+        "1": true,
+        "2": true,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 1404,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "ppo_reset:normal",
+      "source_arm": "ppo_reset",
+      "task": "move_stapler_pad",
+      "successes": 0,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": false,
+        "8": false
+      },
+      "actual_policy_actions": 3200,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": null
+    },
+    {
+      "condition": "sac_frozen",
+      "source_arm": "sac",
+      "task": "adjust_bottle",
+      "successes": 3,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 1,
+        "8": 3
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 2417,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/target-1ce4bfb24bc66fbf02f056a42d0508712f82b6d5bc5e54be64b402d380938722-recovery.pt",
+        "sha256": "8d250c30867c1cbc7560f7d14031afb4479945804fba8590b74cefbbf6616e04"
+      }
+    },
+    {
+      "condition": "sac_online",
+      "source_arm": "sac",
+      "task": "adjust_bottle",
+      "successes": 5,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true,
+        true
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 1,
+        "4": 2,
+        "8": 5
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": true,
+        "4": true,
+        "8": true
+      },
+      "actual_policy_actions": 2054,
+      "target_adaptation": {
+        "replay_mode": "fresh_target",
+        "source_counters": {
+          "environment_steps": 16225,
+          "primitive_steps": 502356,
+          "updates": 314500,
+          "optimizer_steps": 943500,
+          "update_seconds": 3036.777273056796
+        },
+        "source_replay_rows": 16225,
+        "source_replay_excluded": true,
+        "sample_with_replacement": true,
+        "minimum_target_replay_rows": 1,
+        "additional_warmup_chunks": 0
+      },
+      "additional_target_clone_updates": {
+        "environment_steps": 67,
+        "primitive_steps": 2054,
+        "updates": 1340,
+        "optimizer_steps": 4020,
+        "update_seconds": 12.292690027039498,
+        "replay_rows": 67,
+        "replay_mode": "fresh_target"
+      },
+      "target_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/target-11b20af986a9b34c54da47e45b8948d505f539f97e4fbe9b7af30d43c9aabd0d-recovery.pt",
+        "sha256": "3be0dedf8b6dc9db16694e3e57d6d6c9f5f3ceec141cf9ad922757bc98a42957"
+      }
+    },
+    {
+      "condition": "sac_frozen",
+      "source_arm": "sac",
+      "task": "move_stapler_pad",
+      "successes": 0,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": false,
+        "8": false
+      },
+      "actual_policy_actions": 3200,
+      "target_adaptation": null,
+      "additional_target_clone_updates": null,
+      "target_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/target-f810641f65142d58e8c0c8a031f1eea7efd5c5ffee91282b237593127beb51a2-recovery.pt",
+        "sha256": "9e053f2601c7e330564c7620a477a57d7fa7449194e09e1cdb947288f2bb3b75"
+      }
+    },
+    {
+      "condition": "sac_online",
+      "source_arm": "sac",
+      "task": "move_stapler_pad",
+      "successes": 1,
+      "episodes": 8,
+      "success_by_episode": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "cumulative_successes_at_episode": {
+        "1": 0,
+        "2": 0,
+        "4": 1,
+        "8": 1
+      },
+      "success_at_episode": {
+        "1": false,
+        "2": false,
+        "4": true,
+        "8": false
+      },
+      "actual_policy_actions": 2941,
+      "target_adaptation": {
+        "replay_mode": "fresh_target",
+        "source_counters": {
+          "environment_steps": 16225,
+          "primitive_steps": 502356,
+          "updates": 314500,
+          "optimizer_steps": 943500,
+          "update_seconds": 3036.777273056796
+        },
+        "source_replay_rows": 16225,
+        "source_replay_excluded": true,
+        "sample_with_replacement": true,
+        "minimum_target_replay_rows": 1,
+        "additional_warmup_chunks": 0
+      },
+      "additional_target_clone_updates": {
+        "environment_steps": 96,
+        "primitive_steps": 2941,
+        "updates": 1920,
+        "optimizer_steps": 5760,
+        "update_seconds": 17.929252891568467,
+        "replay_rows": 96,
+        "replay_mode": "fresh_target"
+      },
+      "target_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/target-c945ec08b2f32192d174387dc4d2dfb945bcb8e298d0adf12be653822cd5809a-recovery.pt",
+        "sha256": "10f8b371142d8504e80730ae8cf67debc91bd6c653fd34fd0288b21484c09690"
+      }
+    }
+  ],
+  "case_comparison": {
+    "source_validation_cases": 24,
+    "source_validation_conditions_each": 3,
+    "target_cases": 16,
+    "target_conditions_each": 6,
+    "all_actual_cases_initial_features_and_raw_observation_hashes_match": true,
+    "recorded_episode_action_and_chunk_counts_match_raw_manifests": true,
+    "case_rows": [
+      {
+        "phase": "source_validation",
+        "task": "handover_mic",
+        "requested_seed": 3000000000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000000000,
+            "actual_seed": 3000000000,
+            "initial_features_sha256": "e92fc53d936e37bbb30783723a48774e8567a5676cf4b0eeea877c87d051d41f",
+            "initial_raw_observation_sha256": "440be6a66b7727f1ddccf5296027c79d9f8f259ca15e33d78bc46c2fd7e005db",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-af9685c2bddb4702987b02afb0d5f927/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000000000,
+            "actual_seed": 3000000000,
+            "initial_features_sha256": "e92fc53d936e37bbb30783723a48774e8567a5676cf4b0eeea877c87d051d41f",
+            "initial_raw_observation_sha256": "440be6a66b7727f1ddccf5296027c79d9f8f259ca15e33d78bc46c2fd7e005db",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-222e218a48ac4b1fa94e4b0b1744bb14/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000000000,
+            "actual_seed": 3000000000,
+            "initial_features_sha256": "e92fc53d936e37bbb30783723a48774e8567a5676cf4b0eeea877c87d051d41f",
+            "initial_raw_observation_sha256": "440be6a66b7727f1ddccf5296027c79d9f8f259ca15e33d78bc46c2fd7e005db",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-049ad84d0892420ea143fb90802ea70f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "handover_mic",
+        "requested_seed": 3000000997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000000997,
+            "actual_seed": 3000000997,
+            "initial_features_sha256": "d9767ee9cd0c24ea0e01f26bc93190bbc746e0894a20399d2f83c07272569be3",
+            "initial_raw_observation_sha256": "410b71dbdc7d416ce437406ff7c7aca369d4236bda322758397d2b269425c6e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-1e62e48f49eb407e831eb09f5ecd4773/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000000997,
+            "actual_seed": 3000000997,
+            "initial_features_sha256": "d9767ee9cd0c24ea0e01f26bc93190bbc746e0894a20399d2f83c07272569be3",
+            "initial_raw_observation_sha256": "410b71dbdc7d416ce437406ff7c7aca369d4236bda322758397d2b269425c6e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-c5c0a3ea6fd24607bfb219783ee3b49c/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000000997,
+            "actual_seed": 3000000997,
+            "initial_features_sha256": "d9767ee9cd0c24ea0e01f26bc93190bbc746e0894a20399d2f83c07272569be3",
+            "initial_raw_observation_sha256": "410b71dbdc7d416ce437406ff7c7aca369d4236bda322758397d2b269425c6e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-c5478fc9369947acbdfd5bd728ddae78/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "handover_mic",
+        "requested_seed": 3000001994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000001994,
+            "actual_seed": 3000001994,
+            "initial_features_sha256": "e0c3671ade72d4ae44434bbca35be8f1002d6704c53c42270ec521f220347d3d",
+            "initial_raw_observation_sha256": "d309a059feecf71e1cd8db76540aef003d4a3b3841e90d685331b6e37201c3d9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-6f26a89c894d4d37bf982099fc9f777d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000001994,
+            "actual_seed": 3000001994,
+            "initial_features_sha256": "e0c3671ade72d4ae44434bbca35be8f1002d6704c53c42270ec521f220347d3d",
+            "initial_raw_observation_sha256": "d309a059feecf71e1cd8db76540aef003d4a3b3841e90d685331b6e37201c3d9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-e8ec583e76ad472a90d158e907f79a99/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000001994,
+            "actual_seed": 3000001994,
+            "initial_features_sha256": "e0c3671ade72d4ae44434bbca35be8f1002d6704c53c42270ec521f220347d3d",
+            "initial_raw_observation_sha256": "d309a059feecf71e1cd8db76540aef003d4a3b3841e90d685331b6e37201c3d9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a8a757fc324f4c5ca3b0338d841c6108/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "handover_mic",
+        "requested_seed": 3000002991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000002991,
+            "actual_seed": 3000002991,
+            "initial_features_sha256": "d5d91ff5bdee81c3d0e814678c6b8183fae249d4ad39af912b143ad14825f217",
+            "initial_raw_observation_sha256": "43735f597485bd8ca4da30f50b5bd0c4ae03115653a139886ab00e540c27cd45",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-17e4df9f44384dddbcfa162050784e89/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000002991,
+            "actual_seed": 3000002991,
+            "initial_features_sha256": "d5d91ff5bdee81c3d0e814678c6b8183fae249d4ad39af912b143ad14825f217",
+            "initial_raw_observation_sha256": "43735f597485bd8ca4da30f50b5bd0c4ae03115653a139886ab00e540c27cd45",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-9e6099a5d84741d1b646a1cb8f8e9e65/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000002991,
+            "actual_seed": 3000002991,
+            "initial_features_sha256": "d5d91ff5bdee81c3d0e814678c6b8183fae249d4ad39af912b143ad14825f217",
+            "initial_raw_observation_sha256": "43735f597485bd8ca4da30f50b5bd0c4ae03115653a139886ab00e540c27cd45",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-d7c9d3d672e6453496c63da512333ceb/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 600
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "pick_diverse_bottles",
+        "requested_seed": 3000010000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000010000,
+            "actual_seed": 3000010001,
+            "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+            "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-ce647c731831402bbbd1bd155188def7/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000010000,
+            "actual_seed": 3000010001,
+            "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+            "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-aa8a627000fa4276b72bab9bb30ace3e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000010000,
+            "actual_seed": 3000010001,
+            "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+            "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-38eff2a294584f24941c3f885e3b7cf7/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "pick_diverse_bottles",
+        "requested_seed": 3000010997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000010997,
+            "actual_seed": 3000010997,
+            "initial_features_sha256": "750cc1d3d24f4663b1379a54a0df889eaf429d2a98298e185df3aee4182bc219",
+            "initial_raw_observation_sha256": "ed68fbf01394b89ed4dac788fbfc4e174d4311171f3fdd315367d2f32b4e7f5c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-fd19da4eff9448548d4a99d170380b10/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000010997,
+            "actual_seed": 3000010997,
+            "initial_features_sha256": "750cc1d3d24f4663b1379a54a0df889eaf429d2a98298e185df3aee4182bc219",
+            "initial_raw_observation_sha256": "ed68fbf01394b89ed4dac788fbfc4e174d4311171f3fdd315367d2f32b4e7f5c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-c7f6214242794d3da333c003a4c2f3bd/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000010997,
+            "actual_seed": 3000010997,
+            "initial_features_sha256": "750cc1d3d24f4663b1379a54a0df889eaf429d2a98298e185df3aee4182bc219",
+            "initial_raw_observation_sha256": "ed68fbf01394b89ed4dac788fbfc4e174d4311171f3fdd315367d2f32b4e7f5c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-9f3b1cfe357747148393fd0216e60fd9/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "pick_diverse_bottles",
+        "requested_seed": 3000011994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000011994,
+            "actual_seed": 3000011994,
+            "initial_features_sha256": "a0258e4eb26702c279ea280ec6f998184e9d557f1e3873e9535c46cdcb379cf0",
+            "initial_raw_observation_sha256": "ff109994b5460879c3cf31c47c99d9581b847afc0f834cfbd41b18ac258ab55c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-d1b2bb0cfdca4260bceb22ce728c48da/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000011994,
+            "actual_seed": 3000011994,
+            "initial_features_sha256": "a0258e4eb26702c279ea280ec6f998184e9d557f1e3873e9535c46cdcb379cf0",
+            "initial_raw_observation_sha256": "ff109994b5460879c3cf31c47c99d9581b847afc0f834cfbd41b18ac258ab55c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-29485284b2ad462580c13b6c1cfacc02/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000011994,
+            "actual_seed": 3000011994,
+            "initial_features_sha256": "a0258e4eb26702c279ea280ec6f998184e9d557f1e3873e9535c46cdcb379cf0",
+            "initial_raw_observation_sha256": "ff109994b5460879c3cf31c47c99d9581b847afc0f834cfbd41b18ac258ab55c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-83dc057d05d540b39cc809f88c257a4f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "pick_diverse_bottles",
+        "requested_seed": 3000012991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000012991,
+            "actual_seed": 3000012991,
+            "initial_features_sha256": "cd828980925aaf6dac19592a44e97065e3108f171a07b7ac5875bd6d296f3769",
+            "initial_raw_observation_sha256": "27e258051c3d65e84a1a5e2588c6b749d91e5e5a36e043ed76edb1276bddb35b",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-6f6453887fa44e53b8e551e2c3dee66f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000012991,
+            "actual_seed": 3000012991,
+            "initial_features_sha256": "cd828980925aaf6dac19592a44e97065e3108f171a07b7ac5875bd6d296f3769",
+            "initial_raw_observation_sha256": "27e258051c3d65e84a1a5e2588c6b749d91e5e5a36e043ed76edb1276bddb35b",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f2ab62a8669b4e099fd5a4fb3f883117/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000012991,
+            "actual_seed": 3000012991,
+            "initial_features_sha256": "cd828980925aaf6dac19592a44e97065e3108f171a07b7ac5875bd6d296f3769",
+            "initial_raw_observation_sha256": "27e258051c3d65e84a1a5e2588c6b749d91e5e5a36e043ed76edb1276bddb35b",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a1f982dad6a84fe28767ad174ac980e7/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_a2b_left",
+        "requested_seed": 3000020000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000020000,
+            "actual_seed": 3000020000,
+            "initial_features_sha256": "8493e24efb354ed7a66e27d8bebf16c8af767de960132dda07f4f4447854e7e3",
+            "initial_raw_observation_sha256": "dc8680909c9dc29ebbad99c95b406ac5b291898ed2d4cd13dc5c28ee7c1b063f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-e2844688039f45fcb01db021016489f9/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000020000,
+            "actual_seed": 3000020000,
+            "initial_features_sha256": "8493e24efb354ed7a66e27d8bebf16c8af767de960132dda07f4f4447854e7e3",
+            "initial_raw_observation_sha256": "dc8680909c9dc29ebbad99c95b406ac5b291898ed2d4cd13dc5c28ee7c1b063f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5d8c5fcfb787499095133259d90efd80/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000020000,
+            "actual_seed": 3000020000,
+            "initial_features_sha256": "8493e24efb354ed7a66e27d8bebf16c8af767de960132dda07f4f4447854e7e3",
+            "initial_raw_observation_sha256": "dc8680909c9dc29ebbad99c95b406ac5b291898ed2d4cd13dc5c28ee7c1b063f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-c6e32130737e4f188b35a343dd846f21/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_a2b_left",
+        "requested_seed": 3000020997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000020997,
+            "actual_seed": 3000020997,
+            "initial_features_sha256": "2f4b80540ff7d7ce51ffb4128495fd546e6fc33a695a67b63cd68f8cca3fd87e",
+            "initial_raw_observation_sha256": "cf588baf4e57c0783394aaf73eb2d1af87cc2f78b8e0a13e12de77de4d9cfb03",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-a7ac2a27db1d4cff8fef0f3e8cc672d2/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000020997,
+            "actual_seed": 3000020997,
+            "initial_features_sha256": "2f4b80540ff7d7ce51ffb4128495fd546e6fc33a695a67b63cd68f8cca3fd87e",
+            "initial_raw_observation_sha256": "cf588baf4e57c0783394aaf73eb2d1af87cc2f78b8e0a13e12de77de4d9cfb03",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-d14757128cc444ffaa30b522d73eb385/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000020997,
+            "actual_seed": 3000020997,
+            "initial_features_sha256": "2f4b80540ff7d7ce51ffb4128495fd546e6fc33a695a67b63cd68f8cca3fd87e",
+            "initial_raw_observation_sha256": "cf588baf4e57c0783394aaf73eb2d1af87cc2f78b8e0a13e12de77de4d9cfb03",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-708ac026d0e74b87a5813ed7b8e51f82/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_a2b_left",
+        "requested_seed": 3000021994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000021994,
+            "actual_seed": 3000021994,
+            "initial_features_sha256": "14c591126d6b370447832fb06dee2572884fe1288f38fdc1c1eacb2a769bf11f",
+            "initial_raw_observation_sha256": "c686c8224469343bcc290a26090c2b77b7a18d75262b964c69f0287e50ba8eba",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-980829da0aa64bb68c605f071973508c/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000021994,
+            "actual_seed": 3000021994,
+            "initial_features_sha256": "14c591126d6b370447832fb06dee2572884fe1288f38fdc1c1eacb2a769bf11f",
+            "initial_raw_observation_sha256": "c686c8224469343bcc290a26090c2b77b7a18d75262b964c69f0287e50ba8eba",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-e9ade9bbeb3a467992f5183ea10fb489/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000021994,
+            "actual_seed": 3000021994,
+            "initial_features_sha256": "14c591126d6b370447832fb06dee2572884fe1288f38fdc1c1eacb2a769bf11f",
+            "initial_raw_observation_sha256": "c686c8224469343bcc290a26090c2b77b7a18d75262b964c69f0287e50ba8eba",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a254291a608f4b6e92b189525e735520/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_a2b_left",
+        "requested_seed": 3000022991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000022991,
+            "actual_seed": 3000022991,
+            "initial_features_sha256": "01b7d28157c0b9b4b705ce2d33fc69ba9ec16f4fb539f5b4db470cdc73eb7e06",
+            "initial_raw_observation_sha256": "1a5b0bed9b21b6dfe2b68f5f9231b788509aab74e45a0d9b77048c0802defa0f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-440718f0ace44222b1c47d3d4bb2aefb/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000022991,
+            "actual_seed": 3000022991,
+            "initial_features_sha256": "01b7d28157c0b9b4b705ce2d33fc69ba9ec16f4fb539f5b4db470cdc73eb7e06",
+            "initial_raw_observation_sha256": "1a5b0bed9b21b6dfe2b68f5f9231b788509aab74e45a0d9b77048c0802defa0f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-310f84c87abb4cb2a49b5824bf007d54/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000022991,
+            "actual_seed": 3000022991,
+            "initial_features_sha256": "01b7d28157c0b9b4b705ce2d33fc69ba9ec16f4fb539f5b4db470cdc73eb7e06",
+            "initial_raw_observation_sha256": "1a5b0bed9b21b6dfe2b68f5f9231b788509aab74e45a0d9b77048c0802defa0f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a9d95fc0fa964c5eb95b44e0aa2512bb/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_object_stand",
+        "requested_seed": 3000030000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000030000,
+            "actual_seed": 3000030000,
+            "initial_features_sha256": "ad95b45444679431a304f927381534ff9d99ba2a04899aa80c9b5bda0e82a290",
+            "initial_raw_observation_sha256": "06fdebe98f9d89ad3e8d67a9e8762f954f2a17443624416dcb4777b7da016051",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-c418d25f99934bc591722f801404cc9a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000030000,
+            "actual_seed": 3000030000,
+            "initial_features_sha256": "ad95b45444679431a304f927381534ff9d99ba2a04899aa80c9b5bda0e82a290",
+            "initial_raw_observation_sha256": "06fdebe98f9d89ad3e8d67a9e8762f954f2a17443624416dcb4777b7da016051",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-e1d9a11863a84fff9d95628e5ba6bcab/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000030000,
+            "actual_seed": 3000030000,
+            "initial_features_sha256": "ad95b45444679431a304f927381534ff9d99ba2a04899aa80c9b5bda0e82a290",
+            "initial_raw_observation_sha256": "06fdebe98f9d89ad3e8d67a9e8762f954f2a17443624416dcb4777b7da016051",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-b5f4cad6d54147f982644af2395775e5/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_object_stand",
+        "requested_seed": 3000030997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000030997,
+            "actual_seed": 3000030997,
+            "initial_features_sha256": "fdf198edf41300620d9a98b9df84951df87fec2115c279272e15a1bfc3ff0927",
+            "initial_raw_observation_sha256": "325447c97efc176ae712672009ad24a68440478b920f6eb58b6ff82b5be5e167",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-c19107dc2f714182afa22bb4c828b9ad/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000030997,
+            "actual_seed": 3000030997,
+            "initial_features_sha256": "fdf198edf41300620d9a98b9df84951df87fec2115c279272e15a1bfc3ff0927",
+            "initial_raw_observation_sha256": "325447c97efc176ae712672009ad24a68440478b920f6eb58b6ff82b5be5e167",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-b650177e7c464b21aa14b75e2b7b5015/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000030997,
+            "actual_seed": 3000030997,
+            "initial_features_sha256": "fdf198edf41300620d9a98b9df84951df87fec2115c279272e15a1bfc3ff0927",
+            "initial_raw_observation_sha256": "325447c97efc176ae712672009ad24a68440478b920f6eb58b6ff82b5be5e167",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-94e1fb67ec744951b9d341a290d772e5/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_object_stand",
+        "requested_seed": 3000031994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000031994,
+            "actual_seed": 3000031994,
+            "initial_features_sha256": "1d3538a147883f64c1bca82eecd17f71efa8695514e661d97f452a7e43be86b7",
+            "initial_raw_observation_sha256": "12189ac18f16fe0842f62199565d11777f44935dab069729699a7ad4bba1d369",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-a96e7024ac20401baa6314772af0d8f4/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000031994,
+            "actual_seed": 3000031994,
+            "initial_features_sha256": "1d3538a147883f64c1bca82eecd17f71efa8695514e661d97f452a7e43be86b7",
+            "initial_raw_observation_sha256": "12189ac18f16fe0842f62199565d11777f44935dab069729699a7ad4bba1d369",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-69b60e3f7c6e4e7685bfd055f42c59d2/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000031994,
+            "actual_seed": 3000031994,
+            "initial_features_sha256": "1d3538a147883f64c1bca82eecd17f71efa8695514e661d97f452a7e43be86b7",
+            "initial_raw_observation_sha256": "12189ac18f16fe0842f62199565d11777f44935dab069729699a7ad4bba1d369",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-deda4bcfafad49b5b44af8e02acd95ff/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_object_stand",
+        "requested_seed": 3000032991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000032991,
+            "actual_seed": 3000032991,
+            "initial_features_sha256": "90bb2e45c0da77e1654cfe337547446817719d39a255d1d37be31f1482279106",
+            "initial_raw_observation_sha256": "bbbbcfa13ea9d13703765d4a0001c1e594418021f869612641ba42322bd4f16c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-97908bbc05fb4ce8a6db7e30c233e141/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000032991,
+            "actual_seed": 3000032991,
+            "initial_features_sha256": "90bb2e45c0da77e1654cfe337547446817719d39a255d1d37be31f1482279106",
+            "initial_raw_observation_sha256": "bbbbcfa13ea9d13703765d4a0001c1e594418021f869612641ba42322bd4f16c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-424179c1469d46249743b3056866e6fd/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000032991,
+            "actual_seed": 3000032991,
+            "initial_features_sha256": "90bb2e45c0da77e1654cfe337547446817719d39a255d1d37be31f1482279106",
+            "initial_raw_observation_sha256": "bbbbcfa13ea9d13703765d4a0001c1e594418021f869612641ba42322bd4f16c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-b9224fb031f443e7a21b0d9509a28cf9/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_phone_stand",
+        "requested_seed": 3000040000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000040000,
+            "actual_seed": 3000040000,
+            "initial_features_sha256": "7ac48fa182ae61bb56cbcb2ab65d4a5cf5b6b033143a2ec38c33965381d4d37f",
+            "initial_raw_observation_sha256": "48c0f596313369c17dc7f89c8c16c18934696d50aa1609e5497375ee61611fdb",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-b229ec55df4a4808a025aab6c1e3fa15/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000040000,
+            "actual_seed": 3000040000,
+            "initial_features_sha256": "7ac48fa182ae61bb56cbcb2ab65d4a5cf5b6b033143a2ec38c33965381d4d37f",
+            "initial_raw_observation_sha256": "48c0f596313369c17dc7f89c8c16c18934696d50aa1609e5497375ee61611fdb",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-8d189d429e0442b9888f0df0f7dba7ad/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000040000,
+            "actual_seed": 3000040000,
+            "initial_features_sha256": "7ac48fa182ae61bb56cbcb2ab65d4a5cf5b6b033143a2ec38c33965381d4d37f",
+            "initial_raw_observation_sha256": "48c0f596313369c17dc7f89c8c16c18934696d50aa1609e5497375ee61611fdb",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-13e2e92431494412a17dbf224a16163e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_phone_stand",
+        "requested_seed": 3000040997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000040997,
+            "actual_seed": 3000040997,
+            "initial_features_sha256": "fd2ae095af4f8fa49832c9f310c85caa851c7519df18cfc5eb5980e77b114bac",
+            "initial_raw_observation_sha256": "a56d5c93dbd290f80279b1e6de9778fef4832942e6f26e220e21e5af575a8d49",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-1fe6596b84b444b5b2eb428aa601ab5f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000040997,
+            "actual_seed": 3000040997,
+            "initial_features_sha256": "fd2ae095af4f8fa49832c9f310c85caa851c7519df18cfc5eb5980e77b114bac",
+            "initial_raw_observation_sha256": "a56d5c93dbd290f80279b1e6de9778fef4832942e6f26e220e21e5af575a8d49",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-9bf4e6e098e8439790467b554a472b6a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000040997,
+            "actual_seed": 3000040997,
+            "initial_features_sha256": "fd2ae095af4f8fa49832c9f310c85caa851c7519df18cfc5eb5980e77b114bac",
+            "initial_raw_observation_sha256": "a56d5c93dbd290f80279b1e6de9778fef4832942e6f26e220e21e5af575a8d49",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-885b02c5d1a740e38c8fd253ecf5fd80/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_phone_stand",
+        "requested_seed": 3000041994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000041994,
+            "actual_seed": 3000041994,
+            "initial_features_sha256": "8e01eb48987215bdbb779bfb2c9908aadb7e6ceb0112d2b4e664d97424a02746",
+            "initial_raw_observation_sha256": "b12ac677a2fb3d01a17f77a47e22b0e97164ce614accb2dab04388ca4e56c26a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-06152e03748a49989ccd33065216675b/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000041994,
+            "actual_seed": 3000041994,
+            "initial_features_sha256": "8e01eb48987215bdbb779bfb2c9908aadb7e6ceb0112d2b4e664d97424a02746",
+            "initial_raw_observation_sha256": "b12ac677a2fb3d01a17f77a47e22b0e97164ce614accb2dab04388ca4e56c26a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-ef7b7a8d43554817b95a742a94654832/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000041994,
+            "actual_seed": 3000041994,
+            "initial_features_sha256": "8e01eb48987215bdbb779bfb2c9908aadb7e6ceb0112d2b4e664d97424a02746",
+            "initial_raw_observation_sha256": "b12ac677a2fb3d01a17f77a47e22b0e97164ce614accb2dab04388ca4e56c26a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-9aefa87d458e4f6c889460a2b83f7047/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "place_phone_stand",
+        "requested_seed": 3000042991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000042991,
+            "actual_seed": 3000042991,
+            "initial_features_sha256": "76903564326f7fdfe7f15b9ed6ae2da06947e0d560995f2790f3b309ed8b30df",
+            "initial_raw_observation_sha256": "5252319d51552fbde570ab72110ba28eded78e69d7ef28f45d92438763b9ec7d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-48ffac7cfbe540f1a501bb7abe46e764/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000042991,
+            "actual_seed": 3000042991,
+            "initial_features_sha256": "76903564326f7fdfe7f15b9ed6ae2da06947e0d560995f2790f3b309ed8b30df",
+            "initial_raw_observation_sha256": "5252319d51552fbde570ab72110ba28eded78e69d7ef28f45d92438763b9ec7d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-ac5d0eec14214c35a6e8dd354b9fdfb8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000042991,
+            "actual_seed": 3000042991,
+            "initial_features_sha256": "76903564326f7fdfe7f15b9ed6ae2da06947e0d560995f2790f3b309ed8b30df",
+            "initial_raw_observation_sha256": "5252319d51552fbde570ab72110ba28eded78e69d7ef28f45d92438763b9ec7d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-1362b4ddf0384bf4a68b3d3e2cde4d8b/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "scan_object",
+        "requested_seed": 3000050000,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000050000,
+            "actual_seed": 3000050000,
+            "initial_features_sha256": "8608c4a26f623df517ba49ce9b13c76d42151e8a2acc1d7f4b4644970f600fd5",
+            "initial_raw_observation_sha256": "98a10c7e7efc896871767562fee66767ee47607ded057eaebcd071e27e08e642",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-52340d057c6544238f78ea8db3d30591/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000050000,
+            "actual_seed": 3000050000,
+            "initial_features_sha256": "8608c4a26f623df517ba49ce9b13c76d42151e8a2acc1d7f4b4644970f600fd5",
+            "initial_raw_observation_sha256": "98a10c7e7efc896871767562fee66767ee47607ded057eaebcd071e27e08e642",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5a99dad44eed4fffa4fe0d980af82b2a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000050000,
+            "actual_seed": 3000050000,
+            "initial_features_sha256": "8608c4a26f623df517ba49ce9b13c76d42151e8a2acc1d7f4b4644970f600fd5",
+            "initial_raw_observation_sha256": "98a10c7e7efc896871767562fee66767ee47607ded057eaebcd071e27e08e642",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-2c24a8134d724fc291c70382dd2c3a80/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "scan_object",
+        "requested_seed": 3000050997,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000050997,
+            "actual_seed": 3000050997,
+            "initial_features_sha256": "103f17556559678ba08b1620e8252b3bb49790f1264f883edbb943239d02c611",
+            "initial_raw_observation_sha256": "f2b449e98a7b4c2d9dfb41cb984cf8a5181dc7731e7c37d3a73b2514e06b4f61",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-30cee2c01e564f07b3bc927208a2f65e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000050997,
+            "actual_seed": 3000050997,
+            "initial_features_sha256": "103f17556559678ba08b1620e8252b3bb49790f1264f883edbb943239d02c611",
+            "initial_raw_observation_sha256": "f2b449e98a7b4c2d9dfb41cb984cf8a5181dc7731e7c37d3a73b2514e06b4f61",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-4db17119ae3c4c49b1858de61c17f8b1/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000050997,
+            "actual_seed": 3000050997,
+            "initial_features_sha256": "103f17556559678ba08b1620e8252b3bb49790f1264f883edbb943239d02c611",
+            "initial_raw_observation_sha256": "f2b449e98a7b4c2d9dfb41cb984cf8a5181dc7731e7c37d3a73b2514e06b4f61",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-1aa266f0b2ec46b1a448f9639d44ae3d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "scan_object",
+        "requested_seed": 3000051994,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000051994,
+            "actual_seed": 3000051994,
+            "initial_features_sha256": "ab79b4aeb052065d06afeaa97261eab30b733d3c05fa6b8d600b72bec1f77b69",
+            "initial_raw_observation_sha256": "ff224abdc320a09380dd6f48b75ec15a4e8276db5d8268c6debbf0cb6c9684df",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-233b6bf20815477b8484beedf2ca41f3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000051994,
+            "actual_seed": 3000051994,
+            "initial_features_sha256": "ab79b4aeb052065d06afeaa97261eab30b733d3c05fa6b8d600b72bec1f77b69",
+            "initial_raw_observation_sha256": "ff224abdc320a09380dd6f48b75ec15a4e8276db5d8268c6debbf0cb6c9684df",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-dbc10d67809346a1b48de012414ebb7d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000051994,
+            "actual_seed": 3000051994,
+            "initial_features_sha256": "ab79b4aeb052065d06afeaa97261eab30b733d3c05fa6b8d600b72bec1f77b69",
+            "initial_raw_observation_sha256": "ff224abdc320a09380dd6f48b75ec15a4e8276db5d8268c6debbf0cb6c9684df",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-edfbffd98fea42bebe967053b06c079e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "source_validation",
+        "task": "scan_object",
+        "requested_seed": 3000052991,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 3000052991,
+            "actual_seed": 3000052991,
+            "initial_features_sha256": "74c9238836ad77d67711d7d477f1f216bf81becf66fe82da342faa23db69fffe",
+            "initial_raw_observation_sha256": "497824c4151623a981a5c1bc7f70e85d07cbb1590fb8fd9aa18783f59bf7c07e",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-948a35f771454eeab776642d1ef2519e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 3000052991,
+            "actual_seed": 3000052991,
+            "initial_features_sha256": "74c9238836ad77d67711d7d477f1f216bf81becf66fe82da342faa23db69fffe",
+            "initial_raw_observation_sha256": "497824c4151623a981a5c1bc7f70e85d07cbb1590fb8fd9aa18783f59bf7c07e",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-50784ee745c943c39048109762f7ff57/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          },
+          {
+            "arm": "sac",
+            "condition": "sac",
+            "requested_seed": 3000052991,
+            "actual_seed": 3000052991,
+            "initial_features_sha256": "74c9238836ad77d67711d7d477f1f216bf81becf66fe82da342faa23db69fffe",
+            "initial_raw_observation_sha256": "497824c4151623a981a5c1bc7f70e85d07cbb1590fb8fd9aa18783f59bf7c07e",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-14a1206fb18744d3a1e84bc222127590/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 500
+          }
+        ],
+        "expected_conditions": 3,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22261030,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-1cfc00ae85d64dd3a68e76a8c2ba88d3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5da9195a2af346298169651c6c290706/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-d02885a1291c48dba93027da8fe0b083/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-de544a23925b499cb0468d73f63a0969/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a2417fb09d01471b811a4ce07413a75c/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236",
+            "initial_raw_observation_sha256": "3c9cc2fe2090de8a1ccd7316b05e25521a417d46a75e00b749a0b6846ed86ffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f2bd5ac1e8994907aebc0ebb0900a65d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22262027,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-2b31bf2c41494e32ad7f15b7724aba3d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-bfc86599fcca41c394e72cd9ee988443/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-c912de9f3d434068b42d01a71bc2b631/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-c9c4a0e470734d218cb2788710112bac/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-44cef3ec479a409c8c55b841fdf0e27f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d",
+            "initial_raw_observation_sha256": "80cd08ec8addeb382ed09c4d12fca2e3983d611d3d564b2571ccdb13098987a2",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5481c155a26a493089ba4863b85bea03/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22263024,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5e0e08754dab403794a881425044fbdf/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-91941eb79d0448f987b1896502f0387d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-ea56c46c918445c7a9088f4723b7c5d4/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5887d1c534124cbfab22de3e870a7c44/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-93d6c5a00080447cac27c50969bf6ac8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc",
+            "initial_raw_observation_sha256": "554bfc6875ba105fd1b87a4b314f75cf07eeedd0bff621d8048daa648df4cffc",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-d27f87755ddf42088bb3337072ec817d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22264021,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-310d19bb6ab94cc4a2e739695e844b06/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-33fbde577d5c414c93c897f7e1bd1a80/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-8f80292a61c948e98845f7afa15218d3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5a68a81a7eaf4540abe267b323a3dd4a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-147b854377c5479b9cab6ceb6a7d454f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19",
+            "initial_raw_observation_sha256": "694bb559ad517f89f60133bc2c335ba6a2af942bdcf603ec09dff5df793d6a81",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-b16a477548d04d92961f65f1341a23d8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22265018,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-63b75ebcff8c42b582860073df23f330/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-e91adf169d874a4da761062031409c0a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-f7d34742954e4980a204e02893b0387c/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-329576d033a44ab281250404de48fe68/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-7dad320958c74cce863015ec414a57f5/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22265018,
+            "actual_seed": 22265019,
+            "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+            "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f48c5ec81ce847fe8e4ea64805dd8638/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22266015,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-28e281bd8e6c4547bf5525b3308224a8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-785c1f15d8ca4ad59ae125f7577db93a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-d185ec09a7904fa2b3628880224c71ad/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-7650b23b4e7a4739873bd413b5f0c4f1/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-08753c4897b4425ba39edafd06378de0/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0",
+            "initial_raw_observation_sha256": "0c099ce7fbe4f185a4731c164c9c5535ceac59c0316f7016be4eda92a7e2af96",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-191d11d4709847a181f00b0ba482b2e3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22267012,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-3bd0bc58eb994fb6abdf48457b754b5a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-58d188d288e040b2bd7fd414c9d829a6/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5a570ba50ca141b685625a2682aab7ef/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-0ed46b9b5684438487249228a150f38f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-449776e288af4e48b85588922e66835d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d",
+            "initial_raw_observation_sha256": "240e0c3f9d6df935fbd848a999947dc554be2be550e5dfbb801c4f58188539e7",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-4993708ae7d44a62947501f0b892a94f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "adjust_bottle",
+        "requested_seed": 22268009,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-6273e0bc0e864c6d91c4f316b246c451/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-7a34b508eb2346628e8e3e34c42aef12/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-f2887ee78109497482b7724aa30816bc/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-0a349d3ee72745cca6bad8b1a8e5d568/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-33e8066c54be469cb7635ed47e0ab2c3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5",
+            "initial_raw_observation_sha256": "295a5e848a4756005a4eb789bb2dd5c22d07711796a0ce31fc12234f1b825b94",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-672ef070b4124a5cbcbc09300b0fe0f6/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22261030,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-1673737b213241508aec46e0a062a15b/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-af59d7ec99594405a3f783fdaab8d85a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-d8a402513afc4e53b9496dc9d9d4977c/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-ce5f7fe2bea8498884b3457b7be49afe/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-af4698bd6dca4eb99ba231ebe3e43532/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22261030,
+            "actual_seed": 22261030,
+            "initial_features_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b",
+            "initial_raw_observation_sha256": "da87dc2d5295214588a90441440932647f342ce1989fd20d888824e2d602a113",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f19ee5f9247a4a0d986786e88a2c44c5/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22262027,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-16fb8004e78f41009b36f066dab6003d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-2933e398037745758ce0f98815083a8b/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-98b9d30f98fb44ec9a083ec7c00c8276/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-680e3ae5c208456c9c4738ae5e4d76e8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5ec9ade5500147119e2d294d2cb9b167/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22262027,
+            "actual_seed": 22262027,
+            "initial_features_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466",
+            "initial_raw_observation_sha256": "f51007e348777555c86287cdf06efaf550b1ff8ebb050287bbc3ede27c5efc46",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f4070e066d86407ca0dd0f8efb17c7e2/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22263024,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-14d4a76277db43b39417f1d3a231e599/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-35ec65495ccb4afcbe5fb9d2f8688089/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-6ff6ec75e7c8498fb6c31548f6c2f774/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-6e25b3244eae41e499736a8099d52e16/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-159b000db3b940dfb04278b77f6eea18/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22263024,
+            "actual_seed": 22263024,
+            "initial_features_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925",
+            "initial_raw_observation_sha256": "0ecb2de2a26d989dbab4af11051e787f2c302890000f3c7b331fcc17ab0ef90d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-91dafbc8a7bd4cdfa25b691c0f761cc0/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22264021,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-21d57c26a8404e34a98d4ac6be10c84e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5b48844acc114d22aa20a1a3e7a52c57/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5c6f3ba010fc4720993199fc015af3c9/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-0fb3aadb42ff4b31afd77ff61cea8ea3/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-1ec008e546de4de4977375ecf0442f00/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22264021,
+            "actual_seed": 22264021,
+            "initial_features_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156",
+            "initial_raw_observation_sha256": "09b350da7e78a85797f1d183d3a41bb9d30d9e32897b246006fd2a631d62032d",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-cde4ab3419bd40bebc06543f7992eae8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22265018,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-28b69f83a2eb4cc6bd47239a449355a9/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-5f6f54816e5745a7ad79b15ca2655242/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-b6fc4d84c12842c58ac586a6775156eb/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-57d81302449c4408816efa2c297f45d1/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-5a0d7585e15641e797015aec42b0a60e/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22265018,
+            "actual_seed": 22265018,
+            "initial_features_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf",
+            "initial_raw_observation_sha256": "6820b4b3642f29b1f8c09f73bfa3ed0fdbff3e9144df4a9a785cef5601513c5f",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-9f8561598d6946e49ca88fe8ae91c597/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22266015,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-4bc04402dc0a44babe909a06d2f6e7b7/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-61ff31ffb09a41bb92ade3125eaeebce/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-6f758f40410a4f47b487322ce6ad5918/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f26441ccd5314328b8bad7b23c2e09b8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-7ce0ad79b3dd45e1b90c01e1fe3f70af/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22266015,
+            "actual_seed": 22266015,
+            "initial_features_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5",
+            "initial_raw_observation_sha256": "00e0a23cb003395e297515f72b77331ed180c3469a9f1be294721726068aee7c",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a58f929c45884f3f9a516a36f42a3c66/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22267012,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-385d4b30b7774fb7b36d1830b2245692/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-38ed5078d23d455baed219f710f683d1/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-89b6778e66ba432b8003b6fb0a218326/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-2d9aadaf4ac64d50b04130c7d3811086/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-70b573ccadb941459fe908eaef57dbb7/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22267012,
+            "actual_seed": 22267012,
+            "initial_features_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1",
+            "initial_raw_observation_sha256": "9cd5aedc6ac978304e48c94e3f438e86a0485da65718df63632ba68685ba19c9",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a12bb39b39ca4c0e8cc73cb55371878f/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      },
+      {
+        "phase": "target",
+        "task": "move_stapler_pad",
+        "requested_seed": 22268009,
+        "observations": [
+          {
+            "arm": "ppo",
+            "condition": "ppo:memory_reset",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-56e8823300334bc1ae52b4643b428926/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:normal",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-97a9bad7c331481c87e803cc1bb0fce8/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo",
+            "condition": "ppo:reward_blind",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-e30e3ac981c042a89f80b693a1d988eb/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "ppo_reset",
+            "condition": "ppo_reset:normal",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-3c1a201075444d7ca437f1a2ca83f18d/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_frozen",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-8a3d90804bfb4f69b7ef150da9f442ec/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          },
+          {
+            "arm": "sac",
+            "condition": "sac_online",
+            "requested_seed": 22268009,
+            "actual_seed": 22268009,
+            "initial_features_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b",
+            "initial_raw_observation_sha256": "c0589b4c49ff18dbdc87d1fe1086b87c21aa8af7e3376bb7bca60256a34a8d1a",
+            "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-940dbd9d628945f58e682fba4647c39a/reset.json",
+            "reset_policy_actions": 0,
+            "episode_limit": 400
+          }
+        ],
+        "expected_conditions": 6,
+        "matches": {
+          "actual_seed": true,
+          "initial_features_sha256": true,
+          "initial_raw_observation_sha256": true,
+          "episode_limit": true
+        }
+      }
+    ],
+    "consistent_reset_seed_advances": [
+      {
+        "arm": "ppo",
+        "condition": "ppo:reward_blind",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-63b75ebcff8c42b582860073df23f330/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      },
+      {
+        "arm": "ppo",
+        "condition": "ppo:normal",
+        "requested_seed": 3000010000,
+        "actual_seed": 3000010001,
+        "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+        "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-ce647c731831402bbbd1bd155188def7/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "pick_diverse_bottles",
+        "phase": "source_validation"
+      },
+      {
+        "arm": "ppo",
+        "condition": "ppo:memory_reset",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-e91adf169d874a4da761062031409c0a/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      },
+      {
+        "arm": "ppo",
+        "condition": "ppo:normal",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus/episodes/episode-f7d34742954e4980a204e02893b0387c/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      },
+      {
+        "arm": "ppo_reset",
+        "condition": "ppo_reset:normal",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-329576d033a44ab281250404de48fe68/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      },
+      {
+        "arm": "ppo_reset",
+        "condition": "ppo_reset:normal",
+        "requested_seed": 3000010000,
+        "actual_seed": 3000010001,
+        "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+        "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/corpus/episodes/episode-aa8a627000fa4276b72bab9bb30ace3e/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "pick_diverse_bottles",
+        "phase": "source_validation"
+      },
+      {
+        "arm": "sac",
+        "condition": "sac",
+        "requested_seed": 3000010000,
+        "actual_seed": 3000010001,
+        "initial_features_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935",
+        "initial_raw_observation_sha256": "b90ff21b55a8e62ecc59a8aed9e54910fab0ebe394b38edf4f57560aaefc4170",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-38eff2a294584f24941c3f885e3b7cf7/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "pick_diverse_bottles",
+        "phase": "source_validation"
+      },
+      {
+        "arm": "sac",
+        "condition": "sac_online",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-7dad320958c74cce863015ec414a57f5/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      },
+      {
+        "arm": "sac",
+        "condition": "sac_frozen",
+        "requested_seed": 22265018,
+        "actual_seed": 22265019,
+        "initial_features_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc",
+        "initial_raw_observation_sha256": "d552be544d4b5f804aa2be248e58bb9cc90b77883b35a1d3d4921616900a0438",
+        "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f48c5ec81ce847fe8e4ea64805dd8638/reset.json",
+        "reset_policy_actions": 0,
+        "episode_limit": 400,
+        "task": "adjust_bottle",
+        "phase": "target"
+      }
+    ]
+  },
+  "limitations": [
+    "Two predeclared development tasks with one K8 trial per condition; no replicated adaptation/generalization conclusion.",
+    "PPO normal/memory-reset/reward-blind share the same source checkpoint; trained-reset is a separately trained controller. All have7/8 bottle and0/8 stapler here.",
+    "SAC online target clone SGD is additional target adaptation cost, not a source update or progress toward source100-round quota.",
+    "The initial seeds/features/raw observations are paired; resulting trajectories differ by policy and recurrent/online learning history.",
+    "PPO source50 updates/250 optimizer steps and SAC source314500 updates/943500 total optimizer steps are different algorithmic counters, not directly comparable iterations.",
+    "Saved stage completion/RNG restoration and unchanged source counters were checked from JSON; this narrow audit did not reconstruct every historical gradient or reopen ledgers."
+  ]
+}

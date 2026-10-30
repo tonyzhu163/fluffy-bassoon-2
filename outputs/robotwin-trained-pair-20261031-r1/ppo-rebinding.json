@@ -1,0 +1,103 @@
+{
+  "schema": "robotwin_executor_handoff_rebinding_v1",
+  "created_at_utc": "2026-10-30T17:00:15.040504+00:00",
+  "hostname": "job-zgdkrn0qqueh-master-0",
+  "method": "ppo",
+  "artifact": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-rebind-20261031-r1/outputs/robotwin-trained-pair-20261031-r1/rebind.py",
+    "sha256": "a6adb729617a82d9c9bf70106c5cb3025cb1628c45efe8c1dacd877f151ef9e9"
+  },
+  "artifact_commit": "669b1840ef4894aef7609400dae180e5ff7729a9",
+  "qualified_runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "predecessor_manifest": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/continuation-manifest.json",
+    "sha256": "9cf6ad12b2cd3e5d5243239985fa5077e5e9c97f0700bac060bc7332a13f2d8b"
+  },
+  "admitted_manifest": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r1/ppo-570-handoff.json",
+    "sha256": "1a5090125ce6f872a2f57fbe1d2b13bd36ef42ef2bd46d42d86942d9eafe94ab"
+  },
+  "predecessor_execution_source_commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+  "admitted_execution_source_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "lineage_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "original_parent": {
+    "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+    "sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
+  },
+  "owner_boundary_audit": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/control/owner-handoff-1793379063844674710.json",
+    "sha256": "649484f61465a4e9813f290412456087bdce1b4ede33a85274e0c2181aec21bf"
+  },
+  "unchanged_checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/coordinator-recovery.pt",
+    "sha256": "eb20e72aac275c06a3b783c3369c79b9a2ae1452fb8a1115428439ee833aaa08"
+  },
+  "only_existing_field_changed": "execution_source_commit",
+  "all_other_existing_fields_and_artifact_refs_equal": true,
+  "original_loader_validation_passed": true,
+  "admitted_loader_validation_passed": true,
+  "qualified_trained_boundary": {
+    "schema": "robotwin_trained_parallel_boundary_v1",
+    "method": "ppo",
+    "predecessor_manifest_sha256": "9cf6ad12b2cd3e5d5243239985fa5077e5e9c97f0700bac060bc7332a13f2d8b",
+    "source_steps": 499022,
+    "completed_source_trials": 312,
+    "completed_source_iterations": 52,
+    "optimizer_steps": 260,
+    "campaign_journal_fence": {
+      "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+      "journal_events": 37373,
+      "journal_sha256": "0f6a88cd7e7939d831f2498b1545f276d00bc570fa42eec23b3b759b69f38f88",
+      "charged_actions": 576774,
+      "decision_count": 18679
+    },
+    "identity_digests": {
+      "learner": "c8f74fb4e1cdb0b9fda938a0a7c5b527f68d214c40339103c69c5700eaf4085f",
+      "policy": "1e783080b72c37aaafe5c14268175c2ff84adb9e840fbecfdb13d78a94a7229b",
+      "optimizer": "2c32122dfbe5d490e7525784746f6daeeb9f70bfca4deefc35bdf7c776569496",
+      "sampler": "21aa23c69c960b5fb17b13e7dd1e349a489a9878f458ca66dd64a9093529f468",
+      "learner_rng": "00b41eb3e782438fbc80e516bf846daa09be35ce9edcb1440ac45a23b5f13c9d",
+      "global_rng": "00b41eb3e782438fbc80e516bf846daa09be35ce9edcb1440ac45a23b5f13c9d",
+      "schedule": "e4846f37654cfcccaacbcd1be90e03c85142be8e5901b4314501eb518f6cfa0c",
+      "task_steps": "27ac606cee3eb5e3329d31940230b3e23789af3ff75306f0d241c8a151540520"
+    }
+  },
+  "corpus_chain_reader_commit": "c62be99615e797fbec108e1f1b5e232e4a591494",
+  "old_corpus_roots": [
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo-20261030-r2/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0002/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0003/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0004/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0005/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0006/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0007/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0008/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0009/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0010/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0011/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/corpus"
+  ],
+  "new_corpus_roots": [
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo-20261030-r2/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0002/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0003/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0004/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0005/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0006/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0007/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0008/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0009/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0010/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0011/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/corpus"
+  ],
+  "source_actions_added": 0,
+  "scientific_contract_changed": false,
+  "canonical_ledger_modified": false,
+  "canonical_ledger_snapshot_sha256": "940e5167e79aa90c26ce8754a7647d6e853c5ee977e43647eaf054bbdc922ef3",
+  "permission_to_start_new_writer": false
+}

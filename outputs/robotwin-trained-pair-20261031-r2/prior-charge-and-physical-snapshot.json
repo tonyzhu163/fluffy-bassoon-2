@@ -1,0 +1,40 @@
+{
+  "schema": "robotwin_trained_pair_actual_charges_snapshot_v1",
+  "owner_release": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r2/owner-release.json",
+    "sha256": "a181f5c4090260bc2059b4b47aedaf536dd25fbd939b13b714e2c8802e0b11ac"
+  },
+  "known_terminal_gpu_seconds_including_predecessor_pair": 75769,
+  "full_cumulative_gpu_seconds": null,
+  "unknowns": "Historicaloptimization630GPU-sreportednotindependentlytimedhere;activeSACcontinuationnotterminalcharged.",
+  "original_source_goal_rounds": 100,
+  "methods": {
+    "ppo": {
+      "source_rounds": 53,
+      "source_actions": 508540,
+      "canonical_head": {
+        "journal_events": 37990,
+        "journal_sha256": "a7b972cb91355a0eec7575a90285494d3e8062c19195fbe686473aff63f395b9",
+        "charged_actions": 586292,
+        "decision_count": 18987
+      },
+      "remaining_total_actions": 640108,
+      "remaining_source_safety_actions": 591460
+    },
+    "ppo_reset": {
+      "source_rounds": 55,
+      "source_actions": 525625,
+      "canonical_head": {
+        "journal_events": 36859,
+        "journal_sha256": "11024c11d96735b6374a28a2fd6f6be86a3585640431c847c94334d6df459e8d",
+        "charged_actions": 569012,
+        "decision_count": 18421
+      },
+      "remaining_total_actions": 599788,
+      "remaining_source_safety_actions": 574375
+    }
+  },
+  "separate_active_sac_allocation": "job-gv77bzhyeroo",
+  "prior_unused_operational_seconds_sealed": 2250,
+  "no_prior_capacity_reused": true
+}

@@ -1,0 +1,44 @@
+{
+  "status": "sample_schema_passed",
+  "completed_at_utc": "2026-10-30T16:51:16.098626+00:00",
+  "elapsed_seconds": 3.6192902852781117,
+  "control_source_sha256": "67db52fa8f6fa4e8bb56bc6e5cea9f531b5fe41716845350f3372226c5de77a0",
+  "manifest_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+    "sha256": "4753fbd72963a09068d6f1f78220d10d0990e8daef610ebe634bee23b1130d31"
+  },
+  "canonical_ancestry_passed": true,
+  "selected_episode_inventory": {
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-sac-20261030-r2/experiment/corpus/episodes": "episode-6306665914794a1083a68e81a992c237",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/corpus/episodes": "episode-dfa846c1523e46b29b5d12c09035041a"
+  },
+  "expected_sample_source_actions": 839,
+  "sampled_raw_action_counts": {
+    "source/sac": 839
+  },
+  "raw_receipt": {
+    "corpus_roots": [
+      "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-sac-20261030-r2/experiment/corpus",
+      "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/corpus"
+    ],
+    "episode_manifests": 2,
+    "completed_chunks": 27,
+    "raw_json_and_reference_digest": "7636b060c8e9145927d8ad8bf1fef627b4333679724077ad3cdab91407cb3216",
+    "referenced_artifact_count": 83,
+    "unique_nonzero_source_episodes": 2,
+    "source_episode_keys_unique": true,
+    "raw_json_index_hashes_verified": true,
+    "referenced_artifacts_present": true,
+    "array_headers_verified": true,
+    "native_valid_action_masks_verified": true,
+    "full_blob_hash_audit": false
+  },
+  "immutable_ledger_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/continuation-ledger.json",
+    "sha256": "b1e5b0e31026d28ce9630491e104512b4962c1f3d2ea6b06b005da168a121733"
+  },
+  "immutable_ledger_source_actions": 411497,
+  "full_inventory_count_audit_completed": false,
+  "no_model_module_imported": true,
+  "scope": "The actual unmodified raw_action_counts body was invoked with a Path subclass restricting ONLY episode manifest/reset inventory globs to one closed original prefix episode and one closed resumed episode. All chunk inventories, references, NPZ headers, masks, frame-sidecars and closure checks ran normally for those episodes. This verifies actual schema compatibility, not whole-corpus counts. No ledger constructors, live ledger, model/test/CUDA, signals, Git or remote writes."
+}
