@@ -55,8 +55,14 @@ analysis and next discriminating tests: [experiment summary](../frozen-vla-steer
 RoboTwin uses six source goals and six controller-held-out goals, with a
 1024D independent-noise interface versus LIBERO's32D tied noise. Its three
 source collectors resumed after native simulator reset failures, preserving
-replay/optimizer/RNG state; first student fitting/comparison proceeds alongside
-collection. This is owner-reported and has separate benchmark costs. Future
+replay/optimizer/RNG state. Both PPO arms now completed100 rounds and roughly
+1M source actions each. FULL and trainedRESET score8/16 on the two-goal
+development panel; cache-reset7/16,rewardblind9/16. A saved native panel is
+verified on the same16 cases/underlying motor contract and scores6/16, with
+different execution dates and noise draws. No reliable memory or broad
+robot-performance improvement is established. SourceSAC remains running;
+its final result and larger student fits are not complete. Benchmark costs
+are separate from LIBERO. Future
 collection should overlap initial fitting/evaluation after a bounded smoke,
 rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
 
@@ -461,9 +467,29 @@ with25-round block totals112→106→102→101 /600: no useful upward source
 learning trend. Nonzero finite updates and very small approximate joint KL
 are verified; the cause of weak learning is unresolved. This baseline keeps
 within-episode recurrence and clears cross-episode feedback/cache. It cannot
-establish memory benefit. Prior native cases use a different seed bank;
-full-memory and SAC final comparisons remain pending. This is a two-goal
+establish memory benefit. Source-stage native probes use a different seed bank;
+the final full-memory comparison is reported below; SAC remains pending. This is a two-goal
 development panel, not the full benchmark. Target novelty alone cannot
 explain weak source training; whether more data or a different optimization
 or steering interface helps remains unresolved.
 [Diagnosis](../../outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
+
+RoboTwin fixed100 comparison (bottle/stapler): FULL7/8,1/8;
+same-weight cache reset6/8,1/8; rewardblind8/8,1/8;
+separately trained episode-reset8/8,0/8. FULL and trainedRESET both total8/16;
+neither establishes a memory or reward-feedback advantage. Cache reset keeps
+direct previous-noise/reward feedback, whereas trainedRESET clears it.
+FULL also trains weakly:416/2400successes, quarter totals116→104→93→103 /600,
+sourceVAL2/24;964875source actions/31211valid decisions/500Adam steps.
+The source-learning deficit precedes target transfer. Exact optimizer or
+interface causes remain unresolved, and sourceSAC is still pending.
+[FULL diagnosis](../../outputs/robotwin-ppo100-diagnosis-20261031-r1/ANALYSIS.md).
+
+The earlier qualified native16 panel scores6/8bottle,0/8stapler and is now
+verified against all64 learned case records by actual seeds/raw inputs/
+features plus the shared frozen-motor and normalization/action contracts.
+This is a cross-run matched-case control, not a contemporaneous randomized
+replication or shared-noise experiment. It supplies a descriptive native
+reference without new rollouts; the modest two/three-case gains do not
+establish a robust steering or memory advantage.
+[Reconciliation](../../outputs/robotwin-trained-continuation-20261031-r1/NATIVE16-REUSE.md).

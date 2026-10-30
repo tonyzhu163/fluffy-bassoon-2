@@ -385,8 +385,8 @@ rounds/600K4 trials/2400 training episodes,963759 source actions and500 Adam
 steps. The owned terminal audit passes, all four10/25/50/100 stages complete,
 and the frozen Motus pi0.5 motor hash is unchanged. Final heldout development
 results are8/8 on adjust_bottle and0/8 on move_stapler_pad; six-source-goal
-validation is3/24. This is the RESET endpoint only; full-memory and SAC
-final comparisons are unfinished.
+validation is3/24. This section covers RESET; FULL is reported below and
+the sourceSAC final comparison remains unfinished.
 
 Training success is421/2400 (17.54%), with successive25-round blocks
 112,106,102,101 /600: no useful upward trend. All100 update records and
@@ -400,8 +400,9 @@ parameterization as its cause.
 The controller preserves within-episode recurrence but clears cache and
 previous noise/reward each episode. Its8/8 score is not cross-episode
 adaptation evidence. Eight scenes on each of two goals are not a full
-benchmark. Prior native rows have different seeds; no paired native
-improvement or memory benefit is claimed. Canonical reported resource
+benchmark. Its source-stage before/after native probes use different seeds;
+the separate matched historical reference is reconciled below. No reliable
+native improvement or memory benefit is claimed. Canonical reported resource
 charge1021785 comprises source963759, source validation39434 and target
 18592, with no pending or uncertain actions. These are action costs, not
 additional optimizer exposure.
@@ -413,3 +414,75 @@ Summary SHA256:
 `8f5d5e2e9377df90fa955049e4464abf7ba58daa2977046902917b0132d1ff60`.
 Final coordinator recovery SHA256:
 `48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49`.
+
+## RoboTwin FULL PPO100 and frozen interventions
+
+The shared PPO pair exits0. FULL completes100updates/600K4/2400source
+episodes/964875source actions/31211valid chunk decisions/500Adam steps.
+Its source success416/2400 is weak and flat (quarter totals116,104,93,103
+per600), similar to trainedRESET421/2400. FULL source validation2/24 and
+RESET3/24 are coarse seen-goal/state panels.
+
+| Fixed100 condition | adjust_bottle | move_stapler_pad | Total |
+| --- | ---: | ---: | ---: |
+| Earlier native Gaussian, matched cases |6/8|0/8|6/16|
+| FULL normal |7/8|1/8|8/16|
+| Same FULL weights, cache reset |6/8|1/8|7/16|
+| Same FULL weights, reward input zeroed |8/8|1/8|9/16|
+| Separately trained episode reset |8/8|0/8|8/16|
+
+Controller and motor parameters remain frozen during these queries. Cache
+reset retains explicit previous-noise/reward feedback; trainedRESET clears
+both feedback and cache while preserving within-episode recurrence. The
+different controls should not be called memoryless policies. No reliable
+memory/reward-use or broad benchmark advantage follows from this panel.
+Normal/cache-reset stapler wins occur on different scenes. The source-stage
+native probes are a separate seed bank, distinct from the matched historical
+native row above.
+
+The read-only metadata diagnosis verifies all100 updates/2400episodes and
+finite optimizer metrics; FULL approximate joint KL averages0.000226. The
+cause of weak source learning is unresolved; logs do not isolate sample
+budget, LR/clipping, task interference or the noise parameterization.
+[FULL training diagnosis](../../../outputs/robotwin-ppo100-diagnosis-20261031-r1/ANALYSIS.md),
+[RESET independent endpoint](../../../outputs/robotwin-reset100-independent-20261031-r1/RESULT.md).
+
+Independent FULL byte checks match all11 references among32 saved metadata/
+checkpoint files. All64 evaluation groups/304episodes are complete; learned
+groups are not budget-truncated. At100, requested/resolved seeds and raw
+input descriptors match all16 target cases across the four learned
+conditions; the three FULL lesions use identical policy/archive bytes and
+their first episodes have identical executed histories. Later histories
+diverge. This is a saved-descriptor check, not a new simulator replay or full
+raw-payload rehash. The summary initial_observation_sha256 field is a feature
+hash; extra raw-input checks support endpoint matching beyond that field.
+
+Canonical saved-owner charge is1068449 actions: source964875, sourceVAL40874,
+target56300,native6400; pending/uncertain0. Evaluation totals independently
+match episode metadata. The independent file audit did not measure scheduler
+time; a subsequent UI lookup below supplies it. The driver ceiling is not
+elapsed GPU cost and per-arm times are
+not added as separate allocations. Summary SHA256
+`4fe0a6aff5b8454a71e1e97cdb21c0fa1b94d14e9f61ae9e20ccf9731390d83a`;
+final coordinator SHA256
+`c439486c327116c8da4fc077217416757bdc2f21ffa819f8ae802cc3f7810fa5`.
+[FULL independent verification](../../../outputs/robotwin-ppo100-independent-20261031-r1/RESULT.md).
+
+The owning chat's46856dc reconciliation verifies a distinct earlier native16
+panel against all48 FULL-condition and16 trainedRESET target records:
+requested/resolved seeds, raw observations and features match, including
+bottleE5's shared fallback. Motor/capture qualification, normalization,
+RLinf/RoboTwin, H32/noise shape and action-transform contracts agree.
+Executors2fd/570 and stochastic draws are distinct. This supplies a historical
+case-paired reference6/16, not a contemporaneous native replication. FULL
+records3wins/1loss against it; trainedRESET2wins/0losses. The small panel
+does not establish a robust gain or memory benefit. No new action or GPU
+cost is added; the native panel's5051actions remain counted once there.
+[Native16 evidence](../../../outputs/robotwin-trained-continuation-20261031-r1/NATIVE16-REUSE.md).
+
+A separate authenticated scheduler lookup confirms the shared continuation
+job-fji2xx8oq53h succeeded, ending06:43:32Shanghai with4h17m31s elapsed:
+15451GPU-seconds on one GPU. Count this allocation once for both arms;
+it is only the continuation from prior checkpoints, not all100-round
+training cost. Earlier allocations remain separate.
+[Scheduler receipt](../../../outputs/robotwin-ppo100-pair-scheduler-20261031-r1/receipt.json).

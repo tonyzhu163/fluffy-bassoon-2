@@ -4,6 +4,23 @@ Objective: establish useful PPO and DSRL baselines, then find a meta-learning
 method that improves robotic success and adaptation cost. The architecture is
 open. More data is a hypothesis to test, not an explanation for every failure.
 
+Current scientific readout,2026-10-31:
+
+- LIBERO's completed first full90 comparison remains below native; no reliable
+  memory benefit. Expanded collection/readout are ready, with compute pending.
+- RoboTwin FULL and trainedRESET each finished approximately1M source actions.
+  Source training stays near17% success in both, without an upward trend.
+- Their two-goal target totals are both8/16. Same-FULL-weight cache reset7/16
+  and rewardblind9/16 establish no consistent memory or reward-input benefit.
+- A saved native16 panel is now verified on the same cases and underlying
+  motor contract:6/16. Reuse adds no rollouts. The small observed steering
+  gains do not establish a robust performance or memory improvement.
+- SourceSAC's final comparison remains pending. Do not attribute the PPO
+  weakness to dataset size, optimizer or interface alone before those results.
+- No high-performance or sample-efficiency claim is established. Prioritize
+  effective source learning and matched robot controls over more compatibility
+  work or simply repeating a larger PPO collection with the same recipe.
+
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before
 expanding that experiment. Verified numerical results stay in the method's
@@ -600,3 +617,62 @@ the source data count reached approximately1M. Any later optimization or
 native-source diagnostic must have its own explicit execution budget; it
 does not gate LIBERO collection/readout.
 [Measured training diagnosis](../outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
+
+## RoboTwin full/reset100 comparison
+
+Both PPO arms have now completed their fixed100 source rounds and final
+evaluation; the shared pair exits0. FULL uses964,875 source actions/31,211
+valid chunk decisions; RESET963,759/31,172. Each has600K4/2,400episodes/
+500Adam steps. FULL training success416/2,400 versus RESET421/2,400;
+quarter totals116→104→93→103 /600 versus112→106→102→101. Both source
+policies are weak and flat. FULL final source validation2/24 versus RESET3/24
+is too small a panel to establish a ranking.
+
+| Fixed100 condition | Bottle /8 | Stapler /8 | Total /16 |
+| --- | ---: | ---: | ---: |
+| Saved native Gaussian, matched cases |6|0|6|
+| FULL normal |7|1|8|
+| Same FULL weights, cache reset |6|1|7|
+| Same FULL weights, reward blind |8|1|9|
+| Separately trained episode reset |8|0|8|
+
+There is no consistent demonstrated memory or reward-use advantage. The
+normal/cache-reset stapler successes occur on different episodes; equal
+aggregate counts do not mean identical trajectories. Cache reset removes
+the recurrent cache but preserves the FULL policy's direct previous-noise/
+reward input across a boundary. The trainedRESET clears both. These are
+distinct controls, and neither is a fully memoryless MLP.
+
+RESET target requested seeds and summary initial-feature hashes match across
+source checkpoints; the summary field is named initial_observation_sha256
+but refers to features in the inspected records. At stage100, additional
+raw RGB/wrist/proprio/features/language descriptors match across all four
+learned conditions. Their first FULL-policy episodes have identical executed
+histories before interventions can affect feedback. Five source-validation
+goal banks have matching summary hashes; handover uses the same seeds with
+different hashes, so the entire validation series is not an identical-input
+paired experiment. Controller RNG may
+also differ across conditions/checkpoints. Prior native probes use a separate
+seed bank. A separate earlier native16 panel has now been verified against
+all64 learned target records, including resolved seed fallbacks and raw
+input/feature descriptors. It shares motor, normalization, backend capture
+qualification and action-transform contracts, while executor versions/dates
+and noise samples differ. This historical case-matched reference scored6/16;
+FULL has3 recorded wins/1loss against it and trainedRESET2wins/0losses.
+These descriptive gains are not independent replications, statistical proof
+or a broad benchmark result. Reuse adds zero actions/GPU time; the original
+native panel's5051actions remain charged once to that panel.
+
+Both learners have finite nonzero optimization but very conservative logged
+joint KL (FULL mean0.000226, RESET0.000232). Source training is already weak,
+so target novelty alone is not an explanation. The data do not identify the
+cause: weak exploration/steering support, small effective batches, conservative
+optimization and task interference remain hypotheses. Finish the existing
+sourceSAC comparison before choosing the next recipe; none of this gates the
+ready LIBERO source/readout phases.
+[FULL diagnosis](../outputs/robotwin-ppo100-diagnosis-20261031-r1/ANALYSIS.md),
+[RESET endpoint verification](../outputs/robotwin-reset100-independent-20261031-r1/RESULT.md),
+[matched FULL endpoint verification](../outputs/robotwin-ppo100-independent-20261031-r1/RESULT.md).
+[Historical native16 reconciliation](../outputs/robotwin-trained-continuation-20261031-r1/NATIVE16-REUSE.md)
+comes from the owning chat's committed46856dc audit; the contemporaneous
+single-seed probes remain distinct and unpaired.
