@@ -17,6 +17,7 @@ def validate_trained_parallel_arguments(args, checkpoint):
     """Reject changes to known scientific arguments before loading the motor."""
     contract=checkpoint["contract"]
     _require(not args.stage_source_validation_only,"original target evaluation cannot be suppressed")
+    _require(args.eval_trials==1,"original single target repetition cannot change")
     for argument,key in (("source_steps","source_steps_per_learner"),("source_tasks","source_tasks"),
             ("eval_tasks","eval_tasks"),("methods","methods"),("train_episodes","train_episodes"),
             ("eval_episodes","eval_episodes"),("native_horizon","native_horizon"),
