@@ -1,0 +1,361 @@
+{
+  "format": "source40_two_stream_bridge_saved_audit_v1",
+  "observed_at": "2026-10-31 Asia/Shanghai",
+  "streams": [
+    {
+      "run_id": "libero40-sac-source-bridge-20261031-r1-s00-train",
+      "job_id": "job-zh3wvn64ebfd",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "parent": {
+        "slot": "libero_spatial:00/train",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2",
+        "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/experiment",
+        "actions": 11344,
+        "source_updates": 11380,
+        "chunks": 1065,
+        "next_case": 30,
+        "episodes": 120,
+        "remaining_candidate_cases": 482,
+        "contract_sha256": "60dcec4586e3bef746d079e00f50cd392f2dbb1a3d62bfdcb6cf822d41c3a9d2",
+        "index_sha256": "f0cdab587118ab967da43e358abae1da6643201813d3b3183f981301ad8b79c1",
+        "recovery_sha256": "18c6dd13f009636f487231c30022f64f6e357608cc33968be9d71b95e1ef848f",
+        "schedule_sha256": "5631e17c681bd0f058ebec311a503e31147e7d3dfcc86f056e31b0ab5cdbc838",
+        "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b"
+      },
+      "exit_code": 0,
+      "collection_qualified": true,
+      "checks": {
+        "terminal_exit0": true,
+        "complete_qualified_whole_cases": true,
+        "exact_source": true,
+        "slot_action_cap": true,
+        "no_quota_for_another_K4": true,
+        "full_latest_recovery_checksum": true,
+        "final_actor_checkpoint_checksum": true,
+        "full_recovery_contract_and_boundary": true,
+        "full_recovery_cursor_and_replay": true,
+        "all_recovery_states_present": true,
+        "final_publication_learning_state_equals_latest": true,
+        "all_new_raw_episode_hashes": true,
+        "actual_complete_new_boundaries": true,
+        "actual_fixed_learned_episode_stage": true,
+        "actual_postwarmup_UTD20_updates": true,
+        "new_executed_noise_is_finite_bounded32D": true,
+        "finite_new_update_metrics": true,
+        "final_update_clock": true,
+        "ad_export_checksum": true,
+        "ad_cumulative_cost": true,
+        "ad_final_actor_binding": true,
+        "ad_actual_rows": true,
+        "ad_finite_labels": true,
+        "ad_targets_equal_executed_noise": true,
+        "dpt_export_checksum": true,
+        "dpt_cumulative_cost": true,
+        "dpt_final_actor_binding": true,
+        "dpt_actual_rows": true,
+        "dpt_finite_labels": true,
+        "actual_allocated_GPU_probe": true,
+        "frozen_motor_bytes_unchanged": true,
+        "original_1800_second_worker_bound": true
+      },
+      "index_sha256": "9c198e94a108b294de4d57ea4e18459e6604b407ac6dfda7d60238da10fa66f5",
+      "contract_sha256": "7574020083928bf5c5b20ac0337d5e426effc9e3cba23ea5b02119679db5f76c",
+      "worker_time_sha256": "2bc0185682638ad2039c93a01fd0587a692bb861eb532a3bb60519582adc65af",
+      "full_latest_recovery_sha256": "895bf0ff083ef7839e820cd6fbf00d79b2d33d903ac8be784ec14893f487f45d",
+      "final_actor_checkpoint_sha256": "b95e004854ae641910d82a71f5fabeb6846e77d9472513f8dfa364dd9d11729c",
+      "candidate_sha256": "639050c2baba186f9017f997eb20c83eba4210ae1f49640019ea8a4bf4cb945b",
+      "plan_sha256": "f89f672aa1ae72a1c19749cd60cf31c7c059cb6cfae6843d4e59c0204aa962dd",
+      "new": {
+        "episodes": 100,
+        "cases": 25,
+        "chunks": 862,
+        "successes": 100,
+        "updates": 17240,
+        "actions": 9121,
+        "actual_settled_state_hashes": 25,
+        "stages": {
+          "sac_online": 862
+        }
+      },
+      "cumulative": {
+        "episodes": 220,
+        "cases": 55,
+        "chunks": 1927,
+        "updates": 28620,
+        "actions": 20465
+      },
+      "charged_gpu_seconds": 1078,
+      "unused_action_headroom": 1335,
+      "quota_filled": true,
+      "allocated_receipts": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/attempts/1793385515479383349/migration-fingerprint.json",
+          "sha256": "f2edfd45f237e1efd32608ddc36fccf8d7df07f45082f736fa6eea248536303c",
+          "value": {
+            "before": "068d7f152828c8dd93c7a026f9fa90aaa2e121bd8f22cc05816176c6733921c4",
+            "after": "068d7f152828c8dd93c7a026f9fa90aaa2e121bd8f22cc05816176c6733921c4",
+            "exact": true,
+            "numerical_state_changed": false,
+            "metadata_changes_only": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/attempts/1793385515479383349/motor-restore.json",
+          "sha256": "5fe9356095c137f2089494fb26d9a46d907407ca5e8b9eb3a9fbce48be6e16d8",
+          "value": {
+            "expected_sha256": "25ade226d94071bf5a90137af4c3ddf22f0f2b61bb2f98329e86bad27d053d46",
+            "actual_sha256": "25ade226d94071bf5a90137af4c3ddf22f0f2b61bb2f98329e86bad27d053d46",
+            "passed": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/attempts/1793385515479383349/parameters-after.json",
+          "sha256": "9d47b46820f7e96bfa397d35ba17a0ce14cb4a7bb294325be3ff9a2294935d6c",
+          "value": {
+            "before": {
+              "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+              "leaves": 51,
+              "elements_by_dtype": {
+                "bfloat16": 3353433872
+              }
+            },
+            "after": {
+              "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+              "leaves": 51,
+              "elements_by_dtype": {
+                "bfloat16": 3353433872
+              }
+            },
+            "unchanged": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/attempts/1793385515479383349/parameters-before.json",
+          "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+          "value": {
+            "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+            "leaves": 51,
+            "elements_by_dtype": {
+              "bfloat16": 3353433872
+            }
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/attempts/1793385515479383349/restored-learner.json",
+          "sha256": "fe8e7c4b73de8ef85a30b38b5f5a612d6e9f634528bb8c38f46952c18843ec7b",
+          "value": {
+            "expected_sha256": "ef4aa88f946809cc8926ddfb8da45bf28d75bcc82e0dfdcc04688ab8e77aa632",
+            "actual_sha256": "ef4aa88f946809cc8926ddfb8da45bf28d75bcc82e0dfdcc04688ab8e77aa632",
+            "passed": true,
+            "replay_rows": 1065,
+            "updates": 11380,
+            "optimizer_steps_during_restore": 0
+          }
+        }
+      ],
+      "exports": {
+        "ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/experiment/prefix-through-case-00054/ad.npz",
+          "sha256": "7d5f0e1d0a867c576bc485c5a14f8f2832b980161bfc50e549eda5535ed2db63",
+          "manifest_sha256": "6e8095a5b2e07477bc74d2df7f4ddf14f985307189e4388f4f0eb66bb4dd35c5",
+          "transitions": 1927,
+          "teacher_updates": 28620,
+          "cumulative_teacher_actions": 20465
+        },
+        "dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/experiment/prefix-through-case-00054/dpt.npz",
+          "sha256": "c012acfc34549f1b7e081611d9c67c1ee63ab2ea80b5c154c0f5c6f7185c0601",
+          "manifest_sha256": "5daa9b75ba5ec11b71c4b1f9d1067b5ded5a00866de5763425d44750c4aa2032",
+          "transitions": 1927,
+          "teacher_updates": 28620,
+          "cumulative_teacher_actions": 20465
+        }
+      },
+      "focused_tests": ".....................ss..................                                [100%]\n39 passed, 2 skipped in 1.21s",
+      "full_recovery_verification": "Saved full payload/cursor/replay/learning bytes checked; initial allocated restore passed. No new independent final model restore was run."
+    },
+    {
+      "run_id": "libero40-sac-source-bridge-20261031-r1-o00-train",
+      "job_id": "job-xli5uonwbiph",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "parent": {
+        "slot": "libero_object:00/train",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train",
+        "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train/experiment",
+        "actions": 8230,
+        "source_updates": 6080,
+        "chunks": 794,
+        "next_case": 12,
+        "episodes": 48,
+        "remaining_candidate_cases": 500,
+        "contract_sha256": "dc985bcf0967bb0e4a5e4e51c43167686724a0092a538d0b7b68ef5f6f5046da",
+        "index_sha256": "794d38e4b58479b98ff086e854dfa258c6246b0d89ee7ec8b9a3532e3320d275",
+        "recovery_sha256": "1bfee70a7737d67bf65ee137d372d6a22b34aed25c8796adce441b8d57b8fe71",
+        "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+        "source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf"
+      },
+      "exit_code": 0,
+      "collection_qualified": true,
+      "checks": {
+        "terminal_exit0": true,
+        "complete_qualified_whole_cases": true,
+        "exact_source": true,
+        "slot_action_cap": true,
+        "no_quota_for_another_K4": true,
+        "full_latest_recovery_checksum": true,
+        "final_actor_checkpoint_checksum": true,
+        "full_recovery_contract_and_boundary": true,
+        "full_recovery_cursor_and_replay": true,
+        "all_recovery_states_present": true,
+        "final_publication_learning_state_equals_latest": true,
+        "all_new_raw_episode_hashes": true,
+        "actual_complete_new_boundaries": true,
+        "actual_fixed_learned_episode_stage": true,
+        "actual_postwarmup_UTD20_updates": true,
+        "new_executed_noise_is_finite_bounded32D": true,
+        "finite_new_update_metrics": true,
+        "final_update_clock": true,
+        "ad_export_checksum": true,
+        "ad_cumulative_cost": true,
+        "ad_final_actor_binding": true,
+        "ad_actual_rows": true,
+        "ad_finite_labels": true,
+        "ad_targets_equal_executed_noise": true,
+        "dpt_export_checksum": true,
+        "dpt_cumulative_cost": true,
+        "dpt_final_actor_binding": true,
+        "dpt_actual_rows": true,
+        "dpt_finite_labels": true,
+        "actual_allocated_GPU_probe": true,
+        "frozen_motor_bytes_unchanged": true,
+        "original_1800_second_worker_bound": true
+      },
+      "index_sha256": "e1dc10acb60ac41e7ac5fb97a0d71df1ef660ca8a43ed696f80cf11583de09d3",
+      "contract_sha256": "1750bebe8ad19d296694f645adbd5845b18d23a120b174b7ac62e2c154cbf858",
+      "worker_time_sha256": "f61afc2b23b0dd449e3607c9ae5fcb64fc06d36a1996c17bade90cd16aeea8e0",
+      "full_latest_recovery_sha256": "1b5ab572cb46d1a143b6fc84ab4f6054994a256ac6a5ef82dcbf47a55d17adb8",
+      "final_actor_checkpoint_sha256": "1f288d06e87bb502ee8855a77698b8ba2bc0439b9444950f7dcaa6ae5fb7183a",
+      "candidate_sha256": "e1186bb8f1b4ea6b8249abf9b3229a68302967bcaa83a84155b04ef7ae43ee5e",
+      "plan_sha256": "f89f672aa1ae72a1c19749cd60cf31c7c059cb6cfae6843d4e59c0204aa962dd",
+      "new": {
+        "episodes": 84,
+        "cases": 21,
+        "chunks": 1193,
+        "successes": 84,
+        "updates": 23860,
+        "actions": 12447,
+        "actual_settled_state_hashes": 21,
+        "stages": {
+          "sac_online": 1193
+        }
+      },
+      "cumulative": {
+        "episodes": 132,
+        "cases": 33,
+        "chunks": 1987,
+        "updates": 29940,
+        "actions": 20677
+      },
+      "charged_gpu_seconds": 1134,
+      "unused_action_headroom": 1123,
+      "quota_filled": true,
+      "allocated_receipts": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/attempts/1793385532224048167/migration-fingerprint.json",
+          "sha256": "75818e5865d4dde2dd0183b072143847beefc274848c1c6bdcfcb00b2c95c2c6",
+          "value": {
+            "before": "b2b3a681da522e016ebfd34b746ed1a5f9f12665a71b5115e232fa3e70c8b8be",
+            "after": "b2b3a681da522e016ebfd34b746ed1a5f9f12665a71b5115e232fa3e70c8b8be",
+            "exact": true,
+            "numerical_state_changed": false,
+            "metadata_changes_only": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/attempts/1793385532224048167/motor-restore.json",
+          "sha256": "97bb60f548dc5a949777fbd39804eba1e0f7c39ce853d6e37babf1821ee6211d",
+          "value": {
+            "expected_sha256": "9ae1860bf5c7125f7ddc75af4793c5afd72e156429e3b88d98ac51a31baf8ce2",
+            "actual_sha256": "9ae1860bf5c7125f7ddc75af4793c5afd72e156429e3b88d98ac51a31baf8ce2",
+            "passed": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/attempts/1793385532224048167/parameters-after.json",
+          "sha256": "9d47b46820f7e96bfa397d35ba17a0ce14cb4a7bb294325be3ff9a2294935d6c",
+          "value": {
+            "before": {
+              "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+              "leaves": 51,
+              "elements_by_dtype": {
+                "bfloat16": 3353433872
+              }
+            },
+            "after": {
+              "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+              "leaves": 51,
+              "elements_by_dtype": {
+                "bfloat16": 3353433872
+              }
+            },
+            "unchanged": true
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/attempts/1793385532224048167/parameters-before.json",
+          "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+          "value": {
+            "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+            "leaves": 51,
+            "elements_by_dtype": {
+              "bfloat16": 3353433872
+            }
+          }
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/attempts/1793385532224048167/restored-learner.json",
+          "sha256": "afa8c458bd9e54fa035c4d4ee909917b1adff8020c22f1a622cece10c9ad4cae",
+          "value": {
+            "expected_sha256": "581b12b50831b1eb44bb481ccc18607424e13474cc99b6b74ea6fd079924af11",
+            "actual_sha256": "581b12b50831b1eb44bb481ccc18607424e13474cc99b6b74ea6fd079924af11",
+            "passed": true,
+            "replay_rows": 794,
+            "updates": 6080,
+            "optimizer_steps_during_restore": 0
+          }
+        }
+      ],
+      "exports": {
+        "ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/experiment/prefix-through-case-00032/ad.npz",
+          "sha256": "63a1da7d0c83255d2caf897f19695e6c22cac5c09ccb340c74f9d67d897ab19c",
+          "manifest_sha256": "1f84b488befef6527f157dbf5c7e213f7cf3ac2646418b567760e8660aacefc9",
+          "transitions": 1987,
+          "teacher_updates": 29940,
+          "cumulative_teacher_actions": 20677
+        },
+        "dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train/experiment/prefix-through-case-00032/dpt.npz",
+          "sha256": "92215fd1a8170173df615a7387ac5d714de455c3d95650a4ee4b92e7b1c292d0",
+          "manifest_sha256": "dc23407cbca49bbb088327608c8e1948d4ead6abf5542c263aa6200027b06482",
+          "transitions": 1987,
+          "teacher_updates": 29940,
+          "cumulative_teacher_actions": 20677
+        }
+      },
+      "focused_tests": ".....................ss..................                                [100%]\n39 passed, 2 skipped in 1.16s",
+      "full_recovery_verification": "Saved full payload/cursor/replay/learning bytes checked; initial allocated restore passed. No new independent final model restore was run."
+    }
+  ],
+  "total_new": {
+    "episodes": 184,
+    "cases": 46,
+    "chunks": 2055,
+    "successes": 184,
+    "updates": 41100,
+    "actions": 21568
+  },
+  "total_gpu_seconds": 2212,
+  "maximum_gpu_seconds": 3600,
+  "limitations": "Two fixed source goals;184/184 new source successes show no success headroom. No improved teacher competence, adaptation/generalization, or full24h/all40 top-up completion claim."
+}
