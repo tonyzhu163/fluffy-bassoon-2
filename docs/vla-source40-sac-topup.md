@@ -181,6 +181,18 @@ PYTHONPATH="$PINNED/src" "$MODEL_PYTHON" -m fluffy_bassoon.meta_rl.vla_source40_
   --output "$NEW_FINAL_ALIAS_DIR" --run-id "$NEW_FINAL_RUN" --source-commit "$FINAL_COMMIT"
 ```
 
+The default requires every producer to match the latest production source/plan.
+If the plan explicitly retains already quota-filled bridge parents, add
+`--allow-retained-parents`. This admits only those exact declared canonical
+parents; it does not accept arbitrary old actor pins. `producers.json` binds
+all40 actual producer pins/plans, terminal contract/index/full-recovery and
+candidate/publication hashes, migration/ancestor/clock evidence and unchanged
+motor receipts. Every actor must have real top-up updates, complete quota/case
+boundaries, identical SAC recipe/noise/features/frozen motor and no target data.
+Original non-top-up actors or stale/mismatched parents are rejected. The source
+ledger records each actual producer pin, so the existing fixed48-query driver
+stays unchanged. Prior bridge costs are imported once rather than recharged.
+
 Prepare a clean worktree for that final run at the same reviewed commit, then
 the existing qualified launcher accepts the new budget alias:
 
