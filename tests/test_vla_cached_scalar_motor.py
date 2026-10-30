@@ -192,6 +192,69 @@ def test_source_sac_unbounded_gaussian_warmup_noise_is_not_clipped_or_rescaled(m
     assert case.backend.splits==case.backend.decodes==1
 
 
+def test_source_sac_post_infer_feature_reads_reuse_host_features_without_extra_prefix(make):
+    case=make()
+    initial=case.motor.feature_encoder(case.obs,case.instruction)
+    case.motor.infer(case.obs,case.instruction,case.noise)
+    assert not case.motor.cache_pending
+    # OnlineSourceSimulator.step requests pending-observation features after
+    # motor inference, before encoding the next public observation.
+    retained=case.motor.feature_encoder(deepcopy(case.obs),case.instruction)
+    np.testing.assert_array_equal(retained,initial)
+    assert case.backend.prepares==1 and not case.motor.cache_pending
+    following=deepcopy(case.obs); following["state"][0]+=1
+    case.motor.feature_encoder(following,case.instruction)
+    assert case.backend.prepares==2 and case.motor.cache_pending
+    case.motor.infer(following,case.instruction,case.noise)
+    assert case.backend.prepares==case.backend.decodes==case.backend.splits==2
+    assert case.native.native_infers==0 and case.motor.calls==2
+    expected,_=split(split(np.array([7,11],np.uint32))[0])
+    np.testing.assert_array_equal(case.motor.policy._rng,expected)
+
+
+def test_consumed_kv_is_not_revived_by_repeated_host_feature_reads(make):
+    case=make(); expected=case.motor.feature_encoder(case.obs,case.instruction)
+    case.motor.infer(case.obs,case.instruction,case.noise)
+    for _ in range(2):
+        retained=case.motor.feature_encoder(deepcopy(case.obs),case.instruction)
+        np.testing.assert_array_equal(retained,expected)
+        assert not case.motor.cache_pending
+        case.motor.infer(case.obs,case.instruction,case.noise)
+    assert case.backend.prepares==case.backend.decodes==case.backend.splits==1
+    assert case.native.native_infers==case.native.native_splits==2
+    assert case.motor.calls==3
+
+
+@pytest.mark.parametrize("operation",["clear","restore","qualify"])
+def test_explicit_boundaries_invalidate_retained_host_features_as_well_as_kv(make,operation):
+    case=make(); case.motor.feature_encoder(case.obs,case.instruction)
+    case.motor.infer(case.obs,case.instruction,case.noise)
+    before=case.motor.policy._rng.copy()
+    if operation=="clear": case.motor.clear_cache()
+    elif operation=="restore": case.motor.restore_motor_rng(before.copy())
+    else: case.motor.feature_encoder.qualify(case.obs,case.instruction)
+    np.testing.assert_array_equal(case.motor.policy._rng,before)
+    assert case.backend.prepares==case.backend.decodes==case.backend.splits==1
+    case.motor.feature_encoder(case.obs,case.instruction)
+    assert case.backend.prepares==2 and case.motor.cache_pending
+
+
+@pytest.mark.parametrize("operation",["features","infer"])
+def test_model_identity_error_invalidates_retained_host_features_before_recovery(make,operation):
+    case=make(); case.motor.feature_encoder(case.obs,case.instruction)
+    case.motor.infer(case.obs,case.instruction,case.noise)
+    original=case.native.policy._model; before=case.native.policy._rng.copy()
+    case.native.policy._model=deepcopy(original)
+    with pytest.raises((ValueError,RuntimeError)):
+        if operation=="features": case.motor.feature_encoder(case.obs,case.instruction)
+        else: case.motor.infer(case.obs,case.instruction,case.noise)
+    np.testing.assert_array_equal(case.native.policy._rng,before)
+    assert case.backend.prepares==case.backend.decodes==case.backend.splits==1
+    case.native.policy._model=original
+    case.motor.feature_encoder(case.obs,case.instruction)
+    assert case.backend.prepares==2 and case.motor.cache_pending
+
+
 @pytest.mark.parametrize("changed",["image","wrist","state","instruction","dtype","shape","scalar_shape"])
 def test_present_prefix_rejects_changed_current_input_before_rng_or_decode(make,changed):
     case=make()
@@ -224,6 +287,8 @@ def test_invalid_cached_noise_never_consumes_rng_or_attempts_suffix(make,invalid
         case.motor.infer(case.obs,case.instruction,value)
     np.testing.assert_array_equal(case.native.policy._rng,before)
     assert case.backend.splits==case.backend.decodes==case.native.native_infers==0
+    case.motor.feature_encoder(case.obs,case.instruction)
+    assert case.backend.prepares==2  # Validation error must discard host features too.
 
 
 @pytest.mark.parametrize("failure",["suffix","shape","nan","attestation"])
@@ -241,6 +306,8 @@ def test_attempted_suffix_failure_is_charged_once_and_never_retried(make,failure
     case.backend.decode_error=case.backend.attest_error=case.backend.bad_actions=None
     case.motor.infer(case.obs,case.instruction,case.noise)
     assert case.native.native_infers==1 and case.backend.decodes==case.backend.splits==1
+    case.motor.feature_encoder(case.obs,case.instruction)
+    assert case.backend.prepares==2  # Failed attempt cannot leave reusable host state.
 
 
 @pytest.mark.parametrize("failure",["raise","shape","nan"])
