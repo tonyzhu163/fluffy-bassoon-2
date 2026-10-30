@@ -5,6 +5,7 @@ deliberately not the LIBERO vla_history dataset/trainer schema.
 """
 import argparse
 from collections import defaultdict
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -35,9 +36,22 @@ def _canonical(value):
 
 
 def _digest_array(value):
-    import hashlib
     digest = hashlib.sha256(str(value.dtype).encode() + str(value.shape).encode())
     digest.update(value.tobytes())
+    return digest.hexdigest()
+
+
+def parameter_digest(state):
+    """Match BehaviorPolicyArchive's tensor digest, not a caller's label string."""
+    digest = hashlib.sha256()
+    if not isinstance(state, dict) or not state:
+        raise ValueError('Acting archive omitted tensor weights')
+    for name, value in sorted(state.items()):
+        if not isinstance(value, torch.Tensor) or not value.isfinite().all():
+            raise ValueError('Acting archive has invalid tensor weights')
+        value = value.detach().cpu().contiguous()
+        digest.update(name.encode() + str(value.dtype).encode() + str(tuple(value.shape)).encode())
+        digest.update(value.reshape(-1).view(torch.uint8).numpy().tobytes())
     return digest.hexdigest()
 
 
@@ -82,7 +96,7 @@ def source_recovery(path, sha256, method):
 class CorpusReader:
     def __init__(self, root):
         self.root = Path(root).resolve()
-        self.inputs, self.features = {}, {}
+        self.inputs, self.features, self.actors = {}, {}, {}
 
     def path(self, value):
         path = (self.root / value).resolve()
@@ -126,6 +140,21 @@ class CorpusReader:
             raise ValueError('One frame path has conflicting identities')
         return self.features[key]
 
+    def acting_weights(self, context, method):
+        path = self.path(context['policy_checkpoint'])
+        file_sha = context.get('policy_checkpoint_sha256')
+        key = str(path)
+        if key not in self.actors:
+            saved = checked_load(path, file_sha)
+            actual = parameter_digest(saved.get('state_dict'))
+            expected_kind = 'sac_actor' if method == 'sac' else 'ppo_actor_value'
+            if saved.get('kind') != expected_kind or saved.get('parameter_sha256') != actual:
+                raise ValueError('Acting archive payload/tensor parameter digest differs')
+            self.actors[key] = (file_sha, actual)
+            self.inputs[key] = file_sha
+        if self.actors[key] != (file_sha, context.get('policy_sha256')):
+            raise ValueError('Acting tensor parameter digest differs from context')
+
 
 def _decode(value, arrays):
     if isinstance(value, dict):
@@ -153,7 +182,12 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
     if (collection.get('schema') != SCHEMA or collection.get('source_commit') != contract['source_commit']
             or set(collection.get('source_tasks', [])) != set(TASKS)
             or collection.get('model_path') != contract['model_path']
-            or _canonical(reader.json('runtime-contract.json')) != _canonical(contract['runtime'])):
+            # The driver excludes render PCI from checkpoint contracts. It is
+            # allocation identity, not a feature/motor/scientific setting. The
+            # COMPLETE raw runtime JSON remains hash-pinned by the reader.
+            or _canonical({key:value for key,value in reader.json('runtime-contract.json').items()
+                           if key != 'actual_render_pci'}) != _canonical({key:value for key,value in contract['runtime'].items()
+                           if key != 'actual_render_pci'})):
         raise ValueError('Corpus source/runtime contract differs from source recovery')
     by_trial, excluded = defaultdict(list), defaultdict(int)
     for reset_path in sorted((reader.root / 'episodes').glob('*/reset.json')):
@@ -223,10 +257,7 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
                 parsed = re.fullmatch(rf'{method}:update:(\d+):([0-9a-f]{{64}})', version)
                 if parsed is None or int(parsed[1]) != update or parsed[2] != ctx.get('policy_sha256'):
                     raise ValueError('Behavior version differs from actual source update')
-                policy_path = reader.path(ctx['policy_checkpoint'])
-                if file_sha256(policy_path) != ctx.get('policy_checkpoint_sha256'):
-                    raise ValueError('Acting checkpoint file checksum differs')
-                reader.inputs[str(policy_path)] = ctx['policy_checkpoint_sha256']
+                reader.acting_weights(ctx, method)
             if 'pre_squash_actions' in metadata and not np.allclose(
                     1.5 * np.tanh(metadata['pre_squash_actions']).reshape(-1), noise, rtol=0, atol=1e-6):
                 raise ValueError('Recorded physical noise differs from PPO action sample')
@@ -247,15 +278,20 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
         if (manifest.get('completed_chunks') != len(rows) or manifest.get('executed_primitive_steps') != steps):
             raise ValueError('Episode manifest counters differ')
         by_trial[number].append(dict(task=task, episode_index=episode_index, rows=rows, reset=reset))
-    trials = []
+    trials, quarantined = [], defaultdict(int)
     for number in range(1, source['trials'] + 1):
         episodes = sorted(by_trial[number], key=lambda episode: episode['episode_index'])
         complete = (len(episodes) == 4 and [ep['episode_index'] for ep in episodes] == list(range(4))
                     and len({ep['task'] for ep in episodes}) == 1
                     and not any(row['budget_truncated'] for ep in episodes for row in ep['rows']))
         if not complete:
-            if allow_legacy_cut and number == source['trials'] and 'source_iterations' not in contract:
+            legacy_prefix = (episodes and len(episodes) <= 4
+                and [ep['episode_index'] for ep in episodes] == list(range(len(episodes)))
+                and len({ep['task'] for ep in episodes}) == 1)
+            if allow_legacy_cut and number == source['trials'] and 'source_iterations' not in contract and legacy_prefix:
                 excluded['legacy_final_incomplete_trials'] += 1
+                for episode in episodes:
+                    quarantined[episode['task']] += sum(row['duration'] for row in episode['rows'])
                 continue
             raise ValueError('Committed source cursor lacks one unambiguous complete K4 trial')
         rows = [row for ep in episodes for row in ep['rows']]
@@ -275,6 +311,14 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
         trials.append(dict(number=number, task=episodes[0]['task'], rows=rows))
     if not trials:
         raise ValueError('No eligible complete source histories')
+    selected = {task:sum(row['duration'] for trial in trials if trial['task'] == task for row in trial['rows']) for task in TASKS}
+    expected = source['state'].get('task_steps', {})
+    actual = {task:selected[task] + quarantined.get(task, 0) for task in TASKS}
+    if (set(expected) != set(TASKS) or actual != expected
+            or sum(actual.values()) != source['state'].get('source_steps')):
+        raise ValueError('Selected/quarantined durations differ from frozen source_steps/task_steps')
+    if quarantined:
+        excluded['legacy_quarantined_actions'] = sum(quarantined.values())
     return reader, trials, dict(excluded)
 
 

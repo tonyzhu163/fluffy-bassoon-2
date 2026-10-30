@@ -29,6 +29,13 @@ separate source-only measurement.
   an incomplete LAST trial in the older action-cut contract; never relabel it
   as K4 or discard a complete trial based on reward. Costs stay in its ledger.
 
+The scientific runtime comparison ignores only `actual_render_pci`, which the
+driver omits from checkpoint contracts. The complete raw runtime file remains
+hash-pinned. Acting archive file SHA, payload parameter SHA and a recomputed
+tensor digest must all agree. Native selected action durations must reconcile
+exactly with frozen source/task counters; an explicitly quarantined legacy cut
+remains included in that reconciliation and in the original physical ledger.
+
 The source corpus can keep growing after the selected source checkpoint, but
 selected files and both checkpoints must retain their hashes. Prefer the
 owner's immutable iteration10/25/50/100 stage snapshots. A moving latest

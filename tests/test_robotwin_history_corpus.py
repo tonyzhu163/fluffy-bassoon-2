@@ -49,6 +49,7 @@ def recovery(root, method, *, updates=2, trials=2, reset=False):
     learner.updates = updates
     payload = dict(contract=contract, method=method, learner=learner.state_dict(),
         schedule=dict(tasks=list(TASKS), trials=trials), source_steps=trials*4*32,
+        task_steps={task:trials*4*32 if task==TASKS[0] else 0 for task in TASKS},
         boundary='completed whole-trial source iteration')
     path=root/f'{method}-recovery.pt'
     torch.save(payload,path)
@@ -61,14 +62,21 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
     root = tmp_path/'corpus'
     root.mkdir()
     write_json(root/'contract.json',dict(schema=SCHEMA,source_commit='a'*40,source_tasks=list(TASKS),model_path='/fixed/motus'))
-    write_json(root/'runtime-contract.json',source['contract']['runtime'])
+    # Actual db01840 schema: corpus retains allocation identity, checkpoint omits it.
+    write_json(root/'runtime-contract.json',dict(source['contract']['runtime'],actual_render_pci='0000:a3:00.0'))
     for trial in (1,2):
         version_update = 0 if fixed else trial-1
         policy_path=root/'policies'/f'{version_update}.pt'
         policy_path.parent.mkdir(exist_ok=True)
+        state={'weight':torch.tensor([float(version_update)])}
+        parameter_digest=hashlib.sha256()
+        for name,value in sorted(state.items()):
+            parameter_digest.update(name.encode()+str(value.dtype).encode()+str(tuple(value.shape)).encode())
+            parameter_digest.update(value.reshape(-1).view(torch.uint8).numpy().tobytes())
+        parameter_sha=parameter_digest.hexdigest()
         if not policy_path.exists():
-            torch.save(dict(state_dict={'weight':torch.tensor([float(version_update)])}),policy_path)
-        parameter_sha=hashlib.sha256(str(version_update).encode()).hexdigest()
+            torch.save(dict(kind='sac_actor' if method=='sac' else 'ppo_actor_value',
+                state_dict=state,parameter_sha256=parameter_sha),policy_path)
         context=dict(phase='source',method=method,trial_id=f'source:{method}:{trial}',
             policy_version=f'{method}:update:{version_update}:{parameter_sha}',
             policy_sha256=parameter_sha,policy_checkpoint=str(policy_path),
@@ -224,3 +232,39 @@ def test_sac_warmup_has_no_actor_and_does_not_invent_an_update(tmp_path):
     with np.load(result['datasets']['ad']['path']) as data:
         assert data['behavior_versions'][0]=='bounded_uniform_warmup'
         assert data['behavior_updates'][0]==data['behavior_updates'][1]==0
+
+
+def test_scientific_runtime_fields_are_not_normalized_away(tmp_path):
+    root,args=fixture(tmp_path)
+    path=root/'runtime-contract.json';value=json.loads(path.read_text());value['features']='different encoder'
+    write_json(path,value)
+    with pytest.raises(ValueError,match='source/runtime contract differs'):
+        export_corpus(root,tmp_path/'invalid',**args)
+
+
+def test_frozen_source_action_counters_must_reconcile(tmp_path):
+    root,args=fixture(tmp_path)
+    value=torch.load(args['source_path'],weights_only=False)
+    value['source_steps']+=1
+    torch.save(value,args['source_path'])
+    args['source_sha256']=file_sha256(args['source_path'])
+    with pytest.raises(ValueError,match='frozen source_steps/task_steps'):
+        export_corpus(root,tmp_path/'invalid',**args)
+
+
+def test_acting_archive_tensors_are_verified_not_just_declared_hash_strings(tmp_path):
+    root,args=fixture(tmp_path)
+    actor=root/'policies/0.pt'
+    saved=torch.load(actor,weights_only=False)
+    saved['state_dict']['weight']+=7.
+    torch.save(saved,actor)
+    digest=file_sha256(actor)
+    for directory in (root/'episodes').glob('trial1-*'):
+        manifest=json.loads((directory/'manifest.json').read_text())
+        for ref in manifest['chunks']:
+            path=directory/ref['path'];value=json.loads(path.read_text())
+            value['context']['policy_checkpoint_sha256']=digest
+            write_json(path,value);ref['sha256']=file_sha256(path)
+        write_json(directory/'manifest.json',manifest)
+    with pytest.raises(ValueError,match='tensor parameter digest'):
+        export_corpus(root,tmp_path/'invalid',**args)
