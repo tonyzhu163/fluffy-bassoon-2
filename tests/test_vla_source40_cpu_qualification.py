@@ -45,9 +45,15 @@ def test_test_paths_are_reviewed_local_python_files_and_required_metadata_suite_
 
 
 def test_cpu_clock_preserves_actual_overrun_and_never_charges_gpu(tmp_path):
-    module.write(tmp_path/'cpu-worker-clock.json', dict(started_unix=1000., status='started'))
+    module.write(tmp_path/'cpu-worker-clock.json', dict(started_unix=1000., status='started', zero_gpu_attested=True))
     first = module.finish(tmp_path, 1, now=1100.)
     assert first['charged_cpu_worker_seconds'] == 160 and first['charged_gpu_seconds'] == 0
     last = module.finish(tmp_path, 124, now=2800.)
     assert last['charged_cpu_worker_seconds'] == 1860 and last['cpu_time_overrun']
     assert len(json.loads((tmp_path/'cpu-worker-clock.json').read_text())['closure_history']) == 2
+
+
+def test_failed_allocation_admission_does_not_claim_zero_gpu_time(tmp_path):
+    module.write(tmp_path/'cpu-worker-clock.json', dict(started_unix=1000., status='started', zero_gpu_attested=False))
+    result = module.finish(tmp_path, 1, now=1100.)
+    assert result['charged_gpu_seconds'] is None

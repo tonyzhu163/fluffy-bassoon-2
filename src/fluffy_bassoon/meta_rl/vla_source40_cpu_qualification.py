@@ -109,7 +109,7 @@ def finish(root, exit_code, *, now=None):
     data.setdefault('closure_history', []).append(dict(ended_unix=ended, exit_code=int(exit_code)))
     data.update(status='finished', ended_unix=ended, exit_code=int(exit_code),
         charged_cpu_worker_seconds=math.ceil(max(0., ended-data['started_unix']))+60,
-        charged_gpu_seconds=0)
+        charged_gpu_seconds=0 if data.get('zero_gpu_attested') is True else None)
     data['cpu_time_overrun'] = data['charged_cpu_worker_seconds'] > 1800
     write(path, data)
     return data
@@ -133,13 +133,14 @@ def run(a):
     a.output.mkdir(parents=True, exist_ok=False)  # No overwrite/retry/reselection.
     clock = dict(format=FORMAT, source_commit=a.source, run_id=a.run, hostname=a.expected_hostname,
         started_unix=a.started_unix, status='started', maximum_cpu_worker_seconds=1800,
-        execution_seconds=1740, startup_allowance_seconds=60, charged_gpu_seconds=0,
+        execution_seconds=1740, startup_allowance_seconds=60, charged_gpu_seconds=None,
+        zero_gpu_attested=False,
         interrupted_charge_cpu_seconds=1800, additional_simulator_actions=0)
     write(a.output/'cpu-worker-clock.json', clock)
     contract = dict(format=FORMAT, source_commit=a.source, run_id=a.run, hostname=a.expected_hostname,
         plan_path=str(a.plan.resolve()), plan_file_sha256=a.plan_sha256, canonical_ledger=str(a.ledger.resolve()),
         tests=tests, capture_assemble=a.capture_assemble, model_construction=False, inference=False,
-        optimizer_updates=0, simulator_actions=0, allocated_gpu_count=0,
+        optimizer_updates=0, simulator_actions=0, requested_gpu_count=0,
         runtime=sys.executable, python_abi=sysconfig.get_config_var('SOABI'))
     write(a.output/'contract.json', contract)
     code_rc = 1
@@ -173,6 +174,8 @@ def run(a):
         attestation.update(hostname=a.expected_hostname, python=sys.executable, sys_prefix=sys.prefix,
             python_abi=sysconfig.get_config_var('SOABI'), resources=cgroup_resources())
         write(a.output/'zero-gpu-attestation.json', attestation)
+        clock.update(zero_gpu_attested=True, charged_gpu_seconds=0)
+        write(a.output/'cpu-worker-clock.json', clock)
         print(json.dumps(dict(zero_gpu_pre_mask=True, hostname=a.expected_hostname,
             measured_cpu_quota=attestation['resources']['effective_cpu_quota_cores'],
             measured_memory_limit=attestation['resources']['memory_limit_bytes'])), flush=True)
@@ -194,12 +197,13 @@ def run(a):
         write(a.output/'index.json', dict(contract, completed=True, phases=phases, outputs=outputs,
             zero_gpu_attestation_sha256=sha(a.output/'zero-gpu-attestation.json'),
             junit_sha256=sha(a.output/'junit.xml'), no_gpu_budget_consumed=True,
-            cuda_uninitialized_at_completion=True))
+            cuda_uninitialized_at_completion=True, allocated_gpu_count=0))
         code_rc = 0
         return 0
     except BaseException as error:
         write(a.output/'failure.json', dict(error=repr(error), completed=False, phases=phases,
-            partial_outputs_preserved=True, gpu_seconds=0, simulator_actions=0))
+            partial_outputs_preserved=True, gpu_seconds=0 if clock['zero_gpu_attested'] else None,
+            zero_gpu_attested=clock['zero_gpu_attested'], simulator_actions=0))
         raise
     finally:
         finish(a.output, code_rc)
