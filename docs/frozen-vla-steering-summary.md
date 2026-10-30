@@ -544,3 +544,59 @@ completed source rounds and2.570M closed actions as of05:26Shanghai; its
 The CPU-only qualification returns the proposed600GPU-s label-preparation
 reserve to contingency: source planned88,880/90,000s,1,120s contingency.
 The pending29.5GPUh/150GB request and original32h ledger are unchanged.
+
+## RoboTwin reset100: weak source learning, uneven target success
+
+The separately trained episode-reset recurrent PPO controller completed100
+balanced source rounds/600K4 trials/2,400 episodes,963,759 source actions and
+500 Adam steps. The owned terminal audit passes and the motor remains frozen.
+This is a completed RESET endpoint; persistent PPO and SAC final comparisons
+are still pending.
+
+| Source round | Bottle target /8 | Stapler target /8 | Source validation /24 |
+| --- | ---: | ---: | ---: |
+|10|6|1|4|
+|25|7|0|4|
+|50|7|0|2|
+|100|8|0|3|
+
+The100-round training history itself is weak and flat:421/2,400 successes
+(17.54%); consecutive25-round blocks112,106,102,101 /600. Per-source-goal
+successes/400 are handover76, bottles35, a2b66, object-stand138, phone86,
+scan20. Final source validation is0,1,1,1,0,0 /4 respectively. Small fixed
+validation panels and stochastic actions limit generalization conclusions;
+there is no demonstrated strong source policy followed by a validation-only
+collapse. Target novelty alone cannot explain weak source training.
+
+The100 updates contain31,172 actual valid chunk decisions, mean311.72 per
+global update; all500 optimizer steps are accounted for. Losses are finite
+and gradients nonzero. Logged approximate JOINT KL averages0.000232, maximum
+0.001665; median clipping fraction0. Log-probability sums all1,024 action
+coordinates, so tiny KL is not per-coordinate averaging. Pre-clipping
+gradient norms54.94–76.35 exceed the norm1 cap. These show conservative
+updates, not that raising LR or reducing clipping would improve robots.
+Actual source horizons600/500/400 match the task configs; GAE crosses earlier
+episode boundaries and terminates at the final K4 boundary. This review finds
+no supported reward/GAE defect or old uniform400-horizon explanation.
+
+The already-recorded VLRLA reference has8,192 nominal chunk slots/update,
+about26.3 times this learner's mean actual batch. That compares capacity with
+realized data, and VLRLA trains a different component. Five epochs and more
+iterations do not reproduce its optimization scale. It does not prescribe
+collecting10M actions. Small batches, conservative optimization, task
+interference and the bounded1024D noise parameterization remain competing
+hypotheses, not established causes.
+
+Bottle8/8 is not memory or adaptation evidence: this control resets cache
+and previous noise/reward at every episode, while retaining within-episode
+recurrence. Its target seeds differ from the available prior native bank,
+so there is no paired contemporaneous native improvement claim. The one
+extra bottle success from50 to100 does not establish a scaling benefit;
+stapler remains0/8. This is eight scenes per goal in a two-goal development
+panel, not eight independent heldout goals or a full benchmark. Keep all
+predeclared checkpoints and finish the already
+running full/SAC comparisons. Do not simply multiply this PPO recipe because
+the source data count reached approximately1M. Any later optimization or
+native-source diagnostic must have its own explicit execution budget; it
+does not gate LIBERO collection/readout.
+[Measured training diagnosis](../outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).

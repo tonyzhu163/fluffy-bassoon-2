@@ -377,3 +377,39 @@ under matched reset seeds, then budget repeated Bernoulli outcomes if
 variation persists.
 
 [Results and compact raw evidence](../../../outputs/noise-mode-icrl-20261029-s0-r1/RESULTS.md).
+
+## RoboTwin episode-reset PPO: completed100-round endpoint
+
+The separately trained episode-reset GTrXL controller completed100 source
+rounds/600K4 trials/2400 training episodes,963759 source actions and500 Adam
+steps. The owned terminal audit passes, all four10/25/50/100 stages complete,
+and the frozen Motus pi0.5 motor hash is unchanged. Final heldout development
+results are8/8 on adjust_bottle and0/8 on move_stapler_pad; six-source-goal
+validation is3/24. This is the RESET endpoint only; full-memory and SAC
+final comparisons are unfinished.
+
+Training success is421/2400 (17.54%), with successive25-round blocks
+112,106,102,101 /600: no useful upward trend. All100 update records and
+963759 actions reconcile. There are31172 actual valid chunk decisions;
+losses are finite, gradients nonzero, and logged approximate joint KL is
+small (mean0.000232). Static review confirms correct native horizons and
+cross-episode K4 GAE. This establishes weak/flat source learning, without
+isolating LR, clipping, sample budget, task interference or noise
+parameterization as its cause.
+
+The controller preserves within-episode recurrence but clears cache and
+previous noise/reward each episode. Its8/8 score is not cross-episode
+adaptation evidence. Eight scenes on each of two goals are not a full
+benchmark. Prior native rows have different seeds; no paired native
+improvement or memory benefit is claimed. Canonical reported resource
+charge1021785 comprises source963759, source validation39434 and target
+18592, with no pending or uncertain actions. These are action costs, not
+additional optimizer exposure.
+
+Evidence: [training/optimizer diagnosis](../../../outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
+Original endpoint:
+`/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment`.
+Summary SHA256:
+`8f5d5e2e9377df90fa955049e4464abf7ba58daa2977046902917b0132d1ff60`.
+Final coordinator recovery SHA256:
+`48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49`.

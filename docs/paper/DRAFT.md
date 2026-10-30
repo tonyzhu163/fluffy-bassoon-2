@@ -453,3 +453,17 @@ collection/readout remain independent; new validation-label admission is
 verified by its complete assembly round trip, with AD/TRAIN data and source
 cost unchanged. Exit0,348 conservative CPU-worker seconds, zero GPU time
 or new actions. Preserve all legacy metrics and fixed milestones.
+
+RoboTwin's episode-reset PPO endpoint is complete at100 rounds/600K4/
+2,400source episodes/963,759source actions/500Adam steps. Target bottle8/8,
+stapler0/8; six-goal source validation3/24. Training success is421/2,400,
+with25-round block totals112→106→102→101 /600: no useful upward source
+learning trend. Nonzero finite updates and very small approximate joint KL
+are verified; the cause of weak learning is unresolved. This baseline keeps
+within-episode recurrence and clears cross-episode feedback/cache. It cannot
+establish memory benefit. Prior native cases use a different seed bank;
+full-memory and SAC final comparisons remain pending. This is a two-goal
+development panel, not the full benchmark. Target novelty alone cannot
+explain weak source training; whether more data or a different optimization
+or steering interface helps remains unresolved.
+[Diagnosis](../../outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
