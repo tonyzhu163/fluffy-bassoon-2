@@ -41,17 +41,18 @@
   },
   "cost_scenarios": {
     "no_due_evaluation": {
-      "condition": "No incomplete due stage at input, and the new round does not reach a due milestone",
+      "condition": "No incomplete due stage at input; this is a source-only one-round slice",
       "planning_scheduler_gpu_seconds_for_both_arms": 600,
       "planning_gpu_hours_for_both_arms": 0.16666666666666666,
       "maximum_new_actions": 21600,
-      "status": "Conservative planning estimate including loading and update; not measured trained throughput"
+      "status": "Conservative planning estimate including loading and update; not measured trained throughput",
+      "newly_reached_milestone": "The lifetime-six guard must exit before evaluate_stage and preserve the due stage/cursors intact for the next fresh process; this slice does not spend future evaluation capacity"
     },
     "due_evaluation": {
       "milestones": [10, 25, 50, 100],
-      "condition": "Any stage already due but incomplete at input, or made due by the one-round continuation",
+      "condition": "A stage is already due but incomplete at input; execute its original required evaluation, or reject source-only eligibility safely",
       "must_finish_due_units_in_original_order": true,
-      "may_skip_or_defer_to_obtain_benchmark_timing": false,
+      "may_skip_input_due_stage_to_obtain_benchmark_timing": false,
       "full_stage_maximum_actions": {
         "ppo": {"source_validation": 10800, "target": 19200, "native": 1600, "total": 31600},
         "ppo_reset": {"source_validation": 10800, "target": 6400, "native": 0, "total": 17200},
@@ -61,7 +62,7 @@
       "maximum_by_arm": {"ppo": 42400, "ppo_reset": 28000},
       "proposed_scheduler_gpu_ceiling_seconds": 2700,
       "proposed_gpu_hours_ceiling": 0.75,
-      "budget_condition": "Only after owner verifies actual completed-unit cursors and original per-phase, total and compute residuals; subtract completed units using their exact receipts"
+      "budget_condition": "Only after owner verifies actual completed-unit cursors and original per-phase, total and compute residuals; subtract completed units using their exact receipts. A stage newly reached after this source round is deferred intact by the process-lifetime boundary, rather than charged to the source-only slice"
     }
   },
   "owner_handoff_manifest_required_for_each_arm": {
@@ -101,7 +102,7 @@
     "initial_slice_complete_rounds": 1,
     "subsequent_example_maximum_complete_rounds_per_process_lifetime": 10,
     "source_episodes_per_simulator_at_example_bound": 40,
-    "boundary": "Complete source update and all currently due evaluation units, durable coordinator acknowledged, no pending/inflight/uncertain work",
+    "boundary": "Complete source update or original complete evaluation-unit boundary; durable coordinator acknowledged, no partial/inflight/uncertain work. Preserve any next due stage and completed-unit cursors exactly across fresh processes",
     "new_slice": "Fresh process/output identity with exact checkpoint and corpus ancestry; trained weights/optimizer/samplers/RNG/cursors remain continuous",
     "admission": "Original residual source/phase/total actions and compute only; reserve complete native units plus checkpoint/shutdown time before RPC",
     "retry": "No automatic retries, cap expansion, discarded trained prefix or fresh controller initialization"
@@ -111,6 +112,19 @@
     "new_robotwin_packed_21600_action_2700_second_hold": "Settled at21310actions/453seconds; unused290actions/2247seconds sealed and unavailable",
     "old_libero_1800_second_hold": "Owner releases1339seconds exclusively to required DSRL baseline inside32h; retains411actual+50margin=461seconds; unavailable for Robo consolidation",
     "new_source_target_or_resource_expansion": false
+  },
+  "historical_owner_attested_evidence_only": {
+    "method": "ppo",
+    "manifest": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+    "manifest_sha256": "7a976d2ea989b0071e31f51a61a28b3d3fc7692be90a14e8653e17d8d814fd5c",
+    "source_actions": 384343,
+    "completed_trials": 240,
+    "updates": 40,
+    "optimizer_steps": 200,
+    "pending": 0,
+    "owner_status": "Slice0002 was already RUNNING when this historical receipt was supplied",
+    "not_current_handoff_or_ledger_ownership_or_residual_budget_proof": true,
+    "independent_latest_state_claim": false
   },
   "launch_readiness": {
     "ready": false,
