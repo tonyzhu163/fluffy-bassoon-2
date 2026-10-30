@@ -1,0 +1,161 @@
+{
+  "format": "source40_CPU_capture_assembly_saved_audit_v1",
+  "observed_at": "2026-10-31 Asia/Shanghai",
+  "job_id": "job-k404j8e0104x",
+  "run_id": "libero40-source-pipeline-cpu-20261031-r2",
+  "source_commit": "8b226a69b080380992bcff12e7e2eca4148f6ec0",
+  "checks": {
+    "terminal_exit0": true,
+    "actual_CPU_job_identity": true,
+    "pre_mask_zero_GPU": true,
+    "actual_CPU_memory_limits": true,
+    "actual_runtime_ABI": true,
+    "no_GPU_RL_or_model_work": true,
+    "bounded_CPU_clock": true,
+    "attestation_and_JUnit_checksums": true,
+    "all34_metadata_tests_passed": true,
+    "test_capture_assemble_exit0": true,
+    "admission_actual_file_checksum": true,
+    "assembly_actual_file_checksum": true,
+    "fitting_inputs_actual_file_checksum": true,
+    "all40_fixed8_selected_once": true,
+    "source_only_fullbank_admission": true,
+    "full_cumulative_cost_preserved": true,
+    "train_ad_actual_data_checksum": true,
+    "train_ad_actual_manifest_rows": true,
+    "train_dpt_actual_data_checksum": true,
+    "train_dpt_actual_manifest_rows": true,
+    "validation_ad_actual_data_checksum": true,
+    "validation_ad_actual_manifest_rows": true,
+    "validation_dpt_actual_data_checksum": true,
+    "validation_dpt_actual_manifest_rows": true,
+    "latest_bridge_prefixes_selected": true
+  },
+  "index_sha256": "67b32ca0856c16053c175d5f65ffa74c6254972bb03c45c2bb9280ada21a04c4",
+  "clock_sha256": "2a59f08831c0ca9985da3279b8b914b82b08a6d161482a6c726edac061e22cb9",
+  "test_summary": {
+    "tests": 34,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "allocated_attestation": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/zero-gpu-attestation.json",
+    "sha256": "7c1021ddf7bbcb19932b20138a1148ff8b17170a0e7dfbcda4b0fcbe2d1aab2a",
+    "python_abi": "cpython-312-x86_64-linux-gnu",
+    "torch": "2.7.1+cu128",
+    "pre_mask_GPU_count": 0,
+    "CUDA_initialized": false,
+    "cpu_quota": 4,
+    "memory_bytes": 17179869184
+  },
+  "CPU_seconds": 710,
+  "GPU_seconds": 0,
+  "simulator_actions": 0,
+  "outputs": {
+    "admission": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/admission.json",
+      "sha256": "26303151bc26bc6809348b7b3e3351205619efbfb21f34da4b70229a33198fe2"
+    },
+    "assembly": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/assembly.json",
+      "sha256": "89d28ad329b612ba52a4bcf108150a335de378a0e0b209e73b7bd5f47a347160"
+    },
+    "fitting_inputs": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/topup-inputs.json",
+      "sha256": "6563d1fc76ba506cf9f44cb648c30455313a33602ab1154e30b37cc54bc54883"
+    }
+  },
+  "datasets": {
+    "train": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/train-ad.npz",
+        "sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+        "trials": 40,
+        "transitions": 33729,
+        "sidecar_sha256": "bc206f20b70200c26cb7ad9ca59b4a9b1bc8eccd7d48259d657feeabbb8825bf"
+      },
+      "dpt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/train-dpt.npz",
+        "sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+        "trials": 40,
+        "transitions": 33729,
+        "sidecar_sha256": "ca2c6b873e051954cf2383e3dfcb672399eab3c2d67bdd2d2a4850e45c8bef6a"
+      }
+    },
+    "validation": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/validation-ad.npz",
+        "sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+        "trials": 8,
+        "transitions": 8202,
+        "sidecar_sha256": "51f231b88e5b6cfa9f0feb4e0ba698314ea25966cd293e69ea842167013ef2c5"
+      },
+      "dpt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/validation-dpt.npz",
+        "sha256": "6a33b77ee2cb6be939d013d4c2af7bd943502dec4ede11a96c41a06fa77091b3",
+        "trials": 8,
+        "transitions": 8202,
+        "sidecar_sha256": "6c968fa0108635c87a6f1bba92202a362089476deb04529ee1b8fe540f8b14fe"
+      }
+    }
+  },
+  "cumulative_source_action_charge": 457851,
+  "selected_bridge_prefixes": [
+    {
+      "slot": "libero_spatial:00/train",
+      "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_spatial-00-train/index.json",
+      "index_sha256": "64dc19fc0e71ef72ebcb0b884ab6a4df5e2b46868cc15a9db2f97ef9398966ff",
+      "current_leaf": {
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train",
+        "maximum_total_actions": 21800,
+        "plan_sha256": "f89f672aa1ae72a1c19749cd60cf31c7c059cb6cfae6843d4e59c0204aa962dd",
+        "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+        "inherited_action_charge": 11344,
+        "parent_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2"
+      },
+      "producer_source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "selected_cases": 55,
+      "selected_episodes": 220,
+      "selected_chunks": 1927,
+      "selected_teacher_updates": 28620,
+      "charged_total_actions": 20465,
+      "proof_sha256": "519c2a9b045db841a728d78fea5ce5a4f70dac8eb85d527a49f80fc88141e86f"
+    },
+    {
+      "slot": "libero_object:00/train",
+      "index_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_object-00-train/index.json",
+      "index_sha256": "32dfadcee4c352d4fe78a5cdb17c537e77d9aa820e42525e6a6ab570ed9149dd",
+      "current_leaf": {
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train",
+        "maximum_total_actions": 21800,
+        "plan_sha256": "f89f672aa1ae72a1c19749cd60cf31c7c059cb6cfae6843d4e59c0204aa962dd",
+        "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+        "inherited_action_charge": 8230,
+        "parent_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train"
+      },
+      "producer_source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "selected_cases": 33,
+      "selected_episodes": 132,
+      "selected_chunks": 1987,
+      "selected_teacher_updates": 29940,
+      "charged_total_actions": 20677,
+      "proof_sha256": "a7c35e9898fde292d569485578cf506099a326bfc906f4aabef5574c31a18ff9"
+    }
+  ],
+  "phase_seconds": {
+    "metadata-tests": 7.123708724975586,
+    "capture": 514.1613953113556,
+    "assemble": 113.30644631385803
+  },
+  "predecessor_failure": {
+    "run": "libero40-source-pipeline-cpu-20261031-r1",
+    "job": "job-ujyjxq64rql8",
+    "GPU_count": 0,
+    "scheduler_seconds": 49,
+    "source_prefix": "0478",
+    "cause": "Runtime guard assumedPython3.10; actual qualified binary is3.12.15",
+    "evidence": "Root verified UI/runtime metadata; no output absence is used as job-status evidence"
+  },
+  "limitations": "Immutable source data is ready for fitting; no controller training, model checkpoint or robot performance result is established by this CPU qualification."
+}
