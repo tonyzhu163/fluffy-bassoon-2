@@ -21,6 +21,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import sys
 import time
 import weakref
@@ -394,11 +395,26 @@ def parse_args(argv=None):
     p.add_argument("--boundary-reserve-seconds",type=float,default=180)
     p.add_argument("--qualification-smoke",action="store_true")
     p.add_argument("--resume",type=Path)
+    p.add_argument("--resume-trial-manifest",type=Path)
+    p.add_argument("--resume-trial-manifest-sha256")
+    p.add_argument("--lineage-source-commit")
+    p.add_argument("--max-source-trials-per-process",type=int,default=0)
+    p.add_argument("--recycle-at-round-boundary",action="store_true")
     args=p.parse_args(argv)
     if args.source_steps is None: args.source_steps=272_000 if args.campaign_root else 10_240_000
     if args.ppo_trials_per_update is None: args.ppo_trials_per_update=8 if args.campaign_root else 256
     if args.native_episodes is None: args.native_episodes=1 if args.campaign_root else 2
     if args.source_validation_episodes is None: args.source_validation_episodes=4 if args.campaign_root else 0
+    recovery_flags=(args.resume_trial_manifest,args.resume_trial_manifest_sha256,args.lineage_source_commit)
+    if any(recovery_flags) and (not all(recovery_flags) or not args.resume or not args.campaign_root
+            or not args.record_corpus or not args.source_iterations
+            or not re.fullmatch(r"[0-9a-f]{64}",args.resume_trial_manifest_sha256 or "")
+            or not re.fullmatch(r"[0-9a-f]{40}",args.lineage_source_commit or "")):
+        p.error("Episode-boundary migration requires resume, bound manifest/SHA, explicit lineage and a whole-trial campaign")
+    if args.max_source_trials_per_process<0:
+        p.error("Process trial lifetime must be nonnegative")
+    if args.recycle_at_round_boundary and len(args.methods)!=1:
+        p.error("Round-boundary process recycling requires one independently supervised source arm")
     if args.ppo_max_update_kl is not None and (
             not math.isfinite(args.ppo_max_update_kl) or args.ppo_max_update_kl<=0):
         p.error("--ppo-max-update-kl must be finite and positive")
@@ -498,6 +514,20 @@ def main(argv=None):
         raise FileExistsError("Use a fresh output identity, including for resumed allocations")
     args.output.mkdir(parents=True,exist_ok=True)
     started=time.monotonic()
+    resume_joint=None;resume_path=None;trial_continuation=None
+    lineage_commit=args.lineage_source_commit or args.source_commit
+    execution_run_id=args.output.name
+    if args.resume_trial_manifest:
+        from fluffy_bassoon.meta_rl.robotwin_trial_resume import load_trial_continuation
+        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
+        resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
+        trial_continuation=load_trial_continuation(args.resume_trial_manifest,args.resume_trial_manifest_sha256,
+            checkpoint_path=resume_path,checkpoint=resume_joint,execution_commit=args.source_commit,
+            lineage_commit=lineage_commit)
+        # Legacy child paths all ended in /experiment. A fresh execution must
+        # never reuse experiment:action:0 or misattribute its Git revision.
+        output_identity=hashlib.sha256(str(args.output.resolve()).encode()).hexdigest()[:16]
+        execution_run_id=f"{args.output.parent.name}:{args.output.name}:{output_identity}"
     random.seed(args.seed); np.random.seed(args.seed); torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
     capture_qualification=None
@@ -507,10 +537,12 @@ def main(argv=None):
     corpus_writer=None
     if args.record_corpus:
         from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
-        corpus_writer=RobotwinCorpusWriter(args.output/"corpus",dict(
-            source_commit=args.source_commit,model_path=str(args.model_path),
+        corpus_identity=dict(source_commit=lineage_commit,model_path=str(args.model_path),
             norm_stats=str(args.norm_stats),source_tasks=args.source_tasks,
-            train_episodes=args.train_episodes,native_horizon=args.native_horizon))
+            train_episodes=args.train_episodes,native_horizon=args.native_horizon)
+        if trial_continuation:corpus_identity.update(execution_source_commit=args.source_commit,
+            resume_trial_manifest_sha256=trial_continuation.manifest_sha256)
+        corpus_writer=RobotwinCorpusWriter(args.output/"corpus",corpus_identity)
     from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv
     runtime_options={}
     task_episode_limits=None
@@ -535,7 +567,7 @@ def main(argv=None):
                         action_horizon=args.native_horizon,output_dir=args.output/"runtime",
                         task_config_name=args.task_config_name,**runtime_options)
     observation_dim=int(env.observation_dim); noise_shape=tuple(env.noise_shape)
-    contract=dict(source_commit=args.source_commit,source_tasks=args.source_tasks,
+    contract=dict(source_commit=lineage_commit,source_tasks=args.source_tasks,
                   eval_tasks=args.eval_tasks,methods=args.methods,source_steps_per_learner=args.source_steps,
                   train_episodes=args.train_episodes,eval_episodes=args.eval_episodes,
                   reported_episode_indices=[x for x in (1,2,4,8) if x<=args.eval_episodes],
@@ -604,20 +636,29 @@ def main(argv=None):
         if capture_qualification:
             validate_loaded_capture_runtime(capture_qualification,runtime)
     write_json(args.output/"contract.json",contract)
+    if trial_continuation:
+        if resume_joint["contract"]!=contract:raise ValueError("Migration scientific/source contract changed")
+        migration=dict(trial_continuation.receipt,execution_run_id=execution_run_id,
+            scope="execution/recovery migration only; scientific and learner contract unchanged")
+        write_json(args.output/"execution-migration.json",migration)
     budget=None
     if args.campaign_root:
         from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
+        if trial_continuation:
+            snapshot=json.loads((args.campaign_root/"snapshot.json").read_text())
+            if snapshot["journal_sha256"]!=trial_continuation.receipt["ledger_journal_sha256"]:
+                raise ValueError("Migration physical ledger advanced after its bound snapshot")
         budget=CampaignBudget(args.campaign_root,campaign_id=args.campaign_id,
             total_actions=args.campaign_max_actions,
             source_caps={method:args.source_steps for method in args.methods},
-            contract=contract,run_id=args.output.name,source_commit=args.source_commit)
+            contract=contract,run_id=execution_run_id,source_commit=args.source_commit)
         budget.__enter__()
         if args.campaign_prior_receipts:
             for receipt in json.loads(args.campaign_prior_receipts.read_text()):
                 budget.import_receipt(**receipt)
         if args.collector_lanes>1 and resume_joint is not None:
             assert_campaign_checkpoint_fence(args.campaign_root,resume_joint,live_budget=budget)
-        env=CampaignEnv(env,budget,run_id=args.output.name)
+        env=CampaignEnv(env,budget,run_id=execution_run_id)
     policy_archive=BehaviorPolicyArchive(args.output/"corpus"/"policies") if args.record_corpus else None
     vector_env=None
     collector_time=(CollectorTimeAdmission(args.collector_group_seconds,args.boundary_reserve_seconds)
@@ -634,6 +675,9 @@ def main(argv=None):
         context=dict(method=method,phase=phase,trial_id=trial_id,
                      **dict(dict(policy_checkpoint=None,policy_sha256=None,
                                  policy_checkpoint_sha256=None),**behavior),**metadata)
+        if trial_continuation:context.update(execution_source_commit=args.source_commit,
+            lineage_source_commit=lineage_commit,execution_run_id=execution_run_id,
+            resume_trial_manifest_sha256=trial_continuation.manifest_sha256)
         if hasattr(env,"set_recording_context"): env.set_recording_context(context)
         return context
     def decision_metadata(metadata):
@@ -642,6 +686,7 @@ def main(argv=None):
     updates_path=args.output/"updates.jsonl"
     history=[]; trained={}; summaries={}; completed_units=set()
     stage_reports={}; active_milestone=None; checkpoint_rng_override=None
+    completed_process_trials=0
     def log(stage,**values):
         row=dict(stage=stage,elapsed_seconds=time.monotonic()-started,**values)
         print(json.dumps(row,allow_nan=False),flush=True)
@@ -649,6 +694,14 @@ def main(argv=None):
     def guard():
         if time.monotonic()-started>=args.wall_seconds-args.boundary_reserve_seconds:
             raise WallBudgetReached("Stopped before a new trial to preserve checkpoint reserve")
+        lifetime_reached=(args.max_source_trials_per_process
+                          and completed_process_trials>=args.max_source_trials_per_process)
+        if args.recycle_at_round_boundary:
+            lifetime_reached=(lifetime_reached and all(
+                state["completed_trials"]%args.ppo_trials_per_update==0 and not state["pending"]
+                and state["selected_resume"] is None for state in source_states.values()))
+        if lifetime_reached:
+            raise WallBudgetReached("Stopped at a durable boundary before native process lifetime limit")
     def record_episode(method,phase,**metadata):
         def callback(row):
             append_json(episodes_path,dict(method=method,phase=phase,**metadata,**row))
@@ -713,9 +766,9 @@ def main(argv=None):
                 if args.campaign_root:
                     history.append(row); completed_units.add(unit); save_joint(force=True)
     def sac_trial(learner,task,seeds,*,phase,source=False,online=False,primitive_budget=None,method="sac",stage=None,
-                  source_iteration=None,stage_iteration=None):
+                  source_iteration=None,stage_iteration=None,start_episode=0):
         total=0; rows=[]; external_cut=False
-        for episode,seed in enumerate(seeds):
+        for episode,seed in enumerate(seeds[start_episode:],start=start_episode):
             observation=np.asarray(env.reset(task,int(seed)),np.float32)
             initial_hash=observation_hash(observation); done=False; steps=chunks=0; success=False; reward_sum=0.
             while not done:
@@ -766,7 +819,9 @@ def main(argv=None):
     accepted_resume_steps={}
     next_method_index=0
     last_joint_steps=0
-    if resume_joint is not None:
+    if args.resume is not None:
+        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
+        if resume_joint is None:resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
         if resume_joint["contract"]!=contract:
             raise ValueError("Resume scientific/source contract changed")
         if args.campaign_root:
@@ -782,7 +837,7 @@ def main(argv=None):
             schedule=BalancedSchedule(args.source_tasks,args.seed+101)
             state=dict(learner=learner,schedule=schedule,steps=0,
                        task_steps={task:0 for task in args.source_tasks},pending=[],last_checkpoint_steps=0,
-                       completed_trials=0,iterations=0)
+                       completed_trials=0,iterations=0,selected_resume=None,recovered_prefix_credit=0)
             if resume_joint is not None:
                 saved=resume_joint["states"][method]
                 learner.load_state_dict(saved["learner"])
@@ -801,6 +856,12 @@ def main(argv=None):
                                 or len(state["pending"])!=partial))):
                         raise ValueError("Fixed-iteration recovery counters are inconsistent")
             source_states[method]=state
+            if trial_continuation and trial_continuation.method==method:
+                state["selected_resume"]=trial_continuation if trial_continuation.trial is not None else None
+                if trial_continuation.prefix_rollout is not None:
+                    errors=learner.replay_error(trial_continuation.prefix_rollout)
+                    if errors["log_prob_max_error"]>2e-4 or errors["value_max_error"]>1e-5:
+                        raise ValueError("Recovered episode prefix does not replay under the saved policy")
             accepted_resume_steps[method]=state["steps"]
         if resume_joint is not None:
             next_method_index=int(resume_joint["next_method_index"])
@@ -825,6 +886,8 @@ def main(argv=None):
             if args.source_iterations:
                 states[method].update(completed_source_trials=state["completed_trials"],
                                       completed_source_iterations=state["iterations"])
+            if state["selected_resume"] is not None:
+                states[method]["selected_trial_recovery"]=state["selected_resume"].receipt
         path=args.output/"coordinator-recovery.pt"
         temporary=path.with_suffix(".tmp")
         recovery=dict(contract=contract,states=states,
@@ -848,6 +911,7 @@ def main(argv=None):
             torch.save(recovery,temporary)
             temporary.replace(path)
         last_joint_steps=total
+        return recovery
     def save_state(method,force=False):
         state=source_states[method]
         if force or state["steps"]-state["last_checkpoint_steps"]>=args.checkpoint_steps:
@@ -861,11 +925,12 @@ def main(argv=None):
         for method,state in source_states.items():
             learner=state["learner"]
             summaries[method]=dict(source_steps=state["steps"],task_steps=state["task_steps"],
-                                   allocation_source_steps=state["steps"]-accepted_resume_steps[method],
+                                   allocation_source_steps=state["steps"]-accepted_resume_steps[method]-state["recovered_prefix_credit"],
                                    updates=learner.updates,optimizer_steps=learner.optimizer_steps,
                                    pending_trials=len(state["pending"]),
                                    pending_primitive_steps=sum(r["primitive_steps"] for _,r in state["pending"]))
             if state.get("rejected_group"): summaries[method]["rejected_group"]=state["rejected_group"]
+            if trial_continuation:summaries[method]["recovered_prior_prefix_actions"]=state["recovered_prefix_credit"]
             if method=="sac": summaries[method]["contract"]=learner.contract()
             if args.source_iterations:
                 summaries[method].update(completed_source_trials=state["completed_trials"],
@@ -1015,6 +1080,7 @@ def main(argv=None):
         maybe_ppo_update(method)
         refresh_summaries()
     def source_round(method):
+        nonlocal completed_process_trials
         state=source_states[method]; learner=state["learner"]
         previous_iteration=state["iterations"]
         if method!="sac": maybe_ppo_update(method)
@@ -1040,12 +1106,20 @@ def main(argv=None):
             allowance=min(allowance,budget.remaining(phase="source",method=method))
             if allowance<1: raise CampaignBudgetReached(f"No source allowance remains for {method}")
         schedule_before=deepcopy(state["schedule"].state_dict()) if args.source_iterations else None
-        task,seeds=state["schedule"].sample(args.train_episodes)
+        selected=state["selected_resume"]
+        if selected is not None:
+            task=selected.trial["task"];seeds=selected.trial["seeds"]
+            if state["schedule"].trials!=selected.trial["schedule_trials"]:
+                raise ValueError("Already-selected trial cursor changed before continuation")
+        else:task,seeds=state["schedule"].sample(args.train_episodes)
+        prefix_steps=selected.prefix_steps if selected is not None else 0
+        prefix_chunks=selected.prefix_chunks if selected is not None else 0
+        start_episode=selected.start_episode if selected is not None else 0
         iteration_metadata={}
         if args.source_iterations:
             horizon=(env.episode_limit_for_task(task) if hasattr(env,"episode_limit_for_task") else args.episode_limit)
-            required=args.train_episodes*horizon
-            remaining=args.source_steps-state["steps"]
+            required=(args.train_episodes-start_episode)*horizon
+            remaining=args.source_steps-state["steps"]-prefix_steps
             if budget is not None: remaining=min(remaining,budget.remaining(phase="source",method=method))
             if remaining<required:
                 state["schedule"].load_state_dict(schedule_before)
@@ -1058,24 +1132,35 @@ def main(argv=None):
         log("source_trial_start",method=method,task=task,seeds=seeds,
             source_steps=state["steps"],optimizer_steps=learner.optimizer_steps,**iteration_metadata)
         if method=="sac":
-            result=sac_trial(learner,task,seeds,phase="source",source=True,
+            result=sac_trial(learner,task,seeds,phase="source",source=True,start_episode=start_episode,
                              primitive_budget=allowance,stage=active_milestone,
                              source_iteration=iteration_metadata.get("source_iteration"))
             errors={}
         else:
-            rollout,result=learner.collect_trial(env,task,seeds,
+            continuation_options=(dict(start_episode=start_episode,history_offset=prefix_chunks) if selected is not None else {})
+            rollout,result=learner.collect_trial(env,task,seeds,**continuation_options,
                 primitive_budget=allowance,
                 episode_callback=record_episode(method,"source",**iteration_metadata),
                 decision_callback=decision_metadata if args.record_corpus else None)
+            if selected is not None and selected.prefix_rollout is not None:
+                from fluffy_bassoon.meta_rl.robotwin_trial_resume import combine_episode_rollouts
+                rollout=combine_episode_rollouts(selected.prefix_rollout,rollout)
             errors=learner.replay_error(rollout)
             if errors["log_prob_max_error"]>2e-4 or errors["value_max_error"]>1e-5:
                 raise RuntimeError(f"Old-policy replay failed: {errors}")
+        if selected is not None:
+            result["episodes"]=deepcopy(selected.episodes)+result["episodes"]
+            result["primitive_steps"]+=prefix_steps;result["chunks"]+=prefix_chunks
+            result["resume_trial_manifest_sha256"]=selected.manifest_sha256
         if args.source_iterations:
             if len(result["episodes"])!=args.train_episodes or result.get("budget_truncated",False):
                 raise RuntimeError("Fixed source iterations require complete K4 trials without external cuts")
             state["completed_trials"]+=1
         if method!="sac": state["pending"].append((rollout,result))
         state["steps"]+=result["primitive_steps"]
+        state["recovered_prefix_credit"]+=prefix_steps
+        state["selected_resume"]=None
+        completed_process_trials+=1
         if active_milestone is not None:
             result["stage_source_actions"]=active_milestone
             result["external_stage_budget_cut"]=bool(result.get("budget_truncated",False)
@@ -1318,7 +1403,7 @@ def main(argv=None):
         status="failed"; log(status,error_type=type(exc).__name__,reason=str(exc))
         raise
     finally:
-        if source_states: save_joint(force=True)
+        final_joint=save_joint(force=True) if source_states else None
         for method in source_states: save_state(method,force=True)
         refresh_summaries()
         if "frozen_before" in locals():
@@ -1352,6 +1437,22 @@ def main(argv=None):
         if hasattr(env,"counters"):
             value=env.counters
             summary["runtime_counters"]=value() if callable(value) else value
+        if args.max_source_trials_per_process:
+            summary.update(process_source_trials=completed_process_trials,
+                           process_trial_lifetime_limit=args.max_source_trials_per_process,
+                           recycle_at_round_boundary=args.recycle_at_round_boundary)
+        if (status=="wall_budget_stop" and final_joint is not None and len(args.methods)==1
+                and args.source_iterations and (args.max_source_trials_per_process or trial_continuation)
+                and all(state["selected_resume"] is None and state["schedule"].trials==state["completed_trials"]
+                        for state in source_states.values())):
+            from fluffy_bassoon.meta_rl.robotwin_trial_resume import write_boundary_manifest
+            ledger_copy=args.output/"continuation-ledger.json"
+            write_json(ledger_copy,budget.snapshot())
+            summary["continuation_manifest"]=write_boundary_manifest(
+                args.output/"continuation-manifest.json",checkpoint_path=args.output/"coordinator-recovery.pt",
+                checkpoint=final_joint,corpus_root=args.output/"corpus",progress_path=args.output/"progress.jsonl",
+                episodes_path=episodes_path,ledger_snapshot_path=ledger_copy,
+                execution_commit=args.source_commit,lineage_commit=lineage_commit)
         write_json(args.output/"summary.json",summary)
         try:
             if vector_env is not None: vector_env.close()

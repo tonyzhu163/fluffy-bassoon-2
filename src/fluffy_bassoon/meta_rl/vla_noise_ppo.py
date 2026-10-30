@@ -127,7 +127,8 @@ class RecurrentNoisePPO:
     @torch.no_grad()
     def collect_trial(self, env, task_name, episode_seeds, *, deterministic=False,
                       reset_memory=None, reward_blind=False, episode_callback=None,
-                      primitive_budget=None, decision_callback=None):
+                      primitive_budget=None, decision_callback=None,
+                      start_episode=0, history_offset=0):
         """Run complete episodes; sequential execution preserves causal adaptation.
 
         Environment step returns its exact primitive-step increment. This can be
@@ -140,6 +141,13 @@ class RecurrentNoisePPO:
             raise ValueError("Primitive budget must be a positive integer")
         c = self.config
         reset_memory = c.reset_each_episode if reset_memory is None else bool(reset_memory)
+        if (type(start_episode) is not int or not 0<=start_episode<len(episode_seeds)
+                or type(history_offset) is not int or history_offset<0):
+            raise ValueError("Invalid original episode/history continuation offset")
+        if start_episode and (not c.reset_each_episode or not reset_memory or primitive_budget is not None):
+            raise ValueError("Episode-boundary continuation requires the trained reset controller and whole episodes")
+        if not start_episode and history_offset:
+            raise ValueError("An unstarted trial cannot have a prior history offset")
         self.policy.eval()
         state = None
         previous_noise = np.zeros(self.action_dim, np.float32)
@@ -152,7 +160,7 @@ class RecurrentNoisePPO:
         total_primitive = 0
         budget_cut = False
         bootstrap = None
-        for episode, seed in enumerate(episode_seeds):
+        for episode, seed in enumerate(episode_seeds[start_episode:],start=start_episode):
             if c.reset_each_episode:
                 previous_noise = np.zeros(self.action_dim,np.float32)
                 previous_reward = 0.
@@ -184,7 +192,7 @@ class RecurrentNoisePPO:
                     decision_callback(dict(
                         episode_index=episode, chunk_index=chunks,
                         episode_limit=episode_limit,
-                        history_index=len(records["rewards"]),
+                        history_index=history_offset+len(records["rewards"]),
                         policy_update=int(self.updates),
                         pre_squash_actions=raw[0].detach().cpu().numpy().copy(),
                         old_log_prob=log_prob[0].detach().cpu().numpy().copy(),
