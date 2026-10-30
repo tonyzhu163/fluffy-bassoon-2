@@ -45,6 +45,7 @@ def prepared_pair(tmp_path,recovery_runtime,monkeypatch):
             "--benchmark-episode-limits","--source-eval-iterations","10","25","50","100",
             "--ppo-max-update-kl",".1","--learning-rate","1e-6","--final-observation-only",
             "--capture-qualification",str(qualification)]
+        args.remove("--stage-source-validation-only")
         args[args.index("--source-steps")+1]="1100000"
         cap=1226400 if method=="ppo" else 1168800
         args +=["--campaign-max-actions",str(cap)]
