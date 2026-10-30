@@ -26,6 +26,8 @@ BUDGET_VALIDATION_TASKS = {f"{suite}:{i:02d}" for suite in SOURCE_SUITES for i i
 CAMPAIGN_FORMAT = "libero40_source_1m_campaign_v1"
 OBJECTIVES = ("ad", "dpt")
 MODES = ("full", "static")
+DPT_SAME_TEACHER_METRIC = "heldout_state_same_train_teacher"
+DPT_LEGACY_METRIC = "legacy_teacher_transfer"
 
 
 def _json(path):
@@ -215,8 +217,99 @@ def load_source(path, partition, *, allow_small_pilot=False, prefix_snapshot_adm
         episodes=len(receipts))
 
 
+def _same_array(left, right):
+    """Labels may change; every behavior-array byte and its layout must agree."""
+    return (left.dtype == right.dtype and left.shape == right.shape
+            and left.tobytes(order="C") == right.tobytes(order="C"))
+
+
+def dpt_validation_metric(assembly):
+    """Describe old data without relabeling its immutable source publication."""
+    return assembly.get("dpt_validation_labels", {}).get("metric_name", DPT_LEGACY_METRIC)
+
+
+def _admit_dpt_validation_binding(path, expected_sha256, admission, groups):
+    """Admit derived labels separately from immutable behavior publications.
+
+    This adapter never loads a SAC actor. The writer independently verifies the
+    TRAIN actor identity; we bind its result to the exact source publications
+    selected here and recheck all public non-target arrays.
+    """
+    if (admission is None or admission.get("kind") != "source40_topup_complete_prefix_admission_v1"
+            or path is None or expected_sha256 is None):
+        raise ValueError("Derived DPT labels require explicit complete-prefix admission and binding SHA256")
+    from .vla_source40_dpt_same_teacher import load_binding, non_target_hashes
+    binding = load_binding(path, expected_sha256, admission_path=admission["path"],
+        admission_sha256=admission["file_sha256"])
+    ordered_tasks = [row["task_key"] for row in binding.get("rows", [])]
+    expected_order = [row["slot"].split("/")[0]
+        for row in _json(admission["path"])["source_indices"]["validation"]]
+    if (binding.get("format") != "source40_dpt_same_train_teacher_labels_v1"
+            or binding.get("completed") is not True or binding.get("metric_name") != DPT_SAME_TEACHER_METRIC
+            or Path(binding.get("admission_path", "")).resolve() != Path(admission["path"]).resolve()
+            or binding.get("admission_sha256") != admission["file_sha256"]
+            or binding.get("source_action_charge") != admission["cumulative_source_action_charge"]
+            or ordered_tasks != expected_order or len(ordered_tasks) != len(BUDGET_VALIDATION_TASKS)
+            or set(ordered_tasks) != BUDGET_VALIDATION_TASKS):
+        raise ValueError("Derived DPT binding changed the eight-goal order, source admission or behavior cost")
+    by_task = {split: {row["task"]: row for row in rows} for split, rows in groups.items()}
+    replacements, label_roles = {}, []
+    for row in binding["rows"]:
+        task = row["task_key"]
+        train, validation = (by_task[split][task] for split in ("train", "validation"))
+        for split, source in (("train", train), ("validation", validation)):
+            if (Path(row[split + "_index_path"]).resolve() != Path(source["index_path"]).resolve()
+                    or row[split + "_index_sha256"] != source["index_sha256"]):
+                raise ValueError("Derived DPT label source differs from selected behavior history")
+        train_publication = train.get("selected", train.get("selected_publication"))
+        validation_publication = validation.get("selected", validation.get("selected_publication"))
+        checkpoint = _member(Path(train["index_path"]).parent, train_publication["source_checkpoint"])
+        teacher = row["label_teacher"]
+        actor_digest = teacher.get("pure_actor_sha256", "")
+        if (Path(teacher["checkpoint_path"]).resolve() != checkpoint
+                or teacher["checkpoint_sha256"] != train_publication["source_checkpoint_sha256"]
+                or file_sha256(checkpoint) != teacher["checkpoint_sha256"]
+                or teacher["train_dpt_sha256"] != train_publication["datasets"]["dpt"]["sha256"]
+                or teacher["source_updates"] != _json(train["index_path"])["source_updates"]
+                or len(actor_digest) != 64 or any(char not in "0123456789abcdef" for char in actor_digest)):
+            raise ValueError("Derived DPT labels must use the matching TRAIN final checkpoint and pure actor identity")
+        original = row["original_validation_dpt"]
+        original_path = _member(Path(validation["index_path"]).parent,
+            validation_publication["datasets"]["dpt"]["path"])
+        if (Path(original["path"]).resolve() != original_path
+                or original["sha256"] != validation_publication["datasets"]["dpt"]["sha256"]):
+            raise ValueError("Derived DPT labels replaced the original validation publication provenance")
+        old_trials, old_manifest = load_dataset(original_path, expected_sha256=original["sha256"])
+        derived = row["derived_validation_dpt"]
+        if (Path(derived.get("sidecar_path", "")).resolve() != Path(derived["path"]).with_suffix(".json").resolve()
+                or file_sha256(derived["sidecar_path"]) != derived.get("sidecar_sha256")):
+            raise ValueError("Derived DPT label sidecar requires its explicit matching file SHA256")
+        new_trials, new_manifest = load_dataset(derived["path"], expected_sha256=derived["sha256"])
+        metadata = new_manifest["metadata"]
+        if (len(old_trials) != 1 or len(new_trials) != 1 or new_manifest["objective"] != "dpt"
+                or any(metadata.get(key) != value for key, value in old_manifest["metadata"].items())
+                or metadata.get("metric_name") != DPT_SAME_TEACHER_METRIC
+                or metadata.get("label_teacher") != teacher
+                or set(row["non_target_field_sha256"]) != set(FIELDS) - {"target_noise"}
+                or non_target_hashes(old_trials[0]) != row["non_target_field_sha256"]
+                or non_target_hashes(new_trials[0]) != row["non_target_field_sha256"]
+                or any(not _same_array(old_trials[0][field], new_trials[0][field])
+                    for field in set(FIELDS) - {"target_noise"})):
+            raise ValueError("Derived DPT labels changed behavior arrays, chronology, boundaries or original provenance")
+        replacements[task] = new_trials[0]
+        label_roles.append(dict(task_key=task, train=teacher, validation=teacher,
+            original_validation_dpt=original, derived_validation_dpt=derived,
+            non_target_field_sha256=row["non_target_field_sha256"]))
+    descriptor = dict(format="source40_dpt_validation_label_admission_v1", path=str(Path(path).resolve()),
+        file_sha256=expected_sha256, metric_name=DPT_SAME_TEACHER_METRIC,
+        admission_path=admission["path"], admission_sha256=admission["file_sha256"],
+        source_action_charge=admission["cumulative_source_action_charge"], label_roles=label_roles)
+    return descriptor, replacements
+
+
 def assemble(train_indices, validation_indices, output, *, allow_small_pilot=False,
-             campaign_path=None, campaign_sha256=None, topup_admission_path=None, topup_admission_sha256=None):
+             campaign_path=None, campaign_sha256=None, topup_admission_path=None, topup_admission_sha256=None,
+             dpt_validation_binding_path=None, dpt_validation_binding_sha256=None):
     """Join different tasks, never different prefix versions of one history."""
     if topup_admission_path is not None or topup_admission_sha256 is not None:
         if campaign_path is not None or campaign_sha256 is not None or allow_small_pilot:
@@ -258,6 +351,10 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
                     ([row[key]] if key == "history_id" else row[key])}
         if identities("train") & identities("validation"):
             raise ValueError(f"Train/validation source overlap: {key}")
+    label_admission, validation_dpt = None, {}
+    if dpt_validation_binding_path is not None or dpt_validation_binding_sha256 is not None:
+        label_admission, validation_dpt = _admit_dpt_validation_binding(
+            dpt_validation_binding_path, dpt_validation_binding_sha256, prefix_admission, groups)
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     result = dict(format=ASSEMBLY_FORMAT, source_only=True, motor_sha256=PI05_RECEIPT,
@@ -266,6 +363,8 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
         validation_task_keys=[row["task"] for row in groups["validation"]], campaign=campaign,
         datasets={}, selected_sources={}, collection_costs_count_once={},
         interpretation="Source imitation candidates only; no claim of robot gain or in-context adaptation")
+    if label_admission is not None:
+        result["dpt_validation_labels"] = label_admission
     for partition, rows in groups.items():
         selected_sources = [dict(index_path=row["index_path"], index_sha256=row["index_sha256"],
             task=row["task"], history_id=row["history_id"], selected_publication=row["selected"],
@@ -279,13 +378,17 @@ def assemble(train_indices, validation_indices, output, *, allow_small_pilot=Fal
         result["datasets"][partition] = {}
         for objective in OBJECTIVES:
             path = output / f"{partition}-{objective}.npz"
-            manifest = save_dataset(path, [row["datasets"][objective] for row in rows], objective=objective,
-                metadata=dict(motor_sha256=PI05_RECEIPT, feature_contract=result["feature_contract"],
+            derived_role = partition == "validation" and objective == "dpt" and label_admission is not None
+            trials = [validation_dpt[row["task"]] if derived_role else row["datasets"][objective] for row in rows]
+            metadata = dict(motor_sha256=PI05_RECEIPT, feature_contract=result["feature_contract"],
                     noise_contract=NOISE_CONTRACT, global_task_split="source40", local_scene_split=partition,
                     trial_ids=[row["history_id"] for row in rows], source_case_ids=[case for row in rows for case in sorted(row["case_ids"])],
                     source_task_keys=[row["task"] for row in rows], campaign=campaign, selected_source_histories=selected_sources,
                     small_pilot=allow_small_pilot, publication_rule="One latest complete paired prefix per task; overlapping versions excluded",
-                    teacher_status="Source SAC candidates; no expert/optimality claim"))
+                    teacher_status="Source SAC candidates; no expert/optimality claim")
+            if derived_role:
+                metadata.update(metric_name=DPT_SAME_TEACHER_METRIC, dpt_validation_labels=label_admission)
+            manifest = save_dataset(path, trials, objective=objective, metadata=metadata)
             result["datasets"][partition][objective] = dict(path=path.name, sha256=manifest["sha256"],
                 trials=manifest["trials"], transitions=manifest["transitions"])
     result["assembly_sha256"] = content_hash(result)
@@ -319,10 +422,16 @@ def load_assembly(path, *, allow_small_pilot=False):
             actual_campaign = load_campaign(campaign["path"], campaign["file_sha256"])
         if actual_campaign != campaign:
             raise ValueError("Assembly campaign provenance differs")
+    label_admission, validation_dpt = value.get("dpt_validation_labels"), {}
+    if label_admission is not None:
+        verified, validation_dpt = _admit_dpt_validation_binding(label_admission["path"],
+            label_admission["file_sha256"], campaign, value["selected_sources"])
+        if verified != label_admission:
+            raise ValueError("Assembly derived DPT label admission differs")
     for partition in ("train", "validation"):
         for objective in OBJECTIVES:
             item = value["datasets"][partition][objective]
-            _, manifest = load_dataset(_member(path.parent, item["path"]), expected_sha256=item["sha256"])
+            trials, manifest = load_dataset(_member(path.parent, item["path"]), expected_sha256=item["sha256"])
             if (manifest["objective"] != objective or manifest["metadata"].get("local_scene_split") != partition
                     or manifest["metadata"].get("motor_sha256") != value["motor_sha256"]
                     or manifest["metadata"].get("feature_contract") != value["feature_contract"]
@@ -332,6 +441,15 @@ def load_assembly(path, *, allow_small_pilot=False):
                     or manifest["metadata"].get("selected_source_histories") != value["selected_sources"][partition]
                     or manifest["metadata"].get("trial_ids") != [row["history_id"] for row in value["selected_sources"][partition]]):
                 raise ValueError("Assembled dataset contract differs")
+            if partition == "validation" and objective == "dpt" and label_admission is not None:
+                if (manifest["metadata"].get("metric_name") != DPT_SAME_TEACHER_METRIC
+                        or manifest["metadata"].get("dpt_validation_labels") != label_admission
+                        or len(trials) != len(validation_tasks)
+                        or any(not _same_array(trial[field], validation_dpt[task][field])
+                            for task, trial in zip(validation_tasks, trials, strict=True) for field in FIELDS)):
+                    raise ValueError("Assembled DPT validation arrays differ from the explicitly bound derived labels")
+            elif "dpt_validation_labels" in manifest["metadata"] or manifest["metadata"].get("metric_name") == DPT_SAME_TEACHER_METRIC:
+                raise ValueError("Same-TRAIN-teacher metric requires explicit derived validation label admission")
     return value
 
 
