@@ -489,3 +489,22 @@ readiness or score is claimed. Neither staging nor inventory enters source
 pretraining or gates source collection. Full-suite GPU costs remain separate.
 [Inventory](../outputs/libero-shifted-suite-inventory-20261031-r1/README.md),
 [Pro stage](../outputs/libero-pro-full-stage-20261031-r1/README.md).
+
+
+Next-generation validation decision: prefer the same source-only, preselected
+TRAIN actor per goal for TRAIN and heldout-state VAL DPT labels on the eight
+matched goals. Preserve actual behavior histories, noises/actions/rewards and
+all legacy archives. The proposed derived-label schema separates behavior
+and label-teacher provenance, pure actor digest and full checkpoint, with
+source costs counted once. Until verified, explicitly retain teacher_transfer
+as the metric; no silent relabel or fixed500 checkpoint-selection change.
+Collection remains independent. Up to600GPU-s comes from existing source
+contingency within25h (89,480 planned/520 unassigned), not a larger budget.
+[Design](../outputs/libero40-dpt-teacher-binding-design-20261031-r1/DESIGN.md).
+
+The ready robot readout has been added to the pending resource request:
+29.5additionalGPUh/150GB, comprising25h source+4.5h fixed100 LIBERO90 readout.
+This supersedes the unanswered source-only question; approving source only
+still grants only25h/130GB. No new budget has yet been granted. PPO44h/arm,
+full shifted suites and2/4/8-shot completion remain separate/unfunded.
+[Combined request](../outputs/libero40-source-and-readout-budget-20261031-r1/PROPOSAL.md).
