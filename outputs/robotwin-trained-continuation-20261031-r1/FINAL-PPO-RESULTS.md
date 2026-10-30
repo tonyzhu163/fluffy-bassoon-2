@@ -42,3 +42,7 @@ Persistent final evaluation used25822 actions (76 episodes including four native
 Actual paired scheduler duration was15451 GPU-seconds (4h17m31s); pod duration15455s is separate. The known terminal historical total becomes92784GPU-seconds=77333+15451, excluding the active SAC job and unverified630 historical optimization seconds. The13h cap was not actual usage or a reusable balance.
 
 Evidence: [independent persistent audit](checks/independent-ppo100-20261031T0647.json), [independent reset audit](checks/independent-reset100-20261031T0632.json), [terminal accounting](receipts/scheduler-accounting-final.json), [target CSV](stage100-targets.csv). Audit SHAs: persistent aa6a3490334033b6b6250ed0ec28f5d1f023c059752920d6f4d828b85d9afe84; reset aea0ccc7e71f129b887625d98a22429ec70ac573a8fde35c4d483f67b3f58122.
+
+## Reused native control on identical cases
+
+The completed earlier native16 panel is now independently SHA-bound and paired to every final PPO/reset target case: native6/8 bottle,0/8 stapler versus normal7/8,1/8. Same actual seeds/raw observations/public features and frozen motor/capture contract pass, with distinct executor identities retained. This is a cross-run descriptive control, not the unpaired contemporaneous21161030 probes. See [native16 reuse](NATIVE16-REUSE.md). No new native rollout or allocation is needed.

@@ -437,3 +437,11 @@ adaptation advantage. Native references use another seed bank and are unpaired;
 SAC remains an independent ongoing arm. No complete three-arm ranking is claimed.
 The [complete paired report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-PPO-RESULTS.md)
 contains exact checkpoint identities, episode1/2/4/8 traces, costs and audits.
+
+The [native16 saved-result reconciliation](../../../outputs/robotwin-trained-continuation-20261031-r1/NATIVE16-REUSE.md)
+subsequently verified that the earlier qualified native panel already contains
+the exact16 final target cases: native6/8 bottle and0/8 stapler. All48 PPO and16
+trained-reset initial cases, both native result/unit hashes and the common motor/
+capture contract match. Distinct2fd/570 executors and stochastic draws remain
+explicit. This cross-run control requires no new actions and does not establish
+a statistically reliable or memory-specific benefit.
