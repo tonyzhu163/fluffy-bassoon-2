@@ -96,11 +96,18 @@ def qualify_original(policy, observation, *, seed=173):
     original = FrozenHistoryController(policy, mode='full', generator=torch.Generator(device=device).manual_seed(seed))
     instrumented = DistributionController(policy)
     instrumented.generator = torch.Generator(device=device).manual_seed(seed)
+    def same_state(left, right):
+        if isinstance(left, dict):
+            return isinstance(right, dict) and left.keys() == right.keys() and all(same_state(left[k], right[k]) for k in left)
+        if torch.is_tensor(left):
+            return torch.is_tensor(right) and torch.equal(left, right)
+        return left == right
     for step in range(4):
         a, b = original.act(observation), instrumented.act(observation)
-        if not np.array_equal(a, b) or not torch.equal(original.generator.get_state(), instrumented.generator.get_state()):
+        if (not np.array_equal(a, b) or not torch.equal(original.generator.get_state(), instrumented.generator.get_state())
+                or not same_state(original.state, instrumented.state)):
             raise RuntimeError('Original distribution adapter does not reproduce qualified stochastic actions/RNG bitwise')
         for controller, proposal in ((original, a), (instrumented, b)):
             controller.observe(np.clip(proposal, -1., 1.).astype(np.float32), -1., step == 3)
-    return dict(bitwise_actions=True, bitwise_sampler_state=True, verification_steps=4,
+    return dict(bitwise_actions=True, bitwise_sampler_state=True, bitwise_cache=True, verification_steps=4,
         robot_interactions=0, feedback='Prespecified synthetic qualification feedback only; never source/target training data')
