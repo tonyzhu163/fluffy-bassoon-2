@@ -67,6 +67,31 @@ def test_migration_preserves_all_numerical_state_journals_and_original_budget(tm
         action_cap=172000, mode=mode, ledger_path=ledger)
     with pytest.raises(ValueError, match='fresh r2'):
         prepare(old, new, 'b' * 40, ledger, old.name)
+    # The failed r2 probe is part of the SAME source/time/action lineage.
+    (new / 'launcher.lock').touch()
+    clock2 = json.loads((new / 'worker-time.json').read_text())
+    clock2['attempts'].append(dict(status='finished', charged_seconds=187, reserved_seconds=19800, path=str(new / 'probe-attempt')))
+    (new / 'worker-time.json').write_text(json.dumps(clock2))
+    for number in range(4):
+        (new / f'experiment/execution-journal/reset-probe-{number}.json').write_text(json.dumps(dict(settling_steps=10, returned=True)))
+    probe = new / 'attempts/probe'
+    probe.mkdir(parents=True)
+    (probe / 'actual-reset-arrays.pkl.gz').write_bytes(b'preserved r2 arrays')
+    third = tmp_path / ('r3-' + mode)
+    chained = prepare(new, third, 'c' * 40, ledger, old.name, camera_max_lsb=1)
+    assert chained['carried_time_seconds'] == seconds + 187
+    assert chained['carried_physical_cost']['total_action_charge'] == 77
+    assert chained['original_reservation_id'] == old.name
+    assert chained['parent_source_commit'] == 'b' * 40 and chained['original_source_commit'] == 'a' * 40
+    assert chained['state_sha256_before'] == result['state_sha256_before']
+    assert chained['camera_max_uint8_lsb'] == 1
+    assert json.loads(ledger.read_text())['reservations'] == {old.name: record}
+    catalog = json.loads((third / 'prior-artifacts.json').read_text())['files']
+    assert any(row['path'] == str(probe / 'actual-reset-arrays.pkl.gz') for row in catalog)
+    assert any(row['path'] == str(old / 'experiment/raw/original-trial41-evidence') for row in catalog)
+    validate(third / 'migration.json', output_root=third, source_commit='c' * 40,
+        action_cap=172000, mode=mode, ledger_path=ledger, camera_max_lsb=1)
+
 
 
 def test_reset_probe_requires_exact_physics_and_public_observations():

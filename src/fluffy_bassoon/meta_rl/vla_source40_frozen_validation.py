@@ -133,7 +133,8 @@ def load_models(manifest_path, expected_sha256, *, motor, tasks, schedule_sha256
         provenance[mode] = dict(recovery_path=spec['recovery_path'], recovery_sha256=spec['recovery_sha256'],
             policy_path=str(path), policy_sha256=digest, tensor_sha256=policy_signature(policy),
             source_commit=saved['contract']['source']['source_commit'], source_updates=saved['iteration'],
-            source_counters=saved['counters'], source_worker_time_charge_seconds=charge, actual_source_tasks=len(saved['runtime']['task_cycle']['exposure']))
+            source_counters=saved['counters'], reset_identity=saved['contract'].get('reset_identity'),
+            source_worker_time_charge_seconds=charge, actual_source_tasks=len(saved['runtime']['task_cycle']['exposure']))
     if asdict(models['full'].config) != asdict(models['episode'].config):
         raise ValueError('Frozen full/reset policy architectures differ')
     if file_sha256(manifest_path) != expected_sha256:
@@ -280,6 +281,7 @@ def main(argv=None):
                 rollout, receipt = collect_rl2_trial(policy, sim, motor,
                     lambda observation: motor.feature_encoder(observation, sim.metadata['instruction']),
                     **physical_case, attempts=4, chunk=10, mode=mode, episode_runner=runner,
+                    reset_identity=provenance[mode].get('reset_identity'),
                     episode_sink=lambda **episode: sink(trial=trial + 1,
                         behavior_update=provenance[mode]['source_updates'],
                         behavior_policy_sha256=provenance[mode]['policy_sha256'], **episode))

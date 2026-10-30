@@ -20,10 +20,18 @@ from .vla_source40_ppo import JournaledSimulator, physical_charge, write_json
 from .vla_source40_schedule import load_schedule
 
 
-def compare_resets(results):
+def compare_resets(results, *, camera_max_lsb=0):
     if len(results) != 4:
         raise ValueError('Repair qualification requires four actual resets')
     first = results[0]
+    if camera_max_lsb:
+        from .vla_reset_identity import comparison
+        metrics = [comparison(first, result, camera_max_lsb=camera_max_lsb) for result in results]
+        if not all(row['allowed'] for row in metrics):
+            raise RuntimeError('Explicit source40 physical/proprio/camera precision qualification failed')
+        return dict(exact_actual_simulator_states=True, exact_nominal_states=True,
+            exact_proprioception=True, camera_max_uint8_lsb=1, reset_comparisons=metrics,
+            raw_observations_unchanged=True, source40_renderer_tolerance_explicit=True)
     for result in results:
         if (not result.get('initial_state_vector_sha256')
                 or result['initial_state_vector_sha256'] != first['initial_state_vector_sha256']
@@ -47,6 +55,7 @@ def main(argv=None):
     parser.add_argument('--simulator-pythonpath', required=True)
     parser.add_argument('--expected-hostname', required=True)
     parser.add_argument('--port', type=int, default=8766)
+    parser.add_argument('--camera-reset-max-lsb', type=int, choices=(0, 1), default=0)
     args = parser.parse_args(argv)
     if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname:
         raise ValueError('Actual reset qualification requires the named allocated Linux host')
@@ -76,7 +85,7 @@ def main(argv=None):
             results.append(result)
             with gzip.open(args.output / f'reset-{ordinal:02d}.pkl.gz', 'xb', compresslevel=1) as stream:
                 pickle.dump(result, stream, protocol=5)
-        outcome = compare_resets(results)
+        outcome = compare_resets(results, camera_max_lsb=args.camera_reset_max_lsb)
         after = physical_charge(sim.journal)['total_action_charge']
         if after - before != 40:
             raise RuntimeError('Reset-only probe cost differs from four10-action settling resets')

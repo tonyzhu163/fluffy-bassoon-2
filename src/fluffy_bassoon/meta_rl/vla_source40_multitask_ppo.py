@@ -225,6 +225,7 @@ def parser():
     ap.add_argument('--memory-mode', choices=('full', 'episode'), default='full')
     ap.add_argument('--device', default='cuda:0')
     ap.add_argument('--resume', action='store_true')
+    ap.add_argument('--camera-reset-max-lsb', type=int, choices=(0, 1), default=0)
     return ap
 
 
@@ -278,6 +279,11 @@ def main(argv=None):
             memory_mode=args.memory_mode, seed=args.seed,
             validation='Separate frozen-policy source-validation task/case allocation, not optimizer input',
             support_query_protocol='Source trials do not set deployment support-shot budgets')
+        reset_identity = None
+        if args.camera_reset_max_lsb:
+            from .vla_reset_identity import RESET_IDENTITY
+            reset_identity = RESET_IDENTITY
+            contract['reset_identity'] = reset_identity
         contract_path = args.output / 'source-contract.json'
         if args.resume:
             if json.loads(contract_path.read_text()) != contract:
@@ -313,7 +319,7 @@ def main(argv=None):
             learning_rate=args.learning_rate, epochs=args.epochs,
             resume=args.output / 'learner/latest.pt' if args.resume else None,
             episode_sink=episode_sink(args.output / 'raw', contract=contract),
-            runtime_state=snapshot, restore_runtime=restore)
+            runtime_state=snapshot, restore_runtime=restore, reset_identity=reset_identity)
         exposure = cycle.state_dict()
         write_json(args.output / 'index.json', dict(source_contract=contract, summary=summary,
             committed_task_exposure=exposure, actual_tasks_with_committed_episodes=sum(

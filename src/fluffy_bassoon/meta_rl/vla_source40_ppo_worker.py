@@ -74,13 +74,17 @@ PPO_DRIVER_SECONDS = 21600
 
 def worker_contract(args):
     """Scheduler slice length may vary; scientific training inputs stay fixed."""
-    return dict(source_commit=args.source, run_id=args.run, maximum_total_actions=args.action_cap,
+    contract = dict(source_commit=args.source, run_id=args.run, maximum_total_actions=args.action_cap,
         updates=args.updates, memory_mode=args.memory_mode, maximum_driver_seconds=PPO_DRIVER_SECONDS,
         campaign_sha256=hashlib.sha256(args.campaign.read_bytes()).hexdigest(),
         schedule_sha256=hashlib.sha256(args.schedule.read_bytes()).hexdigest(),
         architecture=dict(width=args.width, layers=args.layers, heads=args.heads, context_length=args.context_length),
         optimizer=dict(learning_rate=1e-4, epochs=2), seed=2,
         status='Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified')
+    if getattr(args, 'camera_reset_max_lsb', 0):
+        from .vla_reset_identity import RESET_IDENTITY
+        contract['reset_identity'] = RESET_IDENTITY
+    return contract
 
 
 def main():
@@ -96,6 +100,7 @@ def main():
     for name, default in (('width', 128), ('layers', 2), ('heads', 4), ('context-length', 300)):
         start.add_argument('--' + name, type=int, default=default)
     start.add_argument('--resume', action='store_true')
+    start.add_argument('--camera-reset-max-lsb', type=int, choices=(0, 1), default=0)
     end = sub.add_parser('finish')
     end.add_argument('--root', type=Path, required=True)
     end.add_argument('--attempt', type=Path, required=True)

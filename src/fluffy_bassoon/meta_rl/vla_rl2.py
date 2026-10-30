@@ -84,7 +84,7 @@ def make_rl2_policy(config=None, *, device="cpu", seed=0):
 
 @torch.no_grad()
 def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, scene_seed,
-        attempts, chunk, mode="full", deterministic=False, episode_runner=None, episode_sink=None):
+        attempts, chunk, mode="full", deterministic=False, episode_runner=None, episode_sink=None, reset_identity=None):
     """One real K-attempt scene trial; terminal feedback is consumed next episode.
 
     `feature_encoder` consumes the current full public observation and returns
@@ -104,7 +104,7 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
     previous_reward, previous_done, episode_start = 0., False, True
     records = {key: [] for key in ("observations", "raw_actions", "log_probs", "values", "rewards",
                                    "trial_ends", "attempt_ends", "resets")}
-    summaries, initial_hash = [], None
+    summaries, initial_hash, initial_physical_reset = [], None, None
     pending = None
     for attempt in range(attempts):
         records_before = len(records["observations"])
@@ -155,6 +155,21 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
                 or len(records["observations"]) - records_before != len(rows)
                 or int(summary["primitive_steps"]) != sum(int(row["primitive_steps"]) for row in rows)):
             raise RuntimeError("RL² collection requires complete episodes and every actual feedback callback")
+        identity_error = None
+        if reset_identity is not None:
+            from .vla_reset_identity import RESET_IDENTITY, comparison, episode_reset
+            if reset_identity != RESET_IDENTITY:
+                raise ValueError('Unknown explicit source40 reset identity profile')
+            try:
+                current_reset = episode_reset(rows, summary)
+                if initial_physical_reset is None:
+                    initial_physical_reset = current_reset
+                summary['reset_identity_metrics'] = comparison(initial_physical_reset, current_reset, camera_max_lsb=1)
+                if not summary['reset_identity_metrics']['allowed']:
+                    identity_error = 'physical/proprio state or bounded camera identity changed'
+            except (ValueError, KeyError) as error:
+                summary['reset_identity_metrics'] = dict(allowed=False, error=repr(error))
+                identity_error = repr(error)
         summaries.append(dict(attempt=attempt + 1, **summary))
         if episode_sink is not None:
             # Keep raw cameras, proprioception, next observations, actual VLA
@@ -165,7 +180,10 @@ def collect_rl2_trial(policy, sim, motor, feature_encoder, *, initial_state, sce
                 initial_recurrent_state=episode_state)
         # Retain the actual failed episode before rejecting its identity. No
         # invalid trial reaches PPO, but its physical evidence must survive.
-        if initial_hash is None:
+        if reset_identity is not None:
+            if identity_error is not None:
+                raise RuntimeError('Same-scene source40 RL2 reset identity rejected: ' + identity_error)
+        elif initial_hash is None:
             initial_hash = summary["initial_observation_sha256"]
         elif summary["initial_observation_sha256"] != initial_hash:
             raise RuntimeError("Same-scene RL² retry changed its initial observation")
@@ -234,7 +252,7 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
         entropy_coef=.01, value_coef=.5, clip=.2, max_grad_norm=1.,
         max_elapsed_seconds=None, resume=None, episode_runner=None, save_rollouts=True, heldout_states=(),
         max_total_actions=None, physical_cost=None, episode_sink=None,
-        runtime_state=None, restore_runtime=None):
+        runtime_state=None, restore_runtime=None, reset_identity=None):
     """Direct meta-RL from real simulator trials, with one full-trial PPO batch.
 
     The caller owns allocation/probe and clean-source qualification. The budget
@@ -283,6 +301,12 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
         contract["raw_rollout_schema"] = "frozen_vla_ppo_episode_v1"
     if runtime_state is not None:
         contract["runtime_recovery"] = "Atomic motor RNG and adapter state with policy/optimizer/sampler/Torch RNG"
+    if reset_identity is not None:
+        from .vla_reset_identity import RESET_IDENTITY
+        if (reset_identity != RESET_IDENTITY or source_contract.get('format') != 'openpi_pi05_source40_shared_ppo_v1'
+                or source_contract.get('reset_identity') != reset_identity):
+            raise ValueError('Renderer tolerance requires the explicit source40 scientific contract')
+        contract['reset_identity'] = reset_identity
     output_dir = Path(output_dir)
     random.seed(seed)
     np.random.seed(seed)
@@ -337,7 +361,7 @@ def train_rl2(policy, sim, motor, feature_encoder, *, train_states, attempts, ch
         rollout, receipt = collect_rl2_trial(policy, sim, motor, feature_encoder,
             initial_state=state, scene_seed=scene_seed, attempts=attempts, chunk=chunk,
             mode=mode, episode_runner=episode_runner,
-            episode_sink=save_episode if episode_sink is not None else None)
+            episode_sink=save_episode if episode_sink is not None else None, reset_identity=reset_identity)
         with torch.no_grad():
             replay, _, _ = policy.evaluate_sequence(rollout["observations"], rollout["raw_actions"], rollout["resets"])
             replay_error = float((replay - rollout["log_probs"]).abs().max())

@@ -10,6 +10,7 @@ TASK_SLICE=${6:?allocated slice seconds, including setup and shutdown}
 shift 6
 TASK_RESUME=
 TASK_MIGRATION=
+TASK_CAMERA_LSB=0
 TASK_WIDTH=128
 TASK_LAYERS=2
 TASK_HEADS=4
@@ -18,6 +19,7 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     --resume) TASK_RESUME=--resume; shift ;;
     --migration-receipt) TASK_MIGRATION=${2:?explicit repair migration receipt}; shift 2 ;;
+    --camera-reset-max-lsb) TASK_CAMERA_LSB=${2:?explicit source40 camera precision}; shift 2 ;;
     --width) TASK_WIDTH=${2:?width}; shift 2 ;;
     --layers) TASK_LAYERS=${2:?layers}; shift 2 ;;
     --heads) TASK_HEADS=${2:?heads}; shift 2 ;;
@@ -63,6 +65,7 @@ TASK_ATTEMPT=$("$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_ppo_worker b
   --source "$TASK_SOURCE" --run "$TASK_RUN" --action-cap "$TASK_ACTIONS" --updates "$TASK_UPDATES" \
   --memory-mode "$TASK_MODE" --slice-seconds "$TASK_SLICE" --worker-seconds 21600 \
   --width "$TASK_WIDTH" --layers "$TASK_LAYERS" --heads "$TASK_HEADS" --context-length "$TASK_CONTEXT" \
+  --camera-reset-max-lsb "$TASK_CAMERA_LSB" \
   "${TASK_RESUME_ARGS[@]}")
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
 task_cleanup() {
@@ -79,7 +82,8 @@ if [ -n "$TASK_MIGRATION" ]; then
   test "$TASK_RESUME" = --resume
   "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_ppo_migration validate \
     --migration "$TASK_MIGRATION" --output-root "$TASK_OUTPUT" --source-commit "$TASK_SOURCE" \
-    --action-cap "$TASK_ACTIONS" --memory-mode "$TASK_MODE" --ledger "$TASK_PLAN/ppo-ledger.json"
+    --action-cap "$TASK_ACTIONS" --memory-mode "$TASK_MODE" --ledger "$TASK_PLAN/ppo-ledger.json" \
+    --camera-reset-max-lsb "$TASK_CAMERA_LSB"
 else
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_campaign reserve-ppo \
   --campaign "$TASK_PLAN/campaign.json" --ledger "$TASK_PLAN/ppo-ledger.json" \
@@ -109,7 +113,7 @@ if [ -n "$TASK_MIGRATION" ] && [ ! -f "$TASK_OUTPUT/repair-reset-qualified.json"
     --output "$TASK_ATTEMPT/reset-probe" --experiment "$TASK_OUTPUT/experiment" \
     --simulator-python "$TASK_SIM" \
     --simulator-pythonpath "$TASK_WORKTREE/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
-    --expected-hostname "$(hostname)"
+    --expected-hostname "$(hostname)" --camera-reset-max-lsb "$TASK_CAMERA_LSB"
   cp "$TASK_ATTEMPT/reset-probe/index.json" "$TASK_OUTPUT/repair-reset-qualified.json"
 fi
 export PYTHONPATH=$TASK_CUDA:$TASK_DSRL_OVERLAY:$TASK_WORKTREE/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
@@ -128,4 +132,5 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT_SECONDS" "$TASK_MODEL" \
   --updates "$TASK_UPDATES" --attempts 4 --memory-mode "$TASK_MODE" \
   --seed 2 --width "$TASK_WIDTH" --layers "$TASK_LAYERS" --heads "$TASK_HEADS" \
   --context-length "$TASK_CONTEXT" --learning-rate 1e-4 --epochs 2 \
+  --camera-reset-max-lsb "$TASK_CAMERA_LSB" \
   "${TASK_RESUME_ARGS[@]}"
