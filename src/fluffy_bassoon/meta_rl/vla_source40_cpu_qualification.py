@@ -75,7 +75,7 @@ def require_zero_gpu(torch, *, environment=None):
     """Observe allocation visibility BEFORE applying our CPU-only mask."""
     environment = os.environ if environment is None else environment
     if not getattr(torch.version, 'cuda', None):
-        raise ValueError('Use the qualified CUDA-capable cp310 Torch build to attest zero allocated devices')
+        raise ValueError('Use the qualified CUDA-capable base Torch build to attest zero allocated devices')
     if torch.cuda.is_initialized():
         raise ValueError('CUDA was initialized before the zero-GPU allocation check')
     before = {k: environment.get(k) for k in ('CUDA_VISIBLE_DEVICES', 'NVIDIA_VISIBLE_DEVICES', 'PYTHONPATH')}
@@ -118,9 +118,11 @@ def finish(root, exit_code, *, now=None):
 def run(a):
     code = Path(__file__).resolve().parents[3]
     if (sys.platform != 'linux' or not socket.gethostname().startswith('job-')
-            or socket.gethostname() != a.expected_hostname or sys.version_info[:2] != (3, 10)
+            or socket.gethostname() != a.expected_hostname or sys.version_info[:2] != (3, 12)
             or Path(sys.prefix).resolve() != CPU_ENV.resolve()):
-        raise ValueError('Require the exact qualified cp310 runtime in the identified Baige CPU job')
+        raise ValueError('Require the qualified Python3.12 base runtime in the identified Baige CPU job: '
+            + repr(dict(platform=sys.platform, hostname=socket.gethostname(), expected_hostname=a.expected_hostname,
+                python=sys.version, prefix=sys.prefix, expected_prefix=str(CPU_ENV))))
     if (subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=code, text=True).strip() != a.source
             or subprocess.check_output(['git', 'status', '--porcelain'], cwd=code, text=True).strip()):
         raise ValueError('Require the exact clean reviewed CPU qualification source')

@@ -22,7 +22,7 @@ export PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONNOUSERSITE=1
 export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 export PYTHONPATH=$TASK_TEST:$TASK_CODE/src
 # CUDA_VISIBLE_DEVICES is deliberately untouched until the helper has attested
-# zero devices from the real allocation using CUDA-capable cp310 Torch.
+# zero devices from the real allocation using the qualified base Torch runtime.
 task_cleanup() {
   TASK_RC=$?
   trap - EXIT
