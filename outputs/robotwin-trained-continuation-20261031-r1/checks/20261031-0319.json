@@ -1,0 +1,250 @@
+{
+  "checked_at_utc": "2026-10-30T19:19:50.997486+00:00",
+  "allocation": "job-fji2xx8oq53h",
+  "exit_code": null,
+  "failures": {},
+  "paired": {
+    "ppo": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo-latest.json",
+        "sha256": "29cae2cb8727e2e24b5ba489011ea011227fc3cb41edb2751301f42ff205f4b9"
+      },
+      "complete": false,
+      "audited_children": 9,
+      "audit_status": "passed_owned_child",
+      "audit_kind": "source_round",
+      "source_iterations": 66,
+      "source_trials": 396,
+      "source_actions": 634516,
+      "optimizer_steps": 330,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-008/experiment/coordinator-recovery.pt",
+        "sha256": "6ab96683aaad635e248e95bc6803b05167908fb5b18fa7130e87c67a50d15d1c"
+      },
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-008/experiment/continuation-manifest.json",
+        "sha256": "6afd394f65206096f7e195d86b52cc32067a35201fc4a7fcc94c4674595226ec"
+      },
+      "frozen_motor_unchanged": true,
+      "canonical_head": {
+        "journal_events": 46155,
+        "journal_sha256": "58898935ee2afb0ca43d374306c79a16b3ed000029899fefa8e4b238449182f0",
+        "charged_actions": 712268,
+        "decision_count": 23063
+      },
+      "active": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-009/experiment",
+        "stage": {
+          "stage": "source_execution_group_start",
+          "elapsed_seconds": 60.02608537953347,
+          "method": "ppo",
+          "source_steps": 634516,
+          "lanes": 6,
+          "plans": [
+            {
+              "task": "scan_object",
+              "seeds": [
+                870779407,
+                1914178900,
+                2105684056,
+                267423680
+              ],
+              "episode_limit": 500,
+              "schedule_trial": 397
+            },
+            {
+              "task": "pick_diverse_bottles",
+              "seeds": [
+                1240684312,
+                778730755,
+                407047460,
+                623770327
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 398
+            },
+            {
+              "task": "place_a2b_left",
+              "seeds": [
+                500402978,
+                2124934072,
+                1513288304,
+                1829539109
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 399
+            },
+            {
+              "task": "place_phone_stand",
+              "seeds": [
+                51696912,
+                1896254052,
+                289193876,
+                1563582217
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 400
+            },
+            {
+              "task": "handover_mic",
+              "seeds": [
+                52164537,
+                1015114334,
+                1723199049,
+                544821729
+              ],
+              "episode_limit": 600,
+              "schedule_trial": 401
+            },
+            {
+              "task": "place_object_stand",
+              "seeds": [
+                1881484538,
+                264009411,
+                1079681342,
+                1139164070
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 402
+            }
+          ],
+          "required_actions": 10800,
+          "source_iteration": 67,
+          "optimizer_steps": 330
+        }
+      }
+    },
+    "ppo_reset": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset-latest.json",
+        "sha256": "5d068e1299323117f3e37aba646d5c33d0bbfcb3aa4c172bf3606eca005b83e2"
+      },
+      "complete": false,
+      "audited_children": 9,
+      "audit_status": "passed_owned_child",
+      "audit_kind": "source_round",
+      "source_iterations": 68,
+      "source_trials": 408,
+      "source_actions": 651000,
+      "optimizer_steps": 340,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-008/experiment/coordinator-recovery.pt",
+        "sha256": "ef3e40dbdb27dd9b5799b26bb13feb7c4f071f52b6d4b6b38a63654f7befb1b0"
+      },
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-008/experiment/continuation-manifest.json",
+        "sha256": "89514881ac9591d9edaf7068d2665f6c42d5a67954cc0f4b5eaf640ba60c5358"
+      },
+      "frozen_motor_unchanged": true,
+      "canonical_head": {
+        "journal_events": 44974,
+        "journal_sha256": "6179ec51bbb125fb3af5c499c7e71a5bdb873498fa8ff8a936c3eaf6ff4d9274",
+        "charged_actions": 694387,
+        "decision_count": 22472
+      },
+      "active": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-009/experiment",
+        "stage": {
+          "stage": "source_execution_group_start",
+          "elapsed_seconds": 57.83309979457408,
+          "method": "ppo_reset",
+          "source_steps": 651000,
+          "lanes": 6,
+          "plans": [
+            {
+              "task": "place_phone_stand",
+              "seeds": [
+                64595323,
+                1993085639,
+                1651190050,
+                1015551804
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 409
+            },
+            {
+              "task": "scan_object",
+              "seeds": [
+                840435933,
+                1010501543,
+                433265435,
+                708650282
+              ],
+              "episode_limit": 500,
+              "schedule_trial": 410
+            },
+            {
+              "task": "pick_diverse_bottles",
+              "seeds": [
+                1126144164,
+                515400000,
+                1352642609,
+                2615173
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 411
+            },
+            {
+              "task": "place_object_stand",
+              "seeds": [
+                1382390150,
+                1256574552,
+                1179126250,
+                815059455
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 412
+            },
+            {
+              "task": "handover_mic",
+              "seeds": [
+                1949338608,
+                1575943034,
+                1077669536,
+                1454060977
+              ],
+              "episode_limit": 600,
+              "schedule_trial": 413
+            },
+            {
+              "task": "place_a2b_left",
+              "seeds": [
+                1365396181,
+                2069376672,
+                9103306,
+                1061308908
+              ],
+              "episode_limit": 400,
+              "schedule_trial": 414
+            }
+          ],
+          "required_actions": 10800,
+          "source_iteration": 69,
+          "optimizer_steps": 340
+        }
+      }
+    }
+  },
+  "last_gpu_sample": {
+    "uuid": "GPU-fdf52c60-81ff-9c4a-6076-7e57069dc6d3",
+    "used_bytes": 69127372800,
+    "total_bytes": 102641958912,
+    "utilization_percent": 46.0,
+    "utc": "2026-10-30T19:19:51.573085+00:00"
+  },
+  "sac": {
+    "allocation": "job-gv77bzhyeroo",
+    "summary_ref": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0028/experiment/summary.json",
+      "sha256": "336a1048229c0db97cd176b87d158ac3c4cba5a4aeb71d47739be1384d61e2b1"
+    },
+    "exit_code": null,
+    "source_steps": 680313,
+    "completed_source_iterations": 68,
+    "completed_source_trials": 408,
+    "updates": 429540,
+    "optimizer_steps": 1288620,
+    "pending_trials": 0,
+    "unretained_or_uncertain_source_charge": 0
+  }
+}
