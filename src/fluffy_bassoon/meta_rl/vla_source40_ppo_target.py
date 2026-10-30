@@ -26,7 +26,6 @@ from .vla_source40_corpus import PI05_RECEIPT, save_motor_rng
 from .vla_source40_evaluate import SUPPORT_BUDGETS, TargetCase, evaluate_case, load_candidates
 from .vla_source40_frozen_validation import load_models
 from .vla_source40_multitask_ppo import source_tasks
-from .vla_source40_ppo import physical_charge
 from .vla_source40_schedule import content_hash, load_schedule
 from .vla_source40_subset_evaluate import TargetServer
 
@@ -83,6 +82,24 @@ def candidates(models, provenance):
 def controller_factory(spec):
     cls = TargetPPOController if spec.get('kind') == 'ppo' else FrozenHistoryController
     return cls(spec['policy'], mode=spec['mode'])
+
+
+def model_requirement(methods, models, models_sha256):
+    if bool(models) != bool(models_sha256):
+        raise ValueError('Source PPO models and their manifest hash must be supplied together')
+    if any(method in PPO_METHODS for method in methods) and not models:
+        raise ValueError('PPO deployment requires terminal R3 models; native/AD-only deployment does not')
+    return bool(models)
+
+
+def deduplicated_ad_grid(methods, selected):
+    if set(methods) != {'native', 'ad_full', 'ad_episode_reset'}:
+        raise ValueError('Deduplicated first-suite grid is nativeK0 + ADfullK0/K1 + same-weight resetK1 only')
+    full, reset = selected['ad_full'], selected['ad_episode_reset']
+    if (full['policy'] is not reset['policy'] or full['sha256'] != reset['sha256']
+            or full['mode'] != 'full' or reset['mode'] != 'episode'):
+        raise ValueError('Empty-history reuse requires the same full-policy weights and episode reset semantics')
+    return dict(native=[0], ad_full=[0, 1], ad_episode_reset=[1])
 
 
 def reservation(path, run, source_commit, action_cap):
@@ -176,10 +193,13 @@ class ShiftedServer:
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('output', 'models', 'case-plan', 'schedule', 'checkpoint', 'openpi-root', 'ledger'):
+    for name in ('output', 'case-plan', 'schedule', 'checkpoint', 'openpi-root', 'ledger'):
         parser.add_argument('--' + name, type=Path, required=True)
-    for name in ('source-commit', 'run-id', 'expected-hostname', 'models-sha256', 'case-plan-sha256'):
+    for name in ('source-commit', 'run-id', 'expected-hostname', 'case-plan-sha256'):
         parser.add_argument('--' + name, required=True)
+    parser.add_argument('--models', type=Path)
+    parser.add_argument('--models-sha256')
+    parser.add_argument('--deduplicated-ad-grid', action='store_true')
     parser.add_argument('--max-total-actions', type=int, required=True)
     parser.add_argument('--max-elapsed-seconds', type=float, required=True)
     parser.add_argument('--port', type=int, default=8771)
@@ -198,6 +218,9 @@ def main(argv=None):
         raise ValueError('Require explicit bounded future target compute/action limits')
     if len({bool(args.students_index), bool(args.students_index_sha256), bool(args.assembly)}) != 1:
         raise ValueError('Optional existing AD/DPT controls require their index hash and assembly together')
+    use_ppo = model_requirement(args.methods, args.models, args.models_sha256)
+    if args.deduplicated_ad_grid and not args.students_index:
+        raise ValueError('The deduplicated AD grid requires the fixed controller matrix and source assembly')
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -219,18 +242,20 @@ def main(argv=None):
         model_config='pi05_libero', feature_interface='vla-prefix')))
     model_directory = args.output / 'models'
     model_directory.mkdir(exist_ok=True)
-    models, source = load_models(args.models, args.models_sha256, motor=motor,
-        tasks=[row['task_key'] for row in source_tasks(schedule)], schedule_sha256=schedule['schedule_sha256'],
-        output=model_directory, device=args.device)
-    selected = candidates(models, source)
+    source, selected = {}, {}
+    if use_ppo:
+        models, source = load_models(args.models, args.models_sha256, motor=motor,
+            tasks=[row['task_key'] for row in source_tasks(schedule)], schedule_sha256=schedule['schedule_sha256'],
+            output=model_directory, device=args.device)
+        selected = candidates(models, source)
     student_costs = None
     if args.students_index:
         students, student_costs = load_candidates(args.students_index, args.students_index_sha256,
             args.assembly, motor, seed=args.student_seed, device=args.device)
         selected.update(students)
-    for mode, record in source.items():
-        experiment = Path(record['recovery_path']).parents[1]
-        record['source_rpc_cost'] = physical_charge(experiment / 'execution-journal')
+    grid = deduplicated_ad_grid(args.methods, selected) if args.deduplicated_ad_grid else None
+    # load_models binds the terminal R3 index and cumulative migration charges.
+    # Reuse that immutable receipt, rather than guessing an R1/R2 fallback root.
     config = plan['simulator']
     server = (TargetServer(task_id=case.task_id, python=config['python'], pythonpath=config['pythonpath'],
                 output=attempt / 'simulator', port=args.port, libero_root=Path(config['libero_root']))
@@ -247,8 +272,14 @@ def main(argv=None):
                 ppo_episode_reset='Same full weights; source cost shared with ppo_full',
                 ppo_trained_episode='Separately trained episode-reset source model'),
             ordinary_dsrl_baseline='Separate existing fresh target-online DSRL pipeline; PPO controls are not DSRL',
-            full_protocol_support_grid=set(args.support_budgets) == set(SUPPORT_BUDGETS),
+            full_protocol_support_grid=grid is None and set(args.support_budgets) == set(SUPPORT_BUDGETS),
             shifted_scope='Existing Plus/Pro workers are declared development slices; no full shifted-suite result is implied')
+        if grid is not None:
+            provenance['empty_history_reuse'] = dict(method='ad_episode_reset', support_budget=0,
+                reference_method='ad_full', reference_support_budget=0, policy_sha256=selected['ad_full']['sha256'],
+                proof='Same policy object; empty cache/feedback; same case query RNG; episode reset changes no within-query step',
+                controller_implementation_sha256=file_sha256(Path(__file__).with_name('vla_history.py')),
+                actual_extra_physical_episodes=0, trained_static_substitution=False)
         def reset_motor_rng(seed):
             import jax
             motor.policy._rng = jax.random.key(seed)
@@ -260,12 +291,18 @@ def main(argv=None):
                 raise RuntimeError('Common frozen target motor same-noise qualification failed')
             write_json(args.output / 'qualification.json', dict(same_noise_max_delta=float(np.abs(a-b).max()),
                 features=motor.feature_encoder.qualify(observation, server.metadata['instruction'])))
-        evaluate_case(server, motor, selected, case=case, output=args.output, provenance=provenance,
+        result = evaluate_case(server, motor, selected, case=case, output=args.output, provenance=provenance,
             max_primitive_steps=args.max_total_actions, max_settling_steps=args.max_total_actions,
             support_budgets=tuple(args.support_budgets), methods=tuple(args.methods),
             controller_factory=controller_factory, reset_motor_rng=reset_motor_rng,
             motor_rng_state=lambda: save_motor_rng(motor.policy._rng), qualify=qualify,
-            resume=args.resume, max_elapsed_seconds=args.max_elapsed_seconds)
+            resume=args.resume, max_elapsed_seconds=args.max_elapsed_seconds, method_support_budgets=grid)
+        if grid is not None:
+            reference = next(row for row in result['trials'] if row['method'] == 'ad_full' and row['support_budget'] == 0)
+            result['explicit_zero_shot_reuse'] = dict(provenance['empty_history_reuse'],
+                reference_query_episode_id=reference['query_episode_id'], query_success=reference['query_success'],
+                physical_cost_counted_once=True)
+            write_json(args.output / 'index.json', result)
     finally:
         server.close()
 

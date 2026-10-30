@@ -104,7 +104,9 @@ def build_plan(*, worktree, source_commit, simulator_python="/mowenjie/envs/wam-
                 "dpt_episode_reset": groups[3]["group_id"]},
             nominal_actions=sum(group["maximum_actions"] for group in groups),
             nominal_episodes=sum(group["episodes"] for group in groups),
-            qualification_settling_allowance=settle))
+            qualification_settling_allowance=0,
+            reporting_scope=('Full LIBERO90 at declared H400' if benchmark == 'libero90' else
+                'Official perturbation case under the declared280-step development cutoff; not a full benchmark score')))
 
     for task in range(90):
         add("libero90", f"libero90:{task:02d}/state-0/seed-123", "libero_90", task, 0, 123,
@@ -151,6 +153,7 @@ def build_plan(*, worktree, source_commit, simulator_python="/mowenjie/envs/wam-
         zero_shot_reuse="Episode-reset controller K0 is the same full-controller K0; reference it without another episode",
         ordinary_dsrl_and_ppo="Not evaluated by this first wave; required separately for the full method comparison",
         maximum_total_actions=250000, maximum_gpu_seconds=21600,
+        qualification='Use the first planned reset, with zero additional physical resets/actions',
         benchmark_declarations=dict(plus_file_sha256=hashlib.sha256(plus_path.read_bytes()).hexdigest(),
             pro_file_sha256=hashlib.sha256(pro_path.read_bytes()).hexdigest()),
         restrictions=["No semantic filtering or outcome-dependent task selection", "No target data added to source pretraining",

@@ -147,7 +147,8 @@ def audit_control(path, result, group):
 
 def run_common(motor, banks, targets, *, output, contract, server_factory, provenance,
         runtime_id, resume=False, reset_motor_rng=lambda seed: None, motor_rng_state=lambda: None,
-        controller_factory=None, qualify=None, deadline=float('inf')):
+        controller_factory=None, qualify=None, deadline=float('inf'), action_ceiling=MAX_ACTIONS,
+        audit_fn=None, strict_initial_observations=True):
     """One shared motor object; continuations explicitly retain process lineage."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=resume)
@@ -164,7 +165,7 @@ def run_common(motor, banks, targets, *, output, contract, server_factory, prove
         _save_recovery(output / 'comparison-recovery.pkl', dict(contract_sha256=content_hash(contract),
             next_group=0, global_rng=global_rng(), motor_rng=motor_rng_state()))
     plan, cap = contract['groups'], contract['maximum_total_actions']
-    if not 0 < cap <= MAX_ACTIONS or charged_actions(output) > cap:
+    if not 0 < cap <= action_ceiling or charged_actions(output) > cap:
         raise ValueError('Common-runtime joint physical ceiling differs')
     server, connected, completed, initials = None, None, [], {}
     stop_reason = None
@@ -182,10 +183,10 @@ def run_common(motor, banks, targets, *, output, contract, server_factory, prove
                 if time.monotonic() >= deadline:
                     stop_reason = 'invocation_time_reservation'
                     break
-                if connected != case.task_id:
+                if connected != case.case_id:
                     if server is not None:
                         server.close()
-                    server, connected = server_factory(case), case.task_id
+                    server, connected = server_factory(case), case.case_id
                 local = CostLedger(path / 'physical-journal', max_primitive_steps=cap, max_settling_steps=cap)
                 local_cost = sum(row[name] for row in local.costs().values() for name in
                     ('primitive_steps', 'uncertain_primitive_steps_ceiling', 'settling_steps', 'uncertain_settling_steps_ceiling'))
@@ -244,13 +245,16 @@ def run_common(motor, banks, targets, *, output, contract, server_factory, prove
             if any(result.get('source_provenance', {}).get(key) != value for key, value in source.items()
                     if key != 'group_maximum_total_actions'):
                 raise ValueError('Completed group changed source bank or target-actor provenance')
-            identity = audit_group(path, result, group) if condition in banks else audit_control(path, result, group)
+            identity = (audit_fn(path, result, group) if audit_fn is not None else
+                audit_group(path, result, group) if condition in banks else audit_control(path, result, group))
             identity['query_episode_random_seed'] = next(row['episode_random_seed'] for row in result['episodes'] if row['role'] == 'query')
             previous = initials.setdefault(case.case_id, identity)
-            if (not same_public(previous['initial_arrays'], identity['initial_arrays'])
-                    or previous['nominal_state_sha256'] != identity['nominal_state_sha256']
-                    or previous['initial_observation_sha256'] != identity['initial_observation_sha256']
-                    or previous['query_episode_random_seed'] != identity['query_episode_random_seed']):
+            identity['public_arrays_match_first_group'] = same_public(previous['initial_arrays'], identity['initial_arrays'])
+            identity['public_hash_matches_first_group'] = previous['initial_observation_sha256'] == identity['initial_observation_sha256']
+            if (previous['nominal_state_sha256'] != identity['nominal_state_sha256']
+                    or previous['query_episode_random_seed'] != identity['query_episode_random_seed']
+                    or (strict_initial_observations and not (identity['public_arrays_match_first_group']
+                        and identity['public_hash_matches_first_group']))):
                 raise ValueError('Common-runtime methods changed actual initial arrays or nominal physical state')
             invocations = json.loads(invocation_path.read_text())
             completed.append(dict(group=group, result_path=str(final), result_sha256=file_sha256(final),

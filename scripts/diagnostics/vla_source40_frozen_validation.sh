@@ -36,9 +36,10 @@ flock -n 9
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export PYTHONPATH=$TASK_WT/src
 "$TASK_MODEL" - "$TASK_OUT/models.json" "$TASK_ROOT/outputs/$TASK_FULL_RUN" \
-  "$TASK_ROOT/outputs/$TASK_RESET_RUN" "$TASK_RESUME" <<'PYMODELS'
+  "$TASK_ROOT/outputs/$TASK_RESET_RUN" "$TASK_PLAN/ppo-ledger.json" "$TASK_RESUME" <<'PYMODELS'
 import fcntl, hashlib, json, pathlib, sys
 output, full, reset = map(pathlib.Path, sys.argv[1:4])
+from fluffy_bassoon.meta_rl.vla_source40_ppo_lineage import terminal_source
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 models = {}
@@ -46,16 +47,9 @@ for mode, root in (('full', full), ('episode', reset)):
     # The source launcher owns this lock for its entire attempt. Never admit a live writer.
     with (root / 'launcher.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        clock = json.loads((root / 'worker-time.json').read_text())
-        charge = sum(row.get('charged_seconds', row['reserved_seconds']) for row in clock['attempts'])
-        if clock['worker_seconds'] != 21600 or charge > 21600:
-            raise ValueError('Source PPO cumulative time exceeds the approved6h ceiling')
-        recovery = root / 'experiment/learner/latest.pt'
-        models[mode] = dict(recovery_path=str(recovery), recovery_sha256=sha(recovery),
-            worker_time_path=str(root / 'worker-time.json'), worker_time_sha256=sha(root / 'worker-time.json'),
-            worker_time_charge_seconds=charge, unresolved_attempts=sum(row['status'] != 'finished' for row in clock['attempts']))
+        models[mode] = terminal_source(root, mode, pathlib.Path(sys.argv[4]))
 value = dict(format='source40_frozen_ppo_validation_models_v1', models=models)
-if sys.argv[4] == '--resume':
+if sys.argv[5] == '--resume':
     if json.loads(output.read_text()) != value:
         raise ValueError('Frozen validation model/time inputs changed on resume')
 else:
@@ -63,15 +57,15 @@ else:
 PYMODELS
 TASK_MODELS_SHA=$(sha256sum "$TASK_OUT/models.json" | cut -d' ' -f1)
 TASK_ATTEMPT=$("$TASK_MODEL" - "$TASK_OUT" "$TASK_SOURCE" "$TASK_RUN" "$TASK_MODELS_SHA" \
-  "$TASK_PLAN/campaign.json" "$TASK_PLAN/schedule.json" "$TASK_SLICE" "$TASK_RESUME" <<'PYTIME'
+  "$TASK_PLAN/campaign.json" "$TASK_PLAN/schedule.json" "$TASK_SLICE" "$TASK_RESUME" "$TASK_STARTED" <<'PYTIME'
 import hashlib, pathlib, sys
 from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
-root, source, run, models_sha, campaign, schedule, seconds, resume = sys.argv[1:]
+root, source, run, models_sha, campaign, schedule, seconds, resume, started = sys.argv[1:]
 contract = dict(operation='frozen_source_ppo_validation', source_commit=source, run_id=run,
     models_sha256=models_sha, maximum_total_actions=56000, maximum_driver_seconds=14400,
     campaign_sha256=hashlib.sha256(pathlib.Path(campaign).read_bytes()).hexdigest(),
     schedule_sha256=hashlib.sha256(pathlib.Path(schedule).read_bytes()).hexdigest(), optimizer_updates=0)
-print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=14400, resume=resume == '--resume'))
+print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=14400, resume=resume == '--resume', now=float(started)))
 PYTIME
 )
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
@@ -96,7 +90,7 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   PYTHONPATH=$TASK_ROOT/envs/pytest-overlay-20261029-r1:$TASK_WT/src \
-  "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla_source40_frozen_validation.py tests/test_vla_source40_ppo_worker.py \
+  "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla_source40_frozen_validation.py tests/test_vla_source40_ppo_worker.py tests/test_vla_source40_ppo_lineage.py \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1

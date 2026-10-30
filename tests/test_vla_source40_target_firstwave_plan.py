@@ -48,7 +48,7 @@ def test_six_workers_own_entire_cases_and_caps_do_not_multiply_global_allowance(
     assert len(assigned) == len(set(assigned)) == 98
     assert set(assigned) == set(case_ids)
     assert sum(worker["action_cap"] for worker in value["workers"]) <= value["contract"]["maximum_total_actions"]
-    assert sum(worker["qualification_settling_allowance"] for worker in value["workers"]) == 960
+    assert sum(worker["qualification_settling_allowance"] for worker in value["workers"]) == 0
 
 
 def test_shifted_cases_describe_two_variants_and_pro_seed_repeats_honestly():

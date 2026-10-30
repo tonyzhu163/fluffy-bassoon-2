@@ -43,7 +43,7 @@ adaptation.
 
 LIBERO90 horizon400+settle10; Plus280+10; Pro280+5. These are declared
 evaluation horizons, not a claim of matching every full leaderboard protocol.
-One qualification reset per case adds up to960 settling actions. Six workers
+Qualification uses the first planned reset and adds no physical reset. Six workers
 own `cases[i::6]`, so a case's A+B groups share one frozen motor process.
 Each worker receives its nominal action sum+1,000 headroom and at most3,600
 GPU-seconds. Worker action caps total249,920, within a250,000-action global
@@ -58,3 +58,47 @@ method groups. Dynamic `--output` and `--port` arguments belong to the runner.
 Import paths begin with the explicit pinned worktree's `src`, never an agent's
 local editing path. The Plus/Pro declaration files are read as restricted AST
 literals, without importing a simulator or model.
+
+The executable is `vla_source40_target_firstwave` and the allocated launcher is
+`scripts/diagnostics/vla_source40_target_firstwave.sh`. It reads a separate
+`libero_target_wave_budget_v1` ledger with `wave_sha256`,
+`maximum_total_actions:250000`, `maximum_gpu_seconds:21600`,
+`source_campaign_immutable:true`, a human-readable `scope_amendment`, and
+exactly six `reservations`. Each row binds `run_id`, `worker`, `source_commit`,
+`wave_sha256`, `maximum_total_actions` from that worker's plan, `worker_seconds:3600`,
+`purpose:target_evaluation`, `source_pretraining_data:false`, and
+`fresh_ppo_training_data:false`. Neither the runner nor launcher creates a
+reservation. The old source campaign and action ledger remain immutable.
+
+```sh
+bash scripts/diagnostics/vla_source40_target_firstwave.sh \
+  EXACT_SOURCE WORKER_RUN_ID WORKER_INDEX \
+  /absolute/firstwave-plan.json /absolute/final500/index.json \
+  /absolute/assembly.json /absolute/target-ledger.json 3540
+```
+
+Run from each prepared exact-source worker worktree. Root schedules six
+separate allocations. The first invocation has a3,540-second slice plus a
+60-second scheduler allowance inside the original3,600-second ceiling.
+`worker-time.json` starts before setup. Actual probe/tests, model loading,
+execution, teardown, failed attempts and scheduler allowance are charged.
+A retry uses the same worker output with `--resume` and a **smaller** slice
+whose reservation fits the remaining original hour. Unclosed attempts retain
+their full reserved charge. No retry receives a new hour or another action cap.
+
+Each group archives actual initial RGB/wrist/proprioception, decoded actions,
+noise, rewards, episode boundaries, controller context, full sampler/global
+and motor RNG, before-RPC intents and a complete-episode cursor. Unknown RPC
+costs stay conservatively charged. Nominal initialization and query seed
+checks remain mandatory. Raw initial-observation equality is reported within
+and across groups; camera differences prevent a strict causal memory claim
+while the nominal-case screen remains reportable. A fresh-process continuation
+is also marked non-primary for strict shared-runtime claims. Frozen motor
+parameter hashes are compared before and after the entire worker process.
+
+Frozen PPO deployment is a separate path. `vla_source40_ppo_lineage` admits
+only explicitly supplied successful terminal R3 roots, binds both R1→R2→R3
+migration receipts, complete recovery SHA, raw-evidence catalogs and all
+cumulative time/physical charges, and retains the original R1 reservation.
+It never falls back to a failed40-update partial checkpoint. AD-only deployment
+requires no PPO manifest and therefore does not wait for PPO completion.

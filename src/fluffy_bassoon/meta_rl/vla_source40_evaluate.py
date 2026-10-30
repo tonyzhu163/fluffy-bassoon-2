@@ -336,7 +336,7 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
                   max_settling_steps, support_budgets=SUPPORT_BUDGETS, methods=METHODS,
                   controller_factory=_controller, reset_motor_rng=lambda seed: None,
                   motor_rng_state=lambda: None, qualify=None, resume=False, max_elapsed_seconds=3600.,
-                  external_deadline=float('inf')):
+                  external_deadline=float('inf'), method_support_budgets=None):
     case.validate(sim.metadata)
     if (motor.horizon != 10 or len(set(methods)) != len(methods) or not methods or not set(methods).issubset(SUPPORTED_METHODS)
             or not support_budgets or len(set(support_budgets)) != len(support_budgets)
@@ -346,6 +346,11 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
         raise ValueError("Invalid native horizon, method, support grid or physical budget")
     if any(method not in candidates for method in methods if method not in ("native", "tied_gaussian", 'zero')):
         raise ValueError("Every learned method needs a declared fixed controller")
+    if method_support_budgets is not None and (set(method_support_budgets) != set(methods)
+            or any(not values or len(set(values)) != len(values)
+                or any(type(value) is not int or value not in SUPPORT_BUDGETS for value in values)
+                for values in method_support_budgets.values())):
+        raise ValueError('Explicit per-method support budgets must cover exactly the declared methods')
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     traces = output / "traces"
@@ -362,6 +367,8 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
         query_randomness="Paired by case and role; independent of support draw count",
         motor_parameters="Pinned OpenPI module_jit captures immutable parameters; no optimizer updates during deployment",
         suite_scope="One declared case; no semantic filtering. Prior development declarations remain development results.")
+    if method_support_budgets is not None:
+        contract['method_support_budgets'] = {key: list(value) for key, value in method_support_budgets.items()}
     recovery_path = output / "evaluation-recovery.pkl"
     if resume:
         if json.loads((output / "contract.json").read_text()) != contract:
@@ -378,7 +385,8 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
         _save_recovery(recovery_path, recovery)
     signatures = {key: _policy_signature(spec["policy"]) for key, spec in candidates.items()}
     motor_signature = _motor_signature(motor)
-    trials = [(method, budget) for method in methods for budget in support_budgets]
+    trials = [(method, budget) for method in methods for budget in
+        (support_budgets if method_support_budgets is None else method_support_budgets[method])]
     records = recovery["records"]
     started = time.monotonic()
     deadline = min(started + max_elapsed_seconds, external_deadline)
@@ -436,7 +444,9 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
     result = dict(format=FORMAT, completed=True, case=asdict(case), trials=summary, episodes=records,
         physical_costs=actual, committed_episode_costs=committed, interrupted_physical_costs=interrupted,
         budget_matched_primary_eligible=not any(value for row in interrupted.values() for value in row.values()),
-        full_support_grid=set(support_budgets) == set(SUPPORT_BUDGETS), full_method_grid=set(methods) == set(METHODS),
+        full_support_grid=(set(support_budgets) == set(SUPPORT_BUDGETS) if method_support_budgets is None
+            else all(set(value) == set(SUPPORT_BUDGETS) for value in method_support_budgets.values())),
+        full_method_grid=set(methods) == set(METHODS),
         source_provenance=provenance, weights_unchanged=True, latest_recovery_sha256=file_sha256(recovery_path),
         interpretation="Single-case transfer only; query success is separate from support outcomes; no semantic-novelty assertion")
     write_json(output / "index.json", result)

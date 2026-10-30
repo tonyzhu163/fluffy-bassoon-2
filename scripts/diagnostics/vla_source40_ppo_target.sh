@@ -4,7 +4,7 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact reviewed target-evaluation commit}
 TASK_RUN=${2:?fresh target evaluation identity}
-TASK_MODELS=${3:?hash-bound terminal source models manifest}
+TASK_MODELS=${3:?terminal source models manifest or - for native/AD-only}
 TASK_CASE=${4:?predeclared case/simulator plan JSON}
 TASK_ACTIONS=${5:?existing target action escrow}
 TASK_WORKER_SECONDS=${6:?approved cumulative target GPU seconds}
@@ -30,13 +30,17 @@ TASK_STARTED=$(date +%s)
 TASK_RESUME_ARGS=()
 if [ "$TASK_RESUME" = --resume ]; then
   test -f "$TASK_OUT/experiment/evaluation-recovery.pkl"
-  cmp "$TASK_MODELS" "$TASK_OUT/models-input.json"
+  if [ "$TASK_MODELS" != - ]; then cmp "$TASK_MODELS" "$TASK_OUT/models-input.json"; fi
   cmp "$TASK_CASE" "$TASK_OUT/case-plan.json"
   TASK_RESUME_ARGS=(--resume)
 else
   test ! -e "$TASK_OUT"
   mkdir -p "$TASK_OUT"
-  cp "$TASK_MODELS" "$TASK_OUT/models-input.json"
+  if [ "$TASK_MODELS" = - ]; then
+    printf '%s\n' '{"format":"no_source_ppo_models_required_v1"}' > "$TASK_OUT/models-input.json"
+  else
+    cp "$TASK_MODELS" "$TASK_OUT/models-input.json"
+  fi
   cp "$TASK_CASE" "$TASK_OUT/case-plan.json"
 fi
 cd "$TASK_WT"
@@ -49,10 +53,10 @@ export PYTHONPATH=$TASK_WT/src
 TASK_MODELS_SHA=$(sha256sum "$TASK_OUT/models-input.json" | cut -d' ' -f1)
 TASK_CASE_SHA=$(sha256sum "$TASK_OUT/case-plan.json" | cut -d' ' -f1)
 TASK_ATTEMPT=$("$TASK_MODEL" - "$TASK_OUT" "$TASK_SOURCE" "$TASK_RUN" "$TASK_MODELS_SHA" "$TASK_CASE_SHA" \
-  "$TASK_ACTIONS" "$TASK_WORKER_SECONDS" "$TASK_SLICE" "$TASK_LEDGER" "$TASK_RESUME" "${TASK_EXTRA[@]}" <<'PYTIME'
+  "$TASK_ACTIONS" "$TASK_WORKER_SECONDS" "$TASK_SLICE" "$TASK_LEDGER" "$TASK_RESUME" "$TASK_STARTED" "${TASK_EXTRA[@]}" <<'PYTIME'
 import hashlib, json, pathlib, sys
 from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
-root, source, run, models, case, actions, worker, seconds, ledger_path, resume, *extra = sys.argv[1:]
+root, source, run, models, case, actions, worker, seconds, ledger_path, resume, started, *extra = sys.argv[1:]
 ledger = json.loads(pathlib.Path(ledger_path).read_text())
 row = ledger.get('reservations', {}).get(run)
 if (row is None or row.get('source_commit') != source or row.get('maximum_total_actions') != int(actions)
@@ -64,7 +68,7 @@ contract = dict(operation='frozen_source_ppo_target', source_commit=source, run_
     models_sha256=models, case_plan_sha256=case, maximum_total_actions=int(actions),
     maximum_driver_seconds=int(worker), escrow_record_sha256=record_sha, extra_arguments=extra,
     deployment_optimizer_updates=0, target_data_in_pretraining=False)
-print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=int(worker), resume=resume == '--resume'))
+print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=int(worker), resume=resume == '--resume', now=float(started)))
 PYTIME
 )
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
@@ -97,10 +101,14 @@ export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1
 export PYTHONPATH=$TASK_CUDA:$TASK_WT/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 TASK_TIMEOUT=$(( TASK_SLICE - ( $(date +%s) - TASK_STARTED ) - 60 ))
 test "$TASK_TIMEOUT" -gt 60
+TASK_MODEL_ARGS=()
+if [ "$TASK_MODELS" != - ]; then
+  TASK_MODEL_ARGS=(--models "$TASK_OUT/models-input.json" --models-sha256 "$TASK_MODELS_SHA")
+fi
 timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   -m fluffy_bassoon.meta_rl.vla_source40_ppo_target \
   --output "$TASK_OUT/experiment" --run-id "$TASK_RUN" --source-commit "$TASK_SOURCE" \
-  --expected-hostname "$(hostname)" --models "$TASK_OUT/models-input.json" --models-sha256 "$TASK_MODELS_SHA" \
+  --expected-hostname "$(hostname)" "${TASK_MODEL_ARGS[@]}" \
   --case-plan "$TASK_OUT/case-plan.json" --case-plan-sha256 "$TASK_CASE_SHA" --schedule "$TASK_PLAN/schedule.json" \
   --checkpoint "$TASK_OLD/inputs/pi05-libero-openpi-20261027-r1" --openpi-root "$TASK_OPENPI" \
   --ledger "$TASK_LEDGER" --max-total-actions "$TASK_ACTIONS" --max-elapsed-seconds "$TASK_WORKER_SECONDS" \

@@ -92,7 +92,16 @@ def test_hash_bound_final_recoveries_export_immutable_frozen_models(tmp_path, mo
         clock.write_text(json.dumps(dict(worker_seconds=21600, attempts=[dict(charged_seconds=100, reserved_seconds=660)],
             contract=dict(source_commit='a' * 40, memory_mode=mode, maximum_total_actions=172000))))
         models[mode] = dict(recovery_path=str(path), recovery_sha256=module.file_sha256(path),
-            worker_time_path=str(clock), worker_time_sha256=module.file_sha256(clock))
+            worker_time_path=str(clock), worker_time_sha256=module.file_sha256(clock),
+            terminal_root=str(tmp_path / mode), ledger_path=str(tmp_path / 'ledger.json'),
+            cumulative_physical_cost=dict(total_action_charge=17600))
+        terminal_index = tmp_path / f'{mode}-terminal-index.json'
+        terminal_index.write_text(json.dumps(dict(summary=dict(updates=payload['iteration'], counters=payload['counters']),
+            committed_task_exposure=payload['runtime']['task_cycle'], source_contract=payload['contract']['source'])))
+        models[mode]['terminal_index_path'] = str(terminal_index)
+    # This unit exercises model/recovery binding; full R1→R2→R3 terminal
+    # metadata admission has its own model-free lineage checks.
+    monkeypatch.setattr(module, 'terminal_source', lambda root, mode, ledger: models[mode])
     manifest = tmp_path / 'models.json'
     manifest.write_text(json.dumps(dict(format='source40_frozen_ppo_validation_models_v1', models=models)))
     output = tmp_path / 'validation'

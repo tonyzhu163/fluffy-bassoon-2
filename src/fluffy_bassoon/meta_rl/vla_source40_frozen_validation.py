@@ -27,6 +27,7 @@ from .vla_source40_context_probe import policy_signature
 from .vla_source40_corpus import PI05_RECEIPT, restore_motor_rng, save_motor_rng
 from .vla_source40_multitask_ppo import OwnedSimulator, source_tasks
 from .vla_source40_ppo import JournaledSimulator, episode_sink, physical_charge, write_json
+from .vla_source40_ppo_lineage import terminal_source
 from .vla_source40_schedule import SOURCE_SUITES, content_hash, load_schedule
 from .vla_rl2 import RL2ActorCritic, RL2Config, collect_rl2_trial, export_rl2_policy
 from .warmstart import atomic_save, checked_load, validate_weights
@@ -104,8 +105,18 @@ def load_models(manifest_path, expected_sha256, *, motor, tasks, schedule_sha256
     models, provenance = {}, {}
     for mode in MODES:
         spec = manifest['models'][mode]
+        if 'terminal_root' not in spec or 'ledger_path' not in spec:
+            raise ValueError('Require an explicit successful terminal R3 source lineage, not a partial checkpoint')
+        lineage = terminal_source(spec['terminal_root'], mode, spec['ledger_path'])
+        if spec != lineage:
+            raise ValueError('Frozen source manifest differs from its terminal R3 lineage')
         saved = checked_load(spec['recovery_path'], spec['recovery_sha256'], weights_only=False)
         config = source_admission(saved, mode, motor.feature_encoder.contract, tasks, schedule_sha256=schedule_sha256)
+        terminal = json.loads(Path(spec['terminal_index_path']).read_text())
+        if (terminal['summary']['updates'] != saved['iteration'] or terminal['summary']['counters'] != saved['counters']
+                or terminal['committed_task_exposure'] != saved['runtime']['task_cycle']
+                or terminal['source_contract'] != saved['contract']['source']):
+            raise ValueError('Final terminal index and complete source recovery differ')
         if file_sha256(spec['worker_time_path']) != spec['worker_time_sha256']:
             raise ValueError('Source worker-time receipt checksum differs')
         clock = json.loads(Path(spec['worker_time_path']).read_text())
@@ -120,7 +131,8 @@ def load_models(manifest_path, expected_sha256, *, motor, tasks, schedule_sha256
         policy = policy.to(device).eval().requires_grad_(False)
         path = Path(output) / f'frozen-{mode}.pt'
         metadata = dict(contract=saved['contract'], updates=saved['iteration'], counters=saved['counters'],
-            full_recovery_sha256=spec['recovery_sha256'], selection='Fixed final complete source recovery; no validation selection')
+            full_recovery_sha256=spec['recovery_sha256'], terminal_lineage=lineage,
+            selection='Fixed final complete source recovery; no validation selection')
         if path.exists():
             exported = checked_load(path, file_sha256(path))
             if exported.get('manifest') != metadata or any(not torch.equal(exported['policy'][key], value.detach().cpu())
@@ -134,6 +146,7 @@ def load_models(manifest_path, expected_sha256, *, motor, tasks, schedule_sha256
             policy_path=str(path), policy_sha256=digest, tensor_sha256=policy_signature(policy),
             source_commit=saved['contract']['source']['source_commit'], source_updates=saved['iteration'],
             source_counters=saved['counters'], reset_identity=saved['contract'].get('reset_identity'),
+            terminal_lineage=lineage, source_rpc_cost=lineage['cumulative_physical_cost'],
             source_worker_time_charge_seconds=charge, actual_source_tasks=len(saved['runtime']['task_cycle']['exposure']))
     if asdict(models['full'].config) != asdict(models['episode'].config):
         raise ValueError('Frozen full/reset policy architectures differ')

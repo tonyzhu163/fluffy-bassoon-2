@@ -11,7 +11,8 @@ import torch
 from fluffy_bassoon.meta_rl.vla_rl2 import RL2ActorCritic, RL2Config
 from fluffy_bassoon.meta_rl.vla_source40_evaluate import SUPPORT_BUDGETS, _episode_rng, evaluate_case
 from fluffy_bassoon.meta_rl.vla_source40_ppo_target import (PPO_METHODS, TargetPPOController,
-    candidates, controller_factory, reservation, shifted_command)
+    candidates, controller_factory, deduplicated_ad_grid, model_requirement, reservation, shifted_command)
+from fluffy_bassoon.meta_rl.vla_history import FrozenHistoryController, HistoryConfig, HistoryNoisePolicy
 from fluffy_bassoon.meta_rl.vla_libero_pro import initial_state_receipt
 from test_vla_source40_evaluate import Simulator, Motor, case
 
@@ -24,6 +25,37 @@ def policy():
 def specs():
     return candidates(dict(full=policy(), episode=policy()),
         dict(full=dict(policy_sha256='full-source-hash'), episode=dict(policy_sha256='separate-reset-source-hash')))
+
+
+def test_native_ad_only_does_not_wait_for_ppo_models_but_ppo_requires_terminal_input():
+    assert not model_requirement(('native', 'ad_full', 'ad_episode_reset'), None, None)
+    with pytest.raises(ValueError, match='requires terminal R3'):
+        model_requirement(('ppo_full',), None, None)
+    with pytest.raises(ValueError, match='supplied together'):
+        model_requirement(('ppo_full',), 'models.json', None)
+
+
+def test_empty_history_ad_full_and_same_weight_episode_reset_have_identical_query_semantics():
+    torch.manual_seed(7)
+    model = HistoryNoisePolicy(HistoryConfig(4104, 32, width=8, layers=1, heads=2, context_length=8))
+    full, reset = (FrozenHistoryController(model, mode=mode) for mode in ('full', 'episode'))
+    _episode_rng(full, 123)
+    _episode_rng(reset, 123)
+    for step in range(4):
+        observation = np.full(4104, step / 10., np.float32)
+        left, right = full.act(observation), reset.act(observation)
+        np.testing.assert_array_equal(left, right)
+        for controller, noise in ((full, left), (reset, right)):
+            controller.observe(executed_noise=np.clip(noise, -1., 1.), reward=0. if step == 3 else -1., done=step == 3)
+    selected = dict(ad_full=dict(policy=model, sha256='same', mode='full'),
+        ad_episode_reset=dict(policy=model, sha256='same', mode='episode'))
+    grid = deduplicated_ad_grid(('native', 'ad_full', 'ad_episode_reset'), selected)
+    assert grid == dict(native=[0], ad_full=[0, 1], ad_episode_reset=[1])
+    assert sum(sum(value + 1 for value in budgets) for budgets in grid.values()) == 6
+    assert 90 * 6 * 410 == 221400
+    with pytest.raises(ValueError, match='same full-policy weights'):
+        deduplicated_ad_grid(tuple(grid), dict(selected,
+            ad_episode_reset=dict(policy=model, sha256='different', mode='episode')))
 
 
 def test_global_rl2_rng_seed_avoids_the_unsupported_local_generator():
