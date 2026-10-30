@@ -14,6 +14,7 @@ SOURCE, RUN = 'a' * 40, 'target-online-dsrl-six-clock-test'
 def test_initial_slice_plus_scheduler_allowance_reserves_exactly_two_hours(tmp_path):
     value = prepare_attempt(tmp_path, SOURCE, RUN, started_unix=1000.)
     assert value['slice_seconds'] == 7140 and value['stop_unix'] == 8140
+    assert value['driver_stop_unix'] == 8020 < value['outer_timeout_unix'] == 8080 < value['stop_unix']
     ledger = json.loads((tmp_path / 'worker-time.json').read_text())
     assert ledger['worker_seconds'] == ledger['attempts'][0]['reserved_seconds'] == 7200
     assert ledger['attempts'][0]['started_unix'] == 1000.

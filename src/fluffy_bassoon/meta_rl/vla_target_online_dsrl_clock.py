@@ -56,6 +56,7 @@ def prepare_attempt(root, source, run, *, resume=False, started_unix=None):
         resume=resume, now=started)
     stop_unix = math.floor(started + slice_seconds)
     value = dict(attempt=str(attempt), slice_seconds=slice_seconds, stop_unix=stop_unix,
+        driver_stop_unix=stop_unix - 120, outer_timeout_unix=stop_unix - 60,
         prior_charged_seconds=charge, scheduler_allowance_seconds=SCHEDULER_ALLOWANCE_SECONDS,
         maximum_worker_seconds=WORKER_SECONDS)
     (attempt / 'invocation-clock.json').write_text(json.dumps(value, indent=2) + '\n')

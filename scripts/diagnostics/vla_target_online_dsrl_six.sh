@@ -93,5 +93,5 @@ timeout --signal=INT --kill-after=30s "$TASK_REMAINING" "$TASK_MODEL" \
   --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --libero-root "$TASK_LIBERO" \
   --simulator-python "$TASK_SIM" \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
-  --max-total-actions 64000 --max-elapsed-seconds 7200 --stop-unix "$TASK_STOP_UNIX" \
+  --max-total-actions 64000 --max-elapsed-seconds 7200 --stop-unix "$(( TASK_STOP_UNIX - 120 ))" \
   --learner-seed 0 "${TASK_DRIVER_RESUME[@]}"

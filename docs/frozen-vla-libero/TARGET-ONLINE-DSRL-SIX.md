@@ -60,8 +60,9 @@ charge measured runtime plus the same allowance. An unclosed attempt remains
 charged at its full reservation. A resumed invocation receives only the
 remaining slice less scheduler allowance; fewer than600seconds is rejected.
 The fixed7200-second scientific ceiling and action/recipe/case contracts never
-change with invocation length. An explicit `--stop-unix` goes to the driver,
-with the outer timeout stopping60seconds earlier for shutdown and accounting.
+change with invocation length. The driver's explicit `--stop-unix` is120seconds
+before the reserved slice end; its outer timeout is60seconds before that end,
+leaving another60seconds after the soft driver stop for orderly shutdown.
 An overrun is reported at its actual duration rather than truncated.
 
 The launcher probes the actual GPU and runs only relevant baseline, physical
