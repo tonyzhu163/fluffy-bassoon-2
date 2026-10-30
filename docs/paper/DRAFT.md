@@ -60,11 +60,11 @@ replay/optimizer/RNG state. Both PPO arms now completed100 rounds and roughly
 development panel; cache-reset7/16,rewardblind9/16. A saved native panel is
 verified on the same16 cases/underlying motor contract and scores6/16, with
 different execution dates and noise draws. No reliable memory or broad
-robot-performance improvement is established. At the closed source95 boundary,
-SAC scores257/2280 (11.27%) over954,873source actions, also with a flat
-source-learning curve. The next closed boundary98 has269/2352 (11.44%)
-over984,207source actions. These partial results show weak learning is not
-limited to recurrent PPO; the cause is unisolated. Source100/final SAC results and
+robot-performance improvement is established. SAC source100 is now complete:
+277/2400 successes (11.54%),1,003,790 source actions and638,500 joint SAC
+updates over32,425 distinct decisions. Quarter success78/57/76/66 per600
+shows no sustained improvement. Weak source learning is not limited to
+recurrent PPO; the cause is unisolated. Final SAC validation/targets and
 larger student fits are not complete. Benchmark costs
 are separate from LIBERO. Future
 collection should overlap initial fitting/evaluation after a bounded smoke,
