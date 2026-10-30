@@ -1,0 +1,155 @@
+{
+  "format": "libero40_terminal_capacity_aliases_v1",
+  "campaign_sha256": "9af3e471d21b535250c42899ee3d2bc81f25c4bdbed7a68fbe3052fb8242af2c",
+  "canonical_ledger_sha256": "91fb02851b391fbd5ad28d9a4788ee4639d8f5b1f1eacbf617d957da986f6a1d",
+  "aliases": {
+    "libero-collector-speed-20261030-r2": {
+      "run_id": "libero-collector-speed-20261030-r2",
+      "source_commit": "11e6a4192e92f8fdaec5598575e3841c62a3f066",
+      "purpose": "parallel_collection_systems_qualification",
+      "maximum_physical_action_charge": 2880,
+      "maximum_gpu_seconds": 1800,
+      "maximum_gpu_hours": 0.5,
+      "teacher_updates": 0,
+      "student_updates": 0,
+      "source_training_data_credit": 0,
+      "within_original_donor_reservations": true,
+      "additional_campaign_capacity": 0,
+      "original_campaign_ceiling": 1000000,
+      "donors": [
+        {
+          "slot": "libero_spatial:03/train",
+          "donor_run_id": "libero40-1m-sac-20261030-bulk-r1-s03-train",
+          "donor_source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+          "original_maximum_total_actions": 9500,
+          "terminal_actual_charge": 7867,
+          "known_primitive_steps": 7097,
+          "settling_steps": 770,
+          "unresolved_ceiling": 0,
+          "index_sha256": "cbd0e0c79bc0d79a89185765668051f756f48a44da8ecd23f5057e761815bc00",
+          "collector_lock_free_at_reservation": true,
+          "terminal_qualified_exit_zero": true,
+          "aliased_actions": 1633,
+          "existing_aliases_actions": 0,
+          "remaining_unaliased_actions": 0
+        },
+        {
+          "slot": "libero_goal:02/train",
+          "donor_run_id": "libero40-1m-sac-20261030-bulk-r1-g02-train",
+          "donor_source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf",
+          "original_maximum_total_actions": 9500,
+          "terminal_actual_charge": 7874,
+          "known_primitive_steps": 7264,
+          "settling_steps": 610,
+          "unresolved_ceiling": 0,
+          "index_sha256": "130688ea94378427ffcd9156ca40d6079f199380acebe60b174c301c3573a386",
+          "collector_lock_free_at_reservation": true,
+          "terminal_qualified_exit_zero": true,
+          "aliased_actions": 1247,
+          "existing_aliases_actions": 0,
+          "remaining_unaliased_actions": 379
+        }
+      ],
+      "donor_future_execution": "Terminal donors are sealed against future execution while capacity aliases exist. Any reopening requires explicit reconciliation of alias reservations and actual charges; the original9500 caps do not become available again.",
+      "attempts": {
+        "libero-collector-speed-20261030-r2": {
+          "status": "terminal",
+          "source_commit": "11e6a4192e92f8fdaec5598575e3841c62a3f066",
+          "job_id": "job-g2x5mlt86wgq",
+          "physical_action_charge": 95,
+          "unresolved_physical_action_ceiling": 0,
+          "accounted_gpu_seconds": 170,
+          "scheduler_duration_evidence": "Parent verified Baige UI active2m50s;created16:15:32,ended16:18:32Asia/Shanghai",
+          "exit_code": 3,
+          "result_status": "no_parallel_candidate_qualified",
+          "report_sha256": "af02e1f77cdb1ee88a425e73eac5e2642054a6319d951701bb0d63d36c65f92f"
+        },
+        "libero-collector-speed-20261030-r3": {
+          "status": "terminal",
+          "source_commit": "a58929b75d1891677e0deba2773ee76ed0ee56f7",
+          "job_id": "job-65jlwosqafk4",
+          "physical_action_charge": 179,
+          "unresolved_physical_action_ceiling": 0,
+          "accounted_gpu_seconds": 110,
+          "exit_code": 1,
+          "result_status": "failed",
+          "report_sha256": "dfeb40b059c61252318e10479a92a55bf370072d78981196751b476742965aeb",
+          "scheduler_duration_evidence": "Parent verified Baige UI active1m50s;created16:26:01,ended16:28:01Asia/Shanghai"
+        },
+        "libero-collector-speed-20261030-r4a": {
+          "status": "terminal",
+          "source_commit": "c6f46e8cd80c7cca0877983b659c76ef26b1edbd",
+          "maximum_physical_action_charge": 2100,
+          "maximum_gpu_seconds": 1200,
+          "execution_microbatch": 1,
+          "simulator_lanes": [
+            2
+          ],
+          "same_process_controls": [
+            "native_executed_live_cached_shadow",
+            "pure_native_scalar",
+            "pure_cached_scalar",
+            "parallel_B2_same_case"
+          ],
+          "live_shadow_all_observations": true,
+          "four_reset_probe": {
+            "suite": "libero_spatial",
+            "task_id": 0,
+            "initial_state": 19,
+            "scene_seed": 1916071045,
+            "repeats": 4,
+            "settling_charge": 40
+          },
+          "reset_acceptance_profile_applied": false,
+          "teacher_updates": 0,
+          "student_updates": 0,
+          "source_training_data_credit": 0,
+          "job_id": "job-1l5gxk7pglgo",
+          "physical_action_charge": 485,
+          "known_task_actions": 385,
+          "settling_actions": 100,
+          "unresolved_physical_action_ceiling": 0,
+          "accounted_gpu_seconds": 131,
+          "exit_code": 0,
+          "result_status": "passed",
+          "report_sha256": "f578bcd372cfbb2829a5c7d233d97800179cabac11b8ebf1cd607ef0e9376fd8",
+          "physical_journal_sha256": "805d0ff587463174a9aa29224eac193bf62b7beadbaaf8792f0f989558f29afd",
+          "reset_npz_sha256": {
+            "reset-state19-repeat-3.npz": "877ca90cad1877c672a22e71e62f1dfe1f4e08677b83e133cb1bf1d4eb92880c",
+            "reset-state19-repeat-2.npz": "877ca90cad1877c672a22e71e62f1dfe1f4e08677b83e133cb1bf1d4eb92880c",
+            "reset-state19-repeat-0.npz": "faffd6998da411fcd7fceb3fa0b674b542e081b8bf90ec2fa04c07172876afc7",
+            "reset-state19-repeat-1.npz": "877ca90cad1877c672a22e71e62f1dfe1f4e08677b83e133cb1bf1d4eb92880c"
+          },
+          "scheduler_duration_evidence": "Parent verified Baige UI success;created16:53:30,ended16:55:51Asia/Shanghai,ACTIVE2m11s=131GPU-seconds",
+          "timing_comparison_eligible": false
+        }
+      },
+      "source_migrations": [
+        {
+          "prior_source_commit": "11e6a4192e92f8fdaec5598575e3841c62a3f066",
+          "new_source_commit": "a58929b75d1891677e0deba2773ee76ed0ee56f7",
+          "new_run_id": "libero-collector-speed-20261030-r3",
+          "reason": "StrictB2/B4 numerical parity failed; preserve qualifiedB1kernels while parallelizing simulator lanes. No tolerance widening or training-scope change."
+        },
+        {
+          "prior_source_commit": "a58929b75d1891677e0deba2773ee76ed0ee56f7",
+          "new_source_commit": "c6f46e8cd80c7cca0877983b659c76ef26b1edbd",
+          "new_run_id": "libero-collector-speed-20261030-r4a",
+          "reason": "Same-process native/cached/parallel controls and every-observation live shadow isolate cross-GPU/reset confounds; metadata-only23ad427 full-state reset evidence, no tolerance widening"
+        }
+      ],
+      "combined_actual_and_reserved_physical_actions": 759,
+      "combined_actual_and_reserved_gpu_seconds": 411,
+      "compute_budget_source": "Existing approved32GPU-hour pool; parent verified dedicated1800-second hold released from terminalSACworker0, not an additional allocation",
+      "status": "terminal_qualified_speed_check",
+      "qualified_executable_source": "c6f46e8cd80c7cca0877983b659c76ef26b1edbd",
+      "unused_physical_envelope_sealed": 2121,
+      "unused_gpu_seconds_envelope_sealed": 1389,
+      "unused_capacity_released": false,
+      "further_attempts_authorized": false,
+      "scope": "Systems qualification only; no production migration or source-training credit. Unused envelope and donor streams remain sealed until explicit owner reconciliation."
+    }
+  },
+  "updated_at_utc": "2026-10-30T08:57:39+00:00",
+  "accounting_rule": "Aliases consume unused terminal capacity WITHIN immutable original SAC reservations. Sum donor actual charges plus all donor aliases must stay within each original cap. Original ledgers, sourcecaps, indexes, journals and recoveries are not modified. Completed donor streams cannot be reopened without explicit reconciliation."
+}
