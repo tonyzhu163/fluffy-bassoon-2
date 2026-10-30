@@ -30,11 +30,11 @@
     "acting_payload_kind_tensor_digest_tail_unchanged": true
   },
   "CPU_adapter_bytes_unchanged": true,
-  "expected_fixture_tests": 121,
+  "expected_fixture_tests": 125,
   "existing_fixture_tests": 75,
-  "new_fixture_tests": 46,
+  "new_fixture_tests": 50,
   "deferred_optional_source100_tests": 9,
-  "generated_fixture_programs_AST_valid": 5,
+  "generated_fixture_programs_AST_valid": 12,
   "remote_publish_program_AST_valid": true,
   "actual_tests_or_process_fixtures_run": false,
   "actual_payloads_or_labels_run": false,
@@ -51,8 +51,8 @@
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r2/PLAN.md",
-      "sha256": "218c26d9b117cc75332d1dfc48af835eb223083472bb1139e8157ce70dae3803",
-      "bytes": 6701
+      "sha256": "4c34cd248bd0dc5a188f5c2d4f94a4f0f66494180f59a57c8686c32f7e748fd7",
+      "bytes": 6912
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r2/budget.json",
@@ -66,7 +66,7 @@
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r2/gate_job.py",
-      "sha256": "b650ff487c0a10105416eb3d6c230833ecd7d90c184dfd6546dcd3e6980d520d",
+      "sha256": "f525e28c6717644f6644e78f3dfac7c3b58af324c5a0af9d1828708b45b49b3b",
       "bytes": 19741
     },
     {
@@ -91,22 +91,25 @@
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r2/transfer_guard.py",
-      "sha256": "43b3a93bf93aecdaef372491bb173e7a02f23c3a5e017933886f9e3c2885b6b9",
-      "bytes": 7140
+      "sha256": "779ca030625e55eb48391726def5d518dfb733516ec0ced0177d0b8a0d2f9e83",
+      "bytes": 9217
     },
     {
       "path": "tests/test_robotwin_cpu_residual_bootstrap.py",
-      "sha256": "843cdd9d56ef9f79fa9ef49e272a9d3f9004d05cb8926e51d201ef568f202849",
-      "bytes": 12965
+      "sha256": "1865ed5f761d1d61b24228b5366c991bb9428722ea42a6af4b20fef4e2d8f4a8",
+      "bytes": 14824
     }
   ],
   "CUA_submission_proof_sequence": "Execution owner must bind and inspect a single actual observed Submit-to-Running-to-proof invocation before launch; runbook alone is not completed orchestration",
-  "supersedes_unlaunched_recovery_candidate": "75ca317c2a71fd4251e82c770f1f4ed16e8ddaeb",
+  "supersedes_unlaunched_recovery_candidate": "b6ec9fc4bd68ade9cea9a50b9af438c93ccdc054",
   "transfer_cleanup_scope": "Live reservedSID+UID; sameSID changedPGID supported; always cleanup after0/nonzero/timeout/parentloss; no setsid-escape claim",
   "review_findings_addressed": [
     "residentSIDholder through normal0/nonzero exit plus separate commandstatus",
     "fullSID changedPGID cleanup and adopted wait/absence receipt",
     "AX Worker resource data confined to a single full header/data table with one role",
-    "exact actual intent.ticket_path checked locally and remotely before any final link"
+    "exact actual intent.ticket_path checked locally and remotely before any final link",
+    "status publication errors preserve resident SID holder through guardian timeout/cleanup",
+    "bounded enumeration retries and owned PGID/member fallback with unresolved SID failure receipt",
+    "failed status publication, transient/persistent enumeration, wrong remote resource path fixtures"
   ]
 }

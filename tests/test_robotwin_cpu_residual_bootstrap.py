@@ -154,11 +154,11 @@ def test_atomic_publication_cannot_overwrite_an_existing_final(tmp_path):
     assert json.loads(path.read_text())==dict(first=True)
 
 
-@pytest.mark.parametrize('mode',['exact','relative','foreign'])
+@pytest.mark.parametrize('mode',['exact','relative','foreign','resource-path'])
 def test_remote_publisher_checks_actual_ticket_path_before_any_final_file(tmp_path,mode):
     base=tmp_path/'input';base.mkdir();stage=base/'upload';stage.mkdir();out=tmp_path/'output';out.mkdir()
     ticket_path=str(base/'actual-bootstrap.json')
-    intent=dict(ticket_path=ticket_path if mode=='exact' else ('actual-bootstrap.json' if mode=='relative' else '/foreign/ticket.json'),
+    intent=dict(ticket_path=ticket_path if mode in ('exact','resource-path') else ('actual-bootstrap.json' if mode=='relative' else '/foreign/ticket.json'),
         bootstrap_expires_at_unix=time.time()+30,hostname='job-fixture-master-0',run_id=bridge.RUN)
     raw=json.dumps(intent).encode();(out/'bootstrap-intent.json').write_bytes(raw)
     resource=dict(hostname=intent['hostname'])
@@ -168,6 +168,7 @@ def test_remote_publisher_checks_actual_ticket_path_before_any_final_file(tmp_pa
     resource_raw=json.dumps(resource).encode();(stage/'actual-resource.json').write_bytes(resource_raw)
     ticket=dict(code_commit=PIN,hostname=intent['hostname'],run_id=bridge.RUN,output=str(out),
         resource_receipt=dict(path=str(base/'actual-resource.json'),sha256=hashlib.sha256(resource_raw).hexdigest()))
+    if mode=='resource-path':ticket['resource_receipt']['path']='/foreign/resource.json'
     (stage/'actual-bootstrap.json').write_text(json.dumps(ticket))
     result=subprocess.run([sys.executable,'-I','-B','-S','-c',bridge.REMOTE_PUBLISH,str(stage),str(base),str(out),
         PIN,hashlib.sha256(raw).hexdigest()],capture_output=True,timeout=3)
@@ -176,7 +177,8 @@ def test_remote_publisher_checks_actual_ticket_path_before_any_final_file(tmp_pa
     if mode!='exact':assert not any((base/name).exists() for name in ('actual-running.png','actual-resource.json'))
 
 
-@pytest.mark.parametrize('mode',['timeout','TERM','KILL','normal0','normal1'])
+@pytest.mark.parametrize('mode',['timeout','TERM','KILL','normal0','normal1','status-failure',
+                                  'enumeration-transient','enumeration-persistent'])
 def test_transfer_guard_bounds_descendants_after_dispatcher_loss(tmp_path,mode):
     adapter=load('fixture_transfer_subreaper',ROOT/'owned_cpu_runtime.py');adapter.become_subreaper()
     info=tmp_path/'ids.json'
@@ -186,14 +188,30 @@ def test_transfer_guard_bounds_descendants_after_dispatcher_loss(tmp_path,mode):
         "grand=subprocess.Popen([sys.executable,'-I','-B','-S','-c','import os,time;os.setpgid(0,0);time.sleep(120)'])\n"
         "while os.getpgid(grand.pid)!=grand.pid:time.sleep(.005)\n"
         +f"Path({str(info)!r}).write_text(json.dumps(dict(pid=os.getpid(),grand=grand.pid)))\n"
-        +(f"sys.exit({0 if mode=='normal0' else 1})\n" if mode.startswith('normal') else "time.sleep(120)\n"))
+        +(f"sys.exit({1 if mode=='normal1' else 0})\n" if mode.startswith(('normal','enumeration')) or mode=='status-failure'
+          else "time.sleep(120)\n"))
+    if mode=='status-failure':
+        (tmp_path/'transfer.log.1.receipt.json.command.json.partial').write_text('collision')
+    if mode.startswith('enumeration'):
+        (tmp_path/'transfer_guard.py').write_text("import importlib.util,subprocess\n"
+            +f"spec=importlib.util.spec_from_file_location('guard',{str(ROOT/'transfer_guard.py')!r})\n"
+            "m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n"
+            +f"mode={mode!r}\n"
+            "original=m.process_ids;calls=0\n"
+            "def failing_ps():\n global calls\n calls+=1\n"
+            " if (mode=='enumeration-transient' and calls==1) or (mode=='enumeration-persistent' and calls>1):\n"
+            "  raise subprocess.TimeoutExpired(['/bin/ps'],.5)\n return original()\n"
+            "m.process_ids=failing_ps\nm.main()\n")
     driver=tmp_path/'driver.py'
     driver.write_text("import importlib.util,sys,signal\nfrom pathlib import Path\n"
         +f"spec=importlib.util.spec_from_file_location('bridge',{str(ROOT/'dispatch_bootstrap.py')!r})\n"
         "m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n"
+        +("m.time.time_ns=lambda:1\n" if mode=='status-failure' else '')
+        +(f"m.__file__={str(tmp_path/'dispatch_bootstrap.py')!r}\n" if mode.startswith('enumeration') else '')
+        +
         "def stop(signum,frame):raise RuntimeError('fixture dispatcher signal')\n"
         "signal.signal(signal.SIGTERM,stop)\n"
-        +f"m.bounded_command([sys.executable,'-I','-B','-S',{str(child)!r}],timeout={1 if mode=='timeout' else 10},log=Path({str(tmp_path/'transfer.log')!r}))\n")
+        +f"m.bounded_command([sys.executable,'-I','-B','-S',{str(child)!r}],timeout={1 if mode in ('timeout','status-failure') else 10},log=Path({str(tmp_path/'transfer.log')!r}))\n")
     process=subprocess.Popen([sys.executable,'-I','-B','-S',str(driver)],start_new_session=True,
                              stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     unrelated=subprocess.Popen([sys.executable,'-I','-B','-S','-c','import time;time.sleep(120)'],start_new_session=True)
@@ -217,12 +235,19 @@ def test_transfer_guard_bounds_descendants_after_dispatcher_loss(tmp_path,mode):
         assert len(receipts)==1
         receipt=receipts[0]
         assert receipt['reason']=={'timeout':'timeout','TERM':'parent_lost','KILL':'parent_lost',
-                                   'normal0':'command_exit','normal1':'command_exit'}[mode]
-        assert receipt['cleanup']['clean'] and not receipt['cleanup']['remaining_after']
+            'normal0':'command_exit','normal1':'command_exit','status-failure':'timeout',
+            'enumeration-transient':'command_exit','enumeration-persistent':'command_exit'}[mode]
+        assert receipt['cleanup']['clean']==(mode!='enumeration-persistent')
+        assert receipt['cleanup']['unresolved_SID']==(mode=='enumeration-persistent')
+        assert not receipt['cleanup']['remaining_after']
         assert any(row['pid']==identities['grand'] for row in receipt['cleanup']['reaped_adopted'])
         assert not any(Path('/proc',str(pid)).exists() for pid in (receipt['guardian_pid'],receipt['child_pid']))
         if mode.startswith('normal'):assert receipt['command_returncode']==int(mode[-1])
-        assert process.returncode==(-signal.SIGKILL if mode=='KILL' else (0 if mode=='normal0' else 1))
+        if mode.startswith('enumeration'):
+            assert receipt['cleanup']['enumeration_errors'] and receipt['command_returncode']==0
+        if mode=='status-failure':
+            assert (tmp_path/'transfer.log.1.receipt.json.command.json.partial').read_text()=='collision'
+        assert process.returncode==(-signal.SIGKILL if mode=='KILL' else (0 if mode in ('normal0','enumeration-transient') else 1))
         assert unrelated.poll() is None
     finally:
         if process.poll() is None:process.kill();process.wait(timeout=3)
