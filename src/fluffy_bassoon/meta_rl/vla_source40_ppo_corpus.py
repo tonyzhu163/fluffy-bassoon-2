@@ -19,7 +19,7 @@ import torch
 from .vla_history import file_sha256, save_dataset, trial_tokens, validate_trial
 from .vla_rl2 import load_rl2_policy
 from .vla_source40_ppo import FORMAT as RAW_FORMAT, PI05_RECEIPT, write_json
-from .vla_source40_schedule import SOURCE_SUITES
+from .vla_source40_schedule import SOURCE_SUITES, content_hash
 from .warmstart import checked_load
 
 
@@ -57,7 +57,9 @@ def _array(value):
 def load_committed_trials(run, recovery_sha256):
     """Read only complete trials committed by the explicitly pinned recovery."""
     run = Path(run).resolve()
-    declared_source = json.loads((run / 'source-contract.json').read_text())
+    source_path = run / 'source-contract.json'
+    source_sha = file_sha256(source_path)
+    declared_source = json.loads(source_path.read_text())
     validation = declared_source.get('partition') == 'validation'
     recovery = run / ('validation-recovery.pt' if validation else 'learner/latest.pt')
     saved = checked_load(recovery, recovery_sha256, weights_only=False)
@@ -87,7 +89,7 @@ def load_committed_trials(run, recovery_sha256):
     if partition not in ('train', 'validation'):
         raise ValueError('Unknown source case partition')
     states = range(40) if partition == 'train' else range(40, 50)
-    inputs = {str(recovery): recovery_sha256}
+    inputs = {str(recovery): recovery_sha256, str(source_path): source_sha}
     trials = []
     validation_counters = dict(environment_steps=0, settling_steps=0, optimizer_steps=0)
     attempts = contract.get('attempts')
@@ -243,7 +245,7 @@ def export_corpus(run, output, *, recovery_sha256, teacher_path, teacher_sha256,
     output.mkdir(parents=True, exist_ok=False)
     metadata = dict(source_contract=source, local_scene_split=snapshot['partition'],
         motor_sha256=PI05_RECEIPT, feature_contract=source['feature_contract'], noise_contract=source['noise_contract'],
-        trial_ids=[f'ppo:{recovery_sha256}:{key}' for key in task_keys], task_keys=task_keys,
+        trial_ids=[f'ppo:{content_hash(source)}:{key}' for key in task_keys], task_keys=task_keys,
         source_trials=dict(source_trials), input_sha256=pinned_inputs, teacher_manifest=manifest,
         teacher_policy_sha256=teacher_sha256, teacher_status='candidate; independent competence not assumed',
         label_rule='deterministic tanh(mean); teacher memory replayed from actual feedback, reset per source trial',
