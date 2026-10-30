@@ -1,0 +1,2688 @@
+{
+  "format": "source40_distribution_diagnostic_plan_v1",
+  "contract": {
+    "source_commit": "1a65226e0d3b6a68cf59808028245b3da5be3d07",
+    "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1",
+    "inputs": {
+      "matrix": "/mowenjie/fluffy-bassoon-2/outputs/libero40-all40-offline-20261030-r2/experiment/scales/update-000500/index.json",
+      "matrix_sha256": "de23134d2d4357a08944725bcf947c1383deb9c30bb05b69b713204c4c1b9417",
+      "assembly": "/mowenjie/fluffy-bassoon-2/outputs/libero40-all40-offline-20261030-r2/assembly/assembly.json",
+      "assembly_sha256": "8b6726d7c412d7f983cc538760696c0996e4ce43559a0573eb641e777aa5514f"
+    },
+    "operations": {
+      "ad_full": {
+        "mean": "original",
+        "std": "learned"
+      },
+      "dpt_full": {
+        "mean": "original",
+        "std": "learned"
+      },
+      "ad_zero_mean_same_std": {
+        "mean": "zero",
+        "std": "learned"
+      },
+      "dpt_zero_mean_same_std": {
+        "mean": "zero",
+        "std": "learned"
+      },
+      "ad_original_mean_std1": {
+        "mean": "original",
+        "std": "unit"
+      },
+      "dpt_original_mean_std1": {
+        "mean": "original",
+        "std": "unit"
+      }
+    },
+    "methods": [
+      "native",
+      "ad_full",
+      "dpt_full",
+      "ad_zero_mean_same_std",
+      "dpt_zero_mean_same_std",
+      "ad_original_mean_std1",
+      "dpt_original_mean_std1"
+    ],
+    "maximum_total_actions": 27000,
+    "maximum_gpu_seconds": 3600,
+    "optimizer_updates": 0,
+    "qualification_extra_resets": 0,
+    "source_data_from_targets": false,
+    "purpose": "Diagnostic of learned conditional mean and dispersion; no checkpoint selection or new meta-performance claim",
+    "native_distribution": {
+      "kind": "independent_native_flow_noise",
+      "mean": 0.0,
+      "std": 1.0,
+      "shape": [
+        10,
+        32
+      ],
+      "epsilon_trace_field": "native_initial_noise",
+      "proposed_flow_noise_trace_field": "native_initial_noise",
+      "clipping": null
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "0",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 0,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:00/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:00/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:00/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 0,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "10",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 10,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:10/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:10/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:10/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 10,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "20",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 20,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:20/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:20/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:20/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 20,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "30",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 30,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:30/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:30/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:30/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 30,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "40",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 40,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:40/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:40/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:40/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 40,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "50",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 50,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:50/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:50/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:50/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 50,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "60",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 60,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:60/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:60/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:60/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 60,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "70",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 70,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:70/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:70/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:70/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 70,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    },
+    {
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "simulator": {
+        "python": "/mowenjie/envs/wam-libero-plus-py310/bin/python",
+        "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-distribution-diagnostic-20261031-r1/src:/mowenjie/fluffy-bassoon-2/deps/libero-dsrl-87edbd1-20261029-r1/repo:/mowenjie/fluffy-bassoon/third_party/openpi-215abfb/packages/openpi-client/src:/mowenjie/fluffy-bassoon/envs/pi05-plus-client-deps",
+        "module": "fluffy_bassoon.meta_rl.vla_libero",
+        "arguments": [
+          "--mode",
+          "env-server",
+          "--suite",
+          "libero_90",
+          "--task-id",
+          "80",
+          "--horizon",
+          "400",
+          "--fresh-environment-on-reset"
+        ],
+        "horizon": 400,
+        "settle_steps": 10,
+        "expected_metadata": {
+          "suite": "libero_90",
+          "task_id": 80,
+          "horizon": 400,
+          "settle_steps": 10,
+          "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+          "fresh_environment_on_reset": true
+        }
+      },
+      "groups": [
+        {
+          "group_id": "libero90:80/state-0/seed-123/native/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "native",
+          "source_condition": "native",
+          "updates": null,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/ad_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/dpt_full/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_full",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/ad_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/dpt_zero_mean_same_std/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_zero_mean_same_std",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/ad_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "ad_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        },
+        {
+          "group_id": "libero90:80/state-0/seed-123/dpt_original_mean_std1/k0",
+          "case": {
+            "benchmark": "libero90",
+            "case_id": "libero90:80/state-0/seed-123",
+            "suite": "libero_90",
+            "task_id": 80,
+            "initial_state": 0,
+            "scene_seed": 123
+          },
+          "method": "dpt_original_mean_std1",
+          "source_condition": "source500",
+          "updates": 500,
+          "support_budgets": [
+            0
+          ],
+          "maximum_actions": 410
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "group_id": "libero90:00/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:00/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:00/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 0,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:10/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:10/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 10,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:20/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:20/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 20,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:30/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:30/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 30,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:40/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:40/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 40,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:50/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:50/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 50,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:60/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:60/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 60,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:70/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:70/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 70,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/native/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "native",
+      "source_condition": "native",
+      "updates": null,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/ad_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/dpt_full/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_full",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/ad_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/dpt_zero_mean_same_std/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_zero_mean_same_std",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/ad_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "ad_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    },
+    {
+      "group_id": "libero90:80/state-0/seed-123/dpt_original_mean_std1/k0",
+      "case": {
+        "benchmark": "libero90",
+        "case_id": "libero90:80/state-0/seed-123",
+        "suite": "libero_90",
+        "task_id": 80,
+        "initial_state": 0,
+        "scene_seed": 123
+      },
+      "method": "dpt_original_mean_std1",
+      "source_condition": "source500",
+      "updates": 500,
+      "support_budgets": [
+        0
+      ],
+      "maximum_actions": 410
+    }
+  ],
+  "counts": {
+    "cases": 9,
+    "physical_episodes": 63,
+    "nominal_actions_including_settling": 25830,
+    "action_cap": 27000,
+    "gpu_seconds": 3600
+  },
+  "diagnostic_sha256": "2114c042b3b6ca7de0f760314acb4d368a229b52092512cddd2b7919b2415733"
+}
