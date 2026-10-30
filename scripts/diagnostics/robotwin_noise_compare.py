@@ -29,6 +29,9 @@ import torch
 
 from fluffy_bassoon.meta_rl.vla_noise_ppo import PPOConfig, RecurrentNoisePPO, observation_hash, capture_rng, restore_rng
 from fluffy_bassoon.meta_rl.vla_noise_sac import SACConfig, NoiseSAC
+from fluffy_bassoon.meta_rl.collection_admission import (
+    admit_collected_group, assert_resume_allowed, quarantine_collection_failure,
+)
 
 
 SOURCE_TASKS = ("handover_mic", "pick_diverse_bottles", "place_a2b_left",
@@ -43,6 +46,75 @@ class WallBudgetReached(RuntimeError):
 
 class CampaignBudgetReached(RuntimeError):
     pass
+
+
+class CollectorTimeAdmission:
+    """Reviewed first-group bound, then measured complete-group wall times."""
+    def __init__(self, initial_seconds, checkpoint_reserve):
+        if (not math.isfinite(initial_seconds) or initial_seconds <= 0
+                or not math.isfinite(checkpoint_reserve) or checkpoint_reserve < 0):
+            raise ValueError("Parallel collection needs a finite reviewed group-time bound")
+        self.initial_seconds=float(initial_seconds)
+        self.checkpoint_reserve=float(checkpoint_reserve)
+        self.maximum_observed=0.
+
+    def require(self, remaining_seconds):
+        required=max(self.initial_seconds,1.25*self.maximum_observed)+self.checkpoint_reserve
+        if not math.isfinite(remaining_seconds) or remaining_seconds <= required:
+            raise WallBudgetReached(f"Complete parallel group plus checkpoint reserve requires {required:.3f}s")
+
+    def observe(self, seconds):
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("Invalid measured complete-group wall time")
+        self.maximum_observed=max(self.maximum_observed,float(seconds))
+
+    def state_dict(self):
+        return dict(initial_seconds=self.initial_seconds,checkpoint_reserve=self.checkpoint_reserve,
+                    maximum_observed=self.maximum_observed)
+
+    def load_state_dict(self, state):
+        if (state["initial_seconds"]!=self.initial_seconds
+                or state["checkpoint_reserve"]!=self.checkpoint_reserve
+                or not math.isfinite(state["maximum_observed"]) or state["maximum_observed"]<0):
+            raise ValueError("Parallel collection timing recovery changed")
+        self.maximum_observed=float(state["maximum_observed"])
+
+
+def restore_unstarted_source_group(state, plan):
+    """Only for groups with zero simulator RPCs; never refund physical work."""
+    state["schedule"].load_state_dict(deepcopy(plan["schedule_before"]))
+    state["learner"].sampler.bit_generator.state=deepcopy(plan["sampler_before"])
+    restore_rng(plan["rng_before"])
+
+
+def plan_parallel_source_group(state, *, lanes, episodes, episode_limit_for_task,
+                               remaining_actions, admit_time):
+    """Plan within one six-trial round, rolling back every prelaunch stream."""
+    if lanes not in (2,3,6) or episodes!=4 or len(state["pending"])%lanes:
+        raise ValueError("Parallel groups require aligned two/three/six-lane K4 execution")
+    if len(state["pending"])+lanes>6:
+        raise ValueError("Parallel group would cross the fixed six-trial PPO update")
+    plan=dict(schedule_before=deepcopy(state["schedule"].state_dict()),
+        sampler_before=deepcopy(state["learner"].sampler.bit_generator.state),
+        rng_before=deepcopy(capture_rng()))
+    try:
+        plans=[]
+        for _ in range(lanes):
+            task,seeds=state["schedule"].sample(episodes)
+            limit=episode_limit_for_task(task)
+            if type(limit) is not int or limit<1:
+                raise ValueError("Native source task horizon must be a positive integer")
+            plans.append(dict(task=task,seeds=seeds,episode_limit=limit,
+                              schedule_trial=state["schedule"].trials))
+        required=sum(len(item["seeds"])*item["episode_limit"] for item in plans)
+        if remaining_actions<required:
+            raise CampaignBudgetReached("Insufficient reservation for complete parallel K4 trials; no RPC dispatched")
+        admit_time()
+        plan.update(plans=plans,required_actions=required)
+        return plan
+    except BaseException:
+        restore_unstarted_source_group(state,plan)
+        raise
 
 
 class PPOUpdateRejected(RuntimeError):
@@ -295,6 +367,8 @@ def parse_args(argv=None):
     p.add_argument("--record-corpus",action="store_true")
     p.add_argument("--final-observation-only",action="store_true")
     p.add_argument("--capture-qualification",type=Path)
+    p.add_argument("--collector-lanes",type=int,default=1)
+    p.add_argument("--collector-group-seconds",type=float)
     p.add_argument("--ppo-epochs",type=int,default=5)
     p.add_argument("--ppo-minibatch-trials",type=int,default=16)
     p.add_argument("--learning-rate",type=float,default=3e-4)
@@ -328,6 +402,20 @@ def parse_args(argv=None):
     if not set(args.eval_tasks)<=set(SOURCE_TASKS+HELDOUT_TASKS):
         p.error("Unknown evaluation task")
     if len(set(args.methods))!=len(args.methods): p.error("Duplicate method")
+    if args.collector_lanes not in (1,2,3,6):
+        p.error("collector-lanes must be one, two, three or six")
+    if args.collector_lanes>1:
+        if (not args.source_iterations or args.ppo_trials_per_update!=6
+                or args.train_episodes!=4 or args.ppo_update_steps or args.native_horizon!=32
+                or not args.benchmark_episode_limits or not args.campaign_root or not args.record_corpus
+                or args.ppo_max_update_kl is None or not set(args.methods)&{"ppo","ppo_reset"}
+                or len(args.source_tasks)!=6 or set(args.source_tasks)!=set(SOURCE_TASKS)):
+            p.error("Parallel PPO requires the native six-task, six-complete-K4 fixed-round campaign with corpus and KL guard")
+        if (args.collector_group_seconds is None or not math.isfinite(args.collector_group_seconds)
+                or args.collector_group_seconds<=0):
+            p.error("Parallel PPO needs an explicit reviewed --collector-group-seconds bound")
+    elif args.collector_group_seconds is not None:
+        p.error("collector-group-seconds requires parallel collection")
     if args.campaign_root and not args.record_corpus:
         p.error("Campaign collection requires --record-corpus")
     if args.campaign_root and args.source_steps*len(args.methods)>args.campaign_max_actions:
@@ -366,11 +454,19 @@ def parse_args(argv=None):
             p.error("Stage target adaptation uses the declared K8 trials")
     elif args.stage_source_validation_only and not args.source_iterations:
         p.error("Stage validation mode requires action milestones or fixed source iterations")
+    if args.resume:
+        try: assert_resume_allowed(args.resume)
+        except RuntimeError as error: p.error(str(error))
     return args
 
 
 def main(argv=None):
     args=parse_args(argv)
+    resume_joint=None
+    if args.resume is not None:
+        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
+        resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
+        assert_resume_allowed(args.resume,checkpoint=resume_joint)
     if sys.platform!="linux" or not torch.cuda.is_available():
         raise RuntimeError("Run only inside a qualified allocated Linux CUDA job")
     if (args.output/"contract.json").exists():
@@ -435,6 +531,12 @@ def main(argv=None):
         episode_limit=args.episode_limit,action_limit=args.action_limit))
     contract["ppo_trials_per_update"] = args.ppo_trials_per_update
     contract["ppo_update_primitive_threshold"] = args.ppo_update_steps
+    if args.collector_lanes>1:
+        contract["parallel_source_collection"]=dict(lanes=args.collector_lanes,
+            controller_microbatch=1,motor_microbatch=1,
+            group_seconds_bound=args.collector_group_seconds,
+            native_task_horizons=True,raw_corpus=True,
+            scope="source PPO only; scalar SAC and evaluations unchanged")
     if task_episode_limits is not None:
         contract["task_episode_limits"]=task_episode_limits
     if args.source_iterations:
@@ -490,6 +592,14 @@ def main(argv=None):
                 budget.import_receipt(**receipt)
         env=CampaignEnv(env,budget,run_id=args.output.name)
     policy_archive=BehaviorPolicyArchive(args.output/"corpus"/"policies") if args.record_corpus else None
+    vector_env=None
+    collector_time=(CollectorTimeAdmission(args.collector_group_seconds,args.boundary_reserve_seconds)
+                    if args.collector_lanes>1 else None)
+    if args.collector_lanes>1:
+        from fluffy_bassoon.rl.robotwin_production_vector import ProductionRobotwinVectorEnv
+        vector_env=ProductionRobotwinVectorEnv(env.env if isinstance(env,CampaignEnv) else env,
+            budget,run_id=args.output.name,lanes=args.collector_lanes,
+            corpus_writer=corpus_writer,output_dir=args.output)
     def set_context(method,phase,trial_id,learner=None,**metadata):
         behavior=(policy_archive.identify(learner,"sac" if isinstance(learner,NoiseSAC) else method)
                   if policy_archive is not None and learner is not None else
@@ -535,6 +645,8 @@ def main(argv=None):
                      schedule=schedule.state_dict(),source_steps=steps,task_steps=task_steps,
                      pending_rollouts=pending or [],boundary="complete trial or declared budget cut",
                      resume_stage="source",elapsed_seconds=time.monotonic()-started)
+        rejected=source_states.get(method,{}).get("rejected_group")
+        if rejected: payload.update(rejected_group=rejected,resume_blocked=True)
         if iteration_state is not None: payload.update(iteration_state)
         torch.save(payload,temporary)
         temporary.replace(path)
@@ -619,16 +731,15 @@ def main(argv=None):
     accepted_resume_steps={}
     next_method_index=0
     last_joint_steps=0
-    resume_joint=None
-    if args.resume is not None:
-        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
-        resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
+    if resume_joint is not None:
         if resume_joint["contract"]!=contract:
             raise ValueError("Resume scientific/source contract changed")
         if args.campaign_root:
             completed_units.update(resume_joint.get("completed_units",[]))
             history[:]=resume_joint.get("history",[])
             stage_reports.update(resume_joint.get("stages",{}))
+        if collector_time is not None:
+            collector_time.load_state_dict(resume_joint["collector_time_admission"])
     def initialize_sources():
         nonlocal next_method_index,last_joint_steps
         for method in args.methods:
@@ -674,18 +785,24 @@ def main(argv=None):
             states[method]=dict(learner=state["learner"].state_dict(),
                 schedule=state["schedule"].state_dict(),source_steps=state["steps"],
                 task_steps=state["task_steps"],pending_rollouts=state["pending"])
+            if state.get("rejected_group"):
+                states[method]["rejected_group"]=state["rejected_group"]
             if args.source_iterations:
                 states[method].update(completed_source_trials=state["completed_trials"],
                                       completed_source_iterations=state["iterations"])
         path=args.output/"coordinator-recovery.pt"
         temporary=path.with_suffix(".tmp")
-        torch.save(dict(contract=contract,states=states,
+        recovery=dict(contract=contract,states=states,
                         rng=capture_rng() if checkpoint_rng_override is None else deepcopy(checkpoint_rng_override),
                         next_method_index=next_method_index,boundary="completed source trial/update",
                         completed_units=sorted(completed_units),history=history,
                         stages=stage_reports,
                         resume_stage="source_or_completed_evaluation_unit",
-                        elapsed_seconds=time.monotonic()-started),temporary)
+                        elapsed_seconds=time.monotonic()-started)
+        if collector_time is not None:
+            recovery["collector_time_admission"]=collector_time.state_dict()
+        if any(s.get("rejected_group") for s in source_states.values()): recovery["resume_blocked"]=True
+        torch.save(recovery,temporary)
         temporary.replace(path); last_joint_steps=total
     def save_state(method,force=False):
         state=source_states[method]
@@ -704,6 +821,7 @@ def main(argv=None):
                                    updates=learner.updates,optimizer_steps=learner.optimizer_steps,
                                    pending_trials=len(state["pending"]),
                                    pending_primitive_steps=sum(r["primitive_steps"] for _,r in state["pending"]))
+            if state.get("rejected_group"): summaries[method]["rejected_group"]=state["rejected_group"]
             if method=="sac": summaries[method]["contract"]=learner.contract()
             if args.source_iterations:
                 summaries[method].update(completed_source_trials=state["completed_trials"],
@@ -777,6 +895,72 @@ def main(argv=None):
         if trials==args.ppo_trials_per_update:
             state["iterations"]+=1
             record_iteration_complete(method)
+    def parallel_source_round(method):
+        from fluffy_bassoon.meta_rl.vla_noise_batched_collection import (
+            CollectionNotStarted,collect_trials_batched,
+        )
+        from fluffy_bassoon.rl.robotwin_production_vector import ProductionAdmissionError
+        state=source_states[method]; learner=state["learner"]
+        remaining=min(args.source_steps-state["steps"],budget.remaining(phase="source",method=method))
+        plan=plan_parallel_source_group(state,lanes=args.collector_lanes,
+            episodes=args.train_episodes,episode_limit_for_task=vector_env.episode_limit_for_task,
+            remaining_actions=remaining,
+            admit_time=lambda: collector_time.require(args.wall_seconds-(time.monotonic()-started)))
+        plans=plan["plans"]
+        lane_iteration=[dict(source_iteration=state["iterations"]+1,
+            trial_in_iteration=state["completed_trials"]%6+lane+1) for lane in range(len(plans))]
+        admitted=False; collected=None
+        trial_start=time.monotonic()
+        try:
+            behavior=policy_archive.identify(learner,method)
+            for lane,item in enumerate(plans):
+                vector_env.set_lane_context(lane,dict(phase="source",method=method,
+                    trial_id=f"source:{method}:{item['schedule_trial']}",**behavior,
+                    stage_source_actions=None,stage_source_iteration=None,**lane_iteration[lane]))
+            vector_env.admit_group([item["task"] for item in plans],[item["seeds"] for item in plans])
+            admitted=True
+            log("source_execution_group_start",method=method,source_steps=state["steps"],
+                lanes=len(plans),plans=plans,required_actions=plan["required_actions"],
+                source_iteration=state["iterations"]+1,optimizer_steps=learner.optimizer_steps)
+            collected=collect_trials_batched(learner,vector_env,
+                [item["task"] for item in plans],[item["seeds"] for item in plans],
+                primitive_budget=remaining,controller_microbatch=1,
+                should_stop=lambda: time.monotonic()-started>=args.wall_seconds-args.boundary_reserve_seconds,
+                decision_callback=vector_env.record_decision_metadata,
+                episode_callback=lambda lane,row: record_episode(method,"source",collector_lane=lane,
+                    **lane_iteration[lane])(row))
+            group_receipt=vector_env.finish_group()
+        except CollectionNotStarted as error:
+            vector_env.cancel_group(str(error))
+            restore_unstarted_source_group(state,plan)
+            raise WallBudgetReached(str(error)) from error
+        except ProductionAdmissionError:
+            restore_unstarted_source_group(state,plan)
+            raise
+        except BaseException as error:
+            if not admitted:
+                restore_unstarted_source_group(state,plan)
+            else:
+                quarantine_collection_failure(state,output_dir=args.output,method=method,error=error,
+                    capture_rng=capture_rng,save_payload=torch.save,collected=collected,
+                    details=dict(plan=plan,vector=vector_env.group_recovery_metadata(),
+                                 vector_resume_blocker=getattr(vector_env,"resume_blocker_metadata",None),
+                                 campaign_budget=budget.snapshot()))
+            raise
+        elapsed=time.monotonic()-trial_start
+        collector_time.observe(elapsed)
+        # Every physical lane is charged before replay. A rejected lane blocks
+        # the whole group and future ordinary resume, retaining prior pending.
+        errors=admit_collected_group(state,collected,output_dir=args.output,method=method,
+            capture_rng=capture_rng,save_payload=torch.save)
+        state["completed_trials"]+=len(collected)
+        save_state(method,force=True)
+        save_joint(force=True)
+        log("source_execution_group_complete",method=method,source_steps=state["steps"],
+            lanes=len(collected),trial_seconds=elapsed,replay_errors=errors,
+            completed_source_trials=state["completed_trials"],group_receipt=group_receipt)
+        maybe_ppo_update(method)
+        refresh_summaries()
     def source_round(method):
         state=source_states[method]; learner=state["learner"]
         previous_iteration=state["iterations"]
@@ -792,6 +976,9 @@ def main(argv=None):
             if state["iterations"]>=args.source_iterations: return
         elif state["steps"]>=args.source_steps: return
         guard()
+        if method!="sac" and vector_env is not None:
+            parallel_source_round(method)
+            return
         allowance=None if args.source_iterations else args.source_steps-state["steps"]
         if active_milestone is not None and not args.source_iterations:
             allowance=min(allowance,active_milestone-state["steps"])
@@ -1105,6 +1292,7 @@ def main(argv=None):
             summary["source_validation"]=[row for row in history if row.get("phase")=="source_validation"]
             summary["native"]=[row for row in history if row.get("method")=="native"]
         if corpus_writer is not None: summary["corpus"]=corpus_writer.statistics()
+        if collector_time is not None: summary["collector_time_admission"]=collector_time.state_dict()
         if policy_archive is not None:
             summary["behavior_policy_archive"]=dict(bytes_written=policy_archive.bytes_written,
                 io_seconds=policy_archive.seconds,acting_versions=len(policy_archive.index))
@@ -1113,6 +1301,7 @@ def main(argv=None):
             summary["runtime_counters"]=value() if callable(value) else value
         write_json(args.output/"summary.json",summary)
         try:
+            if vector_env is not None: vector_env.close()
             if hasattr(env,"close"): env.close()
         finally:
             if budget is not None: budget.close()
