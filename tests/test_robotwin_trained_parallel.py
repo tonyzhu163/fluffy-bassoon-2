@@ -19,11 +19,13 @@ from fluffy_bassoon.meta_rl.robotwin_trained_parallel import (
 def trained_boundary(tmp_path,recovery_runtime,monkeypatch):
     import fluffy_bassoon.rl.robotwin_noise as runtime
     recovery_runtime["fail_reset"]=None
+    monkeypatch.setattr(runtime.RobotwinNoiseEnv,"native_horizon",32)
     monkeypatch.setattr(runtime,"load_benchmark_episode_limits",lambda *args:
         {task:1 for task in driver.SOURCE_TASKS+driver.HELDOUT_TASKS})
     args=common_args(tmp_path,"ppo",iterations=3,limit=6)+[
         "--benchmark-episode-limits","--source-eval-iterations","1","2","3",
         "--source-validation-episodes","4","--ppo-max-update-kl",".1","--learning-rate","1e-6"]
+    args.remove("--stage-source-validation-only")
     output=tmp_path/"scalar"/"experiment"
     assert driver.main(args+["--output",str(output)])==0
     summary=json.loads((output/"summary.json").read_text())
@@ -149,7 +151,9 @@ def test_trained_n6_execution_preserves_contract_and_stops_before_due_evaluation
     assert summary["continuation_manifest"] and s["source_steps"]==48
     progress=[json.loads(x) for x in (output/"progress.jsonl").read_text().splitlines()]
     assert not any(x["stage"]=="source_stage_evaluation_start" and x["source_iteration"]==2 for x in progress)
-    assert len(b["state"]["actions"])-before_actions==48  # Original due scalarK4 eval24 + one sourceN6 group24.
+    episodes=[json.loads(x) for x in (output/"episodes.jsonl").read_text().splitlines()]
+    assert sum(x["phase"]=="source" for x in episodes)==24
+    assert len(b["state"]["actions"])-before_actions==len(episodes)>24
     assert instances[0].run_id!="experiment" and instances[0].run_id.startswith("parallel:experiment:")
     manifest=json.loads(Path(summary["continuation_manifest"]["path"]).read_text())
     assert manifest["expected"]["completed_source_iterations"]==2

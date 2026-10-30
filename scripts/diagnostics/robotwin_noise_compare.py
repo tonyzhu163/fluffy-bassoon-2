@@ -526,7 +526,9 @@ def main(argv=None):
         output_identity=hashlib.sha256(str(args.output.resolve()).encode()).hexdigest()[:16]
         execution_run_id=f"{args.output.parent.name}:{args.output.name}:{output_identity}"
         if args.collector_lanes>1:
-            from fluffy_bassoon.meta_rl.robotwin_trained_parallel import validate_trained_parallel_boundary
+            from fluffy_bassoon.meta_rl.robotwin_trained_parallel import (
+                validate_trained_parallel_boundary,validate_trained_parallel_arguments)
+            validate_trained_parallel_arguments(args,resume_joint)
             trained_parallel_admission=validate_trained_parallel_boundary(trial_continuation,resume_joint,
                 manifest_path=args.resume_trial_manifest,campaign_root=args.campaign_root)
     elif args.collector_lanes>1 and args.resume and not parallel:

@@ -13,6 +13,30 @@ def _require(condition, message):
         raise ValueError("Trained parallel migration: " + message)
 
 
+def validate_trained_parallel_arguments(args, checkpoint):
+    """Reject changes to known scientific arguments before loading the motor."""
+    contract=checkpoint["contract"]
+    _require(not args.stage_source_validation_only,"original target evaluation cannot be suppressed")
+    for argument,key in (("source_steps","source_steps_per_learner"),("source_tasks","source_tasks"),
+            ("eval_tasks","eval_tasks"),("methods","methods"),("train_episodes","train_episodes"),
+            ("eval_episodes","eval_episodes"),("native_horizon","native_horizon"),
+            ("task_config_name","task_config_name"),("action_limit","action_limit"),
+            ("ppo_trials_per_update","ppo_trials_per_update"),("ppo_max_update_kl","ppo_max_update_kl")):
+        _require(getattr(args,argument)==contract[key],f"scientific argument {argument} changed")
+    _require(args.source_iterations==contract["source_iterations"]["count"]
+             and args.source_eval_iterations==contract["source_iterations"]["evaluation_iterations"],
+             "original source goal/evaluation cursor schedule changed")
+    _require(args.source_validation_episodes==contract["campaign"]["source_validation_episodes"]
+             and args.campaign_id==contract["campaign"]["id"]
+             and args.campaign_max_actions==contract["campaign"]["max_actions"],
+             "physical campaign or evaluation allowance changed")
+    for argument,key in (("learning_rate","learning_rate"),("ppo_epochs","epochs"),
+                         ("ppo_minibatch_trials","minibatch_trials")):
+        _require(getattr(args,argument)==contract["ppo"][key],f"PPO argument {argument} changed")
+    for argument in ("model_path","norm_stats"):
+        _require(str(getattr(args,argument))==contract[argument],f"frozen {argument} changed")
+
+
 def continuation_campaign_fence(manifest_path, campaign_root):
     """Use the hash-bound predecessor ledger without opening a live ledger."""
     manifest=json.loads(Path(manifest_path).read_text())
