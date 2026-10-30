@@ -445,3 +445,8 @@ trained-reset initial cases, both native result/unit hashes and the common motor
 capture contract match. Distinct2fd/570 executors and stochastic draws remain
 explicit. This cross-run control requires no new actions and does not establish
 a statistically reliable or memory-specific benefit.
+
+The same-weight saved `memory_reset` condition is a recurrent-cache reset lesion;
+it retains explicit previous-noise/reward across episodes. It must not be
+called fully memoryless. The separately trained episode-reset arm clears both
+cache and explicit feedback. Exact570 source confirms these independent flags.

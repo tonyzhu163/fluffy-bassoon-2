@@ -18,7 +18,7 @@ Source100 coordinator SHAs are9930fe4dbca5ff8cadaf8985e4f9cfe72c8feb050996e3d8f3
 | Controller/condition | Source validation | Bottle adjustment | Stapler placement |
 | --- | ---: | ---: | ---: |
 | Persistent normal | 2/24 | 7/8 | 1/8 |
-| Same weights, memory reset | — | 6/8 | 1/8 |
+| Same weights, cache reset | — | 6/8 | 1/8 |
 | Same weights, reward blind | — | 8/8 | 1/8 |
 | Separately trained episode reset | 3/24 | 8/8 | 0/8 |
 
@@ -46,3 +46,5 @@ Evidence: [independent persistent audit](checks/independent-ppo100-20261031T0647
 ## Reused native control on identical cases
 
 The completed earlier native16 panel is now independently SHA-bound and paired to every final PPO/reset target case: native6/8 bottle,0/8 stapler versus normal7/8,1/8. Same actual seeds/raw observations/public features and frozen motor/capture contract pass, with distinct executor identities retained. This is a cross-run descriptive control, not the unpaired contemporaneous21161030 probes. See [native16 reuse](NATIVE16-REUSE.md). No new native rollout or allocation is needed.
+
+Control terminology: saved condition `memory_reset` resets the recurrent cache at each episode start while retaining the persistent controller's explicit previous-noise/reward inputs. It is a cache-reset lesion, not a fully memoryless policy. The separately trained episode-reset controller clears both cache and explicit feedback. This follows the exact570 runtime `vla_noise_ppo.py`: feedback clearing depends on `c.reset_each_episode`; the `reset_memory` input independently resets recurrent state. Raw condition names remain unchanged.

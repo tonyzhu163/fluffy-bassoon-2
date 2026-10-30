@@ -10,7 +10,7 @@ All48 persistent-PPO condition records and16 separately trained-reset records ex
 | --- | ---: | ---: | ---: |
 | Earlier native Gaussian on matched cases | 6 | 0 | 6 |
 | Final persistent PPO normal | 7 | 1 | 8 |
-| Same weights, memory reset | 6 | 1 | 7 |
+| Same weights, cache reset | 6 | 1 | 7 |
 | Same weights, reward blind | 8 | 1 | 9 |
 | Separately trained episode reset | 8 | 0 | 8 |
 
@@ -19,3 +19,5 @@ This is a cross-run matched-initial-case control. The stochastic noise draws and
 Original native-panel unused10463actions/2449GPU-seconds remain sealed. There is no fresh native-evaluation admission or authority inferred from unused source caps. The existing qualified command is historical and the completed form/output must not be resubmitted. Reusing saved results requires no new resource reservation.
 
 Exact inputs, per-case equality and per-policy success vectors are recorded in [the cross-run pairing audit](checks/native16-cross-run-pairing-20261031-0703.json). The two native result/receipt files are retained under the completed native-panel receipts. Independent read-only review by benchmark_horizons passed; no simulation/model/test execution was performed for this reconciliation.
+
+Control terminology: saved condition `memory_reset` resets the recurrent cache at each episode start while retaining the persistent controller's explicit previous-noise/reward inputs. It is a cache-reset lesion, not a fully memoryless policy. The separately trained episode-reset controller clears both cache and explicit feedback. This follows the exact570 runtime `vla_noise_ppo.py`: feedback clearing depends on `c.reset_each_episode`; the `reset_memory` input independently resets recurrent state. Raw condition names remain unchanged.
