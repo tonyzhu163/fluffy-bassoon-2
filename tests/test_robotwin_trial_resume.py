@@ -64,18 +64,36 @@ def recovery_runtime(monkeypatch):
         def frozen_fingerprint(self):return "fixed-motor"
         def close(self):pass
     def cpu_rng():return dict(python=random.getstate(),numpy=np.random.get_state(),torch=torch.get_rng_state(),cuda=[])
+    class CPUDriverTorch:
+        # Only the driver's allocated-runtime gate is synthetic. Globally
+        # claiming CUDA availability makes real CPU Adam query a CUDA stream
+        # during its graph-capture health check on zero-GPU test allocations.
+        class cuda:
+            @staticmethod
+            def is_available():return True
+            @staticmethod
+            def manual_seed_all(seed):pass
+        def __getattr__(self,name):return getattr(torch,name)
+    def cpu_ppo(observation_dim,noise_shape,*,config,seed,**kwargs):
+        model=RecurrentNoisePPO(observation_dim,noise_shape,
+            config=replace(config,width=8,layers=1,heads=2,memory_length=8),device="cpu",seed=seed)
+        assert model.device.type=="cpu" and all(p.device.type=="cpu" for p in model.policy.parameters())
+        return model
+    class TinySAC(NoiseSAC):
+        def __init__(self,observation_dim,action_dim,*,config,seed,**kwargs):
+            super().__init__(observation_dim,action_dim,
+                config=replace(config,hidden_dims=(8,),batch_size=1,warmup_chunks=0,replay_capacity=64),
+                device="cpu",seed=seed)
+            assert self.device.type=="cpu"
+            assert all(p.device.type=="cpu" for network in (self.actor,self.critic,self.target_critic)
+                       for p in network.parameters())
+            assert self.log_temperature.device.type==self.torch_rng.device.type==self.train_torch_rng.device.type=="cpu"
     monkeypatch.setattr(runtime_module,"RobotwinNoiseEnv",Runtime)
-    monkeypatch.setattr(driver.torch.cuda,"is_available",lambda:True)
-    monkeypatch.setattr(driver.torch.cuda,"manual_seed_all",lambda seed:None)
+    monkeypatch.setattr(driver,"torch",CPUDriverTorch())
     monkeypatch.setattr(ppo_module,"capture_rng",cpu_rng)
     monkeypatch.setattr(driver,"capture_rng",cpu_rng)
-    monkeypatch.setattr(driver,"RecurrentNoisePPO",lambda observation_dim,noise_shape,*,config,seed,**kw:
-        RecurrentNoisePPO(observation_dim,noise_shape,config=replace(config,width=8,layers=1,heads=2,memory_length=8),
-                          device="cpu",seed=seed))
-    monkeypatch.setattr(driver,"NoiseSAC",type("TinySAC",(NoiseSAC,),{
-        "__init__":lambda self,observation_dim,action_dim,*,config,seed,**kw:NoiseSAC.__init__(
-            self,observation_dim,action_dim,config=replace(config,hidden_dims=(8,),batch_size=1,
-                warmup_chunks=0,replay_capacity=64),device="cpu",seed=seed)}))
+    monkeypatch.setattr(driver,"RecurrentNoisePPO",cpu_ppo)
+    monkeypatch.setattr(driver,"NoiseSAC",TinySAC)
     return state
 
 
