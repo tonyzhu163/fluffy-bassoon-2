@@ -53,7 +53,8 @@ test -z "$(git status --porcelain)"
 "$TASK_PYTHON" "scripts/[train]gpu_probe.py" --expected-count 1 \
     --output "$TASK_OUTPUT/gpu-probe.json" --purpose training --baige-container
 export LYCO_BAIGE_GPU_MAP="$TASK_OUTPUT/gpu-probe.json"
-timeout 180 "$TASK_PYTHON" -m pytest -q \
+timeout 180 "$TASK_PYTHON" -m pytest -q -x --tb=short \
+    --basetemp "/dev/shm/robotwin-pytest-$TASK_RUN" \
     tests/test_robotwin_noise.py tests/test_robotwin_assets.py \
     tests/test_robotwin_fast_observations.py tests/test_vla_noise_ppo.py \
     tests/test_vla_noise_sac.py tests/test_vla_noise_ppo_review.py \

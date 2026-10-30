@@ -354,7 +354,8 @@ def test_stage_configuration_requires_exact_ordered_campaign_limits():
 def test_fixed_iterations_require_whole_trials_and_separate_sparse_evaluation():
     required=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
         "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--output","/new",
-        "--campaign-root","/campaign","--record-corpus","--source-steps","1100000",
+        "--campaign-root","/campaign","--campaign-max-actions","4000000",
+        "--record-corpus","--source-steps","1100000",
         "--source-iterations","100","--ppo-trials-per-update","6",
         "--source-eval-iterations","10","25","50","100","--benchmark-episode-limits"]
     args=driver.parse_args(required)
