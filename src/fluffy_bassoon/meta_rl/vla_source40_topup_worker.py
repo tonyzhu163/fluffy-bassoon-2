@@ -48,10 +48,26 @@ def remaining(root):
         accounting='One original10560s ceiling; prior attempts and next60s startup allowance retained')
 
 
-def assigned(plan,prefix,worker,outputs):
-    rows=[row for row in plan['slots'] if row['launchable']]
+def train_admission(plan):
+    rows=[row for row in plan['slots'] if row['slot'].endswith('/train')]
     if len(rows)!=40 or [row['slot'] for row in rows]!=source.expected_slots()[:40]:
         raise ValueError('Production packing requires all40 admitted train streams in their fixed source order')
+    retained=[row for row in rows if not row['launchable']]
+    proofs=[]
+    for row in retained:
+        headroom=row['maximum_total_actions']-row['parent']['actions']
+        if not 0<=headroom<1650:
+            raise ValueError('Retained source leaves must lack quota for qualification plus another complete K4')
+        proofs.append(dict(slot=row['slot'],parent=row['parent'],maximum_total_actions=row['maximum_total_actions'],
+            remaining_action_headroom=headroom,reason='Quota-based preservation of the exact terminal parent; no cold relaunch'))
+    return dict(all40_admitted_train_count=40,all40_train_rows_sha256=source.content_hash(rows),
+        launchable_train_count=40-len(retained),retained_only_train_count=len(retained),
+        retained_only_source_leaves=proofs)
+
+
+def assigned(plan,prefix,worker,outputs):
+    train_admission(plan)
+    rows=[row for row in plan['slots'] if row['slot'].endswith('/train') and row['launchable']]
     result=[]
     names=dict(libero_spatial='s',libero_object='o',libero_goal='g',libero_10='l')
     for row in rows[worker::8]:
@@ -85,7 +101,7 @@ def begin(root,plan_path,ledger,budget_path,prefix,worker,source_commit,*,resume
     if source_commit!=plan['source_commit']:raise ValueError('Macro source pin differs')
     slots=assigned(plan,prefix,worker,root.parent.parent)
     assignment=dict(plan_sha256=plan['plan_sha256'],source_commit=source_commit,
-        canonical_ledger=str(Path(ledger).resolve()),slots=slots)
+        canonical_ledger=str(Path(ledger).resolve()),slots=slots,source_admission=train_admission(plan))
     root.mkdir(parents=True,exist_ok=True)
     immutable(root/'assignment.json',assignment)
     immutable(root/'assigned.txt',''.join(row['slot']+'\n' for row in slots),text=True)
@@ -200,6 +216,7 @@ def finish(root,attempt,exit_code,*,now=None):
         maximum_macro_charged_seconds=WORKER_SECONDS,within_macro_ceiling=charge(clock)<=WORKER_SECONDS,
         child_accounting='Overlapping controls; NEVER sum child charges with macro charge',
         children=states,fulfilled_streams=sum(value['fulfilled'] for value in states),assigned_streams=len(states),
+        source_admission=assignment['source_admission'],
         all40_claim=False,coverage='Assignments/admission are not completed source quota or512-case-bank exhaustion')
     immutable(attempt/'macro-outcome.json',value)
     return value

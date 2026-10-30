@@ -7,17 +7,22 @@ and all active qualification worktrees remain unchanged.
 The proposed NEW component is at most **85,880 GPU-seconds**:
 eight workers×(10,500s execution+60s startup allowance), plus a final source
 teacher check≤1,400s. This leaves520s under86,400s. Historical migration
-qualification time remains charged once to the original32h pool, not requested
-again as NEW compute. The existing canonical nested child-hold sum still must
-fit86,400s including historical qualification; it overlaps macro time and must
+qualification and bridge collection remain charged once to the original32h
+pool, not requested again as NEW compute. Their terminal leaves/costs are
+imported without recollection. The existing canonical nested child-hold sum
+still must fit86,400s including prior qualification/bridge holds; it overlaps macro time and must
 not be added to macro charges. No final check is launched by the worker.
 
 Before launch, root must bind the exact clean source, production plan content
 SHA and fresh prefix/root in `budget-template.json`, then set its status to
 `root_reconciled` after approval and reconciliation. The budget remains
-immutable during execution. The production plan must retain all40 train
-streams; each worker owns the original fixed stride of five streams. Nothing
-is reassigned using observed success or update counts.
+immutable during execution. The production plan retains all40 admitted train
+leaves in fixed source order. Only quota-launchable leaves are packed by the
+same fixed stride among eight workers; two filled bridge leaves yield38 new
+assignments, four/five per worker. Every assignment/macro outcome retains the
+hash of all40 rows plus retained-only parent index/contract/recovery proofs and
+counts. No filled parent is cold-relaunched. This is quota-based preservation;
+nothing is filtered by semantics, success or update counts.
 
 In an already funded allocation, request at most2h55m for a fresh worker:
 

@@ -113,8 +113,13 @@ For a later approved production phase, write an overrides JSON mapping
 production request consists of eight workers, each at most2h55m actual execution
 and a60s startup allowance, plus a final check of at most1,400s:
 **8×(10,500+60)+1,400=85,880 GPU-seconds**, leaving520s unassigned under24h.
-The earlier qualification is charged once to its original32h pool; it is not
-another NEW GPU-time request. This describes a ceiling, not eight available
+The earlier qualification and any bridge collections are charged once to their
+original32h pool; they are not another NEW GPU-time request. A future plan
+imports their exact terminal source leaves/costs. All40 train goals remain
+admitted; only quota-launchable train leaves are packed across the eight
+workers. Already quota-filled parents remain hash-bound retained-only leaves,
+with explicit proof/counts, and are never cold-relaunched. This is quota-based
+preservation, not semantic filtering. This describes a ceiling, not eight available
 GPUs or a promise that every source quota finishes within it.
 
 After approval, bind the exact production plan/pin/prefix in a root-funded

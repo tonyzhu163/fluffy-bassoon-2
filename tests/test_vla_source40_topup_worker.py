@@ -128,3 +128,32 @@ def test_macro_contract_cannot_reset_failed_attempts_and_unfunded_budget_rejecte
         macro.begin(*wrong,resume=True,now=1500)
     assert 8*(macro.ACTIVE_SECONDS+macro.ALLOWANCE)+macro.FINAL_SECONDS==85880<86400
     assert 40*macro.CHILD_SECONDS+1000+macro.FINAL_SECONDS==86400
+
+
+def test_two_quota_filled_bridge_leaves_retained_all40_admitted_only38_assigned(tmp_path,monkeypatch):
+    args,plan,_=prepared(tmp_path,monkeypatch)
+    retained={'libero_spatial:00/train','libero_object:00/train'}
+    for row in plan['slots']:
+        if row['slot'] in retained:
+            row.update(launchable=False,maximum_new_actions=0)
+            row['parent'].update(actions=21800,index_sha256='bridge-index',contract_sha256='bridge-contract',
+                recovery_sha256='bridge-full-state',source_commit='b'*40)
+    admission=macro.train_admission(plan)
+    assert admission['all40_admitted_train_count']==40
+    assert admission['launchable_train_count']==38 and admission['retained_only_train_count']==2
+    assert {row['slot'] for row in admission['retained_only_source_leaves']}==retained
+    assert all(row['parent']['recovery_sha256']=='bridge-full-state' for row in admission['retained_only_source_leaves'])
+    packed=[row['slot'] for worker in range(8) for row in macro.assigned(plan,'campaign',worker,tmp_path/'outputs')]
+    assert len(packed)==len(set(packed))==38 and not retained.intersection(packed)
+    assert set(packed)|retained==set(macro.source.expected_slots()[:40])
+    attempt,_,_=macro.begin(*args,now=1000)
+    assignment=macro.source.read(args[0]/'assignment.json')
+    assert assignment['source_admission']==admission
+    assert not retained.intersection(row['slot'] for row in assignment['slots'])
+    summary=macro.finish(args[0],attempt,0,now=1100)
+    assert summary['source_admission']==admission and summary['assigned_streams'] in (4,5)
+    changed=copy.deepcopy(plan);changed['slots'][0]['parent']['recovery_sha256']='changed-bridge'
+    assert macro.train_admission(changed)['all40_train_rows_sha256']!=admission['all40_train_rows_sha256']
+    plan['slots'][0]['parent']['actions']=18000
+    with pytest.raises(ValueError,match='Retained source leaves'):
+        macro.train_admission(plan)
