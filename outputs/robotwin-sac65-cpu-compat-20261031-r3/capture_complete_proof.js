@@ -26,8 +26,11 @@ function completeCpuDetail(ax, ready) {
     const rows = node.children.filter(x => x.role === 'row');
     const cells = row => row.children.filter(x => x.role === 'cell').map(texts);
     if (!rows.length || JSON.stringify(cells(rows[0])) !== JSON.stringify(header)) continue;
-    if (rows.length !== 2) throw new Error('Actual resource table has multiple roles');
-    tables.push(cells(rows[1]));
+    if (rows.length < 2) return null; // Header rendered before its Worker row.
+    if (rows.length > 2) throw new Error('Actual resource table has multiple roles');
+    const worker = cells(rows[1]);
+    if (worker.length < 5 || worker.some(cell => !cell.length || cell.every(text => !text.trim()))) return null;
+    tables.push(worker);
   }
   if (!tables.length) return null; // Header Running alone is never enough.
   if (JSON.stringify(tables) !== JSON.stringify([[['Worker'], ['1'], ['不使用加速芯片'], ['8 核'], ['64 GiB']]])) {

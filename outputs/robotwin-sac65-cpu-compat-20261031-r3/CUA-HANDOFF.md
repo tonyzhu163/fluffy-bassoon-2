@@ -30,7 +30,9 @@ python3 -I -B -S <local-code>/outputs/robotwin-sac65-cpu-compat-20261031-r3/disp
 
 Verify its live readiness, nonce, exact code/run, expiry and task name
 `mwj_1031_robotwin_sac65_cpu_r3_<first-seven-pin-characters>` before Submit.
-In one bounded CUA invocation, set `submittedAtMs=Date.now()` immediately before
+Use a hard outer CUA tool timeout of at most 60 seconds; Date checks cannot cancel
+an individual browser/filesystem API await. In that one bounded invocation, set
+`submittedAtMs=Date.now()` immediately before
 the observed Submit action and `overallDeadlineMs=submittedAtMs+55000`. Navigate
 through fresh visible UI links to the actual detail tab, then **await**:
 
@@ -42,6 +44,9 @@ await publishCompleteCpuProof({detailTab, fs: firstFitFs, inbox,
 Do not return when the header first says Running. The helper waits until job ID,
 actual `job-...-master-0` and complete five-column/one-Worker `1/0GPU/8/64` table
 all render, then captures native bytes and rechecks complete actual detail.
+Header-only resource tables and missing Worker cells/text keep waiting; complete
+contradictory resources or extra roles are rejected. The proposed snapshots in
+`capture-proposed-cases.json` describe those outcomes and have not been executed.
 It writes `.image` bytes, full AX and only then the nonce marker. It shares the
 original overall deadline; no fresh wait is created after navigation. Retain
 the actual CUA invocation duration and result as evidence.
