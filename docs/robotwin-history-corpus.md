@@ -61,7 +61,7 @@ are audit fields and are not appended to model inputs.
 
 Each objective writes NPZ plus `index.json` under a fresh output identity:
 
-- `observations [T,2062]`, actual `executed_noise [T,1024]`, and separate
+- Current and next `observations [T,2062]`, actual `executed_noise [T,1024]`, and separate
   `target_noise [T,1024]`; `history_inputs [T,3090]` for the full-history input.
 - Actual learning/native rewards, separate termination/truncation flags,
   budget-cut flags, episode/source-trial starts, original episode/primitive

@@ -230,7 +230,8 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
             if 'pre_squash_actions' in metadata and not np.allclose(
                     1.5 * np.tanh(metadata['pre_squash_actions']).reshape(-1), noise, rtol=0, atol=1e-6):
                 raise ValueError('Recorded physical noise differs from PPO action sample')
-            row = dict(features=reader.frame(chunk['observation']), noise=noise,
+            row = dict(features=reader.frame(chunk['observation']),
+                next_features=reader.frame(chunk['next_observation']), noise=noise,
                 reward=float(learning['reward']), native_reward=float(native['reward']),
                 terminated=bool(learning['terminated']), truncated=bool(learning['truncated']),
                 native_terminated=bool(native['terminated']), native_truncated=bool(native['truncated']),
@@ -362,7 +363,7 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
             row['target'] = label
         grouped[trial['task']].extend(rows)
     arrays, task_keys = {}, sorted(grouped)
-    fields = dict(observations='features', executed_noise='noise', rewards='reward', native_rewards='native_reward',
+    fields = dict(observations='features', next_observations='next_features', executed_noise='noise', rewards='reward', native_rewards='native_reward',
         terminated='terminated', truncated='truncated', native_terminated='native_terminated',
         native_truncated='native_truncated', budget_truncated='budget_truncated', episode_starts='episode_start',
         episode_indices='episode_index', primitive_steps='primitive_step', episode_limits='episode_limit',
@@ -376,6 +377,7 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
     for name, key in fields.items():
         arrays[name] = np.asarray([row[key] for row in joined])
     arrays['observations'] = arrays['observations'].astype(np.float32)
+    arrays['next_observations'] = arrays['next_observations'].astype(np.float32)
     arrays['executed_noise'] = arrays['executed_noise'].astype(np.float32)
     arrays['rewards'] = arrays['rewards'].astype(np.float32)
     arrays['native_rewards'] = arrays['native_rewards'].astype(np.float32)
