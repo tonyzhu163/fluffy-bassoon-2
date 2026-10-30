@@ -449,8 +449,8 @@
     },
     "source-sac-topup-migration-qualification": {
       "maximum_gpu_seconds": 1000,
-      "reserved_gpu_seconds": 1000,
-      "status": "repaired_allocation_running_actual_restore_and_updates_verified",
+      "reserved_gpu_seconds": 816,
+      "status": "terminal_exit0_26_saved_data_checks_complete",
       "run_id": "libero40-sac-topup-migration-20261031-r2",
       "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
       "maximum_new_simulator_actions": 5000,
@@ -482,7 +482,44 @@
       "last_verified_total_optimizer_updates": 6380,
       "last_verified_new_actions": 778,
       "actual_restore_passed": true,
-      "final_export_independent_recovery_pending": true
+      "final_export_independent_recovery_pending": false,
+      "charged_gpu_seconds_conservative": 766,
+      "additional_shutdown_margin_seconds": 50,
+      "released_unused_gpu_seconds": 184,
+      "actual_new_simulator_actions": 3452,
+      "actual_new_source_episodes": 40,
+      "actual_complete_new_cases": 10,
+      "actual_new_chunks": 323,
+      "actual_new_optimizer_updates": 6460,
+      "audit_commit": "504b67dd33d06b9435721ee789b6129660c96720"
+    },
+    "source-sac-collection-bridge-0": {
+      "maximum_gpu_seconds": 1800,
+      "reserved_gpu_seconds": 1800,
+      "status": "funded_preparing_immutable_production_plan",
+      "run_id": "libero40-sac-source-bridge-20261031-r1-s00-train",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "slot": "libero_spatial:00/train",
+      "worker_seconds": 1800,
+      "slice_seconds": 1740,
+      "scheduler_max_minutes": 29,
+      "maximum_cumulative_slot_actions": 21800,
+      "funding": "Remaining original32h, same source40/SAC recipe and cumulative1M cap; no new material resource grant",
+      "selection": "First two train slots in fixed interleaved source order, not selected by outcomes"
+    },
+    "source-sac-collection-bridge-1": {
+      "maximum_gpu_seconds": 1800,
+      "reserved_gpu_seconds": 1800,
+      "status": "funded_preparing_immutable_production_plan",
+      "run_id": "libero40-sac-source-bridge-20261031-r1-o00-train",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "slot": "libero_object:00/train",
+      "worker_seconds": 1800,
+      "slice_seconds": 1740,
+      "scheduler_max_minutes": 29,
+      "maximum_cumulative_slot_actions": 21800,
+      "funding": "Remaining original32h, same source40/SAC recipe and cumulative1M cap; no new material resource grant",
+      "selection": "First two train slots in fixed interleaved source order, not selected by outcomes"
     }
   },
   "allocations": [
@@ -751,5 +788,5 @@
     }
   ],
   "last_checkpoint_audit_at_shanghai": "2026-10-31 01:35",
-  "unassigned_gpu_seconds": 3929
+  "unassigned_gpu_seconds": 513
 }
