@@ -118,8 +118,9 @@ def test_episode_delegates_to_qualified_generic_r3_warmstart_without_new_optimiz
     calls=[];monkeypatch.setattr(warm,'prepare',lambda *args,**kwargs:calls.append((args,kwargs)))
     history=dict(path=value['legacy_history_path'],sha256='h',prior_actions=196776)
     source=dict(warm_start=history)
-    prod.prepare(tmp_path/'learner','/plan','sha',source,object(),{'cursor':0},updates=100,actions=773224,seed=2,mode='episode')
-    assert len(calls)==1 and calls[0][0][1]==history
+    config=RL2Config(observation_dim=3,noise_dim=2,width=8,layers=1,heads=2,context_length=4)
+    prod.prepare(tmp_path/'learner','/plan','sha',source,config,{'cursor':0},updates=100,actions=773224,seed=2,mode='episode')
+    assert len(calls)==1 and calls[0][0][1]==history and calls[0][0][3]==config
     assert calls[0][1]==dict(updates=100,maximum_new_actions=773224,seed=2,mode='episode')
 
 
