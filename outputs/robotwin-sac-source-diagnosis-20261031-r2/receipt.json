@@ -1,0 +1,245 @@
+{
+  "format": "robotwin_sac_source98_closed_increment_v1",
+  "status": "PARTIAL_SOURCE98_TARGET100_NOT_RECORDED",
+  "checked_utc": "2026-10-30T23:33:28.662864+00:00",
+  "summary_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment/summary.json",
+  "summary_sha256": "7052925a6522e0a1dcba32377617d5f2ffc8756d6e289b9eae31263299131bda",
+  "closed_child": {
+    "slice": 58,
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment",
+    "raw_exit_code": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "elapsed_seconds": 496.0238738609478,
+    "input_handoff": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0057/experiment/continuation-manifest.json",
+      "sha256": "63c58c38d4cb28085afe779381eda333b6fb66a70688741b260aab7f34f8c16f"
+    },
+    "status": "verified_wall_budget_stop",
+    "next_handoff": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment/continuation-manifest.json",
+      "sha256": "70bdafd844aadbda11a8fe2dc7ca552c2debd7d1c95b318bf4e635add63a319d"
+    },
+    "checkpoint": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment/coordinator-recovery.pt",
+      "sha256": "76ee7235447e1263ce58909a6d9d98dd6341cd126b87edab42f438b2655de04a"
+    },
+    "round_boundary": true,
+    "source": {
+      "sac": {
+        "source_steps": 984207,
+        "task_steps": {
+          "handover_mic": 214778,
+          "pick_diverse_bottles": 152907,
+          "place_a2b_left": 144455,
+          "place_object_stand": 132845,
+          "place_phone_stand": 146644,
+          "scan_object": 192578
+        },
+        "allocation_source_steps": 9323,
+        "updates": 625840,
+        "optimizer_steps": 1877520,
+        "pending_trials": 0,
+        "pending_primitive_steps": 0,
+        "recovered_prior_prefix_actions": 0,
+        "contract": {
+          "format": "frozen_vla_feature_noise_sac_v1",
+          "observation_dim": 2062,
+          "action_dim": 1024,
+          "action_limit": 1.5,
+          "config": {
+            "hidden_dims": [
+              128,
+              128,
+              128
+            ],
+            "learning_rate": 0.0003,
+            "batch_size": 256,
+            "warmup_chunks": 500,
+            "utd": 20,
+            "replay_capacity": 100000,
+            "gamma": 0.99,
+            "tau": 0.005,
+            "initial_temperature": 1.0,
+            "target_entropy": null,
+            "layer_norm": true,
+            "max_grad_norm": null
+          },
+          "seed": 20261030,
+          "algorithm": "feature-conditioned DSRL-SAC-style; not authors' PixelSAC/DSRL-NA",
+          "warmup_distribution": "bounded uniform in the shared steering support",
+          "entropy_coordinates": "tanh-normalized; external action scale excluded",
+          "stochastic_streams": "separate interaction and optimizer generators; paired frozen/online action draws",
+          "truncation": "bootstrap on time-limit truncation; stop on genuine termination",
+          "target_restore": "independent complete source restore, then explicit fresh_target replay for primary online fine-tune; source weights/optimizers/costs retained",
+          "target_replay": "fresh_target samples with replacement from >=1 new target row; no repeated source warmup; carry_source optional diagnostic",
+          "actor_parameters": 562048,
+          "critic_parameters": 858114
+        },
+        "completed_source_trials": 588,
+        "completed_source_iterations": 98,
+        "source_action_safety_cap": 1100000,
+        "source_physical_charge": 984207,
+        "retained_learning_actions": 984207,
+        "unretained_or_uncertain_source_charge": 0
+      }
+    },
+    "native_cleanup_fault": false,
+    "ledger_journal_sha256": "df728e56b693b75abf6e99e4933c01b0ac5f52c066aaa83831a9fd2c0e0d54bb"
+  },
+  "final_source": {
+    "source_steps": 984207,
+    "task_steps": {
+      "handover_mic": 214778,
+      "pick_diverse_bottles": 152907,
+      "place_a2b_left": 144455,
+      "place_object_stand": 132845,
+      "place_phone_stand": 146644,
+      "scan_object": 192578
+    },
+    "allocation_source_steps": 9323,
+    "updates": 625840,
+    "optimizer_steps": 1877520,
+    "pending_trials": 0,
+    "pending_primitive_steps": 0,
+    "recovered_prior_prefix_actions": 0,
+    "contract": {
+      "format": "frozen_vla_feature_noise_sac_v1",
+      "observation_dim": 2062,
+      "action_dim": 1024,
+      "action_limit": 1.5,
+      "config": {
+        "hidden_dims": [
+          128,
+          128,
+          128
+        ],
+        "learning_rate": 0.0003,
+        "batch_size": 256,
+        "warmup_chunks": 500,
+        "utd": 20,
+        "replay_capacity": 100000,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "initial_temperature": 1.0,
+        "target_entropy": null,
+        "layer_norm": true,
+        "max_grad_norm": null
+      },
+      "seed": 20261030,
+      "algorithm": "feature-conditioned DSRL-SAC-style; not authors' PixelSAC/DSRL-NA",
+      "warmup_distribution": "bounded uniform in the shared steering support",
+      "entropy_coordinates": "tanh-normalized; external action scale excluded",
+      "stochastic_streams": "separate interaction and optimizer generators; paired frozen/online action draws",
+      "truncation": "bootstrap on time-limit truncation; stop on genuine termination",
+      "target_restore": "independent complete source restore, then explicit fresh_target replay for primary online fine-tune; source weights/optimizers/costs retained",
+      "target_replay": "fresh_target samples with replacement from >=1 new target row; no repeated source warmup; carry_source optional diagnostic",
+      "actor_parameters": 562048,
+      "critic_parameters": 858114
+    },
+    "completed_source_trials": 588,
+    "completed_source_iterations": 98,
+    "source_action_safety_cap": 1100000,
+    "source_physical_charge": 984207,
+    "retained_learning_actions": 984207,
+    "unretained_or_uncertain_source_charge": 0
+  },
+  "increment_from95": {
+    "episodes": 72,
+    "successes": 12,
+    "actual_actions": 29334,
+    "chunks": 948,
+    "source_iterations": [
+      96,
+      97,
+      98
+    ],
+    "per_goal": [
+      {
+        "task": "handover_mic",
+        "episodes": 12,
+        "successes": 1
+      },
+      {
+        "task": "pick_diverse_bottles",
+        "episodes": 12,
+        "successes": 1
+      },
+      {
+        "task": "place_a2b_left",
+        "episodes": 12,
+        "successes": 2
+      },
+      {
+        "task": "place_object_stand",
+        "episodes": 12,
+        "successes": 5
+      },
+      {
+        "task": "place_phone_stand",
+        "episodes": 12,
+        "successes": 3
+      },
+      {
+        "task": "scan_object",
+        "episodes": 12,
+        "successes": 0
+      }
+    ],
+    "joint_updates": 18960,
+    "combined_optimizer_calls": 56880
+  },
+  "last_logged_metrics": {
+    "method": "sac",
+    "phase": "source",
+    "critic_loss": 0.011530512012541294,
+    "actor_loss": -28.533885955810547,
+    "temperature_loss": -1274.787841796875,
+    "temperature": 4.9254751502303407e-05,
+    "target_mean": 28.15350914001465,
+    "entropy": -895.472900390625,
+    "actor_gradient_norm": 0.11091292649507523,
+    "critic_gradient_norm": 0.4796862006187439,
+    "temperature_gradient_norm": 128.52716064453125,
+    "updates": 625500,
+    "gradient_steps": 20,
+    "optimizer_steps": 1876500,
+    "actor_optimizer_steps": 625500,
+    "critic_optimizer_steps": 625500,
+    "temperature_optimizer_steps": 625500,
+    "update_seconds": 0.22410177416168153,
+    "update_seconds_total": 6239.887623084476,
+    "replay_rows": 31775
+  },
+  "stage100_source_snapshot_recorded": false,
+  "stage100_source_validation": [],
+  "stage100_targets": [],
+  "parent_exit_present": false,
+  "metadata_files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0056/experiment/episodes.jsonl",
+      "sha256": "302ece8e2e1fd16736dbda1e341debbd13410b235a47113f9eb6b99cd36ea382"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0056/experiment/updates.jsonl",
+      "sha256": "850b13004f19d647642920c6b0ba5efd67485b014f6b81429cf5fca786c01e05"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0057/experiment/episodes.jsonl",
+      "sha256": "36cda7e873e89609c3c227105bb5c3c06f674574ec07d9789c5d60d2cb76da0d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0057/experiment/updates.jsonl",
+      "sha256": "5a0c7a7438a3a4c15790261bc497bcbfd06e03f2de6f5cf8bd25b66b2dbecf6a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment/episodes.jsonl",
+      "sha256": "5e863d5f655479385ed4cb3e1e736544e60af49b797881206828516703b18876"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0058/experiment/updates.jsonl",
+      "sha256": "526efdb7c061407a3382b083e829316561bf3b2cd3045f8f0ec4a310ea06404b"
+    }
+  ],
+  "scope": "Single closed-boundary read; no active checkpoint/model/process inspection; prior95analysis immutable"
+}
