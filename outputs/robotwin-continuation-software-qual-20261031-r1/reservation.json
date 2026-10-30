@@ -1,0 +1,78 @@
+{
+  "schema": "joint_cpu_software_qualification_v1",
+  "run_id": "robotwin-continuation-software-qual-20261031-r1",
+  "status": "ready_pending_owner_review_not_submitted",
+  "resources": {
+    "gpus": 0,
+    "cpus": 4,
+    "memory_gib": 16,
+    "scheduler_cap_seconds": 600
+  },
+  "external_timeout_seconds": 560,
+  "termination_grace_seconds": 10,
+  "scheduler_margin_seconds": 30,
+  "python": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+  "launcher_pin": "required exact40-hex --launcher-pin argument after the focused auxiliary commit",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-continuation-software-qual-20261031-r1",
+  "phases": [
+    {
+      "name": "robotwin_continuation_and_paired_launcher",
+      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-continuation-aux-20261031-r1",
+      "source_commit": "1fb1dd073733dd934723a915e0cd961cd5875d5a",
+      "tests": [
+        "tests/test_robotwin_trained_pair_continuation.py",
+        "tests/test_robotwin_trained_pair_plan.py",
+        "tests/test_robotwin_trained_pair_preflight.py",
+        "tests/test_robotwin_trained_pair_runtime.py",
+        "tests/test_robotwin_trained_pair_audit.py"
+      ],
+      "reference_discovery_commit": "4e9ddf89a02ae2d90b37a305c55cc91781fa8c11",
+      "reference_static_cases": {
+        "continuation": 8,
+        "paired_launcher": 47
+      },
+      "count_policy": "Save actual JUnit counts; every selected file must contribute passing cases. The corrected continuation candidate may add cases.",
+      "fixture_dependency_files_not_separately_collected": [
+        "tests/test_robotwin_trial_resume.py",
+        "tests/test_robotwin_trained_parallel.py"
+      ],
+      "scope": "New continuation/production-preflight behavior and existing paired-launcher regressions, using synthetic CPU learners and owned temporary fake processes only. One-shot defaults remain covered.",
+      "final_static_cases": {
+        "continuation": 14,
+        "paired_launcher": 50,
+        "total": 64
+      }
+    },
+    {
+      "name": "libero_cached_scalar_b1_cpu_fakes",
+      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-scalar-cpu-20261031-r1",
+      "source_commit": "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa",
+      "tests": [
+        "tests/test_vla_cached_scalar_motor.py"
+      ],
+      "reference_static_cases": 43,
+      "count_policy": "Save actual JUnit counts; every selected file must contribute passing cases; no skips or xfails.",
+      "scope": "Injected scalar cached-prefix CPU fakes only. The test fixture rejects JAX/JAXLIB/OpenPI/OpenPI-client imports. No actual LIBERO motor, model weights, simulator or robot."
+    }
+  ],
+  "acceptance": {
+    "actual_job_hostname_receipt": true,
+    "cuda_device_count_before_hiding_devices": 0,
+    "every_code_root_at_exact_clean_pin_before_and_after": true,
+    "fresh_python_process_per_phase": true,
+    "phase_specific_pythonpath": true,
+    "nonzero_passed_cases_per_phase_and_selected_file": true,
+    "failures": 0,
+    "errors": 0,
+    "skips_or_xfails": 0,
+    "raw_logs_and_junit_required": true
+  },
+  "excluded": [
+    "Unchanged c62 control-suite retest",
+    "Unchanged c166 suite retest",
+    "Native RoboTwin/LIBERO model or robot qualification",
+    "GPU computation or allocation",
+    "Source-supervisor controls or source actions",
+    "Automatic retry or reuse of an existing output"
+  ]
+}
