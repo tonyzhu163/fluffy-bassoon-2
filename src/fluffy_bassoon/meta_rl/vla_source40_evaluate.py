@@ -29,7 +29,7 @@ from .vla_source40_training import NOISE_CONTRACT, load_assembly
 SUPPORT_BUDGETS = (0, 1, 2, 4, 8)
 METHODS = ("native", "tied_gaussian", "ad_full", "ad_episode_reset", "ad_static",
            "dpt_full", "dpt_episode_reset", "dpt_static")
-SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'frozen_target_sac', 'zero',
+SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'frozen_target_sac', 'zero', 'tied_gaussian_clipped',
     'ppo_full', 'ppo_episode_reset', 'ppo_trained_episode')
 FORMAT = "openpi_pi05_source40_support_query_v1"
 
@@ -292,7 +292,8 @@ def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, epis
             proposed = executed = None
             noise = rng.standard_normal((motor.horizon, 32)).astype(np.float32)
         else:
-            proposed = executed = rng.standard_normal(32).astype(np.float32)
+            proposed = rng.standard_normal(32).astype(np.float32)
+            executed = np.clip(proposed, -1., 1.).astype(np.float32) if method == 'tied_gaussian_clipped' else proposed
             noise = expand_noise(executed, motor.horizon)
         actions = np.asarray(motor.infer(observation, sim.metadata["instruction"], noise), np.float32)
         if actions.shape != (10, 7) or not np.isfinite(actions).all():
@@ -344,7 +345,7 @@ def evaluate_case(sim, motor, candidates, *, case, output, provenance, max_primi
             or max_primitive_steps < 1 or max_settling_steps < 0
             or not np.isfinite(max_elapsed_seconds) or max_elapsed_seconds <= 0):
         raise ValueError("Invalid native horizon, method, support grid or physical budget")
-    if any(method not in candidates for method in methods if method not in ("native", "tied_gaussian", 'zero')):
+    if any(method not in candidates for method in methods if method not in ("native", "tied_gaussian", 'zero', 'tied_gaussian_clipped')):
         raise ValueError("Every learned method needs a declared fixed controller")
     if method_support_budgets is not None and (set(method_support_budgets) != set(methods)
             or any(not values or len(set(values)) != len(values)

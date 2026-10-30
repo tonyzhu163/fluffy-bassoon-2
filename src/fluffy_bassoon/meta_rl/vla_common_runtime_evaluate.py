@@ -228,12 +228,12 @@ def run_common(motor, banks, targets, *, output, contract, server_factory, prove
                     reset_motor_rng=reset_motor_rng, motor_rng_state=motor_rng_state,
                     qualify=hook if ordinal == 0 else None, resume=(path / 'contract.json').exists(),
                     max_elapsed_seconds=contract['maximum_seconds_per_invocation'], external_deadline=deadline)
-                # Native has no controller; retain its complete sampler/motor
+                # Unlearned controls have no controller; retain sampler/motor
                 # and global RNG boundary using the authoritative recovery.
-                if group['method'] == 'native':
+                if group['method'] in ('native', 'zero', 'tied_gaussian', 'tied_gaussian_clipped'):
                     with recovery.open('rb') as stream:
                         boundary = pickle.load(stream)
-                    context = contexts / f'native-{time.time_ns()}.pkl'
+                    context = contexts / f'{group["method"]}-{time.time_ns()}.pkl'
                     _save_recovery(context, dict(
                         evaluation_recovery=boundary, global_rng=global_rng(), runtime_id=runtime_id))
                     archive_path = contexts / 'index.json'
