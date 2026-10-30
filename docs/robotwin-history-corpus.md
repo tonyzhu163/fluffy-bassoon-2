@@ -46,6 +46,31 @@ selected files and both checkpoints must retain their hashes. Prefer the
 owner's immutable iteration10/25/50/100 stage snapshots. A moving latest
 checkpoint is not a fixed snapshot.
 
+## Projected continuation roots
+
+A continuation chain can be projected into a fresh flat view without changing
+original records. A projection receipt binds the exact ordered source roots,
+ancestor manifests/contracts/migrations, closed checkpoint and full-file
+content hashes. Source and destination files retain their bytes; an unequal
+relative-path collision cannot be resolved by choosing a newer record.
+
+The projection-aware reader permits aliases only for recorded acting-policy
+checkpoints, whose producer stores canonical absolute paths. Each alias must
+name exactly an admitted original root's policies path and a contained
+projected policies path with the same full SHA. Original lexical paths and
+their ancestors cannot be symlinks, and unrelated identical-byte archives do
+not become admitted origins. Actor kind, tensor/version/context identities
+remain checked. General RGB/native/JSON path containment is unchanged.
+
+The reader rechecks all metadata links and original archive bytes; provenance
+is retained in the exporter input hashes. Stage/coordinator serialization may
+differ only when actual source/task counters, trial/update counts, source
+contract and actor tensors establish the same closed source state. A boolean
+attestation does not replace those checks. This compatibility extension needs
+its own exact-pin CPU qualification; the old single-root qualification does
+not automatically qualify a composed bank. Labels/history/action accounting
+and the supervised trainer remain the existing implementations.
+
 ## Label and history semantics
 
 AD targets equal actual physical steering noise. The exported histories group

@@ -73,8 +73,29 @@ def verify_final_indexes(b, projection):
         for name in ("contract.json", "runtime-contract.json"):
             if inputs.get(str(corpus / name)) != digest(corpus / name):
                 raise ValueError("Index is not linked to the admitted corpus projection")
-        if any(Path(x).resolve() != source and not Path(x).resolve().is_relative_to(corpus) for x in inputs):
-            raise ValueError("Index contains input paths outside the admitted source projection")
+        allowed_provenance = {str(source): source_sha}
+        for ref in (projection['ancestry'], projection['tip_manifest'], projection['source_checkpoint']):
+            allowed_provenance[str(Path(ref['path']).resolve())] = ref['sha256']
+        ancestry_ref = projection['ancestry']
+        if digest(ancestry_ref['path']) != ancestry_ref['sha256']:
+            raise ValueError('Projection ancestry changed')
+        ancestry = json.loads(Path(ancestry_ref['path']).read_text())
+        for entry in ancestry.get('ordered_ancestry', []):
+            refs = [entry['manifest'], entry['bound_corpus_contract'], entry['canonical_corpus_contract']]
+            if entry['execution_migration'] is not None:
+                refs.append(entry['execution_migration']['ref'])
+            for ref in refs:
+                allowed_provenance[str(Path(ref['path']).resolve())] = ref['sha256']
+        for root in projection['roots']:
+            for name, field in (('contract.json', 'contract_sha256'), ('runtime-contract.json', 'runtime_sha256')):
+                allowed_provenance[str((Path(root['root']) / name).resolve())] = root[field]
+        for relative, item in projection['files'].items():
+            if Path(relative).parts[0] == 'policies':
+                for origin in item['origins']:
+                    allowed_provenance[str(Path(origin).resolve())] = item['sha256']
+        if any(not Path(x).resolve().is_relative_to(corpus)
+               and allowed_provenance.get(str(Path(x).resolve())) != sha for x, sha in inputs.items()):
+            raise ValueError("Index contains unbound input paths outside the admitted source projection")
         for objective, dataset in m["datasets"].items():
             if (dataset.get("objective") != objective
                     or Path(dataset["path"]).resolve() != exports / partition / (objective + ".npz")

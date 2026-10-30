@@ -181,6 +181,8 @@ def main():
         bound(ancestry["tip_manifest"])
         result = dict(status="byte_projection_only_not_export_admission", purpose=a.purpose,
                       source_rounds=rounds, method=tip["method"],
+                      lineage_commit=LINEAGE, ancestry=admission['ancestry'],
+                      source_checkpoint=tip['checkpoint'],
                       admission_sha256=a.admission_sha256, reader_sha256=READER_SHA,
                       tip_manifest=ancestry["tip_manifest"], roots=root_evidence, files=files,
                       unique_files=len(files), unique_file_bytes=total_unique_bytes,

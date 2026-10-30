@@ -5,6 +5,12 @@ launched.** No new allocation, corpus projection, payload scan, teacher label,
 model fit, robot action or VLA query has run for this plan. The execution
 owner reviews the immutable bank, residual costs and launch admission.
 
+Later compatibility preparation: production acting-policy paths are absolute.
+The [single bounded SAC65 CPU gate](../robotwin-sac65-cpu-compat-20261031-r1/PLAN.md)
+adds a projection-specific checked archive alias and exact source/ancestry
+bindings. Its new reader candidate requires qualification; the earlier static
+acceptance applies only to its recorded old bytes. No gate has launched.
+
 The next proposed reference is four matched Transformer fits on the **complete
 SAC source100 bank**: AD full/static and DPT full/static. This continues the
 earlier SAC5-bank comparison without silently adding PPO/reset data arms.

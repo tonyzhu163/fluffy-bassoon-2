@@ -91,13 +91,167 @@ def source_recovery(path, sha256, method):
     if type(count) is not int or count < 1 or count > state['schedule']['trials']:
         raise ValueError('No complete committed source trials')
     return dict(contract=contract, state=state, learner=learner, method=method, trials=count,
-                source_iteration=payload.get('source_iteration'))
+                source_iteration=payload.get('source_iteration'),
+                recovery_path=str(Path(path).resolve()), recovery_sha256=sha256)
 
 
 class CorpusReader:
-    def __init__(self, root):
+    def __init__(self, root, source=None):
         self.root = Path(root).resolve()
         self.inputs, self.features, self.actors = {}, {}, {}
+        self.policy_aliases, self.projected_policy_sha = {}, {}
+        self.provenance_inputs = {}
+        self.is_projection = False
+        projection_path = self.root / 'projection.json'
+        if projection_path.exists():
+            self.is_projection = True
+            if (projection_path.is_symlink() or (self.root / 'ASSEMBLY-INCOMPLETE').exists()):
+                raise ValueError('Incomplete or redirected corpus projection')
+            projection_sha = file_sha256(projection_path)
+            projection = json.loads(projection_path.read_text())
+            if projection.get('status') != 'byte_projection_only_not_export_admission':
+                raise ValueError('Require a complete byte projection receipt')
+            if source is None:
+                raise ValueError('A projected corpus requires its bound source recovery')
+            def bound_json(ref):
+                path = Path(ref['path']).resolve()
+                if file_sha256(path) != ref['sha256']:
+                    raise ValueError('Projection provenance changed')
+                self.provenance_inputs[str(path)] = ref['sha256']
+                return json.loads(path.read_text())
+            ancestry = bound_json(projection['ancestry'])
+            if (projection['tip_manifest'] != ancestry['tip_manifest']
+                    or ancestry['lineage_commit'] != projection['lineage_commit']):
+                raise ValueError('Projection tip differs from its ordered ancestry')
+            tip = bound_json(projection['tip_manifest'])
+            roots = [item['root'] for item in projection['roots']]
+            if any(not Path(root).is_absolute() or str(Path(root)) != root
+                   or '..' in Path(root).parts or Path(root).resolve() != Path(root) for root in roots):
+                raise ValueError('Projection roots must be original canonical paths')
+            if (roots != ancestry['ordered_corpus_roots'] or len(roots) != ancestry['root_count']
+                    or roots != [entry['corpus_root'] for entry in ancestry['ordered_ancestry']]
+                    or len(set(roots)) != len(roots)
+                    or any(entry['method'] != source['method'] for entry in ancestry['ordered_ancestry'])):
+                raise ValueError('Projection ordered roots differ from its bound ancestry')
+            if (tip.get('kind') != 'whole_trial_boundary' or tip.get('method') != source['method']
+                    or tip.get('lineage_source_commit') != projection['lineage_commit']
+                    or projection['method'] != source['method']
+                    or projection['lineage_commit'] != source['contract']['source_commit']
+                    or tip['checkpoint'] != projection['source_checkpoint']
+                    or tip['expected']['completed_source_trials'] != source['trials']
+                    or tip['expected']['source_steps'] != source['state']['source_steps']
+                    or tip['expected']['completed_source_iterations'] != projection['source_rounds']
+                    or tip['expected']['pending_rollout_digests']):
+                raise ValueError('Projection does not bind this closed source checkpoint')
+            checkpoint = tip['checkpoint']
+            if file_sha256(checkpoint['path']) != checkpoint['sha256']:
+                raise ValueError('Projection source checkpoint changed')
+            self.provenance_inputs[str(Path(checkpoint['path']).resolve())] = checkpoint['sha256']
+            if source['recovery_sha256'] != checkpoint['sha256']:
+                # A final per-method stage file and its closed coordinator may
+                # have different serialization. Prove source-state equality;
+                # a caller flag alone cannot establish this link.
+                closed = source_recovery(checkpoint['path'], checkpoint['sha256'], source['method'])
+                weights = 'actor' if source['method'] == 'sac' else 'policy'
+                if (_canonical(source['contract']) != _canonical(closed['contract'])
+                        or source['trials'] != closed['trials']
+                        or source['state']['source_steps'] != closed['state']['source_steps']
+                        or source['state']['task_steps'] != closed['state']['task_steps']
+                        or source['learner']['updates'] != closed['learner']['updates']
+                        or parameter_digest(source['learner'][weights]) != parameter_digest(closed['learner'][weights])
+                        or source['source_iteration'] != projection['source_rounds']):
+                    raise ValueError('Stage snapshot differs from the projected closed source state')
+            previous, base_producer, base_runtime = None, None, None
+            for item, entry in zip(projection['roots'], ancestry['ordered_ancestry'], strict=True):
+                root_path = Path(item['root'])
+                manifest = bound_json(entry['manifest'])
+                if (manifest['corpus_root'] != str(root_path) or manifest['method'] != source['method']
+                        or manifest['kind'] != entry['kind'] or manifest['expected'] != entry['expected']
+                        or manifest['checkpoint'] != entry['checkpoint']
+                        or manifest['corpus_contract']['sha256'] != entry['bound_corpus_contract']['sha256']
+                        or Path(manifest['corpus_contract']['path']).resolve()
+                           != Path(entry['bound_corpus_contract']['path']).resolve()
+                        or Path(entry['canonical_corpus_contract']['path']).resolve() != root_path / 'contract.json'):
+                    raise ValueError('Projection ancestor manifest/root/contract binding differs')
+                if entry['canonical_corpus_contract']['sha256'] != item['contract_sha256']:
+                    raise ValueError('Projection producer contract differs from ancestry')
+                for name, field in (('contract.json','contract_sha256'), ('runtime-contract.json','runtime_sha256')):
+                    path = root_path / name
+                    if path.is_symlink() or file_sha256(path) != item[field]:
+                        raise ValueError('Projection producer metadata changed')
+                    self.provenance_inputs[str(path)] = item[field]
+                producer = json.loads((root_path / 'contract.json').read_text())
+                if (producer.get('source_commit') != projection['lineage_commit']
+                        or bound_json(entry['bound_corpus_contract']) != producer
+                        or entry['corpus_contract'] != producer):
+                    raise ValueError('Foreign projection producer lineage')
+                scientific = {k:v for k,v in producer.items()
+                              if k not in ('execution_source_commit','resume_trial_manifest_sha256')}
+                runtime = {k:v for k,v in json.loads((root_path / 'runtime-contract.json').read_text()).items()
+                           if k != 'actual_render_pci'}
+                if base_producer is None:
+                    base_producer, base_runtime = scientific, runtime
+                    if (file_sha256(self.root / 'contract.json') != item['contract_sha256']
+                            or file_sha256(self.root / 'runtime-contract.json') != item['runtime_sha256']):
+                        raise ValueError('Projection top-level metadata differs from its original producer')
+                if scientific != base_producer or runtime != base_runtime:
+                    raise ValueError('Projection producer scientific/runtime contracts differ')
+                migration = entry['execution_migration']
+                if previous is None:
+                    if migration is not None or producer.get('resume_trial_manifest_sha256'):
+                        raise ValueError('Projection ancestry omitted its original prefix')
+                else:
+                    if migration is None:
+                        raise ValueError('Projection ancestry lost its predecessor')
+                    value = bound_json(migration['ref'])
+                    if (Path(migration['ref']['path']).resolve() != root_path.parent / 'execution-migration.json'
+                            or value != migration['value']
+                            or value['manifest_sha256'] != previous['manifest']['sha256']
+                            or Path(value['manifest_path']).resolve() != Path(previous['manifest']['path']).resolve()
+                            or value['manifest_sha256'] != producer.get('resume_trial_manifest_sha256')
+                            or value['execution_source_commit'] != producer.get('execution_source_commit')
+                            or value['lineage_source_commit'] != projection['lineage_commit']
+                            or value.get('method') != source['method']):
+                        raise ValueError('Projection predecessor migration binding differs')
+                previous = entry
+            for relative, item in projection['files'].items():
+                if str(Path(relative)) != relative:
+                    raise ValueError('Projection file paths must be canonical relative paths')
+                relative = Path(relative)
+                if relative.is_absolute() or '..' in relative.parts:
+                    raise ValueError('Projection file path escapes its root')
+                if not relative.parts or relative.parts[0] != 'policies':
+                    continue
+                projected = self.root / relative
+                destination = projected.resolve()
+                if (not destination.is_relative_to(self.root)
+                        or any((self.root / parent).is_symlink() for parent in (relative, *relative.parents))):
+                    raise ValueError('Projected acting archive escapes its root')
+                if (str(destination) in self.projected_policy_sha
+                        and self.projected_policy_sha[str(destination)] != item['sha256']):
+                    raise ValueError('Conflicting projected acting archive destination')
+                for origin in item['origins']:
+                    origin_path = Path(origin)
+                    if not origin_path.is_absolute() or str(origin_path) != origin or '..' in origin_path.parts:
+                        raise ValueError('Projected acting archive origin must be absolute')
+                    origin_root = next((Path(root) for root in roots if origin == str(Path(root) / relative)), None)
+                    if origin_root is None:
+                        raise ValueError('Foreign or redirected acting archive origin')
+                    self.policy_route(origin_path, origin_root, relative)
+                    alias = (destination, item['sha256'], origin_root, relative)
+                    if origin in self.policy_aliases and self.policy_aliases[origin] != alias:
+                        raise ValueError('Conflicting projected acting archive origin')
+                    self.policy_aliases[origin] = alias
+                self.projected_policy_sha[str(destination)] = item['sha256']
+            if file_sha256(projection_path) != projection_sha:
+                raise ValueError('Projection receipt changed while reading')
+            self.inputs[str(projection_path)] = projection_sha
+
+    @staticmethod
+    def policy_route(path, root, relative):
+        if (path != root / relative or root.resolve() != root
+                or any((root / parent).is_symlink() for parent in (relative, *relative.parents))):
+            raise ValueError('Redirected projected acting archive path')
 
     def path(self, value):
         path = (self.root / value).resolve()
@@ -142,8 +296,25 @@ class CorpusReader:
         return self.features[key]
 
     def acting_weights(self, context, method):
-        path = self.path(context['policy_checkpoint'])
+        value = context['policy_checkpoint']
+        original = Path(value)
+        alias = None
+        if self.is_projection and original.is_absolute() and not original.is_relative_to(self.root):
+            if str(original) != value or '..' in original.parts:
+                raise ValueError('Noncanonical projected acting archive context')
+            alias = self.policy_aliases.get(value)
+            if alias is None:
+                raise ValueError('Unlisted external acting archive context')
+            self.policy_route(original, alias[2], alias[3])
+            self.policy_route(alias[0], self.root, alias[3])
+        path = alias[0] if alias is not None else self.path(context['policy_checkpoint'])
         file_sha = context.get('policy_checkpoint_sha256')
+        if str(path) in self.projected_policy_sha and self.projected_policy_sha[str(path)] != file_sha:
+            raise ValueError('Projected acting archive SHA differs from its original context')
+        if alias is not None:
+            if file_sha256(original) != alias[1]:
+                raise ValueError('Original projected acting archive changed')
+            self.provenance_inputs[str(original)] = alias[1]
         key = str(path)
         if key not in self.actors:
             saved = checked_load(path, file_sha)
@@ -177,7 +348,7 @@ def _interface(contract):
 
 
 def read_source(corpus_root, source, *, allow_legacy_cut=False, partition='train', validation_iteration=None):
-    reader = CorpusReader(corpus_root)
+    reader = CorpusReader(corpus_root, source)
     collection = reader.json('contract.json')
     contract, method = source['contract'], source['method']
     if partition not in ('train', 'validation'):
@@ -467,6 +638,7 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
     arrays['history_inputs'] = np.concatenate([native_tokens(grouped[task], carry_across_trials=True) for task in task_keys])
     arrays['lengths'] = np.asarray([len(grouped[task]) for task in task_keys], np.int64)
     inputs = dict(reader.inputs)
+    inputs.update(reader.provenance_inputs)
     inputs[str(Path(source_path).resolve())], inputs[str(Path(teacher_path).resolve())] = source_sha256, teacher_sha256
     if any(file_sha256(path) != digest for path, digest in inputs.items()):
         raise ValueError('Source/teacher changed during export; use immutable snapshots')
