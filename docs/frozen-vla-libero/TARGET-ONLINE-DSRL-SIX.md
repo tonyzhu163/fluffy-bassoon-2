@@ -42,8 +42,9 @@ can remain below500 chunks after16 episodes; report zero updates honestly.
 
 The7,000-action gap above summed case caps is unassigned; no case may silently
 spend it. Extra qualification resets and unresolved interrupted RPC intents
-count inside the same case cap. The outer authorized allocation and root's
-32-GPU-hour ledger govern time; `--resume` does not grant another2h budget.
+count inside the same case cap. The outer authorized allocation, root's
+32-GPU-hour ledger and this run's cumulative `worker-time.json` govern time;
+`--resume` does not grant another2h budget.
 
 Deploy the reviewed integrated commit into a new immutable run worktree, then
 inside an already approved one-GPU allocation:
@@ -53,11 +54,25 @@ bash scripts/diagnostics/vla_target_online_dsrl_six.sh \
   <exact-SHA> <fresh-run-id> 7200
 ```
 
-The launcher probes the actual GPU and runs focused Linux tests before
-model interaction. Model computation remains on allocated Linux. It preserves
-per-attempt logs/probes/tests and bounds driver wall time below the scheduler
-ceiling. For an interrupted run, reuse the exact source/run/seconds and append
-`--resume`, only within the remaining separately authorized compute allowance.
+The first invocation reserves7,140seconds plus60seconds scheduler allowance.
+It starts the cumulative clock before GPU setup and tests; finished failures
+charge measured runtime plus the same allowance. An unclosed attempt remains
+charged at its full reservation. A resumed invocation receives only the
+remaining slice less scheduler allowance; fewer than600seconds is rejected.
+The fixed7200-second scientific ceiling and action/recipe/case contracts never
+change with invocation length. An explicit `--stop-unix` goes to the driver,
+with the outer timeout stopping60seconds earlier for shutdown and accounting.
+An overrun is reported at its actual duration rather than truncated.
+
+The launcher probes the actual GPU and runs only relevant baseline, physical
+journal/warmup and cumulative-clock Linux tests before model interaction.
+Typed and legacy motor RNG round-trips run in the actual model environment.
+It preserves per-attempt logs/probes/tests/clock receipts. Model computation
+remains on allocated Linux. For an interrupted run, reuse the exact source/run,
+keep the fixed7200 argument and append `--resume`; the clock automatically
+chooses a shorter remaining slice. A terminal scheduler receipt may justify
+explicit reconciliation of an unclosed attempt by its owner; never delete or
+reset the time ledger to obtain another allocation.
 
 Per-case recovery includes actor/critic/target/temperature and all optimizers,
 full replay, sampler, Python/NumPy/agent RNG, typed motor RNG, target training

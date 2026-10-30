@@ -6,6 +6,7 @@ Target experience is adaptation/evaluation data, excluded from source training.
 """
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -61,6 +62,25 @@ def validate_completed(index, case_contract, output):
         raise ValueError('Completed six-case target receipt/recovery differs from its immutable contract')
 
 
+def invocation_deadline(stop_unix, *, now_unix=None, now_monotonic=None):
+    """A scheduler-slice stop is ephemeral, never part of the scientific contract."""
+    now_unix = time.time() if now_unix is None else now_unix
+    now_monotonic = time.monotonic() if now_monotonic is None else now_monotonic
+    remaining = stop_unix - now_unix
+    if not math.isfinite(remaining) or not 0 < remaining <= MAX_SECONDS:
+        raise ValueError('Require an explicit live invocation stop within the original two-hour ceiling')
+    return now_monotonic + remaining
+
+
+def scientific_contract(source_commit, learner_seed):
+    """Resume contract contains fixed science, never invocation clock values."""
+    return dict(plan(), source_commit=source_commit, learner_seed=learner_seed,
+        motor_receipt_sha256=PI05_RECEIPT, maximum_driver_seconds=MAX_SECONDS,
+        fresh_actor_replay_optimizer_per_case=True, fixed_query_seed_across_milestones=True,
+        query_data_added_to_replay=False, source_checkpoint_reused=False,
+        prefix_features_recorded=True, prefix_features_are_actor_input=False)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('output', 'checkpoint', 'openpi-root', 'dsrl-root', 'libero-root', 'simulator-python'):
@@ -68,15 +88,17 @@ def main(argv=None):
     for name in ('source-commit', 'expected-hostname', 'simulator-pythonpath'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--max-total-actions', type=int, required=True)
-    parser.add_argument('--max-elapsed-seconds', type=float, default=6900.)
+    parser.add_argument('--max-elapsed-seconds', type=float, default=MAX_SECONDS)
+    parser.add_argument('--stop-unix', type=float, required=True)
     parser.add_argument('--learner-seed', type=int, default=0)
     parser.add_argument('--port', type=int, default=8779)
     parser.add_argument('--resume', action='store_true')
     args = parser.parse_args(argv)
     started = time.monotonic()
+    deadline = invocation_deadline(args.stop_unix)
     if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname:
         raise ValueError('Run target-online DSRL only inside the explicitly identified allocated Linux host')
-    if (args.max_total_actions != TOTAL_CAP or not 0 < args.max_elapsed_seconds <= MAX_SECONDS
+    if (args.max_total_actions != TOTAL_CAP or args.max_elapsed_seconds != MAX_SECONDS
             or not 0 <= args.learner_seed < 2**31):
         raise ValueError('Require the joint64k physical contract and at most2h driver ceiling')
     from fluffy_bassoon.gpu_execution import validate_execution
@@ -87,12 +109,7 @@ def main(argv=None):
         raise ValueError('Require the exact clean reviewed six-case target baseline commit')
     if onset.sha256(args.checkpoint / 'READY.json') != PI05_RECEIPT:
         raise ValueError('Require the qualified official OpenPI40 motor')
-    contract = dict(plan(), source_commit=args.source_commit, learner_seed=args.learner_seed,
-        motor_receipt_sha256=PI05_RECEIPT,
-        maximum_seconds_per_invocation=args.max_elapsed_seconds,
-        fresh_actor_replay_optimizer_per_case=True, fixed_query_seed_across_milestones=True,
-        query_data_added_to_replay=False, source_checkpoint_reused=False,
-        prefix_features_recorded=True, prefix_features_are_actor_input=False)
+    contract = scientific_contract(args.source_commit, args.learner_seed)
     args.output.mkdir(parents=True, exist_ok=args.resume)
     import fcntl
     lock = (args.output / 'run.lock').open('a')
@@ -117,7 +134,7 @@ def main(argv=None):
             raise ValueError('Recorded prefix feature contract changed on target resume')
     else:
         onset.write_json(feature_path, contract_feature)
-    deadline, results = started + args.max_elapsed_seconds, []
+    results = []
     for target in contract['cases']:
         output = args.output / f'case-{target["task_id"]:02d}'
         case_contract = dict(contract_sha256=content_hash(contract), case=target, recipe=RECIPE,
