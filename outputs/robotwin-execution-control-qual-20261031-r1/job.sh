@@ -4,7 +4,7 @@ TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_RUN=robotwin-execution-control-qual-20261031-r1
 TASK_OUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_PYTHON=$TASK_ROOT/envs/robotwin-vlrla-20261029-r1/bin/python
-TASK_CONTROL=$TASK_ROOT/worktrees/robotwin-execution-control-code-20261031-r1
+TASK_CONTROL=$TASK_ROOT/worktrees/robotwin-execution-control-code-20261031-r2
 TASK_GUARD=$TASK_ROOT/worktrees/robotwin-parent-guard-qual-20261030-r1
 TASK_PAIR=$TASK_ROOT/worktrees/robotwin-trained-pair-launcher-20261031-r1
 test ! -e "$TASK_OUT"
@@ -33,7 +33,7 @@ phase() {
   > "$TASK_OUT/$TASK_LABEL.log" 2>&1
  cat "$TASK_OUT/$TASK_LABEL.log"
 }
-phase owner-control "$TASK_CONTROL" b77533841948c8a9f76d23cd7c974156929bb0f9 120 \
+phase owner-control "$TASK_CONTROL" c62be99615e797fbec108e1f1b5e232e4a591494 120 \
  outputs/robotwin-trained-handoff-control-20261030-r1/tests/test_control.py
 phase panel-guard "$TASK_GUARD" c166171b847ada9a20a9629a07d5a0100b517097 120 \
  tests/test_robotwin_parent_guard.py tests/test_robotwin_history_live.py tests/test_robotwin_history_evaluate.py
