@@ -588,6 +588,33 @@ def test_fixed_iteration_reserves_a_complete_trial_before_any_source_action(tmp_
     assert saved["states"]["ppo"]["pending_rollouts"]==[]
 
 
+def test_preupdate_resume_finishes_round_before_collecting_past_its_evaluation(tmp_path,fixed_round_driver):
+    state=fixed_round_driver
+    common=["--source-commit","a"*40,"--model-path","/model","--norm-stats","/norm",
+        "--robotwin-root","/robotwin","--rlinf-root","/rlinf","--methods","ppo","sac","ppo_reset",
+        "--source-steps","220","--source-iterations","2","--ppo-trials-per-update","6",
+        "--source-eval-iterations","1","2","--benchmark-episode-limits",
+        "--native-episodes","0","--stage-source-validation-only","--record-corpus",
+        "--campaign-root",str(tmp_path/"campaign")]
+    first=tmp_path/"first";second=tmp_path/"second"
+    state["interrupt"]="before_update"
+    assert driver.main(common+["--output",str(first)])==0
+    saved=torch.load(first/"coordinator-recovery.pt",map_location="cpu",weights_only=False)
+    assert saved["states"]["ppo"]["completed_source_trials"]==6
+    assert saved["states"]["ppo"]["completed_source_iterations"]==0
+    assert driver.main(common+["--output",str(second),"--resume",str(first)])==0
+    summary=json.loads((second/"summary.json").read_text())
+    first_stage=summary["stages"]["iteration:1"]
+    for method,descriptor in first_stage["snapshots"].items():
+        snapshot=torch.load(descriptor["path"],map_location="cpu",weights_only=False)
+        assert snapshot["schedule"]["trials"]==6  # Never seven trials at the first evaluation.
+        if method!="sac":assert snapshot["learner"]["updates"]==1
+        assert snapshot["pending_rollouts"]==[]
+    for method in ("ppo","sac","ppo_reset"):
+        assert summary["source"][method]["completed_source_trials"]==12
+        assert summary["source"][method]["completed_source_iterations"]==2
+
+
 def test_exact_stage_barriers_preserve_pending_policy_rng_and_resumed_native_noise(tmp_path,monkeypatch):
     import fluffy_bassoon.rl.robotwin_noise as runtime_module
     stream=[0]

@@ -779,9 +779,16 @@ def main(argv=None):
             record_iteration_complete(method)
     def source_round(method):
         state=source_states[method]; learner=state["learner"]
+        previous_iteration=state["iterations"]
         if method!="sac": maybe_ppo_update(method)
         else: maybe_sac_iteration(method)
         if args.source_iterations:
+            # Recovery may restore the six completed trials immediately before
+            # their update. Finish that round without collecting the next one
+            # ahead of the outer barrier and its frozen evaluation.
+            if state["iterations"]!=previous_iteration:
+                refresh_summaries()
+                return
             if state["iterations"]>=args.source_iterations: return
         elif state["steps"]>=args.source_steps: return
         guard()
