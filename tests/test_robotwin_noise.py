@@ -9,6 +9,7 @@ import pytest
 from fluffy_bassoon.rl.robotwin_noise import (
     RobotwinNoiseEnv, _reset_with_retry_limit, _setup_task_with_retry_limit,
     _SynchronousExecutor, _install_synchronous_vector_executor,
+    load_benchmark_episode_limits,
 )
 
 
@@ -57,6 +58,60 @@ def test_early_success_counts_executed_not_issued():
     assert reward == 1 and terminated and not truncated
     assert info["primitive_steps"] == 2 and info["issued_primitive_steps"] == 4
     assert env.elapsed_steps == 2
+
+
+def test_success_at_episode_horizon_is_terminal_not_timeout():
+    backend = FakeBackend()
+    backend.early_success = True
+    env = RobotwinNoiseEnv(episode_limit=2, backend=backend)
+    env.reset("handover_mic", 1)
+    _, _, terminated, truncated, info = env.step(np.zeros(8))
+    assert terminated and not truncated and not info["budget_truncated"]
+
+
+def test_per_task_horizons_preserve_full_episodes_and_backend_reset_limit():
+    backend = FakeBackend()
+    limits = {"handover_mic": 10, "scan_object": 5}
+    env = RobotwinNoiseEnv(backend=backend, task_episode_limits=limits)
+    limits["handover_mic"] = 1  # The caller cannot alter the declared runtime map.
+    assert env.episode_limit == 10
+    assert env.episode_limit_for_task("handover_mic") == 10
+    env.reset("handover_mic", 1)
+    assert backend.episode_limit == env.episode_limit == 10
+    counts = [env.step(np.zeros(8))[4]["primitive_steps"] for _ in range(3)]
+    assert counts == [4, 4, 2] and not env.active
+    env.reset("scan_object", 2)
+    assert backend.episode_limit == env.episode_limit == 5
+    first = env.step(np.zeros(8))
+    last = env.step(np.zeros(8))
+    assert not first[3] and last[3] and not last[2]
+    assert last[4]["primitive_steps"] == 1 and last[4]["episode_limit"] == 5
+    assert env.contract["task_episode_limits"] == {"handover_mic": 10, "scan_object": 5}
+    with pytest.raises(ValueError, match="No declared episode limit"):
+        env.reset("adjust_bottle", 3)
+
+
+@pytest.mark.parametrize("limits", [{}, {"handover_mic": True}, {"scan_object": 0}, {"invented": 5}])
+def test_invalid_per_task_episode_maps(limits):
+    with pytest.raises(ValueError, match="positive integer"):
+        RobotwinNoiseEnv(backend=FakeBackend(), task_episode_limits=limits)
+
+
+def test_benchmark_horizons_use_pinned_yaml_and_record_source_hash(tmp_path):
+    config = tmp_path / "task_config"
+    config.mkdir()
+    path = config / "_eval_step_limit.yml"
+    path.write_text("handover_mic: 600\nscan_object: 500\npick_diverse_bottles: 400\n")
+    limits = load_benchmark_episode_limits(tmp_path, ["handover_mic", "scan_object"])
+    assert limits == {"handover_mic": 600, "scan_object": 500}
+    env = RobotwinNoiseEnv(robotwin_root=tmp_path, backend=FakeBackend(), task_episode_limits=limits)
+    assert env.contract["episode_limits_source"]["path"] == str(path.resolve())
+    assert len(env.contract["episode_limits_source"]["sha256"]) == 64
+    with pytest.raises(ValueError, match="Missing or invalid.*place_phone_stand"):
+        load_benchmark_episode_limits(tmp_path, ["place_phone_stand"])
+    path.write_text("handover_mic: true\n")
+    with pytest.raises(ValueError, match="Missing or invalid"):
+        load_benchmark_episode_limits(tmp_path, ["handover_mic"])
 
 
 def test_exact_external_budget_cap_and_unbounded_native_reference():

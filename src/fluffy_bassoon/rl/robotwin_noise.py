@@ -36,6 +36,40 @@ FEATURE_DIM = 2048 + 14
 RESET_ATTEMPTS = 32
 
 
+def load_benchmark_episode_limits(robotwin_root, tasks):
+    """Read the pinned benchmark's control-action horizons without a fallback."""
+    import yaml
+
+    if isinstance(tasks, str):
+        raise ValueError("tasks must be a nonempty sequence of task names")
+    tasks = tuple(tasks)
+    if not tasks or any(not isinstance(task, str) for task in tasks):
+        raise ValueError("tasks must be a nonempty sequence of task names")
+    path = Path(robotwin_root) / "task_config" / "_eval_step_limit.yml"
+    values = yaml.safe_load(path.read_text())
+    if not isinstance(values, dict):
+        raise ValueError("Benchmark episode-limit file must contain a task mapping")
+    limits = {}
+    for task in tasks:
+        value = values.get(task)
+        if type(value) is not int or value < 1:
+            raise ValueError(f"Missing or invalid benchmark episode limit for {task}")
+        limits[task] = value
+    return limits
+
+
+def _episode_limit_contract(robotwin_root, task_episode_limits):
+    if task_episode_limits is None:
+        return {}
+    fields = dict(task_episode_limits=dict(sorted(task_episode_limits.items())),
+        episode_limit_policy="per-task control-action horizon; true termination takes precedence over timeout")
+    if robotwin_root is not None:
+        path = Path(robotwin_root) / "task_config" / "_eval_step_limit.yml"
+        if path.is_file() and load_benchmark_episode_limits(robotwin_root, task_episode_limits) == task_episode_limits:
+            fields["episode_limits_source"] = dict(path=str(path.resolve()), sha256=_sha256(path))
+    return fields
+
+
 class _SynchronousExecutor:
     """Future-compatible execution on the simulator scene's owning thread.
 
@@ -391,7 +425,8 @@ class _RoboTwinBackend:
     def __init__(self, model_path, norm_stats, robotwin_root, rlinf_root,
                  device="cuda", episode_limit=400, action_horizon=32,
                  num_steps=5, task_config_name="demo_clean", output_dir=None,
-                 final_observation_only=False, corpus_writer=None):
+                 final_observation_only=False, corpus_writer=None,
+                 task_episode_limits=None):
         from fluffy_bassoon.gpu_execution import validate_execution
 
         mode = os.environ.get("FLUFFY_GPU_EXECUTION", "baige")
@@ -421,6 +456,7 @@ class _RoboTwinBackend:
         self.robotwin_root = Path(robotwin_root).resolve()
         self.rlinf_root = Path(rlinf_root).resolve()
         self.episode_limit = episode_limit
+        self.task_episode_limits = task_episode_limits
         if task_config_name not in ("demo_clean", "demo_randomized"):
             raise ValueError("task_config_name must be demo_clean or demo_randomized")
         self.task_config_name = task_config_name
@@ -445,6 +481,7 @@ class _RoboTwinBackend:
         self._versions = {name: value._version for name, value in self.model.named_parameters()}
         self.env = None
         self.task_name = None
+        self.scene_episode_limit = None
         self.prefix_seconds = self.motor_seconds = 0.0
         self.prefix_calls = self.motor_queries = 0
         self._prepared = self._prefix_mask = self._kv_cache = None
@@ -467,6 +504,7 @@ class _RoboTwinBackend:
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
+        self.contract.update(_episode_limit_contract(robotwin_root, task_episode_limits))
         if corpus_writer is not None:
             corpus_writer.register_runtime(self.contract)
 
@@ -527,7 +565,8 @@ class _RoboTwinBackend:
         # RoboTwin's task assets/configuration resolve paths relative to its root.
         os.chdir(self.robotwin_root)
         _install_reset_retry_limit()
-        if self.env is not None and self.task_name != task_name:
+        if self.env is not None and (self.task_name != task_name
+                                     or self.scene_episode_limit != self.episode_limit):
             self.env.venv.close()
             self.env = None
         if self.env is None:
@@ -540,6 +579,7 @@ class _RoboTwinBackend:
             if self.final_observation_only:
                 _install_final_observation_capture(self.env.venv)
             self.task_name = task_name
+            self.scene_episode_limit = self.episode_limit
         raw, _ = self.env.reset(env_seeds=[int(seed)])
         subenv = self.env.venv.envs[0]
         task = subenv.task
@@ -557,6 +597,8 @@ class _RoboTwinBackend:
                               features_sha256=hashlib.sha256(features.tobytes()).hexdigest(),
                               actual_render_pci=actual_pci, reset_policy_actions=0,
                               reset_internal_physics_steps="not separately instrumented")
+        if getattr(self, "task_episode_limits", None) is not None:
+            reset_info["episode_limit"] = self.episode_limit
         if self.corpus_writer is not None:
             reset_info["corpus_episode_id"] = self.corpus_writer.begin_episode(raw, features, reset_info)
         return features, reset_info
@@ -659,26 +701,53 @@ class RobotwinNoiseEnv:
     def __init__(self, model_path=None, norm_stats=None, robotwin_root=None, rlinf_root=None,
                  device="cuda", episode_limit=400, action_horizon=32, num_steps=5,
                  task_config_name="demo_clean", output_dir=None, *, backend=None,
-                 final_observation_only=False, corpus_writer=None):
+                 final_observation_only=False, corpus_writer=None,
+                 task_episode_limits=None):
         if type(episode_limit) is not int or episode_limit < 1:
             raise ValueError("episode_limit must be a positive integer")
         if type(final_observation_only) is not bool:
             raise ValueError("final_observation_only must be a bool")
         if final_observation_only and task_config_name != "demo_clean":
             raise ValueError("final_observation_only initially supports demo_clean only")
+        if task_episode_limits is not None:
+            if (not isinstance(task_episode_limits, dict) or not task_episode_limits
+                    or any(task not in SOURCE_TASKS + HELDOUT_TASKS
+                           or type(limit) is not int or limit < 1
+                           for task, limit in task_episode_limits.items())):
+                raise ValueError("Require positive integer episode limits for explicit RoboTwin tasks")
+            task_episode_limits = dict(task_episode_limits)
+        self.task_episode_limits = task_episode_limits
+        self.default_episode_limit = episode_limit
+        initial_episode_limit = (max(task_episode_limits.values())
+                                 if task_episode_limits is not None else episode_limit)
         self.backend = backend if backend is not None else _RoboTwinBackend(
-            model_path, norm_stats, robotwin_root, rlinf_root, device, episode_limit,
+            model_path, norm_stats, robotwin_root, rlinf_root, device, initial_episode_limit,
             action_horizon, num_steps, task_config_name, output_dir,
-            final_observation_only=final_observation_only, corpus_writer=corpus_writer)
+            final_observation_only=final_observation_only, corpus_writer=corpus_writer,
+            task_episode_limits=task_episode_limits)
         self.corpus_writer = corpus_writer
         self.observation_dim = self.backend.observation_dim
         self.noise_shape = tuple(self.backend.noise_shape)
         self.native_horizon = int(self.noise_shape[0])
-        self.episode_limit = episode_limit
+        self.episode_limit = initial_episode_limit
         self.elapsed_steps = 0
         self.active = False
         self.last_reset_info = None
         self.contract = getattr(self.backend, "contract", {})
+        if task_episode_limits is not None:
+            self.backend.task_episode_limits = dict(task_episode_limits)
+            self.contract = dict(self.contract,
+                **_episode_limit_contract(robotwin_root, task_episode_limits))
+            self.backend.contract = self.contract
+            if corpus_writer is not None:
+                corpus_writer.register_runtime(self.contract)
+
+    def episode_limit_for_task(self, task_name):
+        if self.task_episode_limits is None:
+            return self.default_episode_limit
+        if task_name not in self.task_episode_limits:
+            raise ValueError(f"No declared episode limit for {task_name}")
+        return self.task_episode_limits[task_name]
 
     def set_recording_context(self, metadata):
         """Set method/phase/trial/policy identity without changing the scene."""
@@ -695,6 +764,8 @@ class RobotwinNoiseEnv:
             raise ValueError("Task is outside the explicit VLRLA twelve-task inventory")
         if type(seed) is not int or seed < 0:
             raise ValueError("seed must be a nonnegative integer")
+        self.episode_limit = self.episode_limit_for_task(task_name)
+        self.backend.episode_limit = self.episode_limit
         features, info = self.backend.reset(task_name, seed)
         self.elapsed_steps = 0
         self.active = True
@@ -729,12 +800,15 @@ class RobotwinNoiseEnv:
         natural_episode_end = bool(terminated or truncated or self.elapsed_steps >= self.episode_limit)
         budget_truncated = (max_primitive_steps is not None and actual >= max_primitive_steps
                             and not natural_episode_end)
-        truncated = bool(truncated or self.elapsed_steps >= self.episode_limit or budget_truncated)
+        truncated = bool(not terminated and
+                         (truncated or self.elapsed_steps >= self.episode_limit or budget_truncated))
         if not np.isfinite(reward):
             raise RuntimeError("Nonfinite environment reward")
         self.active = not (terminated or truncated)
         info = dict(info, episode_primitive_steps=self.elapsed_steps,
                     budget_truncated=bool(budget_truncated))
+        if self.task_episode_limits is not None:
+            info["episode_limit"] = self.episode_limit
         if self.corpus_writer is not None:
             info["corpus_chunk"] = self.corpus_writer.finalize_learning_flags(
                 reward=reward, terminated=terminated, truncated=truncated,
