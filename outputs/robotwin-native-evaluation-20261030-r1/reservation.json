@@ -1,0 +1,38 @@
+{
+  "run_id": "robotwin-native-evaluation-20261030-r1",
+  "source_commit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196",
+  "status": "reserved_not_yet_submitted",
+  "allocation_id": null,
+  "scope": "Required first frozen RoboTwin student baseline under human-authorized target testing; no source training or new architecture",
+  "gpus": 1,
+  "cpus": 16,
+  "memory_gib": 128,
+  "shared_memory_gib": 8,
+  "max_scheduler_gpu_seconds": 5400,
+  "max_parent_seconds": 5300,
+  "outer_timeout_seconds": 5330,
+  "max_new_physical_actions": 57600,
+  "source_caps": {},
+  "phase_caps": {
+    "target": 57600
+  },
+  "data_episodes": 144,
+  "units": 18,
+  "evaluation_plan_file_sha256": "b911dd972cc30e6f6b02cacf831eafa84738bd66ebd032824bb5fc94d340287c",
+  "evaluation_plan_canonical_sha256": "3e82a6df6001024cffaae92af26a2412fb11b260302504ec1ae4243d06b6b5f1",
+  "original_source_parent_cap_unchanged": 4589600,
+  "separate_settled_packing_max": 21600,
+  "combined_separate_guards_conservative_max": 4668800,
+  "prior_receipts_imported": 0,
+  "robot_cost_accounting": "Separate target-only ledger, no imported source/prior charges, no transfer from old12k hold; copying fixed banks costs zero interactions",
+  "time_accounting": "All startup, preflight, model admission, parity, failures and teardown count; failed/partial units halt and retain unknown charges",
+  "source_sgd_updates": 0,
+  "target_sgd_updates": 0,
+  "prior_qualification": {
+    "source_commit": "82c4d8c006db064096549538e9cbab0c2f05facd",
+    "job": "job-tmtbmt14kl6w",
+    "tests": 151,
+    "real_cpu_admissions": 5
+  },
+  "required_live_preflight": "Wrapper+adapter fake tests and all5actualCPUadmissions before GPUprobe and first motor action"
+}
