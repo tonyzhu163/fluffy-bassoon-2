@@ -332,8 +332,8 @@
     },
     "target-dsrl-long-task-00": {
       "maximum_gpu_seconds": 6000,
-      "reserved_gpu_seconds": 6000,
-      "status": "active_13tests_gpu_and_full_parent_restore_verified_advancing",
+      "reserved_gpu_seconds": 5115,
+      "status": "terminal_exit0_240train_all250tracehashes_and_final_recoveries_verified",
       "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
       "run_id": "libero40-target-online-dsrl-long-20261030-r1-task00",
       "maximum_new_actions": 100000,
@@ -343,18 +343,24 @@
       "inherited_case_actions": 9030,
       "job_id": "job-pytyo9urlxrj",
       "last_verified_at_shanghai": "2026-10-31 00:15",
-      "last_verified_training_episodes": 93,
-      "last_verified_optimizer_steps": 63300,
+      "last_verified_training_episodes": 240,
+      "last_verified_optimizer_steps": 153480,
       "last_verified_cumulative_actions": 40497,
       "last_verified_new_actions": 31467,
-      "last_frozen_query_training_episodes": 80,
-      "last_frozen_query_success": true,
-      "last_verified_training_successes": 7
+      "last_frozen_query_training_episodes": 240,
+      "last_frozen_query_success": false,
+      "last_verified_training_successes": 72,
+      "charged_gpu_seconds": 5065,
+      "scheduler_terminal_duration_seconds": 5012,
+      "additional_shutdown_margin_seconds": 50,
+      "actual_total_action_charge": 87576,
+      "actual_new_action_charge": 78546,
+      "released_unused_gpu_seconds": 885
     },
     "target-dsrl-long-task-40": {
       "maximum_gpu_seconds": 6000,
-      "reserved_gpu_seconds": 6000,
-      "status": "active_13tests_gpu_and_full_parent_restore_verified_advancing",
+      "reserved_gpu_seconds": 5456,
+      "status": "terminal_exit0_240train_all250tracehashes_and_final_recoveries_verified",
       "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
       "run_id": "libero40-target-online-dsrl-long-20261030-r1-task40",
       "maximum_new_actions": 100000,
@@ -364,18 +370,24 @@
       "inherited_case_actions": 9030,
       "job_id": "job-5rqftpqn4wxi",
       "last_verified_at_shanghai": "2026-10-31 00:15",
-      "last_verified_training_episodes": 100,
-      "last_verified_optimizer_steps": 70400,
+      "last_verified_training_episodes": 240,
+      "last_verified_optimizer_steps": 182400,
       "last_verified_cumulative_actions": 44300,
       "last_verified_new_actions": 35270,
-      "last_frozen_query_training_episodes": 80,
+      "last_frozen_query_training_episodes": 240,
       "last_frozen_query_success": false,
-      "last_verified_training_successes": 0
+      "last_verified_training_successes": 0,
+      "charged_gpu_seconds": 5406,
+      "scheduler_terminal_duration_seconds": 5351,
+      "additional_shutdown_margin_seconds": 50,
+      "actual_total_action_charge": 102520,
+      "actual_new_action_charge": 93490,
+      "released_unused_gpu_seconds": 544
     },
     "distribution-diagnostic": {
       "maximum_gpu_seconds": 3600,
-      "reserved_gpu_seconds": 3600,
-      "status": "active61tests_gpu_loadedpolicy_originalactions_cache_rng_passed_advancing",
+      "reserved_gpu_seconds": 778,
+      "status": "terminal_exit0_all63raw_traces_context_recoveries_parameter_and_sampler_parity_verified",
       "run_id": "libero40-distribution-diagnostic-20261031-r1",
       "source_commit": "1a65226e0d3b6a68cf59808028245b3da5be3d07",
       "purpose": "target_evaluation",
@@ -388,20 +400,35 @@
       "last_verified_at_shanghai": "2026-10-31 00:20",
       "last_verified_completed_queries": 9,
       "last_verified_actions": 3108,
-      "allocated_at_shanghai": "2026-10-31 00:16:41"
+      "allocated_at_shanghai": "2026-10-31 00:16:41",
+      "charged_gpu_seconds": 728,
+      "scheduler_terminal_duration_seconds": 671,
+      "additional_shutdown_margin_seconds": 50,
+      "actual_total_action_charge": 14916,
+      "completed_queries": 63,
+      "released_unused_gpu_seconds": 2822
     },
     "batch14-qualification": {
       "maximum_gpu_seconds": 2400,
-      "reserved_gpu_seconds": 2400,
-      "status": "reserved_reviewed_code_allocated_tests_before_training",
+      "reserved_gpu_seconds": 902,
+      "status": "terminal_exit0_one_batch_two_steps_exact_replay_full_recovery_motor_unchanged",
       "run_id": "libero40-batch14-source-qualification-20261031-r1",
-      "source_commit": "ffed28e4b507aedd135083af825b16e60b94e613",
+      "source_commit": "9bc9c9c5d3a41cfb0be361d47ea3c4fa58a3d1a9",
       "purpose": "source_ppo_runtime_qualification",
       "maximum_total_actions": 20000,
       "updates": 1,
       "complete_trials_per_update": 14,
       "attempts": 4,
-      "funding": "2400s fromremaining2540s original32h pool; no fullscale/resetarm/targetepisodes"
+      "funding": "2400s fromremaining2540s original32h pool; no fullscale/resetarm/targetepisodes",
+      "charged_gpu_seconds": 852,
+      "scheduler_terminal_duration_seconds": 811,
+      "additional_shutdown_margin_seconds": 50,
+      "job_id": "job-ccniwh46yq9w",
+      "actual_total_action_charge": 8313,
+      "completed_source_trials": 14,
+      "completed_source_episodes": 56,
+      "completed_optimizer_steps": 2,
+      "released_unused_gpu_seconds": 1498
     }
   },
   "allocations": [
@@ -669,6 +696,6 @@
       "actual_simulator_actions": 30961
     }
   ],
-  "last_checkpoint_audit_at_shanghai": "2026-10-31 00:15",
-  "unassigned_gpu_seconds": 140
+  "last_checkpoint_audit_at_shanghai": "2026-10-31 01:35",
+  "unassigned_gpu_seconds": 5889
 }

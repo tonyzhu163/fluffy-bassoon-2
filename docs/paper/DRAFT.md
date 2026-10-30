@@ -37,8 +37,10 @@ matching initial inputs and noise can still produce small cross-process
 motor-action differences, so scores are not pooled.
 
 Ordinary target-online PixelSAC remains4/6 across0/1/4/8/13/16 training
-episodes. The two failed cases are being continued losslessly toward
-40/80/160/240 episodes as outcome-selected development diagnostics. The
+episodes. The two failed cases completed240 episodes each as outcome-selected
+developmentdiagnostics:task0 has72train successes andonequery80success,
+butboth160/240queries fail;task40 hasno successes. Repeatedfrozen-seed
+checks are being prepared; these are not broad or stable performance results. The
 predeclared source-SAC panel is16/16 for native, actor mean and actor sample;
 it establishes no teacher advantage. Source histories contain94 failures
 among2,108 episodes and only10 cases with learned-behavior failure followed
@@ -372,3 +374,14 @@ rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
   They cannot fill any VLA result slot or establish the paper's claim.
 - Publication strength and novelty remain empirical/literature questions;
   no venue or acceptance outcome is assumed.
+
+## Latest development notes (2026-10-31)
+
+- Batch14oneupdate passed exactreplay/fullrecovery/frozenmotor checks after
+  56already-successfulsourceepisodes.852GPU-s/8,313actions; no targetclaim.
+- Mean/std interventions onfixed9 all6/9, same percasevector. Changes are
+  numericallyreal butthispanel omitsmostearlier sensitivecases.
+- Current32hpool has5,889s unassigned afterterminalreconciliation. Source
+  top-up/policywarmstart/cache paths are preparation; materially larger
+  compute needs a concrete approval. Full0/1/2/4/8 andshifted-suite matrix
+  remains incomplete; the centralrobotperformance claim remainsunproven.

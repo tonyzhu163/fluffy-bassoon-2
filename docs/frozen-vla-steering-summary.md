@@ -242,3 +242,77 @@ execution shortening across attempts. These are descriptive execution lengths,
 not training or adaptation sample-efficiency gains; native wall time includes
 qualification/JIT and cannot support policy-speed claims. See
 [source length receipt](../outputs/libero40-source-lengths-20261031-r1/README.md).
+
+## 2026-10-31 terminal readout and revised next test
+
+Both ordinary DSRL continuations completed240 training episodes, exit0. Task0
+had72training successes and153,480updates; task40 hadzero/182,400. Both final
+240 queries failed. Task0's only successful measured query was at80, followed
+by failures at160 and240 on the same recorded query seed/initial hashes.
+This does not estimate a success-rate decline: each changed checkpoint has
+only one fixed stochastic query, and training successes mix many policies.
+The next diagnostic therefore freezes80/160/240 plus native and uses eight
+new paired stochastic seeds on the same physical case. That comparison is
+outcome-selected development; it neither selects a best source checkpoint nor
+supports broad generalization. No more online interaction is added to these
+closed240-episode runs. See
+[terminal DSRL receipt](../outputs/libero40-target-online-dsrl-long-audit-20261031-r1/README.md).
+
+The mean/std diagnostic completed63queries/14,916actions/728GPU-s: allseven
+conditions score6/9 with identical case outcomes (fail0/40/80). The actual
+interventions changed executed noise std fromAD.548/DPT.427 toabout.719;
+unit-std clipped about32% of coordinates. Thus this is not a no-op, but this
+run shows no success sensitivity on the selectednine. The panel omitted20of
+23 previously observed sensitive IDs; it does not rule out dispersion effects
+on the broader suite. Preserve separate contemporaneous native controls.
+[Full report](../outputs/libero40-distribution-report-20261031-r1/README.md),
+[sensitivity map](../outputs/libero40-sensitive-cases-20261031-r1/README.md).
+
+Batch14 PPO qualification completed one actual update:14K4trials/56episodes,
+795decisions,8,313all-in actions andtwoAdamsteps. Exact individual/merged
+likelihood andvalue replay errors areall0. Policy/candidate match, full
+optimizer/sampler/global+motorRNG recovery and unchanged frozen-motor hashes
+passed. All56episodes succeeded BEFOREthisupdate, so it supplies no recovery
+signal or target-performance evidence.795real decisions is still much smaller
+thanVLRLA's nominal8,192-decision iteration; trials are not interchangeable
+withquery decisions.
+
+Measured852GPU-s:651.24collection+4.09replay+13.46update seconds, with
+10,804MiB sampled devicepeak and1,345,175,040-byte Torchupdatepeak. A single
+simulator collected trialsserially;14 is thegradientbatch, not14parallel lanes.
+The initial global update had finite metrics butKL.0645/clipfraction.348;
+oneupdate cannot establish optimization stability. Steadycost extrapolates
+about22.4GPUh/Mactions, or28.5including this coldstart, before workloadvariation.
+[Qualification](../outputs/libero40-batch14-qualification-audit-20261031-r1/README.md).
+
+Decision: preserve allclosedruns; use the pairedfrozen-SAC repeats to measure
+checkpoint variability. Prepare explicit, lossless sourceSAC andR3→batch14PPO
+continuation/admission paths before requesting materially larger compute.
+The proposed1Msource/learner scale adds postwarmup exposure (oldSAConly272.9
+learned querychunks/goal onaverage), but does not guarantee useful recovery
+histories or targetgains. New source validation/qualification costs stay inside
+thatcap. An optional cached-prefix B1 optimization remains unqualified and
+must not delay the original-runtime collection proposal. Nofullbank top-up
+has been launched or newlyapproved.
+
+Original32h accounting after terminal UI/clock closure:109,311seconds held
+including conservative shutdown margins,5,889seconds unassigned. This is
+remaining oldapproval, not authorization for the proposed24hSAC or122hfull
+envelope. The per-learner scale proposal remains a staged resource request,
+with frozen rollout/update counts, actual coverage and later full target
+matrix still required.
+
+## 2026-10-31 collection cadence correction
+
+The user asked why we did not collect both benchmarks in parallel and then
+train. Initial LIBERO collection and training did occur, but the subsequent
+loop became too serial: multiple diagnostic branches delayed source scale-up.
+Prioritize the source-SAC continuation and PPO migration needed for the next
+collection phase; defer optional repeated-query and cache diagnostics until
+they do not delay collection. RoboTwin stays under its independent owner's
+running collection/training loop. Keep the original32h ceiling: its5,889s
+remaining can fund bounded continuation checks, while the proposed24h source
+SAC top-up still needs explicit approval. After those checks, overlap collection,
+offline fitting from complete snapshots and target evaluation rather than
+waiting for an entire corpus. Fresh PPO collection remains on-policy; SAC
+histories are not interchangeable PPO rollouts.

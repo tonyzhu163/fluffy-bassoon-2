@@ -1,0 +1,1010 @@
+{
+  "qualification": {
+    "format": "source40_one_batch14_qualification_receipt_v1",
+    "exit_code": 0,
+    "cumulative_gpu_charge_seconds": 852,
+    "maximum_gpu_seconds": 2400,
+    "actual_physical_cost": {
+      "known_primitive_steps": 7743,
+      "unresolved_primitive_ceiling": 0,
+      "settling_step_charge": 570,
+      "known_settling_steps": 570,
+      "total_action_charge": 8313
+    },
+    "batch_summary": {
+      "format": "frozen_vla_rl2_complete_trial_batch_v1",
+      "completed": true,
+      "updates": 1,
+      "target_updates": 1,
+      "counters": {
+        "environment_steps": 7743,
+        "settling_steps": 560,
+        "rollout_forward_samples": 795,
+        "update_forward_samples": 1590,
+        "verification_forward_samples": 1590,
+        "optimizer_steps": 2
+      },
+      "complete_source_trials": 14,
+      "pending_complete_trials": 0,
+      "physical_action_charge": 8313,
+      "maximum_total_actions": 20000,
+      "stop_reason": "requested_complete_batch_updates",
+      "full_recovery_sha256": "45888e863fce5a68b0fe18d4b6d3c0352e556c735debb154f43a726673200e83",
+      "batch_statistics": [
+        {
+          "update": 1,
+          "trials": 14,
+          "episodes": 56,
+          "committed_collection_seconds": 651.2409827136435,
+          "successes": 56,
+          "failures": 0,
+          "all_success_trials": 14,
+          "fail_then_success_trials": 0,
+          "learned_behavior_fail_then_success_trials": 0,
+          "patterns": [
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS"
+          ],
+          "task_coverage": {
+            "libero_spatial:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1798679648
+              ],
+              "initial_state_vector_sha256": [
+                "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed"
+              ],
+              "initial_simulator_state_sha256": [
+                "648f16953d455faa71ebb800aebfeed9a6243ef90c926b8eb7c9759a1d06c2dc"
+              ]
+            },
+            "libero_object:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                561807780
+              ],
+              "initial_state_vector_sha256": [
+                "6cd4976519943bdc84677396a6e2942e9816ae87e56fc72943914e147f9b6e1e"
+              ],
+              "initial_simulator_state_sha256": [
+                "a91606df330bc9bcb9b5dbad27555e9f52861b514b334a6d4e2d7512550e2cfc"
+              ]
+            },
+            "libero_goal:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                234731698
+              ],
+              "initial_state_vector_sha256": [
+                "5a8f40221c0b59dfaa1061b36a49d4b10b0b47ffb82a1ac0b10080a2aa466ec4"
+              ],
+              "initial_simulator_state_sha256": [
+                "88f3a19dba74447089a6f3247d87ed8a32a3de219a18b2033f4f83d90e71b8ff"
+              ]
+            },
+            "libero_10:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                641004849
+              ],
+              "initial_state_vector_sha256": [
+                "747b653b2ca1feeae8f3bd994880ce743730993ea5ce4bd003623e877f26b3bd"
+              ],
+              "initial_simulator_state_sha256": [
+                "6dd3a9e4c8611dc9ce02998fb78e8d969bd5c9729e41c71908311f9edc0dd6ae"
+              ]
+            },
+            "libero_spatial:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                888658063
+              ],
+              "initial_state_vector_sha256": [
+                "d116842e01703fbea595511db813a3816c8d9f2302b4e979ebec4f15b7a750a2"
+              ],
+              "initial_simulator_state_sha256": [
+                "cc78895c38f41f60c7737869328c2b6b97e8eb22c90558036b9160bd3eb58f45"
+              ]
+            },
+            "libero_object:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1748536463
+              ],
+              "initial_state_vector_sha256": [
+                "4404ff0ecec75d07dbe02cdb0a6284fb3b24c79f2c164987433f00d3b885948c"
+              ],
+              "initial_simulator_state_sha256": [
+                "cc2b97bf5d41a23706430ab33601299be39db09041c200b4a173ec7717f2ed95"
+              ]
+            },
+            "libero_goal:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                969095166
+              ],
+              "initial_state_vector_sha256": [
+                "5b071f3bb26bf0ce3b866621d8c9037d793aae5d25f9ae686a1d9048c4e56b88"
+              ],
+              "initial_simulator_state_sha256": [
+                "e7b521d2c76466c2b1536e9a04c198298fe0840e25a4751175f9327a2f407a04"
+              ]
+            },
+            "libero_10:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                197387982
+              ],
+              "initial_state_vector_sha256": [
+                "5abdf8f466f490901dee9f931b32eb181b2928eaa17bb6379742f988581d564a"
+              ],
+              "initial_simulator_state_sha256": [
+                "e2521b001e9c011dee8bc9b1a7fd8965bab09bd46fb76c68cb7b6cb264ff5197"
+              ]
+            },
+            "libero_spatial:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                719155818
+              ],
+              "initial_state_vector_sha256": [
+                "408c455fb617e5320060d643ef80ec2035d4e98600659cc3deb5a1e85482bf76"
+              ],
+              "initial_simulator_state_sha256": [
+                "8d8a8c4a6482a389e51f0be54a48a9a4a284e874a3ae02c3a1617ccf9a56df1b"
+              ]
+            },
+            "libero_object:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1288706066
+              ],
+              "initial_state_vector_sha256": [
+                "02feb7104ff3af12f1247c461997f1113686f704fb702cd3280d6bfba56e6f71"
+              ],
+              "initial_simulator_state_sha256": [
+                "39e7b75dcf5ae1f32d4fe666a430626f31f3aa26956e2a54292f43f122a9f09a"
+              ]
+            },
+            "libero_goal:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1746310708
+              ],
+              "initial_state_vector_sha256": [
+                "c42c3f992ef65b98b14e2f505837a6a31516c00a1afabd0607aa6d70362ca6fd"
+              ],
+              "initial_simulator_state_sha256": [
+                "25f8d90177beabf52c9c718ba18ebe8d4c634a83a904d0ca83e4aeb0ce7e5d3b"
+              ]
+            },
+            "libero_10:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1564571817
+              ],
+              "initial_state_vector_sha256": [
+                "9ae67aa7e7dd9987ecd1f2930e2b061fb66a414dd94e4b575417356a556cbd90"
+              ],
+              "initial_simulator_state_sha256": [
+                "9d67cd39467c2338a5353003d17c66b5f62cfb7e2e3d42d4fa2ce96501612f10"
+              ]
+            },
+            "libero_spatial:03": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                2132147592
+              ],
+              "initial_state_vector_sha256": [
+                "36424fa758f0e72399a35cefa285d0658e4b5bd17bfb3e2127f85aa2e0944517"
+              ],
+              "initial_simulator_state_sha256": [
+                "768c71e0db6e7e981cd553a55a1519ff45ab5e58f26a0afa8c015c8f1dce604a"
+              ]
+            },
+            "libero_object:03": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                403514482
+              ],
+              "initial_state_vector_sha256": [
+                "65b4e812d49c1bc043dd16e4226442779ebaaf106dca39030d9a8576460bc091"
+              ],
+              "initial_simulator_state_sha256": [
+                "d0bfc5c92ffc12913ca63021d08759f0b5d2eb031d91677194bdfc75a133ea45"
+              ]
+            }
+          },
+          "case_identity": "Nominal state IDs and repeated scene seeds are reported separately; seed alone is not a new physical state"
+        }
+      ],
+      "pending_statistics": {
+        "trials": 0,
+        "episodes": 0,
+        "committed_collection_seconds": 0,
+        "successes": 0,
+        "failures": 0,
+        "all_success_trials": 0,
+        "fail_then_success_trials": 0,
+        "learned_behavior_fail_then_success_trials": 0,
+        "patterns": [],
+        "task_coverage": {},
+        "case_identity": "Nominal state IDs and repeated scene seeds are reported separately; seed alone is not a new physical state"
+      },
+      "committed_source_task_coverage": {
+        "libero_spatial:00": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            1798679648
+          ],
+          "initial_state_vector_sha256": [
+            "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed"
+          ],
+          "initial_simulator_state_sha256": [
+            "648f16953d455faa71ebb800aebfeed9a6243ef90c926b8eb7c9759a1d06c2dc"
+          ]
+        },
+        "libero_object:00": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            561807780
+          ],
+          "initial_state_vector_sha256": [
+            "6cd4976519943bdc84677396a6e2942e9816ae87e56fc72943914e147f9b6e1e"
+          ],
+          "initial_simulator_state_sha256": [
+            "a91606df330bc9bcb9b5dbad27555e9f52861b514b334a6d4e2d7512550e2cfc"
+          ]
+        },
+        "libero_goal:00": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            234731698
+          ],
+          "initial_state_vector_sha256": [
+            "5a8f40221c0b59dfaa1061b36a49d4b10b0b47ffb82a1ac0b10080a2aa466ec4"
+          ],
+          "initial_simulator_state_sha256": [
+            "88f3a19dba74447089a6f3247d87ed8a32a3de219a18b2033f4f83d90e71b8ff"
+          ]
+        },
+        "libero_10:00": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            641004849
+          ],
+          "initial_state_vector_sha256": [
+            "747b653b2ca1feeae8f3bd994880ce743730993ea5ce4bd003623e877f26b3bd"
+          ],
+          "initial_simulator_state_sha256": [
+            "6dd3a9e4c8611dc9ce02998fb78e8d969bd5c9729e41c71908311f9edc0dd6ae"
+          ]
+        },
+        "libero_spatial:01": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            888658063
+          ],
+          "initial_state_vector_sha256": [
+            "d116842e01703fbea595511db813a3816c8d9f2302b4e979ebec4f15b7a750a2"
+          ],
+          "initial_simulator_state_sha256": [
+            "cc78895c38f41f60c7737869328c2b6b97e8eb22c90558036b9160bd3eb58f45"
+          ]
+        },
+        "libero_object:01": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            1748536463
+          ],
+          "initial_state_vector_sha256": [
+            "4404ff0ecec75d07dbe02cdb0a6284fb3b24c79f2c164987433f00d3b885948c"
+          ],
+          "initial_simulator_state_sha256": [
+            "cc2b97bf5d41a23706430ab33601299be39db09041c200b4a173ec7717f2ed95"
+          ]
+        },
+        "libero_goal:01": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            969095166
+          ],
+          "initial_state_vector_sha256": [
+            "5b071f3bb26bf0ce3b866621d8c9037d793aae5d25f9ae686a1d9048c4e56b88"
+          ],
+          "initial_simulator_state_sha256": [
+            "e7b521d2c76466c2b1536e9a04c198298fe0840e25a4751175f9327a2f407a04"
+          ]
+        },
+        "libero_10:01": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            197387982
+          ],
+          "initial_state_vector_sha256": [
+            "5abdf8f466f490901dee9f931b32eb181b2928eaa17bb6379742f988581d564a"
+          ],
+          "initial_simulator_state_sha256": [
+            "e2521b001e9c011dee8bc9b1a7fd8965bab09bd46fb76c68cb7b6cb264ff5197"
+          ]
+        },
+        "libero_spatial:02": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            719155818
+          ],
+          "initial_state_vector_sha256": [
+            "408c455fb617e5320060d643ef80ec2035d4e98600659cc3deb5a1e85482bf76"
+          ],
+          "initial_simulator_state_sha256": [
+            "8d8a8c4a6482a389e51f0be54a48a9a4a284e874a3ae02c3a1617ccf9a56df1b"
+          ]
+        },
+        "libero_object:02": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            1288706066
+          ],
+          "initial_state_vector_sha256": [
+            "02feb7104ff3af12f1247c461997f1113686f704fb702cd3280d6bfba56e6f71"
+          ],
+          "initial_simulator_state_sha256": [
+            "39e7b75dcf5ae1f32d4fe666a430626f31f3aa26956e2a54292f43f122a9f09a"
+          ]
+        },
+        "libero_goal:02": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            1746310708
+          ],
+          "initial_state_vector_sha256": [
+            "c42c3f992ef65b98b14e2f505837a6a31516c00a1afabd0607aa6d70362ca6fd"
+          ],
+          "initial_simulator_state_sha256": [
+            "25f8d90177beabf52c9c718ba18ebe8d4c634a83a904d0ca83e4aeb0ce7e5d3b"
+          ]
+        },
+        "libero_10:02": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            1564571817
+          ],
+          "initial_state_vector_sha256": [
+            "9ae67aa7e7dd9987ecd1f2930e2b061fb66a414dd94e4b575417356a556cbd90"
+          ],
+          "initial_simulator_state_sha256": [
+            "9d67cd39467c2338a5353003d17c66b5f62cfb7e2e3d42d4fa2ce96501612f10"
+          ]
+        },
+        "libero_spatial:03": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            2132147592
+          ],
+          "initial_state_vector_sha256": [
+            "36424fa758f0e72399a35cefa285d0658e4b5bd17bfb3e2127f85aa2e0944517"
+          ],
+          "initial_simulator_state_sha256": [
+            "768c71e0db6e7e981cd553a55a1519ff45ab5e58f26a0afa8c015c8f1dce604a"
+          ]
+        },
+        "libero_object:03": {
+          "trials": 1,
+          "episodes": 4,
+          "initial_state_ids": [
+            0
+          ],
+          "scene_seeds": [
+            403514482
+          ],
+          "initial_state_vector_sha256": [
+            "65b4e812d49c1bc043dd16e4226442779ebaaf106dca39030d9a8576460bc091"
+          ],
+          "initial_simulator_state_sha256": [
+            "d0bfc5c92ffc12913ca63021d08759f0b5d2eb031d91677194bdfc75a133ea45"
+          ]
+        }
+      },
+      "actual_tasks_with_complete_trials": 14,
+      "interpretation": "Actual source exposure and optimizer progress; no robot/memory/sample-efficiency benefit established",
+      "candidate_sha256": "aa06d2a712f6fbaaafb693973d109d2e99bd942ade13daf0e7a4fc184b8c1fe3"
+    },
+    "update_receipts": [
+      {
+        "update": 1,
+        "replay": {
+          "trials": 14,
+          "valid_tokens": 795,
+          "trial_boundaries": [
+            {
+              "trial": 0,
+              "start": 0,
+              "end": 32,
+              "decisions": 32
+            },
+            {
+              "trial": 1,
+              "start": 32,
+              "end": 90,
+              "decisions": 58
+            },
+            {
+              "trial": 2,
+              "start": 90,
+              "end": 138,
+              "decisions": 48
+            },
+            {
+              "trial": 3,
+              "start": 138,
+              "end": 243,
+              "decisions": 105
+            },
+            {
+              "trial": 4,
+              "start": 243,
+              "end": 288,
+              "decisions": 45
+            },
+            {
+              "trial": 5,
+              "start": 288,
+              "end": 350,
+              "decisions": 62
+            },
+            {
+              "trial": 6,
+              "start": 350,
+              "end": 386,
+              "decisions": 36
+            },
+            {
+              "trial": 7,
+              "start": 386,
+              "end": 487,
+              "decisions": 101
+            },
+            {
+              "trial": 8,
+              "start": 487,
+              "end": 527,
+              "decisions": 40
+            },
+            {
+              "trial": 9,
+              "start": 527,
+              "end": 575,
+              "decisions": 48
+            },
+            {
+              "trial": 10,
+              "start": 575,
+              "end": 607,
+              "decisions": 32
+            },
+            {
+              "trial": 11,
+              "start": 607,
+              "end": 706,
+              "decisions": 99
+            },
+            {
+              "trial": 12,
+              "start": 706,
+              "end": 742,
+              "decisions": 36
+            },
+            {
+              "trial": 13,
+              "start": 742,
+              "end": 795,
+              "decisions": 53
+            }
+          ],
+          "individual_log_prob_max_error": 0.0,
+          "individual_value_max_error": 0.0,
+          "merged_log_prob_max_error": 0.0,
+          "merged_value_max_error": 0.0,
+          "all_trial_memory_and_feedback_resets": true,
+          "seconds": 4.0931699220091105
+        },
+        "metrics": {
+          "loss": 407.96421813964844,
+          "actor_loss": 0.04821988883539596,
+          "critic_loss": 816.1354370117188,
+          "exploration_entropy": 15.171585083007812,
+          "approximate_kl": 0.06448769569396973,
+          "clip_fraction": 0.34779873490333557,
+          "gradient_norm": 152.83148384094238,
+          "optimizer_steps": 2,
+          "forward_samples": 1590,
+          "active_action_samples": 1590,
+          "peak_cuda_allocated_bytes": 1345175040,
+          "peak_cuda_reserved_bytes": 1463812096,
+          "update_seconds": 13.457644040929154
+        },
+        "source_trials": {
+          "trials": 14,
+          "episodes": 56,
+          "committed_collection_seconds": 651.2409827136435,
+          "successes": 56,
+          "failures": 0,
+          "all_success_trials": 14,
+          "fail_then_success_trials": 0,
+          "learned_behavior_fail_then_success_trials": 0,
+          "patterns": [
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS",
+            "SSSS"
+          ],
+          "task_coverage": {
+            "libero_spatial:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1798679648
+              ],
+              "initial_state_vector_sha256": [
+                "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed"
+              ],
+              "initial_simulator_state_sha256": [
+                "648f16953d455faa71ebb800aebfeed9a6243ef90c926b8eb7c9759a1d06c2dc"
+              ]
+            },
+            "libero_object:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                561807780
+              ],
+              "initial_state_vector_sha256": [
+                "6cd4976519943bdc84677396a6e2942e9816ae87e56fc72943914e147f9b6e1e"
+              ],
+              "initial_simulator_state_sha256": [
+                "a91606df330bc9bcb9b5dbad27555e9f52861b514b334a6d4e2d7512550e2cfc"
+              ]
+            },
+            "libero_goal:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                234731698
+              ],
+              "initial_state_vector_sha256": [
+                "5a8f40221c0b59dfaa1061b36a49d4b10b0b47ffb82a1ac0b10080a2aa466ec4"
+              ],
+              "initial_simulator_state_sha256": [
+                "88f3a19dba74447089a6f3247d87ed8a32a3de219a18b2033f4f83d90e71b8ff"
+              ]
+            },
+            "libero_10:00": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                641004849
+              ],
+              "initial_state_vector_sha256": [
+                "747b653b2ca1feeae8f3bd994880ce743730993ea5ce4bd003623e877f26b3bd"
+              ],
+              "initial_simulator_state_sha256": [
+                "6dd3a9e4c8611dc9ce02998fb78e8d969bd5c9729e41c71908311f9edc0dd6ae"
+              ]
+            },
+            "libero_spatial:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                888658063
+              ],
+              "initial_state_vector_sha256": [
+                "d116842e01703fbea595511db813a3816c8d9f2302b4e979ebec4f15b7a750a2"
+              ],
+              "initial_simulator_state_sha256": [
+                "cc78895c38f41f60c7737869328c2b6b97e8eb22c90558036b9160bd3eb58f45"
+              ]
+            },
+            "libero_object:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1748536463
+              ],
+              "initial_state_vector_sha256": [
+                "4404ff0ecec75d07dbe02cdb0a6284fb3b24c79f2c164987433f00d3b885948c"
+              ],
+              "initial_simulator_state_sha256": [
+                "cc2b97bf5d41a23706430ab33601299be39db09041c200b4a173ec7717f2ed95"
+              ]
+            },
+            "libero_goal:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                969095166
+              ],
+              "initial_state_vector_sha256": [
+                "5b071f3bb26bf0ce3b866621d8c9037d793aae5d25f9ae686a1d9048c4e56b88"
+              ],
+              "initial_simulator_state_sha256": [
+                "e7b521d2c76466c2b1536e9a04c198298fe0840e25a4751175f9327a2f407a04"
+              ]
+            },
+            "libero_10:01": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                197387982
+              ],
+              "initial_state_vector_sha256": [
+                "5abdf8f466f490901dee9f931b32eb181b2928eaa17bb6379742f988581d564a"
+              ],
+              "initial_simulator_state_sha256": [
+                "e2521b001e9c011dee8bc9b1a7fd8965bab09bd46fb76c68cb7b6cb264ff5197"
+              ]
+            },
+            "libero_spatial:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                719155818
+              ],
+              "initial_state_vector_sha256": [
+                "408c455fb617e5320060d643ef80ec2035d4e98600659cc3deb5a1e85482bf76"
+              ],
+              "initial_simulator_state_sha256": [
+                "8d8a8c4a6482a389e51f0be54a48a9a4a284e874a3ae02c3a1617ccf9a56df1b"
+              ]
+            },
+            "libero_object:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1288706066
+              ],
+              "initial_state_vector_sha256": [
+                "02feb7104ff3af12f1247c461997f1113686f704fb702cd3280d6bfba56e6f71"
+              ],
+              "initial_simulator_state_sha256": [
+                "39e7b75dcf5ae1f32d4fe666a430626f31f3aa26956e2a54292f43f122a9f09a"
+              ]
+            },
+            "libero_goal:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1746310708
+              ],
+              "initial_state_vector_sha256": [
+                "c42c3f992ef65b98b14e2f505837a6a31516c00a1afabd0607aa6d70362ca6fd"
+              ],
+              "initial_simulator_state_sha256": [
+                "25f8d90177beabf52c9c718ba18ebe8d4c634a83a904d0ca83e4aeb0ce7e5d3b"
+              ]
+            },
+            "libero_10:02": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                1564571817
+              ],
+              "initial_state_vector_sha256": [
+                "9ae67aa7e7dd9987ecd1f2930e2b061fb66a414dd94e4b575417356a556cbd90"
+              ],
+              "initial_simulator_state_sha256": [
+                "9d67cd39467c2338a5353003d17c66b5f62cfb7e2e3d42d4fa2ce96501612f10"
+              ]
+            },
+            "libero_spatial:03": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                2132147592
+              ],
+              "initial_state_vector_sha256": [
+                "36424fa758f0e72399a35cefa285d0658e4b5bd17bfb3e2127f85aa2e0944517"
+              ],
+              "initial_simulator_state_sha256": [
+                "768c71e0db6e7e981cd553a55a1519ff45ab5e58f26a0afa8c015c8f1dce604a"
+              ]
+            },
+            "libero_object:03": {
+              "trials": 1,
+              "episodes": 4,
+              "initial_state_ids": [
+                0
+              ],
+              "scene_seeds": [
+                403514482
+              ],
+              "initial_state_vector_sha256": [
+                "65b4e812d49c1bc043dd16e4226442779ebaaf106dca39030d9a8576460bc091"
+              ],
+              "initial_simulator_state_sha256": [
+                "d0bfc5c92ffc12913ca63021d08759f0b5d2eb031d91677194bdfc75a133ea45"
+              ]
+            }
+          },
+          "case_identity": "Nominal state IDs and repeated scene seeds are reported separately; seed alone is not a new physical state"
+        },
+        "physical_action_charge": 8313,
+        "counters": {
+          "environment_steps": 7743,
+          "settling_steps": 560,
+          "rollout_forward_samples": 795,
+          "update_forward_samples": 1590,
+          "verification_forward_samples": 1590,
+          "optimizer_steps": 2
+        }
+      }
+    ],
+    "full_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-batch14-source-qualification-20261031-r1/experiment/learner/latest.pt",
+    "full_recovery_sha256": "45888e863fce5a68b0fe18d4b6d3c0352e556c735debb154f43a726673200e83",
+    "sampled_whole_device_peak_memory_mib": 10804.0,
+    "whole_device_telemetry_samples": 770,
+    "whole_device_telemetry_sha256": "14b92421afdc6ad2fcac078f61741443abf24e3c440266977fe738c3bbb61f56",
+    "frozen_motor_parameters_unchanged": true,
+    "motor_parameters_before_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "motor_parameters_after_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "motor_parameter_receipts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-batch14-source-qualification-20261031-r1/experiment/attempts/1793378677811631178/parameters-after.json",
+        "sha256": "4c678751eba72f8c7fcced8b912a244b6a0efc12fba262f547adb12c183cf690",
+        "motor_before": {
+          "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+          "leaves": 51,
+          "elements_by_dtype": {
+            "bfloat16": 3353433872
+          }
+        },
+        "motor_after": {
+          "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+          "leaves": 51,
+          "elements_by_dtype": {
+            "bfloat16": 3353433872
+          }
+        },
+        "unchanged": true,
+        "motor_initialized": true,
+        "verification_complete": true
+      }
+    ],
+    "memory_limit": "1Hz NVML samples include frozen motor/rendering/PPO; Torch exact replay/update peaks are separate update metrics",
+    "interpretation": "Runtime/capacity/recovery qualification for one gradient batch; no robot-performance or memory benefit established"
+  },
+  "checkpoint_format": "frozen_vla_rl2_complete_trial_batch_v1",
+  "checkpoint_keys": [
+    "format",
+    "contract",
+    "boundary",
+    "policy",
+    "optimizer",
+    "sampler",
+    "rng",
+    "runtime",
+    "progress"
+  ],
+  "candidate_format": "frozen_vla_rl2_policy_v1",
+  "policy_state_tensors": 66,
+  "policy_tensors_finite": true,
+  "candidate_matches_full_recovery_policy": true,
+  "optimizer_state_entries": 63,
+  "optimizer_parameter_steps": [
+    2
+  ],
+  "progress_phase": "collect",
+  "progress_iteration": 1,
+  "progress_complete_trials": 14,
+  "pending_trials": 0,
+  "rng_keys": [
+    "python",
+    "numpy",
+    "torch",
+    "cuda"
+  ],
+  "sampler_present": true,
+  "runtime_keys": [
+    "motor_rng",
+    "task_cycle"
+  ],
+  "motor_rng": {
+    "format": "str",
+    "implementation": "threefry2x32",
+    "key_data": [
+      2
+    ]
+  },
+  "task_cursor": 14,
+  "files": {
+    "experiment/learner/latest.pt": {
+      "size_bytes": 16583357,
+      "sha256": "45888e863fce5a68b0fe18d4b6d3c0352e556c735debb154f43a726673200e83"
+    },
+    "experiment/learner/candidate.pt": {
+      "size_bytes": 5650589,
+      "sha256": "aa06d2a712f6fbaaafb693973d109d2e99bd942ade13daf0e7a4fc184b8c1fe3"
+    },
+    "experiment/learner/summary.json": {
+      "size_bytes": 14704,
+      "sha256": "32efa8695c23b12bebdbcb05456ffcf1ea87e9b580094b856a5736e6a45c3d32"
+    },
+    "experiment/index.json": {
+      "size_bytes": 38572,
+      "sha256": "e68994c7f81b266ca3b75c7438ff8f27f8bc1eae0a7355fca58dcd263755ff8a"
+    },
+    "worker-time.json": {
+      "size_bytes": 1394,
+      "sha256": "1401b457c03464f075e06b1be5242435f3ed787a9cc12ede134b49bb4d6086c7"
+    }
+  },
+  "scope": "CPU-only checkpoint tensor/metadata read; no model construction, forward, gradients or tests"
+}

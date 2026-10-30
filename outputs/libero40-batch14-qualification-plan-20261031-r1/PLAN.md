@@ -1,8 +1,13 @@
 # One complete batch14 source PPO qualification
 
-Prepared, not launched or reserved. Root may fund at most2,400 cumulative
-GPU-seconds and20,000 simulator actions from the2,540s unassigned original32h
-pool, leaving140s unassigned. The budget template is deliberately unfunded.
+Status amendment2026-10-31: funded and completed asjob-ccniwh46yq9w, source
+9bc9c9c5d3a41cfb0be361d47ea3c4fa58a3d1a9. Exact funded record isbudget.json;
+budget-template.json remains an explicitly unfunded historical template.
+Original2,400s/20k ceiling used852GPU-s/8,313actions, exit0.14K4 trials,
+56successful episodes, one global batch and two optimizer steps completed.
+Allfour individual/merged replay errors were0, full recovery/candidate match
+and frozen motor byte hashes passed. This is runtime qualification only.
+Actual timing/memory and source-state evidence: ../libero40-batch14-qualification-audit-20261031-r1/receipt.json.
 No full source collection,100-update run, reset arm or target evaluation is
 authorized by this launcher.
 

@@ -579,3 +579,31 @@ complete milestone recovery:
 Both actual bytes were rehashed from saved artifacts. This is one successful
 query on an outcome-selected development case, not reliable or few-shot
 performance. Exact later160/240 outcomes and full costs are still pending.
+
+## 2026-10-31 final bounded DSRL and batch14 runtime results
+
+The two outcome-selected DSRL cases completed240 training episodes each.
+Task0:72training successes,8,154chunks,153,480updates. Task40:0successes,
+9,600chunks,182,400updates. Both final240queries fail; task0's80query is the
+only successful query among its0/1/4/8/13/16/40/80/160/240 checks. Onequery
+percheckpoint cannot estimate stable performance. All250training/querytrace
+hashes percase andfinalquery/fullrecoveries were verified. Unique six-case
+onset+continuation cost207,594actions/12,322GPU-s, inheritedprefixes countedonce.
+[Terminal receipt](../../outputs/libero40-target-online-dsrl-long-audit-20261031-r1/README.md).
+
+The frozen nine-case distribution test is complete:63queries, allseven
+methods6/9 withidenticaloutcomes. Motor/controllerbytes and actual original
+sampler/cache equivalence passed; eachrawtrace/recovery was read/rehashed.
+Cost14,916actions/728GPU-s. This panel/run gives no successsensitivity to
+those interventions; it omits20of23 previously observed sensitive cases.
+[Report](../../outputs/libero40-distribution-report-20261031-r1/README.md).
+
+Native-horizon batch14PPO runtime qualification:one14K4 batch/56successful
+sourceepisodes/795validdecisions,8,313all-in actions/twooptimizersteps, exit0.
+Individual/merged behaviorlogp+value replay errors0. Fullcandidate matches the
+finite66-tensor checkpoint;63Adamstate entries areatstep2; sampler/global
+andtypedmotorRNG/cursorarepresent. Frozen3.3Bmotor parameter hash unchanged.
+852GPU-s (UI811);651.24scollection/4.09sreplay/13.46supdate,10,804MiB
+sampledwhole-devicepeak. This is one update on14goals, noall40training,
+parallel-lane speedup, target-performance or adaptation claim.
+[Actual receipt and independent CPU checkpoint read](../../outputs/libero40-batch14-qualification-audit-20261031-r1/README.md).
