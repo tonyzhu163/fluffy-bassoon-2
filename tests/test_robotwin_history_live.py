@@ -165,6 +165,19 @@ def test_child_exception_preserves_pending_reservation_and_stops_recovery(tmp_pa
     with pytest.raises(RuntimeError,match='Unknown/pending'): live.audit_ledger(args,configuration)
 
 
+def test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime(tmp_path):
+    configuration=plan(); args=arguments(tmp_path,create=False); calls=[]
+    with live.ledger(args,configuration,'prior-fake-cost') as budget:
+        budget.reserve('prior-fake-cost',54401,phase='target',method='native',task='adjust_bottle',
+            episode=0,chunk=0,policy_version='native')
+        budget.resolve('prior-fake-cost',54401)
+        assert budget.remaining(phase='target',method='native')==3199
+    with pytest.raises(RuntimeError,match='Insufficient complete K8 allowance'):
+        live.run_child(args,configuration,prepare=lambda *a:calls.append('runtime'),
+            agent_loader=lambda *a,**k:calls.append('agent'))
+    assert not calls and not (args.output/'unit-receipt.json').exists()
+
+
 def test_parent_orders_fake_tests_admission_gpu_probe_before_any_unit(tmp_path,monkeypatch):
     from fluffy_bassoon.meta_rl import robotwin_history_evaluate
     configuration=plan(); args=arguments(tmp_path,create=False); events=[]

@@ -219,6 +219,8 @@ def run_child(args, plan, *, prepare=prepare_runtime, agent_loader=None, trial_r
     with ledger(args,plan,'unit') as budget:
         before=budget.snapshot()
         if before['pending_actions'] or before['uncertain_actions']: raise RuntimeError('Unknown physical outcome: stop')
+        if budget.remaining(phase='target',method=args.condition)<3200:
+            raise RuntimeError('Insufficient complete K8 allowance before model/runtime preparation')
         try:
             agent=(agent_loader or load_agent)(plan,args.condition,device='cuda')
             env,writer,parity=prepare(args,plan)
