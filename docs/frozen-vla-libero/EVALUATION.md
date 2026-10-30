@@ -562,3 +562,20 @@ Evidence: [noise report](../../outputs/libero40-noise-controls-report-20261030-r
 [failure analysis](../../outputs/libero40-failure-analysis-20261030-r1/ANALYSIS.md),
 [native cross-run receipt](../../outputs/libero40-native-crossrun-20261030-r1/README.md),
 [experiment summary and next tests](../frozen-vla-steering-summary.md).
+
+## 2026-10-31 ordinary DSRL continuation: first positive development query
+
+On task0/state0/scene seed123, the frozen80-training-episode query succeeded
+in249 primitive actions (+10settling). Training cost32,651 actions;54,140
+optimizer updates. Query seed238430264, no SGD, unchanged policy/replay and
+no query transitions admitted into replay. The independent query40 failed;
+first training success was episode41. Task40's query80 still failed, with
+zero training successes by episode100. Both continuations remain active.
+
+Task0 query trace SHA256:
+`14cba02f88a7649611c9f9754bd58ccf1cb922d2345a7c85add12d7181cacf1d`;
+complete milestone recovery:
+`02e3e578eb8f6cb57e4c97e1617719dd22abf2c7029fe82f69bc5d03d4aea2bc`.
+Both actual bytes were rehashed from saved artifacts. This is one successful
+query on an outcome-selected development case, not reliable or few-shot
+performance. Exact later160/240 outcomes and full costs are still pending.

@@ -192,3 +192,53 @@ Detailed evidence: [trajectory/dispersion analysis](../outputs/libero40-failure-
 [native cross-run receipt](../outputs/libero40-native-crossrun-20261030-r1/README.md),
 [scale references](../outputs/steering-scale-reference-20261030-r1/COMPARISON.md),
 [long DSRL protocol](../outputs/libero40-target-online-dsrl-long-plan-20261030-r1/README.md).
+
+## 2026-10-31: first longer-DSRL frozen query success
+
+Task0 succeeds on its separate frozen query after80 training episodes:
+249 primitives+10 settling, after32,651 training actions and54,140 optimizer
+updates. The trace and milestone recovery hashes were independently checked;
+weights and replay remained unchanged during the query, with zero query SGD.
+This is one outcome-selected development case/seed, not one-shot adaptation,
+convergence, repeatability or broad target performance. First training success
+was episode41; query40 failed. At00:15 the run had93 training episodes,
+7 training successes and63,300 updates. Task40 had100 episodes/70,400 updates,
+zero training successes and failed query80. Both remain active.
+
+Interpretation: bounded noise steering can produce successful behavior on at
+least one tested failure after substantial online interaction. The short
+16-episode negative onset was insufficient to reject that possibility. Task40's
+finite, small critic loss with exclusively failed data does not prove useful
+learning or an adequate exploration budget. Continue the declared160/240
+queries before deciding whether its limitation is exploration, representation,
+steering capacity or training duration. Do not enlarge its budget mid-run.
+
+The fixed-nine mean/std diagnostic is submitted asjob-45fnd9k9p9s5 at source
+1a65226e0d3b6a68cf59808028245b3da5be3d07, initially queued.63K0 queries,
+27k actions and3,600 cumulative seconds are funded from prior terminal
+surplus;2,540 seconds remain unassigned inside the original32h. Allocated
+regressions and actual loaded-policy action/cache/RNG parity must pass before
+any comparative result. This is a distribution intervention, not a new trained
+meta-learning method.
+
+PPO follow-up hypothesis: the first direct PPO used one K4 trial per gradient
+batch. A14-complete-trial batch tests whether this update noise contributes to
+negative transfer. The implementation and a bounded one-batch20k-action/40min
+qualification launcher are in preparation; no qualification reservation or
+full-scale launch yet. Its purpose is to measure replay correctness, finite
+updates, memory and real collection/update costs before a larger proposal.
+
+The diagnostic received its allocation00:16:41.61 Linux checks and the actual
+CUDA probe passed. Both loaded source AD/DPT policies reproduced original
+sampled actions, recurrent caches and generator state bitwise for four steps;
+same-noise motor delta was0.0, with no extra simulator resets. At00:20 nine
+queries/3,108 actions were committed; final outcomes and parameter/recovery
+verification remain pending.
+
+Source teacher length analysis on the16 successful paired cases: native mean
+147.75 primitives, actor mean146.375, sampled actor147.125. The latter shorten
+means by only0.93%/0.42%, with per-goal reversals. Source PPO shows no monotonic
+execution shortening across attempts. These are descriptive execution lengths,
+not training or adaptation sample-efficiency gains; native wall time includes
+qualification/JIT and cannot support policy-speed claims. See
+[source length receipt](../outputs/libero40-source-lengths-20261031-r1/README.md).
