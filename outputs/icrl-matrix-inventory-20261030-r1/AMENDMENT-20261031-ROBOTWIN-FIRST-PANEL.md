@@ -1,5 +1,9 @@
 # RoboTwin first frozen panel — 2026-10-31
 
+Later update: the separate guard CPU gate has since passed, and source-policy
+stage50 results are now available; see the [superseding status amendment](AMENDMENT-20261031-ROBOTWIN-STAGE50-GUARD.md).
+The panel results and capture provenance below retain their original scope.
+
 The native Transformer AD/DPT exporter, fitting and frozen deployment paths
 are implemented and qualified. The first paired development evaluation is
 **COMPLETE: nine conditions × two tasks × K8 =18 units /144 episodes**.

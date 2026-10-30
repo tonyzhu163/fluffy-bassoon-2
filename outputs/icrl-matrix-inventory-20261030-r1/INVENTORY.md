@@ -13,7 +13,10 @@ RoboTwin native AD/DPT rows were amended on2026-10-31 from the completed
 first frozen panel; see [bounded results and provenance](AMENDMENT-20261031-ROBOTWIN-FIRST-PANEL.md).
 This reconciles the2026-10-30 native implementation/fitting amendments.
 Untouched rows retain their original snapshot dates. Neither completion
-receipt qualifies the future parent-death guard or changes a live source run.
+receipt alone qualifies the future parent-death guard or changes a live source
+run. A later [stage50 and allocated guard amendment](AMENDMENT-20261031-ROBOTWIN-STAGE50-GUARD.md)
+records the separate31-test guard qualification and completed direct-policy
+stage50 evaluation; final100-round source endpoints remain open.
 
 The human's coordination authorization was verified in coordinator chat
 `01a18be4-a6ab-79a2-af3d-13f76308e253`: “can you coordinate all the other
@@ -58,7 +61,7 @@ the existence of a compact benchmark core does not implement that VLA cell.
 | LIBERO direct RL2/PPO | **Implemented; frozen source validation and bounded target panel COMPLETE**. Source validation full63/64, separately trained reset61/64; contemporaneous LIBERO-90 native30/90, frozen full24/90, trained reset26/90. Fixed-nine K1 full/same-weight reset/trained reset all5/9 | Planned; current RL2ActorCritic hardcodes GTrXL | Planned; current RL2ActorCritic hardcodes GTrXL | Preserve the source-only frozen checkpoints and one-seed/fixed-bank limits. No reliable memory benefit or robust ICRL claim; source-training quota completion is not inferred from frozen evaluation completion |
 | RoboTwin AD | **Implemented and qualified; full/static100-update fits and first frozen development panel COMPLETE**. Bottle full5/8, static5/8, same-weight reset6/8; stapler all0/8 | Planned; no noise-interface supervised GRU integration | Planned; no noise-interface supervised CTM integration | One fit seed and early SAC5 bank only; no early history advantage. Final source endpoints, independently trained supervised reset and architecture comparisons remain separate |
 | RoboTwin DPT-style | **Implemented and qualified; full/static100-update fits and first frozen development panel COMPLETE**. Bottle full5/8, static6/8, same-weight reset5/8; stapler full/static0/8, same-weight reset2/8 | Planned | Planned | Fixed source SAC5 deterministic-mean labels; teacher competence unqualified. Reset E4/E6 wins do not establish ICRL; final source endpoint and broader target performance remain unmeasured here |
-| RoboTwin direct RL2/PPO | **Implemented and runtime qualified**, originally sourcedb01840; independently trained reset PPO is another worker. Owner reports continued100-round source collection separately from the completed frozen student panel | Planned; RecurrentNoisePPO currently hardcodes GTrXL | Planned; RecurrentNoisePPO currently hardcodes GTrXL | Complete source updates/validation at rounds10/25/50/100 and bind actual source/target outcomes. Student panel completion does not complete these source streams |
+| RoboTwin direct RL2/PPO | **Implemented, runtime qualified; stage50 source validation and development target panel COMPLETE**. Source validation PPO4/24, trained reset2/24. Persistent normal/memory-reset/reward-blind and trained-reset targets each bottle7/8, stapler0/8 | Planned; RecurrentNoisePPO currently hardcodes GTrXL | Planned; RecurrentNoisePPO currently hardcodes GTrXL | No stage50 memory advantage. Final100-round endpoints remain open; source/migration state is owner-controlled and separate from the completed frozen student panel |
 
 ### Offline controls versus online controls
 
@@ -67,8 +70,8 @@ the existence of a compact benchmark core does not implement that VLA cell.
 | Independently trained static AD and DPT | Complete500-update fits in current all40 bank; same data/initialization/optimization recipe | Complete100-update fits on same early source bank; both static models included in completed two-task K8 panel |
 | Independently trained supervised episode-reset AD/DPT | **Absent.** Generic `vla_history_train --mode episode` exists, but current source40 fitter uses `MODES=(full,static)` | **Absent** |
 | Same-weight inference episode reset | Implemented; a lesion, not another trained student. Completed fixed-nine PPO K1 panel scores5/9 for full, same-weight reset and trained reset alike | AD/DPT lesions implemented and completed in first frozen K8 panel; all four full/reset E1 traces match exactly. PPO reset path remains separate |
-| Independently trained episode-reset PPO | Frozen-source and LIBERO-90 query panels complete:61/64 source episodes and26/90 target queries; fixed-nine K1 is5/9 | Implemented/qualified; source worker status and eventual endpoint results owned separately |
-| Native, reactive SAC frozen / target-updating, reward/history controls | Bounded noise screen, frozen PPO targets, eight-actor source-SAC competence and six-case target-online onset now COMPLETE; exact panel-specific results below. Full all40 teacher advantage and target-online convergence remain unestablished | First frozen panel COMPLETE: bottle native6/8, zero6/8, SAC5 mean5/8; stapler all0/8. Target-updating SAC and reward-blind outcomes are not supplied by this panel |
+| Independently trained episode-reset PPO | Frozen-source and LIBERO-90 query panels complete:61/64 source episodes and26/90 target queries; fixed-nine K1 is5/9 | Stage50 source validation2/24; targets bottle7/8, stapler0/8. Final source endpoint and live worker state remain separate |
+| Native, reactive SAC frozen / target-updating, reward/history controls | Bounded noise screen, frozen PPO targets, eight-actor source-SAC competence and six-case target-online onset now COMPLETE; exact panel-specific results below. Full all40 teacher advantage and target-online convergence remain unestablished | First frozen student panel: bottle native6/8, zero6/8, SAC5 mean5/8; stapler all0/8. Separate stage50: SAC source validation3/24; frozen targets3/8,0/8; online5/8,1/8. PPO reward-blind7/8,0/8. Stage50 native references use different seeds, so no paired native advantage is inferred |
 
 Static policy success is generalization evidence. An inference lesion and a
 separately trained reset model answer different questions. Reward blindness
@@ -91,6 +94,8 @@ does not necessarily remove information in visual/dynamics observations.
 | RoboTwin native exporter/trainer | `1aeea4f9fcc307bb147def92374bb81a3e2cb50e`; CPU `job-tmocet3s5ur4` |46 Linux CPU tests and real native export/teacher/toy-fit checks; source train1539 decisions/120 episodes/30 K4/47602 actions. Explicit validation340 decisions/24 episodes remains separate |
 | RoboTwin first source-only fits | Model code `1aeea4f9fcc307bb147def92374bb81a3e2cb50e`; `job-ielg6papl3hn` | Four full/static AD/DPT endpoints at100 updates, one seed;39621 sampled positions per model from1539 unique decisions. Recovery/model identities bound in panel provenance |
 | RoboTwin native integration and first frozen panel | Integration `82c4d8c006db064096549538e9cbab0c2f05facd` CPU `job-tmtbmt14kl6w`; live `2fd2096906e52aabeaeb984f333fe1aaa6c4e196`, Baige `job-ekg1ivu6j8pg` |151 integration tests plus5 actual CPU admissions;22 live-wrapper tests. Panel COMPLETE18 K8/144 episodes,47137 actions,2951 scheduler GPU-seconds, zero SGD/pending/uncertain. Owner independent audit22135 checks passed; native parity0.0 in all18 units |
+| RoboTwin direct-policy stage50 | Scientific lineage `db0184089fa88a5f96c153f9b80029bb91b77def`; execution `e825821a7c2231952bcf1042162f3470bd8ecdea`; saved owner audit checked00:56:17 Shanghai on2026-10-31 | Three source snapshots each300 complete K4 trials;24 source cases match across3 arms and16 target cases across6 conditions. Source counters unchanged during evaluation, RNG restoration reported, snapshot hashes match. Exact counters, target SGD and scope in stage50 amendment |
+| Future panel parent-death guard | `c166171b847ada9a20a9629a07d5a0100b517097`; Baige0GPU `job-k1upj2ycy60q`; evidence owner `80943996d033155e17e242b045f82904c255b89f` |31 focused Linux CPU tests PASS, exit0; joint gate123 tests/71 scheduler seconds/0 GPU-seconds. Software qualification only; later admission/deployment is not inferred. Completed2fd panel unchanged |
 
 Owner updates are authoritative for later status. No source teacher is called
 expert solely from optimizer counts, a final filename or a finite export.
@@ -157,7 +162,8 @@ See the [panel amendment](AMENDMENT-20261031-ROBOTWIN-FIRST-PANEL.md) for the
 full nine-condition table, hashes, accounting and audit limits. Supervised
 trained episode-reset, GRU/CTM and final100-round source endpoint comparisons
 remain open. Future parent-death guard `c166171b847ada9a20a9629a07d5a0100b517097`
-is source-prepared/CPU-staged only, pending its separate allocated Linux gate.
+has now passed its separate allocated Linux CPU gate. Deployment requires a
+later receipt; its qualification does not change the completed2fd panel.
 
 ## Conditional later cells
 
