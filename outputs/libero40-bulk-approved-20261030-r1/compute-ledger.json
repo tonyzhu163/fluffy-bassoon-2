@@ -433,29 +433,42 @@
     "source-ppo-warm-batch14-qualification": {
       "maximum_gpu_seconds": 1400,
       "reserved_gpu_seconds": 1400,
-      "status": "submitted_running_unverified_rollouts",
+      "status": "terminal_exit0_complete_batch14_auditing_recovery",
       "run_id": "libero40-batch14-warm-qualification-20261031-r1",
       "source_commit": "376415e6915399436cb3fea214c50bd3e41f32d5",
       "maximum_new_simulator_actions": 20000,
       "purpose": "ExplicitR3warmstart needed for sourcecollection continuation, onecompletebatch14; notfullscale/methodperformance",
       "job_id": "job-pqje6dlyz0of",
-      "submitted_shanghai": "2026-10-31 01:54:01"
+      "submitted_shanghai": "2026-10-31 01:54:01",
+      "actual_simulator_actions": 9272,
+      "charged_gpu_seconds_conservative": 910,
+      "scheduler_terminal_duration_seconds": 871
     },
     "source-sac-topup-migration-qualification": {
       "maximum_gpu_seconds": 1000,
       "reserved_gpu_seconds": 1000,
-      "status": "first_preflight_failed_retry_preparing_same_cumulative_hold",
-      "run_id": "libero40-sac-topup-migration-20261031-r1",
-      "source_commit": "e7900a75a089db7e0cbf56de8c2e8f2beea90f02",
+      "status": "two_preflight_failures_zero_actions_fresh_source_preparing",
+      "run_id": "libero40-sac-topup-migration-20261031-r2",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
       "maximum_new_simulator_actions": 5000,
       "purpose": "One sourceSAC continuation qualification; no24h/fullbankbudget granted",
       "job_id": "job-g8ghgrpu8334",
       "first_attempt_charge_seconds": 76,
       "first_attempt_simulator_actions": 0,
       "first_attempt_failure": "CUDA_VISIBLE_DEVICES unset; qualified scheduler-container fallback omitted",
-      "remaining_component_seconds": 924,
+      "remaining_component_seconds": 854,
       "retry_slice_seconds": 864,
-      "source_worktree_immutable": true
+      "source_worktree_immutable": true,
+      "prior_run_id": "libero40-sac-topup-migration-20261031-r1",
+      "failed_job_ids": [
+        "job-g8ghgrpu8334",
+        "job-68ino91bxbua"
+      ],
+      "failed_attempt_charge_seconds": 146,
+      "failed_attempt_simulator_actions": 0,
+      "next_worker_seconds": 854,
+      "next_slice_seconds": 794,
+      "second_attempt_failure": "Testfixture omitted selected.slot; actualruntime plan supplies it"
     }
   },
   "allocations": [
