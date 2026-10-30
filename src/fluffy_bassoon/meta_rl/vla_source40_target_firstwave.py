@@ -6,6 +6,7 @@ checkpoint selection, or source-data write occurs here.
 import argparse
 import fcntl
 import json
+import math
 import os
 from pathlib import Path
 import socket
@@ -25,7 +26,8 @@ from .vla_source40_evaluate import load_candidates
 from .vla_source40_memory_replication import public_signature, same_public, trace_rows
 from .vla_source40_ppo_target import ShiftedServer
 from .vla_source40_schedule import content_hash
-from .vla_source40_target_firstwave_plan import FORMAT as PLAN_FORMAT, build_plan
+from .vla_source40_target_firstwave_plan import (INTERIM_INPUTS, INTERIM_PROFILE, LEGACY_PROFILE,
+    load_plan as load_declared_plan, profile_settings)
 
 
 FORMAT = 'source40_ad_target_firstwave_worker_v1'
@@ -33,27 +35,19 @@ LEDGER_FORMAT = 'libero_target_wave_budget_v1'
 
 
 def load_plan(path, expected, source):
-    if file_sha256(path) != expected:
-        raise ValueError('First-wave plan file checksum differs')
-    value = json.loads(Path(path).read_text())
-    digest = value.get('firstwave_sha256')
-    if (value.get('format') != PLAN_FORMAT or value.get('contract', {}).get('source_commit') != source
-            or digest != content_hash({k: v for k, v in value.items() if k != 'firstwave_sha256'})):
-        raise ValueError('First-wave immutable content/source contract differs')
-    # Regeneration examines declarations and metadata only; no simulator/model imports.
-    if value != build_plan(worktree=value['contract']['worktree'], source_commit=source):
-        raise ValueError('First-wave cases, variants, horizons or assignments differ from the predeclaration')
-    return value
+    return load_declared_plan(path, expected, source)
 
 
 def reservation(path, plan, worker, run, source):
     value = json.loads(Path(path).read_text())
+    settings = profile_settings(plan['contract'].get('profile', LEGACY_PROFILE))
     rows = list(value.get('reservations', {}).values())
     if (value.get('format') != LEDGER_FORMAT or value.get('wave_sha256') != plan['firstwave_sha256']
-            or value.get('maximum_total_actions') != 250000 or value.get('maximum_gpu_seconds') != 21600
+            or value.get('maximum_total_actions') != settings['maximum_total_actions']
+            or value.get('maximum_gpu_seconds') != settings['maximum_gpu_seconds']
             or value.get('source_campaign_immutable') is not True or not value.get('scope_amendment')
             or len(rows) != 6 or {row.get('worker') for row in rows} != set(range(6))):
-        raise ValueError('Require the separate authorized six-worker250k/6h target scope amendment')
+        raise ValueError('Require the separate authorized six-worker profile-specific target scope amendment')
     for item in rows:
         planned = plan['workers'][item['worker']]
         if (item.get('source_commit') != source or item.get('wave_sha256') != plan['firstwave_sha256']
@@ -63,8 +57,8 @@ def reservation(path, plan, worker, run, source):
                 or item.get('source_pretraining_data') is not False
                 or item.get('fresh_ppo_training_data') is not False):
             raise ValueError('Target worker reservation differs from the disjoint predeclared budget')
-    if (sum(row['maximum_total_actions'] for row in rows) > 250000
-            or sum(row['worker_seconds'] for row in rows) != 21600):
+    if (sum(row['maximum_total_actions'] for row in rows) > settings['maximum_total_actions']
+            or sum(row['worker_seconds'] for row in rows) != settings['maximum_gpu_seconds']):
         raise ValueError('Target worker reservations exceed the joint action/time scope')
     selected = value['reservations'].get(run)
     if selected is None or selected.get('run_id') != run or selected.get('worker') != worker:
@@ -77,15 +71,18 @@ def worker_groups(plan, worker):
         for entry in plan['cases'][worker::6] for group in entry['groups']]
 
 
-def fixed_matrix(path, expected, assembly, assembly_sha):
+def fixed_matrix(path, expected, assembly, assembly_sha, *, updates=500):
+    if updates not in (100, 500):
+        raise ValueError('Only the explicit fixed100 and legacy fixed500 profiles are supported')
     if file_sha256(path) != expected or file_sha256(assembly) != assembly_sha:
-        raise ValueError('Source40 final500 matrix/assembly file checksum differs')
+        raise ValueError(f'Source40 fixed{updates} matrix/assembly file checksum differs')
     value = json.loads(Path(path).read_text())
     rows = value.get('controllers', [])
     if (value.get('completed') is not True or len(rows) != 4
             or {(r['objective'], r['mode']) for r in rows} != {(a, b) for a in ('ad', 'dpt') for b in ('full', 'static')}
-            or {r['updates'] for r in rows} != {500} or len({r['seed'] for r in rows}) != 1):
-        raise ValueError('Require all four completed source-only fixed500 controllers')
+            or {r['updates'] for r in rows} != {updates} or len({r['seed'] for r in rows}) != 1
+            or (updates == 100 and {r['seed'] for r in rows} != {0})):
+        raise ValueError(f'Require all four completed source-only fixed{updates} controllers')
     registry = []
     for row in rows:
         for field, digest in (('final_path', 'final_sha256'), ('full_recovery_path', 'full_recovery_sha256')):
@@ -94,6 +91,28 @@ def fixed_matrix(path, expected, assembly, assembly_sha):
         registry.append({k: row[k] for k in ('objective', 'mode', 'updates', 'seed', 'final_path', 'final_sha256',
             'full_recovery_path', 'full_recovery_sha256')})
     return value, registry
+
+
+def bind_profile_inputs(plan, matrix, matrix_sha, assembly, assembly_sha):
+    """The interim profile binds the actual complete producer, never a best epoch."""
+    if plan['contract'].get('profile', LEGACY_PROFILE) == LEGACY_PROFILE:
+        return
+    inputs = plan['contract'].get('fixed_source_inputs')
+    if (inputs != INTERIM_INPUTS or Path(matrix).resolve() != Path(inputs['matrix_path']).resolve()
+            or matrix_sha != inputs['matrix_sha256'] or Path(assembly).resolve() != Path(inputs['assembly_path']).resolve()
+            or assembly_sha != inputs['assembly_file_sha256']):
+        raise ValueError('Fixed100 profile must retain its exact producer matrix and CPU snapshot')
+    if (file_sha256(matrix) != matrix_sha or file_sha256(assembly) != assembly_sha
+            or file_sha256(inputs['manifest_path']) != inputs['manifest_sha256']):
+        raise ValueError('Fixed100 matrix/assembly/manifest file checksum differs')
+    value = json.loads(Path(matrix).read_text())
+    manifest = json.loads(Path(inputs['manifest_path']).read_text())
+    if (value.get('contract', {}).get('source_commit') != inputs['producer_source_commit']
+            or value['contract'].get('assembly_sha256') != inputs['assembly_content_sha256']
+            or manifest.get('completed') is not True
+            or manifest.get('assembly_file_sha256') != assembly_sha
+            or manifest.get('assembly_sha256') != inputs['assembly_content_sha256']):
+        raise ValueError('Fixed100 producer or source exposure differs')
 
 
 def audit_firstwave(path, result, group):
@@ -182,17 +201,23 @@ class PlannedServer(ShiftedServer):
             raise
 
 
-def remaining_seconds(root, contract_record):
+def remaining_seconds(root, contract_record, *, worker_seconds=3600, stop_before_unix=None):
     value = json.loads((Path(root) / 'worker-time.json').read_text())
     rows = value['attempts']
     current = rows[-1]
-    if (value['worker_seconds'] != 3600 or current['status'] != 'started'
+    if (value['worker_seconds'] != worker_seconds or current['status'] != 'started'
             or value['contract'].get('escrow_record_sha256') != contract_record):
-        raise ValueError('Require the active exact cumulative one-hour target worker clock')
+        raise ValueError('Require the active exact cumulative profile-specific target worker clock')
     charged = sum(row.get('charged_seconds', row['reserved_seconds']) for row in rows[:-1])
-    if charged + current['reserved_seconds'] > 3600:
+    if charged + current['reserved_seconds'] > worker_seconds:
         raise ValueError('Prior/active target attempts exceed the cumulative approved worker ceiling')
-    return current['slice_seconds'] - (time.time() - current['started_unix']) - 60
+    seconds = current['slice_seconds'] - (time.time() - current['started_unix']) - 60
+    if stop_before_unix is not None:
+        if (not math.isfinite(stop_before_unix) or not time.time() < stop_before_unix
+                <= current['started_unix']+current['slice_seconds']-60):
+            raise ValueError('Graceful target deadline exceeds the reserved invocation')
+        seconds = min(seconds, stop_before_unix-time.time())
+    return seconds
 
 
 def main(argv=None):
@@ -205,6 +230,7 @@ def main(argv=None):
     p.add_argument('--port', type=int, default=8773)
     p.add_argument('--device', default='cuda:0')
     p.add_argument('--resume', action='store_true')
+    p.add_argument('--stop-before-unix', type=float)
     args = p.parse_args(argv)
     root = Path(__file__).resolve().parents[3]
     if (sys.platform != 'linux' or socket.gethostname() != args.expected_hostname
@@ -218,9 +244,16 @@ def main(argv=None):
     if probe.get('status') != 'passed' or len(probe.get('devices', [])) != 1:
         raise ValueError('Require the actual allocated single-GPU execution probe')
     plan = load_plan(args.plan, args.plan_sha256, args.source_commit)
+    profile = plan['contract'].get('profile', LEGACY_PROFILE)
+    settings = profile_settings(profile)
+    if profile == INTERIM_PROFILE and args.stop_before_unix is None:
+        raise ValueError('Fixed100 readout requires an explicit graceful invocation deadline')
     budget = reservation(args.ledger, plan, args.worker, args.run_id, args.source_commit)
-    matrix, registry = fixed_matrix(args.matrix, args.matrix_sha256, args.assembly, args.assembly_sha256)
-    seconds = remaining_seconds(args.output.parent, budget['record_sha256'])
+    bind_profile_inputs(plan, args.matrix, args.matrix_sha256, args.assembly, args.assembly_sha256)
+    matrix, registry = fixed_matrix(args.matrix, args.matrix_sha256, args.assembly, args.assembly_sha256,
+        updates=settings['updates'])
+    seconds = remaining_seconds(args.output.parent, budget['record_sha256'],
+        worker_seconds=settings['worker_seconds'], stop_before_unix=args.stop_before_unix)
     if seconds < 60 or file_sha256(args.checkpoint / 'READY.json') != PI05_RECEIPT:
         raise ValueError('No remaining authorized runtime or wrong official frozen OpenPI40 motor')
     deadline = time.monotonic() + seconds
@@ -231,13 +264,17 @@ def main(argv=None):
     groups = worker_groups(plan, args.worker)
     contract = dict(format=FORMAT, source_commit=args.source_commit, wave_sha256=plan['firstwave_sha256'],
         plan_file_sha256=args.plan_sha256, worker=args.worker, groups=groups, budget_reservation=budget,
-        maximum_total_actions=budget['record']['maximum_total_actions'], maximum_seconds_per_invocation=3600.,
-        matrix_file_sha256=args.matrix_sha256, assembly_file_sha256=args.assembly_sha256, fixed500_models=registry,
+        maximum_total_actions=budget['record']['maximum_total_actions'], maximum_seconds_per_invocation=float(settings['worker_seconds']),
+        matrix_file_sha256=args.matrix_sha256, assembly_file_sha256=args.assembly_sha256,
         canonical_motor_key='jax.random.PRNGKey(seed), legacy uint32[2], shared by every comparator',
         target_trajectories_in_pretraining=False, deployment_optimizer_updates=0,
-        reporting_scope='All90 H400 screening, plus eight declared shifted280-step development cases; no full Plus/Pro benchmark score',
+        reporting_scope=settings['reporting_scope'],
         initialization='Exact nominal state/scene seeds; all actual initial arrays retained and equality flags reported; differences preclude causal memory claims',
         resume='Full episode/RPC/context/cursor costs retained; fresh-process continuations are non-primary for strict common-runtime claims')
+    models_field = 'fixed500_models' if profile == LEGACY_PROFILE else 'fixed100_models'
+    contract[models_field] = registry
+    if profile == INTERIM_PROFILE:
+        contract.update(profile=profile, fixed_source_inputs=plan['contract']['fixed_source_inputs'])
     lock = (args.output.parent / 'evaluation.lock').open('a')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     args.model_config, args.feature_interface = 'pi05_libero', 'vla-prefix'
@@ -267,10 +304,11 @@ def main(argv=None):
             provenance={'source40': source, 'native': dict(steering_source_actions=0, target_training_actions=0)},
             runtime_id=runtime_id, resume=args.resume, reset_motor_rng=reset_rng,
             motor_rng_state=lambda: save_motor_rng(motor.policy._rng), qualify=qualify, deadline=deadline,
-            action_ceiling=250000, audit_fn=audit_firstwave, strict_initial_observations=False)
+            action_ceiling=settings['maximum_total_actions'], audit_fn=audit_firstwave, strict_initial_observations=False)
         result.update(format=FORMAT, zero_shot_reuse=zero_shot_reuse(plan, result['completed_groups'], selected),
-            fixed500_models=registry, source_provenance=source, worker=args.worker,
+            source_provenance=source, worker=args.worker,
             wave_sha256=plan['firstwave_sha256'], no_target_optimizer=True)
+        result[models_field] = registry
         result['all_actual_initial_observations_equal'] = all(
             all(row['audit'][key] for key in ('within_group_initial_public_arrays_equal',
                 'within_group_initial_observation_hashes_equal', 'public_arrays_match_first_group',

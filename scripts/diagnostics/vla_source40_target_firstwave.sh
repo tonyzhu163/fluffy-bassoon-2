@@ -7,9 +7,9 @@ TASK_SOURCE=${1:?exact reviewed source}
 TASK_RUN=${2:?immutable worker run identity}
 TASK_WORKER=${3:?predeclared worker index0..5}
 TASK_PLAN=${4:?immutable first-wave plan JSON}
-TASK_MATRIX=${5:?completed source40 fixed500 matrix JSON}
+TASK_MATRIX=${5:?completed profile-bound source40 matrix JSON}
 TASK_ASSEMBLY=${6:?source40 training assembly JSON}
-TASK_LEDGER=${7:?separate authorized target250k/6h ledger}
+TASK_LEDGER=${7:?separate authorized profile-specific target ledger}
 TASK_SLICE=${8:?this allocation seconds including setup; initially3540}
 TASK_RESUME=${9:-}
 case "$TASK_RESUME" in ''|--resume) ;; *) exit 2;; esac
@@ -43,25 +43,27 @@ TASK_ATTEMPT=$("$TASK_MODEL" - "$TASK_OUT" "$TASK_SOURCE" "$TASK_RUN" "$TASK_WOR
   "$TASK_PLAN_SHA" "$TASK_MATRIX_SHA" "$TASK_ASSEMBLY_SHA" "$TASK_LEDGER" "$TASK_SLICE" "$TASK_RESUME" "$TASK_STARTED" <<'PYTIME'
 import hashlib, json, pathlib, sys
 from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
+from fluffy_bassoon.meta_rl.vla_source40_target_firstwave_plan import load_plan, profile_settings, LEGACY_PROFILE
 root, source, run, worker, plan_path, plan_sha, matrix_sha, assembly_sha, ledger_path, seconds, resume, started = sys.argv[1:]
-plan = json.loads(pathlib.Path(plan_path).read_text())
+plan = load_plan(plan_path, plan_sha, source)
+settings = profile_settings(plan['contract'].get('profile', LEGACY_PROFILE))
 ledger = json.loads(pathlib.Path(ledger_path).read_text())
 row = ledger.get('reservations', {}).get(run)
 w = plan['workers'][int(worker)]
-if (ledger.get('format') != 'libero_target_wave_budget_v1' or ledger.get('maximum_total_actions') != 250000
-        or ledger.get('maximum_gpu_seconds') != 21600 or ledger.get('source_campaign_immutable') is not True
+if (ledger.get('format') != 'libero_target_wave_budget_v1' or ledger.get('maximum_total_actions') != settings['maximum_total_actions']
+        or ledger.get('maximum_gpu_seconds') != settings['maximum_gpu_seconds'] or ledger.get('source_campaign_immutable') is not True
         or ledger.get('wave_sha256') != plan['firstwave_sha256'] or row is None
         or row.get('run_id') != run or row.get('source_commit') != source or row.get('worker') != int(worker)
-        or row.get('maximum_total_actions') != w['action_cap'] or row.get('worker_seconds') != 3600
+        or row.get('maximum_total_actions') != w['action_cap'] or row.get('worker_seconds') != settings['worker_seconds']
         or row.get('purpose') != 'target_evaluation' or row.get('source_pretraining_data') is not False
         or row.get('fresh_ppo_training_data') is not False):
     raise ValueError('Exact pre-existing target-only worker reservation is required before any model/simulator work')
 record_sha = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 contract = dict(operation='source40_ad_target_firstwave', source_commit=source, run_id=run, worker=int(worker),
     wave_sha256=plan['firstwave_sha256'], plan_file_sha256=plan_sha, matrix_file_sha256=matrix_sha,
-    assembly_file_sha256=assembly_sha, maximum_total_actions=w['action_cap'], maximum_driver_seconds=3600,
+    assembly_file_sha256=assembly_sha, maximum_total_actions=w['action_cap'], maximum_driver_seconds=settings['worker_seconds'],
     escrow_record_sha256=record_sha, deployment_optimizer_updates=0, source_data_from_targets=False)
-print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=3600,
+print(begin(root, contract, slice_seconds=int(seconds), worker_seconds=settings['worker_seconds'],
     resume=resume == '--resume', now=float(started)))
 PYTIME
 )
@@ -99,6 +101,12 @@ export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:
 export PYTHONPATH=$TASK_CUDA:$TASK_WT/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 TASK_TIMEOUT=$(( TASK_SLICE - ( $(date +%s) - TASK_STARTED ) - 60 ))
 test "$TASK_TIMEOUT" -gt 60
+TASK_DEADLINE_ARGS=()
+TASK_PROFILE=$(PYTHONPATH=$TASK_WT/src "$TASK_MODEL" -c \
+  'import json,sys; print(json.load(open(sys.argv[1]))["contract"].get("profile", "legacy500"))' "$TASK_PLAN")
+if [ "$TASK_PROFILE" = interim100-libero90 ]; then
+  TASK_DEADLINE_ARGS=(--stop-before-unix "$(( TASK_STARTED + TASK_SLICE - 125 ))")
+fi
 timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   -m fluffy_bassoon.meta_rl.vla_source40_target_firstwave \
   --output "$TASK_OUT/experiment" --run-id "$TASK_RUN" --source-commit "$TASK_SOURCE" \
@@ -106,4 +114,4 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   --matrix "$TASK_MATRIX" --matrix-sha256 "$TASK_MATRIX_SHA" \
   --assembly "$TASK_ASSEMBLY" --assembly-sha256 "$TASK_ASSEMBLY_SHA" --ledger "$TASK_LEDGER" \
   --checkpoint "$TASK_OLD/inputs/pi05-libero-openpi-20261027-r1" --openpi-root "$TASK_OPENPI" \
-  "${TASK_RESUME_ARGS[@]}"
+  "${TASK_RESUME_ARGS[@]}" "${TASK_DEADLINE_ARGS[@]}"

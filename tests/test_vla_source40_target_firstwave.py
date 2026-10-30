@@ -7,7 +7,7 @@ import pytest
 
 from fluffy_bassoon.meta_rl.vla_history import file_sha256
 from fluffy_bassoon.meta_rl.vla_source40_schedule import content_hash
-from fluffy_bassoon.meta_rl.vla_source40_target_firstwave_plan import build_plan
+from fluffy_bassoon.meta_rl.vla_source40_target_firstwave_plan import build_plan, INTERIM_PROFILE
 import fluffy_bassoon.meta_rl.vla_source40_target_firstwave as module
 from fluffy_bassoon.meta_rl.vla_source40_subset_evaluate import charged_actions
 from test_vla_common_runtime_evaluate import run
@@ -20,10 +20,10 @@ def plan():
 def ledger(path, value):
     rows = {f'worker-{w["worker"]}': dict(run_id=f'worker-{w["worker"]}', worker=w['worker'],
         source_commit='a' * 40, wave_sha256=value['firstwave_sha256'], maximum_total_actions=w['action_cap'],
-        worker_seconds=3600, purpose='target_evaluation', source_pretraining_data=False, fresh_ppo_training_data=False)
+        worker_seconds=w['gpu_seconds'], purpose='target_evaluation', source_pretraining_data=False, fresh_ppo_training_data=False)
         for w in value['workers']}
-    data = dict(format=module.LEDGER_FORMAT, wave_sha256=value['firstwave_sha256'], maximum_total_actions=250000,
-        maximum_gpu_seconds=21600, source_campaign_immutable=True, scope_amendment='Authorized target screen; old source cap unchanged',
+    data = dict(format=module.LEDGER_FORMAT, wave_sha256=value['firstwave_sha256'], maximum_total_actions=value['contract']['maximum_total_actions'],
+        maximum_gpu_seconds=value['contract']['maximum_gpu_seconds'], source_campaign_immutable=True, scope_amendment='Authorized target screen; old source cap unchanged',
         reservations=rows)
     path.write_text(json.dumps(data))
     return data
@@ -119,3 +119,96 @@ def test_fixed500_manifest_binds_all_four_recoveries(tmp_path):
     Path(rows[0]['full_recovery_path']).write_bytes(b'changed')
     with pytest.raises(ValueError, match='full recovery checksum'):
         module.fixed_matrix(matrix, file_sha256(matrix), assembly, file_sha256(assembly))
+
+
+def test_fixed100_plan_rejects_rehashed_extra_target_support_and_legacy_budget(tmp_path):
+    value = build_plan(worktree='/tmp/planning-worktree', source_commit='a'*40, profile=INTERIM_PROFILE)
+    path = tmp_path/'plan.json'
+    path.write_text(json.dumps(value))
+    assert module.load_plan(path, file_sha256(path), 'a'*40) == value
+    shards = [module.worker_groups(value,i) for i in range(6)]
+    assert sum(g['episodes'] for shard in shards for g in shard) == 522
+    budget = tmp_path/'budget.json'
+    data = ledger(budget,value)
+    before = budget.read_bytes()
+    assert module.reservation(budget,value,0,'worker-0','a'*40)['record']['worker_seconds'] == 2700
+    assert budget.read_bytes() == before
+    data['maximum_gpu_seconds'] = 21600
+    budget.write_text(json.dumps(data))
+    with pytest.raises(ValueError, match='scope amendment'):
+        module.reservation(budget,value,0,'worker-0','a'*40)
+    value['cases'][1]['groups'].append(deepcopy(value['cases'][0]['groups'][-1]))
+    value['firstwave_sha256'] = content_hash({k:v for k,v in value.items() if k!='firstwave_sha256'})
+    path.write_text(json.dumps(value))
+    with pytest.raises(ValueError, match='predeclaration'):
+        module.load_plan(path,file_sha256(path),'a'*40)
+
+
+def test_fixed100_matrix_cannot_be_read_as_legacy500_or_best25(tmp_path):
+    rows=[]
+    for objective in ('ad','dpt'):
+        for mode in ('full','static'):
+            final=tmp_path/f'{objective}-{mode}.pt';recovery=tmp_path/f'{objective}-{mode}-recovery.pt'
+            final.write_bytes(b'fixed100');recovery.write_bytes(b'full optimizer/sampler/RNG')
+            rows.append(dict(objective=objective,mode=mode,updates=100,seed=0,final_path=str(final),final_sha256=file_sha256(final),
+                full_recovery_path=str(recovery),full_recovery_sha256=file_sha256(recovery)))
+    matrix,assembly=tmp_path/'matrix.json',tmp_path/'assembly.json'
+    matrix.write_text(json.dumps(dict(completed=True,controllers=rows)));assembly.write_text('{}')
+    assert len(module.fixed_matrix(matrix,file_sha256(matrix),assembly,file_sha256(assembly),updates=100)[1]) == 4
+    with pytest.raises(ValueError,match='fixed500'):
+        module.fixed_matrix(matrix,file_sha256(matrix),assembly,file_sha256(assembly))
+    rows[0]['updates']=25;matrix.write_text(json.dumps(dict(completed=True,controllers=rows)))
+    with pytest.raises(ValueError,match='fixed100'):
+        module.fixed_matrix(matrix,file_sha256(matrix),assembly,file_sha256(assembly),updates=100)
+
+
+def test_fixed100_profile_binds_producer_snapshot_not_any100_matrix(tmp_path,monkeypatch):
+    matrix,assembly,manifest=tmp_path/'matrix.json',tmp_path/'assembly.json',tmp_path/'inputs.json'
+    source='b'*40
+    matrix.write_text(json.dumps(dict(contract=dict(source_commit=source,assembly_sha256='content'))))
+    assembly.write_text('{}')
+    manifest.write_text(json.dumps(dict(completed=True,assembly_file_sha256=file_sha256(assembly),assembly_sha256='content')))
+    inputs=dict(producer_source_commit=source,matrix_path=str(matrix),matrix_sha256=file_sha256(matrix),
+        assembly_path=str(assembly),assembly_file_sha256=file_sha256(assembly),assembly_content_sha256='content',
+        manifest_path=str(manifest),manifest_sha256=file_sha256(manifest))
+    monkeypatch.setattr(module,'INTERIM_INPUTS',inputs)
+    value=dict(contract=dict(profile=INTERIM_PROFILE,fixed_source_inputs=deepcopy(inputs)))
+    module.bind_profile_inputs(value,matrix,file_sha256(matrix),assembly,file_sha256(assembly))
+    wrong=tmp_path/'other100.json';wrong.write_bytes(matrix.read_bytes())
+    with pytest.raises(ValueError,match='exact producer'):
+        module.bind_profile_inputs(value,wrong,file_sha256(wrong),assembly,file_sha256(assembly))
+    matrix.write_text(json.dumps(dict(contract=dict(source_commit='c'*40,assembly_sha256='content'))))
+    inputs['matrix_sha256']=file_sha256(matrix);value['contract']['fixed_source_inputs']=deepcopy(inputs)
+    with pytest.raises(ValueError,match='producer or source exposure'):
+        module.bind_profile_inputs(value,matrix,file_sha256(matrix),assembly,file_sha256(assembly))
+
+
+def test_fixed100_clock_has_2700_cumulative_ceiling_and_earlier_graceful_stop(tmp_path,monkeypatch):
+    data=dict(worker_seconds=2700,contract=dict(escrow_record_sha256='sha'),attempts=[
+        dict(status='finished',charged_seconds=500,reserved_seconds=1000),
+        dict(status='started',slice_seconds=2140,reserved_seconds=2200,started_unix=1000)])
+    (tmp_path/'worker-time.json').write_text(json.dumps(data));monkeypatch.setattr(module.time,'time',lambda:1100)
+    assert module.remaining_seconds(tmp_path,'sha',worker_seconds=2700) == 1980
+    assert module.remaining_seconds(tmp_path,'sha',worker_seconds=2700,stop_before_unix=1500) == 400
+    with pytest.raises(ValueError,match='Graceful target deadline'):
+        module.remaining_seconds(tmp_path,'sha',worker_seconds=2700,stop_before_unix=4000)
+    data['attempts'][0]['charged_seconds']=501
+    (tmp_path/'worker-time.json').write_text(json.dumps(data))
+    with pytest.raises(ValueError,match='cumulative approved'):
+        module.remaining_seconds(tmp_path,'sha',worker_seconds=2700)
+
+
+def test_actual_shared100_registry_metadata_when_available():
+    # Allocated CPU integration check: read/hash existing bytes only. This
+    # constructs no policy and never calls the evaluator or simulator.
+    inputs=module.INTERIM_INPUTS
+    if not Path(inputs['matrix_path']).is_file():
+        pytest.skip('Actual fixed100 producer artifacts are on the shared Baige PFS')
+    value=build_plan(worktree='/tmp/planning-worktree',source_commit='a'*40,profile=INTERIM_PROFILE)
+    module.bind_profile_inputs(value,inputs['matrix_path'],inputs['matrix_sha256'],
+        inputs['assembly_path'],inputs['assembly_file_sha256'])
+    matrix,registry=module.fixed_matrix(inputs['matrix_path'],inputs['matrix_sha256'],
+        inputs['assembly_path'],inputs['assembly_file_sha256'],updates=100)
+    assert matrix['completed'] and len(registry)==4
+    assert {(r['objective'],r['mode'],r['updates'],r['seed']) for r in registry} == {
+        (o,m,100,0) for o in ('ad','dpt') for m in ('full','static')}

@@ -4,7 +4,7 @@ import ast
 import pytest
 
 from fluffy_bassoon.meta_rl.vla_source40_target_firstwave_plan import (
-    ZERO_METHODS, ONE_METHODS, _literal, build_plan, content_hash)
+    ZERO_METHODS, ONE_METHODS, INTERIM_INPUTS, INTERIM_PROFILE, _literal, build_plan, content_hash)
 
 
 def plan():
@@ -86,3 +86,35 @@ def test_declared_constant_reader_does_not_execute_arbitrary_expressions():
         _literal(ast.parse("__import__('os').getcwd()", mode="eval").body, {})
     with pytest.raises(ValueError, match="six workers"):
         build_plan(worktree="/allocated/reviewed-worktree", source_commit="a" * 40, workers=5)
+
+
+def test_fixed100_profile_retains_all90_and_exact_predeclared_support_grid():
+    value = build_plan(worktree='/allocated/reviewed-worktree', source_commit='a'*40, profile=INTERIM_PROFILE)
+    assert value['counts'] == dict(libero90_cases=90, plus_cases=0, pro_seeded_cases=0, total_cases=90,
+        phase_a_groups=450, phase_b_groups=36, physical_episodes=522, nominal_actions=214020,
+        worker_action_caps=219420, worker_gpu_seconds=16200)
+    assert [c['case']['task_id'] for c in value['cases']] == list(range(90))
+    assert {c['case']['benchmark'] for c in value['cases']} == {'libero90'}
+    assert all(c['case']['initial_state'] == 0 and c['case']['scene_seed'] == 123 for c in value['cases'])
+    assert [c['case']['task_id'] for c in value['cases'] if any(g['phase']=='B' for g in c['groups'])] == list(range(0,90,10))
+    assert all(g['updates'] == (None if g['method']=='native' else 100) for g in value['groups'])
+    assert all(g['episodes'] == g['support_budget']+1 for g in value['groups'])
+    assert value['contract']['fixed_source_inputs'] == INTERIM_INPUTS
+    assert value['contract']['maximum_total_actions'] == 220000
+    assert value['contract']['maximum_gpu_seconds'] == 16200
+    assert 'profile' not in plan()['contract']  # Legacy serialized defaults remain unchanged.
+
+
+def test_fixed100_worker_ownership_and_reset_reuse_do_not_drop_support_cost():
+    value = build_plan(worktree='/allocated/reviewed-worktree', source_commit='a'*40, profile=INTERIM_PROFILE)
+    assert [w['nominal_actions'] for w in value['workers']] == [40590,30750,40590,30750,40590,30750]
+    assert all(w['action_cap'] == w['nominal_actions']+900 and w['gpu_seconds'] == 2700 for w in value['workers'])
+    assert len({k for w in value['workers'] for k in w['case_ids']}) == 90
+    for c in value['cases']:
+        by_id = {g['group_id']:g for g in c['groups']}
+        for objective in ('ad','dpt'):
+            full = by_id[c['zero_shot_reuse'][objective+'_episode_reset']]
+            assert full['method'] == objective+'_full' and full['episodes'] == 1
+        assert all(g['episodes'] == 2 and g['maximum_actions'] == 820 for g in c['groups'] if g['phase']=='B')
+    with pytest.raises(ValueError, match='Unknown fixed'):
+        build_plan(worktree='/allocated/reviewed-worktree', source_commit='a'*40, profile='pick-best-target')
