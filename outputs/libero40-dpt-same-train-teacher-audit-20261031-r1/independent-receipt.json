@@ -1,0 +1,632 @@
+{
+  "format": "source40_dpt_same_train_teacher_independent_terminal_receipt_v1",
+  "job_id": "job-z9tjwlkovscv",
+  "checked_utc": "2026-10-30T21:43:41.230115+00:00",
+  "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1",
+  "exit_code": 0,
+  "index": {
+    "completed": true,
+    "format": "source40_dpt_same_train_teacher_labels_v1",
+    "binding_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/binding.json",
+    "binding_sha256": "9da01d662b45fe3bdc584cceb1dd55732527f9babe9ff0ef0db93d1cae1a1b23",
+    "source_action_charge": 457851,
+    "derived_goals": 8,
+    "metric_name": "heldout_state_same_train_teacher",
+    "derived_assembly": {
+      "assembly_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/assembly.json",
+      "assembly_file_sha256": "1d7a93c8c0ec64a92687003058dac372bf6c19ab7c871aa1e9d218e624b4c29e",
+      "assembly_sha256": "05cb614a21805e2dee390fadc36a278f05704169f1c8c764942fc107f0a4bf0b",
+      "unchanged_arrays": [
+        {
+          "split": "train",
+          "objective": "ad",
+          "histories": 40,
+          "all_fields_exact": true
+        },
+        {
+          "split": "train",
+          "objective": "dpt",
+          "histories": 40,
+          "all_fields_exact": true
+        },
+        {
+          "split": "validation",
+          "objective": "ad",
+          "histories": 8,
+          "all_fields_exact": true
+        }
+      ],
+      "source_action_charge": 457851,
+      "metric_name": "heldout_state_same_train_teacher"
+    },
+    "zero_gpu_attestation_sha256": "1582a677b191483b70798ff2d1483ab377166fef0574dcfb355a9afe1310fe9a",
+    "allocated_GPU_count": 0,
+    "tests_log_sha256": "9874bcdca1a0807607cf31f29b805ccdda61a3de68e09de7b1df95b6bb53c7bd",
+    "simulator_actions": 0,
+    "optimizer_updates": 0,
+    "VLA_inferences": 0,
+    "label_models": "Eight frozen TRAIN PixelSAC actors on CPU only; no VLA"
+  },
+  "clock": {
+    "format": "source40_dpt_same_train_teacher_labels_v1",
+    "source_commit": "850dd96f6e8ff9b96076c7da4618f175dc473688",
+    "run_id": "libero40-dpt-same-train-teacher-cpu-20261031-r1",
+    "started_unix": 1793396171.0,
+    "status": "finished",
+    "maximum_cpu_worker_seconds": 1200,
+    "zero_gpu_attested": true,
+    "charged_gpu_seconds": 0,
+    "closure_history": [
+      {
+        "ended_unix": 1793396458.2859704,
+        "exit_code": 0
+      },
+      {
+        "ended_unix": 1793396458.6551175,
+        "exit_code": 0
+      }
+    ],
+    "ended_unix": 1793396458.6551175,
+    "exit_code": 0,
+    "charged_cpu_worker_seconds": 348,
+    "cpu_time_overrun": false
+  },
+  "attestation_summary": {
+    "passed": true,
+    "device_count_before_mask": 0,
+    "cuda_initialized_before_mask": false,
+    "hostname": "job-z9tjwlkovscv-master-0",
+    "python": "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/bin/python",
+    "python_abi": "cpython-312-x86_64-linux-gnu",
+    "device_nodes": []
+  },
+  "resources": {
+    "cpu": true,
+    "memory": true
+  },
+  "tests": {
+    "passed": 49,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 16.49,
+    "source": "focused-tests.log final summary"
+  },
+  "binding_summary": {
+    "format": "source40_dpt_same_train_teacher_labels_v1",
+    "completed": true,
+    "metric_name": "heldout_state_same_train_teacher",
+    "source_action_charge": 457851,
+    "simulator_actions": 0,
+    "optimizer_updates": 0,
+    "VLA_inferences": 0,
+    "source_commit": "850dd96f6e8ff9b96076c7da4618f175dc473688"
+  },
+  "assembly_summary": {
+    "assembly_sha256": "05cb614a21805e2dee390fadc36a278f05704169f1c8c764942fc107f0a4bf0b",
+    "source_task_keys": [
+      "libero_10:00",
+      "libero_10:01",
+      "libero_10:02",
+      "libero_10:03",
+      "libero_10:04",
+      "libero_10:05",
+      "libero_10:06",
+      "libero_10:07",
+      "libero_10:08",
+      "libero_10:09",
+      "libero_goal:00",
+      "libero_goal:01",
+      "libero_goal:02",
+      "libero_goal:03",
+      "libero_goal:04",
+      "libero_goal:05",
+      "libero_goal:06",
+      "libero_goal:07",
+      "libero_goal:08",
+      "libero_goal:09",
+      "libero_object:00",
+      "libero_object:01",
+      "libero_object:02",
+      "libero_object:03",
+      "libero_object:04",
+      "libero_object:05",
+      "libero_object:06",
+      "libero_object:07",
+      "libero_object:08",
+      "libero_object:09",
+      "libero_spatial:00",
+      "libero_spatial:01",
+      "libero_spatial:02",
+      "libero_spatial:03",
+      "libero_spatial:04",
+      "libero_spatial:05",
+      "libero_spatial:06",
+      "libero_spatial:07",
+      "libero_spatial:08",
+      "libero_spatial:09"
+    ],
+    "validation_task_keys": [
+      "libero_10:00",
+      "libero_10:01",
+      "libero_goal:00",
+      "libero_goal:01",
+      "libero_object:00",
+      "libero_object:01",
+      "libero_spatial:00",
+      "libero_spatial:01"
+    ],
+    "collection_costs_count_once": {
+      "train": {
+        "actual_primitive_steps": 327547,
+        "actual_settling_steps": 23750,
+        "source_updates": 281140,
+        "charged_total_actions": 351297,
+        "uncertain_primitive_steps_ceiling": 0,
+        "uncertain_settling_steps_ceiling": 0
+      },
+      "validation": {
+        "actual_primitive_steps": 79381,
+        "actual_settling_steps": 5920,
+        "source_updates": 85720,
+        "charged_total_actions": 85301,
+        "uncertain_primitive_steps_ceiling": 0,
+        "uncertain_settling_steps_ceiling": 0
+      }
+    }
+  },
+  "assembly_content_hash_expected": "05cb614a21805e2dee390fadc36a278f05704169f1c8c764942fc107f0a4bf0b",
+  "assembly_content_hash_recomputed": "05cb614a21805e2dee390fadc36a278f05704169f1c8c764942fc107f0a4bf0b",
+  "source_commit": "850dd96f6e8ff9b96076c7da4618f175dc473688",
+  "source_status": "",
+  "rows": [
+    {
+      "task_key": "libero_spatial:00",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_spatial-00-train/case-00054-source.pkl",
+        "checkpoint_sha256": "b95e004854ae641910d82a71f5fabeb6846e77d9472513f8dfa364dd9d11729c",
+        "pure_actor_sha256": "4c145c442f40931172fc9642830691ae56691e288f95c27aa6637102716f4614",
+        "train_dpt_sha256": "c012acfc34549f1b7e081611d9c67c1ee63ab2ea80b5c154c0f5c6f7185c0601",
+        "source_updates": 28620,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 2.384185791015625e-07,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 1.4855122566223145,
+        "mean_absolute_delta": 0.6045835018157959,
+        "rms_delta": 0.6965563419058955,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_spatial:01",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_spatial-01-train/case-00015-source.pkl",
+        "checkpoint_sha256": "885d8af2ced284daab5b97902a5d09172fde0baf9527ab80304b94860b61a024",
+        "pure_actor_sha256": "2a11ea0b876755bf087bb19bad06f1c9e194735d91ced621326ec2ca3ff51199",
+        "train_dpt_sha256": "b2d064cae576d3796fe30c376d9576fcfacba7e9d26379b7be9c8e71cb5a26b7",
+        "source_updates": 5340,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 1.4901161193847656e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 0.6228051781654358,
+        "mean_absolute_delta": 0.14032813906669617,
+        "rms_delta": 0.18907750289728786,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_object:00",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_object-00-train/case-00032-source.pkl",
+        "checkpoint_sha256": "1f288d06e87bb502ee8855a77698b8ba2bc0439b9444950f7dcaa6ae5fb7183a",
+        "pure_actor_sha256": "b6fffd5eecc0b4820adeed104cc055b014ed8e7b21e017403dd692e50ff2c323",
+        "train_dpt_sha256": "92215fd1a8170173df615a7387ac5d714de455c3d95650a4ee4b92e7b1c292d0",
+        "source_updates": 29940,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 3.2782554626464844e-07,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 1.8983721733093262,
+        "mean_absolute_delta": 0.6022277474403381,
+        "rms_delta": 0.6861156481488194,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_object:01",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_object-01-train/case-00014-source.pkl",
+        "checkpoint_sha256": "82af2ec8f704f5d63857a0c9e9258827ff7da768aa4bc87cc9db1d04691e08f2",
+        "pure_actor_sha256": "72fbebaeddb62d70e84b19c4d44fe597ed2a432b2a624cc9c198e8270a8c4e4d",
+        "train_dpt_sha256": "adb803938bc2c646e2dfb81d7c835f2eb231a5e80448f8e130aea186370d330d",
+        "source_updates": 5900,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 3.725290298461914e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 0.6675959825515747,
+        "mean_absolute_delta": 0.16580146551132202,
+        "rms_delta": 0.2169431370760124,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_goal:00",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_goal-00-train/case-00013-source.pkl",
+        "checkpoint_sha256": "19eade9435fd6cf8e1fbf787cc5dc087542379d776d3fed30b4915d532a054fe",
+        "pure_actor_sha256": "e2445c3a83a7c225767f824309348afd2a125dabdff9d7cd9f7c643a70282cab",
+        "train_dpt_sha256": "faea6a4f580bf80f586d8983a8e8b51c935b39504e2ad133e80d9ae79631ecda",
+        "source_updates": 5620,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 2.9802322387695312e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 1.1308250427246094,
+        "mean_absolute_delta": 0.22257986664772034,
+        "rms_delta": 0.2899503490458098,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_goal:01",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_goal-01-train/case-00020-source.pkl",
+        "checkpoint_sha256": "dcc08246a63d830e5a3e3394e10a7d6330352589a9abde4e08df9146affb4d0d",
+        "pure_actor_sha256": "6bef36d5daf86070135a99e92a97ecc3945a619c18c0f45005b3cddb4b084ff5",
+        "train_dpt_sha256": "bb71ece9f50b88d2b7100182c44beb891813a1e6ffab5589d7525e4cd6005090",
+        "source_updates": 5300,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 1.4901161193847656e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 0.8079368472099304,
+        "mean_absolute_delta": 0.15662287175655365,
+        "rms_delta": 0.19659651149696714,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_10:00",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_10-00-train/case-00006-source.pkl",
+        "checkpoint_sha256": "f66bf972af0b3f5c215b856b6e8203a20c7aa8088d3ad3f5d7434d1d1e2f5ea0",
+        "pure_actor_sha256": "e1e9e482b9802835b1789fbce2b9f47a9d6f35cbf03d8eaa22a12afb784e8990",
+        "train_dpt_sha256": "5f3d62d890a7b55ed6318ae019857c14ce6ab0ff18f1b495cb7ffc0790e52bcb",
+        "source_updates": 6620,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 4.470348358154297e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 1.1304588317871094,
+        "mean_absolute_delta": 0.2842969298362732,
+        "rms_delta": 0.35332131074389084,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    },
+    {
+      "task_key": "libero_10:01",
+      "label_teacher": {
+        "checkpoint_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/sources/libero_10-01-train/case-00007-source.pkl",
+        "checkpoint_sha256": "27548ba19bfa713521b09235fad2629f5ed8f30aa334b7fbf234f2d1e5d1d7ff",
+        "pure_actor_sha256": "03b869d5408e37b5717c35d76fc03e8d2f6c8875c6e78445eddf203322b5351f",
+        "train_dpt_sha256": "f9253d2210bacbd6530d410b08ac631fc9b9958bde03b6c3ddcc58d08e51d7d5",
+        "source_updates": 7120,
+        "parameter_scope": "actor.params including pixel encoder; excludes optimizer/critic/replay/RNG",
+        "digest_algorithm": "vla_libero.structure_digest"
+      },
+      "actor_params_unchanged": true,
+      "train_label_replay": {
+        "passed": true,
+        "max_absolute_delta": 8.940696716308594e-08,
+        "tolerance": 1e-05
+      },
+      "legacy_target_comparison": {
+        "max_absolute_delta": 1.304485559463501,
+        "mean_absolute_delta": 0.37870535254478455,
+        "rms_delta": 0.4665501489093448,
+        "interpretation": "Descriptive same recorded inputs; teacher identity plus backend floor, no robot quality inference"
+      },
+      "non_target_fields_exact": true
+    }
+  ],
+  "file_checks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/index.json",
+      "sha256": "9a23d32bdf8483c198bf8a2e88139bb49f7a10c6df27b7503e060fa7eb0a72ba",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/cpu-worker-clock.json",
+      "sha256": "16929c6c35530c4d88aa45b95aae83f5b0c8f8259ed23a4eb28487d28896ec66",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/command.json",
+      "sha256": "71a8f6aa59af1af98dfb9daf1c8b389c2a1a3a951648ab695149b16989ad79cf",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/zero-gpu-attestation.json",
+      "sha256": "1582a677b191483b70798ff2d1483ab377166fef0574dcfb355a9afe1310fe9a",
+      "expected_sha256": "1582a677b191483b70798ff2d1483ab377166fef0574dcfb355a9afe1310fe9a",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/focused-tests.log",
+      "sha256": "9874bcdca1a0807607cf31f29b805ccdda61a3de68e09de7b1df95b6bb53c7bd",
+      "expected_sha256": "9874bcdca1a0807607cf31f29b805ccdda61a3de68e09de7b1df95b6bb53c7bd",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/binding.json",
+      "sha256": "9da01d662b45fe3bdc584cceb1dd55732527f9babe9ff0ef0db93d1cae1a1b23",
+      "expected_sha256": "9da01d662b45fe3bdc584cceb1dd55732527f9babe9ff0ef0db93d1cae1a1b23",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/assembly.json",
+      "sha256": "1d7a93c8c0ec64a92687003058dac372bf6c19ab7c871aa1e9d218e624b4c29e",
+      "expected_sha256": "1d7a93c8c0ec64a92687003058dac372bf6c19ab7c871aa1e9d218e624b4c29e",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/topup-inputs.json",
+      "sha256": "2bc71430c2f17ef58e25fe5322c7a7ce46866426cff53f138e5b8e759f9a0556",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/snapshot/admission.json",
+      "sha256": "26303151bc26bc6809348b7b3e3351205619efbfb21f34da4b70229a33198fe2",
+      "expected_sha256": "26303151bc26bc6809348b7b3e3351205619efbfb21f34da4b70229a33198fe2",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-ad.npz",
+      "sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+      "expected_sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-ad.json",
+      "sha256": "bc206f20b70200c26cb7ad9ca59b4a9b1bc8eccd7d48259d657feeabbb8825bf",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-dpt.npz",
+      "sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+      "expected_sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-dpt.json",
+      "sha256": "ca2c6b873e051954cf2383e3dfcb672399eab3c2d67bdd2d2a4850e45c8bef6a",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-ad.npz",
+      "sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+      "expected_sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-ad.json",
+      "sha256": "51f231b88e5b6cfa9f0feb4e0ba698314ea25966cd293e69ea842167013ef2c5",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-dpt.npz",
+      "sha256": "32eda28573610d1a2bd9fcdb0f332b8075ef6a2676ff03f949bcccd6541a0243",
+      "expected_sha256": "32eda28573610d1a2bd9fcdb0f332b8075ef6a2676ff03f949bcccd6541a0243",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-dpt.json",
+      "sha256": "1d387d74ea292206fdc6939b155497ee8a7c5920fd86cad678e33e04d7c3725b",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_spatial-00/validation-dpt.npz",
+      "sha256": "7cfa86572d6a9177d6a9ec7fc317997b4b5c2bc7e4dddfdfb2a442c2d0e93fad",
+      "expected_sha256": "7cfa86572d6a9177d6a9ec7fc317997b4b5c2bc7e4dddfdfb2a442c2d0e93fad",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_spatial-00/validation-dpt.json",
+      "sha256": "0dd9943833089a6e1f41930db30c4f580d554d9c8822e370f3513ab65a299df1",
+      "expected_sha256": "0dd9943833089a6e1f41930db30c4f580d554d9c8822e370f3513ab65a299df1",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_spatial-01/validation-dpt.npz",
+      "sha256": "9a9e0959feb0b732e9ba0f539acee56be7c1d35420d708dda16992b9a11a4a91",
+      "expected_sha256": "9a9e0959feb0b732e9ba0f539acee56be7c1d35420d708dda16992b9a11a4a91",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_spatial-01/validation-dpt.json",
+      "sha256": "f920e5760ec82559ccba03d4731d03a256cc6ec6d736898d5a5681a3e470e15b",
+      "expected_sha256": "f920e5760ec82559ccba03d4731d03a256cc6ec6d736898d5a5681a3e470e15b",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_object-00/validation-dpt.npz",
+      "sha256": "d983d4a1dd7461bf9bb2dc6b369b7a1512ced6d8f235617dcb82d08ba2527381",
+      "expected_sha256": "d983d4a1dd7461bf9bb2dc6b369b7a1512ced6d8f235617dcb82d08ba2527381",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_object-00/validation-dpt.json",
+      "sha256": "068ee0104699b98f226c8ba8a410424d17381207e1ec9695bb03c24b27cd8d79",
+      "expected_sha256": "068ee0104699b98f226c8ba8a410424d17381207e1ec9695bb03c24b27cd8d79",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_object-01/validation-dpt.npz",
+      "sha256": "df612d685dcb9ab6a3857ec563d9b35be061ad5413e7cd6c437df313c8e0494a",
+      "expected_sha256": "df612d685dcb9ab6a3857ec563d9b35be061ad5413e7cd6c437df313c8e0494a",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_object-01/validation-dpt.json",
+      "sha256": "f55ed7fb11aa7fb4d10294241d23a864f6703942034d1cc51b1d2a7780fce981",
+      "expected_sha256": "f55ed7fb11aa7fb4d10294241d23a864f6703942034d1cc51b1d2a7780fce981",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_goal-00/validation-dpt.npz",
+      "sha256": "96082e11c95f77db01719afd83a20d1be1c4d88830442c68c9d865632cb4ea20",
+      "expected_sha256": "96082e11c95f77db01719afd83a20d1be1c4d88830442c68c9d865632cb4ea20",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_goal-00/validation-dpt.json",
+      "sha256": "c8fd63d3e79856ae9076581f9ca28763e558cf34003f9a5ed5c8cb619f1549c3",
+      "expected_sha256": "c8fd63d3e79856ae9076581f9ca28763e558cf34003f9a5ed5c8cb619f1549c3",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_goal-01/validation-dpt.npz",
+      "sha256": "cbe217e31670242569d7494fffd754f2b480507e9cfc49e77c7aab802815a40c",
+      "expected_sha256": "cbe217e31670242569d7494fffd754f2b480507e9cfc49e77c7aab802815a40c",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_goal-01/validation-dpt.json",
+      "sha256": "a3bc9238ce98a894e272b229663b4bb9feaec1599dad45bb026f8e51c8749662",
+      "expected_sha256": "a3bc9238ce98a894e272b229663b4bb9feaec1599dad45bb026f8e51c8749662",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_10-00/validation-dpt.npz",
+      "sha256": "4b7244f4390a74a67d52e9af31302285ba78bd340a516d6c28f4b70772ec7ebb",
+      "expected_sha256": "4b7244f4390a74a67d52e9af31302285ba78bd340a516d6c28f4b70772ec7ebb",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_10-00/validation-dpt.json",
+      "sha256": "f83517df96026b3518bd7e93c1835098cdeea89b9075bc487f1c269d9bac1eba",
+      "expected_sha256": "f83517df96026b3518bd7e93c1835098cdeea89b9075bc487f1c269d9bac1eba",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_10-01/validation-dpt.npz",
+      "sha256": "0f50395e8b40d6316626d190cdbc54188c95409d4d500577e9270d5c58fa624b",
+      "expected_sha256": "0f50395e8b40d6316626d190cdbc54188c95409d4d500577e9270d5c58fa624b",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/generation/libero_10-01/validation-dpt.json",
+      "sha256": "ae1cdc845950b1a97c5f06ebf8958606eea63a59cc2d6d48460ecc421ef36a36",
+      "expected_sha256": "ae1cdc845950b1a97c5f06ebf8958606eea63a59cc2d6d48460ecc421ef36a36",
+      "matches_expected": true
+    }
+  ],
+  "all_file_checks_passed": true,
+  "scope": "Read-only saved metadata and byte hashes. No new actor/model construction, inference, tests or simulator execution by this independent verifier. Array-parity evidence comes from the allocated writer and assembly verification; their saved files were independently rehashed.",
+  "dataset_dimensions": [
+    {
+      "split": "train",
+      "objective": "ad",
+      "trials": 40,
+      "transitions": 33729,
+      "observation_dim": 4104,
+      "noise_dim": 32
+    },
+    {
+      "split": "train",
+      "objective": "dpt",
+      "trials": 40,
+      "transitions": 33729,
+      "observation_dim": 4104,
+      "noise_dim": 32
+    },
+    {
+      "split": "validation",
+      "objective": "ad",
+      "trials": 8,
+      "transitions": 8202,
+      "observation_dim": 4104,
+      "noise_dim": 32
+    },
+    {
+      "split": "validation",
+      "objective": "dpt",
+      "trials": 8,
+      "transitions": 8202,
+      "observation_dim": 4104,
+      "noise_dim": 32
+    }
+  ],
+  "reference_hash_comparisons": 25,
+  "recorded_artifact_hashes": 34,
+  "all_actor_unchanged_proofs_present": true,
+  "all_non_target_exact_proofs_present": true,
+  "maximum_train_label_replay_delta": 3.2782554626464844e-07,
+  "train_label_replay_tolerance": 1e-05,
+  "distinct_pure_actor_digests": 8
+}
