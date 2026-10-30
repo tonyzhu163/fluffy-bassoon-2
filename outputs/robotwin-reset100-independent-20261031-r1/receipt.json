@@ -1,0 +1,2946 @@
+{
+  "format": "robotwin_reset100_independent_endpoint_receipt_v1",
+  "checked_utc": "2026-10-30T22:47:07.050420+00:00",
+  "method": "ppo_reset",
+  "endpoint_only": true,
+  "complete": true,
+  "next_input": null,
+  "latest_audit_kind": "complete",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment",
+  "summary_status": "complete",
+  "execution_source_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "lineage_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "source": {
+    "source_steps": 963759,
+    "task_steps": {
+      "handover_mic": 210897,
+      "pick_diverse_bottles": 149862,
+      "place_a2b_left": 146425,
+      "place_object_stand": 125564,
+      "place_phone_stand": 137298,
+      "scan_object": 193713
+    },
+    "allocation_source_steps": 0,
+    "updates": 100,
+    "optimizer_steps": 500,
+    "pending_trials": 0,
+    "pending_primitive_steps": 0,
+    "recovered_prior_prefix_actions": 0,
+    "completed_source_trials": 600,
+    "completed_source_iterations": 100,
+    "source_action_safety_cap": 1100000,
+    "source_physical_charge": 963759,
+    "retained_learning_actions": 963759,
+    "unretained_or_uncertain_source_charge": 0
+  },
+  "canonical_cost_view": {
+    "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+    "snapshot_sha256": "893ef5fd643ffe0d0d19eeed736e2c7ba59cf28ef56b9ba42edad054feb0c78d",
+    "header_sha256": "0f23420d1e32213e311a150adb0608ca50dd2e14d397ecebd7f3ba9499482831",
+    "total_action_cap": 1168800,
+    "source_caps": {
+      "ppo_reset": 1100000
+    },
+    "by_method": {
+      "source/ppo_reset": 963759,
+      "source_validation/ppo_reset": 39434,
+      "target/ppo_reset": 18592
+    },
+    "journal_events": 66181,
+    "journal_sha256": "82361637889472c287fa4d8f03927e5dabbd493c1acdbd94bba591a79b02cc8f",
+    "charged_actions": 1021785,
+    "actual_actions": 1021785,
+    "decision_count": 33059,
+    "pending_actions": 0,
+    "uncertain_actions": 0
+  },
+  "independent_journal_replay": {
+    "completed": false,
+    "independent_full_journal_replay": false,
+    "reason": "Optional serial66k-event replay was stopped before producing a receipt; no replay-completion or unique raw-episode-count claim.",
+    "canonical_totals_evidence": "Saved owner audit plus independently rehashed snapshot, not an independent full event replay",
+    "snapshot_cost_sum_matches": true,
+    "snapshot_actual_equals_charge": true,
+    "snapshot_pending_actions": 0,
+    "snapshot_uncertain_actions": 0
+  },
+  "frozen_motor": {
+    "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "unchanged": true
+  },
+  "completed_units": [
+    "stage:iteration:100:complete",
+    "stage:iteration:100:source_validation:ppo_reset:handover_mic",
+    "stage:iteration:100:source_validation:ppo_reset:pick_diverse_bottles",
+    "stage:iteration:100:source_validation:ppo_reset:place_a2b_left",
+    "stage:iteration:100:source_validation:ppo_reset:place_object_stand",
+    "stage:iteration:100:source_validation:ppo_reset:place_phone_stand",
+    "stage:iteration:100:source_validation:ppo_reset:scan_object",
+    "stage:iteration:100:target:ppo_reset:normal:adjust_bottle:0",
+    "stage:iteration:100:target:ppo_reset:normal:move_stapler_pad:0",
+    "stage:iteration:10:complete",
+    "stage:iteration:10:source_validation:ppo_reset:handover_mic",
+    "stage:iteration:10:source_validation:ppo_reset:pick_diverse_bottles",
+    "stage:iteration:10:source_validation:ppo_reset:place_a2b_left",
+    "stage:iteration:10:source_validation:ppo_reset:place_object_stand",
+    "stage:iteration:10:source_validation:ppo_reset:place_phone_stand",
+    "stage:iteration:10:source_validation:ppo_reset:scan_object",
+    "stage:iteration:10:target:ppo_reset:normal:adjust_bottle:0",
+    "stage:iteration:10:target:ppo_reset:normal:move_stapler_pad:0",
+    "stage:iteration:25:complete",
+    "stage:iteration:25:source_validation:ppo_reset:handover_mic",
+    "stage:iteration:25:source_validation:ppo_reset:pick_diverse_bottles",
+    "stage:iteration:25:source_validation:ppo_reset:place_a2b_left",
+    "stage:iteration:25:source_validation:ppo_reset:place_object_stand",
+    "stage:iteration:25:source_validation:ppo_reset:place_phone_stand",
+    "stage:iteration:25:source_validation:ppo_reset:scan_object",
+    "stage:iteration:25:target:ppo_reset:normal:adjust_bottle:0",
+    "stage:iteration:25:target:ppo_reset:normal:move_stapler_pad:0",
+    "stage:iteration:50:complete",
+    "stage:iteration:50:source_validation:ppo_reset:handover_mic",
+    "stage:iteration:50:source_validation:ppo_reset:pick_diverse_bottles",
+    "stage:iteration:50:source_validation:ppo_reset:place_a2b_left",
+    "stage:iteration:50:source_validation:ppo_reset:place_object_stand",
+    "stage:iteration:50:source_validation:ppo_reset:place_phone_stand",
+    "stage:iteration:50:source_validation:ppo_reset:scan_object",
+    "stage:iteration:50:target:ppo_reset:normal:adjust_bottle:0",
+    "stage:iteration:50:target:ppo_reset:normal:move_stapler_pad:0"
+  ],
+  "stage_statuses": {
+    "iteration:10": "complete",
+    "iteration:25": "complete",
+    "iteration:50": "complete",
+    "iteration:100": "complete"
+  },
+  "stages": [
+    {
+      "stage_iteration": 10,
+      "source_actions": 94876,
+      "source_updates": 10,
+      "status": "complete",
+      "snapshots": {
+        "ppo_reset": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-10/ppo_reset-recovery.pt",
+          "sha256": "d385d0d80459f000104f7b87a7805b7429ee5dc076e5506c184a9422bbb81dcc"
+        }
+      },
+      "evaluation_units": [
+        "stage:iteration:10:source_validation:ppo_reset:handover_mic",
+        "stage:iteration:10:source_validation:ppo_reset:pick_diverse_bottles",
+        "stage:iteration:10:source_validation:ppo_reset:place_a2b_left",
+        "stage:iteration:10:source_validation:ppo_reset:place_object_stand",
+        "stage:iteration:10:source_validation:ppo_reset:place_phone_stand",
+        "stage:iteration:10:source_validation:ppo_reset:scan_object",
+        "stage:iteration:10:target:ppo_reset:normal:adjust_bottle:0",
+        "stage:iteration:10:target:ppo_reset:normal:move_stapler_pad:0"
+      ],
+      "evaluation_file_matches_summary": true,
+      "source_rng_restored": true,
+      "reported_without_checkpoint_selection": true,
+      "groups": [
+        {
+          "phase": "source_validation",
+          "task": "handover_mic",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 2019,
+          "chunks": 64,
+          "outcomes": [
+            false,
+            false,
+            true,
+            false
+          ],
+          "episode_primitives": [
+            600,
+            600,
+            219,
+            600
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "pick_diverse_bottles",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1313,
+          "chunks": 43,
+          "outcomes": [
+            false,
+            false,
+            true,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            113,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_a2b_left",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_object_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1350,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            150
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_phone_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "scan_object",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1668,
+          "chunks": 54,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            500,
+            500,
+            500,
+            168
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "adjust_bottle",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 6,
+          "primitive_steps": 1672,
+          "chunks": 56,
+          "outcomes": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "episode_primitives": [
+            142,
+            400,
+            400,
+            155,
+            151,
+            142,
+            148,
+            134
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "move_stapler_pad",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 1,
+          "primitive_steps": 2968,
+          "chunks": 97,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            168,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        }
+      ]
+    },
+    {
+      "stage_iteration": 25,
+      "source_actions": 239436,
+      "source_updates": 25,
+      "status": "complete",
+      "snapshots": {
+        "ppo_reset": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-25/ppo_reset-recovery.pt",
+          "sha256": "d6b6981d7b2a928e8c861867639dc1d4a86a2e833bac1b0565c7432bf6919a0c"
+        }
+      },
+      "evaluation_units": [
+        "stage:iteration:25:source_validation:ppo_reset:handover_mic",
+        "stage:iteration:25:source_validation:ppo_reset:pick_diverse_bottles",
+        "stage:iteration:25:source_validation:ppo_reset:place_a2b_left",
+        "stage:iteration:25:source_validation:ppo_reset:place_object_stand",
+        "stage:iteration:25:source_validation:ppo_reset:place_phone_stand",
+        "stage:iteration:25:source_validation:ppo_reset:scan_object",
+        "stage:iteration:25:target:ppo_reset:normal:adjust_bottle:0",
+        "stage:iteration:25:target:ppo_reset:normal:move_stapler_pad:0"
+      ],
+      "evaluation_file_matches_summary": true,
+      "source_rng_restored": true,
+      "reported_without_checkpoint_selection": true,
+      "groups": [
+        {
+          "phase": "source_validation",
+          "task": "handover_mic",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 2023,
+          "chunks": 64,
+          "outcomes": [
+            false,
+            false,
+            true,
+            false
+          ],
+          "episode_primitives": [
+            600,
+            600,
+            223,
+            600
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "pick_diverse_bottles",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_a2b_left",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1352,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            152,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_object_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1337,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            137
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_phone_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "scan_object",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1667,
+          "chunks": 54,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            500,
+            500,
+            500,
+            167
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "adjust_bottle",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 7,
+          "primitive_steps": 1519,
+          "chunks": 51,
+          "outcomes": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "episode_primitives": [
+            156,
+            208,
+            400,
+            174,
+            150,
+            151,
+            141,
+            139
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "move_stapler_pad",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 0,
+          "primitive_steps": 3200,
+          "chunks": 104,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        }
+      ]
+    },
+    {
+      "stage_iteration": 50,
+      "source_actions": 479895,
+      "source_updates": 50,
+      "status": "complete",
+      "snapshots": {
+        "ppo_reset": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/ppo_reset-recovery.pt",
+          "sha256": "a693070c050daf24c0e63b5d2a15e4770b819a31525dea6140f14b0175c2ae62"
+        }
+      },
+      "evaluation_units": [
+        "stage:iteration:50:source_validation:ppo_reset:handover_mic",
+        "stage:iteration:50:source_validation:ppo_reset:pick_diverse_bottles",
+        "stage:iteration:50:source_validation:ppo_reset:place_a2b_left",
+        "stage:iteration:50:source_validation:ppo_reset:place_object_stand",
+        "stage:iteration:50:source_validation:ppo_reset:place_phone_stand",
+        "stage:iteration:50:source_validation:ppo_reset:scan_object",
+        "stage:iteration:50:target:ppo_reset:normal:adjust_bottle:0",
+        "stage:iteration:50:target:ppo_reset:normal:move_stapler_pad:0"
+      ],
+      "evaluation_file_matches_summary": true,
+      "source_rng_restored": true,
+      "reported_without_checkpoint_selection": true,
+      "groups": [
+        {
+          "phase": "source_validation",
+          "task": "handover_mic",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 2400,
+          "chunks": 76,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "pick_diverse_bottles",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_a2b_left",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1341,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            141,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_object_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1354,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            154
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_phone_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "scan_object",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 2000,
+          "chunks": 64,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "adjust_bottle",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 7,
+          "primitive_steps": 1404,
+          "chunks": 48,
+          "outcomes": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "episode_primitives": [
+            150,
+            139,
+            400,
+            144,
+            148,
+            141,
+            145,
+            137
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "move_stapler_pad",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 0,
+          "primitive_steps": 3200,
+          "chunks": 104,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        }
+      ]
+    },
+    {
+      "stage_iteration": 100,
+      "source_actions": 963759,
+      "source_updates": 100,
+      "status": "complete",
+      "snapshots": {
+        "ppo_reset": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/ppo_reset-recovery.pt",
+          "sha256": "1d9cddfc6c03c54a67c8f7e5031ca2f1d3110857dd38d14b3cda5eb6064ab8d9"
+        }
+      },
+      "evaluation_units": [
+        "stage:iteration:100:source_validation:ppo_reset:handover_mic",
+        "stage:iteration:100:source_validation:ppo_reset:pick_diverse_bottles",
+        "stage:iteration:100:source_validation:ppo_reset:place_a2b_left",
+        "stage:iteration:100:source_validation:ppo_reset:place_object_stand",
+        "stage:iteration:100:source_validation:ppo_reset:place_phone_stand",
+        "stage:iteration:100:source_validation:ppo_reset:scan_object",
+        "stage:iteration:100:target:ppo_reset:normal:adjust_bottle:0",
+        "stage:iteration:100:target:ppo_reset:normal:move_stapler_pad:0"
+      ],
+      "evaluation_file_matches_summary": true,
+      "source_rng_restored": true,
+      "reported_without_checkpoint_selection": true,
+      "groups": [
+        {
+          "phase": "source_validation",
+          "task": "handover_mic",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 2400,
+          "chunks": 76,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            600,
+            600,
+            600,
+            600
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "pick_diverse_bottles",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1314,
+          "chunks": 43,
+          "outcomes": [
+            false,
+            false,
+            true,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            114,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_a2b_left",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1345,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            145,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_object_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 1,
+          "primitive_steps": 1351,
+          "chunks": 44,
+          "outcomes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            151
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "place_phone_stand",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 1600,
+          "chunks": 52,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "source_validation",
+          "task": "scan_object",
+          "requested_episodes": 4,
+          "episodes": 4,
+          "successes": 0,
+          "primitive_steps": 2000,
+          "chunks": 64,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            500,
+            500,
+            500,
+            500
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "adjust_bottle",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 8,
+          "primitive_steps": 1429,
+          "chunks": 49,
+          "outcomes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "episode_primitives": [
+            153,
+            127,
+            164,
+            165,
+            386,
+            140,
+            155,
+            139
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        },
+        {
+          "phase": "target",
+          "task": "move_stapler_pad",
+          "requested_episodes": 8,
+          "episodes": 8,
+          "successes": 0,
+          "primitive_steps": 3200,
+          "chunks": 104,
+          "outcomes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_primitives": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "group_budget_truncated": false,
+          "episode_budget_truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "episode_limits": [
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400,
+            400
+          ],
+          "reset_memory": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "reward_blind": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "reset_episode_feedback": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "complete_requested_episodes": true,
+          "primitives_match": true
+        }
+      ]
+    }
+  ],
+  "case_parity": [
+    {
+      "bank": "source_validation/handover_mic",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": false,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000000000,
+          "initial_observation_sha256": "4800bc3702df285971e257ebe7194f2fd4f51a8b81bcd8ccdd8564cb1a799dfc"
+        },
+        {
+          "episode": 2,
+          "seed": 3000000997,
+          "initial_observation_sha256": "0dd0ef53411d7e3f420c3fe5be6d8ec737a0c1d79744fa2890207645c80e7213"
+        },
+        {
+          "episode": 3,
+          "seed": 3000001994,
+          "initial_observation_sha256": "b50811b53864fe8057c2f3f7d1e2f295ec7bc4810ee7611b9d9adca7cb62e20f"
+        },
+        {
+          "episode": 4,
+          "seed": 3000002991,
+          "initial_observation_sha256": "d937a249d34bcb0f245e5d3756601491e7474bddaf375812a70ca35d2c58339f"
+        }
+      ],
+      "per_stage_cases": {
+        "10": [
+          {
+            "episode": 1,
+            "seed": 3000000000,
+            "initial_observation_sha256": "4800bc3702df285971e257ebe7194f2fd4f51a8b81bcd8ccdd8564cb1a799dfc"
+          },
+          {
+            "episode": 2,
+            "seed": 3000000997,
+            "initial_observation_sha256": "0dd0ef53411d7e3f420c3fe5be6d8ec737a0c1d79744fa2890207645c80e7213"
+          },
+          {
+            "episode": 3,
+            "seed": 3000001994,
+            "initial_observation_sha256": "b50811b53864fe8057c2f3f7d1e2f295ec7bc4810ee7611b9d9adca7cb62e20f"
+          },
+          {
+            "episode": 4,
+            "seed": 3000002991,
+            "initial_observation_sha256": "d937a249d34bcb0f245e5d3756601491e7474bddaf375812a70ca35d2c58339f"
+          }
+        ],
+        "25": [
+          {
+            "episode": 1,
+            "seed": 3000000000,
+            "initial_observation_sha256": "8c560959aea1ca0d28696ad552d9f5ffd346f32acc0f4c2f03ef035dbb67ef0e"
+          },
+          {
+            "episode": 2,
+            "seed": 3000000997,
+            "initial_observation_sha256": "91898881108cec3cc1768494e47a8f49a6fa03043f7d24e95ca99d2253cc07aa"
+          },
+          {
+            "episode": 3,
+            "seed": 3000001994,
+            "initial_observation_sha256": "8c76431840342b50fbdb3dc74b029a84c1acadc070cc5476be61765249051571"
+          },
+          {
+            "episode": 4,
+            "seed": 3000002991,
+            "initial_observation_sha256": "bb22f5bcfc13067e9772f60cef9711182442e4538ec68276c8ad13cee8568a0b"
+          }
+        ],
+        "50": [
+          {
+            "episode": 1,
+            "seed": 3000000000,
+            "initial_observation_sha256": "e92fc53d936e37bbb30783723a48774e8567a5676cf4b0eeea877c87d051d41f"
+          },
+          {
+            "episode": 2,
+            "seed": 3000000997,
+            "initial_observation_sha256": "d9767ee9cd0c24ea0e01f26bc93190bbc746e0894a20399d2f83c07272569be3"
+          },
+          {
+            "episode": 3,
+            "seed": 3000001994,
+            "initial_observation_sha256": "e0c3671ade72d4ae44434bbca35be8f1002d6704c53c42270ec521f220347d3d"
+          },
+          {
+            "episode": 4,
+            "seed": 3000002991,
+            "initial_observation_sha256": "d5d91ff5bdee81c3d0e814678c6b8183fae249d4ad39af912b143ad14825f217"
+          }
+        ],
+        "100": [
+          {
+            "episode": 1,
+            "seed": 3000000000,
+            "initial_observation_sha256": "e92fc53d936e37bbb30783723a48774e8567a5676cf4b0eeea877c87d051d41f"
+          },
+          {
+            "episode": 2,
+            "seed": 3000000997,
+            "initial_observation_sha256": "d9767ee9cd0c24ea0e01f26bc93190bbc746e0894a20399d2f83c07272569be3"
+          },
+          {
+            "episode": 3,
+            "seed": 3000001994,
+            "initial_observation_sha256": "e0c3671ade72d4ae44434bbca35be8f1002d6704c53c42270ec521f220347d3d"
+          },
+          {
+            "episode": 4,
+            "seed": 3000002991,
+            "initial_observation_sha256": "d5d91ff5bdee81c3d0e814678c6b8183fae249d4ad39af912b143ad14825f217"
+          }
+        ]
+      }
+    },
+    {
+      "bank": "source_validation/pick_diverse_bottles",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000010000,
+          "initial_observation_sha256": "ec83a41a3df9424dfcd3acd4485442e3009ee493458c4184ec01659a46a03935"
+        },
+        {
+          "episode": 2,
+          "seed": 3000010997,
+          "initial_observation_sha256": "750cc1d3d24f4663b1379a54a0df889eaf429d2a98298e185df3aee4182bc219"
+        },
+        {
+          "episode": 3,
+          "seed": 3000011994,
+          "initial_observation_sha256": "a0258e4eb26702c279ea280ec6f998184e9d557f1e3873e9535c46cdcb379cf0"
+        },
+        {
+          "episode": 4,
+          "seed": 3000012991,
+          "initial_observation_sha256": "cd828980925aaf6dac19592a44e97065e3108f171a07b7ac5875bd6d296f3769"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "source_validation/place_a2b_left",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000020000,
+          "initial_observation_sha256": "8493e24efb354ed7a66e27d8bebf16c8af767de960132dda07f4f4447854e7e3"
+        },
+        {
+          "episode": 2,
+          "seed": 3000020997,
+          "initial_observation_sha256": "2f4b80540ff7d7ce51ffb4128495fd546e6fc33a695a67b63cd68f8cca3fd87e"
+        },
+        {
+          "episode": 3,
+          "seed": 3000021994,
+          "initial_observation_sha256": "14c591126d6b370447832fb06dee2572884fe1288f38fdc1c1eacb2a769bf11f"
+        },
+        {
+          "episode": 4,
+          "seed": 3000022991,
+          "initial_observation_sha256": "01b7d28157c0b9b4b705ce2d33fc69ba9ec16f4fb539f5b4db470cdc73eb7e06"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "source_validation/place_object_stand",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000030000,
+          "initial_observation_sha256": "ad95b45444679431a304f927381534ff9d99ba2a04899aa80c9b5bda0e82a290"
+        },
+        {
+          "episode": 2,
+          "seed": 3000030997,
+          "initial_observation_sha256": "fdf198edf41300620d9a98b9df84951df87fec2115c279272e15a1bfc3ff0927"
+        },
+        {
+          "episode": 3,
+          "seed": 3000031994,
+          "initial_observation_sha256": "1d3538a147883f64c1bca82eecd17f71efa8695514e661d97f452a7e43be86b7"
+        },
+        {
+          "episode": 4,
+          "seed": 3000032991,
+          "initial_observation_sha256": "90bb2e45c0da77e1654cfe337547446817719d39a255d1d37be31f1482279106"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "source_validation/place_phone_stand",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000040000,
+          "initial_observation_sha256": "7ac48fa182ae61bb56cbcb2ab65d4a5cf5b6b033143a2ec38c33965381d4d37f"
+        },
+        {
+          "episode": 2,
+          "seed": 3000040997,
+          "initial_observation_sha256": "fd2ae095af4f8fa49832c9f310c85caa851c7519df18cfc5eb5980e77b114bac"
+        },
+        {
+          "episode": 3,
+          "seed": 3000041994,
+          "initial_observation_sha256": "8e01eb48987215bdbb779bfb2c9908aadb7e6ceb0112d2b4e664d97424a02746"
+        },
+        {
+          "episode": 4,
+          "seed": 3000042991,
+          "initial_observation_sha256": "76903564326f7fdfe7f15b9ed6ae2da06947e0d560995f2790f3b309ed8b30df"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "source_validation/scan_object",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 3000050000,
+          "initial_observation_sha256": "8608c4a26f623df517ba49ce9b13c76d42151e8a2acc1d7f4b4644970f600fd5"
+        },
+        {
+          "episode": 2,
+          "seed": 3000050997,
+          "initial_observation_sha256": "103f17556559678ba08b1620e8252b3bb49790f1264f883edbb943239d02c611"
+        },
+        {
+          "episode": 3,
+          "seed": 3000051994,
+          "initial_observation_sha256": "ab79b4aeb052065d06afeaa97261eab30b733d3c05fa6b8d600b72bec1f77b69"
+        },
+        {
+          "episode": 4,
+          "seed": 3000052991,
+          "initial_observation_sha256": "74c9238836ad77d67711d7d477f1f216bf81becf66fe82da342faa23db69fffe"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "target/adjust_bottle",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 22261030,
+          "initial_observation_sha256": "7929387f532efb5c6d4085d76f8929d990a96b1b020de186f0dc108576426236"
+        },
+        {
+          "episode": 2,
+          "seed": 22262027,
+          "initial_observation_sha256": "895c1f7d1b28c5f3d7b5672f94139635eb3d842d4bf31585baf8f2816bc29c3d"
+        },
+        {
+          "episode": 3,
+          "seed": 22263024,
+          "initial_observation_sha256": "47008b03c564e45b972d63b8a2602982f1f9b0432aaa7998f494b05173f8f5bc"
+        },
+        {
+          "episode": 4,
+          "seed": 22264021,
+          "initial_observation_sha256": "6f14bed587693c1ab332ef81febf9d0def63dbf78f8f0a36840933d15f262f19"
+        },
+        {
+          "episode": 5,
+          "seed": 22265018,
+          "initial_observation_sha256": "a594aa921721b1b860d8d378edddc8eb196346d094ca4b33e9641772ba1c5efc"
+        },
+        {
+          "episode": 6,
+          "seed": 22266015,
+          "initial_observation_sha256": "ca7f60affa674a186e4d716d3ef7b7219591896d19c41c290dd978e6b5684bd0"
+        },
+        {
+          "episode": 7,
+          "seed": 22267012,
+          "initial_observation_sha256": "b68f05c45f5a0542158ee07a9baa9c46dc9c5e605ecdfd9e83e367bc6f9c618d"
+        },
+        {
+          "episode": 8,
+          "seed": 22268009,
+          "initial_observation_sha256": "2200d3eae6895ac051b48fa42832384dbe7b54c3aa1fdef986aa7e6eeb75b3e5"
+        }
+      ],
+      "per_stage_cases": null
+    },
+    {
+      "bank": "target/move_stapler_pad",
+      "same_episode_seeds_and_initial_observation_hashes_all_stages": true,
+      "cases": [
+        {
+          "episode": 1,
+          "seed": 22261030,
+          "initial_observation_sha256": "1e07bfea9d063086250159416b3f8efed0e9517aa1c00005520fbab2e2fc3c3b"
+        },
+        {
+          "episode": 2,
+          "seed": 22262027,
+          "initial_observation_sha256": "9757ed8e47e7b91e6f8ad6f36d3380877465f53733f2bc742f27ec5bc535a466"
+        },
+        {
+          "episode": 3,
+          "seed": 22263024,
+          "initial_observation_sha256": "1b31da8350b1510ce39675ba7e9c8a54641d34fc49ee8510963193de4ac7a925"
+        },
+        {
+          "episode": 4,
+          "seed": 22264021,
+          "initial_observation_sha256": "effc0d0d1816afc378ad8c13219328ff9f98ca2ff391d62aef6973964d0df156"
+        },
+        {
+          "episode": 5,
+          "seed": 22265018,
+          "initial_observation_sha256": "a1bf85273e3d18972c8ac61e5cafebe87cc202a1373df19a6115a1801b442faf"
+        },
+        {
+          "episode": 6,
+          "seed": 22266015,
+          "initial_observation_sha256": "45f4b997065234ab014a88109ce48cec5d2a95b772325a675b494833295a66e5"
+        },
+        {
+          "episode": 7,
+          "seed": 22267012,
+          "initial_observation_sha256": "77b3f0084bb7953b2563f201f87c4a3e123b1649d16f2725a091b668747659b1"
+        },
+        {
+          "episode": 8,
+          "seed": 22268009,
+          "initial_observation_sha256": "8282c9f751d5cceb8261454963e62702a0f1be737e86229482084190b186ed5b"
+        }
+      ],
+      "per_stage_cases": null
+    }
+  ],
+  "prior_native_context": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/summary.json",
+    "rows": [
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 10
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 10
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 10
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 10
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 25
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 25
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 25
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 25
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 50
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_before_target",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 50
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "adjust_bottle",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "c8f52d00e0eb236dc466fcfa10c93d1c5052b3f45189e4baa478e8a29dd7f3e2",
+          "stage_source_iteration": 50
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      },
+      {
+        "episode": {
+          "method": "native",
+          "phase": "native_after",
+          "task": "move_stapler_pad",
+          "episode": 1,
+          "seed": 21161030,
+          "success": false,
+          "return_": 0.0,
+          "primitive_steps": 400,
+          "chunks": 13,
+          "initial_observation_sha256": "f2daeebc3aaa655534bf865fab95f534b9c505ae71e082b21ea01484f2d2eec6",
+          "stage_source_iteration": 50
+        },
+        "seed_matches_any_reset_target_case": false,
+        "initial_observation_matches_any_reset_target_case": false
+      }
+    ],
+    "interpretation": "Separate PPO last-closed native probe bank, not a contemporaneous paired RESET control. No SAC5 native panel is pooled."
+  },
+  "checks": {
+    "all_reference_hashes_match": true,
+    "header_content_hash_matches": true,
+    "all_stages_complete": true,
+    "all_stage_files_match_summary": true,
+    "all_requested_evaluation_episodes_complete": true,
+    "any_evaluation_budget_truncated": false
+  },
+  "file_checks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset-latest.json",
+      "bytes": 7756,
+      "sha256": "9a6cbb176583dc777f03ff60a4ad8024c690f6e0e4ffb178878ef833a8d54021",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/summary.json",
+      "bytes": 224649,
+      "sha256": "8f5d5e2e9377df90fa955049e4464abf7ba58daa2977046902917b0132d1ff60",
+      "expected_sha256": "8f5d5e2e9377df90fa955049e4464abf7ba58daa2977046902917b0132d1ff60",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/contract.json",
+      "bytes": 12081,
+      "sha256": "ae0baf13bdd6fe5f1738a14ffa93dafda42c92137a397bfbb3a405679409d7c2",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/frozen-motor.json",
+      "bytes": 183,
+      "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/execution-migration.json",
+      "bytes": 3111,
+      "sha256": "b9ad11d2ae2847d05d05df5d074029ca331a9f8adf7a932a1994454cde5880d2",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/episodes.jsonl",
+      "bytes": 19243,
+      "sha256": "f7c34655f66828aec9012478e261d4f5e7a3ebe01f3d6a478b7e01118a22911b",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/audit.json",
+      "bytes": 4672,
+      "sha256": "188392b0303440f20bbcb41fc59443306be4987c2a68ff493cb202083cdf9063",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/child-cleanup.json",
+      "bytes": 396,
+      "sha256": "03d8bca62304c0e374a3f3d106cfa490f15521366152d9e8e6ad8e0c45a8854f",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/coordinator-recovery.pt",
+      "bytes": 16536088,
+      "sha256": "48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49",
+      "expected_sha256": "48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/ppo_reset-recovery.pt",
+      "bytes": 16480440,
+      "sha256": "18d4a83e39f3789735eb0ae7810b11597a62ff7c77351bcefa6c8a715ef4005b",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/continuation-manifest.json",
+      "bytes": 2061,
+      "sha256": "893249786db6784a51c76c235fdd1aa932f87145d25bc124fb56bffc56993753",
+      "expected_sha256": "893249786db6784a51c76c235fdd1aa932f87145d25bc124fb56bffc56993753",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/coordinator-recovery.pt",
+      "bytes": 16526616,
+      "sha256": "48e215501ef5e025a565855fbc240bd20bc9728e19046c7313703c74d837fb62",
+      "expected_sha256": "48e215501ef5e025a565855fbc240bd20bc9728e19046c7313703c74d837fb62",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset/snapshot.json",
+      "bytes": 14991,
+      "sha256": "893ef5fd643ffe0d0d19eeed736e2c7ba59cf28ef56b9ba42edad054feb0c78d",
+      "expected_sha256": "893ef5fd643ffe0d0d19eeed736e2c7ba59cf28ef56b9ba42edad054feb0c78d",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-10/stage.json",
+      "bytes": 1312,
+      "sha256": "48dd11a1e3b66a651d95afa9a2123aa65f12d665340d0d3c8e8f8a0d1123ee22",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-10/ppo_reset-recovery.pt",
+      "bytes": 16492810,
+      "sha256": "d385d0d80459f000104f7b87a7805b7429ee5dc076e5506c184a9422bbb81dcc",
+      "expected_sha256": "d385d0d80459f000104f7b87a7805b7429ee5dc076e5506c184a9422bbb81dcc",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-10/evaluation.json",
+      "bytes": 21490,
+      "sha256": "a7436132370c4eabbe6693639d44c5e292f05390565c3a4b570668ac55aace53",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-25/stage.json",
+      "bytes": 1313,
+      "sha256": "7fe37e2958ef354ecb2cc7c99fe83cd788f958ecc588c5439b22f25426bf5144",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-25/ppo_reset-recovery.pt",
+      "bytes": 16492810,
+      "sha256": "d6b6981d7b2a928e8c861867639dc1d4a86a2e833bac1b0565c7432bf6919a0c",
+      "expected_sha256": "d6b6981d7b2a928e8c861867639dc1d4a86a2e833bac1b0565c7432bf6919a0c",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo_reset-20261030-r2/experiment/stages/iteration-25/evaluation.json",
+      "bytes": 21491,
+      "sha256": "9f4884f0861e29d6fa68d716d2063f06a9713dcfcadd5a803fa3e8b50f57393c",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/stage.json",
+      "bytes": 1355,
+      "sha256": "64f7edce147b240b0c29f635f71a90372366d67b9081c3714e0882daec3692c9",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/ppo_reset-recovery.pt",
+      "bytes": 16492938,
+      "sha256": "a693070c050daf24c0e63b5d2a15e4770b819a31525dea6140f14b0175c2ae62",
+      "expected_sha256": "a693070c050daf24c0e63b5d2a15e4770b819a31525dea6140f14b0175c2ae62",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0011/experiment/stages/iteration-50/evaluation.json",
+      "bytes": 21495,
+      "sha256": "bced498473d7ef7bdf92a7cc078a134ecd7a550d4b3407de3e1b9824d3a544d0",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/stage.json",
+      "bytes": 1365,
+      "sha256": "82aaecf5ba35d9c8044860ff06fc7125703ddc0d379ffb95c876252f750cb827",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/ppo_reset-recovery.pt",
+      "bytes": 16493130,
+      "sha256": "1d9cddfc6c03c54a67c8f7e5031ca2f1d3110857dd38d14b3cda5eb6064ab8d9",
+      "expected_sha256": "1d9cddfc6c03c54a67c8f7e5031ca2f1d3110857dd38d14b3cda5eb6064ab8d9",
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/evaluation.json",
+      "bytes": 21500,
+      "sha256": "4c6d2e6fc59ef8176539846b85e352c25034fdff455d8cf5621002d2c6a687d3",
+      "expected_sha256": null,
+      "matches_expected": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/summary.json",
+      "bytes": 294119,
+      "sha256": "863175e377b6f77e8a98463e9e26a8da60963412e6cad18a7812b488c41168e4",
+      "expected_sha256": null,
+      "matches_expected": true
+    }
+  ],
+  "final_checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/coordinator-recovery.pt",
+    "sha256": "48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49"
+  },
+  "verification_scope": "Read-only saved JSON and file-byte hashes. No Torch deserialization, model construction/inference, tests, simulators, job control, allocation or resource mutation. Full-memory/SAC final endpoints are outside this RESET-only receipt. No memory-effect or paired-native-performance claim.",
+  "canonical_cost_accounting_scope": "Hash-bound saved owner audit plus independently rehashed snapshot and sum checks; optional full event replay stopped incomplete.",
+  "source_episode_count_provenance": {
+    "episodes": 2400,
+    "completed_trials": 600,
+    "episodes_per_trial": 4,
+    "source": "Saved source summary complete-trial count and method K4 contract; not a fresh raw-corpus episode scan"
+  },
+  "cost_checks": {
+    "stage_target_primitive_sum": 18592,
+    "stage_source_validation_primitive_sum": 39434,
+    "by_method_sum": 1021785
+  },
+  "reference_hash_comparisons": 9,
+  "recorded_artifact_hashes": 26
+}
