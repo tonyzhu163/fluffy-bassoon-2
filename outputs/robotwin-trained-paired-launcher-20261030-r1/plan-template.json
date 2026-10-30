@@ -1,0 +1,33 @@
+{
+  "schema": "robotwin_trained_pair_plan_v1",
+  "run_id": "robotwin-trained-pair-OWNER-FRESH-ID",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "lineage_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/OWNER-57016-CLEAN-WORKTREE",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-OWNER-FRESH-ID",
+  "parent_manifest": {
+    "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+    "sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
+  },
+  "methods": {
+    "ppo": {
+      "manifest": {"path": "/OWNER_PPO_MANIFEST", "sha256": "OWNER_SHA256"},
+      "checkpoint": {"path": "/OWNER_PPO_CHECKPOINT", "sha256": "OWNER_SHA256"},
+      "frozen_motor": {"path": "/OWNER_PPO_FROZEN_MOTOR", "sha256": "OWNER_SHA256"},
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-OWNER-FRESH-ID/ppo"
+    },
+    "ppo_reset": {
+      "manifest": {"path": "/OWNER_RESET_MANIFEST", "sha256": "OWNER_SHA256"},
+      "checkpoint": {"path": "/OWNER_RESET_CHECKPOINT", "sha256": "OWNER_SHA256"},
+      "frozen_motor": {"path": "/OWNER_RESET_FROZEN_MOTOR", "sha256": "OWNER_SHA256"},
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-OWNER-FRESH-ID/ppo_reset"
+    }
+  },
+  "owner_release": {"path": "/OWNER_EXCLUSIVE_RELEASE", "sha256": "OWNER_SHA256"},
+  "compute_binding": {"path": "/OWNER_THIS_SLICE_RESERVATION", "sha256": "OWNER_SHA256"},
+  "resources": {"gpus": 1, "cpus": 32, "memory_gib": 192, "shared_memory_gib": 16, "scheduler_cap_seconds": 2700},
+  "maximum_seconds": 2520,
+  "child_wall_seconds": 2160,
+  "maximum_new_source_actions": 21600,
+  "maximum_input_due_evaluation_actions": 48800
+}

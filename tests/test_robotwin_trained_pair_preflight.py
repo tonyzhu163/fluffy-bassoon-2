@@ -83,7 +83,8 @@ def prepared_pair(tmp_path,recovery_runtime,monkeypatch):
         canonical_head=heads[method]) for method in preflight.METHODS}
     release_ref=write(tmp_path/"owner-release.json",dict(methods=released))
     snapshot_ref=write(tmp_path/"compute-snapshot.json",dict(residual=2700))
-    compute_ref=write(tmp_path/"compute.json",dict(original_compute_snapshot=snapshot_ref))
+    compute_ref=write(tmp_path/"compute.json",dict(authority=snapshot_ref,
+        prior_charge_and_physical_snapshot=snapshot_ref))
     plan=dict(schema="robotwin_trained_pair_plan_v1",runtime_commit="b"*40,lineage_commit="a"*40,
         parent_manifest=parent_ref,methods=methods,child_commands=commands,worktree=str(worktree),
         output=str(tmp_path/"pair"),owner_release=release_ref,compute_binding=compute_ref,

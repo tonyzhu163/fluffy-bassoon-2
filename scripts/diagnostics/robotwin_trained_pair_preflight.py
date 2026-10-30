@@ -138,7 +138,8 @@ def run_preflight(plan_path,plan_sha256):
     from fluffy_bassoon.meta_rl.collection_admission import assert_resume_allowed,assert_campaign_checkpoint_fence
     require(not driver.torch.cuda.is_initialized(),"CUDA was initialized during CPU preflight")
     rows={};roots={};snapshots={};artifact_refs=[plan["parent_manifest"],plan["owner_release"],plan["compute_binding"],
-        compute["original_compute_snapshot"]]+[release["methods"][method]["terminal_receipt"] for method in METHODS]
+        compute["authority"],compute["prior_charge_and_physical_snapshot"]]+[
+            release["methods"][method]["terminal_receipt"] for method in METHODS]
     for method in METHODS:
         item=plan["methods"][method];command=plan["child_commands"][method]
         require(isinstance(command,list) and len(command)>2 and all(isinstance(v,str) for v in command),
