@@ -101,6 +101,9 @@ export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:
 export PYTHONPATH=$TASK_CUDA:$TASK_WT/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
 TASK_TIMEOUT=$(( TASK_SLICE - ( $(date +%s) - TASK_STARTED ) - 60 ))
 test "$TASK_TIMEOUT" -gt 60
+# Setup/model loading and qualification consume this same absolute slice.
+# Leave60s between graceful driver completion and the outer timeout/cleanup.
+TASK_STOP_UNIX=$(( $(date +%s) + TASK_TIMEOUT - 60 ))
 timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   -m fluffy_bassoon.meta_rl.vla_source40_frozen_validation \
   --output "$TASK_OUT/experiment" --models "$TASK_OUT/models.json" --models-sha256 "$TASK_MODELS_SHA" \
@@ -109,4 +112,5 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   --simulator-python /mowenjie/envs/wam-libero-plus-py310/bin/python \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
-  --max-total-actions 56000 --max-elapsed-seconds 14400 "${TASK_RESUME_ARGS[@]}"
+  --max-total-actions 56000 --max-elapsed-seconds 14400 --invocation-stop-unix "$TASK_STOP_UNIX" \
+  "${TASK_RESUME_ARGS[@]}"

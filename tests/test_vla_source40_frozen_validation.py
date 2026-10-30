@@ -55,6 +55,17 @@ def test_fixed_eight_goals_paired_disjoint_cases_and_joint_budget():
         module.plan(dict(source_validation_task_keys=selected[::-1]), dict(tasks=tasks()))
 
 
+def test_invocation_stop_counts_loading_and_is_independent_of_resume_contract():
+    assert module.invocation_deadline(14400, 1600, now_unix=1000, now_monotonic=50) == 650
+    assert module.invocation_deadline(14400, 20000, now_unix=1000, now_monotonic=50) == 14450
+    assert module.invocation_deadline(14400, 900, now_unix=1000, now_monotonic=50) == 50
+    assert module.invocation_deadline(14400, now_unix=1000, now_monotonic=50) == 14450
+    assert module.TRIAL_TIME_RESERVE == 360
+    for elapsed, stop in ((14401, None), (0, None), (14400, float('nan'))):
+        with pytest.raises(ValueError, match='four-hour ceiling'):
+            module.invocation_deadline(elapsed, stop)
+
+
 def test_final_source_requires_real_all40_coverage_mode_and_optimizer_advancement():
     payload, feature, keys = source()
     assert module.source_admission(payload, 'full', feature, keys, schedule_sha256='source-plan-sha').observation_dim == 4104

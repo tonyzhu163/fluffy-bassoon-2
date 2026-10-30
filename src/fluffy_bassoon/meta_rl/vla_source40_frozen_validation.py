@@ -35,7 +35,24 @@ from .warmstart import atomic_save, checked_load, validate_weights
 
 FORMAT = 'source40_frozen_ppo_validation_v1'
 SLOT_CAP, TOTAL_CAP, WORKER_SECONDS = 3500, 56000, 14400
+TRIAL_TIME_RESERVE = 360
 MODES = ('full', 'episode')
+
+
+def invocation_deadline(max_elapsed_seconds, stop_unix=None, *, now_unix=None, now_monotonic=None):
+    """Keep setup/model loading inside the scheduler slice without changing its contract.
+
+    The cumulative worker ledger remains authoritative. The optional absolute
+    stop is invocation-local, so a shorter exact-source retry can retain the
+    same scientific contract and finish at a complete trial boundary.
+    """
+    if (not math.isfinite(max_elapsed_seconds) or not 0 < max_elapsed_seconds <= WORKER_SECONDS
+            or (stop_unix is not None and not math.isfinite(stop_unix))):
+        raise ValueError('Require a finite invocation stop inside the approved four-hour ceiling')
+    wall = time.time() if now_unix is None else now_unix
+    monotonic = time.monotonic() if now_monotonic is None else now_monotonic
+    remaining = max_elapsed_seconds if stop_unix is None else min(max_elapsed_seconds, max(0., stop_unix - wall))
+    return monotonic + remaining
 
 
 def plan(campaign, schedule):
@@ -188,6 +205,7 @@ def main(argv=None):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--max-total-actions', type=int, required=True)
     parser.add_argument('--max-elapsed-seconds', type=float, default=14400.)
+    parser.add_argument('--invocation-stop-unix', type=float)
     parser.add_argument('--device', default='cuda:0')
     parser.add_argument('--port', type=int, default=8770)
     parser.add_argument('--resume', action='store_true')
@@ -195,6 +213,10 @@ def main(argv=None):
     if (sys.platform != 'linux' or socket.gethostname() != args.expected_hostname
             or args.max_total_actions != TOTAL_CAP or not 0 < args.max_elapsed_seconds <= WORKER_SECONDS):
         raise ValueError('Require allocated Linux and the approved56k/4h frozen-validation limits')
+    # Includes all subsequent contract/model loading and qualification. The
+    # launcher supplies a stop before its outer timeout, not a fresh4h clock.
+    deadline = invocation_deadline(args.max_elapsed_seconds, args.invocation_stop_unix)
+    started = time.monotonic()
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
     root = Path(__file__).resolve().parents[3]
@@ -238,7 +260,6 @@ def main(argv=None):
             rng=rng_state(), motor_rng=save_motor_rng(motor.policy._rng))
         atomic_save(recovery, progress)
     server, connected = None, None
-    deadline, started = time.monotonic() + args.max_elapsed_seconds, time.monotonic()
     stop = None
     try:
         for ordinal in range(progress['slot'], len(slots)):
@@ -246,7 +267,7 @@ def main(argv=None):
             task, mode = slot['task'], slot['mode']
             output = args.output / f'slot-{ordinal:02d}'
             output.mkdir(exist_ok=True)
-            if time.monotonic() + 180 >= deadline:
+            if time.monotonic() + TRIAL_TIME_RESERVE >= deadline:
                 stop = 'complete_trial_time_reservation'
                 break
             if connected != task['task_key']:
@@ -272,7 +293,8 @@ def main(argv=None):
             initial_trial = progress['trial'] if ordinal == progress['slot'] else 0
             for trial in range(initial_trial, 2):
                 if (physical_charge(sim.journal)['total_action_charge'] + 1640 > SLOT_CAP
-                        or total_charge(args.output) + 1640 > TOTAL_CAP or time.monotonic() + 180 >= deadline):
+                        or total_charge(args.output) + 1640 > TOTAL_CAP
+                        or time.monotonic() + TRIAL_TIME_RESERVE >= deadline):
                     stop = 'complete_trial_action_or_time_reservation'
                     break
                 physical_case = slot['cases'][trial]
@@ -325,6 +347,7 @@ def main(argv=None):
         total_action_charge=total_charge(args.output), slot_costs=[physical_charge(args.output / f'slot-{ordinal:02d}' / 'execution-journal')
             for ordinal in range(len(slots))], latest_recovery_sha256=file_sha256(recovery),
         elapsed_seconds=time.monotonic() - started, optimizer_updates=0,
+        invocation_stop_unix=args.invocation_stop_unix,
         weights_unchanged=all(policy_signature(models[mode]) == provenance[mode]['tensor_sha256'] for mode in MODES)))
 
 
