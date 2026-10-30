@@ -5,6 +5,8 @@ from copy import deepcopy
 import json
 import math
 import os
+import hashlib
+import fcntl
 from pathlib import Path
 
 
@@ -23,6 +25,81 @@ def assert_resume_allowed(path, *, checkpoint=None):
                 or checkpoint.get("metadata", {}).get("resume_blocked")
                 or any(state.get("rejected_group") for state in states.values())):
             raise RuntimeError("Ordinary resume blocked by rejected-group checkpoint metadata")
+        vector_root=checkpoint.get("parallel_vector_root")
+        if vector_root:
+            canonical=Path(vector_root)
+            if not canonical.is_dir():
+                raise RuntimeError("Canonical parallel collection journal is unavailable")
+            for journal in canonical.glob("group-*.json"):
+                if json.loads(journal.read_text()).get("status") not in ("checkpointed","cancelled_before_dispatch"):
+                    raise RuntimeError("Uncheckpointed native group blocks ordinary resume, including relocated copies")
+        group=checkpoint.get("parallel_collection_group")
+        if group:
+            journal=Path(group["journal_path"])
+            committed=json.loads(journal.read_text())
+            checkpoint_path=path/"coordinator-recovery.pt" if path.is_dir() else path
+            digest=hashlib.sha256()
+            with checkpoint_path.open("rb") as stream:
+                for block in iter(lambda:stream.read(1<<20),b""):digest.update(block)
+            if (committed.get("status")!="checkpointed" or committed.get("group_id")!=group.get("group_id")
+                    or committed.get("checkpoint_sha256")!=digest.hexdigest()):
+                raise RuntimeError("Ordinary resume blocked by an unacknowledged physical collection group")
+
+
+def campaign_checkpoint_fence(budget):
+    snapshot=budget.snapshot()
+    return dict(canonical_root=str(budget.root.resolve()),
+        **{key:snapshot[key] for key in ("journal_events","journal_sha256","charged_actions","decision_count")})
+
+
+def assert_campaign_checkpoint_fence(campaign_root, checkpoint, *, live_budget=None):
+    """Read canonical history before GPU setup; stale copies cannot refund it."""
+    fence=checkpoint.get("campaign_journal_fence")
+    root=Path(campaign_root).resolve()
+    if not fence or fence.get("canonical_root")!=str(root):
+        raise RuntimeError("Parallel recovery requires its original canonical campaign journal fence")
+    lock=None
+    try:
+        if live_budget is None:
+            lock=(root/"campaign.lock").open("r")
+            try: fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+            except BlockingIOError as error:
+                raise RuntimeError("Another process owns the canonical campaign; resume is blocked") from error
+        else:
+            live_budget._require_open()
+            if live_budget.root.resolve()!=root:
+                raise RuntimeError("Live campaign differs from the recovery fence")
+        paths=sorted((root/"events").glob("*.json"))
+        limit=fence["journal_events"]
+        if type(limit) is not int or limit<1 or len(paths)<limit:
+            raise RuntimeError("Canonical campaign journal is shorter than the recovery fence")
+        previous=None; charged=0; decisions={}
+        for index,path in enumerate(paths):
+            if path.name!=f"{index:010d}.json":
+                raise RuntimeError("Canonical campaign journal sequence is incomplete")
+            event=json.loads(path.read_text());recorded=event.pop("sha256",None)
+            encoded=json.dumps(event,sort_keys=True,separators=(",",":"),allow_nan=False).encode()
+            digest=hashlib.sha256(encoded).hexdigest()
+            if recorded!=digest or event.get("sequence")!=index or event.get("previous_sha256")!=previous:
+                raise RuntimeError("Canonical campaign journal integrity failed")
+            previous=digest
+            if index>=limit:
+                if event.get("kind") not in ("run",):
+                    raise RuntimeError("Uncheckpointed physical campaign events block ordinary resume")
+                continue
+            kind=event["kind"]
+            if kind=="reserve":
+                granted=event["granted"];decisions[event["decision_id"]]=granted;charged+=granted
+            elif kind=="resolve":
+                charged+=event["actual_actions"]-decisions[event["decision_id"]]
+                decisions[event["decision_id"]]=event["actual_actions"]
+            elif kind=="receipt":charged+=event["receipt"]["actual_actions"]
+            if index==limit-1 and (digest!=fence["journal_sha256"]
+                    or charged!=fence["charged_actions"] or len(decisions)!=fence["decision_count"]):
+                raise RuntimeError("Canonical campaign fence hash/counters differ from recovery")
+    finally:
+        if lock is not None:
+            fcntl.flock(lock.fileno(),fcntl.LOCK_UN);lock.close()
 
 
 def _fsync_directory(directory):

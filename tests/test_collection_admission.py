@@ -3,6 +3,8 @@ from copy import deepcopy
 import importlib.util
 from pathlib import Path
 import pickle
+import json
+import hashlib
 
 import numpy as np
 import pytest
@@ -10,7 +12,9 @@ import torch
 
 from fluffy_bassoon.meta_rl.collection_admission import (
     RESUME_BLOCKER, admit_collected_group, assert_resume_allowed,
+    campaign_checkpoint_fence, assert_campaign_checkpoint_fence, quarantine_collection_failure,
 )
+from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
 
 
 class Schedule:
@@ -149,3 +153,66 @@ def test_marker_and_relocated_recovery_fail_before_any_cuda_runtime(tmp_path, mo
     torch.save({"states": {"ppo": {"rejected_group": {"resume_blocked": True}}}}, relocated)
     with pytest.raises(RuntimeError, match="checkpoint metadata"):
         module.main(arguments(tmp_path) + ["--resume", str(relocated)])
+
+
+def test_incomplete_native_group_preserves_forensics_and_never_enters_pending(tmp_path):
+    learner,state,group=fixture()
+    quarantine_collection_failure(state,output_dir=tmp_path,method="ppo",error=OSError("RPC failure"),
+        capture_rng=lambda:{"saved":19},save_payload=save_pickle,
+        details={"charged_actions":33,"pending_physical_intent":True})
+    assert state["pending"]==[("old",{"primitive_steps":10})]
+    assert state["steps"]==10
+    with (tmp_path/"collection-failure.pt").open("rb") as stream: saved=pickle.load(stream)
+    assert saved["details"]["charged_actions"]==33
+    with pytest.raises(RuntimeError,match="blocked"):assert_resume_allowed(tmp_path)
+
+
+def campaign(root,run):
+    return CampaignBudget(root,campaign_id="fence-test",total_actions=30,source_caps={"ppo":30},
+        contract={"fixed":True},run_id=run,source_commit="a"*40)
+
+
+def test_canonical_campaign_fence_allows_run_registration_but_rejects_uncheckpointed_physics(tmp_path):
+    root=tmp_path/"ledger"
+    with campaign(root,"first") as budget:
+        budget.reserve("one",4,phase="source",method="ppo",task="scan_object",episode="e",chunk=0,policy_version="p0")
+        budget.resolve("one",2)
+        checkpoint={"campaign_journal_fence":campaign_checkpoint_fence(budget)}
+        assert_campaign_checkpoint_fence(root,checkpoint,live_budget=budget)
+    assert_campaign_checkpoint_fence(root,checkpoint)
+    with campaign(root,"second") as budget:
+        assert_campaign_checkpoint_fence(root,checkpoint,live_budget=budget)
+        budget.reserve("two",4,phase="source",method="ppo",task="scan_object",episode="e2",chunk=0,policy_version="p0")
+        with pytest.raises(RuntimeError,match="Uncheckpointed physical"):
+            assert_campaign_checkpoint_fence(root,checkpoint,live_budget=budget)
+    with pytest.raises(RuntimeError,match="Uncheckpointed physical"):
+        assert_campaign_checkpoint_fence(root,checkpoint)
+
+
+def test_copied_unacknowledged_group_cannot_drop_the_original_blocker(tmp_path):
+    canonical=tmp_path/"canonical-vector";canonical.mkdir()
+    journal=canonical/"group-00000001.json"
+    group=dict(group_id="g",status="physical_complete_uncheckpointed",journal_path=str(journal))
+    journal.write_text(json.dumps(group))
+    payload=dict(parallel_collection_group=group,parallel_vector_root=str(canonical))
+    copy=tmp_path/"copied-recovery.pt";torch.save(payload,copy)
+    with pytest.raises(RuntimeError,match="Uncheckpointed native"):
+        assert_resume_allowed(copy,checkpoint=payload)
+    journal.write_text(json.dumps(dict(group,status="checkpointed",
+        checkpoint_sha256=hashlib.sha256(copy.read_bytes()).hexdigest())))
+    assert_resume_allowed(copy,checkpoint=payload)
+    later=canonical/"group-00000002.json"
+    later.write_text(json.dumps(dict(group_id="later",status="admitted",dispatch_count=1)))
+    with pytest.raises(RuntimeError,match="Uncheckpointed native"):
+        assert_resume_allowed(copy,checkpoint=payload)
+
+
+def test_default_scalar_cli_cannot_bypass_parallel_recovery_fence_before_cuda(tmp_path,monkeypatch):
+    module=driver()
+    def forbidden_cuda():raise AssertionError("CUDA touched before explicit parallel recovery configuration")
+    monkeypatch.setattr(module.torch.cuda,"is_available",forbidden_cuda)
+    copy=tmp_path/"stale-parallel.pt"
+    torch.save(dict(contract={"parallel_source_collection":{"lanes":6,"group_seconds_bound":120}},
+                    campaign_journal_fence={"canonical_root":"/original"}),copy)
+    with pytest.raises(RuntimeError,match="same explicit collector"):
+        module.main(arguments(tmp_path)+["--resume",str(copy)])

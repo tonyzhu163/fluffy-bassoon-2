@@ -18,6 +18,7 @@ from dataclasses import asdict
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import random
 import sys
@@ -31,6 +32,7 @@ from fluffy_bassoon.meta_rl.vla_noise_ppo import PPOConfig, RecurrentNoisePPO, o
 from fluffy_bassoon.meta_rl.vla_noise_sac import SACConfig, NoiseSAC
 from fluffy_bassoon.meta_rl.collection_admission import (
     admit_collected_group, assert_resume_allowed, quarantine_collection_failure,
+    campaign_checkpoint_fence, assert_campaign_checkpoint_fence,
 )
 
 
@@ -308,6 +310,17 @@ def append_json(path,value):
         stream.write(json.dumps(value,allow_nan=False)+"\n")
 
 
+def durable_torch_replace(payload, path):
+    """The native group fence cannot clear before file and directory fsync."""
+    temporary=path.with_suffix(".tmp")
+    torch.save(payload,temporary)
+    with temporary.open("rb") as stream: os.fsync(stream.fileno())
+    temporary.replace(path)
+    descriptor=os.open(path.parent,os.O_RDONLY)
+    try: os.fsync(descriptor)
+    finally: os.close(descriptor)
+
+
 class BalancedSchedule:
     """Uniform task blocks; actual task interactions are reported separately."""
     def __init__(self,tasks,seed):
@@ -462,11 +475,23 @@ def parse_args(argv=None):
 
 def main(argv=None):
     args=parse_args(argv)
+    if args.collector_lanes>1:
+        for name in ("model_path","norm_stats","robotwin_root","rlinf_root","output",
+                     "campaign_root","campaign_prior_receipts","capture_qualification","resume"):
+            value=getattr(args,name)
+            if value is not None:setattr(args,name,value.resolve())
     resume_joint=None
     if args.resume is not None:
         resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
         resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
         assert_resume_allowed(args.resume,checkpoint=resume_joint)
+        parallel=resume_joint.get("contract",{}).get("parallel_source_collection")
+        if parallel or resume_joint.get("campaign_journal_fence"):
+            if (not parallel or args.collector_lanes!=parallel["lanes"]
+                    or args.collector_group_seconds!=parallel["group_seconds_bound"]
+                    or args.campaign_root is None):
+                raise RuntimeError("Parallel recovery requires the same explicit collector and canonical campaign configuration before GPU setup")
+            assert_campaign_checkpoint_fence(args.campaign_root,resume_joint)
     if sys.platform!="linux" or not torch.cuda.is_available():
         raise RuntimeError("Run only inside a qualified allocated Linux CUDA job")
     if (args.output/"contract.json").exists():
@@ -590,6 +615,8 @@ def main(argv=None):
         if args.campaign_prior_receipts:
             for receipt in json.loads(args.campaign_prior_receipts.read_text()):
                 budget.import_receipt(**receipt)
+        if args.collector_lanes>1 and resume_joint is not None:
+            assert_campaign_checkpoint_fence(args.campaign_root,resume_joint,live_budget=budget)
         env=CampaignEnv(env,budget,run_id=args.output.name)
     policy_archive=BehaviorPolicyArchive(args.output/"corpus"/"policies") if args.record_corpus else None
     vector_env=None
@@ -647,9 +674,17 @@ def main(argv=None):
                      resume_stage="source",elapsed_seconds=time.monotonic()-started)
         rejected=source_states.get(method,{}).get("rejected_group")
         if rejected: payload.update(rejected_group=rejected,resume_blocked=True)
+        if vector_env is not None:
+            payload["campaign_journal_fence"]=campaign_checkpoint_fence(budget)
+            payload["parallel_vector_root"]=str(vector_env.root.resolve())
+            group=vector_env.group_recovery_metadata()
+            if group and group.get("status") not in ("checkpointed","cancelled_before_dispatch"):
+                payload["parallel_collection_group"]=group
         if iteration_state is not None: payload.update(iteration_state)
-        torch.save(payload,temporary)
-        temporary.replace(path)
+        if vector_env is not None:durable_torch_replace(payload,path)
+        else:
+            torch.save(payload,temporary)
+            temporary.replace(path)
     def native(phase,*,unit_prefix="",stage=None,tasks=None,stage_iteration=None):
         rng=np.random.default_rng(args.seed+907)
         for task in args.eval_tasks if tasks is None else tasks:
@@ -801,9 +836,18 @@ def main(argv=None):
                         elapsed_seconds=time.monotonic()-started)
         if collector_time is not None:
             recovery["collector_time_admission"]=collector_time.state_dict()
+        if vector_env is not None:
+            recovery["campaign_journal_fence"]=campaign_checkpoint_fence(budget)
+            recovery["parallel_vector_root"]=str(vector_env.root.resolve())
+            group=vector_env.group_recovery_metadata()
+            if group and group.get("status") not in ("checkpointed","cancelled_before_dispatch"):
+                recovery["parallel_collection_group"]=group
         if any(s.get("rejected_group") for s in source_states.values()): recovery["resume_blocked"]=True
-        torch.save(recovery,temporary)
-        temporary.replace(path); last_joint_steps=total
+        if vector_env is not None:durable_torch_replace(recovery,path)
+        else:
+            torch.save(recovery,temporary)
+            temporary.replace(path)
+        last_joint_steps=total
     def save_state(method,force=False):
         state=source_states[method]
         if force or state["steps"]-state["last_checkpoint_steps"]>=args.checkpoint_steps:
@@ -931,11 +975,19 @@ def main(argv=None):
                     **lane_iteration[lane])(row))
             group_receipt=vector_env.finish_group()
         except CollectionNotStarted as error:
-            vector_env.cancel_group(str(error))
-            restore_unstarted_source_group(state,plan)
+            try: vector_env.cancel_group(str(error))
+            finally: restore_unstarted_source_group(state,plan)
             raise WallBudgetReached(str(error)) from error
-        except ProductionAdmissionError:
-            restore_unstarted_source_group(state,plan)
+        except ProductionAdmissionError as error:
+            proof=vector_env.group_recovery_metadata()
+            if vector_env.can_restore_unstarted_group():
+                restore_unstarted_source_group(state,plan)
+            else:
+                quarantine_collection_failure(state,output_dir=args.output,method=method,error=error,
+                    capture_rng=capture_rng,save_payload=torch.save,collected=collected,
+                    details=dict(plan=plan,vector=proof,
+                                 vector_resume_blocker=getattr(vector_env,"resume_blocker_metadata",None),
+                                 campaign_budget=budget.snapshot()))
             raise
         except BaseException as error:
             if not admitted:
@@ -956,6 +1008,7 @@ def main(argv=None):
         state["completed_trials"]+=len(collected)
         save_state(method,force=True)
         save_joint(force=True)
+        vector_env.acknowledge_checkpoint(args.output/"coordinator-recovery.pt")
         log("source_execution_group_complete",method=method,source_steps=state["steps"],
             lanes=len(collected),trial_seconds=elapsed,replay_errors=errors,
             completed_source_trials=state["completed_trials"],group_receipt=group_receipt)
