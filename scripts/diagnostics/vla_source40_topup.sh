@@ -67,7 +67,8 @@ export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:
 export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH="$TASK_TEST:$TASK_CODE/src" \
   "$TASK_TORCH" -m pytest -q -p no:cacheprovider \
-  tests/test_vla_source40_topup.py tests/test_vla_source40.py tests/test_vla_source40_ppo_worker.py \
+  tests/test_vla_source40_topup.py tests/test_vla_source40_topup_worker.py \
+  tests/test_vla_source40.py tests/test_vla_source40_ppo_worker.py \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 TASK_SUITE=${TASK_SLOT%%:*}
 TASK_NUMBER=${TASK_SLOT#*:}

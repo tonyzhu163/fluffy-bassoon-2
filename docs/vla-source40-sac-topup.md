@@ -1,7 +1,7 @@
 # Cumulative source40 SAC top-up
 
 Prepared2026-10-31. **Executable preparation, not a launch approval.** Full
-top-up remains proposed at24 GPUh /120 GB new storage. The proposed one-goal
+top-up remains proposed at24 NEW GPUh /120 GB new storage. The proposed one-goal
 migration qualification is at most1,000 cumulative GPU-seconds and5,000 NEW
 simulator actions, unfunded until the owner assigns reclaimed resources.
 
@@ -109,16 +109,56 @@ Focused tests run inside that actual allocation; none ran on macOS.
 
 For a later approved production phase, write an overrides JSON mapping
 `libero_spatial:00/train` to the terminal qualification output root, then repeat
-`plan --mode production --overrides ...` with a fresh plan filename. Eight
-already approved3h allocations can each execute the fixed outcome-independent
-`scripts/diagnostics/vla_source40_topup_worker.sh COMMIT PREFIX PLAN LEDGER WORKER`
-for WORKER0–7. Each train stream has a2,100-second cumulative child clock;
-40×2100 plus1000 qualification and1400 final-competence seconds equals24h.
-Gross allocation ceilings
-include setup/idle; no packing speedup is assumed. Qualification time funded
-from the original pool is aliased once, not requested again as new GPU time.
-Unattempted assignments and stopped case suffixes remain explicit. A failure
-stops its worker for diagnosis instead of blindly launching the next goal.
+`plan --mode production --overrides ...` with a fresh plan filename. The NEW
+production request consists of eight workers, each at most2h55m actual execution
+and a60s startup allowance, plus a final check of at most1,400s:
+**8×(10,500+60)+1,400=85,880 GPU-seconds**, leaving520s unassigned under24h.
+The earlier qualification is charged once to its original32h pool; it is not
+another NEW GPU-time request. This describes a ceiling, not eight available
+GPUs or a promise that every source quota finishes within it.
+
+After approval, bind the exact production plan/pin/prefix in a root-funded
+`source40_sac_production_macro_budget_v1` budget. An unfunded template is in
+`outputs/libero40-sac-production-worker-budget-20261031-r1/budget-template.json`.
+For worker0–7, in an already approved allocation:
+
+```bash
+bash "$PINNED/scripts/diagnostics/vla_source40_topup_worker.sh" \
+  "$COMMIT" "$PREFIX" "$PRODUCTION_PLAN" "$CANONICAL_TOPUP_LEDGER" "$WORKER" "$MACRO_BUDGET"
+```
+
+The immutable macro clock includes deployment checks, setup, child work,
+inter-child gaps/idle, failures and teardown. Each resume gets a fresh attempt
+directory while preserving assignment bytes and prior outcome receipts. Before
+requesting a retry allocation, read its **remaining** scheduler duration:
+
+```bash
+PYTHONPATH="$PINNED/src" "$MODEL_PYTHON" -m fluffy_bassoon.meta_rl.vla_source40_topup_worker remaining \
+  --root "/mowenjie/fluffy-bassoon-2/outputs/$PREFIX/worker-$WORKER"
+```
+
+Request at most the returned `maximum_new_scheduler_seconds`, then add
+`--resume` to the same worker command. It does not reset a10,500s deadline.
+Unclosed attempts remain fully charged and require explicit terminal
+reconciliation, rather than assuming they consumed no GPU time.
+
+Every train stream retains its own original2,100s cumulative child clock and
+full partial-case recovery. The wrapper computes the next slice from **both**
+remaining child and macro time; it never hands a closed child a fresh2,040s.
+Only a successful terminal, quota-fulfilled or bank-exhausted stream with exact
+plan/contract/full-recovery/candidate evidence is skipped. `completed=true`
+alone, a wall stop, exhausted child time or a partial case is insufficient.
+Failed/unfulfilled streams stop the worker for diagnosis and remain visible
+alongside unattempted assignments. A macro receipt is not an all40 completion
+or512-case-bank exhaustion claim.
+
+The canonical child `time_hold` aggregate still has its independent86,400s
+ceiling:40×2,100 + up to1,000 historical qualification +1,400 final check.
+Those conservative nested child charges overlap their allocated macro time;
+**never add them to the macro GPU bill**. Both bounds must pass. Macro setup/
+idle is billed even when it produced no child action. Historical qualification
+cost is imported once and not re-reserved as a new1,000s grant. No packing
+speedup or automatic scientific/resource expansion is assumed.
 
 NEW final-teacher competence is reserved inside this same1M cap:the same eight
 predeclared source goals, states40/41, native/mean/sample,48 physical queries,
