@@ -7,7 +7,8 @@ Linux CPU resources and independently review this controller before actual use.
 
 ## Exact scope
 
-Run only **inside the exact owned Baige allocation through its WebShell**.
+Run only **inside the exact owned Baige allocation through its WebShell**. The
+production CLI additionally requires an actual`job-*`Linux hostname.
 Development SSH remains artifact/read-only access. The production CLI fixes the
 old CPU supervisor's c715 artifact SHA
 `492efd191e0dd1d45433d290a92c6bcd766593bfd8783e97321e7705909413bf`, actual executor
@@ -17,7 +18,10 @@ PID/start ticks, exact supervisor script, runID/method, code-root and output.
 Before every signal, the controller verifies Linux hostname, same UID, unique
 full supervisor command identity, exact Python/script path and script SHA,
 source pin/code-root/output/runID/method, current PID start ticks, and the clean
-executor Git pin. Linux pidfd signalling is mandatory to eliminate the PID-reuse
+executor Git pin. Waiting uses one-second cheap fresh /proc identity/StateT
+checks; it does not repeat Git, script hashing or uniqueness scans on each poll.
+Full checks repeat before signals, before artifact audit and before the final
+receipt. Linux pidfd signalling is mandatory to eliminate the PID-reuse
 window; there is no unsafe `kill(PID)` fallback. An already stopped parent is
 rejected rather than claimed as our own pause. The controller itself must run
 from an exact clean Git pin supplied by root.

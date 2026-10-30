@@ -106,11 +106,11 @@ def parent_command_matches(value,owner):
     except ControlError:return False
 
 
-def check_parent(owner,*,allow_stopped=True,unique=True):
+def check_parent(owner,*,allow_stopped=True,unique=True,full=True):
     if sys.platform!='linux' or socket.gethostname()!=owner.hostname:raise ControlError('Linux hostname ownership mismatch')
     if owner.pid<=1 or owner.start_ticks<1:raise ControlError('Invalid explicit supervisor PID/start time')
-    if sha(owner.supervisor_script)!=owner.supervisor_sha256:raise ControlError('Supervisor script changed from its pinned artifact')
-    if owner.check_git:
+    if full and sha(owner.supervisor_script)!=owner.supervisor_sha256:raise ControlError('Supervisor script changed from its pinned artifact')
+    if full and owner.check_git:
         actual=subprocess.check_output(['git','rev-parse','HEAD'],cwd=owner.code_root,text=True).strip()
         dirty=subprocess.check_output(['git','status','--porcelain'],cwd=owner.code_root,text=True).strip()
         if actual!=owner.source_commit or dirty:raise ControlError('Owned executor worktree is not the exact clean pin')
@@ -119,7 +119,7 @@ def check_parent(owner,*,allow_stopped=True,unique=True):
             or current['state']=='Z' or not parent_command_matches(current,owner)):
         raise ControlError('Supervisor PID/start time/command ownership mismatch')
     if not allow_stopped and current['state'] in ('T','t'):raise ControlError('Supervisor was already stopped by another owner action')
-    if unique:
+    if full and unique:
         matching=[value for pid in pids() if (value:=proc(pid)) is not None and value['state']!='Z' and parent_command_matches(value,owner)]
         if len(matching)!=1 or matching[0]['pid']!=owner.pid:raise ControlError('Owned supervisor command is not unique')
     return current
@@ -152,7 +152,7 @@ def direct_children(owner):
     return [value for pid in pids() if (value:=proc(pid)) is not None and value['ppid']==owner.pid]
 
 
-def pause_and_drain(owner,*,wait_seconds,poll_seconds=.1,rollback_on_timeout=False,audit=None):
+def pause_and_drain(owner,*,wait_seconds,poll_seconds=1.,rollback_on_timeout=False,audit=None):
     """Only the supervisor receives signals; finite direct children keep running."""
     if not hasattr(os,'pidfd_open') or not hasattr(signal,'pidfd_send_signal'):
         raise ControlError('Linux pidfd signalling is required; no unsafe PID fallback')
@@ -171,12 +171,12 @@ def pause_and_drain(owner,*,wait_seconds,poll_seconds=.1,rollback_on_timeout=Fal
     try:
         checked_signal(owner,fd,signal.SIGSTOP,signals);paused=True
         stop_deadline=time.monotonic()+2.
-        while check_parent(owner)['state'] not in ('T','t'):
+        while check_parent(owner,full=False,unique=False)['state'] not in ('T','t'):
             if time.monotonic()>=stop_deadline:raise ControlError('Supervisor did not acknowledge SIGSTOP')
             time.sleep(.01)
         deadline=time.monotonic()+wait_seconds;observations=[]
         while True:
-            parent=check_parent(owner)
+            parent=check_parent(owner,full=False,unique=False)
             if parent['state'] not in ('T','t'):raise ControlError('Supervisor did not remain stopped')
             live=[]
             for value in direct_children(owner):
@@ -366,6 +366,8 @@ def main():
     parser.add_argument('--python',type=Path,default=Path('/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python'))
     parser.add_argument('--wait-seconds',type=float,default=4000.);parser.add_argument('--rollback-on-timeout',action='store_true')
     args=parser.parse_args();repo=Path(__file__).resolve().parents[2]
+    if sys.platform!='linux' or not socket.gethostname().startswith('job-'):
+        raise ControlError('Production control requires the actual owned job allocation, never development SSH')
     if (not re.fullmatch(r'[0-9a-f]{40}',args.controller_commit) or not 0<args.wait_seconds<=4500
             or args.method not in ('ppo','sac','ppo_reset') or args.output.name!=args.run_id
             or args.code_root.name!=args.run_id):raise ControlError('Invalid explicit owner/controller scope')

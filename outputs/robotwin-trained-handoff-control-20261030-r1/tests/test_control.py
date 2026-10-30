@@ -195,3 +195,16 @@ def test_stale_start_identity_cannot_send_rollback_continue(owned):
             control.checked_signal(replace(owner,start_ticks=owner.start_ticks+1),fd,signal.SIGCONT,sent)
     finally:os.close(fd)
     assert sent==[] and control.proc(owner.pid)['state']=='T'
+
+
+def test_wait_polling_does_not_repeat_git_subprocesses(owned,monkeypatch):
+    owner=replace(owned(delay=.6),check_git=True);calls=[]
+    def git(command,**kwargs):
+        calls.append(command)
+        return owner.source_commit+'\n' if command[-2:]==['rev-parse','HEAD'] else ''
+    monkeypatch.setattr(control.subprocess,'check_output',git)
+    result=control.pause_and_drain(owner,wait_seconds=4,poll_seconds=.01)
+    assert result['status']=='paused_child_complete_handoff_verified'
+    assert len(calls)<=12 # Full pre-signal/final checks, independent of polling count.
+    assert result['wait_observation_count']>5
+    assert control.proc(owner.pid)['state']=='T'
