@@ -1,0 +1,78 @@
+{
+  "schema": "coordinator_robotwin_PPO100_static_artifact_audit_v1",
+  "read_at_utc": "2026-10-30T23:01:52.330982+00:00",
+  "evidence_kind": "Fresh read-only saved JSON/SHA/ZIP CRC audit; no scheduler query, model deserialization, inference, tests, or ledger mutation",
+  "arms": {
+    "ppo": {
+      "latest_sha256": "a821b93d0f0e213186b5c21e5411362a516947f5102b768e18374833cdc9316b",
+      "complete": true,
+      "closed_children": 44,
+      "stage_statuses": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete",
+        "iteration:100": "complete"
+      },
+      "next_input": null,
+      "checkpoints": {
+        "source100": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/coordinator-recovery.pt",
+          "sha256": "9930fe4dbca5ff8cadaf8985e4f9cfe72c8feb050996e3d8f3f3ff7e558ebb52",
+          "bytes": 16549016,
+          "matches_expected": true,
+          "zip_members": 263,
+          "zip_bad_member": null
+        },
+        "final": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/coordinator-recovery.pt",
+          "sha256": "c439486c327116c8da4fc077217416757bdc2f21ffa819f8ae802cc3f7810fa5",
+          "bytes": 16565848,
+          "matches_expected": true,
+          "zip_members": 263,
+          "zip_bad_member": null
+        }
+      },
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/stages/iteration-100/evaluation.json",
+        "sha256": "f9b21e1788107c957d23d08d933f25074a6f2bd6513a2dd08fac8f04d09642f4",
+        "bytes": 39495
+      }
+    },
+    "ppo_reset": {
+      "latest_sha256": "9a6cbb176583dc777f03ff60a4ad8024c690f6e0e4ffb178878ef833a8d54021",
+      "complete": true,
+      "closed_children": 42,
+      "stage_statuses": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete",
+        "iteration:100": "complete"
+      },
+      "next_input": null,
+      "checkpoints": {
+        "source100": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/coordinator-recovery.pt",
+          "sha256": "48e215501ef5e025a565855fbc240bd20bc9728e19046c7313703c74d837fb62",
+          "bytes": 16526616,
+          "matches_expected": true,
+          "zip_members": 263,
+          "zip_bad_member": null
+        },
+        "final": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/coordinator-recovery.pt",
+          "sha256": "48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49",
+          "bytes": 16536088,
+          "matches_expected": true,
+          "zip_members": 263,
+          "zip_bad_member": null
+        }
+      },
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/evaluation.json",
+        "sha256": "4c6d2e6fc59ef8176539846b85e352c25034fdff455d8cf5621002d2c6a687d3",
+        "bytes": 21500
+      }
+    }
+  },
+  "errors": []
+}
