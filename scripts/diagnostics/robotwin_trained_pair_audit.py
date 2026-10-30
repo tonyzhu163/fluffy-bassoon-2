@@ -139,7 +139,7 @@ def audit_arm(plan, method):
             "completed evaluation evidence/cursors regressed")
     initial_iteration = old["completed_source_iterations"]
     due = []
-    for iteration in (10, 25, 50, 100):
+    for iteration in before["contract"]["source_iterations"]["evaluation_iterations"]:
         unit = f"stage:iteration:{iteration}:complete"
         if iteration <= initial_iteration:
             require(unit in new_units, "an input-due original evaluation was skipped")
@@ -166,7 +166,16 @@ def audit_arm(plan, method):
     source_charge = ledger["by_phase"].get("source", 0) - input_ledger["by_phase"].get("source", 0)
     require(source_charge == source_delta, "source checkpoint/physical accounting differs")
     maximum_eval = (31600 if method == "ppo" else 17200) if due else 0
-    require(source_delta <= actual_delta <= 10800 + maximum_eval, "new original-phase allowance exceeded")
+    require(0 <= actual_delta - source_delta <= maximum_eval, "new original-phase allowance exceeded")
+    evaluation_caps = dict(source_validation=10800, target=19200 if method == "ppo" else 6400,
+        native_before_target=800 if method == "ppo" else 0,
+        native_after=800 if method == "ppo" else 0)
+    phase_deltas = {}
+    for phase in set(ledger["by_phase"]) | set(input_ledger["by_phase"]):
+        delta = ledger["by_phase"].get(phase, 0) - input_ledger["by_phase"].get(phase, 0)
+        maximum = 10800 if phase == "source" else evaluation_caps.get(phase, 0) if due else 0
+        require(0 <= delta <= maximum, "new actions borrowed another original phase allowance")
+        phase_deltas[phase] = delta
     corpus = audit_corpus(output / "corpus")
     require(corpus["actual_actions"] == actual_delta and corpus["source_actions"] == source_delta,
             "raw retained counts differ from canonical physical actions")
@@ -220,7 +229,7 @@ def audit_arm(plan, method):
     return dict(method=method, input_manifest=arm["manifest"], next_manifest=next_ref,
         checkpoint=manifest["checkpoint"], completed_iterations=saved["completed_source_iterations"],
         source_actions=source_delta, actual_actions=actual_delta, input_due_stages_completed=due,
-        optimizer_step_increment=5, trained_boundary=identity, corpus=corpus,
+        optimizer_step_increment=5, trained_boundary=identity, corpus=corpus, phase_actions=phase_deltas,
         final_canonical_head={key: ledger[key] for key in HEAD_KEYS}, frozen_motor_unchanged=True)
 
 
