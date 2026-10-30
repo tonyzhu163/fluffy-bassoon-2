@@ -52,6 +52,56 @@ def read_checked(path, expected):
     return value
 
 
+def read_fixed_plan(path, expected):
+    if expected!=PLAN_SHA:
+        raise ValueError('Only the immutable fixed-panel PLAN_SHA is admitted; migration requires a reviewed code change')
+    return read_checked(path,PLAN_SHA)
+
+
+def process_start_ticks(pid):
+    """Linux /proc identity, including PID reuse protection."""
+    fields=Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()
+    return int(fields[19]) # Field22: starttime, following state at field3.
+
+
+def _set_parent_death_signal(value):
+    import ctypes
+    libc=ctypes.CDLL(None,use_errno=True)
+    libc.prctl.restype=ctypes.c_int
+    zero=ctypes.c_ulong(0)
+    if libc.prctl(ctypes.c_int(1),ctypes.c_ulong(value),zero,zero,zero)!=0:
+        raise OSError(ctypes.get_errno(),'PR_SET_PDEATHSIG failed')
+    observed=ctypes.c_int()
+    if libc.prctl(ctypes.c_int(2),ctypes.byref(observed),zero,zero,zero)!=0:
+        raise OSError(ctypes.get_errno(),'PR_GET_PDEATHSIG failed')
+    return observed.value
+
+
+def arm_parent_death_guard(parent_pid, start_ticks, *, configure=None, current_parent=None, identity=None):
+    """Arm in the exec'd child, never a multithreaded parent's preexec_fn.
+
+    Check the expected parent both before and after prctl: Linux does not send
+    the signal retrospectively if the parent died before it was armed.
+    """
+    if sys.platform!='linux' or type(parent_pid) is not int or parent_pid<1 or type(start_ticks) is not int or start_ticks<1:
+        raise ValueError('Require an explicit allocated Linux parent PID/start identity')
+    configure=configure or _set_parent_death_signal
+    current_parent=current_parent or os.getppid
+    identity=identity or process_start_ticks
+    def check():
+        try:
+            if current_parent()!=parent_pid or identity(parent_pid)!=start_ticks:
+                raise RuntimeError('Owned parent died or its identity changed before runtime preparation')
+        except (OSError,ValueError,IndexError) as error:
+            raise RuntimeError('Owned parent identity is unavailable before runtime preparation') from error
+    check()
+    if configure(signal.SIGKILL)!=signal.SIGKILL:
+        raise RuntimeError('Parent-death signal readback differs; refuse runtime preparation')
+    check()
+    return dict(parent_pid=parent_pid,parent_start_ticks=start_ticks,parent_death_signal='SIGKILL',
+        readback_verified=True,race_checks='expected PPID/start identity before and after prctl')
+
+
 def unit_order(plan):
     from .robotwin_history_evaluate import TASKS,validate_plan
     validate_plan(plan)
@@ -214,7 +264,8 @@ def run_child(args, plan, *, prepare=prepare_runtime, agent_loader=None, trial_r
     references=None if args.condition=='native' else read_checked(args.native_result,args.native_result_sha)
     args.output.mkdir(parents=True,exist_ok=True)
     write(args.output/'intent.json',dict(source_commit=args.source_commit,condition=args.condition,
-        task=args.task,unit_index=args.unit_index,plan_sha256=args.plan_sha,run_id=args.run_id))
+        task=args.task,unit_index=args.unit_index,plan_sha256=args.plan_sha,run_id=args.run_id,
+        parent_death_guard=getattr(args,'parent_death_guard',None)))
     env=None
     with ledger(args,plan,'unit') as budget:
         before=budget.snapshot()
@@ -249,7 +300,8 @@ def child_command(args, index, condition, task, output, native):
         '--output',str(output),'--campaign-root',str(args.campaign_root),'--campaign-id',args.campaign_id,
         '--source-commit',args.source_commit,'--expected-hostname',args.expected_hostname,
         '--robotwin-root',str(args.robotwin_root),'--rlinf-root',str(args.rlinf_root),
-        '--condition',condition,'--task',task,'--unit-index',str(index),'--run-id',f'{args.run_id}:u{index:02d}']
+        '--condition',condition,'--task',task,'--unit-index',str(index),'--run-id',f'{args.run_id}:u{index:02d}',
+        '--parent-pid',str(os.getpid()),'--parent-start-ticks',str(process_start_ticks(os.getpid()))]
     if native: command+=['--native-result',native[1],'--native-result-sha',native[2]]
     return command
 
@@ -309,7 +361,8 @@ def run_parent(args, plan):
     environment.setdefault('CUDA_VISIBLE_DEVICES','0') # Qualified exclusive container fallback; retain any existing visibility.
     def remaining(): return args.wall_seconds-(time.monotonic()-started)-args.final_reserve-10
     run_command([sys.executable,'-m','pytest','-q','tests/test_robotwin_history_live.py',
-        'tests/test_robotwin_history_evaluate.py'],args.output/'wrapper-tests.log',remaining(),environment=environment)
+        'tests/test_robotwin_history_evaluate.py','tests/test_robotwin_parent_guard.py'],
+        args.output/'wrapper-tests.log',remaining(),environment=environment)
     # CPU-only admission creates no motor and leaves the parent's CUDA context unopened.
     write(args.output/'admission.json',admit_plan(plan))
     run_command([sys.executable,str(ROOT/'scripts/[train]gpu_probe.py'),'--expected-count','1',
@@ -340,11 +393,16 @@ def parser():
     p.add_argument('--resume-manifest',type=Path); p.add_argument('--resume-sha')
     p.add_argument('--condition'); p.add_argument('--task'); p.add_argument('--unit-index',type=int)
     p.add_argument('--native-result',type=Path); p.add_argument('--native-result-sha'); p.add_argument('--run-id')
+    p.add_argument('--parent-pid',type=int); p.add_argument('--parent-start-ticks',type=int)
     return p
 
 
 def main(argv=None):
     args=parser().parse_args(argv)
+    if args.mode=='child':
+        # Before imports/model admission, CUDA, Git checks or any simulator reset.
+        args.parent_death_guard=arm_parent_death_guard(args.parent_pid,args.parent_start_ticks)
+    if args.plan_sha!=PLAN_SHA: raise ValueError('Only the immutable fixed-panel PLAN_SHA is admitted')
     if (sys.platform!='linux' or socket.gethostname()!=args.expected_hostname
             or not args.expected_hostname.startswith('job-')
             or not 0<=args.prior_gpu_seconds<5400 or not 0<args.wall_seconds<=5400-args.prior_gpu_seconds
@@ -361,7 +419,7 @@ def main(argv=None):
     if args.output.is_relative_to(ROOT): raise ValueError('Runtime output must be outside the source checkout')
     if bool(args.resume_manifest)!=bool(args.resume_sha): raise ValueError('Recovery needs its exact SHA')
     args.run_id=args.run_id or f'{args.expected_hostname}:{args.output.name}'
-    plan=read_checked(args.plan,args.plan_sha)
+    plan=read_fixed_plan(args.plan,args.plan_sha)
     def terminate(signum,frame): raise TimeoutError('Owned K8 child received termination; no retry')
     signal.signal(signal.SIGTERM,terminate)
     try: return run_parent(args,plan) if args.mode=='parent' else run_child(args,plan)

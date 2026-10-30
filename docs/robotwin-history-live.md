@@ -35,6 +35,24 @@ only its captured PGID/SID, with bounded TERM→KILL cleanup; unexpected session
 identity is refused. Parent SIGTERM/interrupt unwinds the same cleanup path.
 Source jobs and other users' processes are never targeted.
 
+The future guard version additionally admits only the compiled `PLAN_SHA`;
+passing a caller-computed checksum cannot substitute another plan. A different
+panel requires a reviewed code/contract migration. Before any model/runtime
+setup, each exec'd K8 child checks its expected parent PID AND Linux starttime,
+sets `PR_SET_PDEATHSIG=SIGKILL`, verifies `PR_GET_PDEATHSIG`, and checks the
+parent identity again. This closes the race where the parent died before the
+signal was armed and protects against PID reuse. The operation occurs in the
+fresh child, avoiding Python `preexec_fn` in a potentially multithreaded parent.
+
+If the parent later dies abruptly, Linux kills the physical K8 worker even
+though it owns a separate session. The guard does not promise whole-container
+teardown or independent descendant-process cleanup on parent SIGKILL; normal
+owned-group cleanup and the scheduler ceiling still apply. A killed worker may
+leave a reserved native action unresolved. Preserve that charge and raw intent;
+the guard never refunds it or authorizes a retry. Guard failures or mismatched
+parent identities fail before motor construction. The verified guard identity
+is saved in the child intent for subsequent invocations.
+
 ## Owner command
 
 Run inside the admitted one-GPU allocation, from the exact clean execution
