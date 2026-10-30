@@ -11,6 +11,11 @@ method and its saved lane cache. Calling-thread scene ownership, reset retry
 limits, optional qualified final capture, sparse feedback, actions, rewards and
 per-task native episode limits remain the existing scalar implementation.
 The subprocesses contain no motor and exchange CPU NumPy arrays only.
+Before an admitted group starts, an idle parent scene left by preflight or
+scalar evaluation is closed and its stale prefix/raw cache released. This
+requires no pending scalar/lane corpus decision. The exact shared motor stays
+loaded; later scalar evaluation can reset a fresh scene normally. Idle parent
+render systems are not retained just to increase device memory occupancy.
 
 The driver chooses physical lane count within its unchanged global batch. The
 backend accepts six concurrent trials, and does not prefetch future policies or

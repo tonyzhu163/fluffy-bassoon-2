@@ -41,6 +41,13 @@ class Backend:
         self._prepared = "caller-prepared"; self._prefix_mask = "caller-mask"
         self._kv_cache = "caller-cache"; self._raw_obs = "caller-raw"
         self.fail_encode = False
+        self.env = object()
+        self.close_calls = 0
+
+    def close(self):
+        if self.env is not None:
+            self.env = None
+            self.close_calls += 1
 
     def _encode(self, observation):
         state = observation["states"].numpy()[0]
@@ -62,6 +69,7 @@ class Scalar:
 
     def __init__(self, root): self.backend = Backend(root)
     def episode_limit_for_task(self, task): return LIMITS[task]
+    def close(self): self.backend.close()
 
 
 def records_for_lane(writer,lane):
@@ -173,10 +181,11 @@ def test_native_limits_parent_cache_and_all_intents_before_every_parallel_rpc(tm
         final = records_for_lane(writers,lane)[-1][1]
         assert final["issued_primitive_steps"] == expected_last
         assert final["status"] == "complete"
-    assert scalar.backend._prepared == "caller-prepared"
-    assert scalar.backend._prefix_mask == "caller-mask"
-    assert scalar.backend._kv_cache == "caller-cache"
-    assert scalar.backend._raw_obs == "caller-raw"
+    assert scalar.backend._prepared is None
+    assert scalar.backend._prefix_mask is None
+    assert scalar.backend._kv_cache is None
+    assert scalar.backend._raw_obs is None
+    assert scalar.backend.close_calls == 1
     assert writers.statistics()["executed_primitive_steps"] == 1500
     acknowledged = acknowledge(vector,budget,tmp_path/"coordinator.pt")
     assert acknowledged["status"] == "checkpointed" and not (tmp_path/RESUME_BLOCKER).exists()
@@ -282,6 +291,30 @@ def test_physical_completion_is_fenced_until_exact_checkpoint_acknowledgement(tm
     with pytest.raises(ProductionVectorError,match="does not commit"):
         vector.acknowledge_checkpoint(stale)
     assert (tmp_path/RESUME_BLOCKER).exists() and vector.resume_blocker_metadata["resume_blocked"]
+    vector.close(); budget.close()
+
+
+def test_idle_parent_scene_is_released_once_without_changing_shared_model(tmp_path):
+    scalar,budget,writers,vector,tasks = setup(tmp_path,lanes=1)
+    # The marker represents the existing shared model; no GPU model is created.
+    marker = object()
+    scalar.backend.model = marker
+    vector._device_memory = lambda: {"scope":"CPU model-identity fixture"}
+    vector.admit_group(tasks,[[11]])
+    assert scalar.backend.model is marker and scalar.backend.close_calls == 1
+    assert scalar.backend.env is None and scalar.backend._prepared is None
+    assert vector._pool is None
+    vector.cancel_group("no dispatch")
+    vector.admit_group(tasks,[[12]])
+    assert scalar.backend.model is marker and scalar.backend.close_calls == 1
+    vector.cancel_group("second zero-dispatch group")
+    # A later scalar evaluation may reset a fresh scene; release that scene at
+    # the next vector boundary instead of accumulating idle render systems.
+    scalar.backend.env = object()
+    scalar.backend._raw_obs = "fresh scalar evaluation"
+    vector.admit_group(tasks,[[13]])
+    assert scalar.backend.model is marker and scalar.backend.close_calls == 2
+    vector.cancel_group("third zero-dispatch group")
     vector.close(); budget.close()
 
 

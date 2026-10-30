@@ -206,6 +206,10 @@ class ProductionRobotwinVectorEnv:
         remaining = self.budget.remaining(phase=phase, method=method)
         if remaining < bound:
             raise ProductionAdmissionError("Full native-horizon group does not fit the live campaign budget")
+        # Preflight/scalar evaluation can leave an otherwise idle native scene
+        # and prefix cache in the parent. Keep the shared model, not that scene,
+        # when starting the independent simulator processes.
+        self.release_scalar_simulator()
         identity = f"{self.run_id}:vector-group:{self._group_sequence}"
         self._group_sequence += 1
         path = self.root / f"group-{self._group_sequence:08d}.json"
@@ -225,6 +229,36 @@ class ProductionRobotwinVectorEnv:
         self._persist()
         self._write_fence()
         return deepcopy(self._group)
+
+    def release_scalar_simulator(self):
+        """Release only an idle parent scene/cache between complete groups."""
+        self._check_owner()
+        if self._group is not None or self.active.any():
+            raise ProductionAdmissionError("Parent scene release requires an inactive vector group boundary")
+        scalar_writer = getattr(self.scalar_env,"corpus_writer",None)
+        if ((scalar_writer is not None and scalar_writer.pending is not None)
+                or any(writer.pending is not None for writer in self.writers)
+                or getattr(self.backend,"_decision_metadata",{})):
+            raise ProductionAdmissionError("Cannot release a scalar scene with pending corpus/decision work")
+        model = getattr(self.backend,"model",None)
+        released = getattr(self.backend,"env",None) is not None
+        if released:
+            self.scalar_env.close()
+            if getattr(self.backend,"env",None) is not None:
+                raise RuntimeError("Scalar runtime did not release its native scene")
+        if getattr(self.backend,"model",None) is not model:
+            raise RuntimeError("Scalar cleanup changed the parent-owned frozen motor")
+        for key in ("_prepared","_prefix_mask","_kv_cache","_raw_obs"):
+            setattr(self.backend,key,None)
+        self.cache = [None]*self.lanes
+        self.raw = [None]*self.lanes
+        # Cached allocator blocks are not useful occupancy either. This does
+        # not move or alter the live parent-owned model tensors.
+        if model is not None:
+            self.backend.torch.cuda.empty_cache()
+        self._event("idle_parent_scene_release",scene_released=released,
+                    parent_prefix_cache_cleared=True,policy_actions=0)
+        return released
 
     def _write_fence(self):
         _durable_json(self.output_dir / RESUME_BLOCKER, dict(resume_blocked=True,
