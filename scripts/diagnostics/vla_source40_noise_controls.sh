@@ -97,6 +97,7 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   -m fluffy_bassoon.meta_rl.vla_source40_noise_controls \
   --output "$TASK_OUT/experiment" --run-id "$TASK_RUN" --source-commit "$TASK_SOURCE" \
   --expected-hostname "$(hostname)" --worker "$TASK_WORKER" --plan "$TASK_PLAN" --plan-sha256 "$TASK_PLAN_SHA" \
+  --stop-before-unix "$(( TASK_STARTED + TASK_SLICE - 125 ))" \
   --ledger "$TASK_LEDGER" \
   --checkpoint "$TASK_OLD/inputs/pi05-libero-openpi-20261027-r1" --openpi-root "$TASK_OPENPI" \
   "${TASK_RESUME_ARGS[@]}"

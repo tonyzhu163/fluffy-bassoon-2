@@ -57,3 +57,12 @@ before-RPC intents and complete-episode cursors remain recoverable. Nominal
 state, actual initial frames and query seed are checked across controls.
 A fresh-process continuation is explicitly non-primary for strict common-runtime
 claims. Frozen motor parameter state is hashed before and after execution.
+
+Each invocation also records an explicit absolute graceful stop deadline. It is
+validated against the active original cumulative slice,125seconds before the
+slice end and at least60seconds before the shell's outer timeout. That margin
+is for closing the owned simulator, parameter-state checks, writing an incomplete
+final index and recording worker costs. A deadline reached during an episode
+preserves the complete-episode cursor and all raw partial RPC costs; it does not
+count a partial query as complete. Other runtime failures still propagate.
+The deadline is invocation metadata and never extends a resume's original cap.

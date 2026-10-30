@@ -148,7 +148,7 @@ def audit_control(path, result, group):
 def run_common(motor, banks, targets, *, output, contract, server_factory, provenance,
         runtime_id, resume=False, reset_motor_rng=lambda seed: None, motor_rng_state=lambda: None,
         controller_factory=None, qualify=None, deadline=float('inf'), action_ceiling=MAX_ACTIONS,
-        audit_fn=None, strict_initial_observations=True):
+        audit_fn=None, strict_initial_observations=True, graceful_deadline=False):
     """One shared motor object; continuations explicitly retain process lineage."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=resume)
@@ -221,13 +221,27 @@ def run_common(motor, banks, targets, *, output, contract, server_factory, prove
                     if qualify is not None:
                         qualify(observation, server)
                     write_json(path / 'qualification.json', dict(extra_physical_resets=0, runtime_id=runtime_id))
-                result = evaluate_case(CaptureSimulator(server, trace_motor, raw), trace_motor, selected,
-                    case=case, output=path, provenance=source, max_primitive_steps=group_cap,
-                    max_settling_steps=group_cap, support_budgets=tuple(group['support_budgets']),
-                    methods=(group['method'],), controller_factory=factory,
-                    reset_motor_rng=reset_motor_rng, motor_rng_state=motor_rng_state,
-                    qualify=hook if ordinal == 0 else None, resume=(path / 'contract.json').exists(),
-                    max_elapsed_seconds=contract['maximum_seconds_per_invocation'], external_deadline=deadline)
+                try:
+                    result = evaluate_case(CaptureSimulator(server, trace_motor, raw), trace_motor, selected,
+                        case=case, output=path, provenance=source, max_primitive_steps=group_cap,
+                        max_settling_steps=group_cap, support_budgets=tuple(group['support_budgets']),
+                        methods=(group['method'],), controller_factory=factory,
+                        reset_motor_rng=reset_motor_rng, motor_rng_state=motor_rng_state,
+                        qualify=hook if ordinal == 0 else None, resume=(path / 'contract.json').exists(),
+                        max_elapsed_seconds=contract['maximum_seconds_per_invocation'], external_deadline=deadline)
+                except RuntimeError as error:
+                    if (not graceful_deadline or str(error) != 'Target evaluation elapsed-time ceiling reached'
+                            or time.monotonic() < deadline):
+                        raise
+                    # Complete episode cursor/RNG and before-RPC intents remain
+                    # authoritative. Never count this partial group as a query.
+                    invocations[-1].update(charged_after=charged_actions(output), graceful_deadline_stop=True)
+                    write_json(invocation_path, invocations)
+                    write_json(path / 'graceful-stop.json', dict(reason='invocation_time_reservation',
+                        runtime_id=runtime_id, complete_episode_recovery=str(recovery),
+                        physical_charge=charged_actions(output)))
+                    stop_reason = 'invocation_time_reservation'
+                    break
                 # Unlearned controls have no controller; retain sampler/motor
                 # and global RNG boundary using the authoritative recovery.
                 if group['method'] in ('native', 'zero', 'tied_gaussian', 'tied_gaussian_clipped'):

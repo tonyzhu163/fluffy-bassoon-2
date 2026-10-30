@@ -147,3 +147,43 @@ def test_separate_two_worker_ledger_never_reserves_or_refunds(tmp_path):
     path.write_text(json.dumps(ledger))
     with pytest.raises(ValueError, match='immutable diagnostic'):
         module.reservation(path, value, 0, 'worker-0', 'a' * 40)
+
+
+def test_explicit_graceful_deadline_is_inside_the_original_active_slice(tmp_path, monkeypatch):
+    clock = dict(worker_seconds=3600, contract=dict(escrow_record_sha256='record'), attempts=[
+        dict(status='finished', charged_seconds=500, reserved_seconds=660),
+        dict(status='started', slice_seconds=3000, reserved_seconds=3060, started_unix=1000.)])
+    (tmp_path / 'worker-time.json').write_text(json.dumps(clock))
+    monkeypatch.setattr(module.time, 'time', lambda: 1100.)
+    assert module.graceful_seconds(tmp_path, 'record', 3875.) == 2775.
+    with pytest.raises(ValueError, match='at least60 seconds'):
+        module.graceful_seconds(tmp_path, 'record', 3900.)
+    with pytest.raises(ValueError, match='at least60 seconds'):
+        module.graceful_seconds(tmp_path, 'record', float('inf'))
+
+
+def test_mid_episode_graceful_stop_writes_incomplete_index_and_keeps_cost_recoveries(tmp_path, monkeypatch):
+    import fluffy_bassoon.meta_rl.vla_common_runtime_evaluate as common
+    clock = [0.]
+    monkeypatch.setattr(common.time, 'monotonic', lambda: clock[0])
+    class DeadlineSimulator(TargetSimulator):
+        def step(self, actions):
+            result = super().step(actions)
+            clock[0] = 11.
+            return result
+    server = DeadlineSimulator(0)
+    output = tmp_path / 'controls'
+    groups = plan()['cases'][0]['groups'][:1]
+    result = run_common(Motor(), {}, {}, output=output,
+        contract=dict(groups=groups, maximum_total_actions=500, maximum_seconds_per_invocation=60.),
+        provenance={'noise_control': {'no_learning': True}}, server_factory=lambda case: server,
+        runtime_id='deadline-process', audit_fn=module.audit_noise, action_ceiling=152000,
+        deadline=10., graceful_deadline=True)
+    assert not result['completed'] and result['stop_reason'] == 'invocation_time_reservation'
+    assert result['completed_groups'] == [] and result['charged_total_actions'] == 13
+    assert server.closed and (output / 'index.json').is_file()
+    assert (output / 'comparison-recovery.pkl').is_file()
+    assert (output / 'group-000/evaluation-recovery.pkl').is_file()
+    assert (output / 'group-000/graceful-stop.json').is_file()
+    assert list((output / 'group-000/raw-rpc/deadline-process').glob('*-outcome.pkl.gz'))
+    assert charged_actions(output) == 13  # No refund or fabricated complete query.

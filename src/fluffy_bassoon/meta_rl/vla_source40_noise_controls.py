@@ -67,6 +67,16 @@ def remaining_seconds(root, record_sha):
     return current['slice_seconds'] - (time.time() - current['started_unix']) - 60
 
 
+def graceful_seconds(root, record_sha, stop_before_unix, *, now=None):
+    """Absolute slice deadline is invocation metadata, never a fresh budget."""
+    now = time.time() if now is None else now
+    remaining = remaining_seconds(root, record_sha)
+    if (not np.isfinite(stop_before_unix) or stop_before_unix <= now
+            or stop_before_unix > now + remaining - 60):
+        raise ValueError('Graceful stop must precede the original outer timeout by at least60 seconds')
+    return min(remaining - 60, stop_before_unix - now)
+
+
 def audit_noise(path, result, group):
     identity = audit_control(path, result, group)
     if group['method'] not in METHODS or group['support_budgets'] != [0]:
@@ -103,6 +113,7 @@ def main(argv=None):
         p.add_argument('--' + name, required=True)
     p.add_argument('--worker', type=int, choices=(0, 1), required=True)
     p.add_argument('--port', type=int, default=8774)
+    p.add_argument('--stop-before-unix', type=float, required=True)
     p.add_argument('--resume', action='store_true')
     args = p.parse_args(argv)
     root = Path(__file__).resolve().parents[3]
@@ -118,13 +129,16 @@ def main(argv=None):
         raise ValueError('Require the actual allocated single-GPU probe')
     plan = load_plan(args.plan, args.plan_sha256, args.source_commit)
     budget = reservation(args.ledger, plan, args.worker, args.run_id, args.source_commit)
-    seconds = remaining_seconds(args.output.parent, budget['record_sha256'])
+    seconds = graceful_seconds(args.output.parent, budget['record_sha256'], args.stop_before_unix)
     if seconds < 60 or file_sha256(args.checkpoint / 'READY.json') != PI05_RECEIPT:
         raise ValueError('No authorized time remains or official OpenPI40 motor receipt differs')
     deadline = time.monotonic() + seconds
     runtime_id = f'{socket.gethostname()}-{os.getpid()}-{time.time_ns()}'
     attempt = args.output.parent / 'runtime-attempts' / runtime_id
     attempt.mkdir(parents=True)
+    write_json(attempt / 'invocation-deadline.json', dict(stop_before_unix=args.stop_before_unix,
+        remaining_driver_seconds=seconds, outer_shutdown_margin_seconds=60,
+        original_worker_seconds=3600, action_cap=76000))
     entries = {e['case']['case_id']: e for e in plan['cases'][args.worker::2]}
     groups = [g for e in entries.values() for g in e['groups']]
     contract = dict(format=FORMAT, source_commit=args.source_commit, noise_plan_sha256=plan['noise_plan_sha256'],
@@ -159,7 +173,7 @@ def main(argv=None):
                 source_training_actions=0, target_optimizer_updates=0)}, runtime_id=runtime_id, resume=args.resume,
             reset_motor_rng=reset_rng, motor_rng_state=lambda: save_motor_rng(motor.policy._rng),
             qualify=qualify, deadline=deadline, action_ceiling=152000, audit_fn=audit_noise,
-            strict_initial_observations=True)
+            strict_initial_observations=True, graceful_deadline=True)
         result.update(format=FORMAT, noise_plan_sha256=plan['noise_plan_sha256'], worker=args.worker,
             noise_distributions=NOISE, source_training_actions=0, target_optimizer_updates=0,
             interpretation='Contemporaneous paired noise-interface diagnostic on all90; no learning or checkpoint selection')
