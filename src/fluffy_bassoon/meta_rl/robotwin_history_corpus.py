@@ -90,7 +90,8 @@ def source_recovery(path, sha256, method):
     count = state.get('completed_source_trials', state['schedule']['trials'])
     if type(count) is not int or count < 1 or count > state['schedule']['trials']:
         raise ValueError('No complete committed source trials')
-    return dict(contract=contract, state=state, learner=learner, method=method, trials=count)
+    return dict(contract=contract, state=state, learner=learner, method=method, trials=count,
+                source_iteration=payload.get('source_iteration'))
 
 
 class CorpusReader:
@@ -175,10 +176,20 @@ def _interface(contract):
                 episode_limit=contract['episode_limit'], observation_dim=2062, noise_shape=[32, 32], action_limit=1.5)
 
 
-def read_source(corpus_root, source, *, allow_legacy_cut=False):
+def read_source(corpus_root, source, *, allow_legacy_cut=False, partition='train', validation_iteration=None):
     reader = CorpusReader(corpus_root)
     collection = reader.json('contract.json')
     contract, method = source['contract'], source['method']
+    if partition not in ('train', 'validation'):
+        raise ValueError('Unknown source-local partition')
+    phase = 'source' if partition == 'train' else 'source_validation'
+    if partition == 'validation' and (type(validation_iteration) is not int or validation_iteration < 1
+            or source['source_iteration'] != validation_iteration):
+        raise ValueError('Validation requires the exact immutable per-method source-iteration snapshot')
+    expected_trials = source['trials'] if partition == 'train' else len(TASKS)
+    validation_actor = None
+    if partition == 'validation':
+        validation_actor = parameter_digest(source['learner']['actor' if method == 'sac' else 'policy'])
     if (collection.get('schema') != SCHEMA or collection.get('source_commit') != contract['source_commit']
             or set(collection.get('source_tasks', [])) != set(TASKS)
             or collection.get('model_path') != contract['model_path']
@@ -193,14 +204,23 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
     for reset_path in sorted((reader.root / 'episodes').glob('*/reset.json')):
         reset = reader.json(reset_path)
         context = reset.get('context', {})
-        if context.get('phase') != 'source' or context.get('method') != method:
+        if context.get('phase') != phase or context.get('method') != method:
             excluded['non_source_or_other_method_episodes'] += 1
             continue
-        match = re.fullmatch(rf'source:{method}:(\d+)', context.get('trial_id', ''))
+        pattern = (rf'source:{method}:(\d+)' if partition == 'train' else
+                   rf'stage:iteration:{validation_iteration}:source-validation:{method}:([^:]+)')
+        match = re.fullmatch(pattern, context.get('trial_id', ''))
         if match is None:
+            if partition == 'validation':
+                excluded['other_validation_stages'] += 1
+                continue
             raise ValueError('Unknown source trial identity')
-        number = int(match[1])
-        if number > source['trials']:
+        if partition == 'validation' and match[1] not in TASKS:
+            raise ValueError('Target task cannot enter source validation')
+        if partition == 'validation' and context.get('stage_source_iteration') != validation_iteration:
+            raise ValueError('Validation stage clock differs from its source snapshot')
+        number = int(match[1]) if partition == 'train' else TASKS.index(match[1]) + 1
+        if partition == 'train' and number > source['trials']:
             excluded['after_committed_cursor_episodes'] += 1
             continue
         episode_dir = reset_path.parent
@@ -210,7 +230,7 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
             raise ValueError('Committed source prefix contains an unresolved/empty episode')
         rows, previous, steps, episode_index = [], reset['initial_observation'], 0, None
         task = reset.get('reset_info', {}).get('task')
-        if task not in TASKS:
+        if task not in TASKS or (partition == 'validation' and task != match[1]):
             raise ValueError('Target task cannot enter a source history')
         horizon = contract.get('task_episode_limits', {}).get(task, contract['episode_limit'])
         for index, ref in enumerate(refs):
@@ -218,7 +238,7 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
             ctx = chunk.get('context', {})
             if (chunk.get('schema') != SCHEMA or chunk.get('status') != 'complete'
                     or chunk.get('episode_id') != reset['episode_id'] or chunk.get('chunk_index') != index + 1
-                    or ctx.get('phase') != 'source' or ctx.get('method') != method
+                    or ctx.get('phase') != phase or ctx.get('method') != method
                     or ctx.get('trial_id') != context['trial_id'] or chunk['observation'] != previous):
                 raise ValueError('Incomplete, non-source or disconnected native transition')
             decision = reader.arrays(chunk['decision_arrays'], list(chunk['decision_arrays']['arrays']))
@@ -258,6 +278,12 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
                 if parsed is None or int(parsed[1]) != update or parsed[2] != ctx.get('policy_sha256'):
                     raise ValueError('Behavior version differs from actual source update')
                 reader.acting_weights(ctx, method)
+                if partition == 'validation' and ctx['policy_sha256'] != validation_actor:
+                    raise ValueError('Source-validation actor differs from its frozen source snapshot')
+                if partition == 'validation' and ctx.get('stage_source_iteration') != validation_iteration:
+                    raise ValueError('Validation chunk stage clock differs')
+            if partition == 'validation' and method == 'sac' and metadata.get('online_updates') is not False:
+                raise ValueError('Validation feedback cannot update the source actor')
             if 'pre_squash_actions' in metadata and not np.allclose(
                     1.5 * np.tanh(metadata['pre_squash_actions']).reshape(-1), noise, rtol=0, atol=1e-6):
                 raise ValueError('Recorded physical noise differs from PPO action sample')
@@ -279,7 +305,7 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
             raise ValueError('Episode manifest counters differ')
         by_trial[number].append(dict(task=task, episode_index=episode_index, rows=rows, reset=reset))
     trials, quarantined = [], defaultdict(int)
-    for number in range(1, source['trials'] + 1):
+    for number in range(1, expected_trials + 1):
         episodes = sorted(by_trial[number], key=lambda episode: episode['episode_index'])
         complete = (len(episodes) == 4 and [ep['episode_index'] for ep in episodes] == list(range(4))
                     and len({ep['task'] for ep in episodes}) == 1
@@ -288,7 +314,7 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
             legacy_prefix = (episodes and len(episodes) <= 4
                 and [ep['episode_index'] for ep in episodes] == list(range(len(episodes)))
                 and len({ep['task'] for ep in episodes}) == 1)
-            if allow_legacy_cut and number == source['trials'] and 'source_iterations' not in contract and legacy_prefix:
+            if partition == 'train' and allow_legacy_cut and number == source['trials'] and 'source_iterations' not in contract and legacy_prefix:
                 excluded['legacy_final_incomplete_trials'] += 1
                 for episode in episodes:
                     quarantined[episode['task']] += sum(row['duration'] for row in episode['rows'])
@@ -308,13 +334,19 @@ def read_source(corpus_root, source, *, allow_legacy_cut=False):
                         or bool(metadata['recurrent_reset_mask']) != (reset_mode and row['episode_start'])
                         or bool(metadata['reset_episode_feedback']) != reset_mode):
                     raise ValueError('Recorded PPO inputs/reset mask differ from actual causal history')
-        trials.append(dict(number=number, task=episodes[0]['task'], rows=rows))
+        cases = [dict(episode_index=ep['episode_index'],
+            requested_seed=ep['reset']['reset_info'].get('requested_seed'),
+            actual_seed=ep['reset']['reset_info'].get('actual_seed'),
+            initial_observation_sha256=ep['reset']['initial_observation']['sha256']) for ep in episodes]
+        if any(type(case['actual_seed']) is not int or type(case['requested_seed']) is not int for case in cases):
+            raise ValueError('Missing actual source/reset case identity')
+        trials.append(dict(number=number, task=episodes[0]['task'], cases=cases, rows=rows))
     if not trials:
         raise ValueError('No eligible complete source histories')
     selected = {task:sum(row['duration'] for trial in trials if trial['task'] == task for row in trial['rows']) for task in TASKS}
     expected = source['state'].get('task_steps', {})
     actual = {task:selected[task] + quarantined.get(task, 0) for task in TASKS}
-    if (set(expected) != set(TASKS) or actual != expected
+    if partition == 'train' and (set(expected) != set(TASKS) or actual != expected
             or sum(actual.values()) != source['state'].get('source_steps')):
         raise ValueError('Selected/quarantined durations differ from frozen source_steps/task_steps')
     if quarantined:
@@ -385,9 +417,11 @@ def teacher_labels(policy, method, rows, *, reset_each_episode):
 
 def export_corpus(corpus_root, output, *, source_path, source_sha256, source_method,
                   teacher_path, teacher_sha256, teacher_method, objectives=('ad', 'dpt'),
-                  device='cpu', allow_legacy_cut=False):
+                  device='cpu', allow_legacy_cut=False, partition='train', validation_iteration=None):
     if not objectives or len(set(objectives)) != len(objectives) or not set(objectives) <= {'ad', 'dpt', 'behavior_cloning'}:
         raise ValueError('Choose distinct AD/DPT/BC objectives')
+    if partition == 'validation' and 'ad' in objectives:
+        raise ValueError('Fixed-policy source validation is BC/DPT, not an AD learning history')
     output, corpus_root = Path(output).resolve(), Path(corpus_root).resolve()
     if output.exists() or output.is_relative_to(corpus_root):
         raise ValueError('Use a fresh output outside the source corpus')
@@ -395,7 +429,8 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
     teacher = source_recovery(teacher_path, teacher_sha256, teacher_method)
     if _canonical(_interface(source['contract'])) != _canonical(_interface(teacher['contract'])):
         raise ValueError('Source and teacher motor/features/horizon interfaces differ')
-    reader, trials, excluded = read_source(corpus_root, source, allow_legacy_cut=allow_legacy_cut)
+    reader, trials, excluded = read_source(corpus_root, source, allow_legacy_cut=allow_legacy_cut,
+        partition=partition, validation_iteration=validation_iteration)
     policy, teacher_reset = load_teacher(teacher, device=device)
     grouped = defaultdict(list)
     for trial in trials:
@@ -441,15 +476,18 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
         path = output / f'{objective}.npz'
         with path.open('xb') as stream:
             np.savez_compressed(stream, **arrays, target_noise=target)
-        datasets[objective] = dict(path=str(path), sha256=file_sha256(path))
+        datasets[objective] = dict(path=str(path), sha256=file_sha256(path), objective=objective)
+    case_ids = [hashlib.sha256(_canonical(dict(task=trial['task'],
+        actual_seeds=[case['actual_seed'] for case in trial['cases']])).encode()).hexdigest() for trial in trials]
     metadata = dict(format=FORMAT, completed=True, datasets=datasets, task_keys=task_keys,
+        partition=partition, validation_iteration=validation_iteration, case_ids=case_ids,
         source_method=source_method, teacher_method=teacher_method, input_sha256=inputs,
         source_contract=source['contract'], source_recovery_sha256=source_sha256, teacher_recovery_sha256=teacher_sha256,
         teacher_status='source-trained candidate; deterministic mean competence not assumed',
         interface=_interface(source['contract']), policy_input_dim=3090,
         label_rule='deterministic physical1.5*tanh(mean); recurrent teacher rebuilt per actual source trial',
         student_history='same-task source trials across updates; actual feedback crosses source-trial boundaries; original clocks retained',
-        source_trials=[dict(number=trial['number'], task=trial['task'], decisions=len(trial['rows'])) for trial in trials],
+        source_trials=[dict(number=trial['number'], task=trial['task'], cases=trial['cases'], decisions=len(trial['rows'])) for trial in trials],
         excluded=excluded, counts=dict(decisions=len(joined), episodes=sum(row['episode_start'] for row in joined),
             complete_K4_trials=len(trials), committed_source_actions=source['state']['source_steps'],
             selected_actions=sum(row['duration'] for row in joined)),
@@ -471,6 +509,8 @@ def main(argv=None):
     parser.add_argument('--device', default='cpu')
     parser.add_argument('--threads', type=int, default=1)
     parser.add_argument('--allow-legacy-cut', action='store_true')
+    parser.add_argument('--partition', choices=('train', 'validation'), default='train')
+    parser.add_argument('--validation-iteration', type=int)
     args = parser.parse_args(argv)
     if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname or args.threads < 1:
         raise ValueError('Export only on the explicitly identified allocated Linux host')
@@ -482,7 +522,8 @@ def main(argv=None):
     result = export_corpus(args.corpus_root, args.output, source_path=args.source_recovery,
         source_sha256=args.source_sha256, source_method=args.source_method,
         teacher_path=args.teacher_recovery, teacher_sha256=args.teacher_sha256, teacher_method=args.teacher_method,
-        objectives=tuple(args.objectives), device=args.device, allow_legacy_cut=args.allow_legacy_cut)
+        objectives=tuple(args.objectives), device=args.device, allow_legacy_cut=args.allow_legacy_cut,
+        partition=args.partition, validation_iteration=args.validation_iteration)
     print(json.dumps(dict(datasets=result['datasets'], counts=result['counts'])))
 
 

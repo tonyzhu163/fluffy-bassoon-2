@@ -56,19 +56,27 @@ def recovery(root, method, *, updates=2, trials=2, reset=False):
     return path, payload
 
 
-def fixture(tmp_path, method='ppo', *, fixed=False):
-    source_path, source = recovery(tmp_path,method)
-    teacher_path, teacher = recovery(tmp_path,'sac',updates=3)
+def fixture(tmp_path, method='ppo', *, fixed=False, partition='train', feature_value=0.):
+    validation=partition=='validation'
+    source_path, source = recovery(tmp_path,method,trials=6 if validation else 2)
+    if validation:
+        source['source_iteration']=1
+        torch.save(source,source_path)
+    teacher_root=tmp_path/'teacher'; teacher_root.mkdir()
+    teacher_path, teacher = recovery(teacher_root,'sac',updates=3)
     root = tmp_path/'corpus'
     root.mkdir()
     write_json(root/'contract.json',dict(schema=SCHEMA,source_commit='a'*40,source_tasks=list(TASKS),model_path='/fixed/motus'))
     # Actual db01840 schema: corpus retains allocation identity, checkpoint omits it.
     write_json(root/'runtime-contract.json',dict(source['contract']['runtime'],actual_render_pci='0000:a3:00.0'))
-    for trial in (1,2):
-        version_update = 0 if fixed else trial-1
+    for trial in range(1,7 if validation else 3):
+        task=TASKS[trial-1] if validation else TASKS[0]
+        horizon=source['contract']['task_episode_limits'][task]
+        version_update = source['learner']['updates'] if validation else (0 if fixed else trial-1)
         policy_path=root/'policies'/f'{version_update}.pt'
         policy_path.parent.mkdir(exist_ok=True)
-        state={'weight':torch.tensor([float(version_update)])}
+        state=(source['learner']['actor' if method=='sac' else 'policy'] if validation else
+               {'weight':torch.tensor([float(version_update)])})
         parameter_digest=hashlib.sha256()
         for name,value in sorted(state.items()):
             parameter_digest.update(name.encode()+str(value.dtype).encode()+str(tuple(value.shape)).encode())
@@ -77,7 +85,9 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
         if not policy_path.exists():
             torch.save(dict(kind='sac_actor' if method=='sac' else 'ppo_actor_value',
                 state_dict=state,parameter_sha256=parameter_sha),policy_path)
-        context=dict(phase='source',method=method,trial_id=f'source:{method}:{trial}',
+        context=dict(phase='source_validation' if validation else 'source',method=method,
+            trial_id=f'stage:iteration:1:source-validation:{method}:{task}' if validation else f'source:{method}:{trial}',
+            stage_source_iteration=1 if validation else None,
             policy_version=f'{method}:update:{version_update}:{parameter_sha}',
             policy_sha256=parameter_sha,policy_checkpoint=str(policy_path),
             policy_checkpoint_sha256=file_sha256(policy_path))
@@ -85,9 +95,11 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
         for episode in range(4):
             episode_id=f'trial{trial}-ep{episode}'
             episode_dir=root/'episodes'/episode_id
-            frame=array_ref(root,f'frames/{episode_id}-0.npz',features=np.zeros(2062,np.float32))
+            features=np.full(2062,feature_value,np.float32)
+            frame=array_ref(root,f'frames/{episode_id}-0.npz',features=features)
             write_json(episode_dir/'reset.json',dict(schema=SCHEMA,episode_id=episode_id,context=context,
-                reset_info=dict(task=TASKS[0],requested_seed=episode,actual_seed=episode),initial_observation=frame))
+                reset_info=dict(task=task,requested_seed=3_000_000_000+trial*10000+episode if validation else episode,
+                    actual_seed=3_000_000_000+trial*10000+episode if validation else episode),initial_observation=frame))
             if method=='ppo_reset':
                 previous_noise,previous_reward=np.zeros(1024,np.float32),0.
             refs=[]
@@ -95,15 +107,16 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
                 noise=np.full((32,32),.15*trial+.01*chunk,np.float32)
                 done=chunk==1
                 duration=1 if done else 31
-                metadata=dict(episode_index=episode,chunk_index=chunk,episode_limit=600,
+                metadata=dict(episode_index=episode,chunk_index=chunk,episode_limit=horizon,
                     optimizer_updates=version_update,policy_update=version_update,
+                    online_updates=not validation,
                     history_index=episode*2+chunk,reset_episode_feedback=method=='ppo_reset',
                     recurrent_reset_mask=method=='ppo_reset' and chunk==0)
                 decision_arrays={'sampled_noise':noise,'issued_motor_joint_targets':np.zeros((32,14),np.float32)}
                 if method!='sac':
-                    token=policy_inputs(np.zeros(2062,np.float32),previous_noise,previous_reward,
+                    token=policy_inputs(features,previous_noise,previous_reward,
                         method!='ppo_reset' and episode>0 and chunk==0,episode,31*chunk,
-                        train_episodes=4,episode_limit=600)
+                        train_episodes=4,episode_limit=horizon)
                     decision_arrays['metadata/policy_input']=token
                     decision_arrays['metadata/pre_squash_actions']=np.arctanh(noise.reshape(-1)/1.5)
                     metadata['policy_input']={'numeric_array':'metadata/policy_input'}
@@ -111,7 +124,7 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
                 decision=array_ref(root,f'episodes/{episode_id}/chunks/{chunk+1:06d}.npz',**decision_arrays)
                 native=array_ref(root,f'episodes/{episode_id}/chunks/{chunk+1:06d}-native.npz',
                     valid_action_mask=np.asarray([[True]*duration+[False]*(32-duration)]))
-                following=array_ref(root,f'frames/{episode_id}-{chunk+1}.npz',features=np.zeros(2062,np.float32))
+                following=array_ref(root,f'frames/{episode_id}-{chunk+1}.npz',features=features)
                 row=dict(schema=SCHEMA,status='complete',episode_id=episode_id,chunk_index=chunk+1,
                     context=context,observation=frame,next_observation=following,decision_arrays=decision,
                     decision_metadata=metadata,native_result=dict(reward=0. if done else -1.,
@@ -126,7 +139,8 @@ def fixture(tmp_path, method='ppo', *, fixed=False):
             write_json(episode_dir/'manifest.json',dict(schema=SCHEMA,episode_id=episode_id,
                 pending_decision=None,chunks=refs,completed_chunks=2,executed_primitive_steps=32))
     return root,dict(source_path=source_path,source_sha256=file_sha256(source_path),source_method=method,
-        teacher_path=teacher_path,teacher_sha256=file_sha256(teacher_path),teacher_method='sac')
+        teacher_path=teacher_path,teacher_sha256=file_sha256(teacher_path),teacher_method='sac',
+        **(dict(partition='validation',validation_iteration=1) if validation else {}))
 
 
 @pytest.mark.parametrize('method',['ppo','ppo_reset','sac'])
@@ -278,4 +292,15 @@ def test_acting_archive_tensors_are_verified_not_just_declared_hash_strings(tmp_
             write_json(path,value);ref['sha256']=file_sha256(path)
         write_json(directory/'manifest.json',manifest)
     with pytest.raises(ValueError,match='tensor parameter digest'):
+        export_corpus(root,tmp_path/'invalid',**args)
+
+
+def test_source_validation_is_explicit_fixed_policy_bc_dpt_and_never_ad(tmp_path):
+    root,args=fixture(tmp_path,partition='validation')
+    result=export_corpus(root,tmp_path/'validation',objectives=('dpt','behavior_cloning'),**args)
+    assert result['partition']=='validation' and result['validation_iteration']==1
+    assert result['counts']['complete_K4_trials']==6 and result['counts']['episodes']==24
+    assert len(set(result['case_ids']))==6
+    assert all(case['actual_seed']>=3_000_000_000 for trial in result['source_trials'] for case in trial['cases'])
+    with pytest.raises(ValueError,match='Fixed-policy source validation'):
         export_corpus(root,tmp_path/'invalid',**args)
