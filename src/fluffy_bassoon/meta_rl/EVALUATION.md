@@ -486,3 +486,34 @@ job-fji2xx8oq53h succeeded, ending06:43:32Shanghai with4h17m31s elapsed:
 it is only the continuation from prior checkpoints, not all100-round
 training cost. Earlier allocations remain separate.
 [Scheduler receipt](../../../outputs/robotwin-ppo100-pair-scheduler-20261031-r1/receipt.json).
+
+## RoboTwin SAC95: partial source-learning diagnosis
+
+The closed source95 receipt (slice0055, normal wall-budget boundary) records
+570completeK4trials/2280episodes/954873source actions/30844decisions.
+Source success is257/2280 (11.27%); blocks1–25/26–50/51–75/76–95 score
+78/600,57/600,76/600,46/480. SourceVAL10/25/50 is1/24,1/24,3/24.
+Source100 and final target evaluation are not asserted at this boundary.
+
+There are606880 joint SAC cycles, exactly20×(30844−500warmup): one actor,
+one combined twin-critic and one temperature step each. These replay updates
+do not represent606880 new robot samples. The1213 retained diagnostic
+snapshots report only the final step of selected20-step groups. Recorded
+scalars are finite; early target/value-loss transients are large, later
+critic error smaller, without improved robot success. Temperature alpha
+is not action std, and negative differential entropy is valid.
+
+This feature-conditioned full1024D noise SAC usesLR3e-4/batch256/UTD20,
+no norm cap, gamma.99 per decision and timeout bootstrap. It is a declared
+DSRL-style baseline, not the authors' PixelSAC/DSRL-NA reproduction. Its
+flat source curve, alongside both completed PPO arms, shows weak learning
+is not confined to recurrent PPO. Shared motor/features/noise/task factors
+or separate optimizer issues remain unisolated. No original-DSRL failure,
+memory benefit, broad ranking or causal recipe prescription follows.
+[Partial sourceSAC diagnosis and exact identities](../../../outputs/robotwin-sac-source-diagnosis-20261031-r1/ANALYSIS.md).
+
+The next closed boundary0058 is source98, not100:588K4/2352episodes/
+984207source actions/269successes (11.44%)/625840joint updates. Its three
+new rounds contribute12/72 successes and29334actions, insufficient to change
+the weak overall trend. Stage100 validation/targets are still absent there.
+[Closed increment receipt](../../../outputs/robotwin-sac-source-diagnosis-20261031-r2/STATUS.md).

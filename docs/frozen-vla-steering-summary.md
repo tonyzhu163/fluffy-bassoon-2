@@ -15,8 +15,11 @@ Current scientific readout,2026-10-31:
 - A saved native16 panel is now verified on the same cases and underlying
   motor contract:6/16. Reuse adds no rollouts. The small observed steering
   gains do not establish a robust performance or memory improvement.
-- SourceSAC's final comparison remains pending. Do not attribute the PPO
-  weakness to dataset size, optimizer or interface alone before those results.
+- Source SAC's latest closed boundary is round98:269/2352 source successes
+  (11.44%) after984,207 actions. The detailed round95 diagnosis also shows
+  no upward trend. This is partial; source100/final targets remain pending.
+  Weak source learning therefore also
+  occurs in this distinct reactive SAC learner, with its cause unisolated.
 - No high-performance or sample-efficiency claim is established. Prioritize
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
@@ -133,6 +136,22 @@ binding the failed setup receipt so its cost cannot disappear.
 - LIBERO32D tied H10 steering and RoboTwin full1024D H32 steering are different
   control problems. Compare tied versus full noise before treating cross-bench
   differences as a dataset-size effect.
+
+The later completed PPO100 baselines and partial SAC95 diagnosis supersede
+the early crash/progress counts above. FULL/RESET source success is
+416/2400 and421/2400; SAC95 is257/2280. All three source curves are flat.
+At95, SAC has606,880 joint updates over30,844 distinct source decisions,
+so its optimizer count is not a new-sample count. Unlike PPO's shared
+LR1e-6/norm1, SAC usesLR3e-4 without a norm cap; a PPO-only optimizer explanation is
+insufficient. Shared interfaces and separate algorithmic problems remain
+possible. The sampled SAC diagnostics are finite but include an early
+soft-value transient. Smaller later critic error does not establish better
+robot success; alpha is an entropy coefficient, not action std. No recipe
+change or extra collection budget follows from these observations alone.
+[Partial sourceSAC evidence](../outputs/robotwin-sac-source-diagnosis-20261031-r1/ANALYSIS.md).
+The next three closed rounds add12/72 successes and29,334actions. This short
+increment does not change the overall weak source result or complete stage100.
+[Closed round98 receipt](../outputs/robotwin-sac-source-diagnosis-20261031-r2/STATUS.md).
 
 ## Literature guides targeted choices
 
