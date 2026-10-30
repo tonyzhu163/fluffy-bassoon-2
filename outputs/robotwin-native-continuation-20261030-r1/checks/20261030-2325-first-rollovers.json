@@ -1,0 +1,398 @@
+{
+  "checked_at_utc": "2026-10-30T15:29:08.798984+00:00",
+  "audit": "read-only immutable first-slice artifacts; no models instantiated",
+  "methods": {
+    "ppo": {
+      "handoff": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 730.4885739656165,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/ppo-initial-e825821.json",
+          "sha256": "15c0a1bfcf1dd6db12e81cc865609977ca7b8b12aa0d87bcda6bf8df3b9a56ab"
+        },
+        "status": "verified_wall_budget_stop",
+        "next_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+          "sha256": "7a976d2ea989b0071e31f51a61a28b3d3fc7692be90a14e8653e17d8d814fd5c"
+        },
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "sha256": "ed54290dc6bab2c5aaded6bee34352e850e453b133bfce57ec986dd6cbf614c3"
+        },
+        "round_boundary": true,
+        "source": {
+          "ppo": {
+            "source_steps": 384343,
+            "task_steps": {
+              "handover_mic": 83524,
+              "pick_diverse_bottles": 59363,
+              "place_a2b_left": 57606,
+              "place_object_stand": 50944,
+              "place_phone_stand": 54619,
+              "scan_object": 78287
+            },
+            "allocation_source_steps": 17935,
+            "updates": 40,
+            "optimizer_steps": 200,
+            "pending_trials": 0,
+            "pending_primitive_steps": 0,
+            "recovered_prior_prefix_actions": 0,
+            "completed_source_trials": 240,
+            "completed_source_iterations": 40,
+            "source_action_safety_cap": 1100000,
+            "source_physical_charge": 384343,
+            "retained_learning_actions": 384343,
+            "unretained_or_uncertain_source_charge": 0
+          }
+        },
+        "native_cleanup_fault": false,
+        "ledger_journal_sha256": "68c279c99d3121718a762dcd16a7e8989b1588f6a8b13a24ac0c0650b71cb456"
+      },
+      "exit": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 730.4885739656165,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/ppo-initial-e825821.json",
+          "sha256": "15c0a1bfcf1dd6db12e81cc865609977ca7b8b12aa0d87bcda6bf8df3b9a56ab"
+        }
+      },
+      "frozen": {
+        "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "unchanged": true
+      },
+      "checkpoints": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "bytes": 16527832,
+          "sha256": "ed54290dc6bab2c5aaded6bee34352e850e453b133bfce57ec986dd6cbf614c3",
+          "zip_crc_ok": true
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/ppo-recovery.pt",
+          "bytes": 16478170,
+          "sha256": "15ff4ec3802eaf2019ee9fb1f2164eea6fdaa4a7c5e22a81bbdaf879126de0ca",
+          "zip_crc_ok": true
+        }
+      ],
+      "next_process_exists": true,
+      "first_summary": {
+        "ppo": {
+          "source_steps": 384343,
+          "task_steps": {
+            "handover_mic": 83524,
+            "pick_diverse_bottles": 59363,
+            "place_a2b_left": 57606,
+            "place_object_stand": 50944,
+            "place_phone_stand": 54619,
+            "scan_object": 78287
+          },
+          "allocation_source_steps": 17935,
+          "updates": 40,
+          "optimizer_steps": 200,
+          "pending_trials": 0,
+          "pending_primitive_steps": 0,
+          "recovered_prior_prefix_actions": 0,
+          "completed_source_trials": 240,
+          "completed_source_iterations": 40,
+          "source_action_safety_cap": 1100000,
+          "source_physical_charge": 384343,
+          "retained_learning_actions": 384343,
+          "unretained_or_uncertain_source_charge": 0
+        }
+      }
+    },
+    "sac": {
+      "handoff": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 781.5984189452138,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/sac-initial-e825821.json",
+          "sha256": "71e5bdee4121972d810e2c0f561fa36de35d4e12de71d9849933fcb6be7d30ea"
+        },
+        "status": "verified_wall_budget_stop",
+        "next_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+          "sha256": "4753fbd72963a09068d6f1f78220d10d0990e8daef610ebe634bee23b1130d31"
+        },
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "sha256": "773831fde74886f1f0006e121cbbedce51ee8c4ee737e81c67e83b34cb71e3d8"
+        },
+        "round_boundary": true,
+        "source": {
+          "sac": {
+            "source_steps": 411497,
+            "task_steps": {
+              "handover_mic": 88875,
+              "pick_diverse_bottles": 63861,
+              "place_a2b_left": 60376,
+              "place_object_stand": 57089,
+              "place_phone_stand": 62137,
+              "scan_object": 79159
+            },
+            "allocation_source_steps": 17027,
+            "updates": 255800,
+            "optimizer_steps": 767400,
+            "pending_trials": 0,
+            "pending_primitive_steps": 0,
+            "recovered_prior_prefix_actions": 239,
+            "contract": {
+              "format": "frozen_vla_feature_noise_sac_v1",
+              "observation_dim": 2062,
+              "action_dim": 1024,
+              "action_limit": 1.5,
+              "config": {
+                "hidden_dims": [
+                  128,
+                  128,
+                  128
+                ],
+                "learning_rate": 0.0003,
+                "batch_size": 256,
+                "warmup_chunks": 500,
+                "utd": 20,
+                "replay_capacity": 100000,
+                "gamma": 0.99,
+                "tau": 0.005,
+                "initial_temperature": 1.0,
+                "target_entropy": null,
+                "layer_norm": true,
+                "max_grad_norm": null
+              },
+              "seed": 20261030,
+              "algorithm": "feature-conditioned DSRL-SAC-style; not authors' PixelSAC/DSRL-NA",
+              "warmup_distribution": "bounded uniform in the shared steering support",
+              "entropy_coordinates": "tanh-normalized; external action scale excluded",
+              "stochastic_streams": "separate interaction and optimizer generators; paired frozen/online action draws",
+              "truncation": "bootstrap on time-limit truncation; stop on genuine termination",
+              "target_restore": "independent complete source restore, then explicit fresh_target replay for primary online fine-tune; source weights/optimizers/costs retained",
+              "target_replay": "fresh_target samples with replacement from >=1 new target row; no repeated source warmup; carry_source optional diagnostic",
+              "actor_parameters": 562048,
+              "critic_parameters": 858114
+            },
+            "completed_source_trials": 246,
+            "completed_source_iterations": 41,
+            "source_action_safety_cap": 1100000,
+            "source_physical_charge": 411497,
+            "retained_learning_actions": 411497,
+            "unretained_or_uncertain_source_charge": 0
+          }
+        },
+        "native_cleanup_fault": false,
+        "ledger_journal_sha256": "5c17f5897efc6fdbdd218ad2304a01aa11f62df6265da375d0caf116f35ee064"
+      },
+      "exit": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 781.5984189452138,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/sac-initial-e825821.json",
+          "sha256": "71e5bdee4121972d810e2c0f561fa36de35d4e12de71d9849933fcb6be7d30ea"
+        }
+      },
+      "frozen": {
+        "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "unchanged": true
+      },
+      "checkpoints": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "bytes": 439472529,
+          "sha256": "773831fde74886f1f0006e121cbbedce51ee8c4ee737e81c67e83b34cb71e3d8",
+          "zip_crc_ok": true
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/sac-recovery.pt",
+          "bytes": 439430779,
+          "sha256": "df04715627ab9b668388e3636def53625eb29a80f62147b6927261a21df788a0",
+          "zip_crc_ok": true
+        }
+      ],
+      "next_process_exists": true,
+      "first_summary": {
+        "sac": {
+          "source_steps": 411497,
+          "task_steps": {
+            "handover_mic": 88875,
+            "pick_diverse_bottles": 63861,
+            "place_a2b_left": 60376,
+            "place_object_stand": 57089,
+            "place_phone_stand": 62137,
+            "scan_object": 79159
+          },
+          "allocation_source_steps": 17027,
+          "updates": 255800,
+          "optimizer_steps": 767400,
+          "pending_trials": 0,
+          "pending_primitive_steps": 0,
+          "recovered_prior_prefix_actions": 239,
+          "contract": {
+            "format": "frozen_vla_feature_noise_sac_v1",
+            "observation_dim": 2062,
+            "action_dim": 1024,
+            "action_limit": 1.5,
+            "config": {
+              "hidden_dims": [
+                128,
+                128,
+                128
+              ],
+              "learning_rate": 0.0003,
+              "batch_size": 256,
+              "warmup_chunks": 500,
+              "utd": 20,
+              "replay_capacity": 100000,
+              "gamma": 0.99,
+              "tau": 0.005,
+              "initial_temperature": 1.0,
+              "target_entropy": null,
+              "layer_norm": true,
+              "max_grad_norm": null
+            },
+            "seed": 20261030,
+            "algorithm": "feature-conditioned DSRL-SAC-style; not authors' PixelSAC/DSRL-NA",
+            "warmup_distribution": "bounded uniform in the shared steering support",
+            "entropy_coordinates": "tanh-normalized; external action scale excluded",
+            "stochastic_streams": "separate interaction and optimizer generators; paired frozen/online action draws",
+            "truncation": "bootstrap on time-limit truncation; stop on genuine termination",
+            "target_restore": "independent complete source restore, then explicit fresh_target replay for primary online fine-tune; source weights/optimizers/costs retained",
+            "target_replay": "fresh_target samples with replacement from >=1 new target row; no repeated source warmup; carry_source optional diagnostic",
+            "actor_parameters": 562048,
+            "critic_parameters": 858114
+          },
+          "completed_source_trials": 246,
+          "completed_source_iterations": 41,
+          "source_action_safety_cap": 1100000,
+          "source_physical_charge": 411497,
+          "retained_learning_actions": 411497,
+          "unretained_or_uncertain_source_charge": 0
+        }
+      }
+    },
+    "ppo_reset": {
+      "handoff": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 803.8100595939904,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/ppo_reset-initial-e825821.json",
+          "sha256": "e86cf009652a8eb9ddc2c0e9d0629052ab9ffaf22477738bc97efd2e1ac5bb1b"
+        },
+        "status": "verified_wall_budget_stop",
+        "next_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+          "sha256": "42409bbabf827b4ce69d0c43a531849bf04c255f6f5575dd8256a965ae4781aa"
+        },
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "sha256": "9c486c74cd5cb1197bafe726e4672ec19ea971e2992683cff0e87fcdffd42094"
+        },
+        "round_boundary": true,
+        "source": {
+          "ppo_reset": {
+            "source_steps": 392770,
+            "task_steps": {
+              "handover_mic": 85981,
+              "pick_diverse_bottles": 60658,
+              "place_a2b_left": 59236,
+              "place_object_stand": 52391,
+              "place_phone_stand": 54822,
+              "scan_object": 79682
+            },
+            "allocation_source_steps": 16411,
+            "updates": 41,
+            "optimizer_steps": 205,
+            "pending_trials": 0,
+            "pending_primitive_steps": 0,
+            "recovered_prior_prefix_actions": 223,
+            "completed_source_trials": 246,
+            "completed_source_iterations": 41,
+            "source_action_safety_cap": 1100000,
+            "source_physical_charge": 392770,
+            "retained_learning_actions": 392770,
+            "unretained_or_uncertain_source_charge": 0
+          }
+        },
+        "native_cleanup_fault": false,
+        "ledger_journal_sha256": "5ca71c4581094710cf70ef5003b3297470218e2ebe41fb49f7a2e21ada96f0cc"
+      },
+      "exit": {
+        "slice": 1,
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment",
+        "raw_exit_code": 0,
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 803.8100595939904,
+        "input_handoff": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1/outputs/robotwin-native-failure-20261030-r1/manifests/ppo_reset-initial-e825821.json",
+          "sha256": "e86cf009652a8eb9ddc2c0e9d0629052ab9ffaf22477738bc97efd2e1ac5bb1b"
+        }
+      },
+      "frozen": {
+        "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "unchanged": true
+      },
+      "checkpoints": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment/coordinator-recovery.pt",
+          "bytes": 16512856,
+          "sha256": "9c486c74cd5cb1197bafe726e4672ec19ea971e2992683cff0e87fcdffd42094",
+          "zip_crc_ok": true
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo_reset-20261030-r1/slices/0001/experiment/ppo_reset-recovery.pt",
+          "bytes": 16479800,
+          "sha256": "15f890569d774bf7c1c9b99d5d416a4fcab23982b80c6741f7f07cff8294fd50",
+          "zip_crc_ok": true
+        }
+      ],
+      "next_process_exists": true,
+      "first_summary": {
+        "ppo_reset": {
+          "source_steps": 392770,
+          "task_steps": {
+            "handover_mic": 85981,
+            "pick_diverse_bottles": 60658,
+            "place_a2b_left": 59236,
+            "place_object_stand": 52391,
+            "place_phone_stand": 54822,
+            "scan_object": 79682
+          },
+          "allocation_source_steps": 16411,
+          "updates": 41,
+          "optimizer_steps": 205,
+          "pending_trials": 0,
+          "pending_primitive_steps": 0,
+          "recovered_prior_prefix_actions": 223,
+          "completed_source_trials": 246,
+          "completed_source_iterations": 41,
+          "source_action_safety_cap": 1100000,
+          "source_physical_charge": 392770,
+          "retained_learning_actions": 392770,
+          "unretained_or_uncertain_source_charge": 0
+        }
+      }
+    }
+  }
+}

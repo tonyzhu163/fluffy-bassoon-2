@@ -1,0 +1,5 @@
+bash -lc 'set -euo pipefail
+TASK_LAUNCH=/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-evaluation-launch-20261030-r1
+test "$(git -C "$TASK_LAUNCH" rev-parse HEAD)" = 29003d206acb61cb8ecf483d989d103ecdac5d3e
+exec bash "$TASK_LAUNCH/outputs/robotwin-native-evaluation-20261030-r1/job.sh"
+'

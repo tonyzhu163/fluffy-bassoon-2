@@ -1,0 +1,62 @@
+{
+  "status": "running",
+  "source_commit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196",
+  "plan_sha256": "b911dd972cc30e6f6b02cacf831eafa84738bd66ebd032824bb5fc94d340287c",
+  "completed_units": [
+    {
+      "condition": "native",
+      "task": "adjust_bottle",
+      "receipt_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/evaluation/units/00-native-adjust_bottle/unit-receipt.json",
+      "receipt_sha256": "efca480e41aa34c8faf5a1a249d3e6bbde71fff8825bec83450037e9bcdaf7c6"
+    },
+    {
+      "condition": "native",
+      "task": "move_stapler_pad",
+      "receipt_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/evaluation/units/01-native-move_stapler_pad/unit-receipt.json",
+      "receipt_sha256": "be3d1aef895872ec8466cae2bce66feec9496361511b6778d7b723411dee4d4a"
+    }
+  ],
+  "completed_unit_count": 2,
+  "requested_unit_count": 18,
+  "elapsed_seconds": 334.3243643762544,
+  "cumulative_gpu_seconds_lower_bound": 334.32436501514167,
+  "budget": {
+    "header": {
+      "campaign_id": "robotwin-native-evaluation-20261030-r1",
+      "contract": {
+        "deployment": "fresh_K8_fixed100_v1",
+        "evaluation_plan_sha256": "3e82a6df6001024cffaae92af26a2412fb11b260302504ec1ae4243d06b6b5f1",
+        "native_backend_sha256": "eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3"
+      },
+      "phase_caps": {
+        "target": 57600
+      },
+      "schema": "robotwin_campaign_actions_v1",
+      "source_caps": {},
+      "total_actions": 57600
+    },
+    "receipts": {},
+    "runs": {
+      "job-ekg1ivu6j8pg-master-0:evaluation:audit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196",
+      "job-ekg1ivu6j8pg-master-0:00-native-adjust_bottle:unit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196",
+      "job-ekg1ivu6j8pg-master-0:01-native-move_stapler_pad:unit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196"
+    },
+    "charged_actions": 5051,
+    "actual_actions": 5051,
+    "uncertain_actions": 0,
+    "pending_actions": 0,
+    "by_phase": {
+      "target": 5051
+    },
+    "by_method": {
+      "target/native": 5051
+    },
+    "decision_count": 166,
+    "unresolved_decisions": {},
+    "journal_events": 336,
+    "journal_sha256": "4210945ea6f9e96879f7d96906e267b08a77402e51917c7e40dfb4a3066220e2"
+  },
+  "error": null,
+  "additional_sgd_updates": 0,
+  "execution": "18 sequential fresh K8 Python processes; operational refinement of the same immutable panel"
+}
