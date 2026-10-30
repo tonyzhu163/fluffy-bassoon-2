@@ -338,20 +338,26 @@ def verify_snapshot(path, partition, admission):
     return proof
 
 
-def assemble_topup(admission_path, admission_sha256, output):
+def assemble_topup(admission_path, admission_sha256, output, *,
+                   dpt_validation_binding_path=None, dpt_validation_binding_sha256=None):
     descriptor = load_admission(admission_path, admission_sha256)
     value = read(admission_path)
-    from .vla_source40_training import assemble, load_assembly
+    from .vla_source40_training import assemble, dpt_validation_metric, load_assembly
     groups = value['source_indices']
     result = assemble([Path(row['index_path']) for row in groups['train']],
         [Path(row['index_path']) for row in groups['validation']], output,
-        topup_admission_path=admission_path, topup_admission_sha256=admission_sha256)
+        topup_admission_path=admission_path, topup_admission_sha256=admission_sha256,
+        dpt_validation_binding_path=dpt_validation_binding_path,
+        dpt_validation_binding_sha256=dpt_validation_binding_sha256)
     output = Path(output).resolve()
     load_assembly(output / 'assembly.json')
     manifest = dict(format=INPUTS, completed=True, small_pilot=False, source_only=True,
         admission=descriptor, source_indices=groups, assembly_path=str(output / 'assembly.json'),
         assembly_file_sha256=file_sha256(output / 'assembly.json'), assembly_sha256=result['assembly_sha256'],
-        cumulative_source_action_charge=value['cumulative_source_action_charge'], additional_simulator_actions=0)
+        cumulative_source_action_charge=value['cumulative_source_action_charge'], additional_simulator_actions=0,
+        dpt_validation_metric=dpt_validation_metric(result))
+    if 'dpt_validation_labels' in result:
+        manifest['dpt_validation_labels'] = result['dpt_validation_labels']
     manifest['content_sha256'] = content_hash(manifest)
     write(output / 'topup-inputs.json', manifest)
     return manifest
@@ -361,7 +367,7 @@ def milestone_command(path, expected_sha256, *, output, source_commit, hostname,
     if file_sha256(path) != expected_sha256:
         raise ValueError('Top-up input-manifest checksum differs')
     value = read(path)
-    from .vla_source40_training import load_assembly
+    from .vla_source40_training import DPT_LEGACY_METRIC, dpt_validation_metric, load_assembly
     if (value.get('format') != INPUTS or value.get('content_sha256') != content_hash({k: v for k, v in value.items() if k != 'content_sha256'})
             or value.get('completed') is not True or value.get('small_pilot') is not False
             or load_admission(value['admission']['path'], value['admission']['file_sha256']) != value['admission']
@@ -370,6 +376,9 @@ def milestone_command(path, expected_sha256, *, output, source_commit, hostname,
     assembly = load_assembly(value['assembly_path'])
     if assembly['assembly_sha256'] != value['assembly_sha256']:
         raise ValueError('Top-up assembly content identity changed')
+    if (value.get('dpt_validation_labels') != assembly.get('dpt_validation_labels')
+            or value.get('dpt_validation_metric', DPT_LEGACY_METRIC) != dpt_validation_metric(assembly)):
+        raise ValueError('Top-up input manifest changed its explicit DPT validation label binding')
     command = [sys.executable, '-m', 'fluffy_bassoon.meta_rl.vla_source40_subset_training', '--all40-source']
     for split in ('train', 'validation'):
         rows = value['source_indices'][split]
@@ -396,6 +405,8 @@ def main(argv=None):
     assemble.add_argument('--admission', type=Path, required=True)
     assemble.add_argument('--admission-sha256', required=True)
     assemble.add_argument('--output', type=Path, required=True)
+    assemble.add_argument('--dpt-validation-binding', type=Path)
+    assemble.add_argument('--dpt-validation-binding-sha256')
     train = sub.add_parser('train')
     for name in ('manifest', 'output'):
         train.add_argument('--' + name, type=Path, required=True)
@@ -406,7 +417,9 @@ def main(argv=None):
     if args.operation == 'capture':
         value = capture(args.plan, args.plan_sha256, args.ledger, args.output)
     elif args.operation == 'assemble':
-        value = assemble_topup(args.admission, args.admission_sha256, args.output)
+        value = assemble_topup(args.admission, args.admission_sha256, args.output,
+            dpt_validation_binding_path=args.dpt_validation_binding,
+            dpt_validation_binding_sha256=args.dpt_validation_binding_sha256)
     else:
         if sys.platform != 'linux' or socket.gethostname() != args.expected_hostname:
             raise ValueError('Student training requires the explicitly allocated Linux host')
