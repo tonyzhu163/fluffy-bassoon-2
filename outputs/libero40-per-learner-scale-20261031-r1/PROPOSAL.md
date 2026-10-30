@@ -19,18 +19,18 @@ trained reset control each need their own fresh on-policy data.
 
 | Learner | Known completed source floor | Maximum additional actions to cumulative1M | Conservative new compute ceiling | New peak storage ceiling |
 | --- | ---: | ---: | ---: | ---: |
-|SAC teacher bank → AD/DPT corpus |411,578 |≤588,422 |24 GPUh |120 GB |
-|Shared recurrent PPO |171,166 |≤828,834 |44 GPUh |64 GB |
-|Separately trained reset PPO |171,707 |≤828,293 |44 GPUh |64 GB |
+|SAC teacher bank → AD/DPT corpus |432,831 |≤565,723 including20k final source queries |24 GPUh |120 GB |
+|Shared recurrent PPO |195,964 |≤804,036 before new warm qualification |44 GPUh |64 GB |
+|Separately trained reset PPO |196,776 |≤803,224 |44 GPUh |64 GB |
 |Offline full/static fits and exports |Reuses SAC data |0 |4 GPUh |Within32 GB joint derivative/evaluation allowance |
 |One fixed target comparison wave |Separate from source |≤250,000 target actions |6 GPUh |Within that same32 GB allowance |
-|**Reviewable full envelope** | |**≤2,245,549 new source +250,000 target** |**122 additional GPUh** |**280 GB new peak** |
+|**Reviewable full envelope** | |**≤2,172,983 new source +250,000 target** |**122 additional GPUh** |**280 GB new peak** |
 
-These production floors are deliberately lower bounds: existing separately
-metered source qualifications/validation/control costs must also be aliased
-once into the appropriate ledger before launch, reducing the additional action
-allowance. For example, the earlier SAC technical qualification used12,944
-actions; it is not erased or automatically charged to every learner. No old
+These floors now include the separately audited source qualifications,
+validation and controls. The NEW warm PPO qualification must additionally be
+aliased once when its actual terminal cost is known, reducing the next phase
+action allowance. Shared qualification costs are deduplicated in a joint
+campaign total; they are not erased or automatically added repeatedly. No old
 9500-action stream is edited in place. Continuation needs a fresh identity and
 explicit hash-bound recovery/cost import. If the scientific choice is a fresh
 source distribution instead, that is a separately declared new1M generation;
