@@ -435,9 +435,21 @@ Validation-label note: DPT VAL targets use independently trained validation
 teachers (different seed/checkpoint/stage for all8 matching source goals).
 Rising fixed-window NLL therefore includes cross-teacher generalization and
 cannot alone establish worse robot performance or pure state overfit. Actual
-actor-function disagreement was not measured. Labels/checkpoint selection
-are unchanged. PPO continuation now passed7 allocated CPU tests including
+actor-function disagreement had not yet been measured at that provenance
+check. Legacy labels/checkpoint selection are unchanged. PPO continuation now passed7 allocated CPU tests including
 actual checkpoint migration; no new PPO update or robot score follows.
 Full Pro public files are staged, but40 environment cases still need official
-generation. Source25h, target4.5h and PPO44h/arm are distinct resource phases;
-only the first approval question has been issued and remains pending.
+generation. Source25h plus target4.5h now form the pending29.5h/150GB request;
+PPO44h/arm remains separate and unfunded.
+
+An optional CPU-only derivation subsequently measured actual teacher
+disagreement on8,202 heldout-state validation observations across all8 goals:
+mean absolute noise-label changes0.1403–0.6046 per goal. Eight sampled TRAIN
+label replays differ by at most3.28e-7, with matching unchanged actor parameter
+digests. This supports treating legacy DPT validation as teacher transfer;
+it does not establish the cause of its NLL trend or any robot improvement.
+Forty-nine focused tests passed on the actual0GPU allocation. Source
+collection/readout remain independent; new validation-label admission is
+verified by its complete assembly round trip, with AD/TRAIN data and source
+cost unchanged. Exit0,348 conservative CPU-worker seconds, zero GPU time
+or new actions. Preserve all legacy metrics and fixed milestones.

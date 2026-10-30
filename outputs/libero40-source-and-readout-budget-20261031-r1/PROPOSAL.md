@@ -50,12 +50,16 @@ This is one-initialization development screening, not full Plus/Pro, complete
 1M scaling (44h/arm) and full shifted-suite runs remain separate and unfunded.
 
 
-For the next derived500 generation, reserve up to600 seconds from the source
-phase's existing1,120-second contingency for source-only validation-label
-preparation, leaving520 seconds. Prefer a preselected TRAIN actor per goal
-for both TRAIN and heldout-state VAL labels; keep behavior observations,
-actions/noises/rewards and all previous archives unchanged. If that binding
-has not been verified, report the old teacher-transfer metric explicitly.
-This affects validation interpretation, does not introduce target data or
-checkpoint selection, and is not a prerequisite for source collection. The
-source25h and combined29.5h ceilings do not increase.
+The optional validation-label path has now completed on an actual0GPU CPU
+allocation:8 matching TRAIN actors/8,202 VAL decisions,49 focused tests,
+full derived-assembly round trip,348 conservative CPU-worker seconds and
+zero GPU time/actions. Return the proposed600GPU-s label reserve to
+contingency: source planned88,880/90,000s, contingency1,120s. The source25h
+and combined29.5h caps and the pending approval request are unchanged.
+Use a preselected TRAIN actor per goal for both TRAIN and heldout-state VAL
+labels in a fresh derived generation; keep behavior observations,
+actions/noises/rewards and all previous archives unchanged. If its binding
+has not been verified for a later snapshot, report the old teacher-transfer
+metric explicitly. This affects validation interpretation, introduces no
+target data or checkpoint selection, and never gates source collection.
+[Completed CPU evidence](../libero40-dpt-same-train-teacher-cpu-20261031-r1-audit/RESULT.md).

@@ -9,7 +9,7 @@
   "original_pool_unchanged": true,
   "source": {
     "gpu_seconds": 90000,
-    "planned_gpu_seconds": 89480,
+    "planned_gpu_seconds": 88880,
     "additional_pfs_bytes": 130000000000,
     "execution_source": "e93c742eaf1782dc6a3c024e9347321442d5ff11",
     "production_plan_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
@@ -26,9 +26,21 @@
       100,
       500
     ],
-    "validation_label_preparation_reserve_gpu_seconds": 600,
-    "remaining_contingency_gpu_seconds": 520,
-    "validation_label_rule": "Prefer same preselected TRAIN actor on heldout VAL observations in a fresh derived generation. Until verified, explicitly report legacy teacher_transfer NLL; never silently relabel existing archives. Collection is not gated."
+    "validation_label_preparation_reserve_gpu_seconds": 0,
+    "remaining_contingency_gpu_seconds": 1120,
+    "validation_label_rule": "Prefer same preselected TRAIN actor on heldout VAL observations in a fresh derived generation. Until verified, explicitly report legacy teacher_transfer NLL; never silently relabel existing archives. Collection is not gated.",
+    "validation_label_cpu_qualification": {
+      "status": "COMPLETED_EXIT0",
+      "job": "job-z9tjwlkovscv",
+      "source": "850dd96f6e8ff9b96076c7da4618f175dc473688",
+      "charged_cpu_worker_seconds": 348,
+      "charged_gpu_seconds": 0,
+      "focused_tests_passed": 49,
+      "derived_validation_goals": 8,
+      "derived_decisions": 8202,
+      "simulator_actions": 0,
+      "collection_gate": false
+    }
   },
   "readout": {
     "gpu_seconds": 16200,

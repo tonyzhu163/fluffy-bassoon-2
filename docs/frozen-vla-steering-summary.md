@@ -508,3 +508,39 @@ This supersedes the unanswered source-only question; approving source only
 still grants only25h/130GB. No new budget has yet been granted. PPO44h/arm,
 full shifted suites and2/4/8-shot completion remain separate/unfunded.
 [Combined request](../outputs/libero40-source-and-readout-budget-20261031-r1/PROPOSAL.md).
+
+## Measured teacher disagreement and execution priority
+
+The optional CPU writer has now produced same-TRAIN-actor targets for all8
+validation goals/8,202 recorded decisions. Mean absolute differences from
+the original VAL-actor targets range0.1403–0.6046; goalwise RMS differences
+range0.1891–0.6966. Each actor's saved parameter digest matched its loaded
+TRAIN checkpoint and remained unchanged. One TRAIN-label replay per goal
+checked the CPU backend: the largest observed absolute difference was
+3.28e-7 (tolerance1e-5). This sampled check does not prove exhaustive
+cross-backend equality.
+
+This measures actual label disagreement on common observations, rather than
+inferring it from different full learner checkpoint hashes. It confirms
+teacher mismatch is part of the old validation objective. It does not
+identify the cause of the25-to100 NLL change, rank the teachers by robotic
+quality, or establish a benefit from new labels. Preserve every legacy loss
+and fixed checkpoint choice. The new heldout-state metric requires the
+separate derived-generation admission, which passed its complete assembly
+round trip with all AD/TRAIN arrays unchanged and source charge457851.
+All49 focused tests passed on the actual0GPU CPU allocation; exit0,
+348 conservative CPU-worker seconds, zero new simulator actions or SGD.
+[Evidence](../outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1-audit/RESULT.md).
+
+The user's renewed execution priority is collection and training in parallel
+on both benchmarks. Source collection and the ready target profile do not
+wait for this optional analysis. The residual-noise proposal was held at a
+static feasibility note with no launcher, allocation or GPU reservation.
+LIBERO expansion remains a concrete pending compute decision, not another
+qualification requirement. RoboTwin's owner reports89PPO/91reset/83SAC
+completed source rounds and2.570M closed actions as of05:26Shanghai; its
+100-stage evaluations remain unfinished and its budget is separate.
+
+The CPU-only qualification returns the proposed600GPU-s label-preparation
+reserve to contingency: source planned88,880/90,000s,1,120s contingency.
+The pending29.5GPUh/150GB request and original32h ledger are unchanged.

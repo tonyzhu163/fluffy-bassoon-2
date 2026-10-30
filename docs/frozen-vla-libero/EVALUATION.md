@@ -672,3 +672,17 @@ established causal explanation. See the
 [provenance evidence](../../outputs/libero40-dpt-validation-teacher-provenance-20261031-r1/ANALYSIS.md).
 Historical AD/DPT deployment already samples stochastically, ruling out a
 mean-only evaluation explanation. No new sampling diagnostic was launched.
+
+The optional same-TRAIN-teacher CPU writer has now produced a completed
+binding for all8 validation goals/8,202 decisions. Actual TRAIN-vs-original
+VAL noise-label differences have goalwise mean absolute values0.1403–0.6046
+and RMS0.1891–0.6966. Actor parameter digests match the TRAIN checkpoints and
+remain unchanged. One TRAIN-label replay per goal has maximum absolute
+CPU replay delta3.28e-7, below1e-5; this is a sampled backend check. Thus
+teacher disagreement is measured, rather than inferred from checkpoint
+identities. It does not explain the full NLL trend or show a robot benefit.
+All49 focused tests passed on actual0GPU/4CPU/16GiB; combined derived
+assembly admission also passed, including byte-equivalent AD/TRAIN arrays
+and unchanged457851 source cost. Exit0,348 conservative CPU-worker seconds,
+zero GPU time/actions/SGD. Original data and metrics are retained.
+[Measured labels](../../outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1-audit/RESULT.md).
