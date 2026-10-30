@@ -206,7 +206,7 @@ def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeyp
                         for method in continuation.METHODS})))
             else:
                 self.probe=dict(devices=[dict(cuda_total_bytes=96*(1<<30))]);self.probe_binding=dict(uuid="GPU-test")
-        def launch(self,name,command,cwd,environment,log):
+        def launch(self,name,command,cwd,environment,log,*,registered=None):
             directory=Path(log).parent;request=json.loads((directory/"input.json").read_text())
             method=request["method"];number=request["input"]["iteration"]
             if name.endswith("-audit"):
@@ -216,7 +216,10 @@ def test_guardian_independent_respawns_and_single_initial_probe(tmp_path,monkeyp
                     kind=kind,iteration=new,next_input=item,final_checkpoint=ref,completed_units=[],stage_statuses={})))
             else:events.append((method,number));assert command[command.index("--max-source-trials-per-process")+1]=="6"
             identity=dict(pid=len(events)+10,sid=len(events)+10,pgid=len(events)+10,start_ticks=123,uid=0)
-            entry=dict(name=name,identity=identity,process=Process(0 if method=="ppo" else 2));self.sessions.append(entry);return entry
+            entry=dict(name=name,identity=identity,process=Process(0 if method=="ppo" else 2))
+            self.sessions.append(entry)
+            if registered is not None:registered(entry)
+            return entry
         def cleanup_subset(self,entries):
             for entry in entries:self.sessions.remove(entry)
             return dict(clean=True)

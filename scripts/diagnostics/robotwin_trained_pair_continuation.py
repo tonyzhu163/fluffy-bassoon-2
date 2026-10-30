@@ -269,6 +269,28 @@ def audit_child(request):
 
 class ContinuationGuardian(_Guardian):
     """One independent guardian owns every fresh child and bounded CPU helper."""
+    def launch(self,name,command,cwd,environment,log,*,registered=None):
+        # A Python handler that raises between Popen and registry insertion
+        # could strand a detached child. Defer only this guardian's handlers;
+        # unlike pthread_sigmask, this does not block signals in the exec child.
+        handlers={};pending=[]
+        def defer(signum,frame):
+            if not pending:pending.append((signum,frame))
+        try:
+            for number in (signal.SIGTERM,signal.SIGINT):
+                handlers[number]=signal.getsignal(number)
+                signal.signal(number,defer)
+            entry=super().launch(name,command,cwd,environment,log)
+            if registered is not None:registered(entry)
+        finally:
+            for number,handler in handlers.items():signal.signal(number,handler)
+        if pending:
+            number,frame=pending[0];handler=handlers[number]
+            if handler!=signal.SIG_IGN:
+                if callable(handler):handler(number,frame)
+                raise RuntimeError("Continuation guardian terminated during owned spawn")
+        return entry
+
     def cleanup_subset(self,entries):
         selected={id(entry) for entry in entries}
         require(selected<={id(entry) for entry in self.sessions},"cleanup includes an unowned entry")
@@ -336,8 +358,11 @@ class ContinuationGuardian(_Guardian):
                 wall_seconds=plan["child_wall_seconds"],deadline=deadline,identity=None)
             atom(directory/"launch.json",launch)  # Durable exact intent precedes Popen.
             check_active_deadlines(arms)
-            entry=self.launch(f"{method}-slice-{state['number']:03d}",command,str(worktree),env,directory/"console.log")
-            launch.update(status="running",identity=entry["identity"]);atom(directory/"launch.json",launch)
+            def record_child(entry):
+                launch.update(status="running",identity=entry["identity"])
+                atom(directory/"launch.json",launch)
+            entry=self.launch(f"{method}-slice-{state['number']:03d}",command,str(worktree),env,
+                directory/"console.log",registered=record_child)
             state.update(entry=entry,stage="child",deadline=deadline,directory=directory)
         for method,state in arms.items():start_child(method,state)
         with (self.output/"gpu-memory.jsonl").open("x",buffering=1) as trace:
@@ -363,10 +388,11 @@ class ContinuationGuardian(_Guardian):
                         command=[str(PYTHON),str(Path(__file__).resolve()),"--audit-child",
                             str(state["directory"]/"audit-input.json"),"--receipt",str(receipt)]
                         check_active_deadlines(arms)
+                        def record_audit(entry):
+                            atom(state["directory"]/"audit-launch.json",dict(command=command,identity=entry["identity"],
+                                runtime_commit=RUNTIME,source_launch=state["request"]["owned_launch"]))
                         audit_entry=self.launch(f"{method}-slice-{state['number']:03d}-audit",command,str(launcher),
-                            dict(environment,CUDA_VISIBLE_DEVICES=""),state["directory"]/"audit.log")
-                        atom(state["directory"]/"audit-launch.json",dict(command=command,identity=audit_entry["identity"],
-                            runtime_commit=RUNTIME,source_launch=state["request"]["owned_launch"]))
+                            dict(environment,CUDA_VISIBLE_DEVICES=""),state["directory"]/"audit.log",registered=record_audit)
                         state.update(entry=audit_entry,
                             stage="audit",deadline=min(self.work_deadline,time.monotonic()+90))
                     else:

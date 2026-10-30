@@ -11,8 +11,7 @@ import textwrap
 import pytest
 
 
-MODULE=Path(os.environ.get("ROBOTWIN_CONTINUATION_MODULE",
-    str(Path(__file__).parents[1]/"scripts/diagnostics/robotwin_trained_pair_continuation.py"))).resolve()
+MODULE=(Path(__file__).parents[1]/"scripts/diagnostics/robotwin_trained_pair_continuation.py").resolve()
 pytestmark=pytest.mark.skipif(sys.platform!="linux",reason="Owned Linux process CPU gate only")
 
 
