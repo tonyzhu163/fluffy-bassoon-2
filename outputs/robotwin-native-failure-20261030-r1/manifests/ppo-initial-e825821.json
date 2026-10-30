@@ -1,0 +1,57 @@
+{
+  "schema": "robotwin_episode_boundary_resume_v1",
+  "kind": "selected_trial",
+  "method": "ppo",
+  "execution_source_commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+  "lineage_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-recovery-20261030-r1/ppo/coordinator-recovery.pt",
+    "sha256": "759533498db028a014e0908b9eaad0f7b193d09eb8df97b61fe50765be3f31f5"
+  },
+  "corpus_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo-20261030-r2/experiment/corpus",
+  "corpus_contract": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-recovery-20261030-r1/ppo/corpus-contract.json",
+    "sha256": "a31c10cc0399a9c7956ab2b81c583dbd8b64dc05761f0fe0f999e78c8e132128"
+  },
+  "progress": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-recovery-20261030-r1/ppo/progress.jsonl",
+    "sha256": "5ea110242b6959b20a8734e5655ff1888675bdbe4ba26f554bf572023c7255ff"
+  },
+  "episodes_file": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-recovery-20261030-r1/ppo/episodes.jsonl",
+    "sha256": "6c37564a6573c42945b7871025cc0a8fd0ba2bb195ba3168247acb54190a7634"
+  },
+  "ledger_snapshot": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-recovery-20261030-r1/ppo/ledger-snapshot.json",
+    "sha256": "eb1b9667499cb6ebf81e2adcddba38e17687ccc156b2b87bf50d307dedcd9fac"
+  },
+  "trial": {
+    "task": "place_phone_stand",
+    "seeds": [
+      774583299,
+      1050143885,
+      1061812452,
+      1816778261
+    ],
+    "trial_id": "source:ppo:230",
+    "schedule_trials": 230,
+    "source_iteration": 39,
+    "trial_in_iteration": 2
+  },
+  "prefix": [],
+  "expected": {
+    "source_steps": 366408,
+    "completed_source_trials": 229,
+    "completed_source_iterations": 38,
+    "schedule_digest": "3902d965d197cbe139e4224d4120946d9c6b1b687c9fe0195e43fa4a7386f07f",
+    "learner_counters": {
+      "primitive_steps": 366408,
+      "updates": 38,
+      "optimizer_steps": 190,
+      "chunks": 11787
+    },
+    "pending_rollout_digests": [
+      "12a4d40a04510574c6030bd2288a36b7046c526da8289958a2e36ba6ae719f9e"
+    ]
+  }
+}
