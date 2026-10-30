@@ -37,6 +37,25 @@ def summary(value,*,trials,status="wall_budget_stop"):
     return dict(contract=json.loads(json.dumps(value["contract"])),process_source_trials=trials,status=status)
 
 
+def test_long_authority_includes_initial_subslice_and_preserves_goal(tmp_path):
+    path=tmp_path/"owner-evidence.json";path.write_text("{}")
+    ref=continuation.binding(path)
+    authority=dict(schema="robotwin_trained_pair_continuation_authority_v1",
+        runtime_commit=continuation.RUNTIME,lineage_commit=continuation.LINEAGE,
+        parent_manifest_sha256=continuation.PARENT_SHA,initial_admission_plan=ref,
+        source_goal_rounds=100,original_total_compute_ceiling_seconds=None,
+        qualification_capacity_reused=False,automatic_failed_retries=False,
+        resources=dict(continuation.RESOURCES,scheduler_cap_seconds=46800),
+        maximum_driver_seconds=43200,child_wall_seconds=3600,
+        initial_subslice_seconds=2700,initial_subslice_included=True,
+        authority=ref,prior_charge_and_physical_snapshot=ref)
+    continuation.validate_authority(authority,ref)
+    for field,value in (("source_goal_rounds",101),("initial_subslice_included",False),
+                        ("qualification_capacity_reused",True),("maximum_driver_seconds",46800)):
+        changed=deepcopy(authority);changed[field]=value
+        with pytest.raises(ValueError):continuation.validate_authority(changed,ref)
+
+
 @pytest.mark.parametrize("start",[52,54])
 def test_offset_source_rounds_advance_independently(start):
     before=checkpoint(start);after=checkpoint(start+1)
