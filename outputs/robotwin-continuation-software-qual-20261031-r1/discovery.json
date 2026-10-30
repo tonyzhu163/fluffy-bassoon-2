@@ -1,7 +1,98 @@
 [
   {
-    "pin": "4e9ddf8",
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_continuation.py",
+    "source_content_sha256": "16950216ed4835be1d2b3f303d04be8d695dfca7b14b360dad80ae2e7d6afa7c",
+    "top_level_imports": [
+      "copy",
+      "importlib.util",
+      "json",
+      "pathlib",
+      "sys",
+      "time",
+      "pytest",
+      "torch",
+      "test_robotwin_trial_resume",
+      "test_robotwin_trained_parallel",
+      "test_robotwin_trained_pair_audit",
+      "robotwin_trained_pair_preflight"
+    ],
+    "tests": [
+      {
+        "name": "test_long_authority_includes_initial_subslice_and_preserves_goal",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_offset_source_rounds_advance_independently",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_round100_requires_a_fresh_final_evaluation_child_then_retires",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_eval_only_requires_closed_unit_progress_and_exact_source_identity",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_fake_unit_growth_without_closed_raw_evidence_is_rejected",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_legal_stage_only_closure_needs_all_units_and_completed_report",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_cleanup_subset_keeps_other_live_arm_untouched",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_interrupted_subset_cleanup_retains_both_arms_for_fatal_cleanup",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_guardian_independent_respawns_and_single_initial_probe",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_initial_goal100_can_retire_one_arm_or_require_final_evaluation",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_fresh_deadline_check_after_other_arm_cleanup",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_initially_complete_pair_exits_before_probe_or_any_model",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_continuation_reuses_real_one_round_c353_audit",
+        "static_cases": 1,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 14,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
     "path": "tests/test_robotwin_trained_pair_plan.py",
+    "source_content_sha256": "4c4e875d0a8c3bcaaf4b9d9f1970a50ec3dfaef9d49fad8fd6cd9e519d856de8",
     "top_level_imports": [
       "copy",
       "importlib.util",
@@ -55,12 +146,13 @@
       }
     ],
     "static_case_count": 17,
-    "unknown_parameters": false,
-    "source_content_sha256": "4c4e875d0a8c3bcaaf4b9d9f1970a50ec3dfaef9d49fad8fd6cd9e519d856de8"
+    "unknown_parameters": false
   },
   {
-    "pin": "4e9ddf8",
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
     "path": "tests/test_robotwin_trained_pair_preflight.py",
+    "source_content_sha256": "bf9bd57b2facf6b7065cf3b3b199ca71e79f3ab88c9f3c63cfea55db874c5030",
     "top_level_imports": [
       "copy",
       "importlib.util",
@@ -76,6 +168,16 @@
       {
         "name": "test_fixed_production_pins_have_no_cli_overrides",
         "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_goal_boundary_admission_is_explicit_and_default_remains_one_round",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_partial_final_evaluation_reserves_only_uncommitted_original_units",
+        "static_cases": 2,
         "unknown_parameters": []
       },
       {
@@ -124,13 +226,14 @@
         "unknown_parameters": []
       }
     ],
-    "static_case_count": 13,
-    "unknown_parameters": false,
-    "source_content_sha256": "baef6e2c75ff5ede5652030611f7e9b6cbe174e3fbdc2b60dfc6a0ba369cdce6"
+    "static_case_count": 16,
+    "unknown_parameters": false
   },
   {
-    "pin": "4e9ddf8",
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
     "path": "tests/test_robotwin_trained_pair_runtime.py",
+    "source_content_sha256": "dca07e5dc8ee2c055ca407eb5f63cf02013d94b2e7ce6be4ec6b3894e1253cea",
     "top_level_imports": [
       "importlib.util",
       "json",
@@ -188,12 +291,13 @@
       }
     ],
     "static_case_count": 14,
-    "unknown_parameters": false,
-    "source_content_sha256": "dca07e5dc8ee2c055ca407eb5f63cf02013d94b2e7ce6be4ec6b3894e1253cea"
+    "unknown_parameters": false
   },
   {
-    "pin": "4e9ddf8",
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
     "path": "tests/test_robotwin_trained_pair_audit.py",
+    "source_content_sha256": "446aa6e36ca320698d323d43ec8e03a6b5042e134850757375c321b007f0973e",
     "top_level_imports": [
       "copy",
       "importlib",
@@ -219,69 +323,39 @@
       }
     ],
     "static_case_count": 3,
-    "unknown_parameters": false,
-    "source_content_sha256": "446aa6e36ca320698d323d43ec8e03a6b5042e134850757375c321b007f0973e"
+    "unknown_parameters": false
   },
   {
-    "pin": "4e9ddf8",
-    "path": "tests/test_robotwin_trained_pair_continuation.py",
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_continuation_spawn.py",
+    "source_content_sha256": "719448d893a01fc798926a3dbfd30d2eaca7f943b1a2a98ba10df6701dd5ceaf",
     "top_level_imports": [
-      "copy",
-      "importlib.util",
       "json",
+      "importlib.util",
+      "os",
       "pathlib",
+      "signal",
+      "subprocess",
       "sys",
-      "time",
-      "pytest",
-      "torch",
-      "test_robotwin_trial_resume",
-      "test_robotwin_trained_parallel",
-      "test_robotwin_trained_pair_audit"
+      "textwrap",
+      "pytest"
     ],
     "tests": [
       {
-        "name": "test_long_authority_includes_initial_subslice_and_preserves_goal",
-        "static_cases": 1,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_offset_source_rounds_advance_independently",
-        "static_cases": 2,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_round100_requires_a_fresh_final_evaluation_child_then_retires",
-        "static_cases": 1,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_eval_only_requires_closed_unit_progress_and_exact_source_identity",
-        "static_cases": 1,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_cleanup_subset_keeps_other_live_arm_untouched",
-        "static_cases": 1,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_guardian_independent_respawns_and_single_initial_probe",
-        "static_cases": 1,
-        "unknown_parameters": []
-      },
-      {
-        "name": "test_continuation_reuses_real_one_round_c353_audit",
-        "static_cases": 1,
+        "name": "test_signal_after_popen_stays_owned_and_children_keep_normal_signal_masks",
+        "static_cases": 3,
         "unknown_parameters": []
       }
     ],
-    "static_case_count": 8,
-    "unknown_parameters": false,
-    "source_content_sha256": "55fb2c7c787cfea67cb3cb216a3ff0602d22814f2b1dda50da62f00549f37637"
+    "static_case_count": 3,
+    "unknown_parameters": false
   },
   {
-    "pin": "26b55ea",
+    "pin": "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1",
     "path": "tests/test_vla_cached_scalar_motor.py",
+    "source_content_sha256": "fb6681528f1ffdbcfc17303a131ae4bf3a8961cc10cc8af3cd32d1c66e840fab",
     "top_level_imports": [
       "copy",
       "builtins",
@@ -389,23 +463,6 @@
       }
     ],
     "static_case_count": 43,
-    "unknown_parameters": false,
-    "source_content_sha256": "fb6681528f1ffdbcfc17303a131ae4bf3a8961cc10cc8af3cd32d1c66e840fab"
-  },
-  {
-    "pin": "26b55ea",
-    "path": "src/fluffy_bassoon/meta_rl/vla_cached_scalar_motor.py",
-    "top_level_imports": [
-      "__future__",
-      "dataclasses",
-      "hashlib",
-      "time",
-      "types",
-      "numpy"
-    ],
-    "tests": [],
-    "static_case_count": 0,
-    "unknown_parameters": false,
-    "source_content_sha256": "09505c97f3c21a04baaaa1cc2b2ae8453281cd9a33ae2656d2d5790f6ce78b63"
+    "unknown_parameters": false
   }
 ]

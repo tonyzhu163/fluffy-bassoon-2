@@ -9,14 +9,16 @@ pin; root independently reviews, deploys and launches this auxiliary artifact.
 ## Bound inputs and remaining root actions
 
 1. Production is bound to corrected owner commit
-   `1fb1dd073733dd934723a915e0cd961cd5875d5a` at
-   `/mowenjie/fluffy-bassoon-2/worktrees/robotwin-continuation-aux-20261031-r1`.
-   The five selected files cover the continuous runner, production-mode
-   preflight flag and unchanged one-shot defaults. The older reference
+   `0c16c2b794f8de5b78603206917e72195083c265` at
+   `/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2`.
+   The six selected files cover the continuous runner, production-mode
+   preflight flag, unchanged one-shot defaults and three actual owned-fake-process
+   regressions for durable spawn registration before deferred termination.
+   The older reference
    `4e9ddf89a02ae2d90b37a305c55cc91781fa8c11` remains discovery evidence only.
 2. LIBERO is bound to sole-owner commit
    `26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa` at
-   `/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-scalar-cpu-20261031-r1`.
+   `/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1`.
 3. Reservation status is `ready_pending_owner_review_not_submitted`.
    Root independently reviews this artifact, reviews the latest `main` before
    launch, records the reviewed base and deploys the exact artifacts/candidates
@@ -25,7 +27,9 @@ pin; root independently reviews, deploys and launches this auxiliary artifact.
    from this commit. Active source worktrees are not reused or modified. No
    test/model computation runs on development SSH.
 4. Supply the resulting exact root launcher commit as `--launcher-pin` and the
-   actual scheduler job hostname as `--expected-hostname`. The launcher pin is
+   actual CPU job hostname captured at startup as `--expected-hostname`. Root
+   compares the recorded hostname with the allocated scheduler job ID before
+   accepting the receipt. The launcher pin is
    an explicit post-commit argument, avoiding a self-referential commit hash
    inside its own reservation. Keep the output identity fresh; no automatic
    retry is configured.
@@ -45,14 +49,15 @@ tests/test_robotwin_trained_pair_plan.py
 tests/test_robotwin_trained_pair_preflight.py
 tests/test_robotwin_trained_pair_runtime.py
 tests/test_robotwin_trained_pair_audit.py
+tests/test_robotwin_trained_pair_continuation_spawn.py
 ```
 
-Static AST expansion at final1fb1dd0 finds64 production cases: continuation14,
-plan17, preflight16, runtime14, audit3. The same four paired files now contain50
+Static AST expansion at final0c16c2b finds67 production cases: continuation14,
+plan17, preflight16, runtime14, audit3 and spawn3. The same four paired files now contain50
 cases because the owner added three preflight regressions. Older reference
 4e9ddf8 contained8 continuation plus47 paired cases. No new owner regressions
 are excluded to preserve the older count. The gate records actual JUnit counts
-rather than fixing acceptance at64. Every selected file must contribute
+rather than fixing acceptance at67. Every selected file must contribute
 nonzero passing cases; `FINAL-SOURCE-DISCOVERY.json` records the final counts.
 
 Fixture dependencies `tests/test_robotwin_trial_resume.py` and
@@ -62,6 +67,11 @@ Their named fixtures are imported by the selected tests; those files are
 synthetic CPU learners, temporary journals and owned temporary fake processes.
 They do not receive production process identities, source ledger paths or
 robot/model inputs.
+
+The spawn regression file launches real temporary fake child/grandchild
+processes inside the CPU allocation. It exercises deferred SIGTERM/SIGINT and
+durable registration/callback failure cleanup only for identities it created;
+it neither controls source jobs nor runs a model, simulator or robot.
 
 Phase2 runs in a separate fresh Python process from the sole LIBERO owner root:
 
@@ -144,7 +154,7 @@ No previously unused GPU/action qualification capacity is reused.
 ```bash
 bash /mowenjie/fluffy-bassoon-2/worktrees/robotwin-continuation-software-qual-20261031-r1-launch/outputs/robotwin-continuation-software-qual-20261031-r1/job.sh \
   --launcher-pin "$ROOT_REVIEWED_AUXILIARY_COMMIT" \
-  --expected-hostname job-ACTUAL_CPU_JOB_ID-master-0 \
+  --expected-hostname "$(hostname)" \
   --output /mowenjie/fluffy-bassoon-2/outputs/robotwin-continuation-software-qual-20261031-r1
 ```
 

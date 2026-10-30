@@ -17,14 +17,15 @@
   "phases": [
     {
       "name": "robotwin_continuation_and_paired_launcher",
-      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-continuation-aux-20261031-r1",
-      "source_commit": "1fb1dd073733dd934723a915e0cd961cd5875d5a",
+      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+      "source_commit": "0c16c2b794f8de5b78603206917e72195083c265",
       "tests": [
         "tests/test_robotwin_trained_pair_continuation.py",
         "tests/test_robotwin_trained_pair_plan.py",
         "tests/test_robotwin_trained_pair_preflight.py",
         "tests/test_robotwin_trained_pair_runtime.py",
-        "tests/test_robotwin_trained_pair_audit.py"
+        "tests/test_robotwin_trained_pair_audit.py",
+        "tests/test_robotwin_trained_pair_continuation_spawn.py"
       ],
       "reference_discovery_commit": "4e9ddf89a02ae2d90b37a305c55cc91781fa8c11",
       "reference_static_cases": {
@@ -36,16 +37,17 @@
         "tests/test_robotwin_trial_resume.py",
         "tests/test_robotwin_trained_parallel.py"
       ],
-      "scope": "New continuation/production-preflight behavior and existing paired-launcher regressions, using synthetic CPU learners and owned temporary fake processes only. One-shot defaults remain covered.",
+      "scope": "New continuation/production-preflight behavior, paired-launcher regressions and three real owned-fake-process spawn/termination regressions. Synthetic CPU learners and temporary processes only; one-shot defaults remain covered.",
       "final_static_cases": {
         "continuation": 14,
         "paired_launcher": 50,
-        "total": 64
+        "spawn_regressions": 3,
+        "total": 67
       }
     },
     {
       "name": "libero_cached_scalar_b1_cpu_fakes",
-      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-scalar-cpu-20261031-r1",
+      "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1",
       "source_commit": "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa",
       "tests": [
         "tests/test_vla_cached_scalar_motor.py"

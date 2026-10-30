@@ -23,7 +23,8 @@ PHASE_TESTS = [
      "tests/test_robotwin_trained_pair_plan.py",
      "tests/test_robotwin_trained_pair_preflight.py",
      "tests/test_robotwin_trained_pair_runtime.py",
-     "tests/test_robotwin_trained_pair_audit.py"],
+     "tests/test_robotwin_trained_pair_audit.py",
+     "tests/test_robotwin_trained_pair_continuation_spawn.py"],
     ["tests/test_vla_cached_scalar_motor.py"],
 ]
 LIBERO_PIN = "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa"
