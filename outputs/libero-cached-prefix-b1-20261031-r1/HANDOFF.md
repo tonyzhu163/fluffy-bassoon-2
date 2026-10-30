@@ -18,11 +18,18 @@ No closed qualification balance can be reused.
 - `tests/test_vla_cached_scalar_motor.py`: 43 prepared adapter fake CPU cases.
 - `tests/test_vla_cached_scalar_qualification.py`: 56 prepared gate CPU cases.
 
-Only AST/byte compilation, JSON parsing, shell syntax and diff checks have run
-for this implementation. No tests or model work ran on macOS or development
-SSH; no claim of CPU/GPU qualification is made. The execution owner is separately
-gating the earlier adapter pin 26b55ea on allocated CPU resources. That result
-does not qualify the later CLI or its additional tests automatically.
+The adapter's 43 fake CPU cases passed on allocated Linux resources in Baige
+job `job-q6dhvcewwwx1`, at exact clean pin
+`26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa`, in 0.468 seconds, with zero
+failures/errors/skips. Independent allocation/XML/hash readback is committed
+as `04845d56b7b9eeda09d0b44b6df6bbe429df91b4` on the RoboTwin continuation
+branch, under `outputs/robotwin-trained-continuation-preparation-20261031-r1/`.
+The actual allocation had zero GPUs, four CPUs and 16 GiB memory. No tests or
+model work ran on macOS or development SSH.
+
+The later CLI and its 56 additional prepared cases have only static AST/byte
+compilation, JSON, shell syntax and diff checks. The earlier adapter result
+does not qualify this later CLI or any actual GPU/source comparison.
 
 ## Exact comparison scope and limits
 
