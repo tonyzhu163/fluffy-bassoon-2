@@ -161,7 +161,7 @@ def _seed(target, role, ordinal):
     return int(content_hash(dict(case=target, role=role, ordinal=ordinal))[:8], 16)
 
 
-def frozen_query(sim, motor, learner, target):
+def frozen_query(sim, motor, learner, target, *, record_features=False):
     """Published native-before-learning / stochastic-SAC-after-learning query."""
     seed = _seed(target, 'query', 0)
     agent_rng, motor_rng = learner.agent._rng, motor.policy._rng
@@ -192,6 +192,13 @@ def frozen_query(sim, motor, learner, target):
                 reward=0. if outcome['success'] else -1., done=bool(outcome['done']), success=bool(outcome['success']),
                 terminated=bool(outcome['success']), truncated=bool(outcome['done']) and not bool(outcome['success']),
                 primitive_steps=int(outcome['primitive_steps']), primitive_discount=.999 ** outcome['primitive_steps'])
+            if record_features:
+                if getattr(motor, 'feature_encoder', None) is None:
+                    raise ValueError('Requested public-prefix recording requires the qualified frozen encoder')
+                features = np.asarray(motor.feature_encoder(observation, sim.metadata['instruction']), np.float32)
+                if features.shape != (4104,) or not np.isfinite(features).all():
+                    raise ValueError('Recorded public prefix differs from the shared4104D feature contract')
+                row['public_features'] = features
             rows.append(row)
             steps += row['primitive_steps']
             observation = outcome['observation']
@@ -221,7 +228,8 @@ def save_trace(output, identity, rows, summary, contract):
     return dict(summary, trace=str(path.relative_to(output)), trace_sha256=sha256(path))
 
 
-def run_case(sim, motor, learner, sampler, *, target, output, root, contract, resume=False, deadline=float('inf')):
+def run_case(sim, motor, learner, sampler, *, target, output, root, contract, resume=False, deadline=float('inf'),
+             milestones=MILESTONES, case_cap=CASE_CAP, total_cap=TOTAL_CAP, record_features=False):
     """Continue only from a complete physical episode plus its optimizer burst."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
@@ -237,14 +245,14 @@ def run_case(sim, motor, learner, sampler, *, target, output, root, contract, re
         if (output / 'contract.json').exists():
             raise ValueError('Fresh target learner requires a new immutable identity')
         write_json(output / 'contract.json', contract)
-    journaled = JournaledSimulator(sim, output, root)
+    journaled = JournaledSimulator(sim, output, root, case_cap=case_cap, total_cap=total_cap)
 
     def save(completed=False, stop_reason=None):
         learner.save(checkpoint, sampler, contract, **progress, motor_rng=_save_motor(motor))
         value = dict(progress, format=FORMAT, completed=completed, case=target,
             target_only=True, source_assembly_admission=False, source_checkpoint_reused=False,
             target_optimizer_updates=learner.updates, replay_rows=len(learner.replay), costs=costs(output),
-            total_action_charge=charged(output), maximum_total_actions=CASE_CAP,
+            total_action_charge=charged(output), maximum_total_actions=case_cap,
             latest_recovery_sha256=sha256(checkpoint), contract_sha256=content_hash(contract),
             stop_reason=stop_reason, warmup_cleared=learner.updates > 0,
             interpretation='Learning-onset diagnostic only; not a converged DSRL reproduction')
@@ -254,8 +262,8 @@ def run_case(sim, motor, learner, sampler, *, target, output, root, contract, re
     if not resume:
         save()
     wrapped = OnlineSourceSimulator(journaled, learner, sampler, sac_observation, warmup=500, batch=256, utd=20)
-    for milestone in range(progress['next_milestone'], len(MILESTONES)):
-        required_episodes, nominal_action_cap = MILESTONES[milestone]
+    for milestone in range(progress['next_milestone'], len(milestones)):
+        required_episodes, nominal_action_cap = milestones[milestone]
         while progress['training_episodes'] < required_episodes:
             if time.monotonic() + 90 >= deadline or not journaled.reserve_episode():
                 return save(stop_reason='complete_episode_time_or_action_reservation')
@@ -270,7 +278,7 @@ def run_case(sim, motor, learner, sampler, *, target, output, root, contract, re
                 return noise
             rows, summary = run_episode(wrapped, motor, choose,
                 initial_state=target['initial_state'], scene_seed=target['scene_seed'],
-                chunk=10, bounded=False, record_features=False)
+                chunk=10, bounded=False, record_features=record_features)
             if _signature(learner) != before_signature or learner.updates != before_updates:
                 raise RuntimeError('Training actor/critic/optimizer changed within an episode')
             if not rows or not rows[-1]['done'] or len(rows) != len(wrapped.provenance) or summary['primitive_steps'] > 400:
@@ -305,7 +313,7 @@ def run_case(sim, motor, learner, sampler, *, target, output, root, contract, re
         if time.monotonic() + 90 >= deadline or not journaled.reserve_episode():
             return save(stop_reason='complete_query_time_or_action_reservation')
         journaled.role, journaled.episode_id = 'query', f'query-{milestone:03d}'
-        rows, summary = frozen_query(journaled, motor, learner, target)
+        rows, summary = frozen_query(journaled, motor, learner, target, record_features=record_features)
         if progress['nominal_state_sha256'] is None:
             progress['nominal_state_sha256'] = summary['initial_state_vector_sha256']
         if summary['initial_state_vector_sha256'] != progress['nominal_state_sha256']:
