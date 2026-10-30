@@ -59,7 +59,7 @@ export PYTHONPATH=$TASK_WORKTREE/src
 TASK_ATTEMPT=$("$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_ppo_worker begin \
   --root "$TASK_OUTPUT" --campaign "$TASK_PLAN/campaign.json" --schedule "$TASK_PLAN/schedule.json" \
   --source "$TASK_SOURCE" --run "$TASK_RUN" --action-cap "$TASK_ACTIONS" --updates "$TASK_UPDATES" \
-  --memory-mode "$TASK_MODE" --slice-seconds "$TASK_SLICE" --worker-seconds 86400 \
+  --memory-mode "$TASK_MODE" --slice-seconds "$TASK_SLICE" --worker-seconds 21600 \
   --width "$TASK_WIDTH" --layers "$TASK_LAYERS" --heads "$TASK_HEADS" --context-length "$TASK_CONTEXT" \
   "${TASK_RESUME_ARGS[@]}")
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
@@ -92,8 +92,8 @@ export MAGICK_HOME=/mowenjie/libs/libero-plus-imagemagick
 export MAGICK_CODER_MODULE_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.11/modules-Q16/coders
 export LD_LIBRARY_PATH=$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export PYTHONPATH=$TASK_CUDA:$TASK_DSRL_OVERLAY:$TASK_WORKTREE/src:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
-# Contract stays fixed across equal scheduler slices. All repeats share one action cap.
-TASK_DRIVER_SECONDS=$(( TASK_SLICE - 300 ))
+# Slice duration is per attempt. The scientific driver ceiling and action cap stay fixed.
+TASK_DRIVER_SECONDS=21600
 TASK_TIMEOUT_SECONDS=$(( TASK_SLICE - ( $(date +%s) - TASK_STARTED ) - 60 ))
 test "$TASK_TIMEOUT_SECONDS" -gt 60
 timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT_SECONDS" "$TASK_MODEL" \

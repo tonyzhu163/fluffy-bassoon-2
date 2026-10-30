@@ -68,6 +68,21 @@ def finish(root, attempt, exit_code, *, now=None):
     return row
 
 
+PPO_WORKER_SECONDS = 21600
+PPO_DRIVER_SECONDS = 21600
+
+
+def worker_contract(args):
+    """Scheduler slice length may vary; scientific training inputs stay fixed."""
+    return dict(source_commit=args.source, run_id=args.run, maximum_total_actions=args.action_cap,
+        updates=args.updates, memory_mode=args.memory_mode, maximum_driver_seconds=PPO_DRIVER_SECONDS,
+        campaign_sha256=hashlib.sha256(args.campaign.read_bytes()).hexdigest(),
+        schedule_sha256=hashlib.sha256(args.schedule.read_bytes()).hexdigest(),
+        architecture=dict(width=args.width, layers=args.layers, heads=args.heads, context_length=args.context_length),
+        optimizer=dict(learning_rate=1e-4, epochs=2), seed=2,
+        status='Approved six-hour cumulative source-PPO ceiling; scheduler allocation is separately identified')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest='operation', required=True)
@@ -94,14 +109,9 @@ def main():
                     (args.width, args.layers, args.heads, args.context_length))
                 or args.width % args.heads or args.width % 2):
             raise ValueError('Invalid pinned shared-PPO worker identity or action budget')
-        contract = dict(source_commit=args.source, run_id=args.run, maximum_total_actions=args.action_cap,
-            updates=args.updates, memory_mode=args.memory_mode, slice_seconds=args.slice_seconds,
-            campaign_sha256=hashlib.sha256(args.campaign.read_bytes()).hexdigest(),
-            schedule_sha256=hashlib.sha256(args.schedule.read_bytes()).hexdigest(),
-            architecture=dict(width=args.width, layers=args.layers, heads=args.heads,
-                              context_length=args.context_length),
-            optimizer=dict(learning_rate=1e-4, epochs=2), seed=2,
-            status='Planning time ceiling only; the scheduler allocation must be separately authorized')
+        if args.worker_seconds != PPO_WORKER_SECONDS:
+            raise ValueError('Approved source PPO has an exact21600-second cumulative worker ceiling')
+        contract = worker_contract(args)
         print(begin(args.root, contract, slice_seconds=args.slice_seconds,
                     worker_seconds=args.worker_seconds, resume=args.resume))
     else:
