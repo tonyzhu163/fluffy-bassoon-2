@@ -6,7 +6,7 @@ import json
 import numpy as np
 import pytest
 
-from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
+from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter, _atomic_json
 from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv, _capture_sparse_feedback
 
 
@@ -308,3 +308,66 @@ def test_explicit_root_statistics_reconcile_independent_on_disk_records(tmp_path
         root.for_lane(True)
     with pytest.raises(ValueError,match='nonnegative integer'):
         root.for_lane(-1)
+
+
+def test_payload_fsync_precedes_publication_and_directory_fsync_follows_it(tmp_path,monkeypatch):
+    import os
+    import stat
+    writer=writer_at(tmp_path/'corpus')
+    events=[]
+    real_fsync,real_link,real_replace=os.fsync,os.link,os.replace
+    def fsync(descriptor):
+        is_directory=stat.S_ISDIR(os.fstat(descriptor).st_mode)
+        path=Path(os.readlink(f'/proc/self/fd/{descriptor}'))
+        events.append(('directory'if is_directory else'payload',path))
+        return real_fsync(descriptor)
+    def link(source,destination):
+        events.append(('publish_link',Path(destination)))
+        return real_link(source,destination)
+    def replace(source,destination):
+        events.append(('publish_replace',Path(destination)))
+        return real_replace(source,destination)
+    monkeypatch.setattr(os,'fsync',fsync)
+    monkeypatch.setattr(os,'link',link)
+    monkeypatch.setattr(os,'replace',replace)
+    def checked(call,path,publication):
+        events.clear();call()
+        published=events.index((publication,path))
+        payload=[index for index,(kind,_)in enumerate(events)if kind=='payload']
+        directories=[index for index,item in enumerate(events)if item==('directory',path.parent)]
+        assert payload and max(payload)<published
+        assert directories and max(directories)>published
+    path=tmp_path/'intent.json'
+    checked(lambda:_atomic_json(path,{'version':1}),path,'publish_link')
+    checked(lambda:_atomic_json(path,{'version':2},replace=True),path,'publish_replace')
+    blob=writer.root/'decision.npz'
+    checked(lambda:writer._save_arrays(Path('decision.npz'),{'values':np.arange(4)}),blob,'publish_link')
+    with np.load(blob,allow_pickle=False)as saved:
+        np.testing.assert_array_equal(saved['values'],np.arange(4))
+
+
+def test_new_intent_directory_hierarchy_is_synced_and_directory_errors_propagate(tmp_path,monkeypatch):
+    import os
+    import stat
+    real_fsync=os.fsync
+    directories=[]
+    def observed_fsync(descriptor):
+        if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+            directories.append(Path(os.readlink(f'/proc/self/fd/{descriptor}')))
+        return real_fsync(descriptor)
+    monkeypatch.setattr(os,'fsync',observed_fsync)
+    path=tmp_path/'episode'/'chunks'/'intent.json'
+    _atomic_json(path,{'intent':True})
+    assert tmp_path in directories and path.parent.parent in directories and path.parent in directories
+    writer=writer_at(tmp_path/'corpus')
+    def failed_directory_sync(descriptor):
+        if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+            raise OSError('directory durability failed')
+        return real_fsync(descriptor)
+    monkeypatch.setattr(os,'fsync',failed_directory_sync)
+    with pytest.raises(OSError,match='directory durability failed'):
+        _atomic_json(tmp_path/'failed-intent.json',{'intent':True})
+    assert(tmp_path/'failed-intent.json').exists()  # Visible is not yet acknowledged durable.
+    with pytest.raises(OSError,match='directory durability failed'):
+        writer._save_arrays(Path('unacknowledged.npz'),{'values':np.arange(4)})
+    assert(writer.root/'unacknowledged.npz').exists()

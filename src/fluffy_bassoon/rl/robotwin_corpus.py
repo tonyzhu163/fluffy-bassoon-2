@@ -37,9 +37,31 @@ def _sha256(path):
     return digest.hexdigest()
 
 
+def _fsync_directory(path):
+    descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _ensure_directory(path):
+    path = Path(path)
+    missing = []
+    current = path
+    while not current.exists():
+        missing.append(current)
+        current = current.parent
+    path.mkdir(parents=True, exist_ok=True)
+    # A durable file entry also needs its newly created directory hierarchy
+    # reachable after a crash (e.g. a fresh episode/chunks directory).
+    for directory in reversed(missing):
+        _fsync_directory(directory.parent)
+
+
 def _atomic_json(path, value, *, replace=False):
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    _ensure_directory(path.parent)
     temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".partial")
     try:
         with temporary.open("xb") as stream:
@@ -50,6 +72,7 @@ def _atomic_json(path, value, *, replace=False):
             os.replace(temporary, path)
         else:
             os.link(temporary, path)  # Atomic creation; never replace a record.
+        _fsync_directory(path.parent)
     finally:
         temporary.unlink(missing_ok=True)
 
@@ -107,7 +130,7 @@ class RobotwinCorpusWriter:
 
     def __init__(self, root, contract):
         self.root = Path(root).resolve()
-        self.root.mkdir(parents=True, exist_ok=True)
+        _ensure_directory(self.root)
         self.contract = {**deepcopy(contract), "schema": SCHEMA}
         _json_bytes(self.contract)
         contract_path = self.root / "contract.json"
@@ -207,7 +230,7 @@ class RobotwinCorpusWriter:
 
     def _save_arrays(self, relative, arrays, *, recover_existing=False):
         path = self.root / relative
-        path.parent.mkdir(parents=True, exist_ok=True)
+        _ensure_directory(path.parent)
         if path.exists() and recover_existing:
             # A crash may leave a fully written content-addressed blob before
             # its metadata sidecar. Verify every array before adopting it.
@@ -224,6 +247,7 @@ class RobotwinCorpusWriter:
                 stream.flush()
                 os.fsync(stream.fileno())
             os.link(temporary, path)
+            _fsync_directory(path.parent)
         finally:
             temporary.unlink(missing_ok=True)
         return self._array_ref(relative, arrays)
