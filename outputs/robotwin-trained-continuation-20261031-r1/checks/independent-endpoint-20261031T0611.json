@@ -1,0 +1,426 @@
+{
+  "schema": "robotwin_independent_production_endpoint_snapshot_v1",
+  "checked_at_utc": "2026-10-30T22:11:28.979504+00:00",
+  "assembled_at_utc": "2026-10-30T22:13:52.674945+00:00",
+  "status": "in_progress_below_source100_no_saved_outer_failure",
+  "scope": "One endpoint snapshot with fixed immutable manifest/JSON hashes. No repeated polling, new jobs, models, Torch/checkpoint tensor load, tests, controls, ledger constructor/recovery, Git or coordination mutation.",
+  "inputs": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-endpoint-20261031T0610-input.json",
+      "sha256": "b36d434ae0b2add46a82befc6b6d91ca5073afa1f37e5afafedafb80adb06ba2"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-endpoint-20261031T0610-bindings.json",
+      "sha256": "42b0d361f6d3c50b3b64628a8d6e107823ec4ce075157943e466ba57d2595c25"
+    }
+  ],
+  "allocations": {
+    "paired": {
+      "job_id": "job-fji2xx8oq53h",
+      "supervisor_commit_prefix": "0c16",
+      "runtime_commit_prefix": "57016",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1",
+      "outer_exit_code": null,
+      "saved_failure_count": 0
+    },
+    "sac": {
+      "job_id": "job-gv77bzhyeroo",
+      "supervisor_commit_prefix": "c715",
+      "runtime_commit_prefix": "e825821",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1",
+      "outer_exit_code": null,
+      "saved_failure_count": 0
+    }
+  },
+  "methods": {
+    "ppo": {
+      "latest_durable_source_round": 97,
+      "latest_durable_complete_K4_trials": 582,
+      "complete_episodes_in_these_trials_derived": 2328,
+      "latest_durable_source_actions": 938058,
+      "latest_durable_source_updates": 97,
+      "latest_durable_optimizer_steps": 485,
+      "counter_semantics": "PPO one update per six complete K4 trials;five optimizer steps per update",
+      "latest_bound_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-039/experiment/continuation-manifest.json",
+        "sha256": "8b0c442c8b7c239d608a4d8b18672d780149d29d260fbb3b74e6a08135da45c6"
+      },
+      "checkpoint_identity": {
+        "expected": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-039/experiment/coordinator-recovery.pt",
+          "sha256": "a4b1221bd823682ecf058f2b1fcec475bf7db6c4790049c7468232664efe9984"
+        },
+        "exists": true,
+        "bytes": 16549016,
+        "SHA_CRC_recheck": "not requested for this still-below100 snapshot; no tensor loading"
+      },
+      "manifest_and_bound_JSON_hashes_verified": true,
+      "latest_durable_selected_trial": null,
+      "latest_durable_prefix_empty": true,
+      "latest_durable_pending_PPO_empty": true,
+      "frozen_motor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-039/experiment/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb",
+        "value": {
+          "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "unchanged": true
+        }
+      },
+      "latest_durable_audited_head": {
+        "journal_events": 65812,
+        "journal_sha256": "d72fb9a9290ed6f7b2ae08c3e61bd517558a6308d021b985d031d565a841a7bc",
+        "charged_actions": 1015810,
+        "actual_actions": 1015810,
+        "decision_count": 32876,
+        "pending_actions": 0,
+        "uncertain_actions": 0
+      },
+      "current_live_ledger_head_rechecked": false,
+      "last_closed_audit_status": "passed_owned_child",
+      "current_child_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-040",
+      "current_child_last_progress": {
+        "stage": "source_execution_group_start",
+        "elapsed_seconds": 60.72783895395696,
+        "method": "ppo",
+        "source_steps": 938058,
+        "lanes": 6,
+        "plans": [
+          {
+            "task": "place_a2b_left",
+            "seeds": [
+              1763116776,
+              465740965,
+              638094021,
+              2107556088
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 583
+          },
+          {
+            "task": "pick_diverse_bottles",
+            "seeds": [
+              772823709,
+              1061014151,
+              834226567,
+              1701272985
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 584
+          },
+          {
+            "task": "scan_object",
+            "seeds": [
+              239219401,
+              1675907725,
+              1589555935,
+              219260667
+            ],
+            "episode_limit": 500,
+            "schedule_trial": 585
+          },
+          {
+            "task": "place_phone_stand",
+            "seeds": [
+              1655915391,
+              1045596008,
+              1833586674,
+              1226527027
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 586
+          },
+          {
+            "task": "place_object_stand",
+            "seeds": [
+              1525330864,
+              1531081895,
+              651678795,
+              549929757
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 587
+          },
+          {
+            "task": "handover_mic",
+            "seeds": [
+              1917739667,
+              1308334717,
+              1582329292,
+              296641817
+            ],
+            "episode_limit": 600,
+            "schedule_trial": 588
+          }
+        ],
+        "required_actions": 10800,
+        "source_iteration": 98,
+        "optimizer_steps": 485
+      },
+      "current_child_last_completed_episode": null,
+      "current_child_target_source_round": 98,
+      "current_child_completed_iteration_event": null,
+      "stage_statuses_from_latest_bound_record": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete"
+      },
+      "stage100_report_present_in_current_child": false,
+      "stage100_complete": false,
+      "source100_complete": false,
+      "campaign_complete": false
+    },
+    "ppo_reset": {
+      "latest_durable_source_round": 99,
+      "latest_durable_complete_K4_trials": 594,
+      "complete_episodes_in_these_trials_derived": 2376,
+      "latest_durable_source_actions": 953771,
+      "latest_durable_source_updates": 99,
+      "latest_durable_optimizer_steps": 495,
+      "counter_semantics": "PPO one update per six complete K4 trials;five optimizer steps per update",
+      "latest_bound_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-039/experiment/continuation-manifest.json",
+        "sha256": "690daa78b0ccce084b4146e33ab78e1fe76725eae76b6839a26da239ef594e3f"
+      },
+      "checkpoint_identity": {
+        "expected": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-039/experiment/coordinator-recovery.pt",
+          "sha256": "8c576993911cee60d1d39e0fff7ef949c655b86def97aa6dd111baf618572194"
+        },
+        "exists": true,
+        "bytes": 16526616,
+        "SHA_CRC_recheck": "not requested for this still-below100 snapshot; no tensor loading"
+      },
+      "manifest_and_bound_JSON_hashes_verified": true,
+      "latest_durable_selected_trial": null,
+      "latest_durable_prefix_empty": true,
+      "latest_durable_pending_PPO_empty": true,
+      "frozen_motor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-039/experiment/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb",
+        "value": {
+          "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "unchanged": true
+        }
+      },
+      "latest_durable_audited_head": {
+        "journal_events": 64581,
+        "journal_sha256": "6820dbc7e5f359f89794a4bbc8b1fa988351e09f041697068e38db38493ce6af",
+        "charged_actions": 997158,
+        "actual_actions": 997158,
+        "decision_count": 32260,
+        "pending_actions": 0,
+        "uncertain_actions": 0
+      },
+      "current_live_ledger_head_rechecked": false,
+      "last_closed_audit_status": "passed_owned_child",
+      "current_child_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040",
+      "current_child_last_progress": {
+        "stage": "source_execution_group_start",
+        "elapsed_seconds": 60.42734188307077,
+        "method": "ppo_reset",
+        "source_steps": 953771,
+        "lanes": 6,
+        "plans": [
+          {
+            "task": "scan_object",
+            "seeds": [
+              619672987,
+              1974700813,
+              1222255206,
+              75214910
+            ],
+            "episode_limit": 500,
+            "schedule_trial": 595
+          },
+          {
+            "task": "pick_diverse_bottles",
+            "seeds": [
+              1420663813,
+              921163349,
+              1049565666,
+              777237255
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 596
+          },
+          {
+            "task": "handover_mic",
+            "seeds": [
+              1520733454,
+              247520678,
+              661328419,
+              710792832
+            ],
+            "episode_limit": 600,
+            "schedule_trial": 597
+          },
+          {
+            "task": "place_a2b_left",
+            "seeds": [
+              409179933,
+              2030397550,
+              1883835142,
+              119896215
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 598
+          },
+          {
+            "task": "place_phone_stand",
+            "seeds": [
+              2012536781,
+              1117244820,
+              307619298,
+              882325816
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 599
+          },
+          {
+            "task": "place_object_stand",
+            "seeds": [
+              1992404125,
+              1304189834,
+              1028787045,
+              234305192
+            ],
+            "episode_limit": 400,
+            "schedule_trial": 600
+          }
+        ],
+        "required_actions": 10800,
+        "source_iteration": 100,
+        "optimizer_steps": 495
+      },
+      "current_child_last_completed_episode": {
+        "method": "ppo_reset",
+        "phase": "source",
+        "collector_lane": 2,
+        "source_iteration": 100,
+        "trial_in_iteration": 3,
+        "task": "handover_mic",
+        "episode": 1,
+        "seed": 1520733454,
+        "success": false,
+        "return_": 0.0,
+        "primitive_steps": 600,
+        "chunks": 19,
+        "initial_observation_sha256": "796707ef62b75fcac666528395f173b60f1e723804518d62e9b90d844ef39498",
+        "episode_limit": 600,
+        "reset_memory": true,
+        "reward_blind": false,
+        "reset_episode_feedback": true,
+        "budget_truncated": false
+      },
+      "current_child_target_source_round": 100,
+      "current_child_completed_iteration_event": null,
+      "stage_statuses_from_latest_bound_record": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete"
+      },
+      "stage100_report_present_in_current_child": false,
+      "stage100_complete": false,
+      "source100_complete": false,
+      "campaign_complete": false
+    },
+    "sac": {
+      "latest_durable_source_round": 88,
+      "latest_durable_complete_K4_trials": 528,
+      "complete_episodes_in_these_trials_derived": 2112,
+      "latest_durable_source_actions": 885076,
+      "latest_durable_source_updates": 561760,
+      "latest_durable_optimizer_steps": 1685280,
+      "counter_semantics": "SAC updates count each actor/critic/temperature update set; totaloptimizersteps=3*updates",
+      "latest_bound_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0048/experiment/continuation-manifest.json",
+        "sha256": "f24efac4911a5bae84bfddfb3a7fcb7223b8178b712a69f421b7392b485cc62a"
+      },
+      "checkpoint_identity": {
+        "expected": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0048/experiment/coordinator-recovery.pt",
+          "sha256": "c3f086c3a5b25afaa8d0826ef544e46e7166dc782068e0bc649c2d417dab8f23"
+        },
+        "exists": true,
+        "bytes": 922115153,
+        "SHA_CRC_recheck": "not requested for this still-below100 snapshot; no tensor loading"
+      },
+      "manifest_and_bound_JSON_hashes_verified": true,
+      "latest_durable_selected_trial": null,
+      "latest_durable_prefix_empty": true,
+      "latest_durable_pending_PPO_empty": true,
+      "frozen_motor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0048/experiment/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb",
+        "value": {
+          "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "unchanged": true
+        }
+      },
+      "latest_durable_audited_head": {
+        "journal_events": 61412,
+        "journal_sha256": "62ff1be61f6a97d70f606d3058883bd53e85f1ce44ca2d1ff9213f363058ff78",
+        "charged_actions": 949615,
+        "actual_actions": 949615,
+        "decision_count": 30681,
+        "pending_actions": 0,
+        "uncertain_actions": 0
+      },
+      "current_live_ledger_head_rechecked": false,
+      "last_closed_audit_status": "bound supervisor cursor and closed manifest",
+      "current_child_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0049",
+      "current_child_last_progress": {
+        "stage": "source_trial_start",
+        "elapsed_seconds": 328.6777099221945,
+        "method": "sac",
+        "task": "scan_object",
+        "seeds": [
+          1121100570,
+          941637385,
+          2135882135,
+          1148817175
+        ],
+        "source_steps": 891503,
+        "optimizer_steps": 1697760,
+        "source_iteration": 89,
+        "trial_in_iteration": 5
+      },
+      "current_child_last_completed_episode": {
+        "method": "sac",
+        "phase": "source",
+        "task": "handover_mic",
+        "episode": 4,
+        "seed": 414647334,
+        "success": false,
+        "return_": 0.0,
+        "primitive_steps": 600,
+        "chunks": 19,
+        "initial_observation_sha256": "79cb0b22a8d49189b3b4dff6bf3c305e22a3c0caff7f6ed1928e7b5566d51d33",
+        "budget_truncated": false,
+        "source_iteration": 89
+      },
+      "current_child_target_source_round": 89,
+      "current_child_completed_iteration_event": null,
+      "stage_statuses_from_latest_bound_record": {},
+      "stage100_report_present_in_current_child": false,
+      "stage100_complete": false,
+      "source100_complete": false,
+      "campaign_complete": false
+    }
+  },
+  "conclusion": "As of 06:11:29 Shanghai, durable PPO97/reset99/SAC88. Current children are collecting source98/100/89. Reset100 collection is not a completed optimizer update. Source100 and final stage100 evaluations are not complete; campaign completion is not established. No saved outer failure is present.",
+  "completion_requirements": [
+    "Each PPO requires100 completed updates/500 optimizer steps,600 complete K4 trials/2400 episodes, empty pending, checkpoint SHA/CRC, frozen motor and zero audited unresolved head.",
+    "Final stage100 source validation, all target/lesion/native units and supervisor completion must finish before campaign completion.",
+    "SAC source iterations and per-optimizer gradient updates are distinct; target clone updates never count as source progress."
+  ],
+  "limits": [
+    "Checkpoint SHA identities retained from bound manifests; file existence/size checked. Fresh SHA/ZIP CRC rechecks deferred because no method reached source100 in this snapshot.",
+    "Zero pending/uncertain refers to latest closed hash-bound ledger snapshots. Active children may have charged in-flight work; live ledgers were not opened/recovered.",
+    "Absent exit/failure receipts are saved output evidence, not a fresh scheduler terminal query.",
+    "Stopped after one snapshot as requested; no wait for100 or another allocation."
+  ]
+}
