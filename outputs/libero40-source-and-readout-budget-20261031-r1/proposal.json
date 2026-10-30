@@ -9,7 +9,7 @@
   "original_pool_unchanged": true,
   "source": {
     "gpu_seconds": 90000,
-    "planned_gpu_seconds": 88880,
+    "planned_gpu_seconds": 89480,
     "additional_pfs_bytes": 130000000000,
     "execution_source": "e93c742eaf1782dc6a3c024e9347321442d5ff11",
     "production_plan_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
@@ -25,7 +25,10 @@
       25,
       100,
       500
-    ]
+    ],
+    "validation_label_preparation_reserve_gpu_seconds": 600,
+    "remaining_contingency_gpu_seconds": 520,
+    "validation_label_rule": "Prefer same preselected TRAIN actor on heldout VAL observations in a fresh derived generation. Until verified, explicitly report legacy teacher_transfer NLL; never silently relabel existing archives. Collection is not gated."
   },
   "readout": {
     "gpu_seconds": 16200,

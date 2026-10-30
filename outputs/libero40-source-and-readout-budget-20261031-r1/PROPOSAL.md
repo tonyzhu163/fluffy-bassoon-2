@@ -48,3 +48,14 @@ No original artifacts or active worktrees are removed or edited.
 This is one-initialization development screening, not full Plus/Pro, complete
 2/4/8-shot evaluation or a positive memory/sample-efficiency result. PPO/reset
 1M scaling (44h/arm) and full shifted-suite runs remain separate and unfunded.
+
+
+For the next derived500 generation, reserve up to600 seconds from the source
+phase's existing1,120-second contingency for source-only validation-label
+preparation, leaving520 seconds. Prefer a preselected TRAIN actor per goal
+for both TRAIN and heldout-state VAL labels; keep behavior observations,
+actions/noises/rewards and all previous archives unchanged. If that binding
+has not been verified, report the old teacher-transfer metric explicitly.
+This affects validation interpretation, does not introduce target data or
+checkpoint selection, and is not a prerequisite for source collection. The
+source25h and combined29.5h ceilings do not increase.
