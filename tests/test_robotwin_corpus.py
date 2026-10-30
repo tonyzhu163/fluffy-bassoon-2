@@ -221,3 +221,90 @@ def test_environment_records_final_budget_truncation_without_changing_native_fla
     assert not record["native_result"]["truncated"]
     assert record["learning_result"]["truncated"]
     assert record["decision_metadata"]["old_value"] == .25
+
+
+def test_lane_handles_interleave_without_crossed_context_intents_frames_or_chronology(tmp_path):
+    root = writer_at(tmp_path)
+    zero,one = root.for_lane(0),root.for_lane(1)
+    assert zero is root.for_lane(0) is one.for_lane(0)
+    assert zero is not one and zero.root == one.root == root.root
+    zero.set_context(dict(trial_id='lane-zero',policy_version=7))
+    one.set_context(dict(trial_id='lane-one',policy_version=9))
+    episodes = [start_episode(zero),start_episode(one)]
+    assert episodes[0] != episodes[1] and root.episode_id is None
+    paths = [zero.begin_decision(np.zeros((4,2)),np.zeros((4,14)),dict(old_log_prob=-.7)),
+             one.begin_decision(np.ones((4,2)),np.ones((4,14)),dict(old_log_prob=-.9))]
+    assert paths[0] != paths[1] and zero.pending is not one.pending and root.pending is None
+    stats = root.statistics()
+    assert stats['frame_count']==1 and stats['completed_chunks']==0
+    assert set(stats['unresolved_decisions'])==set(paths)
+    for lane,path in enumerate(paths):
+        record=json.loads((tmp_path/path).read_text())
+        assert record['context']['trial_id']==('lane-zero'if lane==0 else'lane-one')
+        assert record['context']['policy_version']==(7 if lane==0 else 9)
+    finish_native(one,executed=2,terminal=True)
+    finish_native(zero,executed=4)
+    assert root.statistics()['native_completed_chunks']==2
+    assert zero.statistics()['active_episode_id']==episodes[0]
+    assert one.statistics()['active_episode_id']==episodes[1]
+    finalize(one,steps=2,terminated=True)
+    finalize(zero,steps=4,truncated=True,budget=True)
+    stats=root.statistics()
+    assert stats['completed_chunks']==2 and stats['native_completed_chunks']==0
+    assert stats['executed_primitive_steps']==6 and stats['unresolved_decisions']==[]
+    assert stats['frame_count']==2 and stats['episode_count']==2
+    assert len(list((tmp_path/'frames').glob('*.npz')))==2
+    persisted=json.loads((tmp_path/'statistics.json').read_text())
+    assert persisted['completed_chunks']==2 and persisted['executed_primitive_steps']==6
+    next_episodes=[start_episode(zero,value=2),start_episode(one,value=2)]
+    for current,previous in zip(next_episodes,episodes):
+        reset=json.loads((tmp_path/'episodes'/current/'reset.json').read_text())
+        assert reset['previous_episode_id']==previous
+    # Serial evaluation on the root never inherits a lane's episode chain.
+    serial=start_episode(root,value=2)
+    assert json.loads((tmp_path/'episodes'/serial/'reset.json').read_text())['previous_episode_id'] is None
+    assert root.context['trial_id']=='trial-0001'
+
+
+def test_reopening_lane_corpus_reports_all_unresolved_without_adopting_or_replaying(tmp_path):
+    root=writer_at(tmp_path);zero,one=root.for_lane(0),root.for_lane(1)
+    start_episode(zero);start_episode(one)
+    missing=zero.begin_decision(np.zeros((4,2)),np.zeros((4,14)),{})
+    partial=one.begin_decision(np.ones((4,2)),np.ones((4,14)),{})
+    finish_native(one,executed=2)
+    reopened=writer_at(tmp_path)
+    inspection=(tmp_path/'recovery-inspection.json').read_bytes()
+    child=reopened.for_lane(0)
+    assert child.pending is None and child.episode_id is None
+    with pytest.raises(RuntimeError,match='Native result'):
+        child.finalize_learning_flags(reward=0.,terminated=False,truncated=True,
+            budget_truncated=False,episode_primitive_steps=2)
+    with pytest.raises(RuntimeError,match='No recorded simulator intent'):
+        finish_native(child)
+    assert (tmp_path/'recovery-inspection.json').read_bytes()==inspection
+    stats=reopened.statistics()
+    assert set(stats['unresolved_decisions'])=={missing,partial}
+    assert stats['completed_chunks']==0 and stats['native_completed_chunks']==1
+    assert json.loads((tmp_path/missing).read_text())['status']=='intent'
+    assert json.loads((tmp_path/partial).read_text())['status']=='native_complete'
+    old_episodes={json.loads((tmp_path/path).read_text())['episode_id']for path in(missing,partial)}
+    assert start_episode(child)not in old_episodes
+
+
+def test_explicit_root_statistics_reconcile_independent_on_disk_records(tmp_path):
+    root=writer_at(tmp_path);child=root.for_lane(0)
+    other=writer_at(tmp_path)
+    start_episode(other)
+    other.begin_decision(np.zeros((4,2)),np.zeros((4,14)),{})
+    finish_native(other,executed=3);finalize(other,steps=3,truncated=True)
+    assert root.statistics()['completed_chunks']==1
+    assert child.statistics()['executed_primitive_steps']==3
+    assert child._stats is root._stats
+    root.register_runtime({'native_horizon':32})
+    child.register_runtime({'native_horizon':32})
+    with pytest.raises(ValueError,match='runtime contract changed'):
+        child.register_runtime({'native_horizon':50})
+    with pytest.raises(ValueError,match='nonnegative integer'):
+        root.for_lane(True)
+    with pytest.raises(ValueError,match='nonnegative integer'):
+        root.for_lane(-1)
