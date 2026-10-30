@@ -30,7 +30,8 @@ SUPPORT_BUDGETS = (0, 1, 2, 4, 8)
 METHODS = ("native", "tied_gaussian", "ad_full", "ad_episode_reset", "ad_static",
            "dpt_full", "dpt_episode_reset", "dpt_static")
 SUPPORTED_METHODS = METHODS + ('frozen_source_sac', 'frozen_target_sac', 'zero', 'tied_gaussian_clipped',
-    'ppo_full', 'ppo_episode_reset', 'ppo_trained_episode')
+    'ppo_full', 'ppo_episode_reset', 'ppo_trained_episode',
+    'ad_zero_mean_same_std', 'dpt_zero_mean_same_std', 'ad_original_mean_std1', 'dpt_original_mean_std1')
 FORMAT = "openpi_pi05_source40_support_query_v1"
 
 
@@ -319,6 +320,9 @@ def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, epis
             native_initial_noise=noise, executed_actions=np.asarray(outcome["executed_actions"], np.float32),
             reward=reward, raw_rewards=list(outcome["rewards"]), done=bool(outcome["done"]),
             success=bool(outcome["success"]), primitive_steps=steps))
+        distribution = getattr(controller, 'last_distribution', None) if controller is not None else None
+        if distribution is not None:
+            rows[-1]['steering_distribution'] = distribution
         primitives += steps
         observation = outcome["observation"]
         if outcome["done"]:

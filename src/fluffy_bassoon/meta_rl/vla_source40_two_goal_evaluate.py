@@ -90,6 +90,10 @@ class RecordingController:
     def public_observation_input(self):
         return bool(getattr(self.controller, 'public_observation_input', False))
 
+    @property
+    def last_distribution(self):
+        return getattr(self.controller, 'last_distribution', None)
+
     def set_episode_seed(self, seed):
         self.seed = seed
         _episode_rng(self.controller, seed)
