@@ -22,12 +22,17 @@ separate source-only measurement.
   query recoveries are rejected. Teacher/source feature/motor/horizon identity
   must match. Source PPO uses `gtrxl_noise_ppo` schema1; SAC uses its saved
   actor contract/config. Neither restoring optimizer state nor SGD is needed.
-- Only `phase=source` and trials covered by the committed source cursor.
+- Training selects only `phase=source` and trials covered by the committed source cursor.
   Every selected trial needs four ended episodes with distinct indices0–3.
   Duplicate/restarted ambiguous trials, unresolved/native-only chunks and
   external budget cuts fail. `--allow-legacy-cut` explicitly quarantines only
   an incomplete LAST trial in the older action-cut contract; never relabel it
   as K4 or discard a complete trial based on reward. Costs stay in its ledger.
+- Explicit `--partition validation --validation-iteration N` instead selects
+  the complete six-task source-validation panel at the matching immutable
+  iteration-N source snapshot. Its acting weights must match that snapshot;
+  no validation SAC updates are permitted. Export BC/DPT only for this fixed
+  policy panel. Training and validation keep separate cases and costs.
 
 The scientific runtime comparison ignores only `actual_render_pci`, which the
 driver omits from checkpoint contracts. The complete raw runtime file remains
@@ -85,9 +90,11 @@ original physical ledger.
 
 This native-token schema is **not** a valid `vla_history_train` input: that
 LIBERO consumer uses a different feedback layout and bound1 deployment adapter.
-A native-bound supervised trainer, independently trained static/episode-reset
-students, portable inference loader and actual K8 robot evaluation remain
-separate integration work. Converting arrays does not qualify those cells.
+The native-bound full/static trainer and portable inference wrapper are
+documented in [robotwin-history-policy.md](robotwin-history-policy.md).
+Their qualification and actual K8 robot evaluation are separate from array
+conversion. A separately trained supervised episode-reset student remains
+unimplemented. Converting arrays does not qualify those cells.
 
 ## Command
 
