@@ -253,7 +253,7 @@ def charged_actions(output):
     return total
 
 
-def main(argv=None):
+def main(argv=None, *, alias_loader=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('output', 'alias', 'schedule', 'source-ledger', 'outputs-root', 'checkpoint', 'openpi-root', 'dsrl-root', 'simulator-python'):
         parser.add_argument('--' + name, type=Path, required=True)
@@ -271,7 +271,8 @@ def main(argv=None):
     if (subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip() != args.source_commit
             or subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True).strip()):
         raise ValueError('Require the exact clean reviewed diagnostic commit')
-    alias = load_alias(args.alias, args.alias_sha256, run_id=args.output.parent.name, source_commit=args.source_commit)
+    alias = (load_alias if alias_loader is None else alias_loader)(args.alias, args.alias_sha256,
+        run_id=args.output.parent.name, source_commit=args.source_commit)
     deadline = invocation_deadline(alias['maximum_worker_seconds'], args.invocation_stop_unix)
     started = time.monotonic()
     schedule = load_schedule(args.schedule)

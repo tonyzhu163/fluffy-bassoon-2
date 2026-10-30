@@ -235,6 +235,7 @@ def publish_prefix(output, learner, contract, progress, checkpoint_sha256):
             source_case_ids=[case["case_id"] for case in contract["cases"][:progress["case_index"] + 1]],
             source_generation_episodes=len(progress["episode_receipts"]), source_generation_chunks=len(rows),
             source_generation_primitive_steps=progress["primitive_steps"], source_updates=learner.updates,
+            source_generation_cumulative_total_actions=physical_action_charge(output / 'raw/decision-journal'),
             source_actor_checkpoint_sha256=checkpoint_sha256,
             teacher_status="candidate current actor; no independent expert/optimality claim",
             history_policy="Actual chronological source learning across cases, including all warmup; no artificial policy reset",
@@ -255,7 +256,7 @@ def validate_simulator(task, metadata):
         raise ValueError("Simulator must match the declared source40 task and fresh-environment reset contract")
 
 
-def main(argv=None):
+def main(argv=None, *, continuation=None):
     ap = argparse.ArgumentParser(description=__doc__)
     for name in ("schedule", "output", "checkpoint", "openpi-root", "dsrl-root"):
         ap.add_argument(f"--{name}", type=Path, required=True)
@@ -312,9 +313,14 @@ def main(argv=None):
         qualification_reset = journal / f"reset-qualification-{time.time_ns()}.json"
         write_json(qualification_reset, dict(kind="qualification", returned=False,
                    settling_steps=int(sim.metadata["settle_steps"])))
-        initial = sim.reset(cases[0]["initial_state"], cases[0]["scene_seed"])["observation"]
+        qualification = sim.reset(cases[0]["initial_state"], cases[0]["scene_seed"])
+        initial = qualification["observation"]
         write_json(qualification_reset, dict(kind="qualification", returned=True,
-                   settling_steps=int(sim.metadata["settle_steps"])))
+                   settling_steps=int(sim.metadata["settle_steps"]),
+                   initial_state_vector_sha256=qualification.get('initial_state_vector_sha256'),
+                   initial_simulator_state_sha256=qualification.get('initial_simulator_state_sha256')))
+        if continuation is not None:
+            continuation.require_physical_state(qualification)
         zeros = np.zeros((10, 32), np.float32)
         a, b = motor.infer(initial, sim.metadata["instruction"], zeros), motor.infer(initial, sim.metadata["instruction"], zeros.copy())
         delta = float(np.max(np.abs(a - b)))
@@ -342,18 +348,26 @@ def main(argv=None):
             contract.update(maximum_total_actions=total_action_budget, requested_case_count=None,
                 available_seeded_case_count=len(cases),
                 case_bank_role="Candidate seeds, actual complete cases are determined by the physical-action ceiling")
+        if continuation is not None:
+            # Explicit migration is owned by the source-only top-up entry point.
+            # The ordinary collector's immutable CLI/resume contract is unchanged.
+            contract = continuation.bind_contract(contract)
         if args.resume:
             if json.loads((args.output / "contract.json").read_text()) != contract:
                 raise ValueError("Resumed source contract changed")
         else:
             write_json(args.output / "contract.json", contract)
-        learner, sampler = OfficialSAC(args.dsrl_root, seed), np.random.default_rng(seed)
+        learner = (OfficialSAC(args.dsrl_root, seed) if continuation is None else
+                   continuation.make_learner(args.dsrl_root, seed))
+        sampler = np.random.default_rng(seed)
         recovery = args.output / "source-recovery.pkl"
         progress = dict(case_index=0, episode_in_case=0, primitive_steps=0, chunks=0,
             settling_steps=0, episode_receipts=[], publications=[])
         if args.resume:
             progress = learner.restore(recovery, sampler, contract)
             motor.policy._rng = restore_motor_rng(progress.pop("motor_rng"))
+            if continuation is not None:
+                continuation.verify_motor_restore(motor)
         physical_cost = physical_costs(journal)["primitive_step_budget_charge"]
         settling_cost = sum(json.loads(path.read_text())["settling_steps"] for path in journal.glob("reset-*.json"))
         inflight, reset_receipt = None, None
@@ -371,7 +385,10 @@ def main(argv=None):
                 case_id=cases[progress["case_index"]]["case_id"], initial_state=initial_state,
                 scene_seed=scene_seed, initial_state_vector_sha256=result.get("initial_state_vector_sha256"),
                 initial_observation_sha256=result["initial_observation_sha256"],
+                initial_simulator_state_sha256=result.get("initial_simulator_state_sha256"),
                 settling_steps=int(sim.metadata["settle_steps"])))
+            if continuation is not None:
+                continuation.require_physical_state(result)
         def before_step(actions):
             nonlocal physical_cost, inflight
             if physical_cost + len(actions) > args.max_primitive_steps:
@@ -427,12 +444,14 @@ def main(argv=None):
                 uncertain_settling_steps_ceiling=sum(p["settling_steps"] for p in resets if not p["returned"]),
                 source_updates=learner.updates,
                 latest_recovery_sha256=sha256(recovery), collection_cost_count_once=True))
-        if not args.resume:
+        if not args.resume or continuation is not None:
             save_boundary()
         wrapped = OnlineSourceSimulator(sim, learner, sampler, sac_observation,
             before_step=before_step, after_outcome=after_outcome,
             before_reset=before_reset, after_reset=after_reset)
         def case_allowed(cursor):
+            if continuation is not None and continuation.wall_stop() and cursor['episode_in_case'] == 0:
+                return False
             return total_action_budget is None or physical_case_allowed(cursor, len(cases),
                 charged_actions=physical_cost + settling_cost, total_budget=total_action_budget,
                 episodes_per_case=schedule["episodes_per_case"])
@@ -446,6 +465,8 @@ def main(argv=None):
                 if (not rows or not rows[-1]["done"] or len(rows) != len(wrapped.provenance)
                         or summary["primitive_steps"] > 400 or any(row["public_features"].shape != (4104,) for row in rows)):
                     raise RuntimeError("Require complete real episodes and every shared prefix feature")
+                if continuation is not None:
+                    continuation.validate_episode(summary, wrapped.provenance)
                 update_metrics = wrapped.finish_episode()
                 for row, provenance in zip(rows, wrapped.provenance):
                     row.update(provenance, case_id=case["case_id"], source_partition=args.partition,
@@ -479,7 +500,9 @@ def main(argv=None):
             terminating_chunk_target = contract["collection_mode"] == "chunk_target" and progress["chunks"] >= contract["target_chunks"]
             next_case = dict(progress, case_index=progress["case_index"] + 1, episode_in_case=0)
             terminating_physical_budget = total_action_budget is not None and not case_allowed(next_case)
-            if publication_due(progress["case_index"] + 1, len(cases), contract["publish_every_cases"]) or terminating_chunk_target or terminating_physical_budget:
+            if (publication_due(progress["case_index"] + 1, len(cases), contract["publish_every_cases"])
+                    or terminating_chunk_target or terminating_physical_budget
+                    or (continuation is not None and continuation.wall_stop())):
                 checkpoint = args.output / f"case-{progress['case_index']:05d}-source.pkl"
                 learner.save(checkpoint, sampler, contract, **progress,
                              motor_rng=save_motor_rng(motor.policy._rng))
@@ -508,6 +531,8 @@ def main(argv=None):
         final["collection_qualified"] = bool(stopping_requirement and learner.updates > 0
             and any(publication["status"] == "paired_ad_dpt" for publication in progress["publications"]))
         final["smoke_qualified"] = final["collection_qualified"] if contract["collection_mode"] == "chunk_target" else None
+        if continuation is not None:
+            final = continuation.finish(final, learner, sampler, motor)
         write_json(args.output / "index.json", final)
         return 0 if final["collection_qualified"] else 3
     except Exception as error:
