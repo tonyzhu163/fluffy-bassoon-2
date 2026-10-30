@@ -66,3 +66,31 @@ final index and recording worker costs. A deadline reached during an episode
 preserves the complete-episode cursor and all raw partial RPC costs; it does not
 count a partial query as complete. Other runtime failures still propagate.
 The deadline is invocation metadata and never extends a resume's original cap.
+
+Read-only terminal aggregation is available as `vla_source40_noise_report`.
+It refuses live launcher locks, nonzero exits and partial indices. It verifies
+all360 group/trace/context/recovery hashes; reconstructs every actual noise
+array from its recorded RNG; checks raw reset/trace initial RGB/wrist/proprio
+and nominal **and post-settle** physics parity; verifies one process per worker
+and unchanged/common motor parameter SHA; and reconciles actual journals and
+cumulative clocks. It reports per-task outcomes and all six paired2×2 tables,
+including discordant task IDs. Contemporaneous native is primary; the earlier
+31/90 firstwave native is a separately labeled reference. No model/framework
+is imported or constructed. Only saved arrays/metadata are read. Nothing is
+written to the workers, and no waiting/polling occurs.
+
+```sh
+python -m fluffy_bassoon.meta_rl.vla_source40_noise_report \
+  --plan /mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-plan-20261030-r1/plan.json \
+  --plan-sha256 9f5f86d6bffec1922952cf0da8e3dc657beccd361db2b0fda132837c5e9e0c7d \
+  --ledger /mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-plan-20261030-r1/target-ledger.json \
+  --ledger-sha256 0de51e4e6fec4c4929cc801f64ea043bc530f115fc68ff2da989d0ed2571b4c2 \
+  --worker-root /mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1 \
+  --worker-root /mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w01-r1 \
+  --output /absolute/new-report-outside-worker-roots.json
+```
+
+The output argument is optional; stdout contains the compact summary. When
+provided, it creates a fresh report artifact outside both immutable worker
+roots and refuses an existing destination. Run saved-data verification once
+both allocations are terminal; this command submits no allocation or tests.
