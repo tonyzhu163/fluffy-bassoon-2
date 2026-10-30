@@ -37,12 +37,22 @@ def assert_resume_allowed(path, *, checkpoint=None):
         if group:
             journal=Path(group["journal_path"])
             committed=json.loads(journal.read_text())
-            checkpoint_path=path/"coordinator-recovery.pt" if path.is_dir() else path
-            digest=hashlib.sha256()
-            with checkpoint_path.open("rb") as stream:
-                for block in iter(lambda:stream.read(1<<20),b""):digest.update(block)
+            expected_digest=group.get("checkpoint_sha256")
+            if group.get("status")=="physical_complete_uncheckpointed":
+                checkpoint_path=path/"coordinator-recovery.pt" if path.is_dir() else path
+                digest=hashlib.sha256()
+                with checkpoint_path.open("rb") as stream:
+                    for block in iter(lambda:stream.read(1<<20),b""):digest.update(block)
+                expected_digest=digest.hexdigest()
+            elif group.get("status")!="checkpointed":
+                raise RuntimeError("Ordinary resume blocked by an unfinished physical collection group")
+            # An ACKed group can appear in a later post-SGD checkpoint. Its
+            # digest identifies the historical admission commit, not these new
+            # checkpoint bytes. The campaign fence separately rejects stale
+            # copies after subsequent physical activity.
             if (committed.get("status")!="checkpointed" or committed.get("group_id")!=group.get("group_id")
-                    or committed.get("checkpoint_sha256")!=digest.hexdigest()):
+                    or committed.get("physical_actions")!=group.get("physical_actions")
+                    or not expected_digest or committed.get("checkpoint_sha256")!=expected_digest):
                 raise RuntimeError("Ordinary resume blocked by an unacknowledged physical collection group")
 
 

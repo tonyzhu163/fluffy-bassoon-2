@@ -216,3 +216,34 @@ def test_default_scalar_cli_cannot_bypass_parallel_recovery_fence_before_cuda(tm
                     campaign_journal_fence={"canonical_root":"/original"}),copy)
     with pytest.raises(RuntimeError,match="same explicit collector"):
         module.main(arguments(tmp_path)+["--resume",str(copy)])
+
+
+def test_healthy_ack_then_optimizer_checkpoint_uses_historical_ack_digest(tmp_path):
+    root=tmp_path/"ledger";vector=tmp_path/"vector";vector.mkdir()
+    journal=vector/"group-00000001.json"
+    group=dict(group_id="g",status="physical_complete_uncheckpointed",journal_path=str(journal),physical_actions=2)
+    with campaign(root,"first") as budget:
+        budget.reserve("one",4,phase="source",method="ppo",task="scan_object",episode="e",chunk=0,policy_version="p0")
+        budget.resolve("one",2)
+        fence=campaign_checkpoint_fence(budget)
+    preupdate=dict(parallel_collection_group=group,parallel_vector_root=str(vector),
+        campaign_journal_fence=fence,states={"ppo":{"updates":0,"pending":[1,2,3,4,5,6]}})
+    before=tmp_path/"preupdate.pt";torch.save(preupdate,before)
+    acknowledged=dict(group,status="checkpointed",checkpoint_sha256=hashlib.sha256(before.read_bytes()).hexdigest())
+    journal.write_text(json.dumps(acknowledged))
+    assert_resume_allowed(before,checkpoint=preupdate)
+    postupdate=dict(preupdate,parallel_collection_group=acknowledged,
+        states={"ppo":{"updates":1,"optimizer_steps":5,"pending":[]}})
+    after=tmp_path/"postupdate.pt";torch.save(postupdate,after)
+    assert hashlib.sha256(after.read_bytes()).hexdigest()!=acknowledged["checkpoint_sha256"]
+    assert_resume_allowed(after,checkpoint=postupdate)
+    assert_campaign_checkpoint_fence(root,postupdate)
+    # Relocation preserves eligibility only while the canonical physical fence
+    # remains current; later physical work must block this otherwise valid copy.
+    copy=tmp_path/"relocated.pt";copy.write_bytes(after.read_bytes())
+    assert_resume_allowed(copy,checkpoint=postupdate)
+    with campaign(root,"later") as budget:
+        budget.reserve("later",1,phase="source",method="ppo",task="scan_object",episode="e2",chunk=0,policy_version="p1")
+        budget.resolve("later",1)
+    with pytest.raises(RuntimeError,match="Uncheckpointed physical"):
+        assert_campaign_checkpoint_fence(root,postupdate)
