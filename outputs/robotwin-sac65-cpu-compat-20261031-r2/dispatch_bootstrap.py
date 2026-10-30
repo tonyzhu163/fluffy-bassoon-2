@@ -44,6 +44,39 @@ def regular_bytes(path, root, maximum):
     return raw
 
 
+def actual_worker_row(ax):
+    """Parse one complete resource table; never combine unrelated AX fields."""
+    roots=[];stack=[]
+    for line in ax.splitlines():
+        match=re.fullmatch(r'([ \t]*)(\d+) (.+)',line)
+        if match is None:continue
+        depth=len(match[1].expandtabs(2));content=match[3]
+        node=dict(role=content.split(' ',1)[0],content=content,children=[])
+        while stack and stack[-1][0]>=depth:stack.pop()
+        (stack[-1][1]['children'] if stack else roots).append(node)
+        stack.append((depth,node))
+    def texts(node):
+        values=[node['content'][5:]] if node['role']=='text' else []
+        return values+[value for child in node['children'] for value in texts(child)]
+    def all_nodes(nodes):
+        for node in nodes:
+            yield node
+            yield from all_nodes(node['children'])
+    tables=[]
+    header=[['类型'],['实例数量'],['GPU类型 * 卡数'],['CPU'],['内存']]
+    for node in all_nodes(roots):
+        if node['role']!='table':continue
+        rows=[row for row in node['children'] if row['role']=='row']
+        if not rows:continue
+        cells=lambda row:[texts(cell) for cell in row['children'] if cell['role']=='cell']
+        if cells(rows[0])!=header:continue
+        require(len(rows)==2,'Actual resource table must contain exactly one Worker role')
+        tables.append(cells(rows[1]))
+    require(tables==[[['Worker'],['1'],['不使用加速芯片'],['8 核'],['64 GiB']]],
+        'Actual CUA Worker row must be exactly1x0GPU/8CPU/64GiB')
+    return tables[0]
+
+
 def prepare_proof(inbox, ready, *, nonce, code_commit, armed_at, now):
     marker = json.loads(regular_bytes(inbox/'proof-ready.json', inbox, 16384))
     require(marker.get('schema') == 'robotwin_cpu_actual_ui_proof_ready_v1'
@@ -64,10 +97,7 @@ def prepare_proof(inbox, ready, *, nonce, code_commit, armed_at, now):
     allocation = ids.pop()
     hosts = set(re.findall(r'\d+ text (' + re.escape(allocation) + r'-master-\d+)(?:\n|$)', ax))
     require(hosts == {allocation+'-master-0'}, 'Actual single allocation hostname is missing')
-    # Parse the actual Worker resource table, rather than supplied request fields.
-    rows = re.findall(r'\d+ text Worker\n.*?\d+ text (\d+)\n.*?'
-        r'\d+ text 不使用加速芯片\n.*?\d+ text (\d+) 核\n.*?\d+ text (\d+) GiB(?:\n|$)', ax, re.S)
-    require(rows == [('1','8','64')], 'Actual CUA Worker resources must be exactly1x0GPU/8CPU/64GiB')
+    actual_worker_row(ax)
     resource = dict(schema='robotwin_actual_cpu_allocation_v1',
         status='issued_actual_running_allocation', allocation_id=allocation,
         hostname=allocation+'-master-0', allocated_gpus=0, allocated_cpus=8, memory_gib=64,
@@ -81,6 +111,7 @@ def prepare_proof(inbox, ready, *, nonce, code_commit, armed_at, now):
 def validate_intent(intent, resource, code_commit, now):
     require(intent.get('run_id') == RUN and intent.get('code_commit') == code_commit
         and intent.get('hostname') == resource['hostname'] and intent.get('output') == REMOTE_OUTPUT
+        and intent.get('ticket_path') == REMOTE_INPUT+'/actual-bootstrap.json'
         and intent.get('max_wait_seconds') == 120 and intent.get('work_deadline_seconds_from_start') == 1400
         and type(intent.get('bootstrap_expires_at_unix')) in (float,int)
         and 0 < intent['bootstrap_expires_at_unix']-now <= 121,
@@ -98,16 +129,16 @@ def bounded_command(command, *, timeout, log):
         try:
             process.stdin.write(json.dumps(dict(command=command,parent_pid=os.getpid(),
                 deadline=time.monotonic()+timeout,receipt=str(receipt)))+'\n');process.stdin.flush()
-            code = process.wait(timeout=timeout+3)
+            code = process.wait(timeout=timeout+7)
             require(code == 0, 'Artifact transfer command failed: '+str(code))
         finally:
             old={n:signal.signal(n,signal.SIG_IGN) for n in (signal.SIGTERM,signal.SIGINT)}
             process.stdin.close()  # Parent loss/EOF also reaches the independent guard.
             if process.poll() is None:
                 try:
-                    process.wait(timeout=3)
+                    process.wait(timeout=7)
                 except subprocess.TimeoutExpired:
-                    process.terminate();process.wait(timeout=3)
+                    process.terminate();process.wait(timeout=7)
             for n,handler in old.items():signal.signal(n,handler)
 
 
@@ -124,11 +155,13 @@ assert not (out/'terminal.json').exists()
 raw=(out/'bootstrap-intent.json').read_bytes()
 assert hashlib.sha256(raw).hexdigest()==expected_intent
 intent=json.loads(raw)
+assert intent.get('ticket_path')==str(base/'actual-bootstrap.json')
 assert time.time()<intent['bootstrap_expires_at_unix']
 ticket=json.loads((stage/'actual-bootstrap.json').read_bytes())
 resource_raw=(stage/'actual-resource.json').read_bytes(); resource=json.loads(resource_raw)
 assert ticket['code_commit']==pin and ticket['hostname']==intent['hostname']==resource['hostname']
 assert ticket['run_id']==intent['run_id'] and ticket['output']==str(out)
+assert ticket['resource_receipt']['path']==str(base/'actual-resource.json')
 assert ticket['resource_receipt']['sha256']==hashlib.sha256(resource_raw).hexdigest()
 for field in ('proof','ax_proof'):
  ref=resource[field]; name=Path(ref['path']).name
@@ -176,7 +209,7 @@ def main():
                  '-o','ServerAliveCountMax=1']
         ssh=['ssh',*options,'-p',str(a.ssh_port),a.ssh_target]
         def transfer(command,maximum,log):
-            remaining=expiry-time.time()-6  # Cleanup is inside the one dispatcher lifetime.
+            remaining=expiry-time.time()-8  # Cleanup is inside the one dispatcher lifetime.
             require(remaining>0,'No transfer time remains before dispatcher expiry')
             bounded_command(command,timeout=min(maximum,remaining),log=log)
         # Resource and proof are actual CUA output before any remote publication.

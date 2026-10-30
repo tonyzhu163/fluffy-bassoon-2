@@ -243,7 +243,7 @@ def main():
         admission_file = out / 'private' / 'reference-admission.json'
         write(admission_file, admission)
         context = dict(code_root=str(code), code_commit=a.code_commit, output=str(out),
-              expected_fixture_tests=109,
+              expected_fixture_tests=121,
               owned_helpers=str(a.owned_helpers.resolve()),
               site_packages=str(Path(sys.executable).parent.parent / 'lib' /
                                 ('python%d.%d' % sys.version_info[:2]) / 'site-packages'),

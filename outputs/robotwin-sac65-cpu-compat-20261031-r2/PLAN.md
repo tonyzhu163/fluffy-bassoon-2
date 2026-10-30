@@ -46,12 +46,12 @@ import firewall and exact three `0c16c2` helper hashes are unchanged. The copied
 CPU adapter is byte-identical to r1. The phase worker changes only the focused
 test-file list; no new training/projection/export behavior is introduced.
 
-Require **109 fixtures, zero failures/errors/skips**: the original 75 plus 34
+Require **121 fixtures, zero failures/errors/skips**: the original 75 plus 46
 residual/proof/transfer fixtures. This is static discovery, not execution.
 The new transfer guard uses a live session-holder through TERM grace, followed
 by group KILL and wait. Its independent pipe/PPID watch bounds a transfer even
 if the dispatcher dies. Tests cover timeout, dispatcher TERM and SIGKILL,
-TERM-ignoring descendants and unrelated-session survival. All real process
+TERM-ignoring changed-PGID descendants, normal success/nonzero head exits and unrelated-session survival. All real process
 fixtures execute only in the allocated Linux qualification.
 
 There is no optimizer step, robot action, VLA query, fit, source100 admission,
