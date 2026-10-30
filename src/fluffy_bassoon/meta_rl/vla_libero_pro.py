@@ -65,6 +65,14 @@ def declared_files(data_root, case):
     return bddl, states, spec
 
 
+def initial_state_receipt(index, nominal_state, observation):
+    """Expose the physical-state identity required by shared support/query evaluation."""
+    return dict(initial_state=int(index),
+        initial_observation_sha256=hashlib.sha256(b''.join(np.asarray(observation[key]).tobytes()
+            for key in ('image', 'wrist', 'state'))).hexdigest(),
+        initial_state_vector_sha256=hashlib.sha256(np.asarray(nominal_state).tobytes()).hexdigest())
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--output", type=Path, required=True)
@@ -151,11 +159,10 @@ def main(argv=None):
                     renderer_verified = True
                 count, success = 0, False
                 obs = public_observation(raw)
-                digest = hashlib.sha256(b"".join(obs[k].tobytes() for k in ("image", "wrist", "state"))).hexdigest()
-                append_json(args.output / "resets.jsonl", dict(initial_state=index, seed=seed,
-                    initial_observation_sha256=digest, simulator_state_sha256=hashlib.sha256(
-                        np.asarray(env.get_sim_state()).tobytes()).hexdigest()))
-                connection.send(dict(observation=obs, initial_state=index, initial_observation_sha256=digest))
+                receipt = initial_state_receipt(index, states[index], obs)
+                append_json(args.output / "resets.jsonl", dict(receipt, seed=seed,
+                    simulator_state_sha256=hashlib.sha256(np.asarray(env.get_sim_state()).tobytes()).hexdigest()))
+                connection.send(dict(observation=obs, **receipt))
             elif command == "step":
                 actions = np.asarray(request["actions"], np.float32)
                 if raw is None or count >= args.horizon or success:
