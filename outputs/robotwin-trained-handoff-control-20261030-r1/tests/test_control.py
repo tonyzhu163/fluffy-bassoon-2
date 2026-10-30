@@ -413,3 +413,29 @@ def test_live_ledger_header_tampering_is_rejected_independently_of_tail_hash(fie
     snapshot,worker,contract=ledger_fixture();snapshot['header'][field]=value
     with pytest.raises(control.ControlError,match='header identity/caps/contract'):
         control.validate_ledger_header(snapshot,worker,'ppo',contract)
+
+
+def external_contract_ancestry(tmp_path):
+    old,new,ref,migration=ancestry(tmp_path)
+    backup=tmp_path/'exports/recovery/ppo/corpus-contract.json'
+    backup.parent.mkdir(parents=True);backup.write_bytes((old/'contract.json').read_bytes())
+    previous=Path(migration['manifest_path']);manifest=json.loads(previous.read_text())
+    manifest['corpus_contract']=control.bound(backup);old_ref=write_json(previous,manifest)
+    new_contract=json.loads((new/'contract.json').read_text())
+    new_contract['resume_trial_manifest_sha256']=old_ref['sha256']
+    contract_ref=write_json(new/'contract.json',new_contract)
+    current=json.loads(Path(ref['path']).read_text());current['corpus_contract']=contract_ref
+    ref=write_json(ref['path'],current)
+    migration['manifest_sha256']=old_ref['sha256'];write_json(new.parent/'execution-migration.json',migration)
+    return old,new,ref
+
+
+def test_external_hash_identical_backup_contract_is_valid_ancestry(tmp_path):
+    old,new,ref=external_contract_ancestry(tmp_path)
+    assert control.corpus_chain(ref)==[str(old),str(new)]
+
+
+def test_external_bound_contract_cannot_disagree_with_canonical_root(tmp_path):
+    old,_,ref=external_contract_ancestry(tmp_path)
+    write_json(old/'contract.json',{'source_commit':control.LINEAGE,'changed':True})
+    with pytest.raises(control.ControlError,match='canonical corpus contract content'):control.corpus_chain(ref)

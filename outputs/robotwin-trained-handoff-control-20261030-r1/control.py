@@ -239,9 +239,10 @@ def corpus_chain(ref):
         if key in seen:raise ControlError('Corpus ancestry cycle')
         seen.add(key);manifest=bound_json(ref);root=Path(manifest['corpus_root']).resolve()
         contract_ref=manifest['corpus_contract'];contract=bound_json(contract_ref)
-        if (Path(contract_ref['path']).resolve()!=root/'contract.json'
+        canonical_contract=root/'contract.json'
+        if (not canonical_contract.is_file() or sha(canonical_contract)!=contract_ref['sha256']
                 or contract.get('source_commit')!=LINEAGE):
-            raise ControlError('Bound corpus contract path/lineage differs')
+            raise ControlError('Bound and canonical corpus contract content/lineage differ')
         if str(root) not in roots:roots.append(str(root))
         migration=root.parent/'execution-migration.json'
         resume_sha=contract.get('resume_trial_manifest_sha256')

@@ -50,8 +50,10 @@ stopped source children fail closed.
    and the existing canonical ledger snapshot/head with zero pending/uncertain
    actions. The sole qualified source validator also checks every manifest binding.
 6. Follow corpus ancestry only through each current hash-bound corpus contract:
-   bind its exact contract path/DB lineage, prior manifest SHA and execution pin
-   to the migration metadata. Reject a missing migration for a resumed corpus.
+   bind its contract content/DB lineage, prior manifest SHA and execution pin
+   to the migration metadata. Stable external backup contract paths are allowed
+   only when canonical corpus `contract.json` exists with the same SHA. Reject
+   a missing migration for a resumed corpus.
    Verify every listed chunk JSON SHA, complete status, order, episode/frame
    chain and cumulative action duration. Require all referenced NPZ/frame files,
    exact declared sizes and numeric array names/shapes/dtypes; verify frame
