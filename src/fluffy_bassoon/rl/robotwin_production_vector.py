@@ -169,7 +169,7 @@ class ProductionRobotwinVectorEnv:
         json.dumps(merged, allow_nan=False)
         if self._group is not None:
             for key in ("phase", "method", "trial_id", "policy_version", "checkpoint_sha256",
-                        "policy_checkpoint_sha256"):
+                        "policy_checkpoint_sha256", "policy_sha256", "policy_checkpoint"):
                 if merged.get(key) != self.contexts[lane].get(key):
                     raise RuntimeError("A lane's behavior identity cannot change during an admitted group")
         self.contexts[lane] = merged

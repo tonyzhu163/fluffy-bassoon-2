@@ -257,12 +257,13 @@ def test_full_group_admission_cancel_and_no_interleaved_budget_consumers(tmp_pat
     vector.close(); budget.close()
 
 
-def test_checkpoint_lineage_cannot_change_inside_group(tmp_path):
+@pytest.mark.parametrize("key",["policy_checkpoint_sha256","policy_sha256","policy_checkpoint"])
+def test_checkpoint_lineage_cannot_change_inside_group(tmp_path,key):
     scalar,budget,writers,vector,tasks = setup(tmp_path,lanes=2)
-    for lane in range(2): vector.set_lane_context(lane,{"policy_checkpoint_sha256":"f"*64})
+    for lane in range(2): vector.set_lane_context(lane,{key:"f"*64})
     vector.admit_group(tasks,[[11],[12]])
     with pytest.raises(RuntimeError,match="behavior identity"):
-        vector.set_lane_context(0,{"policy_checkpoint_sha256":"0"*64})
+        vector.set_lane_context(0,{key:"0"*64})
     vector.cancel_group("no dispatch")
     vector.close(); budget.close()
 
