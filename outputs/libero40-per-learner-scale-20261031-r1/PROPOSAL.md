@@ -4,9 +4,11 @@ Prepared 2026-10-31 from saved receipts and read-only Baige metadata. **Proposed
 not approved or launched.** The human source/target design stays all40 source
 goals → full LIBERO90 + Plus + Pro. No target trajectory enters pretraining;
 no goal filtering or outcome-selected source cases. The original32-GPU-hour
-pool has only140 seconds unassigned after the2,400-second batch14 qualification,
-3,600-second distribution diagnostic and12,000-second DSRL continuations.
-Terminal reclaims can reduce a later request; they are not assumed here.
+pool now has3,489 seconds unassigned after terminal reconciliation and the
+new1,400-second PPO warm-start /1,000-second SAC continuation qualifications.
+Those two continuation checks are funded from the original pool. The24h/122h
+figures below remain proposed ceilings, not approvals. Component margins and
+actual terminal qualifications must be aliased once rather than charged twice.
 
 The recommended meaning of1M is **cumulative per production learner**, including
 source training, source validation, settling, qualifications, failed prefixes
@@ -102,8 +104,13 @@ Measured SAC cost is30,886 GPU-seconds /411,578 selected source actions:
 extrapolations are12.3 and28.4 GPUh, respectively. SAC's larger learned share
 adds optimizer work: the old mixed17.8 ms/update reference suggests about4–6
 extra GPUh for roughly1M additional gradient steps. The24h SAC and44h PPO caps
-include uncertainty/setup/retries; they stop early if exhausted. Batch14 timing
-and memory are pending actual qualification; no speedup is assumed. Both exact
+include uncertainty/setup/retries; they stop early if exhausted. Fresh batch14 qualification is now complete:651.24s collection,4.09s replay,
+13.46s update,8,313 all-in actions and852 charged GPU-seconds. This is about
+22.4 GPUh/M at measured steady collection/replay/update rate, or28.5 GPUh/M
+including the cold qualification. One all-success batch cannot establish
+steady-state throughput or scaling benefit. Sampled device peak was10,804MiB;
+collection was serial, so14 means the gradient batch rather than parallel
+simulator lanes. The old one-trial figures remain historical evidence. Both exact
 individual and merged replay add computation and are explicitly metered.
 
 | Completed storage example | Raw / action | Journal / action | Full latest recovery | Final paired AD/DPT or candidate | Whole retained layout / action |
@@ -170,3 +177,34 @@ Evidence: [compact measurements](metadata.json),
 [original compute ledger](../libero40-bulk-approved-20261030-r1/compute-ledger.json),
 [batch14 contract](../../docs/vla-source40-batch14-ppo.md), and RoboTwin owner's
 `outputs/robotwin-native-failure-20261030-r1/RECOVERY-COST-AUDIT.md`.
+
+## Executable cumulative continuation refinement, 2026-10-31
+
+The source-SAC continuation pipeline is implemented in e7900a7, with its
+1,000s/5,000-new-action qualification funded inside the original32h. The prior
+source floor is432,831 actions after including12,944 technical qualification,
+10 failed-reset settling,7,540 frozen source controls and759 speed-qualification
+actions once. Keep cumulative per-train-stream21,800 actions (872,000 total),
+import actual85,301 validation actions with no new tiny teacher warmups, retain
+21,253 historical extras and reserve20,000 for NEW final-teacher competence.
+Maximum cumulative total is998,554, with1,446 unassigned. NEW training suffixes
+are at most545,723 actions, including the qualification prefix. See
+[executable contract](../../docs/vla-source40-sac-topup.md). Old source actors
+remain40 separately trained per-task actors; this is not a shared all40 SAC
+baseline. Source competence remains a separate measured check.
+
+R3→batch14 PPO warm start is an explicit phase change, not fresh training.
+Cumulative historical source charges including validation/qualifications are
+195,964 full and196,776 reset; new phase ceilings therefore shrink to804,036
+and803,224 before any new qualification is added. Shared qualifications are
+deduplicated in joint campaign costs. The active warm qualifier preserves old
+238/476 update/Adam clocks, starts new phase counters separately, and does
+zero restore SGD. A larger phase must bind its own whole14-K4 boundary and
+retain partial batches at the time/action stop. Old and new actions are both
+reported; no claim of1M newly collected actions per learner is implied.
+
+Human cadence correction: overlap collection and offline fitting from complete
+source snapshots and target evaluation. Optional repeated-query/cache work is
+deferred and is not an admission gate for this resource request. The remaining
+required continuation qualification evidence must precede a larger allocation;
+no24h source-bank or122h campaign has been launched.
