@@ -412,3 +412,20 @@ stored decisions. Its current fullH32×32interface differs from LIBERO's32D
 coordinate repeated over nativeH10. Within-RoboTwin arms share the interface;
 cross-benchmark steering dimensionality is not matched. No tied32D RoboTwin
 ablation has been launched or inferred from the existing1024D histories.
+
+## Trained RoboTwin continuation software qualification, 2026-10-31
+
+Baige `job-q6dhvcewwwx1` passed all 67 selected CPU tests at clean exact source
+`0c16c2b794f8de5b78603206917e72195083c265`, including three real process-spawn
+and cleanup regressions. There were zero failures, errors or skips; the phase
+took 74.828 seconds. The actual allocation was zero GPUs, four CPUs and 16 GiB.
+This validates the original 100-round paired continuation supervisor's tested
+software behavior, not completion of the continuous GPU run or robot learning.
+The owner still binds current released manifests and operational authority.
+
+The same job passed 43 cached scalar LIBERO adapter fake cases at exact source
+`26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa` in 0.468 seconds. These do not
+qualify the later recorded-input CLI, GPU compatibility or source adoption;
+the optional GPU comparison remains deferred. No robot actions were collected.
+
+[Qualification and independently checked receipts](../../../outputs/robotwin-trained-continuation-preparation-20261031-r1/CPU-QUALIFICATION.md).

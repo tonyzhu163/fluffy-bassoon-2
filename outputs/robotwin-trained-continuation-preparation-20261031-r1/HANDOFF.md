@@ -1,4 +1,14 @@
-# Original100-round paired continuation — preparation only
+# Original100-round paired continuation — CPU qualified
+
+Final supervisor `0c16c2b794f8de5b78603206917e72195083c265` passed its allocated
+Linux CPU gate on Baige `job-q6dhvcewwwx1`: 67 tests, including all three real
+spawn/cleanup regressions, with zero failures/errors/skips. Both source checks
+were clean at the exact pin. Independent hash/XML/allocation readback is in
+`linux-cpu-gate/LOCAL-READBACK.json`; see `CPU-QUALIFICATION.md`. This removes
+the software-gate prerequisite. The execution owner still binds the latest
+released heads and operational authority before launching the continuous run.
+The qualified deployed checkout stays immutable at0c16; later evidence-only
+commits do not replace its execution pin.
 
 The first trained paired run passed at unchanged runtime57016/c353:18,879new
 source actions, one real update/five SGD steps per arm, all12replay error pairs0,
@@ -7,8 +17,8 @@ owner's terminal UI reports450GPU-seconds; peak65.5537GiB/70.3878GB. This is an
 actual trained result, not a matched scalar speedup ratio. Protected thin
 readback is under `outputs/robotwin-trained-pair-20261031-r1/`.
 
-The source owner continues short, already-qualified real training pairs while
-this future supervisor receives review and its new allocated CPU gate. Its
+The source owner continued short, already-qualified real training pairs while
+this supervisor received review and its allocated CPU gate. Its
 initial inputs must be the **latest owner-issued** final manifests at launch,
 not hardcoded first-run53/55 or historical52/54 boundaries. The completed R2
 boundary was54/56; further bridge rounds change it normally. No current
@@ -116,7 +126,7 @@ submits no job and controls no predecessor allocation. A hard scheduler limit
 and outer timer remain necessary for kernel/filesystem failures; software
 ownership guards do not establish whole-container teardown under every fault.
 
-Prepared new CPU tests cover independent offsets/retirement, final evaluation,
+The passed CPU tests cover independent offsets/retirement, final evaluation,
 closed-unit progress, authority/cap changes, isolated session cleanup and the
 real tiny-CPU-Adam driver-to-audit path. Rerun relevant prior launcher tests for
 any changed admission helper. No tests/model/GPU work ran on macOS or through
