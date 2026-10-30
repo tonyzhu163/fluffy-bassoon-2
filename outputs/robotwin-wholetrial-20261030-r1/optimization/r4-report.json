@@ -1,0 +1,107 @@
+{
+  "source_commit": "1382e8dd9cfc40c66f93a49677e8e16cba16415e",
+  "status": "passed",
+  "action_budget": 3251,
+  "executed_actions": 3020,
+  "scalar": [],
+  "batches": [],
+  "inference": [],
+  "ppo_collection": [
+    {
+      "reset_each_episode": false,
+      "lanes": 2,
+      "primitive_steps": 1600,
+      "wall_seconds": 39.90337806195021,
+      "replay_errors": [
+        {
+          "log_prob_max_error": 0.0,
+          "value_max_error": 0.0
+        },
+        {
+          "log_prob_max_error": 0.0,
+          "value_max_error": 0.0
+        }
+      ],
+      "phase_seconds": {
+        "preprocess": 0.1607012776657939,
+        "prefix": 2.082670856267214,
+        "action_expert": 3.195274021476507,
+        "simulator": 10.945041401311755,
+        "reset": 21.08785635791719
+      },
+      "optimizer_steps": 0,
+      "controller_microbatch": 1,
+      "trial_lengths": [
+        26,
+        26
+      ]
+    },
+    {
+      "reset_each_episode": true,
+      "lanes": 2,
+      "primitive_steps": 1420,
+      "wall_seconds": 43.43827490042895,
+      "replay_errors": [
+        {
+          "log_prob_max_error": 0.0,
+          "value_max_error": 0.0
+        },
+        {
+          "log_prob_max_error": 0.0,
+          "value_max_error": 0.0
+        }
+      ],
+      "phase_seconds": {
+        "preprocess": 0.15795697923749685,
+        "prefix": 1.7947698971256614,
+        "action_expert": 3.204959870316088,
+        "simulator": 10.905987408012152,
+        "reset": 25.262029830366373
+      },
+      "optimizer_steps": 0,
+      "controller_microbatch": 1,
+      "trial_lengths": [
+        20,
+        26
+      ]
+    }
+  ],
+  "scope": "collector execution qualification; no teacher/student training",
+  "runtime": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "native_horizon": 32,
+    "observation_dim": 2062,
+    "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+    "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+    "task_config_name": "demo_clean",
+    "appearance_randomization": false,
+    "step_accounting": "native completed/partly executed-action valid_action_mask",
+    "final_observation_only": true,
+    "compile_kernels": false,
+    "actual_render_pci": "0000:63:00.0"
+  },
+  "elapsed_seconds": 142.21992356982082,
+  "motor_unchanged": true,
+  "collection_profile": {
+    "phase_seconds": {
+      "preprocess": 0.31865825690329075,
+      "prefix": 3.877440753392875,
+      "action_expert": 6.400233891792595,
+      "simulator": 21.851028809323907,
+      "reset": 46.34988618828356
+    },
+    "prefix_calls": 57,
+    "motor_queries": 52,
+    "simulator_calls": 52,
+    "reset_calls": 5,
+    "executed_actions": 3020
+  }
+}

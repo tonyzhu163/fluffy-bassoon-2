@@ -1,0 +1,67 @@
+{"status": "passed", "purpose": "training", "timing_comparison_eligible": false, "allocation_type": "baige_container", "hostname": "job-gou95fyn81ia-master-0", "probe_pid": 566, "created_at_utc": "2026-10-30T08:02:54.334482+00:00", "devices": [{"allocation_ordinal": 0, "visibility_token": "0", "cuda_uuid": "e687b2e6-0ebe-448b-16fa-93ce8e40c778", "cuda_name": "NVIDIA RPBZZZ6", "cuda_total_bytes": 101973950464, "pci_bus_id": "0000:a3:00.0", "uuid": "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c", "inventory": {"index": 0, "uuid": "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c", "name": "NVIDIA RPBZZZ6", "memory_total_mib": 97887.0, "memory_used_mib": 0.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:A3:00.0"}, "allocation_check": {"elements": 1048576, "result": 2097152.0, "touched_gpu_uuids": ["GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c"], "own_pid_gpu_uuids": ["GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c"]}}], "idle_utilization_required": true, "exclusive_training_admission": false, "admission_policy": "strict_idle_training", "utilization_role": "idle_admission", "utilization_telemetry": {"GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c": 0.0}, "maximum_initial_memory_mib": 256, "gpu_identity_mapping": {"method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation", "assigned_nvml_uuids": ["GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c"]}, "compute_processes_before": [], "compute_processes_after": [{"gpu_uuid": "GPU-908f099d-26f0-fd51-ba83-c066fcf28f4c", "pid": 566, "process_name": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python", "memory_used_mib": "640"}], "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"}
+........................................................................ [ 67%]
+.............................F
+=================================== FAILURES ===================================
+__ test_fixed_iterations_require_whole_trials_and_separate_sparse_evaluation ___
+tests/test_robotwin_campaign_driver.py:360: in test_fixed_iterations_require_whole_trials_and_separate_sparse_evaluation
+    args=driver.parse_args(required)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/diagnostics/robotwin_noise_compare.py:334: in parse_args
+    p.error("Source allocations exceed the entire physical campaign allowance")
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/argparse.py:2640: in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/argparse.py:2627: in exit
+    _sys.exit(status)
+E   SystemExit: 2
+----------------------------- Captured stderr call -----------------------------
+usage: __main__.py [-h] --source-commit SOURCE_COMMIT --model-path MODEL_PATH
+                   --norm-stats NORM_STATS --robotwin-root ROBOTWIN_ROOT
+                   --rlinf-root RLINF_ROOT --output OUTPUT
+                   [--source-tasks SOURCE_TASKS [SOURCE_TASKS ...]]
+                   [--eval-tasks EVAL_TASKS [EVAL_TASKS ...]]
+                   [--methods {ppo,sac,ppo_reset} [{ppo,sac,ppo_reset} ...]]
+                   [--source-steps SOURCE_STEPS]
+                   [--source-iterations SOURCE_ITERATIONS]
+                   [--source-eval-iterations SOURCE_EVAL_ITERATIONS [SOURCE_EVAL_ITERATIONS ...]]
+                   [--benchmark-episode-limits]
+                   [--ppo-update-steps PPO_UPDATE_STEPS]
+                   [--ppo-trials-per-update PPO_TRIALS_PER_UPDATE]
+                   [--checkpoint-steps CHECKPOINT_STEPS]
+                   [--train-episodes TRAIN_EPISODES]
+                   [--eval-episodes EVAL_EPISODES]
+                   [--episode-limit EPISODE_LIMIT]
+                   [--native-horizon NATIVE_HORIZON]
+                   [--task-config-name {demo_clean,demo_randomized}]
+                   [--seed SEED] [--eval-trials EVAL_TRIALS]
+                   [--native-episodes NATIVE_EPISODES]
+                   [--source-validation-episodes SOURCE_VALIDATION_EPISODES]
+                   [--source-milestones SOURCE_MILESTONES [SOURCE_MILESTONES ...]]
+                   [--stage-source-validation-only]
+                   [--campaign-root CAMPAIGN_ROOT] [--campaign-id CAMPAIGN_ID]
+                   [--campaign-max-actions CAMPAIGN_MAX_ACTIONS]
+                   [--campaign-prior-receipts CAMPAIGN_PRIOR_RECEIPTS]
+                   [--record-corpus] [--final-observation-only]
+                   [--capture-qualification CAPTURE_QUALIFICATION]
+                   [--ppo-epochs PPO_EPOCHS]
+                   [--ppo-minibatch-trials PPO_MINIBATCH_TRIALS]
+                   [--learning-rate LEARNING_RATE]
+                   [--ppo-max-update-kl PPO_MAX_UPDATE_KL]
+                   [--sac-warmup SAC_WARMUP] [--sac-batch-size SAC_BATCH_SIZE]
+                   [--sac-utd SAC_UTD] [--action-limit ACTION_LIMIT]
+                   [--wall-seconds WALL_SECONDS]
+                   [--boundary-reserve-seconds BOUNDARY_RESERVE_SECONDS]
+                   [--qualification-smoke] [--resume RESUME]
+__main__.py: error: Source allocations exceed the entire physical campaign allowance
+=============================== warnings summary ===============================
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104
+  /mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104: PytestRemovedIn10Warning: The hookimpl pytest_addhooks uses old-style configuration options (marks or attributes).
+  Please use the pytest.hookimpl(tryfirst=True) decorator instead
+   to configure the hooks.
+   See https://docs.pytest.org/en/latest/deprecations.html#configuring-hook-specs-impls-using-markers
+    @pytest.mark.tryfirst
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_campaign_driver.py::test_fixed_iterations_require_whole_trials_and_separate_sparse_evaluation
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 101 passed, 1 warning in 4.11s

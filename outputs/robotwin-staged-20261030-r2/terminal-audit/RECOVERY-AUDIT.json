@@ -1,0 +1,109 @@
+{
+  "inspection": "read-only CPU recovery metadata/SHA/CRC; no model forward/backward",
+  "source": {
+    "ppo": {
+      "source_steps": 39488,
+      "learner_primitive_steps": 39488,
+      "updates": 3,
+      "pending_trials": 4,
+      "schedule_present": true,
+      "optimizer_steps": 15,
+      "optimizer_parameter_steps": [
+        15.0
+      ],
+      "sampler_present": true,
+      "global_rng_keys": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "optimizer_integrity": true,
+      "matches_summary": true
+    },
+    "sac": {
+      "source_steps": 39138,
+      "learner_primitive_steps": 39138,
+      "updates": 15560,
+      "pending_trials": 0,
+      "schedule_present": true,
+      "replay_rows": 1278,
+      "optimizer_parameter_steps": {
+        "actor_optimizer": [
+          15560.0
+        ],
+        "critic_optimizer": [
+          15560.0
+        ],
+        "temperature_optimizer": [
+          15560.0
+        ]
+      },
+      "private_rng_present": true,
+      "target_critic_present": true,
+      "pending_chunks": 0,
+      "optimizer_integrity": true,
+      "matches_summary": true
+    },
+    "ppo_reset": {
+      "source_steps": 40179,
+      "learner_primitive_steps": 40179,
+      "updates": 3,
+      "pending_trials": 4,
+      "schedule_present": true,
+      "optimizer_steps": 15,
+      "optimizer_parameter_steps": [
+        15.0
+      ],
+      "sampler_present": true,
+      "global_rng_keys": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ],
+      "optimizer_integrity": true,
+      "matches_summary": true
+    }
+  },
+  "files": {
+    "coordinator-recovery.pt": {
+      "bytes": 99733587,
+      "sha256": "185241c86e2c42d3d6966bf59c44ef0cf2fa0ddd80c0b6eb06ebb01e99225be9",
+      "zip_crc_ok": true
+    },
+    "ppo-recovery.pt": {
+      "bytes": 19653126,
+      "sha256": "6bcc6603de4f60b02f3bad3a0e0105b0d32104631ada4c600eda39f8395c0ab1",
+      "zip_crc_ok": true
+    },
+    "sac-recovery.pt": {
+      "bytes": 60557819,
+      "sha256": "7c11cbb06531bb2f11241eceef06e86101d0fcbd958c244e0dd06a57e389f86d",
+      "zip_crc_ok": true
+    },
+    "ppo_reset-recovery.pt": {
+      "bytes": 19490684,
+      "sha256": "efd4b6f86b384ecaa3c7e5c84ccdab893f214b5fa5e9e6d0df35303eb0a7d299",
+      "zip_crc_ok": true
+    }
+  },
+  "coordinator_global_rng": [
+    "cuda",
+    "numpy",
+    "python",
+    "torch"
+  ],
+  "next_method_index": 0,
+  "completed_evaluation_units": 35,
+  "stage_keys": [
+    "32000"
+  ],
+  "charged_actions": 190394,
+  "actual_actions": 190394,
+  "pending_actions": 0,
+  "uncertain_actions": 0,
+  "journal_sha256": "bf2759498af6df9dbfea93133dd1e6b457afb64f716f51986fa42ccbc42da308",
+  "frozen_motor_unchanged": true,
+  "all_checks_pass": true
+}

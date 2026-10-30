@@ -1,0 +1,363 @@
+{
+  "source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "eval_tasks": [
+    "adjust_bottle",
+    "move_stapler_pad"
+  ],
+  "methods": [
+    "ppo"
+  ],
+  "source_steps_per_learner": 1100000,
+  "train_episodes": 4,
+  "eval_episodes": 8,
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "episode_limit": 600,
+  "noise_shape": [
+    32,
+    32
+  ],
+  "observation_dim": 2062,
+  "native_horizon": 32,
+  "task_config_name": "demo_clean",
+  "action_limit": 1.5,
+  "source_sampling": "uniform shuffled task blocks",
+  "qualification_smoke": false,
+  "scope": "six-task source pretraining / declared target evaluation",
+  "source_budget": "fixed complete K4 trials; actual actions reported; source steps are a safety reservation",
+  "target_budget": "equal episode and horizon allowance; actual interactions reported",
+  "clock": "episode index clamped at training maximum during longer evaluation",
+  "source_checkpoint_transfer": "complete source learner independently restored; online target replay is fresh with replacement sampling from first target row",
+  "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+  "norm_stats": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+  "ppo": {
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300,
+    "gate_bias": 2.0,
+    "action_limit": 1.5,
+    "learning_rate": 1e-06,
+    "epochs": 5,
+    "minibatch_trials": 16,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "dual_clip": 3.0,
+    "value_clip": 0.2,
+    "huber_delta": 10.0,
+    "value_weight": 1.0,
+    "max_grad_norm": 1.0,
+    "train_episodes": 4,
+    "episode_limit": 600,
+    "reset_each_episode": false
+  },
+  "ppo_trials_per_update": 6,
+  "ppo_update_primitive_threshold": 0,
+  "task_episode_limits": {
+    "handover_mic": 600,
+    "pick_diverse_bottles": 400,
+    "place_a2b_left": 400,
+    "place_object_stand": 400,
+    "place_phone_stand": 400,
+    "scan_object": 500,
+    "adjust_bottle": 400,
+    "move_stapler_pad": 400,
+    "place_a2b_right": 400,
+    "place_dual_shoes": 600,
+    "place_empty_cup": 500,
+    "stamp_seal": 400
+  },
+  "source_iterations": {
+    "count": 100,
+    "trials_per_iteration": 6,
+    "episodes_per_trial": 4,
+    "evaluation_iterations": [
+      10,
+      25,
+      50,
+      100
+    ],
+    "planned_max_actions_per_learner": 1080000,
+    "ppo_update_rule": "one update after each complete iteration; no partial-trial action cuts",
+    "sac_update_rule": "online UTD unchanged; iterations count complete trial groups"
+  },
+  "ppo_max_update_kl": 0.1,
+  "sac": {
+    "hidden_dims": [
+      128,
+      128,
+      128
+    ],
+    "learning_rate": 0.0003,
+    "batch_size": 256,
+    "warmup_chunks": 500,
+    "utd": 20,
+    "replay_capacity": 100000,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "initial_temperature": 1.0,
+    "target_entropy": null,
+    "layer_norm": true,
+    "max_grad_norm": null
+  },
+  "campaign": {
+    "id": "robotwin-native-wholetrial-20261030-r2-ppo",
+    "max_actions": 1226400,
+    "source_caps": {
+      "ppo": 1100000
+    },
+    "source_validation_episodes": 4,
+    "trained_reset_target_lesions": [
+      "normal"
+    ],
+    "recipe": "fixed complete-trial source iterations; physical-action safety caps",
+    "raw_public_corpus": true,
+    "behavior_checkpoints": "immutable acting weights at every used version"
+  },
+  "corpus": "lossless public RGB/proprio/language and actual decision/action/outcome records",
+  "capture_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-capture-qual-20261029-r1/qualification/qualification.json",
+    "sha256": "d3c28726cf6a669a1850e56eecfecb4692153ad4648d1020cdc646cf95e4cf3e",
+    "source_commit": "8114dd23e872d673ade6ea391b973c05a0dc6eb1",
+    "runtime_contract": {
+      "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+      "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+      "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+      "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+      "noise_shape": [
+        32,
+        32
+      ],
+      "native_horizon": 32,
+      "observation_dim": 2062,
+      "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+      "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+      "task_config_name": "demo_clean",
+      "assets": {
+        "status": "passed",
+        "check": "full_archived_object_families_static_file_sizes",
+        "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+        "hf_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+        "archive_sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27",
+        "manifest_sha256": "4f4584e0f84b788c6ef30d7f8fb905c22deb32586af07b68d20291431873e216",
+        "task_object_families": {
+          "handover_mic": [
+            "018_microphone"
+          ],
+          "pick_diverse_bottles": [
+            "001_bottle"
+          ],
+          "place_a2b_left": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "075_bread",
+            "077_phone",
+            "081_playingcards",
+            "086_woodenblock",
+            "107_soap",
+            "112_tea-box",
+            "113_coffee-box"
+          ],
+          "place_object_stand": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "074_displaystand",
+            "079_remotecontrol"
+          ],
+          "place_phone_stand": [
+            "077_phone",
+            "078_phonestand"
+          ],
+          "scan_object": [
+            "024_scanner",
+            "112_tea-box"
+          ],
+          "adjust_bottle": [
+            "001_bottle"
+          ],
+          "move_stapler_pad": [
+            "048_stapler"
+          ],
+          "place_a2b_right": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "075_bread",
+            "077_phone",
+            "081_playingcards",
+            "086_woodenblock",
+            "107_soap",
+            "112_tea-box",
+            "113_coffee-box"
+          ],
+          "place_dual_shoes": [
+            "007_shoe-box",
+            "041_shoe"
+          ],
+          "place_empty_cup": [
+            "019_coaster",
+            "021_cup"
+          ],
+          "stamp_seal": [
+            "100_seal"
+          ]
+        },
+        "object_family_count": 23,
+        "checked_file_count": 443,
+        "checked_file_bytes": 959793225
+      },
+      "reset_max_attempts": 32,
+      "simulator_execution": "one physical environment; scene setup/reset/step/close on calling thread",
+      "observation_capture": "final camera read per chunk; native full-observation action accounting",
+      "capture_image_equivalence": "unqualified; requires paired allocated-runtime check",
+      "appearance_randomization": false,
+      "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
+      "actual_render_pci": "0000:a4:00.0"
+    },
+    "frozen_fingerprint": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41"
+  },
+  "runtime": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "native_horizon": 32,
+    "observation_dim": 2062,
+    "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+    "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+    "task_config_name": "demo_clean",
+    "assets": {
+      "status": "passed",
+      "check": "full_archived_object_families_static_file_sizes",
+      "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+      "hf_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+      "archive_sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27",
+      "manifest_sha256": "4f4584e0f84b788c6ef30d7f8fb905c22deb32586af07b68d20291431873e216",
+      "task_object_families": {
+        "handover_mic": [
+          "018_microphone"
+        ],
+        "pick_diverse_bottles": [
+          "001_bottle"
+        ],
+        "place_a2b_left": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_object_stand": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "074_displaystand",
+          "079_remotecontrol"
+        ],
+        "place_phone_stand": [
+          "077_phone",
+          "078_phonestand"
+        ],
+        "scan_object": [
+          "024_scanner",
+          "112_tea-box"
+        ],
+        "adjust_bottle": [
+          "001_bottle"
+        ],
+        "move_stapler_pad": [
+          "048_stapler"
+        ],
+        "place_a2b_right": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_dual_shoes": [
+          "007_shoe-box",
+          "041_shoe"
+        ],
+        "place_empty_cup": [
+          "019_coaster",
+          "021_cup"
+        ],
+        "stamp_seal": [
+          "100_seal"
+        ]
+      },
+      "object_family_count": 23,
+      "checked_file_count": 443,
+      "checked_file_bytes": 959793225
+    },
+    "reset_max_attempts": 32,
+    "simulator_execution": "one physical environment; scene setup/reset/step/close on calling thread",
+    "observation_capture": "final camera read per chunk; native full-observation action accounting",
+    "capture_image_equivalence": "unqualified; requires paired allocated-runtime check",
+    "appearance_randomization": false,
+    "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
+    "task_episode_limits": {
+      "adjust_bottle": 400,
+      "handover_mic": 600,
+      "move_stapler_pad": 400,
+      "pick_diverse_bottles": 400,
+      "place_a2b_left": 400,
+      "place_a2b_right": 400,
+      "place_dual_shoes": 600,
+      "place_empty_cup": 500,
+      "place_object_stand": 400,
+      "place_phone_stand": 400,
+      "scan_object": 500,
+      "stamp_seal": 400
+    },
+    "episode_limit_policy": "per-task control-action horizon; true termination takes precedence over timeout",
+    "episode_limits_source": {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/task_config/_eval_step_limit.yml",
+      "sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551"
+    }
+  }
+}
