@@ -215,7 +215,8 @@ class FrozenNativeHistoryController:
         if (not self.pending or actual.shape != (1024,) or not np.isfinite(actual).all()
                 or not np.allclose(actual,self.last_noise,rtol=0,atol=1e-6)
                 or not math.isfinite(float(reward)) or type(done) not in (bool,np.bool_)
-                or type(executed_steps) is not int or not 1 <= executed_steps <= min(32,self.episode_limit-self.primitive_step)
+                or type(executed_steps) is not int or not 0 <= executed_steps <= min(32,self.episode_limit-self.primitive_step)
+                or (executed_steps==0 and not done)
                 or (not done and self.primitive_step+executed_steps==self.episode_limit)):
             raise ValueError('Require actual bounded noise, reward, terminal flag and valid native duration')
         self.previous_noise=actual.copy(); self.previous_reward=float(reward)
