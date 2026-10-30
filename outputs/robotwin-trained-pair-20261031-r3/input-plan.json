@@ -1,0 +1,63 @@
+{
+  "schema": "robotwin_trained_pair_plan_v1",
+  "run_id": "robotwin-trained-pair-20261031-r3",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "lineage_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-pair-runtime-20261031-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r3",
+  "parent_manifest": {
+    "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+    "sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
+  },
+  "methods": {
+    "ppo": {
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/continuation-manifest.json",
+        "sha256": "19d0f4a767c46b87c59db37178be452782a67c5682781dfd389b03a966c3193b"
+      },
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/coordinator-recovery.pt",
+        "sha256": "b1ede4fb5693562d867a4615599e11123e1b44465524bb52d4b07112360699b7"
+      },
+      "frozen_motor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+      },
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r3/ppo"
+    },
+    "ppo_reset": {
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo_reset/continuation-manifest.json",
+        "sha256": "05ba5ab2971671dc00de91cf19f4a3fa7481e126798b854bd0a224deeefce747"
+      },
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo_reset/coordinator-recovery.pt",
+        "sha256": "de9df035b4c7b92aa4143d9a993887b0c43b4d9d6abbe464a9c416ebff90b8b5"
+      },
+      "frozen_motor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo_reset/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+      },
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r3/ppo_reset"
+    }
+  },
+  "owner_release": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r3/owner-release.json",
+    "sha256": "a092fef92a9bbeef7f7b5b50df5287c678ae2736c2e2363623d26fbbc19403d6"
+  },
+  "compute_binding": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r3/compute-binding.json",
+    "sha256": "de1d3a8ee460ce267f31ea8977736e7d2749c6b95303ccf4352fb70eed324c8b"
+  },
+  "resources": {
+    "gpus": 1,
+    "cpus": 32,
+    "memory_gib": 192,
+    "shared_memory_gib": 16,
+    "scheduler_cap_seconds": 2700
+  },
+  "maximum_seconds": 2520,
+  "child_wall_seconds": 2160,
+  "maximum_new_source_actions": 21600,
+  "maximum_input_due_evaluation_actions": 48800
+}
