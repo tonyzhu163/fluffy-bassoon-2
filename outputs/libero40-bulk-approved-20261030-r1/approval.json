@@ -1,0 +1,35 @@
+{
+  "status": "approved",
+  "approval_source": "Direct human reply to request_user_input_async call_f9065a0d59d148c0bbce19d054d49d81 item0",
+  "human_answer": "Approve the 32 GPU-hour ceiling",
+  "recorded_at_shanghai": "2026-10-30 10:41",
+  "maximum_additional_gpu_seconds": 115200,
+  "maximum_total_simulator_actions": 1000000,
+  "storage_allowance_approx_bytes": 630000000000,
+  "scope": "LIBERO source40 SAC and fresh shared full/episode-reset PPO, independent frozen source-local validation; no target source-pretraining data",
+  "components": {
+    "sac": {
+      "workers": 8,
+      "maximum_cumulative_gpu_seconds_per_worker": 7200,
+      "maximum_gpu_seconds_total": 57600
+    },
+    "ppo_full": {
+      "maximum_gpu_seconds_total": 21600,
+      "maximum_simulator_actions": 172000
+    },
+    "ppo_reset": {
+      "maximum_gpu_seconds_total": 21600,
+      "maximum_simulator_actions": 172000
+    },
+    "frozen_source_validation": {
+      "maximum_gpu_seconds_total": 14400,
+      "maximum_simulator_actions": 56000,
+      "goals": 8,
+      "arms": 2
+    }
+  },
+  "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "original_artifacts_and_recoveries_preserved": true,
+  "budget_rule": "All attempts, setup, retries and continuations charge the same component and32h pool; unused reservations are not automatically expanded.",
+  "robotwin_approval_included": false
+}

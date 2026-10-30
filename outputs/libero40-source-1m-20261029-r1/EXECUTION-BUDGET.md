@@ -1,18 +1,19 @@
 # Reviewable collection expansion
 
-Status: prepared, explicit32-GPU-hour approval requested in this chat. The1M LIBERO simulator
+Status: **approved by the human on2026-10-30** for up to32additionalGPUhours.
+[Approval and shared compute ledger](../libero40-bulk-approved-20261030-r1/README.md). The1M LIBERO simulator
 action cap is already approved; this document does not enlarge it. RoboTwin
 has its own owner and action/compute accounting. No target evaluation is
 included in this source collection request.
 
-Reviewed source: `3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf`, incorporating
+Prior qualified preparation source: `3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf`, incorporating
 latest origin/main `acca706`. Allocated Linux preflight221passed/2JAX
 probe-environment skips in `job-y48o6pc3928k`. Its separate4,000-action
 width128 qualification exited0:8 actual episodes over two tasks,80 chunks,
 two PPO iterations/four optimizer steps,744 primitives+90 settling=834actions.
 Behavior likelihood replay error0, finite losses, full recovery saved.
 
-## Requested compute ceiling:32 additional GPU-hours
+## Approved compute ceiling:32 additional GPU-hours
 
 | Work | Initial allocation shape | Maximum GPU-hours |
 | --- | --- | ---: |
@@ -86,8 +87,8 @@ Joint accounting is488,944 SAC +344,000 source PPO +56,000 frozen
 validation +19,500 retained qualifications +35,046 first target comparison
 +8,000 replication +16,000 target-online DSRL +32,000 common-runtime robot comparison +10 prior failed qualification
 +500 contingency=1M.
-The model-only context probe consumes zero simulator actions. Both targeted
-checks precede the pending full32-GPU-hour collection request.
+The model-only context probe consumes zero simulator actions. Those targeted
+checks preceded the now-approved full32-GPU-hour collection ceiling.
 
 The required ordinary target-online DSRL comparison is funded before launch
 by reducing each future/unlaunched source-PPO full/reset stream another8k
@@ -110,7 +111,7 @@ all existing reservations/active contracts stay fixed. Cross-process resumes
 retain recovery and charged actions but lose the strict shared-process claim.
 The completed numerical replay consumed zero simulator actions.
 
-## Executable immutable workers
+## Prior prepared commands (preserved; new launches use fresh identities)
 
 Preparation creates clean detached worktrees and writes receipts, without
 simulator/model computation. Eight shard preparations cover all48 slots;
@@ -153,3 +154,18 @@ do not claim all40 states/task are guaranteed. Frozen validation uses40–49.
 Offline AD/DPT training can reuse the saved SAC corpus without more simulator
 actions. Its substantial training budget and LIBERO90/Plus/Pro support/query
 evaluation will be metered separately after usable source coverage is known.
+
+## Approved launch revision,2026-10-30
+
+Three canonical SAC slots are already reserved/completed: Spatial00train,
+LIBERO10:00train andLIBERO10:00validation. Skip their exact sources/recoveries;
+45freshstreams remain (38train+7validation),445,000newaction ceiling. The
+prior Spatial validation is retained as qualification and does not silently
+fill a new campaign slot. New source code/identities are recorded in the
+approved launch receipts; old3944preparations remain untouched.
+
+Fresh PPOfull/reset keep172k actions each and six-hour cumulative ledgers;
+scheduler slices may shrink on exact-source resume. Frozen validation has
+one joint4h/56k budget after both checkpoints are ready. Every new allocation
+counts inside the same32h pool, including preflight/setup/retries/shutdown.
+No RoboTwin compute approval is implied.

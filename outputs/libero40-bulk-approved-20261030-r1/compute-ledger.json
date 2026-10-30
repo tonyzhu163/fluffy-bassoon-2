@@ -1,0 +1,63 @@
+{
+  "format": "libero32h_component_compute_ledger_v1",
+  "maximum_additional_gpu_seconds": 115200,
+  "accounting": "Component holds include setup/shutdown/failed attempts. Do not spend a fresh full hold on resume. Reconcile actual scheduler times before releasing unused time.",
+  "components": {
+    "sac-worker-0": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-1": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-2": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-3": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-4": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-5": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-6": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "sac-worker-7": {
+      "maximum_gpu_seconds": 7200,
+      "reserved_gpu_seconds": 7200,
+      "status": "held_not_submitted"
+    },
+    "ppo-full": {
+      "maximum_gpu_seconds": 21600,
+      "reserved_gpu_seconds": 21600,
+      "status": "held_not_submitted"
+    },
+    "ppo-reset": {
+      "maximum_gpu_seconds": 21600,
+      "reserved_gpu_seconds": 21600,
+      "status": "held_not_submitted"
+    },
+    "frozen-validation": {
+      "maximum_gpu_seconds": 14400,
+      "reserved_gpu_seconds": 14400,
+      "status": "held_waiting_for_both_ppo_checkpoints"
+    }
+  },
+  "allocations": []
+}
