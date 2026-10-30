@@ -1,0 +1,108 @@
+{
+  "completed": true,
+  "hostname": "job-8jsjgsdc6cth-master-0",
+  "source_commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+  "lineage_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "allocated_gpus": 0,
+  "allocated_cpus": 4,
+  "additional_simulator_actions": 0,
+  "additional_vla_queries": 0,
+  "additional_production_sgd_updates": 0,
+  "synthetic_fixture_updates_present": true,
+  "manifests": [
+    {
+      "method": "ppo",
+      "source_checkpoint_sha256": "759533498db028a014e0908b9eaad0f7b193d09eb8df97b61fe50765be3f31f5",
+      "manifest_sha256": "15c0a1bfcf1dd6db12e81cc865609977ca7b8b12aa0d87bcda6bf8df3b9a56ab",
+      "source_steps": 366408,
+      "completed_trials": 229,
+      "completed_rounds": 38,
+      "learner_updates": 38,
+      "learner_primitive_steps": 366408,
+      "prefix_steps": 0,
+      "prefix_chunks": 0,
+      "start_episode": 0,
+      "next_seed": 774583299,
+      "prefix_rollout_shapes": null,
+      "pending_rollouts": 1,
+      "learner_unchanged": true
+    },
+    {
+      "method": "sac",
+      "source_checkpoint_sha256": "33913fb781c618fec9152401ebe784ddf804cd638a5ad1fca68fa6db6cc2826f",
+      "manifest_sha256": "71e5bdee4121972d810e2c0f561fa36de35d4e12de71d9849933fcb6be7d30ea",
+      "source_steps": 394231,
+      "completed_trials": 236,
+      "completed_rounds": 39,
+      "learner_updates": 244820,
+      "learner_primitive_steps": 394470,
+      "prefix_steps": 239,
+      "prefix_chunks": 8,
+      "start_episode": 1,
+      "next_seed": 121390495,
+      "prefix_rollout_shapes": null,
+      "pending_rollouts": 0,
+      "learner_unchanged": true
+    },
+    {
+      "method": "ppo_reset",
+      "source_checkpoint_sha256": "0ee20cca23a973b95659b3b476bcbc149384a7eeb7f51611a4542d7a95695960",
+      "manifest_sha256": "e86cf009652a8eb9ddc2c0e9d0629052ab9ffaf22477738bc97efd2e1ac5bb1b",
+      "source_steps": 376136,
+      "completed_trials": 236,
+      "completed_rounds": 39,
+      "learner_updates": 39,
+      "learner_primitive_steps": 376136,
+      "prefix_steps": 223,
+      "prefix_chunks": 7,
+      "start_episode": 1,
+      "next_seed": 121390495,
+      "prefix_rollout_shapes": {
+        "observations": [
+          7,
+          1,
+          3090
+        ],
+        "raw_actions": [
+          7,
+          1,
+          1024
+        ],
+        "log_probs": [
+          7,
+          1
+        ],
+        "values": [
+          7,
+          1
+        ],
+        "rewards": [
+          7,
+          1
+        ],
+        "trial_ends": [
+          7,
+          1
+        ],
+        "attempt_ends": [
+          7,
+          1
+        ],
+        "resets": [
+          7,
+          1
+        ],
+        "episode_limits": [
+          7,
+          1
+        ],
+        "action_mask": [
+          7,
+          1
+        ]
+      },
+      "pending_rollouts": 2,
+      "learner_unchanged": true
+    }
+  ]
+}
