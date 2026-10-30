@@ -1,0 +1,65 @@
+{
+  "qualified": true,
+  "selection": "largest predeclared learning rate passing the same source-only gate",
+  "learning_rate": 1e-06,
+  "epochs": 5,
+  "ppo_trials_per_main_update": 8,
+  "main_weights": "fresh independent initialization, not the diagnostic trained weights",
+  "calibration_sha256": "821995144fe49d5503e07ac05b1932ba729ce19d64e101740e06b0fa11ac3f61",
+  "calibration": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/result.json",
+  "candidate_recovery_sha256": "6c2a185aaea65d29c38272421e53b50ed2775b52c4f84dcd3f610605998923bc",
+  "post_divergence": {
+    "mean_joint_analytic_kl": 0.0020603376822093122,
+    "max_joint_analytic_kl": 0.002589743429022176,
+    "mean_joint_mean_shift_kl": 0.002060315801238055,
+    "joint_variance_kl": 2.188097125710442e-08,
+    "sampled_mean_old_minus_new_log_probability": 0.0059276018041958065,
+    "sampled_post_approximate_joint_kl": 0.009816039678416535,
+    "post_clip_fraction": 0.15,
+    "min_post_log_ratio": -0.2717667287289487,
+    "max_post_log_ratio": 0.3524765727954673,
+    "all_finite": true,
+    "dtype": "float64",
+    "direction": "KL(original || post)",
+    "aggregation": "sum all action dimensions, mean active stored decisions",
+    "decision_arrays": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/lr-1e-06-decisions.npz",
+    "decision_arrays_sha256": "5370fdc75f8a595f0d7b0bf40c86d65aeb89c084a333b5e576fc6031ae2b94e9",
+    "old_mean": {
+      "min": -0.8556000590324402,
+      "max": 0.8444228172302246,
+      "absolute_max": 0.8556000590324402,
+      "rms": 0.22774971404602481
+    },
+    "new_mean": {
+      "min": -0.85672926902771,
+      "max": 0.8452997207641602,
+      "absolute_max": 0.85672926902771,
+      "rms": 0.2277875145627149
+    },
+    "old_std": {
+      "min": 0.6065306597126334,
+      "max": 0.6065306597126334,
+      "absolute_max": 0.6065306597126334,
+      "rms": 0.6065306597126335
+    },
+    "new_std": {
+      "min": 0.6065275867966338,
+      "max": 0.6065337326442017,
+      "absolute_max": 0.6065337326442017,
+      "rms": 0.6065305280742377
+    },
+    "old_actor_inputs": {
+      "min": -1.391221284866333,
+      "max": 1.2704099416732788,
+      "absolute_max": 1.391221284866333,
+      "rms": 0.3914197661452144
+    },
+    "new_actor_inputs": {
+      "min": -1.3894597291946411,
+      "max": 1.2735388278961182,
+      "absolute_max": 1.3894597291946411,
+      "rms": 0.3915303108551753
+    }
+  },
+  "ppo_max_update_kl": 0.1
+}

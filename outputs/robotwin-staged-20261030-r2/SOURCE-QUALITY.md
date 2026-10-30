@@ -1,4 +1,6 @@
 # RoboTwin behavior coverage and source-quality reporting
+Current continuation: [launch verification](LAUNCH.md) records fresh r2collection. The prior32-episode table below covers r4only; do not treat it as a live count or as evidence about later policy versions.
+
 
 2026-10-30 Asia/Shanghai. Documentation only; no allocation, new robot action,
 data exclusion or admission gate is introduced. The original1,024D arm,

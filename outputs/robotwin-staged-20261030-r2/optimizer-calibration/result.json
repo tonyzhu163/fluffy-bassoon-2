@@ -1,0 +1,349 @@
+{
+  "status": "complete",
+  "source_commit": "c3b6281c032e2c712a62191b03219b1e70e12947",
+  "diagnostic": "saved_source_PPO_batch3_learning_rates",
+  "main_comparison_advanced": false,
+  "executed_new_robot_actions": 0,
+  "input_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-noise-matched-20261029-r4/experiment/ppo-recovery.pt",
+  "input_sha256": "722618543005ffcac5591593f67f2f8eaa3bd9fcc1be5cebf66995e9487306a9",
+  "original_complete_recovery": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-noise-matched-20261029-r4/experiment/ppo-recovery.pt",
+  "reference_post": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-saved-ppo-20261030-r2/diagnostic/diagnostic-recovery.pt",
+  "reference_post_sha256": "c2f1fe3c7e21f1151ab453adab2e2520b5dafe2146936b8f31741091804bdcfb",
+  "candidate_rates": [
+    1e-06,
+    3e-07
+  ],
+  "candidates": [
+    {
+      "learning_rate": 1e-06,
+      "status": "complete",
+      "retained_ppo_updates": 1,
+      "optimizer_steps": 5,
+      "update_seconds": 5.563056023791432,
+      "metrics": {
+        "loss": -0.0026355862617492678,
+        "actor_loss": -0.04945850968360901,
+        "critic_loss": 0.04682292379438877,
+        "approximate_kl": 0.002531936764717102,
+        "clip_fraction": 0.03,
+        "gradient_norm": 83.57247009277344,
+        "optimizer_steps": 5,
+        "chunks": 140,
+        "ppo_updates": 1
+      },
+      "post_divergence": {
+        "mean_joint_analytic_kl": 0.0020603376822093122,
+        "max_joint_analytic_kl": 0.002589743429022176,
+        "mean_joint_mean_shift_kl": 0.002060315801238055,
+        "joint_variance_kl": 2.188097125710442e-08,
+        "sampled_mean_old_minus_new_log_probability": 0.0059276018041958065,
+        "sampled_post_approximate_joint_kl": 0.009816039678416535,
+        "post_clip_fraction": 0.15,
+        "min_post_log_ratio": -0.2717667287289487,
+        "max_post_log_ratio": 0.3524765727954673,
+        "all_finite": true,
+        "dtype": "float64",
+        "direction": "KL(original || post)",
+        "aggregation": "sum all action dimensions, mean active stored decisions",
+        "decision_arrays": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/lr-1e-06-decisions.npz",
+        "decision_arrays_sha256": "5370fdc75f8a595f0d7b0bf40c86d65aeb89c084a333b5e576fc6031ae2b94e9",
+        "old_mean": {
+          "min": -0.8556000590324402,
+          "max": 0.8444228172302246,
+          "absolute_max": 0.8556000590324402,
+          "rms": 0.22774971404602481
+        },
+        "new_mean": {
+          "min": -0.85672926902771,
+          "max": 0.8452997207641602,
+          "absolute_max": 0.85672926902771,
+          "rms": 0.2277875145627149
+        },
+        "old_std": {
+          "min": 0.6065306597126334,
+          "max": 0.6065306597126334,
+          "absolute_max": 0.6065306597126334,
+          "rms": 0.6065306597126335
+        },
+        "new_std": {
+          "min": 0.6065275867966338,
+          "max": 0.6065337326442017,
+          "absolute_max": 0.6065337326442017,
+          "rms": 0.6065305280742377
+        },
+        "old_actor_inputs": {
+          "min": -1.391221284866333,
+          "max": 1.2704099416732788,
+          "absolute_max": 1.391221284866333,
+          "rms": 0.3914197661452144
+        },
+        "new_actor_inputs": {
+          "min": -1.3894597291946411,
+          "max": 1.2735388278961182,
+          "absolute_max": 1.3894597291946411,
+          "rms": 0.3915303108551753
+        }
+      },
+      "per_optimizer_step_unclipped_gradient_norms": [
+        91.1736068725586,
+        93.64029693603516,
+        96.57533264160156,
+        79.43885803222656,
+        57.03425598144531
+      ],
+      "post_reconstruction": {
+        "mean_max_error": 0.0,
+        "log_prob_max_error": 0.0,
+        "method": "independent sequence reconstruction from empty history on identical public inputs"
+      },
+      "policy_before_sha256": "fed55ba3ea9e15fdf17fa6d3f96139c6f5c1a15c5b7a07b7cdf034cf304ecafb",
+      "policy_after_sha256": "cda4225e2770b53865c330e148459d9cf16e6e7f651239c7ebe907d864c08f0b",
+      "provisional_stable": true,
+      "recovery": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/lr-1e-06-recovery.pt",
+      "recovery_sha256": "6c2a185aaea65d29c38272421e53b50ed2775b52c4f84dcd3f610605998923bc",
+      "optimizer_state_count": 63
+    },
+    {
+      "learning_rate": 3e-07,
+      "status": "complete",
+      "retained_ppo_updates": 1,
+      "optimizer_steps": 5,
+      "update_seconds": 5.051968927495182,
+      "metrics": {
+        "loss": 0.03111276403069496,
+        "actor_loss": -0.015726028382778166,
+        "critic_loss": 0.0468387920409441,
+        "approximate_kl": 0.00022873393126896448,
+        "clip_fraction": 0.0,
+        "gradient_norm": 92.66903991699219,
+        "optimizer_steps": 5,
+        "chunks": 140,
+        "ppo_updates": 1
+      },
+      "post_divergence": {
+        "mean_joint_analytic_kl": 0.0002101728904564931,
+        "max_joint_analytic_kl": 0.00026878076081439134,
+        "mean_joint_mean_shift_kl": 0.00021017064049272226,
+        "joint_variance_kl": 2.249963770850627e-09,
+        "sampled_mean_old_minus_new_log_probability": 0.000873656969272523,
+        "sampled_post_approximate_joint_kl": 0.000956900596820559,
+        "post_clip_fraction": 0.0,
+        "min_post_log_ratio": -0.08922351254364003,
+        "max_post_log_ratio": 0.12639269035162215,
+        "all_finite": true,
+        "dtype": "float64",
+        "direction": "KL(original || post)",
+        "aggregation": "sum all action dimensions, mean active stored decisions",
+        "decision_arrays": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/lr-3e-07-decisions.npz",
+        "decision_arrays_sha256": "0cc3c02940ee04f475968f5c5362db95540d27461b5e8cfeae86cce39b5ddeb2",
+        "old_mean": {
+          "min": -0.8556000590324402,
+          "max": 0.8444228172302246,
+          "absolute_max": 0.8556000590324402,
+          "rms": 0.22774971404602481
+        },
+        "new_mean": {
+          "min": -0.8559134602546692,
+          "max": 0.8447244763374329,
+          "absolute_max": 0.8559134602546692,
+          "rms": 0.2277610016944021
+        },
+        "old_std": {
+          "min": 0.6065306597126334,
+          "max": 0.6065306597126334,
+          "absolute_max": 0.6065306597126334,
+          "rms": 0.6065306597126335
+        },
+        "new_std": {
+          "min": 0.6065297559121938,
+          "max": 0.6065315635144197,
+          "absolute_max": 0.6065315635144197,
+          "rms": 0.6065306165362786
+        },
+        "old_actor_inputs": {
+          "min": -1.391221284866333,
+          "max": 1.2704099416732788,
+          "absolute_max": 1.391221284866333,
+          "rms": 0.3914197661452144
+        },
+        "new_actor_inputs": {
+          "min": -1.3905962705612183,
+          "max": 1.271422028541565,
+          "absolute_max": 1.3905962705612183,
+          "rms": 0.3914497659326934
+        }
+      },
+      "per_optimizer_step_unclipped_gradient_norms": [
+        91.1736068725586,
+        91.88934326171875,
+        92.62683868408203,
+        93.41873931884766,
+        94.2366714477539
+      ],
+      "post_reconstruction": {
+        "mean_max_error": 0.0,
+        "log_prob_max_error": 0.0,
+        "method": "independent sequence reconstruction from empty history on identical public inputs"
+      },
+      "policy_before_sha256": "fed55ba3ea9e15fdf17fa6d3f96139c6f5c1a15c5b7a07b7cdf034cf304ecafb",
+      "policy_after_sha256": "de0f3734d8d540af231019c8522f774e9919fc17d8c4566333ec569c71b91459",
+      "provisional_stable": true,
+      "recovery": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/lr-3e-07-recovery.pt",
+      "recovery_sha256": "2b329545b766f4941c5197768fa4256bd7425097776e8815447d624d8623e2bb",
+      "optimizer_state_count": 63
+    }
+  ],
+  "provisional_stability_rule": {
+    "mean_joint_analytic_kl_max": 0.02,
+    "post_clip_fraction_max": 0.2,
+    "additional_requirements": "finite nonzero gradient, changed weights, one update/five optimizer steps"
+  },
+  "scientific_scope": "source-policy numerical stability only; no target selection or robot-performance claim",
+  "initial_float32_matmul_precision": "highest",
+  "float32_matmul_precision": "high",
+  "behavior_replay": [
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    },
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    },
+    {
+      "log_prob_max_error": 0.0,
+      "value_max_error": 0.0
+    }
+  ],
+  "source_episodes": 12,
+  "source_actions": 4273,
+  "chunks": 140,
+  "action_dimensions": 1024,
+  "policy_before_sha256": "fed55ba3ea9e15fdf17fa6d3f96139c6f5c1a15c5b7a07b7cdf034cf304ecafb",
+  "input_magnitudes": {
+    "all_inputs": {
+      "min": -14.470270156860352,
+      "max": 58.01865005493164,
+      "absolute_max": 58.01865005493164,
+      "rms": 1.1283415377056845
+    },
+    "frozen_motor_features": {
+      "min": -14.470270156860352,
+      "max": 58.01865005493164,
+      "absolute_max": 58.01865005493164,
+      "rms": 1.2797035310481817
+    },
+    "previous_noise": {
+      "min": -1.4849210977554321,
+      "max": 1.490543007850647,
+      "absolute_max": 1.490543007850647,
+      "rms": 0.7371891779041797
+    },
+    "feedback_and_clocks": {
+      "min": 0.0,
+      "max": 1.0,
+      "absolute_max": 1.0,
+      "rms": 0.43045196100047994
+    },
+    "feedback_columns": [
+      {
+        "min": 0.0,
+        "max": 1.0,
+        "absolute_max": 1.0,
+        "rms": 0.08451542547285165
+      },
+      {
+        "min": 0.0,
+        "max": 1.0,
+        "absolute_max": 1.0,
+        "rms": 0.253546276418555
+      },
+      {
+        "min": 0.0,
+        "max": 1.0,
+        "absolute_max": 1.0,
+        "rms": 0.6081457709195683
+      },
+      {
+        "min": 0.0,
+        "max": 0.9599999785423279,
+        "absolute_max": 0.9599999785423279,
+        "rms": 0.5476182181051935
+      }
+    ],
+    "layout": "frozen motor features; previous noise; previous reward, boundary, episode clock, primitive clock",
+    "vlm_features": {
+      "min": -14.470270156860352,
+      "max": 58.01865005493164,
+      "absolute_max": 58.01865005493164,
+      "rms": 1.2831078768060316
+    },
+    "normalized_proprioception": {
+      "min": -1.1105045080184937,
+      "max": 1.1065073013305664,
+      "absolute_max": 1.1105045080184937,
+      "rms": 0.6011178918927289
+    }
+  },
+  "reference": {
+    "learning_rate": 0.0003,
+    "policy_after_sha256": "55d368c411b6dfc46ae2211192188a6a119fa3281bb8e8e84a09fbeb3de1d093",
+    "post_divergence": {
+      "mean_joint_analytic_kl": 12.84419995877769,
+      "max_joint_analytic_kl": 26.61280530574098,
+      "mean_joint_mean_shift_kl": 12.843358555324569,
+      "joint_variance_kl": 0.0008414034531214476,
+      "sampled_mean_old_minus_new_log_probability": 10.140217641075743,
+      "sampled_post_approximate_joint_kl": 8.37124724649318e+24,
+      "post_clip_fraction": 1.0,
+      "min_post_log_ratio": -39.288748200724285,
+      "max_post_log_ratio": 62.32848754102088,
+      "all_finite": true,
+      "dtype": "float64",
+      "direction": "KL(original || post)",
+      "aggregation": "sum all action dimensions, mean active stored decisions",
+      "decision_arrays": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration/reference-lr-3e-04-decisions.npz",
+      "decision_arrays_sha256": "6c46b3c6737144e2fb68032a0aed1926f074bc5e2b0ef74cefdb250ae9201c77",
+      "old_mean": {
+        "min": -0.8556000590324402,
+        "max": 0.8444228172302246,
+        "absolute_max": 0.8556000590324402,
+        "rms": 0.22774971404602481
+      },
+      "new_mean": {
+        "min": -0.9640319347381592,
+        "max": 1.0375585556030273,
+        "absolute_max": 1.0375585556030273,
+        "rms": 0.2600025015419377
+      },
+      "old_std": {
+        "min": 0.6065306597126334,
+        "max": 0.6065306597126334,
+        "absolute_max": 0.6065306597126334,
+        "rms": 0.6065306597126335
+      },
+      "new_std": {
+        "min": 0.6056302390217423,
+        "max": 0.6073851723808287,
+        "absolute_max": 0.6073851723808287,
+        "rms": 0.6064493779835143
+      },
+      "old_actor_inputs": {
+        "min": -1.391221284866333,
+        "max": 1.2704099416732788,
+        "absolute_max": 1.391221284866333,
+        "rms": 0.3914197661452144
+      },
+      "new_actor_inputs": {
+        "min": -1.5033326148986816,
+        "max": 1.4202032089233398,
+        "absolute_max": 1.5033326148986816,
+        "rms": 0.44563052235632034
+      }
+    },
+    "existing_update": true,
+    "new_optimizer_steps": 0
+  },
+  "elapsed_seconds": 16.71981730684638,
+  "retained_independent_diagnostic_updates": 2
+}

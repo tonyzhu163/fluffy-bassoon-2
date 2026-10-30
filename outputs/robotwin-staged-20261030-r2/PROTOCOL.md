@@ -1,6 +1,6 @@
 # Revised two-hour RoboTwin comparison proposal
 
-2026-10-30 Asia/Shanghai. **Authorized by the human on2026-10-30; submitting the prepared two-hour allocation.** See [authorization](AUTHORIZATION.md).
+2026-10-30 Asia/Shanghai. **Running as Baige job-340yo6ui9wmf; source-only LR1e-6qualified.** See [launch verification](LAUNCH.md). See [authorization](AUTHORIZATION.md).
 This replaces the earlier prepared525d669/3e-4PPO command. The common motor,
 all six source tasks, K4 training/K8 evaluation, two fixed target tasks,
 32k/64k/128k matched source-action milestones and1M shared benchmark cap remain

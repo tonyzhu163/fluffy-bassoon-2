@@ -1,5 +1,5 @@
 {
-  "status": "authorized_launch_preparation",
+  "status": "running_source_collection",
   "proposal_date_shanghai": "2026-10-30",
   "source_commit": "c3b6281c032e2c712a62191b03219b1e70e12947",
   "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
@@ -57,18 +57,18 @@
   "cpus": 16,
   "memory_gib": 128,
   "shared_memory_gib": 8,
-  "launch_authorization": "Human: stop waiting for approval and just make the change; authorizes the prepared one-GPU two-hour RoboTwin continuation",
+  "launch_authorization": "Human explicitly authorized the prepared two-hour continuation; see AUTHORIZATION.md",
   "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-one-million-20261029-r1",
   "prior_proposal": "robotwin-staged-20261030-r1 at525d669; preserved and unlaunched, superseded because3e-4PPO update was unsafe",
-  "source_commit_pending_validation": true,
-  "validation_job_id": "job-mjbpmea60ptq",
-  "validation_tests": 86,
+  "source_commit_pending_validation": false,
+  "validation_job_id": "job-340yo6ui9wmf",
+  "validation_tests": 93,
   "initial_resource_accounted_seconds": 2672,
   "initial_resource_remaining_seconds": 28,
   "command": "bash /mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r2/scripts/diagnostics/robotwin_staged_train.sh c3b6281c032e2c712a62191b03219b1e70e12947 robotwin-staged-20261030-r2",
   "code_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r2",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2",
-  "source_optimizer_learning_rate": "choose largest passing1e-6 or3e-7 from source-only calibration; no passing setting claimed yet",
+  "source_optimizer_learning_rate": 1e-06,
   "source_optimizer_epochs": 5,
   "ppo_max_update_kl": 0.1,
   "calibration": {
@@ -85,11 +85,11 @@
     "selection": "largest passing predeclared rate; if none, stop before any robot action",
     "executed_on_resume": false
   },
-  "source_module_validation": "last allocated baseline86tests passed at525d669; seven new rollback tests are static-only and run inside proposed allocation before calibration/collection",
+  "source_module_validation": "93 focused allocated Linux tests passed in current job",
   "actual_resource_accounting": true,
   "baseline_allocated_tests_passed": 86,
-  "new_guard_tests_pending": 7,
-  "guard_static_checks": "AST only; full suite runs first inside proposed allocation",
+  "new_guard_tests_pending": 0,
+  "guard_static_checks": "93 focused allocated Linux tests passed in13.46s, including7new guard cases",
   "steering_interface": {
     "kind": "full_horizon_noise",
     "motor_noise_shape": [
@@ -101,8 +101,13 @@
   },
   "prospective_tied_noise_ablation": "discussion only; not substituted or authorized by this proposal; requires fresh data",
   "source_pin_prepared": true,
-  "training_job_submitted": false,
+  "training_job_submitted": true,
   "authorization_recorded_at_shanghai": "2026-10-30T11:01:17.193779+08:00",
   "additional_authorized_gpu_seconds": 7200,
-  "cumulative_authorized_gpu_seconds": 9900
+  "cumulative_authorized_gpu_seconds": 9900,
+  "job_id": "job-340yo6ui9wmf",
+  "scheduler_created_at_shanghai": "2026-10-30 11:01:30",
+  "scheduler_running_at_shanghai": "2026-10-30 11:01:40",
+  "monitor_id": "robotwin-matched-steering-monitor",
+  "last_check_shanghai": "2026-10-30T11:08:21.463854+08:00"
 }
