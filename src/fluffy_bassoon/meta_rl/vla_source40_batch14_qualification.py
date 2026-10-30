@@ -65,6 +65,11 @@ def report(root, attempt, exit_code):
                 except ValueError:
                     pass
     recovery = experiment/'learner/latest.pt'
+    signatures = []
+    for path in sorted((experiment/'attempts').glob('*/parameters-after.json')):
+        signatures.append(dict(path=str(path),sha256=sha(path),**json.loads(path.read_text())))
+    latest = signatures[-1] if signatures else {}
+    before, after = latest.get('motor_before'), latest.get('motor_after')
     value = dict(format='source40_one_batch14_qualification_receipt_v1',exit_code=int(exit_code),
         cumulative_gpu_charge_seconds=charge,maximum_gpu_seconds=MAX_SECONDS,
         actual_physical_cost=physical_charge(experiment/'execution-journal'),
@@ -72,6 +77,10 @@ def report(root, attempt, exit_code):
         full_recovery_path=str(recovery),full_recovery_sha256=sha(recovery) if recovery.exists() else None,
         sampled_whole_device_peak_memory_mib=max(memory) if memory else None,
         whole_device_telemetry_samples=samples,whole_device_telemetry_sha256=sha(telemetry) if telemetry.exists() else None,
+        frozen_motor_parameters_unchanged=latest.get('unchanged'),
+        motor_parameters_before_sha256=None if before is None else before['sha256'],
+        motor_parameters_after_sha256=None if after is None else after['sha256'],
+        motor_parameter_receipts=signatures,
         memory_limit='1Hz NVML samples include frozen motor/rendering/PPO; Torch exact replay/update peaks are separate update metrics',
         interpretation='Runtime/capacity/recovery qualification for one gradient batch; no robot-performance or memory benefit established')
     (attempt/'qualification-receipt.json').write_text(json.dumps(value,indent=2,allow_nan=False)+'\n')

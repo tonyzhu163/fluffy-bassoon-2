@@ -178,11 +178,15 @@ def main(argv=None):
             output=attempt / f"server-{task['task_key'].replace(':', '-')}-{time.time_ns()}", port=args.port)
     cycle = NativeTaskCycle(tasks, 4, factory, receipts=args.output / 'task-resets')
     sim = JournaledSimulator(cycle, args.output / 'execution-journal', args.max_total_actions)
+    motor, motor_before = None, None
     try:
         args.model_config, args.feature_interface = 'pi05_libero', 'vla-prefix'
         motor = FrozenOpenPI(SimpleNamespace(**dict(vars(args), output=attempt)))
         if motor.metadata['receipt_sha256'] != PI05_RECEIPT or motor.horizon != 10:
             raise ValueError('Require the frozen official OpenPI40 motor')
+        from .vla_motor_replay import parameter_signature
+        motor_before = parameter_signature(motor.policy._model)
+        write_json(attempt / 'parameters-before.json', dict(motor=motor_before))
         contract = dict(format=FORMAT, source_commit=args.source_commit,
             source_only=True, source_data_from_targets=False,
             source_task_keys=[row['task_key'] for row in tasks],
@@ -277,7 +281,24 @@ def main(argv=None):
             physical_cost=physical_charge(sim.journal),
             status='Source-only candidate and actual counts; no robot or memory benefit established'))
     finally:
-        sim.close()
+        try:
+            motor_after = (parameter_signature(motor.policy._model)
+                if motor is not None and motor_before is not None else None)
+            unchanged = motor_before == motor_after if motor_before is not None else None
+            write_json(attempt / 'parameters-after.json', dict(motor_before=motor_before,
+                motor_after=motor_after, unchanged=unchanged, motor_initialized=motor is not None,
+                verification_complete=motor_before is not None and motor_after is not None))
+            index_path = args.output / 'index.json'
+            if index_path.exists():
+                index = json.loads(index_path.read_text())
+                index.update(frozen_motor_parameters_unchanged=unchanged,
+                    motor_parameters_before_sha256=None if motor_before is None else motor_before['sha256'],
+                    motor_parameters_after_sha256=None if motor_after is None else motor_after['sha256'])
+                write_json(index_path, index)
+            if unchanged is False:
+                raise RuntimeError('Frozen OpenPI motor parameter bytes changed during source PPO qualification/training')
+        finally:
+            sim.close()
 
 
 if __name__ == '__main__':
