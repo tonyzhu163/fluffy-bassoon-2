@@ -1,0 +1,469 @@
+{
+  "all_actual_renderer_pci": [
+    "0000:a2:00.0"
+  ],
+  "cluster": "Baige",
+  "distinct_simulator_workers": 12,
+  "gpu_telemetry": {
+    "last_sample": {
+      "elapsed_seconds": 411.7978560505435,
+      "parent_pids": {},
+      "total_bytes": 102641958912,
+      "used_bytes": 0,
+      "used_gib": 0.0,
+      "utc": "2026-10-30T13:56:52.104870+00:00",
+      "utilization_percent": 16.0
+    },
+    "max_utilization_percent": 100.0,
+    "mean_utilization_percent": 24.620947630922693,
+    "peak_sample": {
+      "elapsed_seconds": 205.64862747304142,
+      "parent_pids": {
+        "ppo": 1181,
+        "ppo_reset": 1182
+      },
+      "total_bytes": 102641958912,
+      "used_bytes": 70385664000,
+      "used_gib": 65.5517578125,
+      "utc": "2026-10-30T13:53:25.955641+00:00",
+      "utilization_percent": 89.0
+    },
+    "sample_scope": "whole allocated GPU, roughly one-second samples; transient unsampled peaks possible",
+    "samples": 401,
+    "total_bytes_observed": [
+      102641958912
+    ]
+  },
+  "job_id": "job-230io8i5cmpd",
+  "key_artifact_sha256": {
+    "gpu-probe.json": "0b61de70d528198c9752f6f06c28b6ec8686fefebe55d09daeceb9962a9b5252",
+    "packed/gpu-memory.jsonl": "2a3224b37d9351fbc684a2af06f761a98b9bec23d80050249653deb3a905e60a",
+    "packed/packed-result.json": "0e1a977a878bc5a9426a5680b7171bcc61e2aaa979c542ed500682c7268d2fd8"
+  },
+  "limitations": [
+    "Fresh controllers only; no active production migration or trained-recovery qualification.",
+    "One source global-six K4 round and one PPO update per learner only; no long-run native stability claim.",
+    "No matched scalar throughput baseline; measured action rates are not a demonstrated speedup.",
+    "Persistent OIDN unsupported-CUDA and invalid-handle errors; successful exit does not qualify rendering as error-free.",
+    "Sparse-vs-full raw image parity and native GIL failures in separate production runs are not resolved by this result.",
+    "Capacity tested for two independent six-lane learners with two parent motors and motor/controller microbatch1; does not prove optimal capacity."
+  ],
+  "methods": {
+    "ppo": {
+      "actual_renderer_pci": [
+        "0000:a2:00.0"
+      ],
+      "checkpoint_sha256": "8f498070a696c2cde7454fbcc466f7889a9869b2ef0f3b81d18f4f8df8ffc49b",
+      "completed_episodes": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "console_counts": {
+        "Fatal Python error": 0,
+        "GIL": 0,
+        "No module named 'curobo'": 7,
+        "OIDN Error: invalid handle": 1431,
+        "ProductionVectorError": 0,
+        "RuntimeError": 0,
+        "Segmentation fault": 0,
+        "unsupported device type: CUDA": 25
+      },
+      "device_memory_after": {
+        "free_bytes": 32255442944,
+        "name": "NVIDIA RPBZZZ6",
+        "pci": "0000:a2:00.0",
+        "scope": "instantaneous whole allocated device; includes other processes",
+        "total_bytes": 101973950464,
+        "used_bytes": 69718507520
+      },
+      "device_memory_before": {
+        "free_bytes": 83839483904,
+        "name": "NVIDIA RPBZZZ6",
+        "pci": "0000:a2:00.0",
+        "scope": "instantaneous whole allocated device; includes other processes",
+        "total_bytes": 101973950464,
+        "used_bytes": 18134466560
+      },
+      "dispatch_count": 87,
+      "episode_limits": [
+        500,
+        600,
+        400,
+        400,
+        400,
+        400
+      ],
+      "evidence_files": {
+        "packed/ppo-console.log": "f63cc412df0e99123605318fd270ec6f33273dd8ba23483425ff71d05c069968",
+        "packed/ppo/production-vector/group-00000001.json": "c97fc7ec6c37872a0a49d65ecdde72a88f898fe4dffccf82bd9d0d9345fccfcc",
+        "packed/ppo/production-vector/simulators/workers.json": "33c0cd35de586f32f3998c454c242c964c36a094f18b9a447cb1b6eaa0f4bdd8"
+      },
+      "group_id": "ppo:vector-group:0",
+      "idle_parent_scene_events": [
+        {
+          "kind": "idle_parent_scene_release",
+          "parent_prefix_cache_cleared": true,
+          "policy_actions": 0,
+          "scene_released": true,
+          "sequence": 0,
+          "unix_ns": 1793368350732058769
+        }
+      ],
+      "ledger": {
+        "actual_actions": 10510,
+        "charged_actions": 10510,
+        "decision_count": 339,
+        "journal_events": 680,
+        "journal_sha256": "9dad48cffe46cad0c522f0e07ff5f13c809a4b0d735ed5954ce6203a313516f0",
+        "pending_actions": 0,
+        "uncertain_actions": 0,
+        "unresolved_decisions": {}
+      },
+      "measured_source_actions_per_second": 44.618751216828,
+      "per_lane_actions": [
+        2000,
+        2400,
+        1600,
+        1310,
+        1600,
+        1600
+      ],
+      "phase_seconds": {
+        "corpus": 26.954482150264084,
+        "motor_decode": 45.54002189915627,
+        "motor_encode": 24.352993085049093,
+        "reset_rpc": 88.57828665524721,
+        "step_rpc": 41.37230957392603
+      },
+      "physical_actions": 10510,
+      "ppo_update": {
+        "approximate_kl": 0.0015547023058640921,
+        "chunks": 339,
+        "elapsed_seconds": 393.33645295072347,
+        "loss": -0.0026074085384607316,
+        "optimizer_steps": 5,
+        "ppo_updates": 1,
+        "source_steps": 10510
+      },
+      "replay_checks": [
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        }
+      ],
+      "reset_policy_action_counts": [
+        0
+      ],
+      "reset_receipts": 24,
+      "reset_receipts_by_worker": {
+        "2868": 4,
+        "2869": 4,
+        "2870": 4,
+        "2871": 4,
+        "2872": 4,
+        "2873": 4
+      },
+      "resume_fence_present": false,
+      "seed_retries": [
+        {
+          "actual_seed": 1499316799,
+          "requested_seed": 1499316795,
+          "task": "pick_diverse_bottles",
+          "worker_pid": 2871
+        },
+        {
+          "actual_seed": 1719334130,
+          "requested_seed": 1719334128,
+          "task": "pick_diverse_bottles",
+          "worker_pid": 2871
+        }
+      ],
+      "status": "checkpointed",
+      "trial_seconds": 235.55119122285396,
+      "wall_seconds": 235.05809526797384,
+      "worker_startup": [
+        {
+          "lane": 0,
+          "pid": 2868
+        },
+        {
+          "lane": 1,
+          "pid": 2869
+        },
+        {
+          "lane": 2,
+          "pid": 2870
+        },
+        {
+          "lane": 3,
+          "pid": 2871
+        },
+        {
+          "lane": 4,
+          "pid": 2872
+        },
+        {
+          "lane": 5,
+          "pid": 2873
+        }
+      ]
+    },
+    "ppo_reset": {
+      "actual_renderer_pci": [
+        "0000:a2:00.0"
+      ],
+      "checkpoint_sha256": "63544128b19bd0e4bcc02a65797dd22a6239d7a646fe2c1b0df4595b19bfeb32",
+      "completed_episodes": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "console_counts": {
+        "Fatal Python error": 0,
+        "GIL": 0,
+        "No module named 'curobo'": 7,
+        "OIDN Error: invalid handle": 1467,
+        "ProductionVectorError": 0,
+        "RuntimeError": 0,
+        "Segmentation fault": 0,
+        "unsupported device type: CUDA": 25
+      },
+      "device_memory_after": {
+        "free_bytes": 32255442944,
+        "name": "NVIDIA RPBZZZ6",
+        "pci": "0000:a2:00.0",
+        "scope": "instantaneous whole allocated device; includes other processes",
+        "total_bytes": 101973950464,
+        "used_bytes": 69718507520
+      },
+      "device_memory_before": {
+        "free_bytes": 86536552448,
+        "name": "NVIDIA RPBZZZ6",
+        "pci": "0000:a2:00.0",
+        "scope": "instantaneous whole allocated device; includes other processes",
+        "total_bytes": 101973950464,
+        "used_bytes": 15437398016
+      },
+      "dispatch_count": 86,
+      "episode_limits": [
+        500,
+        600,
+        400,
+        400,
+        400,
+        400
+      ],
+      "evidence_files": {
+        "packed/ppo_reset-console.log": "cf64b88643ca0c8ed7b62a15f2a8061810db73d4168057758d30a49ed7d4e062",
+        "packed/ppo_reset/production-vector/group-00000001.json": "223a4c71bc77ca2615b81eb535262f0a7e962456a578fb88f41169707816a8ce",
+        "packed/ppo_reset/production-vector/simulators/workers.json": "8cf9f667140d5d1bc3267af3a98e16538a2424967f9f2beee504e3e6ae6805eb"
+      },
+      "group_id": "ppo_reset:vector-group:0",
+      "idle_parent_scene_events": [
+        {
+          "kind": "idle_parent_scene_release",
+          "parent_prefix_cache_cleared": true,
+          "policy_actions": 0,
+          "scene_released": true,
+          "sequence": 0,
+          "unix_ns": 1793368350819829846
+        }
+      ],
+      "ledger": {
+        "actual_actions": 10800,
+        "charged_actions": 10800,
+        "decision_count": 348,
+        "journal_events": 698,
+        "journal_sha256": "414b5f589d0b1bc0e0cd8b8bbeee6edb3a3c5da4dc7fc1d982c558d7e7ad1a4b",
+        "pending_actions": 0,
+        "uncertain_actions": 0,
+        "unresolved_decisions": {}
+      },
+      "measured_source_actions_per_second": 45.728638840569836,
+      "per_lane_actions": [
+        2000,
+        2400,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "phase_seconds": {
+        "corpus": 27.309169250540435,
+        "motor_decode": 48.630167067982256,
+        "motor_encode": 25.658325352706015,
+        "reset_rpc": 85.39950226061046,
+        "step_rpc": 40.65778788551688
+      },
+      "physical_actions": 10800,
+      "ppo_update": {
+        "approximate_kl": 0.0014245541958973326,
+        "chunks": 348,
+        "elapsed_seconds": 395.70333709102124,
+        "loss": -0.00848409989848733,
+        "optimizer_steps": 5,
+        "ppo_updates": 1,
+        "source_steps": 10800
+      },
+      "replay_checks": [
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        },
+        {
+          "metrics": {
+            "log_prob_max_error": 0.0,
+            "value_max_error": 0.0
+          },
+          "passed": true
+        }
+      ],
+      "reset_policy_action_counts": [
+        0
+      ],
+      "reset_receipts": 24,
+      "reset_receipts_by_worker": {
+        "2875": 4,
+        "2876": 4,
+        "2877": 4,
+        "2878": 4,
+        "2879": 4,
+        "2880": 4
+      },
+      "resume_fence_present": false,
+      "seed_retries": [
+        {
+          "actual_seed": 1499316799,
+          "requested_seed": 1499316795,
+          "task": "pick_diverse_bottles",
+          "worker_pid": 2878
+        },
+        {
+          "actual_seed": 1719334130,
+          "requested_seed": 1719334128,
+          "task": "pick_diverse_bottles",
+          "worker_pid": 2878
+        }
+      ],
+      "status": "checkpointed",
+      "trial_seconds": 236.17584677413106,
+      "wall_seconds": 235.6490494851023,
+      "worker_startup": [
+        {
+          "lane": 0,
+          "pid": 2875
+        },
+        {
+          "lane": 1,
+          "pid": 2876
+        },
+        {
+          "lane": 2,
+          "pid": 2877
+        },
+        {
+          "lane": 3,
+          "pid": 2878
+        },
+        {
+          "lane": 4,
+          "pid": 2879
+        },
+        {
+          "lane": 5,
+          "pid": 2880
+        }
+      ]
+    }
+  },
+  "observed_utc": "2026-10-30T13:59:14.621741+00:00",
+  "packed_wall_seconds": 412.8239636113867,
+  "read_only_audit": true,
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-packed-ppo-20261030-r1",
+  "remote_worktree_commit": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+  "return_codes": {
+    "ppo": 0,
+    "ppo_reset": 0
+  },
+  "run_id": "robotwin-packed-ppo-20261030-r1",
+  "source_actions_per_packed_wall_second": 51.62006539925633,
+  "source_commit": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+  "stop_reason": null,
+  "total_source_actions": 21310
+}
