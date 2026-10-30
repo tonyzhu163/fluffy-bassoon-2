@@ -1,4 +1,10 @@
-# Paired trained launcher — prepared, pending allocated CPU gate
+# Paired trained launcher — CPU qualified, awaiting owner handoff
+
+The launch artifact is `c353970a316837b13277ec65587e58e5cb25ce56`.
+Its allocated Linux CPU gate passed47tests in19.402seconds on Baige
+`job-k1upj2ycy60q`; the combined owner-control / future-panel / paired gate
+passed123tests with exit0. See `CPU-QUALIFICATION.json` and hash-verified
+`linux-cpu-gate/` receipts. No trained GPU result is claimed.
 
 The scientific executable remains `57016ba08eed79043fd67bf8b085bd6d42e6d766`.
 This separate launch artifact starts the original persistent and episode-reset
@@ -105,12 +111,14 @@ the new run. Do not modify any active worktree.
 
 ## Gate and result
 
-Run the new targeted tests in the source owner's allocated Linux CPU job with
-`CUDA_VISIBLE_DEVICES=''` and the qualified environment. They are prepared,
-not executed on macOS. Static AST/bytecode and shell syntax checks are the only
-local checks. The final CPU gate also includes the owner's control-script
-tests and separately owned future evaluation-wrapper tests; passing any of
-those alone does not qualify this launch artifact.
+The source owner's allocated Linux CPU job ran all four new targeted test
+files with `CUDA_VISIBLE_DEVICES=''` and the qualified environment:47passed,
+zero failures/errors/skips. This includes the genuine tiny-CPU-Adam trained
+N6 continuation through the final corpus/ledger/ACK audit. No computation or
+tests ran on macOS; static bytecode and shell syntax checks were the local
+checks. The combined gate additionally passed45owner-control and31future
+evaluation-wrapper tests. It executed zero live source controls, robot/VLA
+actions or production SGD.
 
 Before CUDA, an external90-second CPU subprocess checks both new manifests,
 complete trained Adam/config/sampler/RNG/task state, original parent/asset/LR
