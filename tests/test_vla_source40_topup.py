@@ -99,6 +99,18 @@ def test_shared_compute_holds_cannot_restart_qualification_budget(tmp_path, monk
         topup.time_hold(production, ledger, tmp_path / 'too-many', 2101)
 
 
+def test_repaired_qualification_shares_prior_failed_charge(tmp_path, monkeypatch):
+    plan = prepared(tmp_path, monkeypatch, 'qualification')
+    ledger = tmp_path / 'ledger.json'
+    topup.time_hold(plan, ledger, tmp_path / 'failed', 1000)
+    topup.time_hold(plan, ledger, tmp_path / 'failed', 1000, actual=146)
+    topup.time_hold(plan, ledger, tmp_path / 'repaired', 854)
+    with pytest.raises(ValueError, match='compute hold'):
+        topup.time_hold(plan, ledger, tmp_path / 'extra', 1)
+    assert sum(row['charged_or_reserved_seconds'] for row in
+        topup.read(ledger)['time_holds'].values()) == 1000
+
+
 def source_fixture(tmp_path):
     root = tmp_path / 'original'
     output = root / 'experiment'
@@ -152,7 +164,7 @@ def test_migration_preserves_all_numeric_state_and_old_raw_then_changes_only_con
 def test_migration_rejects_changed_case_bank_features_or_recipe(tmp_path, monkeypatch):
     parent, old, _ = source_fixture(tmp_path)
     monkeypatch.setattr(topup, 'parent_record', lambda *args: parent)
-    child = topup.Continuation(dict(plan_sha256='f' * 64), dict(parent=parent), tmp_path / 'child', stop_unix=1e12)
+    child = topup.Continuation(dict(plan_sha256='f' * 64), dict(parent=parent, slot=parent['slot']), tmp_path / 'child', stop_unix=1e12)
     child.prepare()
     changed = copy.deepcopy(old)
     changed['cases'][20]['scene_seed'] += 1

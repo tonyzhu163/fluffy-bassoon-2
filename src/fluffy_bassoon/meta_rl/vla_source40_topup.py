@@ -608,8 +608,8 @@ def main(argv=None):
         value = load_plan(args.plan)
         if args.source_commit != value['source_commit'] or args.slot not in expected_slots():
             raise ValueError('Worker clock differs from its prepared source/slot')
-        if value['mode'] == 'qualification' and args.worker_seconds != 1000:
-            raise ValueError('Proposed migration qualification has one cumulative1000-second ceiling')
+        if value['mode'] == 'qualification' and not 60 < args.worker_seconds <= 1000:
+            raise ValueError('Qualification worker must fit its remaining shared1000-second ceiling')
         if not next(row for row in value['slots'] if row['slot'] == args.slot)['launchable']:
             raise ValueError('This preparation has no launchable quota for the requested stream')
         contract = dict(format=FORMAT, plan_sha256=value['plan_sha256'], slot=args.slot,
