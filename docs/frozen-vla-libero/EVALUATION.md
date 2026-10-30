@@ -607,3 +607,20 @@ andtypedmotorRNG/cursorarepresent. Frozen3.3Bmotor parameter hash unchanged.
 sampledwhole-devicepeak. This is one update on14goals, noall40training,
 parallel-lane speedup, target-performance or adaptation claim.
 [Actual receipt and independent CPU checkpoint read](../../outputs/libero40-batch14-qualification-audit-20261031-r1/README.md).
+
+## 2026-10-31 R3 to native batch14 PPO continuation
+
+The explicit warm-start qualification finished exit0:14 K4 trials,56 source
+episodes,894 decisions,55 successes and one SFSS trial before the new update.
+The first global update made two Adam steps. All four replay errors were zero;
+50 focused tests,2 motor-RNG tests and27 independent saved-state checks passed.
+Inherited238 updates/476 steps and all old numerical/RNG leaves were retained;
+the operational Adam clock is478, new cursor14 and no pending batch. Candidate
+weights equal the full recovery, and motor parameter hash c565dd3f... is unchanged.
+
+Cost:9,272 new actions (9,262 training-episode actions plus10 qualification
+settling),712.040s collection/replay/update,849.842s cold worker and910 charged
+GPU-seconds. The cumulative prior+new resource cost is205,236, which includes
+validation/qualification overhead and is not dataset size. The SFSS pattern
+has no matched control and establishes no adaptation, memory or target gain.
+[Audit and exact hashes](../../outputs/libero40-batch14-warm-qualification-audit-20261031-r1/RESULT.md).

@@ -364,10 +364,12 @@ rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
   train/validation streams, 128 episodes/127 successes, 1,223 query chunks and
   4,620 actual source SAC updates; complete recoveries and paired AD/DPT
   exports. This qualifies execution, not an improving teacher or adaptation.
-- **Pending under the new contract:** useful steering headroom, source-policy
-  competence,
-  source40 corpus/controller training and separate-query one-shot evaluation.
-  No frozen-controller robot result under this contract is established.
+- **Source40 development evidence now exists:** all40 SAC source collection,
+  shared PPO/reset training and four AD/DPT fits completed. Initial all90
+  native31/90 versus AD full/static26/26 and DPT26/27 showed no gain; separate
+  PPO comparison native30/90 versus full24/reset26 also showed no gain. These
+  contemporaneous controls remain separate. Full0/1/2/4/8 and complete Plus/Pro
+  coverage, reliable adaptation and net sample efficiency remain unfinished.
 - Independently qualified expert labels, context/feedback benefit, competitive
   final success and net sample efficiency remain open result slots.
 - Earlier non-VLA and older-backbone probes are engineering evidence only.
@@ -381,7 +383,12 @@ rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
   56already-successfulsourceepisodes.852GPU-s/8,313actions; no targetclaim.
 - Mean/std interventions onfixed9 all6/9, same percasevector. Changes are
   numericallyreal butthispanel omitsmostearlier sensitivecases.
-- Current32hpool has5,889s unassigned afterterminalreconciliation. Source
-  top-up/policywarmstart/cache paths are preparation; materially larger
-  compute needs a concrete approval. Full0/1/2/4/8 andshifted-suite matrix
-  remains incomplete; the centralrobotperformance claim remainsunproven.
+- Explicit warm R3→native batch14 continuation completed14K4/56 episodes,
+  894 decisions and two new Adam steps;55/56 source successes preceded that
+  update. Exact replay/full recovery/frozen motor checks passed.9,272actions
+  and910GPU-s; no target or memory benefit established.
+- Current32h pool has3,929s unassigned after verified terminal reconciliation.
+  SAC continuation qualification is recovering from two zero-action preflight
+  faults under the same cumulative allowance. Optional diagnostics are deferred
+  while source collection and fitting are prioritized. Larger source compute
+  still needs approval; the central robotic-performance claim remains unproven.

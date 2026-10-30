@@ -316,3 +316,34 @@ SAC top-up still needs explicit approval. After those checks, overlap collection
 offline fitting from complete snapshots and target evaluation rather than
 waiting for an entire corpus. Fresh PPO collection remains on-policy; SAC
 histories are not interchangeable PPO rollouts.
+
+## 2026-10-31 continuation evidence and preflight repairs
+
+Warm PPO completed a real native batch14 update after lossless R3 migration:
+14 K4/56 episodes/894 decisions,55 successes and one SFSS pattern, two new Adam
+steps. Exact replay is zero; all old policy/optimizer/global+motor RNG leaves
+were preserved, actual Adam step478, candidate/full recovery equal, motor
+parameters unchanged. Cost9,272 actions and910 charged GPU-seconds. One SFSS
+under a stochastic fixed behavior, without a matched reset control, is not
+evidence of memory or adaptation. This qualification is runtime evidence.
+
+SAC continuation preflight exposed two implementation faults: missing GPU
+visibility fallback, then a missing selected.slot field in a test fixture.
+The first attempt used76s; the second passed GPU qualification and used70s.
+Both made zero simulator actions and never created a source experiment. The
+original data and full recoveries are unaffected. The new source cf49bfa fixes
+the launcher/fixture and permits a smaller worker share under the unchanged
+shared1,000s guard. A fresh r2 output receives854s, with the old146s retained;
+the invocation slice700+60 leaves94s headroom. No scientific collector, case,
+SAC optimizer or behavior contract was changed. These preflight failures say
+nothing about method efficacy. See the preserved
+[launch/repair record](../outputs/libero40-sac-topup-preparation-20261031-r1/LAUNCH.md).
+
+Decision: finish actual restored-SAC optimizer/export qualification, then use
+the executable source collection→snapshot→student-training path. The legacy
+assembler hardcodes original caps/pins/quota exhaustion; an explicit top-up
+complete-prefix admission is being implemented so fitting need not wait for
+the full bank. Existing source and warm PPO remain near ceiling, so more
+source actions are an experiment rather than a guaranteed recovery signal.
+Optional repeated-query/cache diagnostics remain deferred. Full source scale,
+matched target matrix and the robotic sample-efficiency claim are unfinished.
