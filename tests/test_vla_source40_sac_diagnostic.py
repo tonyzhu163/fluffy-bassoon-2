@@ -83,6 +83,50 @@ def test_alias_requires_terminal_completed_parent_not_a_live_or_partial_validati
         module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40)
 
 
+def test_probe_only_failure_alias_carries_exact78seconds_without_new_actions(tmp_path):
+    path, value = alias_fixture(tmp_path)
+    prior_root = tmp_path / 'diagnostic-r1'
+    prior_root.mkdir()
+    (prior_root / 'launcher.lock').touch()
+    (prior_root / 'exit-code.txt').write_text('1\n')
+    prior_alias = tmp_path / 'r1-alias.json'
+    prior_value = dict(value, run_id=prior_root.name, source_commit='c' * 40)
+    write(prior_alias, prior_value)
+    clock = dict(worker_seconds=3600, attempts=[dict(status='finished', exit_code=1,
+        charged_seconds=78, reserved_seconds=3600)], contract=dict(operation='source40_per_task_sac_competence',
+        run_id=prior_root.name, source_commit='c' * 40, alias_path=str(prior_alias),
+        alias_sha256=module.file_sha256(prior_alias), maximum_total_actions=20000, maximum_worker_seconds=3600))
+    clock_path = Path(write(prior_root / 'worker-time.json', clock))
+    entry = dict(root=str(prior_root), worker_time_sha256=module.file_sha256(clock_path), charged_seconds=78,
+        alias_path=str(prior_alias), alias_sha256=module.file_sha256(prior_alias))
+    retry = dict(value, maximum_worker_seconds=3522, prior_setup_failures=[entry])
+    write(path, retry)
+    assert module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40) == retry
+    assert module.prior_setup_charge(retry, 'diagnostic') == 78
+    for changed in (dict(retry, maximum_worker_seconds=3523),
+                    dict(retry, prior_setup_failures=[entry, entry]),
+                    dict(retry, prior_setup_failures=[dict(entry, charged_seconds=77)])):
+        write(path, changed)
+        with pytest.raises(ValueError):
+            module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40)
+    write(path, retry)
+    (prior_root / 'experiment').mkdir()
+    with pytest.raises(ValueError, match='zero physical'):
+        module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40)
+    (prior_root / 'experiment').rmdir()
+    with (prior_root / 'launcher.lock').open('r') as lock:
+        module.fcntl.flock(lock, module.fcntl.LOCK_EX | module.fcntl.LOCK_NB)
+        with pytest.raises(ValueError, match='still active'):
+            module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40)
+    altered = deepcopy(clock)
+    altered['contract']['source_commit'] = 'd' * 40
+    write(clock_path, altered)
+    retry['prior_setup_failures'][0]['worker_time_sha256'] = module.file_sha256(clock_path)
+    write(path, retry)
+    with pytest.raises(ValueError, match='source pin'):
+        module.load_alias(path, module.file_sha256(path), run_id='diagnostic', source_commit='a' * 40)
+
+
 def bank_fixture(tmp_path):
     tasks = [dict(task_key=f'{suite}:{number:02d}', suite=suite, task_id=number,
         bddl_sha256=f'bddl-{suite}-{number}') for suite in module.SOURCE_SUITES for number in range(10)]

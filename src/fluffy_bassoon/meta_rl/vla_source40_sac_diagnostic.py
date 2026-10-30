@@ -70,6 +70,63 @@ def query_plan():
     return rows
 
 
+def prior_setup_charge(value, run_id):
+    """Verify an ordered, zero-interaction setup-failure chain without re-spending time."""
+    failures = value.get('prior_setup_failures', [])
+    if not isinstance(failures, list):
+        raise ValueError('Prior setup failures must be an explicit ordered list')
+    total, seen = 0, set()
+    envelope = ('parent_output_root', 'canonical_ppo_ledger_path', 'parent_terminal_index_sha256',
+        'parent_worker_time_sha256', 'parent_total_action_charge', 'parent_worker_charge_seconds',
+        'original_action_ceiling', 'original_worker_seconds')
+    for ordinal, entry in enumerate(failures):
+        root = Path(entry['root']).resolve()
+        if root in seen or root.name == run_id or root == Path(value['parent_output_root']).resolve():
+            raise ValueError('Prior setup roots must be unique terminal diagnostic predecessors')
+        seen.add(root)
+        # A probe-only predecessor never created an experiment or executed a
+        # simulator reset. A partial experiment cannot use this zero-action route.
+        if (root / 'experiment').exists():
+            raise ValueError('Prior setup failure must have zero physical interactions and no experiment directory')
+        with (root / 'launcher.lock').open('r') as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError as error:
+                raise ValueError('Prior setup failure is still active') from error
+            clock_path = root / 'worker-time.json'
+            alias_path = Path(entry['alias_path']).resolve()
+            if (file_sha256(clock_path) != entry['worker_time_sha256']
+                    or file_sha256(alias_path) != entry['alias_sha256']):
+                raise ValueError('Prior setup clock or alias checksum differs')
+            clock, prior = read(clock_path), read(alias_path)
+            rows = clock.get('attempts', [])
+            if (not rows or any(row.get('status') != 'finished' or type(row.get('charged_seconds')) is not int
+                              or row['charged_seconds'] < 0 for row in rows)
+                    or rows[-1].get('exit_code') in (None, 0)
+                    or (root / 'exit-code.txt').read_text().strip() != str(rows[-1]['exit_code'])):
+                raise ValueError('Prior setup failure must be terminal with audited nonzero-exit time charges')
+            charge = sum(row['charged_seconds'] for row in rows)
+            contract = clock.get('contract', {})
+            if (type(entry.get('charged_seconds')) is not int or entry['charged_seconds'] != charge
+                    or prior.get('format') != ALIAS_FORMAT or prior.get('run_id') != root.name
+                    or prior.get('maximum_total_actions') != MAX_ACTIONS
+                    or prior.get('prior_setup_failures', []) != failures[:ordinal]
+                    or any(prior.get(key) != value.get(key) for key in envelope)
+                    or type(prior.get('maximum_worker_seconds')) is not int
+                    or prior['maximum_worker_seconds'] + total > MAX_SECONDS
+                    or clock.get('worker_seconds') != prior['maximum_worker_seconds']
+                    or charge > prior['maximum_worker_seconds']
+                    or contract.get('operation') != 'source40_per_task_sac_competence'
+                    or contract.get('run_id') != root.name or contract.get('source_commit') != prior.get('source_commit')
+                    or Path(contract.get('alias_path', '')).resolve() != alias_path
+                    or contract.get('alias_sha256') != entry['alias_sha256']
+                    or contract.get('maximum_total_actions') != MAX_ACTIONS
+                    or contract.get('maximum_worker_seconds') != prior['maximum_worker_seconds']):
+                raise ValueError('Prior setup failure lost its source pin, original envelope, exact alias or cumulative charge')
+            total += charge
+    return total
+
+
 def load_alias(path, expected_sha256, *, run_id, source_commit):
     if file_sha256(path) != expected_sha256:
         raise ValueError('Source validation remainder alias checksum differs')
@@ -108,6 +165,10 @@ def load_alias(path, expected_sha256, *, run_id, source_commit):
             or charged_seconds + value['maximum_worker_seconds'] > 14400
             or value.get('original_action_ceiling') != 56000 or value.get('original_worker_seconds') != 14400):
         raise ValueError('Require a terminal successful PPO validation and an explicit unused original56k/4h remainder; no duplicate reservation')
+    setup_seconds = prior_setup_charge(value, run_id)
+    if (setup_seconds + value['maximum_worker_seconds'] > MAX_SECONDS
+            or charged_seconds + setup_seconds + value['maximum_worker_seconds'] > 14400):
+        raise ValueError('Setup failures and this exact retry must share the original3600s diagnostic and14400s validation ceilings')
     return value
 
 
