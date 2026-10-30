@@ -2,7 +2,7 @@
   "status": "STATIC_ONLY_NEW_READER_NOT_QUALIFIED",
   "qualified_algorithm_reference": "1aeea4f9fcc307bb147def92374bb81a3e2cb50e",
   "qualified_file_sha256": "b64f8c86f1eb95e169d542b65f19d700137224e3366d1bf5fa8f58d715f099e2",
-  "candidate_file_sha256": "d334d63c19e416486f1c9a43d9b87d6a044ff61dbb840097dba5717bc4dce5d0",
+  "candidate_file_sha256": "4b790f4ed20a7b980465cece4e07232c50dd89ab1b324f67d1c4a969594498ac",
   "protected_AST_checks": {
     "_canonical": true,
     "_digest_array": true,
@@ -25,11 +25,11 @@
   "tests_or_payloads_executed": false,
   "static_case_discovery": {
     "tests/test_robotwin_history_corpus.py": 17,
-    "tests/test_robotwin_offline_compat_gate.py": 47,
+    "tests/test_robotwin_offline_compat_gate.py": 58,
     "tests/test_robotwin_finalbank_index_bindings.py": 9
   },
   "reviewed_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
-  "expected_fixture_total": 64,
+  "expected_fixture_total": 75,
   "actual_fixture_execution": null,
   "prepared_files": [
     {
@@ -44,28 +44,38 @@
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/PLAN.md",
-      "sha256": "854213df92f2c29e10ead783d9a34dc66cb5343bfbfe74855c1a072d3a70c20e",
-      "bytes": 12642
+      "sha256": "debce3a3807a252fcb153075be2948f6321c3568541a0d9561b5906340f2276c",
+      "bytes": 16642
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/bootstrap-ticket.template.json",
+      "sha256": "93403abbce9ced95f18da56cfb4430811f12750ca2bee0c56167de0c57da7b0a",
+      "bytes": 642
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py",
-      "sha256": "09e5758fd0dc79e4fb79e522f87232444d42ee2aa7a562e6daeb74164947703f",
-      "bytes": 13009
+      "sha256": "bc8071941fec0dc0fde1a3a583cd2c88b26c96bdd91390f7de90f34097e4881b",
+      "bytes": 17578
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/job.sh",
-      "sha256": "a0ba3bb478a6fd51b0752f21f6722d33db3d013548bb821fde22febf764b0b2b",
-      "bytes": 1050
+      "sha256": "4a7be14b314300b8b12d8e6c4a1812f02e3383489d861e2895f26d282fb3d87a",
+      "bytes": 1059
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/owned_cpu_runtime.py",
+      "sha256": "ccfcfbe11b83dbc4b7ceec273ad227611a27d11b5926758cf7c84278842df9de",
+      "bytes": 10417
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/phase_worker.py",
-      "sha256": "9b8f7f2eb88bbe1725d590838c457c2f1393af898df8fab8ca477b8b619bfa7b",
-      "bytes": 10470
+      "sha256": "980596dacf217b216c2cd7db24a4c26e32c2b0512820dc4a0a1ab18a798034c6",
+      "bytes": 10541
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/reservation.json",
-      "sha256": "6e614cd896f76b54d36b4320c16557e60d2ed62032a601571d4175d1e6e9ec5c",
-      "bytes": 1456
+      "sha256": "6d9e856485f8103686d40134b54bac863891771328c3a5bb1faa905601568e86",
+      "bytes": 1673
     },
     {
       "path": "outputs/robotwin-sac65-cpu-compat-20261031-r1/resource-receipt.template.json",
@@ -74,8 +84,8 @@
     },
     {
       "path": "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py",
-      "sha256": "d334d63c19e416486f1c9a43d9b87d6a044ff61dbb840097dba5717bc4dce5d0",
-      "bytes": 46470
+      "sha256": "4b790f4ed20a7b980465cece4e07232c50dd89ab1b324f67d1c4a969594498ac",
+      "bytes": 46887
     },
     {
       "path": "tests/test_robotwin_finalbank_index_bindings.py",
@@ -84,9 +94,29 @@
     },
     {
       "path": "tests/test_robotwin_offline_compat_gate.py",
-      "sha256": "d6273ba05be9863cd6d51dfd0a8e3e61ca49925fa5ae591beef25188be382c11",
-      "bytes": 22726
+      "sha256": "bf590c74480965c3ecc69c3530df2bbfc8ab6da2360ea8499c890c58a4dc4c39",
+      "bytes": 30854
     }
   ],
-  "deferred_fixture_total": 9
+  "deferred_fixture_total": 9,
+  "generated_fixture_programs_AST_valid": 3,
+  "bounded_bootstrap": {
+    "max_wait_seconds": 120,
+    "shared_absolute_seconds": 1700,
+    "fresh_budget_after_wait": false,
+    "presubmit_binding": "fixed ticket path/codepin/output; owner issues actual running receipt+UI proof+ticket atomically"
+  },
+  "ownership_primitives": {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "source_scope": "exact three stdlib files; use ContinuationGuardian.launch/session identity/cleanup primitives only; no GPU protocol",
+    "helper_sha256": {
+      "robotwin_trained_pair_runtime.py": "116b5251b43454a4c61fe0bd4faeb3d1cbf6d7a2dd08356241599cbd2f32827c",
+      "robotwin_trained_pair_continuation.py": "173774c46c177548750c78e1e09aa5c8caf583d265be8ecb5517757077274c9b",
+      "robotwin_trained_pair.py": "d8ee934c580cb1d1ab3991f446618af2bd9e06a6ece97cf0fe83aa828b882dc0"
+    },
+    "new_CPU_adapter_qualified": false,
+    "cleanup_reserve_inside1700": 30,
+    "new_guardian_subreaper": true
+  },
+  "supersedes_unlaunched_candidate": "7f71151cc5cf9ee74e41b8d064a7b4e8217f6ad6"
 }

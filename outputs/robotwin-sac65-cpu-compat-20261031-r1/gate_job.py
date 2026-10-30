@@ -1,10 +1,12 @@
 """One owner-launched CPU gate. Stdlib only; no submission or source controls."""
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -41,45 +43,97 @@ def write(path, value):
     temporary.replace(path)
 
 
+def wait_bootstrap(ticket_path, *, code_commit, output, hostname, deadline, clock=None, sleep=None):
+    """Wait only for an owner-uploaded actual-allocation ticket; never reset budget."""
+    clock, sleep = clock or time.monotonic, sleep or time.sleep
+    began = clock()
+    stop = min(deadline, began + 120)
+    while not ticket_path.exists():
+        remaining = stop - clock()
+        if remaining <= 0:
+            raise TimeoutError('Actual resource bootstrap ticket did not arrive within shared deadline')
+        sleep(min(1., remaining))
+    require(clock() < stop, 'Bootstrap ticket arrived after the shared wait deadline')
+    require(ticket_path.is_file() and not ticket_path.is_symlink(), 'Bootstrap ticket must be a regular owner file')
+    raw = ticket_path.read_bytes()
+    ticket = json.loads(raw)
+    require(ticket.get('schema') == 'robotwin_cpu_gate_actual_bootstrap_v1'
+            and ticket.get('run_id') == RUN and ticket.get('code_commit') == code_commit
+            and ticket.get('hostname') == hostname
+            and ticket.get('output') == str(output), 'Stale or mismatched actual resource bootstrap ticket')
+    ref = ticket['resource_receipt']
+    require(Path(ref['path']).is_absolute() and len(ref['sha256']) == 64,
+            'Bootstrap must name the actual absolute resource receipt and SHA')
+    return ref, dict(ticket_path=str(ticket_path), ticket_sha256=hashlib.sha256(raw).hexdigest(),
+                     ticket=ticket, wait_seconds=clock() - began, remaining_work_seconds=deadline - clock())
+
+
 def main():
     started = time.monotonic()  # Before resource/Git/ancestry/import/tests/projection/export.
     deadline = started + 1700
     p = argparse.ArgumentParser(description=__doc__)
-    for name in ('code-root', 'output', 'resource-receipt'):
+    for name in ('code-root', 'output', 'owned-helpers'):
         p.add_argument('--' + name, type=Path, required=True)
-    for name in ('code-commit', 'resource-sha256', 'expected-hostname'):
-        p.add_argument('--' + name, required=True)
+    p.add_argument('--code-commit', required=True)
+    p.add_argument('--bootstrap-ticket', type=Path)
+    p.add_argument('--resource-receipt', type=Path)
+    p.add_argument('--resource-sha256')
+    p.add_argument('--expected-hostname')
     a = p.parse_args()
-    require(sys.platform == 'linux' and socket.gethostname() == a.expected_hostname,
-            'Only the exact allocated Linux host')
+    hostname = socket.gethostname()
+    require(sys.platform == 'linux', 'Only an allocated Linux host')
+    if a.bootstrap_ticket is not None:
+        require(all(value is None for value in (a.resource_receipt, a.resource_sha256, a.expected_hostname)),
+                'Bootstrap and already-bound direct receipt modes cannot be mixed')
+    else:
+        require(a.resource_receipt is not None and a.resource_sha256 is not None
+                and a.expected_hostname == hostname, 'Direct mode needs exact actual host/receipt/SHA')
     out, code = a.output.resolve(), a.code_root.resolve()
     require(not out.exists() and out == Path('/mowenjie/fluffy-bassoon-2/outputs', RUN).resolve()
             and not out.is_relative_to(code), 'Use this fresh unique runtime output outside source code')
     out.mkdir(parents=True, exist_ok=False)
     (out / 'private').mkdir(); (out / 'tmp').mkdir()
     sys.stdout = sys.stderr = (out / 'parent.log').open('a', buffering=1)
-    write(out / 'intent.json', dict(run=RUN, code_commit=a.code_commit, hostname=a.expected_hostname,
+    write(out / 'intent.json', dict(run=RUN, code_commit=a.code_commit, hostname=hostname,
           global_work_seconds=1700, external_TERM_seconds=1770, external_KILL_seconds=1780,
           scheduler_cap_seconds=1800, physical_actions=0, labels='compatibility only', fits=0))
-    status, failure = 'incomplete', None
+    def interrupted(signum, frame):
+        raise RuntimeError('Owned CPU gate received signal ' + str(signum))
+    signal.signal(signal.SIGTERM, interrupted); signal.signal(signal.SIGINT, interrupted)
+    status, failure, runtime = 'incomplete', None, None
     phases = []
     try:
-        require(sha(a.resource_receipt) == a.resource_sha256, 'Actual resource receipt changed')
-        resource = json.loads(a.resource_receipt.read_text())
+        if a.bootstrap_ticket is not None:
+            write(out / 'bootstrap-intent.json', dict(ticket_path=str(a.bootstrap_ticket), max_wait_seconds=120,
+                  code_commit=a.code_commit, hostname=hostname, output=str(out),
+                  work_elapsed_seconds=time.monotonic() - started, work_deadline_seconds_from_start=1700))
+            ref, bootstrap = wait_bootstrap(a.bootstrap_ticket, code_commit=a.code_commit,
+                output=out, hostname=hostname, deadline=deadline)
+            write(out / 'bootstrap-receipt.json', bootstrap)
+            a.resource_receipt, a.resource_sha256 = Path(ref['path']), ref['sha256']
+        resource_bytes = a.resource_receipt.read_bytes()
+        require(hashlib.sha256(resource_bytes).hexdigest() == a.resource_sha256, 'Actual resource receipt changed')
+        resource = json.loads(resource_bytes)
         require(resource['schema'] == 'robotwin_actual_cpu_allocation_v1'
-                and resource['hostname'] == a.expected_hostname
-                and a.expected_hostname.startswith(resource['allocation_id'] + '-')
+                and resource['hostname'] == hostname
+                and hostname.startswith(resource['allocation_id'] + '-')
                 and type(resource['allocated_gpus']) is int and resource['allocated_gpus'] == 0
                 and resource['allocated_cpus'] == 8 and resource['memory_gib'] == 64
                 and resource['observed_running_allocation'] is True,
                 'Need the actual0GPU/8CPU/64GiB allocation, not a requested-resource template')
         require(sha(resource['proof']['path']) == resource['proof']['sha256'], 'Allocation UI proof changed')
+        adapter_path = code / 'outputs' / RUN / 'owned_cpu_runtime.py'
+        spec = importlib.util.spec_from_file_location('owned_cpu_phase_runtime', adapter_path)
+        adapter = importlib.util.module_from_spec(spec); sys.modules[spec.name] = adapter
+        spec.loader.exec_module(adapter)
+        runtime = adapter.CPUPhaseRuntime(a.owned_helpers, out / 'private/ownership', deadline=deadline)
         before = {k: os.environ.get(k) for k in ('CUDA_VISIBLE_DEVICES', 'NVIDIA_VISIBLE_DEVICES',
                   'SLURM_JOB_ID', 'SLURM_JOB_GPUS', 'SLURM_GPUS_ON_NODE')}
-        try:
-            smi = subprocess.run(['nvidia-smi', '-L'], text=True, capture_output=True, timeout=5)
-            observed = dict(returncode=smi.returncode, stdout=smi.stdout, stderr=smi.stderr)
-        except FileNotFoundError:
+        if shutil.which('nvidia-smi'):
+            log = out / 'visibility.log'
+            smi = runtime.run('visibility', ['nvidia-smi', '-L'], code, os.environ, log, 5)
+            observed = dict(returncode=smi['returncode'], stdout=log.read_text(), stderr='combined raw log')
+        else:
             observed = dict(returncode=None, stdout='', stderr='nvidia-smi absent')
         devices = [str(x) for x in Path('/dev').glob('nvidia[0-9]*')]
         require(not devices and not any(line.startswith('GPU ') for line in observed['stdout'].splitlines()),
@@ -94,11 +148,18 @@ def main():
         os.environ.update(CUDA_VISIBLE_DEVICES='', JAX_PLATFORMS='cpu', PYTHONDONTWRITEBYTECODE='1',
                           PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', OMP_NUM_THREADS='4', MKL_NUM_THREADS='4',
                           OPENBLAS_NUM_THREADS='4', TMPDIR=str(out / 'tmp'))
-        head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=code, text=True).strip()
-        dirty = subprocess.check_output(['git', 'status', '--porcelain'], cwd=code, text=True).strip()
+        for name, command in [('git-head', ['git', 'rev-parse', 'HEAD']),
+                              ('git-status', ['git', '--no-optional-locks', '-c', 'core.fsmonitor=false',
+                                              'status', '--porcelain'])]:
+            result = runtime.run(name, command, code, os.environ, out / (name + '.log'), 10)
+            require(result['returncode'] == 0, 'Candidate Git identity check failed')
+        head = (out / 'git-head.log').read_text().strip()
+        dirty = (out / 'git-status.log').read_text().strip()
         require(head == a.code_commit and not dirty, 'Exact clean candidate pin required')
         reader = out / 'private' / 'qualified-c62-reader.py'
-        reader.write_bytes(subprocess.check_output(['git', 'show', READER_PIN + ':' + READER_PATH], cwd=code))
+        result = runtime.run('c62-reader', ['git', '--no-pager', 'show', READER_PIN + ':' + READER_PATH],
+                             code, os.environ, reader, 10)
+        require(result['returncode'] == 0, 'Qualified reader Git extraction failed')
         require(sha(reader) == READER_SHA, 'Qualified reader Git object differs')
         ancestry_file = code / 'outputs/robotwin-finalbank-offline-plan-20261031-r1/SAC65-REFERENCE.json'
         require(sha(ancestry_file) == ANCESTRY_SHA, 'Wrong closed-prefix ancestry')
@@ -150,7 +211,8 @@ def main():
         admission_file = out / 'private' / 'reference-admission.json'
         write(admission_file, admission)
         context = dict(code_root=str(code), code_commit=a.code_commit, output=str(out),
-              expected_fixture_tests=64,
+              expected_fixture_tests=75,
+              owned_helpers=str(a.owned_helpers.resolve()),
               site_packages=str(Path(sys.executable).parent.parent / 'lib' /
                                 ('python%d.%d' % sys.version_info[:2]) / 'site-packages'),
               ancestry=dict(path=str(ancestry_file), sha256=ANCESTRY_SHA), tip=tip,
@@ -161,7 +223,7 @@ def main():
         context_file = out / 'private' / 'context.json'; write(context_file, context)
         worker = code / 'outputs' / RUN / 'phase_worker.py'
         for phase in ('tests', 'projection', 'export', 'audit'):
-            remaining = deadline - time.monotonic()
+            remaining = deadline - time.monotonic() - 30  # Owned cleanup is inside the same1700s.
             reserve = {'tests': 900, 'projection': 660, 'export': 90, 'audit': 0}[phase]
             maximum = min({'tests': 180, 'projection': 900, 'export': 900, 'audit': 90}[phase], remaining - reserve)
             require(maximum >= {'tests': 30, 'projection': 60, 'export': 540, 'audit': 15}[phase],
@@ -171,22 +233,22 @@ def main():
             write(out / (phase + '-phase.json'), receipt)
             phase_started = time.monotonic()
             try:
-                with (out / (phase + '.log')).open('w') as log:
-                    result = subprocess.run([sys.executable, '-I', '-B', '-S', str(worker), '--phase', phase,
-                        '--context', str(context_file), '--context-sha256', sha(context_file)], cwd=code,
-                        stdout=log, stderr=subprocess.STDOUT, timeout=maximum, check=False)
+                result = runtime.run(phase, [sys.executable, '-I', '-B', '-S', str(worker), '--phase', phase,
+                    '--context', str(context_file), '--context-sha256', sha(context_file)], code,
+                    os.environ, out / (phase + '.log'), maximum)
             except BaseException as exc:
                 receipt.update(status='timeout_or_execution_error', error=type(exc).__name__,
                                seconds=time.monotonic() - phase_started,
                                log_sha256=sha(out / (phase + '.log')))
                 write(out / (phase + '-phase.json'), receipt); phases.append(receipt)
                 raise
-            receipt.update(status='passed' if result.returncode == 0 else 'failed',
-                           returncode=result.returncode, seconds=time.monotonic() - phase_started,
+            receipt.update(status='passed' if result['returncode'] == 0 else 'failed',
+                           returncode=result['returncode'], cleanup=result['cleanup'], seconds=time.monotonic() - phase_started,
                            log_sha256=sha(out / (phase + '.log')))
             write(out / (phase + '-phase.json'), receipt); phases.append(receipt)
-            require(result.returncode == 0, 'Phase failed: ' + phase)
+            require(result['returncode'] == 0, 'Phase failed: ' + phase)
         require(time.monotonic() < deadline, 'Global gate time exhausted')
+        runtime.close()
         status = 'passed_closed_SAC65_CPU_compatibility_only'
         write(out / 'COMPATIBILITY-PASS.json', dict(status=status, code_commit=a.code_commit,
               source_rounds=65, complete_K4=390, source_actions=651638, phases=phases,
@@ -197,6 +259,16 @@ def main():
         write(out / 'INCOMPLETE.json', dict(status='not_published_not_admitted', failure=failure))
         raise
     finally:
+        # No more work is launched. Preserve one bounded ownership cleanup even
+        # when a second TERM/INT arrives during the parent's wait.
+        signal.signal(signal.SIGTERM, signal.SIG_IGN); signal.signal(signal.SIGINT, signal.SIG_IGN)
+        if runtime is not None:
+            try:
+                runtime.close()
+            except BaseException as exc:
+                status = 'incomplete'
+                failure = (failure or '') + ' owned-cleanup: ' + str(exc)
+                write(out / 'OWNED-CLEANUP-FAILED.json', dict(error=str(exc), qualified=False))
         write(out / 'terminal.json', dict(status=status, failure=failure, phases=phases,
               elapsed_seconds=time.monotonic() - started, actual_scheduler_seconds='owner_terminal_receipt_required',
               additional_robot_actions=0, fits=0))

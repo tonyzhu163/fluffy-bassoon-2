@@ -33,6 +33,8 @@ rewritten, and original archive bytes are rechecked and retained as provenance.
 The reader independently checks the projection's bound ancestry/tip, every
 ancestor manifest/root/contract/checkpoint-reference tuple, canonical and
 backup contract bytes, each predecessor migration and original ordered roots.
+The ancestry must be nonempty and end at the exact bound tip manifest path/SHA;
+an internally consistent shorter chain cannot borrow a separate full tip.
 The first selected-trial ancestor is retained rather than rounded to whole
 rounds. All producer scientific/runtime contracts must agree. The closed tip
 checkpoint is fully hashed. A differently serialized stage file additionally
@@ -125,14 +127,16 @@ Phases share the same remaining deadline:
 | Array/count/import audit | 90s | global deadline remains binding |
 
 If the protected remaining allowance is insufficient, stop before starting
-that phase. A timeout kills/reaps only the owned phase subprocess; there is no
-source PID discovery/control or ledger constructor. The outer timer also
-bounds the whole owned job. No retry, changed deadline or copy fallback occurs.
+that phase. The owned guardian handles phase workers and descendants on
+timeout, nonzero, caller signals or caller death; it never controls source
+sessions or constructs a ledger. The one outer timer bounds the caller, and
+the independent guardian shares its absolute deadline. No retry, changed
+deadline or copy fallback occurs.
 
 ## Meaningful fixtures and real admission
 
-The fixture phase requires **64 tests, zero skips/failures/errors** in JUnit:
-17 existing native-corpus cases plus47 new focused compatibility cases.
+The fixture phase requires **75 tests, zero skips/failures/errors** in JUnit:
+17 existing native-corpus cases plus58 new focused compatibility cases.
 These are static discovery counts, not a claim they have run. New fixtures cover:
 
 - A normal original single-root corpus; a selected K4 prefix split between
@@ -154,6 +158,62 @@ These are static discovery counts, not a claim they have run. New fixtures cover
   fragment, final100 runner or finalbank/teacher/fit qualification is included.
 - CPU import firewall and blocked optimizer step. No fitting is permitted,
   including fixture Adam steps; head forwards/labels are CPU-only checks.
+- Shared-deadline bootstrap, atomic ticket arrival and stale scope rejection;
+  ancestry terminal-tip closure; real tiny worker/descendant lifecycle checks
+  for timeout/TERM/INT/SIGKILL, actual reaping and unrelated-session survival.
+
+## Presubmittable bootstrap and owned cleanup
+
+The launch command binds a fixed inbox path and the reviewed code/output,
+not an invented future hostname or proof SHA. The parent derives its actual
+hostname, records bootstrap intent and waits at most120s for the owner's
+atomic final ticket. The ticket binds that hostname, exact code pin/output
+and actual resource-receipt path/SHA. The owner first uploads the actual
+running-allocation UI proof and resource JSON, then atomically renames an
+issued ticket to the inbox. A partial upload is not a ticket; a present stale,
+malformed or mismatched ticket fails. The [ticket template](bootstrap-ticket.template.json)
+is unissued and rejected. No model/test import occurs while waiting.
+
+Both timers start before this wait. The same absolute1,700s deadline is passed
+to every later operation; a120s wait leaves at most1,580s, never a fresh1,700s.
+The one outer GNU timer remains TERM1,770/KILL1,780. There is no nested GNU
+timeout wrapper or new operational allowance.
+
+[owned_cpu_runtime.py](owned_cpu_runtime.py) dispatches CPU commands using
+only the qualified ownership primitives at
+`0c16c2b794f8de5b78603206917e72195083c265`:
+
+| Predeployed source file | SHA256 |
+| --- | --- |
+| `robotwin_trained_pair_runtime.py` | `116b5251b43454a4c61fe0bd4faeb3d1cbf6d7a2dd08356241599cbd2f32827c` |
+| `robotwin_trained_pair_continuation.py` | `173774c46c177548750c78e1e09aa5c8caf583d265be8ecb5517757077274c9b` |
+| `robotwin_trained_pair.py` | `d8ee934c580cb1d1ab3991f446618af2bd9e06a6ece97cf0fe83aa828b882dc0` |
+
+Owner stages exactly these three verbatim files in a private helper directory
+before allocation; no pycache or unrelated modules belong there. No code or
+test executes during deployment. Their GPU continuation APIs/minimum budgets
+are not called. The CPU-only adapter reuses `ContinuationGuardian.launch`
+(including corrected spawn registration with normal child signal masks),
+captured SID/UID/leader-start identity checks, parent pipe/PPID watcher and
+bounded `cleanup(graceful=False)`. The new adapter still needs qualification.
+
+An independent stdlib guardian owns every phase session and its descendants,
+including Git subprocesses and changed-PGID children. It watches caller loss
+and shares the original absolute deadline, even if the caller is SIGKILLed.
+A Linux subreaper in this new guardian adopts/reaps its own orphan descendants;
+it cannot adopt unrelated source jobs. TERM/KILL and wait results are retained
+per cleanup. Parent TERM/INT closes the owner pipe and waits; repeated signals
+cannot interrupt final bounded cleanup. Only captured owned identities are
+signaled. The original source controllers/ledgers are never invoked.
+
+Thirty seconds of cleanup are **inside**1,700s, so actual work stops by1,670s
+or earlier after bootstrap/preflight. Visibility/Git checks also use this
+ownership layer. No completion marker is written until phase descendants and
+guardian are cleanly reaped. Kernel-unreapable work produces failed cleanup
+evidence and no qualification; the scheduler's original1,800s boundary remains
+required. Tiny CPU regressions exercise timeout/TERM/INT/SIGKILL, normal child
+signal masks, a changed-PGID descendant, actual waits and an unrelated session
+left alive. No source PID is discovered or controlled by these tests.
 
 After fixtures, the real helper creates `private/projection` by full byte SHA
 and same-device hardlinks. The existing converter then exports `ad dpt` from
@@ -194,14 +254,17 @@ GPU/fitting performance, source100, a new reservation or active-source migration
 
 Before allocation, review this candidate and its narrow reader delta, confirm
 the existing Python environment, deploy its exact Git pin and the c62 object,
-and prepare the actual0GPU receipt/proof from the running job. No setup command
+stage the three0c16 files above and choose an initially unissued bootstrap
+inbox. Once UI Running, upload the actual0GPU receipt/proof and issued ticket.
+No setup command
 executes tests or model work on development SSH. Inside the admitted allocation:
 
 ```bash
 bash <candidate-worktree>/outputs/robotwin-sac65-cpu-compat-20261031-r1/job.sh \
   <candidate-worktree> <exact-candidate-commit> \
   /mowenjie/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r1 \
-  <owner-actual-resource-receipt.json> <receipt-SHA256> <exact-job-hostname>
+  /mowenjie/fluffy-bassoon-2/inputs/robotwin-sac65-cpu-compat-20261031-r1/actual-bootstrap.json \
+  /mowenjie/fluffy-bassoon-2/inputs/robotwin-sac65-cpu-compat-20261031-r1/owned-primitives
 ```
 
 This file submits no job. The handoff message provides the actual candidate

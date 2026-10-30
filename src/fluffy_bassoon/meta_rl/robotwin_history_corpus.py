@@ -128,11 +128,16 @@ class CorpusReader:
             if any(not Path(root).is_absolute() or str(Path(root)) != root
                    or '..' in Path(root).parts or Path(root).resolve() != Path(root) for root in roots):
                 raise ValueError('Projection roots must be original canonical paths')
-            if (roots != ancestry['ordered_corpus_roots'] or len(roots) != ancestry['root_count']
+            if (not roots or not ancestry['ordered_ancestry']
+                    or roots != ancestry['ordered_corpus_roots'] or len(roots) != ancestry['root_count']
                     or roots != [entry['corpus_root'] for entry in ancestry['ordered_ancestry']]
                     or len(set(roots)) != len(roots)
                     or any(entry['method'] != source['method'] for entry in ancestry['ordered_ancestry'])):
                 raise ValueError('Projection ordered roots differ from its bound ancestry')
+            terminal = ancestry['ordered_ancestry'][-1]['manifest']
+            if (terminal['sha256'] != projection['tip_manifest']['sha256']
+                    or Path(terminal['path']).resolve() != Path(projection['tip_manifest']['path']).resolve()):
+                raise ValueError('Projection terminal ancestor is not the bound source tip')
             if (tip.get('kind') != 'whole_trial_boundary' or tip.get('method') != source['method']
                     or tip.get('lineage_source_commit') != projection['lineage_commit']
                     or projection['method'] != source['method']

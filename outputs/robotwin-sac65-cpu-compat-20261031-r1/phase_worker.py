@@ -107,6 +107,7 @@ def main():
             torch.set_num_threads(4)
         if a.phase == 'tests':
             os.environ['FB2_CPU_COMPAT_READER'] = ctx['chain_reader']
+            os.environ['FB2_CPU_OWNED_HELPERS'] = ctx['owned_helpers']
             import pytest
             result = pytest.main(['-q', '-p', 'no:cacheprovider',
                 '--junitxml=' + str(out / 'fixtures.junit.xml'),

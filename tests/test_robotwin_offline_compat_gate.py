@@ -12,7 +12,10 @@ import os
 from pathlib import Path
 import shutil
 import socket
+import signal
+import subprocess
 import sys
+import time
 
 import pytest
 import torch
@@ -300,6 +303,24 @@ def test_rehashed_ancestry_still_needs_actual_manifest_root_counter_and_lineage_
         CorpusReader(output, source)
 
 
+def test_shortened_ancestry_must_still_end_at_the_advertised_full_tip_before_aliases(tmp_path):
+    output, roots, args, receipt = projection_fixture(tmp_path)
+    source = source_recovery(args['source_path'], args['source_sha256'], 'sac')
+    ancestry_path = Path(receipt['ancestry']['path']); ancestry = json.loads(ancestry_path.read_text())
+    ancestry['ordered_ancestry'] = ancestry['ordered_ancestry'][:1]
+    ancestry['ordered_corpus_roots'] = ancestry['ordered_corpus_roots'][:1]
+    ancestry['root_count'] = 1; receipt['roots'] = receipt['roots'][:1]
+    # Retain only first-root origins so the old alias loop would not fail for
+    # an unrelated reason; the separately advertised full tip is untouched.
+    first = str(roots[0]) + '/'
+    receipt['files'] = {key:dict(item, origins=[x for x in item['origins'] if x.startswith(first)])
+                        for key,item in receipt['files'].items() if any(x.startswith(first) for x in item['origins'])}
+    receipt['ancestry'] = write(ancestry_path, ancestry)
+    write(output / 'projection.json', receipt)
+    with pytest.raises(ValueError, match='terminal ancestor'):
+        CorpusReader(output, source)
+
+
 def assembly_fixture(tmp_path):
     roots = [tmp_path / name / 'corpus' for name in ('old', 'new')]
     base = dict(source_commit=project.LINEAGE, schema='robotwin_public_decisions_v1')
@@ -411,3 +432,111 @@ def test_closed65_index_descriptor_requires_current_source_teacher_schema_and_pr
     else:
         with pytest.raises(ValueError):
             worker.verify_source65_index(index, ctx, projection)
+
+
+def bootstrap_ticket(path, code='fixture-pin', hostname='fixture-host', output='/fixture-output'):
+    return write(path, dict(schema='robotwin_cpu_gate_actual_bootstrap_v1',
+        run_id='robotwin-sac65-cpu-compat-20261031-r1', code_commit=code,
+        hostname=hostname, output=output, resource_receipt=dict(path='/fixture-resource.json', sha256='a'*64)))
+
+
+def test_bootstrap_wait_uses_same_deadline_and_accepts_only_atomic_final_ticket(tmp_path):
+    job = load('fixture_bootstrap_job', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    ticket = tmp_path / 'actual.json'; now = [100.]
+    def clock(): return now[0]
+    def sleep(seconds):
+        now[0] += seconds
+        if now[0] == 101:
+            bootstrap_ticket(tmp_path / 'upload.partial')
+        elif now[0] == 102:
+            (tmp_path / 'upload.partial').rename(ticket)
+    ref, receipt = job.wait_bootstrap(ticket, code_commit='fixture-pin', output=Path('/fixture-output'),
+        hostname='fixture-host', deadline=110., clock=clock, sleep=sleep)
+    assert ref['sha256'] == 'a'*64 and receipt['wait_seconds'] == 2
+    assert receipt['remaining_work_seconds'] == 8  # Not a fresh1700s after wait.
+
+
+def test_bootstrap_missing_ticket_cannot_extend_the_shared_deadline(tmp_path):
+    job = load('fixture_bootstrap_timeout', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    now = [1698.]
+    with pytest.raises(TimeoutError):
+        job.wait_bootstrap(tmp_path/'absent', code_commit='fixture-pin', output=Path('/fixture-output'),
+            hostname='fixture-host', deadline=1700., clock=lambda:now[0],
+            sleep=lambda seconds:now.__setitem__(0,now[0]+seconds))
+    assert now[0] == 1700.
+
+
+@pytest.mark.parametrize('field', ['code_commit', 'hostname', 'output', 'schema'])
+def test_bootstrap_rejects_stale_scope_without_accepting_a_resource_template(tmp_path, field):
+    job = load('fixture_bootstrap_scope', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    path=tmp_path/'ticket.json'; bootstrap_ticket(path)
+    value=json.loads(path.read_text()); value[field]='wrong'; write(path,value)
+    with pytest.raises(ValueError,match='Stale or mismatched'):
+        job.wait_bootstrap(path,code_commit='fixture-pin',output=Path('/fixture-output'),
+                           hostname='fixture-host',deadline=time.monotonic()+5)
+
+
+@pytest.mark.parametrize('mode', ['timeout', 'TERM', 'INT', 'KILL'])
+def test_owned_cpu_guardian_reaps_worker_and_changed_pgid_descendant_only(tmp_path, mode):
+    adapter_path = REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/owned_cpu_runtime.py'
+    adapter = load('fixture_cpu_owned_runtime', adapter_path)
+    adapter.become_subreaper()  # Only this owned pytest worker's descendants.
+    helper_dir = os.environ['FB2_CPU_OWNED_HELPERS']
+    worker_info, grand_info = tmp_path/'worker.json', tmp_path/'grand.json'
+    grand = tmp_path/'grand.py'
+    grand.write_text("import os,signal,time,json\nfrom pathlib import Path\n"
+        "os.setpgid(0,0)\n"
+        +f"Path({str(grand_info)!r}).write_text(json.dumps(dict(pid=os.getpid(),sid=os.getsid(0),pgid=os.getpgrp(),"
+        "blocked=[int(x) for x in signal.pthread_sigmask(signal.SIG_BLOCK,[])],"
+        "term_default=signal.getsignal(signal.SIGTERM)==signal.SIG_DFL,"
+        "int_normal=signal.getsignal(signal.SIGINT) in (signal.SIG_DFL,signal.default_int_handler))))\n"
+        "time.sleep(120)\n")
+    worker = tmp_path/'worker.py'
+    worker.write_text("import os,signal,subprocess,sys,time,json\nfrom pathlib import Path\n"
+        +f"child=subprocess.Popen([sys.executable,'-I','-B','-S',{str(grand)!r}])\n"
+        +f"Path({str(worker_info)!r}).write_text(json.dumps(dict(pid=os.getpid(),sid=os.getsid(0),child=child.pid)))\n"
+        "time.sleep(120)\n")
+    driver = tmp_path/'driver.py'; owned_output=tmp_path/'owned'
+    driver.write_text("import importlib.util,sys,signal,time,os\nfrom pathlib import Path\n"
+        +f"spec=importlib.util.spec_from_file_location('owned',{str(adapter_path)!r})\n"
+        "m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)\n"
+        "def stop(signum,frame):raise RuntimeError('fixture parent signal')\n"
+        "signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)\n"
+        "runtime=None\ntry:\n"
+        +f" runtime=m.CPUPhaseRuntime({helper_dir!r},Path({str(owned_output)!r}),deadline=time.monotonic()+40)\n"
+        +f" runtime.run('fixture',[sys.executable,'-I','-B','-S',{str(worker)!r}],{str(tmp_path)!r},os.environ,Path({str(tmp_path/'worker.log')!r}),{1 if mode=='timeout' else 15})\n"
+        "except BaseException:pass\nfinally:\n"
+        " signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)\n"
+        " if runtime is not None:runtime.close()\n")
+    unrelated = subprocess.Popen([sys.executable,'-I','-B','-S','-c','import time;time.sleep(120)'],start_new_session=True)
+    process = subprocess.Popen([sys.executable,'-I','-B','-S',str(driver)],start_new_session=True,
+                               stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    identities = []
+    try:
+        until=time.monotonic()+8
+        while not (worker_info.exists() and grand_info.exists()) and time.monotonic()<until:time.sleep(.02)
+        assert worker_info.exists() and grand_info.exists()
+        w,g=json.loads(worker_info.read_text()),json.loads(grand_info.read_text())
+        identities=[w['pid'],g['pid']]
+        assert w['sid']==g['sid'] and w['sid']!=g['pgid']
+        assert int(signal.SIGTERM) not in g['blocked'] and int(signal.SIGINT) not in g['blocked']
+        assert g['term_default'] and g['int_normal']
+        if mode!='timeout':process.send_signal(getattr(signal,'SIG'+mode))
+        process.wait(timeout=12)
+        guardian=json.loads((owned_output/'owned-runtime.json').read_text())['guardian_pid']
+        until=time.monotonic()+10
+        while time.monotonic()<until:
+            try:os.waitpid(guardian,os.WNOHANG)
+            except ChildProcessError:pass
+            if not any(Path('/proc',str(pid)).exists() for pid in [*identities,guardian]):break
+            time.sleep(.02)
+        assert not any(Path('/proc',str(pid)).exists() for pid in [*identities,guardian])
+        assert unrelated.poll() is None
+        receipt=json.loads((owned_output/'owned-cleanup-latest.json').read_text())
+        assert receipt['clean'] and receipt['adopted']['clean']
+        assert any(row['signal']==int(signal.SIGTERM) for row in receipt['signal_attempts'])
+        receipts=[json.loads(p.read_text()) for p in owned_output.glob('owned-cleanup-[0-9]*.json')]
+        assert any(row['pid']==g['pid'] for r in receipts for row in r['adopted']['reaped'])
+    finally:
+        if process.poll() is None:process.kill();process.wait(timeout=5)
+        unrelated.terminate();unrelated.wait(timeout=5)
