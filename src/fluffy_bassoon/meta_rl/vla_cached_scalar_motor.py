@@ -160,6 +160,7 @@ class CachedScalarMotor:
         self._policy, self._model = native.policy, native.policy._model
         self._encoder = native.feature_encoder
         self._cache = None
+        self._host_cache = None
         self._backend = _NativeBackend(native) if backend is None else backend
         if getattr(self._backend, "native", native) is not native:
             raise ValueError("Prefix backend belongs to another native motor")
@@ -204,6 +205,7 @@ class CachedScalarMotor:
         return dict(kind="cached_native_prefix_scalar_b1_v1", native_contract_unchanged=True,
             prefix_reference_commit="c6f46e8cd80c7cca0877983b659c76ef26b1edbd", execution_microbatch=1,
             cache_capacity=1, cache_checkpointed=False, feature_prefix_reused_for_motor=True,
+            host_feature_cache_capacity=1, post_infer_host_features_reused=True,
             immutable_weights_assumed=True, full_weight_hash_required_by_runtime_qualification=True,
             cached_infer_calls=self.cached_infer_calls, native_infer_calls=self.native_infer_calls,
             requires_external_runtime_qualification=True)
@@ -226,6 +228,7 @@ class CachedScalarMotor:
 
     def clear_cache(self):
         self._cache = None
+        self._host_cache = None
         for name in ("_last_obs", "_last_instruction", "_last_features"):
             if hasattr(self._encoder, name):
                 setattr(self._encoder, name, None)
@@ -241,10 +244,11 @@ class CachedScalarMotor:
         try:
             self._check_runtime()
             identity = (_content(obs), str(instruction))
-            if (self._cache is not None and self._cache[0] == identity
-                    and self._cache[2] is self.policy._rng):
+            if self._host_cache is not None and self._host_cache[0] == identity:
+                if self._cache is not None and self._cache[2] is not self.policy._rng:
+                    self._cache = None
                 self._encoder.cache_hits += 1
-                return self._cache[1].features.copy()
+                return self._host_cache[1].copy()
             self.clear_cache()
             prepared = self._backend.prepare(obs, instruction)
             features = np.asarray(prepared.features, np.float32)
@@ -255,6 +259,7 @@ class CachedScalarMotor:
                 raise ValueError("Motor observation/instruction changed during prefix preparation")
             prepared.features = features.copy()
             self._cache = (identity, prepared, self.policy._rng)
+            self._host_cache = (identity, prepared.features)
             self._encoder.calls += 1
             self._encoder.elapsed_seconds += time.monotonic() - started
             return features.copy()
@@ -274,7 +279,7 @@ class CachedScalarMotor:
                 return self.native.infer(obs, instruction, noise)
             if cached[0] != (_content(obs), str(instruction)) or cached[2] is not self.policy._rng:
                 raise ValueError("Prepared scalar prefix is stale or belongs to another observation/instruction")
-            self.clear_cache()
+            self._cache = None
             self.cached_infer_calls += 1
             self.native.calls += 1
             self.policy._rng, _ = self._backend.split_rng(self.policy._rng)
@@ -284,5 +289,6 @@ class CachedScalarMotor:
             if actions.shape != (10, 7) or not np.isfinite(actions).all():
                 raise ValueError("Unexpected native cached motor output")
             return actions
-        finally:
+        except BaseException:
             self.clear_cache()
+            raise
