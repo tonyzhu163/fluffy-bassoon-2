@@ -67,7 +67,7 @@
     },
     "ppo-full": {
       "maximum_gpu_seconds": 21600,
-      "reserved_gpu_seconds": 21600,
+      "reserved_gpu_seconds": 21145,
       "status": "terminal_r3_exit0_complete_source_recovery",
       "charged_gpu_seconds": 21095,
       "source_commit": "c4cadc8a9a8cebbe2cc977834e19ad8ba36bb523",
@@ -76,7 +76,9 @@
       "physical_charge_before_repair_probe": 26919,
       "last_verified_updates": 238,
       "last_verified_optimizer_steps": 476,
-      "actual_total_action_charge": 171166
+      "actual_total_action_charge": 171166,
+      "additional_shutdown_margin_seconds": 50,
+      "released_unused_gpu_seconds": 455
     },
     "ppo-reset": {
       "maximum_gpu_seconds": 21600,
@@ -95,29 +97,38 @@
     },
     "frozen-validation": {
       "maximum_gpu_seconds": 14400,
-      "reserved_gpu_seconds": 14400,
-      "status": "running_verified15trials_8326actions",
+      "reserved_gpu_seconds": 1253,
+      "status": "terminal_exit0_all32trials128episodes_hashes_verified",
       "source_commit": "9002a2dd352e6176c43943c1e46bf2b85eddc397",
       "run_id": "libero40-ppo-source-validation-20261030-r1",
       "job_id": "job-ztzwinm2b802",
-      "last_verified_completed_trials": 15,
-      "last_verified_actions": 8326
+      "last_verified_completed_trials": 32,
+      "last_verified_actions": 22753,
+      "charged_gpu_seconds": 1203,
+      "additional_shutdown_margin_seconds": 50,
+      "scheduler_terminal_duration_seconds": 1150,
+      "actual_total_action_charge": 22753,
+      "full_policy_successes": 63,
+      "episode_reset_successes": 61,
+      "episodes_per_policy": 64,
+      "released_unused_gpu_seconds": 13147
     },
     "all40-offline-ad-dpt": {
       "maximum_gpu_seconds": 3200,
-      "reserved_gpu_seconds": 2800,
+      "reserved_gpu_seconds": 2359,
       "status": "terminal_exit0_all4controllers500updates_all24export_recovery_hashes_verified",
       "funding": "3200 seconds reassigned from terminal SACworker6 original7200 hold;4000 remains above measured2719 charge",
       "run_id": "libero40-all40-offline-20261030-r2",
       "additional_simulator_actions": 0,
       "prior_attempt_charge_ceiling_seconds": 200,
       "measured_final_attempt_scheduler_seconds": 2059,
-      "released_unused_gpu_seconds": 400,
-      "reconciliation": "Terminal final scheduler2059 plus prior failure upper bound200 plus541 margin; no active work modified"
+      "released_unused_gpu_seconds": 841,
+      "reconciliation": "Terminal final scheduler2059 plus prior failure upper bound200 plus541 margin; no active work modified",
+      "additional_shutdown_margin_seconds": 100
     },
     "collector-speed-qualification": {
       "maximum_gpu_seconds": 1800,
-      "reserved_gpu_seconds": 1800,
+      "reserved_gpu_seconds": 461,
       "charged_gpu_seconds": 411,
       "next_attempt_hold_seconds": 1200,
       "status": "terminal_qualification_passed_not_adopted_in_production",
@@ -125,7 +136,9 @@
       "owner_thread": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
       "source_action_alias": "terminal-capacity-aliases.json:2880total,274spent,2606remaining",
       "physical_actions_spent": 759,
-      "physical_alias_remaining": 2121
+      "physical_alias_remaining": 2121,
+      "additional_shutdown_margin_seconds": 50,
+      "released_unused_gpu_seconds": 1339
     },
     "target-firstwave-worker-0": {
       "maximum_gpu_seconds": 3600,
@@ -219,8 +232,8 @@
     },
     "noise-controls-worker-0": {
       "maximum_gpu_seconds": 3600,
-      "reserved_gpu_seconds": 3600,
-      "status": "running_gpu54tests_real_queries_verified",
+      "reserved_gpu_seconds": 2163,
+      "status": "terminal_exit0_all360_raw_noise_physical_rng_recovery_report_verified",
       "purpose": "target_evaluation",
       "source_pretraining": false,
       "funding": "Released terminal target time plus terminal PPO reset/offline surplus; original32h ceiling unchanged",
@@ -228,13 +241,16 @@
       "run_id": "libero40-noise-controls-20261030-w00-r1",
       "noise_plan_sha256": "307bff54eaab9544af57753ecc3b183149ed6890e1891c0f7ba6d285bb5367ed",
       "job_id": "job-g8vas173mmy5",
-      "last_verified_completed_query_groups": 9,
-      "last_verified_actions": 3225
+      "last_verified_completed_query_groups": 180,
+      "last_verified_actions": 57789,
+      "charged_gpu_seconds": 2113,
+      "scheduler_terminal_duration_seconds": 2070,
+      "actual_total_action_charge": 57789
     },
     "noise-controls-worker-1": {
       "maximum_gpu_seconds": 3600,
-      "reserved_gpu_seconds": 3600,
-      "status": "running_gpu54tests_real_queries_verified",
+      "reserved_gpu_seconds": 2348,
+      "status": "terminal_exit0_all360_raw_noise_physical_rng_recovery_report_verified",
       "purpose": "target_evaluation",
       "source_pretraining": false,
       "funding": "Released terminal target time plus terminal PPO reset/offline surplus; original32h ceiling unchanged",
@@ -242,16 +258,117 @@
       "run_id": "libero40-noise-controls-20261030-w01-r1",
       "noise_plan_sha256": "307bff54eaab9544af57753ecc3b183149ed6890e1891c0f7ba6d285bb5367ed",
       "job_id": "job-834arjyjj6mp",
-      "last_verified_completed_query_groups": 11,
-      "last_verified_actions": 4510
+      "last_verified_completed_query_groups": 180,
+      "last_verified_actions": 65204,
+      "charged_gpu_seconds": 2298,
+      "scheduler_terminal_duration_seconds": 2251,
+      "actual_total_action_charge": 65204
     },
     "target-online-authors-pixel-sac": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "held_driver_in_preparation_not_launched",
+      "reserved_gpu_seconds": 1901,
+      "status": "terminal_exit0_sixcases_all36queries_35558actions",
       "purpose": "target_online_learning",
       "source_pretraining": false,
-      "funding": "Same reconciled32h pool, separate from frozen source validation"
+      "funding": "Same reconciled32h pool, separate from frozen source validation",
+      "source_commit": "ba4674fafbe6d8f816979b61aa4ccd38e2912eff",
+      "run_id": "libero40-target-online-dsrl-six-20261030-r1",
+      "physical_budget_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-online-dsrl-six-plan-20261030-r1/budget.json",
+      "job_id": "job-df23nkw7ne5j",
+      "charged_gpu_seconds": 1851,
+      "scheduler_terminal_duration_seconds": 1812,
+      "actual_total_action_charge": 35558
+    },
+    "source-sac-competence": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 660,
+      "status": "terminal_r2_exit0_all48traces_and_recovery_verified_r1_cost_retained",
+      "source_commit": "492c289e2ecb56c6e38034097aaab69746b0fd8c",
+      "run_id": "libero40-source-sac-competence-20261030-r2",
+      "physical_action_alias": "libero40-validation-remainder-20261030-r1/sac-r2-alias.json",
+      "funding": "3600s of terminal frozen-validation original14400 hold; no expansion",
+      "prior_setup_charge_seconds": 78,
+      "remaining_child_ceiling_seconds": 3522,
+      "charged_gpu_seconds": 610,
+      "successful_attempt_gpu_seconds": 532,
+      "additional_shutdown_margin_seconds": 50,
+      "job_id": "job-zxgkfebhs4k8",
+      "scheduler_terminal_duration_seconds": 490,
+      "prior_setup_scheduler_seconds": 51,
+      "actual_total_action_charge": 7540,
+      "released_unused_gpu_seconds": 2940
+    },
+    "ppo-target-wave-worker-0": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 2297,
+      "status": "terminal_exit0_all_groups_committed_hashes_verified",
+      "source_commit": "7780fb38b61fb37a3e2c0aec67ffea8e8e9c0b94",
+      "run_id": "libero40-ppo-target-wave-20261030-w00-r1",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "funding": "7200s jointly from terminal frozen-validation original14400hold",
+      "charged_gpu_seconds": 2247,
+      "additional_shutdown_margin_seconds": 50,
+      "scheduler_terminal_duration_seconds": 2191,
+      "job_id": "job-3ckrfuvifjwk",
+      "actual_total_action_charge": 56639,
+      "released_unused_gpu_seconds": 1303
+    },
+    "ppo-target-wave-worker-1": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 2329,
+      "status": "terminal_exit0_all_groups_committed_hashes_verified",
+      "source_commit": "7780fb38b61fb37a3e2c0aec67ffea8e8e9c0b94",
+      "run_id": "libero40-ppo-target-wave-20261030-w01-r1",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "funding": "7200s jointly from terminal frozen-validation original14400hold",
+      "charged_gpu_seconds": 2279,
+      "additional_shutdown_margin_seconds": 50,
+      "scheduler_terminal_duration_seconds": 2232,
+      "job_id": "job-mrfdf4ipqicm",
+      "actual_total_action_charge": 52255,
+      "released_unused_gpu_seconds": 1271
+    },
+    "target-dsrl-long-task-00": {
+      "maximum_gpu_seconds": 6000,
+      "reserved_gpu_seconds": 6000,
+      "status": "active_13tests_gpu_and_full_parent_restore_verified_advancing",
+      "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
+      "run_id": "libero40-target-online-dsrl-long-20261030-r1-task00",
+      "maximum_new_actions": 100000,
+      "funding": "Verified terminal-unused time inside original32h, after source/noise/sixcase/speed/validation reconciliation; no expansion",
+      "parent_run": "libero40-target-online-dsrl-six-20261030-r1",
+      "parent_actions_counted_once": 35558,
+      "inherited_case_actions": 9030,
+      "job_id": "job-pytyo9urlxrj",
+      "last_verified_at_shanghai": "2026-10-30 23:54:45",
+      "last_verified_training_episodes": 41,
+      "last_verified_optimizer_steps": 23180,
+      "last_verified_cumulative_actions": 19685,
+      "last_verified_new_actions": 10655,
+      "last_frozen_query_training_episodes": 40,
+      "last_frozen_query_success": false
+    },
+    "target-dsrl-long-task-40": {
+      "maximum_gpu_seconds": 6000,
+      "reserved_gpu_seconds": 6000,
+      "status": "active_13tests_gpu_and_full_parent_restore_verified_advancing",
+      "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
+      "run_id": "libero40-target-online-dsrl-long-20261030-r1-task40",
+      "maximum_new_actions": 100000,
+      "funding": "Verified terminal-unused time inside original32h, after source/noise/sixcase/speed/validation reconciliation; no expansion",
+      "parent_run": "libero40-target-online-dsrl-six-20261030-r1",
+      "parent_actions_counted_once": 35558,
+      "inherited_case_actions": 9030,
+      "job_id": "job-5rqftpqn4wxi",
+      "last_verified_at_shanghai": "2026-10-30 23:54:45",
+      "last_verified_training_episodes": 45,
+      "last_verified_optimizer_steps": 26400,
+      "last_verified_cumulative_actions": 21340,
+      "last_verified_new_actions": 12310,
+      "last_frozen_query_training_episodes": 40,
+      "last_frozen_query_success": false
     }
   },
   "allocations": [
@@ -519,6 +636,6 @@
       "actual_simulator_actions": 30961
     }
   ],
-  "last_checkpoint_audit_at_shanghai": "2026-10-30 22:12",
-  "unassigned_gpu_seconds": 56
+  "last_checkpoint_audit_at_shanghai": "2026-10-30 23:56",
+  "unassigned_gpu_seconds": 6140
 }

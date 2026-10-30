@@ -18,59 +18,42 @@ steering accepted approximately1M source actions per learner on both, with
 complete episodes/trials and benchmark-appropriate horizons. Existing runs
 retain their original contracts; future expansion costs stay explicit. The
 32 additional LIBERO GPU-hour pool is approved.
-Current evidence: capped source streams on Spatial00 and LIBERO10:00;
-fresh shared PPO qualified. Four AD/DPT full/static models trained500 updates
-each on the Spatial00 subset. AD's within-objective validation loss worsened;
-AD/DPT raw losses cannot be compared across different targets. A predeclared
-two-case LIBERO90 test completed84 episodes: one AD500 query succeeded after
-failed support, while the same weights with memory erased failed on exactly
-matched support/initial arrays/query RNG. Every other query failed. This is
-one controlled history effect, not reliable ICRL, reward causality or strong
-topline performance. Offline replay reproduces genuine proposals exactly and shows a small input
-response to terminal-reward flipping; it measures no counterfactual robot
-success. Six-state physical replication completed1/6 retained-context versus
-0/6 reset-context successes on the same goal; low performance, no broad claim.
-Fresh target-online DSRL completed15 training episodes/2,400 updates per
-pilot case; all eight frozen queries at0/1/13/15 training episodes failed.
-This is learning onset, not converged DSRL. Two-source-goal AD/DPT training
-completed500 updates per full/static controller on1,551train/1,664validation
-chunks, with all12 milestone policies/full recoveries checked. Validation
-banks differ across these source-data scales; compare common robot cases,
-not raw cross-run NLL. Exact-input replay found delta0 for key types and
-initialization stages within one motor process, but small cross-process
-motor action differences remain unexplained. A new shared-process robot
-comparison completed76episodes/30,505actions in one unchanged motor process:
-one-source ADfull K1 succeeds1/2; two-source ADstatic succeeds1/2 at bothK0/K1
-with identical query trajectories, while two-source ADfull/reset and allDPT
-queries fail. All methods fail the second case. This remeasures the original
-discovery case, not an independent replication. It shows a one-case benefit
-without history and no monotonic source-scale memory gain. Source audits
-matched all3,215selected chunks and exact training windows;65.2% of Source2
-train rows are warmup, and both training failures/recoveries preceded the
-first update. Final DPT actors lack subsequent source behavior. Candidate
-teacher quality and useful learning-history diversity remain unresolved.
-All40 source SAC collection is complete:527 K4 training cases/2,108 episodes
-and146 validation cases/584 episodes,411,578 selected simulator actions.
-All40 AD/DPT full/static controllers completed500 fitting updates each.
-The first target screen completed626 episodes/189,051 simulator actions.
-Native pi0.5 scores31/90 atK0; AD full/static26/90, DPT full26/90 and static27/90.
-On the nine-case K1 panel AD/DPT retained history each score6/9 versus reset5/9,
-but native and AD-static already score6/9 atK0 on that panel. Task70 after a
-successful support is the sole memory discordance. Every method is4/4 on each
-tiny Plus/Pro development panel. No high-performance/sample-efficiency or
-reliable memory claim is established. RoboTwin uses6 source goals and6 controller-held-out goals;
-its current1024D independent noise interface differs from LIBERO's32D tied
-noise. Its source-only LR1e-6 PPO calibration passed, but useful robot improvement
-remains unproven.
+Current evidence: all40 source SAC collection completed527 K4 training
+cases/2,108 episodes/326,277 simulator actions, plus146 validation cases/
+584 episodes/85,301 actions. Four AD/DPT full/static controllers completed
+500 fitting updates each. First all90 target queries: native31/90; AD
+full/static26/90; DPT full26/90/static27/90. On the fixed-nine K1 panel,
+AD/DPT full each6/9 versus same-weight reset5/9, while native and AD-static
+already reach6/9 atK0. The sole memory discordance follows successful support.
+Tiny Plus/Pro panels are all4/4 and do not constitute full benchmark results.
 
-The bulk SAC collection is terminal and qualified; AD/DPT fitting can proceed
-while PPO is repaired. Shared full/reset PPO each completed40 iterations and
-80 optimizer steps, then stopped at a same-scene observation guard. Preserve
-these incomplete runs and costs; they are neither final policies nor negative
-method results. RoboTwin's latest completed slice has81 complete source K4
-groups/328 source episodes/118,805 actions, with3 PPO iterations per PPO arm
-and15,560 SAC steps; owner-reported, separate costs. Runtime/data quantity does
-not change the unproven central robot-performance claim.
+Final direct PPO source policies completed238/237 updates and171,166/171,707
+actions. Source validation is near ceiling:63/64 full versus61/64 trained
+reset, both16/16 on first attempts. Frozen target wave: native30/90,
+full24/90, trained reset26/90; all three K1 memory/reset conditions5/9.
+All90 noise controls separately score native29/90, zero25/90, tied Gaussian
+28/90 and clipped tied29/90. These native controls belong to separate waves:
+matching initial inputs and noise can still produce small cross-process
+motor-action differences, so scores are not pooled.
+
+Ordinary target-online PixelSAC remains4/6 across0/1/4/8/13/16 training
+episodes. The two failed cases are being continued losslessly toward
+40/80/160/240 episodes as outcome-selected development diagnostics. The
+predeclared source-SAC panel is16/16 for native, actor mean and actor sample;
+it establishes no teacher advantage. Source histories contain94 failures
+among2,108 episodes and only10 cases with learned-behavior failure followed
+by learned-behavior success. More of this corpus is not yet justified as a
+solution to the transfer deficit. No reliable robotic memory, high-performance
+or sample-efficiency advantage is established. Detailed unexpected-result
+analysis and next discriminating tests: [experiment summary](../frozen-vla-steering-summary.md).
+
+RoboTwin uses six source goals and six controller-held-out goals, with a
+1024D independent-noise interface versus LIBERO's32D tied noise. Its three
+source collectors resumed after native simulator reset failures, preserving
+replay/optimizer/RNG state; first student fitting/comparison proceeds alongside
+collection. This is owner-reported and has separate benchmark costs. Future
+collection should overlap initial fitting/evaluation after a bounded smoke,
+rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
 
 ## Abstract scaffold
 
@@ -176,7 +159,7 @@ not change the unproven central robot-performance claim.
 - Qualify the official LIBERO40 motor/runtime and measure source/dev headroom
   across many actual cases per task. Its 40 training tasks may already be easy;
   a different checkpoint does not guarantee useful failure/recovery histories.
-  **Large source collection is not yet a launch contract.**
+  The initial source collection and first fitting/transfer waves are complete. Additional scale must use a concrete recipe and remaining resource budget.
 - Measure whether noise choices reproducibly change outcomes, how much native
   success leaves to improve, and whether a small search procedure already
   captures that gain. Ceiling results cannot establish sample-efficiency gains.

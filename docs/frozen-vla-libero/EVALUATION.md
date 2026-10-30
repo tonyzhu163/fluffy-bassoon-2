@@ -32,21 +32,20 @@ collection-qualified:527 complete K4 training cases/2,108 episodes/326,277
 simulator actions,146 validation cases/584 episodes/85,301 actions. The
 411,578 selected actions exclude12,944 separately spent source-qualification
 actions. State/seed repetition is explicit in the receipts. Target data did
-not enter this source corpus. Offline AD/DPT fitting is the next step; corpus
-quantity and successful SAC updates establish neither useful meta-learning
-nor strong robot performance. [Receipts and costs](../../outputs/libero40-bulk-approved-20261030-r1/README.md).
+not enter this source corpus. All four AD/DPT full/static controllers then
+completed500 fitting updates; all24 milestone model/recovery checksums passed.
+Corpus quantity and successful SAC updates establish neither useful
+meta-learning nor strong robot performance.
+[Receipts and costs](../../outputs/libero40-bulk-approved-20261030-r1/README.md).
 
-Both shared PPO modes reached40 iterations/80 optimizer steps/160 complete
-episodes across all40 goals, then stopped on a repeated-scene observation
-consistency check. Full recoveries are preserved. Both fresh-process reset probes reproduced the observation mismatch before
-any further optimizer update. Full-arm arrays show exact simulator state,
-proprio and main camera; only two wrist-image channel values differ by1/255.
-A source40-specific quantization tolerance is being prepared without changing
-raw observations or physical identity. All four AD/DPT full/static controllers completed500 offline updates on the
-all40 corpus; all24 milestone model/recovery checksums passed. Both repaired
-PPO arms passed325 Linux checks/four real reset comparisons and advanced to
-43 iterations/86 optimizer steps. These remain incomplete robot-performance
-experiments, not method failures or final PPO policies.
+Both shared PPO modes initially stopped at40 iterations on a repeated-scene
+observation guard. Preserved fresh-process probes found exact simulator state
+and proprioception with at most1uint8 camera-level variation. After a qualified,
+source40-specific camera tolerance, lossless continuations completed exit0:
+full238 updates/476 optimizer steps/171,166 actions; separately trained
+episode-reset237/474/171,707. Both cover all40 source goals and retain complete
+optimizer/sampler/RNG recoveries. Final frozen validation and target results
+are recorded below; the repaired interruptions are not method results.
 
 ## Shared-motor source-scale comparison completed
 
@@ -487,3 +486,79 @@ All86 focused Linux tests passed. Shared environments were unchanged.
 
 [Runtime receipts](../../outputs/libero-pi05-corpus-20261029-r1/student-cuda-r1/).
 These verify execution compatibility, not useful robot learning.
+
+## 2026-10-30 frozen PPO source validation
+
+Both final source policies completed independent fixed-weight validation:32K4
+trials/128episodes on eight source goals and states40/41. Full63/64 successes;
+separately trained episode-reset61/64. By attempt (16cases each):full
+16/16/15/16,reset16/16/14/15. Both already solve all16first attempts; this
+near-ceiling panel does not demonstrate adaptation or failed-attempt recovery.
+Episodes within a trial are correlated. Target transfer is a separate test.
+
+Exit0;zero deploymentSGD;unchanged weights;all32trialtracehashes and final
+recovery independently verified. Physicalcost22753actions;conservative GPU
+charge1203seconds, scheduler terminal1150seconds. Original56k/4h envelope
+is retained for explicit remaining-validation aliases; no duplicate allowance.
+[Compact terminal receipt](../../outputs/libero40-ppo-source-validation-audit-20261030-r1/summary.json).
+
+The completed source40 corpus has only94failures among2108episodes and
+454/527SSSS cases. This motivates testing history/teacher quality before
+blindly scaling the same distribution; it does not causally explain the
+student's target deficit. [Failure-content analysis](../../outputs/libero40-train-corpus-statistics-20261030-r1/README.md),
+[experiment summary](../frozen-vla-steering-summary.md).
+
+## 2026-10-30 broad controls and baseline readout
+
+These are separate, development-stage waves with one initialization/seed per
+LIBERO90 task. Use each wave's contemporaneous native control; do not pool the
+native31/90,29/90 and30/90 results.
+
+| Completed comparison | Query successes | Actual actions | Charged GPU seconds |
+| --- | --- | ---: | ---: |
+| All90 noise controls,360 queries | native29/90; zero25/90; tied Gaussian28/90; clipped tied29/90 |122,993|4,411|
+| Frozen source PPO target wave,324 episodes | native30/90; full24/90; trained episode-reset26/90 |108,894|4,526|
+| Source SAC competence,48 queries | native16/16; trained mean16/16; trained sample16/16 |7,540|532 +78 failed setup|
+| Ordinary target-online PixelSAC onset,132 episodes |4/6 at every measured training budget0/1/4/8/13/16 episodes |35,558|1,851|
+
+The PPO fixed-nine-case K1 query scores are5/9 for retained context,
+same-weight reset and separately trained reset. No memory or performance
+advantage is established. All297 target group hashes passed, both motor
+parameter hashes were unchanged and paired-initialization flags passed.
+The noise report independently verified all360 query traces, reconstructed
+noise, physical/reset parity and recovery records. Equal aggregate clipped
+and native scores do not establish casewise equality.
+
+The source-SAC diagnostic is an eight-goal/two-state ceiling panel, not an
+all40 result. R1 failed before physics because its Python3.10 probe inherited
+a Python3.11 Torch overlay. R2 used the qualified probe path; all48 traces and
+the final recovery passed, with zero deployment updates and fixed actor,
+critic, optimizer and replay signatures.
+
+The ordinary target-online DSRL onset uses the released authors' PixelSAC
+interface: one64x64 image plus8 proprioceptive values, batch256, UTD20 and
+warmup exceeding500 query chunks. The frozen pi0.5 motor has horizon10 and
+execution10; actual-duration discounting and that horizon are declared
+departures from the original pi0 recipe. Tasks0/40 each reach640 chunks and
+3,200 updates with no train/query success; task30 reaches800 updates;10/20/50
+never clear warmup. This is an onset result, not converged DSRL. Longer
+lossless continuations on the two observed failures are outcome-selected
+development diagnostics, separate from confirmatory target scores.
+
+Across the student and noise waves all90 initial observation/scene/seed hashes
+match, yet four native outcomes flip. On those four, initial images/proprio
+and first Gaussian draws match bitwise, but first decoded actions differ by
+up to.00195–.00354. This establishes cross-process decoding sensitivity without
+identifying a particular kernel cause.
+
+Source history analysis found94 failures/2,108 episodes;454/527 K4 cases have
+four successes. Only10 cases show a learned-behavior failure followed by a
+learned-behavior success. Thus more of this recipe is not yet supported as a
+route to improved adaptation. AD/DPT already use sampled Gaussian likelihood
+policies; a deterministic-MSE explanation is ruled out. Dispersion calibration
+and teacher quality remain hypotheses to test.
+
+Evidence: [noise report](../../outputs/libero40-noise-controls-report-20261030-r1/report.json),
+[failure analysis](../../outputs/libero40-failure-analysis-20261030-r1/ANALYSIS.md),
+[native cross-run receipt](../../outputs/libero40-native-crossrun-20261030-r1/README.md),
+[experiment summary and next tests](../frozen-vla-steering-summary.md).

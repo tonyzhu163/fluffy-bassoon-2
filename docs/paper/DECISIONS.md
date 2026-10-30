@@ -140,7 +140,7 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
   negating the definition of meta-learning.
 - Central hypothesis: reusable history-to-steering training improves separate
   query success with few supports, preserves high final performance and earns
-  its full source cost. **Untested under the new source40/target90 contract.**
+  its full source cost. **Not supported by the first source40/target90 waves:** supervised and direct PPO controllers are below their contemporaneous native controls; full shifted-suite and multi-shot comparisons remain incomplete.
 - Freeze training seeds, stopping rules, target cases, success margins and
   uncertainty procedure before final comparison. No outcome-selected final
   failures or synthetic hidden condition introduced to force a memory gain.
@@ -161,5 +161,13 @@ raw evidence and dated plans belong in `outputs/`; live state belongs in
 - User selected an initial1M executed-action allowance per benchmark, shared
   across SAC, fresh PPO, validation, settling and retries. All40 LIBERO source
   training goals and six RoboTwin source goals remain. Source-local LIBERO
-  validation uses eight fixed goals on disjoint states. This is a scale pilot,
-  not a proven sufficient dataset or1M per method.
+  validation uses eight fixed goals on disjoint states. This original shared cap applied to the initial pilot. Later human steering
+  accepted roughly1M source actions per learner, without increasing the32-hour
+  LIBERO compute pool; existing runs retain their original contracts. Neither
+  quantity is a proven sufficient meta-learning dataset.
+
+- Execution order: after minimal runtime and saved-data qualification, overlap
+  collection, fitting and frozen query evaluation on immutable completed
+  batches. Keep ordinary target-online DSRL and fresh PPO baselines moving
+  while offline students train. Unexpected outcomes get a written diagnosis
+  and a bounded discriminating test before repeating the same recipe at scale.
