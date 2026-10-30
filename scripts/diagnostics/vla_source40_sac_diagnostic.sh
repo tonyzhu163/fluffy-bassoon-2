@@ -65,7 +65,7 @@ trap task_cleanup EXIT
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
-"$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
+PYTHONPATH=$TASK_WT/src "$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --baige-exclusive-training --output "$TASK_ATTEMPT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
 CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
