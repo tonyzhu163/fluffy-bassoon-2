@@ -52,6 +52,13 @@ remain unfinished. RoboTwin uses6 source goals and6 controller-held-out goals;
 its current1024D independent noise interface differs from LIBERO's32D tied
 noise. Joint KL/clip diagnostics have not qualified its PPO update recipe.
 
+The approved bulk source campaign is now running: eight independent SAC
+workers and two fresh shared full/reset PPO workers. Source generation and
+PPO optimization proceed in parallel; actual coverage/costs and useful
+learning behavior remain measured outcomes. Both benchmarks now collect
+fresh data under their respective human approvals. Runtime progress does
+not change the unproven central robot-performance claim.
+
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes
