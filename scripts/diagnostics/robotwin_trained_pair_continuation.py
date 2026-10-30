@@ -346,11 +346,11 @@ class ContinuationGuardian(_Guardian):
                     if code is None:continue
                     require(code==0,"owned child/audit failed; no automatic retry")
                     cleanup=self.cleanup_subset([entry])
+                    atom(state["directory"]/("child-cleanup.json" if state["stage"]=="child" else "audit-cleanup.json"),cleanup)
                     state["entry"]=None
                     check_active_deadlines(arms)
                     if state["stage"]=="child":
                         require(time.monotonic()+90<=self.work_deadline,"no complete CPU audit window remains")
-                        atom(state["directory"]/"child-cleanup.json",cleanup)
                         state["request"].update(owned_launch=binding(state["directory"]/"launch.json"),
                             owned_cleanup=binding(state["directory"]/"child-cleanup.json"))
                         atom(state["directory"]/"audit-input.json",state["request"])
@@ -367,7 +367,6 @@ class ContinuationGuardian(_Guardian):
                     else:
                         result=json.loads((state["directory"]/"audit.json").read_text())
                         require(result["status"]=="passed_owned_child" and result["method"]==method,"child audit identity differs")
-                        atom(state["directory"]/"audit-cleanup.json",cleanup)
                         state.update(entry=None,input=result["next_input"],number=state["number"]+1,
                             complete=result["kind"]=="complete",last_audit=result,
                             last_audit_ref=binding(state["directory"]/"audit.json"),
