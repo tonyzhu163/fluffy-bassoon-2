@@ -143,6 +143,8 @@ def parser():
     ap.add_argument('--resume', action='store_true')
     ap.add_argument('--warm-start-history',type=Path)
     ap.add_argument('--warm-start-history-sha256')
+    ap.add_argument('--production-plan',type=Path)
+    ap.add_argument('--production-plan-sha256')
     return ap
 
 
@@ -153,7 +155,9 @@ def main(argv=None):
     if (not 0 <= args.seed < 2**32 or not 1 <= args.updates <= 100
             or not 0 < args.max_total_actions <= 1_000_000
             or not math.isfinite(args.stop_unix) or args.stop_unix <= time.time() + 90
-            or bool(args.warm_start_history)!=bool(args.warm_start_history_sha256)):
+            or bool(args.warm_start_history)!=bool(args.warm_start_history_sha256)
+            or bool(args.production_plan)!=bool(args.production_plan_sha256)
+            or (args.production_plan is not None and args.warm_start_history is None)):
         raise ValueError('Require a funded physical cap<=1M and live invocation deadline;100 updates is a target')
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
@@ -216,6 +220,10 @@ def main(argv=None):
             contract.update(warm_start=history,
                 initialization='Explicit legacy R3 phase continuation; inherited policy/Adam/RNG, not fresh random',
                 maximum_cumulative_source_actions=1_000_000)
+        if args.production_plan:
+            from .vla_source40_batch14_production import source_contract
+            contract=source_contract(contract,args.production_plan,args.production_plan_sha256,
+                actions=args.max_total_actions,updates=args.updates,mode=args.memory_mode,seed=args.seed)
         path = args.output / 'source-contract.json'
         if args.resume:
             if not path.exists():
@@ -274,7 +282,13 @@ def main(argv=None):
             return rollout, dict(receipt, descriptor=descriptor, behavior_update=update,
                 behavior_policy_sha256=behavior_sha, collection_seconds=time.monotonic()-started)
         training_resume = args.resume and (args.output / 'learner/latest.pt').is_file()
-        if history is not None:
+        if args.production_plan:
+            from .vla_source40_batch14_production import prepare
+            prepare(args.output/'learner',args.production_plan,args.production_plan_sha256,contract,
+                policy.config,cycle.state_dict(),updates=args.updates,actions=args.max_total_actions,
+                seed=args.seed,mode=args.memory_mode)
+            training_resume=True
+        elif history is not None:
             from .vla_source40_batch14_warmstart import prepare
             prepare(args.output/'learner',history,contract,policy.config,cycle.state_dict(),
                 updates=args.updates,maximum_new_actions=args.max_total_actions,seed=args.seed,mode=args.memory_mode)
