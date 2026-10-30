@@ -5,66 +5,89 @@
   "components": {
     "sac-worker-0": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 3507,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "observed_script_charge_with_shutdown_margin": 3457,
+      "reassigned_gpu_seconds_to_speed": 1800,
+      "charged_gpu_seconds_conservative": 3457,
+      "additional_shutdown_margin_seconds": 50,
+      "scheduler_terminal_duration_seconds": 3411
     },
     "sac-worker-1": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 4042,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 3992,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-2": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 3969,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 3919,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-3": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 4173,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 4123,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-4": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 4115,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 4065,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-5": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 4160,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 4110,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-6": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 4000,
-      "status": "terminal_success_all_streams_complete",
+      "reserved_gpu_seconds": 2769,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
       "observed_script_charge_with_shutdown_margin": 2719,
       "scheduler_terminal_duration_seconds": 2671,
-      "reassigned_gpu_seconds": 3200
+      "reassigned_gpu_seconds": 3200,
+      "charged_gpu_seconds_conservative": 2719,
+      "additional_shutdown_margin_seconds": 50
     },
     "sac-worker-7": {
       "maximum_gpu_seconds": 7200,
-      "reserved_gpu_seconds": 7200,
-      "status": "allocation_probe_and_tests_passed"
+      "reserved_gpu_seconds": 4151,
+      "status": "terminal_success_time_reconciled_unused_hold_released",
+      "charged_gpu_seconds_conservative": 4101,
+      "additional_shutdown_margin_seconds": 50
     },
     "ppo-full": {
       "maximum_gpu_seconds": 21600,
       "reserved_gpu_seconds": 21600,
-      "status": "terminal_repair_probe_failed_actual_arrays_preserved",
+      "status": "r3_running_actual43updates86optimizersteps",
       "charged_gpu_seconds": 1925,
-      "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
-      "current_run_id": "libero40-ppo-full-20261030-r2",
+      "source_commit": "c4cadc8a9a8cebbe2cc977834e19ad8ba36bb523",
+      "current_run_id": "libero40-ppo-full-20261030-r3",
       "original_reservation_id": "libero40-ppo-full-20261030-r1",
-      "physical_charge_before_repair_probe": 26919
+      "physical_charge_before_repair_probe": 26919,
+      "last_verified_updates": 43,
+      "last_verified_optimizer_steps": 86
     },
     "ppo-reset": {
       "maximum_gpu_seconds": 21600,
       "reserved_gpu_seconds": 21600,
-      "status": "terminal_repair_probe_failed_actual_arrays_preserved",
+      "status": "r3_running_actual43updates86optimizersteps",
       "charged_gpu_seconds": 1920,
-      "source_commit": "23ad427de22727f6649817fb9816b3f58b48ea8c",
-      "current_run_id": "libero40-ppo-reset-20261030-r2",
+      "source_commit": "c4cadc8a9a8cebbe2cc977834e19ad8ba36bb523",
+      "current_run_id": "libero40-ppo-reset-20261030-r3",
       "original_reservation_id": "libero40-ppo-reset-20261030-r1",
-      "physical_charge_before_repair_probe": 27065
+      "physical_charge_before_repair_probe": 27065,
+      "last_verified_updates": 43,
+      "last_verified_optimizer_steps": 86
     },
     "frozen-validation": {
       "maximum_gpu_seconds": 14400,
@@ -74,11 +97,90 @@
     "all40-offline-ad-dpt": {
       "maximum_gpu_seconds": 3200,
       "reserved_gpu_seconds": 3200,
-      "status": "running_actual_ad_full500_and_static25_verified",
+      "status": "terminal_exit0_all4controllers500updates_all24export_recovery_hashes_verified",
       "funding": "3200 seconds reassigned from terminal SACworker6 original7200 hold;4000 remains above measured2719 charge",
       "run_id": "libero40-all40-offline-20261030-r2",
       "additional_simulator_actions": 0,
-      "prior_attempt_charge_ceiling_seconds": 200
+      "prior_attempt_charge_ceiling_seconds": 200,
+      "measured_final_attempt_scheduler_seconds": 2059
+    },
+    "collector-speed-qualification": {
+      "maximum_gpu_seconds": 1800,
+      "reserved_gpu_seconds": 1800,
+      "charged_gpu_seconds": 411,
+      "next_attempt_hold_seconds": 1200,
+      "status": "terminal_qualification_passed_not_adopted_in_production",
+      "funding": "1800s reassigned once from terminalSACworker0 original7200hold;remaining5400>conservative3457charge",
+      "owner_thread": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+      "source_action_alias": "terminal-capacity-aliases.json:2880total,274spent,2606remaining",
+      "physical_actions_spent": 759,
+      "physical_alias_remaining": 2121
+    },
+    "target-firstwave-worker-0": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-7usfjchizpoa",
+      "run_id": "libero40-target-firstwave-20261030-w00-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
+    },
+    "target-firstwave-worker-1": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-oeefcfxwn25p",
+      "run_id": "libero40-target-firstwave-20261030-w01-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
+    },
+    "target-firstwave-worker-2": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-1louiqntu06i",
+      "run_id": "libero40-target-firstwave-20261030-w02-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
+    },
+    "target-firstwave-worker-3": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-c7ai91k5ypoa",
+      "run_id": "libero40-target-firstwave-20261030-w03-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
+    },
+    "target-firstwave-worker-4": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-l0yi9us6d16o",
+      "run_id": "libero40-target-firstwave-20261030-w04-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
+    },
+    "target-firstwave-worker-5": {
+      "maximum_gpu_seconds": 3600,
+      "reserved_gpu_seconds": 3600,
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "funding": "Reconciled terminalSAC unusedtime after prioroffline3200 andspeed1800 holds; no newGPUbudget",
+      "purpose": "target_evaluation",
+      "source_pretraining": false,
+      "job_id": "job-ydm04e08evzd",
+      "run_id": "libero40-target-firstwave-20261030-w05-r1",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10"
     }
   },
   "allocations": [
@@ -217,10 +319,11 @@
       "component": "all40-offline-ad-dpt",
       "job_id": "job-7pdp4ywjmrrg",
       "source_commit": "33827ab9a7ad2bc1b767f2cffd0a48f220097530",
-      "status": "gpu_probe_89_tests_passed_actual_training_advancing",
+      "status": "terminal_exit0_all4controllers500updates_all24payload_hashes_verified",
       "scheduler_max_minutes": 50,
       "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-all40-offline-20261030-r2",
-      "additional_simulator_actions": 0
+      "additional_simulator_actions": 0,
+      "scheduler_measured_seconds": 2059
     },
     {
       "component": "ppo-full",
@@ -243,7 +346,90 @@
       "charged_gpu_seconds": 181,
       "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r2",
       "extra_settling_actions": 40
+    },
+    {
+      "component": "ppo-full",
+      "job_id": "job-295xqb1vmorw",
+      "source_commit": "c4cadc8a9a8cebbe2cc977834e19ad8ba36bb523",
+      "status": "gpu_probe_325tests_four_reset_qualification_passed_real43updates86optimizersteps",
+      "scheduler_max_minutes": 325,
+      "slice_seconds": 19440,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r3",
+      "original_reservation_id": "libero40-ppo-full-20261030-r1",
+      "maximum_component_gpu_seconds": 21600
+    },
+    {
+      "component": "ppo-reset",
+      "job_id": "job-sdtzg2tnr4cy",
+      "source_commit": "c4cadc8a9a8cebbe2cc977834e19ad8ba36bb523",
+      "status": "gpu_probe_325tests_four_reset_qualification_passed_real43updates86optimizersteps",
+      "scheduler_max_minutes": 325,
+      "slice_seconds": 19440,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r3",
+      "original_reservation_id": "libero40-ppo-reset-20261030-r1",
+      "maximum_component_gpu_seconds": 21600
+    },
+    {
+      "component": "target-firstwave-worker-0",
+      "job_id": "job-7usfjchizpoa",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w00-r1"
+    },
+    {
+      "component": "target-firstwave-worker-1",
+      "job_id": "job-oeefcfxwn25p",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w01-r1"
+    },
+    {
+      "component": "target-firstwave-worker-2",
+      "job_id": "job-1louiqntu06i",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w02-r1"
+    },
+    {
+      "component": "target-firstwave-worker-3",
+      "job_id": "job-c7ai91k5ypoa",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w03-r1"
+    },
+    {
+      "component": "target-firstwave-worker-4",
+      "job_id": "job-l0yi9us6d16o",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w04-r1"
+    },
+    {
+      "component": "target-firstwave-worker-5",
+      "job_id": "job-ydm04e08evzd",
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "status": "running_actualGPU_and77focused_tests_passed",
+      "scheduler_max_minutes": 60,
+      "initial_slice_seconds": 3540,
+      "maximum_component_gpu_seconds": 3600,
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w05-r1"
     }
   ],
-  "last_checkpoint_audit_at_shanghai": "2026-10-30 16:04"
+  "last_checkpoint_audit_at_shanghai": "2026-10-30 17:12",
+  "unassigned_gpu_seconds": 114
 }

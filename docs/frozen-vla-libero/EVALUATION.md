@@ -20,9 +20,11 @@ consistency check. Full recoveries are preserved. Both fresh-process reset probe
 any further optimizer update. Full-arm arrays show exact simulator state,
 proprio and main camera; only two wrist-image channel values differ by1/255.
 A source40-specific quantization tolerance is being prepared without changing
-raw observations or physical identity. AD-full has already reached500 offline
-updates on the all40 corpus. These remain incomplete performance experiments,
-not method failures or final PPO policies.
+raw observations or physical identity. All four AD/DPT full/static controllers completed500 offline updates on the
+all40 corpus; all24 milestone model/recovery checksums passed. Both repaired
+PPO arms passed325 Linux checks/four real reset comparisons and advanced to
+43 iterations/86 optimizer steps. These remain incomplete robot-performance
+experiments, not method failures or final PPO policies.
 
 ## Shared-motor source-scale comparison completed
 

@@ -30,9 +30,12 @@ observation mismatch before any optimizer update. Saved full-arm reset arrays
 establish that all92 float64 simulator-state entries,8 float32 proprio
 entries and every main-camera byte are identical. Only two wrist-camera
 channels at one pixel differ by1/255. An explicit source40-only camera
-rounding tolerance is being implemented; physical/proprio identity stays
-exact, all raw frames remain intact. A new allocated qualification must pass
-before continuation. Original runs remain
+rounding tolerance is now qualified: physical/proprio identity stays exact
+and all raw frames remain intact. Both R3 allocations passed325 Linux tests
+and four actual reset comparisons, then advanced from40 to43 PPO iterations
+(86 optimizer steps, replay error0). Sourcec4cadc8; jobs295xqb1vmorw/full
+and sdtzg2tnr4cy/reset,325-minute scheduler slices,19440-second drivers.
+These remain within each original6h component ceiling. Original runs remain
 immutable; continuation must preserve all partial physical costs and the
 original172k action reservation. Cumulative time charges after the probes:1,925s full/1,920s reset; cumulative
 physical charges26,959/27,105 including the extra40 settling actions each.
@@ -41,8 +44,9 @@ All40 offline AD/DPT training now proceeds independently of this PPO repair,
 using the exact completed ledger and continuous25/100/500 update milestones.
 The first allocated preflight caught a nonexistent test filename before any
 training; source33827ab fixes that name, with a fresh r2 identity. Corrected job `job-7pdp4ywjmrrg` passed its actual GPU probe and89 Linux
-tests (2 probe-environment JAX skips). AD-full has saved25/100/500 update
-policies/full recoveries; AD-static has started, with DPT arms following.
+tests (2 probe-environment JAX skips). All4AD/DPTfull/static
+controllers finished500updates, with25/100/500 policy/full-recovery exports.
+All24payload SHA256s were independently checked. [Completion receipt](all40-offline-completion.json).
 No new simulator actions are needed for offline training.
 
 Human approved32 additional LIBERO GPU-hours. See [approval](approval.json)
@@ -60,3 +64,13 @@ silently rewrite this existing1M-combined campaign. Final target budget is
 separate. Earlier results still establish no reliable memory or high topline
 performance benefit. Monitor: `continue-approved-libero-source-collection`,
 20-minute cadence, quiet while unchanged and healthy.
+
+Direct human authorization in the coordinator chat now prioritizes evaluation
+of these existing candidates on all90 original LIBERO90 goals and declared
+representative Plus/Pro panels. The first-wave executable/250k-action ledger
+is being prepared separately from immutable source caps; up to6GPUh can be
+reassigned from reconciled terminalSAC holds within the same32h pool. The
+source-scale96h proposal is not approved or a gate for this target screen.
+Collector speed qualification separately holds1,800s once, funded from
+terminalSACworker0; its2,880-action sidecar alias must not be spent twice.
+No scalar-prefix or batched-motor optimization is adopted in production.
