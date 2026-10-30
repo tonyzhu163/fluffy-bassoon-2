@@ -102,7 +102,7 @@ def parallel_args(b,output):
 
 @pytest.mark.parametrize("change",[
     ["--learning-rate","2e-6"],["--stage-source-validation-only"],
-    ["--source-validation-episodes","0"],["--ppo-epochs","4"],
+    ["--source-validation-episodes","0"],["--ppo-epochs","4"],["--native-episodes","1"],
 ])
 def test_trained_scientific_argument_changes_fail_before_cuda(trained_boundary,monkeypatch,change):
     b=trained_boundary
