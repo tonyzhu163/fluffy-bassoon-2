@@ -1,0 +1,54 @@
+{
+  "run_id": "robotwin-packed-ppo-20261030-r1",
+  "source_commit": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+  "status": "terminal_passed",
+  "maximum_new_source_actions": 21600,
+  "maximum_gpu_seconds": 2700,
+  "initialization": "fresh seed20261030; isolated one-round qualification",
+  "arms": {
+    "ppo": {
+      "lanes": 6,
+      "trials": 6,
+      "episodes_per_trial": 4,
+      "maximum_source_actions": 10800,
+      "ppo_update_attempts": 1
+    },
+    "ppo_reset": {
+      "lanes": 6,
+      "trials": 6,
+      "episodes_per_trial": 4,
+      "maximum_source_actions": 10800,
+      "ppo_update_attempts": 1
+    }
+  },
+  "human_authorization": "Direct human: target70-80GB on96GB; accepted12processes as two independentgroups6 with yes lets testthis",
+  "authorization_scope": "single-GPU bounded packed execution test; no scientific production migration",
+  "active_production_modified": false,
+  "old_12000_qualification_hold_reused": false,
+  "cpu_validation": {
+    "runtime_source": "7d37565c870025eefacc3b7cc438c67b17635d7e",
+    "tests": 171,
+    "seconds": 32.55,
+    "final_launcher_source": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+    "launcher_tests": 4,
+    "launcher_seconds": 1.49,
+    "runtime_files_unchanged": true
+  },
+  "latest_origin_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "baseline": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "storage_write_probe_passed": true,
+  "free_bytes": 1386175528960,
+  "recorded_utc": "2026-10-30T13:48:39.101111+00:00",
+  "no_automatic_retry": true,
+  "allocation_hostname": "job-230io8i5cmpd-master-0",
+  "actual_source_actions": 21310,
+  "actual_scheduler_gpu_seconds": 453,
+  "unresolved_actions": 0,
+  "unused_source_actions": 290,
+  "unused_gpu_seconds": 2247,
+  "unused_capacity_sealed": true,
+  "unused_capacity_released": false,
+  "further_attempts_authorized": false,
+  "job_id": "job-230io8i5cmpd",
+  "terminal_audit_sha256": "ebba97e7478ba5f090401e8a6e0b5e9c4d9aa74cb82d8906251dcc4dabd4fe7f"
+}
