@@ -63,9 +63,9 @@ def _member(root, relative):
     return resolved
 
 
-def _validate_physical_budget(index, contract):
+def _validate_physical_budget(index, contract, *, complete_prefix=False):
     """Verify the physical ledger, independent of advertised candidate-bank size."""
-    cap = contract.get("maximum_total_actions")
+    cap = index.get("maximum_total_actions") if complete_prefix else contract.get("maximum_total_actions")
     costs = index.get("physical_cost_accounting", {})
     fields = {name: costs.get(name) for name in
               ("known_primitive_steps", "uncertain_primitive_steps_ceiling", "primitive_step_budget_charge")}
@@ -85,17 +85,22 @@ def _validate_physical_budget(index, contract):
     coverage = index.get("case_coverage", {})
     if (index.get("all_started_cases_complete") is not True
             or coverage.get("all_started_cases_complete") is not True
-            or index.get("stopping_reason") not in ("physical_action_budget", "candidate_bank_exhausted")):
+            or index.get("stopping_reason") not in (("immutable_complete_prefix",) if complete_prefix else
+                ("physical_action_budget", "candidate_bank_exhausted"))):
         raise ValueError("Physical-budget history must stop at complete actual case boundaries")
 
 
-def load_source(path, partition, *, allow_small_pilot=False):
+def load_source(path, partition, *, allow_small_pilot=False, prefix_snapshot_admission=None):
     """Validate immutable receipts and retain exactly one final paired prefix."""
     path = Path(path).resolve()
     index, root = _json(path), path.parent
     contract = _json(root / "contract.json")
+    complete_prefix = prefix_snapshot_admission is not None
+    if complete_prefix:
+        from .vla_source40_topup_assembly import verify_snapshot
+        verify_snapshot(path, partition, prefix_snapshot_admission)
     task = index.get("task_key")
-    if (index.get("format") != INDEX_FORMAT or index.get("completed") is not True
+    if (index.get("format") != INDEX_FORMAT or (index.get("completed") is not True and not complete_prefix)
             or index.get("source_only") is not True or task not in ALL_TASKS
             or index.get("partition") != partition or index.get("source_updates", 0) <= 0
             or not (index.get("collection_qualified") or index.get("smoke_qualified"))):
@@ -123,7 +128,7 @@ def load_source(path, partition, *, allow_small_pilot=False):
     if mode == "physical_budget":
         if contract.get("collection_mode") != mode:
             raise ValueError("Physical-budget collection mode differs from its hash-bound contract")
-        _validate_physical_budget(index, contract)
+        _validate_physical_budget(index, contract, complete_prefix=complete_prefix)
     paired = [row for row in index.get("publications", []) if row.get("status") == "paired_ad_dpt"]
     if not paired or len({row["through_case"] for row in paired}) != len(paired):
         raise ValueError("Require unique committed paired-prefix versions")
@@ -146,7 +151,7 @@ def load_source(path, partition, *, allow_small_pilot=False):
                 or coverage.get("available_cases") != len(contract["cases"])
                 or (index["stopping_reason"] == "candidate_bank_exhausted" and len(cases) != len(contract["cases"]))):
             raise ValueError("Physical-budget actual case coverage differs from selected complete prefix")
-        if index["stopping_reason"] == "physical_action_budget" and len(cases) < len(contract["cases"]):
+        if not complete_prefix and index["stopping_reason"] == "physical_action_budget" and len(cases) < len(contract["cases"]):
             next_case = contract["cases"][len(cases)]
             required = next_case["episodes"] * (contract["horizon"] + 10)
             if index["unused_action_reservation"] >= required:
@@ -211,12 +216,23 @@ def load_source(path, partition, *, allow_small_pilot=False):
 
 
 def assemble(train_indices, validation_indices, output, *, allow_small_pilot=False,
-             campaign_path=None, campaign_sha256=None):
+             campaign_path=None, campaign_sha256=None, topup_admission_path=None, topup_admission_sha256=None):
     """Join different tasks, never different prefix versions of one history."""
-    campaign = load_campaign(campaign_path, campaign_sha256)
+    if topup_admission_path is not None or topup_admission_sha256 is not None:
+        if campaign_path is not None or campaign_sha256 is not None or allow_small_pilot:
+            raise ValueError('Top-up complete-prefix admission is separate from legacy/pilot campaign admission')
+        from .vla_source40_topup_assembly import load_admission
+        campaign = load_admission(topup_admission_path, topup_admission_sha256)
+        prefix_admission = campaign
+    else:
+        campaign = load_campaign(campaign_path, campaign_sha256)
+        prefix_admission = None
     expected_tasks = {"train": ALL_TASKS,
         "validation": BUDGET_VALIDATION_TASKS if campaign is not None else ALL_TASKS}
-    groups = {partition: [load_source(path, partition, allow_small_pilot=allow_small_pilot) for path in paths]
+    source_options = dict(allow_small_pilot=allow_small_pilot)
+    if prefix_admission is not None:
+        source_options['prefix_snapshot_admission'] = prefix_admission
+    groups = {partition: [load_source(path, partition, **source_options) for path in paths]
               for partition, paths in (("train", train_indices), ("validation", validation_indices))}
     for partition, sources in groups.items():
         tasks = [row["task"] for row in sources]
@@ -296,7 +312,12 @@ def load_assembly(path, *, allow_small_pilot=False):
     if campaign is not None:
         # The campaign must remain independently available and hash-bound when
         # the assembled data are admitted for controller training.
-        if load_campaign(campaign["path"], campaign["file_sha256"]) != campaign:
+        if campaign.get('kind') == 'source40_topup_complete_prefix_admission_v1':
+            from .vla_source40_topup_assembly import load_admission
+            actual_campaign = load_admission(campaign['path'], campaign['file_sha256'])
+        else:
+            actual_campaign = load_campaign(campaign["path"], campaign["file_sha256"])
+        if actual_campaign != campaign:
             raise ValueError("Assembly campaign provenance differs")
     for partition in ("train", "validation"):
         for objective in OBJECTIVES:

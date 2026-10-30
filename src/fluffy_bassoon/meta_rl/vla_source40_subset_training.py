@@ -107,9 +107,10 @@ def archive_scale(recovery, output, *, updates, assembly_sha256, exposure):
         full_recovery_path=str(recovery_path), full_recovery_sha256=recovery_sha)
 
 
-def frozen_baseline(index_path):
+def frozen_baseline(index_path, *, prefix_snapshot_admission=None):
     index_path = Path(index_path).resolve()
-    source = load_source(index_path, 'train', allow_small_pilot=True)
+    source = load_source(index_path, 'train', allow_small_pilot=True,
+        prefix_snapshot_admission=prefix_snapshot_admission)
     selected = source['selected']
     contract_path = index_path.parent / 'contract.json'
     return dict(task_key=source['task'], index_path=str(index_path), index_sha256=source['index_sha256'],
@@ -186,7 +187,10 @@ def main(argv=None):
     args.output = args.output.resolve()
     supplied = admit_assembly(args)
     assembly_path = args.assembly if args.assembly is not None else args.output / 'dataset/assembly.json'
-    baseline = frozen_baseline(args.train_index[0])
+    admission = None if supplied is None else supplied.get('campaign')
+    if admission is not None and admission.get('kind') != 'source40_topup_complete_prefix_admission_v1':
+        admission = None
+    baseline = frozen_baseline(args.train_index[0], prefix_snapshot_admission=admission)
     format_name = FORMAT if args.qualification_subset else FULL_FORMAT
     contract = dict(format=format_name, qualification_subset=args.qualification_subset, source_commit=args.source_commit,
         train_indices=[dict(path=str(path.resolve()), sha256=file_sha256(path)) for path in args.train_index],
