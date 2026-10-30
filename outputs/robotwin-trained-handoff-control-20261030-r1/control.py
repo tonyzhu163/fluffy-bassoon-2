@@ -126,8 +126,8 @@ def check_parent(owner,*,allow_stopped=True,unique=True,full=True):
 
 
 def checked_signal(owner,fd,number,signals):
-    current=check_parent(owner)
     if number not in (signal.SIGSTOP,signal.SIGCONT):raise ControlError('Controller may only stop/continue its CPU supervisor')
+    current=check_parent(owner,allow_stopped=number!=signal.SIGSTOP)
     signal.pidfd_send_signal(fd,number,None,0)
     signals.append(dict(signal=signal.Signals(number).name,pid=owner.pid,start_ticks=current['start_ticks']))
 
@@ -235,37 +235,158 @@ def ledger_snapshot(root):
 def corpus_chain(ref):
     roots=[];seen=set()
     while True:
-        key=(ref['path'],ref['sha256'])
+        key=(str(Path(ref['path']).resolve()),ref['sha256'])
         if key in seen:raise ControlError('Corpus ancestry cycle')
         seen.add(key);manifest=bound_json(ref);root=Path(manifest['corpus_root']).resolve()
+        contract_ref=manifest['corpus_contract'];contract=bound_json(contract_ref)
+        if (Path(contract_ref['path']).resolve()!=root/'contract.json'
+                or contract.get('source_commit')!=LINEAGE):
+            raise ControlError('Bound corpus contract path/lineage differs')
         if str(root) not in roots:roots.append(str(root))
         migration=root.parent/'execution-migration.json'
-        if not migration.exists():break
+        resume_sha=contract.get('resume_trial_manifest_sha256')
+        if not migration.exists():
+            if resume_sha:raise ControlError('Bound resumed corpus lost its execution migration')
+            break
         metadata=json.loads(migration.read_text())
-        if metadata['lineage_source_commit']!=LINEAGE:raise ControlError('Corpus lineage changed')
+        if (not resume_sha or metadata.get('lineage_source_commit')!=LINEAGE
+                or metadata.get('manifest_sha256')!=resume_sha
+                or metadata.get('execution_source_commit')!=contract.get('execution_source_commit')):
+            raise ControlError('Corpus ancestry is not bound by its current contract')
         ref=dict(path=metadata['manifest_path'],sha256=metadata['manifest_sha256'])
     return list(reversed(roots))
 
 
+def scoped_file(root,path):
+    candidate=(root/path).resolve()
+    if not candidate.is_relative_to(root) or not candidate.is_file():
+        raise ControlError('A referenced raw artifact is missing or outside its corpus')
+    return candidate
+
+
+def referenced_artifact(root,ref,cache,index_digest):
+    """Check reference, ZIP members and numeric array headers, not full blob SHA.
+
+    RGB payloads are not decompressed/hashed. Only native valid-action masks are
+    loaded separately below to independently verify executed-action durations.
+    """
+    import math
+    import numpy as np
+    path=scoped_file(root,ref['path']);identity=canonical(ref)
+    if str(path) in cache:
+        if cache[str(path)]!=identity:raise ControlError('Conflicting raw artifact references')
+        return path
+    if (type(ref.get('bytes')) is not int or ref['bytes']!=path.stat().st_size
+            or re.fullmatch(r'[0-9a-f]{64}',ref.get('sha256','')) is None):
+        raise ControlError('Referenced artifact size/hash metadata differs')
+    arrays=ref.get('arrays')
+    if not isinstance(arrays,dict) or not arrays:raise ControlError('Missing typed raw array metadata')
+    with zipfile.ZipFile(path) as archive:
+        members=archive.namelist()
+        if len(members)!=len(arrays) or set(members)!={name+'.npy' for name in arrays}:
+            raise ControlError('Raw NPZ members differ from bound array metadata')
+        for name,expected in arrays.items():
+            with archive.open(name+'.npy') as stream:
+                version=np.lib.format.read_magic(stream)
+                if version==(1,0):shape,fortran,dtype=np.lib.format.read_array_header_1_0(stream)
+                elif version==(2,0):shape,fortran,dtype=np.lib.format.read_array_header_2_0(stream)
+                else:raise ControlError('Unsupported raw array header version')
+                if (dtype.hasobject or dtype.kind not in 'buifc' or str(dtype)!=expected.get('dtype')
+                        or list(shape)!=expected.get('shape')
+                        or re.fullmatch(r'[0-9a-f]{64}',expected.get('sha256','')) is None
+                        or archive.getinfo(name+'.npy').file_size!=stream.tell()+math.prod(shape)*dtype.itemsize):
+                    raise ControlError('Raw array shape/dtype/size metadata differs')
+    if 'content_sha256' in ref:
+        sidecar=path.with_suffix('.json')
+        if not sidecar.is_file() or canonical(json.loads(sidecar.read_text()))!=identity:
+            raise ControlError('Referenced frame sidecar is missing or differs')
+        index_digest.update(str(sidecar).encode()+sha(sidecar).encode())
+    cache[str(path)]=identity;index_digest.update(str(path).encode()+identity.encode())
+    return path
+
+
+def check_encoded_arrays(value,ref):
+    if isinstance(value,dict):
+        if 'numeric_array' in value and (set(value)!={'numeric_array'} or value['numeric_array'] not in ref['arrays']):
+            raise ControlError('Encoded metadata references a missing typed raw array')
+        for child in value.values():check_encoded_arrays(child,ref)
+    elif isinstance(value,list):
+        for child in value:check_encoded_arrays(child,ref)
+
+
 def raw_action_counts(roots):
-    counts={};files=hashlib.sha256();episodes=0
+    import numpy as np
+    counts={};files=hashlib.sha256();episodes=0;chunks=0;cache={};source_keys=set()
     for root_arg in roots:
-        root=Path(root_arg)
-        for manifest_path in sorted((root/'episodes').glob('*/manifest.json')):
+        root=Path(root_arg).resolve()
+        if not (root/'episodes').is_dir():raise ControlError('A composed corpus episodes directory is missing')
+        reset_paths=set((root/'episodes').glob('*/reset.json'))
+        manifest_paths=set((root/'episodes').glob('*/manifest.json'))
+        if {path.parent for path in reset_paths}!={path.parent for path in manifest_paths}:
+            raise ControlError('Raw reset/episode manifest inventory differs')
+        for manifest_path in sorted(manifest_paths):
             manifest=json.loads(manifest_path.read_text());reset_path=manifest_path.parent/'reset.json'
             reset=json.loads(reset_path.read_text());ctx=reset['context'];amount=manifest['executed_primitive_steps']
+            refs=manifest['chunks'];episode_id=manifest_path.parent.name
             if manifest.get('pending_decision'):raise ControlError('Composed corpus has an unresolved physical decision')
-            if type(amount) is not int or amount<0:raise ControlError('Invalid raw executed-action count')
-            if amount:
-                refs=manifest['chunks']
-                if not refs or len(refs)!=manifest['completed_chunks']:raise ControlError('Raw episode manifest counter differs')
-                last=(manifest_path.parent/refs[-1]['path']).resolve()
-                if not last.is_relative_to(root) or sha(last)!=refs[-1]['sha256']:raise ControlError('Final raw decision hash differs')
-                learning=json.loads(last.read_text())['learning_result']
-                if not (learning['terminated'] or learning['truncated']):raise ControlError('Raw source/evaluation episode is not closed')
+            if (type(amount) is not int or amount<0 or manifest.get('reset')!='reset.json'
+                    or manifest.get('episode_id')!=episode_id or reset.get('episode_id')!=episode_id
+                    or len(refs)!=manifest.get('completed_chunks')):
+                raise ControlError('Invalid raw episode identity/count')
+            if amount and ctx['phase']=='source':
+                info=reset['reset_info']
+                key=canonical([ctx['method'],ctx['trial_id'],info['task'],info['requested_seed']])
+                if key in source_keys:raise ControlError('Source episode executed twice across composed corpus roots')
+                source_keys.add(key)
+            previous=reset['initial_observation'];referenced_artifact(root,previous,cache,files)
+            total=0;listed=[]
+            for index,ref in enumerate(refs,1):
+                path=scoped_file(root,str(manifest_path.parent.relative_to(root)/ref['path']))
+                if path.parent!=manifest_path.parent/'chunks' or path.name!=f'{index:06d}.json' or sha(path)!=ref['sha256']:
+                    raise ControlError('Raw decision index/order/hash differs')
+                listed.append(path);record=json.loads(path.read_text());native=record['native_result'];learning=record['learning_result']
+                if (record.get('status')!='complete' or record.get('episode_id')!=episode_id
+                        or record.get('chunk_index')!=index or record.get('previous_chunk_index')!=(index-1 if index>1 else None)
+                        or any(record['context'].get(key)!=ctx.get(key) for key in ('phase','method','trial_id'))
+                        or canonical(record['observation'])!=canonical(previous)):
+                    raise ControlError('Raw decision identity/closed status/frame chain differs')
+                for frame in (record['observation'],record['next_observation']):referenced_artifact(root,frame,cache,files)
+                decision_ref=record['decision_arrays'];native_ref=native['arrays']
+                referenced_artifact(root,decision_ref,cache,files)
+                native_path=referenced_artifact(root,native_ref,cache,files)
+                check_encoded_arrays(record['decision_metadata'],decision_ref);check_encoded_arrays(native.get('info',{}),native_ref)
+                issued=record['issued_primitive_steps'];executed=native['executed_primitive_steps']
+                if (type(issued) is not int or not 0<issued<=32 or type(executed) is not int or not 0<=executed<=issued
+                        or decision_ref['arrays'].get('issued_motor_joint_targets',{}).get('shape',[None])[0]!=issued):
+                    raise ControlError('Raw issued/executed action durations differ')
+                with np.load(native_path,allow_pickle=False) as archive:mask=archive['valid_action_mask']
+                mask_sha=hashlib.sha256(str(mask.dtype).encode()+str(mask.shape).encode()+mask.tobytes()).hexdigest()
+                if (not np.isin(mask,(0,1)).all() or int(mask.sum())!=executed
+                        or mask_sha!=native_ref['arrays']['valid_action_mask']['sha256']):
+                    raise ControlError('Native valid-action mask does not bind executed duration')
+                total+=executed;closed=bool(learning['terminated'] or learning['truncated'])
+                if learning['episode_primitive_steps']!=total or closed!=(index==len(refs)):
+                    raise ControlError('Raw cumulative duration/episode closure differs')
+                previous=record['next_observation'];files.update(str(path).encode()+ref['sha256'].encode());chunks+=1
+            if set(listed)!={path.resolve() for path in (manifest_path.parent/'chunks').glob('*.json')}:
+                raise ControlError('Raw decision inventory contains unlisted chunks')
+            if total!=amount:raise ControlError('Raw episode action sum differs from every listed decision')
             key=f'{ctx["phase"]}/{ctx["method"]}';counts[key]=counts.get(key,0)+amount
             files.update(str(manifest_path).encode()+sha(manifest_path).encode()+sha(reset_path).encode());episodes+=1
-    return {k:v for k,v in counts.items() if v},dict(corpus_roots=roots,episode_manifests=episodes,manifest_digest=files.hexdigest())
+    return {k:v for k,v in counts.items() if v},dict(corpus_roots=roots,episode_manifests=episodes,
+        completed_chunks=chunks,raw_json_and_reference_digest=files.hexdigest(),referenced_artifact_count=len(cache),
+        unique_nonzero_source_episodes=len(source_keys),source_episode_keys_unique=True,
+        raw_json_index_hashes_verified=True,referenced_artifacts_present=True,
+        array_headers_verified=True,native_valid_action_masks_verified=True,full_blob_hash_audit=False)
+
+
+def validate_ledger_header(snapshot,worker,method,contract):
+    header=snapshot['header']
+    if (worker['method']!=method or header.get('campaign_id')!=worker['campaign_id']
+            or header.get('total_actions')!=worker['maximum_actions']
+            or header.get('source_caps')!={method:1100000} or header.get('phase_caps')!={}
+            or canonical(header.get('contract'))!=canonical(contract)):
+        raise ControlError('Live ledger header identity/caps/contract differ from original worker')
 
 
 def audit_boundary(experiment,owner,child_exits):
@@ -311,8 +432,8 @@ def audit_boundary(experiment,owner,child_exits):
             or admission['unchanged_action_cap']!=worker['maximum_actions']):
         raise ControlError('Original method ledger/cap changed')
     before,before_sha=ledger_snapshot(ledger_root)
-    if (canonical(before['header']['contract'])!=canonical(checkpoint['contract'])
-            or before['journal_sha256']!=continuation.receipt['ledger_journal_sha256']
+    validate_ledger_header(before,worker,owner.method,checkpoint['contract'])
+    if (before['journal_sha256']!=continuation.receipt['ledger_journal_sha256']
             or before['by_method'].get(f'source/{owner.method}',0)!=state['source_steps']):
         raise ControlError('Live ledger and complete trained source checkpoint differ')
     counts,corpus_receipt=raw_action_counts(corpus_chain(ref))
@@ -326,7 +447,9 @@ def audit_boundary(experiment,owner,child_exits):
         summary=bound(summary_path),frozen_motor=bound(frozen_path),checkpoint_crc_ok=True,
         round_boundary=True,pending_ppo_trials=0,completed_source_trials=state['completed_source_trials'],
         completed_source_iterations=state['completed_source_iterations'],source_steps=state['source_steps'],
-        all_executed_actions_retained=True,raw_action_counts=counts,corpus=corpus_receipt,
+        all_executed_actions_retained=True,retention_scope='Every action duration indexed; referenced blobs present with declared size/array headers; RGB/blob payloads not fully rehashed',
+        raw_json_index_hashes_verified=True,referenced_artifacts_present=True,full_blob_hash_audit=False,
+        raw_action_counts=counts,corpus=corpus_receipt,
         ledger_root=str(ledger_root),ledger_snapshot_sha256=after_sha,ledger_journal_sha256=after['journal_sha256'],
         ledger_pending_actions=0,ledger_uncertain_actions=0,ledger_header=after['header'])
 

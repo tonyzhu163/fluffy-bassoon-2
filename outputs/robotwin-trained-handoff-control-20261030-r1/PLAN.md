@@ -8,7 +8,7 @@ Linux CPU resources and independently review this controller before actual use.
 ## Exact scope
 
 Run only **inside the exact owned Baige allocation through its WebShell**. The
-production CLI additionally requires an actual`job-*`Linux hostname.
+production CLI additionally requires an actual `job-*` Linux hostname.
 Development SSH remains artifact/read-only access. The production CLI fixes the
 old CPU supervisor's c715 artifact SHA
 `492efd191e0dd1d45433d290a92c6bcd766593bfd8783e97321e7705909413bf`, actual executor
@@ -49,12 +49,29 @@ stopped source children fail closed.
    trial count divisible by six, iteration/update counts, unchanged frozen motor,
    and the existing canonical ledger snapshot/head with zero pending/uncertain
    actions. The sole qualified source validator also checks every manifest binding.
-6. Follow hash-bound corpus ancestry, sum closed raw episode action counts by
-   phase/method across all roots, and require equality with actual ledger counts.
-   No frames/model data are copied. Read the ledger twice across the audit;
+6. Follow corpus ancestry only through each current hash-bound corpus contract:
+   bind its exact contract path/DB lineage, prior manifest SHA and execution pin
+   to the migration metadata. Reject a missing migration for a resumed corpus.
+   Verify every listed chunk JSON SHA, complete status, order, episode/frame
+   chain and cumulative action duration. Require all referenced NPZ/frame files,
+   exact declared sizes and numeric array names/shapes/dtypes; verify frame
+   sidecar metadata and small native valid-action mask hashes/sums. Require
+   nonzero SOURCE `(method, trial_id, task, requested_seed)` uniqueness across
+   roots, while allowing repeated evaluation cases and empty preflight resets.
+   Sum every action duration by phase/method and require equality with the live
+   ledger. Bind its campaign ID, total/source/phase caps and scientific contract
+   to the original worker, in addition to its journal head. Read the ledger twice;
    no live flock or Budget constructor is used, and the header is not edited.
 7. Recheck StateT and no live source child, write a fsynced receipt under the
    active output's `control/` directory, and leave the CPU supervisor stopped.
+
+The receipt uses `all_executed_actions_retained` only for indexed action
+durations plus the presence/declared size/array headers of every referenced
+artifact. It explicitly records `raw_json_index_hashes_verified=true`,
+`referenced_artifacts_present=true`, and `full_blob_hash_audit=false`. RGB and
+other NPZ payloads are **not fully decompressed or rehashed**; this is not a
+claim that every blob payload has been reverified. No inference/model compute
+or data copying is performed by the corpus audit.
 
 Native cleanup134/139 is accepted only with those durable wallstop proofs.
 A failed child, missing/non-round manifest, incomplete raw data, ledger change,
@@ -109,7 +126,12 @@ source child in its own session. They demonstrate real SIGSTOP lets that child
 finish, leaves the supervisorT and prevents the next child; wrong hostname,
 command fields, PID/start reject without signalling another process; timeout
 rollback safely resumes only the owned parent; stale start identity prevents
-SIGCONT; newest missing proof cannot fall back to the first stale boundary.
+SIGCONT; external STOP between admission and signal is rejected; newest missing
+proof cannot fall back to the first stale boundary. Pure CPU artifact fixtures
+cover tampered contract-bound ancestry, earlier chunk hashes/status, missing
+NPZ/frame/sidecar files, array headers and native duration masks, source-case
+uniqueness, allowed prefix/suffix and evaluation cases, and live ledger-header
+identity/caps independently of the unchanged journal tail hash.
 All signalled processes in these tests are owned temporary fakes. Tests do not
 load a VLA, simulator, source learner, real ledger or model checkpoint.
 
