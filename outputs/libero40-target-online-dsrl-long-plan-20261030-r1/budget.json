@@ -1,0 +1,82 @@
+{
+  "status": "PREPARED_NO_ALLOCATION_OR_RESERVATION",
+  "parent_run": "libero40-target-online-dsrl-six-20261030-r1",
+  "parent_source": "ba4674fafbe6d8f816979b61aa4ccd38e2912eff",
+  "parent_index_sha256": "dc0b86e4b812c9f36abb01334da62b0cc8dabb40e0a80482f133482c1bf23201",
+  "parent_worker_time_sha256": "9d82d95721a4666b9e1ce917f844912d7e47e4c8cb0097b18a866e08182b50d8",
+  "parent_gpu_charge_seconds": 1851,
+  "parent_actions": 35558,
+  "inherited_selected_actions": 18060,
+  "new_actions_cap_each": 100000,
+  "cumulative_selected_case_cap_each": 109030,
+  "worker_seconds_each": 6000,
+  "total_new_worker_seconds": 12000,
+  "reconciled_original32h_available_seconds": 12626,
+  "remaining_unassigned_seconds": 626,
+  "milestone_prefix": [
+    0,
+    1,
+    4,
+    8,
+    13,
+    16
+  ],
+  "new_query_milestones": [
+    40,
+    80,
+    160,
+    240
+  ],
+  "per_worker": {
+    "0": {
+      "parent_recovery_sha256": "8707eeebca9d0dad3dc7394d9b6f790957551d3bdf74b05318f615df8f707fe3",
+      "postwarmup400step_800update_seconds": [
+        22.316996335983276,
+        22.077259063720703,
+        22.023515701293945
+      ],
+      "extrapolated224episode_seconds": 4959.193575541178
+    },
+    "40": {
+      "parent_recovery_sha256": "b210882f29d1e6f54f00bb3cc7060c19ab432000d58e5bdda09ccbc5b9914c3d",
+      "postwarmup400step_800update_seconds": [
+        20.581802368164062,
+        20.271791458129883,
+        21.262521982192993
+      ],
+      "extrapolated224episode_seconds": 4638.0033137003575
+    }
+  },
+  "stages": [
+    {
+      "total_training_episodes": 40,
+      "new_training_episodes": 24,
+      "new_frozen_queries": 1,
+      "new_action_ceiling": 10260,
+      "maximum_replay_chunks": 1600
+    },
+    {
+      "total_training_episodes": 80,
+      "new_training_episodes": 64,
+      "new_frozen_queries": 2,
+      "new_action_ceiling": 27070,
+      "maximum_replay_chunks": 3200
+    },
+    {
+      "total_training_episodes": 160,
+      "new_training_episodes": 144,
+      "new_frozen_queries": 3,
+      "new_action_ceiling": 60280,
+      "maximum_replay_chunks": 6400
+    },
+    {
+      "total_training_episodes": 240,
+      "new_training_episodes": 224,
+      "new_frozen_queries": 4,
+      "new_action_ceiling": 93490,
+      "maximum_replay_chunks": 9600
+    }
+  ],
+  "selection": "Outcome-based development diagnosis, not held-out confirmatory benchmark",
+  "cost_deduplication": "Parent35558+new(worker0)+new(worker40), parent1851GPU-s once plus both new cumulative clocks"
+}
