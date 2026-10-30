@@ -539,8 +539,8 @@
     },
     "source40-topup-interim100-fit": {
       "maximum_gpu_seconds": 1800,
-      "reserved_gpu_seconds": 1800,
-      "status": "running_actual_ad_full100_archives_verified_ad_static_started",
+      "reserved_gpu_seconds": 621,
+      "status": "terminal_exit0_all4_exact100_all25_100_full_archives_verified",
       "run_id": "libero40-source-topup-interim100-20261031-r1",
       "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
       "manifest_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/topup-inputs.json",
@@ -558,8 +558,15 @@
       "last_verified_objective": "ad",
       "last_verified_mode": "full",
       "last_verified_update": 100,
-      "last_verified_at_shanghai": "2026-10-31 03:45:44",
-      "last_verified_controller_seconds": 91.48
+      "last_verified_at_shanghai": "2026-10-31 03:52",
+      "last_verified_controller_seconds": 91.48,
+      "charged_gpu_seconds_conservative": 571,
+      "additional_shutdown_margin_seconds": 50,
+      "scheduler_terminal_duration_seconds": 531,
+      "released_unused_gpu_seconds": 1179,
+      "actual_new_simulator_actions": 0,
+      "completed_controllers": 4,
+      "unique_controller_optimizer_updates": 400
     }
   },
   "allocations": [
@@ -831,14 +838,16 @@
       "job_id": "job-wbvs39zbt0pw",
       "run_id": "libero40-source-topup-interim100-20261031-r1",
       "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
-      "status": "submitted_starting_actual_updates_pending",
+      "status": "terminal_exit0_all4_exact100_all25_100_full_archives_verified",
       "scheduler_max_minutes": 29,
       "worker_seconds": 1800,
       "slice_seconds": 1740,
       "manifest_sha256": "6563d1fc76ba506cf9f44cb648c30455313a33602ab1154e30b37cc54bc54883",
-      "additional_simulator_actions": 0
+      "additional_simulator_actions": 0,
+      "scheduler_terminal_duration_seconds": 531,
+      "charged_gpu_seconds_conservative": 571
     }
   ],
   "last_checkpoint_audit_at_shanghai": "2026-10-31 01:35",
-  "unassigned_gpu_seconds": 1
+  "unassigned_gpu_seconds": 1180
 }

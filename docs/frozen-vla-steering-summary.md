@@ -380,3 +380,45 @@ unfinished. A concrete25additionalGPU-hour/130GB source-topup plus final-fit
 phase is being prepared for approval; it is not running. Collection, frozen
 snapshot fitting and robot evaluation should overlap after bounded checks.
 Optional repeated-query/cache diagnostics remain deferred.
+
+
+## Interim100 fit readout, 2026-10-31 03:51
+
+The immutable new snapshot fitted all four AD/DPT full/static controllers
+through100 updates, with exact25/100 policy and full optimizer/sampler/RNG
+archives. Script exit0; no additional simulator actions. This is an interim
+fit point, not completion of1M/500 updates or a robot-performance result.
+
+AD full/static validation NLL at100 is51.8066769/51.8066893. Static review
+found distinct feedback/memory paths: full retains prior executed noise,
+reward/done and cached state; static zeros feedback and resets every query
+(vla_history.py124–140,186–225; gtrxl.py140–150). Both use the same initial
+parameters, training windows and fixed validation RNG734001. AD predicts
+actual stochastic behavior noise, including fresh Gaussian exploration;
+its innovation cannot be predicted from history. Current observations may
+explain most predictable mean. Aggregate near-equality does not prove equal
+policy outputs or establish a memory benefit/absence. The Gaussian head has
+one global32D standard-deviation vector, so history cannot express
+teacher-stage-dependent uncertainty; this is an architectural limitation,
+not an observed routing bug.
+
+DPT-full logged minibatch NLL was8.6601 at25 and6.9910 at100, but these
+training batches differ, so they do not establish a training-loss trend. Validation
+NLL worsened13.5081→16.0686 on identical fixed4×8 validation windows. This
+is a real worsening on those windows. Overfitting, source-task mismatch and
+variance calibration are possible explanations; one seed and these windows
+do not identify the cause. The predetermined100 checkpoint remains fixed;
+no new source selection or target-dependent tuning is introduced.
+
+Decision: robot evaluation of the fixed candidates is the discriminating
+performance test. Keep the separate25h source-scale request explicit and
+unapproved until the human replies; more source data remains an experiment,
+not an established repair. Optional diagnostics remain deferred.
+
+
+Final interim audit:26 saved-result checks passed, including independently
+rehashing all16 policy/recovery files. The worker charged571GPU-seconds;
+terminal scheduler duration531s and50s additional shutdown margin close621s
+of the1800s hold, releasing1179s. Original32h now has1180s unassigned.
+All controller exports retained source resource charge457,851 exactly, with
+no extra actions. [Terminal audit](../outputs/libero40-source-topup-interim100-20261031-r1-audit/AUDIT.md).

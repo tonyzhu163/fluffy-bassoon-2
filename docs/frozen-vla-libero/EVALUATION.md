@@ -640,3 +640,14 @@ provide no additional failure-recovery evidence. See the
 Real zero-GPU capture/assembly passed34 tests and25 saved-result checks and
 produced immutable paired inputs for fitting. No new robot result is yet
 available from this snapshot. [CPU receipt](../../outputs/libero40-source-pipeline-cpu-audit-20261031-r1/README.md).
+
+
+All four controllers completed the new interim100-update fit at fixed25/100
+milestones, with16 independently rehashed policy/recovery files and26 audit
+checks passing. Zero new simulator actions;571 conservatively charged GPU-s.
+AD full/static fixed-window validation NLL51.806677/51.806689. DPT full/static
+validation NLL increased13.5081/13.4585 at25 to16.0686/15.8921 at100 on the
+same sampled windows. Logged training minibatches differ, so their losses do
+not establish a trend. Possible overfit/distribution/calibration explanations
+are recorded in the summary. These are fitting metrics, not a robot or memory
+result. [Interim audit](../../outputs/libero40-source-topup-interim100-20261031-r1-audit/AUDIT.md).

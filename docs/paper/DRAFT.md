@@ -404,3 +404,13 @@ were submitted within the existing32h budget; no new target score yet.
 The cumulative1M-source/learner and full500-update/matched target phase remain
 unfinished. Optional diagnostic branches must not serialize collection and
 initial fitting again.
+
+
+Interim100 update03:51: all four models completed with25/100 full recoveries;
+zero new robot actions. AD full/static have effectively equal fixed-window
+validation NLL; their feedback/memory paths are distinct. DPT-full logged training
+minibatch NLL fell on different batches, while matched-window validation NLL
+worsened25→100. Possible
+overfit/distribution/calibration explanations are recorded in the summary;
+no robot, memory or scaling benefit follows from these fit metrics. Next
+robot readout and25h source expansion have separate explicit budgets.
