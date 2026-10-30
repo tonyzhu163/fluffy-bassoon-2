@@ -158,7 +158,8 @@ def main():
     sys.path.insert(0, str(args.runtime_root / 'src'))
     import torch
     import fluffy_bassoon.meta_rl.robotwin_trial_resume as resume_module
-    from fluffy_bassoon.meta_rl.robotwin_trained_parallel import validate_lineage_parent
+    from fluffy_bassoon.meta_rl.robotwin_trained_parallel import (
+        validate_lineage_parent, validate_trained_parallel_boundary)
     require(Path(resume_module.__file__).resolve() == args.runtime_root.resolve()
             / 'src/fluffy_bassoon/meta_rl/robotwin_trial_resume.py', 'loader import did not use qualified runtime')
     checkpoint = torch.load(checkpoint_ref['path'], map_location='cpu', weights_only=False)
@@ -181,6 +182,8 @@ def main():
     load = resume_module.load_trial_continuation
     original = load(old_ref['path'], old_ref['sha256'], checkpoint_path=checkpoint_ref['path'], checkpoint=checkpoint,
         execution_commit=PREDECESSOR, lineage_commit=LINEAGE)
+    trained_boundary = validate_trained_parallel_boundary(original, checkpoint,
+        manifest_path=old_ref['path'], campaign_root=ledger_root)
     new = deepcopy(old); new['execution_source_commit'] = RUNTIME
     require({k: v for k, v in old.items() if k != 'execution_source_commit'}
             == {k: v for k, v in new.items() if k != 'execution_source_commit'}, 'another manifest field changed')
@@ -205,7 +208,8 @@ def main():
         lineage_source_commit=LINEAGE, original_parent=parent_ref, owner_boundary_audit=owner_ref,
         unchanged_checkpoint=checkpoint_ref, only_existing_field_changed='execution_source_commit',
         all_other_existing_fields_and_artifact_refs_equal=True, original_loader_validation_passed=True,
-        admitted_loader_validation_passed=True, corpus_chain_reader_commit=CONTROL,
+        admitted_loader_validation_passed=True, qualified_trained_boundary=trained_boundary,
+        corpus_chain_reader_commit=CONTROL,
         old_corpus_roots=old_roots, new_corpus_roots=new_roots, source_actions_added=0,
         scientific_contract_changed=False, canonical_ledger_modified=False,
         canonical_ledger_snapshot_sha256=after_sha, permission_to_start_new_writer=False)
