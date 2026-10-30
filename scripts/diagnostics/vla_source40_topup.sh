@@ -53,6 +53,7 @@ task_cleanup() {
 }
 trap task_cleanup EXIT
 export FLUFFY_GPU_EXECUTION=baige
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export OPENPI_DATA_HOME=$TASK_OLD/cache/openpi-215abfb
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1
