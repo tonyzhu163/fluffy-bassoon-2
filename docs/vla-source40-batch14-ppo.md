@@ -1,8 +1,19 @@
 # Complete-trial source PPO batches
 
-This is a new source-only implementation, not a migration of the immutable R3
-one-trial PPO runs. It is **not launched or qualified on an allocation** yet.
-The current scientific priority is robust PPO and ordinary DSRL baselines.
+This source-only implementation has passed allocated Linux tests and actual
+fresh and warm-started native-horizon batch14 updates. The immutable R3
+one-trial runs remain unchanged; warm start is an explicit, lossless new
+phase importing their policy, Adam, sampler and global/motor RNG state.
+Full1M scaling has not been launched. The current scientific priority is
+robust PPO and ordinary DSRL baselines.
+
+Verified qualification: fresh14 K4/56 episodes/795 decisions/one global update
+and two Adam steps; warm14 K4/56 episodes/894 decisions with exact replay and
+two additional Adam steps, preserving the inherited476. Warm costs9,272
+all-in source actions and910 conservative GPU-seconds. See the
+[warm qualification](../outputs/libero40-batch14-warm-qualification-audit-20261031-r1/RESULT.md)
+and [fresh qualification](../outputs/libero40-batch14-qualification-audit-20261031-r1/README.md).
+These are runtime and recovery evidence, not robot-transfer or memory gains.
 
 | Setting | Batch14 contract |
 | --- | --- |
@@ -35,7 +46,7 @@ including ragged lengths. A changed policy/optimizer during collection is an
 error. Focused tests additionally compare the valid-token loss and gradients
 with a sum of independently replayed trial losses (float32 gradient tolerances
 `rtol=2e-5`, `atol=2e-7`) and prove that trial reset blocks cross-trial gradients.
-These tests must run on allocated Linux; they have not run on macOS.
+These tests passed on allocated Linux; they were not run on macOS.
 
 The atomic recovery contains policy, optimizer, global Python/NumPy/Torch/CUDA
 RNG, scene sampler, typed motor RNG, source cursor/exposure, the full pending
@@ -65,19 +76,20 @@ A seed alone is not claimed as a new physical state. Unexpected collection,
 likelihood, optimizer, or finite-value errors stop with a diagnostic; diagnose
 before retrying or expanding scale.
 
-The current40-task SAC corpus has2014 successes/94 failures in2108 training
+The original40-task SAC corpus had2014 successes/94 failures in2108 training
 episodes;454/527 cases are SSSS and only10 learned-behavior trials contain a
 failure followed by a later learned-behavior success. This motivates checking
 headroom and useful history signal before automatically repeating its recipe.
 The batch implementation does not manufacture failures or establish that more
 data would repair negative results.
 
-A proposed **unfunded/unlaunched** qualification is one14-trial batch on one
+The historical qualification proposal was one14-trial batch on one
 allocated GPU, at most20,000 actions and40 minutes, including focused tests,
 reset/feature/noise checks and overhead. It should measure optimizer time and
 peak allocated/reserved memory as well as pass exact replay/finite gradients.
-If it cannot finish in that time, retain the partial batch and report actual
-costs. No full-scale run follows automatically.
+The actual bounded qualifications above completed. Their original failed or
+partial attempts and full recoveries remain retained. No full-scale run follows
+automatically, and the new phase needs an explicit cumulative resource budget.
 
 After an approved caller has established its cumulative time/action ledger,
 GPU probe, clean pinned worktree, qualified OpenPI/cu128 environment and exact

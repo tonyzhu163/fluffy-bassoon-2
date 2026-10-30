@@ -18,16 +18,19 @@ steering accepted approximately1M source actions per learner on both, with
 complete episodes/trials and benchmark-appropriate horizons. Existing runs
 retain their original contracts; future expansion costs stay explicit. The
 32 additional LIBERO GPU-hour pool is approved.
-Current evidence: all40 source SAC collection completed527 K4 training
-cases/2,108 episodes/326,277 simulator actions, plus146 validation cases/
-584 episodes/85,301 actions. Four AD/DPT full/static controllers completed
-500 fitting updates each. First all90 target queries: native31/90; AD
+Current source bank:583 K4 training cases/2,332 episodes/33,729 steering
+decisions across all40 tasks; fixed validation146 cases/584 episodes/8,202
+decisions. Training all-in351,297 actions, validation85,301 and historical
+overhead21,253 once: resource total457,851. All four new interim100 fits
+completed with25/100 full recoveries; their robot readout is not yet run.
+The earlier527-case/2,108-episode source snapshot fitted all four controllers
+through500 updates. Its first all90 target queries scored native31/90; AD
 full/static26/90; DPT full26/90/static27/90. On the fixed-nine K1 panel,
 AD/DPT full each6/9 versus same-weight reset5/9, while native and AD-static
 already reach6/9 atK0. The sole memory discordance follows successful support.
 Tiny Plus/Pro panels are all4/4 and do not constitute full benchmark results.
 
-Final direct PPO source policies completed238/237 updates and171,166/171,707
+Earlier one-trial direct PPO source policies completed238/237 updates and171,166/171,707
 actions. Source validation is near ceiling:63/64 full versus61/64 trained
 reset, both16/16 on first attempts. Frozen target wave: native30/90,
 full24/90, trained reset26/90; all three K1 memory/reset conditions5/9.
@@ -414,3 +417,27 @@ worsened25→100. Possible
 overfit/distribution/calibration explanations are recorded in the summary;
 no robot, memory or scaling benefit follows from these fit metrics. Next
 robot readout and25h source expansion have separate explicit budgets.
+
+
+Preparation update:38 source assignments plus two retained source leaves are
+ready, bound to an unfunded25h source proposal. The fixed100 target profile
+passed48 CPU tests including actual model-file admission, but its4.5h GPU
+budget is separate/unfunded. Historical AD/DPT inference already samples the
+Gaussian; a deterministic-mean explanation for the performance gap was
+falsified statically and no additional diagnostic was launched. Full Plus
+contains10,030 registered variants; full Pro's primary map has200 tasks,
+including40 environment tasks requiring official generation. The two tiny
+current adapters cannot supply full-suite scores. See the
+[shifted-suite inventory](../../outputs/libero-shifted-suite-inventory-20261031-r1/README.md).
+
+
+Validation-label note: DPT VAL targets use independently trained validation
+teachers (different seed/checkpoint/stage for all8 matching source goals).
+Rising fixed-window NLL therefore includes cross-teacher generalization and
+cannot alone establish worse robot performance or pure state overfit. Actual
+actor-function disagreement was not measured. Labels/checkpoint selection
+are unchanged. PPO continuation now passed7 allocated CPU tests including
+actual checkpoint migration; no new PPO update or robot score follows.
+Full Pro public files are staged, but40 environment cases still need official
+generation. Source25h, target4.5h and PPO44h/arm are distinct resource phases;
+only the first approval question has been issued and remains pending.

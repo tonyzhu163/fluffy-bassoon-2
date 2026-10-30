@@ -422,3 +422,70 @@ terminal scheduler duration531s and50s additional shutdown margin close621s
 of the1800s hold, releasing1179s. Original32h now has1180s unassigned.
 All controller exports retained source resource charge457,851 exactly, with
 no extra actions. [Terminal audit](../outputs/libero40-source-topup-interim100-20261031-r1-audit/AUDIT.md).
+
+
+## Ready source assignments and target profile, 2026-10-31
+
+The production source plan is now prepared on a real0GPU/4CPU/16GiB job,
+exit0: all40 goals admitted,38 unique assignments across8 workers, two exact
+quota-filled bridge leaves retained and fixed8 validation streams imported.
+Inherited source resource457,851 and cumulative cap998,554 are verified.
+The source ledger is byte-for-byte unchanged and the bound macro budget
+remains UNFUNDED. CPU107s; no tests, model, simulator or GPU work. The pending
+25h approval request is unchanged; source GPU collection has not resumed.
+[Plan receipt](../outputs/libero40-source-production-plan-cpu-audit-20261031-r1/RESULT.md).
+
+The additive fixed100/LIBERO90 readout passed48 actual allocated CPU tests,
+with zero skips, including the real100 matrix, CPUmanifest/assembly and all
+8 policy/full-recovery hashes. No target model/simulator ran. This makes the
+522-episode/220k-action/4.5GPUh readout executable once separately funded;
+it does not grant that budget or complete full Plus/Pro or2/4/8-shot tests.
+[CPU receipt](../outputs/libero40-interim100-target-cpu-audit-20261031-r1/README.md).
+
+A proposed explanation for the old robot deficit was deterministic-mean
+inference after Gaussian-likelihood fitting. Static inspection falsified it:
+the historical and current AD/DPT deployment chain already uses stochastic
+mean+std×randn by default. Deterministic=True is used to obtain likelihood
+parameters inside training; rollout and recording wrappers retain the
+stochastic default. Thus no new mean-versus-sample diagnostic was launched,
+and1,180 old GPU-seconds remain unassigned. This does not establish good
+variance calibration or explain DPT's matched-window validation regression.
+[Source-line evidence](../outputs/libero40-stochastic-deployment-static-20261031-r1/README.md).
+
+
+## PPO continuation check and validation interpretation
+
+The new source-PPO continuation glue passed7 allocated CPU tests with zero
+skips and19 terminal checks. Its actual saved FULL checkpoint migration
+preserves every non-contract leaf, cursor14, Adam478, pending state, typed
+motor RNG and the9,272-action copied journal prefix; original checkpoint
+bytes are unchanged. Reset reuses the existing generic episode-mode R3
+warmstart. A first CPU attempt failed because its mock supplied object()
+instead of the required RL2Config dataclass; the corrected fresh r2 passed.
+R1/r2 used82/80 conservative CPU-worker seconds and zero GPU time/actions.
+This is new glue/recovery evidence, not a new PPO update or robot result.
+Each44h production phase remains proposed/unfunded, with30k actions and1h
+held for final source validation inside its1M/44h envelope.
+[Result](../outputs/libero40-ppo-production-cpu-20261031-r2-audit/RESULT.md).
+
+DPT validation is cross-teacher plus heldout-state imitation. All8 matching
+TRAIN/VAL goals use independently trained SAC teachers with different seeds,
+published learner checkpoints and optimization clocks. The same fixed
+validation windows/labels are reused at25/100; their change does not explain
+the NLL rise. But teacher identity/stage mismatch is an additional possible
+source of error, so the rise cannot be attributed solely to overfitting or
+worse robot control. The stored hashes identify full learner checkpoints,
+not pure actor parameters; actual actor-function disagreement on common
+observations was not measured. Labels, fixed milestones and selection stay
+unchanged; robot readout remains the performance test.
+[Eight-pair provenance](../outputs/libero40-dpt-validation-teacher-provenance-20261031-r1/ANALYSIS.md).
+
+Full shifted-target preparation is also explicit: Plus has10,030 registered
+variants, one upstream trial each; a five-model K0 pass is50,150 episodes.
+The complete pinned public Pro file set is now staged and hash-verified on
+Baige (676files/10.27MB), including160 core BDDL/init pairs. Forty registered
+environment tasks still require official generation/staging; no full-suite
+readiness or score is claimed. Neither staging nor inventory enters source
+pretraining or gates source collection. Full-suite GPU costs remain separate.
+[Inventory](../outputs/libero-shifted-suite-inventory-20261031-r1/README.md),
+[Pro stage](../outputs/libero-pro-full-stage-20261031-r1/README.md).

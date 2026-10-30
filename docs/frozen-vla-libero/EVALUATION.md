@@ -651,3 +651,24 @@ same sampled windows. Logged training minibatches differ, so their losses do
 not establish a trend. Possible overfit/distribution/calibration explanations
 are recorded in the summary. These are fitting metrics, not a robot or memory
 result. [Interim audit](../../outputs/libero40-source-topup-interim100-20261031-r1-audit/AUDIT.md).
+
+
+## Pipeline validation after interim fitting
+
+No new robot-performance result is claimed by the following checks. Fixed100
+LIBERO90 evaluation passed48 allocated CPU tests, including actual saved
+matrix/manifest/assembly and all eight model/recovery files with no skips.
+PPO production glue passed7 CPU tests and actual full-checkpoint migration,
+preserving its complete operational state without any optimizer step. The
+source collection plan is ready with38 assignments plus two retained leaves;
+its budget is still unfunded. Source and target GPU expansion require their
+separate existing resource decisions.
+
+DPT's fixed-window validation targets come from independently trained VAL
+teachers, rather than the matching TRAIN actors on heldout states. NLL thus
+includes teacher/stage generalization. Checkpoint identities alone do not
+measure actor-function disagreement; the observed25→100 regression has no
+established causal explanation. See the
+[provenance evidence](../../outputs/libero40-dpt-validation-teacher-provenance-20261031-r1/ANALYSIS.md).
+Historical AD/DPT deployment already samples stochastically, ruling out a
+mean-only evaluation explanation. No new sampling diagnostic was launched.
