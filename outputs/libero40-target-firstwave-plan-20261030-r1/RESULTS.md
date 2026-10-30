@@ -49,3 +49,9 @@ worker integrity flags are in [RESULTS.json](RESULTS.json). Original source
 histories, model/recovery files, raw observations, contexts and RPC journals
 remain at their immutable Baige paths. No new evaluation job is needed to
 finish this wave.
+
+Scheduler completion was independently verified for all six jobs. Observed
+running durations were1,411/1,211/1,290/1,171/1,311/1,250seconds. Parent
+reservations retain each more-conservative charged time plus50seconds;
+13,343unused target GPU-seconds were explicitly released, without spending
+them. Source/speed/validation holds remain separate.
