@@ -195,7 +195,7 @@ def audit_child(request):
     from robotwin_trained_pair_audit import audit_arm,audit_corpus
     from robotwin_trained_pair_preflight import ledger_view
     from fluffy_bassoon.meta_rl.collection_admission import assert_resume_allowed,assert_campaign_checkpoint_fence
-    from fluffy_bassoon.meta_rl.robotwin_trial_resume import load_trial_continuation
+    from fluffy_bassoon.meta_rl.robotwin_trial_resume import load_trial_continuation,artifact_digest
     from fluffy_bassoon.meta_rl.robotwin_trained_parallel import validate_trained_parallel_boundary
     method=request["method"];require(method in METHODS,"unknown source arm")
     arm=request["input"];output=Path(request["output"])
@@ -257,6 +257,11 @@ def audit_child(request):
     return dict(status="passed_owned_child",kind=kind,method=method,output=str(output),
         iteration=final["states"][method]["completed_source_iterations"],audit=normal,canonical_view=view,
         final_checkpoint=binding(path),completed_units=final["completed_units"],
+        rng_snapshots=dict(coordinator_before=artifact_digest(before["rng"]),
+            coordinator_after=artifact_digest(final["rng"]),
+            learner_global_before=artifact_digest(before["states"][method]["learner"].get("rng")),
+            learner_global_after=artifact_digest(final["states"][method]["learner"].get("rng")),
+            interpretation="Coordinator RNG is authoritative; learner rng captures global state and may differ during partial evaluation"),
         stage_statuses={key:value["status"] for key,value in final["stages"].items()},
         next_input=None if kind=="complete" else dict(manifest=next_ref,
             checkpoint=read_ref(next_ref)["checkpoint"],frozen_motor=binding(output/"frozen-motor.json")))
