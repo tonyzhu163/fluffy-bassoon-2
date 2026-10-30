@@ -209,6 +209,7 @@ def main(argv=None):
     parser.add_argument('--device', default='cuda:0')
     parser.add_argument('--port', type=int, default=8770)
     parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--ppo-source-phase',choices=('legacy-r3','native-batch14'),default='legacy-r3')
     args = parser.parse_args(argv)
     if (sys.platform != 'linux' or socket.gethostname() != args.expected_hostname
             or args.max_total_actions != TOTAL_CAP or not 0 < args.max_elapsed_seconds <= WORKER_SECONDS):
@@ -236,9 +237,14 @@ def main(argv=None):
         model_config='pi05_libero', feature_interface='vla-prefix')))
     if motor.metadata['receipt_sha256'] != PI05_RECEIPT or motor.horizon != 10:
         raise ValueError('Require the common qualified frozen OpenPI40 motor')
-    models, provenance = load_models(args.models, args.models_sha256, motor=motor,
+    loader=load_models
+    if args.ppo_source_phase=='native-batch14':
+        from .vla_source40_batch14_admission import load_models as loader
+    models, provenance = loader(args.models, args.models_sha256, motor=motor,
         tasks=[row['task_key'] for row in source_tasks(schedule)], schedule_sha256=schedule['schedule_sha256'],
         output=args.output, device=args.device)
+    if set(models)!=set(MODES):
+        raise ValueError('Frozen source comparison requires separate full and episode source models')
     contract = dict(format=FORMAT, source_commit=args.source_commit, models_sha256=args.models_sha256,
         models=provenance, campaign_sha256=campaign['campaign_sha256'], schedule_sha256=schedule['schedule_sha256'],
         slots=slots, maximum_total_actions=TOTAL_CAP, maximum_seconds_per_invocation=WORKER_SECONDS,

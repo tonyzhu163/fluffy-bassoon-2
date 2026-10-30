@@ -141,6 +141,8 @@ def parser():
     ap.add_argument('--memory-mode', choices=('full', 'episode'), default='full')
     ap.add_argument('--device', default='cuda:0')
     ap.add_argument('--resume', action='store_true')
+    ap.add_argument('--warm-start-history',type=Path)
+    ap.add_argument('--warm-start-history-sha256')
     return ap
 
 
@@ -150,7 +152,8 @@ def main(argv=None):
         raise ValueError('Model computation requires the explicitly allocated Linux host')
     if (not 0 <= args.seed < 2**32 or not 1 <= args.updates <= 100
             or not 0 < args.max_total_actions <= 1_000_000
-            or not math.isfinite(args.stop_unix) or args.stop_unix <= time.time() + 90):
+            or not math.isfinite(args.stop_unix) or args.stop_unix <= time.time() + 90
+            or bool(args.warm_start_history)!=bool(args.warm_start_history_sha256)):
         raise ValueError('Require a funded physical cap<=1M and live invocation deadline;100 updates is a target')
     from fluffy_bassoon.gpu_execution import validate_execution
     validate_execution(os.environ.get('FLUFFY_GPU_EXECUTION', 'baige'), os.environ)
@@ -205,6 +208,14 @@ def main(argv=None):
             cap_precedence='Start a new batch only when all14 worst-case K4 trials fit;100 updates is not guaranteed',
             validation='No heldout or target trajectories enter optimizer input',
             support_query_protocol='Source K4 trials do not set deployment support-shot budgets')
+        history=None
+        if args.warm_start_history:
+            from .vla_source40_batch14_warmstart import load_history
+            history=load_history(args.warm_start_history,args.warm_start_history_sha256,args.memory_mode,
+                maximum_new_actions=args.max_total_actions)
+            contract.update(warm_start=history,
+                initialization='Explicit legacy R3 phase continuation; inherited policy/Adam/RNG, not fresh random',
+                maximum_cumulative_source_actions=1_000_000)
         path = args.output / 'source-contract.json'
         if args.resume:
             if not path.exists():
@@ -263,7 +274,12 @@ def main(argv=None):
             return rollout, dict(receipt, descriptor=descriptor, behavior_update=update,
                 behavior_policy_sha256=behavior_sha, collection_seconds=time.monotonic()-started)
         training_resume = args.resume and (args.output / 'learner/latest.pt').is_file()
-        if args.resume and not training_resume:
+        if history is not None:
+            from .vla_source40_batch14_warmstart import prepare
+            prepare(args.output/'learner',history,contract,policy.config,cycle.state_dict(),
+                updates=args.updates,maximum_new_actions=args.max_total_actions,seed=args.seed,mode=args.memory_mode)
+            training_resume=True
+        elif args.resume and not training_resume:
             setup_only_restart(args.output)
         if args.resume:
             for partial in args.output.rglob('*.partial'):

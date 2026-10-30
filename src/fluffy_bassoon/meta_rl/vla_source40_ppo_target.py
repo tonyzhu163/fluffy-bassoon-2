@@ -199,6 +199,8 @@ def main(argv=None):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--models', type=Path)
     parser.add_argument('--models-sha256')
+    parser.add_argument('--ppo-source-phase',choices=('legacy-r3','native-batch14'),default='legacy-r3',
+        help='Explicit source admission profile; legacy R3 admission is unchanged')
     parser.add_argument('--deduplicated-ad-grid', action='store_true')
     parser.add_argument('--max-total-actions', type=int, required=True)
     parser.add_argument('--max-elapsed-seconds', type=float, required=True)
@@ -244,9 +246,14 @@ def main(argv=None):
     model_directory.mkdir(exist_ok=True)
     source, selected = {}, {}
     if use_ppo:
-        models, source = load_models(args.models, args.models_sha256, motor=motor,
+        loader=load_models
+        if args.ppo_source_phase=='native-batch14':
+            from .vla_source40_batch14_admission import load_models as loader
+        models, source = loader(args.models, args.models_sha256, motor=motor,
             tasks=[row['task_key'] for row in source_tasks(schedule)], schedule_sha256=schedule['schedule_sha256'],
             output=model_directory, device=args.device)
+        if set(models)!={'full','episode'}:
+            raise ValueError('This matched target protocol requires separately trained full and episode source models')
         selected = candidates(models, source)
     student_costs = None
     if args.students_index:

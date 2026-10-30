@@ -152,6 +152,18 @@ def receipt_counts(receipts):
         case_identity='Nominal state IDs and repeated scene seeds are reported separately; seed alone is not a new physical state')
 
 
+def training_contract(config, source_contract, *, updates, max_total_actions, seed, mode, learning_rate, epochs):
+    return dict(format=FORMAT, source=source_contract, config=asdict(config),
+        updates_target=updates, batch_trials=14, attempts=4, seed=seed, mode=mode,
+        maximum_total_actions=max_total_actions, optimizer=dict(name='Adam', learning_rate=learning_rate),
+        ppo=dict(epochs=epochs, clip=.2, gamma=1., gae_lambda=1., entropy_coef=.01,
+            value_coef=.5, max_grad_norm=1., bounded_entropy=True,
+            loss_weighting='Sum over real decision positions / total valid tokens across14 complete trials',
+            advantage_normalization='Global valid-token mean/std across all14 trials', global_optimizer_steps_per_update=epochs),
+        credit='GAE ends at every complete K4 trial; memory resets at every trial; full history within a trial',
+        partial_batch='Complete trials retained across wall stops; never optimize fewer than14 or cut episodes to fit')
+
+
 def train_complete_batches(policy, *, planner, collector, runtime_state, restore_runtime,
         physical_cost, output, source_contract, updates=100, batch_trials=14,
         max_total_actions=1_000_000, seed=0, mode='full', learning_rate=1e-4, epochs=2,
@@ -171,16 +183,8 @@ def train_complete_batches(policy, *, planner, collector, runtime_state, restore
             or stop_unix is None or not np.isfinite(stop_unix) or learning_rate <= 0):
         raise ValueError('Require14 complete source trials, explicit live time and at most1M physical actions')
     output = Path(output)
-    contract = dict(format=FORMAT, source=source_contract, config=asdict(policy.config),
-        updates_target=updates, batch_trials=batch_trials, attempts=4, seed=seed, mode=mode,
-        maximum_total_actions=max_total_actions, optimizer=dict(name='Adam', learning_rate=learning_rate),
-        ppo=dict(epochs=epochs, clip=.2, gamma=1., gae_lambda=1., entropy_coef=.01,
-            value_coef=.5, max_grad_norm=1., bounded_entropy=True,
-            loss_weighting='Sum over real decision positions / total valid tokens across14 complete trials',
-            advantage_normalization='Global valid-token mean/std across all14 trials',
-            global_optimizer_steps_per_update=epochs),
-        credit='GAE ends at every complete K4 trial; memory resets at every trial; full history within a trial',
-        partial_batch='Complete trials retained across wall stops; never optimize fewer than14 or cut episodes to fit')
+    contract = training_contract(policy.config, source_contract, updates=updates,max_total_actions=max_total_actions,
+        seed=seed,mode=mode,learning_rate=learning_rate,epochs=epochs)
     policy.requires_grad_(True)
     optimizer = torch.optim.Adam(policy.parameters(), lr=learning_rate)
     sampler = np.random.default_rng(seed)
@@ -200,6 +204,9 @@ def train_complete_batches(policy, *, planner, collector, runtime_state, restore
         restore_rng(saved['rng'])
         restore_runtime(saved['runtime'])
         progress = saved['progress']
+        if source_contract.get('warm_start'):
+            from .vla_source40_batch14_warmstart import verify_restoration
+            verify_restoration(saved,policy,optimizer,sampler,runtime_state(),output)
     else:
         output.mkdir(parents=True, exist_ok=False)
         (output / 'traces').mkdir()
@@ -262,9 +269,17 @@ def train_complete_batches(policy, *, planner, collector, runtime_state, restore
             pending_statistics=receipt_counts(progress['pending_receipts']),
             committed_source_task_coverage=exposure, actual_tasks_with_complete_trials=len(exposure),
             interpretation='Actual source exposure and optimizer progress; no robot/memory/sample-efficiency benefit established')
+        if 'inheritance' in progress:
+            inherited=progress['inheritance']
+            value.update(initialization='Explicit legacy R3 warm start; not fresh/random training',
+                inherited_updates=inherited['legacy_recovery']['iteration'],
+                inherited_counters=inherited['legacy_recovery']['counters'],
+                inherited_source_actions=inherited['history']['prior_actions'],
+                cumulative_source_actions=inherited['history']['prior_actions']+physical_cost())
         if progress['iteration'] > 0:
             value['candidate_sha256'] = export_rl2_policy(output / 'candidate.pt', policy,
                 manifest=dict(contract=contract, updates=progress['iteration'], counters=progress['counters'],
+                    full_recovery_sha256=value['full_recovery_sha256'],
                     pending_complete_trials=len(progress['pending_rollouts']), status='Unvalidated source candidate'))
         _json(output / 'summary.json', value)
         return value

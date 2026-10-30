@@ -14,6 +14,7 @@ from .vla_source40_schedule import content_hash
 
 
 FORMAT = 'source40_one_batch14_qualification_budget_v1'
+WARM_FORMAT = 'source40_one_warm_batch14_qualification_budget_v1'
 SCHEDULE_FILE_SHA = 'a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5'
 SCHEDULE_SHA = 'a59bbbbb4b6050cd4a330d395347dd4edc6257b55beebd5c6a91e896355a0716'
 MAX_SECONDS, MAX_ACTIONS = 2400, 20000
@@ -23,16 +24,19 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def budget(path, schedule, run, source):
+def budget(path, schedule, run, source,history=None,history_sha256=None):
     value = json.loads(Path(path).read_text())
     record = value.get('reservations', {}).get(run, {})
-    if (value.get('format') != FORMAT or value.get('funding_status') != 'root_reconciled'
-            or value.get('maximum_gpu_seconds') != MAX_SECONDS or value.get('maximum_total_actions') != MAX_ACTIONS
+    warm=history is not None
+    ceiling=1400 if warm else MAX_SECONDS
+    if (bool(history)!=bool(history_sha256) or value.get('format') != (WARM_FORMAT if warm else FORMAT)
+            or value.get('funding_status') != 'root_reconciled'
+            or value.get('maximum_gpu_seconds') != ceiling or value.get('maximum_total_actions') != MAX_ACTIONS
             or value.get('source_campaign_immutable') is not True or not value.get('scope_amendment')
             or len(value.get('reservations', {})) != 1 or record.get('run_id') != run
             or record.get('source_commit') != source or len(source) != 40
             or any(char not in '0123456789abcdef' for char in source)
-            or record.get('worker_seconds') != MAX_SECONDS or record.get('maximum_total_actions') != MAX_ACTIONS
+            or record.get('worker_seconds') != ceiling or record.get('maximum_total_actions') != MAX_ACTIONS
             or record.get('purpose') != 'source_ppo_runtime_qualification'
             or record.get('updates') != 1 or record.get('complete_trials_per_update') != 14
             or record.get('attempts') != 4 or record.get('memory_mode') != 'full'
@@ -40,7 +44,15 @@ def budget(path, schedule, run, source):
             or record.get('schedule_file_sha256') != SCHEDULE_FILE_SHA
             or sha(schedule) != SCHEDULE_FILE_SHA
             or json.loads(Path(schedule).read_text()).get('schedule_sha256') != SCHEDULE_SHA):
-        raise ValueError('Require an existing exact20k/2400s ONE-batch source-only funding record and canonical inventory')
+        raise ValueError('Require exact20k ONE-batch funding:2400s fresh or1400s explicit warm start, and canonical inventory')
+    if warm:
+        inherited=json.loads(Path(history).read_text())
+        if (sha(history)!=history_sha256 or record.get('warm_start_history_path')!=str(Path(history).resolve())
+                or record.get('warm_start_history_sha256')!=history_sha256
+                or inherited.get('format')!='source40_batch14_warmstart_history_v1'
+                or inherited.get('mode')!='full' or inherited.get('maximum_cumulative_source_actions')!=1_000_000
+                or inherited['prior_actions']+MAX_ACTIONS>1_000_000):
+            raise ValueError('Warm qualification requires exact root-funded full-mode history under cumulative1M/1400s')
     return record
 
 
@@ -71,7 +83,7 @@ def report(root, attempt, exit_code):
     latest = signatures[-1] if signatures else {}
     before, after = latest.get('motor_before'), latest.get('motor_after')
     value = dict(format='source40_one_batch14_qualification_receipt_v1',exit_code=int(exit_code),
-        cumulative_gpu_charge_seconds=charge,maximum_gpu_seconds=MAX_SECONDS,
+        cumulative_gpu_charge_seconds=charge,maximum_gpu_seconds=clock['worker_seconds'],
         actual_physical_cost=physical_charge(experiment/'execution-journal'),
         batch_summary=summary, update_receipts=metrics,
         full_recovery_path=str(recovery),full_recovery_sha256=sha(recovery) if recovery.exists() else None,
@@ -96,6 +108,8 @@ def main(argv=None):
         start.add_argument('--'+name,required=True)
     start.add_argument('--started-unix',type=float,required=True)
     start.add_argument('--resume',action='store_true')
+    start.add_argument('--warm-start-history',type=Path)
+    start.add_argument('--warm-start-history-sha256')
     end=sub.add_parser('report')
     for name in ('root','attempt'):
         end.add_argument('--'+name,type=Path,required=True)
@@ -104,17 +118,21 @@ def main(argv=None):
     if args.operation=='report':
         report(args.root,args.attempt,args.exit_code)
         return
-    record=budget(args.budget,args.schedule,args.run,args.source)
+    record=budget(args.budget,args.schedule,args.run,args.source,args.warm_start_history,args.warm_start_history_sha256)
+    ceiling=record['worker_seconds']
     contract=dict(operation='source40_one_batch14_qualification',source_commit=args.source,run_id=args.run,
         funding_record_sha256=content_hash(record),schedule_file_sha256=SCHEDULE_FILE_SHA,
-        schedule_sha256=SCHEDULE_SHA,maximum_total_actions=MAX_ACTIONS,maximum_worker_seconds=MAX_SECONDS,
+        schedule_sha256=SCHEDULE_SHA,maximum_total_actions=MAX_ACTIONS,maximum_worker_seconds=ceiling,
         updates=1,complete_trials_per_update=14,attempts=4,memory_mode='full',seed=2,
         architecture=dict(width=128,layers=2,heads=4,context_length=300),optimizer=dict(learning_rate=1e-4,epochs=2))
+    if args.warm_start_history:
+        contract.update(warm_start_history_path=str(args.warm_start_history.resolve()),
+            warm_start_history_sha256=args.warm_start_history_sha256,initialization='Explicit legacy R3 warm start')
     path=args.root/'worker-time.json'
     charged=(sum(row.get('charged_seconds',row['reserved_seconds']) for row in json.loads(path.read_text())['attempts'])
         if path.exists() else 0)
-    slice_seconds=MAX_SECONDS-charged-60
-    attempt=begin(args.root,contract,slice_seconds=slice_seconds,worker_seconds=MAX_SECONDS,
+    slice_seconds=ceiling-charged-60
+    attempt=begin(args.root,contract,slice_seconds=slice_seconds,worker_seconds=ceiling,
         resume=args.resume,now=args.started_unix)
     print(f'{attempt}\t{int(args.started_unix+slice_seconds)}\t{slice_seconds}')
 

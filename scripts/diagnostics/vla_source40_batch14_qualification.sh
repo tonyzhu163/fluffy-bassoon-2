@@ -4,9 +4,19 @@ set -Eeuo pipefail
 TASK_STARTED=$(date +%s)
 TASK_SOURCE=${1:?reviewed exact commit}
 TASK_RUN=${2:?fresh immutable qualification identity}
-TASK_BUDGET=${3:?root-created exact20k/2400s funding record}
-TASK_RESUME=${4:-}
-case "$TASK_RESUME" in ''|--resume) ;; *) exit 2;; esac
+TASK_BUDGET=${3:?root-created exact bounded funding record}
+shift 3
+TASK_RESUME=''
+TASK_WARM_ARGS=()
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --resume) TASK_RESUME=--resume; shift;;
+    --warm-start-history|--warm-start-history-sha256)
+      test "$#" -ge 2
+      TASK_WARM_ARGS+=("$1" "$2"); shift 2;;
+    *) exit 2;;
+  esac
+done
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_OLD=/mowenjie/fluffy-bassoon
 TASK_WT=$TASK_ROOT/worktrees/$TASK_RUN
@@ -34,7 +44,8 @@ export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export PYTHONPATH=$TASK_WT/src
 TASK_CLOCK=$("$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_batch14_qualification begin \
   --root "$TASK_OUT" --budget "$TASK_BUDGET" --schedule "$TASK_SCHEDULE" \
-  --source "$TASK_SOURCE" --run "$TASK_RUN" --started-unix "$TASK_STARTED" "${TASK_RESUME_ARGS[@]}")
+  --source "$TASK_SOURCE" --run "$TASK_RUN" --started-unix "$TASK_STARTED" \
+  "${TASK_RESUME_ARGS[@]}" "${TASK_WARM_ARGS[@]}")
 IFS=$'\t' read -r TASK_ATTEMPT TASK_STOP TASK_SLICE <<< "$TASK_CLOCK"
 TASK_TELEMETRY_PID=''
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
@@ -74,6 +85,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   "$TASK_PROBE" -m pytest -q -p no:cacheprovider \
   tests/test_vla_rl2_batch.py tests/test_vla_source40_batch14.py \
   tests/test_vla_reset_identity.py tests/test_vla_source40_ppo_worker.py \
+  tests/test_vla_source40_batch14_warmstart.py \
   tests/test_vla_source40.py::test_resume_charges_unresolved_execution_intent_conservatively \
   > "$TASK_ATTEMPT/focused-tests.log" 2>&1
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
@@ -101,4 +113,4 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
   --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
   --max-total-actions 20000 --stop-unix "$((TASK_STOP - 360))" --updates 1 --seed 2 --memory-mode full \
-  --width 128 --layers 2 --heads 4 --context-length 300 "${TASK_DRIVER_RESUME[@]}"
+  --width 128 --layers 2 --heads 4 --context-length 300 "${TASK_DRIVER_RESUME[@]}" "${TASK_WARM_ARGS[@]}"
