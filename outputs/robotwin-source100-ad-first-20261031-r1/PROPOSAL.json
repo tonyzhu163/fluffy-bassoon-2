@@ -2,8 +2,12 @@
   "format": "robotwin_source100_ad_first_phase_proposal_v1",
   "recorded_at_utc": "2026-10-31T00:56:07.462013+00:00",
   "authorization_status": "approved_by_direct_human_reply",
-  "reservation": null,
-  "admission": false,
+  "reservation": {
+    "job_id": "job-twcl47ph8lnz",
+    "component": "final100_cpu_export",
+    "scheduler_cpu_worker_seconds": 7020
+  },
+  "admission": true,
   "question_asked": true,
   "benchmark": "RoboTwin",
   "source_snapshot_sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90",
@@ -189,5 +193,7 @@
   },
   "grant_receipt": "GRANT.json",
   "grant_receipt_sha256": "723194fb8f0b89a56c85146a155e2076f2e48a8ca024e8672d4d9a7a4630f966",
-  "remaining_authorized_cpu_worker_seconds": 7030
+  "remaining_authorized_cpu_worker_seconds": 7030,
+  "admission_scope": "CPU export bootstrap only; bank/model/robot admission remains staged",
+  "actual_launch_receipt": "LAUNCH.json"
 }
