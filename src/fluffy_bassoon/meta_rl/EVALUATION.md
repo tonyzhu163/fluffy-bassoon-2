@@ -485,3 +485,24 @@ The separate fixed-SAC65 CPU converter/export qualification passed150 tests and
 390 K4 /651638 actions; it does not qualify mean-teacher competence, final100
 student fits or adaptation. Early student fits still use only the early SAC5
 subset. Further fits and teacher measurements remain separate resource proposals.
+
+## RoboTwin final SAC100 AD/BC CPU export, 2026-10-31
+
+The final saved SAC100 corpus has a qualified AD training export of 32,425
+decisions / 2,400 episodes / 600 whole K4 trials / 1,003,790 historical source
+actions. The iteration-100 source-validation BC export contains 328 decisions /
+24 episodes / 6 K4 trials / 10,180 historical validation actions. Actual case IDs,
+task/seeds and initial-observation hashes are disjoint across splits. The exact
+62-root ancestry, actor/counter provenance and executed-noise labels remain bound.
+Independent inspection verified both actual index and NPZ hashes, all 21 ZIP
+member CRCs per dataset, and the case metadata. All allocated phases and final
+owned cleanup were clean. Baige job-vth2qv6r4lxu finished Success / exit 0 in
+1,290 CPU-worker-seconds, with no new GPU use, robot actions, VLA queries or SGD.
+The CPU grant closes at 2,588 actual worker-seconds including software/recoveries;
+4,612 unused seconds are sealed.
+
+This is saved-data readiness, with no new student or robot performance result.
+No 500-update AD fit/readout ran; that GPU phase remains deferred for the human's
+native-action PPO replication priority. Earlier student results retain their
+early-SAC5 data identity. The [CPU export report](../../../outputs/robotwin-final100-ad-export-20261031-r4/RESULTS.md)
+contains exact dataset identities, independent audits, storage and cost closure.

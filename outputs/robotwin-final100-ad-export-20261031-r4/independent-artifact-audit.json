@@ -1,0 +1,67 @@
+{
+  "status": "independent_readonly_index_dataset_SHA_CRC_pass",
+  "checked_utc": "2026-10-31T05:50:49.256445+00:00",
+  "run_id": "robotwin-final100-ad-export-20261031-r4",
+  "job": "job-vth2qv6r4lxu",
+  "inspection": "Separate read-only stdlib JSON/hashlib/zipfile inspection; no tensor/model/array construction, no test execution. SHA streamed1MiB, zipfile.testzip all21members perarchive; largeindices/NPZ remain remote.",
+  "datasets": {
+    "train": {
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/index.json",
+        "sha256": "97b330139891a5b7da7c20d6588320239aed5820559120be8c02d96df23c7ad4"
+      },
+      "index_bytes": 49723851,
+      "dataset": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/ad.npz",
+        "sha256": "ef7ac099896875296cbe02a7c205956ae2becf7bda88416d909549d93c907d7f",
+        "objective": "ad"
+      },
+      "dataset_bytes": 1102781925,
+      "index_SHA_pass": true,
+      "dataset_SHA_pass": true,
+      "all_CRCs_pass": true,
+      "ZIP_members": 21,
+      "counts": {
+        "decisions": 32425,
+        "episodes": 2400,
+        "complete_K4_trials": 600,
+        "committed_source_actions": 1003790,
+        "selected_actions": 1003790
+      }
+    },
+    "validation": {
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/index.json",
+        "sha256": "b3da7d2ac1eecb65c12b71fb4ad8f4fe2965d0060267ecfe5643a6df5c9b50c8"
+      },
+      "index_bytes": 1019829,
+      "dataset": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/behavior_cloning.npz",
+        "sha256": "73c20af23617da30ae9b8e48994a75267f41253dda567e426753512ac68e8dff",
+        "objective": "behavior_cloning"
+      },
+      "dataset_bytes": 11128779,
+      "index_SHA_pass": true,
+      "dataset_SHA_pass": true,
+      "all_CRCs_pass": true,
+      "ZIP_members": 21,
+      "counts": {
+        "decisions": 328,
+        "episodes": 24,
+        "complete_K4_trials": 6,
+        "committed_source_actions": 1003790,
+        "selected_actions": 10180
+      }
+    }
+  },
+  "stage_source": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+    "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+  },
+  "projection_sha256": "fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf",
+  "terminal_complete": true,
+  "additional_robot_actions": 0,
+  "VLA_queries": 0,
+  "SGD": 0,
+  "sourcecase_semantics_independent_owner_review": "PASS: independent-metadata-audit.json plus exact actual genesis supplement"
+}

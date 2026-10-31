@@ -1,0 +1,63 @@
+{
+  "status": "final100_AD_BC_CPU_payload_admitted",
+  "bindings": {
+    "projection_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/projection",
+    "exports_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports",
+    "source100_stage": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+      "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+    },
+    "train_index": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/index.json",
+      "sha256": "97b330139891a5b7da7c20d6588320239aed5820559120be8c02d96df23c7ad4"
+    },
+    "validation_index": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/index.json",
+      "sha256": "b3da7d2ac1eecb65c12b71fb4ad8f4fe2965d0060267ecfe5643a6df5c9b50c8"
+    }
+  },
+  "projection_sha256": "fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf",
+  "counts": {
+    "train": {
+      "decisions": 32425,
+      "episodes": 2400,
+      "complete_K4_trials": 600,
+      "committed_source_actions": 1003790,
+      "selected_actions": 1003790
+    },
+    "validation": {
+      "decisions": 328,
+      "episodes": 24,
+      "complete_K4_trials": 6,
+      "committed_source_actions": 1003790,
+      "selected_actions": 10180
+    }
+  },
+  "datasets": {
+    "train": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/ad.npz",
+        "sha256": "ef7ac099896875296cbe02a7c205956ae2becf7bda88416d909549d93c907d7f",
+        "objective": "ad"
+      }
+    },
+    "validation": {
+      "behavior_cloning": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/behavior_cloning.npz",
+        "sha256": "73c20af23617da30ae9b8e48994a75267f41253dda567e426753512ac68e8dff",
+        "objective": "behavior_cloning"
+      }
+    }
+  },
+  "ZIP_members_CRC_pass": {
+    "train": 21,
+    "validation": 21
+  },
+  "source_actor_counter_binding": "existing7401 CorpusReader, not a new teacher gate",
+  "teacher_used": false,
+  "additional_robot_actions": 0,
+  "VLA_queries": 0,
+  "SGD": 0,
+  "model_payloads": null,
+  "fit_or_readout_admission": false
+}
