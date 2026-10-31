@@ -1,0 +1,63 @@
+{
+  "format": "robotwin_command_readout_resource_only_static_proof_v1",
+  "prepared_utc": "2026-10-31T22:19:52.046664+00:00",
+  "prior_runtime_source": "235fcc00f0ddf7a07590604daba9e79c9a4c3c6d",
+  "latest_main_review": "98dfade4bd165e442325ec2acd6e2524dc0320b3",
+  "rebased_unchanged235_head": "79ef088e21ce23d155f0cf62b0d34e9d0a5bfa97",
+  "all_other_named_bodies_AST_unchanged": {
+    "cells": true,
+    "validate_endpoints": true,
+    "ReadoutControl": true,
+    "initial_physical_identity": true,
+    "qualify_first_native": true,
+    "validate_cursor": true,
+    "validate_case_forks": true,
+    "run_cells": true,
+    "validate_closed_head": true,
+    "prepare_output": true,
+    "publish_recovery": true
+  },
+  "main_AST_only_changes": [
+    "pass existing Audit to resource validation",
+    "bind new resource module through existing runtime SHA loop"
+  ],
+  "ticket_AST_only_changes": [
+    "delegate the old family-only predicate to explicit anchored lineage/closeout proof",
+    "optional existing-Audit parameter"
+  ],
+  "normalized_main_AST_identical": true,
+  "normalized_ticket_AST_identical": true,
+  "old_runtime_modules_except_resource_entry_byte_identical": {
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+    "src/fluffy_bassoon/meta_rl/robotwin_steering_screen.py": "7963f833ab4fe6f92ae87ecb4e5f1b600ad1fe86ee037eeed80ef90619230fa5",
+    "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py": "b7fdd5de4adfdbecc62f76a3ed4a65125ca6e43571f6dd34d4a6598e2ca6fbc6",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_capacity.py": "a501b515947f2e76a1c93fb8025fa6c405d68692248356161afa985d2de9672c",
+    "src/fluffy_bassoon/meta_rl/robotwin_replay_diagnosis.py": "b3c3e2ee8213d52eca5d3a3b97a34bfba418502ad210973a23e12493ba8c4359",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/rl/robotwin_campaign_budget.py": "d1ca7b9e5b4c3963d8bd8fc833794da1b5cbdf6427eb76dd1b9186d769494924",
+    "src/fluffy_bassoon/rl/robotwin_corpus.py": "3120f2ddc4972c718fb88e5cc9452f5acd15195d2f62b5cef3ee1a75fdd643c8",
+    "src/fluffy_bassoon/rl/pi05_residual.py": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+    "src/fluffy_bassoon/rl/robotwin_steering.py": "3a284fb4b16a27d7c0d748befa81d806f4782ff1efca5579c8b5dcacaef5e412",
+    "src/fluffy_bassoon/meta_rl/robotwin_demo_capacity.py": "fabdd092f888bb801cb434673441a461b0f320c73cced46e782d5192c17aa836",
+    "src/fluffy_bassoon/meta_rl/robotwin_prelift_probe.py": "a413a068d197abe991180a50f083133df01e53d3c2443705a0d72c0f5d24ee85"
+  },
+  "old57_suite_rerun": false,
+  "carry": "Actual56 prior cases plus actual1 corrected-selector PASS; new/affected resource cases remain unexecuted",
+  "policy_episode_math_RNG_qualification_recovery_changes": false,
+  "new_allocator_clock_ledger": false,
+  "actual_tests_or_models_here": 0,
+  "resources_here": 0,
+  "prior57_test_file_sha256": "39986afd1834dd62ae846c83b501b0244b6cec27b59dad4faea279329d3918ad",
+  "current_legacy_test_file_sha256": "b5bf7a2dcd7fdc7c8d530ba77bca41bda2adfddf5cfb6fac906d68bdba1fc19e",
+  "legacy_test_named_bodies_AST_unchanged_except": "ticket_data",
+  "affected_legacy_resource_selectors": [
+    "tests/test_robotwin_command_diagnostic_readout.py::test_actual_measured_clock_can_exceed_900_estimate_without_new_allocator",
+    "tests/test_robotwin_command_diagnostic_readout.py::test_actual_readout_admission_rejects_old_or_overlapping_or_reset_scope"
+  ],
+  "affected_legacy_cases": 11
+}
