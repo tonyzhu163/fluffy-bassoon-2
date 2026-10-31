@@ -1,0 +1,40 @@
+{
+  "format": "owner_finite_command_fit_resource_plan_v1",
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "admitted": false,
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "stage_gpu_limits": {
+    "cache04": 600,
+    "fit": 3600
+  },
+  "fit_head_gpu_limits": {
+    "action": 1800,
+    "kv": 1800
+  },
+  "fit_topology": "separate_one_gpu_physical_allocations",
+  "linked_fit_continuation": {
+    "path": null,
+    "sha256": null
+  },
+  "other_fit_ticket_receipts": [],
+  "prior_cost_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation-closeout.json",
+      "sha256": "2f8233e5cfd14caa01c5c4e7fcf9a2f54919c13c3551cbe75ab2ef2503178720"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/allocation-closeout.json",
+      "sha256": "171780b1539dc306882251ff977726475ff3c92a9dd68be9b7a4a66845291530"
+    }
+  ],
+  "storage_admission": null
+}
