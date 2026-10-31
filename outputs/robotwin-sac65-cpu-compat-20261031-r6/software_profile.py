@@ -15,6 +15,7 @@ RUN='robotwin-ad-first-software-qual-20261031-r1'
 FINAL_RUN='robotwin-final100-ad-export-20261031-r1'
 RESIDUAL_RUN='robotwin-final100-ad-export-20261031-r2'
 PROOF_RECOVERY_RUN='robotwin-final100-ad-export-20261031-r3'
+QUALIFIED_CLOSEOUT_RUN='robotwin-final100-ad-export-20261031-r4'
 
 def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path)
@@ -41,14 +42,15 @@ def main(started,gate):
     gate.require(hashlib.sha256(profile_raw).hexdigest()==a.software_profile_sha256,'Software profile changed')
     profile=json.loads(profile_raw)
     run=profile['run_id']
-    proof_recovery=run==PROOF_RECOVERY_RUN
-    residual=run in (RESIDUAL_RUN,PROOF_RECOVERY_RUN)
-    finalbank=run in (FINAL_RUN,RESIDUAL_RUN,PROOF_RECOVERY_RUN)
+    qualified_closeout=run==QUALIFIED_CLOSEOUT_RUN
+    proof_recovery=run in (PROOF_RECOVERY_RUN,QUALIFIED_CLOSEOUT_RUN)
+    residual=run in (RESIDUAL_RUN,PROOF_RECOVERY_RUN,QUALIFIED_CLOSEOUT_RUN)
+    finalbank=run in (FINAL_RUN,RESIDUAL_RUN,PROOF_RECOVERY_RUN,QUALIFIED_CLOSEOUT_RUN)
     clocks=(run,profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['external_TERM_seconds'],profile['external_KILL_seconds'])
     gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460),
         ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280),
         (FINAL_RUN,6720,7020,6790,6800),(RESIDUAL_RUN,5700,6000,5770,5780),
-        (PROOF_RECOVERY_RUN,5520,5820,5590,5600))
+        (PROOF_RECOVERY_RUN,5520,5820,5590,5600),(QUALIFIED_CLOSEOUT_RUN,5400,5700,5470,5480))
         and profile['bootstrap_wait_seconds']==120
         and profile['cleanup_reserve_seconds']==30 and profile['gpus']==0
         and profile['cpus']==8 and profile['memory_gib']==64,'Wrong software resources/clocks')
@@ -59,8 +61,8 @@ def main(started,gate):
                  and isinstance(profile['ad']['pin'],str) and len(profile['ad']['pin'])==40)
             and profile['prior_software_actual_seconds']==170
             and profile['old_sealed_credit_seconds']==0
-            and 170+profile.get('prior_bank_actual_seconds',0)+profile.get('prior_bootstrap_actual_seconds',0)+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
-            and profile['unrequested_seconds']==(171 if proof_recovery else 141 if residual else 10),'Wrong final100 conditional residual')
+            and 170+profile.get('prior_bank_actual_seconds',0)+profile.get('prior_bootstrap_actual_seconds',0)+profile.get('prior_schema_actual_seconds',0)+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
+            and profile['unrequested_seconds']==(202 if qualified_closeout else 171 if proof_recovery else 141 if residual else 10),'Wrong final100 conditional residual')
         if residual:
             ref=profile['prior_bank_terminal_accounting']
             gate.require(sha(ref['path'])==ref['sha256'],'Prior bank terminal accounting changed')
@@ -77,6 +79,14 @@ def main(started,gate):
                 and previous['scheduler_running_seconds']==profile['prior_bootstrap_actual_seconds']==150
                 and previous['GPUs']==0 and previous['tests_run']==0 and previous['data_phases_run']==0
                 and previous['remaining_approved_CPU_worker_seconds']==5991,'Charge bootstrap150 once; no clock reset')
+        if qualified_closeout:
+            ref=profile['prior_schema_terminal_accounting']
+            gate.require(sha(ref['path'])==ref['sha256'],'Prior schema accounting changed')
+            previous=json.loads(Path(ref['path']).read_text())
+            gate.require(previous['job']=='job-y8ap2axem2yk' and previous['scheduler_state']=='Failed'
+                and previous['scheduler_running_seconds']==profile['prior_schema_actual_seconds']==89
+                and previous['GPUs']==0 and previous['tests_passed']==146
+                and previous['remaining_approved_CPU_worker_seconds']==5902,'Charge schema89 once; no new allowance')
         ref=profile['prior_cpu_closure']
         gate.require(sha(a.code_root/ref['path'])==ref['sha256'],'Software closure changed')
         closed=json.loads((a.code_root/ref['path']).read_text())
@@ -214,7 +224,30 @@ def main(started,gate):
             return passed,value
         if finalbank:
             (out/'private/exports').mkdir()
-            if residual:
+            if qualified_closeout:
+                refs=profile['qualified_schema_predecessor'];prior={}
+                for name,ref in refs.items():
+                    gate.require(sha(ref['path'])==ref['sha256'],'Qualified schema receipt changed: '+name)
+                    prior[name]=json.loads(Path(ref['path']).read_text()) if name!='junit' else None
+                value=prior['result'];imports=prior['imports'];terminal=prior['terminal'];cleanup=prior['cleanup']
+                gate.require(value['passed'] and value['returncode']==0 and value['cleanup_clean']
+                    and value['code_commit']==profile['ad']['pin']=='e5675998dd130ff722c922f1cf681f0a96f44eff'
+                    and value['counts']==dict(tests=146,failures=0,errors=0,skipped=0)
+                    and not value['deselected_legacy_nodes']
+                    and value['JUnit_sha256']==refs['junit']['sha256']
+                    and value['imports_sha256']==refs['imports']['sha256']
+                    and imports['error'] is None and not imports['denied_imports']
+                    and not imports['forbidden_modules_loaded'] and not imports['cuda_initialized']
+                    and imports['optimizer_steps_permitted'] is False
+                    and terminal['run_id']==PROOF_RECOVERY_RUN and terminal['status']=='incomplete'
+                    and terminal['failure']=='ValueError: Finalbank phase failed; preserve output, no automatic retry: reuse'
+                    and terminal['results']['schema_regressions']==value and terminal['cleanup_error'] is None
+                    and terminal['physical_actions']==terminal['VLA_queries']==terminal['SGD']==0
+                    and cleanup['clean'] and not cleanup['sessions'] and not cleanup['survivors']
+                    and cleanup['adopted']['clean'],'Qualified schema evidence does not match actual closed R3')
+                results['schema_regressions']=dict(value,adopted_from=refs,new_tests_run=0)
+                gate.write(out/'ad-software-tests-result.json',results['schema_regressions'])
+            elif residual:
                 passed,results['schema_regressions']=worker('ad','software-tests')
                 gate.require(passed,'Necessary dual-encoding regressions failed; preserve output')
             stages=(('reuse',180),('train',2400),('validation',600),('admission',400)) if residual else (

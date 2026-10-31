@@ -1,0 +1,11 @@
+# CPU-only qualified-schema closeout R4, prepared
+
+New human priority remains faithful native-action VLRLA PPO replication. No new AD GPU fit/readout or source collection. This is only original saved-source100 CPU export/admission closeout, preserving all corpus/projection/recoveries. Native PPO source root owners retain their allocation.
+
+Actual ADphaseCPU170software+889R1+150R2+89R3=1298worker-seconds. Original7200 grant leaves5902. One fresh5700scheduler/5400parent/5470TERM5480KILL request leaves202unrequested. Bootstrap120/setup/phases/cleanup30 share the same parent clock; no renewed grant/refunds/sealedcredits/automaticfailedretry. New code/output/input identity required; R1-R3 immutable.
+
+R3 qualified sourcee567 with actual146cases0fail/error/skip, cleanphase/finalteardown/noCUDA/nooptimizer. Subsequent storage accounting rejected generated tmp/pytest-of-root/pytest-current -> containedpytest-0. Full paid R1projection and source contracts are unchanged. R4 binds the ACTUAL R3 result/import/JUnit/fullterminal/finalcleanup and sourcepin before data work, then records new_tests_run0; no unchanged regressions repeated and no pytestfixturetree generated in R4. This is a narrow reuse of existing actual qualification, not a new source gate or a fabricated pass.
+
+Keep strict corpus/symlink/storage guards unchanged. Revalidate readonly original R1projection fd0a3302, original R1ancestry0af508/tip5b978/source59588/finalf551, exact600K4/2400E/1003790source plus BCVAL6K4/24E/10180actions/disjointcases. FreshR4 exports/indices/receipts only. No rawJSON/contracts/labels/tokens/masks/math/teacher changes, no copyfallback/fixturedeletion/oldoutputmutation. Exactbc7f ownership/0c16helpers/e499capture/qualifiedtable-scopedcaller unchanged.
+
+Source/trainer7401 and compatibilitye567 remain frozen. New source code is only namespaced operational clocks/accounting/closed146receipt reuse. Require freshmain compatibility, reviewedexactpin/profile, Gitdeploy/storage/writeprobe, real Running0GPU8CPU64GiB proof BEFORE imports/data, alldata/index/arraySHA+CRC/fullcoverage/admission and finalownedcleanup before PASS. Readonly accounting of failed R2/R3 retainedoutputs remains a prelaunch requirement within aggregate128GiB; no new128GiB per run. No form, allocation or bridge exists at this preparation stage.

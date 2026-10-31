@@ -100,12 +100,14 @@ def verify_source65_index(index, ctx, projection_path):
 def finalbank_phase(phase, ctx, code, receipts, allocation):
     """Owner operational profile around the existing7401 APIs, never a converter."""
     f=ctx['finalbank'];base=Path(ctx['finalbank_root']);private=base/'private'
-    residual=base.name in ('robotwin-final100-ad-export-20261031-r2','robotwin-final100-ad-export-20261031-r3')
+    residual=base.name in ('robotwin-final100-ad-export-20261031-r2','robotwin-final100-ad-export-20261031-r3',
+                         'robotwin-final100-ad-export-20261031-r4')
     projection=Path(f['reused_projection']['path']).parent if residual else private/'projection'
     exports=private/'exports'
     if (base not in (Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1'),
                      Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r2'),
-                     Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3'))
+                     Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3'),
+                     Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4'))
             or (ctx['code_commit']!=ctx['compatibility_source_pin'] if residual else
                 ctx['code_commit']!='7401cd50c038a4cb35149eceeb72128e9a368cc3')
             or f['ancestry']['sha256']!='0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e'

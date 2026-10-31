@@ -213,7 +213,8 @@ def main():
             ('robotwin-ad500-software-qual-20261031-r1',250,300,'mwj_1031_robotwin_ad500_cpu_r1_'),
             ('robotwin-final100-ad-export-20261031-r1',6720,7020,'mwj_1031_robotwin_final100_ad_r1_'),
             ('robotwin-final100-ad-export-20261031-r2',5700,6000,'mwj_1031_robotwin_final100_ad_r2_'),
-            ('robotwin-final100-ad-export-20261031-r3',5520,5820,'mwj_1031_robotwin_final100_ad_r3_')), 'Unreviewed software dispatcher scope')
+            ('robotwin-final100-ad-export-20261031-r3',5520,5820,'mwj_1031_robotwin_final100_ad_r3_'),
+            ('robotwin-final100-ad-export-20261031-r4',5400,5700,'mwj_1031_robotwin_final100_ad_r4_')), 'Unreviewed software dispatcher scope')
         RUN=profile['run_id'];WORK_SECONDS=profile['global_work_seconds'];TASK_PREFIX=profile['task_prefix']
         REMOTE_INPUT='/mowenjie/fluffy-bassoon-2/inputs/'+RUN
         REMOTE_OUTPUT='/mowenjie/fluffy-bassoon-2/outputs/'+RUN
