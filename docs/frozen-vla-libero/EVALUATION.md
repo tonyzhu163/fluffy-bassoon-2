@@ -21,6 +21,11 @@ untrained noise-distribution contrast. No duplicate online learner was launched;
 interface experiments still require a qualified learned positive control.
 [Full12-task table, Wilson intervals and terminal audit](../../outputs/libero90-pi05-headroom-screen-20261101-r1/RESULTS.md).
 
+The task44 interim learned result below is a separate candidate interface
+reference; it does not complete original task59 Stage B. Its fixed endpoint,
+controls, persistence and terminal motor audit remain pending before interface
+GPU work. [Prospective task/case reconciliation](../../outputs/libero90-pi05-headroom-screen-20261101-r1/REFERENCE-RECONCILIATION.md).
+
 ## Task44 ordinary SAC: early regression followed by20/20 rebound
 
 Task44 (`turn on the stove`) was selected at native5/20 in both screening and

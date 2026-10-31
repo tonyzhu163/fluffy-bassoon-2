@@ -21,3 +21,7 @@ The owned384-run is complete, exit0, selected59/runner64. Final independent save
 ## Saved-reference gate and static preparation
 
 The 02:15 saved-main check found no published selected-task/trained-endpoint result from the separate online owner. Its continuation CPU receipt is software evidence only. [Gate receipt](REFERENCE-GATE-CHECK.json) binds the exact saved records; no owner scheduler or live files were queried. [Static interface preparation](INTERFACE-PREPARATION.md) fixes a prospective 32D timing contrast, three candidates and 29,930 maximum actions, without a launch grant or GPU actions. Recheck saved owner records on the existing cadence; do not infer learning from untrained native/tied scores.
+
+## 02:54 saved-reference rebound review
+
+Saved main now binds the other campaign to task44/sourceb665, with real SAC updates: native6/20, untrained tied13/20, initialized SAC8/20, learned1/20 at20,580 and20/20 at40,140. At the owner's02:40 observation it has53,120 updates; this chat did not query the scheduler or live files. [Independent saved-metadata binding review](REFERENCE-REBOUND-REVIEW.json) keeps the interface GPU gate false: fixed500k, final native, last-three persistence, final motor and terminal costs remain pending. [Prospective reconciliation](REFERENCE-RECONCILIATION.md) explains conditional use of task44 as an interface reference without relabeling the original task59 Stage B as complete. No duplicate fit, new allocation or actions.

@@ -1,0 +1,147 @@
+{
+  "format": "libero90_interface_reference_rebound_review_v1",
+  "checked_at": "2026-11-01T02:54:00+08:00",
+  "reviewed_main": "a2d38b94814a5b9dd9ecd8c0c6d53414c134634a",
+  "status": "interim_learning_verified_from_saved_metadata_terminal_gate_pending",
+  "artifacts": {
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-TERMINAL-RECEIPT.json": {
+      "sha256": "5fefa414e321ea07a063769b39bc247e8abf5408061f6b4616c124c11364cb48",
+      "bytes": 6130
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-CHILD-ADMISSION.json": {
+      "sha256": "e9ecb255d8e26b0d51bc7c89d592187843470a0d45fa58e762b4405cd8292443",
+      "bytes": 1456
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-GPU-LAUNCH.json": {
+      "sha256": "5b317fbd3500dea458e2b605ba511480548ad712a8b8998f366249c3f34ab8d8",
+      "bytes": 2672
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-PRELAUNCH.json": {
+      "sha256": "1d7c68825de16baa93e3722ebe360a4f800e7e4c508e9e2ba5b968fe21add0ee",
+      "bytes": 219552
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240.json": {
+      "sha256": "e147199366a8cbcf3626735d19df8ff75178093a949204728e92a120553db8b7",
+      "bytes": 10099
+    },
+    "outputs/libero90-pi05-headroom-online-20261101-r1/REBOUND-PARENT-REVIEW.json": {
+      "sha256": "d3718c4bb1e26b9aa8570d88654d5d6287448f8a0dc65178d11020e4d40b975e",
+      "bytes": 5223
+    }
+  },
+  "original_screen_selected_task": 59,
+  "reference_candidate_task": 44,
+  "reference_run": "dsrl-pi05-headroom-20261101-s0-r1",
+  "reference_job": "job-w8deahieli8q",
+  "reference_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "frozen_selection_sha256": "0f09a0ee2e23f283abb19a80e796f761eddd8e7c1399e6f45fd44b04e78335c5",
+  "motor_parameter_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+  "query_bank": {
+    "states": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "draws_per_state": 2,
+    "cases": 20,
+    "scene_seed": 123,
+    "selection_frozen_before_sgd": true
+  },
+  "recipe": {
+    "warmup_condition": "replay >500 query chunks after a complete episode",
+    "batch_size": 256,
+    "update_to_data": 20,
+    "fixed_weights_within_episode": true,
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "temp_lr": 0.0003,
+    "hidden_dims": [
+      128,
+      128,
+      128
+    ],
+    "cnn_features": [
+      32,
+      32,
+      32,
+      32
+    ],
+    "cnn_strides": [
+      2,
+      1,
+      1,
+      1
+    ],
+    "latent_dim": 50,
+    "discount": 0.999,
+    "tau": 0.005,
+    "num_qs": 10,
+    "target_entropy": "auto",
+    "masks": "0 on success, 1 on timeout/failure",
+    "reward": "-1 per chunk, 0 on success",
+    "action_bounds": "Gaussian warmup unbounded; learned32D noise clipped[-1,1]",
+    "query_behavior": "Native independent H10 Gaussian before any update; stochastic sample_actions SAC after update",
+    "upstream_collection": "examples/train_utils_sim.py:collect_traj at DSRL7f48937",
+    "upstream_evaluation": "examples/train_utils_sim.py:perform_control_eval at DSRL7f48937",
+    "interface": "Official image64 pixels + proprio8, one camera; no VLA-prefix student features",
+    "departures": "pi0.5 H10/ex10; actual-duration discount; development headroom selection; 20k-update/20-query panels"
+  },
+  "panels": [
+    {
+      "kind": "initial_native",
+      "updates": 0,
+      "successes": 6,
+      "episodes": 20
+    },
+    {
+      "kind": "initial_tied",
+      "updates": 0,
+      "successes": 13,
+      "episodes": 20
+    },
+    {
+      "kind": "initial_sac",
+      "updates": 0,
+      "successes": 8,
+      "episodes": 20
+    },
+    {
+      "kind": "learned",
+      "updates": 20580,
+      "successes": 1,
+      "episodes": 20
+    },
+    {
+      "kind": "learned",
+      "updates": 40140,
+      "successes": 20,
+      "episodes": 20
+    }
+  ],
+  "latest_observed_updates": 53120,
+  "endpoint_required": {
+    "nominal_updates": 500000,
+    "maximum_overshoot": 780,
+    "final_native_required": true,
+    "last_three_native_gain_minimum": 6,
+    "final_learned_must_exceed_initial_tied_and_initial_sac": true,
+    "final_whole_motor_signature_required": true
+  },
+  "interface_gpu_gate_passed": false,
+  "pending": [
+    "fixed endpoint and final native",
+    "last-three-panel persistence",
+    "final motor before/after signature and bounded closeout",
+    "explicit task/case reconciliation and bound E1 implementation/grant"
+  ],
+  "limits": "Independent local saved JSON/source/hash review only. Runtime milestone/raw/recovery checks are execution-owner attestations; no checkpoint/array deserialize, models, tests, simulator or scheduler queries. This is not original task59 Stage B completion.",
+  "new_gpu_jobs": 0,
+  "new_robot_actions": 0
+}

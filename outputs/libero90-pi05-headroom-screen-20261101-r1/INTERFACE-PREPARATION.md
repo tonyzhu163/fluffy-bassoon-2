@@ -5,6 +5,8 @@ allocations were run for this preparation. The learned positive-control gate
 is still pending in the saved online-DSRL evidence. This document does not
 change the completed 384-episode plan or spend its unused allowance.
 
+Latest reference status and conditional task reconciliation: [REFERENCE-RECONCILIATION.md](REFERENCE-RECONCILIATION.md). The admission observations below describe the original 02:15 preparation; subsequent interim learning does not yet pass the terminal gate.
+
 ## Reference admission before any interface GPU job
 
 The original screen selected task 59. The separate online owner has a different
