@@ -64,17 +64,51 @@
       "tests_run": false,
       "models_loaded": false,
       "simulator_actions": 0
+    },
+    {
+      "job_id": "job-y1anggvh3h1r",
+      "name": "mwj_1101_dsrl_pi0_task57_prep_r4_2188d91",
+      "source_commit": "2188d9175d7da3a766a53728cb76f5f0691cd22e",
+      "created_shanghai": "2026-11-01T01:17:03+08:00",
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 4,
+        "memory_gib": 32
+      },
+      "conservative_worker_seconds": 180,
+      "exit_code": 1,
+      "stage": "legacy S3 checkpoint download after successful runtime imports",
+      "failure_log": "botocore.errorfactory.NoSuchBucket: The specified bucket does not exist",
+      "runtime_versions": {
+        "jax": "0.5.0",
+        "jaxlib": "0.5.0",
+        "flax": "0.10.2",
+        "numpy": "1.26.4",
+        "pillow": "10.4.0",
+        "mujoco": "3.3.1",
+        "robosuite": "1.4.1",
+        "torch": "2.6.0+cpu",
+        "tensorflow": "2.19.0",
+        "orbax_checkpoint": "0.11.1"
+      },
+      "runtime_model_config_verified": "pi0_libero",
+      "horizon": 50,
+      "action_dim": 32,
+      "tests_run": false,
+      "model_loaded": false,
+      "simulator_actions": 0
     }
   ],
   "next_attempt": {
-    "identity": "dsrl-pi0-task57-20261101-prep-r4",
+    "identity": "dsrl-pi0-task57-20261101-prep-r5",
     "deployment": "Git bundle based on recent main3b71a31; exact new source verification before worktree execution",
-    "maximum_scheduler_minutes": 19,
-    "inner_timeout_seconds": 1020,
+    "maximum_scheduler_minutes": 15,
+    "inner_timeout_seconds": 780,
     "automatic_retry": false,
-    "diagnosis": "Explicitly add the pinned DSRL repository to sys.path before import; setuptools editable installation exposes jaxrl2 but not examples",
-    "maximum_all_in_worker_seconds": 1140,
-    "prior_conservative_cpu_worker_seconds": 600,
-    "maximum_cumulative_cpu_worker_seconds": 1800
+    "diagnosis": "Keep ended imported R4 runtime unchanged; run full9 recovery tests, then use official canonical GCS pi0_libero checkpoint after legacy S3 NoSuchBucket",
+    "maximum_all_in_worker_seconds": 960,
+    "prior_conservative_cpu_worker_seconds": 780,
+    "maximum_cumulative_cpu_worker_seconds": 1800,
+    "legacy_s3_byte_equivalence": "unverified; preserve this limitation"
   }
 }
