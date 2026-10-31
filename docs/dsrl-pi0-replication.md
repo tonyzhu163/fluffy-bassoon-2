@@ -46,6 +46,9 @@ silently change batches after recovery. Alternate checkpoint slots using the
 published cursor, including repeated saves at the same episode number. The
 recovery helper restores these fields; the current fresh-run CLI does not yet
 launch resumed training. Do not start a replacement actor under an old identity.
+Retain a separate policy/optimizer checkpoint and pre-panel RNG at every exact
+evaluation boundary, including the initial native panel; these records accompany
+the rolling full recovery slots and the physical episode traces.
 
 Run the focused accounting/recovery qualification on allocated Linux CPU.
 The initial suite includes physical reservation/failure and iterator chronology;

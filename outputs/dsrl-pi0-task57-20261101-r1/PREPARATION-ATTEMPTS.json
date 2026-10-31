@@ -97,18 +97,58 @@
       "tests_run": false,
       "model_loaded": false,
       "simulator_actions": 0
+    },
+    {
+      "job_id": "job-ri7n77kgci2x",
+      "name": "mwj_1101_dsrl_pi0_task57_assets_r5_26fe3e9",
+      "source_commit": "26fe3e966782e9244b8f8a0b0b583d28e9eb0c42",
+      "created_shanghai": "2026-11-01T01:27:46+08:00",
+      "ended_shanghai": "2026-11-01T01:29:09+08:00",
+      "conservative_worker_seconds": 120,
+      "script_elapsed_seconds": 33,
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 4,
+        "memory_gib": 32
+      },
+      "exit_code": 1,
+      "tests": {
+        "passed": 8,
+        "failed": 1,
+        "seconds": 30.52
+      },
+      "failure": "Flax recovered state MessagePack bytes differ; semantic state and next-update comparison still to qualify",
+      "vla_loaded": false,
+      "simulator_actions": 0
+    },
+    {
+      "job_id": "job-gxizjzf3seq4",
+      "name": "mwj_1101_dsrl_pi0_diagnose_r6",
+      "created_shanghai": "2026-11-01T01:36:40+08:00",
+      "conservative_worker_seconds": 90,
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 1,
+        "memory_gib": 4
+      },
+      "status": "Succeeded",
+      "purpose": "Read R5 test evidence and official GCS object metadata only",
+      "checkpoint_objects": 19,
+      "checkpoint_bytes": 12014131888,
+      "vla_loaded": false,
+      "simulator_actions": 0
     }
   ],
   "next_attempt": {
-    "identity": "dsrl-pi0-task57-20261101-prep-r5",
-    "deployment": "Git bundle based on recent main3b71a31; exact new source verification before worktree execution",
-    "maximum_scheduler_minutes": 15,
-    "inner_timeout_seconds": 780,
+    "identity": "dsrl-pi0-task57-20261101-prep-r7",
+    "maximum_scheduler_minutes": 12,
+    "inner_timeout_seconds": 660,
     "automatic_retry": false,
-    "diagnosis": "Keep ended imported R4 runtime unchanged; run full9 recovery tests, then use official canonical GCS pi0_libero checkpoint after legacy S3 NoSuchBucket",
-    "maximum_all_in_worker_seconds": 960,
-    "prior_conservative_cpu_worker_seconds": 780,
+    "maximum_all_in_worker_seconds": 780,
+    "prior_conservative_cpu_worker_seconds": 990,
     "maximum_cumulative_cpu_worker_seconds": 1800,
-    "legacy_s3_byte_equivalence": "unverified; preserve this limitation"
+    "deployment": "Explicit public GitHub fetch and exact clean detached source pin",
+    "qualification": "Correct semantic state comparison and next optimizer update; retain every evaluation policy checkpoint",
+    "legacy_s3_byte_equivalence": "unverified; GCS original Pi0 family confirmed available"
   }
 }

@@ -9,6 +9,7 @@ import pytest
 
 from fluffy_bassoon.meta_rl.dsrl_pi0_replication import (
     CaptureEnv, Prefetch, compact_replay, restore_replay, save_complete, restore_complete,
+    save_evaluation,
 )
 
 
@@ -149,6 +150,13 @@ def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_pat
     motor = SimpleNamespace(_rng=jax.random.key(17))
     contract = {'qualification':'original-pi0-complete-scalar-recovery'}
     progress = dict(episodes=1, updates=1, training_primitives=20)
+    original_state = jax.tree_util.tree_map(lambda value: np.asarray(value).copy(),
+                                           serialization.to_state_dict(first._save_dict))
+    original_rng = np.asarray(first._rng).copy()
+    save_evaluation(tmp_path, first, motor, progress, contract)
+    snapshot = json.loads((tmp_path/'evaluation-checkpoints/000001.json').read_text())
+    assert (tmp_path/'evaluation-checkpoints'/snapshot['path']).is_file()
+    np.testing.assert_array_equal(first._rng, original_rng)
     save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
     receipt = json.loads((tmp_path/'recovery.json').read_text())
     save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
@@ -157,7 +165,6 @@ def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_pat
     assert (tmp_path/receipt['path']).is_file()
     assert successor['sha256'] == receipt['sha256']
     receipt = successor
-    checkpoint_bytes = serialization.to_bytes(first._save_dict)
     first.update(next(iterator))
     expected = jax.tree_util.tree_leaves(first._save_dict)
     second = OfficialSAC(root, 1).agent
@@ -167,7 +174,13 @@ def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_pat
     restored = restore_complete(tmp_path/receipt['path'], contract, second,
                                 resumed_buffer, resumed_iterator, resumed_motor)
     assert restored == progress
-    assert serialization.to_bytes(second._save_dict) == checkpoint_bytes
+    # Flax restoration can reorder mapping keys; compare every state leaf,
+    # including optimizer moments, exactly rather than MessagePack byte order.
+    restored_state = serialization.to_state_dict(second._save_dict)
+    assert jax.tree_util.tree_structure(restored_state) == jax.tree_util.tree_structure(original_state)
+    for left, right in zip(jax.tree_util.tree_leaves(original_state),
+                           jax.tree_util.tree_leaves(restored_state), strict=True):
+        np.testing.assert_array_equal(np.asarray(left), np.asarray(right))
     assert resumed_buffer.size == 2 and resumed_buffer._traj_counter == 1
     np.testing.assert_array_equal(jax.random.key_data(resumed_motor._rng), jax.random.key_data(motor._rng))
     second.update(next(resumed_iterator))
