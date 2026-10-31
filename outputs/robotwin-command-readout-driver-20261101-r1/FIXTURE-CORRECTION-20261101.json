@@ -1,0 +1,83 @@
+{
+  "format": "robotwin_command_readout_fixture_contract_correction_v1",
+  "prepared_utc": "2026-10-31T20:51:24.627083+00:00",
+  "base_source": "f3d0d52ba040a4bcdf3aee3ffd0c39644006f500",
+  "reason": "CampaignBudget.snapshot unresolved_decisions is a mapping; the empty closed result is {}, not integer0.",
+  "change": {
+    "file": "tests/test_robotwin_command_diagnostic_readout.py",
+    "line": 278,
+    "before": "budget.snapshot()['unresolved_decisions']==0",
+    "after": "budget.snapshot()['unresolved_decisions']=={}",
+    "old_sha256": "81b30f7d0a0e8997d19175622b5dfe8758890e418f80aaa85a59c934334d76fb",
+    "new_sha256": "39986afd1834dd62ae846c83b501b0244b6cec27b59dad4faea279329d3918ad",
+    "old_bytes": 24545,
+    "new_bytes": 24546,
+    "single_assertion_only": true
+  },
+  "execution_owner_report": {
+    "job_id": "job-7dolnmsiqfmx",
+    "cases": 57,
+    "passed": 56,
+    "failed": 1,
+    "exit_code": 1,
+    "actual_CPU_worker_seconds": 69,
+    "separate_CPU_envelope_seconds": 120,
+    "unused_seconds": 51,
+    "three_natural_synthetic_episodes": {
+      "episodes": 3,
+      "primitive_actions": 1200,
+      "chunks_each": 13
+    },
+    "evidence_source": "Direct execution-owner message; raw job evidence remains owned by parent; no new execution here"
+  },
+  "rerun": {
+    "only_selector": "tests/test_robotwin_command_diagnostic_readout.py::test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger",
+    "pytest_argv": [
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_robotwin_command_diagnostic_readout.py::test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger"
+    ],
+    "full_suite_rerun": false,
+    "carry_56_prior_passes": true,
+    "corrected_selector_execution": "pending_actual_allocated_Linux_CPU",
+    "new_tests_prepared": 0,
+    "fixture_contract_only": true
+  },
+  "historical_manifest": {
+    "path": "outputs/robotwin-command-readout-driver-20261101-r1/STATIC-BYTES.json",
+    "sha256": "0050c3c9238968c9b33aeff5c78d4904731ce0f984f189401abadb6a19916c3f",
+    "retained_unchanged": true
+  },
+  "production_runtime_byte_sha256": {
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_readout.py": "4e03ae538e01a9963d258af30ec033aea1a64d0b61398e64c86c150dda5b79ba",
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+    "src/fluffy_bassoon/meta_rl/robotwin_steering_screen.py": "7963f833ab4fe6f92ae87ecb4e5f1b600ad1fe86ee037eeed80ef90619230fa5",
+    "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py": "b7fdd5de4adfdbecc62f76a3ed4a65125ca6e43571f6dd34d4a6598e2ca6fbc6",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_capacity.py": "a501b515947f2e76a1c93fb8025fa6c405d68692248356161afa985d2de9672c",
+    "src/fluffy_bassoon/meta_rl/robotwin_replay_diagnosis.py": "b3c3e2ee8213d52eca5d3a3b97a34bfba418502ad210973a23e12493ba8c4359",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/rl/robotwin_campaign_budget.py": "d1ca7b9e5b4c3963d8bd8fc833794da1b5cbdf6427eb76dd1b9186d769494924",
+    "src/fluffy_bassoon/rl/robotwin_corpus.py": "3120f2ddc4972c718fb88e5cc9452f5acd15195d2f62b5cef3ee1a75fdd643c8",
+    "src/fluffy_bassoon/rl/pi05_residual.py": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+    "src/fluffy_bassoon/rl/robotwin_steering.py": "3a284fb4b16a27d7c0d748befa81d806f4782ff1efca5579c8b5dcacaef5e412",
+    "src/fluffy_bassoon/meta_rl/robotwin_demo_capacity.py": "fabdd092f888bb801cb434673441a461b0f320c73cced46e782d5192c17aa836",
+    "src/fluffy_bassoon/meta_rl/robotwin_prelift_probe.py": "a413a068d197abe991180a50f083133df01e53d3c2443705a0d72c0f5d24ee85"
+  },
+  "production_unchanged": true,
+  "source_selector_policy_episode_budget_and_physics_changes": false,
+  "Mac_checks": [
+    "Python AST",
+    "JSON",
+    "SHA256 comparison"
+  ],
+  "tests_executed_here": 0,
+  "models_or_arrays_computed_here": false,
+  "allocations_or_GPU_work_here": false,
+  "unrelated_optional_bridge_and_cache_repairs": "Independent; no changes here"
+}
