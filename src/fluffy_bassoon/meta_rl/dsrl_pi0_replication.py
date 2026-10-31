@@ -169,7 +169,9 @@ def save_complete(output, agent, buffer, iterator, motor, progress, contract):
         agent_rng=np.asarray(jax.device_get(agent._rng)), replay=compact_replay(buffer),
         prefetch=iterator.state(jax.device_get), numpy_rng=np.random.get_state(),
         python_rng=random.getstate(), motor_rng=save_motor_rng(motor._rng))
-    slot = output/f"recovery-{progress['episodes'] % 2}.pkl"
+    cursor = output/'recovery.json'
+    previous = json.loads(cursor.read_text())['path'] if cursor.exists() else None
+    slot = output/('recovery-1.pkl' if previous == 'recovery-0.pkl' else 'recovery-0.pkl')
     temporary = slot.with_suffix('.tmp')
     with temporary.open('wb') as stream:
         pickle.dump(payload, stream, protocol=5)
@@ -359,6 +361,7 @@ def main(argv=None):
         dsrl_commit=DSRL, openpi_commit=OPENPI, libero_commit=LIBERO, seed=0,
         task_id=57, motor='pi0_libero', native_horizon=50, query_frequency=20,
         checkpoint_receipt_sha256=file_hash(args.checkpoint_receipt),
+        data_role='target-online-baseline', target_only=True, source_assembly_admission=False,
         max_actions=MAX_ACTIONS, max_gpu_seconds=MAX_SECONDS, max_bytes=MAX_BYTES,
         departures=['local scalar/media handling', 'explicit equivalent prefetch recovery',
                     'complete-boundary recovery and resource stopping', 'project-local compilation cache'],

@@ -151,6 +151,12 @@ def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_pat
     progress = dict(episodes=1, updates=1, training_primitives=20)
     save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
     receipt = json.loads((tmp_path/'recovery.json').read_text())
+    save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
+    successor = json.loads((tmp_path/'recovery.json').read_text())
+    assert successor['path'] != receipt['path']
+    assert (tmp_path/receipt['path']).is_file()
+    assert successor['sha256'] == receipt['sha256']
+    receipt = successor
     checkpoint_bytes = serialization.to_bytes(first._save_dict)
     first.update(next(iterator))
     expected = jax.tree_util.tree_leaves(first._save_dict)
