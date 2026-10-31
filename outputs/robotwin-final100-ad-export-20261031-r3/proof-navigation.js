@@ -2,6 +2,7 @@
 // Prerequisites: prepared fresh form/list fully loaded, exact ready ticket, modern dispatcher alive.
 // Fresh AX/Submit index is read immediately before invocation. No backend access.
 // Original deadline includes Submit, list, loading and instance refresh.
+async function submitAndCaptureCpuRecovery({proofFormTab,proofListTab,proofFs,inbox,ready,freshObservedSubmitIndex}) {
 const submittedAtMs = Date.now();
 const overallDeadlineMs = submittedAtMs + 55000;
 await proofFormTab.click(freshObservedSubmitIndex); // ONCE
@@ -33,3 +34,4 @@ while (Date.now() < overallDeadlineMs - 3000) {
   ax = await proofListTab.getAXState({emit:false,disableDiffing:true});
 }
 throw new Error('Original CUA proof deadline expired; no marker or clock extension');
+}
