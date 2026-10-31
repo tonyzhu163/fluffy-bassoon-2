@@ -31,17 +31,17 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
-Execution status at2026-10-31 10:30 Shanghai: the goal remains incomplete and the next
-material runs await the two already-requested resource decisions: LIBERO
-29.5additionalGPUh/150GB, and RoboTwin AD-first3GPUh plus2aggregateCPU-worker
-hours/128GiB/60,000target actions. All current experiment jobs are terminal;
-LIBERO's original32h pool has1180GPU-s unassigned. RoboTwin's final100 AD-only
-export profile is now statically accepted; no new source collection is needed
-for its first AD fits. Its7020s CPU request and6720s parent leave10s unrequested
-within the conditional7030s balance. No production bank/fit/readout is admitted.
-Further readiness restatements do not advance the experiment. Resume the
-corresponding prepared runs after direct human approval; preserve the full
-benchmark/method goal and do not infer approval from automated continuations.
+Execution status2026-10-31 11:42 Shanghai: the human approved the RoboTwin
+AD-first phase:3additionalGPUh,2aggregateCPU-worker hours on8cores,128GiB
+new storage and60,000new target actions. The existing source100 bank supplies
+ADfull/static500-update fits and the fixed16-case K0/K1 robot comparison.
+The execution owner has the direct authorization and prepared final100 export
+profile. The170already-spent software CPU seconds count once inside7200,
+leaving7030; the prepared7020s reservation/6720s parent leaves10unrequested.
+Actual bank/export, fitting and robot progress remain to be verified. The
+separate LIBERO29.5GPUh/150GB request remains pending; its original32h pool
+has1180GPU-s unassigned. The full scientific goal remains incomplete.
+Authorization: outputs/robotwin-source100-ad-first-20261031-r1/GRANT.json.
 
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before

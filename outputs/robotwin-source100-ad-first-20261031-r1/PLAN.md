@@ -1,7 +1,9 @@
 # Source100 AD-first fit and robot readout
 
-Proposal only; no admission, resource reservation or launch. This is the next
-bounded development phase, not completion of the larger benchmark matrix.
+Direct human approval received2026-10-31 11:42 Shanghai; see GRANT.json.
+The existing execution owner is instructed to launch the prepared phase.
+Actual resource reservation, runtime admission and first progress are still
+to be verified. The larger benchmark matrix remains incomplete.
 
 - Existing implementation owner: native RoboTwin history exporter/evaluator.
 - Reuse the qualified exporter, trainer, controller and real robot loop.
@@ -81,7 +83,8 @@ The full six held-out-goal and0/1/2/4/8 protocols remain outstanding.
 
 ## Proposed ceilings
 
-These are fresh-phase requests, not unused balances from closed campaigns.
+These fresh-phase ceilings are now approved by the direct human answer in
+GRANT.json. Closed campaign balances remain sealed.
 
 | Phase | Proposed resources | Ceiling |
 | --- | --- | ---: |
@@ -122,14 +125,15 @@ These are fresh-phase requests, not unused balances from closed campaigns.
 - Distinct sampled readout f7594a03cb8f0f683d366193ed278b7435a4378c now passes
   all48 allocated CPU fixtures in a Success/exit0 job,31 additional CPU-s.
   Aggregate software170 is counted once; remaining CPU capacity is7030 only
-  after approval. Actual final100 bank/500 weights/native GPU readout remain
+  within the approved phase. Actual final100 bank/500 weights/native GPU readout remain
   separate runtime prerequisites. Earlier failed statuses stay unchanged.
 - Do not borrow LIBERO's32h pool, its1180s remainder, sealed native-panel time,
   or any closed CPU qualification balance.
-- No part of this phase is funded yet. The resource decision covers these
-  fixed data, models, cases and ceilings. CPU checks and final-bank production
-  come first. Funding alone does not waive code/profile qualification; each
-  GPU component starts only after its exact handoff and prerequisites pass.
+- The human approved this phase at11:42 Shanghai. Use the exact fixed data,
+  models, cases and aggregate ceilings in GRANT.json. CPU checks and final-bank
+  production come first, followed promptly by fitting and the robot readout.
+  Each component retains its existing allocated-runtime prerequisites; no
+  additional scientific gate or launch confirmation is introduced.
 
 ## Interpretation
 
