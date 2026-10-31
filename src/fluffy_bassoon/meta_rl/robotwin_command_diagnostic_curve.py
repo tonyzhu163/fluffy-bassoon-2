@@ -25,7 +25,7 @@ def validate_resource(ticket,clock,*,operation,plan,other_fit_tickets=()):
             or plan['clock_contract']!=clock['contract'] or plan['clock_root']!=ticket['clock_root']
             or not plan.get('prior_cost_receipts') or not plan.get('storage_admission')):
         raise ValueError('Actual finite linked/original plan with old costs and storage proof required')
-    known={family+'cache04',family+'fit-action',family+'fit-kv'}
+    known={family+'cache04',family+'fit-action',family+'fit-kv',family+'readout'}
     if any(r.get('lineage','').startswith(family) and r['lineage'] not in known for r in clock['attempts']):
         raise ValueError('Unknown/stale diagnostic lineage cannot disappear from stage accounting')
     if operation=='cache04':

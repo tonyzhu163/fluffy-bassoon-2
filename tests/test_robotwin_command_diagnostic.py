@@ -311,3 +311,12 @@ def test_canonical_readout_v2_resolves_exact_source_records_not_ordinals(monkeyp
         assert [result['resolved'][f'phone-{i:02d}']['reset_seed'] for i in seeds]==list(seeds.values())
         assert [cell['private_motor_seed'] for cell in result['proposal']['cells'][::3]]==[20261301+i for i in seeds]
         assert result['resolved']['phone-04']['original_task_success'] is False
+
+
+def test_adopted_readout_hold_remains_separate_from_fit_stage_and_head_caps():
+    clock,plan=two_head_resource()
+    clock['attempts'].append(dict(path='readout-hold',lineage='fixed12-command-diagnostic/readout',
+        lineage_seconds=900,reserved_seconds=900,status='started'))
+    curve.validate_resource(dict(kind='action',resource_attempt='action',clock_root='root',hostname='job-a',gpu_count=1,operation='fit'),
+        clock,operation='fit',plan=plan,
+        other_fit_tickets=[dict(kind='kv',resource_attempt='kv',hostname='job-b',gpu_count=1,operation='fit')])
