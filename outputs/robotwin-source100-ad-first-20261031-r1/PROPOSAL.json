@@ -97,10 +97,17 @@
     "software_qualification_cpu_seconds": 600,
     "software_qualification_is_within_cpu_total": true,
     "cpu_parent_deadline_seconds": 6900,
-    "cpu_parent_starts_before_probe_and_tests": true,
     "gpu_parent_deadline_seconds": 10500,
     "gpu_outer_margin_seconds": 300,
-    "gpu_outer_margin_is_within_contingency": true
+    "gpu_outer_margin_is_within_contingency": true,
+    "cpu_worker_seconds_are_aggregate": true,
+    "software_terminal_actual_deducted_before_final_bank": true,
+    "final_bank_parent_deadline_rule": "min(6900, allocated_remaining_seconds-300), starts before own work",
+    "readout_logical_workers": 12,
+    "readout_gpu_seconds_are_aggregate": true,
+    "standalone_readout_worker_scheduler_seconds": 600,
+    "standalone_readout_worker_parent_seconds": 540,
+    "gpu_parent_deadline_scope": "10500 only for serial single-allocation variant; split uses per-allocation margins plus aggregate10800ledger"
   },
   "exclusions": [
     "DPT fits/teacher panel",

@@ -76,7 +76,7 @@ These are fresh-phase requests, not unused balances from closed campaigns.
 | --- | --- | ---: |
 | Source100 projection, AD/BC export, focused checks |0 GPU,8 CPU,64GiB|7200 CPU-worker seconds|
 | Two500-update fits, including startup/validation/cleanup |1 qualified GPU|2100 GPU-seconds|
-| Initial robot readout, qualification and cleanup |1 qualified GPU,16 CPU,128GiB,8GiB shared memory|7200 GPU-seconds|
+| Initial robot readout, qualification and cleanup |1 qualified GPU/worker,16 CPU,128GiB,8GiB shared memory|7200 aggregate GPU-seconds|
 | Shared setup/failure/contingency |within the same new grant|1500 GPU-seconds|
 | Total new GPU envelope |count each allocation once|10800 GPU-seconds =3 GPU-hours|
 
@@ -90,11 +90,20 @@ These are fresh-phase requests, not unused balances from closed campaigns.
   checkpoints. Check actual capacity/writeability in the allocation.
 - CPU and GPU ceilings include startup/failure/cleanup. Nested stage clocks
   overlap their enclosing allocation and are not added twice.
-- Software qualification is at most600s INSIDE the7200s CPU total, not an
-  additional allocation. Start one6900s CPU parent deadline before probe/tests;
-  projection/export/admission receive only the actual remaining time.
-- The GPU parent deadline is at most10500s inside the10800s scheduler envelope;
-  its300s outer margin is part of the1500s shared setup/contingency allowance.
+- Software qualification is at most600s INSIDE the7200s aggregate CPU total,
+  not an additional allowance. A separate software job is permitted: deduct
+  its actual terminal scheduler charge, then reserve only the remaining CPU
+  time for the final bank. Each parent starts before its own probe/tests/work;
+  final-bank parent <=min(6900s, its scheduler reservation minus300s).
+- The12 planned condition×task readout workers share7200 aggregate GPU-s,
+  not7200 each. A standalone allocation schedule may reserve at most600s
+  scheduler time/worker, with <=540s parent including probe/work/cleanup.
+  Launch concurrency depends on actual availability; count each allocation
+  once. The exact owner-reviewed topology remains an execution prerequisite.
+- For a serial single-allocation variant, the GPU parent is at most10500s
+  inside10800s. For split allocations, use per-allocation margins and the
+  aggregate ledger; do not substitute one wall clock for aggregate GPU cost.
+  All margins stay inside the1500s shared setup/contingency allowance.
 - Do not borrow LIBERO's32h pool, its1180s remainder, sealed native-panel time,
   or any closed CPU qualification balance.
 - No part of this phase is funded yet. The resource decision covers these
