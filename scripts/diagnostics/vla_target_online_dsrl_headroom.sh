@@ -9,10 +9,12 @@ TASK_SLICE=${4:-7140}
 shift 4
 TASK_RESUME=()
 TASK_SELECTION=()
+TASK_SCREEN_SOURCE=()
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --resume) TASK_RESUME=(--resume); shift;;
     --selection-sha256) TASK_SELECTION=(--selection-sha256 "${2:?selection SHA}"); shift 2;;
+    --screen-source) TASK_SCREEN_SOURCE=(--screen-source "${2:?original screen source}"); shift 2;;
     *) exit 2;;
   esac
 done
@@ -32,7 +34,7 @@ flock -n 9
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONPATH=$TASK_WT/src
 TASK_CLOCK=$("$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_target_online_dsrl_headroom begin \
   --root "$TASK_OUT" --source "$TASK_SOURCE" --run "$TASK_RUN" --stage "$TASK_STAGE" \
-  --slice-seconds "$TASK_SLICE" --started-unix "$TASK_STARTED" "${TASK_RESUME[@]}")
+  --slice-seconds "$TASK_SLICE" --started-unix "$TASK_STARTED" "${TASK_RESUME[@]}" "${TASK_SCREEN_SOURCE[@]}")
 IFS=$'\t' read -r TASK_ATTEMPT TASK_STOP TASK_ACTUAL_SLICE <<< "$TASK_CLOCK"
 exec > >(tee "$TASK_ATTEMPT/console.log") 2>&1
 task_cleanup() {
@@ -73,4 +75,4 @@ timeout --signal=INT --kill-after=30s "$TASK_TIMEOUT" "$TASK_MODEL" \
   --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --libero-root "$TASK_LIBERO" \
   --simulator-python /mowenjie/envs/wam-libero-plus-py310/bin/python \
   --simulator-pythonpath "$TASK_WT/src:$TASK_LIBERO:$TASK_OPENPI/packages/openpi-client/src:$TASK_OLD/envs/pi05-plus-client-deps" \
-  "${TASK_DRIVER_RESUME[@]}" "${TASK_SELECTION[@]}"
+  "${TASK_DRIVER_RESUME[@]}" "${TASK_SELECTION[@]}" "${TASK_SCREEN_SOURCE[@]}"
