@@ -57,9 +57,17 @@ def raw_observation(value):
 def source(tmp_path):
     torch.set_num_threads(1)
     p = profile()
-    qualified = json_ref(tmp_path / "control.json", dict(interface_sha256=p["interface"]["control_interface_sha256"],
-        actual_motor=True, zero_edit_parity=True, frozen_motor=True, real_episode_complete=True,
-        suffix_gradient_into_kv=True))
+    interface_ref = json_ref(tmp_path / "native-interface.json", dict(motor_sha256=p["interface"]["motor_sha256"],
+        action_horizon=32, flow_steps=5, public_dim=3, coefficient_dim=4, coefficient_bound=1.))
+    p["interface"]["control_interface_sha256"] = interface_ref["sha256"]
+    plan_ref = json_ref(tmp_path / "driver-plan.json", dict(interface_sha256=interface_ref["sha256"], scope_sha256=p["scope_sha256"]))
+    qualification_ref = json_ref(tmp_path / "gpu-qualification.json", dict(status="passed", native_parity=dict(passed=True),
+        zero_kv_exact=True, zero_fixed_kv_exact=True, zero_action_exact=True, motor_gradients=0, kv_gradient_norm=1.,
+        frozen_before="e" * 64, frozen_after="e" * 64, actual_actions=1,
+        qualification_episode="dev-native", complete_real_episode="dev-native"))
+    episode_ref = json_ref(tmp_path / "dev-native.json", dict(complete=True, spec=dict(id="dev-native"), primitive_steps=1))
+    qualified = json_ref(tmp_path / "control.json", dict(format="frozen_vla_4d_control_qualification_binding_v1",
+        control_interface=interface_ref, driver_plan=plan_ref, driver_qualification=qualification_ref, completed_episode=episode_ref))
     prefix = dict(format=sh.PREFIX, completed=True, profile_sha256=sh.content_hash(p),
         source_task=p["source_task"], interface=p["interface"], source_only=True,
         control_qualification=qualified, lineages=[], learning_qualifications={}, teacher_qualifications={})
@@ -115,6 +123,7 @@ def source(tmp_path):
         selected = next(x for x in prefix["lineages"] if x["lineage_id"] == p["teacher_lineage_ids"][condition])
         qualification = dict(condition_id=condition, interface_sha256=p["interface"]["control_interface_sha256"],
             teacher_lineage_id=selected["lineage_id"],
+            label_sampling_mode="sampled_gaussian",
             teacher_kind="noise_sac", teacher_recovery=selected["final_recovery"],
             actor_parameter_sha256=parameter_digest(torch.load(selected["final_recovery"]["path"], weights_only=False)["actor"]),
             baseline_recovery=selected["initial_recovery"],
@@ -188,7 +197,7 @@ def test_dpt_oracle_is_independent_of_uninformative_behavior_learning(source, tm
         oracle = json_ref(tmp_path / f"oracle-{condition}.json", dict(condition_id=condition,
             interface_sha256=p["interface"]["control_interface_sha256"], coefficients=[.2, -.2, .1, -.1], provenance=provenance))
         qualified = sh.read_json(prefix["teacher_qualifications"][condition])
-        qualified.update(teacher_kind="constant_4d_oracle", oracle=oracle)
+        qualified.update(teacher_kind="constant_4d_oracle", label_sampling_mode="fixed_coefficients", oracle=oracle)
         qualified.pop("teacher_recovery")
         prefix["teacher_qualifications"][condition] = json_ref(tmp_path / f"oracle-qualified-{condition}.json", qualified)
     with pytest.raises(ValueError, match="AD gate failed"): sh.admit_prefix(p, prefix, objective="ad")
@@ -279,6 +288,7 @@ def test_episode_windows_preserve_boundaries_limit_context_and_pair_full_static_
 
 
 def test_wrapped_collector_recovery_binds_mapping_and_complete_update_boundary(source, tmp_path):
+    from fluffy_bassoon.meta_rl.steering_condition_collection import BoundedTeacherRecovery
     p, prefix = source
     lineage = prefix["lineages"][0]
     state = torch.load(lineage["final_recovery"]["path"], weights_only=False)
@@ -288,12 +298,16 @@ def test_wrapped_collector_recovery_binds_mapping_and_complete_update_boundary(s
         profile=dict(task=p["source_task"], mapping_sha256=p["interface"]["mapping_sha256"],
             interface_sha256=p["interface"]["control_interface_sha256"], motor_sha256=p["interface"]["motor_sha256"],
             scope_sha256=p["scope_sha256"]))
-    path = tmp_path / "wrapped.pt"; torch.save(wrapper, path)
-    loaded = sh._source_state(ref(path), lineage=lineage, profile=p)
+    class Control:
+        def snapshot(self): return dict(arm="kv", motor_rng=None, previous_agent_command=np.zeros(14, np.float32))
+    sink = BoundedTeacherRecovery(tmp_path / "actual-sink", guard=lambda: None, control=Control())
+    actual_ref = sink("complete_episode_after_update", wrapper, immutable=True)
+    loaded = sh._source_state(actual_ref, lineage=lineage, profile=p)
     assert loaded["updates"] == state["updates"]
-    wrapper["pending_update_cycles"] = 1; torch.save(wrapper, path)
+    wrapper["pending_update_cycles"] = 1
+    interrupted_ref = sink("optimizer_cycle_intent", wrapper, immutable=True)
     with pytest.raises(ValueError, match="completed update boundary"):
-        sh._source_state(ref(path), lineage=lineage, profile=p)
+        sh._source_state(interrupted_ref, lineage=lineage, profile=p)
 
 
 def test_last_valid_public_request_excludes_hidden_commands_and_unexecuted_tail():
@@ -328,6 +342,50 @@ def test_live_adapter_delegates_2076_projection_to_the_single_driver_owner():
     assert adapter.decision_metadata()["steering_partition"] == "evaluation"
     adapter.observe(native, choice, 0., native, True, False, 1, None)
     assert history.controller.episode_start
+
+
+def test_zero_valid_terminal_receipt_closes_without_synthetic_action_or_feedback(tmp_path):
+    history, _ = controller()
+    class Control:
+        command = np.zeros(14, np.float32)
+        def student_observation(self, native): return np.r_[native, self.command]
+    control = Control()
+    adapter = sh.DriverCoefficientStudent(history, control=control, condition_id="audit-only")
+    writer = RobotwinCorpusWriter(tmp_path / "zero-corpus", {"source_commit": "f" * 40})
+    writer.set_context(dict(phase="student_evaluation", method="ad-full", trial_id="q0", policy_version="frozen"))
+    native = np.ones(3, np.float32)
+    writer.begin_episode(raw_observation(0), native, dict(actual_seed=7))
+    first = adapter.act(native)
+    writer.begin_decision(np.zeros((32, 32), np.float32), np.full((1, 14), .3, np.float32), adapter.decision_metadata())
+    writer.complete_native(next_raw=raw_observation(1), next_features=native,
+        raw_rewards=np.array([.7]), raw_terminations=np.array([False]), raw_truncations=np.array([False]),
+        valid_action_mask=np.array([[True]]), reward=.7, terminated=False, truncated=False,
+        executed_steps=1, success=False, duration_seconds=.01)
+    first_path = writer.finalize_learning_flags(reward=.7, terminated=False, truncated=False,
+        budget_truncated=False, episode_primitive_steps=1)
+    first_ref = dict(root=str(writer.root), path=first_path, sha256=sh.digest(writer.root / first_path))
+    control.command = np.full(14, .3, np.float32)
+    adapter.observe(native, first, .7, native, False, False, 1, first_ref)
+    memory_before = deepcopy(history.controller.state)
+    adapter.act(native)  # Proposed, but the real common runner will skip observe when validity is zero.
+    writer.begin_decision(np.zeros((32, 32), np.float32), np.full((1, 14), .9, np.float32), adapter.decision_metadata())
+    writer.complete_native(next_raw=raw_observation(2), next_features=native,
+        raw_rewards=np.array([1.]), raw_terminations=np.array([True]), raw_truncations=np.array([False]),
+        valid_action_mask=np.array([[False]]), reward=1., terminated=True, truncated=False,
+        executed_steps=0, success=True, duration_seconds=.01)
+    last_path = writer.finalize_learning_flags(reward=1., terminated=True, truncated=False,
+        budget_truncated=False, episode_primitive_steps=1)
+    last_ref = dict(root=str(writer.root), path=last_path, sha256=sh.digest(writer.root / last_path))
+    rng_after_proposal = history.controller.generator.get_state().clone()
+    adapter.finish_episode(dict(complete=True, spec=dict(id="q0"), chunks=2, primitive_steps=1,
+                                corpus_refs=[first_ref, last_ref]))
+    assert not history.controller.pending and history.controller.episode_start and history.controller.previous_done
+    np.testing.assert_array_equal(history.controller.previous_noise, first)
+    assert history.controller.previous_reward == .7  # No feedback attributed to the unexecuted proposal.
+    for key in memory_before:
+        torch.testing.assert_close(history.controller.state[key], memory_before[key], rtol=0, atol=0)
+    assert torch.equal(history.controller.generator.get_state(), rng_after_proposal)
+    assert adapter.capture_state()["case_id"] == "q0"
 
 
 @pytest.mark.parametrize("complete", [False, True])

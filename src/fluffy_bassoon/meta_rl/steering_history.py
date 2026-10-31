@@ -35,12 +35,21 @@ def content_hash(value):
 
 
 def reference(ref):
-    if (not isinstance(ref, dict) or set(ref) != {"path", "sha256"}
-            or not Path(ref["path"]).is_absolute()
-            or not re.fullmatch("[0-9a-f]{64}", ref["sha256"])
-            or digest(ref["path"]) != ref["sha256"]):
+    if (not isinstance(ref, dict) or not {"path", "sha256"} <= ref.keys()
+            or not ref.keys() <= {"path", "sha256", "root", "retention", "size_bytes"}
+            or not isinstance(ref["sha256"], str) or not re.fullmatch("[0-9a-f]{64}", ref["sha256"])):
         raise ValueError("Require an absolute immutable file reference with its actual SHA256")
-    return Path(ref["path"])
+    path = Path(ref["path"])
+    if "root" in ref:
+        root = Path(ref["root"])
+        path = (root / path).resolve()
+        if not root.is_absolute() or not path.is_relative_to(root.resolve()):
+            raise ValueError("Canonical raw reference escapes its original absolute corpus root")
+    if (not path.is_absolute() or digest(path) != ref["sha256"]
+            or ("retention" in ref and ref["retention"] != "immutable")
+            or ("size_bytes" in ref and path.stat().st_size != ref["size_bytes"])):
+        raise ValueError("Reference changed, is rolling, or differs in canonical byte size")
+    return path
 
 
 def read_json(ref):
@@ -174,6 +183,38 @@ def evaluation_plan(profile, *, validated=False):
                 scope="small paired pilot; no OOD, expert-data or ICRL competence claim")
 
 
+def verify_control_qualification(ref, profile):
+    """Map the actual A1 receipt fields; preserve references, never rerun episodes."""
+    binding = read_json(ref)
+    if binding.get("format") != "frozen_vla_4d_control_qualification_binding_v1":
+        raise ValueError("Bind the original driver plan/interface/GPU receipt/completed episode references")
+    interface = read_json(binding["control_interface"])
+    plan = read_json(binding["driver_plan"])
+    q = read_json(binding["driver_qualification"])
+    episode = read_json(binding["completed_episode"])
+    expected = profile["interface"]
+    if (binding["control_interface"]["sha256"] != expected["control_interface_sha256"]
+            or plan.get("interface_sha256") != expected["control_interface_sha256"]
+            or plan.get("scope_sha256") != profile["scope_sha256"]
+            or interface.get("motor_sha256") != expected["motor_sha256"]
+            or interface.get("action_horizon") != 32 or interface.get("flow_steps") != 5
+            or interface.get("public_dim") != expected["native_observation_dim"]
+            or interface.get("coefficient_dim") != 4 or interface.get("coefficient_bound") != 1.0
+            or q.get("status") != "passed" or not q.get("native_parity", {}).get("passed")
+            or not all(q.get(k) is True for k in ("zero_kv_exact", "zero_fixed_kv_exact", "zero_action_exact"))
+            or q.get("motor_gradients") != 0 or not q.get("kv_gradient_norm", 0) > 0
+            or not re.fullmatch("[0-9a-f]{64}", q.get("frozen_before", ""))
+            or q.get("frozen_before") != q.get("frozen_after")
+            or q.get("complete_real_episode") != q.get("qualification_episode")
+            or episode.get("complete") is not True
+            or episode.get("spec", {}).get("id") != q.get("complete_real_episode")
+            or not q.get("actual_actions", 0) > 0 or q["actual_actions"] != episode.get("primitive_steps")):
+        raise ValueError("Original A1 receipt does not qualify this exact motor/interface and real completed episode")
+    # Safetensors FILE hash above and actual frozen TENSOR fingerprint here are distinct identities.
+    return dict(driver_qualification=binding["driver_qualification"], frozen_tensor_sha256=q["frozen_before"],
+                motor_file_sha256=interface["motor_sha256"], actual_qualification_episode=q["complete_real_episode"])
+
+
 def admit_prefix(profile, prefix, *, objective):
     """Split entire learning lineages and physical cases BEFORE making windows."""
     validate_profile(profile)
@@ -185,12 +226,7 @@ def admit_prefix(profile, prefix, *, objective):
             or prefix.get("interface") != profile["interface"]
             or prefix.get("source_only") is not True):
         raise ValueError("Require a completed immutable source-only prefix, not a live mutable index")
-    qualification = read_json(prefix["control_qualification"])
-    if (qualification.get("interface_sha256") != profile["interface"]["control_interface_sha256"]
-            or not all(qualification.get(k) is True for k in
-                       ("actual_motor", "zero_edit_parity", "frozen_motor", "real_episode_complete"))
-            or (profile["interface"]["arm"] == "kv" and qualification.get("suffix_gradient_into_kv") is not True)):
-        raise ValueError("Actual motor/control qualification is required before admitting source data")
+    verify_control_qualification(prefix["control_qualification"], profile)
     lineages = prefix["lineages"]
     if len(lineages) != 6 or len({x["lineage_id"] for x in lineages}) != 6:
         raise ValueError("Require all two TRAIN plus one VAL lineage per condition without filtering")
@@ -248,6 +284,9 @@ def admit_prefix(profile, prefix, *, objective):
             raise ValueError("Measure AD learning against its exact initial source actor")
         if objective == "dpt" and teacher.get("teacher_kind") not in ("noise_sac", "constant_4d_oracle"):
             raise ValueError("DPT requires a qualified same-mapping SAC actor or explicit 4D oracle")
+        if objective == "dpt" and teacher.get("label_sampling_mode") != (
+                "sampled_gaussian" if teacher["teacher_kind"] == "noise_sac" else "fixed_coefficients"):
+            raise ValueError("Bind the exact physically qualified stochastic-actor or fixed-oracle label convention")
         if objective == "dpt" and teacher["teacher_kind"] == "constant_4d_oracle":
             oracle = read_json(teacher["oracle"])
             if (oracle.get("interface_sha256") != profile["interface"]["control_interface_sha256"]
@@ -282,6 +321,20 @@ def _linux(hostname):
 def _source_state(ref, *, lineage, profile):
     from .warmstart import checked_load
     state = checked_load(reference(ref), ref["sha256"], weights_only=False)
+    if state.get("format") == "source_coefficient_full_recovery_v1":
+        import torch
+        required_outer = {"collector", "python_rng", "numpy_rng", "torch_rng", "cuda_rng", "control", "event"}
+        if (not required_outer <= state.keys() or ref.get("retention") != "immutable"
+                or not isinstance(state["python_rng"], tuple) or not isinstance(state["numpy_rng"], tuple)
+                or not isinstance(state["torch_rng"], torch.Tensor) or state["torch_rng"].dtype != torch.uint8
+                or not isinstance(state["control"], dict) or not state["event"]):
+            raise ValueError("Require the actual immutable full recovery with global/control RNG provenance")
+        if state["cuda_rng"] is not None and (not isinstance(state["cuda_rng"], list)
+                or any(not isinstance(x, torch.Tensor) or x.dtype != torch.uint8 for x in state["cuda_rng"])):
+            raise ValueError("Full recovery CUDA RNG provenance differs")
+        state = state["collector"]
+        if state.get("format") != "source_coefficient_teacher_v1":
+            raise ValueError("Full recovery omitted its canonical inner collector state")
     if state.get("format") == "source_coefficient_teacher_v1":
         source, identity = state["profile"], state["lineage"]
         if (state.get("active_episode") is not None or state.get("pending") is not None
@@ -732,17 +785,29 @@ class DriverCoefficientStudent:
     def __init__(self, history, *, control, condition_id):
         self.history, self.control, self.condition_id = history, control, condition_id  # condition is audit-only.
         self.pending_features = self.pending_coefficients = None
+        self._episode_active = False
+        self._decisions = self._observations = self._steps = 0
+        self._before_act = None
 
     def act(self, native_features):
         import numpy as np
         if self.pending_features is not None:
             raise RuntimeError("Resolve the actual native transition before another student decision")
+        if not self._episode_active:
+            self._episode_active = True
+            self._decisions = self._observations = self._steps = 0
+        elif self.history.controller.episode_start:
+            raise RuntimeError("Reconcile the previous completed receipt before another physical episode")
         native = np.asarray(native_features, np.float32)
         if native.shape != (self.history.interface["native_observation_dim"],):
             raise ValueError("The existing motor exposes native features, not a pre-augmented or privileged state")
         # The qualified driver is the ONE owner of previous-command projection/reset state.
         augmented = np.asarray(self.control.student_observation(native), np.float32)
+        c = self.history.controller
+        self._before_act = {key: deepcopy(getattr(c, key)) for key in
+                            ("state", "previous_noise", "previous_reward", "previous_done", "episode_start")}
         choice = self.history.act(augmented)
+        self._decisions += 1
         self.pending_features, self.pending_coefficients = native.copy(), choice.copy()
         self.last_augmented_observation = augmented.copy()
         return choice.copy()
@@ -763,13 +828,52 @@ class DriverCoefficientStudent:
             raise ValueError("Frozen student observation must match its actually executed request")
         done = bool(terminated or truncated)
         self.history.observe(coefficients, reward, done)
+        self._observations += 1
+        self._steps += primitive_steps
+        self._before_act = None
         self.pending_features = self.pending_coefficients = None
 
+    def finish_episode(self, receipt):
+        """Use on_episode=adapter.finish_episode; zero-valid proposals are not actions."""
+        import numpy as np
+        from .robotwin_history_corpus import CorpusReader
+        if (not self._episode_active or receipt.get("complete") is not True
+                or receipt.get("chunks") != self._decisions or receipt.get("primitive_steps") != self._steps
+                or len(receipt.get("corpus_refs", [])) != self._decisions):
+            raise ValueError("Reconcile only the exact complete canonical episode and actual valid-step sum")
+        c = self.history.controller
+        if self.pending_features is not None:
+            if self._decisions != self._observations + 1 or self._before_act is None or not c.pending:
+                raise ValueError("A pending valid/uncertain proposal cannot be discarded")
+            ref = receipt["corpus_refs"][-1]
+            reader = CorpusReader(ref["root"])
+            chunk = reader.json(reader.path(ref["path"]), ref["sha256"])
+            native, outcome = chunk["native_result"], chunk["learning_result"]
+            mask = reader.arrays(native["arrays"], ["valid_action_mask"])["valid_action_mask"]
+            if (chunk.get("status") != "complete" or native["executed_primitive_steps"] != 0
+                    or chunk.get("context", {}).get("trial_id") != receipt.get("spec", {}).get("id")
+                    or not np.isin(mask, (0, 1)).all() or mask.any()
+                    or not (outcome["terminated"] or outcome["truncated"])):
+                raise ValueError("Only the canonical zero-valid terminal call can close without observe")
+            # Roll back the unexecuted decision token; retain the actually consumed
+            # proposal RNG. Existing valid action/reward feedback is not overwritten.
+            for key, value in self._before_act.items():
+                setattr(c, key, value)
+            c.pending = False
+            c.previous_done, c.episode_start = True, True
+            self.pending_features = self.pending_coefficients = None
+            self._before_act = None
+        elif self._decisions != self._observations or c.pending or not c.episode_start:
+            raise ValueError("The complete episode has unresolved feedback or no actual boundary")
+        self._episode_active = False
+
     def capture_state(self):
+        if self._episode_active:
+            raise RuntimeError("Reconcile the complete physical receipt before capturing a query snapshot")
         return self.history.capture_state()
 
     def restore_state(self, snapshot, *, query_action_seed):
-        if self.pending_features is not None:
+        if self.pending_features is not None or self._episode_active:
             raise RuntimeError("An unresolved native action blocks a new query")
         self.history.restore_state(snapshot, query_action_seed=query_action_seed)
 

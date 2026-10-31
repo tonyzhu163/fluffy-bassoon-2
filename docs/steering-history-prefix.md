@@ -64,6 +64,18 @@ cases and teacher-qualification cases stay outside source fitting data.
 
 ## Independent objective gates
 
+Motor admission maps the original A1 `plan.json`, interface,
+`gpu-qualification.json` and completed native episode summary references. It
+checks actual passed status, native parity, zero-edit flags, isolated adapter
+gradient, equal frozen tensor fingerprints and the real completed episode/action
+count. A binding envelope does not request another simulator episode. The motor
+file hash stays distinct from its actual frozen tensor fingerprint.
+
+Production checkpoints use `source_coefficient_full_recovery_v1`, with inner
+`source_coefficient_teacher_v1`, learner, global Python/NumPy/Torch/CUDA RNGs,
+control and event. Preserve original immutable retention/size fields and raw
+`root`/relative-path references. Rolling slots cannot be admitted.
+
 AD requires changing actors that actually acted, chronological update identities,
 complete resumable recoveries and measured source learning above the predeclared
 paired improvement threshold. Preserve failed/non-improving lineages and report
@@ -161,3 +173,9 @@ NLL demonstrates latent identification. Report actual queried outcomes, support
 and query costs, clipping and inference entropy beside NLL. Four case blocks are
 a mechanism pilot. The separate locked 32-case confirmation and independent
 seeds remain required before a reliable adaptation or generalization claim.
+
+Use `on_episode=student.finish_episode` with the existing driver. A zero-valid
+terminal receipt closes the episode without attributing an unexecuted proposal
+as action/reward feedback. It rolls back that decision token, retains actual
+proposal RNG consumption and preserves valid feedback. Valid or uncertain
+pending actions cannot be discarded this way.
