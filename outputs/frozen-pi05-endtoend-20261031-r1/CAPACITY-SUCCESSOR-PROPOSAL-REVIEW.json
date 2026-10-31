@@ -32,5 +32,19 @@
   "execution_owner": "/root/finish_assembly",
   "new_allocations_models_tests_actions": 0,
   "label_objective": "expert submitted-H32 PLAN imitation; not a reconstructed executed waypoint trajectory",
-  "coordinator_label_correction": "Native gen_sparse plans over the full submitted chunk before stepping; executed masks govern actual cost, not causal influence of later waypoint parameters. This supersedes the initial root valid-slots-only SL suggestion."
+  "coordinator_label_correction": "Native gen_sparse plans over the full submitted chunk before stepping; executed masks govern actual cost, not causal influence of later waypoint parameters. This supersedes the initial root valid-slots-only SL suggestion.",
+  "audit_only_reset_and_chunk_capture": {
+    "scope": "same25episodes/10000actions/5164GPU-s; existing task objects only",
+    "fields": [
+      "actual task.get_info and actor variant IDs",
+      "phone/stand world poses with frames/units",
+      "named measured articulation qpos including gripper joints",
+      "nominal gripper and actual gripper drive targets",
+      "camera calibration only if already available without new observation/render",
+      "globalNumPy state before/after native chunk without reseeding"
+    ],
+    "storage": "separate immutable audit refs/decision metadata, excluded public features and original reset_info equality fields",
+    "missing_fields": "explicit unavailable/reason; no unsupported source-scene equality gate",
+    "extra_episode_render_observer": false
+  }
 }
