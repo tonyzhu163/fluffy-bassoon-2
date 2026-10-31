@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r2-16d8af8/outputs/robotwin-sac65-cpu-compat-20261031-r2/gate_job.py", line 310, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r2-16d8af8/outputs/robotwin-sac65-cpu-compat-20261031-r2/gate_job.py", line 166, in main
+    smi = runtime.run('visibility', ['nvidia-smi', '-L'], code, os.environ, log, 5)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r2-16d8af8/outputs/robotwin-sac65-cpu-compat-20261031-r2/owned_cpu_runtime.py", line 197, in run
+    raise RuntimeError(reply['error'])
+RuntimeError: OSError: [Errno 8] Exec format error: 'nvidia-smi'

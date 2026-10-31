@@ -1,0 +1,39 @@
+{
+  "parent_campaign_id": "robotwin-native-wholetrial-20261030-r2",
+  "parent_manifest": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+  "parent_manifest_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+  "maximum_combined_actions": 4589600,
+  "prior_charged_once": true,
+  "source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "run_id": "robotwin-wholetrial-ppo-20261030-r2",
+  "benchmark_horizon_config_sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551",
+  "worker": {
+    "method": "ppo",
+    "campaign_id": "robotwin-native-wholetrial-20261030-r2-ppo",
+    "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+    "source_safety_actions": 1100000,
+    "maximum_complete_source_actions": 1080000,
+    "source_validation_actions": 43200,
+    "target_conditions": 3,
+    "target_actions": 76800,
+    "native_reference_actions": 6400,
+    "maximum_actions": 1226400,
+    "native_episodes": 1,
+    "resource": {
+      "gpus": 1,
+      "cpus": 16,
+      "memory_gib": 128,
+      "shared_memory_gib": 8,
+      "operational_driver_seconds": 43200,
+      "scheduler_cap_minutes": 780
+    }
+  },
+  "source_iterations": 100,
+  "trials_per_iteration": 6,
+  "source_eval_iterations": [
+    10,
+    25,
+    50,
+    100
+  ]
+}

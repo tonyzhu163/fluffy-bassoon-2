@@ -1,0 +1,490 @@
+{
+  "checked_at_utc": "2026-10-30T18:33:34.181540+00:00",
+  "allocation": "job-fji2xx8oq53h",
+  "methods": {
+    "ppo": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo-latest.json",
+        "sha256": "1fb251923fc3a95fa403e109920234140ad8b412f7d1777b16ca848e7d30b630"
+      },
+      "latest": {
+        "complete": false,
+        "children": 1,
+        "next_input": {
+          "manifest": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/continuation-manifest.json",
+            "sha256": "16a5e02a047a11a11257a759aacbe3a8aa56f0aff6efab7de5158b83525e0dcc"
+          },
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/coordinator-recovery.pt",
+            "sha256": "ba1f10c0068fa12a857df5b61eedaef5a341eccff606bc670e647e02c549e7e1"
+          },
+          "frozen_motor": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/frozen-motor.json",
+            "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+          }
+        },
+        "last_audit": {
+          "status": "passed_owned_child",
+          "kind": "source_round",
+          "method": "ppo",
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo",
+          "iteration": 58,
+          "audit": {
+            "method": "ppo",
+            "input_manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r5/ppo/continuation-manifest.json",
+              "sha256": "42657c08ad4259e2fd7adba7cb769a4444947f22359795c110ba1371e45e63d8"
+            },
+            "next_manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/continuation-manifest.json",
+              "sha256": "16a5e02a047a11a11257a759aacbe3a8aa56f0aff6efab7de5158b83525e0dcc"
+            },
+            "checkpoint": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/coordinator-recovery.pt",
+              "sha256": "ba1f10c0068fa12a857df5b61eedaef5a341eccff606bc670e647e02c549e7e1"
+            },
+            "completed_iterations": 58,
+            "source_actions": 10125,
+            "actual_actions": 10125,
+            "input_due_stages_completed": [],
+            "optimizer_step_increment": 5,
+            "trained_boundary": {
+              "schema": "robotwin_trained_parallel_boundary_v1",
+              "method": "ppo",
+              "predecessor_manifest_sha256": "16a5e02a047a11a11257a759aacbe3a8aa56f0aff6efab7de5158b83525e0dcc",
+              "source_steps": 556583,
+              "completed_source_trials": 348,
+              "completed_source_iterations": 58,
+              "optimizer_steps": 290,
+              "campaign_journal_fence": {
+                "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+                "journal_events": 41107,
+                "journal_sha256": "1f178084db7e866bbbda63ee100f9a032df575f08cc7f7cbf34039091eda7fcc",
+                "charged_actions": 634335,
+                "decision_count": 20543
+              },
+              "identity_digests": {
+                "learner": "b6587326de17a17cc9706a035f1e4b3b7a37c45e13ec321ee58e80d223adfad2",
+                "policy": "afd26ea07360351f3a04f6768d2e21fc15ac4b14afe002e03c370ccf1e3fa312",
+                "optimizer": "1d4fd1b035c4a438b6833660f7cfa632ad5fa80f77a96daabbf9dcd3845018b3",
+                "sampler": "21aa23c69c960b5fb17b13e7dd1e349a489a9878f458ca66dd64a9093529f468",
+                "learner_rng": "92ae616c014fc6f69d2ab89471c21f8b05946e46d0e9d6addba57626a26f4835",
+                "global_rng": "92ae616c014fc6f69d2ab89471c21f8b05946e46d0e9d6addba57626a26f4835",
+                "schedule": "597fcc4b78aa775c529784b85ae74329956c7c0fb9b812eee042708ace8a3335",
+                "task_steps": "6bda72e74187c36066ca5814889c57164359f79467a69b3392bc686d15235df0"
+              }
+            },
+            "corpus": {
+              "actual_actions": 10125,
+              "source_actions": 10125,
+              "completed_chunks": 327,
+              "hashed_raw_artifacts": 1006
+            },
+            "phase_actions": {
+              "native_before_target": 0,
+              "source_validation": 0,
+              "target": 0,
+              "source": 10125,
+              "native_after": 0
+            },
+            "final_canonical_head": {
+              "journal_events": 41107,
+              "journal_sha256": "1f178084db7e866bbbda63ee100f9a032df575f08cc7f7cbf34039091eda7fcc",
+              "charged_actions": 634335,
+              "decision_count": 20543
+            },
+            "frozen_motor_unchanged": true
+          },
+          "canonical_view": {
+            "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+            "snapshot_sha256": "6562df719979212ecf5c3b2dcb54d47f7413d96315bd6b8dfff2d37212fe3176",
+            "header_sha256": "c003eaa7d1c079728641dc3b126c32f73023ab57cda4941c08cd192e1ba6b89a",
+            "total_action_cap": 1226400,
+            "source_caps": {
+              "ppo": 1100000
+            },
+            "by_method": {
+              "native_after/native": 2400,
+              "native_before_target/native": 2400,
+              "source/ppo": 556583,
+              "source_validation/ppo": 30615,
+              "target/ppo": 42337
+            },
+            "journal_events": 41107,
+            "journal_sha256": "1f178084db7e866bbbda63ee100f9a032df575f08cc7f7cbf34039091eda7fcc",
+            "charged_actions": 634335,
+            "actual_actions": 634335,
+            "decision_count": 20543,
+            "pending_actions": 0,
+            "uncertain_actions": 0
+          },
+          "final_checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/coordinator-recovery.pt",
+            "sha256": "ba1f10c0068fa12a857df5b61eedaef5a341eccff606bc670e647e02c549e7e1"
+          },
+          "completed_units": [
+            "stage:iteration:10:complete",
+            "stage:iteration:10:native_after:native:adjust_bottle:0",
+            "stage:iteration:10:native_after:native:move_stapler_pad:0",
+            "stage:iteration:10:native_before_target:native:adjust_bottle:0",
+            "stage:iteration:10:native_before_target:native:move_stapler_pad:0",
+            "stage:iteration:10:source_validation:ppo:handover_mic",
+            "stage:iteration:10:source_validation:ppo:pick_diverse_bottles",
+            "stage:iteration:10:source_validation:ppo:place_a2b_left",
+            "stage:iteration:10:source_validation:ppo:place_object_stand",
+            "stage:iteration:10:source_validation:ppo:place_phone_stand",
+            "stage:iteration:10:source_validation:ppo:scan_object",
+            "stage:iteration:10:target:ppo:memory_reset:adjust_bottle:0",
+            "stage:iteration:10:target:ppo:memory_reset:move_stapler_pad:0",
+            "stage:iteration:10:target:ppo:normal:adjust_bottle:0",
+            "stage:iteration:10:target:ppo:normal:move_stapler_pad:0",
+            "stage:iteration:10:target:ppo:reward_blind:adjust_bottle:0",
+            "stage:iteration:10:target:ppo:reward_blind:move_stapler_pad:0",
+            "stage:iteration:25:complete",
+            "stage:iteration:25:native_after:native:adjust_bottle:0",
+            "stage:iteration:25:native_after:native:move_stapler_pad:0",
+            "stage:iteration:25:native_before_target:native:adjust_bottle:0",
+            "stage:iteration:25:native_before_target:native:move_stapler_pad:0",
+            "stage:iteration:25:source_validation:ppo:handover_mic",
+            "stage:iteration:25:source_validation:ppo:pick_diverse_bottles",
+            "stage:iteration:25:source_validation:ppo:place_a2b_left",
+            "stage:iteration:25:source_validation:ppo:place_object_stand",
+            "stage:iteration:25:source_validation:ppo:place_phone_stand",
+            "stage:iteration:25:source_validation:ppo:scan_object",
+            "stage:iteration:25:target:ppo:memory_reset:adjust_bottle:0",
+            "stage:iteration:25:target:ppo:memory_reset:move_stapler_pad:0",
+            "stage:iteration:25:target:ppo:normal:adjust_bottle:0",
+            "stage:iteration:25:target:ppo:normal:move_stapler_pad:0",
+            "stage:iteration:25:target:ppo:reward_blind:adjust_bottle:0",
+            "stage:iteration:25:target:ppo:reward_blind:move_stapler_pad:0",
+            "stage:iteration:50:complete",
+            "stage:iteration:50:native_after:native:adjust_bottle:0",
+            "stage:iteration:50:native_after:native:move_stapler_pad:0",
+            "stage:iteration:50:native_before_target:native:adjust_bottle:0",
+            "stage:iteration:50:native_before_target:native:move_stapler_pad:0",
+            "stage:iteration:50:source_validation:ppo:handover_mic",
+            "stage:iteration:50:source_validation:ppo:pick_diverse_bottles",
+            "stage:iteration:50:source_validation:ppo:place_a2b_left",
+            "stage:iteration:50:source_validation:ppo:place_object_stand",
+            "stage:iteration:50:source_validation:ppo:place_phone_stand",
+            "stage:iteration:50:source_validation:ppo:scan_object",
+            "stage:iteration:50:target:ppo:memory_reset:adjust_bottle:0",
+            "stage:iteration:50:target:ppo:memory_reset:move_stapler_pad:0",
+            "stage:iteration:50:target:ppo:normal:adjust_bottle:0",
+            "stage:iteration:50:target:ppo:normal:move_stapler_pad:0",
+            "stage:iteration:50:target:ppo:reward_blind:adjust_bottle:0",
+            "stage:iteration:50:target:ppo:reward_blind:move_stapler_pad:0"
+          ],
+          "rng_snapshots": {
+            "coordinator_before": "6d5b32ce9b28a46bfc31ece9a5e8fa28ad01d02309e1db07603294500cffbb07",
+            "coordinator_after": "92ae616c014fc6f69d2ab89471c21f8b05946e46d0e9d6addba57626a26f4835",
+            "learner_global_before": "6d5b32ce9b28a46bfc31ece9a5e8fa28ad01d02309e1db07603294500cffbb07",
+            "learner_global_after": "92ae616c014fc6f69d2ab89471c21f8b05946e46d0e9d6addba57626a26f4835",
+            "interpretation": "Coordinator RNG is authoritative; learner rng captures global state and may differ during partial evaluation"
+          },
+          "stage_statuses": {
+            "iteration:10": "complete",
+            "iteration:25": "complete",
+            "iteration:50": "complete"
+          },
+          "next_input": {
+            "manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/continuation-manifest.json",
+              "sha256": "16a5e02a047a11a11257a759aacbe3a8aa56f0aff6efab7de5158b83525e0dcc"
+            },
+            "checkpoint": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/coordinator-recovery.pt",
+              "sha256": "ba1f10c0068fa12a857df5b61eedaef5a341eccff606bc670e647e02c549e7e1"
+            },
+            "frozen_motor": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/frozen-motor.json",
+              "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+            }
+          }
+        },
+        "final_checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/coordinator-recovery.pt",
+          "sha256": "ba1f10c0068fa12a857df5b61eedaef5a341eccff606bc670e647e02c549e7e1"
+        },
+        "completed_units": [
+          "stage:iteration:10:complete",
+          "stage:iteration:10:native_after:native:adjust_bottle:0",
+          "stage:iteration:10:native_after:native:move_stapler_pad:0",
+          "stage:iteration:10:native_before_target:native:adjust_bottle:0",
+          "stage:iteration:10:native_before_target:native:move_stapler_pad:0",
+          "stage:iteration:10:source_validation:ppo:handover_mic",
+          "stage:iteration:10:source_validation:ppo:pick_diverse_bottles",
+          "stage:iteration:10:source_validation:ppo:place_a2b_left",
+          "stage:iteration:10:source_validation:ppo:place_object_stand",
+          "stage:iteration:10:source_validation:ppo:place_phone_stand",
+          "stage:iteration:10:source_validation:ppo:scan_object",
+          "stage:iteration:10:target:ppo:memory_reset:adjust_bottle:0",
+          "stage:iteration:10:target:ppo:memory_reset:move_stapler_pad:0",
+          "stage:iteration:10:target:ppo:normal:adjust_bottle:0",
+          "stage:iteration:10:target:ppo:normal:move_stapler_pad:0",
+          "stage:iteration:10:target:ppo:reward_blind:adjust_bottle:0",
+          "stage:iteration:10:target:ppo:reward_blind:move_stapler_pad:0",
+          "stage:iteration:25:complete",
+          "stage:iteration:25:native_after:native:adjust_bottle:0",
+          "stage:iteration:25:native_after:native:move_stapler_pad:0",
+          "stage:iteration:25:native_before_target:native:adjust_bottle:0",
+          "stage:iteration:25:native_before_target:native:move_stapler_pad:0",
+          "stage:iteration:25:source_validation:ppo:handover_mic",
+          "stage:iteration:25:source_validation:ppo:pick_diverse_bottles",
+          "stage:iteration:25:source_validation:ppo:place_a2b_left",
+          "stage:iteration:25:source_validation:ppo:place_object_stand",
+          "stage:iteration:25:source_validation:ppo:place_phone_stand",
+          "stage:iteration:25:source_validation:ppo:scan_object",
+          "stage:iteration:25:target:ppo:memory_reset:adjust_bottle:0",
+          "stage:iteration:25:target:ppo:memory_reset:move_stapler_pad:0",
+          "stage:iteration:25:target:ppo:normal:adjust_bottle:0",
+          "stage:iteration:25:target:ppo:normal:move_stapler_pad:0",
+          "stage:iteration:25:target:ppo:reward_blind:adjust_bottle:0",
+          "stage:iteration:25:target:ppo:reward_blind:move_stapler_pad:0",
+          "stage:iteration:50:complete",
+          "stage:iteration:50:native_after:native:adjust_bottle:0",
+          "stage:iteration:50:native_after:native:move_stapler_pad:0",
+          "stage:iteration:50:native_before_target:native:adjust_bottle:0",
+          "stage:iteration:50:native_before_target:native:move_stapler_pad:0",
+          "stage:iteration:50:source_validation:ppo:handover_mic",
+          "stage:iteration:50:source_validation:ppo:pick_diverse_bottles",
+          "stage:iteration:50:source_validation:ppo:place_a2b_left",
+          "stage:iteration:50:source_validation:ppo:place_object_stand",
+          "stage:iteration:50:source_validation:ppo:place_phone_stand",
+          "stage:iteration:50:source_validation:ppo:scan_object",
+          "stage:iteration:50:target:ppo:memory_reset:adjust_bottle:0",
+          "stage:iteration:50:target:ppo:memory_reset:move_stapler_pad:0",
+          "stage:iteration:50:target:ppo:normal:adjust_bottle:0",
+          "stage:iteration:50:target:ppo:normal:move_stapler_pad:0",
+          "stage:iteration:50:target:ppo:reward_blind:adjust_bottle:0",
+          "stage:iteration:50:target:ppo:reward_blind:move_stapler_pad:0"
+        ],
+        "stage_statuses": {
+          "iteration:10": "complete",
+          "iteration:25": "complete",
+          "iteration:50": "complete"
+        }
+      },
+      "successor_launches": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-001/launch.json"
+      ]
+    },
+    "ppo_reset": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset-latest.json",
+        "sha256": "336c59a3ac3f74eba2754316b377dff90b772a2764106b72accb406a0c08dd6e"
+      },
+      "latest": {
+        "complete": false,
+        "children": 1,
+        "next_input": {
+          "manifest": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/continuation-manifest.json",
+            "sha256": "efc7641a24854f59cdcfcd6b08701b92a498127f228a801a5f84d59240131091"
+          },
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/coordinator-recovery.pt",
+            "sha256": "af5ff4bc2c9a88925f225fdad17b115188bf6cf20d8c9b9d6f317439aff1ee6c"
+          },
+          "frozen_motor": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/frozen-motor.json",
+            "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+          }
+        },
+        "last_audit": {
+          "status": "passed_owned_child",
+          "kind": "source_round",
+          "method": "ppo_reset",
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset",
+          "iteration": 60,
+          "audit": {
+            "method": "ppo_reset",
+            "input_manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r5/ppo_reset/continuation-manifest.json",
+              "sha256": "a66c0c2f64d9c153200d31a550b22c01c99a5643e1126809f8eb2ebba0fe9931"
+            },
+            "next_manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/continuation-manifest.json",
+              "sha256": "efc7641a24854f59cdcfcd6b08701b92a498127f228a801a5f84d59240131091"
+            },
+            "checkpoint": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/coordinator-recovery.pt",
+              "sha256": "af5ff4bc2c9a88925f225fdad17b115188bf6cf20d8c9b9d6f317439aff1ee6c"
+            },
+            "completed_iterations": 60,
+            "source_actions": 9321,
+            "actual_actions": 9321,
+            "input_due_stages_completed": [],
+            "optimizer_step_increment": 5,
+            "trained_boundary": {
+              "schema": "robotwin_trained_parallel_boundary_v1",
+              "method": "ppo_reset",
+              "predecessor_manifest_sha256": "efc7641a24854f59cdcfcd6b08701b92a498127f228a801a5f84d59240131091",
+              "source_steps": 573979,
+              "completed_source_trials": 360,
+              "completed_source_iterations": 60,
+              "optimizer_steps": 300,
+              "campaign_journal_fence": {
+                "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+                "journal_events": 39988,
+                "journal_sha256": "91bbf5fe4e3f59617a8c8006d89811474eede01460b2150e5dcfbe8ff0cd610d",
+                "charged_actions": 617366,
+                "decision_count": 19983
+              },
+              "identity_digests": {
+                "learner": "feb68f6b90ae99e2d81a334679d9af7a86d7b88990e11d1fefc742ddab8db27e",
+                "policy": "5b9d14261e2fd9bbdd2765a8e5cd90d8b3ac3f2252ce5a3ba7da6af045270f2c",
+                "optimizer": "471c3cc2b4396697dce4afec8984c26062266d3dcf43ee4e878418833b48ae62",
+                "sampler": "21aa23c69c960b5fb17b13e7dd1e349a489a9878f458ca66dd64a9093529f468",
+                "learner_rng": "9ced33c1f2e5751fa06037a620f3f61b3b0f0ef56b6f97d6899a98008abf637c",
+                "global_rng": "9ced33c1f2e5751fa06037a620f3f61b3b0f0ef56b6f97d6899a98008abf637c",
+                "schedule": "5be439e507dd9dd65d3357756b6fc335687f2bdcddf8a237ad53c866f7865ed7",
+                "task_steps": "c93f51ed6deb7e7323559add17e093654e77611669878ce71631f18f30657812"
+              }
+            },
+            "corpus": {
+              "actual_actions": 9321,
+              "source_actions": 9321,
+              "completed_chunks": 301,
+              "hashed_raw_artifacts": 928
+            },
+            "phase_actions": {
+              "source_validation": 0,
+              "source": 9321,
+              "target": 0
+            },
+            "final_canonical_head": {
+              "journal_events": 39988,
+              "journal_sha256": "91bbf5fe4e3f59617a8c8006d89811474eede01460b2150e5dcfbe8ff0cd610d",
+              "charged_actions": 617366,
+              "decision_count": 19983
+            },
+            "frozen_motor_unchanged": true
+          },
+          "canonical_view": {
+            "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+            "snapshot_sha256": "5492eb708ca9ccb0a1af46c8bb400fefc949e4afff5165e0767e8a3a47b298c7",
+            "header_sha256": "0f23420d1e32213e311a150adb0608ca50dd2e14d397ecebd7f3ba9499482831",
+            "total_action_cap": 1168800,
+            "source_caps": {
+              "ppo_reset": 1100000
+            },
+            "by_method": {
+              "source/ppo_reset": 573979,
+              "source_validation/ppo_reset": 29424,
+              "target/ppo_reset": 13963
+            },
+            "journal_events": 39988,
+            "journal_sha256": "91bbf5fe4e3f59617a8c8006d89811474eede01460b2150e5dcfbe8ff0cd610d",
+            "charged_actions": 617366,
+            "actual_actions": 617366,
+            "decision_count": 19983,
+            "pending_actions": 0,
+            "uncertain_actions": 0
+          },
+          "final_checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/coordinator-recovery.pt",
+            "sha256": "af5ff4bc2c9a88925f225fdad17b115188bf6cf20d8c9b9d6f317439aff1ee6c"
+          },
+          "completed_units": [
+            "stage:iteration:10:complete",
+            "stage:iteration:10:source_validation:ppo_reset:handover_mic",
+            "stage:iteration:10:source_validation:ppo_reset:pick_diverse_bottles",
+            "stage:iteration:10:source_validation:ppo_reset:place_a2b_left",
+            "stage:iteration:10:source_validation:ppo_reset:place_object_stand",
+            "stage:iteration:10:source_validation:ppo_reset:place_phone_stand",
+            "stage:iteration:10:source_validation:ppo_reset:scan_object",
+            "stage:iteration:10:target:ppo_reset:normal:adjust_bottle:0",
+            "stage:iteration:10:target:ppo_reset:normal:move_stapler_pad:0",
+            "stage:iteration:25:complete",
+            "stage:iteration:25:source_validation:ppo_reset:handover_mic",
+            "stage:iteration:25:source_validation:ppo_reset:pick_diverse_bottles",
+            "stage:iteration:25:source_validation:ppo_reset:place_a2b_left",
+            "stage:iteration:25:source_validation:ppo_reset:place_object_stand",
+            "stage:iteration:25:source_validation:ppo_reset:place_phone_stand",
+            "stage:iteration:25:source_validation:ppo_reset:scan_object",
+            "stage:iteration:25:target:ppo_reset:normal:adjust_bottle:0",
+            "stage:iteration:25:target:ppo_reset:normal:move_stapler_pad:0",
+            "stage:iteration:50:complete",
+            "stage:iteration:50:source_validation:ppo_reset:handover_mic",
+            "stage:iteration:50:source_validation:ppo_reset:pick_diverse_bottles",
+            "stage:iteration:50:source_validation:ppo_reset:place_a2b_left",
+            "stage:iteration:50:source_validation:ppo_reset:place_object_stand",
+            "stage:iteration:50:source_validation:ppo_reset:place_phone_stand",
+            "stage:iteration:50:source_validation:ppo_reset:scan_object",
+            "stage:iteration:50:target:ppo_reset:normal:adjust_bottle:0",
+            "stage:iteration:50:target:ppo_reset:normal:move_stapler_pad:0"
+          ],
+          "rng_snapshots": {
+            "coordinator_before": "536cfd78b725ad3747e97af55391ea841e724e964efd7048f2c24295e01d9d55",
+            "coordinator_after": "9ced33c1f2e5751fa06037a620f3f61b3b0f0ef56b6f97d6899a98008abf637c",
+            "learner_global_before": "536cfd78b725ad3747e97af55391ea841e724e964efd7048f2c24295e01d9d55",
+            "learner_global_after": "9ced33c1f2e5751fa06037a620f3f61b3b0f0ef56b6f97d6899a98008abf637c",
+            "interpretation": "Coordinator RNG is authoritative; learner rng captures global state and may differ during partial evaluation"
+          },
+          "stage_statuses": {
+            "iteration:10": "complete",
+            "iteration:25": "complete",
+            "iteration:50": "complete"
+          },
+          "next_input": {
+            "manifest": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/continuation-manifest.json",
+              "sha256": "efc7641a24854f59cdcfcd6b08701b92a498127f228a801a5f84d59240131091"
+            },
+            "checkpoint": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/coordinator-recovery.pt",
+              "sha256": "af5ff4bc2c9a88925f225fdad17b115188bf6cf20d8c9b9d6f317439aff1ee6c"
+            },
+            "frozen_motor": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/frozen-motor.json",
+              "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+            }
+          }
+        },
+        "final_checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo_reset/coordinator-recovery.pt",
+          "sha256": "af5ff4bc2c9a88925f225fdad17b115188bf6cf20d8c9b9d6f317439aff1ee6c"
+        },
+        "completed_units": [
+          "stage:iteration:10:complete",
+          "stage:iteration:10:source_validation:ppo_reset:handover_mic",
+          "stage:iteration:10:source_validation:ppo_reset:pick_diverse_bottles",
+          "stage:iteration:10:source_validation:ppo_reset:place_a2b_left",
+          "stage:iteration:10:source_validation:ppo_reset:place_object_stand",
+          "stage:iteration:10:source_validation:ppo_reset:place_phone_stand",
+          "stage:iteration:10:source_validation:ppo_reset:scan_object",
+          "stage:iteration:10:target:ppo_reset:normal:adjust_bottle:0",
+          "stage:iteration:10:target:ppo_reset:normal:move_stapler_pad:0",
+          "stage:iteration:25:complete",
+          "stage:iteration:25:source_validation:ppo_reset:handover_mic",
+          "stage:iteration:25:source_validation:ppo_reset:pick_diverse_bottles",
+          "stage:iteration:25:source_validation:ppo_reset:place_a2b_left",
+          "stage:iteration:25:source_validation:ppo_reset:place_object_stand",
+          "stage:iteration:25:source_validation:ppo_reset:place_phone_stand",
+          "stage:iteration:25:source_validation:ppo_reset:scan_object",
+          "stage:iteration:25:target:ppo_reset:normal:adjust_bottle:0",
+          "stage:iteration:25:target:ppo_reset:normal:move_stapler_pad:0",
+          "stage:iteration:50:complete",
+          "stage:iteration:50:source_validation:ppo_reset:handover_mic",
+          "stage:iteration:50:source_validation:ppo_reset:pick_diverse_bottles",
+          "stage:iteration:50:source_validation:ppo_reset:place_a2b_left",
+          "stage:iteration:50:source_validation:ppo_reset:place_object_stand",
+          "stage:iteration:50:source_validation:ppo_reset:place_phone_stand",
+          "stage:iteration:50:source_validation:ppo_reset:scan_object",
+          "stage:iteration:50:target:ppo_reset:normal:adjust_bottle:0",
+          "stage:iteration:50:target:ppo_reset:normal:move_stapler_pad:0"
+        ],
+        "stage_statuses": {
+          "iteration:10": "complete",
+          "iteration:25": "complete",
+          "iteration:50": "complete"
+        }
+      },
+      "successor_launches": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-001/launch.json"
+      ]
+    }
+  }
+}

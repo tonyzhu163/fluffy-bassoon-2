@@ -1,0 +1,28 @@
+{
+  "status": "git_deployed_only_unlaunched_blocked",
+  "observed_at_utc": "2026-10-30T21:24:21.296616+00:00",
+  "candidate": "b6ec9fc4bd68ade9cea9a50b9af438c93ccdc054",
+  "remote_code": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r2",
+  "remote_code_clean": true,
+  "remote_runtime_output_exists": false,
+  "remote_input": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-sac65-cpu-compat-20261031-r2",
+  "input_contents": "Exact three0c16 helper files Git-extracted and SHA-verified; no actual bootstrap ticket.",
+  "review": "Root nominal guard/proof and budget/science static reviews passed; optimization exception review then found two additional cleanup failures. Deployment was Git-only before that late report; no executable dispatcher, tests, allocation or Submit ran.",
+  "blocking_findings": [
+    "Status publication open/fsync/link failure can release session holder before descendant cleanup.",
+    "Darwin ps enumeration timeout/parse failure fallback can kill only holder, orphaning transfer descendants."
+  ],
+  "next": "Sole exporter fixing both with meaningful fixtures. Keep b6ec worktree unchanged; corrected reviewed pin uses fresh code worktree and recorded prelaunch source-path change. Same unused r2 runtime/output identity and exact source65/budget.",
+  "allocation_id": null,
+  "bridge_armed": false,
+  "new_robot_actions": 0,
+  "new_model_queries": 0,
+  "new_gpu_seconds": 0,
+  "new_scheduler_seconds": 0,
+  "main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "requested_cpu_residual_scheduler_cap": 1500,
+  "residual_scheduler_seconds": 1651,
+  "form_tab": "89096840",
+  "form_status": "safe_placeholder_unsubmitted_0GPU8CPU64GiBshm2_25min_autofaultOFF",
+  "list_tab": "89096841"
+}

@@ -1,0 +1,69 @@
+{
+  "status": "passed_one_trained_round_each",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "launcher_commit": "c353970a316837b13277ec65587e58e5cb25ce56",
+  "plan_sha256": "8d08d54935fc77dad1debb4d417b5c84a8eee47225d96ff38e26a85200b523a1",
+  "no_automatic_retry": true,
+  "scheduler_gpu_seconds_requires_terminal_owner_reconciliation": true,
+  "parent_elapsed_seconds": 407.82707293424755,
+  "failure": null,
+  "result": {
+    "return_codes": {
+      "ppo": 0,
+      "ppo_reset": 0
+    },
+    "stop_reason": null,
+    "cleanup": {
+      "clean": true,
+      "sessions": [
+        {
+          "name": "ppo",
+          "identity": {
+            "pid": 1240,
+            "state": "R",
+            "pgid": 1240,
+            "sid": 1240,
+            "start_ticks": 565044314,
+            "uid": 0
+          },
+          "returncode": 0
+        },
+        {
+          "name": "ppo_reset",
+          "identity": {
+            "pid": 1241,
+            "state": "R",
+            "pgid": 1241,
+            "sid": 1241,
+            "start_ticks": 565044314,
+            "uid": 0
+          },
+          "returncode": 0
+        }
+      ],
+      "before": [],
+      "survivors": [],
+      "elapsed_seconds": 0.00602042768150568,
+      "deadline": 5652921.058330308
+    },
+    "final_gpu": {
+      "uuid": "GPU-ccbca68b-5544-d426-6a0d-c40862198c5c",
+      "used_bytes": 0,
+      "total_bytes": 102641958912,
+      "utilization_percent": 5.0,
+      "utc": "2026-10-30T18:01:09.314065+00:00"
+    },
+    "probe": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/gpu-probe.json",
+      "sha256": "c277b479eaef8e40d007dea740dfbc95e25e75fb1b591ad401700a12c952d3cf",
+      "uuid": "GPU-ccbca68b-5544-d426-6a0d-c40862198c5c"
+    },
+    "elapsed_seconds": 354.26299871504307,
+    "peak_used_bytes": 70391955456,
+    "peak_utilization_percent": 100.0,
+    "samples": 654,
+    "automatic_retries": 0,
+    "total_deadline": 5652921.058330308,
+    "collection_deadline": 5652741.058330308
+  }
+}

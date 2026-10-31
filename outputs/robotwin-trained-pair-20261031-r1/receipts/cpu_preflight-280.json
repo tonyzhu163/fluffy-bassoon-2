@@ -1,0 +1,39 @@
+{
+  "purpose": "cpu_preflight",
+  "returncode": 0,
+  "pid": 280,
+  "elapsed_seconds": 54.97931339684874,
+  "cleanup": {
+    "clean": true,
+    "sessions": [
+      {
+        "name": "cpu_preflight",
+        "identity": {
+          "pid": 280,
+          "state": "R",
+          "pgid": 280,
+          "sid": 280,
+          "start_ticks": 564755209,
+          "uid": 0
+        },
+        "returncode": 0
+      }
+    ],
+    "before": [],
+    "survivors": [],
+    "elapsed_seconds": 0.003720245324075222,
+    "deadline": 5650072.051586116
+  },
+  "command": [
+    "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+    "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-pair-launcher-20261031-r1/scripts/diagnostics/robotwin_trained_pair_preflight.py",
+    "--plan",
+    "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r1/compiled-plan.json",
+    "--plan-sha256",
+    "37083ddc24273be8343e05a2393f25a2523544c6df841710b1f5aa380083d832",
+    "--receipt",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/preflight.json",
+    "--mode",
+    "before"
+  ]
+}

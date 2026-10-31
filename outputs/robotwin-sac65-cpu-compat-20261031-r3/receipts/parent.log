@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r3/outputs/robotwin-sac65-cpu-compat-20261031-r3/gate_job.py", line 318, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r3/outputs/robotwin-sac65-cpu-compat-20261031-r3/gate_job.py", line 194, in main
+    result = runtime.run(name, command, code, os.environ, out / (name + '.log'), 10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r3/outputs/robotwin-sac65-cpu-compat-20261031-r3/owned_cpu_runtime.py", line 197, in run
+    raise RuntimeError(reply['error'])
+RuntimeError: TimeoutError: Owned CPU phase deadline reached

@@ -1,0 +1,68 @@
+{
+  "schema": "robotwin_same_grant_residual_CPU_owner_admission_v1",
+  "admitted_at_utc": "2026-10-30T23:28:31.575882+00:00",
+  "status": "admitted_one_diagnosed_residual_full_CPU_qualification",
+  "code_commit": "80ffd1bba1c27ce40cc7f7d36682250e6fe97a07",
+  "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r6",
+  "resources": {
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "shm_gib": 2,
+    "max_scheduler_seconds": 1680,
+    "automatic_fault_tolerance": false,
+    "automatic_retry": false
+  },
+  "authority": "Existing human AGENTS CPU-test scope; one diagnosed residual within already separately admitted1800 grant, no new science/GPU authority",
+  "old_envelope": {
+    "status": "CLOSED",
+    "actual": 620,
+    "sealed": 1180,
+    "borrow": 0,
+    "credit": 0
+  },
+  "same_qualification_grant": {
+    "original_cap": 1800,
+    "prior_R5_actual": 71,
+    "current_max": 1680,
+    "sealed": 49
+  },
+  "clocks": {
+    "shared": 1580,
+    "TERM": 1650,
+    "KILL": 1660,
+    "bootstrap120_inside": true,
+    "cleanup30_inside": true,
+    "stage30_inside": true
+  },
+  "fix": "Explicitly add existing exact hash-bound shared_runtime.pth literal after actual0GPU/importfirewall; retain-I-B-S/no pth or sitecustomize execution/no env modification",
+  "review": [
+    "root exact worker/path/source/budget review STATICPASS",
+    "raw_corpus exact80ffd path/accounting/science STATICPASS",
+    "optimization owner exact80ffd shared-path/residual STATICPASS"
+  ],
+  "latest_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "main_compatibility": "fresh main unchanged; scientific labels/source/150tests/guards unchanged; active SAC/complete PPO untouched",
+  "required_fixtures": 150,
+  "fixture_tests_executed": 0,
+  "qualification": "not qualified until all real full phases and clean teardown",
+  "additional_robot_actions": 0,
+  "additional_VLA_queries": 0,
+  "additional_SGD": 0,
+  "additional_fits": 0,
+  "launch_state": "not submitted at admission time",
+  "launch_receipt": {
+    "allocation_id": "job-ug06puib7vek",
+    "hostname": "job-ug06puib7vek-master-0",
+    "status": "actualRunning0GPUproof accepted",
+    "one_CUA_capture_ms": 18806,
+    "automatic_delivery": "published_actual_ticket_once/nullfailure",
+    "bootstrap_wait_seconds": 10.098350776359439,
+    "fixture_tests_passed": 150,
+    "fixture_failures": 0,
+    "fixture_errors": 0,
+    "fixture_skips": 0,
+    "data_qualification": "pending full projection/export/audit",
+    "actual_scheduler_cost": "pending terminal receipt"
+  }
+}

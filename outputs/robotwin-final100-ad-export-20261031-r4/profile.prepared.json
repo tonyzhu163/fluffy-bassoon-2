@@ -1,0 +1,211 @@
+{
+  "kind": "robotwin_final100_ad_cpu_v1",
+  "run_id": "robotwin-final100-ad-export-20261031-r4",
+  "preparation_status": "PREPARED_QUALIFIED_SCHEMA_CPU_CLOSEOUT_STATIC_REVIEW_PENDING",
+  "human_phase_authority": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/human-phase-authority.json",
+    "sha256": "04e7c5be42f3d6741b95287698b647cb91856f3a03c01bd88a29b7d2fa542e89"
+  },
+  "task_prefix": "mwj_1031_robotwin_final100_ad_r4_",
+  "scheduler_cap_seconds": 5700,
+  "global_work_seconds": 5400,
+  "external_TERM_seconds": 5470,
+  "external_KILL_seconds": 5480,
+  "bootstrap_wait_seconds": 120,
+  "cleanup_reserve_seconds": 30,
+  "gpus": 0,
+  "cpus": 8,
+  "memory_gib": 64,
+  "shm_gib": 2,
+  "prior_software_actual_seconds": 170,
+  "unrequested_seconds": 202,
+  "old_sealed_credit_seconds": 0,
+  "prior_cpu_closure": {
+    "path": "outputs/robotwin-ad500-software-qual-20261031-r1/CLOSURE.json",
+    "sha256": "8baddad4649a94d1722733d1c02f114dd7fc668d13cbb32c98debeadb20b61b9"
+  },
+  "qualified_software": {
+    "assembly": {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/terminal.json",
+      "sha256": "9017855b39a727602e8f5a526b93f09eea81131b8e8f8794431f04ff17de7fa7"
+    },
+    "ad": {
+      "path": "outputs/robotwin-ad-first-software-qual-20261031-r1/receipts/runtime/ad-software-tests-result.json",
+      "sha256": "8ccfa3b35d921314ed8e90038b4425f07ae21d8df62a7fbd3aa63ccf6bbefee1"
+    }
+  },
+  "site_packages": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages",
+  "shared_runtime_metadata_sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+  "auxiliary_bootstrap": [
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/software_profile.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/job-software.sh",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py"
+  ],
+  "auxiliary_file_sha256": {
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py": "a08f491766dfe1edb39902c8e0e462c3e1b7ce5faba948814629cda6060238dd",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/software_profile.py": "239a650d4633d38c3e451e50b22df439c4b0ee06e0ca646ac6362479912c616b",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py": "37bb20238efbf51c1a219b931267c91d26cc67d3cef2c96afdcc9d59b95d7477",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py": "bc7f941539325a96dbacfd1d172e1a461be984f058cc497e2128451de79e2824",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py": "1fb0747eee8f400422c833c01c364eb96ebf1a7dbf89ca97ab584baa6b86838c",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py": "e534c25b8b43a114bab61ae0f0d4c92f009ef3394bb7f0bfe2aa46de121fc613",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/job-software.sh": "a2c131a1fc8735e8298409be43fc599a13bff408aedf5a3837ebbac03f7d8e30",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py": "6fdde6b0faf9d3256372b4c035b620f48cfc461258a13ebf8d898b5268d5fb88",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py": "779ca030625e55eb48391726def5d518dfb733516ec0ced0177d0b8a0d2f9e83"
+  },
+  "ad": {
+    "root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-final100-ad-compat-20261031-r2",
+    "pin": "e5675998dd130ff722c922f1cf681f0a96f44eff",
+    "bootstrap": [
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/project_corpus.py",
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/run_offline.py",
+      "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py",
+      "src/fluffy_bassoon/meta_rl/robotwin_history.py",
+      "tests/test_robotwin_execution_migration_refs.py",
+      "tests/test_robotwin_offline_compat_gate.py",
+      "tests/test_robotwin_ad_first.py",
+      "tests/test_robotwin_history_corpus.py",
+      "tests/test_robotwin_finalbank_index_bindings.py"
+    ],
+    "file_sha256": {
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/project_corpus.py": "ae95dd2c16c96ec5e366a7795443a4dc18debfd47b708812b5e387eb7dfadc17",
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/run_offline.py": "8337a171a8ee5c742642471266bfa66a5c2658c10d87790c33a018d169a235ce",
+      "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py": "79952fcc0b8896f225623f397bc5b70581bb7701336f59878f33cd2f3955aeb7",
+      "src/fluffy_bassoon/meta_rl/robotwin_history.py": "88fa3dcf24da04682f2cd7c1bba57559019fd0042c87cc6cbd109b81a756d845",
+      "tests/test_robotwin_execution_migration_refs.py": "5f429dafaa8c7a6568158bc08cd767bb2348fe02b20ca8fd4dc76a34d6eb0a04",
+      "tests/test_robotwin_offline_compat_gate.py": "bf590c74480965c3ecc69c3530df2bbfc8ab6da2360ea8499c890c58a4dc4c39",
+      "tests/test_robotwin_ad_first.py": "07bba11ebe237f45aa5d26d2cb4e490de31f19fee203c976c9b986fd95fb768e",
+      "tests/test_robotwin_history_corpus.py": "381027e8c86ad93a4d57c2cd2d2d6585d4d344636a19f1c3d05d324d44a1d453",
+      "tests/test_robotwin_finalbank_index_bindings.py": "745eec4c854996c04b80f7149b06e8eecbcee5a3c79b48a5b0bad4fc8239f83b"
+    },
+    "tests": [
+      "tests/test_robotwin_execution_migration_refs.py",
+      "tests/test_robotwin_offline_compat_gate.py",
+      "tests/test_robotwin_ad_first.py",
+      "tests/test_robotwin_history_corpus.py",
+      "tests/test_robotwin_finalbank_index_bindings.py"
+    ],
+    "expected_tests": 146
+  },
+  "finalbank": {
+    "ancestry": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r1/final-ancestry.json",
+      "sha256": "0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e"
+    },
+    "tip": {
+      "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-final-20261031-r1/sac/continuation-manifest.json",
+      "sha256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4"
+    },
+    "source_stage": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+      "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+    },
+    "final_checkpoint": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/coordinator-recovery.pt",
+      "sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+      "bytes": 1043161745,
+      "ZIP_members": 210,
+      "all_CRCs_passed": true
+    },
+    "reused_projection": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/projection/projection.json",
+      "sha256": "fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf"
+    },
+    "producer_terminal": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/terminal.json",
+      "sha256": "af4898903ab5a211c0bccdfa5df58c28c517aba7be954bcf6f45d1854aa84b69"
+    },
+    "producer_cleanup": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/ownership/owned-cleanup-latest.json",
+      "sha256": "04f148adcafce855be21796361b2a1162dcc261d48193872867224d7d124a4b9"
+    },
+    "producer_storage": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/finalbank-projection/storage.json",
+      "sha256": "9b0ae69706ac373ba8bc74abdc28778c63960574f1e63253bbdd4cef84b7f0fb"
+    },
+    "retained_failed_output_accounting": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/retained-output-accounting.json",
+      "sha256": "e125758e6f679a787954091619e502fb645f5059a0279a694d035e7bd4b60fe4"
+    }
+  },
+  "stage_caps_seconds": {
+    "schema_regressions": 120,
+    "reuse": 180,
+    "train": 2400,
+    "validation": 600,
+    "admission": 400
+  },
+  "storage": {
+    "approved_new_logical_ceiling_bytes": 137438953472,
+    "max_summed_source_files": 500000,
+    "max_summed_source_bytes": 94489280512,
+    "export_metadata_headroom_bytes": 42949672960,
+    "min_free_bytes": 17179869184,
+    "hardlinks_only": true,
+    "copy_fallback": false,
+    "read_cost_estimate": "8*actual_summed_source_bytes +64GiB; capped at768GiB; estimate not measured syscall bytes",
+    "retained_R1_logical_reserve_bytes": 95563022336,
+    "new_residual_output_ceiling_bytes": 41875931136
+  },
+  "future_bindings": {
+    "actual_job_id": null,
+    "actual_hostname": null,
+    "actual_resource_receipt": null,
+    "auxiliary_commit": null,
+    "actual_projection_SHA": "fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf",
+    "actual_train_index_SHA": null,
+    "actual_validation_index_SHA": null,
+    "actual_AD500_full_model_SHA": null,
+    "actual_AD500_static_model_SHA": null,
+    "fit_or_readout_admitted": false
+  },
+  "canonical_grant": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/GRANT.json",
+    "sha256": "723194fb8f0b89a56c85146a155e2076f2e48a8ca024e8672d4d9a7a4630f966"
+  },
+  "prior_bank_actual_seconds": 889,
+  "compatibility_source_pin": "e5675998dd130ff722c922f1cf681f0a96f44eff",
+  "prior_bank_terminal_accounting": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/prior-bank-scheduler-accounting.json",
+    "sha256": "7cc1101f0a6b1c5d81f3569954a97b4dde2d49e69c0a1729e952dbef0d2be7a7"
+  },
+  "prior_bootstrap_actual_seconds": 150,
+  "prior_bootstrap_terminal_accounting": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/prior-bootstrap-scheduler-accounting.json",
+    "sha256": "49fbb97f4a0fbfb5150132f2ffe4867a517667aabf729582f1e287b12db78136"
+  },
+  "prior_schema_actual_seconds": 89,
+  "prior_schema_terminal_accounting": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r4/prior-schema-scheduler-accounting.json",
+    "sha256": "62a5f634c0da13cb489ea3bfdd3b6955e788bb0422a58dc5cfc471d62118f7c4"
+  },
+  "qualified_schema_predecessor": {
+    "result": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3/ad-software-tests-result.json",
+      "sha256": "dccc7907ea368a9dc1a83bfe425549e4f6b5d35be678798cb1156d54c35c41d8"
+    },
+    "imports": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3/ad-software-tests/software-tests-imports.json",
+      "sha256": "b3ed9813630f16790213e5eb48fcd89045f82c0f3cc8b5a6d3f44b5e8fd4b3b0"
+    },
+    "junit": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3/ad-software-tests/fixtures.junit.xml",
+      "sha256": "bcbcc65388951e1e5c2355ece9e412a436a97547fb590aa154fd5fdec019a13e"
+    },
+    "terminal": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3/terminal.json",
+      "sha256": "432745e321e68d5083b0765c548788bc2d5dec07262e33596120638c36010ebf"
+    },
+    "cleanup": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r3/private/ownership/owned-cleanup-latest.json",
+      "sha256": "714e2e4cab6eb2153b75bdcebc6b86bf6cf313c6abf362ecc67481c0aedfda64"
+    }
+  }
+}

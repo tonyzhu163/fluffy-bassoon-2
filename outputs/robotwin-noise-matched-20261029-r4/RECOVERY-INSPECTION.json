@@ -1,0 +1,361 @@
+{
+  "inspection": "read-only CPU checkpoint metadata and CRC; no learner instantiation, forward/backward, optimizer step or CUDA call",
+  "status": "wall_budget_stop",
+  "methods": {
+    "ppo": {
+      "source_steps": 4273,
+      "updates": 0,
+      "pending_rollouts": 3,
+      "source_counter_matches_summary": true,
+      "individual_counter_matches": true,
+      "schedule_matches": true,
+      "task_steps_match": true,
+      "contract_matches": true,
+      "sampler_present": true,
+      "learner_keys": [
+        "boundary",
+        "chunks",
+        "config",
+        "kind",
+        "noise_shape",
+        "observation_dim",
+        "optimizer",
+        "optimizer_steps",
+        "policy",
+        "primitive_steps",
+        "rng",
+        "sampler",
+        "schema_version",
+        "updates"
+      ],
+      "optimizer_steps": 0,
+      "optimizer_state_count": 0,
+      "pending_primitive_steps": 4273,
+      "rollout_tensor_shapes": [
+        {
+          "observations": [
+            44,
+            1,
+            3090
+          ],
+          "raw_actions": [
+            44,
+            1,
+            1024
+          ],
+          "log_probs": [
+            44,
+            1
+          ],
+          "values": [
+            44,
+            1
+          ],
+          "rewards": [
+            44,
+            1
+          ],
+          "trial_ends": [
+            44,
+            1
+          ],
+          "attempt_ends": [
+            44,
+            1
+          ],
+          "resets": [
+            44,
+            1
+          ],
+          "action_mask": [
+            44,
+            1
+          ]
+        },
+        {
+          "observations": [
+            44,
+            1,
+            3090
+          ],
+          "raw_actions": [
+            44,
+            1,
+            1024
+          ],
+          "log_probs": [
+            44,
+            1
+          ],
+          "values": [
+            44,
+            1
+          ],
+          "rewards": [
+            44,
+            1
+          ],
+          "trial_ends": [
+            44,
+            1
+          ],
+          "attempt_ends": [
+            44,
+            1
+          ],
+          "resets": [
+            44,
+            1
+          ],
+          "action_mask": [
+            44,
+            1
+          ]
+        },
+        {
+          "observations": [
+            52,
+            1,
+            3090
+          ],
+          "raw_actions": [
+            52,
+            1,
+            1024
+          ],
+          "log_probs": [
+            52,
+            1
+          ],
+          "values": [
+            52,
+            1
+          ],
+          "rewards": [
+            52,
+            1
+          ],
+          "trial_ends": [
+            52,
+            1
+          ],
+          "attempt_ends": [
+            52,
+            1
+          ],
+          "resets": [
+            52,
+            1
+          ],
+          "action_mask": [
+            52,
+            1
+          ]
+        }
+      ],
+      "global_rng_present": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ]
+    },
+    "sac": {
+      "source_steps": 4274,
+      "updates": 0,
+      "pending_rollouts": 0,
+      "source_counter_matches_summary": true,
+      "individual_counter_matches": true,
+      "schedule_matches": true,
+      "task_steps_match": true,
+      "contract_matches": true,
+      "sampler_present": true,
+      "learner_keys": [
+        "actor",
+        "actor_optimizer",
+        "contract",
+        "critic",
+        "critic_optimizer",
+        "environment_steps",
+        "log_temperature",
+        "numpy_rng",
+        "pending_chunks",
+        "primitive_steps",
+        "replay",
+        "replay_position",
+        "source_replay_rows_at_target_start",
+        "target_critic",
+        "target_replay_mode",
+        "target_start",
+        "temperature_optimizer",
+        "torch_rng",
+        "train_torch_rng",
+        "update_seconds",
+        "updates"
+      ],
+      "replay_rows": 139,
+      "observed_chunks": 139,
+      "optimizer_state_counts": {
+        "actor_optimizer": 0,
+        "critic_optimizer": 0,
+        "temperature_optimizer": 0
+      },
+      "private_rng_present": true,
+      "critic_target_present": true
+    },
+    "ppo_reset": {
+      "source_steps": 2928,
+      "updates": 0,
+      "pending_rollouts": 2,
+      "source_counter_matches_summary": true,
+      "individual_counter_matches": true,
+      "schedule_matches": true,
+      "task_steps_match": true,
+      "contract_matches": true,
+      "sampler_present": true,
+      "learner_keys": [
+        "boundary",
+        "chunks",
+        "config",
+        "kind",
+        "noise_shape",
+        "observation_dim",
+        "optimizer",
+        "optimizer_steps",
+        "policy",
+        "primitive_steps",
+        "rng",
+        "sampler",
+        "schema_version",
+        "updates"
+      ],
+      "optimizer_steps": 0,
+      "optimizer_state_count": 0,
+      "pending_primitive_steps": 2928,
+      "rollout_tensor_shapes": [
+        {
+          "observations": [
+            43,
+            1,
+            3090
+          ],
+          "raw_actions": [
+            43,
+            1,
+            1024
+          ],
+          "log_probs": [
+            43,
+            1
+          ],
+          "values": [
+            43,
+            1
+          ],
+          "rewards": [
+            43,
+            1
+          ],
+          "trial_ends": [
+            43,
+            1
+          ],
+          "attempt_ends": [
+            43,
+            1
+          ],
+          "resets": [
+            43,
+            1
+          ],
+          "action_mask": [
+            43,
+            1
+          ]
+        },
+        {
+          "observations": [
+            52,
+            1,
+            3090
+          ],
+          "raw_actions": [
+            52,
+            1,
+            1024
+          ],
+          "log_probs": [
+            52,
+            1
+          ],
+          "values": [
+            52,
+            1
+          ],
+          "rewards": [
+            52,
+            1
+          ],
+          "trial_ends": [
+            52,
+            1
+          ],
+          "attempt_ends": [
+            52,
+            1
+          ],
+          "resets": [
+            52,
+            1
+          ],
+          "action_mask": [
+            52,
+            1
+          ]
+        }
+      ],
+      "global_rng_present": [
+        "cuda",
+        "numpy",
+        "python",
+        "torch"
+      ]
+    }
+  },
+  "files": {
+    "coordinator-recovery.pt": {
+      "bytes": 28592417,
+      "sha256": "820ccc219c135f22fb4ac4e511bd746e08e0e8258ffb8fd41346cac3893afbb6",
+      "zip_crc_ok": true
+    },
+    "ppo-recovery.pt": {
+      "bytes": 7919931,
+      "sha256": "722618543005ffcac5591593f67f2f8eaa3bd9fcc1be5cebf66995e9487306a9",
+      "zip_crc_ok": true
+    },
+    "sac-recovery.pt": {
+      "bytes": 13493843,
+      "sha256": "a38b39f9a555f9b2bfb5dff978c5f9bf4907d148659475860f56dcc07cbfc248",
+      "zip_crc_ok": true
+    },
+    "ppo_reset-recovery.pt": {
+      "bytes": 7176325,
+      "sha256": "cc82511676e063f081daabcae444dce5ae5623571a8d9e6924cf3f4d8415c518",
+      "zip_crc_ok": true
+    }
+  },
+  "next_method_index": 2,
+  "coordinator_rng_keys": [
+    "cuda",
+    "numpy",
+    "python",
+    "torch"
+  ],
+  "frozen_motor_unchanged": true,
+  "frozen_motor": {
+    "before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "unchanged": true
+  },
+  "global_contract_matches": true
+}

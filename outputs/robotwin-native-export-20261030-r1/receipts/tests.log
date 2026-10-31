@@ -1,0 +1,22 @@
+...F
+=================================== FAILURES ===================================
+_______ test_recurrent_teacher_replays_its_own_resets_not_behavior_cache _______
+tests/test_robotwin_history_corpus.py:166: in test_recurrent_teacher_replays_its_own_resets_not_behavior_cache
+    np.testing.assert_array_equal(episode[0],episode[2])
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/contextlib.py:81: in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 
+E   Arrays are not equal
+E   
+E   Mismatched elements: 1024 / 1024 (100%)
+E   Max absolute difference: 0.00825991
+E   Max relative difference: 2.355407
+E    x: array([-0.30517 , -0.10041 , -0.264001, ..., -0.176439, -0.061022,
+E          -0.169569], dtype=float32)
+E    y: array([-0.30513 , -0.095216, -0.264617, ..., -0.175746, -0.057762,
+E          -0.166401], dtype=float32)
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_history_corpus.py::test_recurrent_teacher_replays_its_own_resets_not_behavior_cache
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 3 passed in 6.71s

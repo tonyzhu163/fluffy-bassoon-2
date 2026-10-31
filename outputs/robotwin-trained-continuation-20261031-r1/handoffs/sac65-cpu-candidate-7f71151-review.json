@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-10-30T20:19:07.144295+00:00",
+  "candidate": "7f71151cc5cf9ee74e41b8d064a7b4e8217f6ad6",
+  "status": "not_admitted_not_deployed_not_launched_pending_corrected_pin",
+  "resources": {
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "scheduler_cap_seconds": 1800
+  },
+  "scope": "Necessary saved-data SAC65 compatibility only: no source jobs, robots, VLA queries, SGD/fits or ledgers changed.",
+  "reviewed_origin_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "qualified_algorithm_reference": "1aeea4f9fcc307bb147def92374bb81a3e2cb50e",
+  "new_reader_requires_cpu_qualification": true,
+  "required_fixes": [
+    "Explicit ordered-ancestry final manifest equals bound tip manifest.",
+    "Timeout/TERM/INT phase cleanup must reap owned worker descendants.",
+    "Bootstrap must bind actual running resource/UI receipt and current hostname after submission, with one external1770/+10 timer before wait and the same absolute1700 internal deadline; avoid nested independent timeout groups."
+  ],
+  "implementation_owner": "01a18acc-88a4-7610-9224-08e2663e4af9",
+  "independent_review_owner": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+  "replacement_pin": null,
+  "root_bootstrap_implementation_created": false,
+  "review_limits": "Static inspection only; no tests/model or payload projection performed. Existing single-root CPU algorithms remain unchanged in declared AST checks, but this is not new-reader qualification."
+}

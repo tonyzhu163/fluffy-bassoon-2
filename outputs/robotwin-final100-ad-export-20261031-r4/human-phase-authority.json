@@ -1,0 +1,22 @@
+{
+  "schema": "robotwin_ad_first_human_phase_authority_v1",
+  "direct_human_authorization": true,
+  "human_message_reference": {
+    "threadId": "01a18677-a163-78e3-a783-b557b3c621b2",
+    "turnId": "01a1900d-0e5d-7711-93bd-fa068234869f",
+    "messageId": "01a1900d-0f0e-7b91-b3d9-2a4187763feb",
+    "questionItemId": "[\"request_user_input_async\",\"call_8221857b6e1c4771a3c1969616821d8d\",0]",
+    "question": "May I fund the RoboTwin AD-first phase with up to 3 additional GPU-hours, 2 CPU-worker hours on 8 cores, 128GiB of new storage and 60,000 new target actions? It reuses the existing 1M-action source bank, trains AD full/static for 500 updates each, then tests zero-shot and one actual support episode plus a separate query on the 16 development cases. Each stage runs only after its allocated checks pass.",
+    "answer": "Approve RoboTwin AD-first phase (Recommended)"
+  },
+  "CPU_worker_seconds": 7200,
+  "new_storage_bytes": 137438953472,
+  "aggregate_GPU_seconds": 10800,
+  "new_target_actions": 60000,
+  "new_source_actions": 0,
+  "scope": "final source100 AD/BC export; ADfull/static500 each; fixed K0/K1 DEV readout",
+  "canonical_grant": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r1/GRANT.json",
+    "sha256": "723194fb8f0b89a56c85146a155e2076f2e48a8ca024e8672d4d9a7a4630f966"
+  }
+}

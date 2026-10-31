@@ -2,6 +2,7 @@
 from copy import deepcopy
 
 import numpy as np
+import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.vla_noise_ppo import PPOConfig, RecurrentNoisePPO
@@ -91,6 +92,50 @@ def test_exact_external_budget_cut_bootstraps_and_is_not_terminal_task():
     assert rollout["bootstrap"].shape==(1,)
     assert np.isfinite(rollout["bootstrap"]).all()
     model.update([rollout])
+
+
+class TaskHorizonEnv(FakeNoiseEnv):
+    def reset(self, task_name, seed):
+        self.episode_limit = {"handover_mic": 7, "scan_object": 3}[task_name]
+        return super().reset(task_name, seed)
+
+    def step(self, noise, *, max_primitive_steps=None):
+        count = min(2, self.episode_limit - self.steps)
+        if max_primitive_steps is not None:
+            count = min(count, max_primitive_steps)
+        self.steps += count
+        timeout = self.steps == self.episode_limit
+        cut = max_primitive_steps is not None and count >= max_primitive_steps and not timeout
+        return (np.array([self.seed % 7, self.steps], np.float32), 0., False, timeout or cut,
+                dict(primitive_steps=count, success=False, budget_truncated=cut))
+
+
+def test_task_horizons_normalize_clock_and_replay_saved_inputs_exactly():
+    model = RecurrentNoisePPO(2, (1, 2), device="cpu", seed=4, config=PPOConfig(
+        width=8, layers=1, heads=2, memory_length=8, epochs=1, minibatch_trials=1,
+        train_episodes=2, episode_limit=7))
+    env = TaskHorizonEnv()
+    metadata = []
+    long, long_result = model.collect_trial(env, "handover_mic", [1, 2], decision_callback=metadata.append)
+    short, short_result = model.collect_trial(env, "scan_object", [1, 2])
+    assert long_result["primitive_steps"] == 14 and short_result["primitive_steps"] == 6
+    assert [row["episode_limit"] for row in long_result["episodes"]] == [7, 7]
+    assert [row["episode_limit"] for row in short_result["episodes"]] == [3, 3]
+    assert long["episode_limits"].flatten().tolist() == [7] * 8
+    assert short["episode_limits"].flatten().tolist() == [3] * 4
+    torch.testing.assert_close(long["observations"][:4, 0, -1], torch.tensor([0., 2/7, 4/7, 6/7]))
+    torch.testing.assert_close(short["observations"][:2, 0, -1], torch.tensor([0., 2/3]))
+    assert all(item["episode_limit"] == 7 for item in metadata)
+    assert model.replay_error(long) == {"log_prob_max_error": 0., "value_max_error": 0.}
+    # The stored causal inputs are authoritative even if the optional new
+    # audit field is absent, as it is on older checkpoints.
+    del short["episode_limits"]
+    assert model.replay_error(short) == {"log_prob_max_error": 0., "value_max_error": 0.}
+
+
+def test_task_horizon_cannot_exceed_policy_safety_bound():
+    with pytest.raises(ValueError, match="declared horizon bound"):
+        learner().collect_trial(TaskHorizonEnv(), "handover_mic", [1, 2])
 
 
 def test_full_recovery_reproduces_next_trial_and_optimizer_update():

@@ -378,6 +378,114 @@ variation persists.
 
 [Results and compact raw evidence](../../../outputs/noise-mode-icrl-20261029-s0-r1/RESULTS.md).
 
+
+## RoboTwin saved-controller optimizer diagnostics, 2026-10-30
+
+These verify optimizer execution on real saved source trajectories, not robot
+performance or successful meta-learning. The frozen Motus pi0.5 H32 motor was
+not instantiated; no new robot actions were collected. Twelve complete K4
+source episodes (4,273actions,140decisions; three of the six source tasks)
+were reused from r4. Restoring the motor's global high float32 matmul mode
+reproduced all original behavior likelihoods/values exactly.
+
+Baige`job-yem1ctw27j26`, source`98efb377c525ff2c101b7e9ec0f6eaf115299b66`,
+completed one independent batch3/five-epoch PPO update/five optimizer steps in
+5.58s and saved complete recovery. Its3e-4setting was unsafe: reported sampled
+KL8.86e19; subsequent exact Gaussian KL(old||post)12.8442, clipped joint ratios
+100%. Variance contributed only0.000841to KL; mean movement dominated.
+
+Baige`job-ypsxplhesd9x`, source`3e1de8e80d3f333adeba252884e173ce54f8b467`,
+completed two independent original-state forks at3e-5and3e-6(five steps each).
+Post analytic KL was0.43548/0.01065and post clipped fractions97.14%/75.00%.
+Neither passed the predeclared KL<=.02and clip-fraction<=.2gate, although3e-6
+reduced drift substantially. Repeat recurrent mean/log-probability reconstruction
+was exact for both. Full policy/optimizer/sampler/RNG and Gaussian diagnostics
+are retained. The three forks are not sequential source-training updates.
+SAC still has139warmup rows/0updates; the batch8main comparison remains
+unlaunched and has no robot-performance or adaptation result.
+
+[Diagnostics and raw evidence](../../../outputs/robotwin-saved-ppo-lr-20261030-r1/RESULTS.md).
+[Revised proposal, resource approval pending](../../../outputs/robotwin-staged-20261030-r2/PROTOCOL.md).
+
+The RoboTwin KL values above sum all1,024noise coordinates before averaging
+stored decisions. Its current fullH32×32interface differs from LIBERO's32D
+coordinate repeated over nativeH10. Within-RoboTwin arms share the interface;
+cross-benchmark steering dimensionality is not matched. No tied32D RoboTwin
+ablation has been launched or inferred from the existing1024D histories.
+
+
+## RoboTwin complete PPO source100 endpoints, 2026-10-31
+
+Persistent and independently trained-reset GTrXL/PPO each completed100 rounds,
+600 whole K4 trials /2400 source episodes,100 PPO updates /500 Adam steps.
+Actual source actions were964875 and963759. Scientific lineage `db0184089fa88a5f96c153f9b80029bb91b77def`
+continued through runtime `57016ba08eed79043fd67bf8b085bd6d42e6d766` and supervisor
+`0c16c2b794f8de5b78603206917e72195083c265`; the common Motus pi0.5 motor stayed frozen.
+Baige `job-fji2xx8oq53h` finished source and all declared evaluation stages with
+exit0 /scheduler and pod Success. Its actual running cost was15451GPU-seconds;
+176 owned-cleanup receipts were clean and final GPU memory was0.
+
+Stage100 source validation: persistent2/24, trained reset3/24. Target bottle/stapler
+successes per K8 trial were persistent normal7/1, same-weight memory-reset6/1,
+reward-blind8/1, separately trained reset8/0. Actual case seeds, initial public
+features and raw observations match across controls. Source/final/stage100
+checkpoint SHA and263-member ZIP CRCs, unchanged motor/source RNG and zero
+pending/uncertain canonical heads passed independent audits.
+
+The small one-seed/two-development-task panels do not establish a memory or
+adaptation advantage. The contemporaneous native probes use another seed bank
+and are unpaired. SAC was still ongoing at this PPO-only audit; its completed
+endpoint is recorded below.
+The [complete paired report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-PPO-RESULTS.md)
+contains exact checkpoint identities, episode1/2/4/8 traces, costs and audits.
+
+The [native16 saved-result reconciliation](../../../outputs/robotwin-trained-continuation-20261031-r1/NATIVE16-REUSE.md)
+subsequently verified that the earlier qualified native panel already contains
+the exact16 final target cases: native6/8 bottle and0/8 stapler. All48 PPO and16
+trained-reset initial cases, both native result/unit hashes and the common motor/
+capture contract match. Distinct2fd/570 executors and stochastic draws remain
+explicit. This cross-run control requires no new actions and does not establish
+a statistically reliable or memory-specific benefit.
+
+The same-weight saved `memory_reset` condition is a recurrent-cache reset lesion;
+it retains explicit previous-noise/reward across episodes. It must not be
+called fully memoryless. The separately trained episode-reset arm clears both
+cache and explicit feedback. Exact570 source confirms these independent flags.
+
+## RoboTwin original three-arm campaign complete, 2026-10-31
+
+Feature-conditioned DSRL-style SAC completed100 balanced source rounds /600
+complete K4 trials /2400 episodes, using1003790 source actions and638500 updates
+per actor, critic and temperature optimizer (1915500 optimizer steps total).
+This is not an authors' PixelSAC reproduction. All10/25/50/100 evaluation stages
+are complete. Baige `job-gv77bzhyeroo` and its pod finished Success/exit0;
+actual scheduler running time was32230GPU-seconds, distinct from the supervisor
+and pod clocks. No additional source actions or source updates occurred during
+the final evaluation.
+
+Stage100 source validation was2/24. Frozen SAC achieved6/8 bottle and2/8 stapler;
+online SAC achieved5/8 and0/8, with3320 additional joint target updates using
+fresh target replay. Those target updates are not source SGD. Both conditions
+are stochastic; their first sampled noise, motor action and next observation
+agree, while online updates after the first chunk change later trajectories.
+All56 final validation/target reset cases match the PPO/reset actual seeds,
+initial public features and raw observations. Independent checkpoint SHA/210
+ZIP-member CRCs,640 native action masks totaling19700 final-evaluation actions,
+61 zero-exit children, unchanged motor, restored source RNG and closed canonical
+pending0/uncertain0 checks passed. Full replay/Adam/RNG/corpus recoveries remain
+preserved; this final audit did not rehash every RGB payload.
+
+The three source banks total2932424 actions /1800 whole K4 trials /7200 episodes.
+Across the final one-seed/two-development-task panels, neither persistent memory
+nor online target adaptation has an established advantage. The
+[final campaign report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md)
+and [SAC endpoint](../../../outputs/robotwin-native-continuation-sac-20261030-r1/FINAL-RESULTS.md)
+retain episode1/2/4/8 outcomes, recovery identities, actual costs and limits.
+The separate fixed-SAC65 CPU converter/export qualification passed150 tests and
+390 K4 /651638 actions; it does not qualify mean-teacher competence, final100
+student fits or adaptation. Early student fits still use only the early SAC5
+subset. Further fits and teacher measurements remain separate resource proposals.
+
 ## RoboTwin episode-reset PPO: completed100-round endpoint
 
 The separately trained episode-reset GTrXL controller completed100 source

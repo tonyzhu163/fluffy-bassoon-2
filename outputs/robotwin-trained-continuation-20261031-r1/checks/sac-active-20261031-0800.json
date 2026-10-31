@@ -1,0 +1,127 @@
+{
+  "checked_at_utc": "2026-10-31T00:00:11.768086+00:00",
+  "job": "job-gv77bzhyeroo",
+  "active_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment",
+  "outer_exit": null,
+  "failures": {},
+  "progress_mtime_utc": "2026-10-30T23:59:33.877011+00:00",
+  "last_progress": {
+    "stage": "target_trial",
+    "elapsed_seconds": 649.763876728015,
+    "method": "sac_online",
+    "task": "adjust_bottle",
+    "successes": [
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true
+    ]
+  },
+  "native_parity": [
+    {
+      "stage": "motor_noise_parity",
+      "elapsed_seconds": 51.321524508995935,
+      "task": "handover_mic",
+      "max_abs_error": 0.0,
+      "tolerance": 2e-05,
+      "passed": true
+    }
+  ],
+  "source_restore": [
+    {
+      "stage": "source_stage_evaluation_start",
+      "elapsed_seconds": 84.55389067088254,
+      "source_action_milestone": null,
+      "source_iteration": 100,
+      "source_steps": {
+        "sac": 1003790
+      },
+      "source_updates": {
+        "sac": 638500
+      },
+      "pending_trials": {
+        "sac": 0
+      }
+    }
+  ],
+  "stage100": {
+    "source_action_milestone": null,
+    "status": "evaluating",
+    "snapshots": {
+      "sac": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+        "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+      }
+    },
+    "source_steps": {
+      "sac": 1003790
+    },
+    "source_updates": {
+      "sac": 638500
+    },
+    "pending_trials": {
+      "sac": 0
+    },
+    "source_iteration": 100,
+    "manifest_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/stage.json"
+  },
+  "recent_stages": [
+    {
+      "stage": "source_validation_trial",
+      "elapsed_seconds": 273.0958831270691,
+      "method": "sac",
+      "task": "place_a2b_left",
+      "successes": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "updates": 638500
+    },
+    {
+      "stage": "source_validation_trial",
+      "elapsed_seconds": 328.7980312749278,
+      "method": "sac",
+      "task": "place_object_stand",
+      "successes": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "updates": 638500
+    },
+    {
+      "stage": "source_validation_trial",
+      "elapsed_seconds": 390.7064627208747,
+      "method": "sac",
+      "task": "place_phone_stand",
+      "successes": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "updates": 638500
+    },
+    {
+      "stage": "source_validation_trial",
+      "elapsed_seconds": 461.3670695889741,
+      "method": "sac",
+      "task": "scan_object",
+      "successes": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "updates": 638500
+    }
+  ],
+  "interpretation": "Original stage100 evaluation only; target clone optimizer counters are not new source training. Full endpoint remains pending."
+}

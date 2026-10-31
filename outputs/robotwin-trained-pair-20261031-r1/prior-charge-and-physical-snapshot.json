@@ -1,0 +1,80 @@
+{
+  "schema": "robotwin_trained_pair_actual_charges_snapshot_v1",
+  "owner_release": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r1/owner-release.json",
+    "sha256": "6503c34eb0d568ef5a8f8398c2e8f34fa021e94b37b38de9c8e05663db8679c2"
+  },
+  "known_prior_terminal_gpu_seconds_before_current_serials": 61387,
+  "new_terminal_serial_gpu_seconds": 13932,
+  "known_terminal_gpu_seconds_including_released_serials": 75319,
+  "full_cumulative_gpu_seconds": null,
+  "reason_full_total_null": "Historical optimization630GPU-s is reported but not independently timed in this review; SAC continuation remains active and its eventual terminal charge is pending.",
+  "prior_itemization": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r1/prior-cost-preparation.json",
+    "sha256": "8d68febec75f929df9d872d381cffc0acc8afb68dd079f71a7de1fd40a418a8e"
+  },
+  "released_serial_workers": {
+    "ppo": {
+      "allocation_id": "job-zgdkrn0qqueh",
+      "actual_scheduler_gpu_seconds": 6989,
+      "source_rounds": 52,
+      "source_actions": 499022,
+      "charged_actions": 576774,
+      "canonical_head": {
+        "journal_events": 37373,
+        "journal_sha256": "0f6a88cd7e7939d831f2498b1545f276d00bc570fa42eec23b3b759b69f38f88",
+        "charged_actions": 576774,
+        "decision_count": 18679
+      },
+      "remaining_total_actions": 649626,
+      "remaining_source_safety_actions": 600978,
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "source_caps_unchanged": {
+        "ppo": 1100000
+      }
+    },
+    "ppo_reset": {
+      "allocation_id": "job-0sz3b9z9h7t5",
+      "actual_scheduler_gpu_seconds": 6943,
+      "source_rounds": 54,
+      "source_actions": 516264,
+      "charged_actions": 559651,
+      "canonical_head": {
+        "journal_events": 36252,
+        "journal_sha256": "861c1273f37346d0fd8ff3afe5e0d603d41bb7b272733ffc63ac6bbfd14144fe",
+        "charged_actions": 559651,
+        "decision_count": 18118
+      },
+      "remaining_total_actions": 609149,
+      "remaining_source_safety_actions": 583736,
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "source_caps_unchanged": {
+        "ppo_reset": 1100000
+      }
+    }
+  },
+  "active_separate_worker": {
+    "method": "sac",
+    "allocation_id": "job-gv77bzhyeroo",
+    "terminal_gpu_seconds": null,
+    "collection_continues": true
+  },
+  "qualification_capacity_reused": false,
+  "first_panel_sealed": {
+    "unused_actions": 10463,
+    "unused_gpu_seconds": 2449
+  },
+  "fresh_qualification_sealed": {
+    "unused_actions": 290,
+    "unused_gpu_seconds": 2247
+  },
+  "source_goal_rounds": 100,
+  "first_pair_final_rounds": {
+    "ppo": 53,
+    "ppo_reset": 55
+  },
+  "input_due_evaluation_actions": 0,
+  "maximum_new_source_actions": 21600
+}

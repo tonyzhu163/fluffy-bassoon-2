@@ -1,0 +1,26 @@
+{
+  "name": "libero_cached_scalar_b1_cpu_fakes",
+  "source": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1",
+    "source_commit": "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa",
+    "git_clean": true
+  },
+  "command": [
+    "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-rA",
+    "-o",
+    "addopts=",
+    "-o",
+    "xfail_strict=true",
+    "-p",
+    "no:cacheprovider",
+    "--junitxml=/mowenjie/fluffy-bassoon-2/outputs/robotwin-continuation-software-qual-20261031-r1/phase-2-libero_cached_scalar_b1_cpu_fakes/junit.xml",
+    "--basetemp=/mowenjie/fluffy-bassoon-2/outputs/robotwin-continuation-software-qual-20261031-r1/phase-2-libero_cached_scalar_b1_cpu_fakes/tmp",
+    "tests/test_vla_cached_scalar_motor.py"
+  ],
+  "pythonpath": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1/src:/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1/tests:/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1/scripts/diagnostics",
+  "started_at_utc": "2026-10-30T18:20:22.517433+00:00"
+}

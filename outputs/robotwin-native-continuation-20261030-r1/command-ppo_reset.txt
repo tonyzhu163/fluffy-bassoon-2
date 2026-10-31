@@ -1,0 +1,5 @@
+bash -lc 'set -euo pipefail
+TASK_LAUNCH=/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-launch-20261030-r1
+test "$(git -C "$TASK_LAUNCH" rev-parse HEAD)" = c715e7b74218f2d54eac7837c4dfefcc2644e69a
+exec bash "$TASK_LAUNCH/outputs/robotwin-native-continuation-20261030-r1/job.sh" e825821a7c2231952bcf1042162f3470bd8ecdea robotwin-native-continuation-ppo_reset-20261030-r1 ppo_reset /mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json "$TASK_LAUNCH/outputs/robotwin-native-failure-20261030-r1/manifests/ppo_reset-initial-e825821.json" e86cf009652a8eb9ddc2c0e9d0629052ab9ffaf22477738bc97efd2e1ac5bb1b 780
+'

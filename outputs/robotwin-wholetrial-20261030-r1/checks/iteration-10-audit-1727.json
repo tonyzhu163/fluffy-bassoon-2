@@ -1,0 +1,405 @@
+{
+  "checked_at_utc": "2026-10-30T09:27:56.655426+00:00",
+  "stage": 10,
+  "source_validation": {
+    "ppo": {
+      "episodes": 24,
+      "successes": 1,
+      "complete": true,
+      "source_snapshot_actions": 93851
+    },
+    "sac": {
+      "episodes": 24,
+      "successes": 1,
+      "complete": true,
+      "source_snapshot_actions": 96789
+    },
+    "ppo_reset": {
+      "episodes": 24,
+      "successes": 4,
+      "complete": true,
+      "source_snapshot_actions": 94876
+    }
+  },
+  "target_groups": {
+    "ppo/normal/adjust_bottle": {
+      "episodes": 8,
+      "successes": 6,
+      "success_bits": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 1,
+        "2": 1,
+        "4": 1,
+        "8": 1
+      }
+    },
+    "ppo/memory_reset/adjust_bottle": {
+      "episodes": 8,
+      "successes": 7,
+      "success_bits": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 1,
+        "2": 1,
+        "4": 1,
+        "8": 1
+      }
+    },
+    "ppo/reward_blind/adjust_bottle": {
+      "episodes": 8,
+      "successes": 6,
+      "success_bits": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 1,
+        "2": 1,
+        "4": 1,
+        "8": 1
+      }
+    },
+    "ppo/normal/move_stapler_pad": {
+      "episodes": 8,
+      "successes": 0,
+      "success_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      }
+    },
+    "ppo/memory_reset/move_stapler_pad": {
+      "episodes": 8,
+      "successes": 0,
+      "success_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      }
+    },
+    "ppo/reward_blind/move_stapler_pad": {
+      "episodes": 8,
+      "successes": 0,
+      "success_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      }
+    },
+    "sac_frozen/normal/adjust_bottle": {
+      "episodes": 8,
+      "successes": 3,
+      "success_bits": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 1,
+        "2": 0,
+        "4": 1,
+        "8": 0
+      }
+    },
+    "sac_online/normal/adjust_bottle": {
+      "episodes": 3,
+      "successes": 1,
+      "success_bits": [
+        0,
+        1,
+        0
+      ],
+      "complete_K8": false,
+      "reported_indices": {
+        "1": 0,
+        "2": 1
+      }
+    },
+    "ppo_reset/normal/adjust_bottle": {
+      "episodes": 8,
+      "successes": 6,
+      "success_bits": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 1,
+        "2": 0,
+        "4": 1,
+        "8": 1
+      }
+    },
+    "ppo_reset/normal/move_stapler_pad": {
+      "episodes": 8,
+      "successes": 1,
+      "success_bits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "complete_K8": true,
+      "reported_indices": {
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "8": 0
+      }
+    }
+  },
+  "case_pairing": [
+    {
+      "a": "source_validation/ppo",
+      "b": "source_validation/sac",
+      "common_cases": 24,
+      "exact_seed_and_initial_observation_matches": 24,
+      "mismatches": []
+    },
+    {
+      "a": "source_validation/ppo",
+      "b": "source_validation/ppo_reset",
+      "common_cases": 24,
+      "exact_seed_and_initial_observation_matches": 24,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/adjust_bottle",
+      "b": "target/ppo/memory_reset/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/adjust_bottle",
+      "b": "target/ppo/reward_blind/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/adjust_bottle",
+      "b": "target/sac_frozen/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/adjust_bottle",
+      "b": "target/sac_online/normal/adjust_bottle",
+      "common_cases": 3,
+      "exact_seed_and_initial_observation_matches": 3,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/adjust_bottle",
+      "b": "target/ppo_reset/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/adjust_bottle",
+      "b": "target/ppo/reward_blind/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/adjust_bottle",
+      "b": "target/sac_frozen/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/adjust_bottle",
+      "b": "target/sac_online/normal/adjust_bottle",
+      "common_cases": 3,
+      "exact_seed_and_initial_observation_matches": 3,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/adjust_bottle",
+      "b": "target/ppo_reset/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/reward_blind/adjust_bottle",
+      "b": "target/sac_frozen/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/reward_blind/adjust_bottle",
+      "b": "target/sac_online/normal/adjust_bottle",
+      "common_cases": 3,
+      "exact_seed_and_initial_observation_matches": 3,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/reward_blind/adjust_bottle",
+      "b": "target/ppo_reset/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/move_stapler_pad",
+      "b": "target/ppo/memory_reset/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/move_stapler_pad",
+      "b": "target/ppo/reward_blind/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/normal/move_stapler_pad",
+      "b": "target/ppo_reset/normal/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/move_stapler_pad",
+      "b": "target/ppo/reward_blind/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/memory_reset/move_stapler_pad",
+      "b": "target/ppo_reset/normal/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/ppo/reward_blind/move_stapler_pad",
+      "b": "target/ppo_reset/normal/move_stapler_pad",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "source_validation/sac",
+      "b": "source_validation/ppo_reset",
+      "common_cases": 24,
+      "exact_seed_and_initial_observation_matches": 24,
+      "mismatches": []
+    },
+    {
+      "a": "target/sac_frozen/normal/adjust_bottle",
+      "b": "target/sac_online/normal/adjust_bottle",
+      "common_cases": 3,
+      "exact_seed_and_initial_observation_matches": 3,
+      "mismatches": []
+    },
+    {
+      "a": "target/sac_frozen/normal/adjust_bottle",
+      "b": "target/ppo_reset/normal/adjust_bottle",
+      "common_cases": 8,
+      "exact_seed_and_initial_observation_matches": 8,
+      "mismatches": []
+    },
+    {
+      "a": "target/sac_online/normal/adjust_bottle",
+      "b": "target/ppo_reset/normal/adjust_bottle",
+      "common_cases": 3,
+      "exact_seed_and_initial_observation_matches": 3,
+      "mismatches": []
+    }
+  ],
+  "stage_status": {
+    "ppo": "complete",
+    "sac": "evaluating",
+    "ppo_reset": "complete"
+  },
+  "interpretation": "One K8 trial per target and condition; native references use a separate seed bank. No adaptation advantage or native paired improvement is established. SAC target evaluation is incomplete. Do not count copied data or source-initialized target counters as new source training."
+}

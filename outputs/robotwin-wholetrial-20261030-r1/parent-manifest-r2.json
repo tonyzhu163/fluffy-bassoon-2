@@ -1,0 +1,135 @@
+{
+  "format": "robotwin_parallel_whole_trial_campaign_v1",
+  "campaign_id": "robotwin-native-wholetrial-20261030-r2",
+  "source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2",
+  "source_task_episode_limits": {
+    "handover_mic": 600,
+    "pick_diverse_bottles": 400,
+    "place_a2b_left": 400,
+    "place_object_stand": 400,
+    "place_phone_stand": 400,
+    "scan_object": 500
+  },
+  "target_task_episode_limits": {
+    "adjust_bottle": 400,
+    "move_stapler_pad": 400
+  },
+  "benchmark_horizon_config_sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551",
+  "source_iterations": 100,
+  "seed": 20261030,
+  "trials_per_iteration": 6,
+  "train_episodes": 4,
+  "eval_episodes": 8,
+  "source_eval_iterations": [
+    10,
+    25,
+    50,
+    100
+  ],
+  "completion": "100 rounds of six complete K4 trials per learner; actual actions vary with success",
+  "source_action_budget": "physical safety bound only; never cut an episode or trial to meet it",
+  "ppo": {
+    "epochs": 5,
+    "minibatch_trials": 16,
+    "learning_rate": 1e-06,
+    "max_update_kl": 0.1
+  },
+  "sac": {
+    "warmup_chunks": 500,
+    "batch_size": 256,
+    "utd": 20,
+    "learning_rate": 0.0003
+  },
+  "frozen_motor": {
+    "noise_shape": [
+      32,
+      32
+    ],
+    "action_limit": 1.5,
+    "feature_dim": 2062
+  },
+  "prior_campaign": {
+    "id": "robotwin-one-million-20261029-r1",
+    "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-one-million-20261029-r1",
+    "maximum_actions": 1000000,
+    "status": "prior active campaign held at its immutable cap until final audit",
+    "accounting": "charge the prior journal once; its 13026 earlier actions are already included; no child imports",
+    "continuation": "retain current allocation through controlled stop; no automatic old-recipe restart"
+  },
+  "calibration": {
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2/optimizer-calibration",
+    "result_sha256": "821995144fe49d5503e07ac05b1932ba729ce19d64e101740e06b0fa11ac3f61",
+    "learning_rate": 1e-06,
+    "transfer": "qualified scalar learning rate only; all new learners initialize fresh"
+  },
+  "workers": {
+    "ppo": {
+      "method": "ppo",
+      "campaign_id": "robotwin-native-wholetrial-20261030-r2-ppo",
+      "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+      "source_safety_actions": 1100000,
+      "maximum_complete_source_actions": 1080000,
+      "source_validation_actions": 43200,
+      "target_conditions": 3,
+      "target_actions": 76800,
+      "native_reference_actions": 6400,
+      "maximum_actions": 1226400,
+      "native_episodes": 1,
+      "resource": {
+        "gpus": 1,
+        "cpus": 16,
+        "memory_gib": 128,
+        "shared_memory_gib": 8,
+        "operational_driver_seconds": 43200,
+        "scheduler_cap_minutes": 780
+      }
+    },
+    "sac": {
+      "method": "sac",
+      "campaign_id": "robotwin-native-wholetrial-20261030-r2-sac",
+      "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/sac",
+      "source_safety_actions": 1100000,
+      "maximum_complete_source_actions": 1080000,
+      "source_validation_actions": 43200,
+      "target_conditions": 2,
+      "target_actions": 51200,
+      "native_reference_actions": 0,
+      "maximum_actions": 1194400,
+      "native_episodes": 0,
+      "resource": {
+        "gpus": 1,
+        "cpus": 16,
+        "memory_gib": 128,
+        "shared_memory_gib": 8,
+        "operational_driver_seconds": 43200,
+        "scheduler_cap_minutes": 780
+      }
+    },
+    "ppo_reset": {
+      "method": "ppo_reset",
+      "campaign_id": "robotwin-native-wholetrial-20261030-r2-ppo_reset",
+      "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+      "source_safety_actions": 1100000,
+      "maximum_complete_source_actions": 1080000,
+      "source_validation_actions": 43200,
+      "target_conditions": 1,
+      "target_actions": 25600,
+      "native_reference_actions": 0,
+      "maximum_actions": 1168800,
+      "native_episodes": 0,
+      "resource": {
+        "gpus": 1,
+        "cpus": 16,
+        "memory_gib": 128,
+        "shared_memory_gib": 8,
+        "operational_driver_seconds": 43200,
+        "scheduler_cap_minutes": 780
+      }
+    }
+  },
+  "maximum_new_actions": 3589600,
+  "maximum_combined_actions": 4589600,
+  "unused_capacity": "release only in a dated reconciliation; never silently spend it on extra data",
+  "created_at_utc": "2026-10-30T08:08:58.509974+00:00"
+}

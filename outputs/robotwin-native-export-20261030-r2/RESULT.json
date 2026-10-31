@@ -1,0 +1,72 @@
+{
+  "format": "robotwin_native_history_dataset_v1",
+  "completed": true,
+  "task_keys": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "source_method": "sac",
+  "teacher_method": "sac",
+  "counts": {
+    "decisions": 1539,
+    "episodes": 120,
+    "complete_K4_trials": 30,
+    "committed_source_actions": 47602,
+    "selected_actions": 47602
+  },
+  "source_recovery_sha256": "f2fb39571cc3d0e809dfdc454f7f6df7f48e585fc972fd4c2fb8c83d36e63a42",
+  "teacher_recovery_sha256": "f2fb39571cc3d0e809dfdc454f7f6df7f48e585fc972fd4c2fb8c83d36e63a42",
+  "teacher_status": "source-trained candidate; deterministic mean competence not assumed",
+  "policy_input_dim": 3090,
+  "label_rule": "deterministic physical1.5*tanh(mean); recurrent teacher rebuilt per actual source trial",
+  "student_history": "same-task source trials across updates; actual feedback crosses source-trial boundaries; original clocks retained",
+  "excluded": {
+    "non_source_or_other_method_episodes": 1,
+    "after_committed_cursor_episodes": 108
+  },
+  "additional_simulator_actions": 0,
+  "additional_vla_queries": 0,
+  "consumer": "Native-token exporter only; LIBERO vla_history_train/deployment is incompatible",
+  "checked_at_utc": "2026-10-30T09:19:19.334334+00:00",
+  "index_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-export-20261030-r2/export/index.json",
+  "index_sha256": "29f5f72588530645a789f91735816268f412aebcffdb4d872c0fdc9d7d27e9b2",
+  "index_bytes": 1829803,
+  "input_file_count": 7667,
+  "trials_by_task": {
+    "scan_object": 5,
+    "handover_mic": 5,
+    "place_phone_stand": 5,
+    "pick_diverse_bottles": 5,
+    "place_a2b_left": 5,
+    "place_object_stand": 5
+  },
+  "datasets": {
+    "ad": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-export-20261030-r2/export/ad.npz",
+      "sha256": "b1ae47a6f31323ef65d252d1099ffbf8140bd5d018af3a7eafb428f71b17be9b",
+      "bytes": 52833353,
+      "independent_file_sha256": "b1ae47a6f31323ef65d252d1099ffbf8140bd5d018af3a7eafb428f71b17be9b"
+    },
+    "dpt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-export-20261030-r2/export/dpt.npz",
+      "sha256": "b59015234c00f4ed3ec6aa2e25302c80b7b357332fc57d9668c3604cb510f6d7",
+      "bytes": 52912660,
+      "independent_file_sha256": "b59015234c00f4ed3ec6aa2e25302c80b7b357332fc57d9668c3604cb510f6d7"
+    }
+  },
+  "cluster": "Baige",
+  "job_id": "job-2j83ht020h15",
+  "source_commit": "9c27e027ffed1f66a5d56c79e142e7a55faba717",
+  "tests_passed": 34,
+  "test_seconds": 3.71,
+  "exit_code": 0,
+  "allocated_gpus": 0,
+  "allocated_cpus": 4,
+  "scheduler_running_seconds": 71,
+  "scheduler_terminal": "2026-10-30 17:17:29 Asia/Shanghai",
+  "sgd_steps": 0
+}

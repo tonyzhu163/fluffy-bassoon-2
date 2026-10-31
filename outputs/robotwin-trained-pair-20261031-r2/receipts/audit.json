@@ -1,0 +1,142 @@
+{
+  "status": "passed_one_trained_round_each",
+  "plan_sha256": "68bafed686ac17281dcc959ae50de6df5d344e1df65da63aaa4f677b6606b618",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "arms": {
+    "ppo": {
+      "method": "ppo",
+      "input_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/ppo/continuation-manifest.json",
+        "sha256": "e8bdb3b20f1f5e403372b05fa0637b3170f287993bc91ea87c0194ac5b7d779a"
+      },
+      "next_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/continuation-manifest.json",
+        "sha256": "19d0f4a767c46b87c59db37178be452782a67c5682781dfd389b03a966c3193b"
+      },
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/coordinator-recovery.pt",
+        "sha256": "b1ede4fb5693562d867a4615599e11123e1b44465524bb52d4b07112360699b7"
+      },
+      "completed_iterations": 54,
+      "source_actions": 8903,
+      "actual_actions": 8903,
+      "input_due_stages_completed": [],
+      "optimizer_step_increment": 5,
+      "trained_boundary": {
+        "schema": "robotwin_trained_parallel_boundary_v1",
+        "method": "ppo",
+        "predecessor_manifest_sha256": "19d0f4a767c46b87c59db37178be452782a67c5682781dfd389b03a966c3193b",
+        "source_steps": 517443,
+        "completed_source_trials": 324,
+        "completed_source_iterations": 54,
+        "optimizer_steps": 270,
+        "campaign_journal_fence": {
+          "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+          "journal_events": 38571,
+          "journal_sha256": "c6b10d44baa9234a4087199e9f8dec00a44459827a6986af04e52842b3a80761",
+          "charged_actions": 595195,
+          "decision_count": 19277
+        },
+        "identity_digests": {
+          "learner": "adcb29f47f5b2561e437599fa765334f36b21a6292bd2efeca2ef112cf5b9b82",
+          "policy": "f4ec44f7272dfb41b448705d3c49119250c667ac2fa9aadcfc3f227a09c6d504",
+          "optimizer": "89533d29f8f126bc7da55fcaa8f7ab319f7465cda019964db161c046ecd87131",
+          "sampler": "21aa23c69c960b5fb17b13e7dd1e349a489a9878f458ca66dd64a9093529f468",
+          "learner_rng": "ea4843e4f844ebd924c6a31fd7e90fd19af82a22d5e39bc5edd4edba6f5f4852",
+          "global_rng": "ea4843e4f844ebd924c6a31fd7e90fd19af82a22d5e39bc5edd4edba6f5f4852",
+          "schedule": "faf9ef4391a065c61fa957e9a8c13b2b20e3d3a9457044b9220ba9eb41561cf6",
+          "task_steps": "36c567fad99af92ec54fa42ae84cf723c2fca06727fb2c69a46e3b30fb4d1f70"
+        }
+      },
+      "corpus": {
+        "actual_actions": 8903,
+        "source_actions": 8903,
+        "completed_chunks": 290,
+        "hashed_raw_artifacts": 895
+      },
+      "phase_actions": {
+        "source_validation": 0,
+        "native_before_target": 0,
+        "source": 8903,
+        "target": 0,
+        "native_after": 0
+      },
+      "final_canonical_head": {
+        "journal_events": 38571,
+        "journal_sha256": "c6b10d44baa9234a4087199e9f8dec00a44459827a6986af04e52842b3a80761",
+        "charged_actions": 595195,
+        "decision_count": 19277
+      },
+      "frozen_motor_unchanged": true
+    },
+    "ppo_reset": {
+      "method": "ppo_reset",
+      "input_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/ppo_reset/continuation-manifest.json",
+        "sha256": "4b63d35a0623fe7f00b6009ca797a4b3cf47e16e4383dad516bfc16b3ec6e33b"
+      },
+      "next_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo_reset/continuation-manifest.json",
+        "sha256": "05ba5ab2971671dc00de91cf19f4a3fa7481e126798b854bd0a224deeefce747"
+      },
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo_reset/coordinator-recovery.pt",
+        "sha256": "de9df035b4c7b92aa4143d9a993887b0c43b4d9d6abbe464a9c416ebff90b8b5"
+      },
+      "completed_iterations": 56,
+      "source_actions": 10045,
+      "actual_actions": 10045,
+      "input_due_stages_completed": [],
+      "optimizer_step_increment": 5,
+      "trained_boundary": {
+        "schema": "robotwin_trained_parallel_boundary_v1",
+        "method": "ppo_reset",
+        "predecessor_manifest_sha256": "05ba5ab2971671dc00de91cf19f4a3fa7481e126798b854bd0a224deeefce747",
+        "source_steps": 535670,
+        "completed_source_trials": 336,
+        "completed_source_iterations": 56,
+        "optimizer_steps": 280,
+        "campaign_journal_fence": {
+          "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+          "journal_events": 37508,
+          "journal_sha256": "87de427eded8c29c467269bcefb8b64352b09ef5cab50304285551afb44af588",
+          "charged_actions": 579057,
+          "decision_count": 18745
+        },
+        "identity_digests": {
+          "learner": "32d812c4caf47c38b5319c306ebc13d4e26c560dc6a8c428b600eeaae112243d",
+          "policy": "fdbb865c07ae167e636dbc03c61a81b0e42b11f47569d65c1e1d9f87f9d9b0df",
+          "optimizer": "dc1c208759ff26228c7e943f5442ecfa2a0bc3c7a845a00b59bd508e914c7232",
+          "sampler": "21aa23c69c960b5fb17b13e7dd1e349a489a9878f458ca66dd64a9093529f468",
+          "learner_rng": "7bdbf55d60da1a8911f344d537a057b1d023c73ea9d98a6a0e2c70ee4782295f",
+          "global_rng": "7bdbf55d60da1a8911f344d537a057b1d023c73ea9d98a6a0e2c70ee4782295f",
+          "schedule": "459d8fa80073cd7842ae35930e026fde67eb779c377400dd2e6cc23b38b0311d",
+          "task_steps": "fb641cefe6c3282023e0f08e5c2022ea2b10942c85e0639dd50823119a292e5e"
+        }
+      },
+      "corpus": {
+        "actual_actions": 10045,
+        "source_actions": 10045,
+        "completed_chunks": 324,
+        "hashed_raw_artifacts": 997
+      },
+      "phase_actions": {
+        "target": 0,
+        "source": 10045,
+        "source_validation": 0
+      },
+      "final_canonical_head": {
+        "journal_events": 37508,
+        "journal_sha256": "87de427eded8c29c467269bcefb8b64352b09ef5cab50304285551afb44af588",
+        "charged_actions": 579057,
+        "decision_count": 18745
+      },
+      "frozen_motor_unchanged": true
+    }
+  },
+  "total_new_source_actions": 18948,
+  "total_new_physical_actions": 18948,
+  "no_new_ledger_or_cap": true,
+  "no_fresh_initialization": true,
+  "no_automatic_retry": true
+}

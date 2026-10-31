@@ -1,0 +1,240 @@
+{
+  "checked_at_utc": "2026-10-30T22:46:37.783889+00:00",
+  "allocation": "job-fji2xx8oq53h",
+  "exit_code": "0",
+  "failures": {},
+  "paired": {
+    "ppo": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo-latest.json",
+        "sha256": "a821b93d0f0e213186b5c21e5411362a516947f5102b768e18374833cdc9316b"
+      },
+      "complete": true,
+      "audited_children": 44,
+      "audit_status": "passed_owned_child",
+      "audit_kind": "complete",
+      "source_iterations": 100,
+      "source_trials": 600,
+      "source_actions": 964875,
+      "learner_counters": {
+        "primitive_steps": 964875,
+        "updates": 100,
+        "optimizer_steps": 500,
+        "chunks": 31211
+      },
+      "source_boundary_input": {
+        "manifest": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/continuation-manifest.json",
+          "sha256": "de9520ff265d90958056218accbc250a03d633832e8b1324bc71652cb6bd8727"
+        },
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/coordinator-recovery.pt",
+          "sha256": "9930fe4dbca5ff8cadaf8985e4f9cfe72c8feb050996e3d8f3f3ff7e558ebb52"
+        },
+        "frozen_motor": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/frozen-motor.json",
+          "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+        }
+      },
+      "final_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/coordinator-recovery.pt",
+        "sha256": "c439486c327116c8da4fc077217416757bdc2f21ffa819f8ae802cc3f7810fa5"
+      },
+      "frozen_motor_unchanged": true,
+      "stage_statuses": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete",
+        "iteration:100": "complete"
+      },
+      "closed_canonical_view": {
+        "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo",
+        "snapshot_sha256": "80c4363f9d97771cd1ac2bfbf24929621f456fc281548d1b7e51832e941ec794",
+        "header_sha256": "c003eaa7d1c079728641dc3b126c32f73023ab57cda4941c08cd192e1ba6b89a",
+        "total_action_cap": 1226400,
+        "source_caps": {
+          "ppo": 1100000
+        },
+        "by_method": {
+          "native_after/native": 3200,
+          "native_before_target/native": 3200,
+          "source/ppo": 964875,
+          "source_validation/ppo": 40874,
+          "target/ppo": 56300
+        },
+        "journal_events": 69248,
+        "journal_sha256": "dc16bc9f9eafaebe496474de018d1001ea0d45c9fe1e6f00fac1c91cff576bd3",
+        "charged_actions": 1068449,
+        "actual_actions": 1068449,
+        "decision_count": 34592,
+        "pending_actions": 0,
+        "uncertain_actions": 0
+      },
+      "last_audit_frozen_motor_unchanged": true,
+      "last_audit_frozen_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+      },
+      "latest_child": {
+        "launch_ref": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/launch.json",
+          "sha256": "03f4400038dc0702a371fbd43e4a008f115b5078c9645e50168d632e56f38f5e"
+        },
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment",
+        "saved_launch_status": "running",
+        "last_progress": {
+          "stage": "source_stage_complete",
+          "elapsed_seconds": 1029.7694812053815,
+          "source_action_milestone": null,
+          "source_iteration": 100,
+          "source_steps": {
+            "ppo": 964875
+          },
+          "source_updates": {
+            "ppo": 100
+          },
+          "pending_trials": {
+            "ppo": 0
+          },
+          "manifest": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/stages/iteration-100/stage.json"
+        },
+        "native_parity": [
+          {
+            "stage": "motor_noise_parity",
+            "elapsed_seconds": 54.39954226370901,
+            "task": "handover_mic",
+            "max_abs_error": 0.0,
+            "tolerance": 2e-05,
+            "passed": true
+          }
+        ]
+      }
+    },
+    "ppo_reset": {
+      "latest_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset-latest.json",
+        "sha256": "9a6cbb176583dc777f03ff60a4ad8024c690f6e0e4ffb178878ef833a8d54021"
+      },
+      "complete": true,
+      "audited_children": 42,
+      "audit_status": "passed_owned_child",
+      "audit_kind": "complete",
+      "source_iterations": 100,
+      "source_trials": 600,
+      "source_actions": 963759,
+      "learner_counters": {
+        "primitive_steps": 963759,
+        "updates": 100,
+        "optimizer_steps": 500,
+        "chunks": 31172
+      },
+      "source_boundary_input": {
+        "manifest": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/continuation-manifest.json",
+          "sha256": "893249786db6784a51c76c235fdd1aa932f87145d25bc124fb56bffc56993753"
+        },
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/coordinator-recovery.pt",
+          "sha256": "48e215501ef5e025a565855fbc240bd20bc9728e19046c7313703c74d837fb62"
+        },
+        "frozen_motor": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-040/experiment/frozen-motor.json",
+          "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+        }
+      },
+      "final_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/coordinator-recovery.pt",
+        "sha256": "48d910980052ce2cec730669fbb6432b86d956aadbff22799b7ecefdeaadcb49"
+      },
+      "frozen_motor_unchanged": true,
+      "stage_statuses": {
+        "iteration:10": "complete",
+        "iteration:25": "complete",
+        "iteration:50": "complete",
+        "iteration:100": "complete"
+      },
+      "closed_canonical_view": {
+        "canonical_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/worker-ledgers/ppo_reset",
+        "snapshot_sha256": "893ef5fd643ffe0d0d19eeed736e2c7ba59cf28ef56b9ba42edad054feb0c78d",
+        "header_sha256": "0f23420d1e32213e311a150adb0608ca50dd2e14d397ecebd7f3ba9499482831",
+        "total_action_cap": 1168800,
+        "source_caps": {
+          "ppo_reset": 1100000
+        },
+        "by_method": {
+          "source/ppo_reset": 963759,
+          "source_validation/ppo_reset": 39434,
+          "target/ppo_reset": 18592
+        },
+        "journal_events": 66181,
+        "journal_sha256": "82361637889472c287fa4d8f03927e5dabbd493c1acdbd94bba591a79b02cc8f",
+        "charged_actions": 1021785,
+        "actual_actions": 1021785,
+        "decision_count": 33059,
+        "pending_actions": 0,
+        "uncertain_actions": 0
+      },
+      "last_audit_frozen_motor_unchanged": true,
+      "last_audit_frozen_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/frozen-motor.json",
+        "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+      },
+      "latest_child": {
+        "launch_ref": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/launch.json",
+          "sha256": "44b72585fe652118f617057984d9f9b025d87e1b9fbf413f0daafedcb259c0a4"
+        },
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment",
+        "saved_launch_status": "running",
+        "last_progress": {
+          "stage": "source_stage_complete",
+          "elapsed_seconds": 648.730439347215,
+          "source_action_milestone": null,
+          "source_iteration": 100,
+          "source_steps": {
+            "ppo_reset": 963759
+          },
+          "source_updates": {
+            "ppo_reset": 100
+          },
+          "pending_trials": {
+            "ppo_reset": 0
+          },
+          "manifest": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment/stages/iteration-100/stage.json"
+        },
+        "native_parity": [
+          {
+            "stage": "motor_noise_parity",
+            "elapsed_seconds": 55.650757488794625,
+            "task": "handover_mic",
+            "max_abs_error": 0.0,
+            "tolerance": 2e-05,
+            "passed": true
+          }
+        ]
+      }
+    }
+  },
+  "last_gpu_sample": {
+    "uuid": "GPU-fdf52c60-81ff-9c4a-6076-7e57069dc6d3",
+    "used_bytes": 0,
+    "total_bytes": 102641958912,
+    "utilization_percent": 0.0,
+    "utc": "2026-10-30T22:43:17.284903+00:00"
+  },
+  "sac": {
+    "allocation": "job-gv77bzhyeroo",
+    "summary_ref": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0052/experiment/summary.json",
+      "sha256": "6e51139848fc7f39477082fce2d07a1016eea673fe373f0a788515a0649b24e0"
+    },
+    "exit_code": null,
+    "source_steps": 924844,
+    "completed_source_iterations": 92,
+    "completed_source_trials": 552,
+    "updates": 587500,
+    "optimizer_steps": 1762500,
+    "pending_trials": 0,
+    "unretained_or_uncertain_source_charge": 0
+  }
+}

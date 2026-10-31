@@ -1,0 +1,41 @@
+{
+  "status": "cancelled_full_scan_after_actual_schema_sample_pass",
+  "recorded_at_utc": "2026-10-30T16:54:02.568990+00:00",
+  "method": "sac",
+  "canonical_ancestry_passed": true,
+  "ancestry_corpus_roots": [
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-sac-20261030-r2/experiment/corpus",
+    "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/corpus"
+  ],
+  "manifest_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+    "sha256": "4753fbd72963a09068d6f1f78220d10d0990e8daef610ebe634bee23b1130d31"
+  },
+  "immutable_ledger_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0001/experiment/continuation-ledger.json",
+    "sha256": "b1e5b0e31026d28ce9630491e104512b4962c1f3d2ea6b06b005da168a121733"
+  },
+  "immutable_ledger_source_actions": 411497,
+  "full_inventory_count_audit_completed": false,
+  "full_raw_action_counts": null,
+  "exact_raw_counts_match_immutable_ledger": null,
+  "actual_schema_sample_ref": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-20261030-r1/checks/20261031-0050-c62-raw-schema-sample.json",
+  "sample_status": "sample_schema_passed",
+  "sample_actions": 839,
+  "sample_chunks": 27,
+  "stop_receipt": {
+    "status": "termination_sent_to_own_readonly_artifact_reader_only",
+    "pid": 1673980,
+    "start_ticks": 398170790,
+    "ppid": 1673979,
+    "argv": [
+      "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+      "-"
+    ],
+    "signal": "SIGTERM",
+    "sent_at_utc": "2026-10-30T16:53:37.963336+00:00",
+    "reason": "Root requested cancellation of duplicate immutable first-slice PFS scan after actual-schema sample passed; no source/controller process signaled."
+  },
+  "reader_ssh_session_exit_code": 255,
+  "scope": "The two-root corpus_chain completed. The full raw_action_counts traversal had not returned counts/receipt when root requested stopping this duplicate scan. Only the owned read-only reader PID was terminated after PID/parent/command/start-time identity checks. Actual schema sample passed separately; no whole-corpus count or immutable-ledger equality claim is made. Root-owned full current-boundary audits proceed inside allocations."
+}

@@ -1,0 +1,262 @@
+{
+  "schema": "robotwin_stage50_sac_sampling_qualification_v1",
+  "checked_at_utc": "2026-10-30T17:04:17.035238+00:00",
+  "status": "saved_first_decision_pairing_and_online_within_episode_divergence_explained",
+  "scope": "Static pinned-code and saved JSON/NPZ byte inspection only. No model construction/forward, new rollouts, tests, allocation/control or ledger operation.",
+  "inputs": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-audit.json",
+      "sha256": "1925193a7c94224bf9e93b4a6417ff9c99d404203b312a7ab40131f49b19d607"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-sac-first-decisions.json",
+      "sha256": "fba0b1ab84f70041fc1f4179e15c3450e421de8f3983621dee2e321bac35b2e7"
+    }
+  ],
+  "pinned_code": [
+    {
+      "commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+      "path": "scripts/diagnostics/robotwin_noise_compare.py",
+      "lines": [
+        194,
+        621,
+        641,
+        652,
+        976,
+        1033,
+        1079
+      ],
+      "supports": [
+        "acting archive hashes actor weights",
+        "target action uses deterministic=False",
+        "online updates after each chunk",
+        "each target clone reloads source state",
+        "restore source global RNG around evaluations"
+      ],
+      "git_blob": "a7c1a9d4ce48f77b82db9af3bcc7bc42a4cf5837"
+    },
+    {
+      "commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+      "path": "src/fluffy_bassoon/meta_rl/vla_noise_sac.py",
+      "lines": [
+        88,
+        154,
+        180,
+        205,
+        228,
+        318,
+        390,
+        418
+      ],
+      "supports": [
+        "tanh-squashed Gaussian",
+        "independent interaction and training torch streams",
+        "fresh replay eligible after first transition",
+        "state restore includes three private RNG streams",
+        "same SAC file bytes as scientific DB pin"
+      ],
+      "git_blob": "0452e87286dd1b4a1e9e52363b2b9629e09a6f67",
+      "scientific_db_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+      "scientific_db_git_blob": "0452e87286dd1b4a1e9e52363b2b9629e09a6f67"
+    }
+  ],
+  "action_sampling": {
+    "conditions": [
+      "sac_frozen",
+      "sac_online"
+    ],
+    "deterministic": false,
+    "formula": "1.5 * tanh(mu(features) + exp(clamp(log_std(features), -20, 2)) * epsilon)",
+    "epsilon": "standard Gaussian from restored private interaction Torch generator",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "warmup_on_target": false,
+    "source_warmup_flag_saved": false,
+    "note": "This is the original stage50 serial learner evaluation convention; it is not the deterministic mean-action convention used by the separate frozen-student first-baseline panel."
+  },
+  "initialization": {
+    "source_checkpoint": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/stages/iteration-50/sac-recovery.pt",
+      "bytes": 532001345,
+      "recorded_sha256": "5f6c30831bfcfff6442a8d20392fb158008c219936518f3d90c3a585330f1caa",
+      "actual_sha256": "5f6c30831bfcfff6442a8d20392fb158008c219936518f3d90c3a585330f1caa",
+      "matches": true
+    },
+    "source_actor_parameter_sha256": "ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77",
+    "source_updates": 314500,
+    "source_optimizer_steps": 943500,
+    "source_policy_actions": 502356,
+    "each_task_and_condition_restores_same_source_learner": true,
+    "restored_state": [
+      "actor",
+      "critic",
+      "target_critic",
+      "temperature",
+      "three Adam optimizer states",
+      "source counters",
+      "private NumPy replay-sampling RNG",
+      "private interaction Torch RNG",
+      "private training Torch RNG"
+    ],
+    "global_source_rng": "Driver captures stage RNG and restores it after cloned evaluation. Source learner counters stay unchanged."
+  },
+  "online_update_timing": {
+    "replay_mode": "fresh_target",
+    "source_replay_excluded": true,
+    "sampling_with_replacement": true,
+    "minimum_new_replay_rows": 1,
+    "extra_warmup_chunks": 0,
+    "gradient_updates_after_each_executed_chunk": 20,
+    "optimizer_steps_per_gradient_update": 3,
+    "first_online_update": "Immediately after the first H32 chunk, within episode1; before the second policy decision.",
+    "interaction_vs_training_randomness": "Updates use train_torch_rng and private NumPy replay sampler, preserving the paired interaction Torch draw stream. Equal Gaussian draws do not imply equal actions once actor parameters or observations differ."
+  },
+  "first_episode_receipts": [
+    {
+      "task": "adjust_bottle",
+      "episode": 1,
+      "requested_seed": 22261030,
+      "actual_seed": 22261030,
+      "first_decision_matches": {
+        "sampled_noise": true,
+        "issued_motor_joint_targets": true,
+        "metadata/interaction_torch_rng": true,
+        "actor_parameter_identity": true,
+        "initial_observation": true,
+        "following_observation": true,
+        "private_numpy_rng": true
+      },
+      "first_decision_actor_parameter_sha256": "ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77",
+      "first_decision_actor_archive": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/policies/ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77.pt",
+        "sha256": "e130c1c0dd0cc3aa33f86354ef2e2acc72867a825c1a6c1b3d5c3cf8ea6b8306"
+      },
+      "frozen_first_decision": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-a2417fb09d01471b811a4ce07413a75c/chunks/000001.json",
+        "sha256": "9f9de4a253d931d13abb81564cf1761a5997d14ab4ba659e708b9f7a46b39bde"
+      },
+      "online_first_decision": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f2bd5ac1e8994907aebc0ebb0900a65d/chunks/000001.json",
+        "sha256": "1e79e10c55fe3d032a5da4a3d7d2df0388a6bbeb8aaf1ef7dd1ad3a4e7aeef8f"
+      },
+      "second_decision": {
+        "frozen_updates_before_action": 314500,
+        "online_updates_before_action": 314520,
+        "same_interaction_torch_rng": true,
+        "same_actor_parameter_identity": false,
+        "same_sampled_noise": false,
+        "same_motor_targets": false,
+        "frozen_actor_sha256": "ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77",
+        "online_actor_sha256": "9003968b951cff8027aee65e866e25a699b51c4d75ad43e6a4776013bdcb3219"
+      },
+      "full_first_episode_trajectory_equality_required": false
+    },
+    {
+      "task": "move_stapler_pad",
+      "episode": 1,
+      "requested_seed": 22261030,
+      "actual_seed": 22261030,
+      "first_decision_matches": {
+        "sampled_noise": true,
+        "issued_motor_joint_targets": true,
+        "metadata/interaction_torch_rng": true,
+        "actor_parameter_identity": true,
+        "initial_observation": true,
+        "following_observation": true,
+        "private_numpy_rng": true
+      },
+      "first_decision_actor_parameter_sha256": "ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77",
+      "first_decision_actor_archive": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/policies/ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77.pt",
+        "sha256": "e130c1c0dd0cc3aa33f86354ef2e2acc72867a825c1a6c1b3d5c3cf8ea6b8306"
+      },
+      "frozen_first_decision": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-f19ee5f9247a4a0d986786e88a2c44c5/chunks/000001.json",
+        "sha256": "6b99d1fbfa4e6448996bd57f37378bf2636b801618ba35218f07e4ca8dedc9b1"
+      },
+      "online_first_decision": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0011/experiment/corpus/episodes/episode-af4698bd6dca4eb99ba231ebe3e43532/chunks/000001.json",
+        "sha256": "a6ec284f197dc639daa6cb7bf347558f457c28c715279052d754716d107b9f26"
+      },
+      "second_decision": {
+        "frozen_updates_before_action": 314500,
+        "online_updates_before_action": 314520,
+        "same_interaction_torch_rng": true,
+        "same_actor_parameter_identity": false,
+        "same_sampled_noise": false,
+        "same_motor_targets": false,
+        "frozen_actor_sha256": "ebf6654c0b89560d03c548aa8ab306eca60601e80d70c4a89242bf545c635b77",
+        "online_actor_sha256": "1f457698bc657150797ea72ef7a2ab6434572be1832c1fac540bd0d1a1978138"
+      },
+      "full_first_episode_trajectory_equality_required": false
+    }
+  ],
+  "equality_interpretation": "At the first decision only, identical initial actor/features and restored interaction RNG imply equal sampled noise and motor actions, which the receipts confirm on both tasks. Complete episode1 trajectory or success equality is not required because online SGD begins after its first chunk. The saved second decision has paired interaction RNG but different updated actor/noise/action hashes.",
+  "source_and_target_costs_separate": {
+    "source": {
+      "policy_actions": 502356,
+      "updates": 314500,
+      "optimizer_steps": 943500
+    },
+    "target_clone_costs": [
+      {
+        "condition": "sac_frozen",
+        "task": "adjust_bottle",
+        "actual_policy_actions": 2417,
+        "additional_target_clone_updates": null
+      },
+      {
+        "condition": "sac_online",
+        "task": "adjust_bottle",
+        "actual_policy_actions": 2054,
+        "additional_target_clone_updates": {
+          "environment_steps": 67,
+          "primitive_steps": 2054,
+          "updates": 1340,
+          "optimizer_steps": 4020,
+          "update_seconds": 12.292690027039498,
+          "replay_rows": 67,
+          "replay_mode": "fresh_target"
+        }
+      },
+      {
+        "condition": "sac_frozen",
+        "task": "move_stapler_pad",
+        "actual_policy_actions": 3200,
+        "additional_target_clone_updates": null
+      },
+      {
+        "condition": "sac_online",
+        "task": "move_stapler_pad",
+        "actual_policy_actions": 2941,
+        "additional_target_clone_updates": {
+          "environment_steps": 96,
+          "primitive_steps": 2941,
+          "updates": 1920,
+          "optimizer_steps": 5760,
+          "update_seconds": 17.929252891568467,
+          "replay_rows": 96,
+          "replay_mode": "fresh_target"
+        }
+      }
+    ]
+  },
+  "native_reference_qualification": {
+    "phases": [
+      "native_before_target",
+      "native_after"
+    ],
+    "each_task_phase_successes": 0,
+    "each_task_phase_episodes": 1,
+    "requested_and_actual_seed": 21161030,
+    "target_episode1_requested_and_actual_seed": 22261030,
+    "paired_to_target_cases": false,
+    "interpretation": "Native before/after each use one separate reference seed, not the target K8 case bank. Their0/1 results are not a paired native-vs-target comparison."
+  },
+  "limits": [
+    "First two decisions of episode1 inspected for each frozen/online task pair; no entire-trajectory replay or mean-policy rerun.",
+    "These tiny two-task single-K8 results do not establish a general adaptation or memory advantage."
+  ]
+}

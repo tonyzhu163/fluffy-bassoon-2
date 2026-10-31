@@ -1,0 +1,11 @@
+# Saved SAC65 CPU recovery r2
+
+Baige `job-wcfjtype0eec`, exact `16d8af8c6a1a6c7cd6980cbbc848deabafa1a6e6`, failed before tests and conversion. The actual 0-GPU, 8-CPU, 64-GiB allocation accepted its actual UI proof, then the owned visibility probe could not execute the container’s `nvidia-smi` (`OSError: [Errno 8] Exec format error`). All owned cleanup receipts report clean, with empty sessions/survivors/adopted children. No fixtures, inventory, projection, labels, model imports, SGD, robot actions or VLA queries ran.
+
+The attempted single-call proof capture stopped after 13.175 seconds because the Running header appeared before the instance hostname row. Subsequent CUA reads captured and published the authentic full Running AX/screenshot after 54.079 seconds overall. This did not satisfy the single-call handoff contract. The prearmed dispatcher then rejected the browser’s native JPEG bytes because it expected PNG. The owner retained those original bytes and manually published an actual JPEG/AX hash-bound resource receipt and ticket, atomically no-clobber and ticket last, to the same allocation before its bootstrap deadline. The gate recorded a 118.111-second bootstrap wait. Neither automated proof delivery nor its timing fix is qualified by this attempt.
+
+Actual scheduler running time was 150 seconds (05:32:37 to 05:35:07 Shanghai; final Failed at 05:35:08), or 1,200 CPU core-seconds and zero GPU-seconds. Together with r1, 299 of the original 1,800 scheduler seconds were charged. Preserving the previously sealed 151 seconds leaves at most 1,350 admissible residual seconds. No new allocation, fresh 1,800-second allowance or automatic retry was issued.
+
+The original training jobs and raw banks remain unchanged. Runtime16d8 and both prior code worktrees are preserved. Only necessary runtime/image-format corrections and a concrete residual full-gate plan are being prepared by the sole exporter.
+
+[Raw terminal receipt](receipts/terminal.json), [raw log](receipts/parent.log), [scheduler accounting](receipts/scheduler-accounting.json), [UI evidence](receipts/terminal.jpg), [CUA deviation](proof-dispatch-16d8af8/cua-execution-deviation.json), [dispatcher failure](proof-dispatch-16d8af8/dispatcher-terminal.json).

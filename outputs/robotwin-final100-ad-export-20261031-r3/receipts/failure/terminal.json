@@ -1,0 +1,351 @@
+{
+  "run_id": "robotwin-final100-ad-export-20261031-r3",
+  "status": "incomplete",
+  "failure": "ValueError: Finalbank phase failed; preserve output, no automatic retry: reuse",
+  "cleanup_error": null,
+  "parent_seconds": 57.383443642407656,
+  "phases": [
+    {
+      "name": "stage-auxiliary",
+      "returncode": 0,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "stage-auxiliary",
+            "identity": {
+              "pid": 853,
+              "state": "R",
+              "pgid": 853,
+              "sid": 853,
+              "start_ticks": 569036588,
+              "uid": 0
+            },
+            "returncode": 0
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.0026349369436502457,
+        "deadline": 5695862.106526522,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 849,
+            "sid": 849,
+            "start_ticks": 569036578,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 853,
+            "sid": 853,
+            "start_ticks": 569036588,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.9307816009968519
+    },
+    {
+      "name": "stage-ad",
+      "returncode": 0,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "stage-ad",
+            "identity": {
+              "pid": 894,
+              "state": "R",
+              "pgid": 894,
+              "sid": 894,
+              "start_ticks": 569036681,
+              "uid": 0
+            },
+            "returncode": 0
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.002618766389787197,
+        "deadline": 5695862.106526522,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 849,
+            "sid": 849,
+            "start_ticks": 569036578,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 853,
+            "sid": 853,
+            "start_ticks": 569036588,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 894,
+            "sid": 894,
+            "start_ticks": 569036681,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.6899029659107327
+    },
+    {
+      "name": "reader",
+      "returncode": 0,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "reader",
+            "identity": {
+              "pid": 929,
+              "state": "R",
+              "pgid": 929,
+              "sid": 929,
+              "start_ticks": 569036750,
+              "uid": 0
+            },
+            "returncode": 0
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.002462053671479225,
+        "deadline": 5695862.106526522,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 849,
+            "sid": 849,
+            "start_ticks": 569036578,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 853,
+            "sid": 853,
+            "start_ticks": 569036588,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 894,
+            "sid": 894,
+            "start_ticks": 569036681,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 929,
+            "sid": 929,
+            "start_ticks": 569036750,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.027303417213261127
+    },
+    {
+      "name": "ad-software-tests",
+      "returncode": 0,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "ad-software-tests",
+            "identity": {
+              "pid": 930,
+              "state": "R",
+              "pgid": 930,
+              "sid": 930,
+              "start_ticks": 569036753,
+              "uid": 0
+            },
+            "returncode": 0
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.0027427691966295242,
+        "deadline": 5695862.106526522,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 849,
+            "sid": 849,
+            "start_ticks": 569036578,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 853,
+            "sid": 853,
+            "start_ticks": 569036588,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 894,
+            "sid": 894,
+            "start_ticks": 569036681,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 929,
+            "sid": 929,
+            "start_ticks": 569036750,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 930,
+            "sid": 930,
+            "start_ticks": 569036753,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "elapsed_seconds": 30.884144344367087
+    },
+    {
+      "name": "finalbank-reuse",
+      "returncode": 1,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "finalbank-reuse",
+            "identity": {
+              "pid": 1832,
+              "state": "R",
+              "pgid": 1832,
+              "sid": 1832,
+              "start_ticks": 569039844,
+              "uid": 0
+            },
+            "returncode": 1
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.0027286699041724205,
+        "deadline": 5695862.106526522,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 849,
+            "sid": 849,
+            "start_ticks": 569036578,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 853,
+            "sid": 853,
+            "start_ticks": 569036588,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 894,
+            "sid": 894,
+            "start_ticks": 569036681,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 929,
+            "sid": 929,
+            "start_ticks": 569036750,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 930,
+            "sid": 930,
+            "start_ticks": 569036753,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 1832,
+            "sid": 1832,
+            "start_ticks": 569039844,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "elapsed_seconds": 1.031518061645329
+    }
+  ],
+  "results": {
+    "schema_regressions": {
+      "passed": true,
+      "code_commit": "e5675998dd130ff722c922f1cf681f0a96f44eff",
+      "imports_sha256": "b3ed9813630f16790213e5eb48fcd89045f82c0f3cc8b5a6d3f44b5e8fd4b3b0",
+      "cleanup_clean": true,
+      "returncode": 0,
+      "scope": "software only; no fit/teacher competence/robot admission",
+      "counts": {
+        "tests": 146,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "JUnit_sha256": "bcbcc65388951e1e5c2355ece9e412a436a97547fb590aa154fd5fdec019a13e",
+      "deselected_legacy_nodes": []
+    }
+  },
+  "scheduler_cost": "pending actual terminal UI receipt",
+  "physical_actions": 0,
+  "VLA_queries": 0,
+  "SGD": 0
+}

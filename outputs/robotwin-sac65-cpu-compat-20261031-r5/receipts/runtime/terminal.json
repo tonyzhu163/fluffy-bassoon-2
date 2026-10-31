@@ -1,0 +1,78 @@
+{
+  "status": "incomplete",
+  "failure": "ValueError: Phase failed: tests",
+  "phases": [
+    {
+      "phase": "tests",
+      "status": "failed",
+      "cap_seconds": 180,
+      "elapsed_before": 36.48876015841961,
+      "returncode": 1,
+      "cleanup": {
+        "clean": true,
+        "sessions": [
+          {
+            "name": "tests",
+            "identity": {
+              "pid": 1211,
+              "state": "R",
+              "pgid": 1211,
+              "sid": 1211,
+              "start_ticks": 566924613,
+              "uid": 0
+            },
+            "returncode": 1
+          }
+        ],
+        "before": [],
+        "survivors": [],
+        "elapsed_seconds": 0.0025125304237008095,
+        "deadline": 5670909.642203002,
+        "adopted": {
+          "clean": true,
+          "reaped": []
+        },
+        "signal_attempts": [
+          {
+            "pid": 361,
+            "sid": 361,
+            "start_ticks": 566921708,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 365,
+            "sid": 365,
+            "start_ticks": 566921718,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 398,
+            "sid": 398,
+            "start_ticks": 566921781,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          },
+          {
+            "pid": 1211,
+            "sid": 1211,
+            "start_ticks": 566924613,
+            "signal": 15,
+            "leader_only": false,
+            "status": "sent_or_already_exited"
+          }
+        ]
+      },
+      "seconds": 0.09003627579659224,
+      "log_sha256": "7f1a7659ce3f91c787b779ec3781262d0c6c3cf4f991d3b5741652d282c9891e"
+    }
+  ],
+  "elapsed_seconds": 36.59757255483419,
+  "actual_scheduler_seconds": "owner_terminal_receipt_required",
+  "additional_robot_actions": 0,
+  "fits": 0
+}

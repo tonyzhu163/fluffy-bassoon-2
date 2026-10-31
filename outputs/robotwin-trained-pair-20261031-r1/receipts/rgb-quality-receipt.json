@@ -1,0 +1,980 @@
+{
+  "status": "numeric_artifact_checks_passed",
+  "inspected_at_utc": "2026-10-30T17:16:05.337616+00:00",
+  "execution_source_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "selected_npz_count": 6,
+  "camera_view_count": 18,
+  "copied_npz_bytes": 2330473,
+  "distinct_rgb_view_sha256_count": 18,
+  "items": [
+    {
+      "arm": "ppo",
+      "task": "handover_mic",
+      "collector_lane": 3,
+      "requested_seed": 313605766,
+      "actual_seed": 313605766,
+      "worker_pid": 2599,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo-lane3-handover_mic.npz",
+      "npz_sha256": "393f31881f8b93efc27a03ae28fab618f301ef5f18f66e2d92700fb18b7b8032",
+      "copied_bytes": 343650,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            1,
+            1,
+            1
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            225.804140625,
+            222.1358984375,
+            222.25416666666666
+          ],
+          "channel_std": [
+            59.44918259304636,
+            58.28019320176182,
+            58.13904407694491
+          ],
+          "rgb_unique_colors": 3251,
+          "all_black_pixel_fraction": 1.3020833333333334e-05,
+          "all_white_pixel_fraction": 0.16979166666666667,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "3c73e35d2d16d967a231ec37bcc8685cfcc1307c6b94790a4e2c482695542d11"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            17,
+            17,
+            17
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            242.62471354166667,
+            234.3426171875,
+            234.34981770833335
+          ],
+          "channel_std": [
+            12.72963830296199,
+            17.960615808862006,
+            17.956768758266463
+          ],
+          "rgb_unique_colors": 1414,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.26569010416666666,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "767516e77d1e589c87ca72c76400ac93162eb0155c356e94c0fabf10a26031fd"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            33,
+            39,
+            40
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            218.9984375,
+            220.42203125,
+            221.88153645833333
+          ],
+          "channel_std": [
+            53.08087552516527,
+            39.46462107644579,
+            36.224443976260595
+          ],
+          "rgb_unique_colors": 7326,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.054375,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "18010fb03c299a42f0dd63ec771f86ce206e1c19210aaf72c30de34d2fb32bd4"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 34.375789930555555
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 41.32536892361111
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 29.48805121527778
+        }
+      }
+    },
+    {
+      "arm": "ppo",
+      "task": "scan_object",
+      "collector_lane": 1,
+      "requested_seed": 1857450632,
+      "actual_seed": 1857450632,
+      "worker_pid": 2597,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo-lane1-scan_object.npz",
+      "npz_sha256": "d99c592148a625938610c7fe9b002e57ca61f513f880aa31196a20f8888802df",
+      "copied_bytes": 481046,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            0,
+            0,
+            0
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            189.17782552083332,
+            180.463671875,
+            180.644921875
+          ],
+          "channel_std": [
+            82.29548185541044,
+            83.15933882247386,
+            83.11115713525413
+          ],
+          "rgb_unique_colors": 9323,
+          "all_black_pixel_fraction": 3.90625e-05,
+          "all_white_pixel_fraction": 0.05936197916666667,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "2eabdbe44ea9a135263a2bd078b595865f0fa90689bfca4b4f381dda004aeb95"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            28,
+            13,
+            15
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            224.908984375,
+            178.831875,
+            178.90291666666667
+          ],
+          "channel_std": [
+            22.02745144581303,
+            70.14228036213771,
+            69.92711143303478
+          ],
+          "rgb_unique_colors": 17609,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.0007291666666666667,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "42d37c7205e84a96cca2ddd39c818b06cd8f4a20a5480f4750b33a9232d34e52"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            23,
+            21,
+            22
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            173.98891927083332,
+            167.97397135416668,
+            169.09278645833334
+          ],
+          "channel_std": [
+            80.51474127209768,
+            79.719319216636,
+            78.54475890274057
+          ],
+          "rgb_unique_colors": 7999,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.014348958333333333,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "916ef29b40ebfabc224d732b998ee0c1722d40d9add99ff0fbe76de64ff750ae"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 78.44555121527777
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 68.87039496527778
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 92.79805555555555
+        }
+      }
+    },
+    {
+      "arm": "ppo",
+      "task": "place_object_stand",
+      "collector_lane": 4,
+      "requested_seed": 796885963,
+      "actual_seed": 796885963,
+      "worker_pid": 2600,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo-lane4-place_object_stand.npz",
+      "npz_sha256": "823fbb86d238c9c2cfa125f1c3c3b68b41057ec777cde5410d674e90badda74d",
+      "copied_bytes": 322056,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            3,
+            3,
+            3
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            220.55334635416668,
+            216.46125,
+            216.51569010416668
+          ],
+          "channel_std": [
+            60.51451051021879,
+            59.937234605772495,
+            59.86557240208274
+          ],
+          "rgb_unique_colors": 3267,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.15263020833333332,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "18c1e3dd7c9dbc021a12abe6409b37db79a3df06527c6784713e9e25aeb307a6"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            37,
+            37,
+            37
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            242.34020833333332,
+            234.177578125,
+            234.1828515625
+          ],
+          "channel_std": [
+            13.105576419605187,
+            18.337600186312013,
+            18.33501787319682
+          ],
+          "rgb_unique_colors": 1428,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.26557291666666666,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "f5d91df6181ccde5bc0bcdc916e9f44531308953deabd25c5d7343475fca13bf"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            15,
+            15,
+            15
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            232.54044270833333,
+            228.16149739583332,
+            228.18088541666665
+          ],
+          "channel_std": [
+            29.83897941472429,
+            29.49961421618348,
+            29.499293145616452
+          ],
+          "rgb_unique_colors": 2541,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.068671875,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "261f0ace961ff337d3f666141f3fa460c9ffbd90043c1bc5d18cfc606b744f98"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 40.73990017361111
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 34.17498697916667
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 24.850364583333334
+        }
+      }
+    },
+    {
+      "arm": "ppo_reset",
+      "task": "handover_mic",
+      "collector_lane": 5,
+      "requested_seed": 1932710039,
+      "actual_seed": 1932710039,
+      "worker_pid": 2623,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo_reset-lane5-handover_mic.npz",
+      "npz_sha256": "b5a55e2c553e8076af06640e7bdbd51ab0fad1fa92574e4bf8222029a905d4aa",
+      "copied_bytes": 333511,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            1,
+            1,
+            1
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            226.35786458333334,
+            222.5909375,
+            222.70611979166668
+          ],
+          "channel_std": [
+            56.94655531380604,
+            55.99733937277316,
+            55.88342930495155
+          ],
+          "rgb_unique_colors": 3425,
+          "all_black_pixel_fraction": 1.3020833333333334e-05,
+          "all_white_pixel_fraction": 0.15712239583333334,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "5f52ffc0fbdbd9239f4bc89e362261104c46205d9a26863dfc452c43cecc5433"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            36,
+            35,
+            35
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            227.35118489583334,
+            223.0535546875,
+            223.23177083333334
+          ],
+          "channel_std": [
+            15.055937882546496,
+            14.336628465215075,
+            14.222620113954626
+          ],
+          "rgb_unique_colors": 2185,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.015455729166666666,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "93df1d5e5b31f378269a5243089ddbe71ba23c13fc8a5a8c665538452df670ed"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            47,
+            46,
+            46
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            242.67231770833334,
+            234.36744791666666,
+            234.37555989583333
+          ],
+          "channel_std": [
+            12.80333999160607,
+            18.00609728175989,
+            18.00291163008509
+          ],
+          "rgb_unique_colors": 1507,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.2443359375,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "dd606989a0021cb2cf44075a03bc27dc694ebfe0a16ca8be6cfbb7fba9150a46"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 36.23462673611111
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 32.368823784722224
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 21.81411892361111
+        }
+      }
+    },
+    {
+      "arm": "ppo_reset",
+      "task": "scan_object",
+      "collector_lane": 0,
+      "requested_seed": 528512585,
+      "actual_seed": 528512585,
+      "worker_pid": 2618,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo_reset-lane0-scan_object.npz",
+      "npz_sha256": "44054f9d09e5d04ded71dd632913cbf9c1d6433fe09817d7240170e5b72f3dd0",
+      "copied_bytes": 488166,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            0,
+            0,
+            0
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            196.66923177083333,
+            192.164375,
+            188.9583984375
+          ],
+          "channel_std": [
+            78.79493067570515,
+            77.48614887396003,
+            78.54128062044421
+          ],
+          "rgb_unique_colors": 11211,
+          "all_black_pixel_fraction": 6.510416666666667e-05,
+          "all_white_pixel_fraction": 0.0639453125,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "26ee6ac57310298d143d574b162d0406e4cadb6c081539b76946e1407b067391"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            26,
+            25,
+            25
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            199.4644140625,
+            195.35255208333334,
+            195.8404296875
+          ],
+          "channel_std": [
+            58.94843049309644,
+            58.38949725181812,
+            57.62459908866225
+          ],
+          "rgb_unique_colors": 6045,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.0008463541666666667,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "6ff3713c19eaba3e3f52fa249ef1803132588394fb212403933fff9fe2817d05"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            20,
+            18,
+            13
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            228.7630859375,
+            212.47634114583335,
+            171.34548177083335
+          ],
+          "channel_std": [
+            19.002200512867105,
+            24.761188814525998,
+            59.234177776222985
+          ],
+          "rgb_unique_colors": 36341,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.0026041666666666665,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "3b74ed708a7c192cde0730b2fb0eb5b240d52a8f8da121391592d5fd31505628"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 58.91704861111111
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 65.5093967013889
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 46.96533420138889
+        }
+      }
+    },
+    {
+      "arm": "ppo_reset",
+      "task": "place_object_stand",
+      "collector_lane": 3,
+      "requested_seed": 755873894,
+      "actual_seed": 755873894,
+      "worker_pid": 2621,
+      "observation_position": "next observation after first completed native action chunk",
+      "native_executed_primitive_steps": 32,
+      "local_npz": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-samples/ppo_reset-lane3-place_object_stand.npz",
+      "npz_sha256": "12738a1f09a868858dde34ba6166b5facb568f6bf9c7617b68fac16d3dbc032e",
+      "copied_bytes": 362044,
+      "raw_shapes": {
+        "main_images": [
+          1,
+          240,
+          320,
+          3
+        ],
+        "wrist_images": [
+          1,
+          2,
+          240,
+          320,
+          3
+        ]
+      },
+      "qualified_rgb_format_matches": true,
+      "views": {
+        "main": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            3,
+            2,
+            2
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            227.49544270833334,
+            223.36588541666666,
+            223.68955729166666
+          ],
+          "channel_std": [
+            51.825273657235236,
+            51.185353869818066,
+            51.137314687523165
+          ],
+          "rgb_unique_colors": 4821,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.1370703125,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "aa7f0e4ceb89675b1a18e39e0a03caa2766a3c07cbc62da6c3dea158037e6b9f"
+        },
+        "wrist0": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            17,
+            17,
+            17
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            242.31501302083333,
+            234.1115234375,
+            234.13411458333334
+          ],
+          "channel_std": [
+            12.991226952611475,
+            18.128704291633507,
+            18.11934488639172
+          ],
+          "rgb_unique_colors": 1898,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.25536458333333334,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "9b824589b708b76ad01a038181a11e6b68d02b604d1eb8b085760473ff291adc"
+        },
+        "wrist1": {
+          "shape": [
+            240,
+            320,
+            3
+          ],
+          "dtype": "uint8",
+          "finite": true,
+          "channel_min": [
+            23,
+            26,
+            31
+          ],
+          "channel_max": [
+            255,
+            255,
+            255
+          ],
+          "channel_mean": [
+            229.65139322916667,
+            228.33514322916668,
+            231.95661458333333
+          ],
+          "channel_std": [
+            31.328360452333516,
+            24.44472046687254,
+            22.944905548341612
+          ],
+          "rgb_unique_colors": 11379,
+          "all_black_pixel_fraction": 0.0,
+          "all_white_pixel_fraction": 0.06515625,
+          "nonconstant": true,
+          "rgb_pixels_sha256": "072601f149f90193aa7fdf04563f0b553a65c3e6662dc73b6398ad22e2fedabf"
+        }
+      },
+      "view_differences": {
+        "main_vs_wrist0": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 33.01167534722222
+        },
+        "main_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 35.68234375
+        },
+        "wrist0_vs_wrist1": {
+          "exactly_equal": false,
+          "mean_absolute_rgb_difference": 20.052039930555555
+        }
+      }
+    }
+  ],
+  "main_camera_task_differences": [
+    {
+      "arm": "ppo",
+      "left_task": "handover_mic",
+      "right_task": "scan_object",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 68.16013020833333
+    },
+    {
+      "arm": "ppo",
+      "left_task": "handover_mic",
+      "right_task": "place_object_stand",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 36.69310329861111
+    },
+    {
+      "arm": "ppo",
+      "left_task": "scan_object",
+      "right_task": "place_object_stand",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 69.49095052083334
+    },
+    {
+      "arm": "ppo_reset",
+      "left_task": "handover_mic",
+      "right_task": "scan_object",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 57.96129340277778
+    },
+    {
+      "arm": "ppo_reset",
+      "left_task": "handover_mic",
+      "right_task": "place_object_stand",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 41.43247395833333
+    },
+    {
+      "arm": "ppo_reset",
+      "left_task": "scan_object",
+      "right_task": "place_object_stand",
+      "exactly_equal": false,
+      "mean_absolute_rgb_difference": 57.34654513888889
+    }
+  ],
+  "contact_sheets": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-quality-ppo-three-lanes.png",
+      "sha256": "48e68f8b14e49baee7b5fae168438c21ce6c104eb688f6d6e51b09a6ffaedd2d"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-quality-ppo_reset-three-lanes.png",
+      "sha256": "3c91962d9b9dbef97f0d1c4366b0b6ab96956d0c3e444071b0d4ad32e05a1b5e"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/receipts/rgb-quality-six-main-views.png",
+      "sha256": "7d255ad8e83cb524273e0d494c274c19a95c1f23bf00618370d4ea7da7ad9b70"
+    }
+  ],
+  "no_model_imported": true,
+  "scope": "Six existing immutable frame NPZ files copied with matching original SHA256; local RGB decoding/numeric inspection and labeled contact sheets only. Raw pixels use their stored RGB channel order, no enhancement or color remapping. No model/test/simulator/GPU/new robot actions/ledger access. This sample does not establish whole-run image quality or explain OIDN warnings.",
+  "numeric_summary": {
+    "all_views_finite": true,
+    "all_views_nonconstant": true,
+    "all_views_uint8": true,
+    "all_views_shape_240_320_3": true,
+    "per_channel_std_min": 12.72963830296199,
+    "per_channel_std_max": 83.15933882247386,
+    "unique_rgb_colors_min": 1414,
+    "unique_rgb_colors_max": 36341,
+    "pixel_distinct_views": 18,
+    "camera_views": 18,
+    "view_pair_mean_absolute_difference_min": 20.052039930555555,
+    "main_cross_task_mean_absolute_difference_min": 36.69310329861111
+  },
+  "visual_inspection": {
+    "inspected_at_utc": "2026-10-30T17:18:39.174392+00:00",
+    "sheets_viewed": [
+      "rgb-quality-ppo-three-lanes.png",
+      "rgb-quality-ppo_reset-three-lanes.png"
+    ],
+    "observations": [
+      "Robot/gripper geometry and task objects are visible in the main views; scanner/box colors and microphone/stand scenes are distinguishable.",
+      "Main and wrist cameras show distinct geometry; several wrist views mostly contain wall/table at this early action point.",
+      "Visible speckle/grain and bright low-contrast backgrounds are present across these stored views. The images were displayed without enhancement or channel remapping."
+    ],
+    "limitation": "This sample supports valid nonconstant RGB capture and distinct task/view data. It does not establish whole-run image quality, prove OIDN warnings harmless, or identify the cause of visible grain."
+  }
+}

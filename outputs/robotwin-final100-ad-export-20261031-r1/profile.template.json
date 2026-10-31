@@ -1,0 +1,126 @@
+{
+  "kind": "robotwin_final100_ad_cpu_v1",
+  "run_id": "robotwin-final100-ad-export-20261031-r1",
+  "preparation_status": "STATIC_ONLY_HUMAN_PHASE_APPROVAL_PENDING",
+  "human_phase_authority": null,
+  "task_prefix": "mwj_1031_robotwin_final100_ad_r1_",
+  "scheduler_cap_seconds": 7020,
+  "global_work_seconds": 6720,
+  "external_TERM_seconds": 6790,
+  "external_KILL_seconds": 6800,
+  "bootstrap_wait_seconds": 120,
+  "cleanup_reserve_seconds": 30,
+  "gpus": 0,
+  "cpus": 8,
+  "memory_gib": 64,
+  "shm_gib": 2,
+  "prior_software_actual_seconds": 170,
+  "unrequested_seconds": 10,
+  "old_sealed_credit_seconds": 0,
+  "prior_cpu_closure": {
+    "path": "outputs/robotwin-ad500-software-qual-20261031-r1/CLOSURE.json",
+    "sha256": "8baddad4649a94d1722733d1c02f114dd7fc668d13cbb32c98debeadb20b61b9"
+  },
+  "qualified_software": {
+    "assembly": {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/terminal.json",
+      "sha256": "9017855b39a727602e8f5a526b93f09eea81131b8e8f8794431f04ff17de7fa7"
+    },
+    "ad": {
+      "path": "outputs/robotwin-ad-first-software-qual-20261031-r1/receipts/runtime/ad-software-tests-result.json",
+      "sha256": "8ccfa3b35d921314ed8e90038b4425f07ae21d8df62a7fbd3aa63ccf6bbefee1"
+    }
+  },
+  "site_packages": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages",
+  "shared_runtime_metadata_sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+  "auxiliary_bootstrap": [
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/software_profile.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/job-software.sh",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py"
+  ],
+  "auxiliary_file_sha256": {
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py": "a08f491766dfe1edb39902c8e0e462c3e1b7ce5faba948814629cda6060238dd",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/software_profile.py": "73fc9abbb2cb2288fb453d70a841c2da5ff944d7001a990fe814652cc785f534",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py": "f69f1c21517ab7b003b3c5dd33f7e67c545bc96cb90bdb7e20796e33fcaf258b",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py": "bc7f941539325a96dbacfd1d172e1a461be984f058cc497e2128451de79e2824",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py": "1fb0747eee8f400422c833c01c364eb96ebf1a7dbf89ca97ab584baa6b86838c",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py": "e534c25b8b43a114bab61ae0f0d4c92f009ef3394bb7f0bfe2aa46de121fc613",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/job-software.sh": "6835bcb73236bae43db583a10c1c4d4b0f8561b7356d4e3da948fb3e8b90dc97",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py": "0c8347f0cd0b481b137fed24e219f1842e5bfe7bc7ea9a127e6dd039f7a38bf5",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py": "779ca030625e55eb48391726def5d518dfb733516ec0ced0177d0b8a0d2f9e83"
+  },
+  "ad": {
+    "root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-final100-ad-code-20261031-r1",
+    "pin": "7401cd50c038a4cb35149eceeb72128e9a368cc3",
+    "bootstrap": [
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/project_corpus.py",
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/run_offline.py",
+      "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py",
+      "src/fluffy_bassoon/meta_rl/robotwin_history.py"
+    ],
+    "file_sha256": {
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/project_corpus.py": "ae95dd2c16c96ec5e366a7795443a4dc18debfd47b708812b5e387eb7dfadc17",
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/run_offline.py": "2a00de47c01351c44562f89c69e99174fe7e59fc9f7f6fd6ea82cc65ac43a6e0",
+      "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py": "8a5004b36eda4b121d5b28e5bcfcd4199672b609da0d6e44bc8e2823f7d52257",
+      "src/fluffy_bassoon/meta_rl/robotwin_history.py": "88fa3dcf24da04682f2cd7c1bba57559019fd0042c87cc6cbd109b81a756d845"
+    }
+  },
+  "finalbank": {
+    "ancestry": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-final100-ad-export-20261031-r1/final-ancestry.json",
+      "sha256": "0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e"
+    },
+    "tip": {
+      "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-final-20261031-r1/sac/continuation-manifest.json",
+      "sha256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4"
+    },
+    "source_stage": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+      "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+    },
+    "final_checkpoint": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/coordinator-recovery.pt",
+      "sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+      "bytes": 1043161745,
+      "ZIP_members": 210,
+      "all_CRCs_passed": true
+    }
+  },
+  "stage_caps_seconds": {
+    "inventory": 180,
+    "projection": 2800,
+    "train": 2400,
+    "validation": 600,
+    "admission": 400
+  },
+  "storage": {
+    "approved_new_logical_ceiling_bytes": 137438953472,
+    "max_summed_source_files": 500000,
+    "max_summed_source_bytes": 94489280512,
+    "export_metadata_headroom_bytes": 42949672960,
+    "min_free_bytes": 17179869184,
+    "hardlinks_only": true,
+    "copy_fallback": false,
+    "read_cost_estimate": "8*actual_summed_source_bytes +64GiB; capped at768GiB; estimate not measured syscall bytes"
+  },
+  "future_bindings": {
+    "actual_job_id": null,
+    "actual_hostname": null,
+    "actual_resource_receipt": null,
+    "auxiliary_commit": null,
+    "actual_projection_SHA": null,
+    "actual_train_index_SHA": null,
+    "actual_validation_index_SHA": null,
+    "actual_AD500_full_model_SHA": null,
+    "actual_AD500_static_model_SHA": null,
+    "fit_or_readout_admitted": false
+  }
+}

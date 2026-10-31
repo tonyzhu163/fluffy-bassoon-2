@@ -1,0 +1,468 @@
+[
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_continuation.py",
+    "source_content_sha256": "16950216ed4835be1d2b3f303d04be8d695dfca7b14b360dad80ae2e7d6afa7c",
+    "top_level_imports": [
+      "copy",
+      "importlib.util",
+      "json",
+      "pathlib",
+      "sys",
+      "time",
+      "pytest",
+      "torch",
+      "test_robotwin_trial_resume",
+      "test_robotwin_trained_parallel",
+      "test_robotwin_trained_pair_audit",
+      "robotwin_trained_pair_preflight"
+    ],
+    "tests": [
+      {
+        "name": "test_long_authority_includes_initial_subslice_and_preserves_goal",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_offset_source_rounds_advance_independently",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_round100_requires_a_fresh_final_evaluation_child_then_retires",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_eval_only_requires_closed_unit_progress_and_exact_source_identity",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_fake_unit_growth_without_closed_raw_evidence_is_rejected",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_legal_stage_only_closure_needs_all_units_and_completed_report",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_cleanup_subset_keeps_other_live_arm_untouched",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_interrupted_subset_cleanup_retains_both_arms_for_fatal_cleanup",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_guardian_independent_respawns_and_single_initial_probe",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_initial_goal100_can_retire_one_arm_or_require_final_evaluation",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_fresh_deadline_check_after_other_arm_cleanup",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_initially_complete_pair_exits_before_probe_or_any_model",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_continuation_reuses_real_one_round_c353_audit",
+        "static_cases": 1,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 14,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_plan.py",
+    "source_content_sha256": "4c4e875d0a8c3bcaaf4b9d9f1970a50ec3dfaef9d49fad8fd6cd9e519d856de8",
+    "top_level_imports": [
+      "copy",
+      "importlib.util",
+      "json",
+      "pathlib",
+      "sys",
+      "numpy",
+      "pytest",
+      "fluffy_bassoon.rl.robotwin_corpus"
+    ],
+    "tests": [
+      {
+        "name": "test_commands_keep_original_caps_goals_and_complete_round_execution",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_plan_rejects_recipe_budget_or_command_expansion",
+        "static_cases": 8,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_hash_bound_owner_release_and_goal_authority_are_required",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_short_slice_admission_and_nonterminal_source_release_fail_closed",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_invented_global_compute_ceiling_or_cloned_worker_ledger_is_rejected",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_audit_counts_real_writer_arrays_and_rejects_tampering",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_audit_accepts_zero_native_terminal_but_rejects_unfinished_episode",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_audit_preserves_native_terminal_feedback_at_learning_boundary",
+        "static_cases": 3,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 17,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_preflight.py",
+    "source_content_sha256": "bf9bd57b2facf6b7065cf3b3b199ca71e79f3ab88c9f3c63cfea55db874c5030",
+    "top_level_imports": [
+      "copy",
+      "importlib.util",
+      "json",
+      "pathlib",
+      "types",
+      "pytest",
+      "torch",
+      "test_robotwin_trial_resume",
+      "fluffy_bassoon.meta_rl.robotwin_trial_resume"
+    ],
+    "tests": [
+      {
+        "name": "test_fixed_production_pins_have_no_cli_overrides",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_goal_boundary_admission_is_explicit_and_default_remains_one_round",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_partial_final_evaluation_reserves_only_uncommitted_original_units",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_complete_pair_passes_without_ledger_mutation_or_cuda",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_non_update_boundary_is_rejected",
+        "static_cases": 4,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_motor_and_owner_head_bindings_are_required",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_released_head_must_equal_canonical_head",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_snapshot_header_cannot_diverge_from_original_journal",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_pair_ownership_check_is_nonblocking",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_cpu_visibility_required_before_any_qualified_import",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_due_stage_cursor_and_completed_stage_reports",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_small_runtime_evidence_is_hash_bound",
+        "static_cases": 1,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 16,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_runtime.py",
+    "source_content_sha256": "dca07e5dc8ee2c055ca407eb5f63cf02013d94b2e7ce6be4ec6b3894e1253cea",
+    "top_level_imports": [
+      "importlib.util",
+      "json",
+      "os",
+      "pathlib",
+      "signal",
+      "socket",
+      "subprocess",
+      "sys",
+      "time",
+      "types",
+      "datetime",
+      "pytest"
+    ],
+    "tests": [
+      {
+        "name": "test_cpu_preflight_is_cuda_hidden_and_reaped_before_return",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_failed_or_timed_out_preflight_cannot_enter_gpu_stage",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_native_command_abort_cleans_orphan_in_changed_pgid_but_not_other_session",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_fatal_launcher_loss_still_has_independent_guardian_cleanup",
+        "static_cases": 3,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_pair_before_single_fresh_probe_is_rejected_without_dispatch",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_probe_identity_or_idle_failure_is_not_accepted",
+        "static_cases": 4,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_runtime_never_expands_the_scheduler_envelope",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_guardian_final_cleanup_failure_cannot_return_success",
+        "static_cases": 1,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 14,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_audit.py",
+    "source_content_sha256": "446aa6e36ca320698d323d43ec8e03a6b5042e134850757375c321b007f0973e",
+    "top_level_imports": [
+      "copy",
+      "importlib",
+      "json",
+      "pathlib",
+      "numpy",
+      "pytest",
+      "torch",
+      "test_robotwin_trial_resume",
+      "test_robotwin_trained_parallel",
+      "fluffy_bassoon.meta_rl.robotwin_trial_resume"
+    ],
+    "tests": [
+      {
+        "name": "test_genuine_trained_n6_driver_passes_complete_after_audit",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_after_audit_rejects_corrupted_contract_or_missing_group_ack",
+        "static_cases": 2,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 3,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "0c16c2b794f8de5b78603206917e72195083c265",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2",
+    "path": "tests/test_robotwin_trained_pair_continuation_spawn.py",
+    "source_content_sha256": "719448d893a01fc798926a3dbfd30d2eaca7f943b1a2a98ba10df6701dd5ceaf",
+    "top_level_imports": [
+      "json",
+      "importlib.util",
+      "os",
+      "pathlib",
+      "signal",
+      "subprocess",
+      "sys",
+      "textwrap",
+      "pytest"
+    ],
+    "tests": [
+      {
+        "name": "test_signal_after_popen_stays_owned_and_children_keep_normal_signal_masks",
+        "static_cases": 3,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 3,
+    "unknown_parameters": false
+  },
+  {
+    "pin": "26b55eae2a5ce6545cdc97b3a875cc6e3a7b46fa",
+    "code_root": "/mowenjie/fluffy-bassoon-2/worktrees/libero-cached-prefix-b1-code-20261031-r1",
+    "path": "tests/test_vla_cached_scalar_motor.py",
+    "source_content_sha256": "fb6681528f1ffdbcfc17303a131ae4bf3a8961cc10cc8af3cd32d1c66e840fab",
+    "top_level_imports": [
+      "copy",
+      "builtins",
+      "importlib",
+      "pickle",
+      "types",
+      "numpy",
+      "pytest"
+    ],
+    "tests": [
+      {
+        "name": "test_prepare_reuses_equal_full_content_without_rng_decode_or_mutable_feature_alias",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_cached_decode_matches_native_oracle_and_consumes_one_rng_and_attestation",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_cached_adapter_rejects_unsupported_h50_without_model_or_rng_work",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_no_pending_prefix_keeps_initial_and_repeated_native_infer_compatibility",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_source_sac_unbounded_gaussian_warmup_noise_is_not_clipped_or_rescaled",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_post_infer_feature_reads_reuse_host_features_without_extra_prefix",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_consumed_kv_is_not_revived_by_repeated_host_feature_reads",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_explicit_boundaries_invalidate_retained_host_features_as_well_as_kv",
+        "static_cases": 3,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_model_identity_error_invalidates_retained_host_features_before_recovery",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_present_prefix_rejects_changed_current_input_before_rng_or_decode",
+        "static_cases": 7,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_invalid_cached_noise_never_consumes_rng_or_attempts_suffix",
+        "static_cases": 4,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_attempted_suffix_failure_is_charged_once_and_never_retried",
+        "static_cases": 4,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_failed_prefix_prepare_clears_previous_ephemeral_cache_without_rng",
+        "static_cases": 3,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_feature_qualification_delegates_original_gate_and_leaves_no_pending_cache",
+        "static_cases": 2,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_explicit_clear_and_equal_value_rng_restore_invalidate_ephemeral_prefix",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_ephemeral_kv_cannot_be_silently_serialized_into_a_recovery",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_direct_native_rng_assignment_rejects_pre_restore_prefix_even_for_equal_values",
+        "static_cases": 1,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_frozen_runtime_identity_change_is_rejected_before_cached_decode",
+        "static_cases": 7,
+        "unknown_parameters": []
+      },
+      {
+        "name": "test_wrapper_preserves_native_policy_model_metadata_feature_contract_and_parameter_shapes",
+        "static_cases": 1,
+        "unknown_parameters": []
+      }
+    ],
+    "static_case_count": 43,
+    "unknown_parameters": false
+  }
+]

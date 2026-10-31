@@ -1,0 +1,321 @@
+{
+  "schema": "robotwin_trained_pair_independent_thin_final_audit_v1",
+  "checked_at_utc": "2026-10-30T18:06:04.178336+00:00",
+  "status": "passed_one_genuine_trained_N6_round_per_original_arm",
+  "allocation_id": "job-zdic0jczdxoc",
+  "scope": "Thin read-only new-run JSON/hash/two checkpoint ZIP CRCs/native NPZ masks. No Torch/tensor checkpoint load/model/forward/new actions/tests/control/ledger constructor/Git/coordination mutation or old full corpus walk.",
+  "inputs": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/receipts/independent-final-input.json",
+      "sha256": "36a17ed81e1c2ef3a95146910d5c164af0dda57eee119e172514296a4b14f380"
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/receipts/independent-bindings-and-masks.json",
+      "sha256": "2c48d4ec7515dd0cf4992d55f14840c26f52e5bf99215d5d09a17aec17a8afc7"
+    }
+  ],
+  "compiled_plan": {
+    "expected": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/compiled-plan.json",
+      "sha256": "8d08d54935fc77dad1debb4d417b5c84a8eee47225d96ff38e26a85200b523a1"
+    },
+    "actual_sha256": "8d08d54935fc77dad1debb4d417b5c84a8eee47225d96ff38e26a85200b523a1",
+    "matches": true
+  },
+  "input_binding_checks": {
+    "owner_release": {
+      "expected": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/owner-release.json",
+        "sha256": "6da4d868bc2fe1783d3c048f7ff8afa371de7caf0b693a2f72591e055b4e927b"
+      },
+      "actual": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/owner-release.json",
+        "bytes": 2828,
+        "sha256": "6da4d868bc2fe1783d3c048f7ff8afa371de7caf0b693a2f72591e055b4e927b"
+      },
+      "matches": true
+    },
+    "compute_binding": {
+      "expected": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/compute-binding.json",
+        "sha256": "57c1651c0aea799eaebe367dd713b4a7a72cc6b01f117c4f0a8aba366fd81479"
+      },
+      "actual": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/compute-binding.json",
+        "bytes": 1114,
+        "sha256": "57c1651c0aea799eaebe367dd713b4a7a72cc6b01f117c4f0a8aba366fd81479"
+      },
+      "matches": true
+    },
+    "parent_manifest": {
+      "expected": {
+        "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+        "sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
+      },
+      "actual": {
+        "path": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-native-wholetrial-20261030-r2/manifest.json",
+        "bytes": 4705,
+        "sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0"
+      },
+      "matches": true
+    },
+    "compute_authority": {
+      "expected": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/authority.json",
+        "sha256": "15ae8ce0773099940b256580c7366c7d5c78db45210226ccb52a7f60afed5492"
+      },
+      "actual": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/authority.json",
+        "bytes": 706,
+        "sha256": "15ae8ce0773099940b256580c7366c7d5c78db45210226ccb52a7f60afed5492"
+      },
+      "matches": true
+    },
+    "compute_prior_charge_and_physical_snapshot": {
+      "expected": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/prior-charge-and-physical-snapshot.json",
+        "sha256": "e4e5fdafcad3efd50df22e1a4c8c83444a42f6890ed1995b392b710d5589373b"
+      },
+      "actual": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-trained-pair-20261031-r4/prior-charge-and-physical-snapshot.json",
+        "bytes": 1520,
+        "sha256": "e4e5fdafcad3efd50df22e1a4c8c83444a42f6890ed1995b392b710d5589373b"
+      },
+      "matches": true
+    }
+  },
+  "launcher_commit": "c353970a316837b13277ec65587e58e5cb25ce56",
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "scientific_lineage_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "original_parent_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+  "compute_authority": {
+    "original_total_compute_ceiling_seconds": null,
+    "source_goal_rounds": 100,
+    "operational_scheduler_gpu_seconds_reserved": 2700,
+    "qualification_capacity_reused": false
+  },
+  "arms": {
+    "ppo": {
+      "input_expected": {
+        "source_steps": 526663,
+        "completed_source_trials": 330,
+        "completed_source_iterations": 55,
+        "schedule_digest": "2c3ccf22c8d46e105c9c471632fac256b2fc1eddcf9f31ee01ec21b623998e24",
+        "learner_counters": {
+          "primitive_steps": 526663,
+          "updates": 55,
+          "optimizer_steps": 275,
+          "chunks": 17040
+        },
+        "pending_rollout_digests": []
+      },
+      "final_expected": {
+        "source_steps": 536686,
+        "completed_source_trials": 336,
+        "completed_source_iterations": 56,
+        "schedule_digest": "459d8fa80073cd7842ae35930e026fde67eb779c377400dd2e6cc23b38b0311d",
+        "learner_counters": {
+          "primitive_steps": 536686,
+          "updates": 56,
+          "optimizer_steps": 280,
+          "chunks": 17364
+        },
+        "pending_rollout_digests": []
+      },
+      "increment": {
+        "complete_K4_trials": 6,
+        "complete_source_episodes": 24,
+        "ppo_updates": 1,
+        "optimizer_steps": 5,
+        "actual_source_actions": 10023
+      },
+      "checkpoint_SHA_and_ZIP_CRC": {
+        "ref": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo/coordinator-recovery.pt",
+          "bytes": 16548952,
+          "sha256": "0ea853bc8abada9958e6e3f12b3403323d80518c407c0a97841f13f52325a7ba"
+        },
+        "zip_crc_bad_member": null,
+        "zip_entries": 263
+      },
+      "final_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo/continuation-manifest.json",
+        "bytes": 1843,
+        "sha256": "8dddea54a3b21f85498a9ff38ffe971edceee14d81ec5216ab700b334ffbba8a"
+      },
+      "input_and_final_artifact_bindings_all_match": true,
+      "exact_admitted_source_tasks_and_requested_seeds_match_raw": true,
+      "native_mask_records_independently_checked": 324,
+      "native_mask_actions": 10023,
+      "six_log_probability_and_value_replay_errors_exact_zero": true,
+      "approximate_kl": 0.00020488121627289572,
+      "group_journal": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo/production-vector/group-00000001.json",
+        "bytes": 76301,
+        "sha256": "8b3538168df45ba07d5711c66f1fbad228dce02111a1bd9289d621b1cd8ada47"
+      },
+      "group_status": "checkpointed",
+      "group_acknowledged_preupdate_checkpoint_sha256": "9f7c3785d3817e82d6cd0cf18e7c962f36580fb086a056c80e8190f6754a34e9",
+      "pending_ppo_rollouts": 0,
+      "ordinary_resume_blocker_exists": false,
+      "captured_final_canonical_head": {
+        "journal_events": 39819,
+        "journal_sha256": "9a3b24759b5ee7c22fabaa23a7b4b7369564621335772243f5667515c77f6d48",
+        "charged_actions": 614438,
+        "decision_count": 19900
+      },
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "frozen_motor_unchanged": true,
+      "policy_and_optimizer_digests_changed_from_input": true,
+      "learner_and_coordinator_rng_digests_match": true,
+      "original_100_round_goal_complete": false
+    },
+    "ppo_reset": {
+      "input_expected": {
+        "source_steps": 545156,
+        "completed_source_trials": 342,
+        "completed_source_iterations": 57,
+        "schedule_digest": "5c84f97d1d18dae906cbbf984c0f4a75f86f80444582b0807b588ae2d0bfa2cb",
+        "learner_counters": {
+          "primitive_steps": 545156,
+          "updates": 57,
+          "optimizer_steps": 285,
+          "chunks": 17641
+        },
+        "pending_rollout_digests": []
+      },
+      "final_expected": {
+        "source_steps": 554779,
+        "completed_source_trials": 348,
+        "completed_source_iterations": 58,
+        "schedule_digest": "597fcc4b78aa775c529784b85ae74329956c7c0fb9b812eee042708ace8a3335",
+        "learner_counters": {
+          "primitive_steps": 554779,
+          "updates": 58,
+          "optimizer_steps": 290,
+          "chunks": 17952
+        },
+        "pending_rollout_digests": []
+      },
+      "increment": {
+        "complete_K4_trials": 6,
+        "complete_source_episodes": 24,
+        "ppo_updates": 1,
+        "optimizer_steps": 5,
+        "actual_source_actions": 9623
+      },
+      "checkpoint_SHA_and_ZIP_CRC": {
+        "ref": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo_reset/coordinator-recovery.pt",
+          "bytes": 16526552,
+          "sha256": "00f893db45a91517a607d57c74084395da711b8ba4780d01267a85c686877d43"
+        },
+        "zip_crc_bad_member": null,
+        "zip_entries": 263
+      },
+      "final_manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo_reset/continuation-manifest.json",
+        "bytes": 1885,
+        "sha256": "4ef1f58acb50dea15b0f310eee89a679a4710febd05acdd10bd4473eb51a9ad6"
+      },
+      "input_and_final_artifact_bindings_all_match": true,
+      "exact_admitted_source_tasks_and_requested_seeds_match_raw": true,
+      "native_mask_records_independently_checked": 311,
+      "native_mask_actions": 9623,
+      "six_log_probability_and_value_replay_errors_exact_zero": true,
+      "approximate_kl": 0.0002320611591891077,
+      "group_journal": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo_reset/production-vector/group-00000001.json",
+        "bytes": 77080,
+        "sha256": "542fefe26904041d6e8ffc5af0cc6f60932b77fdb27b05e06432bbeea13f36d2"
+      },
+      "group_status": "checkpointed",
+      "group_acknowledged_preupdate_checkpoint_sha256": "04c21e997913c16d087eef6f9ddce8bd131d1eac023b8a945fdb14d3428697b6",
+      "pending_ppo_rollouts": 0,
+      "ordinary_resume_blocker_exists": false,
+      "captured_final_canonical_head": {
+        "journal_events": 38746,
+        "journal_sha256": "b5ee04cc17cd96ab4b835c7342c43928e7f5a6bdf861c8a273eb43e6bc02a5b1",
+        "charged_actions": 598166,
+        "decision_count": 19363
+      },
+      "pending_actions": 0,
+      "uncertain_actions": 0,
+      "frozen_motor_unchanged": true,
+      "policy_and_optimizer_digests_changed_from_input": true,
+      "learner_and_coordinator_rng_digests_match": true,
+      "original_100_round_goal_complete": false
+    }
+  },
+  "combined": {
+    "new_complete_K4_trials": 12,
+    "new_complete_source_episodes": 48,
+    "new_source_actions": 19646,
+    "native_mask_records_independently_checked": 635,
+    "all_12_replay_checks_exact_zero": true,
+    "new_ppo_updates": 2,
+    "new_optimizer_steps": 10,
+    "new_target_or_validation_actions": 0
+  },
+  "cleanup": {
+    "child_return_codes": {
+      "ppo": 0,
+      "ppo_reset": 0
+    },
+    "all_saved_cleanup_receipts_clean": true,
+    "receipts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/cleanup-001.json",
+        "bytes": 381,
+        "sha256": "107b849f5b0b6df1eea1e420c2251489f6ade0a1d80fa083bd1d448f9e28b1a8"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/cleanup-002.json",
+        "bytes": 379,
+        "sha256": "b51db90b941201b3922cf76c5f678959633006c04881a02b5a8005cab27abe6c"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/cleanup-003.json",
+        "bytes": 600,
+        "sha256": "91cd3cb94ada14b818740e035107246a4f076dad9408c021fe3e0656065a90fa"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/cleanup-004.json",
+        "bytes": 386,
+        "sha256": "962b472ec28deddf7a406dee93ad9a8e08bdfe7aad607cb776fcad60e97bc18b"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/cleanup-005.json",
+        "bytes": 150,
+        "sha256": "8b281b914bd4232d2d5180d7d7423f207136b482ed79999a9f5f27ad2cee3130"
+      }
+    ],
+    "no_owned_survivors_in_final_receipt": true,
+    "no_failure_or_unreaped_receipts": true,
+    "final_gpu": {
+      "uuid": "GPU-ccbca68b-5544-d426-6a0d-c40862198c5c",
+      "used_bytes": 0,
+      "total_bytes": 102641958912,
+      "utilization_percent": 5.0,
+      "utc": "2026-10-30T18:01:09.314065+00:00"
+    },
+    "peak_used_bytes": 70391955456,
+    "sampled_peak_gib": 65.5576171875,
+    "memory_samples": 654,
+    "automatic_retries": 0
+  },
+  "timing": {
+    "parent_elapsed_seconds": 407.82707293424755,
+    "paired_execution_elapsed_seconds": 354.26299871504307,
+    "actual_terminal_scheduler_gpu_seconds": null,
+    "scheduler_accounting": "Root owns authenticated terminal scheduler charge; process elapsed time is not substituted."
+  },
+  "conclusion": "Genuine continuation from PPO55\u219256 and trained-reset57\u219258 with original caps and clean complete recovery. Original100-round source/evaluation goals remain unfinished.",
+  "limits": [
+    "Adam/config/RNG eligibility cross-checked through hash-bound manifests and existing actual allocated audit metadata; no tensor deserialization or SGD rerun.",
+    "Captured final canonical heads are immutable run evidence; later authorized physical events do not invalidate this audit.",
+    "Cleanup/GPU release verified across saved actual-allocation receipts, not development-host visibility.",
+    "Short continuation does not establish indefinite native stability or adaptation-performance advantage."
+  ]
+}

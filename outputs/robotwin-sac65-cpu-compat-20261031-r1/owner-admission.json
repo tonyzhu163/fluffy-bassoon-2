@@ -1,0 +1,45 @@
+{
+  "schema": "robotwin_sac65_cpu_owner_admission_v1",
+  "status": "failed_bootstrap_before_work_audited",
+  "created_at_utc": "2026-10-30T20:50:51.110026+00:00",
+  "source_commit": "29df647fd30469fc04743baf47ba331718c9d1a2",
+  "source_code_root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-sac65-cpu-compat-20261031-r1",
+  "reviewed_origin_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "independent_static_reviews": [
+    "optimization owner: changed-area PASS",
+    "parallel_launch_plan: changed-area PASS"
+  ],
+  "resources": {
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "shared_memory_gib": 2,
+    "scheduler_cap_seconds": 1800
+  },
+  "absolute_work_seconds": 1700,
+  "bootstrap_wait_inside_work_seconds": 120,
+  "owned_cleanup_inside_work_seconds": 30,
+  "outer_term_seconds": 1770,
+  "outer_kill_seconds": 1780,
+  "source_prefix": {
+    "rounds": 65,
+    "complete_K4": 390,
+    "source_actions": 651638,
+    "ancestry_sha256": "5e65bc308c8d73ab21ff80452c39fec98b873171e49a1432312a8645bd07d861"
+  },
+  "scope": "One necessary saved-data compatibility qualification under AGENTS CPU-test authority. Zero new robot/VLA actions, source SGD, fits or GPU computation. No retry/copy fallback/extra1800 allowance.",
+  "deployment": "Git bundle verified, exact clean detached worktree and exact0c16 three helper SHAs verified; c62 object available; fresh output/inbox absence and storage write/capacity checks passed.",
+  "actual_allocation_id": "job-eahrz09v6kkk",
+  "actual_scheduler_cpu_seconds": null,
+  "actual_scheduler_gpu_seconds": 0,
+  "bootstrap": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-sac65-cpu-compat-20261031-r1/actual-bootstrap.json",
+  "actual_scheduler_running_seconds": 149,
+  "actual_scheduler_cpu_core_seconds": 1192,
+  "actual_pod_seconds": 144,
+  "process_elapsed_seconds": 120.01200418919325,
+  "actual_running_at_shanghai": "2026-10-31 04:51:08",
+  "actual_failed_at_shanghai": "2026-10-31 04:53:38",
+  "remaining_original_scheduler_envelope_seconds": 1651,
+  "failure": "Owner bootstrap proof arrived after the120s gate; context compaction delayed dispatch. No phase/test/export/model/robot/SGD/fits ran.",
+  "retry": "No retry launched. Sole exporter preparing diagnosed residual-budget recovery; immutable r1 retained."
+}

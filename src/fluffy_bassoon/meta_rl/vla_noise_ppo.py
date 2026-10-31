@@ -127,11 +127,12 @@ class RecurrentNoisePPO:
     @torch.no_grad()
     def collect_trial(self, env, task_name, episode_seeds, *, deterministic=False,
                       reset_memory=None, reward_blind=False, episode_callback=None,
-                      primitive_budget=None):
+                      primitive_budget=None, decision_callback=None,
+                      start_episode=0, history_offset=0):
         """Run complete episodes; sequential execution preserves causal adaptation.
 
         Environment step returns its exact primitive-step increment. This can be
-        shorter than the native chunk at termination or the 400-step wrapper cap.
+        shorter than the native chunk at termination or the task's wrapper cap.
         No optimizer update occurs within this function or the trial.
         """
         if not episode_seeds:
@@ -140,6 +141,13 @@ class RecurrentNoisePPO:
             raise ValueError("Primitive budget must be a positive integer")
         c = self.config
         reset_memory = c.reset_each_episode if reset_memory is None else bool(reset_memory)
+        if (type(start_episode) is not int or not 0<=start_episode<len(episode_seeds)
+                or type(history_offset) is not int or history_offset<0):
+            raise ValueError("Invalid original episode/history continuation offset")
+        if start_episode and (not c.reset_each_episode or not reset_memory or primitive_budget is not None):
+            raise ValueError("Episode-boundary continuation requires the trained reset controller and whole episodes")
+        if not start_episode and history_offset:
+            raise ValueError("An unstarted trial cannot have a prior history offset")
         self.policy.eval()
         state = None
         previous_noise = np.zeros(self.action_dim, np.float32)
@@ -147,15 +155,19 @@ class RecurrentNoisePPO:
         keys = ("observations", "raw_actions", "log_probs", "values", "rewards",
                 "trial_ends", "attempt_ends", "resets")
         records = {key: [] for key in keys}
+        episode_limits = []
         episodes = []
         total_primitive = 0
         budget_cut = False
         bootstrap = None
-        for episode, seed in enumerate(episode_seeds):
+        for episode, seed in enumerate(episode_seeds[start_episode:],start=start_episode):
             if c.reset_each_episode:
                 previous_noise = np.zeros(self.action_dim,np.float32)
                 previous_reward = 0.
             features = np.asarray(env.reset(task_name, int(seed)), np.float32)
+            episode_limit = getattr(env, "episode_limit", c.episode_limit)
+            if (type(episode_limit) is not int or not 1 <= episode_limit <= c.episode_limit):
+                raise ValueError("Task episode limit must fit the policy's declared horizon bound")
             if features.shape != (self.observation_dim,):
                 raise ValueError("Runtime feature dimension changed")
             initial_hash = observation_hash(features)
@@ -168,12 +180,30 @@ class RecurrentNoisePPO:
                                        not c.reset_each_episode and episode > 0 and chunks == 0,
                                        episode, primitive,
                                        train_episodes=c.train_episodes,
-                                       episode_limit=c.episode_limit, reward_blind=reward_blind)
+                                       episode_limit=episode_limit, reward_blind=reward_blind)
                 tensor = torch.as_tensor(inputs[None], device=self.device)
                 reset = torch.tensor([reset_memory and chunks == 0], device=self.device)
                 action, raw, log_prob, _, value, state = self.policy.step(
                     tensor, state, reset=reset, deterministic=deterministic)
                 noise = action[0].cpu().numpy() * c.action_limit
+                if decision_callback is not None:
+                    # Publish the behavior-policy quantities before the real
+                    # action. This is fresh on-policy evidence, not SAC replay.
+                    decision_callback(dict(
+                        episode_index=episode, chunk_index=chunks,
+                        episode_limit=episode_limit,
+                        history_index=history_offset+len(records["rewards"]),
+                        policy_update=int(self.updates),
+                        pre_squash_actions=raw[0].detach().cpu().numpy().copy(),
+                        old_log_prob=log_prob[0].detach().cpu().numpy().copy(),
+                        old_value=value[0].detach().cpu().numpy().copy(),
+                        policy_input=inputs.copy(),
+                        recurrent_reset_mask=reset[0].detach().cpu().numpy().copy(),
+                        previous_noise=previous_noise.copy(),
+                        previous_reward=float(previous_reward),
+                        episode_boundary=bool(not c.reset_each_episode and episode > 0 and chunks == 0),
+                        reset_episode_feedback=bool(c.reset_each_episode),
+                        reward_blind=bool(reward_blind)))
                 if primitive_budget is None:
                     following, reward, terminated, truncated, info = env.step(noise)
                 else:
@@ -186,13 +216,13 @@ class RecurrentNoisePPO:
                 total_primitive += steps
                 if primitive_budget is not None and total_primitive > primitive_budget:
                     raise RuntimeError("Runtime exceeded exact primitive budget")
-                if primitive > c.episode_limit:
+                if primitive > episode_limit:
                     raise RuntimeError("Runtime exceeded the wrapper episode limit")
                 done = bool(terminated or truncated)
                 exhausted = primitive_budget is not None and total_primitive >= primitive_budget
                 natural_trial_end = done and episode == len(episode_seeds)-1 and not info.get("budget_truncated",False)
                 budget_cut = bool(exhausted and not natural_trial_end)
-                if primitive >= c.episode_limit and not done:
+                if primitive >= episode_limit and not done:
                     raise RuntimeError("Runtime must truncate at its episode limit")
                 previous_noise, previous_reward = noise, float(reward)
                 features = np.asarray(following, np.float32)
@@ -207,6 +237,7 @@ class RecurrentNoisePPO:
                           "resets": reset[0]}
                 for key, value in values.items():
                     records[key].append(value.detach().cpu())
+                episode_limits.append(torch.tensor(episode_limit, dtype=torch.int64))
                 reward_sum += float(reward)
                 success |= bool(info.get("success", False))
                 chunks += 1
@@ -225,7 +256,7 @@ class RecurrentNoisePPO:
                         features,np.zeros_like(previous_noise) if boundary and c.reset_each_episode else previous_noise,
                         0. if boundary and c.reset_each_episode else previous_reward,
                         boundary and not c.reset_each_episode,next_episode,next_primitive,
-                        train_episodes=c.train_episodes,episode_limit=c.episode_limit,
+                        train_episodes=c.train_episodes,episode_limit=episode_limit,
                         reward_blind=reward_blind)
                     _,_,_,_,next_value,_ = self.policy.step(
                         torch.as_tensor(following_inputs[None],device=self.device),state,
@@ -236,6 +267,7 @@ class RecurrentNoisePPO:
             row = dict(task=task_name, episode=episode+1, seed=int(seed), success=success,
                        return_=reward_sum, primitive_steps=primitive, chunks=chunks,
                        initial_observation_sha256=initial_hash,
+                       episode_limit=episode_limit,
                        reset_memory=reset_memory, reward_blind=bool(reward_blind),
                        reset_episode_feedback=c.reset_each_episode,
                        budget_truncated=budget_cut)
@@ -245,6 +277,9 @@ class RecurrentNoisePPO:
             if exhausted:
                 break
         rollout = {key: torch.stack(value)[:, None] for key, value in records.items()}
+        # The exact causal input tensors above are authoritative for replay;
+        # this audit field is optional on older saved rollouts.
+        rollout["episode_limits"] = torch.stack(episode_limits)[:, None]
         rollout["action_mask"] = torch.ones_like(rollout["trial_ends"], dtype=torch.bool)
         if bootstrap is not None:
             rollout["bootstrap"]=bootstrap

@@ -1,0 +1,124 @@
+{
+  "status": "running_source_collection",
+  "proposal_date_shanghai": "2026-10-30",
+  "source_commit": "c3b6281c032e2c712a62191b03219b1e70e12947",
+  "reviewed_remote_main": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "target_subset": [
+    "adjust_bottle",
+    "move_stapler_pad"
+  ],
+  "source_action_milestones_per_arm": [
+    32000,
+    64000,
+    128000
+  ],
+  "methods": [
+    "ppo",
+    "sac",
+    "ppo_reset"
+  ],
+  "source_actions_total": 384000,
+  "source_validation_max_actions_total": 86400,
+  "target_max_actions_total": 115200,
+  "native_max_actions_total": 4800,
+  "prior_executed_actions": 13026,
+  "planned_actions_including_prior": 603426,
+  "benchmark_action_ceiling": 1000000,
+  "unallocated_actions": 396574,
+  "nominal_train_episodes": 4,
+  "eval_episodes": 8,
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "ppo_trials_per_update": 8,
+  "sac_warmup_chunks": 500,
+  "sac_batch_size": 256,
+  "sac_utd": 20,
+  "intermediate_stage_cut": "external budget truncation with bootstrap; retain pending PPO; no forced intermediate update",
+  "source_validation_seed_domain_min": 3000000000,
+  "measured_qualification_actions_per_second": 26.954602297616557,
+  "new_planned_actions": 590400,
+  "collection_hours_at_qualification_rate": 6.084304201160541,
+  "first_stage_collection_hours_at_qualification_rate": 1.6983288149580915,
+  "throughput_limit": "two measured source scenes; optimizer, raw corpus I/O, startup and all-task variation excluded",
+  "proposed_scheduler_minutes": 120,
+  "gpus": 1,
+  "cpus": 16,
+  "memory_gib": 128,
+  "shared_memory_gib": 8,
+  "launch_authorization": "Human initially approved prepared continuation, then explicitly removed the two-hour overall limit in favor of collection targets; see CONTINUATION.md",
+  "ledger_root": "/mowenjie/fluffy-bassoon-2/campaigns/robotwin-one-million-20261029-r1",
+  "prior_proposal": "robotwin-staged-20261030-r1 at525d669; preserved and unlaunched, superseded because3e-4PPO update was unsafe",
+  "source_commit_pending_validation": false,
+  "validation_job_id": "job-340yo6ui9wmf",
+  "validation_tests": 93,
+  "initial_resource_accounted_seconds": 2672,
+  "initial_resource_remaining_seconds": 28,
+  "command": "bash /mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r2/scripts/diagnostics/robotwin_staged_train.sh c3b6281c032e2c712a62191b03219b1e70e12947 robotwin-staged-20261030-r2",
+  "code_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-staged-20261030-r2",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-staged-20261030-r2",
+  "source_optimizer_learning_rate": 1e-06,
+  "source_optimizer_epochs": 5,
+  "ppo_max_update_kl": 0.1,
+  "calibration": {
+    "candidate_rates": [
+      1e-06,
+      3e-07
+    ],
+    "batch_trials": 3,
+    "epochs": 5,
+    "mean_analytic_post_kl_max": 0.02,
+    "post_clip_fraction_max": 0.2,
+    "source": "same immutable12episodes/4273actions/140decisions; three source tasks only",
+    "weight_transfer_to_main": false,
+    "selection": "largest passing predeclared rate; if none, stop before any robot action",
+    "executed_on_resume": false
+  },
+  "source_module_validation": "93 focused allocated Linux tests passed in current job",
+  "actual_resource_accounting": true,
+  "baseline_allocated_tests_passed": 86,
+  "new_guard_tests_pending": 0,
+  "guard_static_checks": "93 focused allocated Linux tests passed in13.46s, including7new guard cases",
+  "steering_interface": {
+    "kind": "full_horizon_noise",
+    "motor_noise_shape": [
+      32,
+      32
+    ],
+    "policy_action_dim": 1024,
+    "action_limit": 1.5
+  },
+  "prospective_tied_noise_ablation": "discussion only; not substituted or authorized by this proposal; requires fresh data",
+  "source_pin_prepared": true,
+  "training_job_submitted": true,
+  "authorization_recorded_at_shanghai": "2026-10-30T11:01:17.193779+08:00",
+  "job_id": "job-340yo6ui9wmf",
+  "scheduler_created_at_shanghai": "2026-10-30 11:01:30",
+  "scheduler_running_at_shanghai": "2026-10-30 11:01:40",
+  "monitor_id": "robotwin-matched-steering-monitor",
+  "last_check_shanghai": "2026-10-30T11:08:21.463854+08:00",
+  "resource_authorization_history": [
+    {
+      "at_shanghai": "2026-10-30T11:20:09.529026+08:00",
+      "human_instruction": "wait dont limit time like this\uff0chow much are we aiming to collect for either",
+      "interpretation": "continue the existing matched collection/evaluation contract to its action quotas; two-hour slices are operational checkpoint boundaries, not an overall compute or completion cap",
+      "previous_additional_gpu_seconds": 7200,
+      "previous_cumulative_gpu_seconds": 9900
+    }
+  ],
+  "completion_criterion": "128000 actual source actions per each of3learners plus already-planned stage validation/target/native evaluation, all within1Mshared executed-action ceiling",
+  "resource_policy": "human authorized quota-driven continuation beyond initial2h; meter GPUtime and resume checkpointed slices automatically; preserve scientific contract",
+  "overall_gpu_time_ceiling_seconds": null,
+  "operational_slice_minutes": 120
+}

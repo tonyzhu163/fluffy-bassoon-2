@@ -1,12 +1,17 @@
 """Frozen pi0.5 RoboTwin noise interface for both recurrent PPO and DSRL.
 
-The real backend requires an allocated Linux GPU.  No parameters, observations,
-action conventions, or task rewards are modified.  The module imports only
+The real backend requires an allocated Linux GPU. No parameters, action
+conventions, or task rewards are modified. An opt-in observation-capture mode
+defers camera reads to the end of each chunk; image equivalence requires a
+separate allocated-runtime check. The module imports only
 NumPy until that backend is constructed, so accounting contracts can be checked
 with an injected backend on allocated Linux CPU resources.
 """
 from __future__ import annotations
 
+from concurrent.futures import Future
+from contextlib import contextmanager, nullcontext
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -14,6 +19,7 @@ from pathlib import Path
 import random
 import subprocess
 import sys
+import threading
 import time
 
 import numpy as np
@@ -27,6 +33,273 @@ RLINF_COMMIT = "c605b9d55ed93a180119b099e6f836abff293b08"
 ROBOTWIN_COMMIT = "dca9ec682688821c42944eacd7f5dd9bfb15396f"
 MOTUS_REVISION = "effc6e1a99bd4d0edf9447e8ba313def67649cfe"
 FEATURE_DIM = 2048 + 14
+RESET_ATTEMPTS = 32
+
+
+def load_benchmark_episode_limits(robotwin_root, tasks):
+    """Read the pinned benchmark's control-action horizons without a fallback."""
+    import yaml
+
+    if isinstance(tasks, str):
+        raise ValueError("tasks must be a nonempty sequence of task names")
+    tasks = tuple(tasks)
+    if not tasks or any(not isinstance(task, str) for task in tasks):
+        raise ValueError("tasks must be a nonempty sequence of task names")
+    path = Path(robotwin_root) / "task_config" / "_eval_step_limit.yml"
+    values = yaml.safe_load(path.read_text())
+    if not isinstance(values, dict):
+        raise ValueError("Benchmark episode-limit file must contain a task mapping")
+    limits = {}
+    for task in tasks:
+        value = values.get(task)
+        if type(value) is not int or value < 1:
+            raise ValueError(f"Missing or invalid benchmark episode limit for {task}")
+        limits[task] = value
+    return limits
+
+
+def _episode_limit_contract(robotwin_root, task_episode_limits):
+    if task_episode_limits is None:
+        return {}
+    fields = dict(task_episode_limits=dict(sorted(task_episode_limits.items())),
+        episode_limit_policy="per-task control-action horizon; true termination takes precedence over timeout")
+    if robotwin_root is not None:
+        path = Path(robotwin_root) / "task_config" / "_eval_step_limit.yml"
+        if path.is_file() and load_benchmark_episode_limits(robotwin_root, task_episode_limits) == task_episode_limits:
+            fields["episode_limits_source"] = dict(path=str(path.resolve()), sha256=_sha256(path))
+    return fields
+
+
+class _SynchronousExecutor:
+    """Future-compatible execution on the simulator scene's owning thread.
+
+    With one physical environment there is no parallel work to dispatch.
+    RoboTwin otherwise creates a scene on its executor worker, then destroys
+    that scene on the calling thread when switching tasks. SAPIEN's native
+    render/scene resources require a consistent lifecycle thread.
+    """
+    def __init__(self):
+        self.owner_thread = threading.get_ident()
+        self.closed = False
+
+    def submit(self, function, /, *args, **kwargs):
+        if self.closed:
+            raise RuntimeError("Cannot submit to a shut down simulator executor")
+        if threading.get_ident() != self.owner_thread:
+            raise RuntimeError("RoboTwin scene operations must stay on their owning thread")
+        future = Future()
+        try:
+            future.set_result(function(*args, **kwargs))
+        except BaseException as error:
+            future.set_exception(error)
+        return future
+
+    def shutdown(self, wait=True, *, cancel_futures=False):
+        self.closed = True
+
+
+def _install_synchronous_vector_executor(venv):
+    """Install immediately after construction, before the first reset/step."""
+    if venv.n_envs != 1:
+        raise RuntimeError("Synchronous RoboTwin adapter requires one physical environment")
+    if isinstance(venv.env_thread_pool, _SynchronousExecutor):
+        return
+    original = venv.env_thread_pool
+    # VectorEnv.__init__ creates SubEnv/setup_task synchronously; its executor
+    # has not received work yet. No native scene has crossed threads here.
+    original.shutdown(wait=True, cancel_futures=True)
+    venv.env_thread_pool = _SynchronousExecutor()
+
+
+@contextmanager
+def _temporary_instance_method(instance, name, replacement):
+    """Restore the exact instance/class lookup even when native calls fail."""
+    had_override = name in vars(instance)
+    previous = vars(instance).get(name)
+    setattr(instance, name, replacement)
+    try:
+        yield
+    finally:
+        if had_override:
+            setattr(instance, name, previous)
+        else:
+            delattr(instance, name)
+
+
+@contextmanager
+def _capture_sparse_feedback(task):
+    """Observe native feedback without changing its values or adapter logic."""
+    native = task.gen_sparse_reward_data
+    feedback = {}
+
+    def collect(*args, **kwargs):
+        result = native(*args, **kwargs)
+        feedback.update(raw_rewards=deepcopy(result[0]),
+                        raw_terminations=deepcopy(result[1]),
+                        raw_truncations=deepcopy(result[2]),
+                        native_info=deepcopy(result[3]))
+        return result
+
+    with _temporary_instance_method(task, "gen_sparse_reward_data", collect):
+        yield feedback
+
+
+def _step_with_final_observation(subenv, actions, update_obs):
+    """Use the unmodified native full-observation loop for exact accounting.
+
+    Native collect_obs=False omits executed_action_count, including when an
+    action is only partly executed at early success. Keep collect_obs=True
+    and its count/boundary logic, replacing only intermediate camera reads
+    with placeholders. Each replaced get_obs still performs its original
+    _update_render, preserving pose synchronization and lighting RNG calls.
+    The one deferred real get_obs skips that already-performed update.
+
+    This is restricted to the explicit tasks whose success checks use scene
+    state, not intermediate now_obs. Ray-tracer temporal state and pixels are
+    not assumed equivalent merely because physical/accounting traces match.
+    """
+    if subenv.get_instruction() is None:
+        subenv.reset(env_seed=None)
+    actions = np.asarray(actions)
+    if actions.ndim == 1:
+        actions = actions[None, :]
+    if actions.ndim != 2 or actions.shape[0] < 1:
+        raise ValueError("Require a nonempty RoboTwin action chunk")
+    with subenv.lock:
+        task = subenv.task
+        if getattr(task, "crazy_random_light", False):
+            raise RuntimeError("Final-observation capture does not support randomized lights")
+        original_get_obs = task.get_obs
+        original_update_render = task._update_render
+
+        def deferred_observation():
+            original_update_render()
+            return None  # Native code uses only list length until returning.
+
+        with _temporary_instance_method(task, "get_obs", deferred_observation):
+            reward, termination, truncation, info, placeholders = (
+                task.gen_sparse_reward_data(actions, collect_obs=True)
+            )
+        count = info.get("executed_action_count")
+        if (isinstance(count, (bool, np.bool_))
+                or not isinstance(count, (int, np.integer))
+                or not 0 <= count <= len(actions)):
+            raise RuntimeError("Native RoboTwin loop must report an exact executed_action_count")
+        if len(placeholders) != len(actions):
+            raise RuntimeError("Native RoboTwin full-observation padding changed")
+        # The native loop already called _update_render at every original
+        # observation boundary. Do not add a new lighting/RNG transition.
+        with _temporary_instance_method(task, "_update_render", lambda: None):
+            raw_obs = original_get_obs()
+        obs = update_obs(raw_obs)
+        obs["instruction"] = task.get_instruction()
+    return dict(obs=obs, reward=reward, terminated=termination,
+                truncated=truncation, info=info)
+
+
+def _install_final_observation_capture(venv, update_obs=None):
+    """Patch only this single synchronous vector instance; opt-in only."""
+    if venv.n_envs != 1 or not isinstance(venv.env_thread_pool, _SynchronousExecutor):
+        raise RuntimeError("Final-observation capture requires one synchronous physical environment")
+    if update_obs is None:
+        from robotwin.envs.vector_env import update_obs
+    for subenv in venv.envs:
+        if getattr(subenv, "_fb2_final_observation_only", False):
+            continue
+
+        def step(actions, _subenv=subenv):
+            return _step_with_final_observation(_subenv, actions, update_obs)
+
+        subenv.step = step
+        subenv._fb2_final_observation_only = True
+
+
+def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS):
+    """Preserve RoboTwin setup's seed order but expose persistent failures.
+
+    The pinned upstream setup_task silently catches every Exception forever.
+    A missing object therefore creates hundreds of scenes instead of reporting
+    its cause. Successful setup and the first max_attempts seeds are unchanged.
+    """
+    subenv.close()
+    subenv.task = class_decorator(subenv.task_name)
+    with subenv.global_lock:
+        with subenv.lock:
+            first_seed = subenv.env_seed
+            last_error = None
+            for trial_seed in range(first_seed, first_seed + max_attempts):
+                task = class_decorator(subenv.task_name)
+                try:
+                    task.setup_demo(now_ep_num=trial_seed, seed=trial_seed,
+                                    is_test=True, **subenv.args)
+                    episode_info = task.get_info()
+                except Exception as error:
+                    last_error = error
+                    task.close_env()
+                    continue
+                task.close_env()
+                subenv.episode_info_list = [episode_info]
+                return
+            raise RuntimeError(
+                f"RoboTwin {subenv.task_name} setup failed for {max_attempts} seeds "
+                f"starting at {first_seed}; last error: {type(last_error).__name__}: "
+                f"{last_error}. Check assets under {os.environ.get('ASSETS_PATH', '<unset>')} "
+                "before retrying; no episode was collected."
+            ) from last_error
+
+
+def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
+                            max_attempts=RESET_ATTEMPTS):
+    """Match pinned reset semantics, with a bound on unstable-scene retries."""
+    with subenv.global_lock:
+        with subenv.lock:
+            if subenv.task is not None:
+                subenv.reset_count += 1
+                should_clear = subenv.reset_count % subenv.clear_cache_freq == 0
+                subenv.task.close_env(clear_cache=should_clear)
+            if env_seed is not None:
+                subenv.env_seed = env_seed
+            subenv.instruction = subenv.create_instruction()
+            subenv.args["instruction"] = subenv.instruction
+            first_seed = subenv.env_seed
+            last_error = None
+            for trial_seed in range(first_seed, first_seed + max_attempts):
+                try:
+                    subenv.task.setup_demo(now_ep_num=trial_seed, seed=trial_seed,
+                                          **subenv.args)
+                    subenv.task.step_lim = subenv.args["step_lim"]
+                    subenv.task.run_steps = 0
+                    subenv.task.reward_step = 0
+                    return
+                except unstable_error as error:
+                    last_error = error
+                    subenv.task.close_env(clear_cache=True)
+                except Exception:
+                    subenv.task.close_env(clear_cache=True)
+                    raise
+            raise RuntimeError(
+                f"RoboTwin {subenv.task_name} reset remained unstable for "
+                f"{max_attempts} seeds starting at {first_seed}; last error: "
+                f"{type(last_error).__name__}: {last_error}; no episode was collected."
+            ) from last_error
+
+
+def _install_reset_retry_limit():
+    """Patch only this process; external pinned source files remain unchanged."""
+    from robotwin.envs import vector_env
+
+    if getattr(vector_env.SubEnv, "_fb2_reset_attempts", None) == RESET_ATTEMPTS:
+        return
+
+    def setup_task(subenv):
+        return _setup_task_with_retry_limit(subenv, vector_env.class_decorator)
+
+    def reset(subenv, env_seed=None):
+        return _reset_with_retry_limit(subenv, vector_env.UnStableError, env_seed)
+
+    vector_env.SubEnv.setup_task = setup_task
+    vector_env.SubEnv.reset = reset
+    vector_env.SubEnv._fb2_reset_attempts = RESET_ATTEMPTS
 
 
 def _sha256(path):
@@ -77,11 +350,13 @@ def model_config(rlinf_root, model_path, norm_stats, action_horizon=32, num_step
 
 
 def environment_config(rlinf_root, robotwin_root, task_name, seed, episode_limit,
-                       *, task_config_name="demo_clean"):
+                       *, task_config_name="demo_clean", final_observation_only=False):
     from omegaconf import OmegaConf
 
     if task_config_name not in ("demo_clean", "demo_randomized"):
         raise ValueError("task_config_name must be demo_clean or demo_randomized")
+    if final_observation_only and task_config_name != "demo_clean":
+        raise ValueError("final_observation_only initially supports demo_clean only")
     randomize_appearance = task_config_name == "demo_randomized"
     root = Path(rlinf_root)
     cfg = OmegaConf.load(root / "examples/embodiment/config/env/robotwin_adjust_bottle.yaml")
@@ -89,9 +364,9 @@ def environment_config(rlinf_root, robotwin_root, task_name, seed, episode_limit
         total_num_envs=1, auto_reset=False, ignore_terminations=False,
         seed=int(seed), group_size=1, use_fixed_reset_state_ids=True,
         seeds_path=None, assets_path=str(robotwin_root), center_crop=False,
-        # Full observations expose actual completed/partly executed actions.
-        # The fast sparse path does not report their count on early success.
-        skip_intermediate_renders=False, is_eval=False,
+        # The optional fast step still invokes the native full-observation
+        # loop for exact counts, while returning only its final camera read.
+        skip_intermediate_renders=bool(final_observation_only), is_eval=False,
         max_episode_steps=episode_limit, max_steps_per_rollout_epoch=episode_limit,
         reward_coef=1.0, use_custom_reward=True, use_rel_reward=True,
         video_cfg=dict(save_video=False, info_on_video=False, video_base_dir="unused"),
@@ -149,7 +424,9 @@ class _RoboTwinBackend:
 
     def __init__(self, model_path, norm_stats, robotwin_root, rlinf_root,
                  device="cuda", episode_limit=400, action_horizon=32,
-                 num_steps=5, task_config_name="demo_clean", output_dir=None):
+                 num_steps=5, task_config_name="demo_clean", output_dir=None,
+                 final_observation_only=False, corpus_writer=None,
+                 task_episode_limits=None):
         from fluffy_bassoon.gpu_execution import validate_execution
 
         mode = os.environ.get("FLUFFY_GPU_EXECUTION", "baige")
@@ -163,6 +440,12 @@ class _RoboTwinBackend:
             dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True).strip()
             if dirty:
                 raise RuntimeError(f"External source is modified: {root}")
+        # Validate every sampled object variant before loading the 3.35B motor.
+        # Incomplete assets otherwise enter RoboTwin's silent setup retry loop.
+        from fluffy_bassoon.rl.robotwin_assets import validate_robotwin_assets
+
+        self.asset_receipt = validate_robotwin_assets(
+            robotwin_root, SOURCE_TASKS + HELDOUT_TASKS)
         sys.path[:0] = [str(Path(rlinf_root).resolve()), str(Path(robotwin_root).resolve())]
         import torch
         from rlinf.models import get_model
@@ -173,9 +456,17 @@ class _RoboTwinBackend:
         self.robotwin_root = Path(robotwin_root).resolve()
         self.rlinf_root = Path(rlinf_root).resolve()
         self.episode_limit = episode_limit
+        self.task_episode_limits = task_episode_limits
         if task_config_name not in ("demo_clean", "demo_randomized"):
             raise ValueError("task_config_name must be demo_clean or demo_randomized")
         self.task_config_name = task_config_name
+        if type(final_observation_only) is not bool:
+            raise ValueError("final_observation_only must be a bool")
+        if final_observation_only and task_config_name != "demo_clean":
+            raise ValueError("final_observation_only initially supports demo_clean only")
+        self.final_observation_only = final_observation_only
+        self.corpus_writer = corpus_writer
+        self._decision_metadata = {}
         self.noise_shape = (int(action_horizon), 32)
         self.native_horizon = int(action_horizon)
         self.output_dir = Path(output_dir) if output_dir else None
@@ -190,6 +481,7 @@ class _RoboTwinBackend:
         self._versions = {name: value._version for name, value in self.model.named_parameters()}
         self.env = None
         self.task_name = None
+        self.scene_episode_limit = None
         self.prefix_seconds = self.motor_seconds = 0.0
         self.prefix_calls = self.motor_queries = 0
         self._prepared = self._prefix_mask = self._kv_cache = None
@@ -203,9 +495,18 @@ class _RoboTwinBackend:
             features="masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
             action_transform="ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
             task_config_name=task_config_name,
+            assets=self.asset_receipt, reset_max_attempts=RESET_ATTEMPTS,
+            simulator_execution="one physical environment; scene setup/reset/step/close on calling thread",
+            observation_capture=("final camera read per chunk; native full-observation action accounting"
+                                 if final_observation_only else "native camera read at every action boundary"),
+            capture_image_equivalence=("unqualified; requires paired allocated-runtime check"
+                                       if final_observation_only else "native reference"),
             appearance_randomization=task_config_name == "demo_randomized",
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
+        self.contract.update(_episode_limit_contract(robotwin_root, task_episode_limits))
+        if corpus_writer is not None:
+            corpus_writer.register_runtime(self.contract)
 
     def _encode(self, raw):
         from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
@@ -263,15 +564,22 @@ class _RoboTwinBackend:
 
         # RoboTwin's task assets/configuration resolve paths relative to its root.
         os.chdir(self.robotwin_root)
-        if self.env is not None and self.task_name != task_name:
+        _install_reset_retry_limit()
+        if self.env is not None and (self.task_name != task_name
+                                     or self.scene_episode_limit != self.episode_limit):
             self.env.venv.close()
             self.env = None
         if self.env is None:
             cfg = environment_config(self.rlinf_root, self.robotwin_root, task_name, seed,
                                      self.episode_limit,
-                                     task_config_name=self.task_config_name)
+                                     task_config_name=self.task_config_name,
+                                     final_observation_only=self.final_observation_only)
             self.env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
+            _install_synchronous_vector_executor(self.env.venv)
+            if self.final_observation_only:
+                _install_final_observation_capture(self.env.venv)
             self.task_name = task_name
+            self.scene_episode_limit = self.episode_limit
         raw, _ = self.env.reset(env_seeds=[int(seed)])
         subenv = self.env.venv.envs[0]
         task = subenv.task
@@ -283,12 +591,17 @@ class _RoboTwinBackend:
             raise RuntimeError("Task's actual renderer does not match allocated GPU")
         self._check_frozen()
         features = self._encode(raw)
-        return features, dict(task=task_name, requested_seed=int(seed), actual_seed=actual_seed,
+        reset_info = dict(task=task_name, requested_seed=int(seed), actual_seed=actual_seed,
                               instruction=list(raw["task_descriptions"]),
                               observation_sha256=_observation_hash(raw),
                               features_sha256=hashlib.sha256(features.tobytes()).hexdigest(),
                               actual_render_pci=actual_pci, reset_policy_actions=0,
                               reset_internal_physics_steps="not separately instrumented")
+        if getattr(self, "task_episode_limits", None) is not None:
+            reset_info["episode_limit"] = self.episode_limit
+        if self.corpus_writer is not None:
+            reset_info["corpus_episode_id"] = self.corpus_writer.begin_episode(raw, features, reset_info)
+        return features, reset_info
 
     def decode(self, noise):
         torch = self.torch
@@ -310,7 +623,15 @@ class _RoboTwinBackend:
     def step(self, noise, action_count):
         actions = self.decode(noise)[:action_count]
         torch = self.torch
-        obs, rewards, terms, truncs, infos = self.env.chunk_step(torch.from_numpy(actions[None]))
+        writer = self.corpus_writer
+        metadata, self._decision_metadata = self._decision_metadata, {}
+        if writer is not None:
+            writer.begin_decision(noise, actions, metadata)
+        started = time.monotonic()
+        capture = (_capture_sparse_feedback(self.env.venv.envs[0].task)
+                   if writer is not None else nullcontext())
+        with capture as native_feedback:
+            obs, rewards, terms, truncs, infos = self.env.chunk_step(torch.from_numpy(actions[None]))
         info = infos[-1]
         mask = info.get("valid_action_mask")
         if mask is None:
@@ -324,7 +645,15 @@ class _RoboTwinBackend:
         # The wrapper pads observations but the final public observation is real.
         raw = obs[-1]
         features = self._encode(raw)
-        return features, float(torch.as_tensor(rewards).sum()), terminal, truncated, dict(
+        reward = float(torch.as_tensor(rewards).sum())
+        if writer is not None:
+            writer.complete_native(next_raw=raw, next_features=features,
+                valid_action_mask=mask, reward=reward, terminated=terminal,
+                truncated=truncated, executed_steps=actual, success=success,
+                duration_seconds=time.monotonic() - started,
+                adapter_rewards=rewards, adapter_terminations=terms,
+                adapter_truncations=truncs, **native_feedback)
+        return features, reward, terminal, truncated, dict(
             primitive_steps=actual, issued_primitive_steps=action_count,
             success=success, motor_queries=1, prefix_calls=1,
             observation_sha256=_observation_hash(raw),
@@ -371,26 +700,72 @@ class RobotwinNoiseEnv:
 
     def __init__(self, model_path=None, norm_stats=None, robotwin_root=None, rlinf_root=None,
                  device="cuda", episode_limit=400, action_horizon=32, num_steps=5,
-                 task_config_name="demo_clean", output_dir=None, *, backend=None):
+                 task_config_name="demo_clean", output_dir=None, *, backend=None,
+                 final_observation_only=False, corpus_writer=None,
+                 task_episode_limits=None):
         if type(episode_limit) is not int or episode_limit < 1:
             raise ValueError("episode_limit must be a positive integer")
+        if type(final_observation_only) is not bool:
+            raise ValueError("final_observation_only must be a bool")
+        if final_observation_only and task_config_name != "demo_clean":
+            raise ValueError("final_observation_only initially supports demo_clean only")
+        if task_episode_limits is not None:
+            if (not isinstance(task_episode_limits, dict) or not task_episode_limits
+                    or any(task not in SOURCE_TASKS + HELDOUT_TASKS
+                           or type(limit) is not int or limit < 1
+                           for task, limit in task_episode_limits.items())):
+                raise ValueError("Require positive integer episode limits for explicit RoboTwin tasks")
+            task_episode_limits = dict(task_episode_limits)
+        self.task_episode_limits = task_episode_limits
+        self.default_episode_limit = episode_limit
+        initial_episode_limit = (max(task_episode_limits.values())
+                                 if task_episode_limits is not None else episode_limit)
         self.backend = backend if backend is not None else _RoboTwinBackend(
-            model_path, norm_stats, robotwin_root, rlinf_root, device, episode_limit,
-            action_horizon, num_steps, task_config_name, output_dir)
+            model_path, norm_stats, robotwin_root, rlinf_root, device, initial_episode_limit,
+            action_horizon, num_steps, task_config_name, output_dir,
+            final_observation_only=final_observation_only, corpus_writer=corpus_writer,
+            task_episode_limits=task_episode_limits)
+        self.corpus_writer = corpus_writer
         self.observation_dim = self.backend.observation_dim
         self.noise_shape = tuple(self.backend.noise_shape)
         self.native_horizon = int(self.noise_shape[0])
-        self.episode_limit = episode_limit
+        self.episode_limit = initial_episode_limit
         self.elapsed_steps = 0
         self.active = False
         self.last_reset_info = None
         self.contract = getattr(self.backend, "contract", {})
+        if task_episode_limits is not None:
+            self.backend.task_episode_limits = dict(task_episode_limits)
+            self.contract = dict(self.contract,
+                **_episode_limit_contract(robotwin_root, task_episode_limits))
+            self.backend.contract = self.contract
+            if corpus_writer is not None:
+                corpus_writer.register_runtime(self.contract)
+
+    def episode_limit_for_task(self, task_name):
+        if self.task_episode_limits is None:
+            return self.default_episode_limit
+        if task_name not in self.task_episode_limits:
+            raise ValueError(f"No declared episode limit for {task_name}")
+        return self.task_episode_limits[task_name]
+
+    def set_recording_context(self, metadata):
+        """Set method/phase/trial/policy identity without changing the scene."""
+        if self.corpus_writer is not None:
+            self.corpus_writer.set_context(metadata)
+
+    def record_decision_metadata(self, metadata):
+        """Attach current policy inputs/log-probability/history to next step."""
+        if self.corpus_writer is not None:
+            self.backend._decision_metadata = deepcopy(metadata)
 
     def reset(self, task_name, seed):
         if task_name not in SOURCE_TASKS + HELDOUT_TASKS:
             raise ValueError("Task is outside the explicit VLRLA twelve-task inventory")
         if type(seed) is not int or seed < 0:
             raise ValueError("seed must be a nonnegative integer")
+        self.episode_limit = self.episode_limit_for_task(task_name)
+        self.backend.episode_limit = self.episode_limit
         features, info = self.backend.reset(task_name, seed)
         self.elapsed_steps = 0
         self.active = True
@@ -425,12 +800,20 @@ class RobotwinNoiseEnv:
         natural_episode_end = bool(terminated or truncated or self.elapsed_steps >= self.episode_limit)
         budget_truncated = (max_primitive_steps is not None and actual >= max_primitive_steps
                             and not natural_episode_end)
-        truncated = bool(truncated or self.elapsed_steps >= self.episode_limit or budget_truncated)
+        truncated = bool(not terminated and
+                         (truncated or self.elapsed_steps >= self.episode_limit or budget_truncated))
         if not np.isfinite(reward):
             raise RuntimeError("Nonfinite environment reward")
         self.active = not (terminated or truncated)
         info = dict(info, episode_primitive_steps=self.elapsed_steps,
                     budget_truncated=bool(budget_truncated))
+        if self.task_episode_limits is not None:
+            info["episode_limit"] = self.episode_limit
+        if self.corpus_writer is not None:
+            info["corpus_chunk"] = self.corpus_writer.finalize_learning_flags(
+                reward=reward, terminated=terminated, truncated=truncated,
+                budget_truncated=budget_truncated,
+                episode_primitive_steps=self.elapsed_steps)
         return self._features(features), float(reward), bool(terminated), truncated, info
 
     def check_noise_parity(self, noise):
