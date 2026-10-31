@@ -6,6 +6,8 @@ Actual fit artifact admission remains separate from these synthetic fixtures.
 from contextlib import contextmanager
 from dataclasses import asdict
 import json
+import math
+import hashlib
 from types import SimpleNamespace
 
 import numpy as np
@@ -17,7 +19,7 @@ from test_robotwin_history_live import arguments
 from test_robotwin_source_teacher_profile import tiny_actor
 from fluffy_bassoon.meta_rl import robotwin_history_evaluate as ev
 from fluffy_bassoon.meta_rl import robotwin_history_live as live
-from fluffy_bassoon.meta_rl.robotwin_history import NativeHistoryConfig
+from fluffy_bassoon.meta_rl.robotwin_history import NativeHistoryConfig,NativeHistoryPolicy
 from fluffy_bassoon.meta_rl.vla_history import file_sha256
 
 
@@ -57,19 +59,36 @@ class TokenPolicy(torch.nn.Module):
     """Expose feedback, cache and clocks without constructing a learner."""
     def __init__(self):
         super().__init__();self.anchor=torch.nn.Parameter(torch.zeros(1));self.inputs=[];self.states=[]
+        self.epsilons=[]
+        self.log_std=torch.nn.Parameter(torch.full((1024,),math.log(.2)))
         self.config=NativeHistoryConfig()  # Selector fake; no production model is constructed.
         self.register_buffer('observation_mean',torch.zeros(2062))
         self.register_buffer('observation_std',torch.ones(2062))
-    def step(self,token,state,**kwargs):
+    def step(self,token,state,*,deterministic,generator):
         self.inputs.append(token.clone());self.states.append(state)
-        value=.01+token[:,3086:3087]*.01+token[:,-2:-1]*.01
-        return value.expand(-1,1024),None,torch.ones(1) if state is None else state+1
+        value=.01+token[:,3086:3087]*.01+token[:,2062:2063]*.01+token[:,-2:-1]*.01
+        if state is not None:value=value+state*.005
+        mean=value.expand(-1,1024)
+        epsilon=None if deterministic else torch.randn(mean.shape,generator=generator,device=mean.device,dtype=mean.dtype)
+        self.epsilons.append(epsilon)
+        action=mean if deterministic else mean+self.log_std.clamp(-5,2).exp()*epsilon
+        return action,None,torch.ones(1) if state is None else state+1
+
+
+class ConstantProposalPolicy(TokenPolicy):
+    """Keep sampled proposals fixed even when intermediate context changes."""
+    def step(self,token,state,*,deterministic,generator):
+        self.inputs.append(token.clone());self.states.append(state)
+        epsilon=torch.randn((1,1024),generator=generator)
+        self.epsilons.append(epsilon)
+        following=(torch.zeros(1) if state is None else state)+token[:,3086]+token[:,0]
+        return .01+self.log_std.clamp(-5,2).exp()*epsilon,None,following
 
 
 def student(p,condition):
     key=ev.ad500_model_key(condition)
     a=ev.StudentAgent(TokenPolicy(),dict(mode=key.split('-')[1],interface=p['interface']),p['interface'],
-        erase_each_episode=condition.endswith('-reset'),deterministic=True)
+        erase_each_episode=condition.endswith('-reset'),deterministic=p['student_inference']['deterministic'])
     a.condition=condition;a.checkpoint_sha256=p['models'][key]['sha256'];return a
 
 
@@ -81,6 +100,7 @@ def agent(p,condition):
 
 def admission(p):
     return dict(plan_sha256=ev.canonical_sha(p),model_endpoint=500,
+        student_action=p['student_action'],student_inference=dict(p['student_inference']),
         checked=[dict(condition=c,parameter_sha256=ev.parameter_digest(agent(p,c).policy.state_dict()))
             for c in ('ad-full-k0','ad-static-k0','sac100-frozen')])
 
@@ -125,6 +145,67 @@ def test_action_rng_reseed_preserves_support_state_feedback_and_clock():
     a.begin_episode(1,400);assert c.state is state and c.episode_index==1
 
 
+@pytest.mark.parametrize('mode',['full','static'])
+@pytest.mark.parametrize('std',[.125,2.])
+def test_real_native_policy_samples_learned_std_then_clips_with_private_stream(mode,std):
+    p=plan();seed=p['query_action_seeds']['adjust_bottle'][0]
+    with torch.random.fork_rng(devices=[]):
+        torch.manual_seed(41)
+        policy=NativeHistoryPolicy(NativeHistoryConfig(width=8,layers=1,heads=2,context_length=8))
+        with torch.no_grad():
+            policy.actor.weight.zero_();policy.actor.bias.fill_(.25);policy.log_std.fill_(math.log(std))
+        a=ev.StudentAgent(policy,dict(mode=mode,interface=p['interface']),p['interface'],
+            erase_each_episode=False,deterministic=False)
+        a.reset_trial(seed);a.begin_episode(0,400)
+        expected_rng=torch.Generator(device='cpu').manual_seed(seed)
+        for i in range(2):
+            # Foreign/global draws must not select actions or reset the private stream.
+            torch.manual_seed(9999+i);torch.randn(4096)
+            epsilon=torch.randn((1,1024),generator=expected_rng)
+            expected=(.25+policy.log_std.detach().clamp(-5,2).exp()*epsilon).clamp(-1.5,1.5)
+            noise=a.act(np.zeros(2062,np.float32))
+            np.testing.assert_array_equal(noise.reshape(-1),expected.numpy()[0])
+            assert not np.array_equal(noise,np.full((32,32),.25,np.float32))
+            if std==2.:assert (np.abs(noise)==1.5).any()
+            a.observe(noise,.75,i==1,1 if i else 32)
+        assert torch.equal(a.controller.generator.get_state(),expected_rng.get_state())
+
+
+def test_query_rng_reseed_pairs_innovations_after_different_support_lengths_without_erasing_context():
+    p=plan();a=student(p,'ad-full-k1');b=student(p,'ad-full-k1')
+    support_seed=p['support_action_seeds']['adjust_bottle'][0]
+    query_seed=p['query_action_seeds']['adjust_bottle'][0]
+    for model,chunks in ((a,1),(b,2)):
+        model.reset_trial(support_seed);model.begin_episode(0,400)
+        for i in range(chunks):
+            noise=model.act(np.zeros(2062,np.float32));model.observe(noise,1.,i==chunks-1,1 if i==chunks-1 else 32)
+        state=model.controller.state;previous=model.controller.previous_noise.copy()
+        model.reseed_action_rng(query_seed)
+        assert model.controller.state is state and model.controller.previous_reward==1.
+        np.testing.assert_array_equal(model.controller.previous_noise,previous)
+        model.begin_episode(1,400);noise=model.act(np.zeros(2062,np.float32));model.observe(noise,0.,True,1)
+    assert a.policy.states[-1].item()==1 and b.policy.states[-1].item()==2
+    torch.testing.assert_close(a.policy.epsilons[-1],b.policy.epsilons[-1],rtol=0,atol=0)
+
+
+@pytest.mark.parametrize('field',['student_action','student_inference'])
+def test_mean_inference_cannot_replace_sampled_plan_or_bound_topology(tmp_path,field):
+    p=plan();p['native_backend_sha256']=live.BACKEND_SHA
+    if field=='student_action':p[field]='deterministic_mean'
+    else:p[field]['deterministic']=True
+    with pytest.raises(ValueError,match='exact source100 AD500'):ev.validate_plan(p)
+    path=tmp_path/'mean.json';live.write(path,p)
+    with pytest.raises(ValueError,match='topology'):live.read_ad500_plan(path,live.sha(path))
+
+
+def test_mean_agent_is_rejected_before_query_reset_or_action(tmp_path):
+    p=plan();b=Budget(p);native=run(tmp_path,p,b,'native')
+    a=student(p,'ad-full-k0');a.deterministic=True;env=ReadoutEnv(p,b);before=len(b.events)
+    with pytest.raises(ValueError,match='sampled-Gaussian plan'):
+        run(tmp_path,p,b,'ad-full-k0',native=native,a=a,env=env)
+    assert not env.resets and not env.actions and len(b.events)==before
+
+
 def test_k0_has_eight_fresh_trials_no_prior_query_feedback_and_unclipped_native(tmp_path):
     p=plan();b=Budget(p);native=run(tmp_path,p,b,'native')
     a=student(p,'ad-full-k0');value=run(tmp_path,p,b,'ad-full-k0',native=native,a=a)
@@ -149,11 +230,52 @@ def test_k1_retains_failed_supports_resets_between_pairs_and_sameweight_lesion_k
         assert full.policy.states[q] is not None and reset.policy.states[q] is None
         assert full.policy.inputs[q][0,3086]==1 and reset.policy.inputs[q][0,3086]==0
         assert full.policy.inputs[q][0,3087]==1 and reset.policy.inputs[q][0,3087]==0
+        torch.testing.assert_close(full.policy.epsilons[s],reset.policy.epsilons[s],rtol=0,atol=0)
+        torch.testing.assert_close(full.policy.epsilons[q],reset.policy.epsilons[q],rtol=0,atol=0)
         torch.testing.assert_close(full.policy.inputs[q][:,-2:],reset.policy.inputs[q][:,-2:],rtol=0,atol=0)
         assert f['episodes'][q]['episode_clock']==r['episodes'][q]['episode_clock']==1
     assert f['actual_actions']==r['actual_actions']==16 and b.actual==40
     assert [row for row in f['episodes'] if row['role']=='support']==[row for row in r['episodes'] if row['role']=='support']
     ev.verify_ad500_result(r,p,'ad-full-k1-reset','adjust_bottle',native=native,support=f,admission=admission(p))
+
+
+@pytest.mark.parametrize('change',['reward','features'])
+def test_support_trace_rejects_intermediate_context_drift_with_equal_proposals_and_aggregate_outcome(tmp_path,change):
+    p=plan();b=Budget(p);native=run(tmp_path,p,b,'native',horizon=33)
+    class SupportEnv(ReadoutEnv):
+        def __init__(self,*,changed):super().__init__(p,b,horizon=33);self.changed=changed
+        def step(self,noise):
+            following,_,end,trunc,info=super().step(noise)
+            if self.context['adaptation_role']=='support':
+                reward=float(not end)
+                if self.changed and change=='reward':reward=1.-reward
+                if self.changed and change=='features' and not end:following=np.ones(2062,np.float32)
+                return following,reward,end,trunc,info
+            return following,99.,end,trunc,info
+    def fixed(condition):
+        a=ev.StudentAgent(ConstantProposalPolicy(),dict(mode='full',interface=p['interface']),p['interface'],
+            erase_each_episode=condition.endswith('-reset'),deterministic=False)
+        a.condition=condition;a.checkpoint_sha256=p['models']['ad-full']['sha256'];return a
+    full=run(tmp_path,p,b,'ad-full-k1',native=native,env=SupportEnv(changed=False),a=fixed('ad-full-k1'))
+    env=SupportEnv(changed=True);before=b.actual
+    with pytest.raises(ValueError,match='Same-weight support rollout differs'):
+        run(tmp_path,p,b,'ad-full-k1-reset',native=native,support=full,env=env,a=fixed('ad-full-k1-reset'))
+    # The old aggregate-only check would pass: same reset/proposals/chunks/steps,
+    # return1/successFalse/endTrue, but different policy-visible support history.
+    first=full['episodes'][0]
+    assert first['return_']==1. and first['success'] is False and first['primitive_steps']==33 and first['chunks']==2
+    digest=hashlib.sha256()
+    for noise in env.actions:digest.update(noise.tobytes(order='C'))
+    assert digest.hexdigest()==first['proposal_sha256']
+    assert len(env.resets)==1 and len(env.actions)==2 and b.actual-before==33
+    assert not (tmp_path/'ad-full-k1-reset/result.json').exists()
+
+
+def test_resumed_support_requires_the_per_decision_trace_digest(tmp_path):
+    p=plan();b=Budget(p);native=run(tmp_path,p,b,'native')
+    full=run(tmp_path,p,b,'ad-full-k1',native=native);full['episodes'][0].pop('support_trace_sha256')
+    with pytest.raises(ValueError,match='support trace is absent'):
+        ev.verify_ad500_result(full,p,'ad-full-k1','adjust_bottle',native=native,support=None,admission=admission(p))
 
 
 def test_query_sac_streams_are_independent_per_query_and_never_restore_source_k4_rng():
@@ -232,7 +354,7 @@ def test_ad500_selector_requires_exact_source100_recipe_and_actual500_endpoint(m
         if fault=='best_file':assert not calls
     else:
         a=ev.load_agent(p,'ad-full-k1-reset',device='cpu')
-        assert a.controller.erase_each_episode and a.deterministic
+        assert a.controller.erase_each_episode and a.deterministic is False
         assert calls==[(p['models']['ad-full']['path'],p['models']['ad-full']['sha256'],'cpu')]
 
 
@@ -319,3 +441,14 @@ def test_resumed_result_cannot_relabel_clocks_streams_or_trial_isolation(tmp_pat
     value=run(tmp_path,p,b,'ad-full-k0',native=native);value['episodes'][1][field]+=1
     with pytest.raises(ValueError,match='order, clocks, action stream'):
         ev.verify_ad500_result(value,p,'ad-full-k0','adjust_bottle',native=native,support=None,admission=admission(p))
+
+
+@pytest.mark.parametrize('field',['action_convention','student_inference','admission'])
+def test_resumed_result_cannot_relabel_sampled_student_as_a_mean_policy(tmp_path,field):
+    p=plan();b=Budget(p);native=run(tmp_path,p,b,'native')
+    value=run(tmp_path,p,b,'ad-full-k0',native=native);checked=admission(p)
+    if field=='action_convention':value['context'][field]='deterministic_mean'
+    elif field=='student_inference':value['context'][field]['deterministic']=True
+    else:checked['student_inference']['deterministic']=True
+    with pytest.raises(ValueError,match='AD500'):
+        ev.verify_ad500_result(value,p,'ad-full-k0','adjust_bottle',native=native,support=None,admission=checked)

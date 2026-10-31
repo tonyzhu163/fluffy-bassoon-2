@@ -5,7 +5,15 @@ pytest, fitting, simulator actions, resource admission or launch occurred here.
 The AD7401 export/fit candidate and teacher063d successor remain separate pins.
 Readout preparation is not another gate on the two AD fits.
 
-Explicit successor to frozen c7444c8ab517f3438e38d3c6441abe7e975ddd88: master confirmed the already proposed support bank32161030+997*i. Only that support constant/template/hash/documentation changes; the322 draft remains historical and unadmitted. No outcomes, artifact bindings, resources or active CPU gate change. Different seeds alone do not establish physical novelty; accepted reset/capture hashes and pairing remain required.
+Explicit inference successor to frozen5f394066dc79ca61cb5cfd1a586b1c52783e7d07.
+Before any target outcomes or admission, the method coordinators changed the
+new AD500 primary to the learned Gaussian sample followed by the existing
+physical clip. No extra mean arm, condition, physical case or resource is added.
+The previous5f mean draft and earlierc744 bank draft remain historical/unadmitted.
+Canonical support32161030+997*i and query22261030+997*i are unchanged. Different
+seeds alone establish no physical novelty; accepted reset/capture hashes and
+pairing remain required. Qualified legacy mean profiles and raw results keep
+their original pins.
 
 ## Scope and topology
 
@@ -25,16 +33,28 @@ Support action seeds:80261030 + task_index*100000 + i*997, i=0..7.
 Requested banks and accepted support/query cases must remain disjoint. Native
 raw/feature/case references cover each query; K1full supplies the independently
 rerun reset arm's support references. The reset arm checks complete support
-proposal hashes, durations, rewards and outcomes before issuing its query.
+proposal and per-decision support trace hashes before issuing its query. Each
+support decision frames little-endian float32 input features and physical noise
+before dispatch, then canonical actual duration/reward/termination/truncation
+metadata and typed following features after the outcome. Equal episode totals
+alone do not establish the same support history. A changed intermediate reward
+or feature with equal proposals/totals still stops before the query.
 Only action RNG is reseeded after support, preserving intended history.
-Students use the qualified deterministic clipped physical mean; native noise
-is unclipped Gaussian; SAC100 samples with independent per-query generators.
+Students sample mu(history)+exp(clamp(log_std,-5,2))*epsilon using the existing
+private Torch generator (`deterministic=False`), then the existing controller
+clips the physical proposal to[-1.5,1.5]. This deploys the learned variance from
+Gaussian sequence NLL. The plan explicitly binds `student_inference` and
+`student_action`; CPU admission, execution and resume verification require the
+same rule. Native noise stays unclipped Gaussian; SAC100 samples its physical
+tanh policy with independent per-query generators. Student support and query
+streams retain their declared separate seeds. Full/reset support traces and
+paired query innovations stay matched while the intended memory lesion remains.
 No old sequential K8 or source-validation private RNG stream is relabeled K0.
 
 ## Artifacts and selection
 
 plan.prepared.json is immutable topology, not an executable bound plan.
-Its SHA256 is7d40e92b8af73984b06ede475427109161fb37cec0e106a798ed0d4b1079fbb1.
+Its SHA256 ise98957126989a0cfa9acc3286879bbf90b6379a20617350eb1f33753f435571a.
 After the source-only fits, make a new owner-hashed copy changing ONLY:
 - models: actual absolute paths and SHA256 for ad-full/ad-static candidate-000500.pt;
 - fit_commit: exact clean source-only fitting commit;
@@ -68,17 +88,25 @@ Partial/unknown outcomes retain reservations and halt; no automatic retries.
 
 ## Prepared validation
 
-34 CPU cases in tests/test_robotwin_ad500_readout.py are prepared, not run.
+48 CPU cases in tests/test_robotwin_ad500_readout.py are prepared, not run.
 They use injected ledgers and environments, no production CampaignBudget import.
 Coverage: topology binding, per-query isolation, actual failed support retention,
 RNG-only reseed, equal K1 clocks/exact lesion, native/SAC sampling conventions,
 case drift/overlap before acting,400step/final16 accounting, strict500/source100
 selector,6400 pre-model allowance, child profile/reference/parent identity,
 source normalization, unknown outcome reservation,12worker128episode topology,
-complete-unit recovery and tamper rejection.
+complete-unit recovery and tamper rejection. New regressions exercise the real
+small native policy at two learned standard deviations/full and static modes,
+verify sample-then-clip against the declared private stream despite global RNG
+draws, preserve context while pairing query innovations after unequal support
+lengths, reject mean-plan/mean-agent/mean-receipt substitutions, and retain
+same-weight stochastic support trace pairing. Two negative fixtures hold all
+proposals and aggregate return/duration/chunks/outcome fixed while changing
+intermediate reward or features; the per-decision digest must reject the lesion
+before any query. A resumed support row also requires its trace digest.
 
 For an allocated CPU gate under the existing no-native/no-ledger firewall,
-select these34 plus existing evaluator/live/parent/source regression cases as
+select these48 plus existing evaluator/live/parent/source regression cases as
 reviewed by the execution owner. Three legacy tests intentionally instantiate
 real CampaignBudget and require their already qualified integration context:
 test_child_closes_at_real_ledger_k8_boundary_and_no_step_occurs_in_parity,
@@ -86,7 +114,11 @@ test_child_exception_preserves_pending_reservation_and_stops_recovery,
 test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime.
 Do not weaken the import firewall or claim these integration tests ran there.
 All passing counts must come from real allocated JUnit receipts. This readout
-is not folded into the currently prepared AD108-first/teacher57 software gate.
+is not folded into the closed AD108/teacher57 component qualification:139 actual
+worker CPU-seconds and461 sealed unused seconds close its600-second envelope.
+No future readout test or runtime may borrow that sealed balance. AD7401 and
+teacher063d component results remain immutable; the wrapper's publication failure
+and missing end-to-end qualification remain recorded in the execution receipts.
 
 The larger0/2/4/8/all-six-target protocol remains open. Target success is not
 measured, target data select no endpoint, and no ICRL benefit is claimed here.

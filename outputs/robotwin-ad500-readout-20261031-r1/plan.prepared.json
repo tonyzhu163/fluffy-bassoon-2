@@ -372,7 +372,7 @@
   "max_actions": 51200,
   "max_episodes": 128,
   "max_gpu_seconds": 5400,
-  "student_action": "deterministic_mean",
+  "student_action": "learned_gaussian_sample_clipped_to[-1.5,1.5]",
   "sample_convention": "independent_declared_per_query_action_seed",
   "paid_sample_reuse": null,
   "models": {
@@ -387,5 +387,12 @@
   "reset_lesion": "Same full weights; clear cache, previous noise/reward and carry flag; keep K1 query clock 1",
   "scope": "Two development tasks only; full 0/2/4/8 six-task protocol remains open",
   "status": "IMMUTABLE_PREPARED_TOPOLOGY; qualification, actual artifact bindings and resource admission are external",
-  "resource_reservation": null
+  "resource_reservation": null,
+  "student_inference": {
+    "distribution": "learned_diagonal_gaussian",
+    "deterministic": false,
+    "generator": "private_torch_generator",
+    "physical_transform": "clip[-1.5,1.5]",
+    "seed_policy": "declared_support_and_query_episode_seeds"
+  }
 }

@@ -36,6 +36,10 @@ AD500_FORMAT = 'robotwin_source100_ad500_readout_v1'
 AD500_MODELS = ('ad-full', 'ad-static')
 AD500_CONDITIONS = ('native', 'sac100-frozen', 'ad-full-k0', 'ad-static-k0',
     'ad-full-k1', 'ad-full-k1-reset')
+AD500_STUDENT_ACTION = 'learned_gaussian_sample_clipped_to[-1.5,1.5]'
+AD500_STUDENT_INFERENCE = dict(distribution='learned_diagonal_gaussian',deterministic=False,
+    generator='private_torch_generator',physical_transform='clip[-1.5,1.5]',
+    seed_policy='declared_support_and_query_episode_seeds')
 
 
 def source_case_bank():
@@ -97,7 +101,9 @@ def validate_ad500_plan(plan):
             or plan.get('conditions')!=list(AD500_CONDITIONS) or plan.get('episodes_per_trial')!=8
             or plan.get('episode_limit')!=400 or plan.get('max_actions')!=51200
             or plan.get('max_episodes')!=128 or plan.get('max_gpu_seconds')!=5400
-            or plan.get('student_action')!='deterministic_mean'
+            or plan.get('student_action')!=AD500_STUDENT_ACTION
+            or plan.get('student_inference')!=AD500_STUDENT_INFERENCE
+            or plan['student_inference']['deterministic'] is not False
             or plan.get('sample_convention')!='independent_declared_per_query_action_seed'
             or plan.get('paid_sample_reuse') is not None
             or plan.get('teacher',{}).get('sha256')!=SOURCE_TEACHER_SHA
@@ -349,7 +355,7 @@ def load_ad500_agent(plan, condition, *, device):
             or manifest.get('unique_training_decisions')!=contract['train_metadata']['counts']['decisions']):
         raise ValueError('AD500 source/validation split or training coverage differs')
     agent=StudentAgent(policy,manifest,plan['interface'],erase_each_episode=condition.endswith('-reset'),
-        deterministic=True)
+        deterministic=plan['student_inference']['deterministic'])
     agent.condition=condition; agent.checkpoint_sha256=spec['sha256']
     return agent
 
@@ -409,6 +415,7 @@ def admit_plan(plan):
                 normalization=actual
             del agent
         return dict(plan_sha256=canonical_sha(plan),checked=checked,model_endpoint=500,
+            student_action=plan['student_action'],student_inference=dict(plan['student_inference']),
             source_teacher_sha256=SOURCE_TEACHER_SHA,normalization_sha256=normalization,
             source_or_target_SGD_updates=0,additional_robot_actions=0,paid_sample_reuse=False,
             status='CPU artifact admission only; limited two-task readout, not the full adaptation protocol')
@@ -462,10 +469,22 @@ def case_identity(case):
     return {key:case[key] for key in ('task','requested_seed','actual_seed','observation_sha256','features_sha256')}
 
 
+def _support_trace_array(trace, name, value, shape):
+    """Frame the actual policy-visible array before buffers can be reused."""
+    array=np.asarray(value,dtype='<f4')
+    if array.shape!=shape or not np.isfinite(array).all():
+        raise ValueError('Invalid support trace public features or physical noise')
+    header=dict(field=name,dtype=array.dtype.str,shape=list(array.shape))
+    trace.update(json.dumps(header,sort_keys=True,separators=(',',':')).encode()+b'\n')
+    trace.update(array.tobytes(order='C'))
+
+
 def verify_ad500_result(result, plan, condition, task, *, native, support, admission):
     """Recheck the complete isolated-query topology on fresh or resumed units."""
     schedule=episode_schedule(plan,condition,task); rows=result['episodes']; context=result['context']
     if (admission is None or admission.get('plan_sha256')!=canonical_sha(plan)
+            or admission.get('student_inference')!=plan['student_inference']
+            or admission.get('student_action')!=plan['student_action']
             or admission.get('model_endpoint')!=500 or result.get('source_iteration')!=100
             or result.get('source_or_target_SGD_updates')!=0 or result.get('paid_sample_reuse') is not False
             or result.get('query_feedback_carried_to_later_trials') is not False
@@ -481,6 +500,8 @@ def verify_ad500_result(result, plan, condition, task, *, native, support, admis
                 or row.get('task')!=task or row.get('episode')!=i+1 or case_identity(row)!=case_identity(case)
                 or len(row.get('proposal_sha256',''))!=64):
             raise ValueError('AD500 support/query order, clocks, action stream or cases differ')
+        if entry['role']=='support' and len(row.get('support_trace_sha256',''))!=64:
+            raise ValueError('AD500 support trace is absent or incomplete')
         bank=query if entry['role']=='query' else supports
         bank.append(dict(case,episode=entry['query_index']+1))
     if (query!=result.get('query_reset_cases') or supports!=result.get('support_reset_cases')
@@ -502,8 +523,9 @@ def verify_ad500_result(result, plan, condition, task, *, native, support, admis
         checkpoint=SOURCE_TEACHER_SHA if condition=='sac100-frozen' else plan['models'][ad500_model_key(condition)]['sha256']
         if (context.get('policy_checkpoint_sha256')!=checkpoint or context.get('policy_sha256')!=checked.get(key)
                 or result.get('model_endpoint')!=(None if condition=='sac100-frozen' else 500)
+                or (condition!='sac100-frozen' and context.get('student_inference')!=plan['student_inference'])
                 or context.get('action_convention')!=('per_query_rng_stochastic_physical1.5*tanh(sample)'
-                    if condition=='sac100-frozen' else 'deterministic_mean')):
+                    if condition=='sac100-frozen' else plan['student_action'])):
             raise ValueError('AD500 actor identity or frozen action convention differs')
 
 
@@ -567,6 +589,10 @@ def run_trial(env, budget, agent, plan, *, condition, task, output, run_id, refe
             'source_private_rng_stochastic_physical1.5*tanh(sample)' if condition=='sac100-sample' else
             'per_query_rng_stochastic_physical1.5*tanh(sample)' if condition=='sac100-frozen' else plan['student_action']),
         erase_each_episode=condition.endswith('-reset'))
+    if spec['ad500'] and condition not in ('native','sac100-frozen'):
+        if agent.deterministic is not plan['student_inference']['deterministic']:
+            raise ValueError('AD500 agent inference differs from the fixed sampled-Gaussian plan')
+        context['student_inference']=dict(plan['student_inference'])
     env.set_recording_context(context)
     # Model/control identities do not perturb their shared action random stream.
     policy_seed = 20261030+7_000_000+spec['tasks'].index(task)*100_000
@@ -612,11 +638,16 @@ def run_trial(env, budget, agent, plan, *, condition, task, output, run_id, refe
         reset_cases.append(case); agent.begin_episode(entry['clock'],limit)
         steps=0; chunks=0; reward_sum=0.; success=False; done=False
         proposals=hashlib.sha256()
+        support_trace=hashlib.sha256() if spec['ad500'] and entry['role']=='support' else None
         while not done:
+            if support_trace is not None:
+                _support_trace_array(support_trace,'input_features',features,(2062,))
             noise=agent.act(features)
             if (noise.shape!=(32,32) or noise.dtype!=np.float32 or not np.isfinite(noise).all()
                     or (condition!='native' and (np.abs(noise)>1.5+1e-6).any())):
                 raise ValueError('Invalid physical action proposal')
+            if support_trace is not None:
+                _support_trace_array(support_trace,'physical_noise',noise,(32,32))
             requested=min(32,limit-steps)
             decision_id=f'{trial_id}:episode:{index+1}:chunk:{chunks}'
             reservation=budget.reserve(decision_id,requested,phase=spec['phase'],method=condition,task=task,
@@ -638,6 +669,10 @@ def run_trial(env, budget, agent, plan, *, condition, task, output, run_id, refe
             if (info.get('budget_truncated') or not math.isfinite(float(reward))
                     or (actual==0 and not done) or (not done and steps+actual>=limit)):
                 raise RuntimeError('Invalid terminal/horizon/accounting result')
+            if support_trace is not None:
+                outcome=dict(executed_steps=actual,reward=float(reward),terminated=bool(end),truncated=bool(trunc))
+                support_trace.update(json.dumps(outcome,sort_keys=True,separators=(',',':'),allow_nan=False).encode()+b'\n')
+                _support_trace_array(support_trace,'following_features',following,(2062,))
             agent.observe(noise,float(reward),done,actual)
             steps+=actual; chunks+=1; decisions+=1; history_decisions+=1; reward_sum+=float(reward)
             success|=bool(info.get('success',False)); features=following
@@ -645,6 +680,7 @@ def run_trial(env, budget, agent, plan, *, condition, task, output, run_id, refe
         if spec['ad500']:
             row.update(role=entry['role'],query_index=entry['query_index'],episode_clock=entry['clock'],
                 action_seed=entry['action_seed'],trial_index=entry['query_index'],proposal_sha256=proposals.hexdigest())
+            if support_trace is not None:row['support_trace_sha256']=support_trace.hexdigest()
             if entry['role']=='support' and support_references is not None:
                 prior=[r for r in support_references['episodes'] if r['role']=='support'][entry['query_index']]
                 if row!=prior: raise ValueError('Same-weight support rollout differs; stop before its paired query')

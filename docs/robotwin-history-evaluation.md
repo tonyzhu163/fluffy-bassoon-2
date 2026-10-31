@@ -62,7 +62,7 @@ accepted seed, raw initial-observation hash and public feature hash must match
 episode by episode before a policy motor query. Prior native-before/after
 single episodes or a different case bank cannot supply this receipt.
 
-All students use the predeclared deterministic clipped physical mean. SAC
+The fixed100 panel students use the predeclared deterministic clipped physical mean. SAC
 uses its deterministic physical `1.5*tanh(mean)` labeling convention. Native
 Gaussian is the motor's UNCLIPPED standard Gaussian; the separate native-zero
 condition supplies zero initial noise. Applying the steering bound to native
@@ -132,14 +132,28 @@ retains its independently trained, per-decision feedback/recurrence removal.
 The support environment bank is disjoint from the fixed query bank. Accepted
 support seeds must also be disjoint from all accepted queries, and the reset
 arm must match the full arm's support reset cases and complete support records.
+Each support row includes a digest of every decision's typed input features and
+physical noise, actual duration/reward/end/truncation, and following features.
+Inputs are hashed before dispatch to protect against buffer reuse. Matching
+aggregate episode totals and proposal hashes alone is insufficient. A differing
+support trace stops the reset arm before its query, including during recovery.
 Native queries establish accepted seeds/raw observations/public feature hashes
 for all conditions. Mismatches stop before acting on the mismatched case.
 
 Native noise remains unclipped Gaussian. Frozen SAC100 uses its sampled
 physical tanh action, with a separate declared private action seed per query;
-it does not restore the source teacher's K4 RNG stream. Students retain their
-deterministic clipped physical mean. `reseed_action_rng` changes only the
-action generator between episodes, preserving support memory and clocks.
+it does not restore the source teacher's K4 RNG stream. For this new AD500
+readout, students sample the learned diagonal Gaussian with their private
+Torch generator (`deterministic=False`), then apply the controller's existing
+physical clip to[-1.5,1.5]. Both the learned mean and exported `log_std` enter
+that sample. The plan's explicit `student_inference` binds the distribution,
+private generator, transform and declared support/query seeds; CPU admission,
+execution and resume receipts enforce it. Each support and query episode has
+its own predeclared stream. `reseed_action_rng` changes only the action generator
+between episodes, preserving support memory and clocks. Same-weight K1 full/reset
+support traces and query innovations remain paired. This pre-outcome migration
+adds no condition or physical case; legacy fixed100 mean defaults and historical
+readout preparations retain their original pins.
 
 Fresh execution is bounded by 128 episodes and 51,200 actions at400 steps,
 zero SGD, no saved-control reuse, and a separately proposed5400 GPU-second cap.
