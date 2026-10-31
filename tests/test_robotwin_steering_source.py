@@ -278,3 +278,49 @@ def test_cross_adapter_selects_one_fixed_source_validation_blind_and_preserves_r
         output=tmp_path, guard=lambda: None,
         archive=SimpleNamespace(identify=lambda *_: dict(policy_sha256="d"*64)), episode_runner=None)
     assert result["criterion_pass"] is False and len(received["source_reset_identities"]) == 18
+
+
+def saved_ledger_boundary(root, *, run_id):
+    p = profile()
+    with CampaignBudget(root, campaign_id="resume-test", total_actions=300000,
+            source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+            contract=dict(scope_sha256=p.scope_sha256), run_id=run_id, source_commit="a"*40) as budget:
+        actions = budget.snapshot()
+        path = str(root.resolve())
+        ledger = dict(budget.header, root=path)
+        prior = dict(ledger_root=path, action_ledger=ledger, actions=actions,
+                     status="boundary_stop", teachers={}, closed_physical_boundary=True)
+    return prior, ledger, dict(collector=deepcopy(prior))
+
+
+def test_resume_binds_saved_root_global_capture_tip_and_event_count_not_equal_totals(tmp_path):
+    prior, ledger, captured = saved_ledger_boundary(tmp_path/"owned", run_id="first")
+    foreign, foreign_ledger, _ = saved_ledger_boundary(tmp_path/"foreign", run_id="other")
+    assert prior["actions"]["charged_actions"] == foreign["actions"]["charged_actions"] == 0
+    source.validate_resume_ledger(prior, ledger, captured)
+    with pytest.raises(ValueError, match="roots/header"):
+        source.validate_resume_ledger(prior, foreign_ledger, captured)
+    forged = dict(prior, ledger_root=foreign_ledger["root"], action_ledger=foreign_ledger)
+    with pytest.raises(ValueError, match="captured global"):
+        source.validate_resume_ledger(forged, foreign_ledger, captured)
+    wrong_tip = deepcopy(prior)
+    wrong_tip["actions"]["journal_sha256"] = "0"*64
+    with pytest.raises(ValueError, match="journal tip"):
+        source.validate_resume_ledger(wrong_tip, ledger, dict(collector=deepcopy(wrong_tip)))
+    wrong_count = deepcopy(prior)
+    wrong_count["actions"]["journal_events"] += 1
+    with pytest.raises(ValueError, match="event count"):
+        source.validate_resume_ledger(wrong_count, ledger, dict(collector=deepcopy(wrong_count)))
+
+
+def test_resume_under_lock_allows_only_one_exact_new_run_registration(tmp_path):
+    prior, ledger, captured = saved_ledger_boundary(tmp_path/"owned", run_id="first")
+    source.validate_resume_ledger(prior, ledger, captured)
+    with CampaignBudget(ledger["root"], campaign_id=ledger["campaign_id"], total_actions=ledger["total_actions"],
+            source_caps=ledger["source_caps"], phase_caps=ledger["phase_caps"], contract=ledger["contract"],
+            run_id="fresh-resume", source_commit="a"*40) as budget:
+        source.validate_opened_resume(prior, budget, run_id="fresh-resume", source_commit="a"*40)
+        # A zero-action foreign append still changes the exact journal ancestry.
+        budget.import_receipt("zero-actions-append", 0, "b"*64)
+        with pytest.raises(ValueError, match="advanced beyond"):
+            source.validate_opened_resume(prior, budget, run_id="fresh-resume", source_commit="a"*40)

@@ -95,6 +95,12 @@ same-profile closed boundary stops, restores all captured global streams after
 loading the motor, and restores each teacher's complete private state into new
 recovery output directories. Partial physical or partial optimizer states stay
 preserved for execution-owner reconciliation. No reset replaces partial work.
+The saved manifest and its hash-verified global checkpoint both bind the exact
+canonical ledger root/header, journal SHA tip and event count. Equal action
+totals from another journal are insufficient. Before opening the ledger, resume
+checks the saved tip/count; under its existing lock, it permits only the one
+fresh run-registration event and unchanged physical counters. Any intervening
+append or root/tip/count mismatch blocks before model/reset execution.
 
 The optional `after_source` callable in the orchestration API is reserved for
 the existing control owner's separately pinned24-case A2 helper; no duplicate
