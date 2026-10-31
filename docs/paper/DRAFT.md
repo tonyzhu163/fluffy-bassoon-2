@@ -59,14 +59,18 @@ consumer(1,14) guard. The narrow correction and full90-row CPU seal pass.
 Action and KV command-imitation fits stopped at their time guards before
 fixed5000 endpoints, retaining3,399/2,655 updates and full recoveries for
 explicit continuation. Qualified resource migration now permits both exact-state
-continuations to advance; fixed5000 remains pending. No final capacity, physical benefit,
-source RL or Transformer result is available yet.
+continuations to advance. Action reaches fixed5,000 with endpoint/recovery and
+frozen721a verification, charging727 new GPU-seconds; decoded plan MSE is
+0.00547043 TRAIN/0.03020526 VAL. KV is4,727 in the saved06:20 observation.
+Required54 resource-gate CPU checks and actual KV5,000 precede the funded
+fixed15-case physical readout. No physical benefit, source RL or Transformer
+result is available yet, and validation never selects an earlier endpoint.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through200,080 scores20/20. All panels are retained. This is interim
+from40,140 through220,040 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency

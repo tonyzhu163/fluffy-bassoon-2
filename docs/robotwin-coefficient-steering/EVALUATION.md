@@ -166,8 +166,8 @@ checkpoint substitution or additional episode is admitted. At05:20 the independe
 physical GPUs: action1,409/KV499 with full recovery hashes matching. Both
 subsequently stop at the existing inclusive time guard, Failed/exit1. Action
 retains3,399 complete updates; KV2,655. All0/100/500/2000 milestones and full
-recoveries survive; neither5000 endpoint exists, so final-only robot readout
-stays held. Each attempt charges782/900 GPU-seconds, leaving118. Closed
+recoveries survive; neither5000 endpoint existed at that closeout, so final-only
+robot readout was held. Each attempt charges782/900 GPU-seconds, leaving118. Closed
 original phase cost is now5,189 GPU-seconds/23,922 actions. No independent
 terminal full-motor hash was published on this guard failure; per-update
 frozen checks remain recorded.
@@ -200,13 +200,30 @@ hashes and distinct allocated GPU probes pass. No prefix replay, new robot
 action or final5000 endpoint is claimed.
 [Resume proof](../../outputs/frozen-pi05-endtoend-20261031-r1/LINKED-RESUME-PARENT-REVIEW.json).
 
-The unchanged235 readout resource guard rejects the new linked-family names.
-A separate narrow resource-only successor is being prepared by the readout
-owner, with180 CPU-worker-seconds reserved for focused cases; it does not
-hold the independent fits. No model/episode/seed/horizon/loader change or
-old57-test rerun is requested. The next discriminating test remains fixed5000
-completion followed by the unchanged15-case physical readout, with honest
-resource admission and no favorable prefix selection.
+At06:20, the linked action continuation completes the fixed5,000 updates,
+Succeeded/exit0, charging727 GPU-seconds after its original782. The endpoint
+and full recovery hashes match; all90 cached-native parity and source postfit
+frozen motor721a checks pass. Training/validation decoded14D plan MSE are
+0.00547043/0.03020526; validation gripper MSE0.15009219 dominates that aggregate.
+The final head gradient is finite and nonzero. These are command-plan fit
+measurements, not physical competence. The primary endpoint remains5,000;
+validation does not select an earlier checkpoint. KV is still running at4,727
+in this saved observation. Closed phase GPU cost is5,916, with1,800 KV and1,500
+readout seconds held separately. Endpoint CRC is null in the saved receipt;
+there is no new terminal restore claim.
+[Action endpoint and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/ACTION5000-0620-PARENT-REVIEW.json).
+
+The unchanged235 readout guard rejects the linked-family resource names.
+Resource-only successor949c88fe has independent static PASS and preserves
+policy/episode/RNG mathematics. Its one allocated CPU gate, job-4jq7u25x1sv6,
+qualifies exactly43 new and11 affected legacy resource cases under a new
+180-worker-second total. Optional cached wide-head error analysis may use
+only remaining time after these54 cases; it cannot hold readout or create a
+new allocation. After both actual5,000 endpoints and required CPU PASS, the
+funded unchanged15-episode physical readout may launch with actual linked
+closeouts/runtime admission. No additional confirmation or favorable prefix
+selection is needed. No source teacher, chronological RL corpus or AD/DPT
+eligibility follows from these offline fits.
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved
