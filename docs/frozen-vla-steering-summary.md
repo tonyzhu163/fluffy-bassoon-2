@@ -43,6 +43,15 @@ separate LIBERO29.5GPUh/150GB request remains pending; its original32h pool
 has1180GPU-s unassigned. The full scientific goal remains incomplete.
 Authorization: outputs/robotwin-source100-ad-first-20261031-r1/GRANT.json.
 
+New standing instruction was verified directly in the RoboTwin chat:
+"stop asking for my approval for gpu hours <= 10". The already-prepared,
+independently executable LIBERO fixed100 readout is authorized under that
+instruction at its existing4.5GPUh/20GB/220k-target-action ceiling. It reuses
+existing students and runs in parallel with RoboTwin export/fitting. The25h
+LIBERO source expansion remains pending; it is not divided into smaller jobs
+to bypass the threshold. Actual allocations and first progress still need
+verification. The original32h pool and RoboTwin grant remain separate.
+
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before
 expanding that experiment. Verified numerical results stay in the method's
