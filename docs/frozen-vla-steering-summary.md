@@ -31,14 +31,28 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
-Current priority: the human requested faithful VLRLA PPO replication. Hold
-the proposed AD100/500 sweep; no implementation or allocation occurred. Use
-native action-expert PPO with the VLM frozen, an explicit matched SFT baseline,
-and the existing RLinf route. A bounded two-iteration qualification/onset
-pilot is specified under outputs/vlrla-native-ppo-pilot-20261031-r1/GRANT.json;
-its full25-iteration result remains unproven. New code/runtime qualification
-and actual allocation are pending. Existing RoboTwin source100 export is
-preserved by its owner; new AD GPU fits/readout are deferred.
+Current priority: **DSRL first; native PPO afterward**, explicitly chosen by
+the human. Train the noise controller while the entire official pi0.5 stays
+frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
+with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
+and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
+implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At14:09:34 three initial-native queries completed with471 charged actions and a full initial recovery; replay/updates are zero before training. No full-panel or learning result yet.
+See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
+
+The compatible collection records actual steering noise under the same frozen
+motor: AD can predict that noise from ordered learning histories; DPT can use
+a later competent final SAC noise teacher to label saved query observations.
+Native PPO changes the action expert, so its noise seeds cannot automatically
+label the original frozen motor. Physical-action learning remains possible.
+See [data contract](../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
+
+Native PPO GPU dispatch is held. Its allocated CPU qualification completed:
+274 conservative worker-seconds total, no GPU/actions/SGD; the latest three
+changed data regressions passed. The explicit human instruction authorizes25
+TOTAL iterations after the pilot passes, matched to the same128 starting-model
+cases; this is queued behind DSRL, not an extra25 after the pilot's2. The
+existing6GPUh pilot cap remains unchanged. AD100/500 fits are also held;
+existing RoboTwin export continues under its separate owner.
 
 The fixed100 LIBERO phase is now audited terminal: native28/90; AD full/static
 29/90each; DPT full/static28/90each. ADK1full/reset/nativeK0all6/9with the same
@@ -48,7 +62,7 @@ or sample-efficiency result. Full/static aggregate ties conceal per-case swaps.
 Earlier100/500data/optimizer/native-wave changes prevent an early-stopping or
 scaling conclusion. Recorded competing explanations and a proposed fixed-bank
 contrast remain in the analysis; the new human PPO priority supersedes that
-proposal. No further collection is justified by this result alone.
+proposal. That result alone does not justify repeating the same source collection.
 
 The completed486groups/522episodes cost172045actions,7126conservativeGPU-s
 (6846scheduler-s) and8.61GB. All522trace/contextarchives,486group recoveries
@@ -73,6 +87,26 @@ policy; saved SAC histories can train the offline students but cannot replace
 that on-policy collection. The initial LIBERO batch has now been trained and
 tested. Its negative transfer result and sparse recovery histories justify a
 targeted recipe diagnosis before repeating the same collection at larger scale.
+
+## RoboTwin source100 export is ready; GPU fitting stays deferred
+
+Owner closeout154fdb970de397480db94f59760cd76149864ac8 records CPU R4
+job-vth2qv6r4lxu asSucceeded/exit0, with admitted AD training arrays for
+32,425 decisions /2,400 episodes /600 K4 histories from the existing1,003,790
+source actions. Separate BC validation has328 decisions /24 episodes /6K4,
+10,180 selected historical actions. Saved independent index/NPZ hashes,
+42ZIP CRCs and606-case identity/disjointness/ancestry metadata passed. Root
+read the committed closure and its exact bindings; this receipt is not a new
+array-restoration or runtime audit by this chat.
+
+Total CPU phase2,588 worker-seconds;4,612 unused seconds sealed. New GPU,
+physical interaction and SGD are all zero; conservative storage96.728GB is
+within128GiB. The owner deleted the completed CPU monitor. AD GPU fitting and
+readout remain deferred with the separate10,800GPU-second/60k-action grant
+unspent. This is dataset readiness, not evidence of a good teacher, a trained
+student, native PPO replication or robot-performance improvement. The later
+human DSRL-first priority supersedes the closure's older native-PPO wording.
+[Immutable owner closure](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/154fdb970de397480db94f59760cd76149864ac8/outputs/robotwin-final100-ad-export-20261031-r4/CLOSURE.json).
 
 ## LIBERO: first transfer result is below native
 

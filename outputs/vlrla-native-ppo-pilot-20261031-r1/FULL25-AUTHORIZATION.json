@@ -1,0 +1,16 @@
+{
+  "format": "native_ppo_full25_human_instruction_v1",
+  "source_thread_id": "01a18677-a163-78e3-a783-b557b3c621b2",
+  "human_instruction_verbatim": "yes keep going, once the pilot passes run the full 25 iterations and compare against the starting pi0.5 on the same 128 cases before we go back to meta learning",
+  "latest_human_priority": "DSRL first; native PPO afterward (Recommended)",
+  "status": "QUEUED_BEHIND_FROZEN_MOTOR_DSRL",
+  "native_gpu_dispatch_held": true,
+  "total_iterations": 25,
+  "valid_pilot_iterations_count_toward_total": true,
+  "evaluation_cases": 128,
+  "matched_starting_pi05_cases_required": true,
+  "condition": "Pilot passes; use measured runtime and storage for the concrete full-run resource plan. Preserve existing finite pilot ceilings and discuss any genuinely larger budget beyond the standing authority before expansion.",
+  "data_compatibility": "Native action-expert PPO changes the motor. Its physical actions remain useful; sampling noise is not automatically a label for steering the original frozen motor.",
+  "actual_native_gpu_seconds": 0,
+  "supersedes": "GRANT.json predates the explicit human full25 instruction; it does not itself raise the pilot21600GPU-second cap."
+}

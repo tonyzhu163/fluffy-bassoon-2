@@ -1,0 +1,89 @@
+{
+  "checked_at_shanghai": "2026-10-31T13:00:00+08:00",
+  "cpu_form_prepared": {
+    "automatic_retry": false,
+    "command": "Safe exit-2 placeholder; awaiting committed native qualification launcher",
+    "cpu_cores": 8,
+    "gpu_count": 0,
+    "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+    "max_runtime_minutes": 30,
+    "ram_gib": 64,
+    "shm_gib": 8,
+    "submitted": false
+  },
+  "format": "vlrla_native_ppo_preflight_metadata_v1",
+  "main_reviewed_at_shanghai": "2026-10-31T13:07:13.910702+08:00",
+  "no_allocation_submitted": true,
+  "official_rlinf_source": {
+    "git_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf",
+    "status_porcelain_empty": true
+  },
+  "released_ppo": {
+    "download_token": false,
+    "file_count": 17,
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/pi05-robotwin-ppo-adjust-bottle-1223d8b9-20261031-r1",
+    "ready_sha256": "52ebf3a2f84cba5317fbc0bd9bed1e5c37c338309bb532acda1e2dd9c2235a39",
+    "revision": "1223d8b9c387eb22c51350900d842d0f3b86cf14",
+    "robotwin_norm_stats_sha256": "bff5fcadaba626c28c1c2350d3baa7f1a04befc9f8b73f3e558a09c1b9c6ee52",
+    "sft_initializer_untouched": true,
+    "total_bytes": 8529290042
+  },
+  "reviewed_main_commit": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "runtime": {
+    "dev_imports_performed": false,
+    "historical_path_absent": "/mowenjie/fluffy-bassoon-2/envs/robotwin-baseline-smoke-20261028-r1",
+    "native_fsdp_ppo_currently_qualified": false,
+    "package_metadata": {
+      "hydra-core": "1.3.8",
+      "mplib_own_override": "0.2.1",
+      "omegaconf": "2.3.1",
+      "pytest": "9.2.0",
+      "ray": "2.59.0",
+      "rlinf": "0.4.0",
+      "rlinf-openpi": "0.1.1",
+      "rlinf-transformer-openpi": "4.53.2",
+      "sapien": "3.0.1",
+      "torch": "2.11.0+cu128",
+      "transformers": "4.55.4"
+    },
+    "python_target": "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/bin/python3.11",
+    "retained_python": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+    "shared_pth": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages"
+  },
+  "scheduler_snapshot": {
+    "eight_gpu_cpu_ram_proposal": [
+      128,
+      768
+    ],
+    "four_gpu_cpu_ram_proposal": [
+      64,
+      512
+    ],
+    "gpu_allocated": 405,
+    "gpu_free_aggregate": 11,
+    "gpu_total": 416,
+    "node_pinning_selected": false,
+    "queue_id": "aihcq-rh0wwk9muei4",
+    "resource_pool": "Pro6K",
+    "screenshots": {
+      "four-gpu-node-available.jpg": "ea8283201f7d60e4d8a1df9196b68d0337421a6ab0c53285790f5fa4e2f82cbd",
+      "no-full-eight-gpu-node.jpg": "fba77c80b69ceaea01aea8b7687018e3d706b5062e48d1a7702f0157dbe41aea"
+    },
+    "single_node_free_at_least_4": {
+      "free_cpu": 111,
+      "free_gpu": 4,
+      "free_ram_gib": 1288,
+      "gpu_type_label": "RPBZZZ6",
+      "node_id": "aihcn-o4krfblc7lo5"
+    },
+    "single_node_free_at_least_8": false
+  },
+  "scientific_scope": "Released-checkpoint recipe-aligned adjust_bottle native action-expert PPO onset/runtime qualification; not source6/meta-training, frozen-noise steering, complete25iteration reproduction or Bridge headline match.",
+  "storage": {
+    "concurrent_robotwin_reserve_bytes": 137438953472,
+    "minimum_free_floor_bytes": 536870912000,
+    "new_phase_maximum_bytes": 68719476736,
+    "project_free_bytes": 1156851957760
+  }
+}
