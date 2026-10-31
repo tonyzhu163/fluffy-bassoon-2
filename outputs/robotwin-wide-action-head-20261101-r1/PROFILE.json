@@ -1,0 +1,41 @@
+{
+  "format": "robotwin_prospective_wide_action_profile_v1",
+  "status": "code_prepared_not_runtime_qualified",
+  "base_main_reviewed": "0e487adf2783c9c7bdc01fadd018b297f7f157b2",
+  "module": "fluffy_bassoon.rl.robotwin_wide_action",
+  "head": "WideActionResidual",
+  "configuration": "CONFIG.json",
+  "configuration_file_sha256": "e208fa1911ca39ee75537a84aa00a7fadf19e67bba508d55dbeb94d06429a433",
+  "expected_head_contract_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+  "native_interface_reference": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/A1-INTERFACE.json",
+    "sha256": "c7a6dbf1bee96f5984f9a708c732fd81d4f21c0bbccbb5b2dca4922d6c728ceb",
+    "legacy_arm_delta": 0.05,
+    "meaning": "motor/norm/actual source limits only, not declaration of2rad"
+  },
+  "prospective_contract": {
+    "arm_delta_radians": 2.0,
+    "gripper_delta_raw_absolute_units": 1.1,
+    "public_dim": 2062,
+    "width": 64,
+    "base_dim": 14,
+    "slot_dim": 1,
+    "native_gripper_clip_unchanged": true,
+    "policy_gripper_clip": false,
+    "source12_arm_limits_required": true
+  },
+  "gates": {
+    "allocated_cpu_tests": false,
+    "recorded_support_extension": false,
+    "all12_original_teacher_bank": false,
+    "real_motor_parity": false,
+    "predeclared_real_learning_curve_profile": false,
+    "fit_admitted": false,
+    "GPU_admitted": false
+  },
+  "expectation": "2rad/1.1 should remove the captured coordinatewise target-support floor if every actual native-base/target delta and source arm target lies inside the declared intervals; shared parameters/rounding/optimization/robot success remain unproven",
+  "allocation": null,
+  "run_identity": null,
+  "fit_profile": null,
+  "output_identity": null
+}
