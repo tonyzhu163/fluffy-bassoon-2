@@ -1,0 +1,53 @@
+{
+  "format": "robotwin_readout_provenance_failure_extract_v1",
+  "published_evidence": {
+    "commit": "c458f69f8d75d3c85bc764f0b4aa0c4d4790e401",
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-READOUT-INITIAL-CHECK.json",
+    "sha256": "03b7e3c75dd90c3c5f7420408fba9013de28463ba081510dbe9a7078725f01ba"
+  },
+  "job_id": "job-ctc5ji8fr720",
+  "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+  "console_log_verbatim": "Traceback (most recent call last):\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/scripts/diagnostics/robotwin_command_diagnostic_readout.py\", line 5, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_readout.py\", line 259, in main\n    path=Path(inspect.getfile(obj)).resolve();rel=str(path.relative_to(root))\n                                                      ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py\", line 730, in relative_to\n    raise ValueError(\"{!r} is not in the subpath of {!r}\"\nValueError: '/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/contextlib.py' is not in the subpath of '/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1' OR one path is relative and the other is absolute.\n",
+  "closeout": {
+    "metadata": {
+      "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+      "exit_code": 1,
+      "error": null,
+      "attempt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793486941000000-0014",
+        "started_unix": 1793486941.0,
+        "slice_seconds": 1440,
+        "reserved_seconds": 1500,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "lineage": "fixed12-command-diagnostic/readout",
+        "lineage_seconds": 1500,
+        "ended_unix": 1793486955.0853515,
+        "exit_code": 1,
+        "charged_seconds": 75,
+        "slice_overrun": false
+      },
+      "charged_gpu_seconds": 75,
+      "readout_lineage": "fixed12-command-diagnostic/readout",
+      "maximum_readout_GPU_seconds": 1500,
+      "maximum_new_actions": 6000,
+      "all_full_recoveries_and_raw_preserved": true
+    },
+    "file": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/allocation-closeout.json",
+      "sha256": "4e42a56419a056fe8e925515f82bfd1b2fdf6627b04db7c44bad5cbb8c040189",
+      "bytes": 802
+    }
+  },
+  "failed_request": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/request.json",
+    "sha256": "859be45272f7f69dec0c9842d4f6d13089754fbc6cd4e64a7296eb00531e72cb",
+    "bytes": 4980
+  },
+  "canonical_bindings": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/canonical-bindings.json",
+    "sha256": "e8c49c56d55853f14d0e2fb3a753c6395a1e3267a1097f4ae3b7c2836423a2a9",
+    "bytes": 21577
+  },
+  "raw_GPU_telemetry_omitted_from_extract": true
+}

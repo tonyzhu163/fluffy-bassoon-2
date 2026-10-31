@@ -239,6 +239,14 @@ def publish_recovery(output,state,payload,*,boundary):
     _atomic_json(output/'result.json',state,replace=True)
 
 
+def checked_runtime_source(obj,root,expected):
+    """Only the approved native-plan contextmanager may use its wrapped source."""
+    target=inspect.unwrap(obj) if obj is observe_native_plans else obj
+    path=Path(inspect.getfile(target)).resolve();rel=str(path.relative_to(root))
+    if expected.get(rel)!=file_sha(path):raise ValueError('Loaded readout/runtime blob differs: '+rel)
+    return path
+
+
 def main(argv=None):
     if sys.platform!='linux':raise RuntimeError('Readout computation requires the actual allocated Linux job')
     p=argparse.ArgumentParser(description=__doc__)
@@ -256,8 +264,7 @@ def main(argv=None):
     audit.json(plan['storage_admission'])
     for obj in (main,load_frontend,WideActionResidual,_RoboTwinBackend,ReactiveEpisodeControl,run_complete_episode,qualify_real_motor,
                 physical_audit,observe_native_plans,validate_lineages,validate_capacity_locked,Audit,selected_device,rng_state,atomic_save,CampaignBudget,RobotwinCorpusWriter):
-        path=Path(inspect.getfile(obj)).resolve();rel=str(path.relative_to(root))
-        if request['runtime_blob_sha256'].get(rel)!=file_sha(path):raise ValueError('Loaded readout/runtime blob differs: '+rel)
+        checked_runtime_source(obj,root,request['runtime_blob_sha256'])
     for rel,digest in request['runtime_blob_sha256'].items():
         if Path(rel).is_absolute() or '..' in Path(rel).parts:raise ValueError('Runtime blob must be inside the deployed source')
         audit.bound(root/rel,digest)
