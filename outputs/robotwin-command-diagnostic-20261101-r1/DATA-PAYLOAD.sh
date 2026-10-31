@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run only inside the owner's actual finite allocated Linux CPU/data clock.
 set -euo pipefail
-: "${DATA_OPERATION:?assemble or seal or readout-bindings}"
+: "${DATA_OPERATION:?assemble or seal or readout-bindings or reconcile-cache04}"
 : "${DATA_REQUEST:?actual absolute request file}"
 : "${DATA_REQUEST_SHA:?exact SHA256}"
 : "${DATA_OUTPUT:?fresh absolute output JSON}"
@@ -19,6 +19,6 @@ if os.environ['DATA_OPERATION']=='assemble':
     value=bank.assemble_bank(r['demos'],r['interface'],r['result_refs'],audit=audit)
 elif os.environ['DATA_OPERATION']=='seal':
     value=bank.seal_full_cache(audit.json(r['bank']),r['cache_receipts'],deadline=audit.deadline)
-else:raise ValueError('Only assemble or seal or readout-bindings')
+else:raise ValueError('Only assemble or seal or readout-bindings or reconcile-cache04')
 _atomic_json(Path(os.environ['DATA_OUTPUT']),value)
 PY
