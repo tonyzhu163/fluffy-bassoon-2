@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="42" time="47.380" timestamp="2026-10-31T20:52:02.858914+08:00" hostname="job-nneqgcplclpy-master-0"><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[None]" time="10.260" /><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[boundary_stop]" time="8.690" /><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[passed]" time="8.940" /><testcase classname="tests.test_steering_history_pipeline" name="test_shared_cli_and_driver_budget_admission_counts_all_readout_methods[objectives0]" time="0.014" /><testcase classname="tests.test_steering_history_pipeline" name="test_shared_cli_and_driver_budget_admission_counts_all_readout_methods[objectives1]" time="0.014" /><testcase classname="tests.test_steering_history_pipeline" name="test_shared_cli_and_driver_budget_admission_counts_all_readout_methods[objectives2]" time="0.012" /><testcase classname="tests.test_steering_history_pipeline" name="test_shared_readout_admission_rejects_unresolved_work" time="0.012" /><testcase classname="tests.test_steering_history_pipeline" name="test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift" time="13.447" /><testcase classname="tests.test_steering_history_pipeline" name="test_builder_uses_real_sink_validation_input_and_published_state_identity" time="2.175" /><testcase classname="tests.test_steering_history_pipeline" name="test_execution_microbatches_preserve_global_valid_position_loss_and_one_step" time="0.729" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_actual_metadata_composition_keeps_absent_flags_and_fixed_whole_split" time="0.016"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_metadata_compositi0')
+
+    def test_actual_metadata_composition_keeps_absent_flags_and_fixed_whole_split(tmp_path):
+&gt;       result,_=manifest(tmp_path)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[flag]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity0')
+mutation = 'flag'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[order]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity1')
+mutation = 'order'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[offset]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity2')
+mutation = 'offset'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[views]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity3')
+mutation = 'views'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[inventory]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity4')
+mutation = 'inventory'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_fail_closed_demo_identity_and_author_binding[tamper]" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_fail_closed_demo_identity5')
+mutation = 'tamper'
+
+    @pytest.mark.parametrize('mutation',['flag','order','offset','views','inventory','tamper'])
+    def test_fail_closed_demo_identity_and_author_binding(tmp_path,mutation):
+&gt;       result,path=manifest(tmp_path)
+                    ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_tail_padding_never_loses_or_reweights_actual_targets" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_hdf5_reader_rejects_extra_or_truncated_timeline" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_hdf5_reader_rejects_extra0')
+
+    def test_hdf5_reader_rejects_extra_or_truncated_timeline(tmp_path):
+&gt;       result,_=manifest(tmp_path);row=result['episodes'][0];schema=result['schema']
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state" time="0.049"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_author_jpeg_writer_invers0')
+
+    def test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state(tmp_path):
+        import cv2
+        from PIL import Image
+&gt;       result,_=manifest(tmp_path);row=result['episodes'][0];schema=result['schema'];path=tmp_path/'views.h5'
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_target_conversion_preserves_prompt_actions_and_physical_roundtrip" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_action_head_preserves_raw_grippers_and_zero_signed_bits" time="0.002" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_action_head_uses_only_arm_headroom_without_repairing_base" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_teacher_replay_is_explicit_unbounded_teacher_not_native_clamp" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_masked_loss_excludes_only_tail_and_flow_reports_active_vs_padding" time="0.009" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_finite_small_fit_keeps_motor_and_complete_optimizer_private_rng_recovery[kv]" time="0.061" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_finite_small_fit_keeps_motor_and_complete_optimizer_private_rng_recovery[action]" time="0.065" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_native_paired_plan_charges_all_teachers_and_arms_without_locked_panel" time="0.001"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_native_paired_plan_charge0')
+
+    def test_native_paired_plan_charges_all_teachers_and_arms_without_locked_panel(tmp_path):
+&gt;       demos,_=manifest(tmp_path);original={}
+                ^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_reactive_capacity.py:221: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_robotwin_reactive_capacity.py:38: in manifest
+    result=prepare_demo_manifest(json.loads(INVENTORY.read_text()),file_sha(INVENTORY),author,
+                                            ^^^^^^^^^^^^^^^^^^^^^
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-condition-composite-cpu-20261031-r2-source88bf7018/outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
+
+../../../.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py:1044: FileNotFoundError</failure></testcase><testcase classname="tests.test_robotwin_reactive_capacity" name="test_cache_tamper_cannot_supply_training_targets" time="0.006" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_boundary_stop_preserves_last_finite_optimizer_sampler_and_policy" time="0.037" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_interrupted_new_best_publication_keeps_every_prior_recovery_reference_valid" time="0.024" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_capacity_admission_cannot_replenish_residual_or_restart_clock[budget]" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_capacity_admission_cannot_replenish_residual_or_restart_clock[clock]" time="0.001" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_capacity_admission_cannot_replenish_residual_or_restart_clock[identity]" time="0.000" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_capacity_admission_cannot_replenish_residual_or_restart_clock[config]" time="0.000" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_only_exact_canonical_tip_plus_one_new_registration_is_accepted" time="0.020" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history[foreign_same_total]" time="0.018" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history[missing_root]" time="0.014" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history[intervening_zero_action]" time="0.023" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history[replayed_run]" time="0.022" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history[storage_root]" time="0.016" /><testcase classname="tests.test_robotwin_reactive_capacity" name="test_lock_recheck_rejects_an_event_appended_after_preopen_validation" time="0.026" /></testsuite></testsuites>
