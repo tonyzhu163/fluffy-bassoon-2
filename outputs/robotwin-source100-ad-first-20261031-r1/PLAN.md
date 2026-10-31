@@ -100,15 +100,20 @@ These are fresh-phase requests, not unused balances from closed campaigns.
   its actual terminal scheduler charge, then reserve only the remaining CPU
   time for the final bank. Each parent starts before its own probe/tests/work;
   final-bank parent <=min(6900s, its scheduler reservation minus300s).
-- The12 planned condition×task readout workers share7200 aggregate GPU-s,
-  not7200 each. A standalone allocation schedule may reserve at most600s
-  scheduler time/worker, with <=540s parent including probe/work/cleanup.
-  Launch concurrency depends on actual availability; count each allocation
-  once. The exact owner-reviewed topology remains an execution prerequisite.
+- The12 condition×task readout units execute serially as finite children
+  inside ONE exclusive1GPU allocation. They are not12 scheduler reservations.
+  The owner's current5400s scheduler/5300s parent proposal fits within the
+  7200 aggregate readout ceiling. Review the exact resulting handoff/pin.
 - For a serial single-allocation variant, the GPU parent is at most10500s
   inside10800s. For split allocations, use per-allocation margins and the
   aggregate ledger; do not substitute one wall clock for aggregate GPU cost.
   All margins stay inside the1500s shared setup/contingency allowance.
+- Software components are now qualified, while both software wrappers remain
+  Failed/exit1 (selector, then post-cleanup JSON publication). Actual139CPU-s
+  is counted once; the old461s unused allowance is sealed. At most7061CPU-s
+  remains only if the pending combined phase is approved. The new sampled
+  readout's fixtures still need actual allocated qualification. See
+  [SOFTWARE-OUTCOME.md](SOFTWARE-OUTCOME.md).
 - Do not borrow LIBERO's32h pool, its1180s remainder, sealed native-panel time,
   or any closed CPU qualification balance.
 - No part of this phase is funded yet. The resource decision covers these

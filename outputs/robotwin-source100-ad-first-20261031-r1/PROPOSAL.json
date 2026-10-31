@@ -10,7 +10,7 @@
   "source_final_coordinator_sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
   "ad_code_commit": "7401cd50c038a4cb35149eceeb72128e9a368cc3",
   "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
-  "regressions": "prepared; allocated Linux execution required",
+  "regressions": "AD108PASS; teacher/source57PASS/3legacydeselected; actualsourceactor/RNG/countersPASS. Both softwarewrappersFailed/exit1; new sampledreadout regressions pending.",
   "teacher_panel_required_for_ad": false,
   "objectives": [
     "ad"
@@ -84,7 +84,7 @@
     "student_inference": "sample_learned_gaussian_then_bound1.5",
     "inference_mode_selected_before_new_robot_outcomes": true,
     "additional_mean_condition": false,
-    "topology_status": "owner reports12 finite condition-task children serial inside ONEexclusive1GPU readout allocation; exact reviewed pin required"
+    "topology_status": "12 finite condition-task child units SERIAL inside ONEexclusive1GPU readout allocation; ownerproposes5400scheduler/5300parent, within7200readoutceiling"
   },
   "requested_ceilings": {
     "cpu_worker_seconds": 7200,
@@ -109,8 +109,6 @@
     "final_bank_parent_deadline_rule": "min(6900, allocated_remaining_seconds-300), starts before own work",
     "readout_logical_workers": 12,
     "readout_gpu_seconds_are_aggregate": true,
-    "standalone_readout_worker_scheduler_seconds": 600,
-    "standalone_readout_worker_parent_seconds": 540,
     "gpu_parent_deadline_scope": "10500 only for serial single-allocation variant; split uses per-allocation margins plus aggregate10800ledger",
     "readout_logical_workers_are_scheduler_jobs": false,
     "readout_owner_proposed_scheduler_seconds": 5400,
@@ -123,5 +121,30 @@
     "additional target tasks",
     "borrowing LIBERO or sealed old campaign capacity"
   ],
-  "other_pending_request": "LIBERO29.5GPUh/150GB is separate and unchanged"
+  "other_pending_request": "LIBERO29.5GPUh/150GB is separate and unchanged",
+  "software_closure": {
+    "owner_commit": "c67b35c",
+    "jobs": [
+      {
+        "id": "job-2wg5ue74mpid",
+        "scheduler_status": "Failed",
+        "exit_code": 1,
+        "actual_worker_seconds": 69
+      },
+      {
+        "id": "job-d7v2vejcs5qk",
+        "scheduler_status": "Failed",
+        "exit_code": 1,
+        "actual_worker_seconds": 70
+      }
+    ],
+    "actual_worker_seconds": 139,
+    "actual_core_seconds": 1112,
+    "gpu_seconds": 0,
+    "unused_sealed_seconds": 461,
+    "envelope_closed": true,
+    "automatic_retry": false,
+    "wrapper_e2e_success": false,
+    "future_cpu_remaining_only_if_approved": 7061
+  }
 }

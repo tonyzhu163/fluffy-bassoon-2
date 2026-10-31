@@ -232,6 +232,17 @@ Keep legacy mean-mode results separate; add no new inference-mode condition
 inside the fixed phase. This choice precedes new target outcomes and uses
 the existing private sampling generator with independent paired query seeds.
 
+Allocated software checks now pass AD108 and57 selected source/teacher
+compatibility cases, plus actual source100 actor/RNG/counter comparison.
+Both wrapper jobs still exit1: an absolute pytest deselection mismatch,
+then a run-ID/helper-name collision during final JSON publication after
+successful phases and cleanup. The fixes are isolated; neither failure is
+a robot or learned-policy result. Keep the failed statuses and component
+passes separate. Cost139CPU-worker-s/1112core-s/0GPU; unused461s is sealed.
+The combined AD-first request remains pending, with7061CPU-s left only if
+approved. Full bank materialization, two fits and sampled readout are not yet
+executed. [Fault analysis and closure](../outputs/robotwin-source100-ad-first-20261031-r1/SOFTWARE-OUTCOME.md).
+
 ## Literature guides targeted choices
 
 - [VLRLA's simulation history teacher](https://arxiv.org/html/2610.19517v1)
