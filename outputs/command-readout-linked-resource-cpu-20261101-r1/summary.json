@@ -1,0 +1,56 @@
+{
+  "format": "command_readout_linked_CPU_qualification_v1",
+  "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+  "passed": true,
+  "required_passed": true,
+  "components": {
+    "required54": {
+      "return_code": 0,
+      "error": null,
+      "arguments": [
+        "bash",
+        "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/outputs/robotwin-command-readout-linked-20261101-r1/CPU-PAYLOAD.sh"
+      ],
+      "JUnit": {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "54",
+        "time": "1.785",
+        "timestamp": "2026-11-01T06:38:56.311949+08:00",
+        "hostname": "job-4jq7u25x1sv6-master-0"
+      }
+    },
+    "optional-wide5000": {
+      "return_code": 0,
+      "error": null,
+      "arguments": [
+        "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+        "/mowenjie/fluffy-bassoon-2/outputs/command-readout-linked-resource-cpu-20261101-r1/OPTIONAL-WIDE5000-ANALYSIS.py",
+        "--endpoint",
+        "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "--endpoint-sha256",
+        "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200",
+        "--cache",
+        "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+        "--cache-sha256",
+        "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8",
+        "--output",
+        "/mowenjie/fluffy-bassoon-2/outputs/command-readout-linked-resource-cpu-20261101-r1/cpu-r1/wide5000-analysis.json",
+        "--deadline",
+        "1793486369.8552704",
+        "--visible-gpu-count",
+        "0"
+      ]
+    }
+  },
+  "exit_code": 0,
+  "error": null,
+  "charged_CPU_worker_seconds": 85,
+  "maximum_CPU_worker_seconds": 180,
+  "GPU_seconds": 0,
+  "new_actions": 0,
+  "scope": "required54resourcecases +conditionallyoptional all90CPUwidehead analysis; noVLA/CUDArestore/physics",
+  "all_old_CPU_balances_untouched": true
+}
