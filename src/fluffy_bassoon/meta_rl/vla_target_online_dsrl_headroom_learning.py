@@ -127,7 +127,10 @@ def run_learning(sim, motor, learner, sampler, *, output, root, contract, resume
             target_only=True, source_assembly_admission=False, source_checkpoint_reused=False,
             contract_sha256=content_hash(contract), state_sha256=onset.sha256(state_path),
             target_optimizer_updates=learner.updates, replay_rows=len(learner.replay),
-            costs=onset.costs(output), total_action_charge=onset.charged(output),
+            costs=onset.costs(output), cost_breakdown_scope='learning case only; whole-phase charge includes all screening/confirmation/learning leaves',
+            learning_case_action_charge=onset.charged(output),
+            cumulative_whole_phase_charge=onset.joint_charge(root),
+            total_action_charge=onset.joint_charge(root),
             maximum_total_actions=max_actions, output_bytes=storage['actual_output_bytes'], storage=storage,
             maximum_output_bytes=storage_limit_bytes, stop_reason=stop_reason,
             latest_recovery_sha256=progress['model']['sha256'])

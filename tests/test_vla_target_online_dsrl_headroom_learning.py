@@ -12,6 +12,10 @@ def test_fresh_native_readmission_aborts_before_any_sgd_and_cannot_resume_past_i
     learner, motor = FakeSAC(), FakeMotor()
     sim = FakeSimulator(learner)
     root, output = tmp_path / 'experiment', tmp_path / 'experiment/case-learn-29'
+    inherited = root / 'case-screen-29/physical-journal'
+    inherited.mkdir(parents=True)
+    phase.onset.write_json(inherited / 'prior-reset.json', dict(role='query', kind='reset',
+        actual_steps=10, maximum_steps=10, returned=True))
     contract = dict(fixed='readmission-fixture')
     result = learning.run_learning(sim, motor, learner, np.random.default_rng(0),
         output=output, root=root, contract=contract, task_id=29,
@@ -19,6 +23,8 @@ def test_fresh_native_readmission_aborts_before_any_sgd_and_cannot_resume_past_i
     assert result['phase'] == 'aborted_before_sgd' and learner.updates == 0
     assert result['training']['episodes'] == 0 and len(result['panels']) == 1
     assert result['panels'][0]['threshold_updates'] == 0
+    assert result['cumulative_whole_phase_charge'] == result['total_action_charge']
+    assert result['total_action_charge'] == result['learning_case_action_charge'] + 10
     assert result['stop_reason'] == 'initial_native_off_weak_band_no_task_substitution'
     restored = FakeSAC()
     again = learning.run_learning(FakeSimulator(restored), FakeMotor(), restored,
