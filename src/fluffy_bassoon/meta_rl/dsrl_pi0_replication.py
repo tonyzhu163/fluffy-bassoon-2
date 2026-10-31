@@ -351,7 +351,9 @@ def main(argv=None):
             or subprocess.check_output(['git','status','--porcelain'], cwd=repo, text=True).strip()):
         raise ValueError('Require exact clean runner source')
     receipt = json.loads(args.checkpoint_receipt.read_text())
-    if receipt.get('status') != 'verified' or receipt['checkpoint'] != 's3://openpi-assets/checkpoints/pi0_libero':
+    checkpoint_urls = {'s3://openpi-assets/checkpoints/pi0_libero',
+                       'gs://openpi-assets/checkpoints/pi0_libero'}
+    if receipt.get('status') != 'verified' or receipt['checkpoint'] not in checkpoint_urls:
         raise ValueError('Require the original checkpoint receipt')
     for row in receipt['files']:
         if file_hash(args.checkpoint/row['path']) != row['sha256']:
@@ -361,6 +363,8 @@ def main(argv=None):
         dsrl_commit=DSRL, openpi_commit=OPENPI, libero_commit=LIBERO, seed=0,
         task_id=57, motor='pi0_libero', native_horizon=50, query_frequency=20,
         checkpoint_receipt_sha256=file_hash(args.checkpoint_receipt),
+        checkpoint_source_url=receipt['checkpoint'],
+        legacy_s3_byte_equivalence=receipt.get('legacy_s3_byte_equivalence', 'not independently established'),
         data_role='target-online-baseline', target_only=True, source_assembly_admission=False,
         max_actions=MAX_ACTIONS, max_gpu_seconds=MAX_SECONDS, max_bytes=MAX_BYTES,
         departures=['local scalar/media handling', 'explicit equivalent prefetch recovery',
@@ -380,7 +384,7 @@ def main(argv=None):
     train_sim.trajwise_alternating_training_loop = training_loop
     train_sim.WandBLogger = lambda *unused, **kwargs: LocalLogger(args.output)
     original_download = train_sim.download.maybe_download
-    train_sim.download.maybe_download = lambda url, **kwargs: args.checkpoint if url == receipt['checkpoint'] else original_download(url, **kwargs)
+    train_sim.download.maybe_download = lambda url, **kwargs: args.checkpoint if url in checkpoint_urls else original_download(url, **kwargs)
     sys.argv = ['launch_train_sim', '--algorithm','pixel_sac','--env','libero',
         '--prefix','original_pi0_task57','--wandb_project','local_original_pi0_task57',
         '--batch_size','256','--discount','0.999','--seed','0','--max_steps','500000',

@@ -6,9 +6,10 @@ TASK_SOURCE=${1:?exact reviewed runner source}
 TASK_RUN=${2:?fresh scientific run identity}
 TASK_QUAL=${3:?allocated full qualification output directory}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_PREP=dsrl-pi0-task57-20261101-prep-r4
-TASK_ENV=$TASK_ROOT/envs/$TASK_PREP
-TASK_REPO=$TASK_ROOT/deps/$TASK_PREP/repo
+TASK_PREP=dsrl-pi0-task57-20261101-prep-r5
+TASK_RUNTIME=dsrl-pi0-task57-20261101-prep-r4
+TASK_ENV=$TASK_ROOT/envs/$TASK_RUNTIME
+TASK_REPO=$TASK_ROOT/deps/$TASK_RUNTIME/repo
 TASK_OUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_CODE=$(pwd)
 TASK_PY=$TASK_ENV/bin/python
@@ -61,7 +62,7 @@ export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export OPENPI_DATA_HOME=$TASK_ROOT/cache/$TASK_PREP
-export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/$TASK_PREP/libero-config
+export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/$TASK_RUNTIME/libero-config
 export XDG_CACHE_HOME=$TASK_ROOT/cache/$TASK_RUN
 TASK_CHECKPOINT=$(cat "$TASK_ROOT/outputs/$TASK_PREP/checkpoint-path.txt")
 TASK_REMAINING=$(( TASK_STARTED + 35880 - $(date +%s) ))
