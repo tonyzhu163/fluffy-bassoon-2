@@ -1,8 +1,8 @@
 {
   "format": "pi05_task57_dsrl_grant_v1",
   "approved": true,
-  "source_commit": null,
-  "run_id": "dsrl-pi05-task57-20261031-r1",
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "run_id": "dsrl-pi05-task57-20261031-s0-r1",
   "maximum_gpu_seconds": 36000,
   "maximum_total_actions": 1000000,
   "maximum_output_bytes": 68719476736,
@@ -79,7 +79,17 @@
     "standing_human_instruction": "stop asking for my approval for gpu hours <= 10",
     "reference": "outputs/frozen-vla-standing-authorization-20261031-r1/AUTHORIZATION.json"
   },
-  "runtime_admission": false,
+  "runtime_admission": {
+    "state_at_grant_binding": "awaiting_allocated_CPU_qualification",
+    "launch_authorized_after_pass": true,
+    "required_cpu_tests": [
+      "tests/test_vla_target_online_dsrl_task57.py",
+      "tests/test_vla_target_online_dsrl_task57_recovery.py"
+    ],
+    "actual_allocation_probe_required": true,
+    "sole_owner": "/root/finish_assembly",
+    "no_further_human_or_root_ack_required_after_conditions_pass": true
+  },
   "actual_jobs": [],
   "execution_owner": "/root/finish_assembly",
   "budget_includes": [
@@ -96,5 +106,13 @@
   "other_budgets": "Fresh independent bounded DSRL baseline; no borrowing from native6h, closed fixed100, original32h or RoboTwin3h. Pending25hsource expansion remains unfunded.",
   "ceiling_behavior": "Stop before next whole episode when cumulative time/action/storage headroom is insufficient; preserve complete recoveries and charge unresolved physical intents.",
   "native_ppo_gpu_dispatch": "HELD",
-  "new_source40_meta_pretraining_admission": false
+  "new_source40_meta_pretraining_admission": false,
+  "default_single_gpu_allocation": {
+    "gpus": 1,
+    "cpu_cores": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "maximum_scheduler_seconds": 36000,
+    "slice_policy": "Full remaining phase if scheduler admits; otherwise finite slices with SAME cumulative36000-second clock and complete recovery."
+  }
 }
