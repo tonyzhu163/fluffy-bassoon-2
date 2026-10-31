@@ -1,0 +1,645 @@
+{
+  "format": "task44_training_and_closed_pair_parent_review_v1",
+  "qualified_source_and_owner_evidence_files": {
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CHILD-AUTHORITY.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "0255ff5407e1ef2a7fb5baf88adcc317345b6a7ff51b065427c07b65b2ad887b",
+      "bytes": 1276
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CLOSEOUT.md": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "f8335147682c3e4ec2c15260e9f09fc2dbe49a431bc53f122bdaf08488ad31db",
+      "bytes": 1914
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "180926a9343cc54a6a38f9c9381e58df96df20cf44b60ef39ce5bb42cdd3e5d9",
+      "bytes": 6371
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CPU-DEPLOYMENT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "0158fbcfe32423252a414949169ffeb3ebb6139750cf432be0bea14daba65a14",
+      "bytes": 912
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CPU-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "6d8f078356d4e9e9ad8865f7728db5a9999dc839d17fb09965fc8fd27d7c6e9a",
+      "bytes": 5974
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CPU-RESERVATION.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "14f365243ba57d9ec08d99cb67f4218727301ad7c8440770ed9cb352668bda59",
+      "bytes": 698
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-GPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "e06f07bfa94dc0b1b15049255f4ae03b200691c25ebdb1c31baa97b4a788c1e4",
+      "bytes": 8476
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-GPU-PRELAUNCH.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "59c074411bb40c7da5e5008d54554fee7c4fbf9bcf2446f14c6def1b4ebb3d1d",
+      "bytes": 726
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-R1-PREBEGIN-FAILURE.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "1e6b21419b2e56cd6b22b27748de385e5a19ba9f1d422c34ac34d1360ffdb314",
+      "bytes": 1032
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-R2-CHILD-AUTHORITY.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "a42a6e90a6e712c25d4ede27abf4b55d817be883f9a2c9415118dd0641e00f61",
+      "bytes": 1852
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-R2-GPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "033b85b7efb9e2f6e820649bb5211420d2c4b1c10c2acb2392f7b99d952fa93e",
+      "bytes": 9771
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-R2-GPU-LAUNCH.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "bdf23920439236fe75610a73a8ce5de5e86eba31801a591562cbbedf5aa2712c",
+      "bytes": 1330
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-R2-TERMINAL-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "11096cf683ddc069f6392a143289b422df47a51b1f64acbb02a638f453b0597a",
+      "bytes": 31614
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-RESOURCE-CPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "7512875f90b8d405ac2bbda493108efbcb6d323def2ae63a0f80a98b7f5ef045",
+      "bytes": 5327
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-RESOURCE-CPU-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "c54dad367125f564e5d21a191a04807478764f8e9699e2b9c7ba3b9fb5c0e5cd",
+      "bytes": 2123
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/TEACHER-BANK-CPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "7567afa8bd20d08367059648013141de2e6cf228d673b376768f4ed787be94c5",
+      "bytes": 5337
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/TEACHER-BANK-CPU-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "38b0c388481dc0fd4f70291070ec74af42beb88a4ecf306c3012ea563f8ba312",
+      "bytes": 2093
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/TEACHER-BANK-CPU-RESERVATION.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "ceb5d074d364da1b7a6b84412664eb02efae5d9308156e52f8b66ac11fc3f11a",
+      "bytes": 501
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/allocation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "b4176ff4c06c6f8616c51d204b01eb2eaf21ede8fd47ead9b6c308e98056fa7b",
+      "bytes": 942
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/cpu-worker-clock.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "3cb750e755d7c19af3c620eec13e03e5170d6db3223656bec2d8903e1acda1b3",
+      "bytes": 590
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/exit-code.txt": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/preflight04.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "a1ee5e4f524055eecbde733e6afb63e1aa9a3883f0795043868e902ff068fa7a",
+      "bytes": 3781
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/prelift.junit.xml": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "a842a8fc54355da4d9c1ffde257035ed4e93728f929ad058a14cb8223603f6c6",
+      "bytes": 5527
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/summary.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "953a5332b9f92721e76adfaae4cee9433b368a2542b4412800c94f96043e6a92",
+      "bytes": 740
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/tests.log": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "b2b43f7f26205ba5dca7b422f046122610788657d72af72da4201442ed2a526b",
+      "bytes": 99
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-evidence/zero-gpu-attestation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "c607abbf8b3122782dc583b0ab407f282d794f3e0d6e677c0c7754a591b1020b",
+      "bytes": 1051
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-cpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "97b8c0d29f4bcecae101cf0cb3e67d6954b72dabbb1f44b62c95e47ebab8f786",
+      "bytes": 72534
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-gpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "de6bd358860c4a68658e49eb2db8025ffb2710a58368150bb71e79b01e6870c0",
+      "bytes": 74361
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-gpu-submitted.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "f0ce99a2c7f7b553f8c57c8c5433c8147590f8ebc26fb26fe21645cd1824130e",
+      "bytes": 73363
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-r1-failed.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "f6f2d027dfb280af5c1c1bdc2a6401168c111f495b6cc93c9528ddf97fad9f60",
+      "bytes": 73415
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-r1-runtime-traceback.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "23203adf02afb71d154f77954d1866b17696b82d03cd35a25598d5ac894a0be7",
+      "bytes": 123869
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-r1-runtime-traceback.txt": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "5b05167329551d4fdeec83993c914002f9bcd13fb68b4de81026d623c6cf289b",
+      "bytes": 692
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-r2-gpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "2fad9f928fcbda90f2b2e1afc019ff9e49f5c5d2ff2e687227eb5d939b371be1",
+      "bytes": 74667
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-r2-terminal.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "ebaa58f3a35c05e325dfc4fe17c9cafded12b3067bad1240a6845a8a4ae5e11a",
+      "bytes": 72874
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/allocation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "defc7f9b8a0e542c019f6e6d48ca11fe8d153e9c2fdc2eaeda73c75fecac680c",
+      "bytes": 933
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/cpu-worker-clock.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "60e3a1d2b31d747097fc7d8a42d7e3a262444fa1ecb4c35217553ceafdd30b7a",
+      "bytes": 589
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/exit-code.txt": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/short-resource.junit.xml": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "66d22c26f1aab9f337756a34a11ae3b404a02e04a4ebdb226d44a6abda7d8c70",
+      "bytes": 653
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/summary.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "62a67a11a3105bd509b7ea4db749cc0d25551a56a7960d534bd45dece61d4779",
+      "bytes": 657
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/tests.log": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "86288ee89a493b657a4f02c2118272c4f6a9a7afa049f10741e60f3a564db934",
+      "bytes": 98
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-evidence/zero-gpu-attestation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "9c7cabc32e3895ab8b47ad12fe7ca1c2b3934c9f9edd7fa7887fcfcbef3d49bd",
+      "bytes": 1054
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "b6b4734845877e86a6cb60864a2a4c2a0ffd9e3a76c1f99536ed2931cbaac983",
+      "bytes": 73969
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/prelift-resource-cpu-terminal.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "d46d411b4826e877a78c2d6b07438e024f5fbc7c936d92ad1174bc833538f7d5",
+      "bytes": 72562
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/allocation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "60ff51d27360c0d14b2f0a93a69bb96870b5275a49d55e400037bb6d48a8bef3",
+      "bytes": 955
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/cpu-worker-clock.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "62312ca576935381367026f0ab67e92d6bf9459e278ec40cd5302ee33202ed3e",
+      "bytes": 591
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/exit-code.txt": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/summary.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "c0f66e41eae781c430a0fb456225bae07f84893b575c32216103eda5f3eefcc9",
+      "bytes": 654
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/teacher-bank.junit.xml": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "5072039efaef3082257d3369633e114d7dc1787d5885a802589f0380673346f4",
+      "bytes": 7110
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/tests.log": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "8b88ccb06158d5eeae3399bbffb4a990b57e41593673184b6f5b5fbc5ccab432",
+      "bytes": 99
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-evidence/zero-gpu-attestation.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "48f4c5d4b559189fa7fe42089ee7fba7e64fd72ba3a86b79b40086b132d83eed",
+      "bytes": 1050
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "1e3ba737d9abb9e0f88ac27acf71839d08c3526f09a05310878470d716b20e35",
+      "bytes": 73159
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/teacher-bank-cpu-terminal.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "b578948404f4eebbac9de86d1b5dbc6fba3371c6d86ac240ffc50ab63ef3103e",
+      "bytes": 71594
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0130-CURSOR-SNAPSHOT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "b0312ba6e79bfa7029bb3b86d345994d56065210a8871bd0d847c0249e0ca9d5",
+      "bytes": 321676
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0130-INDEX-SNAPSHOT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "2bef57d2d88a4f9f3954b23b84c548096a29247ac7ddcc7eeddb04d99d436579",
+      "bytes": 321947
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0130.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "f8304fddce58fe718a91fa18d53bff1836411db899f500e35c289e3f31f4183d",
+      "bytes": 156595
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/INITIAL-LEARNING-READER.py": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "a341e5a5418f23c5596d9e15e8e96c35bf9dfe40fc5d601ccc0f01c46fb550e1",
+      "bytes": 3068
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-CHILD-ADMISSION.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "e9ecb255d8e26b0d51bc7c89d592187843470a0d45fa58e762b4405cd8292443",
+      "bytes": 1456
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-FIRST-TRAINING-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "e0ec0f7eae7c8518b5b274b68394cbc76570d288bdab5977c2a66d30097100a0",
+      "bytes": 200596
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-FIRST-UPDATES.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "0f9d554268df30fd5bd96b2aca93f8855fac3c562ce6c28a8204ee9338f3aae8",
+      "bytes": 8241
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-GPU-COMMAND.sh": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "9cf80b5a1495264e7a5d32649b46090c1de02e6ff1ee1b7e9b7c489928844149",
+      "bytes": 475
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-GPU-LAUNCH.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "5b317fbd3500dea458e2b605ba511480548ad712a8b8998f366249c3f34ab8d8",
+      "bytes": 2672
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-INITIAL-PROGRESS.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "074ab1ffda510d6da34ce09aeeeecc15bf940099e26b6ef0f254f522ec3a6082",
+      "bytes": 49332
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/LEARNING-PRELAUNCH.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "1d7c68825de16baa93e3722ebe360a4f800e7e4c508e9e2ba5b968fe21add0ee",
+      "bytes": 219552
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-TERMINAL-RECEIPT.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "5fefa414e321ea07a063769b39bc247e8abf5408061f6b4616c124c11364cb48",
+      "bytes": 6130
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/SELECTION-READINESS-2.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "8033b615dfca00aa15ec62f9c9bdb6c4c440cb4a66cd59d3a8cdf98367bc5f23",
+      "bytes": 75749
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/SELECTION-READINESS.json": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "65a86325f7576e0d0a38b495075743d708bb2ef7908bfb996f84520d6080e557",
+      "bytes": 380
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/UPDATE-0158.md": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "f0fa144feafc095513afe48cd200755b01ba183af6cb149976643eef87ce03c8",
+      "bytes": 1693
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/learning-gpu-presubmit.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "09f1a90eebf4afae91da92ace8fb30ac0ed01b9e7aa7863488771d67885c3499",
+      "bytes": 82541
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/learning-gpu-running.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "944c19b6ee2a5369102732e10d85af6b5b408b1d96e2be43d75f9c06b4fa3406",
+      "bytes": 81953
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/learning-gpu-submitted.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "5eaa338d5ee0b20e98cc367f72a32ccc1d052abfdb7bd64682dc71e91d12fe74",
+      "bytes": 82522
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/screen-terminal.jpg": {
+      "commit": "b9bc61be2be1ecc52484e9fe5a4fed61f39b6e30",
+      "sha256": "be0a2df60dc6839dc21909e41e9497bb96319ccc3845b0892b72b4fcf6fa5637",
+      "bytes": 82280
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/paired04-scalar-handoff-20261101-r1/DELIVERY.json": {
+      "commit": "e96e53c7cce81ee485d0a2fef793bbe538c921e0",
+      "sha256": "1e731d89f9d0dd0e2b6cd05b4b158d165fba592ac7f82bc8a83d22077c0e3ba1",
+      "bytes": 712
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/paired04-scalar-handoff-20261101-r1/EXPECTED-REFS.json": {
+      "commit": "e96e53c7cce81ee485d0a2fef793bbe538c921e0",
+      "sha256": "f52be7cdd9cc6927a6f4241966464fe94a403a68b64ad484a3d668e8925f24aa",
+      "bytes": 11268
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/paired04-scalar-handoff-20261101-r1/FILES.txt": {
+      "commit": "e96e53c7cce81ee485d0a2fef793bbe538c921e0",
+      "sha256": "2c387f8c7bf33b7cfd00f9b0c8f093a3d948bfa93d9c7d5ec30580d1cebff9f3",
+      "bytes": 1870
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/paired04-scalar-handoff-20261101-r1/MANIFEST.json": {
+      "commit": "e96e53c7cce81ee485d0a2fef793bbe538c921e0",
+      "sha256": "e7e5bcb14e1e877a57eeedf7ef8759ccea4e520630b7624cf1ea432cdad5f146",
+      "bytes": 21523
+    },
+    "outputs/robotwin-prelift-trace-diagnosis-20261101-r1/EVIDENCE.json": {
+      "commit": "8bc5d1ff0c0c6bf8623201522a562043aa84c14c",
+      "sha256": "53156701c14fabf76f919fd37207638bc5dc36cea88fa5394be57ae6f2937482",
+      "bytes": 238949
+    },
+    "outputs/robotwin-prelift-trace-diagnosis-20261101-r1/REPORT.md": {
+      "commit": "8bc5d1ff0c0c6bf8623201522a562043aa84c14c",
+      "sha256": "d91db2353fda00615f7f1342b3e5b556f32075861722c738d5d5d2b642b08830",
+      "bytes": 7705
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/SOURCE-PARALLEL-CPU-COMMAND.sh": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "eadf6eaf950c023443f2058dfbc9fe2faa16a34cb488bb7c16f093853a6fc92a",
+      "bytes": 5466
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/SOURCE-PARALLEL-CPU-DEPLOYMENT.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "9b47b82e4ebd8f07cf05de5ee638fc7368bab717b0d51a881d945e31ea587143",
+      "bytes": 638
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/SOURCE-PARALLEL-CPU-RECEIPT.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "e905f04af5912c206df7bde298d1d9af9d9776e53ef125e5758816b0f27087da",
+      "bytes": 2862
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/SOURCE-PARALLEL-CPU-RESERVATION.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "6baa2070e9182454488948308faf24ff8c19dd09e1f77d343d4af9cd9d506d76",
+      "bytes": 599
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/SOURCE-PARALLEL-CPU-RESULT.md": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "622bef67d08434381b90cc9c626de615ea5be9070765944672f13181351b5ad0",
+      "bytes": 847
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/allocation.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "7a8df922adab7d52598e336e621410d6169f4865aa0120cd4e6847aa09c5b41d",
+      "bytes": 985
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/cpu-worker-clock.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "0dc80bb6a6ae1ae52e5c83b4b60bc61a67550395f5fa059243bf149df721674b",
+      "bytes": 590
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/exit-code.txt": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/source-parallel.junit.xml": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "e5f3050adf39353ec58722076549d7f21b0c00b1b40e8acad487595abe3bb24b",
+      "bytes": 2331
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/summary.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "59dbe9c613af46b1d3dbab385b0ab8990f43721e087015c795f3b61329b97319",
+      "bytes": 714
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/tests.log": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "fa59bd34a0620cbfd5e97eeab975e58affbcacc12d5aac1a29af42823aff8341",
+      "bytes": 100
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-evidence/zero-gpu-attestation.json": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "1fb1a5cc8a71e2525aecd1a48f27de9bb9b3c63c0f112cb6d471d452a6f34b29",
+      "bytes": 1053
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-presubmit.jpg": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "1dcf4c9400c0a68a712640d913151c0d0c4bc6f12d42ab4a8d95c8562a63879e",
+      "bytes": 73859
+    },
+    "outputs/frozen-pi05-endtoend-20261031-r1/source-parallel-cpu-terminal.jpg": {
+      "commit": "2d55836faf2ed0d9e1baad1916511735c769a811",
+      "sha256": "271723c3387fd99db7b03b31d04ccac3ac231ec485f239fa8809e051daa72933",
+      "bytes": 71810
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/ANALYSIS.md": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "b6f8a2ed8d949ac0bba7c556b5404e3959674d95d2d72e619cf90f294f2a255d",
+      "bytes": 4840
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/EVIDENCE.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "232c021596abd7d0e2825808e1bde4acd13b6584148f2154a6275bbb7387a910",
+      "bytes": 20483
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/EXECUTION-CONTEXT.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "50fd8a601de9239be64ba1eb0013dfdd9d6ea25719dbe0456aab799fb622e655",
+      "bytes": 1479
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/PLAN.md": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "3736517cb196f834889b7415bb8999001d88f77530c8827eb194b0552521526b",
+      "bytes": 6146
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/PREDECESSOR-TERMINAL.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "932d8b4402db32b86871a73b7a80afe0cd15b69d34cc5daae4cb92229d936347",
+      "bytes": 15548
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/PROFILE.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "0072b8c2c8239fb28d2cee7999f6614c770cd4c11ade6404c6fd285751a77ba1",
+      "bytes": 7027
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/STATIC-BYTES.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "af821ed31692d237300fff4518fea2be367a5d85c0b33eccfce999737819eacf",
+      "bytes": 2326
+    },
+    "outputs/robotwin-prelift-closure-probe-20261101-r1/TEST-INVENTORY.json": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "7cd8920734503726b9d82cc182ae597143af5d9ab285df883a817c73c7d5a120",
+      "bytes": 2411
+    },
+    "scripts/diagnostics/robotwin_prelift_probe.py": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "3dd351f8947b20df6a572f0d0f27cf6c08d71608f5b8044cefbd9b3eec0c4678",
+      "bytes": 184
+    },
+    "src/fluffy_bassoon/meta_rl/robotwin_prelift_probe.py": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "af28f66199d583a19270c0832155013038aac61f88cb8ad3ae56c82f3edf647d",
+      "bytes": 18150
+    },
+    "src/fluffy_bassoon/meta_rl/robotwin_prelift_probe_run.py": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "08fbf9399bf84399ff33db5e589245a9c04f92e2b2676ff00af3b1f246b63126",
+      "bytes": 20352
+    },
+    "tests/test_robotwin_prelift_probe.py": {
+      "commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "sha256": "af35037133e44bd3cc686a098176e651b93f281211f25ca5668f868d8a0fcd9d",
+      "bytes": 16050
+    },
+    "outputs/robotwin-fixed-teacher-bank-20261101-r1/HANDOFF.json": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "e84924dc1afc8d1bcdcd53a796fb81da5b142059330478285408cc07b3f456f6",
+      "bytes": 2361
+    },
+    "outputs/robotwin-fixed-teacher-bank-20261101-r1/INPUTS.json": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "2670a58da8e3228537e36bc6f2ff38ee29ad64dbc61065439378e7da5d32f480",
+      "bytes": 3491
+    },
+    "outputs/robotwin-fixed-teacher-bank-20261101-r1/PLAN.md": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "56907ac11290d118fa86542068ac8b72bb5dbf0e14b7592fd1dfb28abd99fd7f",
+      "bytes": 8431
+    },
+    "outputs/robotwin-fixed-teacher-bank-20261101-r1/REVIEW-FIX.json": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "fae95f6484e0695cc7a888d0421f2b8a190b6bfc35d1dcd3654541965aacc4e4",
+      "bytes": 1371
+    },
+    "outputs/robotwin-fixed-teacher-bank-20261101-r1/STATIC-BYTES.json": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "2fcefe52edb8db1f9c2acb030c204ae2cb222fec0cc4d328721262d57155e96b",
+      "bytes": 3646
+    },
+    "src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "ddde178ef9a11e8eab1e886d4094daeb762aaa620cd749439ee61688309d8b4a",
+      "bytes": 33813
+    },
+    "tests/test_robotwin_teacher_bank.py": {
+      "commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "sha256": "57b02efef2ac0ee0b60b2352a4e747deaa29d18b9d13bdbcb03b2e7502c251f0",
+      "bytes": 26025
+    },
+    "src/fluffy_bassoon/meta_rl/vla_source40_ppo_worker.py": {
+      "commit": "6397b1dc005c08389e511db19a115c273580fbb6",
+      "sha256": "0d148c870ea0005aabdc28f07fb6c2e6c0325099d4e0c820e31b7059f3cff18a",
+      "bytes": 6789
+    },
+    "tests/test_vla_worker_short_slice.py": {
+      "commit": "6397b1dc005c08389e511db19a115c273580fbb6",
+      "sha256": "75fff1f35845dc4202db6e798955cc4f1e5ef2e086b5f8e6357aed1746f13100",
+      "bytes": 1634
+    },
+    "docs/robotwin-source-concurrency.md": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "c44b1c19775cfe6c53d8b6bfe6d38dd873ff5c25f552f958271ad8309ed8293a",
+      "bytes": 8523
+    },
+    "outputs/source-parallel-orchestration-20261101-r1/HANDOFF.md": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "1c85842ea65295b7777e02ab1d5d128098c523539ff4bd976c45b129eef6f47f",
+      "bytes": 3510
+    },
+    "outputs/source-parallel-orchestration-20261101-r1/PROFILE.json": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "c6c249b2f574f699542cdb6ca1cf78fa4e6f9e7d0f01125c07f95093a1aa96d4",
+      "bytes": 1878
+    },
+    "outputs/source-parallel-orchestration-20261101-r1/STATIC-MANIFEST.json": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "4e111f11941e9d6f646c762fdf2c106e13ddd1737d2653445260a67c489da45e",
+      "bytes": 2065
+    },
+    "src/fluffy_bassoon/meta_rl/robotwin_source_parallel.py": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "d1a9901bf0d5c5981627ce5ec509d6642dc0ff21c31554651beaa67eabc8df04",
+      "bytes": 37746
+    },
+    "src/fluffy_bassoon/rl/robotwin_source_broker.py": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "6773e54f6d9c905372df2454953012465f578fe5b8464db40945ef5869d39c1c",
+      "bytes": 17088
+    },
+    "tests/test_robotwin_source_broker.py": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "491ccb4165797bf2b872b7c5854ff734084986df3bed089fb1e8a620ac5773d5",
+      "bytes": 14414
+    },
+    "tests/test_robotwin_source_parallel.py": {
+      "commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "sha256": "2956d73fa85864a08f272b94fafbb017c437f2bc421ead1a63ee42f2390c3fa8",
+      "bytes": 13030
+    }
+  },
+  "JUnit_and_clock_checks": [
+    {
+      "folder": "prelift-cpu-evidence",
+      "actual_tests": 34,
+      "CPU_worker_seconds": 77
+    },
+    {
+      "folder": "teacher-bank-cpu-evidence",
+      "actual_tests": 44,
+      "CPU_worker_seconds": 75
+    },
+    {
+      "folder": "prelift-resource-cpu-evidence",
+      "actual_tests": 3,
+      "CPU_worker_seconds": 73
+    },
+    {
+      "folder": "source-parallel-cpu-evidence",
+      "actual_tests": 14,
+      "CPU_worker_seconds": 92
+    }
+  ],
+  "actual_primary_updates": 180,
+  "stable_primary_full_recovery": {
+    "path": "recovery-0.pkl",
+    "sha256": "c1f5d392484376d7adf46db5e331e4ecaae25bb5588546eb017e68857a83965d",
+    "updates": 180,
+    "replay_rows": 503,
+    "signature": "77ae5fb7db5e4abcd5e558e9dc97216028d1b5b08ae2458e196999488cef475d"
+  },
+  "primary_initial_control_successes": {
+    "native": 6,
+    "tied": 13,
+    "initialized_SAC": 8
+  },
+  "primary_query_denominator_each": 20,
+  "learned_query_score_available": false,
+  "phone_pair_both_fail": true,
+  "original_grants_and_profile_history_preserved": true,
+  "verification": "Root copied/hashed saved files and read metadata/JUnit only; no runtime observer, numerical arrays, tests or models on dev host."
+}

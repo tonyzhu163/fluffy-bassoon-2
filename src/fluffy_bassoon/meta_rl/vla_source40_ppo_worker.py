@@ -14,11 +14,19 @@ def _write(path, value):
     temporary.replace(path)
 
 
-def begin(root, contract, *, slice_seconds, worker_seconds, resume=False, now=None):
+def begin(root, contract, *, slice_seconds, worker_seconds, resume=False, now=None,
+          allow_short_slice=False, lineage=None, lineage_seconds=None):
     """An unclosed attempt stays charged at its full reserved slice."""
-    if (type(slice_seconds) is not int or not 600 <= slice_seconds <= 86400
+    if type(allow_short_slice) is not bool:
+        raise ValueError('Short-slice admission must be an explicit boolean')
+    minimum_slice = 60 if allow_short_slice else 600
+    if (type(slice_seconds) is not int or not minimum_slice <= slice_seconds <= 86400
             or type(worker_seconds) is not int or not slice_seconds + 60 <= worker_seconds <= 86400):
         raise ValueError('Require a bounded slice and at most24 cumulative worker-hours')
+    if (lineage is None)!=(lineage_seconds is None) or (lineage is not None and (
+            not isinstance(lineage,str) or not lineage or len(lineage)>160
+            or type(lineage_seconds) is not int or not minimum_slice+60<=lineage_seconds<=worker_seconds)):
+        raise ValueError('Optional serial lineage requires a fixed bounded original-clock subcap')
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     path = root / 'worker-time.json'
@@ -38,10 +46,20 @@ def begin(root, contract, *, slice_seconds, worker_seconds, resume=False, now=No
         reservation = slice_seconds + 60  # Includes a scheduler-startup allowance.
         if charge + reservation > worker_seconds:
             raise RuntimeError('This slice exceeds the original cumulative worker-time reservation')
+        if lineage is not None:
+            related=[row for row in data['attempts'] if row.get('lineage')==lineage]
+            if any(row.get('lineage_seconds')!=lineage_seconds for row in related):
+                raise ValueError('An existing lineage cannot change its original subcap')
+            if any(row['status']!='finished' for row in related):
+                raise RuntimeError('A serial lineage already has an outstanding reservation')
+            used=sum(row.get('charged_seconds',row['reserved_seconds']) for row in related)
+            if used+reservation>lineage_seconds:
+                raise RuntimeError('This slice exceeds the original lineage aggregate reservation')
         attempt = root / 'attempts' / f'{int(started * 1000000)}-{len(data["attempts"]):04d}'
         attempt.mkdir(parents=True, exist_ok=False)
         row = dict(path=str(attempt), started_unix=started, slice_seconds=slice_seconds,
             reserved_seconds=reservation, status='started', scheduler_allowance_seconds=60)
+        if lineage is not None:row.update(lineage=lineage,lineage_seconds=lineage_seconds)
         data['attempts'].append(row)
         _write(path, data)
         _write(attempt / 'attempt.json', row)

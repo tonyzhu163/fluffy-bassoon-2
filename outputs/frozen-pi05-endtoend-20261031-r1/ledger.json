@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "suffix_complete_7of7; original_bank11of12; no_fit; independent_LIBERO_native_screen_running",
+  "state": "four_case_prelift_factorial_all_fail; all12_false; task44_SAC_active_separate_phase; independent_partial11_cache_closeout_pending",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -92,6 +92,50 @@
       "fit_updates": 0,
       "terminal_receipt_path": "EVENT-SUFFIX-TERMINAL-RECEIPT.json",
       "terminal_receipt_sha256": "932d8b4402db32b86871a73b7a80afe0cd15b69d34cc5daae4cb92229d936347"
+    },
+    {
+      "role": "prelift_prebegin_launcher_failure",
+      "job_id": "job-0bqytnaeje1t",
+      "source_commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "reserved_seconds": 600,
+      "charged_seconds": 103,
+      "settled": true,
+      "status": "Failed",
+      "actual_new_actions": 0,
+      "model_loaded": false,
+      "cost_reconciled_under_original_clock": true,
+      "unused_child_seconds_carried_to_retry": 497
+    },
+    {
+      "role": "matched_prelift_pair_retry",
+      "job_id": "job-i5dem442uskn",
+      "source_commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "resource_helper_source": "6397b1dc005c08389e511db19a115c273580fbb6",
+      "reserved_seconds": 497,
+      "charged_seconds": 233,
+      "released_seconds": 264,
+      "settled": true,
+      "status": "Succeeded",
+      "actual_new_actions": 800,
+      "teacher04_successes": 0,
+      "fit_updates": 0,
+      "terminal_receipt_path": "PRELIFT-R2-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "11096cf683ddc069f6392a143289b422df47a51b1f64acbb02a638f453b0597a"
+    },
+    {
+      "role": "prelift_four_case_dose_grip_factorial",
+      "job_id": "job-snrggr7e3xoo",
+      "source_commit": "8632e421412388e8bb9c933b2b10cf5940dc7156",
+      "reserved_seconds": 900,
+      "charged_seconds": 310,
+      "released_seconds": 590,
+      "settled": true,
+      "status": "Succeeded",
+      "actual_new_actions": 1600,
+      "teacher04_successes": 0,
+      "fit_updates": 0,
+      "terminal_receipt_path": "FACTORIAL-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "2da5b0bf18eb0c444b32e9cb6514970a5c5aeaa828b4552e5f3316999e7c5899"
     }
   ],
   "cpu_attempts": [
@@ -300,14 +344,77 @@
       "passed_tests": 40,
       "receipt_path": "WIDE-ACTION-CPU-RECEIPT.json",
       "receipt_sha256": "a4f1a3e264d965a16b6d4f54eb2ba70bc38ab9ddcb74edc196717d48a0ce2840"
+    },
+    {
+      "role": "prelift_CPU_qualification",
+      "job_id": "job-tdbpofy2z4vj",
+      "source_commit": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "reserved_seconds": 120,
+      "charged_seconds": 77,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "PRELIFT-CPU-RECEIPT.json",
+      "receipt_sha256": "6d8f078356d4e9e9ad8865f7728db5a9999dc839d17fb09965fc8fd27d7c6e9a"
+    },
+    {
+      "role": "fixed_bank_CPU_qualification",
+      "job_id": "job-rfzx0vne9nel",
+      "source_commit": "061874dfeb6e6d27d5e3551c62c45aeaec98fb7b",
+      "reserved_seconds": 180,
+      "charged_seconds": 75,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "TEACHER-BANK-CPU-RECEIPT.json",
+      "receipt_sha256": "38b0c388481dc0fd4f70291070ec74af42beb88a4ecf306c3012ea563f8ba312"
+    },
+    {
+      "role": "short_slice_resource_CPU_qualification",
+      "job_id": "job-yzpvinm3416v",
+      "source_commit": "6397b1dc005c08389e511db19a115c273580fbb6",
+      "reserved_seconds": 120,
+      "charged_seconds": 73,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "PRELIFT-RESOURCE-CPU-RECEIPT.json",
+      "receipt_sha256": "c54dad367125f564e5d21a191a04807478764f8e9699e2b9c7ba3b9fb5c0e5cd"
+    },
+    {
+      "role": "parallel_source_CPU_qualification",
+      "job_id": "job-t9gbjn2nzr84",
+      "source_commit": "f385ae8ce86dd29c8c7ad1d0f4ef36248190ea04",
+      "reserved_seconds": 150,
+      "charged_seconds": 92,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "SOURCE-PARALLEL-CPU-RECEIPT.json",
+      "receipt_sha256": "e905f04af5912c206df7bde298d1d9af9d9776e53ef125e5758816b0f27087da"
+    },
+    {
+      "role": "partial11_and_factorial_CPU_qualification",
+      "job_id": "job-fbngf8so25cq",
+      "source_commits": {
+        "partial11": "7eef998223aa93c91bc16f9599979aa3dc7f522d",
+        "factorial": "8632e421412388e8bb9c933b2b10cf5940dc7156"
+      },
+      "charged_seconds": 88,
+      "reserved_seconds": 180,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "PARTIAL-FACTORIAL-CPU-RECEIPT.json",
+      "receipt_sha256": "e4870a1e772f4a2d654ea74c62e7039a0f1f0d8279ecad855f87c7f00ad34166"
     }
   ],
   "physical_action_reservations": [],
-  "charged_gpu_seconds": 2652,
+  "charged_gpu_seconds": 3298,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 1277,
+  "charged_cpu_worker_seconds": 1682,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 21522,
+  "charged_actions": 23922,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
@@ -320,7 +427,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "All targeted GPU attempts settled once:2652GPU-s/21522actions; B318GPU-s/1351newactions. Producer pending/uncertain0. Owner checked49 new chunks/7 manifests and summed1351, not a full old-journal replay. Old CPU1277/1800 after the74-second wide-head gate remains separate from new LIBERO164/600. Wide-head synthetic tests40PASS; no VLA, trained checkpoint, simulator, actions or fitting admission.",
+  "accounting": "F settled310GPU-s/1600actions once; old known phase3298GPU-s/23922actions, zero pending/uncertain actions. Partial11 cache1200 remains conservatively held until its own owner closeout (F receipt later whole-clock3452 is not an F cost). CPU1682/1800,118remaining. LIBERO164/600 separate. No clock/header replacement or borrowed capacity.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -374,32 +481,92 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 523,
-  "unreserved_gpu_seconds": 26148,
+  "remaining_cpu_worker_seconds": 118,
+  "unreserved_gpu_seconds": 24302,
   "latest_action_snapshot": {
-    "checked_shanghai": "2026-11-01T00:44:00+08:00",
-    "terminal": true,
-    "actual": 21522,
-    "charged": 21522,
-    "pending": 0,
-    "uncertain": 0,
-    "journal_events": 1430,
-    "journal_sha256": "ed0d9cc4160e4d3ad120a9ec51218982d6bd72a8f9ba2143b02e86264eaae779",
-    "latest_child_actions": 1351,
-    "independent_full_journal_replay": false
+    "actual_actions": 23922,
+    "by_method": {
+      "a1/action": 4161,
+      "a1/capacity_native": 400,
+      "a1/capacity_teacher": 608,
+      "a1/event_aligned_teacher": 2523,
+      "a1/event_fixed_control": 400,
+      "a1/kv": 3643,
+      "a1/native": 5897,
+      "a1/noise": 3890,
+      "a1/prelift_close_endpoint": 400,
+      "a1/prelift_dose1-close_endpoint": 400,
+      "a1/prelift_dose1-hold_current": 400,
+      "a1/prelift_dose5-close_endpoint": 400,
+      "a1/prelift_dose5-hold_current": 400,
+      "a1/prelift_hold_current": 400
+    },
+    "by_phase": {
+      "a1": 23922
+    },
+    "charged_actions": 23922,
+    "decision_count": 790,
+    "header": {
+      "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+      "contract": {
+        "candidate_tasks": [
+          "place_phone_stand",
+          "place_object_stand"
+        ],
+        "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "phase_id": "frozen-pi05-endtoend-20261031-r1",
+        "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+      },
+      "phase_caps": {
+        "a1": 30000,
+        "condition_cross": 15000,
+        "source": 120000,
+        "source_validation": 30000,
+        "student_evaluation": 105000
+      },
+      "schema": "robotwin_campaign_actions_v1",
+      "source_caps": {
+        "sac_calibration_minus_train0": 19200,
+        "sac_calibration_minus_train1": 19200,
+        "sac_calibration_minus_validation2": 19200,
+        "sac_calibration_plus_train0": 19200,
+        "sac_calibration_plus_train1": 19200,
+        "sac_calibration_plus_validation2": 19200
+      },
+      "total_actions": 300000
+    },
+    "journal_events": 1588,
+    "journal_sha256": "87b12dda5299a0ddff26e548d0d6789c65bbf07d4a5608f8b79873e8469035f4",
+    "pending_actions": 0,
+    "receipts": {},
+    "runs": {
+      "frozen-pi05-endtoend-a1-20261031-r1": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "frozen-pi05-endtoend-a1-20261031-r2": "969fb44c503fac409373abc88ce5687b71195068",
+      "frozen-pi05-event-capacity-20261031-r1": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+      "frozen-pi05-event-suffix-20261101-r1": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+      "frozen-pi05-prelift-factorial-20261101-r1": "8632e421412388e8bb9c933b2b10cf5940dc7156",
+      "frozen-pi05-prelift-pair-20261101-r2": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "frozen-pi05-reactive-capacity-20261031-r1": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f"
+    },
+    "uncertain_actions": 0,
+    "unresolved_decisions": {},
+    "independent_full_journal_replay": false,
+    "terminal": true
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 4548,
-  "remaining_a1_actions": 8478,
+  "remaining_a1_gpu_seconds": 3902,
+  "remaining_a1_actions": 6078,
   "retry_launched": true,
   "source_teacher_admitted": false,
   "selection_evaluable": true,
   "preserve_initial_grant_and_header": true,
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 26148,
-  "remaining_phase_actions": 278478,
+  "remaining_phase_gpu_seconds": 25502,
+  "remaining_phase_actions": 276078,
   "selected_arm": null,
   "eligible_arms": [],
   "capacity_preparation": {
@@ -445,7 +612,7 @@
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 523,
+  "unreserved_cpu_worker_seconds": 118,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,
@@ -461,8 +628,8 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 4548,
-  "unreserved_a1_actions": 8478,
+  "unreserved_a1_gpu_seconds": 2702,
+  "unreserved_a1_actions": 7678,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
     "CPU_qualified": true,
@@ -542,5 +709,28 @@
     "original_all12_gate": false,
     "cache_or_fit_admitted": false,
     "mixed_run_bank_not_automatically_assembled": true
+  },
+  "prelift_pair": {
+    "status": "terminal_both400failure",
+    "whole_child_ceiling": 600,
+    "actual_GPU_seconds": 336,
+    "software_failure_GPU_seconds": 103,
+    "physics_retry_GPU_seconds": 233,
+    "actual_actions": 800,
+    "valid_prelude_and_other13_match": true,
+    "nominal_contrast": 0.3216080367565155,
+    "candidate04": null,
+    "all12_fit_admitted": false
+  },
+  "partial11_cache": {
+    "source_commit": "7eef998223aa93c91bc16f9599979aa3dc7f522d",
+    "job_id": "job-p94g7qdx8665",
+    "reserved_seconds": 1200,
+    "lineage_seconds": 1200,
+    "maximum_new_actions": 0,
+    "maximum_output_bytes": 12884901888,
+    "status": "formal_closeout_pending",
+    "admitted_scope": "partial11_only_no_fit_or_full_seal",
+    "latest_phase_clock_observation_in_F_receipt": 3452
   }
 }

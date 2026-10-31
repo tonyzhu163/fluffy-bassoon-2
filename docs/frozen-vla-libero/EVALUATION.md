@@ -3,57 +3,53 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## Weak-native selection running; online continuation qualified
+## Task44 ordinary SAC: early regression followed by20/20 rebound
 
-Baige `job-sdxpm3y64pd9` runs the predeclared12-task native screen on the same
-official frozen OpenPI40 pi0.5. At00:50 Shanghai, its first real episode is
-verified: task0/state0 times out400 primitives plus10 settling,410 all-in,
-zero optimizer steps and no SAC actor. Actual allocation/CUDA/own-PID and the
-whole C565 motor-before signature pass. This is execution evidence, not a
-native task success rate or a learning result. The full240-episode screen and
-separate weak-query confirmations remain pending at this observation.
-[Launch and actual episode](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-GPU-LAUNCH.json).
+Task44 (`turn on the stove`) was selected at native5/20 in both screening and
+separate confirmation. Preferred77 screened4/20 but confirmed0/20 and was
+rejected beforeSGD. Fresh-process native readmission6/20 passed the frozen
+2–8 band. The entire official OpenPI40 pi0.5 remains frozen.
 
-The01:10 owned check verifies151/240 completed screen episodes in a later
-exact-byte recovery snapshot. Completed native task rates are0:0/20,
-29:11/20,33:20/20,38:10/20,44:5/20,53:0/20 and59:3/20. Each completed task
-has20 distinct actual initial-state hashes. Task64 is still partial6/11;
-the remaining four tasks are unstarted in that snapshot. Tasks44 and59 fall
-in the declared weak band, but none is selected until the full fixed screen
-and separate confirmation finish. The observed25% and15% are development
-case rates, not population estimates or evidence of learning.
+| Fixed20-case query condition | Success | Actual updates |
+| --- | ---: | ---: |
+| Fresh native |6/20|0|
+| Unbounded tied Gaussian |13/20|0|
+| Initialized bounded SAC |8/20|0|
+| First learned panel |1/20|20,580|
+| Second learned panel |20/20|40,140|
 
-The151 completed receipts sum53648 actions; this excludes any later active
-RPC and is not a new full-journal proof. The earlier127-episode producer
-snapshot reports44608 all-in actions and1.997GB. A new raw trace and closed
-RPC byte proof pass, recoverable cursor bytes match,0SGD remains and final
-motor-after is pending active closeout. Next owned check01:30Shanghai.
-[Light receipt and limits](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0110-RECEIPT.json).
+The second panel reverses the first panel's regression and exceeds every
+untrained control. It uses1,651 query primitives+200 settling. Initial
+identities/private seeds match native, acting weights stay fixed, and queries
+neither update nor enter replay. The newest immutable milestone, stable full
+recovery and raw trace hashes pass in the sole execution owner's check. This
+is promising interim ordinary RL evidence, not a selected final checkpoint or
+a completed replication. Both learned panels stay in the curve. The untrained
+tied control's13/20 advantage also shows why a native-only gap cannot isolate
+learning. [Owned check](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240.json).
 
-The prospective rule requires2–8 native successes of20 in both screening and
-query confirmation, with fixed candidates/ranking and at most3 confirmations.
-Selected task/query bank freezes before any SGD. A fresh initial-native panel
-must again satisfy that weak band in the learning process; otherwise stop
-without task substitution. This addresses the ceiling of the finished task57
-experiment. All selections, rejected candidates and target development exposure
-remain disclosed; no target records enter source40/meta-pretraining.
+At02:40 the learner has53,120 updates and189 training episodes:151 successes,
+38 failures, adding100 successes/3 failures since02:20. Losses remain finite.
+Low temperature (.00911), entropy near−16 and large pre-tanh means coexist
+with the new excellent query performance, so concentration alone does not
+explain20k's failure. Replay coverage, critic fit, state generalization and
+early transient learning remain competing explanations. Narrow pinned-source
+checks found no concrete scale/order/reward/entropy mismatch. Existing60k/80k
+panels test persistence without retuning. [Evidence and limitations](../../outputs/libero90-pi05-headroom-online-20261101-r1/EARLY-REGRESSION.md).
 
-Screen source7a69 passed4/4 focused Linux CPU checks; learning successorb665
-passed exactly3 new continuation/migration checks, not a fresh seven-test suite
-at one pin. Actual zero-GPU2CPU/16GiB attestations and inclusive90+74=164
-CPU-worker-seconds are retained,436 of the fresh600 remain. The prepared child
-keeps the original screen output/clock/action lineage and a separate pinned
-code worktree. After selection/readmission it uses fresh ordinary SAC and the
-fixed500k endpoint,20k-update panels and native/tied/initialized-SAC controls;
-no favorable checkpoint choice. Tests are software evidence, not robot gains.
-[Saved proof review](../../outputs/libero90-pi05-headroom-online-20261101-r1/RUNTIME-PARENT-REVIEW.json).
+Baige job-w8deahieli8q/sourceb665 continues the fixed500k endpoint, all20k
+panels, last-three gain criterion and final native. Current whole-phase charge
+is156,664 actions/7.44GB; screen settled3,076 GPU-seconds and active3,379.4
+seconds is not a terminal charge. This child reserves25,200 in the original
+57,600/1M/64GiB lineage. No task/checkpoint substitution or extra learner seed.
+Next owned check03:00Shanghai.
 
-The first screen slice reserves7200 inclusive GPU-seconds against the declared
-57600-second whole lineage and10800-second screen sublimit. Every allocation
-is strictly under8hours. All startup/failures/retries/controls/queries share
-the1M-action/64GiB ceilings. These are separate from task57 and RoboTwin;
-whole frozen-motor identity, real episodes, conservative physical intents and
-full RNG/replay/optimizer recovery remain required on continuation.
+All240 screens and40 confirmations remain retained. Selection and target
+trajectories are disclosed development exposure, excluded from source40/new
+meta-pretraining. Screen7a69→learningb665 preserves the original clocks/actions
+and immutable code worktree. NativeH10 differs from paper pi0H50: this is an
+adapted single-seed pilot. No memory, unseen-task transfer, full-suite or total
+sample-efficiency claim follows. [Selection/launch](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-TERMINAL-RECEIPT.json).
 
 ## Task57 fixed500k DSRL curve complete
 
