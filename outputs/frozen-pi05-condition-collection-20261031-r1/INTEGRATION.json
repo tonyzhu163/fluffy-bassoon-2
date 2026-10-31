@@ -1,5 +1,5 @@
 {
-  "status": "static-composed; actual allocated integrated CPU qualification pending",
+  "status": "R1 actual87pass/4fail preserved; narrow source fixture plus owner readout repair prepared for one affected rerun",
   "reviewed_main": "e665e2cfa7282f09ce6da6b2e8ab5debdf20ae66",
   "source_entry_base": "48e7834ed004d7ba8712b4c7dd39e6487da34ca6",
   "components": [
@@ -64,10 +64,10 @@
       "bytes": 14006
     },
     {
-      "component_commit": "4f195e2f80e2ba3967009c287ecc87f2a33a72ab",
+      "component_commit": "8aa24bb6df98af98e6b93af3d9be83ab558b31ca",
       "path": "src/fluffy_bassoon/meta_rl/steering_history_readout.py",
-      "sha256": "1462f3058fb9fb282ff9e3a99138c51ed4191db66c4af875b90e794521e59d32",
-      "bytes": 42823
+      "sha256": "8787e4c6f50dfaa2db06f4aab65224a276c702d078da57ebd14fa8637c0c7a3f",
+      "bytes": 43097
     },
     {
       "component_commit": "4f195e2f80e2ba3967009c287ecc87f2a33a72ab",
@@ -88,10 +88,10 @@
       "bytes": 27798
     },
     {
-      "component_commit": "4f195e2f80e2ba3967009c287ecc87f2a33a72ab",
+      "component_commit": "8aa24bb6df98af98e6b93af3d9be83ab558b31ca",
       "path": "tests/test_steering_history_pipeline.py",
-      "sha256": "00d908bfbe20dd17636528343e1e8c190efe8e1523aa1b9882653baa062b99c9",
-      "bytes": 16502
+      "sha256": "391f83b91f053a19fce9de91dccb404480ce48a9ef0450e21d3baa1f51adae03",
+      "bytes": 18202
     },
     {
       "component_commit": "cfeb885b4b50b652990d10c32d0cad1e4981d110",
@@ -143,8 +143,8 @@
     "affected_calibration": 17,
     "source_entry": 15,
     "condition_cross": 16,
-    "history_updated_component": 43,
-    "total": 91
+    "history_updated_component": 47,
+    "total": 95
   },
   "condition_contract_identity": "Canonical content hash: actual source Torch tuples and original JSON lists preserve the same strict contract; changed bias still rejects.",
   "CPU_execution": "NOT RUN by composing chat. Sole resource owner must allocate/check actual composite and save JUnit/import/probe/teardown/cost receipts.",
@@ -153,5 +153,8 @@
     "path": "STATE-FEEDBACK-AUDIT.md",
     "source_excerpt_sha256": "4d0f77bac7edd7c8d20855c10c87ba9f7382f4ec8e826205231167d66c2b2bcc",
     "finding": "Public native14 is transformed commanded drive-target plus gripper feedback, not independent measured arm qpos; dynamics identification/reward-causal limitation documented; no condition or observation redesign."
-  }
+  },
+  "affected_rerun_command": "python -m pytest -q tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink tests/test_steering_history_pipeline.py --junitxml=<fresh-owned-receipt>/composite-r2.junit.xml",
+  "affected_rerun_expected_cases": 10,
+  "prior_composite_receipt_sha256": "cb8491161696db877e5154a6aebf2cf7f877d722d6619f0aec69c5c26636d9c6"
 }

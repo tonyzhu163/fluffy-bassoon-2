@@ -295,6 +295,17 @@ def prime_history(history, traces):
     return history.prime_support([_replay_rows(t) for t in traces])
 
 
+def admit_readout_budget(budget, schedule):
+    """Shared CLI/driver preflight against the original phase-wide allowance."""
+    if budget.snapshot()["unresolved_decisions"]:
+        raise ValueError("Unresolved prior physical work blocks a new readout runtime")
+    # The canonical API requires an actual method even for phase-wide checks.
+    # Evaluation has no per-method cap; all scheduled policies share this slice.
+    method = schedule["supports"][0]["policy"]
+    if budget.remaining(phase=PHASE, method=method) < schedule["maximum_actions"]:
+        raise ValueError("The original shared phase ledger cannot admit this complete student grid")
+
+
 def run_readout(plan, *, control, budget, students, teacher_factory, stationary_factory, select_condition,
                 output, run_id, source_commit, guard, checkpoint, episode_runner=None):
     """Execute the bound grid using the SAME actual complete-episode runner.
@@ -315,10 +326,9 @@ def run_readout(plan, *, control, budget, students, teacher_factory, stationary_
             or budget.header["campaign_id"] != profile["shared_reservation"]["pilot_id"]
             or set(budget.header["source_caps"]) != {r["lineage_id"] for r in profile["lineage_slots"]}
             or run_id != budget.run_id or source_commit != budget.source_commit
-            or budget.header["contract"].get("scope_sha256") != profile["scope_sha256"]
-            or budget.snapshot()["unresolved_decisions"]
-            or budget.remaining(phase=PHASE) < schedule["maximum_actions"]):
+            or budget.header["contract"].get("scope_sha256") != profile["scope_sha256"]):
         raise ValueError("The original shared phase ledger cannot admit this complete student grid")
+    admit_readout_budget(budget, schedule)
     if set(students) != set(plan["models"]):
         raise ValueError("Loaded students differ from the exact completed model bindings")
     for task, horizon in ((profile["source_task"], profile["episode_action_limit"]),
@@ -605,10 +615,7 @@ def main(argv=None):
         with CampaignBudget(ledger["root"], campaign_id=ledger["campaign_id"], total_actions=300000,
                 source_caps=ledger["source_caps"], phase_caps=ledger["phase_caps"], contract=ledger["contract"],
                 run_id=args.run_id, source_commit=source) as budget:
-            if budget.snapshot()["unresolved_decisions"]:
-                raise ValueError("Unresolved prior physical work blocks a new readout runtime")
-            if budget.remaining(phase=PHASE)<plan["schedule"]["maximum_actions"]:
-                raise ValueError("No model/reset can start without the complete predeclared readout action slice")
+            admit_readout_budget(budget, plan["schedule"])
             for policy,_ in students.values():policy.to("cuda:0")
             env = RobotwinNoiseEnv(model_path=args.model_path, norm_stats=args.norm_stats,
                 robotwin_root=args.robotwin_root, rlinf_root=args.rlinf_root, output_dir=args.output/"runtime",

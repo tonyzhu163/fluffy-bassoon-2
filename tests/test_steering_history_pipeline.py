@@ -6,12 +6,13 @@ import json
 import socket
 
 import numpy as np
+import pytest
 import torch
 
 from fluffy_bassoon.meta_rl import steering_history as sh
 from fluffy_bassoon.meta_rl.steering_history_prefix import build_prefix
 from fluffy_bassoon.meta_rl.steering_history_readout import (FORMAT, FrozenReference,
-    matrix_schedule, run_readout,stationary_reference_factory)
+    admit_readout_budget, matrix_schedule, run_readout,stationary_reference_factory)
 from fluffy_bassoon.meta_rl.steering_condition_collection import BoundedTeacherRecovery
 from fluffy_bassoon.meta_rl.robotwin_steering_screen import run_complete_episode, paired_reset_fields, PHASE_CAPS
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy, load_dataset
@@ -113,6 +114,37 @@ def _budget(root, p, run_id):
         source_caps={row["lineage_id"]: 10000 for row in p["lineage_slots"]},
         phase_caps=PHASE_CAPS,
         contract=dict(scope_sha256=p["scope_sha256"]), run_id=run_id, source_commit="f"*40)
+
+
+@pytest.mark.parametrize("objectives", [["ad"], ["dpt"], ["ad", "dpt"]])
+def test_shared_cli_and_driver_budget_admission_counts_all_readout_methods(tmp_path, monkeypatch, objectives):
+    p = profile()
+    schedule = matrix_schedule(p, objectives)
+    with _budget(tmp_path/"admission-ledger", p, "admission-fixture") as budget:
+        remaining = budget.remaining
+        methods = []
+        def observed_remaining(*, phase, method):
+            methods.append(method)
+            return remaining(phase=phase, method=method)
+        monkeypatch.setattr(budget, "remaining", observed_remaining)
+        admit_readout_budget(budget, schedule)
+        assert methods == [objectives[0]+"-full"]
+        # Another actual readout policy's cost reduces the same phase slice.
+        spent = PHASE_CAPS["student_evaluation"] - schedule["maximum_actions"] + 1
+        budget.import_receipt("native-readout-cost", spent, "a"*64,
+            phase="student_evaluation", method="native")
+        with pytest.raises(ValueError, match="complete student grid"):
+            admit_readout_budget(budget, schedule)
+        assert methods[-1] == objectives[0]+"-full"
+
+
+def test_shared_readout_admission_rejects_unresolved_work(tmp_path):
+    p = profile()
+    with _budget(tmp_path/"pending-ledger", p, "pending-fixture") as budget:
+        budget.reserve("pending-query", 1, phase="student_evaluation", method="ad-full",
+            task=p["source_task"], episode="pending-query", chunk=0, policy_version="test-only")
+        with pytest.raises(ValueError, match="Unresolved prior physical work"):
+            admit_readout_budget(budget, matrix_schedule(p, ["ad", "dpt"]))
 
 
 def test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift(tmp_path):
