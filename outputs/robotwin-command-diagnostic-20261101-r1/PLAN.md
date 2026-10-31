@@ -102,7 +102,9 @@ with matching per-head `lineage_seconds`; every actual/open/failed/resumed
 head charge counts against its own immutable head cap and the shared fit-stage
 ceiling. Sum of head caps must fit the stage cap. Different heads may be admitted
 concurrently; only same-head continuation is serial. No cross-head borrowing or
-per-attempt reset. Unknown/stale fit lineages are refused. This per-head concurrent route supports SEPARATE one-GPU physical
+per-attempt reset. Unknown/stale fit lineages are refused. The already adopted separate `/readout`
+hold is recognized but excluded from fit/head counters; the common phase clock
+still counts it, and the readout owner validates its own physical scope. This per-head concurrent route supports SEPARATE one-GPU physical
 allocations only: immutable current/other tickets must map every booked row to
 a unique actual host. One physical allocation must never be booked twice. A
 grouped two-head job is not supported by these per-head tickets and requires an
