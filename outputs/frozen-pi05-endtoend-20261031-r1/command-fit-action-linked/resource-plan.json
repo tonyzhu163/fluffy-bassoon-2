@@ -1,0 +1,47 @@
+{
+  "format": "owner_finite_command_fit_resource_plan_v1",
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "admitted": true,
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "stage_gpu_limits": {
+    "cache04": 600,
+    "fit": 3600
+  },
+  "fit_head_gpu_limits": {
+    "action": 1800,
+    "kv": 1800
+  },
+  "fit_topology": "separate_one_gpu_physical_allocations",
+  "other_fit_ticket_receipts": [],
+  "prior_cost_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-fit-linked-r1/closed-parent-clock-5189.json",
+      "sha256": "5c9a738bd66bb93dbda31bb0d8d1de52f2587fc6b2a43b24d23c0f0bdc6b38f8"
+    }
+  ],
+  "linked_fit_continuation": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-fit-linked-r1/LINKED-AUTHORITY.json",
+    "sha256": "2ca8a32f0dd57b274e957b39f421c04e83675f2676c52f002bf11c3ba905d751"
+  },
+  "storage_admission": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-fit-linked-r1/STORAGE.json",
+    "sha256": "db505c6c826c5e8ebb14675654f6dc775d23feba3b977adeb7e209adb86bf93a"
+  },
+  "complete_cache_file": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+    "sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8"
+  },
+  "required_CPU_evidence": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/command-fit-linked-resource-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "dbbe5d1feebef37698ff744d0659837bb4828767fb2c01906e38b13ba14ae366"
+  }
+}

@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "diagnostic04_encoding_closed_full12_seal_failed; no_fit; task44_active_separate_phase",
+  "state": "action5000_closed_KV4727_active_readout54CPU_active",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -511,8 +511,8 @@
       "canonical_action_header_unchanged": true
     }
   ],
-  "charged_gpu_seconds": 5189,
-  "reserved_gpu_seconds": 5100,
+  "charged_gpu_seconds": 5916,
+  "reserved_gpu_seconds": 3300,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 23922,
@@ -528,7 +528,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "Closed original GPU5189/actions23922. Both initial fixed5000 fits timed out at3399/2655,782GPU-s each; old900lineages/costs stay immutable. OriginalA1reservedreadout1500 leaves511; linked continuation3600 is an explicit new allocation from original global unassigned capacity, separately counted from originalA17200, same globalclock28800. Reservedglobal5100/unreserved18511; no new GPUjobs until operational migration code+focusedCPU PASS. All old CPU allowances unchanged.",
+  "accounting": "As saved06:20: originalA1closed5189 retained,linkedAction727 closed separately=5916 globalclosed. KV1800+conditionalreadout1500=3300 held;globalunreserved19584. OriginalA17200 and global28800 unchanged. Actions23922 unchanged;readout6000 reservation unchanged. CPU qualification54 has its own180 phase; all old unused sealed.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -583,7 +583,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 25,
-  "unreserved_gpu_seconds": 18511,
+  "unreserved_gpu_seconds": 19584,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -666,7 +666,7 @@
   "preserve_initial_grant_and_header": true,
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 23611,
+  "remaining_phase_gpu_seconds": 22884,
   "remaining_phase_actions": 276078,
   "selected_arm": null,
   "eligible_arms": [],
@@ -902,9 +902,11 @@
       "role": "linked_same5000_command_fit_continuations",
       "maximum_seconds": 3600,
       "per_head_seconds": 1800,
-      "state": "conditional_resource_migration_code_CPU_PASS_and_actual_admission_pending",
+      "state": "action727_settled_KV1800_active",
       "authority_path": "COMMAND-FIT-LINKED-RESOURCE-AUTHORITY.json",
-      "actual_allocation_created": false
+      "actual_allocation_created": true,
+      "actual_seconds": 727,
+      "reserved_active_seconds": 1800
     }
   ],
   "command_diagnostic_cache04": {
@@ -942,8 +944,8 @@
     "seal_evidence": "Copied zeroGPU/CPUclock/JUnit/terminal/fullcache metadata verified; all90 tensor validation by allocated producer, no independent Mac tensor claim."
   },
   "command_diagnostic_fits": {
-    "state": "linked_resumes_both_advancing_with_old_optimizer_RNG_contract_gates",
-    "actual_fits": 0,
+    "state": "action5000_complete_KV4727_running",
+    "actual_fits": 2,
     "actual_complete_cache": true,
     "max_updates_each": 5000,
     "primary_candidate": 5000,
@@ -980,10 +982,14 @@
         "final5000": false,
         "full_recovery_preserved": true
       }
-    }
+    },
+    "completed_heads": [
+      "action"
+    ],
+    "actual_complete_heads": 1
   },
   "command_diagnostic_readout": {
-    "state": "held_true5000_and_narrow_linked_family_readout_gate_fix_CPU_pending",
+    "state": "949_resource_only_staticPASS_required54CPU_running_actualKV5000_pending",
     "GPU_ceiling": 1500,
     "action_ceiling": 6000,
     "episode_ceiling": 15,
@@ -991,14 +997,16 @@
     "actual_job": null,
     "no_source_student_eligibility": true,
     "code_owner": "01a18762-9db6-74c2-940a-96524803e454",
-    "new_resource_CPU_grant": "outputs/command-readout-linked-resource-cpu-20261101-r1/GRANT.json"
+    "new_resource_CPU_grant": "outputs/command-readout-linked-resource-cpu-20261101-r1/GRANT.json",
+    "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+    "actual_CPU_job": "job-4jq7u25x1sv6"
   },
   "original_A1_closed_GPU_seconds": 5189,
   "linked_continuation_extension": {
     "extension_id": "command-fit-linked-continuation-20261101-r1",
     "additional_cap": 3600,
-    "charged_seconds": 0,
-    "reserved_seconds": 3600,
+    "charged_seconds": 727,
+    "reserved_seconds": 1800,
     "old_A1_cap_immutable": 7200,
     "combined_A1_plus_linked_cap": 10800,
     "same_global_clock_max": 28800,
@@ -1008,16 +1016,17 @@
         "kind": "action",
         "job_id": "job-535ggybsgppf",
         "created_shanghai": "2026-11-01 06:05:58",
-        "status": "Running_actual_postresume_updates",
-        "post_resume_SGD_verified": 3614,
-        "latest_full_recovery_hash_matches": true
+        "status": "Succeeded_exit0",
+        "post_resume_SGD_verified": 5000,
+        "latest_full_recovery_hash_matches": true,
+        "charged_GPU_seconds": 727
       },
       {
         "kind": "kv",
         "job_id": "job-76gonbaui824",
         "created_shanghai": "2026-11-01 06:07:11",
-        "status": "Running_actual_postresume_updates",
-        "post_resume_SGD_verified": 2906,
+        "status": "Running_saved0620",
+        "post_resume_SGD_verified": 4727,
         "latest_full_recovery_hash_matches": true
       }
     ],

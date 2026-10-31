@@ -61,15 +61,18 @@ Both initial command fits hit their time guards before5000: action3,399/KV2,655.
 Full recoveries and0/100/500/2000 milestones survive; robot evaluation remains
 held. Their1,564 GPU-seconds bring closed phone cost to5,189 with23,922 actions
 unchanged. The narrow resource migration passes29 CPU cases and real checkpoint
-inspection; both continuations now advance from the same optimizer/RNG
-state toward5000 on separate GPUs. A later readout resource guard also needs
-a narrow linked-family update, while physical readout stays held. No capacity,
-physical benefit or source/student claim follows from incomplete prefixes.
+inspection. The linked action fit completes5,000 at727 new GPU-seconds with
+matching endpoint/recovery, all90 parity and frozen721a checks. Its decoded
+plan MSE is0.00547043 TRAIN/0.03020526 VAL; no physical benefit follows. KV
+is4,727 in the saved06:20 observation. Resource-only readout949 has static
+PASS; exactly54 affected CPU cases run under180 worker-seconds before the
+fixed15-episode readout, which still needs actual KV5,000 admission. No
+validation checkpoint selection, source/student claim or extra approval gate.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through200,080
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through220,040
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three
