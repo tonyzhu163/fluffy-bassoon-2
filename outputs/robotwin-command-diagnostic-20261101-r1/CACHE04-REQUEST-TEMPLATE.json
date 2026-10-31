@@ -1,0 +1,76 @@
+{
+  "status": "STATIC_TEMPLATE_NOT_ADMISSION",
+  "operation": "cache04",
+  "profile": {
+    "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+    "seed": 20261031,
+    "updates": 5000,
+    "global_batch": 2,
+    "learning_rate": 0.001,
+    "milestones": [
+      0,
+      100,
+      500,
+      2000,
+      5000
+    ],
+    "primary_endpoint": 5000,
+    "selection": "fixed_final_endpoint",
+    "optimizer": "AdamW",
+    "weight_decay": 0.0,
+    "gradient_clip": 1.0,
+    "execution_microbatch": 1,
+    "rank": 4,
+    "kv_scale": 0.1,
+    "kv_layers": [
+      -1
+    ],
+    "wide_contract_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+    "whole_split": {
+      "phone-00": "train",
+      "phone-01": "train",
+      "phone-02": "train",
+      "phone-03": "train",
+      "phone-04": "train",
+      "phone-05": "train",
+      "phone-06": "train",
+      "phone-07": "train",
+      "phone-08": "validation",
+      "phone-09": "validation",
+      "phone-10": "validation",
+      "phone-11": "validation"
+    },
+    "labels": "captured full submitted plans; native executed masks are physical costs only",
+    "maximum_new_robot_actions": 0,
+    "maximum_fit_output_bytes": 17179869184,
+    "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+    "source_eligible": false,
+    "successful_teacher_bank_eligible": false,
+    "diagnostic_bank_format": "robotwin_fixed12_command_diagnostic_bank_v1",
+    "complete_cache_format": "robotwin_fixed12_complete_command_diagnostic_cache_v1",
+    "failed04_label_source": "original be247 event-teacher-phone-04; no later recipe substitution",
+    "maximum_cache04_output_bytes": 2147483648
+  },
+  "bank": null,
+  "cache_receipts": null,
+  "complete_cache_sha256": null,
+  "wide_configuration": {
+    "path": "outputs/robotwin-wide-action-head-20261101-r1/CONFIG.json",
+    "sha256": "e208fa1911ca39ee75537a84aa00a7fadf19e67bba508d55dbeb94d06429a433"
+  },
+  "runtime_blob_sha256": {
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py": "825ea2740c03ad6df2cf09303a1b5935c201d8c7f2fce41411f6d0d1ff9bc251",
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+    "src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py": "91de73d421537fa01715da12a2aecfc19bdbf1a5edb47054d9274590c7792506",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+    "src/fluffy_bassoon/meta_rl/robotwin_demo_capacity.py": "fabdd092f888bb801cb434673441a461b0f320c73cced46e782d5192c17aa836",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "0acc9c0a5fc82cc827f109e42937f2adf8134fcd45ab01a7f5fcc4943867120d",
+    "src/fluffy_bassoon/rl/pi05_residual.py": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_bank.py": "6bca9629c4029e05afa6ab9cddab73ba8941432d9a408e561dd972f55e5cfedf",
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_curve.py": "b6b8c7ecf1e9060ed365cebe25bc9a36478c50e2972cb1999082d88079a414e8"
+  },
+  "resume": null
+}
