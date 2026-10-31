@@ -5,14 +5,24 @@ Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
 ## Task57 DSRL preserves10/10 with shorter observed query episodes
 
-Baigejob-iudscqfntb4e is active at fixed sourced001556. The15:37:00Shanghai
-snapshot on2026-10-31 contains480/480 successful training episodes,6,769
-replay chunks and125,520 optimizer updates, with87,903 all-in simulator actions
-and7.20GB outputs. Losses remain finite; full/newest-milestone/raw/RPC hashes
-match, with no new journal traversal. No training failure/recovery appeared.
-At that snapshot:actual120,220 updates,10/10successes,1,239primitives
-plus100settles versus native1,451+100. The first ten checkpoints are below;
-full subsequent panels remain in the dated receipts. [Latest check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md).
+Baigejob-iudscqfntb4e is active at fixed sourced001556. At16:16:28Shanghai
+on2026-10-31 it has665/666 training successes,9,285 replay chunks,175,840
+SAC updates,120,473 all-in actions and10.43GB outputs. Newest complete panel:
+actual170,160 updates,10/10successes,1,245primitives+100settles versus native
+1,451+100. Latest full/newest milestone/raw/RPC/paired identity hashes match;
+losses are finite. No runtime failure, exit or retry occurred. [Current saved
+check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1616.md).
+
+The first training timeout is zero-indexed episode576/state16,400 primitives,
+collected at151,260updates and followed by800updates. Earlier episode536
+succeeded143primitives; later616/656 succeeded133/134. Nominal state and
+initial-observation hashes match, but actor weights and RNG differ: this is
+one failure/later-success record, not causal recovery or ICRL evidence. The
+failure trace rehashed correctly. It does not turn the near-ceiling bank into
+a rich recovery corpus. [Bound failure metadata](../../outputs/dsrl-pi05-task57-20261031-r1/first-failure-1616.json).
+
+The first ten learned checkpoints are below; later panels remain in the
+immutable dated receipts.
 
 | Actual optimizer updates | Query success | Query primitives | Settling actions |
 | ---: | ---: | ---: | ---: |

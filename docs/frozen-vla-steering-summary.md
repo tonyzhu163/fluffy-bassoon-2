@@ -97,6 +97,21 @@ that on-policy collection. The initial LIBERO batch has now been trained and
 tested. Its negative transfer result and sparse recovery histories justify a
 targeted recipe diagnosis before repeating the same collection at larger scale.
 
+Latest scientific update16:16:28:665/666 training successes at175,840updates
+and120,473 all-in actions. The first RL timeout is episode576/state16;
+later visits to the same nominal/initial-observation hashes succeeded with
+changed actor/RNG. This supplies one failure/later-success record, not causal
+recovery or a rich recovery corpus. All query panels through170,160 remain
+10/10; latest1,245primitives+100settles versus native1,451+100. [Receipt](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1616.md).
+
+The requested exact source-only redesign plan is now published on main at
+7b959e736320cf2730a75cc86945566397445278 (13,775bytes, SHA2561a8d4917…).
+Only the owned DSRL row and the separately authorized additive redesign row
+were changed across two commits; the older diagnosis and other rows were
+preserved. Publication is not runtime admission or a resource grant.
+Source40 candidates09/04 have saved learned-SAC successes and F→S sequences,
+but native headroom is unqualified; see [candidate limits](../outputs/dsrl-pi05-task57-20261031-r1/SOURCE40-SAVED-CANDIDATES.md).
+
 ## RoboTwin source100 export is ready; GPU fitting stays deferred
 
 Owner closeout154fdb970de397480db94f59760cd76149864ac8 records CPU R4
