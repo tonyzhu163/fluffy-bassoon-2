@@ -1,0 +1,52 @@
+{
+  "format": "owner_finite_command_fit_resource_plan_v1",
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "admitted": true,
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "stage_gpu_limits": {
+    "cache04": 600,
+    "fit": 1800
+  },
+  "fit_head_gpu_limits": {
+    "action": 900,
+    "kv": 900
+  },
+  "fit_topology": "separate_one_gpu_physical_allocations",
+  "other_fit_ticket_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation.json",
+      "sha256": "2e48bcba05d7a6a529c7dd45e54456ff8fef4f8206c8e6c4ec267efa69d1ac5a"
+    }
+  ],
+  "prior_cost_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cache04-allocation-r1/allocation-closeout.json",
+      "sha256": "fa9849deb5d70edeb54f35c5b530a66fdd3513b02f18cf5fe88d6fac8e7d89cf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/PRIOR-COSTS.json",
+      "sha256": "dffdda4d14074a72ca0b42c9fe45f554c4241dda3d443ec700cd382778fd9954"
+    }
+  ],
+  "storage_admission": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/STORAGE.json",
+    "sha256": "a94fcb3030cc8a4a8a11fd8a6222af74c3b6669ae0332d48577e8d70ba9e0428"
+  },
+  "complete_cache_file": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+    "sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8"
+  },
+  "required_CPU_evidence": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "62d4d1cf54968ac8d0216fc37f30874c2f2c616435a4855c9e2e269e34e254af"
+  }
+}

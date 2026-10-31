@@ -1,0 +1,695 @@
+{
+  "format": "command_fit_due_terminal_read_v1",
+  "checked_unix": 1793482211.85622,
+  "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+  "heads": {
+    "action": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1",
+      "allocation-closeout.json": {
+        "metadata": {
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "kind": "action",
+          "exit_code": 1,
+          "error": null,
+          "attempt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481359000000-0010",
+            "started_unix": 1793481359.0,
+            "slice_seconds": 840,
+            "reserved_seconds": 900,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "lineage": "fixed12-command-diagnostic/fit-action",
+            "lineage_seconds": 900,
+            "ended_unix": 1793482080.772025,
+            "exit_code": 1,
+            "charged_seconds": 782,
+            "slice_overrun": false
+          },
+          "charged_gpu_seconds": 782,
+          "fit_lineage": "fixed12-command-diagnostic/fit-action",
+          "maximum_head_lineage_seconds": 900,
+          "maximum_new_actions": 0,
+          "all_full_recoveries_and_prefixes_preserved": true
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation-closeout.json",
+          "sha256": "2f8233e5cfd14caa01c5c4e7fcf9a2f54919c13c3551cbe75ab2ef2503178720",
+          "bytes": 824,
+          "mtime": 1793482080.789696
+        }
+      },
+      "allocation.json": {
+        "metadata": {
+          "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+          "admitted": true,
+          "operation": "fit",
+          "kind": "action",
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "request_sha256": "9514b69420a1389eb76a377d2c44a32fc2bbc7e14f8d708a5cd6c9382ef2341d",
+          "hostname": "job-8bsqknljwduh-master-0",
+          "gpu_count": 1,
+          "private_motor_context": true,
+          "maximum_robot_actions": 0,
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1",
+          "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481359000000-0010",
+          "driver_deadline_unix": 1793482139.0,
+          "authority_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
+            "sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
+          },
+          "resource_plan_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/resource-plan.json",
+            "sha256": "509216280784657dcc4168939f4b7b410b6c0b60f96189a2fd6721becd97b484"
+          },
+          "reserved_gpu_seconds": 900,
+          "started_unix": 1793481359.0
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation.json",
+          "sha256": "2e48bcba05d7a6a529c7dd45e54456ff8fef4f8206c8e6c4ec267efa69d1ac5a",
+          "bytes": 1878,
+          "mtime": 1793481371.4321344
+        }
+      },
+      "resource-plan.json": {
+        "metadata": {
+          "format": "owner_finite_command_fit_resource_plan_v1",
+          "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+          "source_eligible": false,
+          "admitted": true,
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "stage_gpu_limits": {
+            "cache04": 600,
+            "fit": 1800
+          },
+          "fit_head_gpu_limits": {
+            "action": 900,
+            "kv": 900
+          },
+          "fit_topology": "separate_one_gpu_physical_allocations",
+          "other_fit_ticket_receipts": [],
+          "prior_cost_receipts": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cache04-allocation-r1/allocation-closeout.json",
+              "sha256": "fa9849deb5d70edeb54f35c5b530a66fdd3513b02f18cf5fe88d6fac8e7d89cf"
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/PRIOR-COSTS.json",
+              "sha256": "dffdda4d14074a72ca0b42c9fe45f554c4241dda3d443ec700cd382778fd9954"
+            }
+          ],
+          "storage_admission": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/STORAGE.json",
+            "sha256": "a94fcb3030cc8a4a8a11fd8a6222af74c3b6669ae0332d48577e8d70ba9e0428"
+          },
+          "complete_cache_file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+            "sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8"
+          },
+          "required_CPU_evidence": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/summary.json",
+            "sha256": "62d4d1cf54968ac8d0216fc37f30874c2f2c616435a4855c9e2e269e34e254af"
+          }
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/resource-plan.json",
+          "sha256": "509216280784657dcc4168939f4b7b410b6c0b60f96189a2fd6721becd97b484",
+          "bytes": 2131,
+          "mtime": 1793481371.431338
+        }
+      },
+      "progress": {
+        "complete": false,
+        "format": "robotwin_fixed12_reactive_learning_curve_v1",
+        "iteration": 3399,
+        "milestones": {
+          "0": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009425342990401602,
+                "decoded_arm12_MSE": 0.004340937756023038,
+                "decoded_gripper2_MSE": 0.039931773234290695,
+                "decoded_physical14_MSE": 0.009425342990401602,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010162620623304974,
+                "decoded_arm12_MSE": 0.004860411888395382,
+                "decoded_gripper2_MSE": 0.041975875511586276,
+                "decoded_physical14_MSE": 0.010162620623304974,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000000.pt",
+              "sha256": "4e85c73f253de46095790e61fde9c58bbb402795632d616e76bb1d72dd0fced8"
+            }
+          },
+          "100": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009884366752841033,
+                "decoded_arm12_MSE": 0.004570554085814099,
+                "decoded_gripper2_MSE": 0.041767240488689725,
+                "decoded_physical14_MSE": 0.009884366752841033,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010880247864406556,
+                "decoded_arm12_MSE": 0.005530486864569996,
+                "decoded_gripper2_MSE": 0.042978813023572524,
+                "decoded_physical14_MSE": 0.010880247864406556,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000100.pt",
+              "sha256": "85a82fbd69c43f371a5fb92ea865ab595fd662d3a0647e5d1fa91346ae52f5c2"
+            }
+          },
+          "2000": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.005436024689153443,
+                "decoded_arm12_MSE": 0.003324247258279957,
+                "decoded_gripper2_MSE": 0.018106689448544103,
+                "decoded_physical14_MSE": 0.005436024689153443,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.01496049752417353,
+                "decoded_arm12_MSE": 0.005114930868980342,
+                "decoded_gripper2_MSE": 0.07403389818032988,
+                "decoded_physical14_MSE": 0.01496049752417353,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-002000.pt",
+              "sha256": "be57d0af6bf504820063e3ce7dbfaf536d40b16f277145f073ee017e57e34cb6"
+            }
+          },
+          "500": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.007377050912132623,
+                "decoded_arm12_MSE": 0.0038062424358260645,
+                "decoded_gripper2_MSE": 0.028801902372456757,
+                "decoded_physical14_MSE": 0.007377050912132623,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.011099637797867348,
+                "decoded_arm12_MSE": 0.005521748553811838,
+                "decoded_gripper2_MSE": 0.04456697210636256,
+                "decoded_physical14_MSE": 0.011099637797867348,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000500.pt",
+              "sha256": "ee296c912cbd07d1ef6ee61552a10eea76f875b2cc591a1e21987cfadde78aba"
+            }
+          }
+        },
+        "new_robot_actions": 0,
+        "primary_endpoint": null,
+        "recovery": {
+          "iteration": 3399,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-003399-feb42d0312ed4c0e952fc6488e46ad0a.pt",
+          "sha256": "efa5e2a42ab2c55dc8abd442e205c9253964e4d1bf3247be4e9cd901ccf1470f"
+        }
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-003399-feb42d0312ed4c0e952fc6488e46ad0a.pt",
+        "sha256": "efa5e2a42ab2c55dc8abd442e205c9253964e4d1bf3247be4e9cd901ccf1470f",
+        "bytes": 1776993,
+        "mtime": 1793482078.9008005
+      },
+      "recovery_hash_matches": true,
+      "recovery_ZIP_CRC": null,
+      "console_tail": "          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 422, in main\n    fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 283, in fit_curve\n    return _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 264, in _qualified_curve\n    state=_fit(kind,head,backend,records,output,guard=guard,config=profile,contract=contract,resume=resume)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 222, in _fit\n    batch=batch_from_cache(records,[index],backend.model.device,guard=guard)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py\", line 127, in batch_from_cache\n    guard();ref=records[int(index)]\n    ^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 389, in guard\n    if time.time()+60>=ticket['driver_deadline_unix']:raise TimeoutError('Original inclusive fit clock')\n                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: Original inclusive fit clock\n"
+    },
+    "kv": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1",
+      "allocation-closeout.json": {
+        "metadata": {
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "kind": "kv",
+          "exit_code": 1,
+          "error": null,
+          "attempt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481433000000-0011",
+            "started_unix": 1793481433.0,
+            "slice_seconds": 840,
+            "reserved_seconds": 900,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "lineage": "fixed12-command-diagnostic/fit-kv",
+            "lineage_seconds": 900,
+            "ended_unix": 1793482154.7150996,
+            "exit_code": 1,
+            "charged_seconds": 782,
+            "slice_overrun": false
+          },
+          "charged_gpu_seconds": 782,
+          "fit_lineage": "fixed12-command-diagnostic/fit-kv",
+          "maximum_head_lineage_seconds": 900,
+          "maximum_new_actions": 0,
+          "all_full_recoveries_and_prefixes_preserved": true
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/allocation-closeout.json",
+          "sha256": "171780b1539dc306882251ff977726475ff3c92a9dd68be9b7a4a66845291530",
+          "bytes": 813,
+          "mtime": 1793482154.7322571
+        }
+      },
+      "allocation.json": {
+        "metadata": {
+          "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+          "admitted": true,
+          "operation": "fit",
+          "kind": "kv",
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "request_sha256": "9514b69420a1389eb76a377d2c44a32fc2bbc7e14f8d708a5cd6c9382ef2341d",
+          "hostname": "job-ojt0dkom0woh-master-0",
+          "gpu_count": 1,
+          "private_motor_context": true,
+          "maximum_robot_actions": 0,
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1",
+          "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481433000000-0011",
+          "driver_deadline_unix": 1793482213.0,
+          "authority_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
+            "sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
+          },
+          "resource_plan_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/resource-plan.json",
+            "sha256": "76291fec120ca7ef6b8b0775127dd2b7ecfdee0c77d9ec40cb6525ae29bf4fbd"
+          },
+          "reserved_gpu_seconds": 900,
+          "started_unix": 1793481433.0
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/allocation.json",
+          "sha256": "47b946353021a31084051cb1cf6f53f25a616ada4a7b163851981f9f6a74f240",
+          "bytes": 1862,
+          "mtime": 1793481436.5209174
+        }
+      },
+      "resource-plan.json": {
+        "metadata": {
+          "format": "owner_finite_command_fit_resource_plan_v1",
+          "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+          "source_eligible": false,
+          "admitted": true,
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "stage_gpu_limits": {
+            "cache04": 600,
+            "fit": 1800
+          },
+          "fit_head_gpu_limits": {
+            "action": 900,
+            "kv": 900
+          },
+          "fit_topology": "separate_one_gpu_physical_allocations",
+          "other_fit_ticket_receipts": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation.json",
+              "sha256": "2e48bcba05d7a6a529c7dd45e54456ff8fef4f8206c8e6c4ec267efa69d1ac5a"
+            }
+          ],
+          "prior_cost_receipts": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cache04-allocation-r1/allocation-closeout.json",
+              "sha256": "fa9849deb5d70edeb54f35c5b530a66fdd3513b02f18cf5fe88d6fac8e7d89cf"
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/PRIOR-COSTS.json",
+              "sha256": "dffdda4d14074a72ca0b42c9fe45f554c4241dda3d443ec700cd382778fd9954"
+            }
+          ],
+          "storage_admission": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/STORAGE.json",
+            "sha256": "a94fcb3030cc8a4a8a11fd8a6222af74c3b6669ae0332d48577e8d70ba9e0428"
+          },
+          "complete_cache_file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+            "sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8"
+          },
+          "required_CPU_evidence": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/summary.json",
+            "sha256": "62d4d1cf54968ac8d0216fc37f30874c2f2c616435a4855c9e2e269e34e254af"
+          }
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/resource-plan.json",
+          "sha256": "76291fec120ca7ef6b8b0775127dd2b7ecfdee0c77d9ec40cb6525ae29bf4fbd",
+          "bytes": 2374,
+          "mtime": 1793481436.5201972
+        }
+      },
+      "progress": {
+        "complete": false,
+        "format": "robotwin_fixed12_reactive_learning_curve_v1",
+        "iteration": 2655,
+        "milestones": {
+          "0": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.015104611434645353,
+                "decoded_arm12_MSE": 0.004340937756023038,
+                "decoded_gripper2_MSE": 0.039931773234290695,
+                "decoded_physical14_MSE": 0.009425342990401602,
+                "flow_velocity_padded18_MSE": 0.00026533681023473154,
+                "flow_velocity_physical14_MSE": 0.034183679219539756,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.015820306542861675,
+                "decoded_arm12_MSE": 0.004860411888395382,
+                "decoded_gripper2_MSE": 0.041975875511586276,
+                "decoded_physical14_MSE": 0.010162620623304974,
+                "flow_velocity_padded18_MSE": 0.0003788024270241814,
+                "flow_velocity_physical14_MSE": 0.035673669747276496,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-000000.pt",
+              "sha256": "0594149fa6886d9eb36789cd8389a7cd5b22870a5372bd225dc63fc95f1ac5bb"
+            }
+          },
+          "100": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.015085457444903904,
+                "decoded_arm12_MSE": 0.004330604732874745,
+                "decoded_gripper2_MSE": 0.039928913123973196,
+                "decoded_physical14_MSE": 0.009416077434796135,
+                "flow_velocity_padded18_MSE": 0.0002653203442102635,
+                "flow_velocity_physical14_MSE": 0.03413991894028992,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.015807253138128936,
+                "decoded_arm12_MSE": 0.004854154439726699,
+                "decoded_gripper2_MSE": 0.0419523261310368,
+                "decoded_physical14_MSE": 0.010153893075247262,
+                "flow_velocity_padded18_MSE": 0.0003790536100366028,
+                "flow_velocity_physical14_MSE": 0.035643510786550384,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-000100.pt",
+              "sha256": "4124340f600092bc894a8732cf38e4b18bd6aed85911ab84d4d462bb3417a860"
+            }
+          },
+          "2000": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.014879454225089971,
+                "decoded_arm12_MSE": 0.004210203399947855,
+                "decoded_gripper2_MSE": 0.039795128419592304,
+                "decoded_physical14_MSE": 0.009293764057903485,
+                "flow_velocity_padded18_MSE": 0.00026663684119244215,
+                "flow_velocity_physical14_MSE": 0.03366736223800742,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.015652490567715307,
+                "decoded_arm12_MSE": 0.004768260717517998,
+                "decoded_gripper2_MSE": 0.04155799561599289,
+                "decoded_physical14_MSE": 0.010023936928129322,
+                "flow_velocity_padded18_MSE": 0.00038179005956148364,
+                "flow_velocity_physical14_MSE": 0.035286248104447235,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-002000.pt",
+              "sha256": "838fe4132e134e4a84e0f1aad168997ff10df3f12f2adacfb6c0c65611617725"
+            }
+          },
+          "500": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.015033517249040467,
+                "decoded_arm12_MSE": 0.004306549995481038,
+                "decoded_gripper2_MSE": 0.03988131405091691,
+                "decoded_physical14_MSE": 0.009388659050343664,
+                "flow_velocity_padded18_MSE": 0.00026499324225206817,
+                "flow_velocity_physical14_MSE": 0.034021618844228094,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.01576552003098186,
+                "decoded_arm12_MSE": 0.004833873708061479,
+                "decoded_gripper2_MSE": 0.041823737823376304,
+                "decoded_physical14_MSE": 0.010118139991910928,
+                "flow_velocity_padded18_MSE": 0.0003795332510370437,
+                "flow_velocity_physical14_MSE": 0.035547503062324334,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-000500.pt",
+              "sha256": "6f3e388e2bcc3eb7ab249f556065a007e3b088463939c50b5692da82b4716574"
+            }
+          }
+        },
+        "new_robot_actions": 0,
+        "primary_endpoint": null,
+        "recovery": {
+          "iteration": 2655,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/recoveries/update-002655-14e6d3b1e6924e24b1d58c796d48b3a9.pt",
+          "sha256": "f839ee47ddad56399675a872ad7f9fe00c3b42d5e78b0c21bed340dfd12ab367"
+        }
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/recoveries/update-002655-14e6d3b1e6924e24b1d58c796d48b3a9.pt",
+        "sha256": "f839ee47ddad56399675a872ad7f9fe00c3b42d5e78b0c21bed340dfd12ab367",
+        "bytes": 316138,
+        "mtime": 1793482152.844074
+      },
+      "recovery_hash_matches": true,
+      "recovery_ZIP_CRC": null,
+      "console_tail": "                       ^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_curve.py\", line 76, in main\n    return curve.main(argv,_api=bank,_profile=PROFILE,_validate=validate_profile,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 422, in main\n    fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 283, in fit_curve\n    return _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 264, in _qualified_curve\n    state=_fit(kind,head,backend,records,output,guard=guard,config=profile,contract=contract,resume=resume)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 236, in _fit\n    guard();publish(output,state,head,optimizer,rng,generator)\n    ^^^^^^^\n  File \"/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py\", line 389, in guard\n    if time.time()+60>=ticket['driver_deadline_unix']:raise TimeoutError('Original inclusive fit clock')\n                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: Original inclusive fit clock\n"
+    }
+  },
+  "clock": {
+    "format": "source40_ppo_worker_time_v1",
+    "contract": {
+      "format": "frozen_pi05_shared_gpu_clock_v1",
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+      "maximum_gpu_seconds": 28800,
+      "maximum_actions": 300000,
+      "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+    },
+    "worker_seconds": 28800,
+    "attempts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793440180000000-0000",
+        "started_unix": 1793440180.0,
+        "slice_seconds": 7140,
+        "reserved_seconds": 7200,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793440751.62417,
+        "exit_code": 1,
+        "charged_seconds": 632,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793444055000000-0001",
+        "started_unix": 1793444055.0,
+        "slice_seconds": 6420,
+        "reserved_seconds": 6480,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793445132.1823423,
+        "exit_code": 0,
+        "charged_seconds": 1138,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793453091000000-0002",
+        "started_unix": 1793453091.0,
+        "slice_seconds": 5370,
+        "reserved_seconds": 5430,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793453296.575951,
+        "exit_code": 1,
+        "charged_seconds": 266,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793459658000000-0003",
+        "started_unix": 1793459658.0,
+        "slice_seconds": 5104,
+        "reserved_seconds": 5164,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793459895.2140234,
+        "exit_code": 1,
+        "charged_seconds": 298,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+        "started_unix": 1793463614.0,
+        "slice_seconds": 1740,
+        "reserved_seconds": 1800,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793463871.4212303,
+        "exit_code": 0,
+        "charged_seconds": 318,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/prelift-pair-r1/prebegin-reconciliation",
+        "started_unix": 1793468674.0,
+        "slice_seconds": 540,
+        "reserved_seconds": 600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793468717.0,
+        "exit_code": 1,
+        "charged_seconds": 103,
+        "slice_overrun": false,
+        "external_prebegin_failure_reconciliation": true,
+        "actual_begin_succeeded": false,
+        "scheduler_job_id": "job-0bqytnaeje1t",
+        "failure_receipt_sha256": "1e6b21419b2e56cd6b22b27748de385e5a19ba9f1d422c34ac34d1360ffdb314",
+        "prior_worker_time_sha256": "97ac22396fa5a3b43892d273f9224e618b874c2817485f29699cd9573b802b8f"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793469296000000-0006",
+        "started_unix": 1793469296.0,
+        "slice_seconds": 437,
+        "reserved_seconds": 497,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793469468.2603166,
+        "exit_code": 0,
+        "charged_seconds": 233,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793471964000000-0007",
+        "started_unix": 1793471964.0,
+        "slice_seconds": 840,
+        "reserved_seconds": 900,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793472213.723424,
+        "exit_code": 0,
+        "charged_seconds": 310,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793472313000000-0008",
+        "started_unix": 1793472313.0,
+        "slice_seconds": 1140,
+        "reserved_seconds": 1200,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "lineage": "frozen-pi05-endtoend-20261031-r1/partial11-model-cache",
+        "lineage_seconds": 1200,
+        "ended_unix": 1793472406.6011918,
+        "exit_code": 0,
+        "charged_seconds": 154,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793478839000000-0009",
+        "started_unix": 1793478839.0,
+        "slice_seconds": 540,
+        "reserved_seconds": 600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "lineage": "fixed12-command-diagnostic/cache04",
+        "lineage_seconds": 600,
+        "ended_unix": 1793478951.7910838,
+        "exit_code": 1,
+        "charged_seconds": 173,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481359000000-0010",
+        "started_unix": 1793481359.0,
+        "slice_seconds": 840,
+        "reserved_seconds": 900,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "lineage": "fixed12-command-diagnostic/fit-action",
+        "lineage_seconds": 900,
+        "ended_unix": 1793482080.772025,
+        "exit_code": 1,
+        "charged_seconds": 782,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481433000000-0011",
+        "started_unix": 1793481433.0,
+        "slice_seconds": 840,
+        "reserved_seconds": 900,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "lineage": "fixed12-command-diagnostic/fit-kv",
+        "lineage_seconds": 900,
+        "ended_unix": 1793482154.7150996,
+        "exit_code": 1,
+        "charged_seconds": 782,
+        "slice_overrun": false
+      }
+    ]
+  },
+  "clock_file": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
+    "sha256": "5c9a738bd66bb93dbda31bb0d8d1de52f2587fc6b2a43b24d23c0f0bdc6b38f8",
+    "bytes": 6265,
+    "mtime": 1793482154.720558
+  }
+}

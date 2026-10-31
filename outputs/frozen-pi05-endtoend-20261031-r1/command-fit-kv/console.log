@@ -1,0 +1,30 @@
+/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:37: UserWarning: Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.
+  warn("Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.")
+/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:73: UserWarning: Failed to find Vulkan ICD file. This is probably due to an incorrect or partial installation of the NVIDIA driver. SAPIEN will attempt to provide an ICD file anyway but it may not work.
+  warn(
+INFO:root:Loaded norm stats from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training
+INFO:RLinf:openpi: converted OpenPI PyTorch checkpoint keys from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors in memory
+INFO:RLinf:openpi param dtypes: img.stem.weight=torch.float32, img.pos_embedding=torch.float32, llm.layers.0.pre_attention_norms.0.scale=torch.float32, llm.layers.0.attn.q_proj.0.weight=torch.bfloat16, action_out_proj.weight=torch.float32
+INFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=32, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors precision=None num_steps=5 action_horizon=32 action_chunk=32
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/scripts/diagnostics/robotwin_command_diagnostic_curve.py", line 5, in <module>
+    if __name__=='__main__':raise SystemExit(main(operation='fit'))
+                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_curve.py", line 76, in main
+    return curve.main(argv,_api=bank,_profile=PROFILE,_validate=validate_profile,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py", line 422, in main
+    fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py", line 283, in fit_curve
+    return _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py", line 264, in _qualified_curve
+    state=_fit(kind,head,backend,records,output,guard=guard,config=profile,contract=contract,resume=resume)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py", line 236, in _fit
+    guard();publish(output,state,head,optimizer,rng,generator)
+    ^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py", line 389, in guard
+    if time.time()+60>=ticket['driver_deadline_unix']:raise TimeoutError('Original inclusive fit clock')
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: Original inclusive fit clock
