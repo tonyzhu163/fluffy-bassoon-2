@@ -1,0 +1,353 @@
+{
+  "format": "pi05_headroom_due_light_check_v1",
+  "checked_unix": 1793475611.176852,
+  "job_id": "job-w8deahieli8q",
+  "source_commit": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "task_id": 44,
+  "phase": "training",
+  "completed": false,
+  "index_sha256": "5ef97b7be527103c977e7fd52e638046c202f21038ab2fa3bf68e87abc1a3c04",
+  "updates": 107400,
+  "replay_rows": 5864,
+  "training": {
+    "episodes": 504,
+    "chunks": 5864,
+    "primitive_steps": 56523,
+    "settling_steps": 5040
+  },
+  "train_successes": 465,
+  "train_failures": 39,
+  "last_training_receipt": {
+    "initial_state": 23,
+    "scene_seed": 123,
+    "instruction": "turn on the stove",
+    "task_id": 44,
+    "suite": "libero_90",
+    "semantic_task": "KITCHEN_SCENE9_turn_on_the_stove",
+    "success": true,
+    "chunks": 8,
+    "primitive_steps": 72,
+    "raw_return": 1.0,
+    "initial_observation_sha256": "45cfa8180b3c0f0c36b63a71efbeb2eeee170e8d780f72e8e7cec2fad00169ff",
+    "initial_state_vector_sha256": "77d0930c18ae0b25cddf787266107aba417220a7d80e2f5070a7710753e19174",
+    "initial_simulator_state_sha256": "6b1c112a1313861fd605d0440483a537ff8ece950ea264cb62b5c25ceb062de1",
+    "initial_public_observation_hashes": {
+      "image": "839ec2c1a028612f5d1f9e6eb74b65cb4d2033cba572b13cf76adcc4c97f7591",
+      "wrist": "06f94f052c86746c121b09fe8f94b1990bf69651674924cdf9afe67f95bd86b0",
+      "state": "f5f2d8f1b6812c7a989460c2f6aea2ceb2e15c136fcda60dfc4a3703aa86367c"
+    },
+    "initial_simulator_state": [
+      0.5000000000000003,
+      -0.0027589636807330005,
+      -0.14066310945111984,
+      0.005608083102374083,
+      -2.4545555914100823,
+      0.001791436720244505,
+      2.2579019505860405,
+      0.7863517564476692,
+      0.03873018315977028,
+      -0.038728152550999546,
+      -0.1686728878809097,
+      0.12011220969680288,
+      0.8994107258211033,
+      0.7071067800833553,
+      -6.849749419260232e-05,
+      4.831869731861187e-05,
+      0.7071067773211803,
+      0.04028931794290873,
+      -0.0223518559767978,
+      0.8991707330326614,
+      0.7071065468067493,
+      -7.827453979201479e-05,
+      8.43014674392603e-05,
+      0.7071070062086748,
+      0.0,
+      0.002030166701883938,
+      0.011295363325683382,
+      -0.0008697527551797648,
+      0.020578986591463008,
+      -0.0021266513758919,
+      -0.025232960498217417,
+      0.00461622862928062,
+      0.0031774586787462963,
+      -0.003198785865093834,
+      4.2493682990325934e-10,
+      -2.401430794441737e-09,
+      6.194583112747658e-06,
+      -1.8182066765927902e-07,
+      1.0609742901468435e-06,
+      7.22503820915377e-11,
+      -4.198557186393855e-11,
+      -1.3103093064308716e-09,
+      6.02887460345166e-06,
+      5.043512065226813e-08,
+      1.5955142570897937e-06,
+      2.32718706095233e-12,
+      0.0
+    ],
+    "data_role": "target-onlineDEV",
+    "completed": true,
+    "training_episode": 503,
+    "target_optimizer_updates_before": 107240,
+    "target_optimizer_updates": 107400,
+    "replay_rows": 5864,
+    "update_metrics": {
+      "actor_loss": 2.986215353012085,
+      "critic_loss": 0.0041446806862950325,
+      "entropy": -15.851987838745117,
+      "mean_pi_avg": 0.025186840444803238,
+      "mean_pi_max": 2.8258345127105713,
+      "mean_pi_min": -3.2449402809143066,
+      "mean_pi_norm": 5.948083877563477,
+      "next_actions_max": 0.9990285634994507,
+      "next_actions_mean": -0.00888889655470848,
+      "next_actions_min": -0.9990379214286804,
+      "next_actions_sampled": -0.00888889655470848,
+      "next_actions_std": 0.6631158590316772,
+      "next_log_probs": 16.42644691467285,
+      "next_q_pi": -2.4060750007629395,
+      "q": -3.291853427886963,
+      "q_pi_in_actor": -2.8861823081970215,
+      "std_pi_avg": 0.4329623579978943,
+      "std_pi_max": 1.2469117641448975,
+      "std_pi_min": 0.08669976145029068,
+      "std_pi_norm": 2.4978818893432617,
+      "target_actor_entropy": -16.42644691467285,
+      "target_q": -3.2750425338745117,
+      "temperature": 0.006310452241450548,
+      "temperature_loss": 0.000934023701120168
+    },
+    "actor_fixed_within_episode": true,
+    "behavior": "target_sac",
+    "policy_signature": "c42b190b597c81924bcf53fd52255438598560c2c2dd9bb8078880e3a76ea0c9",
+    "trace": "raw/training-000503-1793475605536599334.pkl.gz",
+    "trace_sha256": "65cffeffeeebdb6202bcc743c5887335dfd30f104bcc3dddf20718400de7a230"
+  },
+  "last_losses_finite": true,
+  "newest_raw_trace": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/raw/training-000503-1793475605536599334.pkl.gz",
+    "sha256": "65cffeffeeebdb6202bcc743c5887335dfd30f104bcc3dddf20718400de7a230",
+    "bytes": 1242767
+  },
+  "newest_raw_trace_matches": true,
+  "full_recovery": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "976b0cbe8036a341d9f5432d7ebc6cde95de17fda4cef4aee4624e3af36aaaca",
+      "updates": 107400,
+      "replay_rows": 5864,
+      "signature": "b530d68245ecd3eeb7cc9ad1d61aa623081bb1594653b4ef1d6acb3eb7c34dc2"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "976b0cbe8036a341d9f5432d7ebc6cde95de17fda4cef4aee4624e3af36aaaca",
+      "bytes": 184994802
+    },
+    "stable": true
+  },
+  "stable_recovery_read_limit": 2,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "kind": "initial_native",
+      "queries": 20,
+      "successes": 6,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 6447,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_tied-000000",
+      "kind": "initial_tied",
+      "queries": 20,
+      "successes": 13,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 4490,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_sac-000000",
+      "kind": "initial_sac",
+      "queries": 20,
+      "successes": 8,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 5898,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "learned-020000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 1,
+      "actual_updates": 20580,
+      "threshold_updates": 20000,
+      "primitive_steps": 7683,
+      "settling_steps": 200,
+      "policy_signature": "bb52982822065b6dcd9347e5c6daa94a5b9d0a4a7e616afd89ac543b521f478e"
+    },
+    {
+      "name": "learned-040000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 40140,
+      "threshold_updates": 40000,
+      "primitive_steps": 1651,
+      "settling_steps": 200,
+      "policy_signature": "2ea85c0b6f2bc04c289b8326f4dee419d9dbd4ec0d5edc65e5af14f69b48a631"
+    },
+    {
+      "name": "learned-060000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 60000,
+      "threshold_updates": 60000,
+      "primitive_steps": 1678,
+      "settling_steps": 200,
+      "policy_signature": "b6ec9603d4a00bfb485ca500c855956fe7acb3723c7086e8cffcd327be9e8b77"
+    },
+    {
+      "name": "learned-080000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 80140,
+      "threshold_updates": 80000,
+      "primitive_steps": 1582,
+      "settling_steps": 200,
+      "policy_signature": "df1f1a0e49b1b576beb3bed10431b736e4f03e584915f513fdc80e85376f6653"
+    },
+    {
+      "name": "learned-100000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 100020,
+      "threshold_updates": 100000,
+      "primitive_steps": 1519,
+      "settling_steps": 200,
+      "policy_signature": "9550ae45e5aa5a0bde7e49bf3c201fdfce4c309bda80bf2f2455effb9bae83b1",
+      "optimizer_update_overshoot": 20,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-100000-recovery.pkl",
+        "sha256": "2a63510cc5e279b72a7f7d11bc82f015123bac2e40153d038299228afb2300ad",
+        "bytes": 175643236
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "active_panel": null,
+  "whole_phase_action_charge": 190890,
+  "learning_case_action_charge": 94111,
+  "costs": {
+    "training": {
+      "known_actions": 61563,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 56523,
+      "settling_steps": 5040,
+      "reset_attempts": 504
+    },
+    "query": {
+      "known_actions": 32548,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 30948,
+      "settling_steps": 1600,
+      "reset_attempts": 160
+    },
+    "qualification": {
+      "known_actions": 0,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 0,
+      "reset_attempts": 0
+    }
+  },
+  "maximum_total_actions": 1000000,
+  "storage": {
+    "actual_output_bytes": 9398742967,
+    "full_slot_logical_bytes": 369786854,
+    "maximum_full_checkpoint_bytes": 184994802,
+    "maximum_complete_trace_bytes": 5871030,
+    "next_episode_reservation_bytes": 4294967296,
+    "hardlinks_counted_once": true
+  },
+  "output_bytes": 9398742967,
+  "maximum_output_bytes": 68719476736,
+  "free_PFS_bytes": 1058864627712,
+  "attempt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793468637000000-0001",
+    "started_unix": 1793468637.0,
+    "slice_seconds": 25140,
+    "reserved_seconds": 25200,
+    "status": "started",
+    "scheduler_allowance_seconds": 60
+  },
+  "settled_prior_GPU_seconds": 3076,
+  "active_elapsed_seconds": 6974.176851987839,
+  "observed_conservative_elapsed_GPU_seconds": 10111,
+  "phase_interrupted_reservation_GPU_seconds": 28276,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_job_GPU_seconds": 25200,
+  "motor_before": {
+    "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "leaves": 51,
+    "elements_by_dtype": {
+      "bfloat16": 3353433872
+    }
+  },
+  "motor_before_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793468650700888326/motor-before.json",
+    "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+    "bytes": 156
+  },
+  "final_motor_after_pending": true,
+  "stop_reason": null,
+  "next_owned_check": "2026-11-01 04:00 Asia/Shanghai",
+  "verification_limits": "Current counters, stable latest full recovery, newly completed learned panels and newest closed raw trace bytes only. Old control/milestone hashes not repeated; no journal forest, tensor deserialization, saved-array analysis, model/test/simulator execution, or job control.",
+  "newest_RPC_sample": {
+    "record": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793475612093211715.json",
+      "sha256": "06ec4de09fd5f58dd7c3ebefe4e6463aa2388f63bb89a85afd2cbfbf7b676fc5",
+      "bytes": 449
+    },
+    "metadata": {
+      "kind": "step",
+      "role": "training",
+      "episode_id": "training-000504",
+      "maximum_steps": 10,
+      "actual_steps": 10,
+      "returned": true,
+      "input_path": "1793475612093211715-input.pkl.gz",
+      "input_sha256": "58add0306215e52debba87884b5d75c58611d30c28ab31490bc54233e3dd2de9",
+      "outcome_status": "complete",
+      "outcome_path": "1793475612093211715.pkl.gz",
+      "outcome_sha256": "087607b20b21d4145fd85f5d474bdeb7401d8d4ff6695e7f9bed3169df13f632"
+    },
+    "referenced_bytes": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793475612093211715-input.pkl.gz",
+        "sha256": "58add0306215e52debba87884b5d75c58611d30c28ab31490bc54233e3dd2de9",
+        "bytes": 139157
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793475612093211715.pkl.gz",
+        "sha256": "087607b20b21d4145fd85f5d474bdeb7401d8d4ff6695e7f9bed3169df13f632",
+        "bytes": 141739
+      }
+    ],
+    "referenced_byte_hashes_match": true
+  },
+  "RPC_verification_scope": "One name listing and at most3 latest JSON metadata records; raw referenced bytes may be rehashed separately, no journal history replay."
+}
