@@ -5,6 +5,9 @@ TASK_STARTED=$(date +%s)
 TASK_SOURCE=${1:?exact reviewed runner source}
 TASK_RUN=${2:?fresh scientific run identity}
 TASK_QUAL=${3:?allocated full qualification output directory}
+TASK_PRIOR=${4:?conservatively charged GPU seconds from prior allocations}
+[[ "$TASK_PRIOR" =~ ^[0-9]+$ ]]
+test "$TASK_PRIOR" -lt 35000
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PREP=dsrl-pi0-task57-20261101-prep-r7
 TASK_RUNTIME=dsrl-pi0-task57-20261101-prep-r4
@@ -20,17 +23,19 @@ test ! -e "$TASK_OUT"
 mkdir -p "$TASK_OUT"
 export PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONNOUSERSITE=1
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
-export PYTHONPATH=$TASK_CODE/src:$TASK_REPO:$TASK_REPO/openpi/src:$TASK_REPO/openpi/packages/openpi-client/src
+export PYTHONPATH=$TASK_CODE/src:$TASK_REPO:$TASK_REPO/LIBERO:$TASK_REPO/openpi/src:$TASK_REPO/openpi/packages/openpi-client/src
 exec > >(tee "$TASK_OUT/console.log") 2>&1
 task_cleanup() {
   TASK_RC=$?
   trap - EXIT
-  "$TASK_PY" - "$TASK_OUT" "$TASK_STARTED" "$TASK_SOURCE" "$TASK_RC" <<'PY'
+  "$TASK_PY" - "$TASK_OUT" "$TASK_STARTED" "$TASK_SOURCE" "$TASK_RC" "$TASK_PRIOR" <<'PY'
 import json,math,pathlib,sys,time
 out,started,source,rc=pathlib.Path(sys.argv[1]),float(sys.argv[2]),sys.argv[3],int(sys.argv[4])
 ended=time.time()
+prior=int(sys.argv[5])
 value=dict(source_commit=source,started_unix=started,ended_unix=ended,exit_code=rc,
     charged_gpu_seconds=math.ceil(ended-started)+60,maximum_gpu_seconds=36000,
+    prior_gpu_seconds=prior,cumulative_gpu_seconds=prior+math.ceil(ended-started)+60,
     scheduler_allowance_seconds=60,allocation_charged_once=True)
 (out/'worker-time.json').write_text(json.dumps(value,indent=2)+'\n')
 PY
@@ -65,11 +70,11 @@ export OPENPI_DATA_HOME=$TASK_ROOT/cache/$TASK_PREP
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/$TASK_RUNTIME/libero-config
 export XDG_CACHE_HOME=$TASK_ROOT/cache/$TASK_RUN
 TASK_CHECKPOINT=$(cat "$TASK_ROOT/outputs/$TASK_PREP/checkpoint-path.txt")
-TASK_REMAINING=$(( TASK_STARTED + 35880 - $(date +%s) ))
+TASK_REMAINING=$(( TASK_STARTED + 35880 - TASK_PRIOR - $(date +%s) ))
 test "$TASK_REMAINING" -gt 600
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PY" \
   -m fluffy_bassoon.meta_rl.dsrl_pi0_replication \
   --dsrl-root "$TASK_REPO" --checkpoint "$TASK_CHECKPOINT" \
   --checkpoint-receipt "$TASK_ROOT/outputs/$TASK_PREP/checkpoint-receipt.json" \
   --source-commit "$TASK_SOURCE" --output "$TASK_OUT/experiment" \
-  --deadline-unix "$((TASK_STARTED + 35640))"
+  --deadline-unix "$((TASK_STARTED + 35640 - TASK_PRIOR))"
