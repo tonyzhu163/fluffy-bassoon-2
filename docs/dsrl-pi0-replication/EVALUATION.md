@@ -1,19 +1,25 @@
 # Original Pi0 DSRL task57 evaluation
 
-The original `pi0_libero` seed0 pilot is running on Baige as
-`job-psgxs9n5b08w`, pinned to main commit
-`00eca3fae5cb8052cee445f87359e26aa18e1a17`.
-The [method contract](../dsrl-pi0-replication.md) fixes the original DSRL,
-OpenPI and LIBERO sources and distinguishes this work from Pi0.5.
+The seed0 pilot completed successfully on Baige (`job-psgxs9n5b08w`) at
+2026-11-01 07:35:01 Shanghai, after 500,080 optimizer updates. The original
+`pi0_libero` native panel scored **4/10**; the final learned panel scored
+**10/10** at 500k updates, 25,504 replay query rows and 495,165 training
+primitive actions. The first 10/10 panel occurred at 40k updates, 2,507 replay
+query rows and 49,664 training actions. This is a single-seed qualitative
+reproduction of the reported steering gain.
 
-The single-seed pilot improved from 4/10 native successes to its first 10/10
-learned panel at 40k optimizer updates. It then scored 10/10 in 16 consecutive
-panels through 190k. The latest panel scored 10/10 at
-480k updates, after 24,500 replay query rows and 475,726 training primitive
-actions. Later panels below 10/10 were 200k: 9/10, 370k: 9/10; the full curve retains
-these dips and subsequent panels. The run is still active, with one seed and 10 evaluation
-episodes per panel. It does not establish the paper's three-seed aggregate or
-its sample-efficiency confidence interval.
+The [paper, Section 5.5](https://arxiv.org/html/2506.15799v2#S5.SS5) reports
+roughly 20% to 100% LIBERO success around 10,000 online samples, averaged over
+three seeds. Our 40% native baseline differs, and each panel has only ten
+evaluation episodes. This pilot does not establish the published three-seed
+aggregate, its uncertainty, better sample efficiency, or the comparisons
+against other algorithms.
+
+The [method contract](../dsrl-pi0-replication.md) and source
+`00eca3fae5cb8052cee445f87359e26aa18e1a17` preserve original Pi0 H50/execute20,
+LIBERO90 task57 random resets, the shared training/evaluation environment and
+original SAC chronology. This work is separate from Pi0.5 and all
+source40/meta-learning data.
 
 | Panel | Optimizer updates | Replay query rows | Training primitive actions | Successes | Episodes | Panel actions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -66,60 +72,62 @@ its sample-efficiency confidence interval.
 | Learned SAC | 460000 | 23506 | 456490 | 10 | 10 | 1389 |
 | Learned SAC | 470000 | 24005 | 466153 | 10 | 10 | 1445 |
 | Learned SAC | 480000 | 24500 | 475726 | 10 | 10 | 1572 |
+| Learned SAC | 490000 | 25005 | 485500 | 10 | 10 | 1573 |
+| Learned SAC | 500000 | 25504 | 495165 | 10 | 10 | 1477 |
 
-The initial native panel completed at 2026-11-01 02:18:55 Shanghai after
-replay >500 warmup and before the first SAC update. It uses the original random
-reset population, 400-action horizon, independent H50x32 Gaussian noise,
-execute20 interface, and shared training/evaluation environment. No extra
-settling or scene selection was introduced. Its 40% baseline is above the
-paper's roughly 20% aggregate. The learned panels use the original stochastic
-SAC noise policy; record all panels, including the initial decline.
+The native panel ran after replay >500 warmup and before the first SAC update.
+It used independent H50x32 Gaussian noise; learned panels used the original
+stochastic SAC noise policy. The early 0/10 and 2/10 panels, and later 9/10
+panels at 200k and 370k, are retained. Replay queries, primitive actions and
+optimizer updates are separate units.
 
-The first 10/10 panel occurred at 2,507 queried replay records, after 49,664
-training primitive actions. Sample, primitive-action and optimizer-update
-counts are separate units. This is directional evidence for the reported
-steering gain, with one seed and only 10 evaluation episodes per panel; it is
-not a claim of better sample efficiency than the published aggregate.
+The terminal audit verified the complete recovery at 500,080 updates and all
+51 evaluation policy/optimizer/RNG payloads from 0 through 500k against saved
+SHA256 hashes. The final recovery is `recovery-0.pkl` (678,360,350 bytes), SHA256
+`e67a7991ec05622e68c2c747e37ed5a2c62eb5c011d6f5ca0cec94315dda9cb5`.
+Original DSRL `7f48937`, OpenPI `a6d2400`, LIBERO `87edbd1` and the runner
+commit remained pinned with no tracked source changes. All ten allocated
+Linux qualification checks passed, including next-update recovery.
 
-At the direct allocation audit (`2026-11-01T07:26:49.720981+08:00`), the last published
-progress was 488,900 updates, 2,888 training episodes and 24,945 replay rows. The
-complete recovery at 484,020 updates and all 49 retained evaluation
-policy/RNG snapshots (0 through 480k) matched their saved SHA256 hashes.
-The current process still held the allocated GPU's compute and graphics
-contexts. Current-run output was 8,092,131,673 bytes. The physical ledger,
-read separately during a live collection/update boundary, contained
-569,308 known actions and 400 pending actions. Retain
-the additional 400 pending actions from failed R3, for 570,108 conservatively
-charged phase actions at that ledger read. Counting conservatively from job
-creation through this audit, plus prior failures, bounds cumulative GPU time
-at 19,549 seconds; the final worker lifetime is pending. The final before/after
-motor hash comparison remains pending the run's terminal cleanup.
+The frozen motor matched before and after training: 50 parameter leaves,
+3,238,048,528 bfloat16 elements, SHA256
+`2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903`.
+Same-noise qualification passed; model and renderer were attested on the
+allocated GPU. Intermittent NVML compute-only readings were resolved by
+bounded observations of the same PID/UUID returning C+G; no scientific
+process or source was changed.
 
-During the 04:45 check, one NVML query reported compute-only activity for the
-correct model PID. Six bounded observations then showed C followed by five
-C+G readings on the same allocated UUID, while physical actions advanced and
-EGL binding variables remained correct. The subsequent strict audit passed
-C+G. This transient telemetry observation did not require a process or source
-change. See the [context samples](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0445-GPU-SAMPLES.json).
-The 05:25 single-query check again missed combined C+G; a bounded metadata
-recheck immediately verified both contexts on the correct UUID. The
-[metadata reader](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0525-READER.sh)
-now allows up to six observations spaced two seconds apart, requiring the
-correct PID/UUID on every observation and combined C+G before passing. The
-active scientific source and process remain unchanged.
+Physical accounting reconciles every evaluation panel with its ten captured
+episodes, actions and successes. Training used 495,165 actions across 2,962
+episodes; the native and learned panels used 88,013 actions across 510
+episodes. Current-run known actions total 583,178, with no active unresolved
+reservation. Retaining 400 unresolved actions from failed R3 gives **583,578**
+conservatively charged phase actions under the 1M ceiling.
 
-All 10 Linux CPU checks passed with the pinned Policy API and next-update
-optimizer recovery. On sm_120 the original JAX 0.5 Triton compiler aborts at
-first inference; the active run disables Triton GEMM while preserving package
-pins, bfloat16 weights and the scientific recipe. Official GCS Pi0 weights
-passed file hashes; byte equality to the removed original S3 release remains
-unverified. The shared phase ceilings remain 36,000 GPU-seconds, 1M physical
-actions and 64 GiB output, including 660 conservatively charged GPU-seconds and
-400 unresolved actions from failed startup identities.
+The launcher charged **20,081 cumulative GPU-seconds** (5 h 34 m 41 s),
+including 660 seconds for failed allocations and its 60-second scheduler
+allowance, under the unchanged 36,000-second cap. The final CPU-only retrieval
+job `job-8gadv5dju8jx` used no GPU, model loading or physics; its creation-to-
+terminal lifetime was 43 seconds and is conservatively charged 60 seconds.
+Preparation plus retrieval is therefore **1,800/1,800 CPU worker-seconds**.
+All owned remote outputs total 8,333,888,847 bytes; including local receipt
+copies and a 16 MiB compact-artifact margin bounds retained output at
+8,352,437,532 bytes, below 64 GiB. Complete checkpoints and physical traces
+remain in the immutable remote run folder.
 
-[Initial receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
-[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725.json),
-[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725-DIRECT.json),
-[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725-CURVE.csv),
-[console evidence](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-EVIDENCE.log),
+Official GCS Pi0 weights passed file hashes. Byte equality to the removed
+legacy S3 release remains unverified. On Baige sm_120, Triton GEMM was disabled
+with `--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false`;
+JAX 0.5, bfloat16 weights and the scientific recipe stayed pinned. These
+hosting/compiler differences remain replication limitations.
+
+Both task-owned allocations finished successfully. The recurring monitor was
+[removed after verification](../../outputs/dsrl-pi0-task57-20261101-r1/MONITOR-CLOSED.json).
+
+[Final result](../../outputs/dsrl-pi0-task57-20261101-r1/FINAL-RESULT.json),
+[full curve](../../outputs/dsrl-pi0-task57-20261101-r1/FINAL-CURVE.csv),
+[checkpoint/motor manifest](../../outputs/dsrl-pi0-task57-20261101-r1/FINAL-CHECKPOINT-MANIFEST.json),
+[direct terminal receipt](../../outputs/dsrl-pi0-task57-20261101-r1/FINAL-HARVEST-RECEIPT.json),
+[CPU retrieval settlement](../../outputs/dsrl-pi0-task57-20261101-r1/HARVEST-SETTLEMENT.json),
+[initial native receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
 [launch plan](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-LAUNCH-PLAN.json).

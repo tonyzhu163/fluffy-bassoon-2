@@ -1,0 +1,137 @@
+{
+  "status": "complete",
+  "cluster": "Baige",
+  "training_job": "job-psgxs9n5b08w",
+  "harvest_job": "job-8gadv5dju8jx",
+  "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+  "training_scheduler_terminal_shanghai": "2026-11-01T07:35:01+08:00",
+  "receipt_checked_shanghai": "2026-11-01T07:41:43.557796+08:00",
+  "task_id": 57,
+  "task": "pick up the cream cheese and put it in the tray",
+  "motor": "original pi0_libero",
+  "seed": 0,
+  "baseline_panel": {
+    "optimizer_updates": 0,
+    "replay_query_rows": 520,
+    "training_primitive_actions": 10400,
+    "successes": 4,
+    "episodes": 10,
+    "panel_actions": 3520
+  },
+  "first_perfect_learned_panel": {
+    "optimizer_updates": 40000,
+    "replay_query_rows": 2507,
+    "training_primitive_actions": 49664,
+    "successes": 10,
+    "episodes": 10,
+    "panel_actions": 1980
+  },
+  "final_panel": {
+    "optimizer_updates": 500000,
+    "replay_query_rows": 25504,
+    "training_primitive_actions": 495165,
+    "successes": 10,
+    "episodes": 10,
+    "panel_actions": 1477
+  },
+  "training_result": {
+    "updates": 500080,
+    "episodes": 2962,
+    "training_primitives": 495165,
+    "last_checkpoint_updates": 494100,
+    "stop_reason": "optimizer_target",
+    "completed": true,
+    "physical_actions": 583178,
+    "replay_rows": 25504,
+    "one_training_seed": true
+  },
+  "motor_hash_verified": true,
+  "motor_sha256": "2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903",
+  "full_recovery": {
+    "path": "recovery-0.pkl",
+    "sha256": "e67a7991ec05622e68c2c747e37ed5a2c62eb5c011d6f5ca0cec94315dda9cb5",
+    "bytes": 678360350,
+    "progress": {
+      "updates": 500080,
+      "episodes": 2962,
+      "training_primitives": 495165,
+      "last_checkpoint_updates": 494100
+    },
+    "contract": {
+      "format": "original_pi0_task57_replication_v1",
+      "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+      "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+      "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+      "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "seed": 0,
+      "task_id": 57,
+      "motor": "pi0_libero",
+      "native_horizon": 50,
+      "query_frequency": 20,
+      "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+      "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+      "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+      "data_role": "target-online-baseline",
+      "target_only": true,
+      "source_assembly_admission": false,
+      "max_actions": 1000000,
+      "max_gpu_seconds": 36000,
+      "max_bytes": 68719476736,
+      "prior_actions": 400,
+      "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+      "departures": [
+        "local scalar/media handling",
+        "explicit equivalent prefetch recovery",
+        "complete-boundary recovery and resource stopping",
+        "project-local compilation cache"
+      ],
+      "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+    },
+    "boundary": "complete collection episode and complete optimizer burst",
+    "payload_sha256_matches": true
+  },
+  "verified_evaluation_checkpoint_count": 51,
+  "physical_by_role": {
+    "training": {
+      "episodes": 2962,
+      "actions": 495165,
+      "successes": 2845
+    },
+    "query": {
+      "episodes": 510,
+      "actions": 88013,
+      "successes": 482
+    }
+  },
+  "current_known_physical_actions": 583178,
+  "current_uncertain_actions": 0,
+  "inherited_unresolved_actions": 400,
+  "cumulative_conservative_phase_actions": 583578,
+  "physical_ledger_and_every_panel_match": true,
+  "cumulative_gpu_seconds": 20081,
+  "gpu_phase_ceiling_seconds": 36000,
+  "cumulative_cpu_worker_seconds": 1800,
+  "cpu_phase_ceiling_seconds": 1800,
+  "storage_accounting": {
+    "remote_owned_outputs_bytes": 8333888847,
+    "local_receipt_copies_bytes": 1771469,
+    "additional_compact_receipt_allowance_bytes": 16777216,
+    "conservative_phase_output_bytes_upper_bound": 8352437532,
+    "phase_output_ceiling_bytes": 68719476736
+  },
+  "qualification_tests_passed": 10,
+  "scientific_source_and_dependency_pins_clean": true,
+  "interpretation": "Single-seed qualitative reproduction of frozen-Pi0 steering gain; published three-seed aggregate and superior sample efficiency not established",
+  "paper_comparison": {
+    "url": "https://arxiv.org/html/2506.15799v2#S5.SS5",
+    "published_aggregate_seeds": 3,
+    "published_approximate_native_success": 0.2,
+    "published_approximate_learned_success": 1.0,
+    "published_approximate_online_samples": 10000,
+    "baseline_differs": true
+  },
+  "legacy_s3_byte_equivalence": "unverified; official GCS weights independently hash-verified",
+  "compiler_workaround": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+  "monitor": "deleted after verified terminal outcome",
+  "monitor_closure_receipt": "MONITOR-CLOSED.json"
+}

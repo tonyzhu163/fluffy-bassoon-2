@@ -1,0 +1,1257 @@
+{
+  "hostname": "job-8gadv5dju8jx-master-0",
+  "checked_unix": 1793490103.557796,
+  "contract": {
+    "format": "original_pi0_task57_replication_v1",
+    "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+    "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+    "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+    "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+    "seed": 0,
+    "task_id": 57,
+    "motor": "pi0_libero",
+    "native_horizon": 50,
+    "query_frequency": 20,
+    "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+    "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+    "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+    "data_role": "target-online-baseline",
+    "target_only": true,
+    "source_assembly_admission": false,
+    "max_actions": 1000000,
+    "max_gpu_seconds": 36000,
+    "max_bytes": 68719476736,
+    "prior_actions": 400,
+    "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+    "departures": [
+      "local scalar/media handling",
+      "explicit equivalent prefetch recovery",
+      "complete-boundary recovery and resource stopping",
+      "project-local compilation cache"
+    ],
+    "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+  },
+  "result": {
+    "updates": 500080,
+    "episodes": 2962,
+    "training_primitives": 495165,
+    "last_checkpoint_updates": 494100,
+    "stop_reason": "optimizer_target",
+    "completed": true,
+    "physical_actions": 583178,
+    "replay_rows": 25504,
+    "one_training_seed": true
+  },
+  "motor_terminal": {
+    "before": {
+      "sha256": "2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903",
+      "leaves": 50,
+      "elements_by_dtype": {
+        "bfloat16": 3238048528
+      }
+    },
+    "after": {
+      "sha256": "2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903",
+      "leaves": 50,
+      "elements_by_dtype": {
+        "bfloat16": 3238048528
+      }
+    },
+    "equal": true
+  },
+  "motor_hash_verified": true,
+  "worker_time": {
+    "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+    "started_unix": 1793470333,
+    "ended_unix": 1793489693.3105826,
+    "exit_code": 0,
+    "charged_gpu_seconds": 19421,
+    "maximum_gpu_seconds": 36000,
+    "prior_gpu_seconds": 660,
+    "cumulative_gpu_seconds": 20081,
+    "scheduler_allowance_seconds": 60,
+    "allocation_charged_once": true
+  },
+  "exit_code": 0,
+  "recovery": {
+    "path": "recovery-0.pkl",
+    "sha256": "e67a7991ec05622e68c2c747e37ed5a2c62eb5c011d6f5ca0cec94315dda9cb5",
+    "bytes": 678360350,
+    "progress": {
+      "updates": 500080,
+      "episodes": 2962,
+      "training_primitives": 495165,
+      "last_checkpoint_updates": 494100
+    },
+    "contract": {
+      "format": "original_pi0_task57_replication_v1",
+      "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+      "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+      "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+      "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "seed": 0,
+      "task_id": 57,
+      "motor": "pi0_libero",
+      "native_horizon": 50,
+      "query_frequency": 20,
+      "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+      "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+      "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+      "data_role": "target-online-baseline",
+      "target_only": true,
+      "source_assembly_admission": false,
+      "max_actions": 1000000,
+      "max_gpu_seconds": 36000,
+      "max_bytes": 68719476736,
+      "prior_actions": 400,
+      "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+      "departures": [
+        "local scalar/media handling",
+        "explicit equivalent prefetch recovery",
+        "complete-boundary recovery and resource stopping",
+        "project-local compilation cache"
+      ],
+      "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+    },
+    "boundary": "complete collection episode and complete optimizer burst",
+    "payload_sha256_matches": true
+  },
+  "evaluation_checkpoints": [
+    {
+      "path": "000000.pkl",
+      "sha256": "6bd5d6c4b5134c6baf5725f769f0046a474b7db3d6ee9b22a6c3e49d2117432b",
+      "bytes": 36696863,
+      "updates": 0,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "010000.pkl",
+      "sha256": "fa93c24efc881f6ff42e06ba384383471e3167d439ccfa1bfb0ab1d24461022a",
+      "bytes": 36696913,
+      "updates": 10000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "020000.pkl",
+      "sha256": "8807564065dc6d435203e866cd7b883941bbdd02658b7c016819c3bf1d05c5a3",
+      "bytes": 36696914,
+      "updates": 20000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "030000.pkl",
+      "sha256": "cc782357fa6da25352559a32d69515e41f4aa11c779b73473dbe0027e5852b80",
+      "bytes": 36696914,
+      "updates": 30000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "040000.pkl",
+      "sha256": "d14816175fd93c96347f20a3b1c6739165bf05751e6b1cb14ed5c2ada18e618b",
+      "bytes": 36696914,
+      "updates": 40000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "050000.pkl",
+      "sha256": "ebb2fa6ea77a8b83bd8da756f640d7cb564b88bda739f5fdd7edee8e3920170a",
+      "bytes": 36696914,
+      "updates": 50000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "060000.pkl",
+      "sha256": "3a70ddb38e0d9bfb03274be09c39e142d0ef16e83e998d852db84abd5d58e3f1",
+      "bytes": 36696916,
+      "updates": 60000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "070000.pkl",
+      "sha256": "9e5b3a1603b8f2302c3dec84a4c439f837f9d7fc4afb477e203c8609807bc4df",
+      "bytes": 36696918,
+      "updates": 70000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "080000.pkl",
+      "sha256": "1e1c32a2d74d66c8a85dafab3ea1e787dbb16eeccfaefc419ef976f58eb07f6a",
+      "bytes": 36696921,
+      "updates": 80000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "090000.pkl",
+      "sha256": "fe9387d4f148110ab15d6ae98efc8d7590339a4d341a726f4fe2c10f833aceda",
+      "bytes": 36696921,
+      "updates": 90000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "100000.pkl",
+      "sha256": "e88a5b26df58acf983369174e2b8baf9dab0106c9f05e431834a2a6534f8a23b",
+      "bytes": 36696921,
+      "updates": 100000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "110000.pkl",
+      "sha256": "53248fa8090883a9bdabec573f42de2261a9440bfe4dcf3dfd87b06057303366",
+      "bytes": 36696920,
+      "updates": 110000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "120000.pkl",
+      "sha256": "171878a916caf3193d208c3a28a37c9c0a2865d7edf4efd27dfd9b39b5d968f2",
+      "bytes": 36696920,
+      "updates": 120000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "130000.pkl",
+      "sha256": "df47f9e064236247e42c9ae3c75321c6282bb7b44b6dbec48a77574ad2dd7cfd",
+      "bytes": 36696921,
+      "updates": 130000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "140000.pkl",
+      "sha256": "e4fa7e364d98793f02da5a88e41a45969f1a17b4c789a448c5dcb27d7c5cc4dd",
+      "bytes": 36696920,
+      "updates": 140000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "150000.pkl",
+      "sha256": "8dde69c0dbbc5ea0a0712deb481235024a98920cebdfbda9eeef6fcac4da1a62",
+      "bytes": 36696920,
+      "updates": 150000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "160000.pkl",
+      "sha256": "8312c1fce240c2212379596285561c1fe3c3d03d8299690dc31ba9daa9586ded",
+      "bytes": 36696921,
+      "updates": 160000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "170000.pkl",
+      "sha256": "81c13c1df01b44dbc8340d70bdd5ab53edffc116071aa43b97db6a1bd7676284",
+      "bytes": 36696921,
+      "updates": 170000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "180000.pkl",
+      "sha256": "9ed5524c027545a3e9eca9ba2732ebdd56ce4920dbfc6e7382d523d4141a06a8",
+      "bytes": 36696921,
+      "updates": 180000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "190000.pkl",
+      "sha256": "09cbbec0b00e99608a8b20aa5db4a07a1e12928e16a4dad10de5fcb2c5f126b5",
+      "bytes": 36696921,
+      "updates": 190000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "200000.pkl",
+      "sha256": "68670eaea8d0620ef3cac00c8e03a760105423271b8de1816be1d4293b6ebd86",
+      "bytes": 36696920,
+      "updates": 200000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "210000.pkl",
+      "sha256": "4103776c83f6b3ad2b3d996f21a8c9c75ef59e0ae5f154d1d2775a904a261a31",
+      "bytes": 36696921,
+      "updates": 210000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "220000.pkl",
+      "sha256": "71d4072f6bda3a5fd1bcb63043b970377a58f7a907ae2d50cd98920fcf802083",
+      "bytes": 36696921,
+      "updates": 220000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "230000.pkl",
+      "sha256": "3db56bbae11231f87e562245d97aa1801923ee072dff5ff0e19715aeaf9f5bde",
+      "bytes": 36696921,
+      "updates": 230000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "240000.pkl",
+      "sha256": "9cd15bd5dd4fb7bb27d646dd127de4518fb8885f762753239275cefafb9ee2e9",
+      "bytes": 36696920,
+      "updates": 240000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "250000.pkl",
+      "sha256": "a94e69d850cdb1e32890bd83af04c26b4cd0f7046432078e57ba62f9a7a7f690",
+      "bytes": 36696921,
+      "updates": 250000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "260000.pkl",
+      "sha256": "5e623054c82d4b9b88f9386910959db5c2181b2482eab87b8c836a19e5acd06b",
+      "bytes": 36696921,
+      "updates": 260000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "270000.pkl",
+      "sha256": "65c47b796b19ee2c7913e87367840840e0fa15a37aecb6a92a9022e4aba139cb",
+      "bytes": 36696920,
+      "updates": 270000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "280000.pkl",
+      "sha256": "0f88224cd780c1583a2a88af6542687a9096829cc76cb4c1fb149209eb7d1f53",
+      "bytes": 36696921,
+      "updates": 280000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "290000.pkl",
+      "sha256": "18b01bc23dbf6a075a932127e3528feff609af744e7d68a90b98c5bdab43a546",
+      "bytes": 36696921,
+      "updates": 290000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "300000.pkl",
+      "sha256": "71b4f78d596e768931fe7bbd21c57a6650402b7005b9369d85f00e8efc888ccf",
+      "bytes": 36696921,
+      "updates": 300000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "310000.pkl",
+      "sha256": "514a22ddad78af950f191cd595e80fe18a3e6baa9b52511faca9f537f0609136",
+      "bytes": 36696921,
+      "updates": 310000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "320000.pkl",
+      "sha256": "4b3dbb6afd8079e32fa5cb7e4103764bc4974dd03ad2faf512df47f17468a368",
+      "bytes": 36696920,
+      "updates": 320000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "330000.pkl",
+      "sha256": "df301bdc850e21f73dc48b20a5af34c8b8634c2bbb882a76e69a9fad4f0358ff",
+      "bytes": 36696921,
+      "updates": 330000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "340000.pkl",
+      "sha256": "163a8cb4bae9e54db337ef08f06cddd90fb4d85f4b4c89d17f64650d2e01c20f",
+      "bytes": 36696921,
+      "updates": 340000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "350000.pkl",
+      "sha256": "aa343745952f60733f592ca0997f2bd30201d556d356981ef18cb56a2307ce27",
+      "bytes": 36696921,
+      "updates": 350000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "360000.pkl",
+      "sha256": "c010c18423bb1081c170c2f157bafbabc8525dd42e17e2c25bcf95035e50907d",
+      "bytes": 36696921,
+      "updates": 360000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "370000.pkl",
+      "sha256": "5f03ec5982bc1c14f64f446435bdb8cd9da28e894cf0a4787896b24f9c43f690",
+      "bytes": 36696921,
+      "updates": 370000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "380000.pkl",
+      "sha256": "0644cc303ec9b601ca57b16cb46b8b2ed9454209eff2cd9f939f4801382ec063",
+      "bytes": 36696920,
+      "updates": 380000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "390000.pkl",
+      "sha256": "4d4b598aad282559a53b31fbaa88936579e1ef248fff7d9508c88ad9cc42b805",
+      "bytes": 36696920,
+      "updates": 390000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "400000.pkl",
+      "sha256": "112452d8e76e428854e751e90008fe3db4195d3a773c39a6ce8b3dc2a823f83f",
+      "bytes": 36696921,
+      "updates": 400000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "410000.pkl",
+      "sha256": "eb9629f7ee6a6d6f8565ba14cabd5116ab344a08a248a5f8949fdf3f4b2d7a34",
+      "bytes": 36696921,
+      "updates": 410000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "420000.pkl",
+      "sha256": "7cf44f3f7c11cb3ad85aa840693f9813c3b75a7b85e118903c9fc8fddf191b52",
+      "bytes": 36696920,
+      "updates": 420000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "430000.pkl",
+      "sha256": "3fedc83a28f0befaec78b04e22f29b950fbad18e05d61123a897b190044d1e1f",
+      "bytes": 36696920,
+      "updates": 430000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "440000.pkl",
+      "sha256": "b6f09b092bb9b62ed48d106535e052b1abc6f3e7359956115db10251f4ea0841",
+      "bytes": 36696920,
+      "updates": 440000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "450000.pkl",
+      "sha256": "a77ec11e9818912aefb7fcca261820e210551668acc822336fcc8f86ab9d78ff",
+      "bytes": 36696921,
+      "updates": 450000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "460000.pkl",
+      "sha256": "899af87c06e1eb5a6b6e1ccb1d6ad19bd71e1ba9aad61c70df7fd690ee39c75e",
+      "bytes": 36696921,
+      "updates": 460000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "470000.pkl",
+      "sha256": "d5776c87a8ac5aaff5e66d77a76b1b1c102c9f7ee19f8b657a474a12213ae52f",
+      "bytes": 36696921,
+      "updates": 470000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "480000.pkl",
+      "sha256": "8122571f626b147c5d9422c4f30b663b4860f33c7252f8dfdba10ccda1303295",
+      "bytes": 36696920,
+      "updates": 480000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "490000.pkl",
+      "sha256": "8b81d5918b29d1d519a95b2c16dc4c3bd180d6d9d815446b44b99c79481350f2",
+      "bytes": 36696921,
+      "updates": 490000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "500000.pkl",
+      "sha256": "0d9b6d7ac011c1f4e830563a492cc000aede9aec7c3afbee9a920b3ee43f2b1d",
+      "bytes": 36696920,
+      "updates": 500000,
+      "payload_sha256_matches": true
+    }
+  ],
+  "panels": [
+    {
+      "optimizer_updates": 0,
+      "replay_query_rows": 520,
+      "training_primitive_actions": 10400,
+      "successes": 4,
+      "episodes": 10,
+      "panel_actions": 3520
+    },
+    {
+      "optimizer_updates": 10000,
+      "replay_query_rows": 1005,
+      "training_primitive_actions": 20074,
+      "successes": 0,
+      "episodes": 10,
+      "panel_actions": 4000
+    },
+    {
+      "optimizer_updates": 20000,
+      "replay_query_rows": 1504,
+      "training_primitive_actions": 30048,
+      "successes": 2,
+      "episodes": 10,
+      "panel_actions": 3604
+    },
+    {
+      "optimizer_updates": 30000,
+      "replay_query_rows": 2003,
+      "training_primitive_actions": 39833,
+      "successes": 8,
+      "episodes": 10,
+      "panel_actions": 2421
+    },
+    {
+      "optimizer_updates": 40000,
+      "replay_query_rows": 2507,
+      "training_primitive_actions": 49664,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1980
+    },
+    {
+      "optimizer_updates": 50000,
+      "replay_query_rows": 3011,
+      "training_primitive_actions": 59490,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 2308
+    },
+    {
+      "optimizer_updates": 60000,
+      "replay_query_rows": 3504,
+      "training_primitive_actions": 68990,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1821
+    },
+    {
+      "optimizer_updates": 70000,
+      "replay_query_rows": 4009,
+      "training_primitive_actions": 78704,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1751
+    },
+    {
+      "optimizer_updates": 80000,
+      "replay_query_rows": 4500,
+      "training_primitive_actions": 88202,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1756
+    },
+    {
+      "optimizer_updates": 90000,
+      "replay_query_rows": 5005,
+      "training_primitive_actions": 97961,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1909
+    },
+    {
+      "optimizer_updates": 100000,
+      "replay_query_rows": 5507,
+      "training_primitive_actions": 107628,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1656
+    },
+    {
+      "optimizer_updates": 110000,
+      "replay_query_rows": 6001,
+      "training_primitive_actions": 117111,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1750
+    },
+    {
+      "optimizer_updates": 120000,
+      "replay_query_rows": 6503,
+      "training_primitive_actions": 126791,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1602
+    },
+    {
+      "optimizer_updates": 130000,
+      "replay_query_rows": 7005,
+      "training_primitive_actions": 136528,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1464
+    },
+    {
+      "optimizer_updates": 140000,
+      "replay_query_rows": 7500,
+      "training_primitive_actions": 146174,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1456
+    },
+    {
+      "optimizer_updates": 150000,
+      "replay_query_rows": 8008,
+      "training_primitive_actions": 155981,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1622
+    },
+    {
+      "optimizer_updates": 160000,
+      "replay_query_rows": 8503,
+      "training_primitive_actions": 165565,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1606
+    },
+    {
+      "optimizer_updates": 170000,
+      "replay_query_rows": 9005,
+      "training_primitive_actions": 175372,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1533
+    },
+    {
+      "optimizer_updates": 180000,
+      "replay_query_rows": 9505,
+      "training_primitive_actions": 185059,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1629
+    },
+    {
+      "optimizer_updates": 190000,
+      "replay_query_rows": 10002,
+      "training_primitive_actions": 194715,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1764
+    },
+    {
+      "optimizer_updates": 200000,
+      "replay_query_rows": 10501,
+      "training_primitive_actions": 204372,
+      "successes": 9,
+      "episodes": 10,
+      "panel_actions": 1829
+    },
+    {
+      "optimizer_updates": 210000,
+      "replay_query_rows": 11011,
+      "training_primitive_actions": 214269,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1423
+    },
+    {
+      "optimizer_updates": 220000,
+      "replay_query_rows": 11504,
+      "training_primitive_actions": 223837,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1588
+    },
+    {
+      "optimizer_updates": 230000,
+      "replay_query_rows": 12000,
+      "training_primitive_actions": 233512,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1576
+    },
+    {
+      "optimizer_updates": 240000,
+      "replay_query_rows": 12506,
+      "training_primitive_actions": 243221,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1644
+    },
+    {
+      "optimizer_updates": 250000,
+      "replay_query_rows": 13000,
+      "training_primitive_actions": 252847,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1411
+    },
+    {
+      "optimizer_updates": 260000,
+      "replay_query_rows": 13503,
+      "training_primitive_actions": 262642,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1574
+    },
+    {
+      "optimizer_updates": 270000,
+      "replay_query_rows": 14006,
+      "training_primitive_actions": 272445,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1500
+    },
+    {
+      "optimizer_updates": 280000,
+      "replay_query_rows": 14505,
+      "training_primitive_actions": 282136,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1634
+    },
+    {
+      "optimizer_updates": 290000,
+      "replay_query_rows": 15003,
+      "training_primitive_actions": 291754,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1452
+    },
+    {
+      "optimizer_updates": 300000,
+      "replay_query_rows": 15504,
+      "training_primitive_actions": 301398,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1372
+    },
+    {
+      "optimizer_updates": 310000,
+      "replay_query_rows": 16006,
+      "training_primitive_actions": 311130,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1430
+    },
+    {
+      "optimizer_updates": 320000,
+      "replay_query_rows": 16505,
+      "training_primitive_actions": 320769,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1513
+    },
+    {
+      "optimizer_updates": 330000,
+      "replay_query_rows": 17001,
+      "training_primitive_actions": 330408,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1508
+    },
+    {
+      "optimizer_updates": 340000,
+      "replay_query_rows": 17502,
+      "training_primitive_actions": 340090,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1460
+    },
+    {
+      "optimizer_updates": 350000,
+      "replay_query_rows": 18002,
+      "training_primitive_actions": 349704,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1387
+    },
+    {
+      "optimizer_updates": 360000,
+      "replay_query_rows": 18501,
+      "training_primitive_actions": 359418,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1528
+    },
+    {
+      "optimizer_updates": 370000,
+      "replay_query_rows": 19004,
+      "training_primitive_actions": 369176,
+      "successes": 9,
+      "episodes": 10,
+      "panel_actions": 1713
+    },
+    {
+      "optimizer_updates": 380000,
+      "replay_query_rows": 19505,
+      "training_primitive_actions": 378945,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1450
+    },
+    {
+      "optimizer_updates": 390000,
+      "replay_query_rows": 20000,
+      "training_primitive_actions": 388531,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1396
+    },
+    {
+      "optimizer_updates": 400000,
+      "replay_query_rows": 20504,
+      "training_primitive_actions": 398242,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1503
+    },
+    {
+      "optimizer_updates": 410000,
+      "replay_query_rows": 21005,
+      "training_primitive_actions": 407998,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1489
+    },
+    {
+      "optimizer_updates": 420000,
+      "replay_query_rows": 21502,
+      "training_primitive_actions": 417648,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1516
+    },
+    {
+      "optimizer_updates": 430000,
+      "replay_query_rows": 22001,
+      "training_primitive_actions": 427267,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1504
+    },
+    {
+      "optimizer_updates": 440000,
+      "replay_query_rows": 22500,
+      "training_primitive_actions": 436953,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1528
+    },
+    {
+      "optimizer_updates": 450000,
+      "replay_query_rows": 23000,
+      "training_primitive_actions": 446677,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1477
+    },
+    {
+      "optimizer_updates": 460000,
+      "replay_query_rows": 23506,
+      "training_primitive_actions": 456490,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1389
+    },
+    {
+      "optimizer_updates": 470000,
+      "replay_query_rows": 24005,
+      "training_primitive_actions": 466153,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1445
+    },
+    {
+      "optimizer_updates": 480000,
+      "replay_query_rows": 24500,
+      "training_primitive_actions": 475726,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1572
+    },
+    {
+      "optimizer_updates": 490000,
+      "replay_query_rows": 25005,
+      "training_primitive_actions": 485500,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1573
+    },
+    {
+      "optimizer_updates": 500000,
+      "replay_query_rows": 25504,
+      "training_primitive_actions": 495165,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1477
+    }
+  ],
+  "physical_cost": {
+    "known_actions": 583178,
+    "uncertain_actions": 0,
+    "pending": null
+  },
+  "physical_episode_count": 3472,
+  "physical_by_role": {
+    "training": {
+      "episodes": 2962,
+      "actions": 495165,
+      "successes": 2845
+    },
+    "query": {
+      "episodes": 510,
+      "actions": 88013,
+      "successes": 482
+    }
+  },
+  "query_panels_from_physical_ledger": {
+    "0": {
+      "episodes": 10,
+      "actions": 3520,
+      "successes": 4
+    },
+    "10000": {
+      "episodes": 10,
+      "actions": 4000,
+      "successes": 0
+    },
+    "20000": {
+      "episodes": 10,
+      "actions": 3604,
+      "successes": 2
+    },
+    "30000": {
+      "episodes": 10,
+      "actions": 2421,
+      "successes": 8
+    },
+    "40000": {
+      "episodes": 10,
+      "actions": 1980,
+      "successes": 10
+    },
+    "50000": {
+      "episodes": 10,
+      "actions": 2308,
+      "successes": 10
+    },
+    "60000": {
+      "episodes": 10,
+      "actions": 1821,
+      "successes": 10
+    },
+    "70000": {
+      "episodes": 10,
+      "actions": 1751,
+      "successes": 10
+    },
+    "80000": {
+      "episodes": 10,
+      "actions": 1756,
+      "successes": 10
+    },
+    "90000": {
+      "episodes": 10,
+      "actions": 1909,
+      "successes": 10
+    },
+    "100000": {
+      "episodes": 10,
+      "actions": 1656,
+      "successes": 10
+    },
+    "110000": {
+      "episodes": 10,
+      "actions": 1750,
+      "successes": 10
+    },
+    "120000": {
+      "episodes": 10,
+      "actions": 1602,
+      "successes": 10
+    },
+    "130000": {
+      "episodes": 10,
+      "actions": 1464,
+      "successes": 10
+    },
+    "140000": {
+      "episodes": 10,
+      "actions": 1456,
+      "successes": 10
+    },
+    "150000": {
+      "episodes": 10,
+      "actions": 1622,
+      "successes": 10
+    },
+    "160000": {
+      "episodes": 10,
+      "actions": 1606,
+      "successes": 10
+    },
+    "170000": {
+      "episodes": 10,
+      "actions": 1533,
+      "successes": 10
+    },
+    "180000": {
+      "episodes": 10,
+      "actions": 1629,
+      "successes": 10
+    },
+    "190000": {
+      "episodes": 10,
+      "actions": 1764,
+      "successes": 10
+    },
+    "200000": {
+      "episodes": 10,
+      "actions": 1829,
+      "successes": 9
+    },
+    "210000": {
+      "episodes": 10,
+      "actions": 1423,
+      "successes": 10
+    },
+    "220000": {
+      "episodes": 10,
+      "actions": 1588,
+      "successes": 10
+    },
+    "230000": {
+      "episodes": 10,
+      "actions": 1576,
+      "successes": 10
+    },
+    "240000": {
+      "episodes": 10,
+      "actions": 1644,
+      "successes": 10
+    },
+    "250000": {
+      "episodes": 10,
+      "actions": 1411,
+      "successes": 10
+    },
+    "260000": {
+      "episodes": 10,
+      "actions": 1574,
+      "successes": 10
+    },
+    "270000": {
+      "episodes": 10,
+      "actions": 1500,
+      "successes": 10
+    },
+    "280000": {
+      "episodes": 10,
+      "actions": 1634,
+      "successes": 10
+    },
+    "290000": {
+      "episodes": 10,
+      "actions": 1452,
+      "successes": 10
+    },
+    "300000": {
+      "episodes": 10,
+      "actions": 1372,
+      "successes": 10
+    },
+    "310000": {
+      "episodes": 10,
+      "actions": 1430,
+      "successes": 10
+    },
+    "320000": {
+      "episodes": 10,
+      "actions": 1513,
+      "successes": 10
+    },
+    "330000": {
+      "episodes": 10,
+      "actions": 1508,
+      "successes": 10
+    },
+    "340000": {
+      "episodes": 10,
+      "actions": 1460,
+      "successes": 10
+    },
+    "350000": {
+      "episodes": 10,
+      "actions": 1387,
+      "successes": 10
+    },
+    "360000": {
+      "episodes": 10,
+      "actions": 1528,
+      "successes": 10
+    },
+    "370000": {
+      "episodes": 10,
+      "actions": 1713,
+      "successes": 9
+    },
+    "380000": {
+      "episodes": 10,
+      "actions": 1450,
+      "successes": 10
+    },
+    "390000": {
+      "episodes": 10,
+      "actions": 1396,
+      "successes": 10
+    },
+    "400000": {
+      "episodes": 10,
+      "actions": 1503,
+      "successes": 10
+    },
+    "410000": {
+      "episodes": 10,
+      "actions": 1489,
+      "successes": 10
+    },
+    "420000": {
+      "episodes": 10,
+      "actions": 1516,
+      "successes": 10
+    },
+    "430000": {
+      "episodes": 10,
+      "actions": 1504,
+      "successes": 10
+    },
+    "440000": {
+      "episodes": 10,
+      "actions": 1528,
+      "successes": 10
+    },
+    "450000": {
+      "episodes": 10,
+      "actions": 1477,
+      "successes": 10
+    },
+    "460000": {
+      "episodes": 10,
+      "actions": 1389,
+      "successes": 10
+    },
+    "470000": {
+      "episodes": 10,
+      "actions": 1445,
+      "successes": 10
+    },
+    "480000": {
+      "episodes": 10,
+      "actions": 1572,
+      "successes": 10
+    },
+    "490000": {
+      "episodes": 10,
+      "actions": 1573,
+      "successes": 10
+    },
+    "500000": {
+      "episodes": 10,
+      "actions": 1477,
+      "successes": 10
+    }
+  },
+  "panel_and_ledger_accounting_matches": true,
+  "conservative_phase_actions": 583578,
+  "prior_actions": 400,
+  "prior_gpu_seconds": 660,
+  "source_attestations": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/dsrl-pi0-task57-20261101-s0-r4",
+      "head": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+      "tracked_diff": ""
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/dsrl-pi0-task57-20261101-prep-r4/repo",
+      "head": "7f48937d4553e95244cd81c79236a3256df80597",
+      "tracked_diff": ""
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/dsrl-pi0-task57-20261101-prep-r4/repo/openpi",
+      "head": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+      "tracked_diff": ""
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/dsrl-pi0-task57-20261101-prep-r4/repo/LIBERO",
+      "head": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "tracked_diff": ""
+    }
+  ],
+  "bindings": {
+    "motor-binding.json": {
+      "pid": 423,
+      "kind": "compute",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "renderer-binding.json": {
+      "pid": 423,
+      "kind": "graphics",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "qualification.json": {
+      "same_noise_max_delta": 0,
+      "model": "pi0_libero",
+      "horizon": 50,
+      "execute_steps": 20,
+      "extra_physical_actions": 0,
+      "original_rng_restored": true
+    }
+  },
+  "output_bytes": 8333189350,
+  "all_owned_output_bytes": {
+    "dsrl-pi0-task57-20261101-import-r9": 3679,
+    "dsrl-pi0-task57-20261101-prep-r2": 559,
+    "dsrl-pi0-task57-20261101-import-r8": 513,
+    "dsrl-pi0-task57-20261101-s0-r3": 15182,
+    "dsrl-pi0-task57-20261101-prep-r4": 13723,
+    "dsrl-pi0-task57-20261101-s0-r4": 8333189350,
+    "dsrl-pi0-task57-20261101-prep-r5": 18845,
+    "dsrl-pi0-task57-20261101-policy-r10": 7382,
+    "dsrl-pi0-task57-20261101-diagnose-r6": 48558,
+    "dsrl-pi0-task57-20261101-s0-r1": 8919,
+    "dsrl-pi0-task57-20261101-prep-r7": 49537,
+    "dsrl-pi0-task57-20261101-s0-r2": 15044,
+    "dsrl-pi0-task57-20261101-r1": 496361,
+    "dsrl-pi0-task57-20261101-harvest-r1": 0,
+    "dsrl-pi0-task57-20261101-compiler-r11": 7991,
+    "dsrl-pi0-task57-20261101-prep-r3": 13204
+  },
+  "conservative_output_bytes_upper_bound": 8334937423,
+  "terminal_observer_receipt_names": [
+    "TERMINAL-WATCH-0725-TRAINING.json"
+  ],
+  "cpu_harvest": {
+    "maximum_scheduler_seconds": 60,
+    "command_timeout_seconds": 15,
+    "prior_conservative_worker_seconds": 1740,
+    "conservative_charge_seconds": 60,
+    "maximum_cumulative_worker_seconds": 1800,
+    "model_loads": 0,
+    "extra_physical_actions": 0
+  },
+  "metadata_elapsed_seconds": 10.364945411682129,
+  "validation_passed": true
+}
