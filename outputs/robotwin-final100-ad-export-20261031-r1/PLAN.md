@@ -137,3 +137,11 @@ The current template deliberately contains no actual allocation or fitted model
 binding. `payload-admission.json` will be created only from actual completed
 exports and uses actual index/dataset hashes. No model is constructed or trained
 by this CPU profile, and no new robot/VLA/CUDA/optimizer operation is permitted.
+
+Static review accepted auxiliary53f5361abf1bbfcd8cb586b4de764dfe6869922f,
+profile SHA `1a10e71d2f2049be122168d7e846817f0e0341eedb9eb8bbb41ff3c2ddcb2f8e`. Optimization checked clocks, ownership, resources and every10 auxiliary/4 AD
+Git bootstrap hash; the exporter owner checked the existing API calls and
+AD/BC admission sequence. The only initial staging blocker was an unused
+untracked Mac-only helper entry, removed without changing runtime code.
+[HANDOFF.json](HANDOFF.json) binds these reviews. No runtime qualification or
+resource authority follows from static acceptance.
