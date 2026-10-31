@@ -1,0 +1,150 @@
+{
+  "format": "frozen_pi05_command_diagnostic_cpu_receipt_v1",
+  "job_id": "job-6n2x5ay22eok",
+  "source_commit": "06b1425607783082df071f4dc21414a096a6f5d8",
+  "bridge_source": "bbb200ef804dbef33ae5e7156a93803d8b2cef3c",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "diagnostic_curve_qualification": "PASS84/84",
+  "bridge_qualification": "FAIL3/8;5passed",
+  "whole_wrapper_passed": false,
+  "exit_code": 1,
+  "actual_gpu": 0,
+  "actual_cpu_cores": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "cuda_initialized_before_mask": false,
+  "charged_cpu_worker_seconds": 93,
+  "prior_phase_cpu_charge": 1682,
+  "cumulative_phase_cpu_charge": 1775,
+  "maximum_phase_cpu_worker_seconds": 1800,
+  "remaining_phase_cpu_worker_seconds": 25,
+  "remaining_original110_envelope": 17,
+  "tests": {
+    "diagnostic-curve.junit.xml": {
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "84",
+          "time": "4.554",
+          "timestamp": "2026-11-01T03:38:20.948560+08:00",
+          "hostname": "job-6n2x5ay22eok-master-0"
+        }
+      ],
+      "case_class_counts": {
+        "tests.test_robotwin_command_diagnostic": 42,
+        "tests.test_robotwin_reactive_curve": 42
+      },
+      "failures": []
+    },
+    "bridge.junit.xml": {
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "3",
+          "skipped": "0",
+          "tests": "8",
+          "time": "2.603",
+          "timestamp": "2026-11-01T03:38:27.424890+08:00",
+          "hostname": "job-6n2x5ay22eok-master-0"
+        }
+      ],
+      "case_class_counts": {
+        "tests.test_robotwin_fitted_physical": 8
+      },
+      "failures": [
+        {
+          "name": "test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]",
+          "classname": "tests.test_robotwin_fitted_physical",
+          "message": "AttributeError: 'TinyMotor' object has no attribute 'training'"
+        },
+        {
+          "name": "test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]",
+          "classname": "tests.test_robotwin_fitted_physical",
+          "message": "AttributeError: 'TinyMotor' object has no attribute 'training'"
+        },
+        {
+          "name": "test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration",
+          "classname": "tests.test_robotwin_fitted_physical",
+          "message": "AttributeError: 'TinyMotor' object has no attribute 'training'"
+        }
+      ]
+    }
+  },
+  "refs": [
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/allocation.json",
+      "sha256": "f6c8af380b0a9d059fa457ddee0d071794813f000ac5a172526fbf1aba66974c",
+      "bytes": 965
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/bridge-tests.log",
+      "sha256": "3726ef77e4020f623ed608ffea3247df561b234cf8f1c024d0c93c300a164041",
+      "bytes": 6457
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/bridge.junit.xml",
+      "sha256": "13e2f6719a95813d62ef288c3eb7ac20127276f4313b154de4a9afa1cff2ef4d",
+      "bytes": 7410
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/cpu-worker-clock.json",
+      "sha256": "24ec7dff9a2b4fd931286cb09a8d74d0cf2a4973011a4d7a60b2e9f28c22d0f9",
+      "bytes": 590
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/diagnostic-curve-tests.log",
+      "sha256": "2f095d2a69ef6bacd423ba8670bdc8b6418d51a67e1d78874c0dfa8a62fa4db7",
+      "bytes": 179
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/diagnostic-curve.junit.xml",
+      "sha256": "6daa5911b454390e07a2eeaca791e1b9a5371e3c1ebb3e867b7fa555fd2c5bd8",
+      "bytes": 13404
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/exit-code.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/summary.json",
+      "sha256": "abeb0b68fb314acafc1f949d2bbdb90f6482db6f7a1c8356170c988d462cac22",
+      "bytes": 1346
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/zero-gpu-attestation.json",
+      "sha256": "65c02892b48a23f82e70542b55d31de70ff03299c4abbb165687bc9ce4b0dc58",
+      "bytes": 1060
+    }
+  ],
+  "command": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-DIAGNOSTIC-CPU-COMMAND.sh",
+    "sha256": "c3459cda60a1893a5a762e235eec4d21a654561e38c983f4b4113366eda2fcd1",
+    "bytes": 6489
+  },
+  "deployment": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-DIAGNOSTIC-CPU-DEPLOYMENT.json",
+    "sha256": "9083d1b74082727b38f5582d7de952762506cf41039ae2b32855392e73b2f580",
+    "bytes": 1327
+  },
+  "authority": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-DIAGNOSTIC-CPU-RESERVATION-COPY.json",
+    "sha256": "be91a5fc5ae484fe521f9da3e48762de0ef02fd7f6f8add5a3eec5fafdee561a",
+    "bytes": 1874
+  },
+  "command_editor_exact_roundtrip_bytes": 6489,
+  "qualification_scope": "SyntheticCPU only. No actual bank/cache/model/simulator/robot actions. Distinct clean worktrees/PYTHONPATHs; optional bridge failure does not rewrite independently completed84case source result.",
+  "bridge_failure_diagnosis": "All3 errors at robotwin_noise._check_frozen: fixture TinyMotor lacks training attribute. No production motor/model execution occurred; bridge remains unqualified.",
+  "retry_performed": false,
+  "gpu_or_scientific_admission_from_this_receipt": false,
+  "scheduler": {
+    "state": "Failed",
+    "created": "2026-11-01 03:37:46 Asia/Shanghai",
+    "ended": "2026-11-01 03:39:11 Asia/Shanghai",
+    "UI_duration_seconds": 69,
+    "screenshot_sha256": "5cd9aea4829f74cb9c378bdf78741c889f5137f043ee645b6c17b88edb231453"
+  }
+}

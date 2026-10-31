@@ -423,13 +423,42 @@
       "actual_gpu_count": 0,
       "receipt_path": "PARTIAL-FACTORIAL-CPU-RECEIPT.json",
       "receipt_sha256": "e4870a1e772f4a2d654ea74c62e7039a0f1f0d8279ecad855f87c7f00ad34166"
+    },
+    {
+      "role": "required_diag06_curve84_and_optional_bridge8_CPU_qualification",
+      "job_id": "job-6n2x5ay22eok",
+      "component_sources": {
+        "required": "06b1425607783082df071f4dc21414a096a6f5d8",
+        "optional": "bbb200ef804dbef33ae5e7156a93803d8b2cef3c"
+      },
+      "reserved_seconds": 110,
+      "charged_seconds": 93,
+      "released_seconds": 17,
+      "settled": true,
+      "status": "Failed",
+      "wrapper_exit_code": 1,
+      "required_JUnit": {
+        "tests": 84,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "optional_JUnit": {
+        "tests": 8,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0
+      },
+      "actual_gpu_count": 0,
+      "receipt_path": "COMMAND-DIAGNOSTIC-CPU-RECEIPT.json",
+      "receipt_sha256": "01ceaae8c20ada49e7cb4966124683592b020b22ebbd669e660d5d3c417199ba"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 3452,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 1682,
-  "reserved_cpu_worker_seconds": 110,
+  "charged_cpu_worker_seconds": 1775,
+  "reserved_cpu_worker_seconds": 0,
   "charged_actions": 23922,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
@@ -443,7 +472,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "All targeted GPU attempts settled once:3452GPU-s/23922actions,zero active holds/pending/uncertain actions. Latest F310 plus cache154; cache0actions/77rows/1.378GB is PARTIAL11, not full12 or fit/source admission. CPU1682/1800,118remaining; LIBERO164/600 separate. Original grants/header preserved.",
+  "accounting": "GPUactual3452/23922actions, cache04conditional600hold within oldA1, noactualnewGPUyet. CPUactual1775/1800,25remaining: combinedwrapperFailedexit1 with required06diagnostic+curve84/84PASS, separateBBBbridge5PASS/3fixtureFAIL.93chargedONCE,110holdsettled17released. Required sourceindependentlyqualified; optionalbridgeunqualified andnotcache/fitgate.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -497,7 +526,7 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 118,
+  "remaining_cpu_worker_seconds": 25,
   "unreserved_gpu_seconds": 24748,
   "latest_action_snapshot": {
     "actual_actions": 23922,
@@ -628,7 +657,7 @@
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 8,
+  "unreserved_cpu_worker_seconds": 25,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,
@@ -762,9 +791,14 @@
     {
       "role": "command_diagnostic_and_curve_CPU_qualification",
       "maximum_seconds": 110,
-      "state": "conditional_source_successor_binding_pending",
+      "state": "settled",
       "receipt_path": "COMMAND-DIAGNOSTIC-CPU-RESERVATION.json",
-      "actual_allocation_created": false
+      "actual_allocation_created": false,
+      "actual_seconds": 93,
+      "released_seconds": 17,
+      "job_id": "job-6n2x5ay22eok",
+      "required_pass": true,
+      "optional_pass": false
     }
   ],
   "gpu_reservations": [
@@ -772,7 +806,7 @@
       "role": "command_diagnostic_original04_cache",
       "source_commit": "06b1425607783082df071f4dc21414a096a6f5d8",
       "maximum_seconds": 600,
-      "state": "conditional_actual_CPU_PASS_and_data_admission_pending",
+      "state": "mandatory_closed_case_recovery_source_migration_and_linked_CPU_PASS_pending",
       "authority_path": "COMMAND-DIAGNOSTIC-CACHE04-CHILD-AUTHORITY.json",
       "actual_allocation_created": false
     }
