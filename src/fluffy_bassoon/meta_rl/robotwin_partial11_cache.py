@@ -15,10 +15,11 @@ import socket
 import subprocess
 import sys
 import time
+import uuid
 
 import torch
 
-from fluffy_bassoon.rl.robotwin_corpus import _atomic_json
+from fluffy_bassoon.rl.robotwin_corpus import _atomic_json, _fsync_directory
 from fluffy_bassoon.rl.robotwin_noise import _RoboTwinBackend
 from fluffy_bassoon.rl.robotwin_steering import validate_interface
 from fluffy_bassoon.baige_gpu import verify_selected_cuda, selected_device
@@ -34,6 +35,7 @@ SCOPE_SHA='32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447'
 GRANT_SHA='b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4'
 MOTOR_SHA='de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb'
 NORM_SHA='1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb'
+CACHE_LINEAGE='frozen-pi05-endtoend-20261031-r1/partial11-model-cache'
 CLOCK_CONTRACT=dict(format='frozen_pi05_shared_gpu_clock_v1',phase_id='frozen-pi05-endtoend-20261031-r1',
     scope_sha256=SCOPE_SHA,maximum_gpu_seconds=28800,maximum_actions=300000,motor_file_sha256=MOTOR_SHA)
 
@@ -85,6 +87,14 @@ def validate_clock(ticket,clock,*,now,source,run_id,output,cache_root,prior_cach
     rows=[r for r in attempts if r['path']==ticket['resource_attempt']]
     if len(rows)!=1:raise ValueError('Exactly one original registered resource attempt required')
     row=rows[0];seconds=ticket['reserved_gpu_seconds'];start=ticket['scheduler_start_unix'];end=ticket['driver_deadline_unix']
+    lineage=[r for r in attempts if r.get('lineage')==CACHE_LINEAGE]
+    if (row.get('lineage')!=CACHE_LINEAGE or any(r.get('lineage_seconds')!=1200 for r in lineage)
+            or any(r['status']!='finished' for r in lineage if r['path']!=row['path'])
+            or sum(r.get('charged_seconds',r['reserved_seconds']) for r in lineage)>1200):
+        raise ValueError('ALL original-clock cache-lineage charges/reservations must fit1200; no sibling reservation')
+    actual_prior=sum(r.get('charged_seconds',r['reserved_seconds']) for r in lineage if r['path']!=row['path'])
+    if prior_cache_seconds!=actual_prior:
+        raise ValueError('Selected cursor omits later original-clock cache-lineage costs')
     if (row['status']!='started' or type(seconds) is not int or not 660<=seconds<=1200-prior_cache_seconds
             or row['reserved_seconds']!=seconds or row['slice_seconds']+60!=seconds
             or row['scheduler_allowance_seconds']!=60 or row['started_unix']!=start
@@ -164,6 +174,21 @@ def run_cases(bank,state,cache_one,persist,*,should_start):
         records=cache_one(entries[identity])
         commit_case(state,identity,records);persist()
     state['status']='complete_partial11';persist()
+
+
+def publish_cursor(output,state,global_rng):
+    """Immutable durable RNG generation, then one atomic cursor publication."""
+    output=Path(output);directory=output/'recoveries'
+    directory.mkdir(exist_ok=True)
+    _fsync_directory(output.parent.parent);_fsync_directory(output.parent);_fsync_directory(output)
+    candidate={k:deepcopy(v) for k,v in state.items() if k!='recovery'}
+    candidate['recovery_generation']=state.get('recovery_generation',0)+1
+    path=directory/f"{candidate['recovery_generation']:06d}-{uuid.uuid4().hex}.pt"
+    sha=atomic_save(path,dict(state=deepcopy(candidate),global_rng=global_rng,optimizer=None,control=None))
+    _fsync_directory(directory)  # Make this unique generation durable BEFORE publishing its ref.
+    candidate['recovery']=dict(path=str(path),sha256=sha)
+    _atomic_json(output/'cursor.json',candidate,replace=True)
+    state.clear();state.update(candidate)
 
 
 def _storage(path):
@@ -260,10 +285,7 @@ def main(argv=None):
             if _storage(a.cache_root)+(256<<20)>12<<30 or _storage(phase)+(256<<20)>64<<30:
                 raise RuntimeError('Aggregate12GiB cache /64GiB phase storage cap')
         def persist():
-            payload={k:v for k,v in state.items() if k!='recovery'}
-            sha=atomic_save(a.output/'recovery.pt',dict(state=deepcopy(payload),global_rng=rng_state(),optimizer=None,control=None))
-            state['recovery']=dict(path=str(a.output/'recovery.pt'),sha256=sha)
-            _atomic_json(a.output/'cursor.json',state,replace=True)
+            publish_cursor(a.output,state,rng_state())
             _atomic_json(a.output/'partial-cache.json',dict(format='robotwin_fixed12_cache_receipt_v1',bank=bank,
                 records=state['records'],model_qualification=state['model_qualification'],complete=False,fit_eligible=False,
                 cached_teacher_ids=state['complete_cases'],meaning='PARTIAL11 ONLY; never complete-bank or fit admission'),replace=True)

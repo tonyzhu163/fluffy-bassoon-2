@@ -18,7 +18,17 @@ projected release. If its actual registered reservation is larger, this cache
 uses that larger hold for accounting only; it does not authorize a larger pair.
 No other phase, released cap or sealed balance is borrowed.
 
-The existing owner calls existing shared-clock `begin`/`finish`; the CLI never
+The existing owner calls existing shared-clock `begin`/`finish`. This successor
+adds OPTIONAL `lineage`/`lineage_seconds` arguments inside that SAME original
+lock; it creates no clock or allocator wrapper. Cache booking must use
+`lineage="frozen-pi05-endtoend-20261031-r1/partial11-model-cache"` and
+`lineage_seconds=1200`. The original clock atomically sums EVERY tagged finished
+charge and outstanding reservation, refuses an outstanding sibling and refuses
+a changed1200 subcap. The CLI independently reconciles those same complete
+original-clock rows; a stale cursor cannot hide a later attempt's cost. The
+qualified6397 short-slice boolean opt-in and legacy defaults remain unchanged.
+The parent confirmed no4f cache GPU attempt was booked/launched, so this fixed
+lineage starts at the first qualifying cache booking. The CLI never
 allocates, submits, begins, finishes or creates a GPU clock. One full proposal
 is the existing1140-second slice+60-second startup allowance=1200. The supplied
 actual ticket binds the ORIGINAL clock attempt and paired04 hold, source/run,
@@ -81,7 +91,13 @@ registered attempt before dispatch. CUDA and mapped NVML UUIDs remain distinct.
 
 ## Cursor and continuation
 
-`cursor.json`, `recovery.pt` and `partial-cache.json` are saved at case boundaries.
+`cursor.json`, immutable `recoveries/<generation>-<nonce>.pt` snapshots and
+`partial-cache.json` are saved at case boundaries. Each unique RNG/progress
+snapshot is flushed/fsynced and its parent directories made durable BEFORE
+publishing the atomic cursor reference. No published generation is overwritten.
+An interruption between generation and cursor publication leaves the prior
+cursor/SHA/four-domain RNG fully consistent; the unreferenced generation remains
+preserved.
 The recovery carries the exact progress plus all four global RNG domains; no
 optimizer or physical control exists. Seven SHA-bound samples/193 HISTORICAL
 native actions are required to commit each case. Only the fixed ordered prefix
@@ -97,7 +113,8 @@ plus new full reservation stays<=1200; a failure also needs a SHA-bound owner
 diagnosis referring to that cursor before retry. Existing data cannot start
 fresh with another1200 or another output allowance. All11 already committed
 means no new cache GPU job, including a reporting/cleanup-only rerun.
-The existing clock API has a600s minimum slice+60 allowance, so a smaller actual
+This cache PROFILE retains the legacy600s minimum slice+60 allowance (the
+qualified short-slice opt-in remains available unchanged to other callers), so a smaller actual
 residual cannot be silently reset or rounded up; preserve the partial data.
 
 Every receipt remains PARTIAL, complete-bank false and fitfalse, even after

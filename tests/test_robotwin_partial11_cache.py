@@ -14,7 +14,7 @@ def clock_fixture(tmp_path):
           for i,v in enumerate([632,1138,266,298,318])]
     rows.append(dict(path=str(pair),status='started',reserved_seconds=600))
     rows.append(dict(path=str(current),status='started',reserved_seconds=1200,slice_seconds=1140,
-                     scheduler_allowance_seconds=60,started_unix=100))
+                     scheduler_allowance_seconds=60,started_unix=100,lineage=module.CACHE_LINEAGE,lineage_seconds=1200))
     clock=dict(contract=deepcopy(module.CLOCK_CONTRACT),worker_seconds=28800,attempts=rows)
     root=tmp_path/'cache-root';out=root/'fresh'
     ticket=dict(mode=module.FORMAT,source_commit='a'*40,run_id='fresh',hostname=socket.gethostname(),gpu_count=1,
@@ -58,6 +58,8 @@ def test_resume_charges_actual_parent_closure_once_and_reduces_new_slice(tmp_pat
     cost=module.prior_cost(cursor,closeout);assert cost==150
     ticket,clock,root,out=clock_fixture(tmp_path);ticket['prior_cache_gpu_seconds']=cost
     ticket['reserved_gpu_seconds']=1050;ticket['driver_deadline_unix']=970
+    clock['attempts'].insert(-1,dict(path='/old',status='finished',charged_seconds=150,reserved_seconds=660,
+        lineage=module.CACHE_LINEAGE,lineage_seconds=1200))
     clock['attempts'][-1].update(reserved_seconds=1050,slice_seconds=990)
     admit(ticket,clock,root,out,prior=cost)
     ticket['reserved_gpu_seconds']=1200
@@ -158,3 +160,97 @@ def test_fixed_cache_layout_and_tensor_byte_refusal_happen_before_serialization(
     # or constructing a real model/cache/GPU context in this CPU gate.
     huge=tuple((torch.empty(1,4096,1,256,device='meta'),torch.empty(1,4096,1,256,device='meta')) for _ in range(18))
     with pytest.raises(ValueError,match='storage bound'):module.validate_cache_buffers(huge)
+
+
+def test_stale_A_cursor_cannot_omit_later_finished_B_cost(tmp_path):
+    ticket,clock,root,out=clock_fixture(tmp_path)
+    old_a=dict(path='/A',status='finished',charged_seconds=200,reserved_seconds=660,
+        lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    later_b=dict(old_a,path='/B')
+    clock['attempts'][-1].update(reserved_seconds=1000,slice_seconds=940)
+    clock['attempts'][-1]['started_unix']=100
+    clock['attempts'][5:5]=[old_a,later_b]
+    ticket.update(prior_cache_gpu_seconds=200,reserved_gpu_seconds=1000,driver_deadline_unix=920)
+    with pytest.raises(ValueError,match='cache-lineage'):
+        admit(ticket,clock,root,out,prior=200)  # Actual200+200+1000 exceeds dedicated1200.
+    # Even a smaller fitting reservation cannot resume a stale ancestry that
+    # underreports B; the exact previous-cost field must reconcile ALL rows.
+    clock['attempts'][-1].update(reserved_seconds=660,slice_seconds=600)
+    ticket.update(reserved_gpu_seconds=660,driver_deadline_unix=580)
+    with pytest.raises(ValueError,match='omits later'):
+        admit(ticket,clock,root,out,prior=200)
+
+
+def test_outstanding_cache_sibling_reservation_is_not_omitted(tmp_path):
+    ticket,clock,root,out=clock_fixture(tmp_path)
+    clock['attempts'].insert(-1,dict(path='/sibling',status='started',reserved_seconds=660,
+        lineage=module.CACHE_LINEAGE,lineage_seconds=1200))
+    with pytest.raises(ValueError,match='sibling'):
+        admit(ticket,clock,root,out)
+
+
+def test_existing_clock_atomically_enforces_serial_lineage_subcap_without_new_clock(tmp_path):
+    import json
+    from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin,finish
+    root=tmp_path/'original-clock';contract=dict(original='same')
+    a=begin(root,contract,slice_seconds=600,worker_seconds=28800,now=0,
+        lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    with pytest.raises(RuntimeError,match='outstanding'):
+        begin(root,contract,slice_seconds=600,worker_seconds=28800,resume=True,now=1,
+            lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    finish(root,a,0,now=140)  # Actual200 including original60 startup allowance.
+    b=begin(root,contract,slice_seconds=600,worker_seconds=28800,resume=True,now=200,
+        lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    finish(root,b,0,now=340)  # Another200 actual.
+    with pytest.raises(RuntimeError,match='lineage aggregate'):
+        begin(root,contract,slice_seconds=940,worker_seconds=28800,resume=True,now=400,
+            lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    with pytest.raises(ValueError,match='subcap'):
+        begin(root,contract,slice_seconds=600,worker_seconds=28800,resume=True,now=401,
+            lineage=module.CACHE_LINEAGE,lineage_seconds=2400)
+    ledger=json.loads((root/'worker-time.json').read_text())
+    assert len(ledger['attempts'])==2 and sum(r['charged_seconds'] for r in ledger['attempts'])==400
+
+
+def test_original_clock_default_api_and_rows_stay_unchanged(tmp_path):
+    import json
+    from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin,finish
+    root=tmp_path/'clock'
+    attempt=begin(root,{'original':True},slice_seconds=600,worker_seconds=28800,now=0)
+    row=finish(root,attempt,0,now=140)
+    assert row['charged_seconds']==200 and 'lineage' not in row and 'lineage_seconds' not in row
+    assert json.loads((root/'worker-time.json').read_text())['contract']=={'original':True}
+
+
+def test_recovery_publication_interruption_keeps_previous_cursor_and_rng_generation(tmp_path,monkeypatch):
+    import json
+    import torch
+    output=tmp_path/'fresh-child';output.mkdir()
+    state=dict(complete_cases=['phone-00'],records=[],status='partial_boundary_stop')
+    old_rng=dict(python='old-python',numpy='old-numpy',torch=torch.tensor([1,2],dtype=torch.uint8),cuda=None)
+    module.publish_cursor(output,state,old_rng)
+    previous=json.loads((output/'cursor.json').read_text());old_ref=previous['recovery'];old_bytes=Path(old_ref['path']).read_bytes()
+    real_publish=module._atomic_json
+    def crash_before_cursor(path,value,**kwargs):
+        if Path(path).name=='cursor.json':raise OSError('interrupted after durable generation, before cursor publication')
+        return real_publish(path,value,**kwargs)
+    monkeypatch.setattr(module,'_atomic_json',crash_before_cursor)
+    state['complete_cases'].append('phone-01')
+    with pytest.raises(OSError):module.publish_cursor(output,state,dict(old_rng,python='new-python'))
+    assert json.loads((output/'cursor.json').read_text())==previous
+    assert Path(old_ref['path']).read_bytes()==old_bytes and module.file_sha(old_ref['path'])==old_ref['sha256']
+    recovered=torch.load(old_ref['path'],weights_only=False)
+    assert recovered['state']=={k:v for k,v in previous.items() if k!='recovery'}
+    assert recovered['global_rng']['python']=='old-python' and torch.equal(recovered['global_rng']['torch'],old_rng['torch'])
+    assert len(list((output/'recoveries').glob('*.pt')))==2  # New unreferenced generation retained, old never overwritten.
+
+
+def test_qualified_short_slice_optin_composes_with_lineage_without_changing_default(tmp_path):
+    import json
+    from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
+    root=tmp_path/'clock'
+    with pytest.raises(ValueError):begin(root,{'old':True},slice_seconds=120,worker_seconds=28800,now=0)
+    attempt=begin(root,{'old':True},slice_seconds=120,worker_seconds=28800,now=0,
+        allow_short_slice=True,lineage=module.CACHE_LINEAGE,lineage_seconds=1200)
+    row=json.loads((attempt/'attempt.json').read_text())
+    assert row['slice_seconds']==120 and row['reserved_seconds']==180 and row['lineage_seconds']==1200
