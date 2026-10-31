@@ -1,0 +1,203 @@
+{
+  "format": "robotwin_phone04_prelift_closure_pair_v1",
+  "teacher_id": "phone-04",
+  "conditions": [
+    "hold_current",
+    "close_endpoint"
+  ],
+  "maximum_complete_episodes": 2,
+  "maximum_new_actions": 800,
+  "maximum_gpu_seconds": 600,
+  "expected_schedule": {
+    "format": "robotwin_phone04_prelift_closure_pair_v1",
+    "source_schedule": {
+      "format": "robotwin_gripper_event_h32_v1",
+      "reference_frames": 140,
+      "threshold": 1e-05,
+      "boundaries": [
+        0,
+        56,
+        70,
+        120,
+        134,
+        140
+      ],
+      "events": [
+        {
+          "joint": 6,
+          "direction": -1,
+          "start": 56,
+          "end_exclusive": 70
+        },
+        {
+          "joint": 6,
+          "direction": 1,
+          "start": 120,
+          "end_exclusive": 134
+        }
+      ],
+      "chunks": [
+        {
+          "start": 0,
+          "end": 32,
+          "new_frames": 32,
+          "issued_slots": 32,
+          "added_holds": 0
+        },
+        {
+          "start": 32,
+          "end": 56,
+          "new_frames": 24,
+          "issued_slots": 32,
+          "added_holds": 8
+        },
+        {
+          "start": 56,
+          "end": 70,
+          "new_frames": 14,
+          "issued_slots": 32,
+          "added_holds": 18
+        },
+        {
+          "start": 70,
+          "end": 102,
+          "new_frames": 32,
+          "issued_slots": 32,
+          "added_holds": 0
+        },
+        {
+          "start": 102,
+          "end": 120,
+          "new_frames": 18,
+          "issued_slots": 32,
+          "added_holds": 14
+        },
+        {
+          "start": 120,
+          "end": 134,
+          "new_frames": 14,
+          "issued_slots": 32,
+          "added_holds": 18
+        },
+        {
+          "start": 134,
+          "end": 140,
+          "new_frames": 6,
+          "issued_slots": 32,
+          "added_holds": 26
+        }
+      ],
+      "full_schedule_slots": 224,
+      "full_schedule_added_holds": 84,
+      "minimum_slots_to_issue_every_original_frame": 198,
+      "native_episode_limit": 400,
+      "admissible": true,
+      "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+    },
+    "entries": [
+      {
+        "kind": "source",
+        "source_chunk": 0,
+        "start": 0,
+        "end": 32
+      },
+      {
+        "kind": "source",
+        "source_chunk": 1,
+        "start": 32,
+        "end": 56
+      },
+      {
+        "kind": "source",
+        "source_chunk": 2,
+        "start": 56,
+        "end": 70
+      },
+      {
+        "kind": "probe",
+        "start": 70,
+        "end": 70,
+        "source_chunk": null
+      },
+      {
+        "kind": "source",
+        "source_chunk": 3,
+        "start": 70,
+        "end": 102
+      },
+      {
+        "kind": "source",
+        "source_chunk": 4,
+        "start": 102,
+        "end": 120
+      },
+      {
+        "kind": "source",
+        "source_chunk": 5,
+        "start": 120,
+        "end": 134
+      },
+      {
+        "kind": "source",
+        "source_chunk": 6,
+        "start": 134,
+        "end": 140
+      }
+    ],
+    "reference_frames": 140,
+    "insertion_after_source_chunk": 2,
+    "original_full_slots": 224,
+    "full_slots_with_probe": 256,
+    "minimum_slots_to_issue_every_original_frame": 230,
+    "native_episode_limit": 400,
+    "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+  },
+  "demos_sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4",
+  "diagnosis": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-event-diagnosis-cpu-20261101-r1/inspection/report.json",
+    "sha256": "933b3f4452447a47a266d424c5b1bc0cd36c670071635173ea15c2c87ffafd0e"
+  },
+  "whole_split": {
+    "phone-00": "train",
+    "phone-01": "train",
+    "phone-02": "train",
+    "phone-03": "train",
+    "phone-04": "train",
+    "phone-05": "train",
+    "phone-06": "train",
+    "phone-07": "train",
+    "phone-08": "validation",
+    "phone-09": "validation",
+    "phone-10": "validation",
+    "phone-11": "validation"
+  },
+  "changed_variable": "active left gripper command in exactly one inserted H32 hold: actual current nominal versus original closeendpoint0",
+  "unchanged": "all original source targets/order,400native horizon,H32,motor/task/executor/assets,other13probe parameters",
+  "rng_design": "Prospectively fork LATEST settled accounting recovery Python/NumPy/TorchCPU/CUDA state after runtime initialization, before each fresh reset; private VLA seed20261205 in both; preserve both poststates and closed private states, final authoritative branch close_endpoint; historicalbe2470403 remains evidence only",
+  "interpretation": "one original case/one pair; no class/fit/all12bank/generalization claim; no causal interpretation unless common prelude and other13parameters match",
+  "all_twelve_teacher_gate_passed": false,
+  "cache_fit_source_student_admitted": false,
+  "expected_outcomes": {
+    "mechanism": "closed command/drive and measured finger gap should advance before lift in close_endpoint; evaluate rather than assume",
+    "close_success_hold_failure": "supports within-case benefit of closure lead if reset/prelude/contrast match; contact/force cause still not proved",
+    "both_success": "added arm-hold/settling may suffice; extra fullclosure not shown necessary",
+    "both_failure": "single closure lead insufficient; if measured closure did not advance, manipulation was not achieved",
+    "close_failure_hold_success": "earlyfullclosure may harm this case; retain both, no outcome filtering",
+    "native_step_hypothesis": "OPTIONAL actual TOPP/downsample lengths can show <32steps and zero-allocated trailing grip slots; not assumed from endpoints alone",
+    "degenerate_grip_contrast": "If actual postC3 nominal is within1e-5 of closeendpoint0, the grip commands coincide/nearlycoincide. Even2successes cannot identify a closurelead effect; retain both, no retry.",
+    "unequal_prelude": "If C1-C3 observations/physical/privateVLA/globalNumPy signatures differ, paired causal interpretation is ineligible; retain both, no retry."
+  },
+  "historical_result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+    "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+  },
+  "historical_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+    "sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153"
+  },
+  "bank_candidate_priority": [
+    "close_endpoint",
+    "hold_current"
+  ],
+  "bank_candidate_rule": "After BOTH complete records, choose first successful candidate in this predeclared priority; none if neither. Retain both outcomes/all failures. This nominates04 only, never admits the bank/cache/fit. Independent bank assembler verifies exact12/protocol/provenance before fitting."
+}
