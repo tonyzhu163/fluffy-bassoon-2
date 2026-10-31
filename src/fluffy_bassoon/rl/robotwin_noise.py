@@ -426,9 +426,11 @@ class _RoboTwinBackend:
                  device="cuda", episode_limit=400, action_horizon=32,
                  num_steps=5, task_config_name="demo_clean", output_dir=None,
                  final_observation_only=False, corpus_writer=None,
-                 task_episode_limits=None):
+                 task_episode_limits=None, kv_adapter=None, action_residual=None):
         from fluffy_bassoon.gpu_execution import validate_execution
 
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
         mode = os.environ.get("FLUFFY_GPU_EXECUTION", "baige")
         validate_execution(mode, os.environ)
         if sys.platform != "linux" or mode != "baige":
@@ -478,6 +480,15 @@ class _RoboTwinBackend:
         self.render_pci = _install_allocated_renderer(records)
         self.cfg = model_config(rlinf_root, model_path, norm_stats, action_horizon, num_steps)
         self.model = get_model(self.cfg).to(device).eval().requires_grad_(False)
+        self.kv_adapter, self.action_residual = kv_adapter, action_residual
+        self._public_features = self._last_residual_metadata = None
+        if kv_adapter is not None or action_residual is not None:
+            from .pi05_residual import ReactiveALOHAActionResidual, ReactiveKVResidual
+
+            hook = kv_adapter if kv_adapter is not None else action_residual
+            expected_type = ReactiveKVResidual if kv_adapter is not None else ReactiveALOHAActionResidual
+            if not isinstance(hook, expected_type) or hook.training or hook.public_dim != FEATURE_DIM:
+                raise ValueError("Require the explicit eval-mode reactive hook with the native public feature dimension")
         self._versions = {name: value._version for name, value in self.model.named_parameters()}
         self.env = None
         self.task_name = None
@@ -505,6 +516,8 @@ class _RoboTwinBackend:
             step_accounting="RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
             actual_render_pci=self.render_pci)
         self.contract.update(_episode_limit_contract(robotwin_root, task_episode_limits))
+        if kv_adapter is not None or action_residual is not None:
+            self.contract["optional_residual"] = dict(configuration=hook.config(), live_qualified=False)
         if corpus_writer is not None:
             corpus_writer.register_runtime(self.contract)
 
@@ -530,6 +543,8 @@ class _RoboTwinBackend:
         self.prefix_seconds += time.monotonic() - tick
         self.prefix_calls += 1
         self._prepared, self._prefix_mask, self._kv_cache = prepared, mask, cache
+        self._public_features = features.detach()
+        self._residual_prepared = prepared
         self._raw_obs = raw
         result = features[0].detach().cpu().numpy().astype(np.float32, copy=False)
         if result.shape != (self.observation_dim,) or not np.isfinite(result).all():
@@ -606,11 +621,35 @@ class _RoboTwinBackend:
     def decode(self, noise):
         torch = self.torch
         tick = time.monotonic()
+        kv_adapter = getattr(self, "kv_adapter", None)
+        action_residual = getattr(self, "action_residual", None)
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
+        if (kv_adapter is not None or action_residual is not None) and getattr(
+                self, "_residual_prepared", None) is not self._prepared:
+            raise RuntimeError("Residual public features are not bound to the current prepared observation")
+        self._last_residual_metadata = None
         with torch.no_grad():
             tensor = torch.as_tensor(noise, dtype=torch.float32, device=self.model.device)[None]
+            cache = self._kv_cache
+            if kv_adapter is not None:
+                if kv_adapter.training:
+                    raise ValueError("Use an eval-mode KV hook for simulator inference")
+                cache = kv_adapter(cache, self._prefix_mask, self._public_features)
+                self._last_residual_metadata = dict(configuration=kv_adapter.config(),
+                                                     public_features=self._public_features.detach().cpu())
             targets = self.model._sample_actions_from_prefix_cache(
-                self._prepared, self._prefix_mask, self._kv_cache, noise=tensor)
+                self._prepared, self._prefix_mask, cache, noise=tensor)
             actions = self.model.decode_actions(targets, self._prepared.state)
+            if action_residual is not None:
+                if action_residual.training:
+                    raise ValueError("Use an eval-mode action hook for simulator inference")
+                correction = action_residual(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(configuration=action_residual.config(),
+                    public_features=self._public_features.detach().cpu(),
+                    **{name: getattr(correction, name).detach().cpu() for name in
+                       ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
         torch.cuda.synchronize()
         self.motor_seconds += time.monotonic() - tick
         self.motor_queries += 1
@@ -625,6 +664,10 @@ class _RoboTwinBackend:
         torch = self.torch
         writer = self.corpus_writer
         metadata, self._decision_metadata = self._decision_metadata, {}
+        if self._last_residual_metadata is not None:
+            if "frozen_pi05_residual" in metadata:
+                raise ValueError("Reserved residual metadata must come from the executed backend hook")
+            metadata = dict(metadata, frozen_pi05_residual=self._last_residual_metadata)
         if writer is not None:
             writer.begin_decision(noise, actions, metadata)
         started = time.monotonic()
@@ -702,7 +745,11 @@ class RobotwinNoiseEnv:
                  device="cuda", episode_limit=400, action_horizon=32, num_steps=5,
                  task_config_name="demo_clean", output_dir=None, *, backend=None,
                  final_observation_only=False, corpus_writer=None,
-                 task_episode_limits=None):
+                 task_episode_limits=None, kv_adapter=None, action_residual=None):
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
+        if backend is not None and (kv_adapter is not None or action_residual is not None):
+            raise ValueError("An injected backend must own its residual configuration")
         if type(episode_limit) is not int or episode_limit < 1:
             raise ValueError("episode_limit must be a positive integer")
         if type(final_observation_only) is not bool:
@@ -724,7 +771,7 @@ class RobotwinNoiseEnv:
             model_path, norm_stats, robotwin_root, rlinf_root, device, initial_episode_limit,
             action_horizon, num_steps, task_config_name, output_dir,
             final_observation_only=final_observation_only, corpus_writer=corpus_writer,
-            task_episode_limits=task_episode_limits)
+            task_episode_limits=task_episode_limits, kv_adapter=kv_adapter, action_residual=action_residual)
         self.corpus_writer = corpus_writer
         self.observation_dim = self.backend.observation_dim
         self.noise_shape = tuple(self.backend.noise_shape)

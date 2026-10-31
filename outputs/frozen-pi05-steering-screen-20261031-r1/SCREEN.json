@@ -1,0 +1,55 @@
+{
+  "schema": "frozen_pi05_steering_screen_proposal_v1",
+  "status": "not_runtime_admitted",
+  "reviewed_main": "fd4a7c91207210951e5bbfc3ecb80c61fedd9052",
+  "benchmark": "RoboTwin",
+  "source_only": true,
+  "candidate_tasks": ["place_phone_stand", "place_object_stand"],
+  "selected_task": null,
+  "development_cases_per_candidate": 8,
+  "locked_paired_query_cases": 32,
+  "teacher_training_trajectories_proposed": 8,
+  "teacher_validation_trajectories_proposed": 4,
+  "arms": ["native", "reactive_kv_residual", "reactive_decoded_action_residual"],
+  "student_history_enabled": false,
+  "motor": {
+    "family": "Motus pi0.5 via pinned RLinf",
+    "native_horizon": 32,
+    "flow_steps": 5,
+    "decoded_dimensions": 14,
+    "parameter_sha256": null,
+    "normalization_sha256": null,
+    "native_execution_contract_sha256": null
+  },
+  "selection": {
+    "uses": "separate predeclared source development cases",
+    "requires": ["observed native failures", "verified successful compatible teacher trajectories"],
+    "target_cases_forbidden": true,
+    "post_hoc_query_case_filtering_forbidden": true,
+    "no_candidate_pass_action": "stop_and_report_before_changing_task_distribution_or_motor"
+  },
+  "statistics": {
+    "primary_endpoint": "paired success difference on all locked query cases",
+    "planned_contrasts": ["reactive_kv_residual-native", "reactive_decoded_action_residual-native"],
+    "paired_test": "two_sided_exact_McNemar",
+    "familywise_method": "Holm",
+    "familywise_alpha": 0.05,
+    "minimum_observed_gain_for_provisional_advance": 0.15,
+    "also_requires": "positive difference with uncertainty excluding zero under the declared analysis",
+    "claims": "one-task one-training-seed pilot; no broad performance or adaptation claim"
+  },
+  "runtime_admission_requires": [
+    "exact motor, normalization, backend, task and asset bindings",
+    "source-only trajectory splits and verified action conventions",
+    "locked development and query manifests before fitting/evaluation",
+    "zero-modification native parity on real inputs",
+    "KV gradient path through frozen suffix and frozen motor invariants",
+    "allocated Linux CPU qualification and allocated GPU runtime qualification",
+    "one concrete all-in resource receipt and unique runtime output identity"
+  ],
+  "new_gpu_seconds_authorized_by_this_file": 0,
+  "new_actions_authorized_by_this_file": 0,
+  "resource_receipt": null,
+  "existing_runs_migrated": false,
+  "task57_target_online_data_permitted_as_source": false
+}
