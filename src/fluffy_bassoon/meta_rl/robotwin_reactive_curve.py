@@ -51,11 +51,15 @@ def validate_profile(profile):
     if profile!=PROFILE:raise ValueError('Exact predeclared fixed5000 curve profile required')
 
 
-def fit_records(sealed):
-    if (sealed.get('format')!='robotwin_fixed12_complete_cache_v1' or sealed.get('complete') is not True
-            or sealed.get('fixed12_fit_eligible') is not True or sealed.get('resource_fit_admitted') is not False):
-        raise ValueError('Full12 data eligibility required; partial11 never admits a fit')
-    bank_api.validate_bank(sealed['bank'],complete=True)
+def fit_records(sealed,*,_api=None):
+    api=bank_api if _api is None else _api
+    expected_format='robotwin_fixed12_complete_cache_v1' if _api is None else api.COMPLETE_FORMAT
+    if _api is None:
+        if (sealed.get('format')!=expected_format or sealed.get('complete') is not True
+                or sealed.get('fixed12_fit_eligible') is not True or sealed.get('resource_fit_admitted') is not False):
+            raise ValueError('Full12 data eligibility required; partial11 never admits a fit')
+    else:api.validate_complete_cache(sealed)
+    api.validate_bank(sealed['bank'],complete=True)
     rows=deepcopy(sealed['records']);seen=set();ids=set()
     for row in rows:
         context=row['context'];identity=context['teacher_id'];key=(identity,row['anchor'])
@@ -233,9 +237,12 @@ def _fit(kind,head,backend,records,output,*,guard,config,contract,resume=None):
     head.eval();return state
 
 
-def _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,*,guard,deadline,contract,resume=None):
+def _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,*,guard,deadline,contract,resume=None,_api=None,_profile=None,_validate=None):
     """Public scientific gate. Resource admission is the parent's responsibility."""
-    validate_profile(contract['profile']);guard()
+    api=bank_api if _api is None else _api
+    profile=PROFILE if _profile is None else _profile
+    validator=validate_profile if _validate is None else _validate
+    validator(contract['profile']);guard()
     if getattr(backend,'_reactive_curve_active',False):raise ValueError('Never share one motor context across fits')
     if (backend.env is not None or backend.model.training
             or any(p.requires_grad or p.grad is not None for p in backend.model.parameters())):
@@ -243,14 +250,18 @@ def _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,
     if (backend.frozen_fingerprint()!=bank_api.FROZEN
             or backend.contract['norm_stats_sha256']!=NORM_SHA):
         raise ValueError('Actual frozen parameter/normalization hash differs')
-    sealed=bank_api.seal_full_cache(bank,cache_receipts,deadline=deadline)
+    sealed=api.seal_full_cache(bank,cache_receipts,deadline=deadline)
     if bank_api.digest(sealed)!=contract['complete_cache_sha256']:raise ValueError('Full12 cache identity differs')
-    records=fit_records(sealed);head=make_head(kind,backend,wide_configuration)
+    records=fit_records(sealed,_api=_api);head=make_head(kind,backend,wide_configuration)
     # Always qualify the fresh zero head, including before loading a resume.
     parity=parity_check(kind,head,backend,records,guard=guard)
+    if _api is not None:
+        contract=dict(contract,diagnostic_purpose=api.PURPOSE,source_eligible=False,
+            outcome_evidence=deepcopy(bank['outcome_evidence']),
+            command_geometry=api.geometric_floor(records,wide_configuration,guard=guard))
     backend._reactive_curve_active=True
     try:
-        state=_fit(kind,head,backend,records,output,guard=guard,config=PROFILE,contract=contract,resume=resume)
+        state=_fit(kind,head,backend,records,output,guard=guard,config=profile,contract=contract,resume=resume)
         if backend.env is not None or backend.frozen_fingerprint()!=bank_api.FROZEN:
             raise RuntimeError('Fit changed frozen motor or created physics')
         _atomic_json(Path(output)/'result.json',dict(state,parity=parity,new_robot_actions=0,
@@ -260,7 +271,8 @@ def _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,
     finally:backend._reactive_curve_active=False
 
 
-def fit_curve(kind,backend,bank,cache_receipts,wide_configuration,output,*,guard,deadline,contract,resume=None):
+def fit_curve(kind,backend,bank,cache_receipts,wide_configuration,output,*,guard,deadline,contract,resume=None,
+              _api=None,_profile=None,_validate=None):
     # Two wrappers around one motor are still one autograd context. Independent
     # contexts can proceed concurrently only after the parent's capacity gate.
     identity=id(backend.model)
@@ -269,14 +281,14 @@ def fit_curve(kind,backend,bank,cache_receipts,wide_configuration,output,*,guard
         _MOTOR_CONTEXTS.add(identity)
     try:
         return _qualified_curve(kind,backend,bank,cache_receipts,wide_configuration,output,
-            guard=guard,deadline=deadline,contract=contract,resume=resume)
+            guard=guard,deadline=deadline,contract=contract,resume=resume,_api=_api,_profile=_profile,_validate=_validate)
     finally:
         with _CONTEXT_LOCK:_MOTOR_CONTEXTS.remove(identity)
 
 
-def validate_ticket(ticket,clock,*,source,request_sha,kind,output,now):
+def validate_ticket(ticket,clock,*,source,request_sha,kind,output,now,_format=FORMAT):
     """Read an already registered owner attempt; never begin/finish a clock."""
-    if (ticket.get('format')!=FORMAT or ticket.get('admitted') is not True or ticket['source_commit']!=source
+    if (ticket.get('format')!=_format or ticket.get('admitted') is not True or ticket['source_commit']!=source
             or ticket['request_sha256']!=request_sha or ticket['kind']!=kind
             or ticket['hostname']!=socket.gethostname() or ticket['gpu_count']!=1
             or ticket['private_motor_context'] is not True or ticket['maximum_robot_actions']!=0
@@ -300,29 +312,32 @@ def validate_ticket(ticket,clock,*,source,request_sha,kind,output,now):
         raise ValueError('Owner must bind concrete authority and finite resource plan')
 
 
-def validate_runtime_blobs(declared,root):
+def validate_runtime_blobs(declared,root,*,_api=None,_core_bank_sha=None,_extra_runtime=()):
     # Bind loaded implementations, not merely similarly named files elsewhere
     # on PYTHONPATH. The caller's hash-bound request also pins this wrapper.
-    objects=[fit_curve,WideActionResidual,bank_api.seal_full_cache,batch_from_cache,
-             reactive_flow_loss,rng_state,atomic_save,_RoboTwinBackend,ReactiveKVResidual]
+    objects=[fit_curve,WideActionResidual,(bank_api if _api is None else _api).seal_full_cache,batch_from_cache,
+             reactive_flow_loss,rng_state,atomic_save,_RoboTwinBackend,ReactiveKVResidual]+list(_extra_runtime)
     for obj in objects:
         path=Path(inspect.getfile(obj)).resolve()
         relative=str(path.relative_to(root))
         if relative not in declared or file_sha(path)!=declared[relative]:
             raise ValueError('Loaded runtime blob differs from source-bound request: '+relative)
     expected={
-        'src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py':'ddde178ef9a11e8eab1e886d4094daeb762aaa620cd749439ee61688309d8b4a',
+        'src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py':('ddde178ef9a11e8eab1e886d4094daeb762aaa620cd749439ee61688309d8b4a'
+            if _core_bank_sha is None else _core_bank_sha),
         'src/fluffy_bassoon/rl/robotwin_wide_action.py':'8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4'}
     if any(declared.get(k)!=v for k,v in expected.items()):
         raise ValueError('This version carries exact061 bank and de667 wide; no silent adapter migration')
 
 
-def main(argv=None):
+def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,_operation='fit',_validate_resource=None):
+    profile=PROFILE if _profile is None else _profile
+    validator=validate_profile if _validate is None else _validate
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('request','ticket','gpu-probe','model-path','norm-stats','robotwin-root','rlinf-root','output'):
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--request-sha256',required=True);p.add_argument('--ticket-sha256',required=True)
-    p.add_argument('--kind',choices=['action','kv'],required=True)
+    p.add_argument('--kind',choices=['action','kv'] if _operation=='fit' else ['cache04'],required=True)
     a=p.parse_args(argv);audit=Audit(time.time()+60)
     request=audit.json(dict(path=str(a.request),sha256=a.request_sha256))
     ticket=audit.json(dict(path=str(a.ticket),sha256=a.ticket_sha256))
@@ -330,11 +345,21 @@ def main(argv=None):
     if subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],text=True).strip():
         raise ValueError('Exact clean pinned runtime required')
     clock=json.loads((Path(ticket['clock_root'])/'worker-time.json').read_text())
-    validate_ticket(ticket,clock,source=source,request_sha=a.request_sha256,kind=a.kind,output=a.output,now=time.time())
-    validate_profile(request['profile']);audit=Audit(ticket['driver_deadline_unix']-60)
+    validate_ticket(ticket,clock,source=source,request_sha=a.request_sha256,kind=a.kind,output=a.output,now=time.time(),_format=profile['format'])
+    validator(request['profile']);audit=Audit(ticket['driver_deadline_unix']-60)
+    if _api is not None:
+        if request.get('operation')!=_operation or ticket.get('operation')!=_operation:
+            raise ValueError('Explicit diagnostic cache04/fit operation must match request and actual ticket')
+        if _validate_resource is None:raise ValueError('Explicit diagnostic resource validator required')
     for key in ('authority_receipt','resource_plan_receipt'):audit.json(ticket[key])
+    if _api is not None:
+        actual_plan=audit.json(ticket['resource_plan_receipt'])
+        for ref in actual_plan['prior_cost_receipts']:audit.json(ref)
+        audit.json(actual_plan['storage_admission'])
+        _validate_resource(ticket,clock,operation=_operation,plan=actual_plan)
     root=Path(subprocess.check_output(['git','rev-parse','--show-toplevel'],text=True).strip()).resolve()
-    validate_runtime_blobs(request['runtime_blob_sha256'],root)
+    validate_runtime_blobs(request['runtime_blob_sha256'],root,_api=_api,_core_bank_sha=_core_bank_sha,
+        _extra_runtime=() if _validate is None else (_validate,))
     for path,sha in request['runtime_blob_sha256'].items():audit.bound(root/path,sha)
     if file_sha(a.model_path/'model.safetensors')!=MOTOR_SHA or file_sha(a.norm_stats)!=NORM_SHA:
         raise ValueError('Original motor/normalization files required')
@@ -355,18 +380,32 @@ def main(argv=None):
     path.unlink();_fsync_directory(parent)
     def guard():
         if time.time()+60>=ticket['driver_deadline_unix']:raise TimeoutError('Original inclusive fit clock')
-        if sum(f.stat().st_size for f in parent.rglob('*') if f.is_file())+(256<<20)>16<<30:
+        limit=(profile.get('maximum_cache04_output_bytes',16<<30) if _operation=='cache04' else 16<<30)
+        if sum(f.stat().st_size for f in parent.rglob('*') if f.is_file())+(256<<20)>limit:
             raise RuntimeError('Predeclared fit output bound')
     guard();backend=None
     try:
         backend=_RoboTwinBackend(a.model_path,a.norm_stats,a.robotwin_root,a.rlinf_root,device='cuda',
             episode_limit=400,action_horizon=32,num_steps=5,output_dir=parent/(a.output.name+'-runtime'))
-        contract=dict(profile=PROFILE,source_commit=source,complete_cache_sha256=request['complete_cache_sha256'],
+        contract=dict(profile=profile,source_commit=source,complete_cache_sha256=request['complete_cache_sha256'],
             bank=request['bank'],cache_receipts=request['cache_receipts'],wide=request['wide_configuration'],
             runtime_blob_sha256=request['runtime_blob_sha256'])
-        fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],
-            audit.json(request['wide_configuration']),a.output,guard=guard,deadline=ticket['driver_deadline_unix']-60,
-            contract=contract,resume=request.get('resume'))
+        if _operation=='cache04':
+            if _api is None or backend.env is not None or backend.frozen_fingerprint()!=bank_api.FROZEN:
+                raise ValueError('Actual lazy original frozen model required for diagnostic cache04')
+            qualification=dict(format='robotwin_model_only_cache_qualification_v1',status='passed',
+                hostname=socket.gethostname(),gpu_probe=dict(path=str(a.gpu_probe),sha256=file_sha(a.gpu_probe)),
+                cuda_uuid=selected['cuda_uuid'],motor_sha256=MOTOR_SHA,normalization_sha256=NORM_SHA,
+                frozen_parameter_sha256=backend.frozen_fingerprint())
+            qpath=parent/(a.output.name+'-runtime')/'model-qualification.json'
+            _atomic_json(qpath,qualification)
+            _api.cache_bank(audit.json(request['bank']),backend,a.output,guard=guard,
+                deadline=ticket['driver_deadline_unix']-60,
+                model_qualification_ref=dict(path=str(qpath),sha256=file_sha(qpath)))
+        else:
+            fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],
+                audit.json(request['wide_configuration']),a.output,guard=guard,deadline=ticket['driver_deadline_unix']-60,
+                contract=contract,resume=request.get('resume'),_api=_api,_profile=_profile,_validate=_validate)
     finally:
         if backend is not None:backend.close()
     return 0
