@@ -61,17 +61,19 @@ First inspect the already funded first10k-update panel at the next scheduled
 owner check. It tests competence preservation and matched action cost without
 new scope. Do not read its binary-success tie as sample-efficient improvement.
 
-For a later interface comparison, use a small, predeclared development bank
-with observed native failures. Compare native, four predeclared noise choices
-and four bounded physical-action residual choices with the same frozen motor,
-actual reset states, observation/action contracts and matched interaction cost.
-For8 cases this is72 episodes, at most29,520 actions at H400+10 settling;
-it is a proposal outside the current run, not an admitted allocation.
+For a later interface comparison, use four predeclared development cases
+with observed native failures. Run four paired draws for each of three
+families: native, the declared noise family, and bounded physical-action
+residuals over native. This is48 episodes, at most19,680 actions at H400+10
+settling. Native gets the same four attempts; comparing another family's
+best-of-four against a single native draw would confound correction with
+extra search. This proposal is outside the current run and has no allocation.
+Report per-draw success as well as equal-budget best-of-four reachability.
 
 Define residuals in documented robot control units, initially retaining native
 gripper behavior. Zero physical residual should preserve the native action
 path; zero DSRL noise is a different motor input and is not that identity test.
-Use outcome-independent candidate draws and record clipping. Best-of-four is
+Use outcome-independent candidate draws and record clipping. Equal-budget best-of-four is
 an oracle reachability upper bound, not a deployable controller or adaptation
 score. A small negative search cannot rule out the entire interface. Label
 known-failure case selection as development; retain full90 final reporting.
