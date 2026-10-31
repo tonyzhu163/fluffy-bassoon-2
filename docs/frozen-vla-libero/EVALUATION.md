@@ -14,6 +14,22 @@ native task success rate or a learning result. The full240-episode screen and
 separate weak-query confirmations remain pending at this observation.
 [Launch and actual episode](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-GPU-LAUNCH.json).
 
+The01:10 owned check verifies151/240 completed screen episodes in a later
+exact-byte recovery snapshot. Completed native task rates are0:0/20,
+29:11/20,33:20/20,38:10/20,44:5/20,53:0/20 and59:3/20. Each completed task
+has20 distinct actual initial-state hashes. Task64 is still partial6/11;
+the remaining four tasks are unstarted in that snapshot. Tasks44 and59 fall
+in the declared weak band, but none is selected until the full fixed screen
+and separate confirmation finish. The observed25% and15% are development
+case rates, not population estimates or evidence of learning.
+
+The151 completed receipts sum53648 actions; this excludes any later active
+RPC and is not a new full-journal proof. The earlier127-episode producer
+snapshot reports44608 all-in actions and1.997GB. A new raw trace and closed
+RPC byte proof pass, recoverable cursor bytes match,0SGD remains and final
+motor-after is pending active closeout. Next owned check01:30Shanghai.
+[Light receipt and limits](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0110-RECEIPT.json).
+
 The prospective rule requires2–8 native successes of20 in both screening and
 query confirmation, with fixed candidates/ranking and at most3 confirmations.
 Selected task/query bank freezes before any SGD. A fresh initial-native panel
