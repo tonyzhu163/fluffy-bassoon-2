@@ -8,8 +8,9 @@ recorded Gaussian/native base and captured known submitted original source plan.
 No later E/F recipe, physical-ordinal inference, invented execution or replacement
 of failed outcomes. Original whole producer results retain every failure/control
 and all tail records. All native executed masks/costs remain separate from full
-known submitted-plan masks; a failed04 final H32 may have32 known submitted slots
-but only16 executed slots, never32 physical actions.
+known submitted-plan masks; the actual failed04 final H32 keeps its full32 proposal but only16 submitted
+and16 executed slots. Other early termination can have32 submitted but fewer
+executed; masks, rather than proposal length, define loss and physical counts.
 
 The new adapter is `robotwin_command_diagnostic_bank`. Existing061 code is reused
 through explicit private routing hooks in this new commit. Its old APIs/defaults
@@ -69,7 +70,9 @@ frozen-gradient checks stay in force. Decoded physical14/arm12/grip2 error stays
 separate from normalized KV flow14/padded18 error. Interrupted slices resume
 exactly; they never shorten the endpoint or select a favorable VAL checkpoint.
 
-`CPU-PAYLOAD.sh` is the focused new delta suite. Existing owner may include the
+`CPU-PAYLOAD.sh` is the focused new delta suite. The parent has reserved one
+110inclusiveCPU-second original-phase gate; this is an owner-reported reservation,
+not actual consumption or a new1800 envelope. Existing owner may include the
 42 still-unqualified curve cases in that same finite clock if no newer actual
 pass exists. Do not repeat bank44/wide40/PARTIAL29/F33. `DATA-PAYLOAD.sh` assembles
 or seals only inside the existing owner's allocated Linux data clock. GPU
@@ -80,12 +83,22 @@ allocation. Actual ticket format equals the new profile format, operation is
 Before dispatch the owner binds an actual resource-plan receipt containing
 `diagnostic_purpose`, `source_eligible:false`, `admitted:true`, `clock_root`,
 `clock_contract`, `stage_gpu_limits:{cache04:<actual>,fit:<actual>}`,
-`prior_cost_receipts:[{path,sha256},...]` and `storage_admission:{path,sha256}`.
+`fit_head_gpu_limits:{action:<actual>,kv:<actual>}`,
+`prior_cost_receipts:[{path,sha256},...]`, `storage_admission:{path,sha256}`,
+`fit_topology:"separate_one_gpu_physical_allocations"` and
+`other_fit_ticket_receipts:[{path,sha256},...]` for every other already booked
+fit allocation. Current ticket is supplied directly, avoiding a hash cycle.
 Each prior/storage receipt is hash checked. Existing qualified7eef begin/finish
-helper books fixed lineages `fixed12-command-diagnostic/cache04` or `/fits`
-with matching `lineage_seconds`; all related actual charges/open reservations
-count against the same stage ceiling, never per-attempt resets. One physical
-allocation covering multiple fit children is booked/settled once. Parent
+helper books fixed lineages `fixed12-command-diagnostic/cache04`, `/fit-action` or `/fit-kv`
+with matching per-head `lineage_seconds`; every actual/open/failed/resumed
+head charge counts against its own immutable head cap and the shared fit-stage
+ceiling. Sum of head caps must fit the stage cap. Different heads may be admitted
+concurrently; only same-head continuation is serial. No cross-head borrowing or
+per-attempt reset. Unknown/stale fit lineages are refused. This per-head concurrent route supports SEPARATE one-GPU physical
+allocations only: immutable current/other tickets must map every booked row to
+a unique actual host. One physical allocation must never be booked twice. A
+grouped two-head job is not supported by these per-head tickets and requires an
+explicit grouped owner route before use; no allocator is added here. Parent
 controls concurrency only after capacity qualification and private motor contexts.
 Actual finite startup/failure/cleanup clocks, storage and full cache identities
 are required; templates/null estimates are not launch authority.
@@ -100,9 +113,14 @@ aggregate2GiB and each head aggregate16GiB across all failed/resumed children;
 actual16GiB shared free plus write/fsync/unlink is checked before model work.
 
 The adopted diagnostic readout proposal is separately frozen in
-`READOUT-PROPOSAL.json`: case-major04/08/09/10/11 × native/wide5000/KV5000,
+`READOUT-PROPOSAL-V2.json`: case-major canonical04/08/09/10/11 × native/wide5000/KV5000,
 15 natural episodes/max6000 actions, native H400/H32. It fixes reset/private
 motor seeds and same per-case global forks before outcomes, includes physical
-qualification inside first native only, and discloses TRAIN04/VAL08..11 reuse.
+qualification inside first native only, and discloses deliberate TRAIN04/VAL08..11 exposure. Parent explicitly amended
+physical resets PRE-OUTCOME to4/11/14/16/18 while keeping privateVLA20261301+
+RECORD-ID, not reset seed. Old97c1 proposal is retained unchanged. The v2 JSON
+binds original a80 demos and named original result/reset/instruction/manifest
+fields; `DATA_OPERATION=readout-bindings` resolves them against the actual bank
+before physical admission. This metadata correction does not gate CPU/cache/fits.
 This is neither locked32 nor a population/source claim. Existing owner/control
 factory implements and launches it; no duplicate readout driver is added here.
