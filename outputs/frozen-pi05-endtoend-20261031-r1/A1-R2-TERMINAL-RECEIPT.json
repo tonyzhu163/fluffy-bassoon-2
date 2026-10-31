@@ -1,0 +1,500 @@
+{
+  "format": "frozen_pi05_a1_r2_terminal_independent_receipt_v1",
+  "checked_utc": "2026-10-31T11:18:58.293451+00:00",
+  "job_id": "job-zp47pliu429f",
+  "scheduler_status": "Succeeded",
+  "scheduler_row": "mwj_1031_frozen_pi05_a1_g1_r2_969fb44 job-zp47pliu429f \u6210\u529f; created 18:54:06; ended 19:12:27; UI duration 18m10s",
+  "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+  "governing_grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
+  "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
+  "status": "complete_restricted_development_search",
+  "exit_code": "0",
+  "observed_snapshots": [
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/check-1918.json",
+      "sha256": "33f0fe436d25041b791d72b87c059d2b8591089413a0f7527dd68e0bbe4a1c01",
+      "bytes": 505518
+    },
+    {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/terminal-r2-bounded-1918.json",
+      "sha256": "588124f2ff5487424b5f00c887a54cd6e7e18bd15cb3e0e788650f90821351ce",
+      "bytes": 29355
+    }
+  ],
+  "result_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/a1-r2/experiment/result.json",
+    "bytes": 258569,
+    "sha256": "aece67fdfd33af52653dd74587424450571288a26e03be18a0f1d99721fe3538"
+  },
+  "full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/a1-r2/experiment/recovery.pt",
+    "bytes": 264033,
+    "sha256": "39776d2e5a6cbb78a57c57c7a45695d670ea2d782fa915d238ee44250113aa11",
+    "expected_sha256": null,
+    "matched": null
+  },
+  "recovery_stable_equal": true,
+  "planned_conditional_grid": {
+    "development_cases": 16,
+    "failure_cases": [
+      1,
+      2,
+      3
+    ],
+    "search_episodes": 27,
+    "confirmation_episodes": 8,
+    "expected_episodes": 51,
+    "actual_episodes": 51,
+    "missing": [],
+    "unexpected": [],
+    "all_complete": true,
+    "no_pending": true
+  },
+  "stages": {
+    "development": {
+      "episodes": 16,
+      "successes": 4,
+      "actions": 5355
+    },
+    "search": {
+      "episodes": 27,
+      "successes": 4,
+      "actions": 9815
+    },
+    "confirmation": {
+      "episodes": 8,
+      "successes": 3,
+      "actions": 2421
+    }
+  },
+  "development_task_scores": {
+    "place_phone_stand": {
+      "successes": 1,
+      "episodes": 8
+    },
+    "place_object_stand": {
+      "successes": 3,
+      "episodes": 8
+    }
+  },
+  "independent_development_case_results": [
+    {
+      "case": 1,
+      "arm": "noise",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 1,
+      "arm": "kv",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 1,
+      "arm": "action",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 2,
+      "arm": "noise",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 2,
+      "arm": "kv",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 2,
+      "arm": "action",
+      "search_successes": 0,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 0,
+      "native_confirmation_successes": 0,
+      "native_confirmation_episodes": 0,
+      "repeated_recovery": false
+    },
+    {
+      "case": 3,
+      "arm": "noise",
+      "search_successes": 1,
+      "searched_episodes": 3,
+      "confirmation_successes": 1,
+      "confirmation_episodes": 2,
+      "native_confirmation_successes": 1,
+      "native_confirmation_episodes": 2,
+      "repeated_recovery": false
+    },
+    {
+      "case": 3,
+      "arm": "kv",
+      "search_successes": 2,
+      "searched_episodes": 3,
+      "confirmation_successes": 1,
+      "confirmation_episodes": 2,
+      "native_confirmation_successes": 1,
+      "native_confirmation_episodes": 2,
+      "repeated_recovery": false
+    },
+    {
+      "case": 3,
+      "arm": "action",
+      "search_successes": 1,
+      "searched_episodes": 3,
+      "confirmation_successes": 0,
+      "confirmation_episodes": 2,
+      "native_confirmation_successes": 1,
+      "native_confirmation_episodes": 2,
+      "repeated_recovery": false
+    }
+  ],
+  "independent_summary_equals_producer": true,
+  "strict_confirmed_rescue_case_counts": {
+    "noise": 0,
+    "kv": 0,
+    "action": 0
+  },
+  "eligible_arms": [],
+  "selected_arm": null,
+  "paired_confirmation_rows": [
+    {
+      "case": 3,
+      "repeat": 0,
+      "arm": "noise",
+      "native_success": true,
+      "success": true,
+      "native_actions": 142,
+      "actions": 139,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    },
+    {
+      "case": 3,
+      "repeat": 0,
+      "arm": "kv",
+      "native_success": true,
+      "success": true,
+      "native_actions": 142,
+      "actions": 140,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    },
+    {
+      "case": 3,
+      "repeat": 0,
+      "arm": "action",
+      "native_success": true,
+      "success": false,
+      "native_actions": 142,
+      "actions": 400,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    },
+    {
+      "case": 3,
+      "repeat": 1,
+      "arm": "noise",
+      "native_success": false,
+      "success": false,
+      "native_actions": 400,
+      "actions": 400,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    },
+    {
+      "case": 3,
+      "repeat": 1,
+      "arm": "kv",
+      "native_success": false,
+      "success": false,
+      "native_actions": 400,
+      "actions": 400,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    },
+    {
+      "case": 3,
+      "repeat": 1,
+      "arm": "action",
+      "native_success": false,
+      "success": false,
+      "native_actions": 400,
+      "actions": 400,
+      "motor_seed_equal": true,
+      "initial_identity_equal": true
+    }
+  ],
+  "reset_identity_checks": [
+    {
+      "episode": "confirm-place_phone_stand-03-action-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-action-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-kv-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-kv-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-native-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-native-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-noise-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "confirm-place_phone_stand-03-noise-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-action-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-action-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-action-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-kv-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-kv-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-kv-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-noise-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-noise-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-01-noise-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-action-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-action-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-action-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-kv-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-kv-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-kv-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-noise-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-noise-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-02-noise-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-action-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-action-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-action-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-kv-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-kv-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-kv-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-noise-0",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-noise-1",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    },
+    {
+      "episode": "search-place_phone_stand-03-noise-2",
+      "reset_identity_equal": true,
+      "instruction_equal": true,
+      "policy_reset_actions": 0
+    }
+  ],
+  "all_episode_manifest_hashes_match": true,
+  "manifest_count": 51,
+  "newest_raw_file_hashes_and_crc_match": true,
+  "sampled_motor_rng_present": true,
+  "sampled_optimizer_updates": 0,
+  "qualification_passed": true,
+  "terminal_frozen_parameter_guard_passed_by_exit0": true,
+  "frozen_motor_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "costs": {
+    "r1_gpu_seconds": 632,
+    "r2_gpu_seconds": 1138,
+    "phase_cumulative_gpu_seconds": 1770,
+    "remaining_phase_gpu_seconds": 27030,
+    "remaining_a1_gpu_seconds": 5430,
+    "original_native_actions": 5355,
+    "new_r2_actions": 12236,
+    "cumulative_actions": 17591,
+    "producer_snapshot_actions": 17591,
+    "all_complete_episode_action_sum_equals_snapshot": true,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "remaining_phase_actions": 282409,
+    "remaining_a1_actions": 12409,
+    "producer_storage_bytes": 241450300,
+    "phase_cpu_worker_seconds": 331,
+    "remaining_phase_cpu_worker_seconds": 1469
+  },
+  "independent_full_action_journal_replay": false,
+  "checkpoint_deserialized": false,
+  "limitations": "Bounded saved metadata, all episode-manifest bytes and one newest raw sample were checked. Canonical snapshot is hash-bound, not a full independent event replay. This fixed four-coefficient development search gives no eligible arm under the predeclared confirmation rule; it does not test the complete learned reactive KV/action classes or establish held-out adaptation. No source admission or new run was made.",
+  "next_action": "Keep terminal A1 immutable; report to coordinator for the next concrete within-scope plan. Task57 continues independently; next owned read 19:36 Shanghai."
+}
