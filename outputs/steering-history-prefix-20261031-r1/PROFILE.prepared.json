@@ -32,7 +32,7 @@
     2,
     4
   ],
-  "prefix_episodes": 12,
+  "prefix_episodes": 24,
   "teacher_lineage_ids": {
     "calibration_minus": "sac_calibration_minus_train1",
     "calibration_plus": "sac_calibration_plus_train1"
@@ -51,16 +51,16 @@
   ],
   "fit": {
     "seed": 0,
-    "updates": 100,
-    "width": 64,
-    "layers": 1,
+    "updates": 2500,
+    "width": 128,
+    "layers": 2,
     "heads": 4,
     "context_length": 256,
-    "batch_size": 4,
-    "eval_every": 25,
-    "validation_batches": 4,
+    "batch_size": 8,
+    "eval_every": 250,
+    "validation_batches": 16,
     "learning_rate": 0.0003,
-    "max_seconds_per_fit": 180
+    "max_seconds_per_fit": 360
   },
   "shared_reservation": {
     "owner": "Plan VLA in-context learning / finish_assembly",
@@ -68,7 +68,7 @@
     "pilot_gpu_seconds": 28800,
     "pilot_actions": 300000,
     "pilot_storage_bytes": 68719476736,
-    "fit_gpu_seconds": 720,
+    "fit_gpu_seconds": 1440,
     "evaluation_bucket": "student_evaluation",
     "evaluation_actions": 105000
   },
@@ -113,5 +113,6 @@
   ],
   "reset_policy_action_bound": null,
   "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
-  "wrong_task_action_limit": null
+  "wrong_task_action_limit": null,
+  "fit_purpose": "First scientific matched pilot; 100-update settings exist only in synthetic wiring fixtures"
 }

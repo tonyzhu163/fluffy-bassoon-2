@@ -44,7 +44,7 @@ def profile():
             batch_size=4, eval_every=25, validation_batches=4, learning_rate=.0003, max_seconds_per_fit=180),
         shared_reservation=dict(owner="existing LIBERO root / finish_assembly", pilot_id="synthetic-pilot",
             pilot_gpu_seconds=28800, pilot_actions=300000, pilot_storage_bytes=64 * 1024**3,
-            fit_gpu_seconds=720, evaluation_bucket="student_evaluation", evaluation_actions=84000))
+            fit_gpu_seconds=720, evaluation_bucket="student_evaluation", evaluation_actions=105000))
 
 
 def raw_observation(value):
@@ -54,7 +54,10 @@ def raw_observation(value):
 
 
 @pytest.fixture
-def source(tmp_path):
+def source(tmp_path, monkeypatch):
+    # Component fixtures exercise history projection and independent objective
+    # gates. Production A2 verification is covered with raw24 cells separately.
+    monkeypatch.setattr(sh, "verify_condition_cross", lambda *args, **kwargs: None)
     torch.set_num_threads(1)
     p = profile()
     interface_ref = json_ref(tmp_path / "native-interface.json", dict(motor_sha256=p["interface"]["motor_sha256"],
@@ -124,6 +127,7 @@ def source(tmp_path):
         qualification = dict(condition_id=condition, interface_sha256=p["interface"]["control_interface_sha256"],
             teacher_lineage_id=selected["lineage_id"],
             label_sampling_mode="sampled_gaussian",
+            baseline_sampling_mode="bounded_uniform",
             teacher_kind="noise_sac", teacher_recovery=selected["final_recovery"],
             actor_parameter_sha256=parameter_digest(torch.load(selected["final_recovery"]["path"], weights_only=False)["actor"]),
             baseline_recovery=selected["initial_recovery"],
@@ -137,14 +141,18 @@ def source(tmp_path):
 
 def test_exact_four_block_grid_charges_support_once():
     plan = sh.evaluation_plan(profile())
-    assert len(plan["cards"]) == 80
+    assert len(plan["cards"]) == 88
     assert sum(row["episodes"] for row in plan["supports"]) == 56
-    assert plan["maximum_complete_episodes"] == 136
-    assert plan["maximum_actions"] == 81600
+    assert plan["maximum_complete_episodes"] == 144
+    assert plan["maximum_actions"] == 86400
     assert len({x["id"] for x in plan["supports"]}) == len(plan["supports"])
     intact = [x for x in plan["cards"] if x["policy"] == "ad-full" and x["case_id"] == "q0" and x["lesion"] == "intact"]
     assert [x["k"] for x in intact] == [0, 1, 2, 4]
     assert len({x["reset_seed"] for x in intact}) == len({x["action_seed"] for x in intact}) == 1
+    transfer=[x for x in plan["supports"] if "task" in x]
+    assert len(transfer)==4 and all(x["episodes"]==2 for x in transfer)
+    wrong=[x for x in plan["cards"] if x["lesion"]=="wrong-condition"]
+    assert len(wrong)==8 and all(x["k"]==4 for x in wrong)
 
 
 @pytest.mark.parametrize("objective", ["ad", "dpt"])

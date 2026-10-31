@@ -44,6 +44,7 @@ def parser():
     p.add_argument("--max-episodes-per-window", type=int)
     p.add_argument("--updates", type=int, default=1000)
     p.add_argument("--batch-size", type=int, default=8)
+    p.add_argument("--execution-batch-size", type=int)
     p.add_argument("--learning-rate", type=float, default=3e-4)
     p.add_argument("--eval-every", type=int, default=100)
     p.add_argument("--validation-batches", type=int, default=4)
@@ -58,18 +59,29 @@ def parser():
     return p
 
 
-def supervised_update(policy, optimizer, batch, *, mode):
+def supervised_update(policy, optimizer, batch, *, mode, execution_batch_size=None):
+    started=time.monotonic()
     policy.train()
     optimizer.zero_grad(set_to_none=True)
-    loss = policy.sequence_nll(*batch, mode=mode)
-    if not torch.isfinite(loss):
-        raise RuntimeError("Non-finite history-controller imitation loss")
-    loss.backward()
+    width=batch[0].shape[1]
+    execution=width if execution_batch_size is None else execution_batch_size
+    if type(execution) is not int or execution<1:
+        raise ValueError("Execution batch must be positive; saved logical batch is unchanged")
+    positions=int(batch[2].sum());value=0.
+    for start in range(0,width,execution):
+        part=tuple(x[:,start:start+execution] for x in batch)
+        loss=policy.sequence_nll(*part,mode=mode)
+        if not torch.isfinite(loss):raise RuntimeError("Non-finite history-controller imitation loss")
+        weight=int(part[2].sum())/positions
+        (loss*weight).backward();value+=float(loss.detach())*weight
     norm = torch.nn.utils.clip_grad_norm_(policy.parameters(), 1., error_if_nonfinite=True)
     optimizer.step()
     if any(not torch.isfinite(value).all() for value in policy.parameters()):
         raise RuntimeError("Non-finite history-controller parameters")
-    return dict(nll=float(loss.detach()), gradient_norm=float(norm))
+    device=next(policy.parameters()).device
+    return dict(nll=value,gradient_norm=float(norm),update_seconds=time.monotonic()-started,
+        valid_positions=positions,logical_batch_size=width,execution_batch_size=min(execution,width),
+        cuda_peak_allocated_bytes=torch.cuda.max_memory_allocated(device) if device.type=="cuda" else 0)
 
 
 @torch.no_grad()
@@ -108,6 +120,8 @@ def main(argv=None):
             raise ValueError("Training/evaluation counts must be positive")
     if args.max_episodes_per_window is not None and (args.max_episodes_per_window < 1 or args.full_trial_batches):
         raise ValueError("Choose a positive complete-episode window cap or full-trial batches")
+    if args.execution_batch_size is not None and args.execution_batch_size<1:
+        raise ValueError("Execution batch must be positive; do not change global batch or loss weighting")
     if (not 0 <= args.seed < 2**32 or not math.isfinite(args.learning_rate) or args.learning_rate <= 0
             or not math.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0):
         raise ValueError("Invalid seed/optimization budget")
@@ -175,7 +189,7 @@ def main(argv=None):
     for update in range(start_update + 1, args.updates + 1):
         batch = sample_batch(train, policy, sampler, batch_size=args.batch_size,
                              max_context=max_context, mode=args.mode, max_episodes=args.max_episodes_per_window)
-        metrics = supervised_update(policy, optimizer, batch, mode=args.mode)
+        metrics = supervised_update(policy, optimizer, batch, mode=args.mode,execution_batch_size=args.execution_batch_size)
         elapsed = elapsed_before + time.monotonic() - started
         terminal = update == args.updates or elapsed >= args.max_elapsed_seconds
         if update == 1 or update % args.eval_every == 0 or terminal:

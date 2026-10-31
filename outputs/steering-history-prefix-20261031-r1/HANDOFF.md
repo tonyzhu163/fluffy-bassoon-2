@@ -6,8 +6,8 @@ This does not qualify the motor, teacher, student or scientific result.
 
 One shared phase remains 28,800 GPU-s / 300,000 all-in actions / 64 GiB,
 owned by `Plan VLA in-context learning / finish_assembly`. No allocation is
-requested or created by this code. The prepared fit slice is four times 180 s,
-720 GPU-s total, subordinate to the shared parent clock. All readout actions
+requested or created by this code. The prepared fit slice is four times 360 s,
+1440 GPU-s total, subordinate to the shared parent clock. All readout actions
 use the exact `student_evaluation` bucket (105,000), with no per-child grant.
 
 ## Code/API ownership
@@ -65,8 +65,8 @@ sac_calibration_plus_validation2
 
 Predeclared label teachers are TRAIN1 (minus/plus), matching the collector's
 `teacher_label_selection`. One exact teacher labels BOTH partitions. A qualified
-snapshot may postdate the selected behavior prefix. First fit may use the common
-12-episode immutable boundary while collection continues; 24 is the initial
+snapshot is the exact final24 actor qualified by A2. First scientific fit uses the common
+24-episode immutable boundary; 12 remains pending data. 24 is the initial
 collection target and 48 remains only the cap. No whole-lineage filtering.
 
 The source prefix JSON has `format=frozen_vla_4d_source_prefix_v1`, `completed=true`,
@@ -114,22 +114,24 @@ independent, so failed AD learning does not block qualified DPT oracle fitting.
 `COMMANDS.txt` supplies the exact entry points. Export each admitted objective
 to a fresh directory, then emit its full/static argument vectors. The sole owner
 runs those vectors under the ONE existing shared clock and GPU probe. Four
-matched fits: seed0, width64/layer1/heads4, memory256, at most9 complete episodes
-per window, batch4, 100 updates, eval every25, 180 s maximum per fit. If runtime
-capacity does not reach the same 100-update endpoint, preserve `latest.pt` and
+matched fits: seed0, width128/layers2/heads4, memory256, at most9 complete episodes
+per window, batch8, 2500 updates, eval every250 with16 VAL batches, 360 s maximum per fit. If runtime
+capacity does not reach the same 2500-update endpoint, preserve `latest.pt` and
 report incomplete; no partial candidate is accepted for readout.
 
 `load_student` admits only the completed exact pinned fit. `evaluation_plan`
-predeclares 80 fresh queries plus 56 charged support episodes, 136 total. With
-both task horizons600 and zero reset policy actions:81,600 actions. Actual native
+predeclares 88 fresh queries plus 56 charged support episodes, 144 total. With
+both task horizons600 and zero reset policy actions:86,400 actions. Actual native
 source/donor horizons and reset bounds determine the exact cap; it must fit the
 105,000 `student_evaluation` slice BEFORE queries open. No K8 substitution.
 
 One 4-support prefix per full model/case is collected completely before querying.
 Clone empty/K1/K2/K4 policy memory/RNG and run separate physical-reset queries;
 query feedback never reaches later supports. K4 includes reset, reward blind,
-consistent reward shuffle, wrong-task, trained static and stationary retry/native
-controls. Fresh wrong-task donors are charged. Store exact case/model snapshot
+consistent reward shuffle, wrong-condition, trained static and stationary retry/native
+controls. Cross-task transfer uses two fresh donor supports per model/condition
+and K2 queries with matched calibration. One fixed source-VAL-selected blind
+policy supplies stationary retries for both conditions. Store exact case/model snapshot
 bindings and paired seeds. The independent 32-case confirmation remains unopened
 and outstanding for reliability/generalization claims. Report per-K query NLL,
 K0 mixed-label ambiguity, actual queried outcomes and all physical costs.

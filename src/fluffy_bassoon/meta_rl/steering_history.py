@@ -18,7 +18,7 @@ import sys
 PROFILE = "frozen_vla_4d_history_profile_v1"
 PREFIX = "frozen_vla_4d_source_prefix_v1"
 ASSEMBLY = "frozen_vla_4d_history_assembly_v1"
-HISTORY_LESIONS = ("intact", "reset", "reward-blind", "shuffle", "wrong-task")
+HISTORY_LESIONS = ("intact", "reset", "reward-blind", "shuffle", "wrong-condition", "cross-task-transfer")
 
 
 def digest(path):
@@ -150,27 +150,33 @@ def evaluation_plan(profile, *, validated=False):
                     cards.append(dict(case_id=block, condition_id=condition, policy=policy,
                         k=k, lesion="intact", support_id=support_id, reset_seed=query_seed,
                         action_seed=seed(f"scene-{scene}:query-actions")))
-                for lesion in ("reset", "reward-blind", "shuffle", "wrong-task"):
+                opposite_index = 1-condition_index
+                opposite_block = profile["locked_query_case_ids"][opposite_index*2+scene]
+                for lesion in ("reset", "reward-blind", "shuffle", "wrong-condition"):
                     cards.append(dict(case_id=block, condition_id=condition, policy=policy,
-                        k=4, lesion=lesion, support_id=(objective + ":wrong-task" if lesion == "wrong-task" else support_id),
+                        k=4, lesion=lesion, support_id=(opposite_block+":"+policy if lesion == "wrong-condition" else support_id),
                         reset_seed=query_seed, action_seed=seed(f"scene-{scene}:query-actions")))
+                cards.append(dict(case_id=block, condition_id=condition, policy=policy,k=2,
+                    lesion="cross-task-transfer",support_id=objective+":cross-task:"+condition,
+                    reset_seed=query_seed,action_seed=seed(f"scene-{scene}:query-actions")))
                 cards.append(dict(case_id=block, condition_id=condition, policy=objective + "-static",
-                    k=4, lesion="intact", support_id=None, context="static; matched K4 query only",
+                    k=4, lesion="intact", support_id=support_id, context="static; matched K4 support discarded",
                     reset_seed=query_seed, action_seed=seed(f"scene-{scene}:query-actions")))
             supports.append(dict(id=block + ":stationary", case_id=block, condition_id=condition,
-                policy="qualified-teacher", episodes=4, reset_seeds=support_seeds,
+                policy="stationary-reference", episodes=4, reset_seeds=support_seeds,
                 action_seed=seed(f"scene-{scene}:stationary-actions")))
             cards += [dict(case_id=block, condition_id=condition, policy="native", k=0,
                 lesion="intact", support_id=None, reset_seed=query_seed, action_seed=seed(f"scene-{scene}:native-actions")),
-                dict(case_id=block, condition_id=condition, policy="qualified-teacher", k=4,
+                dict(case_id=block, condition_id=condition, policy="stationary-reference", k=4,
                 lesion="stationary-retry", support_id=block + ":stationary", reset_seed=query_seed,
                 action_seed=seed(f"scene-{scene}:query-actions"))]
     for objective in ("ad", "dpt"):
-        supports.append(dict(id=objective + ":wrong-task", task=profile["wrong_task"],
-            policy=objective + "-full", episodes=4,
-            reset_seeds=[seed(f"wrong-task:support-{i}") for i in range(4)],
-            action_seed=seed("wrong-task:support-actions")))
-    # 56 support episodes + 80 independent reset queries = 136, not a Cartesian expansion.
+        for condition in profile["conditions"]:
+            supports.append(dict(id=objective+":cross-task:"+condition,task=profile["wrong_task"],condition_id=condition,
+                policy=objective+"-full",episodes=2,
+                reset_seeds=[seed(f"cross-task:support-{i}") for i in range(2)],
+                action_seed=seed("cross-task:support-actions")))
+    # 56 support episodes + 88 independent reset queries = 144.
     episodes = sum(row["episodes"] for row in supports) + len(cards)
     cap = ((episodes - 8) * profile["episode_action_limit"] + 8 * profile["wrong_task_action_limit"]
            + episodes * profile["reset_policy_action_bound"])
@@ -178,7 +184,8 @@ def evaluation_plan(profile, *, validated=False):
         raise ValueError("All charged support/query episodes exceed the owner's evaluation slice")
     return dict(supports=supports, cards=cards, maximum_complete_episodes=episodes, maximum_actions=cap,
                 query_snapshot_k=[0, 1, 2, 4], no_query_feedback_reuse=True, stochastic_students=True,
-                wrong_task_support="fresh donor episodes charged once; cloned/replayed for independent queries",
+                cross_task_support="8 fresh donors total:2 per model/condition; K2 same-condition transfer, not a negative control",
+                wrong_condition_support="K4 from actual opposite-condition same-model/scene public prefix; reconstructed, no cached-state relabeling",
                 final_32_case_confirmation="separate, unopened, required before a reliability claim",
                 scope="small paired pilot; no OOD, expert-data or ICRL competence claim")
 
@@ -213,6 +220,11 @@ def verify_control_qualification(ref, profile):
     # Safetensors FILE hash above and actual frozen TENSOR fingerprint here are distinct identities.
     return dict(driver_qualification=binding["driver_qualification"], frozen_tensor_sha256=q["frozen_before"],
                 motor_file_sha256=interface["motor_sha256"], actual_qualification_episode=q["complete_real_episode"])
+
+
+def verify_condition_cross(profile, prefix, *, objective):
+    from .steering_history_cross_admission import verify_condition_cross as verify
+    return verify(profile, prefix, objective=objective)
 
 
 def admit_prefix(profile, prefix, *, objective):
@@ -263,6 +275,7 @@ def admit_prefix(profile, prefix, *, objective):
     reserved = set(profile["locked_query_case_ids"])
     if not reserved or (cases["train"] | cases["validation"]) & reserved:
         raise ValueError("Source histories must exclude the predeclared locked query cases")
+    verify_condition_cross(profile, prefix, objective=objective)
     for condition in profile["conditions"]:
         gate_name = "learning_qualifications" if objective == "ad" else "teacher_qualifications"
         teacher = read_json(prefix[gate_name][condition])
@@ -276,16 +289,21 @@ def admit_prefix(profile, prefix, *, objective):
             raise ValueError("Require the exact same-mapping condition qualification and fixed fresh panel")
         if objective == "ad" or teacher.get("teacher_kind") == "noise_sac":
             if (selected is None or selected["partition"] != "train" or selected["condition_id"] != condition
-                    or (objective == "ad" and teacher.get("teacher_recovery") != selected["final_recovery"])
                     or (objective == "dpt" and teacher.get("teacher_lineage_id") != selected["lineage_id"])):
                 raise ValueError("Require the predeclared TRAIN teacher lineage and the exact qualified snapshot")
             reference(teacher["teacher_recovery"])
-        if objective == "ad" and teacher.get("baseline_recovery") != selected["initial_recovery"]:
-            raise ValueError("Measure AD learning against its exact initial source actor")
+        if objective == "ad":
+            final_identity = equivalent_acting(teacher["teacher_recovery"], selected["final_recovery"],
+                lineage=selected, profile=profile)
+            baseline_identity = equivalent_acting(teacher["baseline_recovery"], selected["initial_recovery"],
+                lineage=selected, profile=profile)
+            if (teacher.get("label_sampling_mode") != final_identity["sampling_mode"]
+                    or teacher.get("baseline_sampling_mode") != baseline_identity["sampling_mode"]):
+                raise ValueError("AD validation must measure the actual uniform/learned sampled behavior convention")
         if objective == "dpt" and teacher.get("teacher_kind") not in ("noise_sac", "constant_4d_oracle"):
             raise ValueError("DPT requires a qualified same-mapping SAC actor or explicit 4D oracle")
-        if objective == "dpt" and teacher.get("label_sampling_mode") != (
-                "sampled_gaussian" if teacher["teacher_kind"] == "noise_sac" else "fixed_coefficients"):
+        if objective == "dpt" and teacher.get("label_sampling_mode") not in (
+                ("sampled_gaussian", "deterministic_mean") if teacher["teacher_kind"] == "noise_sac" else ("fixed_coefficients",)):
             raise ValueError("Bind the exact physically qualified stochastic-actor or fixed-oracle label convention")
         if objective == "dpt" and teacher["teacher_kind"] == "constant_4d_oracle":
             oracle = read_json(teacher["oracle"])
@@ -373,7 +391,22 @@ def _check_source(lineage, profile, *, require_learning):
     return final
 
 
-def _teacher(state, *, seed):
+def equivalent_acting(validation_ref, prefix_ref, *, lineage, profile):
+    """Wrapper bytes can differ; actual actor/update/support must be identical."""
+    if sys.platform != "linux":
+        raise ValueError("Verify actual source checkpoint tensors only on allocated Linux")
+    from .robotwin_history_corpus import parameter_digest
+    a = _source_state(validation_ref, lineage=lineage, profile=profile)
+    b = _source_state(prefix_ref, lineage=lineage, profile=profile)
+    first, second = parameter_digest(a["actor"]), parameter_digest(b["actor"])
+    if a["contract"] != b["contract"] or a["updates"] != b["updates"] or first != second:
+        raise ValueError("Validation and published prefix have different actual acting weights or updates")
+    return dict(validation_input=deepcopy(validation_ref), prefix_snapshot=deepcopy(prefix_ref),
+        updates=int(a["updates"]), actor_parameter_sha256=first,
+        sampling_mode="bounded_uniform" if a["updates"] == 0 else "sampled_gaussian")
+
+
+def _teacher(state, *, seed, deterministic=False):
     """Load only the existing actor; use a separate labeling RNG, never source RNG."""
     import numpy as np
     import torch
@@ -393,7 +426,7 @@ def _teacher(state, *, seed):
     def label(observations):
         # The teacher remains on native public features, never student's previous-command suffix.
         result, _ = actor(torch.as_tensor(observations[:, :contract["observation_dim"]], dtype=torch.float32),
-                          generator=rng, deterministic=False)
+                          generator=rng, deterministic=deterministic)
         return result.numpy().astype(np.float32, copy=True)
     return label
 
@@ -558,7 +591,8 @@ def export_prefix(profile, prefix, output, *, objective, expected_hostname):
                 receipt = dict(receipt, labeling_seed=profile["fit"]["seed"] + 81000 + i,
                     labeling_order="sorted lineage IDs; chronological rows; TRAIN and VAL share this exact actor")
                 teacher_receipts[condition] = receipt
-                teachers[condition] = _teacher(state, seed=receipt["labeling_seed"])
+                teachers[condition] = _teacher(state, seed=receipt["labeling_seed"],
+                    deterministic=receipt["label_sampling_mode"] == "deterministic_mean")
             else:
                 coefficients = np.asarray(read_json(receipt["oracle"])["coefficients"], np.float32)
                 teachers[condition] = lambda observations, c=coefficients: np.tile(c, (len(observations), 1))
@@ -715,8 +749,10 @@ class FrozenCoefficientController:
 
     def act(self, observation):
         import numpy as np
-        return np.clip(self.controller.act(observation, deterministic=False),
-                       -self.interface["coefficient_limit"], self.interface["coefficient_limit"])
+        self.last_proposal=self.controller.act(observation, deterministic=False)
+        action=np.clip(self.last_proposal,-self.interface["coefficient_limit"],self.interface["coefficient_limit"])
+        self.last_clipped=action!=self.last_proposal
+        return action
 
     def observe(self, executed_coefficients, reward, done):
         import numpy as np
@@ -804,6 +840,7 @@ class DriverCoefficientStudent:
         # The qualified driver is the ONE owner of previous-command projection/reset state.
         augmented = np.asarray(self.control.student_observation(native), np.float32)
         c = self.history.controller
+        self.action_rng_before = c.generator.get_state().cpu().numpy().copy()
         self._before_act = {key: deepcopy(getattr(c, key)) for key in
                             ("state", "previous_noise", "previous_reward", "previous_done", "episode_start")}
         choice = self.history.act(augmented)
@@ -819,7 +856,9 @@ class DriverCoefficientStudent:
             steering_lineage_id=self.history.case_id, steering_condition_id=self.condition_id,
             steering_partition="evaluation", optimizer_updates=0,
             policy_version="frozen-history:" + self.history.model_identity,
-            student_input_sha256=hashlib.sha256(self.last_augmented_observation.tobytes()).hexdigest())
+            student_input_sha256=hashlib.sha256(self.last_augmented_observation.tobytes()).hexdigest(),
+            student_action_rng_before=self.action_rng_before.copy(),
+            student_gaussian_proposal=self.history.last_proposal.copy(),student_proposal_clipped=self.history.last_clipped.copy())
 
     def observe(self, observations, coefficients, reward, following, terminated, truncated, primitive_steps, corpus_ref):
         import numpy as np
@@ -878,7 +917,7 @@ class DriverCoefficientStudent:
         self.history.restore_state(snapshot, query_action_seed=query_action_seed)
 
 
-def query_nll(policy, manifest, *, interface, support, query, query_targets, seed, case_id, lesion="intact"):
+def query_nll(policy, manifest, *, interface, support, query, query_targets, seed, case_id, lesion="intact", primed_state=None):
     """Per-K query-only diagnostic on actual behavior; no teacher label is feedback.
 
     This is Gaussian coefficient surrogate NLL, not the clipped-action density,
@@ -888,7 +927,11 @@ def query_nll(policy, manifest, *, interface, support, query, query_targets, see
     import torch
     from torch.distributions import Normal
     controller = FrozenCoefficientController(policy, manifest, interface=interface, seed=seed, case_id=case_id, lesion=lesion)
-    permutation = controller.prime_support(support)
+    if primed_state is None:
+        permutation = controller.prime_support(support)
+    else:
+        controller.restore_state(primed_state, query_action_seed=seed)
+        permutation = []
     if len(query) != len(query_targets) or not query:
         raise ValueError("Require an actual query trace and one separate 4D label per query decision")
     losses = []

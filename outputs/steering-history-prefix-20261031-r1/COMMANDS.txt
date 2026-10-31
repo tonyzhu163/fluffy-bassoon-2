@@ -6,7 +6,7 @@ python -m fluffy_bassoon.meta_rl.steering_history export --profile <bound-profil
 python -m fluffy_bassoon.meta_rl.steering_history export --profile <bound-profile.json> --profile-sha256 <file-sha256> --prefix <immutable-prefix.json> --prefix-sha256 <file-sha256> --objective dpt --output <fresh-dpt-export> --expected-hostname <allocated-linux-host>
 
 # Each call emits TWO structured argv lists for existing vla_history_train, full/static.
-# Sole owner executes admitted argv under ONE shared fit clock, at most720GPU-s total.
+# Sole owner executes admitted argv under ONE shared fit clock, at most1440GPU-s total.
 python -m fluffy_bassoon.meta_rl.steering_history fit-commands --assembly <fresh-ad-export/assembly.json> --assembly-sha256 <file-sha256> --output <fresh-fit-root> --source-commit <this-qualified-commit> --expected-hostname <allocated-linux-host>
 python -m fluffy_bassoon.meta_rl.steering_history fit-commands --assembly <fresh-dpt-export/assembly.json> --assembly-sha256 <file-sha256> --output <fresh-fit-root> --source-commit <this-qualified-commit> --expected-hostname <allocated-linux-host>
 
