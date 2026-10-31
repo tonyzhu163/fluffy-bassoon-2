@@ -1,0 +1,56 @@
+{
+  "format": "command_capacity_readout_proposal_parent_review_v1",
+  "status": "scientific_matrix_accepted_resources_and_executable_unadmitted",
+  "purpose": "All12 command-plan capacity diagnostic, preserving failed04; not successful12 teacher admission or source/meta corpus",
+  "task_cases": [
+    4,
+    8,
+    9,
+    10,
+    11
+  ],
+  "conditions": [
+    "native",
+    "wide_final5000",
+    "KV_final5000"
+  ],
+  "physical_episodes": 15,
+  "horizon": 400,
+  "maximum_new_controller_actions": 6000,
+  "original_remaining_a1_actions": 6078,
+  "action_margin": 78,
+  "physical_qualification": "Embedded in first native episode; no extra episode, shortened trial or added reset policy actions",
+  "fit_endpoint": 5000,
+  "fit_selection": "Fixed final5000; no best-validation fallback. First100 are retained updates of same resumable schedule, not discarded smoke.",
+  "data": "Original12/8TRAIN4VAL, failed04 explicitly failed; original11 cache reused unchanged plus separately bound04 diagnostic cache. No old successful12 seal rewrite or filtering.",
+  "preoutcome_bindings_needed": [
+    "case/motor/global RNG schedule",
+    "condition order",
+    "native initial identity and instruction",
+    "exact diagnostic cache/profile/head/source hashes",
+    "finite inclusive per-head and readout clocks",
+    "measured batch capacity/update timing/storage",
+    "checkpoint/optimizer/sampler/private+global RNG resume"
+  ],
+  "old_phase_gpu_residual": 3748,
+  "rough_estimates_not_reservations": {
+    "head_each_GPU_seconds": 900,
+    "readout_GPU_seconds": 900
+  },
+  "resource_rule": "Use original residual only if exact inclusive reservations fit. Otherwise explicit linked continuation under actual per-job<8h authority; no splitting, borrowing, replenishing or truncating5000.",
+  "old_phase_cpu_used": 1682,
+  "old_phase_cpu_remaining": 118,
+  "tests": "Only meaningful new deltas in finite actual CPU allocation; no old-suite repeats.",
+  "gates_still_false": [
+    "successful12_teacher_bank",
+    "source_RL",
+    "AD_DPT_meta_training",
+    "new_mapping_A1_A2",
+    "locked32_readout",
+    "population_or_transfer_claim"
+  ],
+  "new_allocation_or_hold_created": false,
+  "implementation_owner": "01a18be4-a6ab-79a2-af3d-13f76308e253",
+  "scientific_coordinator": "01a19098-69e2-71a1-8cd7-5371c38e4453",
+  "sole_resource_owner": "/root/finish_assembly"
+}
