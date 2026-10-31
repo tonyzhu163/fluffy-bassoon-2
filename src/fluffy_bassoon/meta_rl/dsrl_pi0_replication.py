@@ -201,6 +201,25 @@ def restore_complete(path, expected_contract, agent, buffer, iterator, motor):
     return value['progress']
 
 
+def save_evaluation(output, agent, motor, progress, contract):
+    """Retain the exact policy and pre-panel RNG for each reported evaluation."""
+    import jax
+    from flax import serialization
+    from .vla_source40_corpus import save_motor_rng
+    folder = Path(output)/'evaluation-checkpoints'
+    folder.mkdir(exist_ok=True)
+    path = folder/f"{progress['updates']:06d}.pkl"
+    payload = dict(contract=contract, progress=dict(progress),
+        agent=serialization.to_bytes(agent._save_dict),
+        agent_rng=np.asarray(jax.device_get(agent._rng)),
+        motor_rng=save_motor_rng(motor._rng), numpy_rng=np.random.get_state(),
+        python_rng=random.getstate(), boundary='before evaluation panel; replay in full recovery')
+    with path.open('xb') as stream:
+        pickle.dump(payload, stream, protocol=5)
+    atomic_json(path.with_suffix('.json'), dict(path=path.name, sha256=file_hash(path),
+        bytes=path.stat().st_size, updates=progress['updates']))
+
+
 class LocalLogger:
     def __init__(self, output):
         self.path = Path(output)/'metrics.jsonl'
@@ -286,6 +305,7 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
                 for _ in range(count):
                     i = progress['updates']
                     if i == 0:
+                        save_evaluation(output, agent, agent_dp, progress, contract)
                         capture.role, capture.updates = 'query', i
                         upstream.perform_control_eval(agent, capture, i, variant, wandb_logger, agent_dp)
                         capture.finish()
@@ -301,6 +321,7 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
                             raise RuntimeError('Nonfinite SAC update metric')
                         wandb_logger.log({'training/'+key: value for key, value in finite.items()}, i)
                     if i % variant.eval_interval == 0:
+                        save_evaluation(output, agent, agent_dp, progress, contract)
                         wandb_logger.log(dict(num_online_samples=len(replay_buffer),
                             num_online_trajs=progress['episodes'], env_steps=progress['training_primitives']), i)
                         capture.role, capture.updates = 'query', i

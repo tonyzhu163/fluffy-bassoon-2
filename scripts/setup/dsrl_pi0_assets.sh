@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact reviewed code}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_ID=dsrl-pi0-task57-20261101-prep-r5
+TASK_ID=dsrl-pi0-task57-20261101-prep-r7
 TASK_RUNTIME=dsrl-pi0-task57-20261101-prep-r4
 TASK_CODE=$(pwd)
 TASK_OUT=$TASK_ROOT/outputs/$TASK_ID
@@ -37,9 +37,13 @@ value=dict(hostname=socket.gethostname(),source_commit=source,physical_gpu_devic
 print(json.dumps(value),flush=True)
 PY
 export CUDA_VISIBLE_DEVICES='' JAX_PLATFORMS=cpu PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
-"$TASK_PY" -m pytest -q -p no:cacheprovider \
+if ! "$TASK_PY" -m pytest -q -p no:cacheprovider \
   --junitxml="$TASK_OUT/qualification.xml" tests/test_dsrl_pi0_replication.py \
-  > "$TASK_OUT/qualification.log" 2>&1
+  > "$TASK_OUT/qualification.log" 2>&1; then
+  cat "$TASK_OUT/qualification.log"
+  exit 1
+fi
+tail -n 2 "$TASK_OUT/qualification.log"
 "$TASK_PY" - "$TASK_OUT" "$TASK_CODE" "$TASK_SOURCE" <<'PY'
 import hashlib,json,pathlib,sys
 out,code,source=pathlib.Path(sys.argv[1]),pathlib.Path(sys.argv[2]),sys.argv[3]
