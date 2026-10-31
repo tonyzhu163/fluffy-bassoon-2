@@ -20,6 +20,7 @@ FIELD_PATHS = {
     'policy_statistics': 'training-rollouts:rollout_batch.prev_logprobs,prev_values,advantages,returns,loss_mask,loss_mask_sum,versions',
     'flow_chain32D': 'training-rollouts:rollout_batch.forward_inputs.chains,denoise_inds,model_action',
     'actual_sde_parameters_rng': 'sampling/*.pt.gz:actual_gaussian_parameters,rng_before,rng_after,forward_sampling_fields',
+    'actual_processed_model_state': 'sampling/*.pt.gz:processed_model_state (the actual normalized/padded Observation.state passed into native train prediction)',
     'producer_mapping': 'training-rollouts:collection_iteration=i,producing_policy_iteration=i-1; checkpoint global_step_i is AFTER update i',
     'chronology': 'pre-SGD [chunk_index, round_index*local_env_count+env_index,...]; traces retain rank/round/chunk/env identity',
     'roles': 'traces/sampling:evaluation_data; training-rollouts never contains evaluate() panels',

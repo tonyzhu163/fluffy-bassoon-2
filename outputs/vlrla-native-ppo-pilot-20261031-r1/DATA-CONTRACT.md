@@ -14,6 +14,7 @@ pending actual allocated-Linux validation; this document is not a runtime PASS.
 | Feedback and boundaries | Raw per-action rewards, terminations and truncations separately in `outputs[1:4]`, full raw infos; pre-SGD dones, loss masks and final bootstrap rows remain untrimmed |
 | Policy statistics/processed input | `training-rollouts/*.pt:rollout_batch`: old log probabilities, values, advantages/returns, masks, versions, raw replay input tensors and tokenized instruction |
 | Native flow state | Full `[time,batch,6,50,32]` chains, five denoise indices, normalized/padded32D model action, decoded14D action; shapes/dtypes are written in each JSON sidecar |
+| Processed state | `sampling:processed_model_state` observes the actual normalized/padded `Observation.state` entering native train prediction; it performs no second transform/model pass |
 | Actual Gaussian parameters | `sampling/rank-*/*.pt.gz:actual_gaussian_parameters`: each original sampler call's actual returned mean/std, integration index, method, coefficient and step count |
 | Sampler randomness | Per-prediction Python/NumPy/TorchCPU/CUDA RNG before/after, actual initial Gaussian `chains[:,0]`, and complete realized flow chain. No extra sampling or model pass is used by the logger. |
 | Terminal value-only calls | Sampling logs explicitly mark `terminal_value_only`; these unused action predictions are not AD behavior samples. |

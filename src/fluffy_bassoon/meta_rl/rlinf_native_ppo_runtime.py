@@ -223,6 +223,15 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
         self._pilot_prediction_ordinal = 0
         self._pilot_terminal_only = False
         self._pilot_eval_iteration = 0
+        self._pilot_processed_state = None
+        original_train_prediction = self.hf_model._predict_train
+
+        def recorded_train_prediction(observation, *args, **kwargs):
+            # This is the actual normalized/padded Observation entering the
+            # author's sampler, not a second normalization or inference pass.
+            self._pilot_processed_state = cpu_tree(observation.state)
+            return original_train_prediction(observation, *args, **kwargs)
+        self.hf_model._predict_train = recorded_train_prediction
 
         sampler.sample_mean_var = record_gaussian_parameters(original,
             lambda: self._pilot_sampling_steps, cpu_tree)
@@ -247,6 +256,7 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
     def _predict_rollout_actions(self, env_obs, mode='train', **kwargs):
         before = snapshot_rng()
         self._pilot_sampling_steps = []
+        self._pilot_processed_state = None
         try:
             actions, result = super()._predict_rollout_actions(env_obs, mode=mode, **kwargs)
             after = snapshot_rng()
@@ -266,6 +276,7 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
                 old_logprobs=cpu_tree(result.get('prev_logprobs')),
                 old_values=cpu_tree(result.get('prev_values')),
                 model_actions=cpu_tree(result.get('model_actions')),
+                processed_model_state=self._pilot_processed_state,
                 initial_gaussian_path='forward_sampling_fields.chains[:,0]',
                 noise_semantics='Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed',
                 frozen_sft_steering_target_compatible=False)
