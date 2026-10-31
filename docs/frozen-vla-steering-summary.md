@@ -52,6 +52,13 @@ LIBERO source expansion remains pending; it is not divided into smaller jobs
 to bypass the threshold. Actual allocations and first progress still need
 verification. The original32h pool and RoboTwin grant remain separate.
 
+First actual launch evidence: RoboTwin job-twcl47ph8lnz is Running on its
+0GPU/8CPU/64GiB allocation; source inventory passed218,947files/87,674,977,118
+bytes over62closed roots, and full projection is next. LIBERO worker0
+job-zt7xex96p71j is Running on1GPU/16CPU/96GiB since11:57:38Shanghai;
+remaining five submissions and actual probe/firstepisodes are being verified
+by its dedicated owner. These are execution milestones, not robot outcomes.
+
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before
 expanding that experiment. Verified numerical results stay in the method's
