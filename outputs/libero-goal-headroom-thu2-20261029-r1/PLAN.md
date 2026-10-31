@@ -1,5 +1,7 @@
 # LIBERO-Goal instruction-steering headroom (no training)
 
+**Superseded by [r2](../libero-goal-headroom-thu2-20261029-r2/PLAN.md), a retry after this run failed.**
+
 Dated plan, **2026-10-29**. Run identity `libero-goal-headroom-thu2-20261029-r1`,
 secondary school cluster (thu2). Code: `src/fluffy_bassoon/rl/libero_goal.py`,
 `scripts/diagnostics/libero_goal_headroom.py`, `tests/test_libero_goal_headroom.py`.

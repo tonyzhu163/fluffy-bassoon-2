@@ -1,5 +1,7 @@
 # Meta-World released-motor screen: failed initialization
 
+**Superseded by [r2](../metaworld-pi05-noise-baige-20261029-r2/README.md), a retry after this run failed.**
+
 Baige `job-amup9a8mp0ym`, source
 `4d4f46f4cdcd8cfd7c7056e95bf85d0a90e0ed59`. Scheduler terminal failure at
 2026-10-29 18:28:05 Asia/Shanghai after 2 minutes 10 seconds running; driver

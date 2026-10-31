@@ -1,5 +1,7 @@
 # Final100 AD-only CPU profile — prepared, not admitted
 
+**Superseded by [r4](../robotwin-final100-ad-export-20261031-r4/RESULTS.md), the completed export.**
+
 Prepared Oct31 after the original RoboTwin campaign closed. Human approval of
 the separate AD-first phase is pending elsewhere. This preparation performs no
 allocation, test, checkpoint/model load, data inventory, projection or export.

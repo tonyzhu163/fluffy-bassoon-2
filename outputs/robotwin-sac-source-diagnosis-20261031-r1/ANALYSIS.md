@@ -1,5 +1,7 @@
 # SAC source95: weak learning is not specific to PPO
 
+**Superseded by [r3](../robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md), the source100 analysis.**
+
 **PARTIAL: closed audited slice0055, source round95.** No source100 or final target-completion result is asserted. The named child endedexit0 with `verified_wall_budget_stop`, a complete round boundary,570completeK4trials and no pending trials. Its summary/file SHA and copied closed-child receipt are in `metadata-summary.json`. The active child, current checkpoint tensors, replay, frames and model parameters were not inspected or controlled.
 
 Source JSON/JSONL records reconcile exactly to **2280episodes,954873actual actions,30844chunk decisions**. There are **257/2280successes(11.27%)** and2023failures, all recorded returns0or1. No conflicting inherited metadata identities were found. The training blocks score **78/600(13.0%),57/600(9.5%),76/600(12.67%),46/480(9.58%)** over rounds1–25/26–50/51–75/76–95. There is no useful upward trend through this boundary.

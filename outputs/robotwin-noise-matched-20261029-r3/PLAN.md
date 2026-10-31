@@ -1,5 +1,7 @@
 # Asset-complete actual training retry
 
+**Superseded by [r4](../robotwin-noise-matched-20261029-r4/RESULTS.md), the completed run.**
+
 2026-10-29 Asia/Shanghai. Source `5f2d1c4fc7c1a5e93010aa530d9ab82234edd4fa`
 merges the reviewed latest remote main `26d8be7` and preserves the matched
 six-task experiment contract in r1. Prior r2 failed before any training

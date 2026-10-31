@@ -1,5 +1,7 @@
 # Native pi0.5 context pilot
 
+**Superseded by [r4](../native-vla-context-pilot-20261028-r4/RESULTS.md), the completed run; this plan's scope still applies.**
+
 Date: 2026-10-28 (Asia/Shanghai). Status: implementation ready for allocated
 Linux qualification; no successful model computation claimed by this plan.
 

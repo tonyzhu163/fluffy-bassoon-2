@@ -1,5 +1,7 @@
 # SAC65 residual CPU compatibility recovery
 
+**Superseded by [r6](../robotwin-sac65-cpu-compat-20261031-r6/RESULTS.md), the passing qualification.**
+
 **PREPARED, UNLAUNCHED, UNQUALIFIED.** A new exact-pin static review and owner
 admission remain required. This is the recovery of the original necessary
 CPU qualification, with unchanged scientific scope and immutable r1 retained.

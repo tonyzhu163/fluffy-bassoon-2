@@ -1,5 +1,7 @@
 # Privileged bounded tracker and controlled public-history qualification
 
+**Superseded by [r2](../pi05-tracker-gate-baige-20261028-r2/RESULTS.md), the run that executed.**
+
 The preceding learned private-theta heads succeeded3/6, tied with the frozen
 motor; the external label reference succeeded4/6. That small result leaves
 the existing flow interface's capacity unresolved and blocks longer paired

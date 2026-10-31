@@ -1,5 +1,7 @@
 # Diagnosed final100 export continuation, R2
 
+**Superseded by [r4](../robotwin-final100-ad-export-20261031-r4/RESULTS.md), the completed export.**
+
 Human phase authorization is unchanged: canonicalGRANT723194... permits7200
 aggregateCPU-worker-seconds,10800GPU-seconds,128GiB new logical storage and60000
 target actions. No repeated approval is needed. Original source collection is

@@ -1,5 +1,7 @@
 # Actual r2 preflight corrections and remaining SAC65 CPU gate
 
+**Superseded by [r6](../robotwin-sac65-cpu-compat-20261031-r6/RESULTS.md), the passing qualification.**
+
 **PREPARED ONLY. No r3 allocation, no runtime qualification.** Same scientific
 scope; no new GPU, robot, VLA, SGD, fitting or source100 authority. The execution
 owner retains exact-pin admission, deployment, proof capture, launch and cost.

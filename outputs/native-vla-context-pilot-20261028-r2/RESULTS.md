@@ -1,5 +1,7 @@
 # Native VLA context pilot: first GPU admission
 
+**Superseded by [r4](../native-vla-context-pilot-20261028-r4/RESULTS.md), the completed run.**
+
 Baige job `job-t9agduualjt2`, source
 `cb3182becab68d0c8221d9faffd6e72bf1c1c88a`, started 2026-10-28
 19:07:55 Shanghai. One RPBZZZ6, 16 CPU, 64 GiB RAM, 8 GiB SHM,

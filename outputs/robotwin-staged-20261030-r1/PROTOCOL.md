@@ -1,5 +1,7 @@
 # RoboTwin steering at three source-data scales
 
+**Superseded by [r2](../robotwin-staged-20261030-r2/PROTOCOL.md), the revised protocol that ran.**
+
 Prepared 2026-10-30 Asia/Shanghai. This is the next proposed source-learning
 run, with early evaluations instead of waiting for a 272k-action-per-arm run.
 No larger allocation has been launched. The previous proposal and all original

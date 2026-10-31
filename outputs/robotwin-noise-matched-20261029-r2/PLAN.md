@@ -1,5 +1,7 @@
 # Actual experiment retry after allocation-visibility fix
 
+**Superseded by [r4](../robotwin-noise-matched-20261029-r4/RESULTS.md), the completed run.**
+
 2026-10-29 Asia/Shanghai. Scientific contract is unchanged from
 [r1](../robotwin-noise-matched-20261029-r1/PLAN.md): six-task source training,
 GTrXL/PPO versus source-pretrained feature-conditioned noise SAC and trained

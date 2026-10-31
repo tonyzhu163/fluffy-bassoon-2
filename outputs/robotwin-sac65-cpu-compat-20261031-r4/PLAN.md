@@ -1,5 +1,7 @@
 # SAC65 full CPU gate: local exact-code I/O correction
 
+**Superseded by [r6](../robotwin-sac65-cpu-compat-20261031-r6/RESULTS.md), the passing qualification.**
+
 **PREPARED ONLY. No r4 allocation or qualification.** The only new execution
 change materializes reviewed Git code locally so full code-identity checks do
 not stat the shared checkout. Scientific checks, guardians and source data stay

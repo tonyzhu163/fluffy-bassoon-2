@@ -1,5 +1,7 @@
 # Saved-trajectory PPO diagnostic, separate from the matched comparison
 
+**Superseded by [r2](../robotwin-saved-ppo-20261030-r2/RESULTS.md), the corrected diagnostic.**
+
 2026-10-30 Asia/Shanghai. Within the100seconds left of the original45GPU-minute
 envelope, request **one GPU, maximum one scheduler minute**, automatic retries
 off. No simulator, VLA weights or new robot actions. The Python process has a

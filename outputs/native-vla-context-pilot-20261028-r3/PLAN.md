@@ -1,5 +1,7 @@
 # Native VLA context pilot: stabilized history tokens
 
+**Superseded by [r4](../native-vla-context-pilot-20261028-r4/RESULTS.md), the completed run.**
+
 User instruction: "run it on baige". This is a bounded continuation of the
 direct native-context experiment described in
 [the method contract](../../docs/native-vla-context-icrl.md), using the r1

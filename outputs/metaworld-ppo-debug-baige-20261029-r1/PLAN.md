@@ -1,5 +1,7 @@
 # Checkpoint-based ML10 PPO diagnosis
 
+**Superseded by [r3](../metaworld-ppo-debug-baige-20261029-r3/PLAN.md), a retry after this run failed.**
+
 User goal: debug the ML10 benchmark and determine whether CTM/CMM hyperparameters need adjustment. The preceding goal turn made progress by establishing per-family concentration and ruling out longer evaluation as the sole explanation; it did not establish a causal diagnosis.
 
 Latest remote main reviewed at65b48a457f9cf1c9c9dcd1c9813ac9e53d5e0455 on2026-10-29 around01:00 Shanghai. Diagnostic code descends from that main and the qualified ML10 implementation. Keep active sources and contracts immutable. Existing CMM ML10 and supervised decay checks are owned by the complementary benchmark campaign; inspect their saved artifacts without duplicating, changing or stopping them.

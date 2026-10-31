@@ -1,5 +1,7 @@
 # CTM frozen ML10 clock diagnostic
 
+**Superseded by [r3](../metaworld-clock-debug-baige-20261029-r3/PLAN.md), a retry after this run failed.**
+
 User goal: debug CTM/CMM ML10 and assess settings. Original CTM job-rczwk9dd1v1e/sourcecd0128f completed80updates/10Msteps; checkpoint a34dff8decfef013bde1f74310c67709b5ae0689a2b1f89ed49848db51a58b18. Original evaluations use25episodes after training on5 with the training clock scale. CMM sibling frozen-clock test job-pgjw4p0j22ut/sourcea95271a has qualified8allocated tests and its first raw/capped pair is10.0/20.8% train success; remainingconditions and audit pending. Independently test CTM rather than transfer CMM conclusions.
 
 Same additive evaluator/tests as CMM, on CTM's own unchanged qualified runtime. Full PPO/core/env/train sources byte-identical to originalcd0128f. OneRPBZZZ6/16CPU/64GiB/8GiBSHM,15minute hardcap and820second driver. Launch only after paired CTM value control job-knyy09k3p6rr terminates exit0, retaining oneGPU per method. Sum original7290s + failed diagnostic131s + corrected diagnostic337s + actual value-control cost +this900second maximum must fit original21600s. No training interactions/optimizer updates/newtrainingseed; preserve parent and all diagnostics. Latestmain65b48a4 reviewed, ancestor of runtime source.

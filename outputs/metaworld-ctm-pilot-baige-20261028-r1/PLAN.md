@@ -1,5 +1,7 @@
 # Meta-World CTM pilot, 28 October 2026
 
+**Superseded by [r2](../metaworld-ctm-pilot-baige-20261028-r2/PLAN.md), a retry after this run failed.**
+
 User authorized testing state-based meta-RL before expanding VLA integration,
 then explicitly selected Baige. Use a fresh exclusive one-GPU allocation,
 16 CPUs, 64 GiB RAM, 8 GiB shared memory, low queue priority and a 180-minute

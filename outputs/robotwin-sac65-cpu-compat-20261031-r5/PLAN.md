@@ -1,5 +1,7 @@
 # One separately admitted full SAC65 CPU qualification
 
+**Superseded by [r6](../robotwin-sac65-cpu-compat-20261031-r6/RESULTS.md), the passing qualification.**
+
 **PREPARED, NOT LAUNCHED OR QUALIFIED.** This changes operational identity,
 accounting and clocks only. The same150fixtures, complete source coverage,
 full-byte projection and paired AD/DPT export/audit remain mandatory. No new

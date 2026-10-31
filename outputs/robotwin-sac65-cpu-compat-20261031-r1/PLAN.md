@@ -1,5 +1,7 @@
 # Closed SAC65 CPU compatibility gate
 
+**Superseded by [r6](../robotwin-sac65-cpu-compat-20261031-r6/RESULTS.md), the passing qualification.**
+
 **PREPARED FOR OWNER STATIC REVIEW. Not launched or qualified.** The execution
 owner retains resource review, admission, deployment and UI launch. This is
 one fresh run, `robotwin-sac65-cpu-compat-20261031-r1`, with exactly0GPU/8CPU/

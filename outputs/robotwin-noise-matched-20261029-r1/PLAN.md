@@ -1,5 +1,7 @@
 # Frozen RoboTwin noise steering: initial matched-budget experiment
 
+**Superseded by [r4](../robotwin-noise-matched-20261029-r4/RESULTS.md), the completed run; this plan's contract still applies.**
+
 User-approved design, 2026-10-29 Asia/Shanghai. Launch actual source training
 as soon as preflight passes; do not substitute a shortened-recipe pilot.
 
