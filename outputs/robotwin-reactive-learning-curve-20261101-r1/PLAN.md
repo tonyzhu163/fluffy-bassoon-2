@@ -32,7 +32,10 @@ teacher coordinates, condition IDs and source cursors are loss/provenance only.
 
 Before each fit or resume, reconstruct a fresh zero head and require bitwise
 native proposals on every actual cached row with its captured Gaussian, and
-zero-KV cache identity or wide raw-command identity. No new proposal RNG draw,
+zero-KV cache identity or wide raw-command identity. KV compares the exact
+publicfloat32 command boundary used by unchanged backend.decode; action also
+requires actual raw-hook dtype equal to the cached training base before checking
+zero bits, so training and deployment precision cannot silently diverge. No new proposal RNG draw,
 physics reset or teacher inference. Runtime verifies actual frozen parameters
 and norm, loaded source blobs, selected CUDA/NVML mapping and the owner's saved
 allocation probe. Frozen motor gradients are forbidden and checked every update;
@@ -50,6 +53,8 @@ snapshot contains policy, optimizer, sampler NumPy, private Torch corruption RNG
 all four global RNG domains, complete-update counter, scientific/source/cache
 contract and milestone refs. The pointer changes only after file/directory fsync.
 An interruption leaves the prior generation valid and preserves orphan files.
+The owner reconciles any fully written orphan generation before a new allocation;
+a completed5000 orphan is audited as data, never a reporting-only GPU retry.
 Resume into a fresh child, require exact source/config/cache contract and hash
 all retained milestone policies, then restore the full state without replaying
 updates or resetting optimizer/RNG. Completed5000 endpoints cannot resume.

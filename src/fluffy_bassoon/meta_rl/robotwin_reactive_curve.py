@@ -106,9 +106,13 @@ def parity_check(kind,head,backend,records,*,guard):
                     cache=edited
                 targets=backend.model._sample_actions_from_prefix_cache(observation,batch['mask'],cache,noise=noise)
                 base=backend.model.decode_actions(targets,observation.state)
-                if not _bits_equal(base,batch['base14']):raise ValueError('Actual cached native base parity failed')
-                if kind=='action' and not _bits_equal(head(base,batch['features']).actions,base):
-                    raise ValueError('Wide zero head changed raw native command bits')
+                # Match the unchanged backend's public float32 command boundary.
+                if not _bits_equal(base.float(),batch['base14']):raise ValueError('Actual cached native base parity failed')
+                if kind=='action':
+                    if base.dtype!=batch['base14'].dtype:
+                        raise ValueError('Action-head runtime dtype differs from captured training base')
+                    if not _bits_equal(head(base,batch['features']).actions,base):
+                        raise ValueError('Wide zero head changed raw native command bits')
             backend._check_frozen();checked+=1
         if backend.env is not None:raise RuntimeError('Model-only parity created physics')
     finally:restore_rng(saved_rng)
