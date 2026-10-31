@@ -39,10 +39,21 @@ def main(started,gate):
     profile=json.loads(profile_raw)
     run=profile['run_id']
     clocks=(run,profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['external_TERM_seconds'],profile['external_KILL_seconds'])
-    gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460))
+    gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460),
+        ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280))
         and profile['bootstrap_wait_seconds']==120
         and profile['cleanup_reserve_seconds']==30 and profile['gpus']==0
         and profile['cpus']==8 and profile['memory_gib']==64,'Wrong software resources/clocks')
+    if 'readout' in profile:
+        prior=profile['prior_cpu_closure']
+        gate.require(sha(a.code_root/prior['path'])==prior['sha256'],'Closed software cost receipt changed')
+        closed=json.loads((a.code_root/prior['path']).read_text())
+        gate.require(run=='robotwin-ad500-software-qual-20261031-r1'
+            and closed['status']=='CLOSED_NO_ADMITTED_WORK' and closed['actual_worker_seconds']==139
+            and closed['unused_sealed_seconds']==461 and closed['old_sealed_borrow']==0
+            and profile['scheduler_cap_seconds']==300 and 139+300<=600
+            and profile['old_sealed_credit_seconds']==0,
+            'New readout-only CPU bound must count139 once, never borrow closed461 or add a new600')
     deadline=started+profile['global_work_seconds']
     hostname=socket.gethostname();code=a.code_root.resolve();out=a.output.resolve()
     gate.require(sys.platform=='linux' and out==Path('/mowenjie/fluffy-bassoon-2/outputs')/run
@@ -104,7 +115,8 @@ def main(started,gate):
             gate.require(local['completed'] and local['full_clean_git_status']
                 and local['original_head']==local['effective_head']==bound['pin'],'Wrong local source identity')
             roots[family]=Path(local['effective_code_root'])
-        for family in (('auxiliary',) if 'ad_predecessor' in profile else ('auxiliary','ad')):stage_family(family)
+        for family in (('auxiliary','readout') if 'readout' in profile else
+                       ('auxiliary',) if 'ad_predecessor' in profile else ('auxiliary','ad')):stage_family(family)
         auxiliary=roots['auxiliary'];reader=out/'private/qualified-c62-reader.py'
         result=run_phase('reader',['git','--no-pager','show',gate.READER_PIN+':'+gate.READER_PATH],auxiliary,reader,10)
         gate.require(result['returncode']==0 and sha(reader)==gate.READER_SHA,'Qualified corpus reader changed')
@@ -118,8 +130,9 @@ def main(started,gate):
                     path=str(auxiliary/BASE/'shared-runtime-path-metadata.json'),
                     sha256=profile['shared_runtime_metadata_sha256']),chain_reader=str(reader),
                 owned_helpers=str(a.owned_helpers),software_test_files=bound['tests'],
-                deselected_nodes=bound.get('deselected_nodes',[]),expected_fixture_tests=bound['expected_tests'],
-                teacher_plan=profile['teacher']['plan'],teacher_plan_sha256=profile['teacher']['plan_sha256'])
+                deselected_nodes=bound.get('deselected_nodes',[]),expected_fixture_tests=bound['expected_tests'])
+            if 'teacher' in profile:
+                c.update(teacher_plan=profile['teacher']['plan'],teacher_plan_sha256=profile['teacher']['plan_sha256'])
             path=target/'context.json';gate.write(path,c)
             result=run_phase(family+'-'+phase,[sys.executable,'-I','-B','-S',str(auxiliary/BASE/'phase_worker.py'),
                 '--phase',phase,'--context',str(path),'--context-sha256',sha(path)],roots[family],
@@ -139,36 +152,41 @@ def main(started,gate):
                     deselected_legacy_nodes=bound.get('deselected_nodes',[]))
             gate.write(out/(family+'-'+phase+'-result.json'),value)
             return passed,value
-        # AD is first and gets an independent durable receipt before teacher work.
-        if 'ad_predecessor' in profile:
-            prior={}
-            for key,ref in profile['ad_predecessor'].items():
-                gate.require(sha(ref['path'])==ref['sha256'],'Closed predecessor bytes changed: '+key)
-                prior[key]=json.loads(Path(ref['path']).read_text()) if key!='junit' else None
-            ad=prior['result'];imports=prior['imports'];account=prior['scheduler']
-            gate.require(ad['passed'] and ad['code_commit']==profile['ad']['pin']
-                and ad['counts']==dict(tests=108,failures=0,errors=0,skipped=0)
-                and ad['JUnit_sha256']==profile['ad_predecessor']['junit']['sha256']
-                and ad['imports_sha256']==profile['ad_predecessor']['imports']['sha256']
-                and not imports['denied_imports'] and not imports['forbidden_modules_loaded']
-                and imports['error'] is None and not imports['cuda_initialized']
-                and prior['terminal']['results']['ad']==ad and prior['terminal']['cleanup_error'] is None,
-                'Previous independent AD admission differs')
-            gate.require(account['allocation_id']=='job-2wg5ue74mpid' and account['scheduler_state']=='Failed'
-                and account['scheduler_running_seconds']==69 and account['gpus']==0
-                and account['cpus']==8 and account['memory_gib']==64
-                and profile['scheduler_cap_seconds']==480 and 69+480+51==600,
-                'Residual CPU authority must charge69once and seal51; no new600')
-            results['ad']=dict(ad,adopted_from=profile['ad_predecessor'],new_tests_run=0)
-            gate.write(out/'ad-software-tests-result.json',results['ad'])
+        if 'readout' in profile:
+            passed,results['readout']=worker('readout','software-tests')
+            gate.require(passed,'New readout software tests failed; preserve receipts, no automatic retry')
+            status='complete'
         else:
-            passed,results['ad']=worker('ad','software-tests')
-            gate.require(passed,'AD software qualification failed; no automatic retry')
-        stage_family('teacher')
-        passed,results['teacher_tests']=worker('teacher','software-tests')
-        if passed:
-            passed,results['teacher_source']=worker('teacher','source-admit')
-        status='complete' if passed else 'AD_passed_teacher_incomplete'
+            # AD is first and gets an independent durable receipt before teacher work.
+            if 'ad_predecessor' in profile:
+                prior={}
+                for key,ref in profile['ad_predecessor'].items():
+                    gate.require(sha(ref['path'])==ref['sha256'],'Closed predecessor bytes changed: '+key)
+                    prior[key]=json.loads(Path(ref['path']).read_text()) if key!='junit' else None
+                ad=prior['result'];imports=prior['imports'];account=prior['scheduler']
+                gate.require(ad['passed'] and ad['code_commit']==profile['ad']['pin']
+                    and ad['counts']==dict(tests=108,failures=0,errors=0,skipped=0)
+                    and ad['JUnit_sha256']==profile['ad_predecessor']['junit']['sha256']
+                    and ad['imports_sha256']==profile['ad_predecessor']['imports']['sha256']
+                    and not imports['denied_imports'] and not imports['forbidden_modules_loaded']
+                    and imports['error'] is None and not imports['cuda_initialized']
+                    and prior['terminal']['results']['ad']==ad and prior['terminal']['cleanup_error'] is None,
+                    'Previous independent AD admission differs')
+                gate.require(account['allocation_id']=='job-2wg5ue74mpid' and account['scheduler_state']=='Failed'
+                    and account['scheduler_running_seconds']==69 and account['gpus']==0
+                    and account['cpus']==8 and account['memory_gib']==64
+                    and profile['scheduler_cap_seconds']==480 and 69+480+51==600,
+                    'Residual CPU authority must charge69once and seal51; no new600')
+                results['ad']=dict(ad,adopted_from=profile['ad_predecessor'],new_tests_run=0)
+                gate.write(out/'ad-software-tests-result.json',results['ad'])
+            else:
+                passed,results['ad']=worker('ad','software-tests')
+                gate.require(passed,'AD software qualification failed; no automatic retry')
+            stage_family('teacher')
+            passed,results['teacher_tests']=worker('teacher','software-tests')
+            if passed:
+                passed,results['teacher_source']=worker('teacher','source-admit')
+            status='complete' if passed else 'AD_passed_teacher_incomplete'
     except BaseException as exc:
         failure=type(exc).__name__+': '+str(exc)
         raise

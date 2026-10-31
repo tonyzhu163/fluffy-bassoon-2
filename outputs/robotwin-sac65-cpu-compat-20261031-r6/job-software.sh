@@ -11,7 +11,9 @@ TASK_PROFILE_SHA=${7:?profile SHA256}
 (( $# == 7 || $# == 8 ))
 TASK_MODE=${8:-original}
 TASK_TERM=570
-if [[ "$TASK_MODE" == teacher-residual ]]; then TASK_TERM=450; else [[ "$TASK_MODE" == original ]]; fi
+if [[ "$TASK_MODE" == teacher-residual ]]; then TASK_TERM=450
+elif [[ "$TASK_MODE" == ad500-readout ]]; then TASK_TERM=270
+else [[ "$TASK_MODE" == original ]]; fi
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 trap 'TASK_RC=$?; if [[ -d "$TASK_OUT" ]]; then printf "%s\n" "$TASK_RC" > "$TASK_OUT/exit-code.txt"; fi' EXIT
 timeout --signal=TERM --kill-after=10s "$TASK_TERM" "$TASK_PYTHON" -I -B -S \
