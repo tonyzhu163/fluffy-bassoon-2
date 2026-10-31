@@ -1,0 +1,43 @@
+{
+  "format": "frozen_pi05_endtoend_phase_ledger_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "grant_sha256": "a07c22b46be5b4b19c64d63d87a572fbf50513ba1a55aa2c5ee43d6e20f57091",
+  "maximum_gpu_seconds": 28800,
+  "maximum_total_actions": 300000,
+  "maximum_output_bytes": 68719476736,
+  "maximum_cpu_worker_seconds": 1800,
+  "state": "funded_preparation_no_runtime_allocation_yet",
+  "gpu_attempts": [],
+  "cpu_attempts": [],
+  "physical_action_reservations": [],
+  "charged_gpu_seconds": 0,
+  "reserved_gpu_seconds": 0,
+  "charged_cpu_worker_seconds": 0,
+  "reserved_cpu_worker_seconds": 0,
+  "charged_actions": 0,
+  "reserved_actions": 0,
+  "uncertain_actions_ceiling": 0,
+  "initial_stage_envelope": {
+    "gpu_seconds": 7200,
+    "actions": 30000,
+    "included_in_total": true,
+    "reserved": false
+  },
+  "unassigned_after_initial_stage_envelope": {
+    "gpu_seconds": 21600,
+    "actions": 270000
+  },
+  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps.",
+  "authoritative_live_path": null,
+  "execution_owner": "/root/finish_assembly",
+  "canonical_action_ledger": {
+    "implementation": "CampaignBudget",
+    "maximum_total_actions": 300000,
+    "phase_caps": {
+      "a1": 30000
+    },
+    "live_path": null,
+    "header_bound": false,
+    "one_shared_header_and_journal": true
+  }
+}

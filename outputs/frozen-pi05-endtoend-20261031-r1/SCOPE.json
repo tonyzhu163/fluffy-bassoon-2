@@ -1,0 +1,73 @@
+{
+  "schema": "frozen_pi05_endtoend_scope_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "status": "preparation_authorized_runtime_not_yet_admitted",
+  "authorization": {
+    "goal_thread": "01a19098-69e2-71a1-8cd7-5371c38e4453",
+    "direct_human_objective": "coordinate and launch targeted experiments rigorously: how to steer a frozen VLA with the listed machinery; how to collect RL data; how to train DPT/AD Transformers on that RL data",
+    "standing_gpu_instruction": "stop asking for my approval for gpu hours <= 10",
+    "standing_instruction_receipt": "outputs/frozen-vla-standing-authorization-20261031-r1/AUTHORIZATION.json",
+    "scope_limit": "one targeted end-to-end pilot, separate from the pending 25h source campaign and all prior runs"
+  },
+  "phase_limits": {
+    "cumulative_gpu_seconds": 28800,
+    "all_in_simulator_actions": 300000,
+    "outputs_gib": 64,
+    "fresh_cpu_qualification_worker_seconds": 1800,
+    "per_child_replenishment": false,
+    "closed_grant_borrowing": false,
+    "includes": ["startup", "qualification", "search", "RL collection", "AD/DPT fitting", "all controls and evaluation", "failures", "retries", "cleanup", "complete recoveries"]
+  },
+  "first_stage_limits_within_phase": {
+    "gpu_seconds": 7200,
+    "all_in_simulator_actions": 30000,
+    "candidate_tasks": ["place_phone_stand", "place_object_stand"],
+    "development_resets_per_candidate": 8,
+    "maximum_selected_source_tasks": 1,
+    "control_arms": ["noise_coefficients", "native_KV_coefficients", "decoded_ALOHA_joint_coefficients"],
+    "coefficient_dimension": 4,
+    "restricted_search_maximum_native_failure_cases": 3,
+    "query_confirmation_bank_may_be_opened": false
+  },
+  "criteria_adopted_for_this_goal": {
+    "A1": "achieved search reachability on development cases, with restricted class and cost explicit; failure is not an impossibility proof",
+    "A2": "persistent condition dependence and transfer across fresh scenes, compared with mismatched and single context-blind controls",
+    "A3": "actual per-condition teacher learning lineages and qualified final teachers reused for AD/DPT, subject to measured improvement and competence",
+    "selection_confirmation": "development selection and fresh confirmation remain separate"
+  },
+  "teacher_profile_provisional_until_code_admission": {
+    "implementation": "existing NoiseSAC, new 4D coefficient profile; not a published DSRL replication",
+    "conditions": 2,
+    "independent_lineages_per_condition": 3,
+    "training_lineages_per_condition": 2,
+    "validation_lineages_per_condition": 1,
+    "episodes_per_lineage_maximum": 48,
+    "batch_size": 32,
+    "warmup_valid_chunks": 32,
+    "UTD": 4,
+    "updates": "between complete episodes, with exact transition duration and bootstrap handling",
+    "condition_definition": "must be evidence-backed and fixed before data collection; hidden from initial public inputs",
+    "all_old_defaults_unchanged": true
+  },
+  "student_targets": {
+    "models": ["AD full-history Transformer", "AD trained static Transformer", "DPT full-history Transformer", "DPT trained static Transformer"],
+    "AD": "actual chronological requested 4D controller choices, bound to the executed mapping and transition records",
+    "DPT": "query-only 4D labels from a qualified final per-condition controller; actual histories retained",
+    "context_maximum_complete_episodes": 8,
+    "frozen_query_support_budgets": [0, 1, 2, 4],
+    "controls": ["same-weight complete history reset", "reward blind", "consistent reward shuffle", "stationary retry", "trained static"],
+    "conditional_or_future_information_as_student_input": false
+  },
+  "binding_required_before_runtime": ["latest main review", "exact executable commit", "motor and normalization digests", "native cache/action conventions", "task and asset revisions", "search bases and seeds", "source-only partitions", "phase remaining-cost ledger", "allocated-resource probe and storage write/capacity checks"],
+  "execution_ownership": {
+    "coordinator": "Review coordination updates",
+    "sole_resource_owner": "Plan VLA in-context learning / finish_assembly",
+    "control_driver": "Clarify DSLR online RL post-training",
+    "condition_and_RL_collector": "existing master-plan owner",
+    "Transformer_profile": "Explain the paper testing matrix"
+  },
+  "active_worktrees_modified": false,
+  "task57_target_online_data_as_source": false,
+  "new_scheduler_job_id": null,
+  "scientific_completion_claim": false
+}
