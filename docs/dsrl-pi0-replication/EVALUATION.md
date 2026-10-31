@@ -9,7 +9,7 @@ OpenPI and LIBERO sources and distinguishes this work from Pi0.5.
 The single-seed pilot improved from 4/10 native successes to its first 10/10
 learned panel at 40k optimizer updates. It then scored 10/10 in 16 consecutive
 panels through 190k. The latest panel scored 10/10 at
-450k updates, after 23,000 replay query rows and 446,677 training primitive
+480k updates, after 24,500 replay query rows and 475,726 training primitive
 actions. Later panels below 10/10 were 200k: 9/10, 370k: 9/10; the full curve retains
 these dips and subsequent panels. The run is still active, with one seed and 10 evaluation
 episodes per panel. It does not establish the paper's three-seed aggregate or
@@ -63,6 +63,9 @@ its sample-efficiency confidence interval.
 | Learned SAC | 430000 | 22001 | 427267 | 10 | 10 | 1504 |
 | Learned SAC | 440000 | 22500 | 436953 | 10 | 10 | 1528 |
 | Learned SAC | 450000 | 23000 | 446677 | 10 | 10 | 1477 |
+| Learned SAC | 460000 | 23506 | 456490 | 10 | 10 | 1389 |
+| Learned SAC | 470000 | 24005 | 466153 | 10 | 10 | 1445 |
+| Learned SAC | 480000 | 24500 | 475726 | 10 | 10 | 1572 |
 
 The initial native panel completed at 2026-11-01 02:18:55 Shanghai after
 replay >500 warmup and before the first SAC update. It uses the original random
@@ -78,18 +81,18 @@ counts are separate units. This is directional evidence for the reported
 steering gain, with one seed and only 10 evaluation episodes per panel; it is
 not a claim of better sample efficiency than the published aggregate.
 
-At the direct allocation audit (`2026-11-01T07:05:51.439109+08:00`), the last published
-progress was 455,700 updates, 2,674 training episodes and 23,285 replay rows. The
-complete recovery at 453,940 updates and all 46 retained evaluation
-policy/RNG snapshots (0 through 450k) matched their saved SHA256 hashes.
+At the direct allocation audit (`2026-11-01T07:26:49.720981+08:00`), the last published
+progress was 488,900 updates, 2,888 training episodes and 24,945 replay rows. The
+complete recovery at 484,020 updates and all 49 retained evaluation
+policy/RNG snapshots (0 through 480k) matched their saved SHA256 hashes.
 The current process still held the allocated GPU's compute and graphics
-contexts. Current-run output was 7,581,558,211 bytes. The physical ledger,
+contexts. Current-run output was 8,092,131,673 bytes. The physical ledger,
 read separately during a live collection/update boundary, contained
-532,785 known actions and 400 pending actions. Retain
-the additional 400 pending actions from failed R3, for 533,585 conservatively
+569,308 known actions and 400 pending actions. Retain
+the additional 400 pending actions from failed R3, for 570,108 conservatively
 charged phase actions at that ledger read. Counting conservatively from job
 creation through this audit, plus prior failures, bounds cumulative GPU time
-at 18,291 seconds; the final worker lifetime is pending. The final before/after
+at 19,549 seconds; the final worker lifetime is pending. The final before/after
 motor hash comparison remains pending the run's terminal cleanup.
 
 During the 04:45 check, one NVML query reported compute-only activity for the
@@ -115,8 +118,8 @@ actions and 64 GiB output, including 660 conservatively charged GPU-seconds and
 400 unresolved actions from failed startup identities.
 
 [Initial receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
-[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0705.json),
-[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0705-DIRECT.json),
-[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0705-CURVE.csv),
+[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725.json),
+[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725-DIRECT.json),
+[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0725-CURVE.csv),
 [console evidence](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-EVIDENCE.log),
 [launch plan](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-LAUNCH-PLAN.json).
