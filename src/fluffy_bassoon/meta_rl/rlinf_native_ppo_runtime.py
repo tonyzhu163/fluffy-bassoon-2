@@ -114,6 +114,29 @@ class SidecarMixin:
 class PilotActor(SidecarMixin, EmbodiedFSDPActor):
     pilot_role = 'actor'
 
+    def compute_advantages_and_returns(self):
+        metrics = super().compute_advantages_and_returns()
+        # Official run_training subsequently shuffles/flattens and discards
+        # final bootstrap rows. Capture the actual complete batch BEFORE it.
+        policy_iteration = int(getattr(self, 'global_step', 0))
+        path = Path(self.cfg.native_pilot.output) / 'training-rollouts' / (
+            f'iteration-{policy_iteration+1:04d}-policy-{policy_iteration:04d}-rank-{self._rank:02d}.pt')
+        value = dict(format='rlinf_native_ppo_chronological_rollout_v1',
+            collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
+            worker_policy_version=getattr(self, 'version', None), rank=self._rank,
+            optimizer_steps_before=self.optimizer_steps, rng_before_sgd=snapshot_rng(),
+            rollout_epoch=int(self.cfg.env.train.rollout_epoch),
+            layout='time-major [chunk_index, round_index * local_env_count + env_index, ...]; terminal bootstrap rows retained',
+            rollout_batch=cpu_tree(self.rollout_batch),
+            evaluation_data=False, source6_pretraining_admission=False)
+        receipt = save_tensor(path, value)
+        write(path.with_suffix('.json'), dict(receipt, completed=True,
+            collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
+            rank=self._rank, optimizer_steps_before=self.optimizer_steps,
+            fields=sorted(self.rollout_batch), evaluation_data=False,
+            retention='unshuffled/untrimmed original batch plus computed advantages/returns'))
+        return metrics
+
     def _pilot_frozen_signature(self):
         digest, count, elements = hashlib.sha256(), 0, 0
         for name, parameter in self.model.named_parameters():
@@ -177,6 +200,10 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
 class PilotEnvironment(SidecarMixin, EnvWorker):
     pilot_role = 'env'
 
+    def set_global_step(self, global_step):
+        self._pilot_producing_policy_iteration = int(global_step)
+        return super().set_global_step(global_step)
+
     def init_worker(self):
         # Install only in this owned EnvWorker process, before native creation.
         import rlinf.envs.sim.robotwin.robotwin_env as module
@@ -227,6 +254,9 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 executed = int(mask.sum().item()) if mask is not None else requested
                 owner._pilot_journal.finish(slot, executed)
                 trace = dict(phase=owner._pilot_phase, journal_cursor=slot,
+                    evaluation_data=bool(env.cfg.is_eval),
+                    producing_policy_iteration=getattr(owner, '_pilot_producing_policy_iteration', 0),
+                    collection_iteration=getattr(owner, '_pilot_producing_policy_iteration', 0)+1,
                     reset_state_ids=env.reset_state_ids.clone(),
                     proposed_motor_actions=cpu_tree(actions), outputs=cpu_tree(result),
                     measured_valid_mask=mask is not None,

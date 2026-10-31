@@ -169,3 +169,27 @@ def test_sampler_and_eval_rng_survive_whole_boundary_restore(tmp_path):
     env.success_seeds = torch.arange(9)
     with pytest.raises(ValueError, match='seed inventory'):
         worker.pilot_restore(str(tmp_path))
+
+
+def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch, tmp_path):
+    import torch
+    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
+    actor = object.__new__(runtime.PilotActor)
+    actor.cfg = SimpleNamespace(native_pilot=SimpleNamespace(output=str(tmp_path)),
+        env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
+    actor._rank = 0; actor.global_step = 0; actor.optimizer_steps = 0
+    final_values = torch.arange(9 * 8).reshape(9, 8, 1)
+    actor.rollout_batch = dict(prev_values=final_values, dones=torch.zeros(9, 8, 50),
+        forward_inputs=dict(chains=torch.ones(8, 8, 6, 50, 32), denoise_inds=torch.zeros(8, 8, 5)))
+    def official_adv(self):
+        self.rollout_batch['advantages'] = torch.ones(8, 8, 1)
+        return {'unchanged_metric': 1}
+    monkeypatch.setattr(runtime.EmbodiedFSDPActor, 'compute_advantages_and_returns', official_adv)
+    assert actor.compute_advantages_and_returns() == {'unchanged_metric': 1}
+    saved = torch.load(next((tmp_path/'training-rollouts').glob('*.pt')), weights_only=False)
+    assert torch.equal(saved['rollout_batch']['prev_values'], final_values)
+    assert saved['rollout_batch']['forward_inputs']['chains'].shape[2] == 6
+    assert saved['producing_policy_iteration'] == 0 and saved['collection_iteration'] == 1
+    assert saved['evaluation_data'] is False
+    actor.rollout_batch['prev_values'] = final_values[:-1].flatten()
+    assert torch.equal(saved['rollout_batch']['prev_values'], final_values)
