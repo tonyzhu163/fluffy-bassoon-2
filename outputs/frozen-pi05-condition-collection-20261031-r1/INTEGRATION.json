@@ -102,13 +102,32 @@
   ],
   "physical_source_admitted": false,
   "source_selection": "original restricted A1 has no eligible arm; no source/fit launched",
-  "AAD_component_modified": false,
-  "saved_gripper_range_evidence": "pending sole-owner saved-array inspection; no hypothetical calibration change",
+  "AAD_component_modified": true,
+  "saved_gripper_range_evidence": {
+    "source_commit": "2436eec1574d917dae6e2bda876575113e73f3e0",
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/a1-gripper-statistics.json",
+    "sha256": "1e126be345a4641df36ec14fd902cf9de9db2cb4572e78a7f4fcb01d5fd35536",
+    "actual_valid_rows": 17591,
+    "issued_slots": 17760,
+    "all_finite": true,
+    "min": [
+      -0.0101426,
+      -0.006903
+    ],
+    "max": [
+      1.0090805,
+      1.0086253
+    ],
+    "outside_counts": [
+      2362,
+      5913
+    ]
+  },
   "new_allocations_jobs_or_monitors": 0,
-  "focused_CPU_command": "python -m pytest -q tests/test_robotwin_steering_source.py tests/test_steering_condition_cross.py tests/test_vla_history.py tests/test_steering_history.py tests/test_steering_history_pipeline.py tests/test_steering_history_cross_admission.py --junitxml=<fresh-owned-receipt>/composite.junit.xml",
+  "focused_CPU_command": "python -m pytest -q tests/test_steering_actuator_condition.py tests/test_robotwin_steering_source.py tests/test_steering_condition_cross.py tests/test_vla_history.py tests/test_steering_history.py tests/test_steering_history_pipeline.py tests/test_steering_history_cross_admission.py --junitxml=<fresh-owned-receipt>/composite.junit.xml",
   "prior_passes_not_repeated": [
-    "source AAD23",
-    "common paired37; static byte equality checked"
+    "Unchanged collector tests from source AAD23; affected calibration regressions17 are necessary after actual compatibility fix",
+    "common paired37; frozen source/test bytes checked"
   ],
   "source_entry_changes": [
     "use original common paired_reset_fields",
@@ -121,11 +140,18 @@
     "new immutable24-with-cross publication from original source dictionaries and actual A2 result;12/data-only24 remain pending"
   ],
   "component_expected_cases": {
+    "affected_calibration": 17,
     "source_entry": 15,
     "condition_cross": 16,
     "history_updated_component": 43,
-    "total": 74
+    "total": 91
   },
   "condition_contract_identity": "Canonical content hash: actual source Torch tuples and original JSON lists preserve the same strict contract; changed bias still rejects.",
-  "CPU_execution": "NOT RUN by composing chat. Sole resource owner must allocate/check actual composite and save JUnit/import/probe/teardown/cost receipts."
+  "CPU_execution": "NOT RUN by composing chat. Sole resource owner must allocate/check actual composite and save JUnit/import/probe/teardown/cost receipts.",
+  "AAD_change_scope": "Only evidence-backed raw gripper compatibility: arm-only headroom/clipping/inverse validation; native raw grippers kept bitwise, native actuator clamp unchanged. Collector remains byte-identical to qualified AAD.",
+  "public_state_audit": {
+    "path": "STATE-FEEDBACK-AUDIT.md",
+    "source_excerpt_sha256": "4d0f77bac7edd7c8d20855c10c87ba9f7382f4ec8e826205231167d66c2b2bcc",
+    "finding": "Public native14 is transformed commanded drive-target plus gripper feedback, not independent measured arm qpos; dynamics identification/reward-causal limitation documented; no condition or observation redesign."
+  }
 }

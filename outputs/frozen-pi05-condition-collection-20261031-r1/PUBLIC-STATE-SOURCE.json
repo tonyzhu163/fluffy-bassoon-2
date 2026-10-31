@@ -1,0 +1,57 @@
+{
+  "format": "robotwin_commanded_public_state_source_chain_v1",
+  "checked_utc": "2026-10-31T12:03:12.395226+00:00",
+  "pinned_source_commits": {
+    "RoboTwin": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "RLinf": "c605b9d55ed93a180119b099e6f836abff293b08"
+  },
+  "reuse_prior_evidence": {
+    "path": "phone-data-preparation/source-conventions.json",
+    "scope": "BaseTask.get_obs and robot.get_arm_jointState versus real_jointState; those files were not rescanned.",
+    "sha256": "351dd8765aaae75366bb3485730f824b47f39cba308e4ad276bd07d6858ff127"
+  },
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/robotwin/envs/vector_env.py",
+      "sha256": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d",
+      "excerpts": [
+        {
+          "first_line": 48,
+          "last_line": 63,
+          "text": "def update_obs(observation):\n    full_image = observation[\"observation\"][\"head_camera\"][\"rgb\"]\n    left_wrist_image = (\n        observation[\"observation\"].get(\"left_camera\", {}).get(\"rgb\", None)\n    )\n    right_wrist_image = (\n        observation[\"observation\"].get(\"right_camera\", {}).get(\"rgb\", None)\n    )\n    state = observation[\"joint_action\"][\"vector\"]\n\n    return {\n        \"full_image\": full_image,\n        \"left_wrist_image\": left_wrist_image,\n        \"right_wrist_image\": right_wrist_image,\n        \"state\": state,\n    }"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/robotwin_env.py",
+      "sha256": "9d468358e2286b55d807f8fe9569419f1ef4e343488b2f0bfd4eabd521fad210",
+      "excerpts": [
+        {
+          "first_line": 172,
+          "last_line": 215,
+          "text": "    def _extract_obs_image(self, raw_obs):\n        batch_images = []\n        batch_wrist_images = []\n        batch_states = []\n        batch_instructions = []\n        for obs in raw_obs:\n            batch_images.append(\n                self.center_and_crop(obs[\"full_image\"], center_crop=self.center_crop)\n            )\n            wrist_images = []\n            if \"left_wrist_image\" in obs and obs[\"left_wrist_image\"] is not None:\n                wrist_images.append(\n                    self.center_and_crop(\n                        obs[\"left_wrist_image\"], center_crop=self.center_crop\n                    )\n                )\n            if \"right_wrist_image\" in obs and obs[\"right_wrist_image\"] is not None:\n                wrist_images.append(\n                    self.center_and_crop(\n                        obs[\"right_wrist_image\"], center_crop=self.center_crop\n                    )\n                )\n            if len(wrist_images) > 0:\n                batch_wrist_images.append(\n                    torch.stack([torch.from_numpy(img) for img in wrist_images])\n                )\n            batch_states.append(obs[\"state\"])\n            batch_instructions.append(obs[\"instruction\"])\n\n        batch_images = torch.stack([torch.from_numpy(img) for img in batch_images])\n        if len(batch_wrist_images) > 0:\n            batch_wrist_images = torch.stack(batch_wrist_images)\n        else:\n            batch_wrist_images = None\n        batch_states = torch.stack([torch.from_numpy(state) for state in batch_states])\n\n        extracted_obs = {\n            \"main_images\": batch_images,\n            \"wrist_images\": batch_wrist_images,\n            \"states\": batch_states,\n            \"task_descriptions\": batch_instructions,\n        }\n\n        return extracted_obs"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/env_io.py",
+      "sha256": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc",
+      "excerpts": [
+        {
+          "first_line": 61,
+          "last_line": 65,
+          "text": "    def _select_configured_state(self, states):\n        \"\"\"Select a configured subset of the raw env state (openpi parity).\"\"\"\n        indices = self.state_indices\n        if not indices:\n            return states"
+        },
+        {
+          "first_line": 128,
+          "last_line": 137,
+          "text": "    def env_obs_to_observation(self, env_obs: dict[str, Any]) -> Observation:\n        \"\"\"Repack env obs through the transform pipeline onto this device.\"\"\"\n        self._ensure_transforms()\n        repacked = repack_env_obs(\n            self.config_name,\n            env_obs,\n            select_state=self._select_configured_state,\n        )\n        processed = self.input_transform(repacked, transpose=False)\n        return self._observation_dict_to_device(processed)"
+        }
+      ]
+    }
+  ],
+  "model_or_environment_imported": false,
+  "numeric_arrays_read": false,
+  "new_robot_rpc_or_actions": false,
+  "scope": "Static command-target public-state chain only, no new qualification gate or runtime/source edit."
+}

@@ -82,6 +82,8 @@ class CalibrationSpec:
                     order="native decode -> selected 4D steering -> calibration bias -> arm limit clipping -> native execution",
                     reset="condition never changes reset, instruction, initial observation or public features",
                     public_history_action="agent pre-calibration request, not post-calibration actuator commands",
+                    headroom_checked_indices=list(ARM_JOINTS),
+                    gripper_range_handling="raw native requests retained bitwise; native execution alone clamps to[0,1]",
                     audit_only=["sign", "condition_id", "bias_radians", "post_calibration_commands"],
                     exact_inverse="command-space -bias before this transform, only inside declared limits; physical execution and same-coefficient-space reachability still require qualification")
 
@@ -118,13 +120,14 @@ class ActuatorCalibration:
             raise ValueError("Require finite inference commands [B,H,14]")
         lower = torch.as_tensor(self.spec.command_lower, dtype=commands.dtype, device=commands.device)
         upper = torch.as_tensor(self.spec.command_upper, dtype=commands.dtype, device=commands.device)
-        if ((commands < lower).any() or (commands > upper).any()):
+        arms = list(ARM_JOINTS)
+        if ((commands[..., arms] < lower[arms]).any() or (commands[..., arms] > upper[arms]).any()):
             raise ValueError("Input command exceeds receipt-bound limits; native parity is unqualified")
         bias = torch.as_tensor(self.spec.bias_radians, dtype=commands.dtype,
                                device=commands.device) * self.spec.sign
         proposal = torch.where(bias == 0, commands, commands + bias)
-        final = proposal.clamp(min=lower, max=upper)
-        final[..., list(GRIPPERS)] = commands[..., list(GRIPPERS)]
+        final = proposal.clone()
+        final[..., arms] = proposal[..., arms].clamp(min=lower[arms], max=upper[arms])
         audit = self._audit(commands.detach().cpu().numpy(), proposal.detach().cpu().numpy(),
                             final.detach().cpu().numpy())
         return final, audit
@@ -135,12 +138,13 @@ class ActuatorCalibration:
             raise ValueError("Require finite floating commands [B,H,14]")
         lower = np.asarray(self.spec.command_lower, dtype=commands.dtype)
         upper = np.asarray(self.spec.command_upper, dtype=commands.dtype)
-        if np.any(commands < lower) or np.any(commands > upper):
+        arms = list(ARM_JOINTS)
+        if np.any(commands[..., arms] < lower[arms]) or np.any(commands[..., arms] > upper[arms]):
             raise ValueError("Input command exceeds receipt-bound limits; native parity is unqualified")
         bias = np.asarray(self.spec.bias_radians, dtype=commands.dtype) * self.spec.sign
         proposal = np.where(bias == 0, commands, commands + bias)
-        final = np.clip(proposal, lower, upper)
-        final[..., list(GRIPPERS)] = commands[..., list(GRIPPERS)]
+        final = proposal.copy()
+        final[..., arms] = np.clip(proposal[..., arms], lower[arms], upper[arms])
         return final, self._audit(commands, proposal, final)
 
     def _audit(self, commands, proposal, final):
@@ -163,7 +167,8 @@ class ActuatorCalibration:
         bias = self.spec.sign * np.asarray(self.spec.bias_radians, dtype=nominal.dtype)
         request = np.where(bias == 0, nominal, nominal - bias)
         lower, upper = np.asarray(self.spec.command_lower), np.asarray(self.spec.command_upper)
-        if np.any(request < lower) or np.any(request > upper):
+        arms = list(ARM_JOINTS)
+        if np.any(request[..., arms] < lower[arms]) or np.any(request[..., arms] > upper[arms]):
             raise ValueError("Inverse request is outside the declared command range")
         return request
 
