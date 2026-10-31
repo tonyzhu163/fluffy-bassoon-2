@@ -101,6 +101,7 @@ def reconstruct_rows(traces, teacher_reference):
             stream = (trace['task_key'], trace['rank'], index)
             history = contexts.setdefault(stream, [])
             duration = int(mask[index].sum())
+            submitted = torch.as_tensor(trace['proposed_motor_actions'][index]).clone()
             row = dict(task_key=trace['task_key'], rank=trace['rank'], env_index=index,
                 collection_iteration=trace['collection_iteration'],
                 producing_policy_iteration=trace['producing_policy_iteration'],
@@ -111,8 +112,8 @@ def reconstruct_rows(traces, teacher_reference):
                 current_observation=item(trace['current_observation'], index),
                 next_observation=item(outputs[0][-1], index),
                 final_observation=item(outputs[4][-1].get('final_observation', outputs[0][-1]), index),
-                submitted_actions=trace['proposed_motor_actions'][index].clone(),
-                executed_actions=trace['proposed_motor_actions'][index][mask[index].bool()].clone(),
+                submitted_actions=submitted,
+                executed_actions=submitted[mask[index].bool()].clone(),
                 valid_action_mask=mask[index].clone(), duration=duration,
                 raw_rewards=outputs[1][index].clone(), terminations=outputs[2][index].clone(),
                 truncations=outputs[3][index].clone(), history_row_indices=list(history),

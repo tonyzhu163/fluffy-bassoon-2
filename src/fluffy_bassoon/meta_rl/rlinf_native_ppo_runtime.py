@@ -366,6 +366,7 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 requested = int(actions.shape[0] * actions.shape[1])
                 slot = owner._pilot_journal.begin(requested, phase=owner._pilot_phase)
                 current = env._pilot_current_observation
+                submitted_actions = cpu_tree(actions)
                 if current is None:
                     raise RuntimeError('A motor chunk has no recorded initial/current public observation')
                 scene_ids = env.reset_state_ids.clone()
@@ -388,7 +389,7 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                     episode_serials=episode_ids, primitive_time_before=times,
                     executed_or_conservative_duration=duration, reset_state_ids=scene_ids,
                     current_observation=current,
-                    proposed_motor_actions=cpu_tree(actions), outputs=cpu_tree(result),
+                    proposed_motor_actions=submitted_actions, outputs=cpu_tree(result),
                     measured_valid_mask=mask is not None,
                     executed_or_conservative=executed)
                 path = owner._pilot_root / 'traces' / f'rank-{owner._rank:02d}' / f'{owner._pilot_trace_ordinal:05d}.pt.gz'

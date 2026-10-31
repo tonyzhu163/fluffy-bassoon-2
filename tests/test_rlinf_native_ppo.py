@@ -245,7 +245,7 @@ def test_native_history_multirank_episode_contract(monkeypatch, tmp_path):
                     episode_serials=torch.tensor([round_index+1]),
                     reset_state_ids=torch.tensor([100+rank*10+round_index]),
                     primitive_time_before=torch.tensor([elapsed]), current_observation=current,
-                    proposed_motor_actions=actions, measured_valid_mask=True,
+                    proposed_motor_actions=actions.numpy(), measured_valid_mask=True,
                     outputs=([next_obs], rewards, terms, truncs,
                         [dict(valid_action_mask=mask, final_observation=next_obs)])))
                 elapsed += duration
