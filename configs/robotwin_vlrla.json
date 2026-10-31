@@ -1,0 +1,81 @@
+{
+  "format": "robotwin_vlrla_protocol_v1",
+  "paper": "https://arxiv.org/html/2610.19517v1",
+  "seen_tasks": [
+    "handover_mic", "pick_diverse_bottles", "place_a2b_left",
+    "place_object_stand", "place_phone_stand", "scan_object"
+  ],
+  "unseen_tasks": [
+    "adjust_bottle", "move_stapler_pad", "place_a2b_right",
+    "place_dual_shoes", "place_empty_cup", "stamp_seal"
+  ],
+  "runtime": {
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "robotwin_branch": "RLinf_support",
+    "embodiment": "ALOHA-AgileX",
+    "planner": "mplib",
+    "mplib_version": "0.2.1",
+    "sapien_version": "3.0.1"
+  },
+  "interface": {
+    "rgb_views": ["head", "left_wrist", "right_wrist"],
+    "action_dimension": 14,
+    "action_chunk_length": 50,
+    "flow_steps": 5,
+    "feedback": ["previous_executed_action_chunk", "previous_reward", "terminated", "truncated"],
+    "memory_resets": "between trials only",
+    "deployment_weight_updates": false,
+    "episode_resets": "new randomized scene within the same task; do not assume a repeated identical scene"
+  },
+  "bridge": {
+    "layers": 6,
+    "attention_heads": 8,
+    "hidden_dimension": 512,
+    "feedforward_dimension": 1024,
+    "summary_queries": 36,
+    "action_queries": 24,
+    "residual_rank": 64,
+    "dropout": 0.1,
+    "residual_output_initialization": "zero",
+    "sequence_transitions": 48,
+    "segment_transitions": 6,
+    "objective": "flow matching through a frozen action expert to the trainable KV bridge"
+  },
+  "history_collection": {
+    "algorithm": "PPO, Appendix A.2.1 / Table S2",
+    "iterations": 25,
+    "training_environments": 256,
+    "rollout_rounds": 4,
+    "wrapper_horizon": 400,
+    "flow_sde_noise_coefficient": 0.3,
+    "optimization_epochs": 5,
+    "global_minibatch": 2048,
+    "microbatch_per_gpu": 32,
+    "gradient_accumulation": 8,
+    "reference_gpus": 8,
+    "keep_failures": true,
+    "record": ["instruction", "three_rgb_views", "proprioception", "executed_action_chunk", "reward", "terminated", "truncated", "task_id", "scene_seed", "source_policy_checkpoint", "training_iteration"],
+    "chronology": "preserve source-policy improvement order; never replace it with shuffled successful demonstrations"
+  },
+  "evaluation": {
+    "instances": 128,
+    "metrics": ["success_by_attempt", "cumulative_success_per_interaction", "final_success"],
+    "controls": ["native_motor", "static_steering", "online_dsrl", "history_reset", "trained_episode_reset", "reward_shuffle", "wrong_task_history"],
+    "selection": "seen-task development scenes only; unseen-task feedback never returns to training or checkpoint selection"
+  },
+  "available_smoke_checkpoint": {
+    "repository": "RLinf/RLinf-Pi05-RoboTwin-SFT-adjust_bottle",
+    "revision": "fa8df6ed103db0f5549c122f3a17c00ba6426c98",
+    "role": "runtime qualification only",
+    "valid_for_six_seen_task_training_claim": false,
+    "reason": "adjust_bottle is an unseen task in the paper split; a task-specific initializer cannot establish unseen-to-the-motor transfer"
+  },
+  "reproduction_status": {
+    "official_vlrla_code_verified": false,
+    "matched_multitask_motor_verified": false,
+    "gpu_runtime_requalified": false,
+    "full_paper_compute_authorized": false,
+    "prior_grpo_smoke_is_ppo_history_reproduction": false
+  }
+}

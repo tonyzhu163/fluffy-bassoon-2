@@ -2,6 +2,8 @@
 
 | Guide | Contents |
 | --- | --- |
+| [LIBERO transfer](libero-transfer.md) | Independent LIBERO-40 to strict LIBERO-90 split, Plus/PRO claim boundaries and adaptation controls |
+| [RoboTwin VLRLA setup](robotwin-vlrla.md) | Pinned runtime setup, six seen/six unseen tasks and bridge/history reproduction requirements |
 | [In-context RL review](in-context-rl-review.md) | Literature review (RL², AD, PEARL, MELD, AMAGO, TrMRL, Vintix, ECET, VLRLA, survey), pi0.5 language steering, and the proposed CTM in-context RL loop |
 | [VLRLA experimental protocol](vlrla-protocol.md) | Exact RoboTwin six/six task split, collection and optimization settings, bridge/simp training, simulation and real-robot evaluation, and reproduction gaps |
 | [Frozen-VLA ICRL design axes](frozen-vla-icrl-design.md) | Training method, memory architecture and steering interface; staged DSRL/noise and RL² comparison |
