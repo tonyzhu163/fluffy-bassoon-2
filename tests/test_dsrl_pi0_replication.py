@@ -10,6 +10,7 @@ import pytest
 from fluffy_bassoon.meta_rl.dsrl_pi0_replication import (
     CaptureEnv, Prefetch, compact_replay, restore_replay, save_complete, restore_complete,
     save_evaluation,
+    frozen_motor_model,
 )
 
 
@@ -186,3 +187,34 @@ def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_pat
     second.update(next(resumed_iterator))
     for left, right in zip(expected, jax.tree_util.tree_leaves(second._save_dict), strict=True):
         np.testing.assert_allclose(np.asarray(left), np.asarray(right), rtol=1e-5, atol=1e-6)
+
+
+def test_pinned_policy_exposes_original_frozen_model_through_bound_method():
+    if os.environ.get('DSRL_OFFICIAL_ROOT') is None:
+        pytest.skip('Run in the pinned original OpenPI runtime')
+    import jax.numpy as jnp
+    from flax import nnx
+    from openpi.policies.policy import Policy
+    from fluffy_bassoon.meta_rl.vla_motor_replay import parameter_signature
+
+    class TinyMotor(nnx.Module):
+        action_dim, action_horizon = 32, 50
+
+        def __init__(self):
+            self.scale = nnx.Param(jnp.asarray(2., dtype=jnp.float32))
+
+        def sample_actions(self, observation, noise=None):
+            del observation
+            return noise*self.scale.value
+
+        def get_prefix_rep(self, observation):
+            return observation
+
+    model = TinyMotor()
+    policy = Policy(model)
+    assert not hasattr(policy, '_model')
+    assert frozen_motor_model(policy) is model
+    before = parameter_signature(model)
+    np.testing.assert_array_equal(policy._sample_actions(None, noise=jnp.ones(3)),
+                                  np.full(3, 2.))
+    assert parameter_signature(frozen_motor_model(policy)) == before

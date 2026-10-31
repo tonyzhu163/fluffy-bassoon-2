@@ -51,9 +51,9 @@ def checked_xml(path,count):
     suites=[root] if root.tag=='testsuite' else list(root.iter('testsuite'))
     assert sum(int(s.get('tests',0)) for s in suites)==count
     assert all(int(s.get(key,0))==0 for s in suites for key in ('failures','errors','skipped'))
-assert prep.resolve()==qual.resolve()
 assert (prep/'exit-code.txt').read_text().strip()=='0'
-checked_xml(qual/'qualification.xml',9)
+assert (qual/'exit-code.txt').read_text().strip()=='0'
+checked_xml(qual/'qualification.xml',10)
 value=json.loads((qual/'qualification-summary.json').read_text())
 assert value['passed'] is True and value['exit_code']==0 and value['full_suite'] is True
 for name,digest in value['file_sha256'].items():
