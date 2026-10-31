@@ -6,8 +6,12 @@ original frozen `pi0_libero` motor. This is separate from the existing
 Task57 records have role `target-online-baseline`; source assembly is forbidden.
 
 Keep the authors' DSRL `7f48937`, its OpenPI submodule `a6d2400` and LIBERO
-submodule `87edbd1` clean. The original public S3 checkpoint and its own
-normalization assets receive a per-file SHA256 receipt before use. Use the
+submodule `87edbd1` clean. The original public S3 bucket now returns
+`NoSuchBucket`. The canonical official GCS `pi0_libero` checkpoint is the
+hosting fallback, with cloud MD5/size checks and per-file SHA256 receipts.
+Byte equality to the unavailable S3 release is not independently established
+and remains an explicit replication limit. Use that checkpoint's own
+normalization assets and the
 original Pi0 H50 prediction/execute20 interface,400-step episode horizon,
 native `env.reset()` distribution, and the authors' shared training/evaluation
 environment. Do not introduce fixed initial-state banks, extra settling,
