@@ -49,7 +49,8 @@ def scientific_contract(source, grant_sha256):
         scene_seed=123, learner_seed=0, horizon=400, settling_steps=10,
         motor_receipt_sha256=PI05_RECEIPT, model_config='pi05_libero',
         entire_motor_frozen=True, native_horizon=10, execute_steps=10,
-        maximum_optimizer_updates=MAX_UPDATES, complete_burst_overshoot_maximum=780,
+        nominal_optimizer_stop=MAX_UPDATES, maximum_optimizer_updates=MAX_UPDATES + 780,
+        complete_burst_overshoot_maximum=780,
         learned_query_interval_updates=PANEL_INTERVAL, query_episodes_per_panel=10,
         maximum_total_actions=MAX_ACTIONS, maximum_gpu_seconds=MAX_SECONDS,
         maximum_output_bytes=MAX_BYTES, prefix_features_recorded=False,
@@ -306,7 +307,10 @@ def run_profile(sim, motor, learner, sampler, *, output, root, contract, resume=
                 progress['phase'] = 'complete'
             else:
                 progress['next_threshold'] += panel_interval
-                progress['phase'] = 'final_native' if learner.updates >= stop_updates else 'training'
+                if progress['next_threshold'] <= stop_updates and learner.updates >= progress['next_threshold']:
+                    progress['phase'] = 'learned_panel'
+                else:
+                    progress['phase'] = 'final_native' if learner.updates >= stop_updates else 'training'
             save()
             continue
         if learner.updates >= progress['next_threshold']:
