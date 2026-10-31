@@ -25,3 +25,7 @@ The 02:15 saved-main check found no published selected-task/trained-endpoint res
 ## 02:54 saved-reference rebound review
 
 Saved main now binds the other campaign to task44/sourceb665, with real SAC updates: native6/20, untrained tied13/20, initialized SAC8/20, learned1/20 at20,580 and20/20 at40,140. At the owner's02:40 observation it has53,120 updates; this chat did not query the scheduler or live files. [Independent saved-metadata binding review](REFERENCE-REBOUND-REVIEW.json) keeps the interface GPU gate false: fixed500k, final native, last-three persistence, final motor and terminal costs remain pending. [Prospective reconciliation](REFERENCE-RECONCILIATION.md) explains conditional use of task44 as an interface reference without relabeling the original task59 Stage B as complete. No duplicate fit, new allocation or actions.
+
+## 07:14 local workspace recovery
+
+The old local `libero90-headroom-launch` checkout was absent from disk and Git's active worktree list. This chat created and attached a fresh detached checkout at `/Users/mowenjie/.codex/worktrees/libero90-interface-gates/fluffy-bassoon-2` from current main `0da374a4`. Published result/audit hashes are intact. The main clone remains on main with its pre-existing dirty coordination file preserved; no remote run worktree was touched. The heartbeat now uses the recovered local path. Saved task44 CHECK-0640 reports235,660 updates and the same pending fixed500k/final-native/motor gate. No owner live files, scheduler queries, tests, models or simulator actions were used in recovery.
