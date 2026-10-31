@@ -142,3 +142,35 @@ def geometric_floor(records,wide_configuration,*,guard):
         partitions={s:dict(valid_submitted_slots=t['valid_slots'],outside_coordinate_count=t['outside'],
             attainable_command_MSE_lower_bound=t['squared']/(14*t['valid_slots'])) for s,t in totals.items()},
         meaning='Diagnostic geometric reachability bound only; neither expertise nor closed-loop success')
+
+
+def readout_bindings(bank,proposal,*,deadline):
+    """Resolve the explicit pre-outcome canonical15 panel, not a new driver."""
+    bank=_recheck_bank(bank,deadline);wanted={4:4,8:11,9:14,10:16,11:18}
+    if (proposal.get('format')!='robotwin_fixed12_command_diagnostic_readout_proposal_v2'
+            or proposal['diagnostic_purpose']!=PURPOSE or proposal['source_eligible'] is not False
+            or proposal['case_order']!=list(wanted) or proposal['condition_order']!=['native','wide-final5000','KV-final5000']
+            or len(proposal['cells'])!=15 or proposal['maximum_complete_episodes']!=15
+            or proposal['maximum_new_actions']!=6000):raise ValueError('Exact prospective canonical15 diagnostic panel required')
+    resolved={}
+    for i,seed in wanted.items():
+        identity=f'phone-{i:02d}';entry=bank['entries'][i];row=entry['record'];binding=proposal['canonical_bindings'][identity]
+        if (binding['demos_ref']!=bank['demos'] or binding['dataset_id']!=identity
+                or binding['producer_result']!=entry['producer_result'] or binding['record_id']!=row['spec']['id']
+                or row['spec']['reset_seed']!=seed or row['reset_info']['actual_seed']!=seed
+                or row['spec']['paired_instruction']!=row['reset_info']['instruction']
+                or row['reset_identity']!={k:row['reset_info'][k] for k in ('actual_seed','observation_sha256','features_sha256')}):
+            raise ValueError('Canonical record/reset/instruction binding differs')
+        resolved[identity]=dict(binding=deepcopy(binding),reset_seed=seed,
+            paired_instruction=deepcopy(row['spec']['paired_instruction']),reset_identity=deepcopy(row['reset_identity']),
+            reset_info=deepcopy(row['reset_info']),episode_manifest_ref=deepcopy(row['episode_manifest_ref']),
+            original_task_success=row['success'])
+    for cell,(i,condition) in zip(proposal['cells'],((i,c) for i in wanted for c in proposal['condition_order'])):
+        if (cell['record_id']!=f'phone-{i:02d}' or cell['case']!=i or cell['reset_seed']!=wanted[i]
+                or cell['private_motor_seed']!=20261301+i or cell['condition']!=condition
+                or cell['canonical_binding']!=f'phone-{i:02d}'
+                or cell['checkpoint_iteration']!=(None if condition=='native' else 5000)):
+            raise ValueError('No ordinal/physical-seed substitution or endpoint change')
+    return dict(format='robotwin_command_diagnostic_canonical_readout_bindings_v2',diagnostic_purpose=PURPOSE,
+        source_eligible=False,proposal=deepcopy(proposal),resolved=resolved,
+        admitted=False,meaning='Canonical data bindings only; actual models/factory/clock/physical readout still require owner admission')
