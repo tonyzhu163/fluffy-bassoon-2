@@ -36,7 +36,7 @@ the human. Train the noise controller while the entire official pi0.5 stays
 frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
 with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
 and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
-implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At14:09:34 three initial-native queries completed with471 charged actions and a full initial recovery; replay/updates are zero before training. No full-panel or learning result yet.
+implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At14:17:09 the initial native panel scored10/10 and training45/45, with707 replay chunks,4,280 actual SAC updates and8,816 all-in actions. Full recovery and sampled raw hashes passed; losses are finite. The panel has no observed binary-success headroom and these45 episodes contain no failures, so this is runtime/data-capture progress, not a demonstrated performance gain or useful recovery corpus. Later panels can test competence preservation and completion cost. [Interpretation and read-only interface/data proposals](../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
 See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
 
 The compatible collection records actual steering noise under the same frozen

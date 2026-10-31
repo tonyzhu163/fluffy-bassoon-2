@@ -3,6 +3,25 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Task57 DSRL is active; native already reaches10/10
+
+At14:17:09 Shanghai on2026-10-31, Baigejob-iudscqfntb4e completed the initial
+native10-case query panel with10 successes,1,451 primitive+100 settling actions.
+The fresh SAC collector completed45/45 successful training episodes,707 replay
+chunks and4,280 optimizer updates; total8,816 actual actions including queries
+and qualification. All40 training states were visited. Scalar losses were
+finite and saved recovery/sample trace hashes matched. No learned query panel
+was complete in this receipt; the run remains active under its original cap.
+
+This bank has no observed binary-success headroom and no training failures yet.
+It cannot show a success-rate improvement over10/10; subsequent matched panels
+can measure regression, preservation and completion cost. It supplies no
+failure-recovery or meta-learning benefit at this point. The motor is pi0.5,
+whereas the DSRL paper used pi0; this is an adapted baseline. Target57 records
+are excluded from source40 pretraining and remain development exposure.
+[Actual receipt](../../outputs/dsrl-pi05-task57-20261031-r1/first-advancement.json),
+[interpretation](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
+
 ## Fixed100 LIBERO90 screen complete
 
 All six workers succeeded:486groups/522episodes, including36actual supports.
