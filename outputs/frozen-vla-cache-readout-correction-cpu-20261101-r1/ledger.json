@@ -1,11 +1,27 @@
 {
   "phase_id": "frozen-vla-cache-readout-correction-cpu-20261101-r1",
   "CPU_ceiling": 300,
-  "CPU_reserved": 300,
-  "CPU_charged": 0,
+  "CPU_reserved": 0,
+  "CPU_charged": 103,
   "GPU_charged": 0,
   "actions": 0,
-  "attempts": [],
-  "state": "funded_static_delta_PASS_actual_resource_admission_pending",
-  "old_caps_unchanged": true
+  "attempts": [
+    {
+      "job_id": "job-qzpsryt5bul9",
+      "charged_seconds": 103,
+      "reported_exit_code": 0,
+      "component_pass_counts": [
+        12,
+        1,
+        3
+      ],
+      "all90_CPU_seal_reported_passed": true,
+      "owner_handoff_path": "OWNER-HANDOFF.json",
+      "owner_handoff_sha256": "e57c5adb492923d4beaa74e27245d8705bf08a2b1efc161452919f3576768d43",
+      "copied_producer_packet_pending": true
+    }
+  ],
+  "state": "owner_reported_terminal_all_components_and_full90_seal_PASS_copied_packet_pending",
+  "old_caps_unchanged": true,
+  "CPU_unused": 197
 }

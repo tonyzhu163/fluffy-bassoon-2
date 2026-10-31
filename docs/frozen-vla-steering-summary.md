@@ -58,15 +58,16 @@ source admission follows. The173-second cache attempt brings phone cost to
 preservation98/120 remain distinct. Required33 recovery tests pass; optional
 bridge fixture failures and skipped readout remain explicit. Allocated CPU
 inspection confirms saved official state(1,32) versus the consumer's erroneous
-(1,14) guard in all three inspected rows. A narrow consumer correction and
-full90-row CPU seal remain pending; paid tensors are preserved and no GPU
-reencoding is admitted. Readout56/57 has one fixture-contract failure, with
-production unchanged; only the corrected selector will repeat.
+(1,14) guard in all three inspected rows. The sole execution owner now reports the narrow correction12/12, readout
+selector1/1 and bridge3/3 passing, plus the full90-row CPU seal; copied
+producer proof is pending. Paid tensors and failed04 remain unchanged, with
+no GPU reencoding. Two fixed5000 head fits are funded at900 GPU-seconds each
+inside the original residual; actual runtime admission is pending.
 [Evidence and next discriminator](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through140,080
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through160,080
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three
