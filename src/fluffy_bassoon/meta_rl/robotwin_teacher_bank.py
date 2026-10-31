@@ -467,6 +467,8 @@ def seal_full_cache(bank,cache_receipts,*,deadline,_api=None):
                     or native['native_result']['executed_primitive_steps']!=row['native_actual_actions']):
                 raise ValueError('Canonical chunk identity/native cost differs from cached anchor')
             submitted=saved['submitted_plan_mask'];executed=saved['native_executed_mask']
+            # Official prepared model state is padded32; physical commands and
+            # the state slice in public2062 features remain14, without truncation.
             if (saved['format']!='robotwin_captured_plan_cache_v1' or saved['context']!=wanted
                     or submitted.shape!=(32,) or executed.shape!=(32,)
                     or submitted.dtype!=torch.bool or executed.dtype!=torch.bool
@@ -477,7 +479,7 @@ def seal_full_cache(bank,cache_receipts,*,deadline,_api=None):
                     or not torch.equal(saved['data']['valid'],submitted[None])
                     or not torch.equal(saved['data']['teacher14'],saved['full_known_proposed_plan14'][None])
                     or set(saved['data'])!={'state','features','cache','mask','target32','teacher14','base14','valid'}
-                    or saved['data']['features'].shape!=(1,2062) or saved['data']['state'].shape!=(1,14)
+                    or saved['data']['features'].shape!=(1,2062) or saved['data']['state'].shape!=(1,32)
                     or saved['data']['base14'].shape!=(1,32,14)
                     or saved['data']['target32'].shape!=(1,32,32)):
                 raise ValueError('Saved cache masks/labels/context differ from full-plan/native-cost receipt')

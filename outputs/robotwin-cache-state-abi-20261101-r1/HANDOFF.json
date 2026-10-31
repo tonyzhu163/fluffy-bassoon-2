@@ -1,0 +1,37 @@
+{
+  "status": "STATIC_ONLY_ALLOCATED_CPU_QUALIFICATION_PENDING",
+  "reviewed_main": "9f187387d0c4e209a0ffd9d6be259441d8288dbd",
+  "pre_change_rebased_head": "ac362ffdc4bf4bfd7395dc20868215c4f39d2fe3",
+  "immutable_cache_producer": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
+  "producer_job": "job-5elum703js2h",
+  "measured_schema_job": "job-7dolnmsiqfmx",
+  "measured_rows": [
+    "first paid00",
+    "first04",
+    "last04"
+  ],
+  "measured_state": {
+    "shape": [
+      1,
+      32
+    ],
+    "dtype": "torch.float32"
+  },
+  "only_failed_guard": "state_shape_1x14",
+  "measured_schema_receipt": "Owner copying compact hash-bound JSON; full reference pending, not invented here",
+  "new_core_bank_sha256": "2d88bd08c3cbcebd694393bdf3f368862fb5af1ef4d4dedc0c23d7dc2889a81b",
+  "production_behavior_delta": "Sealer exact official padded model-state shape (1,32) instead of physical/public (1,14); no widening",
+  "fixture_delta": "Existing synthetic core-sealer complete_cache_fixture state shape14 to32; no old84 file or math changes",
+  "new_prepared_cases": 4,
+  "prepared_total_targeted_cases": 12,
+  "tests_executed_here": 0,
+  "focused_CPU_command": "python -m pytest -q tests/test_robotwin_cache_state_abi.py tests/test_robotwin_teacher_bank.py -k 'state_abi or full_twelve_cache_join or full_cache_join_rejects or two_different_anchors' --junitxml=<fresh-owner-receipt>/cache-state-abi.junit.xml",
+  "reseal_command": "Use existing diagnostic DATA-PAYLOAD.sh with DATA_OPERATION=seal, this SEAL-REQUEST.json hash, fresh DATA_OUTPUT and actual OWNER_DATA_DEADLINE inside owner allocated CPU clock",
+  "actual_CPU_admission": null,
+  "GPU_reencode": false,
+  "new_physical_actions": 0,
+  "cache_payload_rewrites": 0,
+  "source_eligible": false,
+  "fit_admitted": false,
+  "resource_owner": "Existing parent/finish_assembly only"
+}

@@ -286,7 +286,7 @@ def complete_cache_fixture(tmp_path,monkeypatch):
             payload=dict(format='robotwin_captured_plan_cache_v1',context=context,canonical_chunk=canonical[anchor],
                 submitted_plan_mask=submitted,native_executed_mask=executed,full_known_proposed_plan14=target,
                 data=dict(valid=submitted[None],teacher14=target[None].clone(),target32=torch.zeros(1,32,32),
-                    base14=torch.zeros(1,32,14),features=torch.zeros(1,2062),state=torch.zeros(1,14),
+                    base14=torch.zeros(1,32,14),features=torch.zeros(1,2062),state=torch.zeros(1,32),
                     cache=(),mask=torch.ones(1,1,dtype=torch.bool)))
             path=tmp_path/(entry['id']+f'-{anchor}.pt');torch.save(payload,path)
             rows.append(dict(path=str(path),sha256=file_sha(path),context=context,anchor=anchor,
