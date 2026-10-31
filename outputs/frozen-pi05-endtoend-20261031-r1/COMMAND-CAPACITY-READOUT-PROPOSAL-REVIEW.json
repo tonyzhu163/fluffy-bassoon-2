@@ -60,5 +60,32 @@
     "4": "Then AD/DPT corpus/fitting/readout admission",
     "forbidden": "A2 cannot be a prerequisite for generating the teacher collection needed to evaluate A2",
     "current": "No new mapping/A1/teacher collection admitted by this diagnostic proposal"
+  },
+  "readout_preoutcome_amendment": {
+    "old_proposal_sha256": "97c1c6866acaac1283d9c250bc44ad3a785aa5ec16c629fdea4342b8891e8771",
+    "reason": "Original intent is source record04 plus canonical VAL records08..11. Record IDs are not reset seeds; reset_seed=case would instead define a different DEV physical panel. Explicit amendment before any fit/readout.",
+    "canonical_record_to_reset_seed": {
+      "04": 4,
+      "08": 11,
+      "09": 14,
+      "10": 16,
+      "11": 18
+    },
+    "independent_saved_source_proof": {
+      "path": "outputs/frozen-pi05-endtoend-20261031-r1/EVENT-SUFFIX-TERMINAL-RECEIPT.json",
+      "sha256": "932d8b4402db32b86871a73b7a80afe0cd15b69d34cc5daae4cb92229d936347"
+    },
+    "private_VLA_seed": "20261301 + record ID, unchanged",
+    "unchanged": [
+      "15episodes",
+      "6000maxactions",
+      "case-major order",
+      "native/wide5000/KV5000",
+      "same per-case global forks",
+      "all12failed04 retained",
+      "no locked32/population/source claim"
+    ],
+    "new_readout_profile_hash": "Must be explicitly bound by same source owner; old97c1 retained as historical",
+    "no_runtime_or_outcomes_used_for_amendment": true
   }
 }

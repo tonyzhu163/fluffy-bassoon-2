@@ -1,0 +1,53 @@
+{
+  "format": "pi05_headroom_due_check_proof_v1",
+  "receipt_sha256": "7d75196c7e6764e5afeea1a8bc6f64fae109e3bca520cb2c8041513058a8948f",
+  "reader_sha256": "2b02d7899ea657c6a501821b895dc5381671e8611e308ce1a566cf88abd2732f",
+  "reader_git_blob": "8c75d5fd62fc0b9e9f71c886ec5d63164339aca5",
+  "reader_immutability": "Dated snapshot committed with this receipt; exact Git blob recorded.",
+  "scheduler": {
+    "job_id": "job-w8deahieli8q",
+    "state": "Running",
+    "checked_at": "2026-11-01 03:21 Asia/Shanghai",
+    "UI_elapsed_seconds": 5851,
+    "screenshot": "check-0320-scheduler.jpg",
+    "screenshot_sha256": "63ecf8f417da49b50172aef2a88f8a65784117b0380a5bf426f3c3747331e3fe"
+  },
+  "caps": {
+    "phase_GPU_seconds": 57600,
+    "job_GPU_seconds": 25200,
+    "all_in_actions": 1000000,
+    "storage_bytes": 68719476736
+  },
+  "checks": {
+    "actions_within_cap": true,
+    "storage_within_cap": true,
+    "reservations_within_phase": true,
+    "job_elapsed_within_cap": true,
+    "stable_full_checkpoint": true,
+    "newest_raw_trace_matches": true,
+    "finite_losses": true,
+    "new_panel_checkpoint_matches": true,
+    "new_panel_weights_fixed": true,
+    "new_panel_initials_match": true,
+    "query_replay_isolated": true,
+    "one_RPC_bytes_match": true
+  },
+  "carried_previous_proof": {
+    "git_commit": "9a6dd399b92fecea722d1ffe1fd0bf46d82bc241",
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0300-PROOF.json",
+    "sha256": "6e568f14fc8b5c9b4bb6371ca1a8895a4fafde2af9b060175e7491bb072bd191"
+  },
+  "snapshot_order": {
+    "index_updates": 92060,
+    "index_replay_rows": 5097,
+    "stable_later_recovery_updates": 92220,
+    "stable_later_recovery_replay_rows": 5105,
+    "atomic_whole_snapshot_claim": false,
+    "explanation": "The index is read once before hashing. Training advanced by one completed episode before the stable recovery pointer read; the full recovery independently matches its own pointer hash."
+  },
+  "one_RPC_scope": "One directory-name enumeration,at most3 newest metadata records,one returned complete step input/outcome byte hashes; no journal-history reconciliation or payload deserialization.",
+  "scientific_scope": "One outcome-selected development goal/seed. Prespecified80k panel20/20 follows40k20/20 and60k20/20;20k1/20 retained. Fixed500k endpoint,last-three sustained criterion and final native remain pending. No selected-best checkpoint or meta-learning claim.",
+  "final_motor_after_pending": true,
+  "next_owned_check": "2026-11-01 03:40 Asia/Shanghai",
+  "no_run_changes": true
+}
