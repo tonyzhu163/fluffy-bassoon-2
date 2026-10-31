@@ -359,8 +359,12 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         others=[audit.json(ref) for ref in actual_plan.get('other_fit_ticket_receipts',[])]
         _validate_resource(ticket,clock,operation=_operation,plan=actual_plan,other_fit_tickets=others)
     root=Path(subprocess.check_output(['git','rev-parse','--show-toplevel'],text=True).strip()).resolve()
+    extra=() if _validate is None else (_validate,)
+    if _api is not None:
+        from .robotwin_cache04_recovery import cache04,publish_cursor,committed_receipt
+        extra+= (cache04,publish_cursor,committed_receipt)
     validate_runtime_blobs(request['runtime_blob_sha256'],root,_api=_api,_core_bank_sha=_core_bank_sha,
-        _extra_runtime=() if _validate is None else (_validate,))
+        _extra_runtime=extra)
     for path,sha in request['runtime_blob_sha256'].items():audit.bound(root/path,sha)
     if file_sha(a.model_path/'model.safetensors')!=MOTOR_SHA or file_sha(a.norm_stats)!=NORM_SHA:
         raise ValueError('Original motor/normalization files required')
@@ -409,9 +413,9 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
                 frozen_parameter_sha256=backend.frozen_fingerprint())
             qpath=parent/(a.output.name+'-runtime')/'model-qualification.json'
             _atomic_json(qpath,qualification)
-            _api.cache_bank(audit.json(request['bank']),backend,a.output,guard=guard,
-                deadline=ticket['driver_deadline_unix']-60,
-                model_qualification_ref=dict(path=str(qpath),sha256=file_sha(qpath)))
+            cache04(_api,backend,audit.json(request['bank']),request,ticket,clock,a.output,
+                dict(path=str(qpath),sha256=file_sha(qpath)),source=source,guard=guard,
+                deadline=ticket['driver_deadline_unix']-60)
         else:
             fit_curve(a.kind,backend,audit.json(request['bank']),request['cache_receipts'],
                 audit.json(request['wide_configuration']),a.output,guard=guard,deadline=ticket['driver_deadline_unix']-60,
