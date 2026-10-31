@@ -315,7 +315,8 @@ def run_trial(env, budget, agent, plan, *, condition, task, output, run_id, refe
             or references.get('context',{}).get('method') != 'native'
             or references['context'].get('evaluation_plan_sha256') != canonical_sha(plan)
             or len(references.get('reset_cases',[])) != count):
-        raise ValueError('Need the completed native trial receipt bound to this exact plan')
+        label='K4' if spec['source'] else 'K8'
+        raise ValueError('Need the completed native '+label+' receipt bound to this exact plan')
     header=getattr(budget,'header',{})
     if (header.get('total_actions') != plan['max_actions'] or header.get('source_caps') != {}
             or header.get('phase_caps') != {spec['phase']:plan['max_actions']}
