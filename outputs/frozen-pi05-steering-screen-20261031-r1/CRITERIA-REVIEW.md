@@ -4,8 +4,10 @@ Read 2026-10-31 Asia/Shanghai at the user's request. Source:
 [PROPOSAL.md](../steering-interface-criteria-20261031-r1/PROPOSAL.md), reviewed
 at main `d0853cbe7fbdd0b646f9053c6c2796816257cd76`, blob
 `f070c2b71abc4b8568b2dee2ea6de7ff3c31ad1c`.
-This is an adoption recommendation, not a changed GPU contract or resource grant.
-The optional-hook synthetic CPU qualification can proceed independently.
+This review preceded the user's targeted execution request. The subsequent
+[targeted scope](../frozen-pi05-endtoend-20261031-r1/SCOPE.json) adopts A1/A2/A3
+with these safeguards inside its existing shared resource limits. The proposal
+does not provide an additional resource grant.
 
 ## Recommendation
 
@@ -50,6 +52,19 @@ already selected by the implementation work.
    infer the condition from current observations. A matched-versus-best-mismatch
    margin is a sufficient development gate when well estimated, not the only
    possible proof of history value.
+
+   The actual RoboTwin public state requires a further caution. The pinned
+   vector wrapper constructs state from `joint_action/vector`, and the robot's
+   arm-state accessor reads drive targets rather than measured positions.
+   Under additive actuator calibration, the next public state together with
+   the previous requested command may identify the offset after one chunk.
+   Both are present in the prepared static student's input. A contrast against
+   one fixed condition-specific teacher therefore does not establish a need
+   for longer history or rewards. Keep the trained static comparison, inspect
+   the first query decision after reset, and use reward interventions to
+   distinguish dynamics identification from reward-dependent adaptation.
+   Exact source and allocated data evidence are indexed in the
+   [evidence audit](../frozen-pi05-endtoend-20261031-r1/EXECUTION-STATUS.json).
 
 4. **Do not promise A3 improvement by construction.** Online training may stay
    flat. Preserve failed lineages and require fixed-case improvement beyond
@@ -99,5 +114,13 @@ action targets automatically; it does invalidate an assumed correspondence betwe
 its RNG seed and the original motor's noise-steering target. Record the chosen
 objective and label space before fitting.
 
-No A1/A2/A3 jobs were launched by this review. The proposal remains pending the
-user's decision; the governing plan and current runtime budgets are unchanged.
+For the native 32-dimensional flow objective, report the 14 decoded physical
+coordinates separately from the 18 padded coordinates. A reduction concentrated
+in padding does not demonstrate useful steering. Preserve raw native gripper
+commands and their downstream actuator clipping; bounds for editable arm
+channels must not reject ordinary native gripper overshoot.
+
+This review itself launches no jobs. Current execution follows the targeted
+scope and its unchanged shared ceilings; live status belongs only in
+[coordination](../coordination.md), with verified results in the method's
+evaluation record.

@@ -1,0 +1,248 @@
+{
+  "format": "frozen_pi05_evidence_audit_index_v2",
+  "purpose": "Historical independent evidence audit; current live status is solely outputs/coordination.md. This file is not a second process monitor.",
+  "audited_at_utc": "2026-10-31T11:55:45.339254+00:00",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "authoritative_live_status": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/main/outputs/coordination.md",
+  "latest_audited_runtime_snapshot_utc": "2026-10-31T11:18:58.293451+00:00",
+  "latest_audited_attempt": {
+    "job_id": "job-zp47pliu429f",
+    "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+    "scheduler_status": "Succeeded",
+    "stage_status": "complete_restricted_development_search",
+    "complete_episodes": 51,
+    "closed_actions_recomputed": 17591,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "eligible_arms": [],
+    "selected_arm": null,
+    "scope": "Restricted fixed4D development family; full learned reactive methods remain untested"
+  },
+  "predecessor": {
+    "run_id": "frozen-pi05-endtoend-a1-20261031-r1",
+    "job_id": "job-hm6fgvu3p4a6",
+    "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+    "scheduler_status": "Failed",
+    "actual_gpu_seconds": 632,
+    "actual_actions": 5355,
+    "completed_native_episodes": 16,
+    "completed_intervention_episodes": 0
+  },
+  "qualified_software": [
+    {
+      "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "test_cases": 71
+    },
+    {
+      "source_commit": "aad29a877fd8805f0927b5bbe44c58fc34d3891c",
+      "test_cases": 23
+    },
+    {
+      "source_commit": "77119a5ecb3dea33bd943244b9fb43b7764b3d38",
+      "test_cases": 29
+    },
+    {
+      "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+      "test_cases": 108,
+      "actual_saved_artifact_migration_dryrun": true
+    },
+    {
+      "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
+      "test_cases": 11,
+      "qualification": "CPU source inventory only; no model, simulator or teacher qualification"
+    }
+  ],
+  "shared_phase_caps": {
+    "gpu_seconds": 28800,
+    "simulator_actions": 300000,
+    "output_bytes": 68719476736,
+    "fresh_cpu_worker_seconds": 1800
+  },
+  "latest_audited_resource_accounting": {
+    "settled_gpu_seconds": 1770,
+    "active_A1_gpu_reservation": 0,
+    "remaining_original_A1_gpu_seconds": 5430,
+    "remaining_original_A1_actions": 12409,
+    "remaining_phase_gpu_seconds": 27030,
+    "cpu_worker_seconds_consumed": 417,
+    "cpu_worker_seconds_remaining": 1383
+  },
+  "scientific_student_fit_profile": {
+    "matched_models": 4,
+    "updates": 2500,
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "batch_size": 8,
+    "context_length": 256,
+    "learning_rate": 0.0003,
+    "eval_every": 250,
+    "validation_batches": 16,
+    "checkpoint_selection": "final",
+    "maximum_gpu_seconds_per_fit": 360,
+    "fit_reservation_within_existing_phase": 1440,
+    "first_prefix_complete_episodes_per_lineage": 24
+  },
+  "student_evaluation_design": {
+    "support_episodes": 56,
+    "query_episodes": 88,
+    "total_episodes": 144,
+    "worst_actions_at_H600": 86400,
+    "existing_action_cap": 105000,
+    "other_task_history": "cross-task transfer, K2 with genuine charged donor support",
+    "wrong_condition_history": "opposite-sign actual same-scene/model support replay, K4"
+  },
+  "completion_unproven": {
+    "effective_steering": true,
+    "useful_actual_RL_histories": true,
+    "AD_DPT_fitting_and_physical_readout": true
+  },
+  "evidence_refs": {
+    "A1-CPU-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-CPU-RECEIPT.json",
+      "sha256": "bc91ff5cc8e78488177cb589a60b934a05ac71efab1201b1b69a263aad58f165"
+    },
+    "CONDITION-CPU-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CONDITION-CPU-RECEIPT.json",
+      "sha256": "7444e61cfcf78bc5f66247c87dbb4b43432518a5548cf0965e42c33ee6eb4fd8"
+    },
+    "STUDENT-CPU-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/STUDENT-CPU-RECEIPT.json",
+      "sha256": "0318154029d6a714d6d2f45eab74434817c390af04c6b1f6f351b35cfc8a7389"
+    },
+    "PAIRED-CPU-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/PAIRED-CPU-RECEIPT.json",
+      "sha256": "7863d6b7aec40dfe8a2c42705c496cb4f13eb203033f6e709d1ad8e6e8bcad04"
+    },
+    "A1-TERMINAL-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-TERMINAL-RECEIPT.json",
+      "sha256": "478d18f4081d1d4218898bb3132003cb29d53cb92136e2b65a8759a815c00580"
+    },
+    "A1-R2-INITIAL-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-INITIAL-RECEIPT.json",
+      "sha256": "5700790275774102495374e1f3404e6c299ea33ed252d6f5a3538db56f12060e"
+    },
+    "A1-R2-CHILD-AUTHORITY.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-CHILD-AUTHORITY.json",
+      "sha256": "ad3fd32f1fa48dec68398ae327391c1926275285e13d68b271cdf8e609f1a937"
+    },
+    "A1-R2-TERMINAL-RECEIPT.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-TERMINAL-RECEIPT.json",
+      "sha256": "8d288288e77df7f6356d929579bbeb34ada4d6e09e7cebb9aa97e1c9d58860d4"
+    },
+    "PHONE-STAGE0-CPU-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/PHONE-STAGE0-CPU-CHECK.json",
+      "sha256": "ef8f6357fc876e609fd0aea507a5ece730880cd6cdb5badea921983f6f66c783"
+    }
+  },
+  "coordinator_rule_ref": {
+    "path": "/Users/mowenjie/.codex/worktrees/steering-redesign/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/SELECTION-RULE.json",
+    "sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5"
+  },
+  "next_experiment_preparation": "Original full learned reactive KV/action capacity probe. Allocated CPU archive inspection passed; actual success, reset/cadence executability, target roundtrip and learned-fit qualification remain pending. No fixed4D teacher is admitted by a full-class capacity result.",
+  "capacity_data_qualification_audit": {
+    "job_id": "job-rh3ldkdapfv9",
+    "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
+    "passed": true,
+    "tests": 11,
+    "cpu_worker_seconds": 86,
+    "gpu_seconds": 0,
+    "robot_actions": 0,
+    "archive_sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+    "selection": {
+      "status": "canonical_expert_candidates_split_pending_author_success_and_alignment_review",
+      "train": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "validation": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "ordered_candidate_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "explicit_success_indices": [],
+      "unknown_success_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "whole_episode_split": true,
+      "command_state_alignment_qualified": false
+    },
+    "model_readiness": false,
+    "actual_valid_native_gripper_statistics": {
+      "slots": 17591,
+      "finite_counts": [
+        17591,
+        17591
+      ],
+      "nonfinite_counts": [
+        0,
+        0
+      ],
+      "minimum": [
+        -0.010142632760107517,
+        -0.006902992259711027
+      ],
+      "maximum": [
+        1.0090805292129517,
+        1.0086252689361572
+      ],
+      "quantiles": [
+        [
+          -0.0037555355345830323,
+          0.002413393184542656
+        ],
+        [
+          0.9944650530815125,
+          0.9989854693412781
+        ],
+        [
+          1.0023467779159545,
+          1.0039939045906068
+        ]
+      ],
+      "outside_0_1_counts": [
+        2362,
+        5913
+      ]
+    },
+    "public_state_semantics": {
+      "source": "RoboTwin robotwin/envs/vector_env.py",
+      "file_sha256": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d",
+      "line": 56,
+      "statement": "state = observation[\"joint_action\"][\"vector\"]",
+      "interpretation": "Drive-target feedback; measured-qpos interpretation is invalid. Previous requested command and current public state may identify calibration after one chunk; trained static and reward lesions remain necessary."
+    }
+  }
+}
