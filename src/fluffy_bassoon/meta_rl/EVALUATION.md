@@ -503,6 +503,6 @@ The CPU grant closes at 2,588 actual worker-seconds including software/recoverie
 
 This is saved-data readiness, with no new student or robot performance result.
 No 500-update AD fit/readout ran; that GPU phase remains deferred for the human's
-native-action PPO replication priority. Earlier student results retain their
+ordinary-baseline priority: DSRL/SAC first, native PPO afterward. Earlier student results retain their
 early-SAC5 data identity. The [CPU export report](../../../outputs/robotwin-final100-ad-export-20261031-r4/RESULTS.md)
 contains exact dataset identities, independent audits, storage and cost closure.

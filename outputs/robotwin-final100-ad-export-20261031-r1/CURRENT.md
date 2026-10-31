@@ -16,11 +16,11 @@ Paid fullSHA R1 projectionfd0a3302 remains read-only under /outputs/robotwin-fin
 
 Actual R4 scheduler running13:17:19→13:38:49Shanghai=1290CPU-worker-seconds /10320core-seconds /0GPU. Parent1272.080s and pod1278s are separate. All7owned phases and finalteardown were clean, with sessions[] / survivors[]. Aggregate CPU170software+889R1+150R2+89R3+1290R4=2588worker-seconds /20704core-seconds. Unused4612of7200 are sealed; no old credit, refund or capacity borrowing. Conservative logical storage96727780397bytes is inside original128GiB.
 
-## New priority and deferred work
+## Current priority and deferred work
 
-Direct human messages01a19042-6981-7f21-99da-f962c23f8276/01a19042-963a-74a3-9768-9cfce909f761 prioritize faithful native-action VLRLA PPO replication. NEW AD GPU fits/readout remain deferred; the10800GPU-second and60000target-action grants are unspent and are not borrowed by another campaign. No500-update AD fit or new physical readout ran. Saved-data readiness is not student performance, expert-teacher competence, native-action PPO replication or ICRL evidence. Early student results retain their SAC5 data identity.
+Newer direct human answer01a19077-651a-72d3-9bfd-3da0fc076ff2 in source thread01a18677-a163-78e3-a783-b557b3c621b2 is: “DSRL first; native PPO afterward.” It supersedes the earlier native-PPO-first priority wording. Ordinary DSRL/SAC baseline work goes first; native PPO GPU remains held until afterward. Meta-learning fits/readout remain deferred, with the AD10800GPU-second and60000target-action grants unspent and unborrowed. No500-update AD fit or new physical readout ran here. Saved-data readiness is not student performance, expert-teacher competence, PPO replication or ICRL evidence. Early student results retain their SAC5 data identity.
 
-The source root01a18677-a163-78e3-a783-b557b3c621b2 and its PPO owners solely execute that native pilot; this chat creates no duplicate PPO allocator/implementation. Human standing policy: no repeated GPU-hours approval questions for agreed-scope work<=10aggregateGPUh; concrete run budgets still apply.
+The source root and its existing owners solely execute those baselines. This CPU closeout owner starts no new allocator, observer or experiment. The CPU monitor stays deleted; all admitted CPU work is complete and cost-settled. Human standing policy: no repeated GPU-hours approval questions for agreed-scope work<=10aggregateGPUh; concrete run budgets still apply.
 
 See ../robotwin-final100-ad-export-20261031-r4/RESULTS.md, CLOSURE.json, owner-admission.json and independent audit receipts. Root-owned CPU monitoring is closed; deletion is confirmed in monitor-deletion.json. No automatic retry or further resource admission follows this closure.
 
