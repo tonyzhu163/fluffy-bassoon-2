@@ -1,0 +1,446 @@
+{
+  "format": "wide5000_cached_clipping_diagnosis_v1",
+  "endpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+    "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+  },
+  "cache": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/complete-diagnostic-cache.json",
+    "file_sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8",
+    "content_sha256": "5f8ada37185fb7d5add69f9eb17cb032fc63bbc90f562fea825d161ca2a9d7dd"
+  },
+  "script_sha256": "4084144f9871b3de3c248d486093455e301e139015bdf9f1b88654435a3ebb88",
+  "head_module_sha256": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+  "hostname": "job-4jq7u25x1sv6-master-0",
+  "checked_unix": 1793486344.2769103,
+  "visible_gpu_count": 0,
+  "CPU_only": true,
+  "CUDA_initialized": false,
+  "new_actions": 0,
+  "new_SGD": 0,
+  "cases": {
+    "phone-00": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 136,
+          "raw14_MSE": 0.008257786753365658,
+          "arm12_MSE": 0.00208183718817563,
+          "gripper2_MSE": 0.04531348414450582,
+          "clipped_gripper2_MSE": 0.045271440768485806
+        },
+        "wide5000": {
+          "clipped_gripper_values": 152,
+          "raw14_MSE": 0.004767208935470535,
+          "arm12_MSE": 0.00310430197180093,
+          "gripper2_MSE": 0.014744650717488159,
+          "clipped_gripper2_MSE": 0.012469116953921389
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "ALL_train": {
+      "split": "train",
+      "submitted_slots": 1968,
+      "historical_native_actions": 1751,
+      "rows": 62,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 1357,
+          "raw14_MSE": 0.009425342976609805,
+          "arm12_MSE": 0.004340937858306909,
+          "gripper2_MSE": 0.03993177368642716,
+          "clipped_gripper2_MSE": 0.03991332331594249
+        },
+        "wide5000": {
+          "clipped_gripper_values": 1455,
+          "raw14_MSE": 0.005470073394768082,
+          "arm12_MSE": 0.004699438573101283,
+          "gripper2_MSE": 0.010093882324768873,
+          "clipped_gripper2_MSE": 0.00832520603185702
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-01": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 161,
+          "raw14_MSE": 0.014577078924992735,
+          "arm12_MSE": 0.007200727097661603,
+          "gripper2_MSE": 0.05883518988897952,
+          "clipped_gripper2_MSE": 0.05882692619167241
+        },
+        "wide5000": {
+          "clipped_gripper_values": 128,
+          "raw14_MSE": 0.008633091057672524,
+          "arm12_MSE": 0.007799589895374662,
+          "gripper2_MSE": 0.013634098031459698,
+          "clipped_gripper2_MSE": 0.01225577524274549
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-02": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 159,
+          "raw14_MSE": 0.005304733559271499,
+          "arm12_MSE": 0.0031274206346898516,
+          "gripper2_MSE": 0.018368611106761384,
+          "clipped_gripper2_MSE": 0.018358571238845846
+        },
+        "wide5000": {
+          "clipped_gripper_values": 157,
+          "raw14_MSE": 0.004667423615784894,
+          "arm12_MSE": 0.004071229830534569,
+          "gripper2_MSE": 0.008244586327286847,
+          "clipped_gripper2_MSE": 0.006708393671022558
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-03": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 112,
+          "raw14_MSE": 0.013855350586090852,
+          "arm12_MSE": 0.004528595767893558,
+          "gripper2_MSE": 0.06981587949527464,
+          "clipped_gripper2_MSE": 0.0697626381079098
+        },
+        "wide5000": {
+          "clipped_gripper_values": 115,
+          "raw14_MSE": 0.005413475821306424,
+          "arm12_MSE": 0.004568972965815308,
+          "gripper2_MSE": 0.010480492954253129,
+          "clipped_gripper2_MSE": 0.008697728762855081
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-05": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 145,
+          "raw14_MSE": 0.013868109062614006,
+          "arm12_MSE": 0.004707827820696963,
+          "gripper2_MSE": 0.06882979651411628,
+          "clipped_gripper2_MSE": 0.06879070123630975
+        },
+        "wide5000": {
+          "clipped_gripper_values": 144,
+          "raw14_MSE": 0.006145237518530858,
+          "arm12_MSE": 0.004468380966279706,
+          "gripper2_MSE": 0.016206376832037763,
+          "clipped_gripper2_MSE": 0.013422711919610888
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-06": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 126,
+          "raw14_MSE": 0.0038109549546762396,
+          "arm12_MSE": 0.0014434868411463107,
+          "gripper2_MSE": 0.018015763635855813,
+          "clipped_gripper2_MSE": 0.018013351129279185
+        },
+        "wide5000": {
+          "clipped_gripper_values": 156,
+          "raw14_MSE": 0.0028348136354267007,
+          "arm12_MSE": 0.0022379357781903957,
+          "gripper2_MSE": 0.006416080778844527,
+          "clipped_gripper2_MSE": 0.004375297592439423
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-07": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 146,
+          "raw14_MSE": 0.007142223904034263,
+          "arm12_MSE": 0.004258411874668547,
+          "gripper2_MSE": 0.02444509608022855,
+          "clipped_gripper2_MSE": 0.02444381742554234
+        },
+        "wide5000": {
+          "clipped_gripper_values": 160,
+          "raw14_MSE": 0.0057231881740999494,
+          "arm12_MSE": 0.005109924922437513,
+          "gripper2_MSE": 0.009402767684074569,
+          "clipped_gripper2_MSE": 0.008591387091397935
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-08": {
+      "split": "validation",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 152,
+          "raw14_MSE": 0.013858622439772296,
+          "arm12_MSE": 0.0071036694487743605,
+          "gripper2_MSE": 0.0543883403857599,
+          "clipped_gripper2_MSE": 0.05422580028545355
+        },
+        "wide5000": {
+          "clipped_gripper_values": 135,
+          "raw14_MSE": 0.011732465473847086,
+          "arm12_MSE": 0.00938943485777818,
+          "gripper2_MSE": 0.025790649170260544,
+          "clipped_gripper2_MSE": 0.021580447039667796
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "ALL_validation": {
+      "split": "validation",
+      "submitted_slots": 896,
+      "historical_native_actions": 772,
+      "rows": 28,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 414,
+          "raw14_MSE": 0.010162620631029748,
+          "arm12_MSE": 0.004860411783007638,
+          "gripper2_MSE": 0.04197587371916238,
+          "clipped_gripper2_MSE": 0.04192132466818988
+        },
+        "wide5000": {
+          "clipped_gripper_values": 287,
+          "raw14_MSE": 0.030201183609223158,
+          "arm12_MSE": 0.010223104055890395,
+          "gripper2_MSE": 0.15006966092921975,
+          "clipped_gripper2_MSE": 0.14885749026495937
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-09": {
+      "split": "validation",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 49,
+          "raw14_MSE": 0.008673902591520972,
+          "arm12_MSE": 0.0032169635922488023,
+          "gripper2_MSE": 0.04141553658715398,
+          "clipped_gripper2_MSE": 0.04140983685775616
+        },
+        "wide5000": {
+          "clipped_gripper_values": 15,
+          "raw14_MSE": 0.05248651508043373,
+          "arm12_MSE": 0.012594918919229875,
+          "gripper2_MSE": 0.2918360920476569,
+          "clipped_gripper2_MSE": 0.29178733713284305
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-10": {
+      "split": "validation",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 184,
+          "raw14_MSE": 0.010292014988521163,
+          "arm12_MSE": 0.0034472882219375093,
+          "gripper2_MSE": 0.05136037558802308,
+          "clipped_gripper2_MSE": 0.051315047321821204
+        },
+        "wide5000": {
+          "clipped_gripper_values": 112,
+          "raw14_MSE": 0.005227810738431228,
+          "arm12_MSE": 0.003833439956134337,
+          "gripper2_MSE": 0.013594035432212579,
+          "clipped_gripper2_MSE": 0.01307678594482868
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-11": {
+      "split": "validation",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 29,
+          "raw14_MSE": 0.007825942504304554,
+          "arm12_MSE": 0.005673725869069883,
+          "gripper2_MSE": 0.020739242315712565,
+          "clipped_gripper2_MSE": 0.020734614207728635
+        },
+        "wide5000": {
+          "clipped_gripper_values": 25,
+          "raw14_MSE": 0.05135794314418058,
+          "arm12_MSE": 0.015074622490419187,
+          "gripper2_MSE": 0.2690578670667489,
+          "clipped_gripper2_MSE": 0.268985390942498
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-04": {
+      "split": "train",
+      "submitted_slots": 400,
+      "historical_native_actions": 400,
+      "rows": 13,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 372,
+          "raw14_MSE": 0.0089555943076949,
+          "arm12_MSE": 0.006042362216907815,
+          "gripper2_MSE": 0.02643498685241741,
+          "clipped_gripper2_MSE": 0.026431780899531795
+        },
+        "wide5000": {
+          "clipped_gripper_values": 443,
+          "raw14_MSE": 0.005529475397615503,
+          "arm12_MSE": 0.005559449434615778,
+          "gripper2_MSE": 0.005349631175613845,
+          "clipped_gripper2_MSE": 0.0037085833857005966
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    }
+  },
+  "aggregate_reconstruction": {
+    "train": {
+      "published": 0.005470432497738913,
+      "CPU_reconstructed": 0.005470073394768082,
+      "absolute_difference": 3.5910297083163734e-07,
+      "within_roundoff_tolerance": true
+    },
+    "validation": {
+      "published": 0.030205261573428288,
+      "CPU_reconstructed": 0.030201183609223158,
+      "absolute_difference": 4.077964205130569e-06,
+      "within_roundoff_tolerance": true
+    }
+  },
+  "failed04_success": false,
+  "source_eligible": false,
+  "interpretation_limits": "Full submitted-plan slots, including known unexecuted tails; historical native actions are separate. Clip only gripper coordinates to qualified actuator [0,1]. Independent per-slot interval floor is not network capacity or physical success. CPU/GPU arithmetic may differ; inspect aggregate reconstruction before conclusions."
+}

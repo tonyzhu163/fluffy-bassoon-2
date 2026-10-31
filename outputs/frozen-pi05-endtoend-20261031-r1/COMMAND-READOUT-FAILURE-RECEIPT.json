@@ -1,0 +1,50 @@
+{
+  "format": "fixed15_readout_pre_model_failure_receipt_v1",
+  "job_id": "job-ctc5ji8fr720",
+  "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+  "exit_code": 1,
+  "stage": "runtime_provenance_before_model_or_simulator_or_CampaignBudget_construction",
+  "exception": "ValueError: contextlib.py is outside pinned repository",
+  "exact_call": "robotwin_command_diagnostic_readout.main:259 inspect.getfile(obj)",
+  "static_cause": "observe_native_plans imported from robotwin_prelift_probe.py:88 uses @contextmanager, whose wrapper code resides in Pythoncontextlib.py; __wrapped__ leaf is the reviewed repository generator.",
+  "GPU_probe_passed": true,
+  "canonical_DATA_bindings": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/canonical-bindings.json",
+    "sha256": "e8c49c56d55853f14d0e2fb3a753c6395a1e3267a1097f4ae3b7c2836423a2a9",
+    "bytes": 21577
+  },
+  "charged_GPU_seconds": 75,
+  "remaining_same1500_GPU_seconds": 1425,
+  "allphone_actual_GPU_seconds": 7057,
+  "physical_episodes": 0,
+  "physical_controller_actions": 0,
+  "VLA_model_constructed": false,
+  "physics_constructed": false,
+  "current_canonical_tip_unchanged": {
+    "canonical_actions": 23922,
+    "old_events": 1588,
+    "same_terminal_tip": true,
+    "next_event_absent": true,
+    "tip_file": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget/events/0000001587.json",
+      "sha256": "b8187462d46f5174cb8c6b3785bcd81b0248bd65bb4eaf8899aaad0dc3ad76d0"
+    },
+    "raw_physics_output_exists": false
+  },
+  "no_new_ledger_registration": true,
+  "all_failed_outputs_preserved": true,
+  "automatic_retry": false,
+  "scheduler_created": "2026-11-01 06:48:52 Asia/Shanghai",
+  "required_CPU54_still_passed": true,
+  "scope": "Alloldheaders/costs/models/RNG stayimmutable; no relaxedcontainment/hashguard or blindretry. Tinycallableprovenance successor routed to samecodeowner.",
+  "scheduler": {
+    "status": "Failed",
+    "ended": "2026-11-01 06:49:55 Asia/Shanghai",
+    "UI_seconds": 51,
+    "receipt_charge_seconds": 75
+  },
+  "scheduler_screenshot": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-READOUT-TERMINAL.jpg",
+    "sha256": "fd39efb661d4cc58f96c4fae9bc2e4e5dfbe41a02efd6b6428934f38b6e8547d"
+  }
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/scripts/diagnostics/robotwin_command_diagnostic_readout.py", line 5, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_readout.py", line 259, in main
+    path=Path(inspect.getfile(obj)).resolve();rel=str(path.relative_to(root))
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 730, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: '/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/contextlib.py' is not in the subpath of '/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1' OR one path is relative and the other is absolute.
