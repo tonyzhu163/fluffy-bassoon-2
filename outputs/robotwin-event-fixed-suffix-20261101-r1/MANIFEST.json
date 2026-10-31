@@ -1,0 +1,201 @@
+{
+  "format": "original_a1_event_fixed_suffix_diagnostic_v1",
+  "producer": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+  "predecessor_result_sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f",
+  "predecessor_recovery_sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
+  "predecessor_terminal_sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef",
+  "original_teacher_ids": [
+    "phone-02",
+    "phone-00",
+    "phone-01",
+    "phone-03",
+    "phone-04",
+    "phone-05",
+    "phone-06",
+    "phone-07",
+    "phone-08",
+    "phone-09",
+    "phone-10",
+    "phone-11"
+  ],
+  "whole_split": {
+    "phone-00": "train",
+    "phone-01": "train",
+    "phone-02": "train",
+    "phone-03": "train",
+    "phone-04": "train",
+    "phone-05": "train",
+    "phone-06": "train",
+    "phone-07": "train",
+    "phone-08": "validation",
+    "phone-09": "validation",
+    "phone-10": "validation",
+    "phone-11": "validation"
+  },
+  "suffix_specs": [
+    {
+      "arm": "action",
+      "case": 5,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 6,
+      "horizon": 400,
+      "id": "event-teacher-phone-05",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261206,
+      "paired_instruction": [
+        "Move the glass and metal smartphone onto the metal adjustable phone clamp."
+      ],
+      "reset_seed": 6,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-05"
+    },
+    {
+      "arm": "action",
+      "case": 6,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 9,
+      "horizon": 400,
+      "id": "event-teacher-phone-06",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261207,
+      "paired_instruction": [
+        "Take the flat phone to the phonestand for holding phones."
+      ],
+      "reset_seed": 9,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-06"
+    },
+    {
+      "arm": "action",
+      "case": 7,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 10,
+      "horizon": 400,
+      "id": "event-teacher-phone-07",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261208,
+      "paired_instruction": [
+        "Put the glass and metal smartphone atop the phonestand for holding phones."
+      ],
+      "reset_seed": 10,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-07"
+    },
+    {
+      "arm": "action",
+      "case": 8,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 11,
+      "horizon": 400,
+      "id": "event-teacher-phone-08",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261209,
+      "paired_instruction": [
+        "Lift the rectangular phone onto the compact phonestand."
+      ],
+      "reset_seed": 11,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-08"
+    },
+    {
+      "arm": "action",
+      "case": 9,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 14,
+      "horizon": 400,
+      "id": "event-teacher-phone-09",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261210,
+      "paired_instruction": [
+        "Put the phone with polished silver border atop the light brown phone holder."
+      ],
+      "reset_seed": 14,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-09"
+    },
+    {
+      "arm": "action",
+      "case": 10,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 16,
+      "horizon": 400,
+      "id": "event-teacher-phone-10",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261211,
+      "paired_instruction": [
+        "Carry the glass-faced phone to the phone holder with cutout underneath."
+      ],
+      "reset_seed": 16,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-10"
+    },
+    {
+      "arm": "action",
+      "case": 11,
+      "coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_teacher_seed": 18,
+      "horizon": 400,
+      "id": "event-teacher-phone-11",
+      "method": "event_aligned_teacher",
+      "motor_seed": 20261212,
+      "paired_instruction": [
+        "Lift the silver phone with black screen onto the angled holder for phones."
+      ],
+      "reset_seed": 18,
+      "stage": "event_aligned_teacher_execution",
+      "task": "place_phone_stand",
+      "teacher_id": "phone-11"
+    }
+  ],
+  "maximum_complete_episodes": 7,
+  "maximum_new_actions": 2800,
+  "maximum_gpu_seconds": 1800,
+  "cache_fit_source_student_admission": false,
+  "continue_complete_failures": true,
+  "expected_outcomes": {
+    "target": "7/7 original suffix teachers executable",
+    "prediction": "uncertain: fixed04 already failed; no universal-success prior",
+    "interpretation": "Failure misses the bank target, not by itself statistical surprise or a causal diagnosis"
+  }
+}
