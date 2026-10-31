@@ -1,0 +1,9 @@
+# AD-first software components and CPU closure
+
+AD7401 passed108 allocated CPU tests with0failures/errors/skips. Its independent R1 receipt/JUnit/import proof remains valid and was not rerun. Teacher063d then passed57 selected cases with3named legacy real-ledger cases deselected,0failures/errors/skips. Actual saved source59588 and closed source20c agree on actor parameters, private interaction RNG, source/task counters, update count and600K4 ancestry; no CUDA generator was restored. This measures CPU compatibility, not teacher competence or robot performance.
+
+Both actual scheduler jobs are Failed/exit1 and remain recorded that way. R1 had an absolute-vs-relative pytest selection error; the native/ledger import firewall held. R2 completed every work phase and clean owned teardown, then terminal JSON publication failed because a local run-ID string was shadowed by a helper function. Original partial summary/logs/failed UI proof remain unchanged. The local helper is renamed for future use only; the whole wrapper has no end-to-end Success qualification. No further compute is needed to preserve these independently audited component results.
+
+Actual Baige costs: R1 job-2wg5ue74mpid69scheduler-seconds; R2 job-d7v2vejcs5qk70seconds. R2 final refreshed display70 agrees with09:20:10→09:21:20; the initial58-second display is retained as transient. Pod63seconds is separate; no exact parent wall time survived summary publication. Total139CPU-worker-seconds/1112core-seconds/0GPU. The600-second software envelope closes with461unused seconds sealed; no retry, old sealed credit or live work remains.
+
+The pending7200CPU-worker-second combined AD-first proposal includes these139 actual seconds once. Only if that human proposal is approved does7061 remain within its aggregate CPU total. GPU fits, full100 bank projection, teacher robot panel and AD500 readout remain unadmitted. Original100-round campaign and its deleted monitor remain complete.

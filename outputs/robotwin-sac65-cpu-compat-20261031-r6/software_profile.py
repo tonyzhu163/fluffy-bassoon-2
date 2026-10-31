@@ -83,7 +83,7 @@ def main(started,gate):
         clean=staging.git_environment(os.environ)
         for key in tuple(os.environ):
             if key not in clean:os.environ.pop(key)
-        def run(name,command,cwd,log,cap):
+        def run_phase(name,command,cwd,log,cap):
             available=deadline-time.monotonic()-30
             gate.require(available>5,'No software work time remains before cleanup')
             result=runtime.run(name,command,cwd,os.environ,log,min(cap,available))
@@ -97,7 +97,7 @@ def main(started,gate):
             stage_out=out/('stage-'+family);stage_out.mkdir()
             c=dict(source=bound['root'],pin=bound['pin'],output=str(stage_out),bootstrap=bound['bootstrap'])
             path=stage_out/'context.json';gate.write(path,c)
-            result=run('stage-'+family,[sys.executable,'-I','-B','-S',str(code/BASE/'software_profile.py'),
+            result=run_phase('stage-'+family,[sys.executable,'-I','-B','-S',str(code/BASE/'software_profile.py'),
                 '--stage',str(path),'--sha',sha(path)],code,stage_out/'console.log',30)
             gate.require(result['returncode']==0,'Exact staging failed: '+family)
             local=json.loads((stage_out/'local-code.json').read_text())
@@ -106,7 +106,7 @@ def main(started,gate):
             roots[family]=Path(local['effective_code_root'])
         for family in (('auxiliary',) if 'ad_predecessor' in profile else ('auxiliary','ad')):stage_family(family)
         auxiliary=roots['auxiliary'];reader=out/'private/qualified-c62-reader.py'
-        result=run('reader',['git','--no-pager','show',gate.READER_PIN+':'+gate.READER_PATH],auxiliary,reader,10)
+        result=run_phase('reader',['git','--no-pager','show',gate.READER_PIN+':'+gate.READER_PATH],auxiliary,reader,10)
         gate.require(result['returncode']==0 and sha(reader)==gate.READER_SHA,'Qualified corpus reader changed')
         def worker(family,phase):
             target=out/(family+'-'+phase);target.mkdir()
@@ -121,7 +121,7 @@ def main(started,gate):
                 deselected_nodes=bound.get('deselected_nodes',[]),expected_fixture_tests=bound['expected_tests'],
                 teacher_plan=profile['teacher']['plan'],teacher_plan_sha256=profile['teacher']['plan_sha256'])
             path=target/'context.json';gate.write(path,c)
-            result=run(family+'-'+phase,[sys.executable,'-I','-B','-S',str(auxiliary/BASE/'phase_worker.py'),
+            result=run_phase(family+'-'+phase,[sys.executable,'-I','-B','-S',str(auxiliary/BASE/'phase_worker.py'),
                 '--phase',phase,'--context',str(path),'--context-sha256',sha(path)],roots[family],
                 target/'console.log',120)
             ip=target/(phase+'-imports.json');gate.require(ip.is_file(),'Missing import/isolation receipt')
