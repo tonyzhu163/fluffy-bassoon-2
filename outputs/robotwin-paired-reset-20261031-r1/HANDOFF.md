@@ -40,10 +40,12 @@ python -m pytest -q tests/test_pi05_residual.py tests/test_robotwin_noise.py \
   tests/test_robotwin_paired_reset.py --junitxml=paired-reset.xml
 ```
 
-The new file adds33 parameterized cases for lifetime binding, no physical-array
+The new file adds37 parameterized cases for lifetime binding, no physical-array
 mutation, actual corpus text, RNG/default-reset preservation, strict failed-pair
 checks, common API, exact migration and rejection paths. Record actual JUnit
 counts, not this planned count. Only AST and whitespace checks ran locally.
 The sole resource owner reviews/deploys/allocates inside existing residual
 budgets. No tests/models/forwards, scheduler observation, new resource grant or
 live job mutation occurred here. A2 draft50ade9 remains protected separately.
+
+Static review c136 found two blockers, fixed before qualification: optional writer=None after a paired native step, and proof/new/predecessor canonical-root plus saved journal tip/count anchors. New regression cases cover both. Actual native constancy schema (all_sixteen_constant and episodes rows) was already consumed in c136; no operator aliases are required. The owner CPU gate also runs pure validate_instruction_migration against the actual saved recovery/result/reset NPZ/language/terminal proof, without constructing or registering the canonical CampaignBudget.

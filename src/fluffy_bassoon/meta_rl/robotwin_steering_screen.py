@@ -554,7 +554,10 @@ def validate_instruction_migration(saved, proof, *, resume, resume_sha, plan, so
                    or row["chunks"] != records[row["episode"]]["chunks"] for row in language["episodes"])):
         raise ValueError("Whole-episode binding requires original native text consistency evidence")
     journal = proof["journal"]
-    if (Path(journal["root"]).resolve() != Path(allocation["action_ledger"]["root"]).resolve()
+    if (not (Path(journal["root"]).resolve() == Path(allocation["action_ledger"]["root"]).resolve()
+                 == Path(prior["action_ledger"]["root"]).resolve())
+            or journal["event_count"] != prior["actions"]["journal_events"]
+            or journal["sha256"] != prior["actions"]["journal_sha256"]
             or journal["actual_actions"] != sum(row["primitive_steps"] for row in records.values())
             or prior["actions"]["actual_actions"] != journal["actual_actions"]):
         raise ValueError("Migration must retain every native action in the same canonical journal")

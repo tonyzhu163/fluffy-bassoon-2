@@ -746,9 +746,10 @@ class _RoboTwinBackend:
         # corpus capture. The simulator's original text remains audit-only.
         if getattr(self, "_paired_instruction", None) is not None:
             raw = self._raw_obs
-            native_feedback = dict(native_feedback, native_info=dict(
-                native_feedback.get("native_info") or {},
-                paired_instruction=deepcopy(self._instruction_binding)))
+            if writer is not None:
+                native_feedback = dict(native_feedback, native_info=dict(
+                    native_feedback.get("native_info") or {},
+                    paired_instruction=deepcopy(self._instruction_binding)))
         reward = float(torch.as_tensor(rewards).sum())
         if writer is not None:
             writer.complete_native(next_raw=raw, next_features=features,

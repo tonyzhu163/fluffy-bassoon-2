@@ -7,6 +7,7 @@ import sys
 import hashlib
 import json
 from pathlib import Path
+import shutil
 
 import numpy as np
 import pytest
@@ -148,6 +149,24 @@ def test_later_corpus_frame_and_decision_use_same_bound_text(monkeypatch):
     assert following["task_descriptions"] == ["new text after chunk"]
 
 
+def test_paired_step_without_corpus_writer_keeps_bound_input_after_real_step_boundary(monkeypatch):
+    backend, _ = encoder(monkeypatch)
+    backend._encode(observation("initial sampled instruction"))
+    backend.decode = lambda noise: np.zeros((3,14), np.float32)
+    backend._decision_metadata, backend._last_residual_metadata = {}, None
+    backend.corpus_writer = None
+    commands = []
+    def step(actions):
+        commands.append(actions.clone())
+        return [observation("later sampled text")], torch.ones(1), torch.ones(1,dtype=torch.bool), torch.zeros(1,dtype=torch.bool), [
+            dict(valid_action_mask=[1,1,1],episode=dict(success_once=True))]
+    backend.env = SimpleNamespace(chunk_step=step)
+    _,_,end,_,info = backend.step(np.zeros((3,32),np.float32),3)
+    assert end and info["primitive_steps"] == 3 and len(commands) == 1
+    assert backend._raw_obs["task_descriptions"] == ["original accepted instruction"]
+    assert backend._instruction_binding["sampled_instruction"] == ["later sampled text"]
+
+
 def test_new_unpaired_reset_clears_binding_and_restores_global_rng(monkeypatch):
     backend = object.__new__(_RoboTwinBackend)
     backend.torch = torch
@@ -264,6 +283,7 @@ def migration(tmp_path):
     original_path = writer.root/Path(baseline["episode_manifest_ref"]["path"]).with_name("reset.json")
     prior = dict(status="blocked_failure", plan=plan, records=records, pending=pending, scope_sha256="c"*64,
         interface_sha256="d"*64, source_commit=old_source, actions=snapshot,
+        action_ledger=dict(root=str(ledger["root"])),
         failure=dict(type="RuntimeError", message="Actual seed/raw observation/public features differ from the paired development reset"))
     recovery = tmp_path/"recovery.pt"
     recovery.write_bytes(b"stand-in whose content is checked by the CLI before torch.load")
@@ -303,13 +323,22 @@ def test_exact_failed_instruction_migration_preserves_records_cursor_and_costs(m
         assert budget.snapshot()["actual_actions"] == 16
 
 
-@pytest.mark.parametrize("fault", ["failure", "cursor", "cost", "incomplete", "physical", "zero_chunk", "language"])
+@pytest.mark.parametrize("fault", ["failure", "cursor", "cost", "incomplete", "physical", "zero_chunk", "language",
+                                  "foreign_same_total_root", "predecessor_tip", "predecessor_count"])
 def test_instruction_migration_rejects_unproven_or_changed_predecessor(migration, fault):
     saved, proof, kwargs, _ = migration
     if fault == "failure": saved["state"]["failure"]["message"] = "unrelated crash"
     if fault == "cursor": saved["state"]["pending"]["motor_seed"] += 1
     if fault == "cost": kwargs["allocation"]["prior_a1_gpu_seconds"] = 0
     if fault == "incomplete": next(iter(saved["state"]["records"].values()))["complete"] = False
+    if fault == "foreign_same_total_root":
+        old = Path(proof["journal"]["root"])
+        foreign = old.with_name("copied-equal-total-journal")
+        shutil.copytree(old,foreign)
+        proof["journal"]["root"] = str(foreign)
+        kwargs["allocation"]["action_ledger"]["root"] = str(foreign)
+    if fault == "predecessor_tip": proof["journal"]["sha256"] = "f"*64
+    if fault == "predecessor_count": proof["journal"]["event_count"] += 1
     if fault in ("physical", "zero_chunk", "language"):
         key = {"physical":"failed_reset", "zero_chunk":"failed_manifest", "language":"native_language_audit"}[fault]
         path = Path(proof[key]["path"])
