@@ -46,21 +46,18 @@ motor identity are verified; terminal restore and an independent full-journal
 replay were not performed. Target57 data remain excluded from source
 pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
-The targeted Motus/RoboTwin fixed4D screen has no eligible rescue. The
-subsequent supervised reactive-capacity run passes actual zero/native parity,
-frozen-motor qualification and a nonzero KV gradient. It stops before either
-fit: published teacher00/01 succeed at104 actions each, but teacher02 fails
-its full400-action replay. Seed and initial drive targets match; object/physical
-state and replay timing remain unestablished. All12 fixed demonstrations stay
-included. The allocated CPU diagnosis confirms all608 issued teacher requests exactly
-match the source, with seeds/instructions/initial drive targets equal. Physics
-and scene compatibility remain unresolved; arm/gripper timing differs between
-source dense execution and native chunk delivery. Similar transition patterns
-also occur in the two successful replays, so timing is not an established cause.
-All13 tests pass; no fit or new actions occurred. A concrete corrective proposal
-precedes another GPU attempt, retaining all demonstrations. Actual cumulative
-cost stays2036 GPU-seconds/18599 actions; CPU827/1800,973 remain. No learned
-capacity, new RL teacher or meta-learning result is established. See [evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
+The targeted Motus/RoboTwin fixed4D screen still has no eligible rescue. A
+supervised capacity attempt then failed before fitting at teacher02 replay;
+CPU diagnosis showed all608 issued requests were exact, leaving physical
+execution/scene compatibility unresolved. The event-aligned native-H32
+successor is now running. At23:17:54, live frozen-motor/parity/gradient checks
+pass; fixed02 control fails400 while aligned02/00/01/03 each succeed193.
+This one changed-schedule comparison is not a causal rescue or learned result.
+All12 must succeed before canonical plan-imitation100-update/head fits and the
+fixed tiny DEV panel. It uses the original5164GPU-second/10000-new-action A1
+remainder, not a new allowance. Phase CPU978/1800,822 remain after the carried
+24-case plus2affected qualification. No new RL teacher, meta-learning or
+capacity result is established. [Current evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use

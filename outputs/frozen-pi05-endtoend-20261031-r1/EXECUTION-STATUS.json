@@ -1,22 +1,21 @@
 {
   "format": "frozen_pi05_evidence_audit_index_v2",
   "purpose": "Historical independent evidence audit; current live status is solely outputs/coordination.md. This file is not a second process monitor.",
-  "audited_at_utc": "2026-10-31T12:31:23.818425+00:00",
+  "audited_at_utc": "2026-10-31T15:21:54.154901+00:00",
   "phase_id": "frozen-pi05-endtoend-20261031-r1",
   "authoritative_live_status": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/main/outputs/coordination.md",
-  "latest_audited_runtime_snapshot_utc": "2026-10-31T11:18:58.293451+00:00",
+  "latest_audited_runtime_snapshot_utc": "2026-10-31T15:17:54.371118+00:00",
   "latest_audited_attempt": {
-    "job_id": "job-zp47pliu429f",
-    "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
-    "scheduler_status": "Succeeded",
-    "stage_status": "complete_restricted_development_search",
-    "complete_episodes": 51,
-    "closed_actions_recomputed": 17591,
-    "pending_actions": 0,
-    "uncertain_actions": 0,
-    "eligible_arms": [],
-    "selected_arm": null,
-    "scope": "Restricted fixed4D development family; full learned reactive methods remain untested"
+    "job_id": "job-2rkimbvypowd",
+    "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "scheduler_status_at_saved_check": "Running",
+    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
+    "next_owner_check_shanghai": "2026-10-31T23:38:00+08:00",
+    "stage_status": "Real motor qualification passed; fixed02control timeout and four aligned teacher successes verified. Full12/fit results pending.",
+    "complete_episodes": 5,
+    "new_closed_action_prefix": 1172,
+    "current_inflight_actions_independently_counted": false,
+    "scope": "Partial closed episode evidence, not a full ledger settlement, teacher-bank completion, causal rescue or learned residual result."
   },
   "predecessor": {
     "run_id": "frozen-pi05-endtoend-a1-20261031-r1",
@@ -50,6 +49,11 @@
       "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
       "test_cases": 11,
       "qualification": "CPU source inventory only; no model, simulator or teacher qualification"
+    },
+    {
+      "source_commit": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f",
+      "test_cases": 32,
+      "qualification": "Capacity synthetic CPU suite,22 unchanged passes on88bf plus10 blocked cases passed on8fb; no VLA/simulator claim"
     }
   ],
   "shared_phase_caps": {
@@ -59,13 +63,14 @@
     "fresh_cpu_worker_seconds": 1800
   },
   "latest_audited_resource_accounting": {
-    "settled_gpu_seconds": 1770,
-    "active_A1_gpu_reservation": 0,
-    "remaining_original_A1_gpu_seconds": 5430,
-    "remaining_original_A1_actions": 12409,
-    "remaining_phase_gpu_seconds": 27030,
-    "cpu_worker_seconds_consumed": 551,
-    "cpu_worker_seconds_remaining": 1249
+    "settled_gpu_seconds": 2036,
+    "active_A1_gpu_reservation": 5164,
+    "remaining_original_A1_gpu_seconds": 5164,
+    "remaining_original_A1_actions": 11401,
+    "remaining_phase_gpu_seconds": 26764,
+    "cpu_worker_seconds_consumed": 978,
+    "cpu_worker_seconds_remaining": 822,
+    "remaining_phase_actions": 281401
   },
   "scientific_student_fit_profile": {
     "matched_models": 4,
@@ -137,13 +142,37 @@
     "COMPOSITE-CPU-CHECK.json": {
       "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/COMPOSITE-CPU-CHECK.json",
       "sha256": "cb8491161696db877e5154a6aebf2cf7f877d722d6619f0aec69c5c26636d9c6"
+    },
+    "COMBINED-CPU-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/COMBINED-CPU-CHECK.json",
+      "sha256": "d5c28b63a307e5cd32b003919ce93e29fd83e0aebce90e8d8ca1786feff6eb1b"
+    },
+    "CAPACITY-FIXTURE-CPU-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-FIXTURE-CPU-CHECK.json",
+      "sha256": "08f503e5c089abd43c83203a93c9e375497f249e67d23bd26434b8641d54d990"
+    },
+    "CAPACITY-GPU-LAUNCH.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-GPU-LAUNCH.json",
+      "sha256": "449661ac9feebc60daffe6794cad0a49c88e605c9d331b0abab3f544c27ada0d"
+    },
+    "CAPACITY-GPU-INITIAL-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-GPU-INITIAL-CHECK.json",
+      "sha256": "343689882cbd539f084a54b39a3bdc2f0b385db58972ef2bdb75aa072ea76ce5"
+    },
+    "CAPACITY-GPU-FIRST-EPISODES.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-GPU-FIRST-EPISODES.json",
+      "sha256": "872f893a9134ea775b3f2c68b213eb0631cb4b4e7d3b91555bd9fb87ccb66364"
+    },
+    "CAPACITY-GPU-TERMINAL-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-GPU-TERMINAL-CHECK.json",
+      "sha256": "d67e4554721c83bdc437480782a0b613d51e17c51a5c0f0102125f201604a6a8"
     }
   },
   "coordinator_rule_ref": {
     "path": "/Users/mowenjie/.codex/worktrees/steering-redesign/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/SELECTION-RULE.json",
     "sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5"
   },
-  "next_experiment_preparation": "Original full learned reactive KV/action capacity probe. Allocated CPU archive inspection passed; actual success, reset/cadence executability, target roundtrip and learned-fit qualification remain pending. No fixed4D teacher is admitted by a full-class capacity result.",
+  "next_experiment_preparation": "Actual GPU job-2rkimbvypowd advancement verified at23:17:54Shanghai by sole owner; next read23:38. Four aligned successes/one fixed02timeout,1172closed new action prefix. All12 teacher gate and both fits still pending. Preserve canonical ledger and full recovery; no duplicate runtime observer.",
   "capacity_data_qualification_audit": {
     "job_id": "job-rh3ldkdapfv9",
     "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
@@ -278,5 +307,482 @@
     ],
     "owner_terminal_publication_commit": "5a1b3b50177c12a867c2ea56b6719436f662599d",
     "scientific_source_or_fit_admitted": false
+  },
+  "combined_followup_cpu_audit": {
+    "job_id": "job-nneqgcplclpy",
+    "source_commit": "88bf7018eefa075d76bd91fc38471ac7e6d6cfb3",
+    "passed": false,
+    "total_cases": 42,
+    "passed_cases": 32,
+    "failed_cases": [
+      "tests/test_robotwin_reactive_capacity.py::test_actual_metadata_composition_keeps_absent_flags_and_fixed_whole_split",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[flag]",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[order]",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[offset]",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[views]",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[inventory]",
+      "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding[tamper]",
+      "tests/test_robotwin_reactive_capacity.py::test_hdf5_reader_rejects_extra_or_truncated_timeline",
+      "tests/test_robotwin_reactive_capacity.py::test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state",
+      "tests/test_robotwin_reactive_capacity.py::test_native_paired_plan_charges_all_teachers_and_arms_without_locked_panel"
+    ],
+    "source_and_history_repair_cases_passed": 10,
+    "capacity_cases_passed": 22,
+    "capacity_cases_failed": 10,
+    "failure": "All ten capacity failures are FileNotFoundError for the omitted repo-relative stage0 inventory metadata, before their test body. The author JPEG parity check remains unexecuted.",
+    "missing_inventory_sha256": "e60cb3bd863bb6d8a014aadad652d64bb1834535f8e9cff6d53476fcd840102b",
+    "charged_cpu_worker_seconds": 121,
+    "gpu_seconds": 0,
+    "robot_actions": 0,
+    "verification": "Parsed actual saved pytest summary and exception lines; scheduler observation remains solely with the allocation owner.",
+    "remaining_original_qualification_hold_cpu_seconds": 345,
+    "scientific_source_or_fit_admitted": false
+  },
+  "capacity_cpu_qualification_closure": {
+    "job_id": "job-qh4pau3eh6v8",
+    "source_commit": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f",
+    "passed": true,
+    "actual_cases_passed_in_this_run": 10,
+    "junit_cases_independently_parsed": [
+      "tests.test_robotwin_reactive_capacity::test_actual_metadata_composition_keeps_absent_flags_and_fixed_whole_split",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[flag]",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[order]",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[offset]",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[views]",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[inventory]",
+      "tests.test_robotwin_reactive_capacity::test_fail_closed_demo_identity_and_author_binding[tamper]",
+      "tests.test_robotwin_reactive_capacity::test_hdf5_reader_rejects_extra_or_truncated_timeline",
+      "tests.test_robotwin_reactive_capacity::test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state",
+      "tests.test_robotwin_reactive_capacity::test_native_paired_plan_charges_all_teachers_and_arms_without_locked_panel"
+    ],
+    "previous_unchanged_capacity_cases_passed": 22,
+    "total_capacity_cases_qualified": 32,
+    "previous_repaired_source_and_history_cases_passed": 10,
+    "composition": "8fb adds exact previously omitted inventory metadata to88bf; runtime and test code remain identical. Reuse prior passing evidence by component binding.",
+    "charged_cpu_worker_seconds": 74,
+    "original_qualification_hold_remaining_cpu_seconds": 271,
+    "gpu_seconds": 0,
+    "robot_actions": 0,
+    "qualification_scope": "Synthetic CPU code/data-contract qualification; real motor transforms, teacher replay and learned steering effectiveness remain unproven."
+  },
+  "restricted_search_terminal_audit": {
+    "job_id": "job-zp47pliu429f",
+    "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+    "scheduler_status": "Succeeded",
+    "stage_status": "complete_restricted_development_search",
+    "complete_episodes": 51,
+    "closed_actions_recomputed": 17591,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "eligible_arms": [],
+    "selected_arm": null,
+    "scope": "Restricted fixed4D development family; full learned reactive methods remain untested"
+  },
+  "capacity_real_motor_qualification_audit": {
+    "status": "passed",
+    "actual_actions": 400,
+    "zero_kv_exact": true,
+    "zero_fixed_kv_exact": true,
+    "zero_action_exact": true,
+    "native_parity": {
+      "max_abs_error": 0.0,
+      "passed": true,
+      "tolerance": 2e-05
+    },
+    "kv_gradient_norm": 0.003099440501286263,
+    "motor_gradients": 0,
+    "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41"
+  },
+  "capacity_teacher_replay_audit": {
+    "records": [
+      {
+        "id": "capacity-qualification",
+        "success": false,
+        "actions": 400
+      },
+      {
+        "id": "capacity-teacher-phone-00",
+        "success": true,
+        "actions": 104
+      },
+      {
+        "id": "capacity-teacher-phone-01",
+        "success": true,
+        "actions": 104
+      },
+      {
+        "id": "capacity-teacher-phone-02",
+        "success": false,
+        "actions": 400
+      }
+    ],
+    "failure": {
+      "message": "Fixed published teacher trajectory did not execute successfully; diagnose before fitting",
+      "type": "RuntimeError"
+    },
+    "optimizer_fits_run": 0,
+    "full_12_teacher_qualification_passed": false,
+    "recovery_sha256": "c59c91799938c928bdd683a6ce681cfa3f9853fe0c829c05fe6657fe30af5d5b",
+    "owner_terminal_publication_commit": "18f3e1ef7efe8c3d8084dffe86a943b1c96292e7",
+    "next_diagnosis": "Allocated CPU diagnosis completed: all608 requests exact, initial seed/text/14 drive targets match. Physical state and scene equivalence are unproven. Preserve failed02; evaluate outcome-independent event-aligned H32 successor only after its concrete pin and changed-helper qualification."
+  },
+  "native_execution_semantics_audit": {
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "source_path": "envs/_base_task.py",
+    "file_sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+    "git_blob_sha": "3485e7ca7039a23218c06bc9308e8758dc03a4b5",
+    "primary_source_url": "https://github.com/RoboTwin-Platform/RoboTwin/blob/dca9ec682688821c42944eacd7f5dd9bfb15396f/envs/_base_task.py#L1830",
+    "facts": [
+      "Native chunk execution prepends current drive targets, compresses each arm path, independently TOPP-retimes each at1/250 and downsamples it.",
+      "Gripper interpolation durations are distributed over original chunk indices using each re-timed arm step count.",
+      "Valid observation/action indices follow gripper time-fraction boundaries, not equality with each original arm waypoint.",
+      "Stationary compressed paths receive an extra point with Gaussian noise std2e-4; the existing private motor RNG covers VLA noise and does not establish paired planner jitter."
+    ],
+    "data_implication": "Archived dense expert drive-target frames are not automatically an equivalent native chunk-controller trajectory. A decoded14D residual edits waypoint proposals before this planner, rather than issuing each physical servo command.",
+    "untested_hypothesis": "Arm-hold compression plus uniform gripper re-timing may shift grasp closure relative to arrival. This is not established as the cause of phone02 failure.",
+    "required_evidence": "Allocated CPU delivery/state/scene comparisons and reference arm-hold/gripper-transition ranges before changing or repeating the replay.",
+    "conditional_option_only": "If supported, assess event-aligned native H32 expert chunks and actual canonical rollout SL inputs/targets, preserving fixed12 IDs, original data and failed02. No such successor is implemented or dispatched by this audit."
+  },
+  "replay_diagnosis_cpu_audit": {
+    "job_id": "job-a3luoqs9bwkn",
+    "source_commit": "4bbf6e5ce47b69273b2e71e0f6201b88dec30bcd",
+    "exit_code": 0,
+    "tests": {
+      "total": 13,
+      "passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.23,
+      "junit_sha256": "3bfd81dcffd38b3d38f13171e5e7c72736188d0172ccf6745432b590259a8efb"
+    },
+    "charged_cpu_worker_seconds": 81,
+    "phase_cpu_consumed": 827,
+    "phase_cpu_remaining": 973,
+    "actual_valid_commands_compared": 608,
+    "all_valid_reference_exact": true,
+    "initial_seed_text_and_drive_targets_match": true,
+    "physical_scene_identity_proven": false,
+    "robot_actions": 0,
+    "gpu_seconds": 0,
+    "model_forwards": 0,
+    "SGD": 0,
+    "evidence_refs": {
+      "REPLAY-DIAGNOSIS-CPU-RECEIPT.json": {
+        "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/REPLAY-DIAGNOSIS-CPU-RECEIPT.json",
+        "sha256": "a308c55453d4894aa72ce38d6e609d506068963b7140a9fc8e72f2707a561e7b"
+      },
+      "REPLAY-DIAGNOSIS-REPORT.json": {
+        "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/REPLAY-DIAGNOSIS-REPORT.json",
+        "sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
+      }
+    },
+    "interpretation": "Data/executor compatibility diagnosis; no learned steering capacity result, causal timing explanation, source teacher admission or student fit."
+  },
+  "event_successor_static_handoff_review": {
+    "candidate_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "base_main": "73a037c4323bdf79d51093b25ad7754544e7a399",
+    "file_identities_verified": [
+      {
+        "path": "scripts/diagnostics/robotwin_event_capacity.py",
+        "sha256": "6e513c9e9e6925289c60863b8fcfd8b0d1080247f78f83d6fdbdce74148a8209",
+        "bytes": 200
+      },
+      {
+        "path": "scripts/diagnostics/robotwin_event_schedule_preflight.py",
+        "sha256": "c5aac51ddc6ae38d9b2583738517bac237057a23b418253a995e5f121aa2e1a4",
+        "bytes": 4564
+      },
+      {
+        "path": "src/fluffy_bassoon/meta_rl/robotwin_event_admission.py",
+        "sha256": "fc0f48dcef3be53fa9caf9074ec4390e4d1c1551a594e58ca061feb54c1628a8",
+        "bytes": 7716
+      },
+      {
+        "path": "src/fluffy_bassoon/meta_rl/robotwin_event_capacity.py",
+        "sha256": "a375c878d057162332133ef44a389967590b15000a507cab0ad66a1065a632bb",
+        "bytes": 17840
+      },
+      {
+        "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+        "sha256": "b7fdd5de4adfdbecc62f76a3ed4a65125ca6e43571f6dd34d4a6598e2ca6fbc6",
+        "bytes": 18447
+      },
+      {
+        "path": "src/fluffy_bassoon/meta_rl/robotwin_event_schedule.py",
+        "sha256": "a6db739cb85d51ae3af1ac871f19c326c13a0ea002379e396c0c5e80ef1be59f",
+        "bytes": 5418
+      },
+      {
+        "path": "tests/test_robotwin_event_capacity.py",
+        "sha256": "17a1ae7de477e1c0574d68faa196b152e7dcfb3b96694e9b9be6fb3ee8078ff3",
+        "bytes": 17199
+      }
+    ],
+    "review_scope": "Frozen protocol, schedule/cursor/label semantics and byte identities; no Mac tests, arrays, model or simulator execution.",
+    "new_experiments_admitted": false,
+    "pending": "Concrete correctedbe247 passed changed-case CPU requalification; sole execution owner prepares actual GPU dispatch within original caps.",
+    "fixed_plan": {
+      "maximum_complete_episodes": 25,
+      "maximum_new_actions": 10000,
+      "maximum_new_gpu_seconds": 5164,
+      "aligned_teachers_required_before_fit": 12,
+      "whole_training_episodes": 8,
+      "whole_validation_episodes": 4
+    },
+    "public_state_semantics": "Canonical public state is joint drive targets, not measured qpos; separate measured-articulation audits never enter policy inputs.",
+    "supervision": "Expert submitted native plan imitation. ProposedH32, submitted mask and native executed mask kept separate; full known submitted plan labels retain terminal-unexecuted parameters; no claim they are physical waypoint traces.",
+    "source_student_eligibility": "Unchanged: this capacity diagnostic cannot automatically admit the restricted4D source collector, condition cross or AD/DPT fit.",
+    "superseded_candidate_commit": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+    "narrow_change": "Native get_name/get_drive_target getters, matching synthetic fixture API and public drive-target14 wording; all other scientific/runtime requirements unchanged."
+  },
+  "event_successor_cpu_audit": {
+    "source_commit": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+    "job_hostname": "job-tr9monend30t-master-0",
+    "passed_cases": 24,
+    "failed_cases": 0,
+    "skipped_cases": 0,
+    "charged_cpu_worker_seconds": 78,
+    "phase_cpu_consumed": 905,
+    "phase_cpu_remaining": 895,
+    "GPU_seconds": 0,
+    "robot_actions": 0,
+    "model_forwards": 0,
+    "SGD": 0,
+    "qualification_check_ref": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-CPU-CHECK.json",
+      "sha256": "21181ccd01b7b7245800c6f3e7f62ce66db899b14bf222c18e61c1d057439ac3"
+    },
+    "schedule_sha256": "d20f0aebbf54d6eacedfbf3f1152f047ac5a13eb5191e4c4b9240a1ff37ea6aa",
+    "all12_schedules": [
+      {
+        "episode_id": "phone-00",
+        "split": "train",
+        "reference_frames": 131,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 93,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-01",
+        "split": "train",
+        "reference_frames": 130,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 94,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-02",
+        "split": "train",
+        "reference_frames": 129,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 95,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-03",
+        "split": "train",
+        "reference_frames": 128,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 96,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-04",
+        "split": "train",
+        "reference_frames": 140,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 84,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-05",
+        "split": "train",
+        "reference_frames": 125,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 99,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-06",
+        "split": "train",
+        "reference_frames": 132,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 92,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-07",
+        "split": "train",
+        "reference_frames": 132,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 92,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-08",
+        "split": "validation",
+        "reference_frames": 126,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 98,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-09",
+        "split": "validation",
+        "reference_frames": 126,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 98,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-10",
+        "split": "validation",
+        "reference_frames": 125,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 99,
+        "admissible": true,
+        "chunks": 7
+      },
+      {
+        "episode_id": "phone-11",
+        "split": "validation",
+        "reference_frames": 129,
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 95,
+        "admissible": true,
+        "chunks": 7
+      }
+    ],
+    "all_reference_frames_retained": true,
+    "files_filtered": 0,
+    "scope": "Actual allocated CPU schedule/software qualification on955; does not establish physical teacher success or automatically qualify changed native getter/fixture bytes inbe247."
+  },
+  "event_successor_native_getter_cpu_audit": {
+    "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "passed_cases": 2,
+    "case_names": [
+      "test_physical_audit_reads_measured_qpos_nominal_and_drive_without_render_or_rng_change",
+      "test_control_uses_unchanged_full_h32_env_step_and_separate_source_cursor"
+    ],
+    "charged_cpu_worker_seconds": 73,
+    "combined_successor_qualification_cpu_seconds": 151,
+    "released_original_240_second_hold": 89,
+    "phase_cpu_consumed": 978,
+    "phase_cpu_remaining": 822,
+    "new_GPU_seconds": 0,
+    "robot_actions": 0,
+    "check_ref": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-AUDIT-CPU-CHECK.json",
+      "sha256": "730e557d05c66f842683db501658526a432e6da49ce26ed2b91e3364d2a31b9a"
+    },
+    "junit_sha256": "8624d3faaadb73e9f4557ae3694d6dab5c4b6cb2f59bcb9377e94676dbafa878",
+    "qualification_scope": "be247 changed native-getter/fixture paths actually rerun; unchanged schedule and other test-body evidence retained from955 by component identity. No physical teacher success or steering effectiveness established.",
+    "GPU_dispatch": "Sole execution owner preparing actual bounded job after software qualification; this audit creates no allocation."
+  },
+  "event_successor_launch_audit": {
+    "sole_owner_launch_receipt": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-GPU-LAUNCH.json",
+      "sha256": "5ed3cf2d6a802b933aff63ca9e9c8d09bad3fcbdc8c4e9e4da69c541816bd3ee"
+    },
+    "job_id": "job-2rkimbvypowd",
+    "cluster": "Baige",
+    "scheduler_created_shanghai": "2026-10-31T23:14:02+08:00",
+    "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "scheduler_state_at_launch_receipt": "Running",
+    "maximum_new_GPU_seconds": 5164,
+    "maximum_new_actions": 10000,
+    "maximum_complete_episodes": 25,
+    "scope": "Actual sole-owner scheduler launch receipt. Actual GPU probe, real episode advancement, teacher gate and capacity outcomes remain pending a saved owner runtime check.",
+    "CPU_phase_consumed": 978,
+    "CPU_phase_remaining": 822
+  },
+  "event_successor_first_progress_audit": {
+    "receipt": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-FIRST-PROGRESS-RECEIPT.json",
+      "sha256": "1f538dad4c50eaaab6839df0105683632a50a58fa9691579f8e5175d422610ca"
+    },
+    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
+    "next_owner_check_shanghai": "2026-10-31T23:38:00+08:00",
+    "episodes": [
+      {
+        "id": "event-control-fixed-phone-02",
+        "stage": "event_fixed_control",
+        "success": false,
+        "complete": true,
+        "primitives": 400,
+        "chunks": 13
+      },
+      {
+        "id": "event-teacher-phone-00",
+        "stage": "event_aligned_teacher_execution",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-01",
+        "stage": "event_aligned_teacher_execution",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-02",
+        "stage": "event_aligned_teacher_execution",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-03",
+        "stage": "event_aligned_teacher_execution",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      }
+    ],
+    "closed_new_action_prefix": 1172,
+    "current_inflight_actions_not_independently_counted": true,
+    "qualification": {
+      "status": "passed",
+      "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "native_parity": {
+        "max_abs_error": 0.0,
+        "passed": true,
+        "tolerance": 2e-05
+      },
+      "kv_gradient_norm": 0.004276137388038163,
+      "motor_gradients": 0,
+      "zero_kv_exact": true,
+      "zero_fixed_kv_exact": true,
+      "zero_action_exact": true
+    },
+    "full_recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+      "sha256": "73b27ab6191f229a1c453b39fab51c029c665c4d57b7db575446eff20dddf996",
+      "bytes": 196261,
+      "opaque_no_load": true
+    },
+    "checkpoint_validation": "Owner rehashed opaque full recovery bytes; root has not restored or independently inspected its tensors.",
+    "all12_teachers_complete": false,
+    "fit_result_available": false,
+    "interpretation": "Four new aligned successes including02; one same-case legacy control still fails. Single repeats do not establish causal timing explanation or reliable generalization. No restricted4D/source/A2/student eligibility."
   }
 }

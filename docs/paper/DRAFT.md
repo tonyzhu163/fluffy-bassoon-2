@@ -48,15 +48,15 @@ AD can predict actual z from same-motor SAC learning histories; DPT can label
 saved observations with a competent final same-motor teacher. The present
 target57 records remain excluded from source pretraining.
 [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
-New targeted Motus/RoboTwin result (2026-10-31): actual zero/native parity
-and a frozen-suffix KV gradient pass. The completed fixed4D screen yields no
-qualifying rescue. A supervised capacity attempt then stops before fitting:
-the third fixed published demonstration fails native-route replay after two
-successes. An allocated13-test CPU diagnosis then verifies all608 issued requests exactly
-match the demonstrations, with equal seeds/language/initial drive targets.
-Physical trajectory timing and full scene identity remain unqualified; no
-teacher is excluded. This remains data/execution compatibility evidence,
-without learned capacity, RL corpus or Transformer-adaptation results.
+New targeted Motus/RoboTwin evidence (2026-10-31): the fixed4D screen has no
+qualifying rescue; the next supervised attempt fails before fitting at the
+third teacher replay. CPU inspection verifies all608 issued requests exactly.
+A native-H32 event-aligned successor is now running under the original budget.
+At23:17:54 live frozen/zero/native/KV-gradient checks pass; fixed02control
+fails400 while aligned02/00/01/03 succeed193each. All12 source cases must pass
+before canonical plan-imitation fits; no learned capacity/RL-corpus/Transformer
+result exists yet. Scheduling and planner histories differ, so this is not
+causal rescue or an in-context adaptation result. All demonstrations remain.
 [Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

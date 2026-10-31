@@ -1,0 +1,118 @@
+{
+  "format": "root_event_capacity_static_review_v1",
+  "source_commit": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+  "base_main": "73a037c4323bdf79d51093b25ad7754544e7a399",
+  "status": "static_pass_runtime_qualification_pending",
+  "root_scope": [
+    "CPU preflight source/zeroGPU/deadline/12file read scope",
+    "deterministic outcome-independent event schedule",
+    "GPU driver episode order, migration and cumulative caps",
+    "fixed predecessor receipt/recovery schema against actual saved JSON",
+    "no executor change, no extra qualification episode, all12success before fit"
+  ],
+  "independent_agent_scope": [
+    "same-observation recorded native noise/base exact reproduction",
+    "full submitted expert-plan labels vs native actual masks",
+    "canonical current public features only; audit isolation",
+    "whole8TRAIN/4VAL split excludingcontrol andoldrollouts"
+  ],
+  "checked_code_files": [
+    {
+      "path": "scripts/diagnostics/robotwin_event_capacity.py",
+      "sha256": "6e513c9e9e6925289c60863b8fcfd8b0d1080247f78f83d6fdbdce74148a8209",
+      "bytes": 200,
+      "matched": true
+    },
+    {
+      "path": "scripts/diagnostics/robotwin_event_schedule_preflight.py",
+      "sha256": "c5aac51ddc6ae38d9b2583738517bac237057a23b418253a995e5f121aa2e1a4",
+      "bytes": 4564,
+      "matched": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_admission.py",
+      "sha256": "fc0f48dcef3be53fa9caf9074ec4390e4d1c1551a594e58ca061feb54c1628a8",
+      "bytes": 7716,
+      "matched": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_capacity.py",
+      "sha256": "a375c878d057162332133ef44a389967590b15000a507cab0ad66a1065a632bb",
+      "bytes": 17840,
+      "matched": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "sha256": "cb59710204f920c1ceb041164407d39909dab39ba4a20d3791bbebd6fa58bb5e",
+      "bytes": 18417,
+      "matched": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_schedule.py",
+      "sha256": "a6db739cb85d51ae3af1ac871f19c326c13a0ea002379e396c0c5e80ef1be59f",
+      "bytes": 5418,
+      "matched": true
+    },
+    {
+      "path": "tests/test_robotwin_event_capacity.py",
+      "sha256": "0ca3bdf1e4b47182ff91ae01e2d8023e684984f14788d011227e9ad6a1339f94",
+      "bytes": 17120,
+      "matched": true
+    }
+  ],
+  "model_tests_arrays_runtime_queries_by_root": 0,
+  "targeted_CPU_maximum_seconds": 240,
+  "phase_CPU_spent": 827,
+  "phase_CPU_remaining": 973,
+  "GPU_admitted_before_CPU": false,
+  "existing_maximum_GPU_seconds": 5164,
+  "maximum_new_actions": 10000,
+  "maximum_complete_episodes": 25,
+  "criteria_ack_required_after_CPU": false,
+  "unchanged_suites_rerun": false,
+  "execution_owner": "/root/finish_assembly",
+  "initial_source_qualification_reported_by_owner": {
+    "job_id": "job-tr9monend30t",
+    "source": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+    "actual_gpu_count": 0,
+    "tests_passed": 24,
+    "tests_failed": 0,
+    "all12_schedule_pass": true,
+    "report_sha256": "d20f0aebbf54d6eacedfbf3f1152f047ac5a13eb5191e4c4b9240a1ff37ea6aa",
+    "charged_cpu_worker_seconds": 78,
+    "phase_cpu_used": 905,
+    "phase_cpu_remaining": 895,
+    "remaining_same240_envelope": 162
+  },
+  "narrow_successor_review": {
+    "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "status": "static_pass_affected_checks_pending",
+    "changes": "only proven audit joint getters and matching fixture methods; PLAN drive-target14 wording and byte receipt",
+    "unchanged": "schedule/preflight/migration/driver/cache/SL/resource logic",
+    "affected_tests": [
+      "test_physical_audit_reads_measured_qpos_nominal_and_drive_without_render_or_rng_change",
+      "test_control_uses_unchanged_full_h32_env_step_and_separate_source_cursor"
+    ],
+    "qualification": "only2affected cases within same240cumulative envelope; preserve95524case/all12 actual evidence and exact source inheritance; no fresh fullsuite result claim",
+    "gpu_old_source_held": true,
+    "additional_grant": false,
+    "qualification_carryforward_sha256": "7a94ae308676acde82a30ae398e9102db661d7921507cd34bb16a9964071a35a",
+    "independent_optimization_review": "static PASS and exact five whole-file/eight AST-segment bindings; exactly2 fixture-dependent affected cases"
+  },
+  "current_qualification": {
+    "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "actual_original24": 24,
+    "actual_successor_affected": 2,
+    "effective_unique_cases": 24,
+    "carried_unchanged": 22,
+    "total_actual_executions": 26,
+    "CPU_total": 978,
+    "CPU_remaining": 822,
+    "qualification_total": 151,
+    "qualification_original_envelope": 240,
+    "all12_schedule_pass": true,
+    "actual_GPU_job": "job-2rkimbvypowd",
+    "first_progress_receipt_sha256": "1f538dad4c50eaaab6839df0105683632a50a58fa9691579f8e5175d422610ca",
+    "scope": "live qualification and first4 aligned teachers only; full12/SL/dev outcome unverified"
+  }
+}
