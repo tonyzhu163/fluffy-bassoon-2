@@ -1,0 +1,116 @@
+{
+  "format": "frozen_pi05_endtoend_runtime_bindings_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "status": "source_and_storage_bound; executable_driver_and_allocated_admission_pending",
+  "motor": {
+    "repository": "motus-robotics/pi0.5_robotwin2",
+    "revision": "effc6e1a99bd4d0edf9447e8ba313def67649cfe",
+    "path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "model_file_bytes": 7473091464,
+    "model_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+    "model_file_hash_scope": "existing download receipt agrees with public source metadata LFS; not reread7.47GB in this preparation",
+    "norm_path": "assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "expected_prior_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "fresh_allocated_parameter_check_pending": true,
+    "latent_noise_shape": [
+      32,
+      32
+    ],
+    "decoded_action_shape": [
+      32,
+      14
+    ],
+    "flow_steps": 5,
+    "public_feature_dim": 2062,
+    "feature_definition": "2048 masked-mean frozen VLM prefix plus14 normalized proprio",
+    "delta_arm_actions": true,
+    "absolute_grippers": [
+      6,
+      13
+    ]
+  },
+  "runtime": {
+    "python": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+    "python_version": "3.11.17",
+    "torch": "2.11.0+cu128",
+    "shared_site_packages": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages",
+    "runtime_version_scope": "previous allocated receipts plus filesystem metadata; no new imports here",
+    "rlinf_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "assets_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/assets",
+    "mutate_shared_environment": false
+  },
+  "source_task_units": {
+    "tasks": [
+      "place_phone_stand",
+      "place_object_stand"
+    ],
+    "horizons": {
+      "place_phone_stand": 400,
+      "place_object_stand": 400
+    },
+    "horizon_file": "task_config/_eval_step_limit.yml",
+    "horizon_file_sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551",
+    "reset_policy_action_bound": 0,
+    "reset_policy_action_evidence": "_RoboTwinBackend.reset calls env.reset/observation encoding without decoded chunk_step; reset_info reports reset_policy_actions=0",
+    "reset_internal_physics_steps": "not separately instrumented; no claim of zero internal setup ticks",
+    "actual_qualification_counter_confirmation_pending": true,
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "per_key_cap_derivation": "48*(400 controller actions+0 reset policy actions)",
+    "initial_episodes_per_lineage": 24,
+    "maximum_episodes_per_lineage": 48,
+    "not_entitlement": "Each19200 cap remains subordinate to source120000 and whole300000; no automatic6x48 allocation."
+  },
+  "joint_conventions": {
+    "path": "JOINT-CONVENTIONS.json",
+    "sha256": "8a0ff1e70fd776cf8cdb9e254966422e1dee8227584c388a262e62068ebf9bc4"
+  },
+  "resources": {
+    "gpu_seconds": 28800,
+    "a1_gpu_seconds": 7200,
+    "actions": 300000,
+    "a1_actions": 30000,
+    "output_bytes": 68719476736,
+    "fresh_shared_cpu_worker_seconds": 1800,
+    "phase_caps": {
+      "a1": 30000,
+      "source": 120000,
+      "source_validation": 30000,
+      "condition_cross": 15000,
+      "student_evaluation": 105000
+    },
+    "canonical_action_header_created": false,
+    "runtime_reservations_created": false,
+    "task57_grant_shared": false
+  },
+  "next_action": "Final8248 changed driver passed71 focused tests in actual0GPU allocation. Bind explicit scales, root grant and actual allocation ticket/header; then launch GPU within shared phase ceilings.",
+  "no_models_tests_simulators_or_allocations_in_preparation": true,
+  "reset_backend_evidence": {
+    "source_commit": "4cbc96aff63c61797c19dd421b6da97556bc40fc",
+    "path": "src/fluffy_bassoon/rl/robotwin_noise.py",
+    "git_blob_sha1": "502ec0c1e50ef241b5a76c473bc8542bc1aec034",
+    "sha256": "f2359a5e0aa4f3f4d094bf1ac56535b0a1f8127fa4982b87fff2742a80405a86",
+    "lines": "560\u2013614 (reset);694 (actual chunk_step boundary)",
+    "interpretation": "reset reports zero decoded policy actions; no separate internal setup tick instrumentation"
+  },
+  "storage_preparation": {
+    "path": "storage-preparation.json",
+    "sha256": "2bebc7d49e064b1df9f354efe2d5018f920a1067d59c6ef4c50d75b2bb6dd2ce"
+  },
+  "cpu_qualification": {
+    "receipt": "A1-CPU-RECEIPT.json",
+    "source": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+    "passed": true,
+    "charged_cpu_worker_seconds": 79
+  }
+}

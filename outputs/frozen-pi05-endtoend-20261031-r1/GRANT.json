@@ -14,17 +14,20 @@
   },
   "execution_owner": "/root/finish_assembly",
   "coordinator_thread_id": "01a19098-69e2-71a1-8cd7-5371c38e4453",
-  "source_commit": null,
+  "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
   "reviewed_main_at_initial_binding": "d1de374bf3dc2c8b96c69086a512e79b36363f1d",
   "required_motor_contract": {
     "family": "Motus/RLinf RoboTwin pi0.5",
     "flow_horizon": 32,
     "flow_steps": 5,
     "decoded_action_dimension": 14,
-    "motor_path": null,
-    "motor_receipt_sha256": null,
-    "motor_parameter_sha256": null,
-    "execution_horizon": "bind the existing qualified native value; do not infer from flow_steps"
+    "motor_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "motor_receipt_sha256": "1522ec3af3a987660c90cde0233332a8c57f624d3139a9c961d4d76ab1ca0078",
+    "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "execution_horizon": 32,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+    "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "fresh_allocated_parameter_identity_and_frozen_check_required": true
   },
   "source_development_tasks": [
     "place_phone_stand",
@@ -59,13 +62,21 @@
     "adoption_authority": "new explicit user-provided end-to-end experimental goal; earlier proposal and CPU PASS alone were not adoption"
   },
   "runtime_admission": {
-    "state_at_grant_binding": "awaiting exact live-driver source, focused CPU qualification, and motor/runtime/capacity bindings",
+    "state_at_grant_binding": "exact_driver_allocated_CPU_PASS; GPU_qualification_dispatch_authorized; A1_search_waits_actual_live_gates",
     "launch_authorized_after_pass": true,
     "actual_allocation_probe_required": true,
     "actual_motor_zero_modification_parity_required": true,
     "actual_suffix_gradient_and_real_episode_required": true,
     "newer_verified_code_requires_fresh_pinned_child_and_explicit_migration": true,
-    "no_further_human_or_root_ack_required_after_conditions_pass": true
+    "no_further_human_or_root_ack_required_after_conditions_pass": true,
+    "required_cpu_tests": [
+      "tests/test_pi05_residual.py",
+      "tests/test_robotwin_noise.py",
+      "tests/test_robotwin_steering.py",
+      "tests/test_robotwin_campaign_budget.py"
+    ],
+    "gpu_dispatch_authorized": true,
+    "a1_search_only_after_actual_probe_parity_gradient_and_first_complete_episode": true
   },
   "budget_includes": [
     "scheduler startup",
@@ -121,8 +132,10 @@
     "header_contract_required": {
       "phase_id": "frozen-pi05-endtoend-20261031-r1",
       "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
-      "motor_parameter_sha256": null,
-      "allowed_tasks": [
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "candidate_tasks": [
         "place_phone_stand",
         "place_object_stand"
       ]
@@ -153,8 +166,8 @@
       "internal_PhysX_setup_ticks": "separately described as uninstrumented; zero policy-action bound does not mean zero internal physics ticks"
     }
   },
-  "previous_preparation_grant_sha256": "e99a537eeca2b0422ca4366654dbafbca552376e9c8af0a583493d5351b4a1bd",
-  "revision_reason": "Bind six numeric source-lineage action caps from source horizons/reset-policy convention before immutable shared header; whole-phase ceilings unchanged.",
+  "previous_preparation_grant_sha256": "aa3d70d65762552e71f573ae7c68b853714bfeb680bcb370a42276d1669adc94",
+  "revision_reason": "Bind CPU-qualified exact8248 driver, runtime/motor/URDF receipts, fixed interface bounds and settled79CPU-worker-s; live GPU checks precede A1 search.",
   "source_collection_schedule": {
     "initial_episodes_per_lineage": 24,
     "maximum_episodes_per_lineage": 48,
@@ -167,5 +180,45 @@
     "reserved_phase_action_cap": 105000,
     "initial_panel": "four-block shared-prefix mechanism panel, approximately140episodes and at most84000actions atH600",
     "larger_claims": "separate32-case confirmation remains required; no unsupported full-benchmark or sample-efficiency conclusion"
+  },
+  "reviewed_latest_main": "2f0d84fd1cf72020579b0d5fd85672b0a9bdc5f0",
+  "latest_main_relevant_code_unchanged_since": "fab7d03566b72a7eda27bc2eb2cf0b229d7da822",
+  "entrypoint": "scripts/diagnostics/robotwin_steering_screen.py",
+  "runtime_bindings": {
+    "receipt_commit": "ceb850f8bb850327c633faa9018f1c350e354898",
+    "current_cpu_evidence_commit": "418dae9a6078b86b01f672f6b3dcb491ba255387",
+    "path": "RUNTIME-BINDINGS.json",
+    "sha256": "789a4aaa1c43e904b9a833cf9f32fd32670ce353fd73d8b88b1db14afb446fd6",
+    "joint_conventions_sha256": "8a0ff1e70fd776cf8cdb9e254966422e1dee8227584c388a262e62068ebf9bc4",
+    "storage_preparation_sha256": "2bebc7d49e064b1df9f354efe2d5018f920a1067d59c6ef4c50d75b2bb6dd2ce"
+  },
+  "a1_interface": {
+    "path": "A1-INTERFACE.json",
+    "sha256": "c7a6dbf1bee96f5984f9a708c732fd81d4f21c0bbccbb5b2dca4922d6c728ceb",
+    "noise_delta_bound": 1.5,
+    "kv_delta_bound": 0.1,
+    "arm_joint_bound": 0.05,
+    "gripper_delta": 0.0,
+    "coefficient_bound": 1.0,
+    "basis_seed": 20261031,
+    "selection_basis": "fixed engineering pilot bounds from the tested fixture, declared before robot outcomes; no performance tuning or scale sweep",
+    "native_full_Gaussian_clipped": false,
+    "cache_source_and_actual_runtime_shape_confirmation_required": true
+  },
+  "qualification": {
+    "job_id": "job-876fmw17b3c6",
+    "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+    "passed": true,
+    "tests": 71,
+    "actual_gpu_count": 0,
+    "cpu_cores": 2,
+    "ram_gib": 16,
+    "charged_cpu_worker_seconds": 79,
+    "remaining_shared_phase_cpu_worker_seconds": 1721,
+    "summary_sha256": "dd280f102abcf73969d618f6c226af9e6294e3c20440a36bbc8e0deacb7760f2",
+    "receipt_path": "A1-CPU-RECEIPT.json",
+    "receipt_sha256": "bc91ff5cc8e78488177cb589a60b934a05ac71efab1201b1b69a263aad58f165",
+    "synthetic_tests_only": true,
+    "no_real_motor_or_simulator_claim": true
   }
 }

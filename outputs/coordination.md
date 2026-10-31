@@ -42,9 +42,12 @@ show experience changes a useful later decision. The
 the paired fixed100 evidence. The earlier
 [headroom diagnosis](archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
 archived as superseded, with corrections listed at its top. A
-[proposed amendment](steering-interface-criteria-20261031-r1/PROPOSAL.md)
-adds search reachability, condition dependence and per-condition data reuse
-to interface selection; not adopted until the user decides.
+[criteria proposal](steering-interface-criteria-20261031-r1/PROPOSAL.md)
+informs the newly authorized [targeted scope](frozen-pi05-endtoend-20261031-r1/SCOPE.json),
+which adopts A1/A2/A3 with the [review safeguards](frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
+The proposal is not adopted verbatim: search is explicitly bounded, improvement
+must be measured rather than assumed, and the initial mechanism panel does not
+replace fresh32-case confirmation before broader claims.
 
 ## Coordination rules in force
 
@@ -73,8 +76,8 @@ update.
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
 | Native VLRLA-recipe PPO pilot | Run `vlrla-native-ppo-pilot-20261031-r1`; owner `frozen-vla-poc` | **2026-10-31 14:06 Shanghai:** queued behind the task57 DSRL run; native CPU qualification closed, GPU held. Specified at 6 GPU-hours / 1M actions. |
-| LIBERO task57 DSRL on frozen pi0.5 | Baige `job-iudscqfntb4e` (1 GPU, 599 min cap); owner `frozen-vla-poc` | **2026-10-31 17:17 Shanghai:** Running at 246,300 SAC updates and 166,033 all-in actions; training 929/930, latest query 10/10 with 1,256 primitives versus native 1,451. The single prior training timeout remains; next check 17:36. [Receipt](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/6befc74bf68103f6404830d599deb4cab69877fb/outputs/dsrl-pi05-task57-20261031-r1/CHECK-1716.md). |
-| Frozen pi0.5 interface/data redesign | Owner `Review coordination updates`; phase `frozen-pi05-endtoend-20261031-r1`; sole allocator `finish_assembly` | **2026-10-31 17:32 Shanghai:** The funded 8 GPU-hour / 300k-action / 64GiB pilot reserves 105k actions for student evaluation and caps each of six source lineages at 19,200 actions under the shared 120k source limit. The common header remains uncreated pending the compatible executable and verified motor/control-limit receipts; no new allocation yet. [Scope](frozen-pi05-endtoend-20261031-r1/SCOPE.json), [interfaces](frozen-pi05-endtoend-20261031-r1/INTERFACES.md), [grant](frozen-pi05-endtoend-20261031-r1/GRANT.json), [authority](frozen-pi05-endtoend-20261031-r1/AUTHORITY.json), [CPU proof](pi05-residual-hooks-cpu-20261031-r1/RESULT.md). |
+| LIBERO task57 DSRL on frozen pi0.5 | Baige `job-iudscqfntb4e` (1 GPU, 599 min cap); owner `frozen-vla-poc` | **2026-10-31 17:36 Shanghai:** Running at 265,340 SAC updates and 178,445 all-in actions; training 1,001/1,002, latest query 10/10 with 1,217 primitives versus native 1,451. The single prior training timeout remains; next check 17:56. [Receipt](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/3ae47055/outputs/dsrl-pi05-task57-20261031-r1/CHECK-1736.md). |
+| Frozen pi0.5 interface/data redesign | CPU Baige `job-876fmw17b3c6`, source `8248b1ce`; sole allocator `finish_assembly` | **2026-10-31 17:50 Shanghai:** Allocated CPU qualification passed 71/71 tests on actual 0 GPUs / 2 CPUs / 16GiB, charging 79 of 1,800 shared CPU-worker-seconds. The exact driver, fixed interface and motor/source/budget bindings are ready for the authorized live GPU qualification and A1 screen; live checks and robot benefit remain unverified. [CPU proof](frozen-pi05-endtoend-20261031-r1/A1-CPU-RESULT.md), [grant](frozen-pi05-endtoend-20261031-r1/GRANT.json), [driver contract](../docs/robotwin-four-coefficient-screen.md). |
 | RoboTwin final100 AD export (R4) | Baige `job-vth2qv6r4lxu`, CPU only | **2026-10-31 13:38 Shanghai: complete, exit 0.** AD train and BC validation exports pass independent audits; no new GPU, robot actions or SGD. AD GPU fit stays deferred for the DSRL/SAC-first priority. [Final report](robotwin-final100-ad-export-20261031-r4/RESULTS.md); [source campaign](robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
 | Meta-World released pi0.5 noise screen | Baige `job-orgyjb0z9h6d`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17 Shanghai: paused at user request.** Reach screens fail headroom; goals 1 and 3 never reached. Remain paused. [Pause record](metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). |
 

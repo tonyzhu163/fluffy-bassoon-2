@@ -1,18 +1,30 @@
 {
   "format": "frozen_pi05_endtoend_phase_ledger_v1",
   "phase_id": "frozen-pi05-endtoend-20261031-r1",
-  "grant_sha256": "aa3d70d65762552e71f573ae7c68b853714bfeb680bcb370a42276d1669adc94",
+  "grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
   "maximum_gpu_seconds": 28800,
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "funded_preparation_no_runtime_allocation_yet",
+  "state": "allocated_CPU_PASS; GPU_dispatch_binding_ready; no_GPU_reservation_yet",
   "gpu_attempts": [],
-  "cpu_attempts": [],
+  "cpu_attempts": [
+    {
+      "job_id": "job-876fmw17b3c6",
+      "run_id": "frozen-pi05-endtoend-a1-cpu-20261031-r1",
+      "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "maximum_worker_seconds": 1800,
+      "reserved_seconds": 1800,
+      "charged_seconds": 79,
+      "settled": true,
+      "actual_gpu_count": 0,
+      "receipt_sha256": "bc91ff5cc8e78488177cb589a60b934a05ac71efab1201b1b69a263aad58f165"
+    }
+  ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 0,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 0,
+  "charged_cpu_worker_seconds": 79,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 0,
   "reserved_actions": 0,
@@ -59,7 +71,18 @@
       "sac_calibration_plus_train1",
       "sac_calibration_minus_validation2",
       "sac_calibration_plus_validation2"
-    ]
+    ],
+    "header_contract_required": {
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "candidate_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ]
+    }
   },
   "prospective_phase_action_caps": {
     "a1": 30000,
@@ -68,5 +91,6 @@
     "condition_cross": 15000,
     "student_evaluation": 105000
   },
-  "planned_caps_are_not_scheduler_reservations": true
+  "planned_caps_are_not_scheduler_reservations": true,
+  "remaining_cpu_worker_seconds": 1721
 }
