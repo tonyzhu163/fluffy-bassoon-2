@@ -24,8 +24,12 @@ import numpy as np
 import torch
 
 from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
-from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter, _atomic_json, _fsync_directory
-from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv, load_benchmark_episode_limits, RLINF_COMMIT, ROBOTWIN_COMMIT
+from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter, _atomic_json, _fsync_directory, _array_hash
+from fluffy_bassoon.rl.robotwin_noise import (
+    RobotwinNoiseEnv, load_benchmark_episode_limits, RLINF_COMMIT, ROBOTWIN_COMMIT,
+    validate_paired_instruction,
+    _observation_hash,
+)
 from fluffy_bassoon.rl.robotwin_steering import ARMS, TASKS, CoefficientSteering, validate_interface, normalize_arm
 from fluffy_bassoon.rl.pi05_residual import ReactiveKVResidual, velocity_with_kv_residual
 
@@ -99,7 +103,7 @@ def next_episode(plan, records):
         for arm in ARMS:
             for index, coefficients in enumerate(proposals(selected, case["case"], arm)):
                 spec = dict(case, id=f"search-{selected}-{case['case']:02d}-{arm}-{index}", arm=arm,
-                            coefficients=coefficients, stage="search", expected_reset=records[case["id"]]["reset_identity"])
+                            coefficients=coefficients, stage="search", **paired_reset_fields(records[case["id"]]))
                 if spec["id"] not in records:
                     return spec
     for case in cases:
@@ -116,7 +120,7 @@ def next_episode(plan, records):
                 spec = dict(case, id=f"confirm-{selected}-{case['case']:02d}-{arm}-{repeat}", arm=arm,
                             coefficients=coefficients, stage="confirmation",
                             motor_seed=SEED+100000+100*case["case"]+repeat,
-                            expected_reset=records[case["id"]]["reset_identity"])
+                            **paired_reset_fields(records[case["id"]]))
                 if spec["id"] not in records:
                     return spec
     return None
@@ -124,6 +128,15 @@ def next_episode(plan, records):
 
 def reset_identity(info):
     return {key: info[key] for key in ("actual_seed", "observation_sha256", "features_sha256")}
+
+
+def paired_reset_fields(record):
+    """Common baseline-to-query binding for A1, source VAL, cross and students."""
+    info = record["reset_info"]
+    if record["reset_identity"] != reset_identity(info):
+        raise ValueError("Baseline reset identity disagrees with its actual reset receipt")
+    return dict(expected_reset=deepcopy(record["reset_identity"]),
+                paired_instruction=list(validate_paired_instruction(info["instruction"])))
 
 
 def restricted_summary(plan, records):
@@ -162,6 +175,11 @@ def run_complete_episode(control, spec, budget, *, run_id, phase="a1", choose=No
     supplied as student features. on_episode runs only after a complete episode.
     """
     spec = dict(spec, arm=normalize_arm(spec["arm"]))
+    paired = spec.get("paired_instruction")
+    if "expected_reset" in spec and paired is None:
+        raise ValueError("A paired reset requires its original actual paired_instruction")
+    if paired is not None:
+        paired = validate_paired_instruction(paired)
     horizon = control.episode_limit_for_task(spec["task"])
     if isinstance(control, CoefficientSteering) and control.env.corpus_writer is None:
         raise RuntimeError("The common real episode loop requires its canonical raw corpus writer")
@@ -173,10 +191,13 @@ def run_complete_episode(control, spec, budget, *, run_id, phase="a1", choose=No
     control.set_recording_context(dict(phase=phase, method=method, trial_id=spec["id"],
                                       policy_version=spec.get("policy_version", spec["id"])))
     control.set_coefficients(spec["arm"], spec["coefficients"])
-    features = control.reset(spec["task"], spec["reset_seed"], motor_seed=spec["motor_seed"])
+    options = {} if paired is None else dict(paired_instruction=paired)
+    features = control.reset(spec["task"], spec["reset_seed"], motor_seed=spec["motor_seed"], **options)
     if control.last_reset_info.get("reset_policy_actions") != 0:
         raise RuntimeError("Unreserved reset motor commands are not admitted")
     identity = reset_identity(control.last_reset_info)
+    if paired is not None and tuple(control.last_reset_info["instruction"]) != paired:
+        raise RuntimeError("Backend did not retain the original paired instruction")
     if spec.get("expected_reset", identity) != identity:
         raise RuntimeError("Actual seed/raw observation/public features differ from the paired development reset")
     if before_step is not None:
@@ -249,10 +270,52 @@ def run_complete_episode(control, spec, budget, *, run_id, phase="a1", choose=No
     return record
 
 
-def qualify_real_motor(control, spec, output):
+def repeat_paired_prefix(backend, spec, original_reset_ref=None):
+    """Real no-action repeat; migration explicitly re-encodes the saved raw frame."""
+    raw = backend._raw_obs
+    original_frame_ref = None
+    if original_reset_ref is not None:
+        reset = _bound_json_ref(original_reset_ref)
+        frame = reset["initial_observation"]
+        path = Path(original_reset_ref["path"]).parent.parent.parent/frame["path"]
+        if sha(path) != frame["sha256"]:
+            raise ValueError("Saved original prefix input frame failed SHA verification")
+        original_frame_ref = dict(path=str(path), sha256=frame["sha256"])
+        original = dict(raw, task_descriptions=frame["language"])
+        with np.load(path, allow_pickle=False) as arrays:
+            for key in ("main_images", "wrist_images", "states"):
+                value = arrays[key].copy()
+                current = raw[key]
+                original[key] = (torch.as_tensor(value, device=current.device)
+                                 if isinstance(current, torch.Tensor) else value)
+        if _observation_hash(original) != spec["expected_reset"]["observation_sha256"]:
+            raise ValueError("Saved original input does not match the accepted pair")
+        raw = original
+    initial_features = backend._public_features.detach().clone()
+    initial_mask = backend._prefix_mask.detach().clone()
+    initial_cache = tuple(tuple(t.detach().clone() for t in pair) for pair in backend._kv_cache)
+    audit = deepcopy(backend._instruction_binding)
+    backend._encode(raw)
+    if (not torch.equal(initial_features, backend._public_features)
+            or not torch.equal(initial_mask, backend._prefix_mask)
+            or len(initial_cache) != len(backend._kv_cache)
+            or any(len(pair) != len(old) or any(not torch.equal(t, saved)
+                for t, saved in zip(pair, old)) for pair, old in zip(backend._kv_cache, initial_cache))):
+        raise RuntimeError("Repeated actual paired-input prefix/cache/features are not exactly equal")
+    # Keep the sampled language audit of the actual simulator reset, rather
+    # than mistaking the no-action saved-input repeat for another sampled reset.
+    backend._instruction_binding = audit
+    return dict(public_features_exact=True, prefix_mask_exact=True, kv_cache_exact=True,
+        original_reset_identity=deepcopy(spec.get("expected_reset")), instruction=list(spec["paired_instruction"]),
+        saved_original_frame=original_frame_ref)
+
+
+def qualify_real_motor(control, spec, output, *, original_reset_ref=None):
     """First actual observation/noise: decoded zero parity and frozen suffix gradient."""
     backend, model = control.env.backend, control.env.backend.model
     before = backend.frozen_fingerprint()
+    repeated_prefix = (repeat_paired_prefix(backend, spec, original_reset_ref)
+                       if "paired_instruction" in spec else None)
     control.set_coefficients("native", np.zeros(4, np.float32))
     rng = np.random.default_rng(spec["motor_seed"])
     noise = rng.standard_normal((32, 32)).astype(np.float32)
@@ -291,7 +354,7 @@ def qualify_real_motor(control, spec, output):
         result = dict(status="decoded_and_gradient_pass_episode_pending", native_parity=native_parity,
             zero_kv_exact=True, zero_fixed_kv_exact=True, zero_action_exact=True, kv_gradient_norm=norm, motor_gradients=0,
             frozen_before=before, frozen_after=after, cache_shapes=[list(pair[0].shape) for pair in backend._kv_cache],
-            qualification_episode=spec["id"], actual_actions=0)
+            qualification_episode=spec["id"], actual_actions=0, repeated_paired_prefix=repeated_prefix)
         _atomic_json(output/"gpu-qualification.json", result, replace=True)
         return result
     finally:
@@ -376,6 +439,147 @@ def save_recovery(path, state, control=None):
     _fsync_directory(path.parent)
 
 
+def _bound_json_ref(ref):
+    return read_bound(Path(ref["path"]), ref["sha256"])
+
+
+def validate_instruction_migration(saved, proof, *, resume, resume_sha, plan, source,
+                                   scope_sha, interface_sha, allocation):
+    """Only a diagnosed pre-command language mismatch can reuse completed rows.
+
+    This neither refunds costs nor reopens old output. Every predecessor file
+    is read-only and SHA-bound by a separately reviewed owner migration ticket.
+    """
+    prior = saved["state"]
+    failure = dict(type="RuntimeError", message=
+        "Actual seed/raw observation/public features differ from the paired development reset")
+    if (proof.get("schema") != "robotwin_paired_instruction_migration_v1"
+            or saved["format"] != FORMAT or prior["status"] != "blocked_failure"
+            or prior.get("failure") != failure or prior["plan"] != plan
+            or prior["scope_sha256"] != scope_sha or prior["interface_sha256"] != interface_sha
+            or proof["source_commit_before"] != prior["source_commit"]
+            or proof["source_commit_after"] != source or prior["source_commit"] == source
+            or Path(proof["recovery"]["path"]).resolve() != Path(resume).resolve()
+            or proof["recovery"]["sha256"] != resume_sha):
+        raise ValueError("Migration requires the exact diagnosed failed predecessor and successor")
+    if _bound_json_ref(proof["result"]) != prior:
+        raise ValueError("Predecessor result and recovery disagree")
+    terminal = _bound_json_ref(proof["terminal"])
+    closeout = _bound_json_ref(proof["allocation_closeout"])
+    cost = terminal["charged_gpu_seconds"]
+    if (terminal.get("format") != "frozen_pi05_a1_terminal_failure_receipt_v1"
+            or terminal.get("status") != "blocked_failure" or terminal["scheduler"]["status"] != "Failed"
+            or terminal.get("exit_code") != 1 or terminal["source_commit"] != prior["source_commit"]
+            or closeout["source_commit"] != prior["source_commit"] or closeout["exit_code"] != 1
+            or closeout["error"] is not None or closeout["attempt"]["status"] != "finished"
+            or closeout["charged_gpu_seconds"] != cost or prior.get("cleanup_error") is not None
+            or type(cost) is not int or cost <= 0
+            or allocation["prior_a1_gpu_seconds"] < cost or allocation["prior_phase_gpu_seconds"] < cost):
+        raise ValueError("Migration needs terminal failure, clean teardown and retained actual GPU cost")
+    records = prior["records"]
+    if set(records) != {row["id"] for row in plan["development"]}:
+        raise ValueError("Migration preserves exactly the complete original native development bank")
+    for spec in plan["development"]:
+        record = records[spec["id"]]
+        if record.get("complete") is not True or record["spec"] != spec:
+            raise ValueError("Predecessor contains an incomplete or changed native development record")
+        ref = record["episode_manifest_ref"]
+        path = Path(ref["root"])/ref["path"]
+        manifest = read_bound(path, ref["sha256"])
+        if (manifest["pending_decision"] is not None or manifest["completed_chunks"] != record["chunks"]
+                or len(manifest["chunks"]) != record["chunks"]
+                or manifest["executed_primitive_steps"] != record["primitive_steps"]):
+            raise ValueError("Predecessor complete episode manifest differs from saved record")
+        instruction = record["reset_info"]["instruction"]
+        if json.loads(path.with_name("reset.json").read_text())["initial_observation"]["language"] != instruction:
+            raise ValueError("Original native reset text differs from the saved actual instruction")
+        for chunk in manifest["chunks"]:
+            raw_chunk = read_bound(path.parent/chunk["path"], chunk["sha256"])
+            if (raw_chunk["status"] != "complete"
+                    or raw_chunk["observation"]["language"] != instruction
+                    or raw_chunk["next_observation"]["language"] != instruction):
+                raise ValueError("Original native episode did not retain its actual instruction")
+    successor_spec = next_episode(plan, records)
+    old_spec = {key: value for key, value in successor_spec.items() if key != "paired_instruction"}
+    if prior["pending"] != old_spec or successor_spec["stage"] != "search":
+        raise ValueError("Migration must retry only the original pending search identity")
+    original = _bound_json_ref(proof["original_reset"])
+    failed = _bound_json_ref(proof["failed_reset"])
+    manifest = _bound_json_ref(proof["failed_manifest"])
+    baseline = records[f"dev-{old_spec['task']}-{old_spec['case']:02d}"]
+    original_path = Path(proof["original_reset"]["path"]).resolve()
+    baseline_manifest = baseline["episode_manifest_ref"]
+    expected_original_path = (Path(baseline_manifest["root"])/baseline_manifest["path"]).with_name("reset.json").resolve()
+    failed_path = Path(proof["failed_reset"]["path"]).resolve()
+    if (original_path != expected_original_path
+            or Path(proof["failed_manifest"]["path"]).resolve() != failed_path.with_name("manifest.json")
+            or manifest["episode_id"] != failed["episode_id"]
+            or manifest["chunks"] or manifest["completed_chunks"] != 0
+            or manifest["executed_primitive_steps"] != 0 or manifest["pending_decision"] is not None
+            or any((failed_path.parent/"chunks").glob("*"))
+            or failed["context"]["trial_id"] != old_spec["id"]
+            or failed["reset_info"]["reset_policy_actions"] != 0
+            or failed["reset_info"]["requested_seed"] != old_spec["reset_seed"]
+            or failed["reset_info"]["actual_seed"] != old_spec["expected_reset"]["actual_seed"]
+            or reset_identity(original["reset_info"]) != baseline["reset_identity"]
+            or original["initial_observation"]["language"] != successor_spec["paired_instruction"]
+            or original["reset_info"]["instruction"] != successor_spec["paired_instruction"]
+            or failed["reset_info"]["instruction"] == successor_spec["paired_instruction"]):
+        raise ValueError("Failed reset is not the bound zero-command language-mismatch case")
+    for key in ("main_images", "wrist_images", "states"):
+        if original["initial_observation"]["arrays"][key] != failed["initial_observation"]["arrays"][key]:
+            raise ValueError("Migration cannot waive changed physical observations")
+    for reset_path, reset in ((original_path, original), (failed_path, failed)):
+        frame = reset["initial_observation"]
+        path = reset_path.parent.parent.parent/frame["path"]
+        if sha(path) != frame["sha256"]:
+            raise ValueError("Original/failed raw frame bytes differ from their bound reset metadata")
+        with np.load(path, allow_pickle=False) as arrays:
+            for key, descriptor in frame["arrays"].items():
+                value = arrays[key]
+                if (str(value.dtype) != descriptor["dtype"] or list(value.shape) != descriptor["shape"]
+                        or _array_hash(value) != descriptor["sha256"]):
+                    raise ValueError("Original/failed frame typed arrays disagree with reset evidence")
+            raw = {key: arrays[key] for key in ("main_images", "wrist_images", "states")}
+            raw["task_descriptions"] = frame["language"]
+            if (_observation_hash(raw) != reset["reset_info"]["observation_sha256"]
+                    or hashlib.sha256(arrays["features"].tobytes()).hexdigest() != reset["reset_info"]["features_sha256"]):
+                raise ValueError("Original/failed raw feature hashes disagree with actual frame bytes")
+    language = _bound_json_ref(proof["native_language_audit"])
+    if (language.get("format") != "frozen_pi05_native_language_constancy_v1"
+            or language.get("all_sixteen_constant") is not True
+            or language["source_commit"] != prior["source_commit"]
+            or {row["episode"] for row in language["episodes"]} != set(records)
+            or any(row["all_languages_constant"] is not True or row["language"] != records[row["episode"]]["reset_info"]["instruction"]
+                   or row["chunks"] != records[row["episode"]]["chunks"] for row in language["episodes"])):
+        raise ValueError("Whole-episode binding requires original native text consistency evidence")
+    journal = proof["journal"]
+    if (Path(journal["root"]).resolve() != Path(allocation["action_ledger"]["root"]).resolve()
+            or journal["actual_actions"] != sum(row["primitive_steps"] for row in records.values())
+            or prior["actions"]["actual_actions"] != journal["actual_actions"]):
+        raise ValueError("Migration must retain every native action in the same canonical journal")
+    return successor_spec
+
+
+def validate_migration_ledger(budget, proof):
+    """Called under the canonical lock, after only this fresh run registration."""
+    snapshot = budget.snapshot(include_decisions=True)
+    journal = proof["journal"]
+    count = journal["event_count"]
+    old_tip = json.loads((budget.events/f"{count-1:010d}.json").read_text())
+    if (old_tip["sha256"] != journal["sha256"] or snapshot["journal_events"] != count+1
+            or snapshot["actual_actions"] != journal["actual_actions"]
+            or snapshot["charged_actions"] != journal["actual_actions"]
+            or snapshot["pending_actions"] or snapshot["uncertain_actions"] or snapshot["unresolved_decisions"]):
+        raise ValueError("Canonical journal changed or carries unresolved/unknown predecessor costs")
+    new = json.loads((budget.events/f"{count:010d}.json").read_text())
+    if new["kind"] != "run" or new["run_id"] != budget.run_id or new["source_commit"] != budget.source_commit:
+        raise ValueError("Migration allows only a fresh successor registration after the predecessor tip")
+    failed = _bound_json_ref(proof["failed_reset"])["context"]["trial_id"]
+    if any(row["episode"] == failed for row in snapshot["decisions"].values()):
+        raise ValueError("Failed pending search already has a physical reservation")
+
+
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("scope", "allocation", "interface", "joint-conventions"):
@@ -387,11 +591,15 @@ def parser():
     p.add_argument("--run-id", required=True)
     p.add_argument("--resume", type=Path)
     p.add_argument("--resume-sha256")
+    p.add_argument("--paired-reset-migration", type=Path)
+    p.add_argument("--paired-reset-migration-sha256")
     return p
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
+    if args.paired_reset_migration and (not args.resume or not args.paired_reset_migration_sha256):
+        raise ValueError("Diagnosed migration requires a bound predecessor recovery and proof")
     if sys.platform != "linux":
         raise RuntimeError("Actual allocated Linux only; do not run motors or tests on macOS")
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
@@ -424,17 +632,29 @@ def main(argv=None):
     state = dict(status="running", plan=plan, records={}, pending=None, source_commit=source,
                  scope_sha256=args.scope_sha256, interface_sha256=args.interface_sha256, prior_outputs=[],
                  action_ledger=allocation["action_ledger"], allocation_sha256=args.allocation_sha256)
+    migration = None
     if args.resume:
         if not args.resume_sha256 or sha(args.resume) != args.resume_sha256:
             raise ValueError("Resume requires an exact closed-boundary recovery hash")
         saved = torch.load(args.resume, map_location="cpu", weights_only=False)
         prior = saved["state"]
-        if (saved["format"] != FORMAT or prior["status"] != "boundary_stop" or prior["pending"] is not None
+        if args.paired_reset_migration:
+            migration = read_bound(args.paired_reset_migration, args.paired_reset_migration_sha256)
+            pending = validate_instruction_migration(saved, migration, resume=args.resume,
+                resume_sha=args.resume_sha256, plan=plan, source=source, scope_sha=args.scope_sha256,
+                interface_sha=args.interface_sha256, allocation=allocation)
+        elif (saved["format"] != FORMAT or prior["status"] != "boundary_stop" or prior["pending"] is not None
                 or prior["scope_sha256"] != args.scope_sha256 or prior["interface_sha256"] != args.interface_sha256
                 or prior["source_commit"] != source or prior["plan"] != plan):
             raise ValueError("Only an exact same-code closed operational boundary may resume; diagnose real failures separately")
         state = deepcopy(prior)
         state.update(status="running", prior_outputs=prior["prior_outputs"]+[str(args.resume.parent)])
+        if migration is not None:
+            state.update(source_commit=source, pending=pending,
+                diagnosed_predecessor_failure=state.pop("failure"),
+                paired_instruction_migration=dict(proof_sha256=args.paired_reset_migration_sha256,
+                    predecessor_recovery_sha256=args.resume_sha256, original_pending=deepcopy(prior["pending"]),
+                    terminal=migration["terminal"], journal=migration["journal"]))
         random.setstate(saved["python_rng"]); np.random.set_state(saved["numpy_rng"])
         torch.set_rng_state(saved["torch_rng"])
     if not args.resume:
@@ -466,6 +686,9 @@ def main(argv=None):
                 run_id=args.run_id, source_commit=source) as budget:
             if budget.snapshot()["unresolved_decisions"]:
                 raise RuntimeError("Canonical physical ledger has unresolved charges; no model/reset/retry admitted")
+            if migration is not None:
+                validate_migration_ledger(budget, migration)
+                _atomic_json(args.output/"paired-reset-migration.json", state["paired_instruction_migration"])
             storage_guard()
             writer = RobotwinCorpusWriter(args.output/"corpus", dict(schema=FORMAT, source_commit=source,
                 motor_sha256=interface["motor_sha256"], interface_sha256=args.interface_sha256, role="source_A1_development_only"))
@@ -496,7 +719,8 @@ def main(argv=None):
             def before_step(current, spec):
                 nonlocal qualification
                 if qualification is None:
-                    qualification = qualify_real_motor(current, spec, args.output)
+                    qualification = qualify_real_motor(current, spec, args.output,
+                        original_reset_ref=None if migration is None else migration["original_reset"])
                 storage_guard()
                 if time.time() >= allocation["driver_deadline_unix"]-30:
                     raise RuntimeError("Original allocation deadline reached inside an admitted episode")
