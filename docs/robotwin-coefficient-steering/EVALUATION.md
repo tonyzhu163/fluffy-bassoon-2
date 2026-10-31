@@ -130,27 +130,34 @@ failure in those three rows; it does not validate the full90 rows.
 [Measured predicate report](../../outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/schema-inspection.json).
 
 Consumer400eed69 changes that one expectation to(1,32), preserving full model
-state and every other guard. Two independent static reviews pass. The next
-bounded CPU job qualifies12 focused cases, then may run the existing sealer
-on all paid77+new13 rows and closed04 recovery, with fresh output only. No
-payload conversion, model call, GPU reencoding or fit is admitted. This is a
-repair of a concrete ABI mismatch, rather than another physical hypothesis.
+state and every other guard. Two independent static reviews pass. The correction job-qzpsryt5bul9 now reports12/12 focused passes and a successful
+existing full90-row/all12 CPU seal, retaining paid77+new13 and failed04. This
+is a repair of a concrete ABI mismatch, rather than another physical hypothesis.
+The execution owner reports exit0/103 inclusive CPU-worker-seconds; its copied
+producer packet is pending. No payload conversion, VLA, GPU or robot action
+ran. [Saved owner handoff](../../outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/OWNER-HANDOFF.json).
 
 Independent f3 readout qualification passes56/57 tests. The sole failed fixture
 compares an empty unresolved-decision mapping with integer0 after its three
 synthetic400-step episodes; production behavior is unchanged. Fixture235
-corrects the comparison to{}. Its one selector remains unexecuted. The old
-wrapper remains Failed/exit1, charging69/120 CPU-worker-seconds. A new finite
-300-second CPU correction/seal allowance is separate from the old1,775/1,800,
-98/120 and69/120 costs; no old cap is reset. Optional bridge fixtures cannot
-gate an independently qualified cache seal.
+corrects the comparison to{}. Its one corrected selector now passes in the same correction job. The three
+previously failed bridge fixtures also pass; old component passes are carried,
+not rerun. The old wrapper remains Failed/exit1 at69/120 CPU-worker-seconds.
+The new correction uses103/300, separate from old1,775/1,800,98/120 and69/120;
+no old cap is reset. Optional outcomes did not gate the independently
+qualified cache seal.
 [Readout receipt](../../outputs/frozen-vla-readout-software-qual-20261101-r1/RECEIPT.json).
 
 This new diagnostic keeps whole8TRAIN/4VAL and failed04 explicitly false; it
 imitates known submitted command plans rather than claiming all teachers
 succeed. The old successful-teacher gate remains unchanged. No learned head,
 chronological RL source corpus, competent noise teacher or AD/DPT result
-exists yet. There is no filtered or reduced bank.
+exists yet. There is no filtered or reduced bank. Two independent fixed5000
+command-fit children now have900 inclusive GPU-seconds each reserved inside
+the original A1 residual, with actual runtime/resource admission still pending.
+Each will measure update time/capacity inside the retained scientific run;
+insufficient time must leave a full incomplete recovery, not a truncated
+endpoint or a favorable validation choice. No readout GPU is funded yet.
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved

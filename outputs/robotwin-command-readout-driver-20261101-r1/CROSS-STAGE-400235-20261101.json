@@ -1,0 +1,124 @@
+{
+  "format": "robotwin_command_readout_cross_stage_field_check_v1",
+  "checked_utc": "2026-10-31T21:10:32.763010+00:00",
+  "status": "BOUNDED_STATIC_FIELD_COMPATIBILITY_PASS",
+  "producer_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+  "consumer_commit": "235fcc00f0ddf7a07590604daba9e79c9a4c3c6d",
+  "prior_producer_compared": "06b1425607783082df071f4dc21414a096a6f5d8",
+  "scope": "Only final endpoint/header/profile/cache/source contract consumption after the core padded-state ABI guard repair; not a broad review or a fit gate",
+  "profile": {
+    "path": "outputs/robotwin-command-diagnostic-20261101-r1/PROFILE.json",
+    "file_sha256": "efcf704d5844ea1a4efaad7f4862d98cb5b5b8982822bf7673056eab0d9d0891",
+    "canonical_content_sha256": "6c1641b348c1ae6a254341b04fec070cdfcfe3ac34b60946d55ffdb12daeb04c",
+    "matches_consumer": true
+  },
+  "producer_functions": {
+    "make_head": {
+      "unchanged": true,
+      "sha256": "c380b703ee3fc995ca7b7e0f36bc61126d7b8c4b1ac480f3837f9aef158d15f1"
+    },
+    "fit_records": {
+      "unchanged": true,
+      "sha256": "d6c917ca0b69efd19b072977611980d9a5fb32bcddf60dac0a98ee4d1aafedae"
+    },
+    "publish": {
+      "unchanged": true,
+      "sha256": "727c226f0c00d3f335b77e7c4db8e99857fb5c92de50b230d41797b82c8bad19"
+    },
+    "_fit": {
+      "unchanged": true,
+      "sha256": "9c5189ffbd7a6cae6adad1baeb72144ec3c73049f5becafbeb2873e478bcc692"
+    },
+    "_qualified_curve": {
+      "unchanged": true,
+      "sha256": "e83762feab1d3002a4d1186fdb3531bc21f39d2ce0678f69a001d8d1e9e16fc3"
+    }
+  },
+  "head_classes": {
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": {
+      "producer_sha256": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+      "consumer_sha256": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+      "byte_identical": true
+    },
+    "src/fluffy_bassoon/rl/pi05_residual.py": {
+      "producer_sha256": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+      "consumer_sha256": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+      "byte_identical": true
+    }
+  },
+  "loader": {
+    "path": "src/fluffy_bassoon/rl/robotwin_fitted_physical.py",
+    "sha256": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+    "unchanged": true
+  },
+  "field_map": [
+    {
+      "producer": "result.complete=True, kind=action|kv, iteration=5000",
+      "consumer": "validate_endpoints exact two final kinds and complete5000",
+      "compatible": true
+    },
+    {
+      "producer": "primary_endpoint=milestones[5000].policy with absolute path/SHA",
+      "consumer": "primary path/hash equals actual5000 milestone; no best VAL",
+      "compatible": true
+    },
+    {
+      "producer": "endpoint{kind,iteration,contract,config,policy,diagnostics}",
+      "consumer": "existing load_frontend exact existing endpoint ABI",
+      "compatible": true
+    },
+    {
+      "producer": "result.head_configuration=head.config(); endpoint.config=head.config()",
+      "consumer": "saved config==result head_configuration and loaded source-class config",
+      "compatible": true
+    },
+    {
+      "producer": "contract.profile exact diagnostic fixed5000 profile",
+      "consumer": "fixed canonical content SHA6c1641 and declared split/selection",
+      "compatible": true
+    },
+    {
+      "producer": "contract.source_commit=actual Git source pin",
+      "consumer": "derived from actual saved contract, not pinned to the old producer commit",
+      "compatible": true
+    },
+    {
+      "producer": "contract.complete_cache_sha256=request actual sealed digest",
+      "consumer": "derived from actual checkpoint and requires same digest across action/KV",
+      "compatible": true
+    },
+    {
+      "producer": "diagnostic_purpose,source_eligible=False,outcome_evidence all12 incl failed04,command_geometry",
+      "consumer": "unchanged contract preserved verbatim and checked by loader",
+      "compatible": true
+    },
+    {
+      "producer": "Wide config source_bindings motor/norm/joint/base-interface; KV rank4/last layer/2062/1x256",
+      "consumer": "same actual class bytes; exact source bindings/KV config validated",
+      "compatible": true
+    },
+    {
+      "producer": "cache official state shape1x32 guard only; features1x2062/base1x32x14/targets1x32x32 unchanged",
+      "consumer": "loader consumes head config+policy+contract; no old cache-state1x14 expectation",
+      "compatible": true
+    }
+  ],
+  "actual_seal": {
+    "execution_owner_reported_sha256": "65c708bf3b2c85509ed6f35150768149569558def96dd981e5b548f10a673cf8",
+    "rows": 90,
+    "independently_recomputed_here": false,
+    "rule": "Actual fit requests must both bind this same sealed digest; readout derives it from actual endpoints, never substitutes an old digest"
+  },
+  "actual_final5000_endpoints_exist": false,
+  "actual_endpoint_loading": "Pending actual completion; no fabricated checkpoints or model loads",
+  "implementation_changes": 0,
+  "production_tests_or_models_executed": 0,
+  "new_resources_or_GPU": 0,
+  "gate_on_qualified_fits": false,
+  "actual_cpu_delta_owner_report": {
+    "job_id": "job-qzpsryt5bul9",
+    "corrected_readout_selector_passed": 1,
+    "prior_readout_passes_carried": 56,
+    "fresh57_claim": false
+  }
+}
