@@ -36,7 +36,7 @@ the human. Train the noise controller while the entire official pi0.5 stays
 frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
 with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
 and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
-implementation and new-profile qualification are pending, no DSRL GPU launch.
+implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. GPU submission is in progress; no robot result yet.
 See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
 
 The compatible collection records actual steering noise under the same frozen
