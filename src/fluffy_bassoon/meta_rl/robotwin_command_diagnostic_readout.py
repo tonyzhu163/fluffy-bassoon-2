@@ -29,6 +29,7 @@ from .robotwin_reactive_fit import ReactiveEpisodeControl,make_heads
 from .robotwin_reactive_capacity import CONFIG,validate_capacity_locked
 from .robotwin_event_replay import physical_audit,EventEpisodeControl
 from .robotwin_prelift_probe import observe_native_plans
+from .robotwin_command_readout_resources import validate_lineages
 from .robotwin_steering_screen import run_complete_episode,qualify_real_motor,verify_source_conventions
 
 FORMAT='robotwin_command_diagnostic_physical_readout_v1'
@@ -181,7 +182,7 @@ def run_cells(state,specs,forks,episode,*,admit,persist,capture=rng_state,restor
     state['status']='complete_diagnostic_readout';persist(True)
 
 
-def validate_ticket(ticket,clock,plan,*,source,request_sha,output,now):
+def validate_ticket(ticket,clock,plan,*,source,request_sha,output,now,_audit=None):
     lineage='fixed12-command-diagnostic/readout';rows=[r for r in clock['attempts'] if r.get('lineage')==lineage]
     current=[r for r in rows if r['path']==ticket['resource_attempt']]
     limit=plan['stage_gpu_limits']['readout'];end=ticket['driver_deadline_unix'];cleanup=ticket['cleanup_seconds']
@@ -200,14 +201,12 @@ def validate_ticket(ticket,clock,plan,*,source,request_sha,output,now):
             or sum(r.get('charged_seconds',r['reserved_seconds']) for r in rows)>limit
             or sum(r.get('charged_seconds',r['reserved_seconds']) for r in clock['attempts'])>clock['worker_seconds']
             or any(r['status']=='started' and r is not current[0] for r in rows)
-            or any(r.get('lineage','').startswith('fixed12-command-diagnostic/') and r['lineage'] not in
-                   {'fixed12-command-diagnostic/'+k for k in ('cache04','fit-action','fit-kv','readout')}
-                   for r in clock['attempts'])
             or type(cleanup) is not int or cleanup<60 or not math.isfinite(end)
             or not current[0]['started_unix']<=now<end<=current[0]['started_unix']+current[0]['slice_seconds']-cleanup
             or not 120<=current[0]['reserved_seconds']<8*3600
             or not 0<ticket['minimum_episode_admission_seconds']<current[0]['slice_seconds']-cleanup):
         raise ValueError('Actual measured owner readout stage/ticket/clock required;900 is only an estimate')
+    validate_lineages(ticket,clock,plan,audit=_audit)
 
 
 def validate_closed_head(head,ticket,run_id):
@@ -251,12 +250,12 @@ def main(argv=None):
             or request.get('source_eligible') is not False or request.get('maximum_controller_actions')!=6000):raise ValueError('Explicit readonly diagnostic request required')
     if subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],text=True).strip():raise ValueError('Clean pinned readout source required')
     clock=json.loads((Path(ticket['clock_root'])/'worker-time.json').read_text());plan=audit.json(ticket['resource_plan_receipt'])
-    validate_ticket(ticket,clock,plan,source=source,request_sha=a.request_sha256,output=a.output,now=time.time());audit=Audit(ticket['driver_deadline_unix'])
+    validate_ticket(ticket,clock,plan,source=source,request_sha=a.request_sha256,output=a.output,now=time.time(),_audit=audit);audit=Audit(ticket['driver_deadline_unix'])
     audit.json(ticket['authority_receipt'])
     for ref in plan['prior_cost_receipts']:audit.json(ref)
     audit.json(plan['storage_admission'])
     for obj in (main,load_frontend,WideActionResidual,_RoboTwinBackend,ReactiveEpisodeControl,run_complete_episode,qualify_real_motor,
-                physical_audit,observe_native_plans,validate_capacity_locked,Audit,selected_device,rng_state,atomic_save,CampaignBudget,RobotwinCorpusWriter):
+                physical_audit,observe_native_plans,validate_lineages,validate_capacity_locked,Audit,selected_device,rng_state,atomic_save,CampaignBudget,RobotwinCorpusWriter):
         path=Path(inspect.getfile(obj)).resolve();rel=str(path.relative_to(root))
         if request['runtime_blob_sha256'].get(rel)!=file_sha(path):raise ValueError('Loaded readout/runtime blob differs: '+rel)
     for rel,digest in request['runtime_blob_sha256'].items():
