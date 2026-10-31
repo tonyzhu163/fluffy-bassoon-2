@@ -1,0 +1,159 @@
+{
+  "format": "robotwin_phone04_prelift_closure_pair_v1",
+  "status": "schedule_pass_only",
+  "source": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+    "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+    "bytes": 7256080
+  },
+  "schedule": {
+    "format": "robotwin_phone04_prelift_closure_pair_v1",
+    "source_schedule": {
+      "format": "robotwin_gripper_event_h32_v1",
+      "reference_frames": 140,
+      "threshold": 1e-05,
+      "boundaries": [
+        0,
+        56,
+        70,
+        120,
+        134,
+        140
+      ],
+      "events": [
+        {
+          "joint": 6,
+          "direction": -1,
+          "start": 56,
+          "end_exclusive": 70
+        },
+        {
+          "joint": 6,
+          "direction": 1,
+          "start": 120,
+          "end_exclusive": 134
+        }
+      ],
+      "chunks": [
+        {
+          "start": 0,
+          "end": 32,
+          "new_frames": 32,
+          "issued_slots": 32,
+          "added_holds": 0
+        },
+        {
+          "start": 32,
+          "end": 56,
+          "new_frames": 24,
+          "issued_slots": 32,
+          "added_holds": 8
+        },
+        {
+          "start": 56,
+          "end": 70,
+          "new_frames": 14,
+          "issued_slots": 32,
+          "added_holds": 18
+        },
+        {
+          "start": 70,
+          "end": 102,
+          "new_frames": 32,
+          "issued_slots": 32,
+          "added_holds": 0
+        },
+        {
+          "start": 102,
+          "end": 120,
+          "new_frames": 18,
+          "issued_slots": 32,
+          "added_holds": 14
+        },
+        {
+          "start": 120,
+          "end": 134,
+          "new_frames": 14,
+          "issued_slots": 32,
+          "added_holds": 18
+        },
+        {
+          "start": 134,
+          "end": 140,
+          "new_frames": 6,
+          "issued_slots": 32,
+          "added_holds": 26
+        }
+      ],
+      "full_schedule_slots": 224,
+      "full_schedule_added_holds": 84,
+      "minimum_slots_to_issue_every_original_frame": 198,
+      "native_episode_limit": 400,
+      "admissible": true,
+      "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+    },
+    "entries": [
+      {
+        "kind": "source",
+        "source_chunk": 0,
+        "start": 0,
+        "end": 32
+      },
+      {
+        "kind": "source",
+        "source_chunk": 1,
+        "start": 32,
+        "end": 56
+      },
+      {
+        "kind": "source",
+        "source_chunk": 2,
+        "start": 56,
+        "end": 70
+      },
+      {
+        "kind": "probe",
+        "start": 70,
+        "end": 70,
+        "source_chunk": null
+      },
+      {
+        "kind": "source",
+        "source_chunk": 3,
+        "start": 70,
+        "end": 102
+      },
+      {
+        "kind": "source",
+        "source_chunk": 4,
+        "start": 102,
+        "end": 120
+      },
+      {
+        "kind": "source",
+        "source_chunk": 5,
+        "start": 120,
+        "end": 134
+      },
+      {
+        "kind": "source",
+        "source_chunk": 6,
+        "start": 134,
+        "end": 140
+      }
+    ],
+    "reference_frames": 140,
+    "insertion_after_source_chunk": 2,
+    "original_full_slots": 224,
+    "full_slots_with_probe": 256,
+    "minimum_slots_to_issue_every_original_frame": 230,
+    "native_episode_limit": 400,
+    "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+  },
+  "close_endpoint": 0.0,
+  "whole_original_bank_retained": true,
+  "new_robot_actions": 0,
+  "model_forwards": 0,
+  "SGD": 0,
+  "interpretation": "Plan qualification only; no physical/mechanism success or GPU admission"
+}

@@ -1,0 +1,2 @@
+cd /mowenjie/fluffy-bassoon-2/worktrees/dsrl-pi05-headroom-learning-20261101-r1
+exec bash scripts/diagnostics/vla_target_online_dsrl_headroom.sh b6655659d8bff2c6b5d14eaf05d63f4647176d4f dsrl-pi05-headroom-20261101-s0-r1 learn 25140 --resume --code-worktree /mowenjie/fluffy-bassoon-2/worktrees/dsrl-pi05-headroom-learning-20261101-r1 --screen-source 7a69db74bf11d142d89e91d2e40b3b60c2cac586 --selection-sha256 0f09a0ee2e23f283abb19a80e796f761eddd8e7c1399e6f45fd44b04e78335c5
