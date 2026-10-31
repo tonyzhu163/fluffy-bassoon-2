@@ -17,8 +17,9 @@ live status in the single `outputs/coordination.md` (archived per the
 - Prefer simple solutions and use `uv` for Python environments. Run model
   computation and tests on allocated Linux resources; use macOS for editing
   and static checks.
-- On macOS, run `proxy_on` in the same shell before Git operations. Use
-  interactive zsh (`zsh -ic`) when needed to load the shell function.
+- On macOS, run `proxy_on` (or `proxy_on_clash` if that proxy is down) in
+  the same shell before Git operations. Use interactive zsh (`zsh -ic`) when
+  needed to load the shell functions.
 - Keep the main clone on `main`. Use detached worktrees for changes and
   commit-pinned runs.
 - Merge verified feature branches into `main` promptly, and rebase onto
