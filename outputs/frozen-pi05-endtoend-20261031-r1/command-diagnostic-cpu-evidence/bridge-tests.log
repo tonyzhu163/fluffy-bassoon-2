@@ -1,0 +1,118 @@
+FF.F....                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70c7d83e2850>
+kind = 'kv'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+>       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c7d81919d0>
+
+    def _check_frozen(self):
+>       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError
+_ test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r1')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70c7d9156a90>
+kind = 'action'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+>       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c8ed5f2150>
+
+    def _check_frozen(self):
+>       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError
+_ test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_recorded_request_and_publ0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70c7d81065d0>
+
+    def test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration(tmp_path, interface, monkeypatch):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, "action")
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured)
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        def condition(base, requested):
+            final = requested.clone(); final[..., 0] += .01
+            return final, dict(condition_id="audit-only")
+        env.backend.post_command_transform = condition
+>       control.step(np.array([.4, 0., 0., 0.], np.float32))
+
+tests/test_robotwin_fitted_physical.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_fitted_physical.py:208: in step
+    result = super().step(proposed)
+             ^^^^^^^^^^^^^^^^^^^^^^
+src/fluffy_bassoon/rl/robotwin_steering.py:257: in step
+    outcome = self.env.step(mapped)
+              ^^^^^^^^^^^^^^^^^^^^^
+tests/test_robotwin_fitted_physical.py:105: in step
+    self.backend.decode(noise)
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c7d81d70d0>
+
+    def _check_frozen(self):
+>       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]
+FAILED tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]
+FAILED tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration
+3 failed, 5 passed in 2.60s

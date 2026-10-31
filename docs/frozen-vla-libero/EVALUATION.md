@@ -43,6 +43,8 @@ physical states40–49, two private-noise draws each, reused at every checkpoint
 | Second learned panel |20/20|40,140|
 | Third learned panel |20/20|60,000|
 | Fourth learned panel |20/20|80,140|
+| Fifth learned panel |20/20|100,020|
+| Sixth learned panel |20/20|120,000|
 
 The second panel reverses the first panel's regression and exceeds every
 untrained control. It uses1,651 query primitives+200 settling. Initial

@@ -88,7 +88,8 @@ No further blind hold retry follows.
 [Scalar report](../../outputs/robotwin-prelift-factorial-diagnosis-20261101-r1/REPORT.md).
 
 The targeted phase closes these jobs at3,452 GPU-seconds/23,922 actions with
-no active holds. Old-phase CPU is1,682/1,800,118 remaining.
+no active holds. Old-phase CPU is now1,775/1,800,25 unused after the separately
+bound qualification below.
 One composite qualification passes29 partial-wrapper and33 factorial cases plus
 real04 schedule preflight on zero-GPU2CPU/16GiB,88 inclusive CPU-worker-seconds.
 The original bank44, wide40, resource3 and parallel14 checks are retained, not
@@ -99,6 +100,17 @@ checks all77 payload hashes, immutable cursor/RNG-recovery bytes and unchanged
 a full12 seal, successful04 or fitting/source admission.
 [CPU proof](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL-FACTORIAL-CPU-RECEIPT.json),
 [cache closeout](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL11-TERMINAL-RECEIPT.json).
+
+The required new diagnostic42 plus curve42 tests pass on exact06 in a
+zero-GPU Linux allocation. The optional fitted-bridge suite separately yields
+5 passes/3 fixture failures because its TinyMotor lacks the real frozen-model
+interface; the overall wrapper exit1 is preserved. The93-second CPU charge is
+counted once. Optional bridge qualification cannot gate the independent cache
+path. Before GPU dispatch, the execution owner identified absent cache cursor/
+RNG publication; a narrow closed-case preservation successor and focused
+qualification remain necessary. A linked120-second CPU-only correction grant
+keeps the original1,800-second allowance intact; no passed84/5 bodies repeat.
+[Actual qualification](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-DIAGNOSTIC-CPU-RECEIPT.json).
 
 The next prospective command-capacity diagnostic may retain all original12
 identities/8TRAIN4VAL including failed04, explicitly labeling its replay failed.
