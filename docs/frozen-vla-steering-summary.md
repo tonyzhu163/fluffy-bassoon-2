@@ -239,8 +239,8 @@ then a run-ID/helper-name collision during final JSON publication after
 successful phases and cleanup. The fixes are isolated; neither failure is
 a robot or learned-policy result. Keep the failed statuses and component
 passes separate. Cost139CPU-worker-s/1112core-s/0GPU; unused461s is sealed.
-The combined AD-first request remains pending, with7061CPU-s left only if
-approved. Full bank materialization, two fits and sampled readout are not yet
+The combined AD-first request remains pending. Full bank materialization,
+two fits and sampled readout are not yet
 executed. [Fault analysis and closure](../outputs/robotwin-source100-ad-first-20261031-r1/SOFTWARE-OUTCOME.md).
 
 The distinct sampled-readout implementation f7594a0 subsequently passes all48

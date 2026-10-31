@@ -111,10 +111,9 @@ These are fresh-phase requests, not unused balances from closed campaigns.
   aggregate ledger; do not substitute one wall clock for aggregate GPU cost.
   All margins stay inside the1500s shared setup/contingency allowance.
 - Software components are now qualified, while both software wrappers remain
-  Failed/exit1 (selector, then post-cleanup JSON publication). Actual139CPU-s
-  is counted once; the old461s unused allowance is sealed. At most7061CPU-s
-  remains only if the pending combined phase is approved. The new sampled
-  readout's fixtures still need actual allocated qualification. See
+  Failed/exit1 (selector, then post-cleanup JSON publication). Their139CPU-s
+  is counted once and the old461s unused allowance is sealed. The subsequent
+  distinct readout qualification and current aggregate are recorded below. See
   [SOFTWARE-OUTCOME.md](SOFTWARE-OUTCOME.md).
 - Distinct sampled readout f7594a03cb8f0f683d366193ed278b7435a4378c now passes
   all48 allocated CPU fixtures in a Success/exit0 job,31 additional CPU-s.
