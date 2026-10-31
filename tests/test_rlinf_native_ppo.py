@@ -109,8 +109,10 @@ def test_official_runtime_import_and_baseline_precedes_training(monkeypatch, tmp
             self.name = name
         def pilot_rng(self, *, restore=False):
             events.append((self.name, 'rng', restore)); return Handle()
-        def pilot_phase(self, name):
+        def pilot_phase(self, name, **kwargs):
             events.append(('phase', name)); return Handle()
+        def pilot_evaluation_iteration(self, iteration):
+            return Handle()
         def pilot_pair_receipt(self):
             return Handle([dict(same_ids=True)])
     runner = object.__new__(runtime.PilotRunner)
@@ -177,7 +179,10 @@ def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch,
     actor = object.__new__(runtime.PilotActor)
     actor.cfg = SimpleNamespace(native_pilot=SimpleNamespace(output=str(tmp_path)),
         env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
-    actor._rank = 0; actor.global_step = 0; actor.optimizer_steps = 0
+    actor._rank = 0; actor.optimizer_steps = 0
+    actor.model = SimpleNamespace(set_global_step=lambda step: None)
+    assert not hasattr(actor, 'global_step')
+    actor.set_global_step(0)  # Actual author setter updates version, never global_step.
     final_values = torch.arange(9 * 8).reshape(9, 8, 1)
     actor.rollout_batch = dict(prev_values=final_values, dones=torch.zeros(9, 8, 50),
         forward_inputs=dict(chains=torch.ones(8, 8, 6, 50, 32), denoise_inds=torch.zeros(8, 8, 5)))
@@ -193,3 +198,131 @@ def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch,
     assert saved['evaluation_data'] is False
     actor.rollout_batch['prev_values'] = final_values[:-1].flatten()
     assert torch.equal(saved['rollout_batch']['prev_values'], final_values)
+    first_path = next((tmp_path/'training-rollouts').glob('*.pt'))
+    first_sha = sha(first_path)
+    actor.rollout_batch['prev_values'] = final_values
+    actor.set_global_step(1)
+    actor.compute_advantages_and_returns()
+    paths = sorted((tmp_path/'training-rollouts').glob('*.pt'))
+    assert len(paths) == 2 and sha(first_path) == first_sha
+    second = torch.load(paths[1], weights_only=False)
+    assert second['producing_policy_iteration'] == 1 and second['collection_iteration'] == 2
+    assert not hasattr(actor, 'global_step')
+    with pytest.raises(RuntimeError, match='never overwrite'):
+        actor.compute_advantages_and_returns()
+
+
+def test_native_history_multirank_episode_contract(monkeypatch, tmp_path):
+    """One CPU fixture:2ranks×4rounds, mixed S/F, padding, GAE and DPT refs."""
+    import torch
+    from rlinf.algorithms.registry import calculate_adv_and_returns
+    from rlinf.utils.nested_dict_process import process_nested_dict_for_adv, process_nested_dict_for_train
+    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo_data import reconstruct_rows, record_gaussian_parameters
+
+    def observation(number):
+        return dict(main_images=torch.full((1, 2, 2, 3), number, dtype=torch.uint8),
+            wrist_images=torch.full((1, 2, 2, 2, 3), number+1, dtype=torch.uint8),
+            states=torch.full((1, 14), float(number)), task_descriptions=['adjust bottle'])
+    traces = []
+    for rank in range(2):
+        for round_index in range(4):
+            success = (rank+round_index) % 2 == 0
+            elapsed = 0
+            for chunk in range(2):
+                mask = torch.tensor([[True, False] if success and chunk == 0 else
+                    [False, False] if success else [True, True]])
+                duration = int(mask.sum())
+                current = observation(rank*40+round_index*4+elapsed)
+                next_obs = observation(rank*40+round_index*4+elapsed+duration)
+                rewards = torch.tensor([[0., 1.]]) if success and chunk == 0 else torch.zeros(1, 2)
+                terms = torch.tensor([[False, success]])
+                truncs = torch.tensor([[False, not success and chunk == 1]])
+                actions = torch.arange(28).float().reshape(1, 2, 14)+rank+round_index
+                traces.append(dict(evaluation_data=False, task_key='adjust_bottle', rank=rank,
+                    collection_iteration=1, producing_policy_iteration=0, round_index=round_index,
+                    chunk_index=chunk, local_env_indices=[0], global_env_indices=[rank],
+                    episode_serials=torch.tensor([round_index+1]),
+                    reset_state_ids=torch.tensor([100+rank*10+round_index]),
+                    primitive_time_before=torch.tensor([elapsed]), current_observation=current,
+                    proposed_motor_actions=actions, measured_valid_mask=True,
+                    outputs=([next_obs], rewards, terms, truncs,
+                        [dict(valid_action_mask=mask, final_observation=next_obs)])))
+                elapsed += duration
+    # Evaluation never enters this reader, even if interleaved in a file list.
+    evaluation = dict(traces[0], evaluation_data=True)
+    teacher = dict(checkpoint_path='/fixed/source/global_step_25/actor', checkpoint_sha256='a'*64,
+        actor_config_sha256='b'*64, norm_stats_sha256='c'*64,
+        sampling_seed_rule='predeclared query seed; no target checkpoint selection')
+    rows = reconstruct_rows([evaluation, *reversed(traces)], teacher)
+    assert len(rows) == 16 and sum(row['duration'] > 0 for row in rows) == 12
+    assert sum(row['duration'] == 0 for row in rows) == 4  # preserve post-success padding
+    assert all(row['submitted_actions'].shape == (2, 14) for row in rows)
+    assert all(row['executed_actions'].shape[0] == row['duration'] for row in rows)
+    assert all(row['current_observation']['wrist_images'].shape[0] == 2 for row in rows)
+    assert all(torch.equal(row['next_observation']['states'], row['final_observation']['states']) for row in rows)
+    assert all(row['dpt_teacher_action'] is None and row['dpt_label_teacher'] == teacher for row in rows)
+    assert all(row['current_observation']['task_descriptions'] == 'adjust bottle' for row in rows)
+    for row in rows:
+        for earlier in row['history_row_indices']:
+            assert rows[earlier]['rank'] == row['rank'] and rows[earlier]['duration'] > 0
+    assert any(row['history_row_indices'] and row['episode_serial'] > 1 for row in rows)
+
+    for rank in range(2):
+        ordered = sorted((trace for trace in traces if trace['rank'] == rank),
+            key=lambda trace: (trace['round_index'], trace['chunk_index']))
+        raw = dict(rewards=torch.cat([trace['outputs'][1][None] for trace in ordered]),
+            prev_logprobs=torch.zeros(8, 1, 2, 14),
+            prev_values=torch.zeros(12, 1, 1), dones=torch.zeros(12, 1, 2, dtype=torch.bool),
+            terminations=torch.zeros(12, 1, 2, dtype=torch.bool),
+            truncations=torch.zeros(12, 1, 2, dtype=torch.bool),
+            forward_inputs=dict(chains=torch.ones(8, 1, 6, 2, 32),
+                denoise_inds=torch.zeros(8, 1, 5, dtype=torch.long)))
+        for round_index in range(4):
+            raw['prev_values'][round_index*3+2] = .75  # true final bootstrap row
+            for chunk in range(2):
+                source = ordered[round_index*2+chunk]
+                slot = round_index*3+chunk+1
+                raw['terminations'][slot] = source['outputs'][2]
+                raw['truncations'][slot] = source['outputs'][3]
+                raw['dones'][slot] = source['outputs'][2] | source['outputs'][3]
+        batch = process_nested_dict_for_adv(raw, 4)  # Actual author's unflattening.
+        batch['loss_mask'] = torch.tensor([[ordered[round_index*2+chunk]['measured_valid_mask'] and
+            bool(ordered[round_index*2+chunk]['outputs'][4][-1]['valid_action_mask'].any())
+            for round_index in range(4)] for chunk in range(2)])[:,:,None]
+        gae = calculate_adv_and_returns(task_type='embodied', adv_type='gae', reward_type='chunk_level',
+            rewards=batch['rewards'], dones=batch['dones'], values=batch['prev_values'],
+            loss_mask=batch['loss_mask'], gamma=.99, gae_lambda=.95, normalize_advantages=True,
+            group_size=1)
+        batch.update(gae)
+        actor = object.__new__(runtime.PilotActor)
+        actor.cfg = SimpleNamespace(native_pilot=SimpleNamespace(output=str(tmp_path)),
+            env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
+        actor._rank = rank; actor.optimizer_steps = 0
+        actor.model = SimpleNamespace(set_global_step=lambda step: None)
+        actor.set_global_step(0); actor.rollout_batch = batch
+        monkeypatch.setattr(runtime.EmbodiedFSDPActor, 'compute_advantages_and_returns', lambda self: {})
+        actor.compute_advantages_and_returns()
+        saved = torch.load(tmp_path/'training-rollouts'/
+            f'iteration-0001-policy-0000-rank-{rank:02d}.pt', weights_only=False)
+        assert saved['rollout_batch']['prev_values'].shape == (3, 4, 1)
+        assert torch.all(saved['rollout_batch']['prev_values'][-1] == .75)
+        assert torch.equal(saved['rollout_batch']['loss_mask'], batch['loss_mask'])
+        assert torch.equal(saved['rollout_batch']['returns'], gae['returns'])
+        flattened = process_nested_dict_for_train(batch, torch.arange(8).flip(0))
+        assert flattened['prev_values'].shape[0] == 8
+        assert saved['rollout_batch']['prev_values'].shape[0] == 3
+
+    # Actual mean/std observer returns the author's exact tensor objects and
+    # consumes no additional random draw or second sampler evaluation.
+    calls, parameters = [], []
+    mean, std = torch.ones(1, 2, 32), torch.full((1, 2, 32), .3)
+    def author(*args, **kwargs):
+        calls.append(1); return mean, std
+    observer = record_gaussian_parameters(author, lambda: parameters, runtime.cpu_tree)
+    rng = torch.get_rng_state().clone()
+    actual_mean, actual_std = observer(mean, mean, torch.tensor([0]),
+        noise_method='flow_sde', noise_level=.3, num_steps=5)
+    assert actual_mean is mean and actual_std is std and calls == [1]
+    assert torch.equal(rng, torch.get_rng_state())
+    assert torch.equal(parameters[0]['mean'], mean) and torch.equal(parameters[0]['std'], std)
