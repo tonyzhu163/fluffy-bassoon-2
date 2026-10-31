@@ -109,8 +109,15 @@
     "live_path": null,
     "require_same_header_for_all_children": true,
     "fresh_child_is_not_a_fresh_action_budget": true,
-    "source_caps": null,
-    "source_keys_status": "Exact six methodkeys supplied by condition/collector owner; numeric caps await verified horizon and reset-policy-action bounds before header creation.",
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "source_keys_status": "Exact six methodkeys and19200/key numeric caps bound from both allowed task horizons400 plus source-based reset-policy-action bound0; actual qualification reset counters must confirm before development/source episodes.",
     "header_contract_required": {
       "phase_id": "frozen-pi05-endtoend-20261031-r1",
       "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
@@ -131,10 +138,23 @@
     ],
     "source_cap_formula": "48 * max(verified_task_horizon + verified_reset_policy_action_bound over the predeclared allowed source tasks); each key remains subordinate to shared source120000 and phase total300000.",
     "source_cap_basis_policy": "Bind numeric caps before A1 outcomes from the allowed-task upper bound; selecting a source task later cannot change the immutable header.",
-    "source_reservation_method": "spec[method] is the exact lineage methodkey, not the generic steering arm name"
+    "source_reservation_method": "spec[method] is the exact lineage methodkey, not the generic steering arm name",
+    "source_cap_basis": {
+      "allowed_task_horizons": {
+        "place_phone_stand": 400,
+        "place_object_stand": 400
+      },
+      "source_based_reset_policy_actions_bound": 0,
+      "maximum_episodes_per_lineage": 48,
+      "cap_per_key": 19200,
+      "sum_of_six_caps": 115200,
+      "shared_source_cap": 120000,
+      "actual_reset_counter_confirmation_required": true,
+      "internal_PhysX_setup_ticks": "separately described as uninstrumented; zero policy-action bound does not mean zero internal physics ticks"
+    }
   },
-  "previous_preparation_grant_sha256": "a07c22b46be5b4b19c64d63d87a572fbf50513ba1a55aa2c5ee43d6e20f57091",
-  "revision_reason": "Align all prospective action phase caps before the single immutable CampaignBudget header; no ceiling increase or runtime spend.",
+  "previous_preparation_grant_sha256": "e99a537eeca2b0422ca4366654dbafbca552376e9c8af0a583493d5351b4a1bd",
+  "revision_reason": "Bind six numeric source-lineage action caps from source horizons/reset-policy convention before immutable shared header; whole-phase ceilings unchanged.",
   "source_collection_schedule": {
     "initial_episodes_per_lineage": 24,
     "maximum_episodes_per_lineage": 48,
