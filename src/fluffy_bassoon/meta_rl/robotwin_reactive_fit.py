@@ -112,7 +112,9 @@ def cache_demos(backend,manifest,paths,output,*,guard,seed,action_head):
                 base14=torch.as_tensor(proposal,device=model.device)[None],valid=torch.as_tensor(valid)[None]))
             path=output/f'sample-{len(records):04d}.pt'
             digest=atomic_save(path,dict(format='reactive_demo_cache_v1',episode=episode,index=index,
-                source=source,roundtrip=roundtrip,data=data))
+                source=source,roundtrip=roundtrip,data=data,proposal_noise=torch.from_numpy(noise.copy()),
+                proposal_noise_convention=dict(kind='private_standard_normal_32x32',
+                    seed_components=[seed,episode['canonical_index'],index])))
             records.append(dict(path=str(path),sha256=digest,split=episode['split'],episode_id=episode['id'],
                 anchor=index,valid_actions=int(valid.sum()),roundtrip=roundtrip))
             records[-1]['physical_residual_support']=support
@@ -188,7 +190,9 @@ def fit_reactive_head(kind,head,backend,records,output,*,guard,config,contract):
     initial=evaluate(validation)
     state['metrics'].append(dict(iteration=0,validation=initial,validation_loss=initial['MSE'],
                                training_monitor=evaluate(train[:4])))
-    best_path=output/'best.pt'
+    # Selected artifacts are immutable. A deadline/publication failure after
+    # writing a better candidate must not invalidate any prior recovery ref.
+    best_path=output/'selected-000000.pt'
     digest=atomic_save(best_path,dict(kind=kind,iteration=0,contract=contract,config=head.config(),policy=cpu(head.state_dict())))
     state['best']=dict(path=str(best_path),sha256=digest,iteration=0,validation_loss=initial['MSE'])
     persist()
@@ -221,6 +225,7 @@ def fit_reactive_head(kind,head,backend,records,output,*,guard,config,contract):
             diagnostics=evaluate(validation);score=diagnostics['MSE']
             row.update(validation_loss=score,validation=diagnostics,training_monitor=evaluate(train[:4]))
             if score<state['best']['validation_loss']:
+                best_path=output/f'selected-{update:06d}.pt'
                 digest=atomic_save(best_path,dict(kind=kind,iteration=update,contract=contract,config=head.config(),policy=cpu(head.state_dict())))
                 state['best']=dict(path=str(best_path),sha256=digest,iteration=update,validation_loss=score)
         state['metrics'].append(row);persist()
@@ -228,7 +233,9 @@ def fit_reactive_head(kind,head,backend,records,output,*,guard,config,contract):
     state['fit_diagnostics']=dict(initial=state['metrics'][0],final=state['metrics'][-1],
         physical_error_must_be_considered=True,full_class_rejection_authorized=False)
     persist()
-    best=torch.load(best_path,map_location='cpu',weights_only=False)
+    if file_sha(state['best']['path'])!=state['best']['sha256']:
+        raise ValueError('Selected immutable checkpoint bytes changed')
+    best=torch.load(state['best']['path'],map_location='cpu',weights_only=False)
     head.load_state_dict(best['policy']);head.eval()
     return state
 
@@ -255,6 +262,7 @@ class ReactiveEpisodeControl:
         self.env,self.heads=env,heads;self.replay=ReplayTeacherHead().eval();self.mode='native'
         self.interface=deepcopy(interface)
         self.coefficients=np.zeros(4,np.float32);self.motor_rng=None;self.references={}
+        self._pending_metadata={}
         self.kv,self.action=heads['kv'],heads['action']
         env.corpus_writer=env.backend.corpus_writer=writer
         writer.register_runtime(dict(env.contract,reactive_capacity_hooks={k:h.config() for k,h in heads.items()}))
@@ -270,9 +278,9 @@ class ReactiveEpisodeControl:
     def set_recording_context(self,value):self.env.set_recording_context(value)
     def record_decision_metadata(self,value):
         reference=self.references.get(self.mode)
-        self.env.record_decision_metadata(dict(value,capacity_head=self.mode,capacity_checkpoint=reference,
+        self._pending_metadata=dict(value,capacity_head=self.mode,capacity_checkpoint=reference,
             optimizer_updates=0 if reference is None else reference['iteration'],
-            interpretation='reactive capacity diagnosis; not RL/AD/DPT histories'))
+            interpretation='reactive capacity diagnosis; not RL/AD/DPT histories')
     def set_coefficients(self,arm,values):
         if np.asarray(values).shape!=(4,) or np.any(values):raise ValueError('Common-runner placeholder coefficients must be zero')
         # The mode is selected only by the immutable capacity spec, never by
@@ -284,6 +292,7 @@ class ReactiveEpisodeControl:
                                  else self.heads['action'] if arm=='action' else None)
     def reset(self,task,seed,*,motor_seed,paired_instruction=None):
         self.motor_rng=np.random.default_rng(motor_seed)
+        self._pending_metadata={}
         features=self.env.reset(task,seed,paired_instruction=paired_instruction)
         cache=self.env.backend._kv_cache
         if len(cache)!=self.interface['kv_layers'] or any(
@@ -292,7 +301,11 @@ class ReactiveEpisodeControl:
         return features
     def step(self,values):
         self.replay.offset=self.env.elapsed_steps
+        before=deepcopy(self.motor_rng.bit_generator.state)
         noise=self.motor_rng.standard_normal((32,32)).astype(np.float32)
+        self.env.record_decision_metadata(dict(self._pending_metadata,capacity_native_noise=noise.copy(),
+            capacity_motor_rng_before=before,capacity_motor_rng_after=deepcopy(self.motor_rng.bit_generator.state)))
+        self._pending_metadata={}
         return self.env.step(noise)
     def snapshot(self):
         return dict(mode=self.mode,elapsed_steps=self.elapsed_steps,

@@ -3,6 +3,7 @@ from copy import deepcopy
 from io import BytesIO
 import json
 from pathlib import Path
+import shutil
 from types import SimpleNamespace
 
 import h5py
@@ -19,9 +20,11 @@ from fluffy_bassoon.meta_rl.robotwin_reactive_fit import (
 )
 from fluffy_bassoon.meta_rl.robotwin_reactive_capacity import (
     build_plan,summarize,CONFIG,FORMAT,validate_capacity_allocation,
+    validate_capacity_predecessor,validate_capacity_locked,
 )
 from fluffy_bassoon.meta_rl.warmstart import atomic_save
 from fluffy_bassoon.rl.pi05_residual import ReactiveKVResidual
+from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -203,7 +206,7 @@ def test_finite_small_fit_keeps_motor_and_complete_optimizer_private_rng_recover
     assert all(int(v['step'])==3 for v in saved['optimizer']['state'].values())
     assert torch.equal(before,motor.weight) and motor.weight.grad is None
     assert any(not torch.equal(a,b) for a,b in zip(parameters,head.parameters()))
-    assert file_sha(tmp_path/kind/'best.pt')==result['best']['sha256']
+    assert file_sha(result['best']['path'])==result['best']['sha256']
     assert result['fit_diagnostics']['full_class_rejection_authorized'] is False
 
 
@@ -249,6 +252,23 @@ def test_boundary_stop_preserves_last_finite_optimizer_sampler_and_policy(tmp_pa
     assert all(torch.isfinite(v).all() for v in saved['policy'].values())
 
 
+def test_interrupted_new_best_publication_keeps_every_prior_recovery_reference_valid(tmp_path):
+    records=cache_records(tmp_path);head=action_head();motor=TinyMotor();output=tmp_path/'fit'
+    def guard():
+        if (output/'selected-000001.pt').exists():
+            raise TimeoutError('between new selected artifact and full recovery publication')
+    with pytest.raises(TimeoutError):
+        fit_reactive_head('action',head,SimpleNamespace(model=motor,_check_frozen=lambda:None),
+            records,output,guard=guard,config=dict(CONFIG,updates=2,validate_every=1,learning_rate=.01),contract={})
+    saved=torch.load(output/'latest.pt',weights_only=False)
+    assert saved['state']['iteration']==0
+    old=saved['state']['best']
+    assert Path(old['path']).name=='selected-000000.pt'
+    assert file_sha(old['path'])==old['sha256']
+    assert (output/'selected-000001.pt').is_file()
+    assert saved['optimizer']['state']=={}
+
+
 @pytest.mark.parametrize('changed',['budget','clock','identity','config'])
 def test_capacity_admission_cannot_replenish_residual_or_restart_clock(changed):
     allocation=dict(mode=FORMAT,prior_a1_gpu_seconds=1770,reserved_gpu_seconds=5430,
@@ -260,3 +280,49 @@ def test_capacity_admission_cannot_replenish_residual_or_restart_clock(changed):
     if changed=='identity':allocation['run_id']='old-unit'
     if changed=='config':allocation['capacity_fit_config']['updates']=500
     with pytest.raises(ValueError):validate_capacity_allocation(allocation,now=1010,run_id='new-unit')
+
+
+def canonical_predecessor(tmp_path):
+    descriptor=dict(root=str(tmp_path/'canonical'),campaign_id='synthetic',total_actions=300000,
+                    source_caps={},phase_caps={'a1':30000},contract={'synthetic_only':True})
+    with CampaignBudget(**descriptor,run_id='old',source_commit='a'*40) as budget:
+        budget.reserve('old:physical',17591,phase='a1',method='native',task='phone',episode='old',chunk=0,policy_version='old')
+        budget.resolve('old:physical',17591)
+        old=budget.snapshot()
+    original=dict(status='complete_restricted_development_search',pending=None,action_ledger=descriptor,
+                  actions=old,records={'old':{'primitive_steps':17591}})
+    return original,dict(action_ledger=deepcopy(descriptor),phase_output_root=str(tmp_path))
+
+
+def test_only_exact_canonical_tip_plus_one_new_registration_is_accepted(tmp_path):
+    original,allocation=canonical_predecessor(tmp_path)
+    validate_capacity_predecessor(original,allocation,run_id='new')
+    with CampaignBudget(**allocation['action_ledger'],run_id='new',source_commit='b'*40) as budget:
+        validate_capacity_locked(budget,original)
+        assert budget.snapshot()['actual_actions']==17591
+
+
+@pytest.mark.parametrize('changed',['foreign_same_total','missing_root','intervening_zero_action','replayed_run','storage_root'])
+def test_preopen_ledger_binding_rejects_replacement_or_changed_canonical_history(tmp_path,changed):
+    original,allocation=canonical_predecessor(tmp_path)
+    if changed=='foreign_same_total':
+        foreign=tmp_path/'foreign';shutil.copytree(allocation['action_ledger']['root'],foreign)
+        allocation['action_ledger']['root']=str(foreign)
+    if changed=='missing_root':allocation['action_ledger']['root']=str(tmp_path/'typo-never-create')
+    if changed=='storage_root':
+        alternate=tmp_path/'new-storage';alternate.mkdir();allocation['phase_output_root']=str(alternate)
+    if changed in ('intervening_zero_action','replayed_run'):
+        with CampaignBudget(**allocation['action_ledger'],run_id='other' if changed=='intervening_zero_action' else 'new',
+                            source_commit='b'*40):pass
+    before=list(tmp_path.rglob('*.json'))
+    with pytest.raises(ValueError):validate_capacity_predecessor(original,allocation,run_id='new')
+    assert list(tmp_path.rglob('*.json'))==before
+    assert not (tmp_path/'typo-never-create').exists()
+
+
+def test_lock_recheck_rejects_an_event_appended_after_preopen_validation(tmp_path):
+    original,allocation=canonical_predecessor(tmp_path)
+    validate_capacity_predecessor(original,allocation,run_id='new')
+    with CampaignBudget(**allocation['action_ledger'],run_id='intervening',source_commit='c'*40):pass
+    with CampaignBudget(**allocation['action_ledger'],run_id='new',source_commit='b'*40) as budget:
+        with pytest.raises(ValueError,match='predecessor'):validate_capacity_locked(budget,original)

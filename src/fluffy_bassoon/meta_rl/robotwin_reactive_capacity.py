@@ -38,6 +38,54 @@ LIMIT=400
 CONFIG=dict(seed=20261031,rank=4,kv_scale=.1,gripper_bound=0.,
             updates=100,global_batch=2,learning_rate=1e-3,validate_every=25)
 
+LEDGER_COUNTERS=('actual_actions','charged_actions','pending_actions','uncertain_actions',
+    'by_phase','by_method','decision_count','receipts','unresolved_decisions')
+
+
+def validate_capacity_predecessor(original,allocation,*,run_id):
+    """Read-only BEFORE opening anything that can create/register a ledger."""
+    ledger=allocation['action_ledger'];prior=original['action_ledger'];old=original['actions']
+    try:
+        root=Path(ledger['root']).resolve(strict=True)
+        original_root=Path(prior['root']).resolve(strict=True)
+        phase_root=Path(allocation['phase_output_root']).resolve(strict=True)
+    except OSError as error:
+        raise ValueError('Require the existing original canonical ledger, never a replacement root') from error
+    header=dict(schema=CampaignBudget.schema,**{k:ledger[k] for k in
+        ('campaign_id','total_actions','source_caps','phase_caps','contract')})
+    if (root!=original_root or phase_root!=root.parent
+            or {k:v for k,v in ledger.items() if k!='root'}!={k:v for k,v in prior.items() if k!='root'}
+            or header!=old['header'] or original.get('status')!='complete_restricted_development_search'
+            or original.get('pending') is not None or old['actual_actions']!=17591 or old['charged_actions']!=17591
+            or old['pending_actions'] or old['uncertain_actions'] or old['unresolved_decisions']
+            or sum(r['primitive_steps'] for r in original['records'].values())!=17591
+            or run_id in old['runs']):
+        raise ValueError('Capacity continuation must bind the original root/header/closed physical counters/fresh run')
+    count=old['journal_events'];events=root/'events'
+    if (type(count) is not int or count<1 or sorted(p.name for p in events.glob('*.json'))!=
+            [f'{i:010d}.json' for i in range(count)]):
+        raise ValueError('Canonical journal changed after the bound original tip; diagnose before admission')
+    first=json.loads((events/'0000000000.json').read_text())
+    tip=json.loads((events/f'{count-1:010d}.json').read_text())
+    if first.get('header')!=header or tip.get('sha256')!=old['journal_sha256']:
+        raise ValueError('Original canonical header/tip identity differs before ledger open')
+
+
+def validate_capacity_locked(budget,original):
+    """Only this fresh run registration may follow the saved tip under lock."""
+    old=original['actions'];current=budget.snapshot();count=old['journal_events']
+    tip=json.loads((budget.events/f'{count-1:010d}.json').read_text())
+    if (current['journal_events']!=count+1 or tip['sha256']!=old['journal_sha256']
+            or current['header']!=old['header'] or any(current[k]!=old[k] for k in LEDGER_COUNTERS)
+            or budget.run_id in old['runs'] or current['runs']!=dict(old['runs'],**{budget.run_id:budget.source_commit})):
+        raise ValueError('Canonical lock did not preserve exact predecessor costs plus one fresh registration')
+    event=json.loads((budget.events/f'{count:010d}.json').read_text())
+    if (event.get('kind')!='run' or event.get('run_id')!=budget.run_id
+            or event.get('source_commit')!=budget.source_commit
+            or event.get('previous_sha256')!=old['journal_sha256']
+            or event.get('sha256')!=current['journal_sha256']):
+        raise ValueError('Only the exact fresh successor registration is admitted')
+
 
 def validate_capacity_allocation(allocation,*,now,run_id):
     if (allocation.get('mode')!=FORMAT or allocation.get('prior_a1_gpu_seconds')!=1770
@@ -139,12 +187,16 @@ def main(argv=None):
         if not path.resolve().is_relative_to(args.robotwin_root.resolve()) or file_sha(path)!=ref['sha256']:
             raise ValueError('Author convention source differs from the actual pinned runtime')
     original=read_bound(args.original_result,args.original_result_sha256)
+    if (original.get('scope_sha256')!=args.scope_sha256 or original.get('interface_sha256')!=args.interface_sha256):
+        raise ValueError('Original accepted scope/native interface identity must remain exact')
+    validate_capacity_predecessor(original,allocation,run_id=args.run_id)
     plan=build_plan(original['records'],demos)
     args.output.mkdir(parents=True,exist_ok=False)
     _atomic_json(args.output/'plan.json',dict(plan,source_commit=source,demo_manifest_sha256=args.demos_sha256,
         allocation_sha256=args.allocation_sha256,interface_sha256=args.interface_sha256))
     state=dict(format=FORMAT,status='running',stage='admission',records=[],pending=None,plan=plan,
-        source_commit=source,allocation_sha256=args.allocation_sha256,demos_sha256=args.demos_sha256)
+        source_commit=source,allocation_sha256=args.allocation_sha256,demos_sha256=args.demos_sha256,
+        action_ledger=deepcopy(allocation['action_ledger']),predecessor_journal=deepcopy(original['actions']))
     control=None;fits={}
     def storage():
         total=0
@@ -195,6 +247,7 @@ def main(argv=None):
         with CampaignBudget(ledger['root'],campaign_id=ledger['campaign_id'],total_actions=300000,
             source_caps=ledger['source_caps'],phase_caps=ledger['phase_caps'],contract=ledger['contract'],
             run_id=args.run_id,source_commit=source) as budget:
+            validate_capacity_locked(budget,original)
             snap=budget.snapshot()
             if (snap['unresolved_decisions'] or snap['actual_actions']!=17591
                     or budget.remaining(phase='a1',method='capacity_native')<10000):
@@ -245,6 +298,8 @@ def main(argv=None):
                 episode(spec)
             state.update(status='complete',stage='complete',summary=summarize(state['records']),
                 actions=budget.snapshot(),frozen_after=env.frozen_fingerprint(),storage_bytes=storage())
+            state['runtime_counters']={k:getattr(env.backend,k) for k in
+                ('prefix_calls','prefix_seconds','motor_queries','motor_seconds')}
             if state['frozen_after']!=frozen:raise RuntimeError('Final frozen motor fingerprint differs')
     except BaseException as error:
         state.update(status='blocked_failure',failure=dict(type=type(error).__name__,message=str(error)))

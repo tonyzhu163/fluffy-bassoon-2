@@ -66,7 +66,9 @@ No second simulator loop, loader, action normalizer or scheduler is added.
   0/25/50/75/100 selects the checkpoint. The untrained checkpoint is eligible
   and its iteration is reported. Parameter counts, update losses, peak allocated
   CUDA bytes, elapsed time and complete optimizer/sampler/private/global RNG
-  recoveries are retained. A timeout/failure preserves the prior finite recovery;
+  recoveries are retained. Selected checkpoint files are immutable per update;
+  interruption before publishing a new full recovery preserves every old byte
+  reference. A timeout/failure preserves the prior finite recovery;
   it does not trigger automatic restart.
 
 Flow matching uses pinned compute_loss interpolation/time distribution and its
@@ -92,6 +94,14 @@ At most25complete400-step episodes=10,000new actions, inside the remaining
 12,409A1 actions. No episode is cut to hit a quota. No unspent actions admit extra
 trials. Same canonical300,000-action ledger/30,000A1 cap and old header remain;
 no imported prior per child or replacement ledger. All prior episodes stay intact.
+Before opening that ledger, require the original result's same existing resolved
+root, full descriptor/header, exact saved event count/tip and closed physical
+counters. Under the canonical lock, allow only this one fresh run registration
+after that tip, with all old charged/actual/pending/uncertain/decision/method/phase
+counters and receipts unchanged. Foreign same-total clones, typo roots, intervening
+zero-action events and replayed registrations fail before model construction.
+The shared storage root must remain the original canonical ledger's parent;
+the original accepted scope/native-interface hashes must also remain exact.
 
 Maximum new allocation5,430GPU-seconds, including cold setup/probe, qualification,
 all replays, offline cache, both100-update fits, tiny controls, failures and
@@ -107,7 +117,7 @@ All saved outputs, caches and recoveries share the existing64GiB phase ceiling.
 
 Before GPU admission, run only the new prepared CPU test file on actual allocated
 0GPU Linux, ≤300worker-seconds within the existing1,383CPU-second remainder.
-24cases are prepared, NONE run on macOS. They exercise actual metadata bindings,
+32cases are prepared, NONE run on macOS. They exercise actual metadata bindings,
 whole-trajectory masks, transform roundtrip/retained prompt, differentiable KV
 flow, arm headroom/raw-gripper parity, finite optimizer/private-RNG recoveries,
 interrupted-update preservation, cached-byte tampering and residual admission.
