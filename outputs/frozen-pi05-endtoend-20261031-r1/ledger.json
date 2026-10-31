@@ -6,16 +6,17 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "A1_GPU_live_gates_passed_screen_running; three_CPU_components_passed; no_teacher_or_student_training_yet",
+  "state": "A1_R1_terminal_paired_instruction_failure_before_search; exact_repair_and_migration_pending; task57_separate_running",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
       "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
       "reserved_seconds": 7200,
-      "charged_seconds": null,
-      "settled": false,
-      "status": "Running",
-      "reservation_receipt_sha256": "e660ad5ccee3c8998ec350f769c0ff35ad76a157fb7c762b1000f7fa8c5c5650"
+      "charged_seconds": 632,
+      "settled": true,
+      "status": "Failed",
+      "reservation_receipt_sha256": "e660ad5ccee3c8998ec350f769c0ff35ad76a157fb7c762b1000f7fa8c5c5650",
+      "terminal_receipt_sha256": "478d18f4081d1d4218898bb3132003cb29d53cb92136e2b65a8759a815c00580"
     }
   ],
   "cpu_attempts": [
@@ -54,11 +55,11 @@
     }
   ],
   "physical_action_reservations": [],
-  "charged_gpu_seconds": 0,
-  "reserved_gpu_seconds": 7200,
+  "charged_gpu_seconds": 632,
+  "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 244,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 2022,
+  "charged_actions": 5355,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
@@ -126,15 +127,22 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 1556,
-  "unreserved_gpu_seconds": 21600,
+  "unreserved_gpu_seconds": 28168,
   "latest_action_snapshot": {
-    "checked_utc": "2026-10-31T09:54:37.478190+00:00",
-    "actual": 1990,
-    "charged": 2022,
-    "pending": 32,
+    "actual": 5355,
+    "charged": 5355,
+    "pending": 0,
     "uncertain": 0,
-    "interpretation": "charged includes pending primitive reservation; do not add it twice; snapshot is not terminal/full independent journal reconciliation"
+    "terminal": true,
+    "independent_closed_episode_action_sum": 5355,
+    "independent_full_journal_replay": false
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
-  "immutable_initial_grant_figures_are_binding_time_snapshots": true
+  "immutable_initial_grant_figures_are_binding_time_snapshots": true,
+  "remaining_a1_gpu_seconds": 6568,
+  "remaining_a1_actions": 24645,
+  "retry_launched": false,
+  "source_teacher_admitted": false,
+  "selection_evaluable": false,
+  "preserve_initial_grant_and_header": true
 }

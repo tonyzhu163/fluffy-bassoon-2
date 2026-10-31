@@ -1,0 +1,9 @@
+# Source path for the changed instruction — 2026-10-31
+
+The two saved reset files establish identical actual seed, main/wrist RGB and14D physical state, but different official instruction text and frozen features. `A1-INSTRUCTION-SOURCE.json` binds exact installed source bytes and compact line excerpts; no module/model/env was imported or executed.
+
+RoboTwin's `VectorEnv._init_envs` calls `SubEnv.setup_task`, which caches `episode_info_list` from a constructor-time `setup_demo/get_info`. Later `SubEnv.reset` changes `env_seed`, creates an instruction from that cached metadata, and only then sets up the current physical episode. The official generator uses local `random.Random(seed)` for template and descriptor choices. Here it emits one candidate, after which `np.random.choice` selects from the one-item list.
+
+A task switch in the existing backend recreates the native environment, rebuilding constructor-time descriptor metadata; a same-task reset reuses it. Therefore the discrepancy cannot safely be described solely as uncontrolled NumPy jitter. Constructor metadata and setup/RNG paths differ; saved internal descriptor/RNG states do not allow their individual contributions to be replayed. The proximate changed public input is directly verified.
+
+The successor must bind the actual original official native instruction before model encoding and keep it throughout the episode. All raw physical, text and feature equality guards stay. The saved-original-input prefix regression belongs inside the verified repair allocation, before its first real steering command. No speculative GPU allocation, retry, teacher admission or relaxation occurred during this source inspection. R1 retains16 closed native episodes/5355 actions and632GPU-seconds exactly once; phase28168/A16568GPU-seconds and244CPU-worker-seconds used remain unchanged.

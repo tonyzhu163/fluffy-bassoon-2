@@ -49,9 +49,12 @@ zero learned-KV/fixed-KV/joint edits preserve native decoding exactly, a real
 KV-adapter gradient is nonzero with zero motor gradients, and the full motor
 fingerprint remains unchanged. The first complete native phone episode
 succeeds; the first five development episodes include four timeouts. The
-bounded steering comparison is still running. No new learned controller,
-source-data improvement or AD/DPT/memory result follows from this qualification.
-Repeated renderer warnings are recorded without assigning a cause. See
+first screen run subsequently stopped before its first steering action: all16
+native episodes completed (phone1/8, object3/8), but a repeated physical case
+received a different instruction. Images/state match exactly; strict pairing
+is preserved while instruction reuse is repaired. No new learned controller,
+source-data improvement or AD/DPT/memory result follows. Renderer warnings
+are retained but do not explain the matched-pixel instruction difference. See
 [verified scope and limits](robotwin-coefficient-steering/EVALUATION.md) and
 [new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).
 

@@ -43,8 +43,9 @@ teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/D
 New targeted Motus/RoboTwin interface qualification (2026-10-31): allocated
 CPU71/71 passed; actual native/zero-edit decoding is exact, the KV adapter
 receives a nonzero frozen-suffix gradient, and the motor hash stays fixed.
-A real native phone episode completed successfully. The source-development
-steering screen is running; no new learned steering, RL-history improvement
+A real native phone episode completed successfully. The first source-development
+run then stopped on an instruction-pairing defect before any steering action,
+preserving16 native episodes. No new learned steering, RL-history improvement
 or Transformer adaptation result is established. This supports runtime
 compatibility, not the central robotic-performance claim.
 [Qualification and limitations](../robotwin-coefficient-steering/EVALUATION.md).
