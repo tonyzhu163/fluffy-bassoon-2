@@ -1,0 +1,27 @@
+{
+  "format": "source_composite_cpu_admission_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "source_commit": "e5f685d14a10b8878036e62798d294200bfbfee4",
+  "latest_main_review": "cc03ad217139237800809294afaf0a1c288927ea",
+  "maximum_worker_seconds": 600,
+  "included_in_existing_1800": true,
+  "charged_before": 417,
+  "reserved_this_attempt": 600,
+  "unreserved_after": 783,
+  "requested_gpus": 0,
+  "component_byte_bindings_passed": 16,
+  "prepared_cases": 91,
+  "tests": [
+    "tests/test_steering_actuator_condition.py",
+    "tests/test_robotwin_steering_source.py",
+    "tests/test_steering_condition_cross.py",
+    "tests/test_vla_history.py",
+    "tests/test_steering_history.py",
+    "tests/test_steering_history_pipeline.py",
+    "tests/test_steering_history_cross_admission.py"
+  ],
+  "review_scope": "Actual gripper compatibility correction and exact component composition; CPU fixture/software qualification only",
+  "source_collection_or_fit_admitted": false,
+  "execution_owner": "/root/finish_assembly",
+  "actual_job_and_test_results_pending": true
+}

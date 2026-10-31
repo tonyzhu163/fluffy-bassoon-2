@@ -35,7 +35,8 @@ are held. The fresh task57 pi0.5-adapted PixelSAC curve is running toward500k op
 updates, within10GPUh/1M all-in actions/64GiB. Native query is10/10; learned
 panels through380120 remain10/10 with shorter observed episodes. At390080
 updates the panel drops to9/10,1518 query primitives versus native1451: paired
-state48 times out400 versus native success152. These repeated panels do not
+state48 times out400 versus native success152; the next two panels return10/10.
+These repeated panels do not
 establish reliable success preservation, memory or total sample efficiency;
 final native stability control remains pending. Native PPO
 GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
@@ -44,16 +45,12 @@ noise cannot directly label steering of the original frozen motor. AD can
 instead predict actual z from fixed-motor SAC learning histories; DPT can
 later label saved query observations with a competent final same-motor SAC
 teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
-New targeted Motus/RoboTwin result (2026-10-31): native/zero-edit decoding is
-exact, a real KV-adapter gradient reaches the frozen suffix, and the motor
-hash remains fixed. An instruction-pairing defect was repaired with explicit
-migration, preserving16 native episodes. The completed51-episode restricted
-four-coefficient grid yields no qualifying rescue: noise/KV/action confirm
-1/2,1/2,0/2 on the successful-search case, against matched native1/2. No source
-teacher is admitted. This is a restricted random-basis test, without a result
-for full learned reactive capacity or Transformer adaptation. Same-phone
-8TRAIN/4VAL demo capacity preparation stays within remaining original caps;
-no capacity training has started.
+New targeted Motus/RoboTwin result (2026-10-31): actual zero/native parity
+and a frozen-suffix KV gradient pass. The completed fixed4D screen yields no
+qualifying rescue. A supervised capacity attempt then stops before fitting:
+the third fixed published demonstration fails native-route replay after two
+successes. This is data/execution compatibility evidence, without a learned
+capacity, RL-corpus or Transformer-adaptation result. No teacher is excluded.
 [Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

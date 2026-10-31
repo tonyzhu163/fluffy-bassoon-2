@@ -37,7 +37,8 @@ entire official OpenPI LIBERO40 pi0.5 motor stays frozen. Native query success
 starts at10/10. Learned panels through380120 updates retain10/10, with lower
 observed episode costs, but the390080 panel falls to9/10: paired state48 times
 out at400 actions versus native success at152. Its1518 query primitives exceed
-native1451. This first query regression prevents interpreting the earlier
+native1451; the next400160/410020 panels return10/10. This variability prevents
+interpreting the earlier
 shorter episodes as reliable competence preservation. Stochastic controller
 sampling and learned-policy instability remain competing explanations; final
 native stability control is still pending. Rare training timeouts and later
@@ -47,24 +48,16 @@ transfer or total sample-efficiency gain is established. Target57 data remain
 excluded from source pretraining; current counters are in
 [coordination](../outputs/coordination.md).
 
-The targeted Motus/RoboTwin restricted four-coefficient screen is complete.
-After an instruction-pairing defect, an explicitly migrated repair reproduced
-saved original features/prefix caches exactly. Zero edits preserve native
-outputs, real KV gradients are nonzero, and the motor remains frozen. The
-completed51-episode conditional grid has no eligible rescue under the rule
-fixed before search outcomes: on the only case with search successes, noise
-and KV each confirm1/2, action0/2, against matched native1/2. No source
-teacher is admitted. The17591 cumulative actions and1770 GPU-seconds include
-the failed initial run once. This restricted random-basis probe does not test
-full learned reactive KV/action capacity. The original same-phone capacity
-check is being prepared from8 whole TRAIN/4 VAL released demonstrations;
-the bounded data job passed11 tests and inventoried all12 candidates, but
-success and temporal/replay compatibility remain unverified. Actual native
-gripper commands exceed normalized actuator bounds before canonical clipping;
-raw grippers must be preserved. Executable/transform/cost admission remains
-pending before any capacity GPU run. No new budget is granted. See
-[verified evidence and limits](robotwin-coefficient-steering/EVALUATION.md) and
-[new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).
+The targeted Motus/RoboTwin fixed4D screen has no eligible rescue. The
+subsequent supervised reactive-capacity run passes actual zero/native parity,
+frozen-motor qualification and a nonzero KV gradient. It stops before either
+fit: published teacher00/01 succeed at104 actions each, but teacher02 fails
+its full400-action replay. Seed and initial drive targets match; object/physical
+state and replay timing remain unestablished. All12 fixed demonstrations stay
+included. A bounded CPU command/scene/cadence diagnosis precedes another GPU
+attempt. Actual cumulative cost is2036 GPU-seconds/18599 actions under the
+original budget. No learned capacity, new RL teacher or meta-learning result
+is established. See [evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use

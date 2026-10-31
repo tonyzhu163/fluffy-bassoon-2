@@ -1,7 +1,7 @@
 {
   "format": "frozen_pi05_evidence_audit_index_v2",
   "purpose": "Historical independent evidence audit; current live status is solely outputs/coordination.md. This file is not a second process monitor.",
-  "audited_at_utc": "2026-10-31T11:55:45.339254+00:00",
+  "audited_at_utc": "2026-10-31T12:31:23.818425+00:00",
   "phase_id": "frozen-pi05-endtoend-20261031-r1",
   "authoritative_live_status": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/main/outputs/coordination.md",
   "latest_audited_runtime_snapshot_utc": "2026-10-31T11:18:58.293451+00:00",
@@ -64,8 +64,8 @@
     "remaining_original_A1_gpu_seconds": 5430,
     "remaining_original_A1_actions": 12409,
     "remaining_phase_gpu_seconds": 27030,
-    "cpu_worker_seconds_consumed": 417,
-    "cpu_worker_seconds_remaining": 1383
+    "cpu_worker_seconds_consumed": 551,
+    "cpu_worker_seconds_remaining": 1249
   },
   "scientific_student_fit_profile": {
     "matched_models": 4,
@@ -133,6 +133,10 @@
     "PHONE-STAGE0-CPU-CHECK.json": {
       "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/PHONE-STAGE0-CPU-CHECK.json",
       "sha256": "ef8f6357fc876e609fd0aea507a5ece730880cd6cdb5badea921983f6f66c783"
+    },
+    "COMPOSITE-CPU-CHECK.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/COMPOSITE-CPU-CHECK.json",
+      "sha256": "cb8491161696db877e5154a6aebf2cf7f877d722d6619f0aec69c5c26636d9c6"
     }
   },
   "coordinator_rule_ref": {
@@ -244,5 +248,35 @@
       "statement": "state = observation[\"joint_action\"][\"vector\"]",
       "interpretation": "Drive-target feedback; measured-qpos interpretation is invalid. Previous requested command and current public state may identify calibration after one chunk; trained static and reward lesions remain necessary."
     }
+  },
+  "source_student_integration_audit": {
+    "job_id": "job-mjw4gq2e94d3",
+    "source_commit": "e5f685d14a10b8878036e62798d294200bfbfee4",
+    "qualification_passed": false,
+    "tests": 91,
+    "passed": 87,
+    "failed": 4,
+    "failed_cases": [
+      "tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[None]",
+      "tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[boundary_stop]",
+      "tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[passed]",
+      "tests/test_steering_history_pipeline.py::test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift"
+    ],
+    "actual_cpu_worker_seconds": 134,
+    "gpu_seconds": 0,
+    "robot_actions": 0,
+    "verification": "Saved actual pytest log tail and parsed worker summary; full JUnit not independently parsed because the saved wrapper contains a text tail.",
+    "failures": [
+      {
+        "scope": "three source orchestration fixtures",
+        "finding": "Canonical unresolved_decisions is a mapping; fixtures incorrectly compare its empty value with integer zero. Preserve the budget API."
+      },
+      {
+        "scope": "physical readout",
+        "finding": "Two phase-admission callers omit required method= in CampaignBudget.remaining; one is reached by the failing real-runner fixture and the CLI occurrence was identified by follow-up static inspection."
+      }
+    ],
+    "owner_terminal_publication_commit": "5a1b3b50177c12a867c2ea56b6719436f662599d",
+    "scientific_source_or_fit_admitted": false
   }
 }
