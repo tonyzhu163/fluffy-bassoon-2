@@ -1,0 +1,932 @@
+{
+  "commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/_base_task.py",
+      "relative_path": "envs/_base_task.py",
+      "sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+      "excerpts": [
+        {
+          "line": 67,
+          "text": "        self.ep_num = kwags.get(\"now_ep_num\", 0)"
+        },
+        {
+          "line": 68,
+          "text": "        self.render_freq = kwags.get(\"render_freq\", 10)"
+        },
+        {
+          "line": 69,
+          "text": "        self.data_type = kwags.get(\"data_type\", None)"
+        },
+        {
+          "line": 70,
+          "text": "        self.save_data = kwags.get(\"save_data\", False)"
+        },
+        {
+          "line": 71,
+          "text": "        self.dual_arm = kwags.get(\"dual_arm\", True)"
+        },
+        {
+          "line": 72,
+          "text": "        self.eval_mode = kwags.get(\"eval_mode\", False)"
+        },
+        {
+          "line": 73,
+          "text": "        self.step_lim = kwags.get(\"step_lim\", None)"
+        },
+        {
+          "line": 74,
+          "text": ""
+        },
+        {
+          "line": 196,
+          "text": "    def play_once(self):"
+        },
+        {
+          "line": 197,
+          "text": "        pass"
+        },
+        {
+          "line": 198,
+          "text": ""
+        },
+        {
+          "line": 199,
+          "text": "    def check_success(self):"
+        },
+        {
+          "line": 200,
+          "text": "        pass"
+        },
+        {
+          "line": 201,
+          "text": ""
+        },
+        {
+          "line": 202,
+          "text": "    def setup_scene(self, **kwargs):"
+        },
+        {
+          "line": 203,
+          "text": "        \"\"\""
+        },
+        {
+          "line": 465,
+          "text": "        pkl_dic = {"
+        },
+        {
+          "line": 466,
+          "text": "            \"observation\": {},"
+        },
+        {
+          "line": 467,
+          "text": "            \"pointcloud\": [],"
+        },
+        {
+          "line": 468,
+          "text": "            \"joint_action\": {},"
+        },
+        {
+          "line": 469,
+          "text": "            \"endpose\": {},"
+        },
+        {
+          "line": 470,
+          "text": "        }"
+        },
+        {
+          "line": 471,
+          "text": ""
+        },
+        {
+          "line": 472,
+          "text": "        pkl_dic[\"observation\"] = self.cameras.get_config()"
+        },
+        {
+          "line": 509,
+          "text": "        # qpos"
+        },
+        {
+          "line": 510,
+          "text": "        if self.data_type.get(\"qpos\", False):"
+        },
+        {
+          "line": 511,
+          "text": ""
+        },
+        {
+          "line": 512,
+          "text": "            left_jointstate = self.robot.get_left_arm_jointState()"
+        },
+        {
+          "line": 513,
+          "text": "            right_jointstate = self.robot.get_right_arm_jointState()"
+        },
+        {
+          "line": 514,
+          "text": ""
+        },
+        {
+          "line": 515,
+          "text": "            pkl_dic[\"joint_action\"][\"left_arm\"] = left_jointstate[:-1]"
+        },
+        {
+          "line": 516,
+          "text": "            pkl_dic[\"joint_action\"][\"left_gripper\"] = left_jointstate[-1]"
+        },
+        {
+          "line": 517,
+          "text": "            pkl_dic[\"joint_action\"][\"right_arm\"] = right_jointstate[:-1]"
+        },
+        {
+          "line": 518,
+          "text": "            pkl_dic[\"joint_action\"][\"right_gripper\"] = right_jointstate[-1]"
+        },
+        {
+          "line": 519,
+          "text": "            pkl_dic[\"joint_action\"][\"vector\"] = np.array(left_jointstate + right_jointstate)"
+        },
+        {
+          "line": 520,
+          "text": "        # pointcloud"
+        },
+        {
+          "line": 521,
+          "text": "        if self.data_type.get(\"pointcloud\", False):"
+        },
+        {
+          "line": 522,
+          "text": "            pkl_dic[\"pointcloud\"] = self.cameras.get_pcd(self.data_type.get(\"conbine\", False))"
+        },
+        {
+          "line": 523,
+          "text": ""
+        },
+        {
+          "line": 556,
+          "text": "            text_color = (0, 0, 0)  # \u767d\u8272"
+        },
+        {
+          "line": 557,
+          "text": "            draw.text(position, reward_text, fill=text_color, font=font)"
+        },
+        {
+          "line": 558,
+          "text": "            return np.array(img)"
+        },
+        {
+          "line": 559,
+          "text": "        if not self.save_data:"
+        },
+        {
+          "line": 560,
+          "text": "            return"
+        },
+        {
+          "line": 561,
+          "text": ""
+        },
+        {
+          "line": 562,
+          "text": "        print(\"saving: episode = \", self.ep_num, \" index = \", self.FRAME_IDX, end=\"\\r\")"
+        },
+        {
+          "line": 563,
+          "text": ""
+        },
+        {
+          "line": 592,
+          "text": "        return traj_data"
+        },
+        {
+          "line": 593,
+          "text": ""
+        },
+        {
+          "line": 594,
+          "text": "    def merge_pkl_to_hdf5_video(self):"
+        },
+        {
+          "line": 595,
+          "text": "        if not self.save_data:"
+        },
+        {
+          "line": 596,
+          "text": "            return"
+        },
+        {
+          "line": 597,
+          "text": "        cache_path = self.folder_path[\"cache\"]"
+        },
+        {
+          "line": 598,
+          "text": "        target_file_path = f\"{self.save_dir}/data/episode{self.ep_num}.hdf5\""
+        },
+        {
+          "line": 599,
+          "text": "        target_video_path = f\"{self.save_dir}/video/episode{self.ep_num}.mp4\""
+        },
+        {
+          "line": 1551,
+          "text": "            self.viewer.render()"
+        },
+        {
+          "line": 1552,
+          "text": ""
+        },
+        {
+          "line": 1553,
+          "text": "        actions = np.array([action])"
+        },
+        {
+          "line": 1554,
+          "text": "        left_jointstate = self.robot.get_left_arm_jointState()"
+        },
+        {
+          "line": 1555,
+          "text": "        right_jointstate = self.robot.get_right_arm_jointState()"
+        },
+        {
+          "line": 1556,
+          "text": "        left_arm_dim = len(left_jointstate) - 1 if action_type == 'qpos' else 7"
+        },
+        {
+          "line": 1557,
+          "text": "        right_arm_dim = len(right_jointstate) - 1 if action_type == 'qpos' else 7"
+        },
+        {
+          "line": 1558,
+          "text": "        current_jointstate = np.array(left_jointstate + right_jointstate)"
+        },
+        {
+          "line": 1559,
+          "text": ""
+        },
+        {
+          "line": 1733,
+          "text": "            self.scene.step()"
+        },
+        {
+          "line": 1734,
+          "text": "            self._update_render()"
+        },
+        {
+          "line": 1735,
+          "text": "                "
+        },
+        {
+          "line": 1736,
+          "text": "            if self.check_success():"
+        },
+        {
+          "line": 1737,
+          "text": "                self.eval_success = True"
+        },
+        {
+          "line": 1738,
+          "text": "                self.get_obs() # update obs"
+        },
+        {
+          "line": 1739,
+          "text": "                if (self.eval_video_path is not None):"
+        },
+        {
+          "line": 1740,
+          "text": "                    self.eval_video_ffmpeg.stdin.write(self.now_obs[\"observation\"][\"head_camera\"][\"rgb\"].tobytes())"
+        },
+        {
+          "line": 1801,
+          "text": "            self.viewer.render()"
+        },
+        {
+          "line": 1802,
+          "text": ""
+        },
+        {
+          "line": 1803,
+          "text": "        actions = chunk_actions"
+        },
+        {
+          "line": 1804,
+          "text": "        left_jointstate = self.robot.get_left_arm_jointState()"
+        },
+        {
+          "line": 1805,
+          "text": "        right_jointstate = self.robot.get_right_arm_jointState()"
+        },
+        {
+          "line": 1806,
+          "text": "        left_arm_dim = len(left_jointstate) - 1"
+        },
+        {
+          "line": 1807,
+          "text": "        right_arm_dim = len(right_jointstate) - 1"
+        },
+        {
+          "line": 1808,
+          "text": "        current_jointstate = np.array(left_jointstate + right_jointstate)"
+        },
+        {
+          "line": 1809,
+          "text": ""
+        },
+        {
+          "line": 1975,
+          "text": "                    collected_obs.append(self.get_obs())"
+        },
+        {
+          "line": 1976,
+          "text": "                completed_action_this_step = len(collected_obs) > completed_before"
+        },
+        {
+          "line": 1977,
+          "text": ""
+        },
+        {
+          "line": 1978,
+          "text": "            if self.check_success():"
+        },
+        {
+          "line": 1979,
+          "text": "                self.eval_success = True"
+        },
+        {
+          "line": 1980,
+          "text": ""
+        },
+        {
+          "line": 1981,
+          "text": "                infos[\"success\"] = True"
+        },
+        {
+          "line": 1982,
+          "text": "                reward = np.array([1], dtype=np.float32)"
+        },
+        {
+          "line": 2132,
+          "text": ""
+        },
+        {
+          "line": 2133,
+          "text": "            self.episode_left_eef_poses = [self.robot.get_left_ee_pose()]"
+        },
+        {
+          "line": 2134,
+          "text": "            self.episode_right_eef_poses = [self.robot.get_right_ee_pose()]"
+        },
+        {
+          "line": 2135,
+          "text": "            self.episode_left_joint_states = [self.robot.get_left_arm_jointState()]"
+        },
+        {
+          "line": 2136,
+          "text": "            self.episode_right_joint_states = [self.robot.get_right_arm_jointState()]"
+        },
+        {
+          "line": 2137,
+          "text": "            self.episode_left_gripper_state = [self.robot.is_left_gripper_open()]"
+        },
+        {
+          "line": 2138,
+          "text": "            self.episode_right_gripper_state = [self.robot.is_right_gripper_open()]"
+        },
+        {
+          "line": 2139,
+          "text": ""
+        },
+        {
+          "line": 2140,
+          "text": "            # for step in range(args['rdt_step']):"
+        },
+        {
+          "line": 2141,
+          "text": "            for step in range(args['rdt_step']):"
+        },
+        {
+          "line": 2142,
+          "text": "                actions = np.array([take_actions[step]])"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/parse_hdf5.py",
+      "relative_path": "envs/utils/parse_hdf5.py",
+      "sha256": "0a7c47157e38ad742aa8ef10192021264e66fbae03344b12be526262c0e13c51",
+      "excerpts": [
+        {
+          "line": 1,
+          "text": "import h5py, cv2"
+        },
+        {
+          "line": 2,
+          "text": "import numpy as np"
+        },
+        {
+          "line": 3,
+          "text": ""
+        },
+        {
+          "line": 4,
+          "text": ""
+        },
+        {
+          "line": 5,
+          "text": "def parse_img_array(data):"
+        },
+        {
+          "line": 37,
+          "text": "def h5_to_dict(node):"
+        },
+        {
+          "line": 38,
+          "text": "    result = {}"
+        },
+        {
+          "line": 39,
+          "text": "    for name, item in node.items():"
+        },
+        {
+          "line": 40,
+          "text": "        if isinstance(item, h5py.Dataset):"
+        },
+        {
+          "line": 41,
+          "text": "            data = item[()]"
+        },
+        {
+          "line": 42,
+          "text": "            if \"rgb\" in name:"
+        },
+        {
+          "line": 43,
+          "text": "                result[name] = parse_img_array(data)"
+        },
+        {
+          "line": 44,
+          "text": "            else:"
+        },
+        {
+          "line": 45,
+          "text": "                result[name] = data"
+        },
+        {
+          "line": 46,
+          "text": "        elif isinstance(item, h5py.Group):"
+        },
+        {
+          "line": 47,
+          "text": "            # \u9012\u5f52\u5904\u7406\u5b50 group"
+        },
+        {
+          "line": 48,
+          "text": "            result[name] = h5_to_dict(item)"
+        },
+        {
+          "line": 49,
+          "text": "    # \u5982\u679c\u4f60\u8fd8\u60f3\u628a attributes \u4e00\u5e76\u8bfb\u8fdb\u6765\uff0c\u53ef\u4ee5\uff1a"
+        },
+        {
+          "line": 50,
+          "text": "    if hasattr(node, \"attrs\") and len(node.attrs) > 0:"
+        },
+        {
+          "line": 53,
+          "text": ""
+        },
+        {
+          "line": 54,
+          "text": ""
+        },
+        {
+          "line": 55,
+          "text": "def read_hdf5(file_path):"
+        },
+        {
+          "line": 56,
+          "text": "    with h5py.File(file_path, \"r\") as f:"
+        },
+        {
+          "line": 57,
+          "text": "        data_dict = h5_to_dict(f)"
+        },
+        {
+          "line": 58,
+          "text": "    return data_dict"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/pkl2hdf5.py",
+      "relative_path": "envs/utils/pkl2hdf5.py",
+      "sha256": "e119b4093c25f881c535a041bf1895e182ba00564d6ca57f6d6fe4fb62b2666c",
+      "excerpts": [
+        {
+          "line": 1,
+          "text": "import h5py, pickle"
+        },
+        {
+          "line": 2,
+          "text": "import numpy as np"
+        },
+        {
+          "line": 3,
+          "text": "import os"
+        },
+        {
+          "line": 4,
+          "text": "import cv2"
+        },
+        {
+          "line": 5,
+          "text": "from collections.abc import Mapping, Sequence"
+        },
+        {
+          "line": 63,
+          "text": "            value = np.array(value)"
+        },
+        {
+          "line": 64,
+          "text": "            if \"rgb\" in key:"
+        },
+        {
+          "line": 65,
+          "text": "                encode_data, max_len = images_encoding(value)"
+        },
+        {
+          "line": 66,
+          "text": "                hdf5_group.create_dataset(key, data=encode_data, dtype=f\"S{max_len}\")"
+        },
+        {
+          "line": 67,
+          "text": "            else:"
+        },
+        {
+          "line": 68,
+          "text": "                hdf5_group.create_dataset(key, data=value)"
+        },
+        {
+          "line": 69,
+          "text": "        else:"
+        },
+        {
+          "line": 70,
+          "text": "            return"
+        },
+        {
+          "line": 71,
+          "text": "            try:"
+        },
+        {
+          "line": 72,
+          "text": "                hdf5_group.create_dataset(key, data=str(value))"
+        },
+        {
+          "line": 73,
+          "text": "                print(\"Not np array\")"
+        },
+        {
+          "line": 74,
+          "text": "            except Exception as e:"
+        },
+        {
+          "line": 75,
+          "text": "                print(f\"Error storing value for key '{key}': {e}\")"
+        },
+        {
+          "line": 76,
+          "text": ""
+        },
+        {
+          "line": 83,
+          "text": ""
+        },
+        {
+          "line": 84,
+          "text": "    images_to_video(np.array(data_list[\"observation\"][\"head_camera\"][\"rgb\"]), out_path=video_path)"
+        },
+        {
+          "line": 85,
+          "text": ""
+        },
+        {
+          "line": 86,
+          "text": "    with h5py.File(hdf5_path, \"w\") as f:"
+        },
+        {
+          "line": 87,
+          "text": "        create_hdf5_from_dict(f, data_list)"
+        },
+        {
+          "line": 88,
+          "text": ""
+        },
+        {
+          "line": 89,
+          "text": ""
+        },
+        {
+          "line": 90,
+          "text": "def process_folder_to_hdf5_video(folder_path, hdf5_path, video_path):"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/robotwin/envs/vector_env.py",
+      "relative_path": "robotwin/envs/vector_env.py",
+      "sha256": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d",
+      "excerpts": [
+        {
+          "line": 53,
+          "text": "    right_wrist_image = ("
+        },
+        {
+          "line": 54,
+          "text": "        observation[\"observation\"].get(\"right_camera\", {}).get(\"rgb\", None)"
+        },
+        {
+          "line": 55,
+          "text": "    )"
+        },
+        {
+          "line": 56,
+          "text": "    state = observation[\"joint_action\"][\"vector\"]"
+        },
+        {
+          "line": 57,
+          "text": ""
+        },
+        {
+          "line": 58,
+          "text": "    return {"
+        },
+        {
+          "line": 59,
+          "text": "        \"full_image\": full_image,"
+        },
+        {
+          "line": 60,
+          "text": "        \"left_wrist_image\": left_wrist_image,"
+        },
+        {
+          "line": 236,
+          "text": "                    setup_demo_success = True"
+        },
+        {
+          "line": 237,
+          "text": "                    _ = self.task.get_obs()"
+        },
+        {
+          "line": 238,
+          "text": "                    _ = self.task.play_once()"
+        },
+        {
+          "line": 239,
+          "text": "                    if self.task.plan_success and self.task.check_success():"
+        },
+        {
+          "line": 240,
+          "text": "                        play_once_success = True"
+        },
+        {
+          "line": 241,
+          "text": "                except Exception as e:"
+        },
+        {
+          "line": 242,
+          "text": "                    logging.warning("
+        },
+        {
+          "line": 243,
+          "text": "                        f\"RoboTwin SubEnv {self.env_id} check_seed error with seed {seed}, error: {e}\""
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/script/eval_policy_reload.py",
+      "relative_path": "script/eval_policy_reload.py",
+      "sha256": "8ec9bbe06de0d6c44f027fd8190e27de0982283a886d1bbf071366928e686ded",
+      "excerpts": [
+        {
+          "line": 109,
+          "text": "        print(f\"Dataset does not exist at \\n{data_path}\\n\")"
+        },
+        {
+          "line": 110,
+          "text": "        exit()"
+        },
+        {
+          "line": 111,
+          "text": ""
+        },
+        {
+          "line": 112,
+          "text": "    with h5py.File(data_path, \"r\") as root:"
+        },
+        {
+          "line": 113,
+          "text": "        # pdb.set_trace()"
+        },
+        {
+          "line": 114,
+          "text": "        if data_type == 'ee':"
+        },
+        {
+          "line": 115,
+          "text": "            left_gripper, left_arm = ("
+        },
+        {
+          "line": 116,
+          "text": "                root[\"/endpose/left_gripper\"][()],"
+        },
+        {
+          "line": 122,
+          "text": "            )"
+        },
+        {
+          "line": 123,
+          "text": "        elif data_type == 'joint':"
+        },
+        {
+          "line": 124,
+          "text": "            left_gripper, left_arm = ("
+        },
+        {
+          "line": 125,
+          "text": "                root[\"/joint_action/left_gripper\"][()],"
+        },
+        {
+          "line": 126,
+          "text": "                root[\"/joint_action/left_arm\"][()],"
+        },
+        {
+          "line": 127,
+          "text": "            )"
+        },
+        {
+          "line": 128,
+          "text": "            right_gripper, right_arm = ("
+        },
+        {
+          "line": 129,
+          "text": "                root[\"/joint_action/right_gripper\"][()],"
+        },
+        {
+          "line": 130,
+          "text": "                root[\"/joint_action/right_arm\"][()],"
+        },
+        {
+          "line": 131,
+          "text": "            )"
+        },
+        {
+          "line": 132,
+          "text": "    left_path = np.hstack((left_arm, left_gripper.reshape(-1,1)))"
+        },
+        {
+          "line": 133,
+          "text": "    right_path = np.hstack((right_arm, right_gripper.reshape(-1,1)))"
+        },
+        {
+          "line": 134,
+          "text": "    action = np.hstack((left_path, right_path))"
+        },
+        {
+          "line": 141,
+          "text": "    if not os.path.exists(directory):"
+        },
+        {
+          "line": 142,
+          "text": "        os.makedirs(directory)"
+        },
+        {
+          "line": 143,
+          "text": ""
+        },
+        {
+          "line": 144,
+          "text": "def save_data_pkl(data, save_path):"
+        },
+        {
+          "line": 145,
+          "text": "    ensure_dir(save_path)"
+        },
+        {
+          "line": 146,
+          "text": "    with open(save_path, \"wb\") as file:"
+        },
+        {
+          "line": 147,
+          "text": "        pickle.dump(data, file)"
+        },
+        {
+          "line": 148,
+          "text": "    print(f\"Success save {save_path}\")"
+        },
+        {
+          "line": 159,
+          "text": "    #     seed_list = seed_list[traj_num:]"
+        },
+        {
+          "line": 160,
+          "text": "    args[\"need_plan\"] = False"
+        },
+        {
+          "line": 161,
+          "text": "    args[\"render_freq\"] = 0"
+        },
+        {
+          "line": 162,
+          "text": "    args[\"save_data\"] = True"
+        },
+        {
+          "line": 163,
+          "text": "    data_path = args['ori_data_path']"
+        },
+        {
+          "line": 164,
+          "text": "    clear_cache_freq = args[\"clear_cache_freq\"]"
+        },
+        {
+          "line": 165,
+          "text": ""
+        },
+        {
+          "line": 166,
+          "text": "    if os.path.exists(os.path.join(data_path, \"seed.txt\")):"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/script/gen_reward_data.py",
+      "relative_path": "script/gen_reward_data.py",
+      "sha256": "887110e422b7fbf6f31a27588c50049a6212f31442a12e7e9afb7f42b9dbe07c",
+      "excerpts": [
+        {
+          "line": 38,
+          "text": "    observation['observation']['head_camera']['rgb'] = observation['observation']['head_camera']['rgb'][:,:,::-1]"
+        },
+        {
+          "line": 39,
+          "text": "    observation['observation']['left_camera']['rgb'] = observation['observation']['left_camera']['rgb'][:,:,::-1]"
+        },
+        {
+          "line": 40,
+          "text": "    observation['observation']['right_camera']['rgb'] = observation['observation']['right_camera']['rgb'][:,:,::-1]"
+        },
+        {
+          "line": 41,
+          "text": "    observation['agent_pos'] = observation['joint_action']"
+        },
+        {
+          "line": 42,
+          "text": "    return observation"
+        },
+        {
+          "line": 43,
+          "text": ""
+        },
+        {
+          "line": 44,
+          "text": "TASK = None"
+        },
+        {
+          "line": 45,
+          "text": ""
+        },
+        {
+          "line": 168,
+          "text": "                print('error occurs !')"
+        },
+        {
+          "line": 169,
+          "text": "                continue"
+        },
+        {
+          "line": 170,
+          "text": ""
+        },
+        {
+          "line": 171,
+          "text": "        if (not expert_check) or ( Demo_class.plan_success and Demo_class.check_success() ):"
+        },
+        {
+          "line": 172,
+          "text": "            succ_seed += 1"
+        },
+        {
+          "line": 173,
+          "text": "            suc_test_seed_list.append(now_seed)"
+        },
+        {
+          "line": 174,
+          "text": "        else: # \u5168\u5931\u8d25\u4e86\uff0c\u4e0d\u7b26\u5408\u8bbe\u5b9a\u7684\u89c4\u8303"
+        },
+        {
+          "line": 175,
+          "text": "            now_seed += 1"
+        }
+      ]
+    }
+  ],
+  "alignment_status": "source excerpts for explicit review; no automatic state/command inference"
+}

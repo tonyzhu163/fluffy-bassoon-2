@@ -1,0 +1,5010 @@
+{
+  "format": "robotwin_capacity_stage0_v1",
+  "status": "inventory_complete_alignment_review_required",
+  "source_only": true,
+  "model_readiness": false,
+  "allocation_sha256": "b97d1a38e689a3a76474c06e71b37b6a77377ffc76f9d2d2bed77d45f63820c9",
+  "hostname": "job-rh3ldkdapfv9-master-0",
+  "dataset_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "robot_actions": 0,
+  "model_imports": [],
+  "GPU_seconds": 0,
+  "episodes": [
+    {
+      "canonical_index": 0,
+      "member": "aloha-agilex_clean_50/data/episode0.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode0.hdf5",
+      "bytes": 6920321,
+      "sha256": "36c421f91fa12a466769311513526219fadd5cd7e09369fb3e95c3cc6e117eaa",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            131,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            131
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            131,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            131
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            131,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            131
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            131,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            131
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            131,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.36572718620300293,
+            2.060441732406616,
+            1.4434677362442017,
+            0.1542484164237976,
+            -0.3350985050201416,
+            -0.13778819143772125,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.5735225081443787,
+            0.0,
+            0.0,
+            -1.0668681859970093,
+            -0.4203319549560547,
+            -0.182636097073555,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.1432948112487793,
+            1.5190244913101196,
+            0.1542484164237976,
+            0.003650000086054206,
+            0.03750903904438019,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            131,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            131
+          ],
+          "dtype": "|S15543",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            131,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            131
+          ],
+          "dtype": "|S16319",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            131,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            131
+          ],
+          "dtype": "|S13411",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            131,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            131,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            131
+          ],
+          "dtype": "|S6474",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            131,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 0,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Take the metallic phone with glass screen front to the small plastic phonestand.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode0.json",
+        "sha256": "0b7f40e2a5e07d526bba388df970d047c44738190792182759d5debac6c1758d"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 1,
+      "member": "aloha-agilex_clean_50/data/episode1.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode1.hdf5",
+      "bytes": 7868500,
+      "sha256": "2711486f15b30b8e8fad011050839a53a7f1aa0df4e6f03b47ffd156f7056a16",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            130,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            130
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            130,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            130
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            130,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            130
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            130,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            130
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            130,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.5417298674583435,
+            2.2988007068634033,
+            1.8701220750808716,
+            -0.028578076511621475,
+            -0.4443976581096649,
+            -0.239595428109169,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.6371821165084839,
+            0.0,
+            0.0,
+            -0.9997055530548096,
+            -0.5350229144096375,
+            -0.28828734159469604,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.2988007068634033,
+            1.8701220750808716,
+            0.0,
+            0.019200000911951065,
+            0.35590842366218567,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            130,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            130
+          ],
+          "dtype": "|S15408",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            130,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            130
+          ],
+          "dtype": "|S15258",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            130,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            130
+          ],
+          "dtype": "|S21671",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            130,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            130,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            130
+          ],
+          "dtype": "|S7109",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            130,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 1,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Move the phone with buttons and screen onto the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode1.json",
+        "sha256": "b39bb9b8ddea21e2eede1656cc53660b24fd7fa3f0c091a9ce89deaaea7f5035"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 2,
+      "member": "aloha-agilex_clean_50/data/episode2.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode2.hdf5",
+      "bytes": 8319466,
+      "sha256": "ea7f61b910463364bad00da055e7ff1afc8d2f299474bebb3ced08d575a5f555",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            129,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            129,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            129,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            129,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            129,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.6726363301277161,
+            2.0450422763824463,
+            1.4256269931793213,
+            0.12381955981254578,
+            -0.574791431427002,
+            -0.28891581296920776,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.8151885867118835,
+            0.0,
+            0.0,
+            -1.0180243253707886,
+            -0.703046441078186,
+            -0.37967178225517273,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.075910806655884,
+            1.4256269931793213,
+            0.12381955981254578,
+            0.002803540090098977,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S17207",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S17843",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S21824",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S6536",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            129,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 2,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Carry the compact phone to the curved phonestand with phone slot.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode2.json",
+        "sha256": "9813840710c6077b7af845b707c6104274ed130cc21b9ead5c9e758b817c99f3"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 3,
+      "member": "aloha-agilex_clean_50/data/episode3.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode3.hdf5",
+      "bytes": 7329672,
+      "sha256": "6d22e5d96893b287a3bea645e04f4b3c0b8b2ace896d22718ca07af2d5834b0f",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            128,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            128
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            128,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            128
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            128,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            128
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            128,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            128
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            128,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.3932669460773468,
+            1.842739224433899,
+            1.1995623111724854,
+            0.21198809146881104,
+            -0.3171204924583435,
+            -0.15303316712379456,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.4964541494846344,
+            0.0,
+            0.0,
+            -0.9682146906852722,
+            -0.41582754254341125,
+            -0.429250031709671,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            1.914582371711731,
+            1.1995623111724854,
+            0.21198809146881104,
+            0.0009919066214933991,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            128,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            128
+          ],
+          "dtype": "|S13205",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            128,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            128
+          ],
+          "dtype": "|S15307",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            128,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            128
+          ],
+          "dtype": "|S21426",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            128,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            128,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            128
+          ],
+          "dtype": "|S6242",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            128,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 3,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Lift the compact phone onto the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode3.json",
+        "sha256": "d13c4cc0f5ade4f2ea7c0d3014c4e3c2bdacdd7da94e16deb12af739ce41107b"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 4,
+      "member": "aloha-agilex_clean_50/data/episode4.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+      "bytes": 7256080,
+      "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            140,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            140
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            140,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            140
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            140,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            140
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            140,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            140
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            140,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.2553892731666565,
+            2.120642900466919,
+            1.5124343633651733,
+            0.18493476510047913,
+            0.017255909740924835,
+            -0.12091565877199173,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.49817413091659546,
+            0.0,
+            0.0,
+            -1.319961428642273,
+            0.0,
+            -0.12091565877199173,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.447042465209961,
+            2.13200044631958,
+            0.18493476510047913,
+            0.08953917771577835,
+            0.20579741895198822,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            140,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            140
+          ],
+          "dtype": "|S14189",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            140,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            140
+          ],
+          "dtype": "|S16258",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            140,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            140
+          ],
+          "dtype": "|S13937",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            140,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            140,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            140
+          ],
+          "dtype": "|S6374",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            140,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 4,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Take the black phone to the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode4.json",
+        "sha256": "180b43568a03e60de4363c1523e82667404d9db7b0fc8633daab768ea9bde74f"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 5,
+      "member": "aloha-agilex_clean_50/data/episode5.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode5.hdf5",
+      "bytes": 6590425,
+      "sha256": "3d76b3c4eb23de8327a1ccb5cd5eefcf94c5d4f31f61ffcf8d2fab98491b8ecd",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            125,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            125,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            125,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            125,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            125,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.6052200794219971,
+            2.2687177658081055,
+            1.867982029914856,
+            -0.12524087727069855,
+            -0.5156630873680115,
+            -0.2992249131202698,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.7217921018600464,
+            0.0,
+            0.0,
+            -1.0591466426849365,
+            -0.6201419830322266,
+            -0.8728540539741516,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.2687177658081055,
+            1.867982029914856,
+            0.0,
+            0.0026061723474413157,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S15680",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S17216",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S11605",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S7136",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            125,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 6,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Move the glass and metal smartphone onto the metal adjustable phone clamp.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode5.json",
+        "sha256": "ff400e201154ba4d24d61107d499c1188b1bd0a44ad6d2aa7126fc631855d3bc"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 6,
+      "member": "aloha-agilex_clean_50/data/episode6.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode6.hdf5",
+      "bytes": 8770192,
+      "sha256": "10cd5b9a11475fd95aecb84698a0c7289f503de4841f3a20236416db84bd62fa",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            132,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            132,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            132,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            132,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            132,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.5396056771278381,
+            2.084623336791992,
+            1.5164794921875,
+            0.06683928519487381,
+            -0.44095054268836975,
+            -0.2338414043188095,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.8253867030143738,
+            0.0,
+            0.0,
+            -1.003858208656311,
+            -0.5472220182418823,
+            -1.3788912296295166,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.084623336791992,
+            1.5164794921875,
+            0.06683928519487381,
+            0.0006801587878726423,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S18708",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S18222",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S21618",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S6814",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            132,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 9,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Take the flat phone to the phonestand for holding phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode6.json",
+        "sha256": "5f1e1ca6e2d39c26882b5c1d7db665d6bff12849c5a7a2f2435c0477e1e5e526"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 7,
+      "member": "aloha-agilex_clean_50/data/episode7.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode7.hdf5",
+      "bytes": 6688288,
+      "sha256": "85424049a804084d1d2dd22fbe47b1b4c93db8453f7494fa656926afe43b4740",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            132,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            132,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            132,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            132,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            132
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            132,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.49802833795547485,
+            2.230260133743286,
+            1.7448009252548218,
+            -0.02423456311225891,
+            -0.4303281903266907,
+            -0.23117728531360626,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.6002957820892334,
+            0.0,
+            0.0,
+            -1.2399061918258667,
+            -0.5240418910980225,
+            -0.8609220385551453,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            2.36071515083313,
+            1.9515821933746338,
+            0.0,
+            0.00475197983905673,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S14584",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S15743",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S12257",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            132,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            132,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            132
+          ],
+          "dtype": "|S7006",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            132,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 10,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Put the glass and metal smartphone atop the phonestand for holding phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode7.json",
+        "sha256": "7fb606052e2d1ed2e82ba0344fac5a888d9e4ff777844cab89a9028f7dce49ca"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 8,
+      "member": "aloha-agilex_clean_50/data/episode8.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode8.hdf5",
+      "bytes": 6631540,
+      "sha256": "14d481715ff3abcd1910f8c7fa1e6114c514ec141a2cb228363f00778beb2a5d",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            126,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            126,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            126,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            126,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            126,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.5203730463981628,
+            1.5771936178207397,
+            0.9028556942939758,
+            0.19011540710926056,
+            -0.4725229740142822,
+            -0.21236807107925415,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.710944414138794,
+            0.0,
+            0.0,
+            -0.9744215607643127,
+            -0.6428745985031128,
+            -0.32787254452705383,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            1.9049358367919922,
+            1.1527479887008667,
+            0.19011540710926056,
+            0.0019092290895059705,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S14476",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S16106",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S15076",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S5888",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            126,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 11,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Lift the rectangular phone onto the compact phonestand.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode8.json",
+        "sha256": "97d73f28262bc704a54976f00483fb16550c714fe1f115c7d533ea74fe16ea76"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 9,
+      "member": "aloha-agilex_clean_50/data/episode9.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode9.hdf5",
+      "bytes": 5993224,
+      "sha256": "b7c836ed9145cb304d4a0fd72f14941d4e100601dcb10c08a2636f9db7b47066",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            126,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            126,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            126,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            126,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            126
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            126,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.4357803165912628,
+            2.060142755508423,
+            1.4452016353607178,
+            0.12377579510211945,
+            0.39349254965782166,
+            0.1988735944032669,
+            1.0
+          ],
+          "minimum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.9840641021728516,
+            -0.001196464872919023,
+            -0.01711205765604973,
+            0.0
+          ],
+          "maximum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5917538404464722,
+            2.060142755508423,
+            1.4452016353607178,
+            0.12377579510211945,
+            0.47733622789382935,
+            0.2517000138759613,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S13765",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S14477",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S6313",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            126,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            126,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            126
+          ],
+          "dtype": "|S11925",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            126,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 14,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base2",
+          "{a}": "right"
+        }
+      },
+      "selected_instruction": "Put the phone with polished silver border atop the light brown phone holder.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode9.json",
+        "sha256": "9a17209f6bf898d7711de62f2a7fa275a0ed7eb7175438cdb62b933e7298aa95"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 10,
+      "member": "aloha-agilex_clean_50/data/episode10.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode10.hdf5",
+      "bytes": 7953175,
+      "sha256": "421a36499639a5c40a3ae23524ac19e46022c36a48c753bf03ca8ba38253b540",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            125,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            125,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            125,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            125,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            125
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            125,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            -0.6391177773475647,
+            1.9819265604019165,
+            1.3372083902359009,
+            0.1603347212076187,
+            -0.5449528694152832,
+            -0.2675139307975769,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "minimum": [
+            -0.7840685844421387,
+            0.0,
+            0.0,
+            -0.9485787749290466,
+            -0.6762436032295227,
+            -0.35616523027420044,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "maximum": [
+            0.0,
+            1.9819265604019165,
+            1.3372083902359009,
+            0.1603347212076187,
+            0.001413738471455872,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S16990",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S16903",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S22190",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            125,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            125,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            125
+          ],
+          "dtype": "|S6456",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            125,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 16,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "selected_instruction": "Carry the glass-faced phone to the phone holder with cutout underneath.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode10.json",
+        "sha256": "1aa48722f05b4b4cc09b8e2edc9cec3265bfe50b45aa8935ef2a73d63d108b87"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    },
+    {
+      "canonical_index": 11,
+      "member": "aloha-agilex_clean_50/data/episode11.hdf5",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode11.hdf5",
+      "bytes": 6985219,
+      "sha256": "2a17d9a28296c83f6c047ccea619b674a44f2b47df4195e8fed8ad7280298885",
+      "attributes": {},
+      "datasets": {
+        "endpose/left_endpose": {
+          "shape": [
+            129,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/left_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_endpose": {
+          "shape": [
+            129,
+            7
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "endpose/right_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_arm": {
+          "shape": [
+            129,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/left_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_arm": {
+          "shape": [
+            129,
+            6
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/right_gripper": {
+          "shape": [
+            129
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        },
+        "joint_action/vector": {
+          "shape": [
+            129,
+            14
+          ],
+          "dtype": "float64",
+          "attributes": {},
+          "first": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "last": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5596010684967041,
+            1.8299713134765625,
+            1.1260658502578735,
+            0.17509999871253967,
+            0.4848767817020416,
+            0.2800339162349701,
+            1.0
+          ],
+          "minimum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.034995675086975,
+            -0.0037997618783265352,
+            0.0,
+            0.0
+          ],
+          "maximum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.7235614061355591,
+            2.0722711086273193,
+            1.4077928066253662,
+            0.17509999871253967,
+            0.6197274923324585,
+            1.1220568418502808,
+            1.0
+          ],
+          "data_semantics": "not inferred from numeric range; requires author-source alignment"
+        },
+        "observation/front_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/front_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S16364",
+          "attributes": {}
+        },
+        "observation/head_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/head_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S16416",
+          "attributes": {}
+        },
+        "observation/left_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/left_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S6062",
+          "attributes": {}
+        },
+        "observation/right_camera/cam2world_gl": {
+          "shape": [
+            129,
+            4,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/extrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            4
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/intrinsic_cv": {
+          "shape": [
+            129,
+            3,
+            3
+          ],
+          "dtype": "float32",
+          "attributes": {}
+        },
+        "observation/right_camera/rgb": {
+          "shape": [
+            129
+          ],
+          "dtype": "|S14225",
+          "attributes": {}
+        },
+        "pointcloud": {
+          "shape": [
+            129,
+            0
+          ],
+          "dtype": "float64",
+          "attributes": {}
+        }
+      },
+      "explicit_success": null,
+      "seed_metadata": {},
+      "instruction_metadata": {},
+      "reset_seed": 18,
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base2",
+          "{a}": "right"
+        }
+      },
+      "selected_instruction": "Lift the silver phone with black screen onto the angled holder for phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode11.json",
+        "sha256": "d7f4191eeb53eeb19ef8f36e8e8421a923507d1e254978a52772a28e38838050"
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      }
+    }
+  ],
+  "original_cache": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-phone-clean50-3dc3b798-20261031-r1/aloha-agilex_clean_50.zip",
+    "sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+    "bytes": 255542392,
+    "external_bytes_also_charged_to_phase": 255542392
+  },
+  "archive": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/phone-aloha-agilex-clean50.zip",
+    "sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+    "bytes": 255542392,
+    "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/place_phone_stand/aloha-agilex_clean_50.zip"
+  },
+  "plain_metadata_refs": {
+    "seeds": {
+      "member": "aloha-agilex_clean_50/seed.txt",
+      "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+    },
+    "scenes": {
+      "member": "aloha-agilex_clean_50/scene_info.json",
+      "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+    }
+  },
+  "archive_hdf5_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "archive_members": [
+    {
+      "path": "aloha-agilex_clean_50/",
+      "bytes": 0,
+      "crc32": 0
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/",
+      "bytes": 0,
+      "crc32": 0
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode0.pkl",
+      "bytes": 55921,
+      "crc32": 505501881
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode1.pkl",
+      "bytes": 54913,
+      "crc32": 2206053014
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode2.pkl",
+      "bytes": 54049,
+      "crc32": 2966793849
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode3.pkl",
+      "bytes": 53761,
+      "crc32": 1361176303
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode4.pkl",
+      "bytes": 62641,
+      "crc32": 3464019837
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode5.pkl",
+      "bytes": 52223,
+      "crc32": 2232793488
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode6.pkl",
+      "bytes": 56593,
+      "crc32": 1491251918
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode7.pkl",
+      "bytes": 56689,
+      "crc32": 3534757672
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode8.pkl",
+      "bytes": 52321,
+      "crc32": 3848828894
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode9.pkl",
+      "bytes": 52657,
+      "crc32": 115928508
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode10.pkl",
+      "bytes": 51649,
+      "crc32": 4030064970
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode11.pkl",
+      "bytes": 54433,
+      "crc32": 1748253544
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode12.pkl",
+      "bytes": 53473,
+      "crc32": 3943147505
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode13.pkl",
+      "bytes": 52609,
+      "crc32": 1867963847
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode14.pkl",
+      "bytes": 51409,
+      "crc32": 2583608884
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode15.pkl",
+      "bytes": 52417,
+      "crc32": 4133133243
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode16.pkl",
+      "bytes": 52513,
+      "crc32": 598389307
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode17.pkl",
+      "bytes": 52033,
+      "crc32": 329733582
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode18.pkl",
+      "bytes": 53425,
+      "crc32": 4008776959
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode19.pkl",
+      "bytes": 53185,
+      "crc32": 2243559148
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode20.pkl",
+      "bytes": 55201,
+      "crc32": 678585166
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode21.pkl",
+      "bytes": 53041,
+      "crc32": 4022375875
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode22.pkl",
+      "bytes": 53087,
+      "crc32": 1575426533
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode23.pkl",
+      "bytes": 57745,
+      "crc32": 3346209690
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode24.pkl",
+      "bytes": 54961,
+      "crc32": 2391452310
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode25.pkl",
+      "bytes": 57073,
+      "crc32": 4123677740
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode26.pkl",
+      "bytes": 52897,
+      "crc32": 295652684
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode27.pkl",
+      "bytes": 54001,
+      "crc32": 1472959357
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode28.pkl",
+      "bytes": 53281,
+      "crc32": 2990480094
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode29.pkl",
+      "bytes": 53569,
+      "crc32": 1268026717
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode30.pkl",
+      "bytes": 53281,
+      "crc32": 4143482924
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode31.pkl",
+      "bytes": 52273,
+      "crc32": 592032693
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode32.pkl",
+      "bytes": 51167,
+      "crc32": 679844764
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode33.pkl",
+      "bytes": 52945,
+      "crc32": 3326353151
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode34.pkl",
+      "bytes": 53233,
+      "crc32": 636504362
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode35.pkl",
+      "bytes": 51985,
+      "crc32": 2233627977
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode36.pkl",
+      "bytes": 52321,
+      "crc32": 1520235240
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode37.pkl",
+      "bytes": 53089,
+      "crc32": 2994165482
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode38.pkl",
+      "bytes": 56641,
+      "crc32": 3309307460
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode39.pkl",
+      "bytes": 51841,
+      "crc32": 3525069838
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode40.pkl",
+      "bytes": 54481,
+      "crc32": 1881558880
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode41.pkl",
+      "bytes": 53233,
+      "crc32": 3688403884
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode42.pkl",
+      "bytes": 53281,
+      "crc32": 724942715
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode43.pkl",
+      "bytes": 55393,
+      "crc32": 697331762
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode44.pkl",
+      "bytes": 52993,
+      "crc32": 3973796421
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode45.pkl",
+      "bytes": 54097,
+      "crc32": 3505112521
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode46.pkl",
+      "bytes": 52609,
+      "crc32": 2611133406
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode47.pkl",
+      "bytes": 54337,
+      "crc32": 1163242049
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode48.pkl",
+      "bytes": 55873,
+      "crc32": 2417689667
+    },
+    {
+      "path": "aloha-agilex_clean_50/_traj_data/episode49.pkl",
+      "bytes": 54145,
+      "crc32": 1561546775
+    },
+    {
+      "path": "aloha-agilex_clean_50/seed.txt",
+      "bytes": 143,
+      "crc32": 2173296860
+    },
+    {
+      "path": "aloha-agilex_clean_50/scene_info.json",
+      "bytes": 15163,
+      "crc32": 3036078384
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/",
+      "bytes": 0,
+      "crc32": 0
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode0.hdf5",
+      "bytes": 6920321,
+      "crc32": 2755221470
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode1.hdf5",
+      "bytes": 7868500,
+      "crc32": 70557274
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode2.hdf5",
+      "bytes": 8319466,
+      "crc32": 1037601526
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode3.hdf5",
+      "bytes": 7329672,
+      "crc32": 4280508529
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode4.hdf5",
+      "bytes": 7256080,
+      "crc32": 2838610721
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode5.hdf5",
+      "bytes": 6590425,
+      "crc32": 2457626591
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode6.hdf5",
+      "bytes": 8770192,
+      "crc32": 1127727466
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode7.hdf5",
+      "bytes": 6688288,
+      "crc32": 5352395
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode8.hdf5",
+      "bytes": 6631540,
+      "crc32": 941617690
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode9.hdf5",
+      "bytes": 5993224,
+      "crc32": 1547380723
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode10.hdf5",
+      "bytes": 7953175,
+      "crc32": 2194551849
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode11.hdf5",
+      "bytes": 6985219,
+      "crc32": 1594757539
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode12.hdf5",
+      "bytes": 6068461,
+      "crc32": 349092278
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode13.hdf5",
+      "bytes": 6137930,
+      "crc32": 3696471943
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode14.hdf5",
+      "bytes": 7598912,
+      "crc32": 3087945051
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode15.hdf5",
+      "bytes": 6390628,
+      "crc32": 2838986062
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode16.hdf5",
+      "bytes": 7927741,
+      "crc32": 56624355
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode17.hdf5",
+      "bytes": 6115822,
+      "crc32": 1511845980
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode18.hdf5",
+      "bytes": 6757690,
+      "crc32": 737174854
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode19.hdf5",
+      "bytes": 6415298,
+      "crc32": 3843612574
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode20.hdf5",
+      "bytes": 8048755,
+      "crc32": 3905403005
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode21.hdf5",
+      "bytes": 8409452,
+      "crc32": 610888575
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode22.hdf5",
+      "bytes": 8390021,
+      "crc32": 3735312839
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode23.hdf5",
+      "bytes": 6896958,
+      "crc32": 1950772532
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode24.hdf5",
+      "bytes": 6660397,
+      "crc32": 2093064761
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode25.hdf5",
+      "bytes": 6795347,
+      "crc32": 1980634046
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode26.hdf5",
+      "bytes": 7928630,
+      "crc32": 2831615174
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode27.hdf5",
+      "bytes": 6890760,
+      "crc32": 1459711476
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode28.hdf5",
+      "bytes": 5677682,
+      "crc32": 1562456012
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode29.hdf5",
+      "bytes": 7824008,
+      "crc32": 2437462587
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode30.hdf5",
+      "bytes": 6267597,
+      "crc32": 2631808217
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode31.hdf5",
+      "bytes": 7384390,
+      "crc32": 3893878139
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode32.hdf5",
+      "bytes": 5746104,
+      "crc32": 1009572222
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode33.hdf5",
+      "bytes": 6263787,
+      "crc32": 1741556798
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode34.hdf5",
+      "bytes": 6361864,
+      "crc32": 1619382804
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode35.hdf5",
+      "bytes": 7392300,
+      "crc32": 2206412781
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode36.hdf5",
+      "bytes": 7935488,
+      "crc32": 3893535227
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode37.hdf5",
+      "bytes": 6469781,
+      "crc32": 1435159875
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode38.hdf5",
+      "bytes": 7000468,
+      "crc32": 4161311626
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode39.hdf5",
+      "bytes": 7849800,
+      "crc32": 1155966324
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode40.hdf5",
+      "bytes": 6591120,
+      "crc32": 161357127
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode41.hdf5",
+      "bytes": 6675013,
+      "crc32": 4010217078
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode42.hdf5",
+      "bytes": 6093064,
+      "crc32": 2489296733
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode43.hdf5",
+      "bytes": 6628170,
+      "crc32": 2611992285
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode44.hdf5",
+      "bytes": 6496451,
+      "crc32": 3838610496
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode45.hdf5",
+      "bytes": 7761032,
+      "crc32": 1541956069
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode46.hdf5",
+      "bytes": 6715834,
+      "crc32": 1326097812
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode47.hdf5",
+      "bytes": 6016904,
+      "crc32": 46735424
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode48.hdf5",
+      "bytes": 6666443,
+      "crc32": 3851104201
+    },
+    {
+      "path": "aloha-agilex_clean_50/data/episode49.hdf5",
+      "bytes": 5993080,
+      "crc32": 2081710161
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/",
+      "bytes": 0,
+      "crc32": 0
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode0.mp4",
+      "bytes": 69232,
+      "crc32": 2455292811
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode1.mp4",
+      "bytes": 61028,
+      "crc32": 89199654
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode2.mp4",
+      "bytes": 70837,
+      "crc32": 4111449858
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode3.mp4",
+      "bytes": 57538,
+      "crc32": 2115246966
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode4.mp4",
+      "bytes": 71875,
+      "crc32": 2179447660
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode5.mp4",
+      "bytes": 65111,
+      "crc32": 696073789
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode6.mp4",
+      "bytes": 76635,
+      "crc32": 2503038524
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode7.mp4",
+      "bytes": 67078,
+      "crc32": 2255372900
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode8.mp4",
+      "bytes": 66318,
+      "crc32": 2535737250
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode9.mp4",
+      "bytes": 49457,
+      "crc32": 3518081020
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode10.mp4",
+      "bytes": 64570,
+      "crc32": 2867577671
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode11.mp4",
+      "bytes": 65117,
+      "crc32": 3814187424
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode12.mp4",
+      "bytes": 58317,
+      "crc32": 3160267113
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode13.mp4",
+      "bytes": 45211,
+      "crc32": 139292902
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode14.mp4",
+      "bytes": 60594,
+      "crc32": 1349945377
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode15.mp4",
+      "bytes": 55036,
+      "crc32": 3024526761
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode16.mp4",
+      "bytes": 51544,
+      "crc32": 2889991497
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode17.mp4",
+      "bytes": 52006,
+      "crc32": 4034311452
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode18.mp4",
+      "bytes": 58371,
+      "crc32": 4006528880
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode19.mp4",
+      "bytes": 59289,
+      "crc32": 627951492
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode20.mp4",
+      "bytes": 54632,
+      "crc32": 1364585605
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode21.mp4",
+      "bytes": 72674,
+      "crc32": 3791191008
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode22.mp4",
+      "bytes": 61962,
+      "crc32": 3157306700
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode23.mp4",
+      "bytes": 57506,
+      "crc32": 802235838
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode24.mp4",
+      "bytes": 65907,
+      "crc32": 3895015201
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode25.mp4",
+      "bytes": 59602,
+      "crc32": 1175919510
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode26.mp4",
+      "bytes": 55472,
+      "crc32": 4033560750
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode27.mp4",
+      "bytes": 61870,
+      "crc32": 3700996238
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode28.mp4",
+      "bytes": 42080,
+      "crc32": 3788794251
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode29.mp4",
+      "bytes": 51647,
+      "crc32": 2030328662
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode30.mp4",
+      "bytes": 62087,
+      "crc32": 2900104913
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode31.mp4",
+      "bytes": 57626,
+      "crc32": 2113336760
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode32.mp4",
+      "bytes": 52537,
+      "crc32": 1417889467
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode33.mp4",
+      "bytes": 53163,
+      "crc32": 2613017905
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode34.mp4",
+      "bytes": 60665,
+      "crc32": 2070581169
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode35.mp4",
+      "bytes": 58893,
+      "crc32": 3195777708
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode36.mp4",
+      "bytes": 52607,
+      "crc32": 2687432296
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode37.mp4",
+      "bytes": 61166,
+      "crc32": 2478975764
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode38.mp4",
+      "bytes": 66366,
+      "crc32": 3495694912
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode39.mp4",
+      "bytes": 64150,
+      "crc32": 3939673709
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode40.mp4",
+      "bytes": 59866,
+      "crc32": 154280412
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode41.mp4",
+      "bytes": 70536,
+      "crc32": 36513908
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode42.mp4",
+      "bytes": 60095,
+      "crc32": 1522047154
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode43.mp4",
+      "bytes": 62339,
+      "crc32": 2308473876
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode44.mp4",
+      "bytes": 51875,
+      "crc32": 1281231759
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode45.mp4",
+      "bytes": 62521,
+      "crc32": 217549498
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode46.mp4",
+      "bytes": 55387,
+      "crc32": 2370321751
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode47.mp4",
+      "bytes": 56005,
+      "crc32": 686863348
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode48.mp4",
+      "bytes": 63860,
+      "crc32": 2545077256
+    },
+    {
+      "path": "aloha-agilex_clean_50/video/episode49.mp4",
+      "bytes": 54334,
+      "crc32": 1769919535
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/",
+      "bytes": 0,
+      "crc32": 0
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode0.json",
+      "bytes": 16465,
+      "crc32": 663344002
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode1.json",
+      "bytes": 13797,
+      "crc32": 1148818704
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode2.json",
+      "bytes": 14963,
+      "crc32": 1808224971
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode3.json",
+      "bytes": 13888,
+      "crc32": 4225214833
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode4.json",
+      "bytes": 15837,
+      "crc32": 2735921699
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode5.json",
+      "bytes": 15850,
+      "crc32": 1688862257
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode6.json",
+      "bytes": 14972,
+      "crc32": 1869059724
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode7.json",
+      "bytes": 16744,
+      "crc32": 3642976689
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode8.json",
+      "bytes": 15305,
+      "crc32": 3495882560
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode9.json",
+      "bytes": 16674,
+      "crc32": 954336745
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode10.json",
+      "bytes": 14901,
+      "crc32": 847546784
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode11.json",
+      "bytes": 16189,
+      "crc32": 3047801388
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode12.json",
+      "bytes": 16016,
+      "crc32": 1688275298
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode13.json",
+      "bytes": 15455,
+      "crc32": 81481525
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode14.json",
+      "bytes": 13924,
+      "crc32": 4042921752
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode15.json",
+      "bytes": 15356,
+      "crc32": 2245878640
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode16.json",
+      "bytes": 14878,
+      "crc32": 4248648465
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode17.json",
+      "bytes": 14926,
+      "crc32": 1637881529
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode18.json",
+      "bytes": 15890,
+      "crc32": 1430374867
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode19.json",
+      "bytes": 15828,
+      "crc32": 664884524
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode20.json",
+      "bytes": 14772,
+      "crc32": 2283313012
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode21.json",
+      "bytes": 14903,
+      "crc32": 3263607644
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode22.json",
+      "bytes": 14000,
+      "crc32": 2464003114
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode23.json",
+      "bytes": 16076,
+      "crc32": 3325088577
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode24.json",
+      "bytes": 15142,
+      "crc32": 736835628
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode25.json",
+      "bytes": 16150,
+      "crc32": 3908921342
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode26.json",
+      "bytes": 13983,
+      "crc32": 206386394
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode27.json",
+      "bytes": 15975,
+      "crc32": 2606132150
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode28.json",
+      "bytes": 16100,
+      "crc32": 765505671
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode29.json",
+      "bytes": 14765,
+      "crc32": 1997222622
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode30.json",
+      "bytes": 15867,
+      "crc32": 2806067649
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode31.json",
+      "bytes": 14936,
+      "crc32": 1368754477
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode32.json",
+      "bytes": 15115,
+      "crc32": 3433137522
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode33.json",
+      "bytes": 16882,
+      "crc32": 2407347623
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode34.json",
+      "bytes": 15766,
+      "crc32": 729235071
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode35.json",
+      "bytes": 13976,
+      "crc32": 3676987071
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode36.json",
+      "bytes": 13967,
+      "crc32": 3658146216
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode37.json",
+      "bytes": 15522,
+      "crc32": 1886791221
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode38.json",
+      "bytes": 16031,
+      "crc32": 1210865878
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode39.json",
+      "bytes": 14888,
+      "crc32": 3779027416
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode40.json",
+      "bytes": 16580,
+      "crc32": 3442506554
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode41.json",
+      "bytes": 16734,
+      "crc32": 4242389862
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode42.json",
+      "bytes": 16256,
+      "crc32": 3039332976
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode43.json",
+      "bytes": 16827,
+      "crc32": 3827126986
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode44.json",
+      "bytes": 16150,
+      "crc32": 1102536256
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode45.json",
+      "bytes": 13993,
+      "crc32": 2180616544
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode46.json",
+      "bytes": 15801,
+      "crc32": 1816977532
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode47.json",
+      "bytes": 16828,
+      "crc32": 2214322803
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode48.json",
+      "bytes": 15917,
+      "crc32": 810894019
+    },
+    {
+      "path": "aloha-agilex_clean_50/instructions/episode49.json",
+      "bytes": 15714,
+      "crc32": 3581494769
+    }
+  ],
+  "selection": {
+    "status": "canonical_expert_candidates_split_pending_author_success_and_alignment_review",
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "validation": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "ordered_candidate_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "explicit_success_indices": [],
+    "unknown_success_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "whole_episode_split": true,
+    "command_state_alignment_qualified": false
+  },
+  "storage_bytes": 840132600,
+  "elapsed_seconds": 5.888122197240591,
+  "hdf5_import_only": true,
+  "gripper_statistics": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/a1-gripper-statistics.json",
+    "sha256": "1e126be345a4641df36ec14fd902cf9de9db2cb4572e78a7f4fcb01d5fd35536"
+  }
+}
