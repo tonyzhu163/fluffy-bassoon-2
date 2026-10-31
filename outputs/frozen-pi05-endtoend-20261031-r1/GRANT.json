@@ -100,10 +100,52 @@
     "implementation": "CampaignBudget",
     "maximum_total_actions": 300000,
     "phase_caps": {
-      "a1": 30000
+      "a1": 30000,
+      "source": 120000,
+      "source_validation": 30000,
+      "condition_cross": 15000,
+      "student_evaluation": 105000
     },
     "live_path": null,
     "require_same_header_for_all_children": true,
-    "fresh_child_is_not_a_fresh_action_budget": true
+    "fresh_child_is_not_a_fresh_action_budget": true,
+    "source_caps": null,
+    "source_keys_status": "Exact six methodkeys supplied by condition/collector owner; numeric caps await verified horizon and reset-policy-action bounds before header creation.",
+    "header_contract_required": {
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+      "motor_parameter_sha256": null,
+      "allowed_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ]
+    },
+    "per_stage_code_condition_and_mapping_pins": "Immutable child authorities and explicit migration records; do not mutate the shared CampaignBudget header.",
+    "source_caps_expected_keys": [
+      "sac_calibration_minus_train0",
+      "sac_calibration_plus_train0",
+      "sac_calibration_minus_train1",
+      "sac_calibration_plus_train1",
+      "sac_calibration_minus_validation2",
+      "sac_calibration_plus_validation2"
+    ],
+    "source_cap_formula": "48 * max(verified_task_horizon + verified_reset_policy_action_bound over the predeclared allowed source tasks); each key remains subordinate to shared source120000 and phase total300000.",
+    "source_cap_basis_policy": "Bind numeric caps before A1 outcomes from the allowed-task upper bound; selecting a source task later cannot change the immutable header.",
+    "source_reservation_method": "spec[method] is the exact lineage methodkey, not the generic steering arm name"
+  },
+  "previous_preparation_grant_sha256": "a07c22b46be5b4b19c64d63d87a572fbf50513ba1a55aa2c5ee43d6e20f57091",
+  "revision_reason": "Align all prospective action phase caps before the single immutable CampaignBudget header; no ceiling increase or runtime spend.",
+  "source_collection_schedule": {
+    "initial_episodes_per_lineage": 24,
+    "maximum_episodes_per_lineage": 48,
+    "lineages": 6,
+    "extension_requires_remaining_phase_and_source_caps": true,
+    "episode_count_is_not_an_action_entitlement": true,
+    "actual_learner_seeds": "six distinct seeds, pinned by the collector profile"
+  },
+  "student_evaluation_schedule": {
+    "reserved_phase_action_cap": 105000,
+    "initial_panel": "four-block shared-prefix mechanism panel, approximately140episodes and at most84000actions atH600",
+    "larger_claims": "separate32-case confirmation remains required; no unsupported full-benchmark or sample-efficiency conclusion"
   }
 }
