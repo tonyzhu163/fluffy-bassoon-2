@@ -28,8 +28,11 @@ teacher measurement/residual requests and four fixed500-update fits. No final
 bank, teacher reservation, new label, fit or allocation is admitted by it.
 Its [measured amendment](../robotwin-finalbank-offline-plan-20261031-r1/MEASURED-HANDOFF-20261031.md)
 now records the completed SAC65 compatibility gate and exact closed SAC100
-source identities. Final100 validation ancestry, teacher competence and fits
-remain separate owner admissions; closed CPU balances stay sealed.
+source identities. Final62-root source+validation ancestry is now supplied;
+actual full-bank admission, DPT teacher competence and fits remain separate.
+The [AD/BC-first path](../robotwin-finalbank-offline-plan-20261031-r1/AD-FIRST-HANDOFF-20261031.md)
+preserves the existing AD full/static subset without requiring an unused mean
+panel; new code still needs allocated CPU qualification. CPU balances stay sealed.
 
 The human's coordination authorization was verified in coordinator chat
 `01a18be4-a6ab-79a2-af3d-13f76308e253`: “can you coordinate all the other

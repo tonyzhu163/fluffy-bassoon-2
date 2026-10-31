@@ -3,9 +3,10 @@
 `meta_rl.robotwin_history_corpus` reads `robotwin_public_decisions_v1` from
 the existing three-worker source campaign. It does not change the collector,
 load the frozen motor/simulator, or implement a supervised robot student.
-Use an immutable source checkpoint and explicitly pinned teacher checkpoint.
-Teacher competence, including deterministic mean-action quality, remains a
-separate source-only measurement.
+Use an immutable source checkpoint. DPT additionally requires an explicitly
+pinned teacher checkpoint and separate source-only competence review. AD/BC
+targets are executed noise; AD/BC-only export loads no teacher and runs no
+teacher inference. The default paired AD/DPT export retains its teacher path.
 
 ## Supported inputs
 
@@ -19,8 +20,8 @@ separate source-only measurement.
 - Source coordinator recoveries (`states[method]`) at the saved source
   boundary, or per-method source/stage recoveries (`learner`, `schedule`).
   Explicit source method selection is required. Target-adapted SAC or target
-  query recoveries are rejected. Teacher/source feature/motor/horizon identity
-  must match. Source PPO uses `gtrxl_noise_ppo` schema1; SAC uses its saved
+  query recoveries are rejected. When DPT is requested, teacher/source feature/
+  motor/horizon identity must match. Source PPO uses `gtrxl_noise_ppo` schema1; SAC uses its saved
   actor contract/config. Neither restoring optimizer state nor SGD is needed.
 - Training selects only `phase=source` and trials covered by the committed source cursor.
   Every selected trial needs four ended episodes with distinct indices0–3.
@@ -42,7 +43,7 @@ exactly with frozen source/task counters; an explicitly quarantined legacy cut
 remains included in that reconciliation and in the original physical ledger.
 
 The source corpus can keep growing after the selected source checkpoint, but
-selected files and both checkpoints must retain their hashes. Prefer the
+selected files and all used checkpoints must retain their hashes. Prefer the
 owner's immutable iteration10/25/50/100 stage snapshots. A moving latest
 checkpoint is not a fixed snapshot.
 
@@ -80,6 +81,10 @@ trial or a renamed clock alone is not AD. SAC warmup remains bounded uniform,
 with no invented actor checkpoint; its first actor action may also have update0.
 
 DPT-style labels use a source-trained SAC actor or recurrent PPO teacher.
+AD/BC-only conversion skips this teacher path. BC uses executed noise for fixed
+source validation; both unused teacher manifest fields are null. Unused teacher
+arguments create no teacher provenance claim. Source/behavior archive, masks,
+chronology, case, runtime and physical-count checks remain identical.
 The convention is deterministic physical `1.5*tanh(mean)`. Recurrent state is
 rebuilt under the selected teacher weights from ACTUAL previous physical noise
 and reward, independently at each original K4 source trial. Its own full versus
@@ -141,3 +146,10 @@ python -m fluffy_bassoon.meta_rl.robotwin_history_corpus \
 export uses `--objectives dpt behavior_cloning` when the source has no changing
 policy history. Reusing a competent SAC teacher is the initial practical route;
 the deterministic convention still needs its own source qualification.
+
+For AD-only training use `--objectives ad` and omit all three `--teacher-*`
+arguments. Its validation uses `--objectives behavior_cloning --partition
+validation --validation-iteration 100` against the matching fixed source100
+stage checkpoint. No source/target data is relabeled as another partition.
+The final-bank runner's `--objectives ad` executes the existing AD full/static
+subset; omitting this option preserves the paired exports/four-fit default.

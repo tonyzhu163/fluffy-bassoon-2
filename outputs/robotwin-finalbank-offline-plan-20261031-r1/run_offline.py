@@ -22,12 +22,31 @@ def digest(p):
     return h.hexdigest()
 
 
-def verify_final_indexes(b, projection):
+def objective_request(values):
+    values=tuple(values)
+    if values not in (('ad',),('dpt',),('ad','dpt')):
+        raise ValueError('Choose AD, DPT, or the declared AD/DPT pair')
+    return values
+
+
+def required_admissions(phase, objectives=('ad','dpt')):
+    required = ['closed_source100','chain_projection_verified','assembly_cpu_gate_passed',
+                'stage100_state_matches_closed_tip','disjoint_source_cases_verified',
+                'owner_compute_reservation_admitted']
+    if 'dpt' in objective_request(objectives):
+        required.append('teacher_source_qualification_reviewed')
+    if phase == 'fit':
+        required += ['actual_gpu_probe_passed','export_cpu_admission_passed']
+    return required
+
+
+def verify_final_indexes(b, projection, objectives=('ad','dpt')):
     """Reject an old valid bank paired with unrelated valid source100 refs."""
     corpus = Path(b["projection_root"]).resolve()
     exports = Path(b["exports_root"]).resolve()
     source = Path(b["source100_stage"]["path"]).resolve()
     source_sha = b["source100_stage"]["sha256"]
+    requested=objective_request(objectives);needs_teacher='dpt' in requested
     tip_ref = projection["tip_manifest"]
     if digest(tip_ref["path"]) != tip_ref["sha256"]:
         raise ValueError("Projection tip changed")
@@ -37,20 +56,21 @@ def verify_final_indexes(b, projection):
             or tip["expected"]["completed_source_trials"] != 600):
         raise ValueError("Projection is not a final source100 boundary")
     metadata, cases = {}, {}
-    for partition, key, count, objectives in (
-            ("train", "train_index", 600, {"ad", "dpt"}),
-            ("validation", "validation_index", 6, {"behavior_cloning", "dpt"})):
+    for partition, key, count, dataset_objectives in (
+            ("train", "train_index", 600, set(requested)),
+            ("validation", "validation_index", 6, {'behavior_cloning' if x=='ad' else 'dpt' for x in requested})):
         path = Path(b[key]["path"]).resolve()
         if path != exports / partition / "index.json":
             raise ValueError("Index is outside the admitted export output")
         m = json.loads(path.read_text())
         if (m.get("format") != "robotwin_native_history_dataset_v1"
                 or m.get("completed") is not True or m.get("partition") != partition
-                or m.get("source_method") != "sac" or m.get("teacher_method") != "sac"
+                or m.get("source_method") != "sac"
+                or m.get("teacher_method") != ('sac' if needs_teacher else None)
                 or m.get("source_recovery_sha256") != source_sha
-                or m.get("teacher_recovery_sha256") != b["teacher100_source"]["sha256"]
+                or m.get("teacher_recovery_sha256") != (b["teacher100_source"]["sha256"] if needs_teacher else None)
                 or m.get("policy_input_dim") != 3090
-                or set(m.get("datasets", {})) != objectives
+                or set(m.get("datasets", {})) != dataset_objectives
                 or m.get("validation_iteration") != (100 if partition == "validation" else None)
                 or m.get("counts", {}).get("complete_K4_trials") != count
                 or m["counts"].get("episodes") != 4 * count
@@ -125,11 +145,25 @@ def main():
     p.add_argument("--bindings", type=Path, required=True)
     p.add_argument("--bindings-sha256", required=True)
     p.add_argument("--phase", choices=("export", "fit"), required=True)
+    p.add_argument("--objectives",choices=('ad','dpt'),nargs='+',default=['ad','dpt'])
     p.add_argument("--execute", action="store_true")
     a = p.parse_args()
     if digest(a.bindings) != a.bindings_sha256:
         raise ValueError("Bindings changed")
     b = json.loads(a.bindings.read_text())
+    objectives=objective_request(a.objectives);needs_teacher='dpt' in objectives
+    if a.execute:
+        if sys.platform != 'linux' or socket.gethostname() != b['allocated_hostname']:
+            raise ValueError('Only the exact admitted allocated Linux host')
+        if tuple(b.get('objectives',['ad','dpt']))!=objectives:
+            raise ValueError('Execution objectives differ from owner-hashed bindings')
+        gate=b['admission'];required=required_admissions(a.phase,objectives)
+        if any(gate.get(k) is not True for k in required):
+            raise ValueError('Missing exact owner admission: '+','.join(k for k in required if gate.get(k) is not True))
+        for key in required:
+            ref=b['admission_receipts'][key]
+            if digest(ref['path'])!=ref['sha256']:
+                raise ValueError('Changed owner admission receipt: '+key)
     common = ["--source-commit", b["code_commit"], "--expected-hostname", b["allocated_hostname"]]
     commands = []
     if a.phase == "export":
@@ -138,17 +172,19 @@ def main():
                        "--corpus-root", b["projection_root"],
                        "--source-recovery", b["source100_stage"]["path"],
                        "--source-sha256", b["source100_stage"]["sha256"], "--source-method", "sac",
-                       "--teacher-recovery", b["teacher100_source"]["path"],
-                       "--teacher-sha256", b["teacher100_source"]["sha256"], "--teacher-method", "sac",
                        "--output", str(Path(b["exports_root"]) / partition),
                        "--device", "cpu", "--threads", "4", "--objectives"]
-            command += ["ad", "dpt"] if partition == "train" else ["behavior_cloning", "dpt"]
+            command += list(objectives) if partition=='train' else ['behavior_cloning' if x=='ad' else 'dpt' for x in objectives]
+            if needs_teacher:
+                command += ['--teacher-recovery',b['teacher100_source']['path'],
+                    '--teacher-sha256',b['teacher100_source']['sha256'],'--teacher-method','sac']
             command += ["--partition", partition]
             if partition == "validation":
                 command += ["--validation-iteration", "100"]
             commands.append(command + common)
     else:
         for objective, mode in (("ad", "full"), ("ad", "static"), ("dpt", "full"), ("dpt", "static")):
+            if objective not in objectives:continue
             commands.append([b["python"], "-m", "fluffy_bassoon.meta_rl.robotwin_history_train",
                 "--train-index", b["train_index"]["path"], "--train-sha256", b["train_index"]["sha256"],
                 "--validation-index", b["validation_index"]["path"],
@@ -164,28 +200,14 @@ def main():
         for command in commands:
             print(shlex.join(command))
         return
-    if sys.platform != "linux" or socket.gethostname() != b["allocated_hostname"]:
-        raise ValueError("Only the exact admitted allocated Linux host")
-    gate = b["admission"]
-    required = ["closed_source100", "chain_projection_verified", "assembly_cpu_gate_passed",
-                "stage100_state_matches_closed_tip", "disjoint_source_cases_verified",
-                "teacher_source_qualification_reviewed", "owner_compute_reservation_admitted"]
-    if a.phase == "fit":
-        required += ["actual_gpu_probe_passed", "export_cpu_admission_passed"]
-    if any(gate.get(k) is not True for k in required):
-        raise ValueError("Missing exact owner admission: " + ",".join(k for k in required if gate.get(k) is not True))
-    for key in required:
-        ref = b["admission_receipts"][key]
-        if digest(ref["path"]) != ref["sha256"]:
-            raise ValueError("Changed owner admission receipt: " + key)
     cwd = b["code_root"]
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=cwd, text=True).strip()
     dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=cwd, text=True).strip()
     if head != b["code_commit"] or dirty:
         raise ValueError("Require reviewed exact clean code")
-    if b["source100_stage"] != b["teacher100_source"]:
+    if needs_teacher and b["source100_stage"] != b["teacher100_source"]:
         raise ValueError("Primary plan preselects the same source100 SAC snapshot as teacher")
-    for key in ("source100_stage", "teacher100_source", "projection_receipt") + (("train_index", "validation_index") if a.phase == "fit" else ()):
+    for key in ('source100_stage','projection_receipt') + (('teacher100_source',) if needs_teacher else ()) + (("train_index", "validation_index") if a.phase == "fit" else ()):
         if digest(b[key]["path"]) != b[key]["sha256"]:
             raise ValueError("Changed bound input: " + key)
     projection = json.loads(Path(b["projection_receipt"]["path"]).read_text())
@@ -196,10 +218,10 @@ def main():
             or Path(b["projection_receipt"]["path"]).resolve() != Path(b["projection_root"], "projection.json").resolve()):
         raise ValueError("Require the exact complete final-SAC100 projection receipt")
     if a.phase == "fit":
-        verify_final_indexes(b, projection)
+        verify_final_indexes(b, projection,objectives)
     # Time includes subprocess loads/exports; future scheduler receipts remain
     # authoritative. No automatic continuation, retry, or bound enlargement.
-    cap = 6900 if a.phase == "export" else 3300
+    cap = 6900 if a.phase == "export" else 1650*len(objectives)
     maximum = b["admitted_parent_seconds"]
     if type(maximum) is not int or not 0 < maximum <= cap:
         raise ValueError("Remaining parent time exceeds admitted cap")

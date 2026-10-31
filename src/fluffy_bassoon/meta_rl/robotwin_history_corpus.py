@@ -595,30 +595,36 @@ def teacher_labels(policy, method, rows, *, reset_each_episode):
 
 
 def export_corpus(corpus_root, output, *, source_path, source_sha256, source_method,
-                  teacher_path, teacher_sha256, teacher_method, objectives=('ad', 'dpt'),
+                  teacher_path=None, teacher_sha256=None, teacher_method=None, objectives=('ad', 'dpt'),
                   device='cpu', allow_legacy_cut=False, partition='train', validation_iteration=None):
     if not objectives or len(set(objectives)) != len(objectives) or not set(objectives) <= {'ad', 'dpt', 'behavior_cloning'}:
         raise ValueError('Choose distinct AD/DPT/BC objectives')
     if partition == 'validation' and 'ad' in objectives:
         raise ValueError('Fixed-policy source validation is BC/DPT, not an AD learning history')
+    needs_teacher = 'dpt' in objectives
+    if needs_teacher and any(value is None for value in (teacher_path,teacher_sha256,teacher_method)):
+        raise ValueError('DPT requires an explicitly pinned source teacher')
     output, corpus_root = Path(output).resolve(), Path(corpus_root).resolve()
     if output.exists() or output.is_relative_to(corpus_root):
         raise ValueError('Use a fresh output outside the source corpus')
     source = source_recovery(source_path, source_sha256, source_method)
-    teacher = source_recovery(teacher_path, teacher_sha256, teacher_method)
-    if _canonical(_interface(source['contract'])) != _canonical(_interface(teacher['contract'])):
-        raise ValueError('Source and teacher motor/features/horizon interfaces differ')
+    if needs_teacher:
+        teacher = source_recovery(teacher_path, teacher_sha256, teacher_method)
+        if _canonical(_interface(source['contract'])) != _canonical(_interface(teacher['contract'])):
+            raise ValueError('Source and teacher motor/features/horizon interfaces differ')
     reader, trials, excluded = read_source(corpus_root, source, allow_legacy_cut=allow_legacy_cut,
         partition=partition, validation_iteration=validation_iteration)
-    policy, teacher_reset = load_teacher(teacher, device=device)
+    if needs_teacher:
+        policy, teacher_reset = load_teacher(teacher, device=device)
     grouped = defaultdict(list)
     for trial in trials:
         rows = trial['rows']
         rows[0]['trial_start'] = True
         # Teacher state is rebuilt independently for each actual source K4.
-        labels = teacher_labels(policy, teacher_method, rows, reset_each_episode=teacher_reset)
-        for row, label in zip(rows, labels, strict=True):
-            row['target'] = label
+        if needs_teacher:
+            labels = teacher_labels(policy, teacher_method, rows, reset_each_episode=teacher_reset)
+            for row, label in zip(rows, labels, strict=True):
+                row['target'] = label
         grouped[trial['task']].extend(rows)
     arrays, task_keys = {}, sorted(grouped)
     fields = dict(observations='features', next_observations='next_features', executed_noise='noise', rewards='reward', native_rewards='native_reward',
@@ -644,7 +650,9 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
     arrays['lengths'] = np.asarray([len(grouped[task]) for task in task_keys], np.int64)
     inputs = dict(reader.inputs)
     inputs.update(reader.provenance_inputs)
-    inputs[str(Path(source_path).resolve())], inputs[str(Path(teacher_path).resolve())] = source_sha256, teacher_sha256
+    inputs[str(Path(source_path).resolve())] = source_sha256
+    if needs_teacher:
+        inputs[str(Path(teacher_path).resolve())] = teacher_sha256
     if any(file_sha256(path) != digest for path, digest in inputs.items()):
         raise ValueError('Source/teacher changed during export; use immutable snapshots')
     output.mkdir(parents=True, exist_ok=False)
@@ -661,11 +669,14 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
         actual_seeds=[case['actual_seed'] for case in trial['cases']])).encode()).hexdigest() for trial in trials]
     metadata = dict(format=FORMAT, completed=True, datasets=datasets, task_keys=task_keys,
         partition=partition, validation_iteration=validation_iteration, case_ids=case_ids,
-        source_method=source_method, teacher_method=teacher_method, input_sha256=inputs,
-        source_contract=source['contract'], source_recovery_sha256=source_sha256, teacher_recovery_sha256=teacher_sha256,
-        teacher_status='source-trained candidate; deterministic mean competence not assumed',
+        source_method=source_method, teacher_method=teacher_method if needs_teacher else None, input_sha256=inputs,
+        source_contract=source['contract'], source_recovery_sha256=source_sha256,
+        teacher_recovery_sha256=teacher_sha256 if needs_teacher else None,
+        teacher_status=('source-trained candidate; deterministic mean competence not assumed' if needs_teacher
+                        else 'not used; AD/BC targets are executed physical noise'),
         interface=_interface(source['contract']), policy_input_dim=3090,
-        label_rule='deterministic physical1.5*tanh(mean); recurrent teacher rebuilt per actual source trial',
+        label_rule=('deterministic physical1.5*tanh(mean); recurrent teacher rebuilt per actual source trial' if needs_teacher
+                    else 'actual executed physical noise; no teacher loading or inference'),
         student_history='same-task source trials across updates; actual feedback crosses source-trial boundaries; original clocks retained',
         source_trials=[dict(number=trial['number'], task=trial['task'], cases=trial['cases'], decisions=len(trial['rows'])) for trial in trials],
         excluded=excluded, counts=dict(decisions=len(joined), episodes=sum(row['episode_start'] for row in joined),
@@ -679,12 +690,14 @@ def export_corpus(corpus_root, output, *, source_path, source_sha256, source_met
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('corpus-root', 'source-recovery', 'teacher-recovery', 'output'):
+    for name in ('corpus-root', 'source-recovery', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
-    for name in ('source-sha256', 'teacher-sha256', 'source-commit', 'expected-hostname'):
+    for name in ('source-sha256', 'source-commit', 'expected-hostname'):
         parser.add_argument('--' + name, required=True)
     parser.add_argument('--source-method', choices=METHODS, required=True)
-    parser.add_argument('--teacher-method', choices=METHODS, required=True)
+    parser.add_argument('--teacher-recovery', type=Path)
+    parser.add_argument('--teacher-sha256')
+    parser.add_argument('--teacher-method', choices=METHODS)
     parser.add_argument('--objectives', choices=('ad', 'dpt', 'behavior_cloning'), nargs='+', default=['ad', 'dpt'])
     parser.add_argument('--device', default='cpu')
     parser.add_argument('--threads', type=int, default=1)

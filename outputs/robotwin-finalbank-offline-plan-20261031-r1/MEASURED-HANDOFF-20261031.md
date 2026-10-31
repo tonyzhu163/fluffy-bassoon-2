@@ -4,6 +4,10 @@ Dated 2026-10-31, Asia/Shanghai. **Static handoff; no new resource admission or
 launch.** This updates the existing final-bank proposal using R6 measurements
 and exact SAC100 source identities. No implementation, wrapper, tests,
 collector, teacher panel, fit or target evaluation is added here.
+The later [AD/BC-first handoff](AD-FIRST-HANDOFF-20261031.md) records the minimal
+objective-aware code change: AD skips unused teacher inference/review; DPT
+retains it. The final62-root source+validation chain is now available. New code
+still needs allocated CPU qualification and actual resources remain unadmitted.
 
 ## Closed SAC65 compatibility result
 
@@ -63,7 +67,9 @@ execution remain unchanged; PPO/reset runtime570 is not substituted.
 
 | Input | Exact identity |
 | --- | --- |
-| Current61-root source ancestry | [SAC100-SOURCE-REFERENCE-20261031.json](SAC100-SOURCE-REFERENCE-20261031.json), SHA `403e35ba951a7ebe5b595ad73fbee17a84f0cc856e09758fa2fb5fddf90d9bd7` |
+| Final62-root source+validation ancestry | [SAC100-FINAL-REFERENCE-20261031.json](SAC100-FINAL-REFERENCE-20261031.json), SHA `0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e` |
+| Final terminal tip | [SAC100-FINAL-TIP-20261031.json](SAC100-FINAL-TIP-20261031.json), SHA `5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4` |
+| Historical61-root source ancestry | [SAC100-SOURCE-REFERENCE-20261031.json](SAC100-SOURCE-REFERENCE-20261031.json), SHA `403e35ba951a7ebe5b595ad73fbee17a84f0cc856e09758fa2fb5fddf90d9bd7` |
 | Source tip | `slices/0060/experiment/continuation-manifest.json`, SHA `b2ae61a72c03bffb5c6e174d80077fb068089dcb0660a19732f4c83bf427999a` |
 | Source coordinator | `slices/0060/experiment/coordinator-recovery.pt`, SHA `20c512080f3012452343a0c7d8aff67ee03966add4497d61256854e52d5d611f` |
 | Preselected per-method source100 snapshot | `slices/0061/experiment/stages/iteration-100/sac-recovery.pt`, SHA `59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90` |
@@ -75,15 +81,14 @@ passed210-member ZIP CRC inspection in owner audits. This amendment rehashes
 retained JSON, not checkpoint tensors. Full paths, counters and evidence hashes
 are in [the machine-readable handoff](MEASURED-HANDOFF-20261031.json).
 
-At the retained07:55/07:57 snapshot, the closed source chain ends at0060 while
-stage100 validation is being recorded in0061. Those61 roots do not include the
-final validation corpus. Before final train/validation projection, the owner
-must supply actual completed stage100/closed ancestry containing its real
-validation root. Do not manually append an unbound root or infer validation
-completion from a checkpoint filename. The existing converter checks distinct
-stage serialization against closed-tip actor weights, source counters and
-source iteration. The fixed59588 source snapshot stays the teacher candidate;
-a later final coordinator may have different serialization after evaluation.
+The earlier07:55/07:57 source-only chain ended0060 and is historical. The owner
+has now closed0061 evaluation and supplied its bound FINAL62-root ancestry,
+including24 source-validation episodes/10180 actions. Final coordinator SHA is
+`f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8`.
+No manual extra root is appended. Actual byte projection and source-stage/
+closed-tip actor/counter equivalence still need final-bank qualification. The
+fixed59588 source snapshot stays the source/teacher candidate even though the
+final coordinator has different post-evaluation serialization.
 
 Final training retains all600 K4 /2,400 episodes /1,003,790 source actions,
 including warmup/failed histories in chronological order. Export training as
@@ -138,10 +143,11 @@ repurpose no original source/evaluation cap.
 
 ## Four fits and source-only selection stay fixed
 
-The existing runner requires `teacher_source_qualification_reviewed` before
-executing export as well as fit. The owner's sequence/admission must satisfy
-that existing requirement; R6 compatibility cannot set that flag or authorize
-waiting for an unadmitted teacher panel inside a CPU allocation.
+The objective-aware runner requires `teacher_source_qualification_reviewed`
+whenever DPT is requested, for export and fit. AD/BC-only does not require or
+set that unused flag. R6 compatibility cannot supply DPT teacher review, and
+AD is not serialized behind an unadmitted mean panel. Every other source,
+split, funding and compute admission remains mandatory.
 
 Keep AD full, AD static, DPT full and DPT static, each seed0/500 updates with
 the existing architecture/optimizer/window recipe: four trajectories,2,000

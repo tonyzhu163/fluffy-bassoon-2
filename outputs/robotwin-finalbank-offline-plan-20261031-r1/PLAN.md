@@ -7,6 +7,10 @@ See the [measured handoff](MEASURED-HANDOFF-20261031.md) for actual R6 receipts,
 closed CPU accounting, exact SAC100 source/teacher identities and unchanged
 remaining resource proposals. The execution owner retains final-bank and
 resource admission. This documentation update starts no new work.
+The [AD/BC-first amendment](AD-FIRST-HANDOFF-20261031.md) removes the unused
+teacher dependency for the existing AD full/static subset. DPT/default paired
+execution retains teacher review. New objective-aware code still needs its
+necessary allocated CPU regression pass; final62-root input identities are bound.
 
 Later compatibility preparation: production acting-policy paths are absolute.
 The [completed bounded SAC65 CPU gate](../robotwin-sac65-cpu-compat-20261031-r6/PLAN.md)
@@ -113,7 +117,7 @@ Before a final export, owner-hash an admission with:
    behavior archives, source counters and case uniqueness reconciled. Keep
    task horizons600/500/400 and actual1024D physical actions intact.
 5. A passed allocated CPU assembly/export compatibility gate, owner-reviewed
-   teacher qualification, fresh output identities, capacity/write probes and
+   teacher qualification when DPT is requested, fresh output identities, capacity/write probes and
    exact source/compute receipts. Live source writers/ledgers are untouched.
 
 Use [projection admission template](projection-admission.template.json).
