@@ -1,0 +1,98 @@
+{
+  "check_time_shanghai": "2026-10-29T03:12:22.283132+08:00",
+  "objective": "Debug ML10 and assess whether CTM/CMM hyperparameters need adjustment",
+  "requirements": [
+    {
+      "requirement": "Diagnose CTM/CMM numerical, recovery and optimization behavior on real ML10",
+      "status": "proven",
+      "evidence": [
+        "outputs/metaworld-ppo-controls-baige-20261029-r1/audit.json",
+        "outputs/metaworld-ppo-controls-baige-20261029-r1/checkpoint-audit.json",
+        "outputs/metaworld-ppo-debug-baige-20261029-r2/audit.json",
+        "outputs/metaworld-ppo-debug-baige-20261029-r2/checkpoint-audit.json"
+      ]
+    },
+    {
+      "requirement": "Determine whether the measured gradient imbalance supports a value-weight change",
+      "status": "proven_negative_for_tested_CTM_continuation",
+      "evidence": [
+        "outputs/metaworld-ppo-controls-baige-20261029-r1/audit.json",
+        "outputs/metaworld-ppo-controls-baige-20261029-r1/checkpoint-audit.json"
+      ]
+    },
+    {
+      "requirement": "Isolate evaluation clock/state effects for both CTM and CMM",
+      "status": "proven",
+      "evidence": [
+        "outputs/metaworld-clock-debug-baige-20261029-r1/audit.json",
+        "outputs/metaworld-clock-debug-baige-20261029-r3/audit.json"
+      ]
+    },
+    {
+      "requirement": "Provide evidence-based hyperparameter recommendations and limits",
+      "status": "proven",
+      "evidence": [
+        "outputs/metaworld-ml10-debug-20261029-r1/RESULTS.md"
+      ]
+    },
+    {
+      "requirement": "Preserve original sources, checkpoints, scientific contracts, single training seed and per-method caps",
+      "status": "proven",
+      "ctm_recorded_seconds": 10797,
+      "ctm_cap_seconds": 21600,
+      "cmm_recorded_seconds": 7363,
+      "cmm_cap_seconds": 10800,
+      "evidence": [
+        "outputs/metaworld-ppo-controls-baige-20261029-r1/checkpoint-audit.json",
+        "outputs/metaworld-ppo-debug-baige-20261029-r2/checkpoint-audit.json",
+        "outputs/metaworld-ml10-debug-20261029-r1/runtime-equivalence.txt"
+      ]
+    },
+    {
+      "requirement": "Mirror reviewable artifacts and retain failed admissions",
+      "status": "proven",
+      "evidence": [
+        "outputs/metaworld-clock-debug-baige-20261029-r2/failure-audit.json",
+        "outputs/metaworld-ml10-debug-20261029-r1/RESULTS.md"
+      ]
+    }
+  ],
+  "unresolved_required_work": [],
+  "limitations": [
+    "One training seed",
+    "Short inherited-optimizer CTM continuation",
+    "One clock-evaluation block per architecture",
+    "No T/depth/trace ablation or proof of global optimum",
+    "Original ECET comparison remains independently active"
+  ],
+  "evidence_sha256": {
+    "outputs/metaworld-ppo-controls-baige-20261029-r1/audit.json": "b79cf6b1621ba000e07f623e8ea5d2d024f81c6e8c411277d06814bbe8080a90",
+    "outputs/metaworld-ppo-controls-baige-20261029-r1/checkpoint-audit.json": "3755236aaaaa343bcbfc74f7f095a48ddbf0c55b2a7e566b987d7f5a9b64725e",
+    "outputs/metaworld-ppo-debug-baige-20261029-r2/audit.json": "9d4eb35340f6e5f431ab1538ab1d7cebcb9673b0b359ba21c6d0cd258b05c36d",
+    "outputs/metaworld-ppo-debug-baige-20261029-r2/checkpoint-audit.json": "6c47498d91a669a428a73d65556742a40f77e05f440aa51b5728cfb8a6261288",
+    "outputs/metaworld-clock-debug-baige-20261029-r1/audit.json": "47deb3dba1ba3b1651682c489d592ac3468d8cd43507fb1c8fee0e8f20152325",
+    "outputs/metaworld-clock-debug-baige-20261029-r3/audit.json": "578fdb120d3489b22e1b004e204626b75b54bf5b9ce57f9eda888ee1edec2969",
+    "outputs/metaworld-ml10-debug-20261029-r1/first5-audit.json": "0226a03e6f0aebaf7bd1ccdc09004fba8cd77e4ed5d7c0ea86adfd75d66819bb",
+    "outputs/metaworld-ml10-debug-20261029-r1/runtime-equivalence.txt": "1bcc773577bec77e00b8192757fe712961bd9eeebf4b8f98b20a7e97f6ae78d2",
+    "outputs/metaworld-ml10-debug-20261029-r1/RESULTS.md": "b020226156a3e3a913fbb884cf6064335937b592fa75a59992e6b98128ed52c2",
+    "outputs/metaworld-ml10-debug-20261029-r1/scheduler-terminal-receipt.json": "ce592fa404e7a28093c39f8ad16883a0b04e2f1bbf378c4b32a2bcbfd5979e40",
+    "outputs/metaworld-ml10-debug-20261029-r1/baige-final-clock-receipt.png": "4275f911573f335fe5409785587e4ebe55f861ceb5d27f67514504239baa17d7"
+  },
+  "scheduler_terminality": {
+    "check_time_shanghai": "2026-10-29T03:13:31.952325+08:00",
+    "source": "Baige console visible AX state, independently read after saved launcher exits",
+    "jobs": {
+      "job-vb7p9f0cz56n": {
+        "status": "Succeeded",
+        "maximum_minutes": 15,
+        "automatic_retries": false
+      },
+      "job-pgjw4p0j22ut": {
+        "status": "Succeeded",
+        "maximum_minutes": 15,
+        "automatic_retries": false
+      }
+    },
+    "screenshot": "baige-final-clock-receipt.png"
+  }
+}

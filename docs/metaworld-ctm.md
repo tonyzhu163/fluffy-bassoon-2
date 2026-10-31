@@ -98,6 +98,14 @@ batched-head full-trial replay and cached-window replay on the same real ML10
 batch and the same CTM T1 weights. Report collection and optimization separately.
 One timed update is a throughput check, not a learning result.
 
+Additional execution changes skip unused reset-state construction during
+collection and compute carried synchronization accumulators without an unused
+reference readout. The reference normalization and parameter gradients remain
+unchanged. Optional persistent CPU worker groups dispatch simulator steps in
+parallel; qualify complete seeded trajectory parity before enabling them. See
+[worker backend](metaworld-workers.md) and the
+[current matched comparison](metaworld-comparison.md).
+
 ## Admission, recovery and accounting
 
 Model work and tests run only in a scheduled Linux allocation. A GPU probe
@@ -129,7 +137,10 @@ evidence; neither alone proves a learned reward-driven RL algorithm.
 
 First qualify execution and measure complete 2,500-step training trials with
 one seed and bounded GPU time. Then select a feasible immutable training
-configuration and run three screening seeds. Use five seeds for final curves.
+configuration. The current user-selected comparison uses one seed, 50 lanes,
+10M training interactions and ten PPO epochs; cached100 is selected for CTM.
+Do not add uncertainty bands to this single-seed screen. Multi-seed studies
+require a separately approved run plan.
 The first VLA admission evidence should include reliable continuous-control
 learning, adaptation across episodes, useful-history interventions and measured
 cost relative to the recurrent baselines. Train-family success alone is

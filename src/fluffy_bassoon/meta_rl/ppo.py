@@ -1,6 +1,7 @@
 """Full-trial recurrent PPO for the compact meta-RL environments."""
 
 import math
+from time import perf_counter
 from types import SimpleNamespace
 
 import gymnasium as gym
@@ -13,6 +14,7 @@ from torch.nn import functional as F
 
 from lerobot_policy_ctm.architectures.persistent_transformer_control.action_expert import PersistentTransformerExpert
 from lerobot_policy_ctm.shared.persistent_ctm import PersistentCTMCore
+from .metaworld_workers import batch_reset, batch_step
 
 
 class GRUCore(nn.Module):
@@ -84,7 +86,7 @@ class PersistentCTMVectorCore(nn.Module):
         # Zero action accumulators reproduce the episode-start (memory=None) first tick exactly.
         expert = self.expert
         activated = expert.start_activated_state.expand(batch, -1)
-        _, out_alpha, out_beta = expert.compute_synchronisation(activated, None, None, None, "out")
+        out_alpha, out_beta = expert._synchronisation_accumulators(activated, None, None, None, "out")
         zeros = out_alpha.new_zeros(out_alpha.shape)
         return dict(activated=activated, trace=expert.start_trace.expand(batch, -1, -1),
                     action_alpha=zeros, action_beta=zeros, out_alpha=out_alpha, out_beta=out_beta)
@@ -183,7 +185,7 @@ class RecurrentActorCritic(nn.Module):
 @torch.no_grad()
 def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, deterministic=False, normalize_clock=True,
                    reward_blind=False, reset_keys=None, clock_scale=None, record_states=False,
-                   replay_chunk_length=0):
+                   replay_chunk_length=0, timing=None):
     """`reset_keys` restricts attempt-boundary resets to those state entries (a component lesion).
 
     `clock_scale` overrides the declared clock maximum, so a longer evaluation trial can keep its
@@ -191,6 +193,9 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
     """
     if not envs or len(envs) != len(seeds):
         raise ValueError("Require one reset seed per environment")
+    collection_started = perf_counter()
+    phases = dict(observation_and_reset_seconds=0., policy_and_action_transfer_seconds=0.,
+                  environment_step_seconds=0.) if timing is not None else None
     if type(normalize_clock) is not bool or type(reward_blind) is not bool:
         raise ValueError("Clock normalization and reward blinding must be boolean")
     if reset_keys is not None:
@@ -211,7 +216,7 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
         raise ValueError("Policy input dimension does not match environment observations")
     policy.eval()
     reference = next(policy.parameters())
-    observations = [env.reset(seed=int(seed))[0] for env, seed in zip(envs, seeds, strict=True)]
+    observations = [row[0] for row in batch_reset(envs, seeds)]
     state = None
     records = {key: [] for key in ("observations", "raw_actions", "log_probs", "values",
                                    "rewards", "trial_ends", "attempt_ends", "resets", "action_mask", "settling_steps")}
@@ -222,6 +227,7 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
         raise ValueError("A clock scale override requires clock normalization")
     states, replay_states = [], []
     for step in range(first.attempts * first.horizon):
+        phase_started = perf_counter() if phases is not None else None
         if replay_chunk_length and step % replay_chunk_length == 0:
             incoming = policy.core.initial_state(len(envs)) if state is None else state
             replay_states.append({key: value.detach().clone() for key, value in incoming.items()}
@@ -234,16 +240,30 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
                                  dtype=reference.dtype, device=reference.device)
         resets = torch.tensor([reset_each_attempt and bool(obs["attempt_end"].item()) for obs in observations],
                               dtype=torch.bool, device=reference.device)
-        step_resets = resets
+        # Physical resets are known on the CPU. Avoid rebuilding the complete
+        # initial state on every decision when no lane needs a memory reset.
+        step_resets = resets if reset_each_attempt and any(
+            bool(obs["attempt_end"].item()) for obs in observations) else None
         if reset_keys is not None:
             if state is not None and resets.any():
                 initial = policy.core.initial_state(len(envs))
                 state = {key: torch.where(resets.reshape(-1, *([1] * (value.ndim - 1))), initial[key], value)
                          if key in reset_keys else value for key, value in state.items()}
-            step_resets = torch.zeros_like(resets)
+            step_resets = None
+        if phases is not None:
+            phases["observation_and_reset_seconds"] += perf_counter() - phase_started
+            phase_started = perf_counter()
         action, raw_action, log_prob, _, value, state = policy.step(
             inputs, state, reset=step_resets, deterministic=deterministic)
-        returned = [env.step(a) for env, a in zip(envs, action.cpu().numpy(), strict=True)]
+        commands = action.cpu().numpy()
+        # The transfer synchronizes sampled actions before CPU simulation, so
+        # this phase includes actual inference latency without extra CUDA waits.
+        if phases is not None:
+            phases["policy_and_action_transfer_seconds"] += perf_counter() - phase_started
+            phase_started = perf_counter()
+        returned = batch_step(envs, commands)
+        if phases is not None:
+            phases["environment_step_seconds"] += perf_counter() - phase_started
         observations, rewards, ended, truncated, info = map(list, zip(*returned, strict=True))
         if any(truncated) or any(done != (step == first.attempts * first.horizon - 1) for done in ended):
             raise RuntimeError("Collector requires complete fixed-length trials without external truncation")
@@ -274,6 +294,11 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
         result["replay_states"] = ({key: torch.stack([s[key] for s in replay_states])
                                     for key in replay_states[0]} if isinstance(replay_states[0], dict)
                                    else torch.stack(replay_states))
+    if phases is not None:
+        total = perf_counter() - collection_started
+        timing.update(phases, total_seconds=total, decisions=first.attempts * first.horizon,
+                      environment_steps=first.attempts * first.horizon * len(envs),
+                      reset_and_bookkeeping_seconds=total - sum(phases.values()))
     return result
 
 

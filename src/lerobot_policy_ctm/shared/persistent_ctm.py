@@ -35,16 +35,33 @@ class PersistentCTMCore(TokenCTM):
                 ("action_alpha", "action_beta", "out_alpha", "out_beta")}
 
     def _initial_synchronisation_memory(self, activated, r_out):
-        _, alpha, beta = self.compute_synchronisation(activated, None, None, r_out, "out")
+        alpha, beta = self._synchronisation_accumulators(activated, None, None, r_out, "out")
         return dict(action_alpha=None, action_beta=None, out_alpha=alpha, out_beta=beta)
 
+    def _synchronisation_accumulators(self, activated, alpha, beta, decay, kind):
+        """Update random-pair accumulators without computing a discarded readout.
+
+        Other pairing schemes retain the reference implementation. Parameter
+        names, state layout and arithmetic order of the carried memory agree
+        with compute_synchronisation; normalization remains at the read sites.
+        """
+        if self.neuron_select_type != "random-pairing":
+            _, alpha, beta = self.compute_synchronisation(activated, alpha, beta, decay, kind)
+            return alpha, beta
+        left = getattr(self, f"{kind}_neuron_indices_left")
+        right = getattr(self, f"{kind}_neuron_indices_right")
+        product = activated[:, left] * activated[:, right]
+        if alpha is None or beta is None:
+            return product, torch.ones_like(product)
+        return decay * alpha + product, decay * beta + 1
+
     def _attention_synchronisation(self, activated, memory, r_action):
-        _, alpha, beta = self.compute_synchronisation(
+        alpha, beta = self._synchronisation_accumulators(
             activated, memory["action_alpha"], memory["action_beta"], r_action, "action")
         return self._normalise_synchronisation(alpha, beta), {**memory, "action_alpha": alpha, "action_beta": beta}
 
     def _advance_post_activation(self, activated, memory, r_out):
-        _, alpha, beta = self.compute_synchronisation(
+        alpha, beta = self._synchronisation_accumulators(
             activated, memory["out_alpha"], memory["out_beta"], r_out, "out")
         return {**memory, "out_alpha": alpha, "out_beta": beta}
 
