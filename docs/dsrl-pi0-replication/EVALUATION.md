@@ -8,11 +8,12 @@ OpenPI and LIBERO sources and distinguishes this work from Pi0.5.
 
 The single-seed pilot improved from 4/10 native successes to its first 10/10
 learned panel at 40k optimizer updates. It then scored 10/10 in 16 consecutive
-panels through 190k. The latest panel scored 9/10 at
-200k updates, after 10,501 replay query rows and 204,372 training primitive
-actions. A single 10-episode panel is too small to establish a decline. The full
-run is still active; this does not establish the paper's three-seed aggregate
-or its sample-efficiency confidence interval.
+panels through 190k. The latest panel scored 10/10 at
+230k updates, after 12,000 replay query rows and 233,512 training primitive
+actions. The 200k panel scored 9/10; the full curve retains this dip and the
+subsequent panels. The run is still active, with one seed and 10 evaluation
+episodes per panel. It does not establish the paper's three-seed aggregate or
+its sample-efficiency confidence interval.
 
 | Panel | Optimizer updates | Replay query rows | Training primitive actions | Successes | Episodes | Panel actions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -37,6 +38,9 @@ or its sample-efficiency confidence interval.
 | Learned SAC | 180000 | 9505 | 185059 | 10 | 10 | 1629 |
 | Learned SAC | 190000 | 10002 | 194715 | 10 | 10 | 1764 |
 | Learned SAC | 200000 | 10501 | 204372 | 9 | 10 | 1829 |
+| Learned SAC | 210000 | 11011 | 214269 | 10 | 10 | 1423 |
+| Learned SAC | 220000 | 11504 | 223837 | 10 | 10 | 1588 |
+| Learned SAC | 230000 | 12000 | 233512 | 10 | 10 | 1576 |
 
 The initial native panel completed at 2026-11-01 02:18:55 Shanghai after
 replay >500 warmup and before the first SAC update. It uses the original random
@@ -52,19 +56,26 @@ counts are separate units. This is directional evidence for the reported
 steering gain, with one seed and only 10 evaluation episodes per panel; it is
 not a claim of better sample efficiency than the published aggregate.
 
-At the direct allocation audit (`2026-11-01T04:25:41.182206+08:00`), the last published
-progress was 202,720 updates, 1,070 training episodes and 10,636 replay rows. The
-complete recovery at 201,920 updates and all 21 retained evaluation
-policy/RNG snapshots (0 through 200k) matched their saved SHA256 hashes.
+At the direct allocation audit (`2026-11-01T04:47:27.653934+08:00`), the last published
+progress was 238,080 updates, 1,289 training episodes and 12,404 replay rows. The
+complete recovery at 232,180 updates and all 24 retained evaluation
+policy/RNG snapshots (0 through 230k) matched their saved SHA256 hashes.
 The current process still held the allocated GPU's compute and graphics
-contexts. Current-run output was 3,517,528,954 bytes. The physical ledger,
+contexts. Current-run output was 4,047,829,214 bytes. The physical ledger,
 read separately during a live collection/update boundary, contained
-250,007 known actions and 400 pending actions. Retain
-the additional 400 pending actions from failed R3, for 250,807 conservatively
+288,812 known actions and 400 pending actions. Retain
+the additional 400 pending actions from failed R3, for 289,612 conservatively
 charged phase actions at that ledger read. Counting conservatively from job
 creation through this audit, plus prior failures, bounds cumulative GPU time
-at 8,681 seconds; the final worker lifetime is pending. The final before/after
+at 9,987 seconds; the final worker lifetime is pending. The final before/after
 motor hash comparison remains pending the run's terminal cleanup.
+
+One live NVML query reported compute-only activity for the correct model PID.
+Six bounded observations then showed C followed by five C+G readings on the
+same allocated UUID, while physical actions advanced and EGL binding variables
+remained correct. The subsequent strict audit passed C+G. This transient
+telemetry observation did not require a process or source change. See the
+[context samples](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0445-GPU-SAMPLES.json).
 
 All 10 Linux CPU checks passed with the pinned Policy API and next-update
 optimizer recovery. On sm_120 the original JAX 0.5 Triton compiler aborts at
@@ -76,8 +87,8 @@ actions and 64 GiB output, including 660 conservatively charged GPU-seconds and
 400 unresolved actions from failed startup identities.
 
 [Initial receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
-[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0425.json),
-[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0425-DIRECT.json),
-[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0425-CURVE.csv),
+[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0445.json),
+[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0445-DIRECT.json),
+[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0445-CURVE.csv),
 [console evidence](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-EVIDENCE.log),
 [launch plan](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-LAUNCH-PLAN.json).
