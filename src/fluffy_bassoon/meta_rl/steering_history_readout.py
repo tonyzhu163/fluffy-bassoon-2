@@ -547,7 +547,7 @@ def validate_allocation(plan, allocation, scope, *, source, hostname, output):
         raise ValueError("Never create/replenish a ledger for student evaluation")
 
 
-def main(argv=None):
+def main(argv=None, *, control_factory=None):
     ap = argparse.ArgumentParser(description=__doc__)
     for name in ("plan", "scope", "allocation", "joint-conventions"):
         ap.add_argument("--"+name, type=Path, required=True)
@@ -620,7 +620,8 @@ def main(argv=None):
             env = RobotwinNoiseEnv(model_path=args.model_path, norm_stats=args.norm_stats,
                 robotwin_root=args.robotwin_root, rlinf_root=args.rlinf_root, output_dir=args.output/"runtime",
                 action_horizon=32, num_steps=5, task_episode_limits=limits)
-            control = CoefficientSteering(env, interface, post_command_transform=distribution,
+            factory = CoefficientSteering if control_factory is None else control_factory
+            control = factory(env, interface, post_command_transform=distribution,
                 condition_contract=distribution.contract(), interface_sha256=binding["control_interface"]["sha256"])
             control.set_coefficients(plan["profile"]["interface"]["arm"], [0.]*4)
             if control.mapping_sha256() != plan["profile"]["interface"]["mapping_sha256"]:

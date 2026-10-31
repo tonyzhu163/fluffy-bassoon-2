@@ -324,7 +324,8 @@ def run_lineage(*, control, budget, profile, lineage, distribution, output, guar
     return state
 
 
-def _worker(connection, args, allocation, profile_data, interface, qualification, lineage_data, header, source):
+def _worker(connection, args, allocation, profile_data, interface, qualification, lineage_data, header, source,
+            control_factory=None):
     """Spawn target: create all mutable learner/runtime objects inside child."""
     from .steering_condition_collection import LineageSpec, SourceProfile
     lineage, profile = LineageSpec(**lineage_data), SourceProfile(**profile_data)
@@ -357,7 +358,8 @@ def _worker(connection, args, allocation, profile_data, interface, qualification
             robotwin_root=args.robotwin_root, rlinf_root=args.rlinf_root, device=device,
             output_dir=worker_output/"runtime", action_horizon=32, num_steps=5,
             task_episode_limits=serial.load_benchmark_episode_limits(args.robotwin_root, serial.TASKS))
-        control = serial.CoefficientSteering(env, interface, interface_sha256=args.interface_sha256)
+        factory = serial.CoefficientSteering if control_factory is None else control_factory
+        control = factory(env, interface, interface_sha256=args.interface_sha256)
         control.set_coefficients(profile.arm, serial.np.zeros(4, serial.np.float32))
         if control.mapping_sha256() != profile.mapping_sha256:
             raise ValueError("Worker actual frontend mapping differs from qualification")
@@ -403,7 +405,7 @@ def _worker(connection, args, allocation, profile_data, interface, qualification
         connection.close()
 
 
-def supervise(args, allocation, profile, interface, qualification, budget, source):
+def supervise(args, allocation, profile, interface, qualification, budget, source, *, control_factory=None):
     """All six methods execute, in concurrent waves if qualified capacity<6."""
     context = mp.get_context("spawn")
     processes, connections, results = {}, {}, {}
@@ -424,7 +426,8 @@ def supervise(args, allocation, profile, interface, qualification, budget, sourc
                 parent, child = context.Pipe(duplex=True)
                 process = context.Process(target=_worker, name=lineage.method,
                     args=(child, args, allocation, asdict(profile), interface, qualification,
-                          asdict(lineage), budget.header, source))
+                          asdict(lineage), budget.header, source)
+                         + (() if control_factory is None else (control_factory,)))
                 process.start()
                 child.close()
                 processes[lineage.method] = process
@@ -476,7 +479,7 @@ def supervise(args, allocation, profile, interface, qualification, budget, sourc
             signal.signal(signum, handler)
 
 
-def main(argv=None):
+def main(argv=None, *, control_factory=None, selection_validator=None):
     args = serial.parser().parse_args(argv)
     if sys.platform != "linux":
         raise RuntimeError("Source models/tests require an actual allocated Linux runtime")
@@ -496,7 +499,8 @@ def main(argv=None):
         raise ValueError("Exact original scope and scientifically selected frontend required")
     # The current frontend is ineligible. Parallel execution never substitutes
     # scheduling/capacity for actual selected mapping and condition proofs.
-    serial.validate_selection(selection, qualification, serial.read_reference(selection["a1_result"]),
+    validator = serial.validate_selection if selection_validator is None else selection_validator
+    validator(selection, qualification, serial.read_reference(selection["a1_result"]),
         profile, interface, interface_sha=args.interface_sha256,
         selection_rule=serial.read_reference(selection["selection_rule"]))
     validate_parallel_admission(scope, allocation, profile, source=source, hostname=socket.gethostname(),
@@ -558,7 +562,8 @@ def main(argv=None):
             allocation_sha256=args.allocation_sha256, profile_sha256=args.profile_sha256,
             selection_sha256=args.selection_sha256, gpu_probe_sha256=serial.sha(args.gpu_probe),
             max_concurrency=allocation["max_concurrency"], corpus_index=str(corpus/"shards.json")))
-        state = supervise(args, allocation, profile, interface, qualification, budget, source)
+        state = supervise(args, allocation, profile, interface, qualification, budget, source,
+            control_factory=control_factory)
         # Preserve all full-state references and the unfiltered canonical tip
         # BEFORE optional corpus export/qualification can fail. Never label a
         # synthetic or partially assembled index as student-admitted data.
