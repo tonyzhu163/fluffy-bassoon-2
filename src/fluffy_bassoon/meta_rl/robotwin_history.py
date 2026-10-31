@@ -182,6 +182,12 @@ class FrozenNativeHistoryController:
         self.state=None; self.previous_noise=np.zeros(1024,np.float32); self.previous_reward=0.
         self.episode_index=-1; self.episode_limit=None; self.primitive_step=0; self.pending=False; self.episode_open=False
 
+    def reseed_action_rng(self, seed):
+        """Pair query action streams without erasing support state or clocks."""
+        if self.pending or self.episode_open or type(seed) is not int or not 0 <= seed < 2**32:
+            raise ValueError('Reseed action RNG only between completed episodes with a declared seed')
+        self.generator.manual_seed(seed)
+
     def begin_episode(self, *, episode_index, episode_limit):
         allowed=set((self.manifest['interface'].get('task_episode_limits') or {}).values()) or {self.manifest['interface']['episode_limit']}
         if (self.pending or self.episode_open or type(episode_index) is not int

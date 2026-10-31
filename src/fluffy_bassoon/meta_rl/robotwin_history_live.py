@@ -22,6 +22,8 @@ ROOT = Path(__file__).resolve().parents[3]
 BACKEND_SHA = 'eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3'
 PLAN_SHA = 'b911dd972cc30e6f6b02cacf831eafa84738bd66ebd032824bb5fc94d340287c'
 SOURCE_PLAN_SHA = 'ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602'
+AD500_TEMPLATE = ROOT/'outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json'
+AD500_TEMPLATE_SHA = '145e45d77c51e4885663bd6aa0745b35cb1a26b8896e26edcc9bee12a439c24c'
 
 
 def sha(path):
@@ -65,6 +67,20 @@ def read_source_teacher_plan(path, expected):
     value = read_checked(path,SOURCE_PLAN_SHA)
     if value.get('format') != 'robotwin_source_teacher_evaluation_v1':
         raise ValueError('Source teacher profile cannot substitute the development panel')
+    return value
+
+
+def read_ad500_plan(path, expected):
+    """Only post-fit artifact bindings may differ from the immutable topology."""
+    template=read_checked(AD500_TEMPLATE,AD500_TEMPLATE_SHA)
+    value=read_checked(path,expected)
+    topology=dict(value)
+    for key in ('models','fit_commit','train_index_sha256','validation_index_sha256'):
+        if value.get(key) is None or value.get(key)==template[key]:
+            raise ValueError('AD500 requires actual post-fit artifact bindings; the prepared template cannot run')
+        topology[key]=template[key]
+    if topology!=template:
+        raise ValueError('AD500 topology differs from the immutable prepared template')
     return value
 
 
@@ -125,7 +141,8 @@ def ledger(args, plan, suffix):
     return CampaignBudget(args.campaign_root,campaign_id=args.campaign_id,total_actions=spec['max_actions'],
         source_caps={},phase_caps={spec['phase']:spec['max_actions']},
         contract=dict(evaluation_plan_sha256=canonical_sha(plan),native_backend_sha256=BACKEND_SHA,
-                      deployment='source_teacher_K4_v1' if spec['source'] else 'fresh_K8_fixed100_v1'),
+                      deployment='source_teacher_K4_v1' if spec['source'] else
+                        'isolated_K0_K1_source100_AD500_v1' if spec['ad500'] else 'fresh_K8_fixed100_v1'),
         run_id=f'{args.expected_hostname}:{args.output.name}:{suffix}',source_commit=args.source_commit)
 
 
@@ -188,9 +205,11 @@ def run_command(command, log, timeout, *, environment=None):
 
 
 def verify_unit(record, plan, expected, natives, *, source_admission=None):
-    from .robotwin_history_evaluate import canonical_sha,trial_profile,SOURCE_TASK_LIMITS,SOURCE_TEACHER_SHA
-    spec=trial_profile(plan);count=spec['episodes']
+    from .robotwin_history_evaluate import (canonical_sha,trial_profile,unit_episode_count,
+        verify_ad500_result,SOURCE_TASK_LIMITS,SOURCE_TEACHER_SHA)
+    spec=trial_profile(plan)
     condition,task=expected
+    count=unit_episode_count(plan,condition)
     limit=SOURCE_TASK_LIMITS[task] if spec['source'] else 400
     receipt=read_checked(record['receipt_path'],record['receipt_sha256'])
     result_path=Path(record['receipt_path']).parent/'trial/result.json'
@@ -206,7 +225,7 @@ def verify_unit(record, plan, expected, natives, *, source_admission=None):
         raise ValueError('Incomplete or incompatible trial unit receipt')
     for index,(case,episode) in enumerate(zip(result['reset_cases'],result['episodes'],strict=True)):
         if (case.get('task')!=task or case.get('episode')!=index+1
-                or case.get('requested_seed')!=plan['cases'][task][index]
+                or (not spec['ad500'] and case.get('requested_seed')!=plan['cases'][task][index])
                 or type(case.get('actual_seed')) is not int or not case.get('observation_sha256')
                 or not case.get('features_sha256') or not 0<=episode['primitive_steps']<=limit):
             raise ValueError('Trial reset cases or durations differ')
@@ -229,15 +248,25 @@ def verify_unit(record, plan, expected, natives, *, source_admission=None):
                     or sampling.get('deterministic') is not (condition=='sac100-mean')
                     or sampling.get('optimizer_rng_used') is not False):
                 raise ValueError('Source teacher actor or private sampling convention changed')
+    if spec['ad500']:
+        verify_ad500_result(result,plan,condition,task,
+            native=None if condition=='native' else natives.get(task,(None,))[0],
+            support=natives.get(('support',task),(None,))[0],admission=source_admission)
+        if condition=='ad-full-k1':
+            natives[('support',task)]=(result,str(result_path),receipt['result_sha256'])
     if condition=='native': natives[task]=(result,str(result_path),receipt['result_sha256'])
+    elif spec['ad500']: pass  # Query and support pairing checked separately above.
     elif task not in natives or result['reset_cases']!=natives[task][0]['reset_cases']:
         raise ValueError('Condition is not paired to the completed native K8 case bank')
     return result
 
 
-def resume_units(path, expected_sha, plan, source_commit, prior_gpu_seconds, *, source_admission=None):
+def resume_units(path, expected_sha, plan, source_commit, prior_gpu_seconds, *, source_admission=None,
+                 expected_plan_sha=None):
     from .robotwin_history_evaluate import trial_profile
-    expected_plan=SOURCE_PLAN_SHA if trial_profile(plan)['source'] else PLAN_SHA
+    spec=trial_profile(plan)
+    expected_plan=expected_plan_sha if spec['ad500'] else SOURCE_PLAN_SHA if spec['source'] else PLAN_SHA
+    if expected_plan is None: raise ValueError('AD500 recovery requires the exact bound-plan file SHA')
     previous=read_checked(path,expected_sha)
     if (previous.get('status') not in ('complete','wall_boundary') or previous.get('source_commit')!=source_commit
             or previous.get('plan_sha256')!=expected_plan
@@ -292,7 +321,7 @@ def prepare_runtime(args, plan):
 
 
 def run_child(args, plan, *, prepare=prepare_runtime, agent_loader=None, trial_runner=None):
-    from .robotwin_history_evaluate import load_agent,renderer_records,run_trial,trial_profile,SOURCE_TASK_LIMITS
+    from .robotwin_history_evaluate import load_agent,renderer_records,run_trial,trial_profile,unit_episode_count,SOURCE_TASK_LIMITS
     spec=trial_profile(plan)
     order=unit_order(plan)
     if (type(args.unit_index) is not int or not 0<=args.unit_index<len(order)
@@ -300,6 +329,11 @@ def run_child(args, plan, *, prepare=prepare_runtime, agent_loader=None, trial_r
         raise ValueError('Child unit differs from the fixed case order')
     if args.condition!='native' and not args.native_result: raise ValueError('Native K8 receipt is required first')
     references=None if args.condition=='native' else read_checked(args.native_result,args.native_result_sha)
+    support=None
+    if spec['ad500'] and args.condition=='ad-full-k1-reset':
+        if not getattr(args,'support_result',None) or not getattr(args,'support_result_sha',None):
+            raise ValueError('Same-weight K1 support receipt required before model/runtime preparation')
+        support=read_checked(args.support_result,args.support_result_sha)
     args.output.mkdir(parents=True,exist_ok=True)
     write(args.output/'intent.json',dict(source_commit=args.source_commit,condition=args.condition,
         task=args.task,unit_index=args.unit_index,plan_sha256=args.plan_sha,run_id=args.run_id,
@@ -308,15 +342,16 @@ def run_child(args, plan, *, prepare=prepare_runtime, agent_loader=None, trial_r
     with ledger(args,plan,'unit') as budget:
         before=budget.snapshot()
         if before['pending_actions'] or before['uncertain_actions']: raise RuntimeError('Unknown physical outcome: stop')
-        allowance=spec['episodes']*(SOURCE_TASK_LIMITS[args.task] if spec['source'] else 400)
+        allowance=unit_episode_count(plan,args.condition)*(SOURCE_TASK_LIMITS[args.task] if spec['source'] else 400)
         if budget.remaining(phase=spec['phase'],method=args.condition)<allowance:
-            label='K4' if spec['source'] else 'K8'
+            label='K0/K1 unit' if spec['ad500'] else 'K4' if spec['source'] else 'K8'
             raise RuntimeError('Insufficient complete '+label+' allowance before model/runtime preparation')
         try:
             agent=(agent_loader or load_agent)(plan,args.condition,device='cuda')
             env,writer,parity=prepare(args,plan)
             result=(trial_runner or run_trial)(env,budget,agent,plan,condition=args.condition,task=args.task,
-                output=args.output/'trial',run_id=args.run_id,references=references)
+                output=args.output/'trial',run_id=args.run_id,references=references,
+                **(dict(support_references=support) if spec['ad500'] else {}))
             after=budget.snapshot(); corpus=writer.statistics()
             if (after['pending_actions'] or after['uncertain_actions'] or corpus.get('pending_decision')
                     or corpus.get('unresolved_decisions') or corpus.get('native_completed_chunks')
@@ -343,8 +378,10 @@ def child_command(args, index, condition, task, output, native):
         '--condition',condition,'--task',task,'--unit-index',str(index),'--run-id',f'{args.run_id}:u{index:02d}',
         '--parent-pid',str(os.getpid()),'--parent-start-ticks',str(process_start_ticks(os.getpid()))]
     if native: command+=['--native-result',native[1],'--native-result-sha',native[2]]
-    if getattr(args,'profile','fixed100')=='source-teacher100':
-        command+=['--profile','source-teacher100']
+    if getattr(args,'profile','fixed100')!='fixed100': command+=['--profile',args.profile]
+    if native and len(native)==4:
+        support=native[3]
+        command+=['--support-result',support[1],'--support-result-sha',support[2]]
     return command
 
 
@@ -355,7 +392,7 @@ def run_units(args, plan, *, worker, audit, started=None, source_admission=None)
     units=[]; natives={}; status='wall_boundary'
     if args.resume_manifest:
         units,natives=resume_units(args.resume_manifest,args.resume_sha,plan,args.source_commit,args.prior_gpu_seconds,
-            source_admission=source_admission)
+            source_admission=source_admission,expected_plan_sha=args.plan_sha)
     snapshot=audit()
     if snapshot['actual_actions']!=sum(read_checked(Path(r['receipt_path']).parent/'trial/result.json',
             read_checked(r['receipt_path'],r['receipt_sha256'])['result_sha256'])['actual_actions'] for r in units):
@@ -366,7 +403,8 @@ def run_units(args, plan, *, worker, audit, started=None, source_admission=None)
             elapsed_seconds=time.monotonic()-started,
             cumulative_gpu_seconds_lower_bound=args.prior_gpu_seconds+time.monotonic()-started,
             budget=snapshot,error=error,additional_sgd_updates=0,
-            execution=('18 sequential fresh source-only K4 Python processes' if spec['source'] else
+            execution=('12 sequential fresh condition/task processes; 8 isolated queries or support/query pairs each'
+                if spec['ad500'] else '18 sequential fresh source-only K4 Python processes' if spec['source'] else
                 '18 sequential fresh K8 Python processes; operational refinement of the same immutable panel'))
         write(args.output/'progress.json',value,replace=True)
         return value
@@ -378,6 +416,9 @@ def run_units(args, plan, *, worker, audit, started=None, source_admission=None)
             if remaining<args.unit_start_reserve+args.final_reserve: break
             native=None if condition=='native' else natives.get(task)
             if condition!='native' and native is None: raise RuntimeError('Native case bank is not complete for this task')
+            if spec['ad500'] and condition=='ad-full-k1-reset':
+                if ('support',task) not in natives: raise RuntimeError('Same-weight K1 support bank is not complete')
+                native=(*native,natives[('support',task)])
             unit=args.output/'units'/f'{index:02d}-{condition}-{task}'; unit.mkdir(parents=True,exist_ok=False)
             record=worker(index,condition,task,unit,native,remaining-args.final_reserve-10)
             result=verify_unit(record,plan,(condition,task),natives,source_admission=source_admission)
@@ -403,7 +444,7 @@ def run_parent(args, plan):
     write(args.output/'execution.json',dict(source_commit=args.source_commit,plan_sha256=args.plan_sha,
         hostname=socket.gethostname(),wall_seconds=args.wall_seconds,prior_gpu_seconds=args.prior_gpu_seconds,
         max_gpu_seconds=spec['max_gpu_seconds'],processes=len(unit_order(plan)),
-        max_nominal_accepted_resets_per_process=spec['episodes']+1))
+        max_nominal_accepted_resets_per_process=(17 if spec['ad500'] else spec['episodes']+1)))
     environment=os.environ.copy(); environment.update(PYTHONPATH=str(ROOT/'src'),OMP_NUM_THREADS='4',
         MKL_NUM_THREADS='4',OPENBLAS_NUM_THREADS='4',FLUFFY_GPU_EXECUTION='baige',PYTHONDONTWRITEBYTECODE='1')
     environment.setdefault('CUDA_VISIBLE_DEVICES','0') # Qualified exclusive container fallback; retain any existing visibility.
@@ -411,6 +452,7 @@ def run_parent(args, plan):
     checks=['tests/test_robotwin_history_live.py','tests/test_robotwin_history_evaluate.py',
         'tests/test_robotwin_parent_guard.py']
     if spec['source']: checks+=['tests/test_robotwin_source_teacher_profile.py']
+    if spec['ad500']: checks+=['tests/test_robotwin_ad500_readout.py']
     run_command([sys.executable,'-m','pytest','-q',*checks],
         args.output/'wrapper-tests.log',remaining(),environment=environment)
     # CPU-only admission creates no motor and leaves the parent's CUDA context unopened.
@@ -430,13 +472,13 @@ def run_parent(args, plan):
         receipt=unit/'unit-receipt.json'
         return dict(condition=condition,task=task,receipt_path=str(receipt),receipt_sha256=sha(receipt))
     return run_units(args,plan,worker=worker,audit=lambda:audit_ledger(args,plan),started=started,
-        source_admission=admission if spec['source'] else None)
+        source_admission=admission if spec['source'] or spec['ad500'] else None)
 
 
 def parser():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--mode',choices=('parent','child'),default='parent')
-    p.add_argument('--profile',choices=('fixed100','source-teacher100'),default='fixed100')
+    p.add_argument('--profile',choices=('fixed100','source-teacher100','ad500-source100'),default='fixed100')
     for name in ('plan','output','campaign-root','robotwin-root','rlinf-root'):
         p.add_argument('--'+name,type=Path,required=True)
     for name in ('campaign-id','source-commit','expected-hostname'): p.add_argument('--'+name,required=True)
@@ -446,6 +488,7 @@ def parser():
     p.add_argument('--resume-manifest',type=Path); p.add_argument('--resume-sha')
     p.add_argument('--condition'); p.add_argument('--task'); p.add_argument('--unit-index',type=int)
     p.add_argument('--native-result',type=Path); p.add_argument('--native-result-sha'); p.add_argument('--run-id')
+    p.add_argument('--support-result',type=Path); p.add_argument('--support-result-sha')
     p.add_argument('--parent-pid',type=int); p.add_argument('--parent-start-ticks',type=int)
     return p
 
@@ -456,7 +499,10 @@ def main(argv=None):
         # Before imports/model admission, CUDA, Git checks or any simulator reset.
         args.parent_death_guard=arm_parent_death_guard(args.parent_pid,args.parent_start_ticks)
     source_profile=args.profile=='source-teacher100'
-    expected_sha=SOURCE_PLAN_SHA if source_profile else PLAN_SHA
+    ad500=args.profile=='ad500-source100'
+    expected_sha=args.plan_sha if ad500 else SOURCE_PLAN_SHA if source_profile else PLAN_SHA
+    if ad500 and (len(args.plan_sha)!=64 or any(c not in '0123456789abcdef' for c in args.plan_sha)):
+        raise ValueError('AD500 requires the actual owner-hashed bound plan')
     cap=3600 if source_profile else 5400
     if args.plan_sha!=expected_sha: raise ValueError('Only the immutable selected-profile PLAN_SHA is admitted')
     if (sys.platform!='linux' or socket.gethostname()!=args.expected_hostname
@@ -475,7 +521,7 @@ def main(argv=None):
     if args.output.is_relative_to(ROOT): raise ValueError('Runtime output must be outside the source checkout')
     if bool(args.resume_manifest)!=bool(args.resume_sha): raise ValueError('Recovery needs its exact SHA')
     args.run_id=args.run_id or f'{args.expected_hostname}:{args.output.name}'
-    plan=(read_source_teacher_plan if source_profile else read_fixed_plan)(args.plan,args.plan_sha)
+    plan=(read_ad500_plan if ad500 else read_source_teacher_plan if source_profile else read_fixed_plan)(args.plan,args.plan_sha)
     def terminate(signum,frame): raise TimeoutError('Owned K8 child received termination; no retry')
     signal.signal(signal.SIGTERM,terminate)
     try: return run_parent(args,plan) if args.mode=='parent' else run_child(args,plan)
