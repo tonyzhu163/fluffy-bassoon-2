@@ -19,9 +19,9 @@
   "protocol_requirements": [
     "Outcome-independent explicit gripper-phase boundary rule; exact per-case schedule/hold counts <=400 before dispatch; never filter a rejected source case",
     "All original source frames retained in schedule; real early terminal success may consume only a prefix and is reported as such",
-    "Separate source cursor, issued H32 slots, actual valid physical slots, added holds and unexecuted padding; only actual slots charged and supervised",
+    "Separate source cursor, issued H32 slots, actual valid physical slots, added holds and unexecuted padding; only actual physical slots charged; full known plan supervision follows the explicit plan-imitation objective, separate from executed masks",
     "Only the12 new aligned executions populate8wholeTRAIN/4VAL SL bank; new control and old rollouts remain audit-only",
-    "Canonical actual observations/issued commands/valid masks and official normalization/decoder roundtrip; no HDF5 observation substitution or future boundary/cursor/hidden audit features as policy inputs",
+    "Canonical actual observations and full expert proposed/submittedH32 plans; retain actual saved native Gaussian/base proposal and executed masks separately. Official normalization/decoder roundtrip plus bound/unreachable diagnostics; no invented executed tail, silent target clipping, resampled residual base, HDF5 observation substitution or future boundary/cursor/hidden audit features as policy inputs",
     "Exactly25physicalepisodes including the control/qualification; all settling/reset/support/query and full recovery overhead inside original action/GPU bounds",
     "Complete cursor/controller/optimizer/global and private RNG recovery; audit globalNumPy without changing native runtime randomness; conservative unresolved intents",
     "No causal conclusion from one repeated02control or automatic fixed4D/source/A2/student admission"
@@ -30,5 +30,7 @@
   "control_owner": "01a18762-9db6-74c2-940a-96524803e454",
   "criteria_owner": "01a19098-69e2-71a1-8cd7-5371c38e4453",
   "execution_owner": "/root/finish_assembly",
-  "new_allocations_models_tests_actions": 0
+  "new_allocations_models_tests_actions": 0,
+  "label_objective": "expert submitted-H32 PLAN imitation; not a reconstructed executed waypoint trajectory",
+  "coordinator_label_correction": "Native gen_sparse plans over the full submitted chunk before stepping; executed masks govern actual cost, not causal influence of later waypoint parameters. This supersedes the initial root valid-slots-only SL suggestion."
 }
