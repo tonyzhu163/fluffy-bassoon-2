@@ -231,6 +231,7 @@ def test_backend_preserves_native_zero_parity_and_records_exact_hook(monkeypatch
 
 def test_backend_forwards_applied_commands_metadata_and_actual_duration(monkeypatch):
     instance = backend(monkeypatch)
+    instance.record_agent_requested_actions = True
     head = ReactiveALOHAActionResidual(public_dim=5, arm_joint_bound=.02, gripper_bound=.003).eval()
     with torch.no_grad():
         head.output.bias.fill_(1)
@@ -244,7 +245,7 @@ def test_backend_forwards_applied_commands_metadata_and_actual_duration(monkeypa
     def step(commands):
         captured["commands"] = commands.clone()
         return [raw], torch.ones(1), torch.ones(1, dtype=torch.bool), torch.zeros(1, dtype=torch.bool), [
-            dict(valid_action_mask=torch.tensor([True, True, False]), episode=dict(success_once=True))]
+            dict(valid_action_mask=torch.tensor([True, False, True]), episode=dict(success_once=True))]
 
     instance.env = SimpleNamespace(chunk_step=step, venv=SimpleNamespace(envs=[SimpleNamespace(task=object())]))
     instance._encode = lambda observation: np.zeros(5, np.float32)
@@ -259,6 +260,7 @@ def test_backend_forwards_applied_commands_metadata_and_actual_duration(monkeypa
     torch.testing.assert_close(record["actions"], record["base_actions"] + record["applied_delta"])
     assert captured["metadata"]["owner"] == "synthetic-test"
     assert terminated and info["primitive_steps"] == 2 and captured["native"]["executed_steps"] == 2
+    np.testing.assert_array_equal(info["last_valid_agent_request"], record["actions"].numpy()[0, 2])
 
 
 def test_ambiguous_hooks_and_stale_public_features_fail_closed(monkeypatch):
@@ -271,3 +273,32 @@ def test_ambiguous_hooks_and_stale_public_features_fail_closed(monkeypatch):
         RobotwinNoiseEnv(kv_adapter=object(), action_residual=object())
     with pytest.raises(ValueError, match="injected backend"):
         RobotwinNoiseEnv(backend=object(), kv_adapter=object())
+
+
+def test_hidden_post_command_transform_keeps_public_request_and_actuator_audit_separate(monkeypatch):
+    instance = backend(monkeypatch)
+    noise = np.zeros((3, 32), np.float32)
+    native = instance.decode(noise)
+    calls = []
+    def condition(base, requested):
+        calls.append((base.clone(), requested.clone()))
+        final = requested.clone(); final[..., 0] += .01
+        return final, dict(condition_id="audit-only-fixture", bias=.01)
+    instance.post_command_transform = condition
+    final = instance.decode(noise)
+    np.testing.assert_array_equal(final[:, [6, 13]], native[:, [6, 13]])
+    record = instance._last_residual_metadata
+    np.testing.assert_array_equal(record["public_agent_requested_actions"].numpy()[0], native)
+    np.testing.assert_array_equal(record["audit_only_post_command_transform"]["actuator_commands"].numpy()[0], final)
+    assert record["audit_only_post_command_transform"]["details"]["condition_id"] == "audit-only-fixture"
+    torch.testing.assert_close(calls[0][0], calls[0][1])
+
+
+def test_hidden_post_command_transform_cannot_change_grippers(monkeypatch):
+    instance = backend(monkeypatch)
+    def invalid(base, requested):
+        final = requested.clone(); final[..., 6] += .01
+        return final, {}
+    instance.post_command_transform = invalid
+    with pytest.raises(ValueError, match="exact grippers"):
+        instance.decode(np.zeros((3, 32), np.float32))

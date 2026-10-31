@@ -641,6 +641,7 @@ class _RoboTwinBackend:
             targets = self.model._sample_actions_from_prefix_cache(
                 self._prepared, self._prefix_mask, cache, noise=tensor)
             actions = self.model.decode_actions(targets, self._prepared.state)
+            base_decoded_actions = actions.detach().clone() if getattr(self, "post_command_transform", None) is not None else None
             if action_residual is not None:
                 if action_residual.training:
                     raise ValueError("Use an eval-mode action hook for simulator inference")
@@ -650,6 +651,22 @@ class _RoboTwinBackend:
                     public_features=self._public_features.detach().cpu(),
                     **{name: getattr(correction, name).detach().cpu() for name in
                        ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
+            if getattr(self, "record_agent_requested_actions", False):
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=actions.detach().cpu().clone())
+            transform = getattr(self, "post_command_transform", None)
+            if transform is not None:
+                requested = actions.detach().clone()
+                transformed, audit = transform(base_decoded_actions, requested.clone())
+                if (not isinstance(transformed, torch.Tensor) or transformed.shape != requested.shape
+                        or transformed.device != requested.device or transformed.dtype != requested.dtype
+                        or not torch.isfinite(transformed).all() or not isinstance(audit, dict)
+                        or not torch.equal(transformed[..., [6, 13]], requested[..., [6, 13]])):
+                    raise ValueError("Post-command condition must preserve finite ALOHA layout and exact grippers")
+                actions = transformed
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=requested.cpu(),
+                    audit_only_post_command_transform=dict(details=audit, actuator_commands=actions.detach().cpu()))
         torch.cuda.synchronize()
         self.motor_seconds += time.monotonic() - tick
         self.motor_queries += 1
@@ -696,12 +713,21 @@ class _RoboTwinBackend:
                 duration_seconds=time.monotonic() - started,
                 adapter_rewards=rewards, adapter_terminations=terms,
                 adapter_truncations=truncs, **native_feedback)
+        public_command = {}
+        if getattr(self, "record_agent_requested_actions", False):
+            requests = self._last_residual_metadata["public_agent_requested_actions"][0, :action_count].numpy().copy()
+            valid = torch.as_tensor(mask).detach().cpu().numpy().reshape(-1).astype(bool)
+            indices = np.flatnonzero(valid)
+            if len(indices) != actual or (len(indices) and indices[-1] >= len(requests)):
+                raise RuntimeError("Native executed mask does not index the issued public request prefix")
+            public_command = dict(agent_requested_actions=requests, valid_action_mask=valid.copy(),
+                last_valid_agent_request=None if not len(indices) else requests[indices[-1]].copy())
         return features, reward, terminal, truncated, dict(
             primitive_steps=actual, issued_primitive_steps=action_count,
             success=success, motor_queries=1, prefix_calls=1,
             observation_sha256=_observation_hash(raw),
             actions_sha256=hashlib.sha256(np.ascontiguousarray(actions).tobytes()).hexdigest(),
-            prefix_seconds=self.prefix_seconds, motor_seconds=self.motor_seconds)
+            prefix_seconds=self.prefix_seconds, motor_seconds=self.motor_seconds, **public_command)
 
     def check_noise_parity(self, noise, atol=2e-5):
         """Compare cached-prefix actions with the native model's explicit-noise API."""
