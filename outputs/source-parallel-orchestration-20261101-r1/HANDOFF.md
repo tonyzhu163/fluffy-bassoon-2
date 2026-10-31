@@ -25,8 +25,13 @@ assembly retains the existing AD/DPT/ICRL gates.
 CPU qualification is prepared, not executed. Run on allocated Linux:
 
 ```sh
-uv run pytest -q tests/test_robotwin_source_broker.py tests/test_robotwin_source_parallel.py tests/test_robotwin_campaign_budget.py tests/test_robotwin_steering_source.py tests/test_steering_condition_collection.py
+uv run pytest -q tests/test_robotwin_source_broker.py tests/test_robotwin_source_parallel.py
 ```
+
+The qualification target is only these14 new prepared cases. Thirteen legacy
+dependencies and fixture helpers were byte-matched against the author base and
+reviewed integration main. Their previous validation carries; the legacy test
+suites were not rerun for this integration.
 
 The14 new test functions cover actual spawned CPU process overlap, waves of
 two across all six lineages, full-episode and finite phase/method admission,
@@ -46,13 +51,12 @@ actual closed scheduler cost. No source launch is allowed before the existing
 frontend/mapping/source selection gate passes. Multi-GPU mapping and automatic
 partial-run resume are deliberately outside this prospective version.
 
-Local Git publication was not attempted: interactive zsh contains neither
-`proxy_on` nor `proxy_on_clash`, and AGENTS requires one in the same shell for
-Git. The parent confirmed use of its established publication path. Source
-files were statically compared against the canonical main checkout and all six
-critical dependencies were identical. The locally observed origin/main ref
-advanced during work; the owner must review/rebase to its final latest main
-before committing/qualifying. No fetch or active-run mutation occurred.
+The exact eight-file source integration was published as
+`8a9f3df46707305334bf5545645d05044a1fea92` on
+`codex/source-parallel-integration`, based on reviewed main
+`b37c48e069d8b94da0a97b0e0618905aa4c05b0a`. The documentation-only successor
+narrows the command above and updates affected manifest hashes; every Python
+and PROFILE blob remains unchanged. No active-run mutation occurred.
 
 `STATIC-MANIFEST.json` records exact file hashes and static AST/JSON checks.
 The parent receives an external unified new-file patch and a source-only tar

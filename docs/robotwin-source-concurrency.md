@@ -124,10 +124,15 @@ launch. No capacity or source experiment is authorized by this documentation.
 Prepared qualification, to run on allocated Linux CPU, not macOS:
 
 ```sh
-uv run pytest -q tests/test_robotwin_source_broker.py tests/test_robotwin_source_parallel.py tests/test_robotwin_campaign_budget.py tests/test_robotwin_steering_source.py tests/test_steering_condition_collection.py
+uv run pytest -q tests/test_robotwin_source_broker.py tests/test_robotwin_source_parallel.py
 ```
 
-These include real spawned CPU process overlap and waves, crash-boundary
+Only these14 new prepared cases are in the qualification target. Thirteen
+legacy dependencies and fixture helpers are byte-identical to the author base
+and reviewed integration main; their previous validation carries, and their
+old suites were not rerun for this integration.
+
+The new cases include real spawned CPU process overlap and waves, crash-boundary
 accounting, unknown/uncertain refusal, per-phase/method caps, fixed validation,
 full state retention, and64 actual tiny-network optimizer cycles after the
 original strict32-chunk warmup. Runtime capacity/model/simulator qualification
