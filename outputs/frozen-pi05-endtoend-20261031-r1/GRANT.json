@@ -1,0 +1,109 @@
+{
+  "format": "frozen_pi05_endtoend_grant_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "approved": true,
+  "authority": "AUTHORITY.json",
+  "maximum_gpu_seconds": 28800,
+  "maximum_total_actions": 300000,
+  "maximum_output_bytes": 68719476736,
+  "qualification_cpu_worker_seconds": 1800,
+  "preferred_cpu_qualification": {
+    "gpus": 0,
+    "cpu_cores": 2,
+    "ram_gib": 16
+  },
+  "execution_owner": "/root/finish_assembly",
+  "coordinator_thread_id": "01a19098-69e2-71a1-8cd7-5371c38e4453",
+  "source_commit": null,
+  "reviewed_main_at_initial_binding": "d1de374bf3dc2c8b96c69086a512e79b36363f1d",
+  "required_motor_contract": {
+    "family": "Motus/RLinf RoboTwin pi0.5",
+    "flow_horizon": 32,
+    "flow_steps": 5,
+    "decoded_action_dimension": 14,
+    "motor_path": null,
+    "motor_receipt_sha256": null,
+    "motor_parameter_sha256": null,
+    "execution_horizon": "bind the existing qualified native value; do not infer from flow_steps"
+  },
+  "source_development_tasks": [
+    "place_phone_stand",
+    "place_object_stand"
+  ],
+  "maximum_selected_source_tasks": 1,
+  "excluded_data": [
+    "LIBERO task57 target-online records",
+    "old source100 AD bank",
+    "target/locked query trajectories"
+  ],
+  "interfaces": [
+    "4D noise coefficients",
+    "4D coefficients for fixed-basis KV residual",
+    "4D decoded arm-joint residual coefficients with separate gripper handling"
+  ],
+  "first_stage_limits": {
+    "maximum_gpu_seconds": 7200,
+    "maximum_total_actions": 30000,
+    "inside_whole_phase": true
+  },
+  "downstream_scope": [
+    "persistent-condition RL learning histories with complete recovery",
+    "compatible AD and DPT full/static Transformers",
+    "fixed-weight support/query evaluation with matched controls"
+  ],
+  "criteria": {
+    "review": "outputs/frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md",
+    "A1": "bounded source-development reachability search plus independent repeat confirmation; failed restricted search is inconclusive beyond the chosen class",
+    "A2": "test condition dependence across fresh scenes and matched/mismatched controllers; no privileged condition in student inputs",
+    "A3": "fit only compatible chronological actual RL records with whole-lineage splits; useful teacher/data evidence before claiming learning or training DPT targets",
+    "adoption_authority": "new explicit user-provided end-to-end experimental goal; earlier proposal and CPU PASS alone were not adoption"
+  },
+  "runtime_admission": {
+    "state_at_grant_binding": "awaiting exact live-driver source, focused CPU qualification, and motor/runtime/capacity bindings",
+    "launch_authorized_after_pass": true,
+    "actual_allocation_probe_required": true,
+    "actual_motor_zero_modification_parity_required": true,
+    "actual_suffix_gradient_and_real_episode_required": true,
+    "newer_verified_code_requires_fresh_pinned_child_and_explicit_migration": true,
+    "no_further_human_or_root_ack_required_after_conditions_pass": true
+  },
+  "budget_includes": [
+    "scheduler startup",
+    "qualification on GPU",
+    "motor loading",
+    "search and independent confirmation",
+    "teacher collection",
+    "AD/DPT fitting",
+    "support and query evaluation",
+    "failures",
+    "retries",
+    "cleanup"
+  ],
+  "count_each_allocation_once": true,
+  "unfinished_attempts_charged_at_full_reservation": true,
+  "unresolved_physical_intents_charged_conservatively": true,
+  "borrowing_from_other_grants": false,
+  "native_ppo_gpu_dispatch": "HELD",
+  "scope_payloads": [
+    {
+      "path": "SCOPE.json",
+      "bytes": 4502,
+      "sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+    },
+    {
+      "path": "INTERFACES.md",
+      "bytes": 5304,
+      "sha256": "8d3d1f5a4773b1735677bfc7a11a4cdbd00c1dcddf3aec312b520621adb59ff5"
+    }
+  ],
+  "canonical_action_accounting": {
+    "implementation": "CampaignBudget",
+    "maximum_total_actions": 300000,
+    "phase_caps": {
+      "a1": 30000
+    },
+    "live_path": null,
+    "require_same_header_for_all_children": true,
+    "fresh_child_is_not_a_fresh_action_budget": true
+  }
+}
