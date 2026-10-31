@@ -1,0 +1,223 @@
+{
+  "format": "original_a1_capacity_terminal_receipt_v1",
+  "job_id": "job-471ns3j0v2n4",
+  "source_commit": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f",
+  "scheduler_status": "Failed",
+  "scheduler_created_shanghai": "2026-10-31T21:24:45+08:00",
+  "scheduler_ended_shanghai": "2026-10-31T21:28:44+08:00",
+  "scheduler_ui_seconds": 230,
+  "exit_code": 1,
+  "status": "blocked_failure",
+  "stage": "teacher_executability",
+  "failure": {
+    "message": "Fixed published teacher trajectory did not execute successfully; diagnose before fitting",
+    "type": "RuntimeError"
+  },
+  "teacher_execution": [
+    {
+      "actions": 104,
+      "id": "phone-00",
+      "source": {
+        "bytes": 6920321,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode0.hdf5",
+        "sha256": "36c421f91fa12a466769311513526219fadd5cd7e09369fb3e95c3cc6e117eaa"
+      },
+      "success": true
+    },
+    {
+      "actions": 104,
+      "id": "phone-01",
+      "source": {
+        "bytes": 7868500,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode1.hdf5",
+        "sha256": "2711486f15b30b8e8fad011050839a53a7f1aa0df4e6f03b47ffd156f7056a16"
+      },
+      "success": true
+    },
+    {
+      "actions": 400,
+      "id": "phone-02",
+      "source": {
+        "bytes": 8319466,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode2.hdf5",
+        "sha256": "ea7f61b910463364bad00da055e7ff1afc8d2f299474bebb3ced08d575a5f555"
+      },
+      "success": false
+    }
+  ],
+  "complete_episodes": 4,
+  "actual_new_actions": 1008,
+  "canonical_action_totals": {
+    "actual_actions": 18599,
+    "charged_actions": 18599,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "journal_events": 1222,
+    "journal_sha256": "4e2ad8344fcc0343aa7d500ea445a61f4524bfa52118bd5cc3c4e582f35435b9"
+  },
+  "charged_gpu_seconds": 266,
+  "prior_gpu_seconds": 1770,
+  "cumulative_phase_gpu_seconds": 2036,
+  "cumulative_a1_gpu_seconds": 2036,
+  "released_from_5430_reservation": 5164,
+  "remaining_a1_gpu_seconds": 5164,
+  "remaining_a1_actions": 11401,
+  "remaining_phase_gpu_seconds": 26764,
+  "remaining_phase_actions": 281401,
+  "full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-r1/experiment/recovery.pt",
+    "sha256": "c59c91799938c928bdd683a6ce681cfa3f9853fe0c829c05fe6657fe30af5d5b",
+    "bytes": 41381
+  },
+  "qualification": {
+    "sha256": "557133ac7beb3a42797da52e5685408fddc21c3b0961d1965cafb21efeef7575",
+    "bytes": 1227,
+    "value": {
+      "actual_actions": 400,
+      "cache_shapes": [
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ]
+      ],
+      "complete_real_episode": "capacity-qualification",
+      "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "kv_gradient_norm": 0.003099440501286263,
+      "motor_gradients": 0,
+      "native_parity": {
+        "max_abs_error": 0.0,
+        "passed": true,
+        "tolerance": 2e-05
+      },
+      "qualification_episode": "capacity-qualification",
+      "repeated_paired_prefix": {
+        "instruction": [
+          "Lift the compact rectangular phone onto the compact adjustable phone holder."
+        ],
+        "kv_cache_exact": true,
+        "original_reset_identity": {
+          "actual_seed": 310316979,
+          "features_sha256": "1ed126bf9b37406b23fba6dc6c71bac37b617845bc59f2eb00457b402e45e9fc",
+          "observation_sha256": "88660a8367bbb718738bbcf263dfc664b400518e23d6dd0d82cac19b6d506917"
+        },
+        "prefix_mask_exact": true,
+        "public_features_exact": true,
+        "saved_original_frame": null
+      },
+      "status": "passed",
+      "zero_action_exact": true,
+      "zero_fixed_kv_exact": true,
+      "zero_kv_exact": true
+    }
+  },
+  "raw_proof_sha256": "f6452dc692d13c8967ac0072b41b1ac5c0e7890b016b433ba096b408b13a2765",
+  "terminal_check_sha256": "d67e4554721c83bdc437480782a0b613d51e17c51a5c0f0102125f201604a6a8",
+  "no_retry": true,
+  "no_cache_or_fit": true,
+  "interpretation": "Teacher execution gate failed on the fixed third published demonstration; no reactive capacity result exists. No demonstration was replaced or filtered. Frozen proof covers before/after live qualification, not a separate post-failure full parameter rehash."
+}
