@@ -31,38 +31,33 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
-Execution status2026-10-31 11:42 Shanghai: the human approved the RoboTwin
-AD-first phase:3additionalGPUh,2aggregateCPU-worker hours on8cores,128GiB
-new storage and60,000new target actions. The existing source100 bank supplies
-ADfull/static500-update fits and the fixed16-case K0/K1 robot comparison.
-The execution owner has the direct authorization and prepared final100 export
-profile. The170already-spent software CPU seconds count once inside7200,
-leaving7030; the prepared7020s reservation/6720s parent leaves10unrequested.
-Actual bank/export, fitting and robot progress remain to be verified. The
-separate LIBERO29.5GPUh/150GB request remains pending; its original32h pool
-has1180GPU-s unassigned. The full scientific goal remains incomplete.
-Authorization: outputs/robotwin-source100-ad-first-20261031-r1/GRANT.json.
+Current priority: the human requested faithful VLRLA PPO replication. Hold
+the proposed AD100/500 sweep; no implementation or allocation occurred. Use
+native action-expert PPO with the VLM frozen, an explicit matched SFT baseline,
+and the existing RLinf route. A bounded two-iteration qualification/onset
+pilot is specified under outputs/vlrla-native-ppo-pilot-20261031-r1/GRANT.json;
+its full25-iteration result remains unproven. New code/runtime qualification
+and actual allocation are pending. Existing RoboTwin source100 export is
+preserved by its owner; new AD GPU fits/readout are deferred.
 
-New standing instruction was verified directly in the RoboTwin chat:
-"stop asking for my approval for gpu hours <= 10". The already-prepared,
-independently executable LIBERO fixed100 readout is authorized under that
-instruction at its existing4.5GPUh/20GB/220k-target-action ceiling. It reuses
-existing students and runs in parallel with RoboTwin export/fitting. The25h
-LIBERO source expansion remains pending; it is not divided into smaller jobs
-to bypass the threshold. Actual allocations and first progress still need
-verification. The original32h pool and RoboTwin grant remain separate.
+The fixed100 LIBERO phase is now audited terminal: native28/90; AD full/static
+29/90each; DPT full/static28/90each. ADK1full/reset/nativeK0all6/9with the same
+success set; DPTK1full5/9versus reset6/9. AD spends4014actions for the same
+6/9query successes native attains with1961. No positive memory, high topline
+or sample-efficiency result. Full/static aggregate ties conceal per-case swaps.
+Earlier100/500data/optimizer/native-wave changes prevent an early-stopping or
+scaling conclusion. Recorded competing explanations and a proposed fixed-bank
+contrast remain in the analysis; the new human PPO priority supersedes that
+proposal. No further collection is justified by this result alone.
 
-Verified launch evidence at12:03Shanghai: all six LIBERO allocations passed
-actual GPU/CUDA probes on six distinct UUIDs and completed real simulator
-episodes, with41groups/16,576charged actions so far and zero deploymentSGD.
-Motor signatures match the official40-task checkpoint. These are execution
-milestones, not a completed performance comparison. The exact launch and
-initial receipts are under outputs/libero40-fixed100-target-plan-20261031-r1;
-next owned runtime check12:22Shanghai. The dedicated delegate retains sole
-LIBERO launch/recovery ownership. This chat's monitor covers LIBERO only;
-RoboTwin's execution owner and the existing coordinator cover that phase.
-RoboTwin job-twcl47ph8lnz has passed source inventory218,947files/
-87,674,977,118bytes/62closed roots; projection and AD fits/readout follow.
+The completed486groups/522episodes cost172045actions,7126conservativeGPU-s
+(6846scheduler-s) and8.61GB. All522trace/contextarchives,486group recoveries
+and3541referenced files passed the saved-byte/array audit; archives were
+rehashed, not restored, and the full RPC intent forest was not replayed.
+See outputs/libero40-fixed100-target-plan-20261031-r1/{RESULT.md,cost-receipt.json}.
+The old LIBERO monitor is stopped; no terminal job is polled as live. Closed
+unused9074GPU-s are not borrowed for the native PPO pilot. Original32h1180s,
+the pending25hsource expansion and deferredRoboTwin AD grant remain separate.
 
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before

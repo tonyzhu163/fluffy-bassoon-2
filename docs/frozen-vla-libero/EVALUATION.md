@@ -3,6 +3,34 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Fixed100 LIBERO90 screen complete
+
+All six workers succeeded:486groups/522episodes, including36actual supports.
+The source-only100-update models, all90state0/seed123cases and400-action
+horizon were fixed before outcomes. One shared motor process per worker,
+unchanged parameters, paired initial arrays/seeds and zero deployment SGD.
+
+| K0 query | Native | AD full | AD static | DPT full | DPT static |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| LIBERO90, one initialization per goal |28/90|29/90|29/90|28/90|28/90|
+
+AD's one-success difference combines gains and regressions; full/static ties
+hide different successful cases. On the fixed9K1panel, AD full/reset are both
+6/9with identical success IDs, also reached by nativeK0. DPT full/reset are
+5/9and6/9; its only discordance favors reset. ADK1spends4014actions for6query
+successes versus nativeK01961for the same success set. No high-performance,
+interaction-efficiency or positive cross-episode-history advantage is shown.
+Historical500-versus-current100 changes both corpus and native wave, so it
+does not isolate optimizer exposure or data scaling.
+
+All522trace/context archives,486group recoveries and3541referenced files
+passed the saved-byte/array audit; all18full/reset actual supports match.
+Archives were rehashed rather than restored; the whole RPC intent forest
+was not replayed. Cost172045actions(support8602/query163443),7126conservative
+GPU-s versus6846scheduler-s,8.61GBoutputs. The phase is closed; unused ceiling
+is not a new run allowance. [Results/proof scope](../../outputs/libero40-fixed100-target-plan-20261031-r1/RESULT.md),
+[paired scientific analysis](../../outputs/libero40-fixed100-analysis-20261031-r1/ANALYSIS.md).
+
 ## All40 students: first broad target screen complete
 
 All six workers exited0:558 groups,626 episodes,189,051 actual simulator

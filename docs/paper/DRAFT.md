@@ -22,7 +22,15 @@ Current source bank:583 K4 training cases/2,332 episodes/33,729 steering
 decisions across all40 tasks; fixed validation146 cases/584 episodes/8,202
 decisions. Training all-in351,297 actions, validation85,301 and historical
 overhead21,253 once: resource total457,851. All four new interim100 fits
-completed with25/100 full recoveries; their robot readout is not yet run.
+completed with25/100 full recoveries. Their complete fresh LIBERO90 readout
+scores native28/90; ADfull/static29/90each; DPTfull/static28/90each. ADK1full
+and same-weight reset both6/9(the same successes as nativeK0); DPT5/9versus
+reset6/9. AD pays4014actions versus native1961for that same6/9query outcome.
+All522episodes passed the saved-trace audit. This supplies no reliable memory,
+high-performance or sample-efficiency benefit. Historical500versus100 changes
+both data and native wave, so it does not isolate scaling or overfitting.
+Current human priority is faithful native action-expert PPO replication before
+further offline-student sweeps; the proposed AD100/500contrast is held.
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
 full/static26/90; DPT full26/90/static27/90. On the fixed-nine K1 panel,
@@ -442,10 +450,10 @@ no robot, memory or scaling benefit follows from these fit metrics. Next
 robot readout and25h source expansion have separate explicit budgets.
 
 
-Preparation update:38 source assignments plus two retained source leaves are
+Archival preparation update (before the fixed100 readout):38 source assignments plus two retained source leaves are
 ready, bound to an unfunded25h source proposal. The fixed100 target profile
 passed48 CPU tests including actual model-file admission, but its4.5h GPU
-budget is separate/unfunded. Historical AD/DPT inference already samples the
+budget was subsequently authorized and the readout completed above. Historical AD/DPT inference already samples the
 Gaussian; a deterministic-mean explanation for the performance gap was
 falsified statically and no additional diagnostic was launched. Full Plus
 contains10,030 registered variants; full Pro's primary map has200 tasks,

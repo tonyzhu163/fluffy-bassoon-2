@@ -48,3 +48,11 @@ The protocol remains official frozenOpenPI40-source training and the **complete9
 ## Evidence boundary
 
 `paired-counts.json` independently recomputes the pairs above from the owner’s SHA-bound `joined-metrics.json` and `case-results.csv`, retaining all90outcomes. It performs no NN/model/test/simulator work and does not duplicate the owner’s raw trace audit. Producer100fitpin2bc15da; matrixdc9ebd1274170e021906c1f66623a98713405e227229bc022e03eb4c1c92a623; unchanged evaluatore764afdd04c9ea4dcbb7ac3e3e25d245c186dd42; motor digestc565dd3f… . Historical scores/corpus context are from the canonical priorEVALUATION/source-failure receipts and remain separate waves.
+
+## Later closure and changed priority
+
+The owner subsequently completed the full saved-byte/NumPy audit at7939ee52:
+all522episodes/486groups/3541referencedfiles passed, without changing these
+scores. See the fixed100 plan's RESULT.md and cost-receipt.json for exact proof
+scope. The human then prioritized faithful VLRLA PPO replication. The proposed
+fixed-bank100/500contrast is held; no implementation or allocation occurred.
