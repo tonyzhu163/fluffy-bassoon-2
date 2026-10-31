@@ -1,0 +1,153 @@
+{
+  "root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "source_files": [
+    {
+      "path": "script/collect_data.py",
+      "sha256": "e51d8dca1afd843206187a72537dc467d1db07bd1c860055ad59e47b181c81ab",
+      "excerpts": [
+        {
+          "first": 127,
+          "last": 139,
+          "text": "        while suc_num < args[\"episode_num\"]:\n            try:\n                TASK_ENV.setup_demo(now_ep_num=suc_num, seed=epid, **args)\n                TASK_ENV.play_once()\n\n                if TASK_ENV.plan_success and TASK_ENV.check_success():\n                    print(f\"simulate data episode {suc_num} success! (seed = {epid})\")\n                    seed_list.append(epid)\n                    TASK_ENV.save_traj_data(suc_num)\n                    suc_num += 1\n                else:\n                    print(f\"simulate data episode {suc_num} fail! (seed = {epid})\")\n                    fail_num += 1"
+        },
+        {
+          "first": 182,
+          "last": 230,
+          "text": "    # =========== Collect Data ===========\n\n    if args[\"collect_data\"]:\n        print(\"\\033[93m\" + \"[Start Data Collection]\" + \"\\033[0m\")\n\n        args[\"need_plan\"] = False\n        args[\"render_freq\"] = 0\n        args[\"save_data\"] = True\n\n        clear_cache_freq = args[\"clear_cache_freq\"]\n\n        st_idx = 0\n\n        def exist_hdf5(idx):\n            file_path = os.path.join(args[\"save_path\"], 'data', f'episode{idx}.hdf5')\n            return os.path.exists(file_path)\n\n        while exist_hdf5(st_idx):\n            st_idx += 1\n\n        for episode_idx in range(st_idx, args[\"episode_num\"]):\n            print(f\"\\033[34mTask name: {args['task_name']}\\033[0m\")\n\n            TASK_ENV.setup_demo(now_ep_num=episode_idx, seed=seed_list[episode_idx], **args)\n\n            traj_data = TASK_ENV.load_tran_data(episode_idx)\n            args[\"left_joint_path\"] = traj_data[\"left_joint_path\"]\n            args[\"right_joint_path\"] = traj_data[\"right_joint_path\"]\n            TASK_ENV.set_path_lst(args)\n\n            info_file_path = os.path.join(args[\"save_path\"], \"scene_info.json\")\n\n            if not os.path.exists(info_file_path):\n                with open(info_file_path, \"w\", encoding=\"utf-8\") as file:\n                    json.dump({}, file, ensure_ascii=False)\n\n            with open(info_file_path, \"r\", encoding=\"utf-8\") as file:\n                info_db = json.load(file)\n\n            info = TASK_ENV.play_once()\n            info_db[f\"episode_{episode_idx}\"] = info\n\n            with open(info_file_path, \"w\", encoding=\"utf-8\") as file:\n                json.dump(info_db, file, ensure_ascii=False, indent=4)\n\n            TASK_ENV.close_env(clear_cache=((episode_idx + 1) % clear_cache_freq == 0))\n            TASK_ENV.merge_pkl_to_hdf5_video()\n            TASK_ENV.remove_data_cache()\n            assert TASK_ENV.check_success(), \"Collect Error\""
+        }
+      ]
+    },
+    {
+      "path": "envs/robot/robot.py",
+      "sha256": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8",
+      "excerpts": [
+        {
+          "first": 527,
+          "last": 539,
+          "text": "    # The data of gripper has been normalized\n    def get_left_arm_jointState(self) -> list:\n        jointState_list = []\n        for joint in self.left_arm_joints:\n            jointState_list.append(joint.get_drive_target()[0].astype(float))\n        jointState_list.append(self.get_left_gripper_val())\n        return jointState_list\n\n    def get_right_arm_jointState(self) -> list:\n        jointState_list = []\n        for joint in self.right_arm_joints:\n            jointState_list.append(joint.get_drive_target()[0].astype(float))\n        jointState_list.append(self.get_right_gripper_val())"
+        }
+      ]
+    },
+    {
+      "path": "envs/_base_task.py",
+      "sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+      "excerpts": [
+        {
+          "first": 462,
+          "last": 477,
+          "text": "    def get_obs(self):\n        self._update_render()\n        self.cameras.update_picture()\n        pkl_dic = {\n            \"observation\": {},\n            \"pointcloud\": [],\n            \"joint_action\": {},\n            \"endpose\": {},\n        }\n\n        pkl_dic[\"observation\"] = self.cameras.get_config()\n        # rgb\n        if self.data_type.get(\"rgb\", True):\n            rgb = self.cameras.get_rgb()\n            for camera_name in rgb.keys():\n                pkl_dic[\"observation\"][camera_name].update(rgb[camera_name])"
+        },
+        {
+          "first": 510,
+          "last": 519,
+          "text": "        if self.data_type.get(\"qpos\", False):\n\n            left_jointstate = self.robot.get_left_arm_jointState()\n            right_jointstate = self.robot.get_right_arm_jointState()\n\n            pkl_dic[\"joint_action\"][\"left_arm\"] = left_jointstate[:-1]\n            pkl_dic[\"joint_action\"][\"left_gripper\"] = left_jointstate[-1]\n            pkl_dic[\"joint_action\"][\"right_arm\"] = right_jointstate[:-1]\n            pkl_dic[\"joint_action\"][\"right_gripper\"] = right_jointstate[-1]\n            pkl_dic[\"joint_action\"][\"vector\"] = np.array(left_jointstate + right_jointstate)"
+        },
+        {
+          "first": 573,
+          "last": 577,
+          "text": "        pkl_dic = self.get_obs()\n        if reward is not None:\n            pkl_dic[\"observation\"]['head_camera'][\"rgb\"] = add_reward_to_pic(pkl_dic[\"observation\"]['head_camera'][\"rgb\"], reward)\n        save_pkl(self.folder_path[\"cache\"] + f\"{self.FRAME_IDX}.pkl\", pkl_dic)  # use cache\n        self.FRAME_IDX += 1"
+        },
+        {
+          "first": 1478,
+          "last": 1480,
+          "text": "        save_freq = self.save_freq if save_freq == -1 else save_freq\n        if save_freq != None:\n            self._take_picture()"
+        },
+        {
+          "first": 1493,
+          "last": 1534,
+          "text": "        for control_idx in range(max_control_len):\n\n            if (left_arm is not None and control_idx < left_arm[\"position\"].shape[0]):  # control left arm\n                self.robot.set_arm_joints(\n                    left_arm[\"position\"][control_idx],\n                    left_arm[\"velocity\"][control_idx],\n                    \"left\",\n                )\n\n            if left_gripper is not None and control_idx < left_gripper[\"num_step\"]:\n                self.robot.set_gripper(\n                    left_gripper[\"result\"][control_idx],\n                    \"left\",\n                    left_gripper[\"per_step\"],\n                )  # TODO\n\n            if (right_arm is not None and control_idx < right_arm[\"position\"].shape[0]):  # control right arm\n                self.robot.set_arm_joints(\n                    right_arm[\"position\"][control_idx],\n                    right_arm[\"velocity\"][control_idx],\n                    \"right\",\n                )\n\n            if right_gripper is not None and control_idx < right_gripper[\"num_step\"]:\n                self.robot.set_gripper(\n                    right_gripper[\"result\"][control_idx],\n                    \"right\",\n                    right_gripper[\"per_step\"],\n                )  # TODO\n\n            self.scene.step()\n\n            if self.render_freq and control_idx % self.render_freq == 0:\n                self._update_render()\n                self.viewer.render()\n\n            if save_freq != None and control_idx % save_freq == 0:\n                self._update_render()\n                self._take_picture()\n\n        if save_freq != None:\n            self._take_picture()"
+        }
+      ]
+    },
+    {
+      "path": "envs/utils/pkl2hdf5.py",
+      "sha256": "e119b4093c25f881c535a041bf1895e182ba00564d6ca57f6d6fe4fb62b2666c",
+      "excerpts": [
+        {
+          "first": 78,
+          "last": 87,
+          "text": "def pkl_files_to_hdf5_and_video(pkl_files, hdf5_path, video_path):\n    data_list = parse_dict_structure(load_pkl_file(pkl_files[0]))\n    for pkl_file_path in pkl_files:\n        pkl_file = load_pkl_file(pkl_file_path)\n        append_data_to_structure(data_list, pkl_file)\n\n    images_to_video(np.array(data_list[\"observation\"][\"head_camera\"][\"rgb\"]), out_path=video_path)\n\n    with h5py.File(hdf5_path, \"w\") as f:\n        create_hdf5_from_dict(f, data_list)"
+        },
+        {
+          "first": 90,
+          "last": 109,
+          "text": "def process_folder_to_hdf5_video(folder_path, hdf5_path, video_path):\n    pkl_files = []\n    for fname in os.listdir(folder_path):\n        if fname.endswith(\".pkl\") and fname[:-4].isdigit():\n            pkl_files.append((int(fname[:-4]), os.path.join(folder_path, fname)))\n\n    if not pkl_files:\n        raise FileNotFoundError(f\"No valid .pkl files found in {folder_path}\")\n\n    pkl_files.sort()\n    pkl_files = [f[1] for f in pkl_files]\n\n    expected = 0\n    for f in pkl_files:\n        num = int(os.path.basename(f)[:-4])\n        if num != expected:\n            raise ValueError(f\"Missing file {expected}.pkl\")\n        expected += 1\n\n    pkl_files_to_hdf5_and_video(pkl_files, hdf5_path, video_path)"
+        }
+      ]
+    },
+    {
+      "path": "task_config/demo_clean.yml",
+      "sha256": "865af205a90c3e7ffe4b4dd3db06955609f1b58c76d997e18894d8195a361566",
+      "excerpts": [
+        {
+          "first": 3,
+          "last": 7,
+          "text": "render_freq: 0\nepisode_num: 50\nuse_seed: false\nsave_freq: 15\nembodiment: [aloha-agilex]"
+        }
+      ]
+    },
+    {
+      "path": "script/eval_policy_reload.py",
+      "sha256": "8ec9bbe06de0d6c44f027fd8190e27de0982283a886d1bbf071366928e686ded",
+      "excerpts": [
+        {
+          "first": 123,
+          "last": 135,
+          "text": "        elif data_type == 'joint':\n            left_gripper, left_arm = (\n                root[\"/joint_action/left_gripper\"][()],\n                root[\"/joint_action/left_arm\"][()],\n            )\n            right_gripper, right_arm = (\n                root[\"/joint_action/right_gripper\"][()],\n                root[\"/joint_action/right_arm\"][()],\n            )\n    left_path = np.hstack((left_arm, left_gripper.reshape(-1,1)))\n    right_path = np.hstack((right_arm, right_gripper.reshape(-1,1)))\n    action = np.hstack((left_path, right_path))\n    return action"
+        },
+        {
+          "first": 172,
+          "last": 183,
+          "text": "    for now_id, now_seed in enumerate(seed_list):\n        ori_action = load_hdf5_data(os.path.join(data_path, f\"data/episode{now_id}.hdf5\"))\n        now_left_arm = ori_action[0][:7]\n        now_right_arm = ori_action[0][8:15]\n        TASK_ENV.setup_demo(now_ep_num=now_id, seed=now_seed, is_test=True, **args)\n        # for action in ori_action:\n        reward_venv = None\n        for i in range(0, len(ori_action), 2):\n            now_action = ori_action[i:i+2]\n            obs_venv,reward_venv, terminated_venv, _, return_poses = TASK_ENV.gen_dense_reward_once(now_action, reward_venv)\n            # print(reward_venv)\n            TASK_ENV._take_picture(reward=reward_venv)"
+        }
+      ]
+    },
+    {
+      "path": "robotwin/envs/vector_env.py",
+      "sha256": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d",
+      "excerpts": [
+        {
+          "first": 48,
+          "last": 63,
+          "text": "def update_obs(observation):\n    full_image = observation[\"observation\"][\"head_camera\"][\"rgb\"]\n    left_wrist_image = (\n        observation[\"observation\"].get(\"left_camera\", {}).get(\"rgb\", None)\n    )\n    right_wrist_image = (\n        observation[\"observation\"].get(\"right_camera\", {}).get(\"rgb\", None)\n    )\n    state = observation[\"joint_action\"][\"vector\"]\n\n    return {\n        \"full_image\": full_image,\n        \"left_wrist_image\": left_wrist_image,\n        \"right_wrist_image\": right_wrist_image,\n        \"state\": state,\n    }"
+        }
+      ]
+    }
+  ],
+  "format": "robotwin_phone_author_convention_v1",
+  "status": "author_convention_verified_runtime_pending",
+  "source_only": true,
+  "dataset_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "archive_sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+  "source_inventory_sha256": "e60cb3bd863bb6d8a014aadad652d64bb1834535f8e9cff6d53476fcd840102b",
+  "schema": {
+    "state": "joint_action/vector",
+    "actions": "joint_action/vector",
+    "state_units": "aloha_physical_drive_target14",
+    "action_units": "aloha_absolute_joint_target14",
+    "camera_order": [
+      "head",
+      "left_wrist",
+      "right_wrist"
+    ],
+    "images": [
+      "observation/head_camera/rgb",
+      "observation/left_camera/rgb",
+      "observation/right_camera/rgb"
+    ],
+    "image_encoding": "jpeg",
+    "action_offset": 0,
+    "target_kind": "author_recorded_drive_target"
+  },
+  "offset_meaning": "same-frame author-recorded drive target, followed by future frames",
+  "success_provenance": "Collector admits planned/check_success seeds; data replay uses seed.txt and asserts check_success after collection. HDF5 has no explicit success flags.",
+  "cadence": "Author dense-control recording every15 simulation steps plus boundary pictures; recorded frames are replayed in their original order as absolute drive targets. No claim of identical low-level wall-clock timing.",
+  "limitations": [
+    "The pinned runtime source establishes the author convention; it is not an embedded generator commit in the public HDF5.",
+    "No original measured-qpos stream or separate commanded-next-state field exists in this archive.",
+    "Offset0 is the explicit same-frame/future-recorded-target objective; no guessed next-command shift.",
+    "Official loaded-motor inverse/delta/Normalize/padding roundtrip and complete physical replay of all12 are runtime gates before fitting.",
+    "No pickle was deserialized, model constructed, or robot action issued during this source review."
+  ]
+}
