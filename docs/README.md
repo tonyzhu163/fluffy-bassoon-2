@@ -38,6 +38,8 @@ Method contracts and results by benchmark. Live status is in
 - [Frozen pi0.5 feature bridge](pi05-feature-bridge.md)
 - [Stochastic flow-residual policy and exact PPO replay](pi05-bridge-policy.md)
 - [Live native pi0.5 bridge PPO](pi05-live-bridge-ppo.md)
+- [Optional reactive pi0.5 residual hooks](pi05-reactive-residuals.md)
+- [Small-prefix AD/DPT on a frozen 4D steering interface](steering-history-prefix.md)
 - [Balanced native support and fresh-probe qualification](ctm-support-probe.md)
 - [Benchmark-specific CTM warm starts](ctm-warmstart.md)
 
@@ -66,8 +68,6 @@ Method contracts and results by benchmark. Live status is in
 
 ## LIBERO source40 pipeline
 
-- [All40 corpus to offline controller milestones](frozen-vla-libero/ALL40-OFFLINE-MILESTONES.md)
-- [Approved PPO and frozen-validation execution](frozen-vla-libero/APPROVED-PPO-VALIDATION-EXECUTION.md)
 - [Common-runtime source-data robot comparison](frozen-vla-libero/COMMON-RUNTIME-SOURCE-COMPARISON.md)
 - [Fixed9 frozen mean/dispersion diagnostic](frozen-vla-libero/DISTRIBUTION-DIAGNOSTIC.md)
 - [What the steering controller learns across trials](frozen-vla-libero/META-TASK.md)
@@ -77,7 +77,6 @@ Method contracts and results by benchmark. Live status is in
 - [Paired memory replication](frozen-vla-libero/PAIRED-MEMORY-REPLICATION.md)
 - [Paired AD/DPT-style data from source40 PPO](frozen-vla-libero/PPO-CORPUS.md)
 - [Frozen source-PPO target support/query execution](frozen-vla-libero/PPO-TARGET-SUPPORT-QUERY.md)
-- [Frozen final-source PPO target wave](frozen-vla-libero/PPO-TARGET-WAVE.md)
 - [Pretraining scale: primary-source audit](frozen-vla-libero/PRETRAINING-SCALE.md)
 - [Frozen per-task source SAC competence](frozen-vla-libero/SOURCE-SAC-COMPETENCE.md)
 - [Complete-case source40 collection preparation](frozen-vla-libero/SOURCE40-COLLECTION.md)
@@ -90,7 +89,6 @@ Method contracts and results by benchmark. Live status is in
 - [Fixed500 supervised-controller target first wave](frozen-vla-libero/TARGET-FIRSTWAVE.md)
 - [Six-case ordinary DSRL learning-onset baseline](frozen-vla-libero/TARGET-ONLINE-DSRL-SIX.md)
 - [Fresh target-online DSRL learning-onset diagnostic](frozen-vla-libero/TARGET-ONLINE-DSRL.md)
-- [Fixed500 two-goal robot comparison](frozen-vla-libero/TWO-GOAL-ROBOT-COMPARISON.md)
 - [Two-source-goal subset qualification](frozen-vla-libero/TWO-GOAL-SUBSET.md)
 - [Complete-trial source PPO batches](vla-source40-batch14-ppo.md)
 - [Proposed cumulative PPO source continuation](vla-source40-batch14-production.md)
@@ -111,3 +109,5 @@ Method contracts and results by benchmark. Live status is in
 - [Fresh-process native K8 wrapper](robotwin-history-live.md)
 - [Native frozen-history live evaluation adapter](robotwin-history-evaluation.md)
 - [Production-native RoboTwin vector candidate](robotwin-production-vector.md)
+- [Bounded frozen-Motus coefficient screen](robotwin-four-coefficient-screen.md)
+- [Frozen Motus steering evaluation](robotwin-coefficient-steering/EVALUATION.md)
