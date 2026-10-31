@@ -88,11 +88,21 @@ class Env:
         backend = object.__new__(_RoboTwinBackend)
         backend.torch, backend.model = torch, TinyMotor().eval().requires_grad_(False)
         backend._versions = {name: parameter._version for name, parameter in backend.model.named_parameters()}
+        backend.noise_shape = tuple(self.noise_shape)
+        backend.native_horizon = backend.noise_shape[0]
         backend.corpus_writer = None
-        backend.contract = dict(model_path=str(tmp_path), norm_stats_path=str(tmp_path/"norm.json"))
-        backend._prepared = None
+        backend._decision_metadata = {}
+        backend.contract = dict(model_path=str(tmp_path), norm_stats_path=str(tmp_path/"norm.json"),
+            noise_shape=list(backend.noise_shape), native_horizon=backend.native_horizon,
+            observation_dim=self.observation_dim)
+        backend._prepared = backend._prefix_mask = backend._kv_cache = None
+        backend._public_features = backend._last_residual_metadata = backend._residual_prepared = None
+        backend._raw_obs = backend._paired_instruction = backend._instruction_binding = None
         backend.kv_adapter = backend.action_residual = backend.post_decode_residual = None
-        backend.motor_seconds, backend.motor_queries = 0., 0
+        backend.post_command_transform, backend.record_agent_requested_actions = None, False
+        backend._post_decode_installed = False
+        backend.prefix_seconds = backend.motor_seconds = 0.
+        backend.prefix_calls = backend.motor_queries = 0
         self.backend, self.contract = backend, backend.contract
     def reset(self, task, seed):
         backend = self.backend
