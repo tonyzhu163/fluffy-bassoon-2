@@ -1,0 +1,68 @@
+{
+  "format": "frozen_vla_linked_CPU_correction_grant_v1",
+  "phase_id": "frozen-vla-cache-readout-correction-cpu-20261101-r1",
+  "authority": "AGENTS.md CPU tests/static checks need no ask; necessary same-scope repair of measured cache consumer ABI and one fixture assertion. Existing human coordinate-and-launch/per-job scope retained.",
+  "maximum_CPU_worker_seconds": 300,
+  "maximum_GPU_seconds": 0,
+  "maximum_new_actions": 0,
+  "maximum_new_output_bytes": 536870912,
+  "resources": {
+    "GPU": 0,
+    "CPU": 2,
+    "memory_GiB": 16,
+    "retry": false
+  },
+  "inclusive_clock": "ONE aggregate300CPU-worker-second deadline including startup, tests, CPU reconciliation/seal, failures and cleanup; no refill or automatic retry.",
+  "required_cache_source": "400eed69ead8b8672686c62f33ed5531f6f60558",
+  "required_cache_tests": {
+    "new_ABI_cases": 4,
+    "affected_sealer_cases": 8,
+    "total": 12,
+    "command": "python -m pytest -q tests/test_robotwin_cache_state_abi.py tests/test_robotwin_teacher_bank.py -k \"state_abi or full_twelve_cache_join or full_cache_join_rejects or two_different_anchors\""
+  },
+  "required_readout_source": "235fcc00f0ddf7a07590604daba9e79c9a4c3c6d",
+  "required_readout_selector": "tests/test_robotwin_command_diagnostic_readout.py::test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger",
+  "optional_bridge_source": "52022ca02e6ae7f2803bec0e082faf4da21cfef1",
+  "optional_bridge_scope": "ONLY3 previously failed selectors; never delay independently qualified cache seal or skip required component for optional work.",
+  "component_handling": "Independent commands record return codes and continue within original deadline. Aggregate exit reflects all requested failures. Cache seal requires its own12-case PASS, regardless of independent readout/bridge outcome.",
+  "seal_after_cache_PASS": {
+    "operation": "EXISTING DATA-PAYLOAD.sh DATA_OPERATION=seal",
+    "request": {
+      "path": "/Users/mowenjie/.codex/worktrees/robotwin-cache-state-abi/fluffy-bassoon-2/outputs/robotwin-cache-state-abi-20261101-r1/SEAL-REQUEST.json",
+      "sha256": "ba3aa2d3ba42d39f468c445a3cbf7992f5562a80ba81c33051e3482e3e6ded7c"
+    },
+    "scope": "CPU validate all paid77+new13 cache rows and closed04 recovery, unchanged canonical bank; fresh output receipt only.",
+    "no_VLA_model_weights_or_simulator": true,
+    "no_reencode_or_payload_rewrite": true,
+    "no_fit_or_source_admission": true
+  },
+  "binding_before_dispatch": "Exact source/static delta PASS, Git deployment, zeroGPU actual allocation and clock, fresh output/read-write/storage admission; owner launches promptly without another ACK.",
+  "execution_owner": "/root/finish_assembly",
+  "old_budgets_untouched": {
+    "original_phone_CPU": {
+      "charged": 1775,
+      "ceiling": 1800,
+      "unused": 25
+    },
+    "preservation_CPU": {
+      "charged": 98,
+      "ceiling": 120,
+      "unused": 22
+    },
+    "readout_CPU": {
+      "charged": 69,
+      "ceiling": 120,
+      "unused": 51
+    },
+    "phone_GPU_actual": 3625,
+    "phone_actions": 23922
+  },
+  "no_borrowing_or_replenishment": true,
+  "qualification_and_seal_are_CPU_only": true,
+  "measured_schema_ref": {
+    "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/schema-inspection.json",
+    "sha256": "f4138385cc05a39387cf083bb31a435685aa7b609051d4a340c26161a1ecca9f",
+    "scope": "Three specified rows only; full90 seal pending"
+  },
+  "static_delta_review": "PASS from finish_ppo and independent reviewer01a18adc: sole exact state ABI shape, other guards/data/math unchanged; actual12case CPU qualification remains required."
+}
