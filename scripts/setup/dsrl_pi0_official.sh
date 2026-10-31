@@ -2,6 +2,7 @@
 # Run only in an allocated Linux CPU job; never edits an existing runtime.
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed repository commit}
+TASK_CODE=$(pwd)
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_ID=${2:?fresh immutable CPU preparation identity}
 case "$TASK_ID" in dsrl-pi0-task57-20261101-prep-r[0-9]*) ;; *) exit 2;; esac
@@ -46,7 +47,17 @@ export UV_PYTHON_INSTALL_DIR=$TASK_ROOT/envs/uv-python
 if command -v uv >/dev/null; then TASK_UV=$(command -v uv)
 elif [ -x /mowenjie/.local/bin/uv ]; then TASK_UV=/mowenjie/.local/bin/uv
 else
-  "$TASK_BASE" -m pip install --target "$TASK_DEPS/tools" uv==0.6.14
+  # The qualified training venv deliberately omits pip. Bootstrap from its
+  # bundled ensurepip wheel into this new tools directory, never into that venv.
+  "$TASK_BASE" - "$TASK_DEPS/tools" <<'PY'
+import ensurepip, pathlib, runpy, sys
+target = sys.argv[1]
+wheel = next((pathlib.Path(ensurepip.__file__).parent/'_bundled').glob('pip-*.whl'))
+sys.path.insert(0, str(wheel))
+sys.argv = ['pip', 'install', '--index-url', 'https://pypi.org/simple',
+            '--target', target, 'uv==0.6.14']
+runpy.run_module('pip', run_name='__main__')
+PY
   TASK_UV=$TASK_DEPS/tools/bin/uv
 fi
 TASK_REPO=$TASK_DEPS/repo
@@ -105,5 +116,11 @@ receipt=dict(status='verified', checkpoint='s3://openpi-assets/checkpoints/pi0_l
 print(json.dumps(dict(checkpoint=str(checkpoint), files=len(files), bytes=receipt['bytes'])), flush=True)
 PY
 "$TASK_UV" pip freeze --python "$TASK_PY" > "$TASK_OUT/requirements-frozen.txt"
+export DSRL_OFFICIAL_ROOT=$TASK_REPO
+export PYTHONPATH=$TASK_CODE/src:$TASK_REPO
+export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+"$TASK_PY" -m pytest -q -p no:cacheprovider \
+  --junitxml="$TASK_OUT/qualification.xml" "$TASK_CODE/tests/test_dsrl_pi0_replication.py" \
+  > "$TASK_OUT/qualification.log" 2>&1
 git -C "$TASK_REPO" status --porcelain > "$TASK_OUT/upstream-status.txt"
 printf 'Preparation complete; no GPU/model/simulator run.\n'

@@ -9,20 +9,47 @@
       "source_commit": "ffa0afcdbbf5d8ed1a931e2dd13793e8ffadd8b9",
       "created_shanghai": "2026-11-01T00:40:54+08:00",
       "ended_shanghai": "2026-11-01T00:41:37+08:00",
-      "resources": {"gpu_count": 0, "cpu_cores": 4, "memory_gib": 32},
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 4,
+        "memory_gib": 32
+      },
       "scheduler_running_seconds": 29,
       "conservative_worker_seconds": 90,
       "exit_code": 128,
       "failure_log": "fatal: couldn't find remote ref refs/heads/codex/dsrl-pi0-task57-20261101",
       "stage": "Git deployment; setup script did not run",
       "diagnosis": "The Baige checkout origin does not expose the newly published branch. Recover with a Git bundle, retaining the failed job identity."
+    },
+    {
+      "job_id": "job-i05d54d0bupi",
+      "name": "mwj_1101_dsrl_pi0_task57_prep_r2_ae245cd",
+      "source_commit": "ae245cd71b6982f33919b7751c1450eadae1521b",
+      "created_shanghai": "2026-11-01T00:49:52+08:00",
+      "ended_shanghai": "2026-11-01T00:50:39+08:00",
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 4,
+        "memory_gib": 32
+      },
+      "scheduler_running_seconds": 29,
+      "conservative_worker_seconds": 90,
+      "exit_code": 1,
+      "stage": "isolated uv bootstrap before clone/install",
+      "failure_log": "qualified Python: No module named pip",
+      "git_bundle_verified": true,
+      "source_verified": true,
+      "allocation_attested": true,
+      "disk_free_bytes": 1104528015360,
+      "write_probe": true
     }
   ],
   "next_attempt": {
-    "identity": "dsrl-pi0-task57-20261101-prep-r2",
+    "identity": "dsrl-pi0-task57-20261101-prep-r3",
     "deployment": "Git bundle based on recent main3b71a31; exact new source verification before worktree execution",
     "maximum_scheduler_minutes": 27,
     "inner_timeout_seconds": 1500,
-    "automatic_retry": false
+    "automatic_retry": false,
+    "diagnosis": "Use bundled ensurepip wheel only to install uv into fresh tools directory; preserve original pip-free training venv"
   }
 }
