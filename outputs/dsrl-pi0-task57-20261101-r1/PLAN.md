@@ -41,3 +41,17 @@ improvement at roughly10k online samples is a three-seed result; reproducing
 that aggregate requires a separately scoped seed expansion after the pilot.
 Sources: [released recipe](https://github.com/nakamotoo/dsrl_pi0/blob/7f48937d4553e95244cd81c79236a3256df80597/examples/scripts/run_libero.sh),
 [paper](https://arxiv.org/html/2506.15799v2#S5.SS5).
+
+Preparation update (2026-11-01 01:42 Shanghai): isolated runtime imports and
+all9 Linux CPU tests now pass on source `ee2c65d3` in Baige
+`job-no6xtx6vxax9` (33.75s). Eight initial tests passed in R5; its last
+assertion compared MessagePack byte order rather than state values. R7
+compares all recovered optimizer/state leaves exactly and the next update
+numerically. It also retains each evaluation policy and pre-panel RNG.
+Original S3 returns NoSuchBucket; official GCS has the original Pi0 LIBERO
+checkpoint (19 files,12,014,131,888 bytes). Download/hash verification is
+pending. Legacy S3 byte equality cannot be independently established.
+CPU preparation uses separate immutable identities, with cumulative ceiling
+1800 worker-seconds including failures; prior reservations990s plus R7<=780s.
+GPU budget remains unused. Latest main reviewed before this qualification:
+`89f578ab`; subsequent main changes are coordination and evidence only.

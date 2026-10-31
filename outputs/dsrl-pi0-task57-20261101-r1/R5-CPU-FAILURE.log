@@ -1,0 +1,272 @@
+
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 ........F                                                                [100%]
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 =================================== FAILURES ===================================
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 _____ test_populated_sac_optimizer_replay_and_prefetch_next_update_recover _____
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_populated_sac_optimizer_r0')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_path):
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # Mandatory in the allocated qualification command; no VLA or simulator.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         root = os.environ.get('DSRL_OFFICIAL_ROOT')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         if root is None:
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             pytest.skip('Set DSRL_OFFICIAL_ROOT in the allocated original runtime')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         import jax
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from flax import serialization
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from flax.core import freeze
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from fluffy_bassoon.meta_rl.vla_libero import OfficialSAC
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         observations = dict(pixels=np.zeros((2,64,64,3,1), np.uint8),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                             state=np.zeros((2,8,1), np.float32))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         batch = freeze(dict(observations=observations, next_observations=observations,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             actions=np.zeros((2,1,32), np.float32), next_actions=np.zeros((2,1,32), np.float32),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             rewards=np.array([-1,0], np.float32), masks=np.array([1,0], np.float32),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             discount=np.full(2, .999**20, np.float32)))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         buffer = SimpleNamespace(data=dict(batch), capacity=2, size=2, _traj_counter=1,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             _start=2, traj_bounds={0:(0,2)}, streaming_buffer_size=None)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # compact_replay accepts ordinary nested mappings, like upstream buffers.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         buffer.data = {key: dict(value) if hasattr(value, 'keys') else value
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                        for key, value in buffer.data.items()}
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first = OfficialSAC(root, 0).agent
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first.update(batch)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         iterator = Prefetch(lambda: batch, jax.device_put)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         next(iterator)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         motor = SimpleNamespace(_rng=jax.random.key(17))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         contract = {'qualification':'original-pi0-complete-scalar-recovery'}
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         progress = dict(episodes=1, updates=1, training_primitives=20)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         receipt = json.loads((tmp_path/'recovery.json').read_text())
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         successor = json.loads((tmp_path/'recovery.json').read_text())
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert successor['path'] != receipt['path']
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert (tmp_path/receipt['path']).is_file()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert successor['sha256'] == receipt['sha256']
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         receipt = successor
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         checkpoint_bytes = serialization.to_bytes(first._save_dict)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first.update(next(iterator))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         expected = jax.tree_util.tree_leaves(first._save_dict)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         second = OfficialSAC(root, 1).agent
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_iterator = Prefetch(lambda: batch, jax.device_put)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_buffer = SimpleNamespace()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_motor = SimpleNamespace(_rng=jax.random.key(99))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         restored = restore_complete(tmp_path/receipt['path'], contract, second,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                                     resumed_buffer, resumed_iterator, resumed_motor)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert restored == progress
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 >       assert serialization.to_bytes(second._save_dict) == checkpoint_bytes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E       AssertionError: assert b'\x84\xa6cri...tch_stats\xc0' == b'\x84\xa6cri...tch_stats\xc0'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         At index 40 diff: b'e' != b'D'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         Use -v to get more diff
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py:170: AssertionError
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 ----------------------------- Captured stdout call -----------------------------
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 PixelMultiplexer(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     encoder = Encoder(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         features = (32, 32, 32, 32)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         strides = (2, 1, 1, 1)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         padding = 'VALID'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     network = LearnedStdTanhNormalPolicy(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         hidden_dims = (128, 128, 128)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         action_dim = 32
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         dropout_rate = 0.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         log_std_min = -20
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         log_std_max = 2
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         low = -1.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         high = 1.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     latent_dim = 50
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     use_bottleneck = True
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 PixelMultiplexer(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     encoder = Encoder(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         features = (32, 32, 32, 32)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         strides = (2, 1, 1, 1)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         padding = 'VALID'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     network = StateActionEnsemble(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         hidden_dims = (128, 128, 128)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         activations = relu
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         num_qs = 10
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         use_action_sep = False
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     latent_dim = 50
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     use_bottleneck = True
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 target_entropy: -16.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 mean
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 PixelMultiplexer(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     encoder = Encoder(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         features = (32, 32, 32, 32)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         strides = (2, 1, 1, 1)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         padding = 'VALID'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     network = LearnedStdTanhNormalPolicy(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         hidden_dims = (128, 128, 128)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         action_dim = 32
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         dropout_rate = 0.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         log_std_min = -20
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         log_std_max = 2
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         low = -1.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         high = 1.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     latent_dim = 50
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     use_bottleneck = True
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 PixelMultiplexer(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     encoder = Encoder(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         features = (32, 32, 32, 32)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         strides = (2, 1, 1, 1)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         padding = 'VALID'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     network = StateActionEnsemble(
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # attributes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         hidden_dims = (128, 128, 128)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         activations = relu
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         num_qs = 10
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         use_action_sep = False
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     latent_dim = 50
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     use_bottleneck = True
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 )
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 target_entropy: -16.0
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 mean
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 ----------------------------- Captured stderr call -----------------------------
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 2026-11-01 01:28:04.733180: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E0000 00:00:1793467684.750167     330 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E0000 00:00:1793467684.755637     330 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 W0000 00:00:1793467684.770526     330 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 W0000 00:00:1793467684.770554     330 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 W0000 00:00:1793467684.770556     330 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 W0000 00:00:1793467684.770557     330 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 ------------------------------ Captured log call -------------------------------
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 WARNING  matplotlib.style.core:core.py:213 In /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 =============================== warnings summary ===============================
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     parse = parser.parseString(pattern)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     parser.resetCache()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     ParserElement.enablePackrat()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/tensorflow_probability/python/__init__.py:57: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     if (distutils.version.LooseVersion(tf.__version__) <
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/tensorflow_probability/python/__init__.py:58: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     distutils.version.LooseVersion(required_tensorflow_version)):
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/tensorflow_probability/python/internal/backend/jax/ops.py:681: DeprecationWarning: jax.interpreters.xla.pytype_aval_mappings is deprecated.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     jax.interpreters.xla.pytype_aval_mappings[onp.ndarray])
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/deps/dsrl-pi0-task57-20261101-prep-r4/repo/jaxrl2/agents/pixel_sac/actor_updater.py:1: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     from audioop import cross
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/distrax/_src/utils/transformations.py:195: DeprecationWarning: jax.core.Var is deprecated. Use jax.extend.core.Var instead, and see https://jax.readthedocs.io/en/latest/jax.extend.html for details.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     if isinstance(v, jax.core.Var) and v in dependent:
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 =========================== short test summary info ============================
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 FAILED tests/test_dsrl_pi0_replication.py::test_populated_sac_optimizer_replay_and_prefetch_next_update_recover
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 1 failed, 8 passed, 19 warnings in 30.52s
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 <?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="9" time="30.525" timestamp="2026-11-01T01:28:02.400270+08:00" hostname="job-ri7n77kgci2x-master-0"><testcase classname="tests.test_dsrl_pi0_replication" name="test_prefetch_matches_upstream_sample_and_global_rng_order" time="0.054" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_prefetch_recovery_retains_pending_batch_and_suspended_refill[0]" time="0.001" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_prefetch_recovery_retains_pending_batch_and_suspended_refill[1]" time="0.001" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_prefetch_recovery_retains_pending_batch_and_suspended_refill[7]" time="0.001" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_full_episode_reserved_before_reset_and_exact_actions_settled" time="0.004" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_reset_failure_keeps_conservative_physical_charge" time="0.001" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_cannot_start_episode_with_insufficient_physical_budget" time="0.001" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_replay_recovery_retains_filled_rows_capacity_and_trajectory_cursor" time="0.000" /><testcase classname="tests.test_dsrl_pi0_replication" name="test_populated_sac_optimizer_replay_and_prefetch_next_update_recover" time="30.167"><failure message="AssertionError: assert b'\x84\xa6cri...tch_stats\xc0' == b'\x84\xa6cri...tch_stats\xc0'&#10;  &#10;  At index 40 diff: b'e' != b'D'&#10;  Use -v to get more diff">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_populated_sac_optimizer_r0')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0     def test_populated_sac_optimizer_replay_and_prefetch_next_update_recover(tmp_path):
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # Mandatory in the allocated qualification command; no VLA or simulator.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         root = os.environ.get('DSRL_OFFICIAL_ROOT')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         if root is None:
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             pytest.skip('Set DSRL_OFFICIAL_ROOT in the allocated original runtime')
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         import jax
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from flax import serialization
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from flax.core import freeze
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         from fluffy_bassoon.meta_rl.vla_libero import OfficialSAC
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         observations = dict(pixels=np.zeros((2,64,64,3,1), np.uint8),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                             state=np.zeros((2,8,1), np.float32))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         batch = freeze(dict(observations=observations, next_observations=observations,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             actions=np.zeros((2,1,32), np.float32), next_actions=np.zeros((2,1,32), np.float32),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             rewards=np.array([-1,0], np.float32), masks=np.array([1,0], np.float32),
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             discount=np.full(2, .999**20, np.float32)))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         buffer = SimpleNamespace(data=dict(batch), capacity=2, size=2, _traj_counter=1,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0             _start=2, traj_bounds={0:(0,2)}, streaming_buffer_size=None)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         # compact_replay accepts ordinary nested mappings, like upstream buffers.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         buffer.data = {key: dict(value) if hasattr(value, 'keys') else value
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                        for key, value in buffer.data.items()}
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first = OfficialSAC(root, 0).agent
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first.update(batch)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         iterator = Prefetch(lambda: batch, jax.device_put)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         next(iterator)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         motor = SimpleNamespace(_rng=jax.random.key(17))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         contract = {'qualification':'original-pi0-complete-scalar-recovery'}
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         progress = dict(episodes=1, updates=1, training_primitives=20)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         receipt = json.loads((tmp_path/'recovery.json').read_text())
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         save_complete(tmp_path, first, buffer, iterator, motor, progress, contract)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         successor = json.loads((tmp_path/'recovery.json').read_text())
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert successor['path'] != receipt['path']
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert (tmp_path/receipt['path']).is_file()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert successor['sha256'] == receipt['sha256']
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         receipt = successor
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         checkpoint_bytes = serialization.to_bytes(first._save_dict)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         first.update(next(iterator))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         expected = jax.tree_util.tree_leaves(first._save_dict)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         second = OfficialSAC(root, 1).agent
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_iterator = Prefetch(lambda: batch, jax.device_put)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_buffer = SimpleNamespace()
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         resumed_motor = SimpleNamespace(_rng=jax.random.key(99))
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         restored = restore_complete(tmp_path/receipt['path'], contract, second,
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0                                     resumed_buffer, resumed_iterator, resumed_motor)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0         assert restored == progress
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 &gt;       assert serialization.to_bytes(second._save_dict) == checkpoint_bytes
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E       AssertionError: assert b'\x84\xa6cri...tch_stats\xc0' == b'\x84\xa6cri...tch_stats\xc0'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         At index 40 diff: b'e' != b'D'
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 E         Use -v to get more diff
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 tests/test_dsrl_pi0_replication.py:170: AssertionError</failure></testcase></testsuite></testsuites>33
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/google/api_core/_python_version_support.py:254: FutureWarning: You are using a Python version (3.11.11) which Google will stop supporting in new releases of google.api_core once it reaches its end of life (2027-10-24). Please upgrade to the latest Python version, or at least Python 3.12, to continue receiving updates for google.api_core past that date.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   warnings.warn(message, FutureWarning)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/google/api_core/_python_version_support.py:254: FutureWarning: You are using a Python version (3.11.11) which Google will stop supporting in new releases of google.cloud._storage_v2 once it reaches its end of life (2027-10-24). Please upgrade to the latest Python version, or at least Python 3.12, to continue receiving updates for google.cloud._storage_v2 past that date.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   warnings.warn(message, FutureWarning)
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0 /mowenjie/fluffy-bassoon-2/envs/dsrl-pi0-task57-20261101-prep-r4/lib/python3.11/site-packages/google/api_core/_python_version_support.py:254: FutureWarning: You are using a Python version (3.11.11) which Google will stop supporting in new releases of google.cloud.storage_control_v2 once it reaches its end of life (2027-10-24). Please upgrade to the latest Python version, or at least Python 3.12, to continue receiving updates for google.cloud.storage_control_v2 past that date.
+2026-11-01 01:37:00 job-gxizjzf3seq4-master-0   warnings.warn(message, FutureWarning)
+2026-11-01 01:37:01 job-gxizjzf3seq4-master-0 {"objects": 19, "bytes": 12014131888, "names": ["openpi-assets/checkpoints/pi0_libero/assets/physical-intelligence/libero/norm_stats.json", "openpi-assets/checkpoints/pi0_libero/params/_METADATA", "openpi-assets/checkpoints/pi0_libero/params/_sharding", "openpi-assets/checkpoints/pi0_libero/params/d/5b6b2a896e0651f82a2c879b8a2a8ba8", "openpi-assets/checkpoints/pi0_libero/params/manifest.ocdbt", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/0ca4bf816ec10acaec0f62490a41529d", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/15ad1c4fa76e1c764766b9bc865e8d1d", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/2e38713b6caa7bfde0385f0adced748d", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/5b573f911a8101f0fcfdd62f73b218fb", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/5c296f4f9a224be488612a6025ca58c6", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/680b47b37cc767ff45156e23565e2252", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/7a559626d53988daabd96a179a6bff54", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/a3bd463a29df7b76a4d71263d8c05704", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/a87389eb66cb14add95ad6441a413ee9", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/cae25c26b881cdb73257fea25bd132a2", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/e98fbfe843f0b1a0938e2e174f5fe64b", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/f0bdaf7cbb943edbc868f15a685f9881", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/d/f251f0005f1667fe8e596da96c894e50", "openpi-assets/checkpoints/pi0_libero/params/ocdbt.process_0/manifest.ocdbt"]}
