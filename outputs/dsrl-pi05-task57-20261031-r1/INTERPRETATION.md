@@ -32,6 +32,27 @@ Nothing here disproves noise steering on difficult cases or establishes
 action-residual superiority. Keep these explanations separate from learner
 bugs: actual SAC update progress is now verified.
 
+## First learned panels: cost optimization without success headroom
+
+At15:19:38 the active run has389/389 successful training episodes,101,020
+updates and72,601 all-in actions. All ten learned panels through actual100,220
+updates score10/10. The latest uses1,270 query primitives versus native1,451
+(12.5% fewer), plus100 settling actions for either panel. Every case is shorter
+in that panel; the same physical/initial-observation hashes and seeds match.
+Full recovery, newest milestone and sampled raw/RPC hashes pass. Independent
+full journal reconciliation remains a terminal task, not a claim of this check.
+
+The reward penalizes every queried chunk, so successful episodes can still
+teach motion-cost optimization. The cost trend is a useful descriptive signal
+on this small bank, while no failure-recovery examples have appeared. It does
+not establish higher success, new-task transfer, memory benefit or overall
+sample efficiency after training/evaluation cost. The noise parameterization
+also differs from native; there is no matched untrained tied-noise panel.
+Preserve the already authorized fixed500k curve and final native stability
+control under the original limits. No case selection, extra collection or
+meta-student fitting is launched from this observation.
+[Saved check](CHECK-1516.md).
+
 ## What the literature establishes
 
 - [VLRLA §4.1](https://arxiv.org/html/2610.19517v1#S4.SS1): simp replaces the

@@ -33,10 +33,11 @@ Current human priority is ordinary DSRL first on the entirely frozen official
 pi0.5, followed by native action-expert PPO; further offline-student sweeps
 are held. A fresh task57 pi0.5-adapted PixelSAC curve is being implemented:
 500k optimizer updates, train states0..39 and matched query states40..49,
-within10GPUh/1M all-in actions/64GiB. At14:17 the initial native query panel
-was10/10 and training45/45, with4,280 SAC updates and8,816 all-in actions.
-This bank currently has no observed binary-success headroom or failure-recovery
-histories; no learned query improvement is established. Native PPO
+within10GPUh/1M all-in actions/64GiB. At15:19:38 training is389/389 successful with101,020 updates and72,601 all-in
+actions. Native and learned panels through100,220 updates all score10/10; the
+latest query uses1,270 primitives versus native1,451 (12.5% fewer). This is a
+descriptive cost signal on10 reused cases, without success-rate, memory or
+overall sample-efficiency evidence. No failure-recovery histories have emerged. Native PPO
 GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
 model cases are explicitly authorized after the pilot passes. Its sampling
 noise cannot directly label steering of the original frozen motor. AD can

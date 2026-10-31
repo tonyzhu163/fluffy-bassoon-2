@@ -3,24 +3,57 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## Task57 DSRL is active; native already reaches10/10
+## Task57 DSRL preserves10/10 with shorter observed query episodes
 
-At14:17:09 Shanghai on2026-10-31, Baigejob-iudscqfntb4e completed the initial
-native10-case query panel with10 successes,1,451 primitive+100 settling actions.
-The fresh SAC collector completed45/45 successful training episodes,707 replay
-chunks and4,280 optimizer updates; total8,816 actual actions including queries
-and qualification. All40 training states were visited. Scalar losses were
-finite and saved recovery/sample trace hashes matched. No learned query panel
-was complete in this receipt; the run remains active under its original cap.
+Baigejob-iudscqfntb4e is active at fixed sourced001556. The15:19:38Shanghai
+snapshot on2026-10-31 contains389/389 successful training episodes,5,544
+replay chunks and101,020 optimizer updates, with72,601 all-in simulator actions
+and5.85GB outputs. Actor/critic/temperature metrics are finite. No training
+failure/recovery episode has appeared.
 
-This bank has no observed binary-success headroom and no training failures yet.
-It cannot show a success-rate improvement over10/10; subsequent matched panels
-can measure regression, preservation and completion cost. It supplies no
-failure-recovery or meta-learning benefit at this point. The motor is pi0.5,
-whereas the DSRL paper used pi0; this is an adapted baseline. Target57 records
-are excluded from source40 pretraining and remain development exposure.
-[Actual receipt](../../outputs/dsrl-pi05-task57-20261031-r1/first-advancement.json),
-[interpretation](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
+| Actual optimizer updates | Query success | Query primitives | Settling actions |
+| ---: | ---: | ---: | ---: |
+| Native0 |10/10|1451|100|
+|10220|10/10|1407|100|
+|20240|10/10|1378|100|
+|30200|10/10|1355|100|
+|40160|10/10|1320|100|
+|50080|10/10|1343|100|
+|60000|10/10|1304|100|
+|70260|10/10|1279|100|
+|80100|10/10|1264|100|
+|90160|10/10|1309|100|
+|100220|10/10|1270|100|
+
+All panels use the same10 physical cases, recorded query seeds and initial
+observation hashes. Queries change no weights/replay and perform no SGD.
+At100,220 updates the panel uses181 fewer primitives than native (12.5%);
+including settling,1,370 versus1,551actions (11.7% fewer). All10 cases are
+shorter at that checkpoint. This is a descriptive small-bank completion-cost
+signal, not a success-rate gain, independent-seed result, deployment adaptation
+or overall sample-efficiency gain after training/evaluation cost. The10 cases
+are reused across checkpoints; these panels are not independent replications.
+
+There is no observed binary-success headroom. The reward also penalizes each
+queried chunk, so all-success histories can still contain cost optimization;
+they currently contain no failure-recovery examples. Noise parameterization
+and learning may both affect cost; no matched untrained tied-noise query panel
+was included. The prescribed final native rerun can test runtime stability,
+while later robustness claims would require a separate declared comparison.
+Keep the fixed500k schedule under its original caps; no case or recipe changes.
+
+Saved latest and immutable100k recovery hashes, newest raw traces and sampled
+RPC input/outcome hashes match. Independent full cost reconciliation reaches
+the earlier32,740-action prefix. The later journal walk was bounded/partial;
+producer counters report zero uncertain actions, but no complete independent
+new-tail reconciliation is claimed yet. Final motor after-hash and terminal
+reconciliation remain pending. [Latest saved check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1516.md),
+[earlier complete prefix](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1436.md).
+
+The motor is pi0.5, whereas the DSRL paper used pi0. This is an adapted
+single-seed baseline. Target57 records remain excluded from source40
+pretraining and count as development exposure. [Interpretation and proposed
+next comparison](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
 
 ## Fixed100 LIBERO90 screen complete
 
