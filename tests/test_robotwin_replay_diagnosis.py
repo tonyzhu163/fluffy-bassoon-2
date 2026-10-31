@@ -1,4 +1,5 @@
 """Synthetic CPU tests; execute only inside the parent's allocated Linux gate."""
+from copy import deepcopy
 import csv
 import hashlib
 import json
@@ -13,6 +14,7 @@ import pytest
 from fluffy_bassoon.meta_rl.robotwin_replay_diagnosis import (
     Audit,IDS,PRODUCER,compare_commands,drive_delivery,jump_metrics,panel,inspect_replays,
     gripper_events,compression_geometry,
+    validate_reset_identity,
 )
 from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
 
@@ -103,6 +105,31 @@ def test_panel_preserves_native_rgb_for_png_display(tmp_path):
     assert all(x['mean_absolute_pixel_difference']==0 for x in metrics)
 
 
+def test_actual_writer_reset_annotation_is_the_only_allowed_difference(tmp_path):
+    writer=RobotwinCorpusWriter(tmp_path/'corpus',{'synthetic':True})
+    writer.set_context(dict(phase='a1',method='capacity_teacher',trial_id=IDS[2],policy_version='fixed'))
+    image=np.zeros((1,2,2,3),np.uint8)
+    raw=dict(main_images=image,wrist_images=np.zeros((1,2,2,2,3),np.uint8),
+             states=np.zeros((1,14),np.float32),task_descriptions=['fixed'])
+    info=dict(actual_seed=2,requested_seed=2,instruction=['fixed'],
+        observation_sha256='a'*64,features_sha256='b'*64,
+        instruction_binding={'effective_observation_sha256':'a'*64})
+    episode=writer.begin_episode(raw,np.zeros(2062,np.float32),info)
+    # Exact producer order: snapshot first, append backend annotation afterward.
+    info['corpus_episode_id']=episode
+    base=writer.root/'episodes'/episode
+    reset=json.loads((base/'reset.json').read_text());manifest=json.loads((base/'manifest.json').read_text())
+    assert 'corpus_episode_id' not in reset['reset_info']
+    validate_reset_identity(reset,info,manifest)
+    for key,value in [('corpus_episode_id','foreign'),('actual_seed',3),('instruction',['changed']),
+                      ('observation_sha256','c'*64),('features_sha256','d'*64),
+                      ('instruction_binding',{'effective_observation_sha256':'e'*64})]:
+        altered=deepcopy(info);altered[key]=value
+        with pytest.raises(ValueError):validate_reset_identity(reset,altered,manifest)
+    altered=deepcopy(reset);altered['episode_id']='foreign'
+    with pytest.raises(ValueError):validate_reset_identity(altered,info,manifest)
+
+
 def test_full_closed_three_episode_audit_uses_existing_capture_schema(tmp_path):
     base=tmp_path/'old'/'experiment';base.mkdir(parents=True)
     writer=RobotwinCorpusWriter(base/'corpus',{'synthetic':True})
@@ -126,6 +153,7 @@ def test_full_closed_three_episode_audit_uses_existing_capture_schema(tmp_path):
         info=dict(actual_seed=ordinal,instruction=['fixed'])
         writer.set_context(dict(phase='a1',method='capacity_teacher',trial_id=IDS[ordinal],policy_version='fixed'))
         episode=writer.begin_episode(raw(targets[0]),np.zeros(2062,np.float32),info)
+        info['corpus_episode_id']=episode
         rp=writer.root/'episodes'/episode/'reset.json';resets[IDS[ordinal]]=dict(path=str(rp),sha256=sha(rp))
         refs=[];cursor=0
         while cursor<total:

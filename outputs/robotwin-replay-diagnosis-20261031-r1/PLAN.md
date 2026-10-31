@@ -4,9 +4,18 @@ Latest main863175fba7982239294a3539ad94a8d8420ade91 was reviewed and incorporate
 before freezing this component. Reused demo-reader/capture-helper bytes are
 identical to the actual8fb producer. Ended source/data remain immutable.
 
+Pre-submit successor fixes the actual writer/backend annotation order: reset.json
+deepcopies reset_info before the backend appends corpus_episode_id. Require the
+closed annotation and reset episode_id to equal the manifest episode_id, then
+compare every remaining reset field exactly, excluding only that annotation
+from the closed record. Seed, text, observation/features hashes and nested
+binding checks remain strict. The synthetic whole-capture fixture now follows
+the actual append-after-snapshot order; an additional writer-schema regression
+checks acceptance and foreign-ID/seed/text/hash rejection.
+
 One necessary read-only CPU slice, at most300worker-seconds inside the existing
 1800phase CPU ceiling (746used/1054remaining at admission preparation). The parent
-alone schedules, observes and settles cost. Include the12focused synthetic tests,
+alone schedules, observes and settles cost. Include the13focused synthetic tests,
 setup, full hash/CRC checks, diagnosis, small evidence and cleanup in one original
 absolute clock. No new grant, model, simulator, VLA query, robot action or SGD.
 No GPU retry, demonstration exclusion, two-demo fit or executor change follows
@@ -115,7 +124,7 @@ python scripts/diagnostics/robotwin_replay_diagnosis.py \
   --output /ABS/FRESH_CPU_OUTPUT/inspection
 ```
 
-12prepared test cases use tiny synthetic captures through the existing recorder,
+13prepared test cases use tiny synthetic captures through the existing recorder,
 matching the three retained outcome/count shapes with608synthetic slots; these
 are not actual archived payloads or physical executions. No test,
 array computation or image decode has run on macOS. Actual data conclusions wait

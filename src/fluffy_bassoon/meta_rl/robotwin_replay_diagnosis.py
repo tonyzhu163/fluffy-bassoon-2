@@ -170,6 +170,17 @@ def compression_geometry(start,issued):
     return result
 
 
+def validate_reset_identity(reset,record_info,manifest):
+    """Backend adds only corpus_episode_id after the writer snapshots reset."""
+    episode=manifest['episode_id']
+    if (not isinstance(episode,str) or not episode
+            or record_info.get('corpus_episode_id')!=episode or reset.get('episode_id')!=episode):
+        raise ValueError('Reset/closed summary/manifest episode identities differ')
+    remaining={key:value for key,value in record_info.items() if key!='corpus_episode_id'}
+    if reset['reset_info']!=remaining:
+        raise ValueError('Reset identity differs from closed summary beyond corpus_episode_id')
+
+
 def panel(source_raw,native,label,path):
     """Display native RGB correctly in a PNG; never modify source JPEG bytes."""
     import cv2
@@ -233,8 +244,7 @@ def inspect_replays(result,result_path,demos,output,audit,*,reset_refs):
         reset_path=manifest_path.parent/manifest['reset']
         if Path(reset_refs[ident]['path']).resolve()!=reset_path.resolve():raise ValueError('Different bound reset path')
         reset=audit.json(reset_refs[ident])
-        # The SHA-bound summary and manifest bind the captured reset identity.
-        if reset['reset_info']!=record['reset_info']:raise ValueError('Reset identity differs from closed summary')
+        validate_reset_identity(reset,record['reset_info'],manifest)
         cursor=0;chunks=[];frames=[(0,reset['initial_observation'])]
         current_frame=audit.arrays(corpus,reset['initial_observation'])
         if len(manifest['chunks'])!=len(record['corpus_refs']):raise ValueError('Manifest chunk list differs')
