@@ -1,0 +1,26 @@
+{
+  "format": "readout_CPU_scoped_cache_schema_inspection_addendum_v1",
+  "same_phase": "frozen-vla-readout-software-qual-20261101-r1",
+  "same_aggregate_CPU_seconds_UNCHANGED": 120,
+  "priority": "Runrequiredreadout57 first; thenboundedread-onlyschema inspectiononlyiforiginaldeadline permits. Do notdelay57submission.",
+  "maximum_inspection_CPU_worker_seconds_within_original120": 20,
+  "GPU_count": 0,
+  "new_robot_actions": 0,
+  "inputs": "SHA-bound actualsealed-request bank/paid11+new04 receipt refs from endedjob-5elum703js2h, exactd442 guard. Inspect ONLY firstpaid11 row and first/lastnew04rows.",
+  "permitted": "OnallocatedLinuxCPU ONLY, verifyfilehashes then torch.load owncachepayloads(map_location=cpu) and small canonical NPZ asneeded; no VLA/modelweights/checkpointrestore/SGD/simulator/render/ledgerwrites or reencoding. NoTensor/arraytransfer todevhost.",
+  "report": [
+    "teacher_id/anchor/receipt/payload SHA",
+    "saved format/context versus exact expectedbankcontext",
+    "allboolpredicates fromactual teacher_bank.py483 guard separately",
+    "state/features/base14/target32/teacher14/proposedplan shapes+dtypes+bytehashes",
+    "submitted/executed/data.valid shapes/dtypes/counts/bytehashes andequivalence",
+    "teacher14 vsfullknownproposedplan equality",
+    "receipt valid_actions/native_actual_actions/nativecanonicalcost",
+    "source/runtime/request/receipt refs andstrictlimits"
+  ],
+  "specific_hypothesis": "Writer stores officialpreparedstate verbatim while consumerhardcodes(1,14); actualshape32 remainsUNCONFIRMED untilthisinspection. Do notrelaxguard,reshape/truncate/rewritelabels/paidpayloads orfixproductionhere.",
+  "output": "Smallscalar/hashJSON andlogs only, original512MiBphaseoutput ceilingunchanged",
+  "outcomes": "Inspectionreports observed mismatches, notsealPASS. Preserveallpriorfailedstatuses/bytes/costs. Capturecomponentsindependentlywithinoriginaldeadline.",
+  "no_new_budget_or_retry": true,
+  "resource_owner": "/root/finish_assembly"
+}
