@@ -15,7 +15,7 @@ def grant(tmp_path, **changes):
         run_id=RUN, maximum_gpu_seconds=36000, maximum_total_actions=1000000,
         maximum_output_bytes=64 * 1024 ** 3, task_id=57, learner_seed=0,
         motor_receipt_sha256=task.PI05_RECEIPT, reviewed_main_commit=task.REVIEWED_MAIN,
-        data_role='target-online-baseline')
+        data_role='target-online-baseline', motor_parameter_sha256=task.MOTOR_PARAMETER_SHA256)
     value.update(changes)
     path = tmp_path / 'grant.json'
     path.write_text(json.dumps(value))

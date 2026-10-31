@@ -56,11 +56,9 @@ cd "$TASK_WT"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"
 TASK_DRIVER_RESUME=()
-if [ -f "$TASK_OUT/experiment/case-57/contract.json" ]; then
+if [ -e "$TASK_OUT/experiment" ]; then
   test "${#TASK_RESUME[@]}" -gt 0
   TASK_DRIVER_RESUME=(--resume)
-else
-  test ! -e "$TASK_OUT/experiment"
 fi
 export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4

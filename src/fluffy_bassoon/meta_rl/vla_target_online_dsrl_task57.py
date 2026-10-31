@@ -31,6 +31,7 @@ MAX_UPDATES, PANEL_INTERVAL = 500000, 10000
 MAX_ACTIONS, MAX_SECONDS, MAX_BYTES = 1000000, 36000, 64 * 1024 ** 3
 TRAIN_STATES, QUERY_STATES = tuple(range(40)), tuple(range(40, 50))
 DATA_ROLE = 'target-online-baseline'
+MOTOR_PARAMETER_SHA256 = 'c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9'
 
 
 def target(state):
@@ -48,6 +49,7 @@ def scientific_contract(source, grant_sha256):
         task_id=57, suite='libero_90', train_states=list(TRAIN_STATES), query_states=list(QUERY_STATES),
         scene_seed=123, learner_seed=0, horizon=400, settling_steps=10,
         motor_receipt_sha256=PI05_RECEIPT, model_config='pi05_libero',
+        motor_parameter_sha256=MOTOR_PARAMETER_SHA256,
         entire_motor_frozen=True, native_horizon=10, execute_steps=10,
         nominal_optimizer_stop=MAX_UPDATES, maximum_optimizer_updates=MAX_UPDATES + 780,
         complete_burst_overshoot_maximum=780,
@@ -71,6 +73,7 @@ def load_grant(path, expected_sha256, source, run):
         run_id=run, maximum_gpu_seconds=MAX_SECONDS, maximum_total_actions=MAX_ACTIONS,
         maximum_output_bytes=MAX_BYTES, task_id=57, learner_seed=0,
         motor_receipt_sha256=PI05_RECEIPT, reviewed_main_commit=REVIEWED_MAIN, data_role=DATA_ROLE)
+    required['motor_parameter_sha256'] = MOTOR_PARAMETER_SHA256
     if any(grant.get(key) != value for key, value in required.items()):
         raise ValueError('Task57 funding record must explicitly bind the unchanged phase ceilings/identity')
     return grant
@@ -185,7 +188,8 @@ def run_profile(sim, motor, learner, sampler, *, output, root, contract, resume=
     if (stop_updates < 1 or panel_interval < 1 or not query_states
             or stop_updates % panel_interval or any(state not in QUERY_STATES for state in query_states)):
         raise ValueError('Require complete predeclared task57 panel schedule')
-    if resume:
+    science_resume = resume and state_path.exists()
+    if science_resume:
         if json.loads(contract_path.read_text()) != contract:
             raise ValueError('Task57 immutable scientific contract changed')
         progress = json.loads(state_path.read_text())
@@ -200,8 +204,13 @@ def run_profile(sim, motor, learner, sampler, *, output, root, contract, resume=
                 or onset._signature(learner) != model['signature']):
             raise ValueError('Atomic task57 cursor/model/training recovery differs')
     else:
-        if contract_path.exists() or state_path.exists():
+        if state_path.exists() or (contract_path.exists() and not resume):
             raise ValueError('Fresh task57 actor requires a new immutable output identity')
+        if contract_path.exists() and json.loads(contract_path.read_text()) != contract:
+            raise ValueError('Task57 setup-only resume changed the scientific contract')
+        if resume and any(json.loads(path.read_text()).get('role') in ('training', 'query')
+                for path in (output / 'physical-journal').glob('*.json')):
+            raise ValueError('Cannot restart scientific task57 data without its full recovery cursor')
         onset.write_json(contract_path, contract)
         progress = dict(format=FORMAT, phase='initial_native', next_threshold=panel_interval,
             active_panel=None, panels=[], training=dict(episodes=0, chunks=0,
@@ -262,7 +271,7 @@ def run_profile(sim, motor, learner, sampler, *, output, root, contract, resume=
             query_cursor=0, receipts=[])
         save()
 
-    if not resume:
+    if not science_resume:
         save(full=True)
     while progress['phase'] != 'complete':
         phase = progress['phase']
@@ -430,10 +439,16 @@ def main(argv=None):
     original_output, args.output = args.output, attempt
     motor = onset.FrozenOpenPI(args)
     args.output = original_output
-    server = onset.TargetServer(task_id=57, python=args.simulator_python,
-        pythonpath=args.simulator_pythonpath, output=attempt / 'server-57',
-        port=args.port, libero_root=args.libero_root)
+    from .vla_motor_replay import parameter_signature
+    before = parameter_signature(motor.policy._model)
+    onset.write_json(attempt / 'motor-parameters-before.json', before)
+    server, result = None, None
     try:
+        if before['sha256'] != MOTOR_PARAMETER_SHA256:
+            raise ValueError('Task57 entire frozen motor parameter SHA256 differs')
+        server = onset.TargetServer(task_id=57, python=args.simulator_python,
+            pythonpath=args.simulator_pythonpath, output=attempt / 'server-57',
+            port=args.port, libero_root=args.libero_root)
         if (server.metadata.get('suite') != 'libero_90' or server.metadata.get('task_id') != 57
                 or server.metadata.get('fresh_environment_on_reset') is not True):
             raise ValueError('Task57 simulator metadata differs from the declared experiment')
@@ -455,11 +470,20 @@ def main(argv=None):
         result = run_profile(server, motor, learner, sampler, output=output, root=args.output,
             contract=contract, resume=args.resume, deadline=deadline, stop_after_updates=args.pause_after_updates,
             storage_root=args.output.parent)
-        onset.write_json(args.output / 'index.json', dict(result, run_id=args.run_id,
-            source_commit=args.source_commit, motor=motor.metadata,
-            elapsed_seconds_this_driver=time.monotonic() - started))
     finally:
-        server.close()
+        if server is not None:
+            server.close()
+        after = parameter_signature(motor.policy._model)
+        onset.write_json(attempt / 'motor-parameters-after.json', dict(before=before, after=after,
+            equal=before == after, expected_parameter_sha256=MOTOR_PARAMETER_SHA256))
+        if result is not None:
+            onset.write_json(args.output / 'index.json', dict(result, run_id=args.run_id,
+                source_commit=args.source_commit, motor=motor.metadata,
+                elapsed_seconds_this_driver=time.monotonic() - started,
+                motor_parameters_unchanged=before == after,
+                motor_parameters_before_sha256=before['sha256'], motor_parameters_after_sha256=after['sha256']))
+        if before != after:
+            raise RuntimeError('Entire pi0.5 motor parameters changed during ordinary DSRL')
 
 
 if __name__ == '__main__':
