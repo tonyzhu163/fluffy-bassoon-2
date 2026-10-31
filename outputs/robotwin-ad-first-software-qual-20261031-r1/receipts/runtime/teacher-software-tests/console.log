@@ -1,0 +1,119 @@
+...............................................FFF..........             [100%]
+=================================== FAILURES ===================================
+__ test_child_closes_at_real_ledger_k8_boundary_and_no_step_occurs_in_parity ___
+
+tmp_path = PosixPath('/mowenjie/fluffy-bassoon-2/outputs/robotwin-ad-first-software-qual-20261031-r1/tmp/pytest-of-root/pytest-1/test_child_closes_at_real_ledg0')
+
+    def test_child_closes_at_real_ledger_k8_boundary_and_no_step_occurs_in_parity(tmp_path):
+        configuration=plan(); args=arguments(tmp_path,create=False); events=[]
+        class Env:
+            backend=SimpleNamespace(prefix_calls=17,motor_queries=9,output_dir=tmp_path/'runtime')
+            def close(self): events.append('close')
+        env=Env(); statistics=dict(pending_decision=None,unresolved_decisions=[],native_completed_chunks=0,executed_primitive_steps=0)
+        def prepare(*values): events.extend(['construct','zero-action-parity']); return env,SimpleNamespace(statistics=lambda:statistics),dict(passed=True)
+        def trial(runtime,budget,agent,configuration,**kwargs):
+            events.append('K8'); value=result(configuration,'native','adjust_bottle')
+            for index in range(8):
+                intent=f'fake-physical-{index}'
+                budget.reserve(intent,1,phase='target',method='native',task='adjust_bottle',episode=index,chunk=0,policy_version='native')
+                budget.resolve(intent,1)
+            statistics['executed_primitive_steps']=8
+            kwargs['output'].mkdir(); live.write(kwargs['output']/'result.json',value)
+            return value
+>       receipt=live.run_child(args,configuration,prepare=prepare,agent_loader=lambda *a,**k:object(),trial_runner=trial)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_history_live.py:151: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robotwin_history_live.py:308: in run_child
+    with ledger(args,plan,'unit') as budget:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+src/fluffy_bassoon/meta_rl/robotwin_history_live.py:122: in ledger
+    from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <__main__.CPUImportGuard object at 0x799237befe50>
+fullname = 'fluffy_bassoon.rl.robotwin_campaign_budget'
+path = ['/tmp/robotwin-sac65-cpu-compat-20261031-r6-c2nu3dmf/repo/src/fluffy_bassoon/rl']
+target = None
+
+    def find_spec(self, fullname, path=None, target=None):
+        if forbidden(fullname):
+            self.denied.append(fullname)
+>           raise ImportError('CPU compatibility gate forbids simulator/frozen-VLA import: ' + fullname)
+E           ImportError: CPU compatibility gate forbids simulator/frozen-VLA import: fluffy_bassoon.rl.robotwin_campaign_budget
+
+/tmp/robotwin-sac65-cpu-compat-20261031-r6-9yat0ky3/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py:35: ImportError
+____ test_child_exception_preserves_pending_reservation_and_stops_recovery _____
+
+tmp_path = PosixPath('/mowenjie/fluffy-bassoon-2/outputs/robotwin-ad-first-software-qual-20261031-r1/tmp/pytest-of-root/pytest-1/test_child_exception_preserves0')
+
+    def test_child_exception_preserves_pending_reservation_and_stops_recovery(tmp_path):
+        configuration=plan(); args=arguments(tmp_path,create=False); closed=[]
+        env=SimpleNamespace(close=lambda:closed.append(True))
+        def trial(runtime,budget,*values,**kwargs):
+            budget.reserve('unknown-intent',32,phase='target',method='native',task='adjust_bottle',episode=0,chunk=0,policy_version='native')
+            raise RuntimeError('native abort')
+        with pytest.raises(RuntimeError,match='native abort'):
+>           live.run_child(args,configuration,prepare=lambda *a:(env,None,dict(passed=True)),
+                agent_loader=lambda *a,**k:object(),trial_runner=trial)
+
+tests/test_robotwin_history_live.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robotwin_history_live.py:308: in run_child
+    with ledger(args,plan,'unit') as budget:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+src/fluffy_bassoon/meta_rl/robotwin_history_live.py:122: in ledger
+    from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <__main__.CPUImportGuard object at 0x799237befe50>
+fullname = 'fluffy_bassoon.rl.robotwin_campaign_budget'
+path = ['/tmp/robotwin-sac65-cpu-compat-20261031-r6-c2nu3dmf/repo/src/fluffy_bassoon/rl']
+target = None
+
+    def find_spec(self, fullname, path=None, target=None):
+        if forbidden(fullname):
+            self.denied.append(fullname)
+>           raise ImportError('CPU compatibility gate forbids simulator/frozen-VLA import: ' + fullname)
+E           ImportError: CPU compatibility gate forbids simulator/frozen-VLA import: fluffy_bassoon.rl.robotwin_campaign_budget
+
+/tmp/robotwin-sac65-cpu-compat-20261031-r6-9yat0ky3/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py:35: ImportError
+_____ test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime _____
+
+tmp_path = PosixPath('/mowenjie/fluffy-bassoon-2/outputs/robotwin-ad-first-software-qual-20261031-r1/tmp/pytest-of-root/pytest-1/test_insufficient_k8_allowance0')
+
+    def test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime(tmp_path):
+        configuration=plan(); args=arguments(tmp_path,create=False); calls=[]
+>       with live.ledger(args,configuration,'prior-fake-cost') as budget:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_history_live.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robotwin_history_live.py:122: in ledger
+    from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <__main__.CPUImportGuard object at 0x799237befe50>
+fullname = 'fluffy_bassoon.rl.robotwin_campaign_budget'
+path = ['/tmp/robotwin-sac65-cpu-compat-20261031-r6-c2nu3dmf/repo/src/fluffy_bassoon/rl']
+target = None
+
+    def find_spec(self, fullname, path=None, target=None):
+        if forbidden(fullname):
+            self.denied.append(fullname)
+>           raise ImportError('CPU compatibility gate forbids simulator/frozen-VLA import: ' + fullname)
+E           ImportError: CPU compatibility gate forbids simulator/frozen-VLA import: fluffy_bassoon.rl.robotwin_campaign_budget
+
+/tmp/robotwin-sac65-cpu-compat-20261031-r6-9yat0ky3/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py:35: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_history_live.py::test_child_closes_at_real_ledger_k8_boundary_and_no_step_occurs_in_parity
+FAILED tests/test_robotwin_history_live.py::test_child_exception_preserves_pending_reservation_and_stops_recovery
+FAILED tests/test_robotwin_history_live.py::test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime
+3 failed, 57 passed in 2.63s
+Traceback (most recent call last):
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-9yat0ky3/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py", line 231, in <module>
+    main()
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-9yat0ky3/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py", line 151, in main
+    raise RuntimeError('Focused fixture suite failed: ' + str(result))
+RuntimeError: Focused fixture suite failed: 1

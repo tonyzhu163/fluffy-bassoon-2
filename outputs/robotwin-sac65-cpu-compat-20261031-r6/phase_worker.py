@@ -144,7 +144,7 @@ def main():
                 'tests/test_robotwin_history_corpus.py','tests/test_robotwin_offline_compat_gate.py',
                 'tests/test_robotwin_cpu_residual_bootstrap.py','tests/test_robotwin_cpu_preflight_actual.py',
                 'tests/test_robotwin_job_local_code.py']
-            options=['--deselect='+str(code/item) for item in ctx.get('deselected_nodes',[])] if a.phase=='software-tests' else []
+            options=['--rootdir='+str(code),*['--deselect='+item for item in ctx.get('deselected_nodes',[])]] if a.phase=='software-tests' else []
             result = pytest.main(['-q','-p','no:cacheprovider',
                 '--junitxml='+str(out/'fixtures.junit.xml'),*options,*[str(code/item) for item in files]])
             if result != 0:

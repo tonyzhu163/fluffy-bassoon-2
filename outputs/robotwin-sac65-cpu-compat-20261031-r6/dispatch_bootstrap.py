@@ -207,9 +207,9 @@ def main():
         raw=a.software_profile.read_bytes()
         require(digest(raw)==a.software_profile_sha256,'Software dispatcher profile changed')
         profile=json.loads(raw)
-        require(profile['run_id']=='robotwin-ad-first-software-qual-20261031-r1'
-            and profile['global_work_seconds']==500 and profile['scheduler_cap_seconds']==600
-            and profile['task_prefix']=='mwj_1031_robotwin_ad_software_r1_', 'Unreviewed software dispatcher scope')
+        require((profile['run_id'],profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['task_prefix']) in (
+            ('robotwin-ad-first-software-qual-20261031-r1',500,600,'mwj_1031_robotwin_ad_software_r1_'),
+            ('robotwin-ad-first-software-qual-20261031-r2',380,480,'mwj_1031_robotwin_ad_software_r2_')), 'Unreviewed software dispatcher scope')
         RUN=profile['run_id'];WORK_SECONDS=profile['global_work_seconds'];TASK_PREFIX=profile['task_prefix']
         REMOTE_INPUT='/mowenjie/fluffy-bassoon-2/inputs/'+RUN
         REMOTE_OUTPUT='/mowenjie/fluffy-bassoon-2/outputs/'+RUN

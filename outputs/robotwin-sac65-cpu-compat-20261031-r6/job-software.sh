@@ -8,10 +8,13 @@ TASK_BOOTSTRAP=${4:?actual UI proof ticket}
 TASK_HELPERS=${5:?exact three0c16 ownership helpers}
 TASK_PROFILE=${6:?exact software profile}
 TASK_PROFILE_SHA=${7:?profile SHA256}
-(( $# == 7 ))
+(( $# == 7 || $# == 8 ))
+TASK_MODE=${8:-original}
+TASK_TERM=570
+if [[ "$TASK_MODE" == teacher-residual ]]; then TASK_TERM=450; else [[ "$TASK_MODE" == original ]]; fi
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 trap 'TASK_RC=$?; if [[ -d "$TASK_OUT" ]]; then printf "%s\n" "$TASK_RC" > "$TASK_OUT/exit-code.txt"; fi' EXIT
-timeout --signal=TERM --kill-after=10s 570 "$TASK_PYTHON" -I -B -S \
+timeout --signal=TERM --kill-after=10s "$TASK_TERM" "$TASK_PYTHON" -I -B -S \
   "$TASK_CODE/outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py" \
   --code-root "$TASK_CODE" --code-commit "$TASK_PIN" --output "$TASK_OUT" \
   --bootstrap-ticket "$TASK_BOOTSTRAP" --owned-helpers "$TASK_HELPERS" \
