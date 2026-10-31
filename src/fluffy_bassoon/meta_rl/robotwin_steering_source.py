@@ -9,6 +9,7 @@ import argparse
 from copy import deepcopy
 from dataclasses import asdict
 import importlib.util
+import hashlib
 import json
 import math
 import os
@@ -264,6 +265,48 @@ def paired_validation_spec(spec, baseline):
     return dict(deepcopy(spec), expected_reset=deepcopy(identity), paired_instruction=deepcopy(instruction))
 
 
+def validate_resume_ledger(prior, ledger, captured):
+    """Bind saved global boundary, ticket and actual canonical journal before opening it."""
+    if captured.get("collector") != {k: v for k, v in prior.items() if k != "global_recovery"}:
+        raise ValueError("Saved manifest differs from its actual captured global boundary")
+    root = str(Path(ledger["root"]).resolve())
+    expected_header = {k: ledger[k] for k in ("campaign_id", "total_actions", "source_caps", "phase_caps", "contract")}
+    expected_header["schema"] = CampaignBudget.schema
+    if (prior.get("ledger_root") != root
+            or prior.get("action_ledger", {}).get("root") != root
+            or prior["action_ledger"] != dict(prior["actions"]["header"], root=root)
+            or prior["actions"]["header"] != expected_header):
+        raise ValueError("Saved boundary, allocation and actual ledger roots/header differ")
+    saved = prior["actions"]
+    count = saved.get("journal_events")
+    files = sorted((Path(root)/"events").glob("*.json"))
+    if (type(count) is not int or count < 2 or len(files) != count
+            or any(path.name != f"{i:010d}.json" for i, path in enumerate(files))):
+        raise ValueError("Saved canonical journal event count differs; equal totals cannot substitute")
+    tip = json.loads(files[-1].read_text())
+    digest = tip.pop("sha256", None)
+    actual = hashlib.sha256(json.dumps(tip, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    if (digest != actual or digest != saved.get("journal_sha256") or tip.get("sequence") != count-1
+            or saved.get("unresolved_decisions")):
+        raise ValueError("Saved canonical journal tip differs or contains unresolved physical work")
+
+
+def validate_opened_resume(prior, budget, *, run_id, source_commit):
+    """Under the existing ledger lock, allow only its one fresh run-registration event."""
+    saved, current = prior["actions"], budget.snapshot()
+    count = saved["journal_events"]
+    path = Path(budget.root)/"events"/f"{count:010d}.json"
+    event = json.loads(path.read_text()) if path.is_file() else {}
+    fields = ("header", "receipts", "charged_actions", "actual_actions", "pending_actions", "uncertain_actions",
+              "by_phase", "by_method", "decision_count", "unresolved_decisions")
+    if (run_id in saved["runs"] or current["journal_events"] != count+1
+            or event.get("kind") != "run" or event.get("run_id") != run_id
+            or event.get("source_commit") != source_commit or event.get("previous_sha256") != saved["journal_sha256"]
+            or event.get("sha256") != current["journal_sha256"]
+            or any(current[k] != saved[k] for k in fields)):
+        raise ValueError("Canonical journal advanced beyond the exact fresh resume registration; no model/reset admitted")
+
+
 def run_source_collection(*, control, budget, profile, distribution, output, guard,
                           archive, run_id, student_profiles, control_qualification,
                           source_commit, device="cuda", prior=None, prefix_builder=None, after_source=None):
@@ -432,7 +475,9 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
                 references[key] = teacher.last_recovery
         closed = (not control.active and all(t.active_episode is None and t.pending is None and not t.updating
                       for t in teachers.values()) and not budget.snapshot()["unresolved_decisions"])
+        ledger_root = str(Path(budget.root).resolve())
         state = dict(format=FORMAT, status=status, error=error, source_commit=source_commit,
+            ledger_root=ledger_root, action_ledger=dict(budget.header, root=ledger_root),
             profile=profile.contract(), teachers=references, closed_physical_boundary=closed,
             complete_episodes={k: len(t.completed_episodes) for k, t in teachers.items()},
             actual_optimizer_cycles={k: t.learner.updates for k, t in teachers.items()},
@@ -567,8 +612,7 @@ def main(argv=None):
         if prior.get("post_source_entered") and not prior.get("post_source_completed"):
             raise ValueError("Preserve the existing A2 cursor/recovery; no automatic restarted cross panel")
         captured = BoundedTeacherRecovery.load(prior["global_recovery"])
-        if captured["collector"].get("teachers") != prior["teachers"]:
-            raise ValueError("Captured global recovery does not bind this exact six-teacher boundary")
+        validate_resume_ledger(prior, allocation["action_ledger"], captured)
     guard = RuntimeGuard(allocation)
     guard.admit_episode()
     args.output.mkdir(parents=True, exist_ok=False)
@@ -589,6 +633,8 @@ def main(argv=None):
                 source_caps=ledger["source_caps"], phase_caps=ledger["phase_caps"], contract=ledger["contract"],
                 run_id=args.run_id, source_commit=source) as budget:
             profile.validate_budget(budget)
+            if prior is not None:
+                validate_opened_resume(prior, budget, run_id=args.run_id, source_commit=source)
             if budget.snapshot()["unresolved_decisions"]:
                 raise ValueError("Unresolved physical charges prohibit new model/reset execution")
             env = RobotwinNoiseEnv(model_path=args.model_path, norm_stats=args.norm_stats,
