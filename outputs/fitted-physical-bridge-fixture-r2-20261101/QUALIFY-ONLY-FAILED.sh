@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+uv run pytest -q 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]' 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]' tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration

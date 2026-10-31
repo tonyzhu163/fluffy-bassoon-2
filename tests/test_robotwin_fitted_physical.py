@@ -66,8 +66,11 @@ def write(path, data):
     return path
 
 
-class TinyMotor:
+class TinyMotor(torch.nn.Module):
     device, num_steps = "cpu", 5
+    def __init__(self):
+        super().__init__()
+
     def _sample_actions_from_prefix_cache(self, prepared, mask, cache, *, noise):
         offset = cache[-1][0][mask].mean()
         result = torch.zeros_like(noise) + offset
@@ -83,7 +86,8 @@ class Env:
     corpus_writer, active, elapsed_steps = None, False, 0
     def __init__(self, tmp_path):
         backend = object.__new__(_RoboTwinBackend)
-        backend.torch, backend.model = torch, TinyMotor()
+        backend.torch, backend.model = torch, TinyMotor().eval().requires_grad_(False)
+        backend._versions = {name: parameter._version for name, parameter in backend.model.named_parameters()}
         backend.corpus_writer = None
         backend.contract = dict(model_path=str(tmp_path), norm_stats_path=str(tmp_path/"norm.json"))
         backend._prepared = None

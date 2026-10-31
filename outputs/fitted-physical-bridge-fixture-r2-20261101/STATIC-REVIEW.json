@@ -1,0 +1,61 @@
+{
+  "format": "fitted_physical_fixture_successor_static_v1",
+  "base_commit": "bbb200ef804dbef33ae5e7156a93803d8b2cef3c",
+  "changed_files": [
+    "tests/test_robotwin_fitted_physical.py"
+  ],
+  "base_file_sha256": "9e3229241004b388fade6bdab17d997566b4c30448f1c1dc4674814112b3e669",
+  "new_file_sha256": "4b528c79a0e7784ef8ea595317bc57129025e9a7e3105aed98e8de4099dea293",
+  "patch": {
+    "path": "/tmp/robotwin-fitted-physical-fixture-r2.patch",
+    "sha256": "5e2eb2fed541798de5fc43e9afaf571740101d1e7d7a94574fab76acf114670e",
+    "bytes": 1140
+  },
+  "static_ast": "passed",
+  "all_existing_test_cases_ast": "unchanged",
+  "all_production_bytes": "unchanged",
+  "production_files_checked": 222,
+  "real_check_frozen": "unchanged; TinyMotor is an actual eval-mode nn.Module; parameter versions are captured normally",
+  "tests_executed_locally": 0,
+  "jobs_launched": 0,
+  "actual_prior_junit": {
+    "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cpu-evidence/bridge.junit.xml",
+    "sha256": "13e2f6719a95813d62ef288c3eb7ac20127276f4313b154de4a9afa1cff2ef4d",
+    "failed_cases": [
+      "test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]",
+      "test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]",
+      "test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration"
+    ]
+  },
+  "retry_argv": [
+    "uv",
+    "run",
+    "pytest",
+    "-q",
+    "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]",
+    "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]",
+    "tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration"
+  ],
+  "retry_shell": "uv run pytest -q 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]' 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]' tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration",
+  "retry_script": {
+    "path": "/tmp/robotwin-fitted-physical-fixture-r2-command.sh",
+    "sha256": "8405e47dcc2d9b3ce665f7db71cfe04cb36a5aed53939a8d998ac2c2bbb8c6cc"
+  },
+  "prior_result": "5passed/3failed retained; diagnostic84/84 independently passed; this successor is not yet executed",
+  "resource_note": "Parent-owned explicit linked CPU continuation for only3 failed cases; no original1800 reset or borrowed25 seconds",
+  "comparison": {
+    "published_bbb200_fixture": "byte-identical before fix",
+    "canonical_checkout_has_fixture": false,
+    "local_main_ref": "4ec35eb9f563813e43293f797e8141a12fb0c4be",
+    "local_origin_main_ref": "753bf5429b75d90db3c8e74de57f2a88e1d6f506",
+    "latest_remote_main": "not fetched; parent publication path must compare actual current main"
+  },
+  "original_package": {
+    "patch_sha256": "7fc649aed2216072ea58a90b0223ad7aab9abdc21635296dd5bb1e45da6ce696",
+    "archive_sha256": "8f96c01522e02eb85676b2cbcdb011b70279aeeadf60da8c0247a7d28a439df8"
+  },
+  "reviewed_latest_main": "753bf5429b75d90db3c8e74de57f2a88e1d6f506",
+  "parent_pin": "bbb200ef804dbef33ae5e7156a93803d8b2cef3c",
+  "root_static_delta_review": "PASS: realnn.Module evalmode/versioncapture,unchangedrealchecker,all7testbodyASTsame; no execution",
+  "production_unchanged_by_construction": true
+}
