@@ -287,9 +287,17 @@ new allocation were used for this audit.
 
 No checkpoint or case is substituted, and this bounded5,000-step diagnostic
 does not reject the full steering class or test meta-learning. The missing
-composed-A1 producer entry may be prepared as code only, with a late-bound
-head and explicitly unfunded finite template; no useful head is nominated
-and no A1/source collection/AD/DPT compute follows automatically. The useful
+composed-A1 producer remains a narrow code task. A separate bounded follow-up
+now funds only eight raw/wide-zero controls on canonical successful TRAIN
+records00–03, with the same fixed wide5,000 model selected prospectively
+from its stronger TRAIN fit. This asks whether failure also occurs on
+fitted training scenes; it is not a useful-teacher nomination. Actual
+scene/noise bindings and focused allocated qualification precede launch.
+Fresh caps are1,200 inclusive GPU-seconds/3,200 actions/4GiB and180 CPU-worker
+seconds; original headers,78 old A1 actions and784 closed readout seconds
+are untouched. Additional search/confirmation and source/AD/DPT remain
+unfunded. No policy is retrained or data case removed.
+[Bounded TRAIN probe](../../outputs/frozen-pi05-train-capacity8-20261101-r1/PROTOCOL.json). The useful
 ordinary LIBERO baseline remains the running experiment.
 [Terminal parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/READOUT547-TERMINAL-PARENT-REVIEW.json).
 [Failure and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/CPU54-KV5000-READOUT-FAILURE-PARENT-REVIEW.json).
