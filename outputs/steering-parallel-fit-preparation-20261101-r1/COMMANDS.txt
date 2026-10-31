@@ -1,0 +1,15 @@
+# Parent-owned qualified allocated Linux only; actual source/data gates must pass.
+# No scheduler submission, observer, model run or allocation is performed by preparation.
+python -m pytest -q tests/test_steering_history_parallel.py --junitxml=<fresh-receipt>/junit.xml
+
+python -m fluffy_bassoon.meta_rl.steering_history_parallel prepare --ad-assembly <actual-ad/assembly.json> --ad-assembly-sha256 <actual-sha> --dpt-assembly <actual-dpt/assembly.json> --dpt-assembly-sha256 <actual-sha> --output-root <absolute-fresh-fit-root> --output <absolute-fresh-fit-root/manifest.json> --source-commit <qualified-fit-pin> --run-id <fresh-fit-identity> --expected-hostname <allocated-linux-host>
+
+# Same qualified GPU if capacity supports all4, or use actual allocated cuda:N indices.
+python -m fluffy_bassoon.meta_rl.steering_history_parallel run --manifest <fit-root/manifest.json> --manifest-sha256 <actual-sha> --placement ad-full=cuda:0 --placement ad-static=cuda:0 --placement dpt-full=cuda:0 --placement dpt-static=cuda:0 --threads 1 --expected-hostname <allocated-linux-host>
+
+# Independent job example: one selected fit, SAME immutable manifest/shared paths.
+# Each fit may be claimed exactly once; use disjoint selections across jobs.
+python -m fluffy_bassoon.meta_rl.steering_history_parallel run --manifest <fit-root/manifest.json> --manifest-sha256 <actual-sha> --placement ad-full=cuda:0 --execution-batch ad-full=2 --threads 1 --expected-hostname <allocated-linux-host>
+
+# One-shot aggregation on allocated Linux, only after all jobs/processes complete.
+python -m fluffy_bassoon.meta_rl.steering_history_parallel collect --manifest <fit-root/manifest.json> --manifest-sha256 <actual-sha> --output <fresh-aggregate.json> --expected-hostname <allocated-linux-host>

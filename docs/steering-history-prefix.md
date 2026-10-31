@@ -160,6 +160,20 @@ Gaussian coefficient surrogate, not the exact clipped-action density. Deployment
 samples the learned Gaussian; it does not replace the policy with an MSE mean.
 Normalization uses TRAIN observations only. All query weights are frozen.
 
+`steering_history_parallel` prepares a hash-bound four-fit manifest through the
+existing source/teacher admission and `fit_commands`. The execution owner binds
+qualified allocated CUDA devices, CPU threads and optional execution microbatches.
+All selected fits start as separate interpreters before any child is awaited;
+one fit's failure does not cancel the others. One process owns each output and
+optimizer/sampler/global/private RNG recovery. Separate jobs can claim disjoint
+fit IDs from the same immutable manifest. Scheduler GPU visibility is retained.
+Collection requires all four actual final candidates and matching full recoveries;
+process exit zero or a time-capped partial is insufficient. The fixed 2,500-update
+profile and its existing 360-second per-fit limit are preserved. Resource capacity
+must accommodate that endpoint; concurrency never substitutes the 100-update
+fixture. NLL comparisons are within each objective and require the full curves;
+the final training batch and fixed validation average have different sampling.
+
 ## Four-block mechanism readout
 
 Before opening queries, bind two conditions by two fresh scenes, paired reset and
