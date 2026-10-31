@@ -1,0 +1,1094 @@
+{
+  "format": "frozen_pi05_event_diagnosis_cpu_terminal_receipt_v1",
+  "verified_at": "2026-11-01T00:09:00+08:00",
+  "source_commit": "c824c0c0a00eec05526e5c43562461bfa7000c0e",
+  "reviewed_main": "940aef2e22b6e4c8829a2ef199ba5738e6d6148e",
+  "source_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-event-diagnosis-cpu-20261101-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-event-diagnosis-cpu-20261101-r1",
+  "inputs_sha256": "cf766fec24f1e7c3fe32f3bedfdb1dad9f9a3fbaaed92c2b780a4c5f10685d89",
+  "terminal_input_receipt_sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef",
+  "scheduler": {
+    "cluster": "Baige",
+    "job_id": "job-nnjau49cnk40",
+    "name": "mwj_1101_event_diagnosis_cpu_r1_c824c0c",
+    "state": "Succeeded",
+    "created": "2026-11-01 00:05:42 Asia/Shanghai",
+    "ended": "2026-11-01 00:06:25 Asia/Shanghai",
+    "displayed_duration_seconds": 30,
+    "actual_gpus": 0,
+    "requested_cpu_cores": 2,
+    "memory_gib": 16,
+    "retry": false,
+    "maximum_minutes": 2,
+    "screenshot": "event-diagnosis-cpu-terminal.jpg"
+  },
+  "exit_code": 0,
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "15",
+    "time": "0.169",
+    "timestamp": "2026-11-01T00:06:05.577997+08:00",
+    "hostname": "job-nnjau49cnk40-master-0"
+  },
+  "actual_cpu_cores": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "device_count_before_mask": 0,
+  "cuda_initialized_before_mask": false,
+  "cpu_clock": {
+    "format": "frozen_pi05_endtoend_cpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "source_commit": "c824c0c0a00eec05526e5c43562461bfa7000c0e",
+    "started_unix": 1793462751.0,
+    "deadline_unix": 1793462841.0,
+    "maximum_cpu_worker_seconds": 180,
+    "prior_phase_cpu_charge": 978,
+    "maximum_phase_cpu_worker_seconds": 1800,
+    "interrupted_charge_cpu_worker_seconds": 180,
+    "status": "finished",
+    "attempts": 1,
+    "charged_gpu_seconds": 0,
+    "ended_unix": 1793462767.7514732,
+    "exit_code": 0,
+    "charged_cpu_worker_seconds": 77,
+    "remaining_cpu_worker_seconds": 103
+  },
+  "phase_cpu": {
+    "previous_charge": 978,
+    "new_charge": 77,
+    "cumulative_charge": 1055,
+    "remaining": 745,
+    "maximum": 1800
+  },
+  "gpu_seconds": 0,
+  "new_robot_actions": 0,
+  "optimizer_updates": 0,
+  "model_forwards": 0,
+  "checkpoint_deserialized": false,
+  "qualified_torch_import_for_zero_gpu_attestation_only": true,
+  "inspection": {
+    "status": "audit_complete",
+    "report_path": "event-diagnosis-cpu-evidence/inspection/report.json",
+    "report_sha256": "933b3f4452447a47a266d424c5b1bc0cd36c670071635173ea15c2c87ffafd0e",
+    "report_bytes": 2007361,
+    "bound_input_files": 186,
+    "bound_input_bytes": 31475274,
+    "case_count": 3,
+    "chunk_count": 33,
+    "full_proposed_and_submitted_plans_exact": true,
+    "episode_rows": [
+      {
+        "id": "event-control-fixed-phone-02",
+        "success": false,
+        "native_actual_actions": 400,
+        "complete_chunks": 13,
+        "expected_seed": 2,
+        "actual_seed": 2,
+        "instruction_exact": true,
+        "initial_public_drive_exact": true,
+        "source_variant_arm_checks": {
+          "{A}": {
+            "source": "077_phone/base0",
+            "native": "077_phone/base0",
+            "exact": true
+          },
+          "{B}": {
+            "source": "078_phonestand/base2",
+            "native": "078_phonestand/base2",
+            "exact": true
+          },
+          "{a}": {
+            "source": "left",
+            "native": "left",
+            "exact": true
+          }
+        },
+        "all_camera_calibrations_exact": true,
+        "all_full_proposals_exact": true,
+        "all_submissions_exact": true,
+        "submitted_native_valid_counts": [
+          {
+            "chunk": 1,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 2,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 3,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 4,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 5,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 6,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 7,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 8,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 9,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 10,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 11,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 12,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 13,
+            "submitted": 16,
+            "native_valid": 16
+          }
+        ],
+        "images": [
+          {
+            "path": "event-control-fixed-phone-02-reset.png",
+            "sha256": "8da7b55fa49e97180dd44e964fd049bfe5e78ddc887c5b0801fcace9cc11d62b",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "57472610d730d1b29c4e3fa45498bbf5794b09493ef939f2b046aba64559aa53",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "423f3e6dab62ac1f3faba158f1bbd150a001f2cf0a5c334d5642bc208fcaef82",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "3c54a1aa156c710fffcad21a78fc684c3cb940c7e7330033ae698c05acc2de09",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 316032,
+              "content_sha256": "3b3c88f83e066bdb8bfeb344f4c6adbefb80429a14a7b9901b28565c21eda46c",
+              "language": [
+                "Carry the compact phone to the curved phonestand with phone slot."
+              ],
+              "path": "frames/3b3c88f83e066bdb8bfeb344f4c6adbefb80429a14a7b9901b28565c21eda46c.npz",
+              "sha256": "a983345a51faf221698eb23d088d8552fd959c3efd62d7b9caf7c57a45d49251"
+            },
+            "source_frame": 0,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 3.9960026041666667
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.637278645833334
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.798098958333333
+              }
+            ]
+          },
+          {
+            "path": "event-control-fixed-phone-02-final.png",
+            "sha256": "d2dde6f627c2030bcc1eea9b6777520793faf1619cd00a10bd8cb08ad04ef639",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "de16d5010913e06219c3db64e53b4bc61b6ff8fb862f4ab1a1feb91abe888cad",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "c67e659ccd338007dab92632b2ac6dddec4cdf51088187878e71f12f05e27dbf",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "bde85c6ee63f8ecce3a04cf4e61ec245ec44346baf9523cc6e74996dcf8cf8a8",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "d79691188450b32d571c35588814d9981542cca7f14db8fdd6fc2d24fcbf314d",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 362200,
+              "content_sha256": "0a81c3c7dd859c151a3347196fd8c589b0eaa55b0b48ce413501656575308d2d",
+              "language": [
+                "Carry the compact phone to the curved phonestand with phone slot."
+              ],
+              "path": "frames/0a81c3c7dd859c151a3347196fd8c589b0eaa55b0b48ce413501656575308d2d.npz",
+              "sha256": "be5b02d22292502abc8b209cb8fae1175123d95b8b4acb0d1a625865f54195fc"
+            },
+            "source_frame": 128,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 8.018828125
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 57.55110243055555
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 7.288784722222222
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "event-teacher-phone-02",
+        "success": true,
+        "native_actual_actions": 193,
+        "complete_chunks": 7,
+        "expected_seed": 2,
+        "actual_seed": 2,
+        "instruction_exact": true,
+        "initial_public_drive_exact": true,
+        "source_variant_arm_checks": {
+          "{A}": {
+            "source": "077_phone/base0",
+            "native": "077_phone/base0",
+            "exact": true
+          },
+          "{B}": {
+            "source": "078_phonestand/base2",
+            "native": "078_phonestand/base2",
+            "exact": true
+          },
+          "{a}": {
+            "source": "left",
+            "native": "left",
+            "exact": true
+          }
+        },
+        "all_camera_calibrations_exact": true,
+        "all_full_proposals_exact": true,
+        "all_submissions_exact": true,
+        "submitted_native_valid_counts": [
+          {
+            "chunk": 1,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 2,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 3,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 4,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 5,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 6,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 7,
+            "submitted": 32,
+            "native_valid": 1
+          }
+        ],
+        "images": [
+          {
+            "path": "event-teacher-phone-02-reset.png",
+            "sha256": "13e516615512263204b4eae20f60dee91292433b70515d8508e9b64687861dd1",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "57472610d730d1b29c4e3fa45498bbf5794b09493ef939f2b046aba64559aa53",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "423f3e6dab62ac1f3faba158f1bbd150a001f2cf0a5c334d5642bc208fcaef82",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "3c54a1aa156c710fffcad21a78fc684c3cb940c7e7330033ae698c05acc2de09",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 316032,
+              "content_sha256": "3b3c88f83e066bdb8bfeb344f4c6adbefb80429a14a7b9901b28565c21eda46c",
+              "language": [
+                "Carry the compact phone to the curved phonestand with phone slot."
+              ],
+              "path": "frames/3b3c88f83e066bdb8bfeb344f4c6adbefb80429a14a7b9901b28565c21eda46c.npz",
+              "sha256": "a983345a51faf221698eb23d088d8552fd959c3efd62d7b9caf7c57a45d49251"
+            },
+            "source_frame": 0,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 3.9960026041666667
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.637278645833334
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.798098958333333
+              }
+            ]
+          },
+          {
+            "path": "event-teacher-phone-02-final.png",
+            "sha256": "9ce73b4436a95e7d951a43fd3518e48b2a665c3a16cfc02362df6088c838a02b",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "268461c810d9a21a3cc33797265f5b6b62f07ae2b804b626b994c4db8727238b",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "0ab4da86ed03c2f6b811d652c1bb7696b90d85fe51f157f854a97965d29513b3",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "4080c00a73d4875d379d76ec9e21bc892b6239166ed62c09b64e24a5b91ce43d",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "778777f1f132bc96575cc5ee8088cc915103e7885b49cd8d48e5351177436473",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 365853,
+              "content_sha256": "dce7aab757c388d85cfe0bdaf4ea02adce3e20ed62a673f7ed1b5c0a5fb4c686",
+              "language": [
+                "Carry the compact phone to the curved phonestand with phone slot."
+              ],
+              "path": "frames/dce7aab757c388d85cfe0bdaf4ea02adce3e20ed62a673f7ed1b5c0a5fb4c686.npz",
+              "sha256": "e41ff322b987c336a4b56702c2f144a2e7734ef0ff6ce55f89816ae8f7c3857f"
+            },
+            "source_frame": 128,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.721705729166667
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 56.36327256944445
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 7.2528125
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "event-teacher-phone-04",
+        "success": false,
+        "native_actual_actions": 400,
+        "complete_chunks": 13,
+        "expected_seed": 4,
+        "actual_seed": 4,
+        "instruction_exact": true,
+        "initial_public_drive_exact": true,
+        "source_variant_arm_checks": {
+          "{A}": {
+            "source": "077_phone/base2",
+            "native": "077_phone/base2",
+            "exact": true
+          },
+          "{B}": {
+            "source": "078_phonestand/base1",
+            "native": "078_phonestand/base1",
+            "exact": true
+          },
+          "{a}": {
+            "source": "left",
+            "native": "left",
+            "exact": true
+          }
+        },
+        "all_camera_calibrations_exact": true,
+        "all_full_proposals_exact": true,
+        "all_submissions_exact": true,
+        "submitted_native_valid_counts": [
+          {
+            "chunk": 1,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 2,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 3,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 4,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 5,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 6,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 7,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 8,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 9,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 10,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 11,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 12,
+            "submitted": 32,
+            "native_valid": 32
+          },
+          {
+            "chunk": 13,
+            "submitted": 16,
+            "native_valid": 16
+          }
+        ],
+        "images": [
+          {
+            "path": "event-teacher-phone-04-reset.png",
+            "sha256": "c4f7efa14823b43ce4cbec47bb7633aa0405bbac6bc0a82271c82b2f862b2214",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "338724ab4cb5c7d6777f9e822ab768a27a00e20a894926fd4b876bd141644e4e",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "31d2ea6a54d4a33e84c2751f3fc578221fb82f168cc5f7f6817e00c6b6b1cdce",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 302355,
+              "content_sha256": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+              "language": [
+                "Take the black phone to the green phone rack."
+              ],
+              "path": "frames/dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6.npz",
+              "sha256": "9b183e26210f741b0d1c1d84266a08babdaa561bab59ede62ea0678af5a2c1fa"
+            },
+            "source_frame": 0,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 4.1106987847222225
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 7.0380251736111115
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 6.825677083333333
+              }
+            ]
+          },
+          {
+            "path": "event-teacher-phone-04-final.png",
+            "sha256": "9c37da3371b03a2c6db79a4d4bd48a6270576d95dfe37e0713f003f18c47b6d8",
+            "actual_frame": {
+              "arrays": {
+                "features": {
+                  "dtype": "float32",
+                  "sha256": "03ddfdc2228fed5dd7288aad2e16ffe61dc2a358edc46f116c7e3ed75bbf6cd5",
+                  "shape": [
+                    2062
+                  ]
+                },
+                "main_images": {
+                  "dtype": "uint8",
+                  "sha256": "bd45159284463aff7a8293f8ea727623ca762e21d62b8f7cb59d23ed95689495",
+                  "shape": [
+                    1,
+                    240,
+                    320,
+                    3
+                  ]
+                },
+                "states": {
+                  "dtype": "float64",
+                  "sha256": "b956ce2696873a92e6f76c95caf3ae3271e1d4f1752c5d1524ff6de311d4b98e",
+                  "shape": [
+                    1,
+                    14
+                  ]
+                },
+                "wrist_images": {
+                  "dtype": "uint8",
+                  "sha256": "e048af850faa326028b20efdeed8c23ee5ff7a5ea4723dcc30195eaa29f71738",
+                  "shape": [
+                    1,
+                    2,
+                    240,
+                    320,
+                    3
+                  ]
+                }
+              },
+              "bytes": 357656,
+              "content_sha256": "0490ca05e0d78d05fe1162c3495a347d04d8f34383c3ebf7a4860ea5be02c0b5",
+              "language": [
+                "Take the black phone to the green phone rack."
+              ],
+              "path": "frames/0490ca05e0d78d05fe1162c3495a347d04d8f34383c3ebf7a4860ea5be02c0b5.npz",
+              "sha256": "6d3b7e1559377d9bae255d95c4de00888c19895447c75812fd94039bc021d905"
+            },
+            "source_frame": 139,
+            "physical_times_matched": false,
+            "camera_metrics": [
+              {
+                "camera": "head",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 10.31056423611111
+              },
+              {
+                "camera": "left_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 67.13853732638889
+              },
+              {
+                "camera": "right_wrist",
+                "source_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "actual_shape": [
+                  240,
+                  320,
+                  3
+                ],
+                "same_shape": true,
+                "mean_absolute_pixel_difference": 7.181393229166667
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "source_demo_count": 12,
+    "unrun_suffix": [
+      "phone-05",
+      "phone-06",
+      "phone-07",
+      "phone-08",
+      "phone-09",
+      "phone-10",
+      "phone-11"
+    ],
+    "training_outputs_absent": {
+      "cache": true,
+      "kv": true,
+      "action": true
+    },
+    "two02_reset_native_physical_comparison": {
+      "actors": {
+        "phone": {
+          "available": true,
+          "world_translation_delta": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "world_translation_L2": 0.0,
+          "quaternion_component_delta_up_to_sign": 0.0,
+          "variant_unchanged": true
+        },
+        "stand": {
+          "available": true,
+          "world_translation_delta": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "world_translation_L2": 0.0,
+          "quaternion_component_delta_up_to_sign": 0.0,
+          "variant_unchanged": true
+        }
+      },
+      "articulations": {
+        "left": {
+          "available": true,
+          "named_measured_qpos_delta": {
+            "right_wheel": 0.0,
+            "left_wheel": 0.0,
+            "fl_castor_wheel": 0.0,
+            "fr_castor_wheel": 0.0,
+            "rr_castor_wheel": 0.0,
+            "rl_castor_wheel": 0.0,
+            "fl_joint1": 0.0,
+            "fr_joint1": 0.0,
+            "lr_joint1": 0.0,
+            "rr_joint1": 0.0,
+            "fl_wheel": 0.0,
+            "fr_wheel": 0.0,
+            "rr_wheel": 0.0,
+            "rl_wheel": 0.0,
+            "fl_joint2": 0.0,
+            "fr_joint2": 0.0,
+            "lr_joint2": 0.0,
+            "rr_joint2": 0.0,
+            "fl_joint3": 0.0,
+            "fr_joint3": 0.0,
+            "lr_joint3": 0.0,
+            "rr_joint3": 0.0,
+            "fl_joint4": 0.0,
+            "fr_joint4": 0.0,
+            "lr_joint4": 0.0,
+            "rr_joint4": 0.0,
+            "fl_joint5": 0.0,
+            "fr_joint5": 0.0,
+            "lr_joint5": 0.0,
+            "rr_joint5": 0.0,
+            "fl_joint6": 0.0,
+            "fr_joint6": 0.0,
+            "lr_joint6": 0.0,
+            "rr_joint6": 0.0,
+            "fl_joint7": 0.0,
+            "fl_joint8": 0.0,
+            "fr_joint7": 0.0,
+            "fr_joint8": 0.0
+          }
+        },
+        "right": {
+          "available": true,
+          "named_measured_qpos_delta": {
+            "right_wheel": 0.0,
+            "left_wheel": 0.0,
+            "fl_castor_wheel": 0.0,
+            "fr_castor_wheel": 0.0,
+            "rr_castor_wheel": 0.0,
+            "rl_castor_wheel": 0.0,
+            "fl_joint1": 0.0,
+            "fr_joint1": 0.0,
+            "lr_joint1": 0.0,
+            "rr_joint1": 0.0,
+            "fl_wheel": 0.0,
+            "fr_wheel": 0.0,
+            "rr_wheel": 0.0,
+            "rl_wheel": 0.0,
+            "fl_joint2": 0.0,
+            "fr_joint2": 0.0,
+            "lr_joint2": 0.0,
+            "rr_joint2": 0.0,
+            "fl_joint3": 0.0,
+            "fr_joint3": 0.0,
+            "lr_joint3": 0.0,
+            "rr_joint3": 0.0,
+            "fl_joint4": 0.0,
+            "fr_joint4": 0.0,
+            "lr_joint4": 0.0,
+            "rr_joint4": 0.0,
+            "fl_joint5": 0.0,
+            "fr_joint5": 0.0,
+            "lr_joint5": 0.0,
+            "rr_joint5": 0.0,
+            "fl_joint6": 0.0,
+            "fr_joint6": 0.0,
+            "lr_joint6": 0.0,
+            "rr_joint6": 0.0,
+            "fl_joint7": 0.0,
+            "fl_joint8": 0.0,
+            "fr_joint7": 0.0,
+            "fr_joint8": 0.0
+          }
+        }
+      }
+    }
+  },
+  "copy_integrity": {
+    "all_local_copied_files_match_remote": true,
+    "file_count": 17,
+    "manifest": "event-diagnosis-cpu-evidence/REMOTE-FILE-HASHES.json",
+    "manifest_sha256": "d5c2dc2b444e84c7968683468464141c817433de708f5ad943bcdcdf5ae8eb22"
+  },
+  "limits": [
+    "This is a saved-data audit of three closed development episodes, not new robot evidence.",
+    "Source joint_action/vector is commanded DRIVE target, not measured articulation pose. Source measured articulation, actor worldposes and synchronized dense physics timing are unavailable.",
+    "Valid mask/request reference indices are action-cost and submitted-plan boundaries, not measured physical waypoint trajectories.",
+    "Native Gaussian fields are verified against their recorded captured-native arrays per chunk; no RNG replay, and no claim that independent episodes used identical full RNG histories.",
+    "PNG endpoints compare source final frame to native terminal at unsynchronized physical times. Their visual differences do not establish a cause.",
+    "No failed-demo filtering, all12 gate relaxation, fitting, automatic retry or new GPU admission follows from this receipt."
+  ]
+}
