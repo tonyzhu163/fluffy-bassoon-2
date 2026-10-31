@@ -1,0 +1,304 @@
+{
+  "format": "frozen_pi05_source_joint_conventions_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "arm_joint_units": "radians",
+  "gripper_indices": [
+    6,
+    13
+  ],
+  "gripper_mode": "absolute",
+  "joint_lower": [
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    0.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    -10.0,
+    0.0
+  ],
+  "joint_upper": [
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    1.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    1.0
+  ],
+  "maximum_arm_delta": 2.0,
+  "maximum_arm_delta_meaning": "Upper bound permitted by ten percent of every literal simulator URDF arm range; deployed arm_joint_bound must additionally be explicitly pinned and no greater. Not a manufacturer safety claim.",
+  "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "reset_policy_action_bound": 0,
+  "reset_internal_physics_steps": "not separately instrumented; not claimed zero",
+  "source_files": [
+    {
+      "root": "robotwin",
+      "path": "envs/_base_task.py",
+      "sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b"
+    },
+    {
+      "root": "robotwin",
+      "path": "envs/robot/robot.py",
+      "sha256": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8"
+    },
+    {
+      "root": "robotwin",
+      "path": "robotwin/envs/vector_env.py",
+      "sha256": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d"
+    },
+    {
+      "root": "rlinf",
+      "path": "rlinf/models/embodiment/openpi/policies/aloha_policy.py",
+      "sha256": "a1165b3d987fd021c67ce8722a2f86a150e3ebaf1340750ec6819bbe619c16c3"
+    },
+    {
+      "root": "rlinf",
+      "path": "rlinf/models/embodiment/openpi/dataconfig/robotwin_aloha_dataconfig.py",
+      "sha256": "2ceafb0798de7a9198ad8e12728f2af441f2c3f72c221b790b4f4867451797b1"
+    },
+    {
+      "root": "rlinf",
+      "path": "rlinf/models/embodiment/openpi/dataconfig/__init__.py",
+      "sha256": "372cae108c7625edb3c0387e7aa05f1f80adde95753e2899df0a2b083715d6bc"
+    },
+    {
+      "root": "rlinf",
+      "path": "rlinf/models/embodiment/openpi/transforms/pipeline.py",
+      "sha256": "890e9f3e72c49c12c42fbfea18879d02456c66f8b2507bf19d48c81e4f8e57ec"
+    },
+    {
+      "root": "rlinf",
+      "path": "rlinf/models/embodiment/openpi/env_io.py",
+      "sha256": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc"
+    },
+    {
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/config.yml",
+      "sha256": "a4f043d2d4b44cca5ec47fb498a3194da3f87ff9530dcbfdcee1539a44423d57"
+    }
+  ],
+  "joint_limit_records": [
+    {
+      "action_index": 0,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint1",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 1,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint2",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 2,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint3",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 3,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint4",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 4,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint5",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 5,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fl_joint6",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 7,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint1",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 8,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint2",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 9,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint3",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 10,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint4",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 11,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint5",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    },
+    {
+      "action_index": 12,
+      "root": "robotwin",
+      "path": "assets/embodiments/aloha-agilex/urdf/arx5_description_isaac.urdf",
+      "sha256": "097c59fb19a7b482249c6097df8319586ea7cfd268c015516f103b289a7e761a",
+      "joint": "fr_joint6",
+      "decoded_qpos_multiplier": 1,
+      "decoded_qpos_offset_rad": 0
+    }
+  ],
+  "gripper_evidence": {
+    "scope": "Static source and JSON bytes only; no imports, models, tests, simulator, scheduler or job checks",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "motus_revision": "effc6e1a99bd4d0edf9447e8ba313def67649cfe",
+    "decoded_gripper_indices": [
+      6,
+      13
+    ],
+    "decoded_command_domain": {
+      "lower": 0.0,
+      "upper": 1.0,
+      "units": "normalized absolute ALOHA/RoboTwin gripper command",
+      "zero": "closed",
+      "one": "open"
+    },
+    "runtime_enforcement": "Robot.set_gripper explicitly clips decoded commands to [0,1] before mapping through gripper_scale",
+    "decoder_is_bounded": false,
+    "decode_from_unnormalized_internal_action": "g=(u+0.5476-(-0.6213))/(1.4910-(-0.6213))=(u+1.1689)/2.1123",
+    "inverse_training_action_transform": "u=g*(1.4910-(-0.6213))+(-0.6213)-0.5476=2.1123*g-1.1689",
+    "gripper_joint_flip_signs": [
+      1,
+      1
+    ],
+    "gripper_delta_mask": [
+      false,
+      false
+    ],
+    "motus_action_quantiles_at_both_grippers": {
+      "q01": -1.1689000129699707,
+      "q99": 0.9429775653600694
+    },
+    "quantile_caveat": "Training quantiles are not hard safety bounds. Unnormalize and AlohaOutputs do not clip model output; unbounded model samples can decode outside [0,1].",
+    "files": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/policies/aloha_policy.py",
+        "sha256": "a1165b3d987fd021c67ce8722a2f86a150e3ebaf1340750ec6819bbe619c16c3",
+        "lines": "120-128,139-179,218-240"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/dataconfig/robotwin_aloha_dataconfig.py",
+        "sha256": "2ceafb0798de7a9198ad8e12728f2af441f2c3f72c221b790b4f4867451797b1",
+        "lines": "33-39,74-92"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/dataconfig/__init__.py",
+        "sha256": "372cae108c7625edb3c0387e7aa05f1f80adde95753e2899df0a2b083715d6bc",
+        "lines": "443-455"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/transforms/pipeline.py",
+        "sha256": "890e9f3e72c49c12c42fbfea18879d02456c66f8b2507bf19d48c81e4f8e57ec",
+        "lines": "63-107"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/env_io.py",
+        "sha256": "ba36371be49982fc921cb4bd1a1ec1e7a32f2c3f5eef084be59385f0155b86dc",
+        "lines": "87-100"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/openpi/training/config.py",
+        "sha256": "b54b77a123537bcb304ffe4ad3ed191ee065890f8d7d6a0973d13a0231b93cec",
+        "lines": "178-186"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/openpi/transforms.py",
+        "sha256": "a1b94e9e72849a18834778f229c6bb389a495eb7fbe0aa800edea728b9424ff4",
+        "lines": "149-181,204-243"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/robot/robot.py",
+        "sha256": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8",
+        "lines": "572-588,653-693"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/_base_task.py",
+        "sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+        "lines": "1823-1829,1944,1958"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+        "sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "fields": "norm_stats.actions.q01/q99[6,13]"
+      }
+    ]
+  },
+  "arm_evidence_notes": [
+    "Limits are literal simulation URDF bounds, not independently verified manufacturer ranges.",
+    "URDF arm3/6 origins include fixed rotations; decoded qpos values are passed without sign/offset conversion.",
+    "URDF contains continuous wheel joints outside the12 named arm joints.",
+    "Gripper mimic is implemented in embodiment config and normalized action handling, not an arm mapping.",
+    "Qpos targets are interpolated/time-parameterized through TOPP before drive targets.",
+    "Curobo YAML absolute URDF reference points outside pinned source tree, but the referenced file was checked and has the identical URDF SHA256.",
+    "Downloaded embodiment assets are not covered by the tracked-code Git pin alone; bind the explicit file hashes."
+  ],
+  "source_evidence_commits": {
+    "arm": "f38139b0855d37856e7157a55466f32d26454832",
+    "gripper": "9a41a0d51e9e562fac3e5d365a0719ce517eb436"
+  },
+  "actual_gpu_qualification_completed": false
+}
