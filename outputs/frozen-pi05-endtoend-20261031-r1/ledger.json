@@ -429,7 +429,7 @@
   "charged_gpu_seconds": 3452,
   "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 1682,
-  "reserved_cpu_worker_seconds": 0,
+  "reserved_cpu_worker_seconds": 110,
   "charged_actions": 23922,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
@@ -628,7 +628,7 @@
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 118,
+  "unreserved_cpu_worker_seconds": 8,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,
@@ -757,5 +757,14 @@
     "output_bytes": 1377989403,
     "fit_eligible": false,
     "full12_eligible": false
-  }
+  },
+  "cpu_reservations": [
+    {
+      "role": "command_diagnostic_and_curve_CPU_qualification",
+      "maximum_seconds": 110,
+      "state": "conditional_source_successor_binding_pending",
+      "receipt_path": "COMMAND-DIAGNOSTIC-CPU-RESERVATION.json",
+      "actual_allocation_created": false
+    }
+  ]
 }
