@@ -1,7 +1,7 @@
 {
   "scientific_gpu_run_started": true,
-  "gpu_seconds": 180,
-  "simulator_actions": 0,
+  "gpu_seconds": 660,
+  "simulator_actions": 400,
   "attempts": [
     {
       "job_id": "job-vego8a5re113",
@@ -174,10 +174,29 @@
       "seconds": 39.11050891876221,
       "vla_loaded": false,
       "simulator_actions": 0
+    },
+    {
+      "job_id": "job-49rpoz0mpx3s",
+      "stage": "Pinned Policy API qualification",
+      "status": "Succeeded",
+      "tests_passed": 10,
+      "seconds": 39.86,
+      "conservative_worker_seconds": 120
+    },
+    {
+      "job_id": "job-wczz2y3oj8bk",
+      "stage": "Compiler flags and carried-action accounting qualification",
+      "status": "Succeeded",
+      "tests_passed": 10,
+      "seconds": 39.07,
+      "conservative_worker_seconds": 120,
+      "created_shanghai": "2026-11-01T02:08:40+08:00",
+      "ended_shanghai": "2026-11-01T02:09:41+08:00"
     }
   ],
   "cpu_preparation_complete": true,
-  "cumulative_conservative_cpu_worker_seconds": 1530,
+  "cumulative_conservative_cpu_worker_seconds": 1740,
   "maximum_cumulative_cpu_worker_seconds": 1800,
-  "gpu_cost_basis": "Conservative first failed allocation; VLA/simulator work0; fresh R2 pending"
+  "gpu_cost_basis": "Conservative completed R1-R3 charges; current R4 is separately accruing under the same phase ceiling",
+  "simulator_actions_basis": "0 completed env.step calls in failed R3,400 pending reset reservation retained"
 }
