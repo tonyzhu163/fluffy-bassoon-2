@@ -5,7 +5,6 @@ schema/alignment are explicit, SHA-bound qualification inputs rather than guesse
 """
 from copy import deepcopy
 import hashlib
-from io import BytesIO
 import json
 from pathlib import Path, PurePosixPath
 from types import SimpleNamespace
@@ -59,7 +58,8 @@ def validate_demo_manifest(manifest):
     if (schema.get('state_units')!='aloha_physical_drive_target14'
             or schema.get('action_units')!='aloha_absolute_joint_target14'
             or schema.get('camera_order')!=['head','left_wrist','right_wrist']
-            or schema.get('image_encoding') not in ('rgb_uint8','jpeg')
+            or schema.get('image_encoding')!='jpeg'
+            or schema.get('image_decoder')!='opencv_imdecode_color_as_native_channels'
             or len(schema.get('images',[]))!=3):
         raise ValueError('Require qualified camera and physical state/action conventions')
     offset=schema['action_offset']
@@ -157,17 +157,21 @@ def read_episode(path,row,schema):
 
 def raw_observation(path,row,schema,index,state):
     import h5py
-    from PIL import Image
+    import cv2
     views=[]
     with h5py.File(path,'r') as data:
         for key in schema['images']:
             value=data[key][index]
             if schema['image_encoding']=='jpeg':
                 payload=value.tobytes() if hasattr(value,'tobytes') else bytes(value)
-                image=np.asarray(Image.open(BytesIO(payload)).convert('RGB'))
+                # Author camera returns RGB, but images_encoding passes that
+                # array directly to OpenCV's BGR-oriented JPEG writer. Its
+                # matching inverse restores the original native channel order;
+                # PIL's nominal RGB decode would swap the red/blue channels.
+                image=cv2.imdecode(np.frombuffer(payload,np.uint8),cv2.IMREAD_COLOR)
             else:
                 image=np.asarray(value)
-            if image.ndim!=3 or image.shape[-1]!=3 or image.dtype!=np.uint8:
+            if image is None or image.ndim!=3 or image.shape[-1]!=3 or image.dtype!=np.uint8:
                 raise ValueError('Require actual qualified HWC uint8 RGB views')
             views.append(image.copy())
     if views[1].shape!=views[2].shape: raise ValueError('Wrist cameras have different declared shapes')

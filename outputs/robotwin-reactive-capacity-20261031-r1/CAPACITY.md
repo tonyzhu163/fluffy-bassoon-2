@@ -26,7 +26,13 @@ asserts success after collection. HDF5 explicit success flags remain absent;
 they are never synthesized. get_obs records simultaneous3RGB views and robot
 drive targets, not measured joint positions. The explicit target is the same
 frame's recorded absolute14D drive target followed by future recorded frames,
-offset0. Images use head/left/right camera order and JPEG→RGB. Dense recording
+offset0. Images use head/left/right camera order. Pinned camera.get_rgb returns
+Color-derived RGB without permutation, but images_encoding passes those arrays
+straight to cv2.imencode('.jpg'). The matching cv2.imdecode(...,IMREAD_COLOR)
+restores the original native channels; nominal PIL RGB decode would swap native
+red/blue here. The prepared asymmetric-channel fixture uses the actual author
+writer call and verifies camera order/native colors, including a negative PIL
+comparison. No dataset bytes or native runtime capture changes. Dense recording
 uses save_freq15 plus boundary images. The pinned source is evidence of the
 author convention, not an embedded generator revision in those HDF5 files.
 
@@ -115,8 +121,11 @@ share the original clock; no phase gets a new clock or extra allowance. Actual
 fitting throughput/memory are unmeasured and must be reported, never assumed.
 All saved outputs, caches and recoveries share the existing64GiB phase ceiling.
 
-Before GPU admission, run only the new prepared CPU test file on actual allocated
-0GPU Linux, ≤300worker-seconds within the existing1,383CPU-second remainder.
+Before GPU admission, combine the new prepared CPU file with only the affected
+source repairs in the parent's one already planned0GPU Linux follow-up, within
+the466worker-seconds left of that same600second hold. After the intervening
+134second source gate, phase CPU is551used/1800,1249remaining. This supersedes
+the earlier standalone≤300second proposal; no second reservation/allocation.
 32cases are prepared, NONE run on macOS. They exercise actual metadata bindings,
 whole-trajectory masks, transform roundtrip/retained prompt, differentiable KV
 flow, arm headroom/raw-gripper parity, finite optimizer/private-RNG recoveries,

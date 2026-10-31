@@ -65,6 +65,11 @@
       "sha256": "e119b4093c25f881c535a041bf1895e182ba00564d6ca57f6d6fe4fb62b2666c",
       "excerpts": [
         {
+          "first": 1,
+          "last": 77,
+          "text": "import h5py, pickle\nimport numpy as np\nimport os\nimport cv2\nfrom collections.abc import Mapping, Sequence\nimport shutil\nfrom .images_to_video import images_to_video\n\n\ndef images_encoding(imgs):\n    encode_data = []\n    padded_data = []\n    max_len = 0\n    for i in range(len(imgs)):\n        success, encoded_image = cv2.imencode(\".jpg\", imgs[i])\n        jpeg_data = encoded_image.tobytes()\n        encode_data.append(jpeg_data)\n        max_len = max(max_len, len(jpeg_data))\n    # padding\n    for i in range(len(imgs)):\n        padded_data.append(encode_data[i].ljust(max_len, b\"\\0\"))\n    return encode_data, max_len\n\n\ndef parse_dict_structure(data):\n    if isinstance(data, dict):\n        parsed = {}\n        for key, value in data.items():\n            if isinstance(value, dict):\n                parsed[key] = parse_dict_structure(value)\n            elif isinstance(value, np.ndarray):\n                parsed[key] = []\n            else:\n                parsed[key] = []\n        return parsed\n    else:\n        return []\n\n\ndef append_data_to_structure(data_structure, data):\n    for key in data_structure:\n        if key in data:\n            if isinstance(data_structure[key], list):\n                # 如果是叶子节点，直接追加数据\n                data_structure[key].append(data[key])\n            elif isinstance(data_structure[key], dict):\n                # 如果是嵌套字典，递归处理\n                append_data_to_structure(data_structure[key], data[key])\n\n\ndef load_pkl_file(pkl_path):\n    with open(pkl_path, \"rb\") as f:\n        data = pickle.load(f)\n    return data\n\n\ndef create_hdf5_from_dict(hdf5_group, data_dict):\n    for key, value in data_dict.items():\n        if isinstance(value, dict):\n            subgroup = hdf5_group.create_group(key)\n            create_hdf5_from_dict(subgroup, value)\n        elif isinstance(value, list):\n            value = np.array(value)\n            if \"rgb\" in key:\n                encode_data, max_len = images_encoding(value)\n                hdf5_group.create_dataset(key, data=encode_data, dtype=f\"S{max_len}\")\n            else:\n                hdf5_group.create_dataset(key, data=value)\n        else:\n            return\n            try:\n                hdf5_group.create_dataset(key, data=str(value))\n                print(\"Not np array\")\n            except Exception as e:\n                print(f\"Error storing value for key '{key}': {e}\")\n\n"
+        },
+        {
           "first": 78,
           "last": 87,
           "text": "def pkl_files_to_hdf5_and_video(pkl_files, hdf5_path, video_path):\n    data_list = parse_dict_structure(load_pkl_file(pkl_files[0]))\n    for pkl_file_path in pkl_files:\n        pkl_file = load_pkl_file(pkl_file_path)\n        append_data_to_structure(data_list, pkl_file)\n\n    images_to_video(np.array(data_list[\"observation\"][\"head_camera\"][\"rgb\"]), out_path=video_path)\n\n    with h5py.File(hdf5_path, \"w\") as f:\n        create_hdf5_from_dict(f, data_list)"
@@ -113,6 +118,22 @@
           "text": "def update_obs(observation):\n    full_image = observation[\"observation\"][\"head_camera\"][\"rgb\"]\n    left_wrist_image = (\n        observation[\"observation\"].get(\"left_camera\", {}).get(\"rgb\", None)\n    )\n    right_wrist_image = (\n        observation[\"observation\"].get(\"right_camera\", {}).get(\"rgb\", None)\n    )\n    state = observation[\"joint_action\"][\"vector\"]\n\n    return {\n        \"full_image\": full_image,\n        \"left_wrist_image\": left_wrist_image,\n        \"right_wrist_image\": right_wrist_image,\n        \"state\": state,\n    }"
         }
       ]
+    },
+    {
+      "path": "envs/camera/camera.py",
+      "sha256": "49ff2005d14749caa5fd9698d35f6f937664bde89cfdf0ab93675204c85bbf33",
+      "excerpts": [
+        {
+          "first": 315,
+          "last": 358,
+          "text": "                    res[camera_name] = _get_config(camera)\n            else:\n                res[camera_name] = _get_config(camera)\n        # ================================= sensor camera =================================\n        # res['head_sensor'] = res['head_camera']\n        # print(res)\n        return res\n\n    def get_rgb(self) -> dict:\n        rgba = self.get_rgba()\n        rgb = {}\n        for camera_name, camera_data in rgba.items():\n            rgb[camera_name] = {}\n            rgb[camera_name][\"rgb\"] = camera_data[\"rgba\"][:, :, :3]  # Exclude alpha channel\n        return rgb\n    \n    # Get Camera RGBA\n    def get_rgba(self) -> dict:\n\n        def _get_rgba(camera):\n            camera_rgba = camera.get_picture(\"Color\")\n            camera_rgba_img = (camera_rgba * 255).clip(0, 255).astype(\"uint8\")\n            return camera_rgba_img\n\n        # ================================= sensor camera =================================\n        # def _get_sensor_rgba(sensor):\n        #     camera_rgba = sensor.get_rgb()\n        #     camera_rgba_img = (camera_rgba * 255).clip(0, 255).astype(\"uint8\")[:,:,:3]\n        #     return camera_rgba_img\n\n        res = {}\n\n        if self.collect_wrist_camera:\n            res[\"left_camera\"] = {}\n            res[\"right_camera\"] = {}\n            res[\"left_camera\"][\"rgba\"] = _get_rgba(self.left_camera)\n            res[\"right_camera\"][\"rgba\"] = _get_rgba(self.right_camera)\n\n        for camera, camera_name in zip(self.static_camera_list, self.static_camera_name):\n            if camera_name == \"head_camera\":\n                if self.collect_head_camera:\n                    res[camera_name] = {}\n                    res[camera_name][\"rgba\"] = _get_rgba(camera)\n            else:"
+        },
+        {
+          "first": 324,
+          "last": 367,
+          "text": "        rgba = self.get_rgba()\n        rgb = {}\n        for camera_name, camera_data in rgba.items():\n            rgb[camera_name] = {}\n            rgb[camera_name][\"rgb\"] = camera_data[\"rgba\"][:, :, :3]  # Exclude alpha channel\n        return rgb\n    \n    # Get Camera RGBA\n    def get_rgba(self) -> dict:\n\n        def _get_rgba(camera):\n            camera_rgba = camera.get_picture(\"Color\")\n            camera_rgba_img = (camera_rgba * 255).clip(0, 255).astype(\"uint8\")\n            return camera_rgba_img\n\n        # ================================= sensor camera =================================\n        # def _get_sensor_rgba(sensor):\n        #     camera_rgba = sensor.get_rgb()\n        #     camera_rgba_img = (camera_rgba * 255).clip(0, 255).astype(\"uint8\")[:,:,:3]\n        #     return camera_rgba_img\n\n        res = {}\n\n        if self.collect_wrist_camera:\n            res[\"left_camera\"] = {}\n            res[\"right_camera\"] = {}\n            res[\"left_camera\"][\"rgba\"] = _get_rgba(self.left_camera)\n            res[\"right_camera\"][\"rgba\"] = _get_rgba(self.right_camera)\n\n        for camera, camera_name in zip(self.static_camera_list, self.static_camera_name):\n            if camera_name == \"head_camera\":\n                if self.collect_head_camera:\n                    res[camera_name] = {}\n                    res[camera_name][\"rgba\"] = _get_rgba(camera)\n            else:\n                res[camera_name] = {}\n                res[camera_name][\"rgba\"] = _get_rgba(camera)\n        # ================================= sensor camera =================================\n        # res['head_sensor']['rgb'] = _get_sensor_rgba(self.head_sensor)\n\n        return res\n\n    def get_observer_rgb(self) -> dict:\n        self.observer_camera.take_picture()"
+        }
+      ]
     }
   ],
   "format": "robotwin_phone_author_convention_v1",
@@ -138,7 +159,8 @@
     ],
     "image_encoding": "jpeg",
     "action_offset": 0,
-    "target_kind": "author_recorded_drive_target"
+    "target_kind": "author_recorded_drive_target",
+    "image_decoder": "opencv_imdecode_color_as_native_channels"
   },
   "offset_meaning": "same-frame author-recorded drive target, followed by future frames",
   "success_provenance": "Collector admits planned/check_success seeds; data replay uses seed.txt and asserts check_success after collection. HDF5 has no explicit success flags.",
@@ -149,5 +171,6 @@
     "Offset0 is the explicit same-frame/future-recorded-target objective; no guessed next-command shift.",
     "Official loaded-motor inverse/delta/Normalize/padding roundtrip and complete physical replay of all12 are runtime gates before fitting.",
     "No pickle was deserialized, model constructed, or robot action issued during this source review."
-  ]
+  ],
+  "image_channel_contract": "camera.get_rgba scales Color to uint8; get_rgb drops alpha without permutation. images_encoding passes native RGB arrays directly to cv2.imencode('.jpg'), with no swap. Matching cv2.imdecode(...,IMREAD_COLOR) restores the original native RGB channel order. PIL.convert('RGB') would swap native red and blue for these authored JPEGs."
 }

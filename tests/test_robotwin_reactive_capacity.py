@@ -78,19 +78,26 @@ def test_hdf5_reader_rejects_extra_or_truncated_timeline(tmp_path):
     with pytest.raises(ValueError,match='length'):read_episode(path,row,schema)
 
 
-def test_jpeg_views_retain_head_left_right_rgb_order_and_state(tmp_path):
+def test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state(tmp_path):
+    import cv2
     from PIL import Image
     result,_=manifest(tmp_path);row=result['episodes'][0];schema=result['schema'];path=tmp_path/'views.h5'
+    colors=[np.array(v,np.uint8) for v in [[17,103,231],[231,17,103],[103,231,17]]]
+    payloads=[]
     with h5py.File(path,'w') as f:
         for index,key in enumerate(schema['images']):
-            rgb=np.zeros((4,4,3),np.uint8);rgb[...,index]=255
-            stream=BytesIO();Image.fromarray(rgb).save(stream,format='JPEG',quality=100)
-            f.create_dataset(key,data=np.asarray([stream.getvalue()],dtype=f'S{len(stream.getvalue())}'))
+            native=np.broadcast_to(colors[index],(4,4,3)).copy()
+            # Exact pinned images_encoding call: no RGB/BGR conversion and
+            # no non-author quality flag before cv2.imencode.
+            success,encoded=cv2.imencode('.jpg',native);assert success
+            payload=encoded.tobytes();payloads.append(payload)
+            f.create_dataset(key,data=np.asarray([payload],dtype=f'S{len(payload)}'))
     state=np.arange(14,dtype=np.float32)[None]
     raw=raw_observation(path,row,schema,0,state)
-    assert raw['main_images'][0].mean((0,1)).argmax()==0
-    assert raw['wrist_images'][0,0].mean((0,1)).argmax()==1
-    assert raw['wrist_images'][0,1].mean((0,1)).argmax()==2
+    views=[raw['main_images'][0],raw['wrist_images'][0,0],raw['wrist_images'][0,1]]
+    for view,color in zip(views,colors):assert np.allclose(view.mean((0,1)),color,rtol=0,atol=3)
+    nominal_pil=np.asarray(Image.open(BytesIO(payloads[0])).convert('RGB'))
+    assert abs(float(nominal_pil[...,0].mean())-float(colors[0][0]))>100
     assert np.array_equal(raw['states'],state)
     assert raw['task_descriptions']==[row['instruction']]
 
