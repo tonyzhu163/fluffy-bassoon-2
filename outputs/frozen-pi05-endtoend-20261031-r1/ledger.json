@@ -168,6 +168,32 @@
       "lineage_seconds": 600,
       "terminal_receipt_path": "CACHE04-TERMINAL-RECEIPT.json",
       "terminal_receipt_sha256": "201ea17997d172701f8c40a21d12da1b0d96af87056e7725cc80bf1fdb9ba48e"
+    },
+    {
+      "role": "command_diagnostic_action_5000_fit",
+      "job_id": "job-8bsqknljwduh",
+      "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+      "reserved_seconds": 900,
+      "charged_seconds": null,
+      "settled": false,
+      "status": "active_owner_report",
+      "maximum_new_actions": 0,
+      "lineage": "fixed12-command-diagnostic/action",
+      "lineage_seconds": 900,
+      "created_shanghai": "2026-11-01 05:15:48"
+    },
+    {
+      "role": "command_diagnostic_kv_5000_fit",
+      "job_id": "job-ojt0dkom0woh",
+      "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+      "reserved_seconds": 900,
+      "charged_seconds": null,
+      "settled": false,
+      "status": "active_owner_report",
+      "maximum_new_actions": 0,
+      "lineage": "fixed12-command-diagnostic/kv",
+      "lineage_seconds": 900,
+      "created_shanghai": "2026-11-01 05:16:57"
     }
   ],
   "cpu_attempts": [
@@ -470,13 +496,21 @@
       "receipt_sha256": "01ceaae8c20ada49e7cb4966124683592b020b22ebbd669e660d5d3c417199ba"
     }
   ],
-  "physical_action_reservations": [],
+  "physical_action_reservations": [
+    {
+      "role": "fixed15_command_diagnostic_readout",
+      "maximum_actions": 6000,
+      "state": "local_protocol_reservation_only_no_RPC_intents",
+      "actual_allocation_created": false,
+      "canonical_action_header_unchanged": true
+    }
+  ],
   "charged_gpu_seconds": 3625,
-  "reserved_gpu_seconds": 1800,
+  "reserved_gpu_seconds": 3300,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 23922,
-  "reserved_actions": 0,
+  "reserved_actions": 6000,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -543,7 +577,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 25,
-  "unreserved_gpu_seconds": 23375,
+  "unreserved_gpu_seconds": 21875,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -689,8 +723,8 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 1775,
-  "unreserved_a1_actions": 6078,
+  "unreserved_a1_gpu_seconds": 275,
+  "unreserved_a1_actions": 78,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
     "CPU_qualified": true,
@@ -835,12 +869,26 @@
       "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
       "maximum_seconds": 1800,
       "per_head_seconds": 900,
-      "state": "funded_conditional_actual_CPU12_PASS_full90_seal_and_resource_binding_pending",
+      "state": "both_physical_jobs_launched",
       "authority_path": "COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
       "authority_sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d",
-      "actual_allocation_created": false,
+      "actual_allocation_created": true,
       "actual_actions": 0,
-      "no_resource_cap_expansion": true
+      "no_resource_cap_expansion": true,
+      "job_ids": [
+        "job-8bsqknljwduh",
+        "job-ojt0dkom0woh"
+      ]
+    },
+    {
+      "role": "fixed15_command_diagnostic_native_action5000_KV5000_readout",
+      "maximum_seconds": 1500,
+      "state": "funded_conditional_actual_both5000_endpoints_and_resource_runtime_binding_pending",
+      "actual_allocation_created": false,
+      "source_commit": "235fcc00f0ddf7a07590604daba9e79c9a4c3c6d",
+      "authority_path": "COMMAND-DIAGNOSTIC-READOUT-CHILD-AUTHORITY.json",
+      "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
+      "maximum_actions": 6000
     }
   ],
   "command_diagnostic_cache04": {
@@ -871,19 +919,56 @@
       "rows": 90,
       "whole_cases": 12,
       "paid11_rows": 77,
-      "new04_rows": 13
+      "new04_rows": 13,
+      "canonical_content_sha256": "5f8ada37185fb7d5add69f9eb17cb032fc63bbc90f562fea825d161ca2a9d7dd"
     },
     "source_eligible": false,
-    "seal_evidence": "Execution owner actual report; producer/JUnit packet copying, no independent root full90 claim."
+    "seal_evidence": "Copied zeroGPU/CPUclock/JUnit/terminal/fullcache metadata verified; all90 tensor validation by allocated producer, no independent Mac tensor claim."
   },
   "command_diagnostic_fits": {
-    "state": "funded_two900_heads_actual_full90_seal_reported_PASS_resource_runtime_admission_pending",
+    "state": "both_running_real_SGD_verified_0520",
     "actual_fits": 0,
     "actual_complete_cache": true,
     "max_updates_each": 5000,
     "primary_candidate": 5000,
     "VAL_selection": false,
-    "readout_funded": false,
-    "authority_sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
+    "readout_funded": true,
+    "authority_sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d",
+    "actual_jobs": {
+      "action": {
+        "job_id": "job-8bsqknljwduh",
+        "created_shanghai": "2026-11-01 05:15:48",
+        "status_reported": "Running",
+        "actual_SGD_verified_by_owner": 1409,
+        "full_recovery_prefix": "fbe560a1",
+        "zero_native_frozen_gates": "Pre-SGD gates passed by reaching real source update loop; raw milestone0 proof copying.",
+        "retained_milestones": [
+          0,
+          100,
+          500
+        ],
+        "full_recovery_hash_matches": true
+      },
+      "kv": {
+        "job_id": "job-ojt0dkom0woh",
+        "created_shanghai": "2026-11-01 05:16:57",
+        "status_reported": "GPU_probe_model_setup_active",
+        "actual_SGD_verified_by_owner": 499,
+        "retained_milestones": [
+          0,
+          100
+        ],
+        "full_recovery_hash_matches": true
+      }
+    }
+  },
+  "command_diagnostic_readout": {
+    "state": "funded_conditional_both5000_endpoints_pending",
+    "GPU_ceiling": 1500,
+    "action_ceiling": 6000,
+    "episode_ceiling": 15,
+    "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
+    "actual_job": null,
+    "no_source_student_eligibility": true
   }
 }

@@ -47,27 +47,26 @@ replay were not performed. Target57 data remain excluded from source
 pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
 The targeted Motus/RoboTwin physical teacher bank remains11/12: original04
-fails, including the matched closure and four dose/grip variants. Recorded
-finger settling does not prove an adequate grasp, contact or scene identity.
-The separate command-plan diagnostic retains all12 original identities,
-including failed04, without treating it as a competent teacher. Paid11 has77
-cached rows; the new04 cache closes all13 rows with whole-case RNG/cursor
-recovery, but the subsequent full12 seal fails a schema guard. No head fit or
-source admission follows. The173-second cache attempt brings phone cost to
-3,625 GPU-seconds/23,922 actions. Its original CPU1,775/1,800 and separate
-preservation98/120 remain distinct. Required33 recovery tests pass; optional
-bridge fixture failures and skipped readout remain explicit. Allocated CPU
-inspection confirms saved official state(1,32) versus the consumer's erroneous
-(1,14) guard in all three inspected rows. The sole execution owner now reports the narrow correction12/12, readout
-selector1/1 and bridge3/3 passing, plus the full90-row CPU seal; copied
-producer proof is pending. Paid tensors and failed04 remain unchanged, with
-no GPU reencoding. Two fixed5000 head fits are funded at900 GPU-seconds each
-inside the original residual; actual runtime admission is pending.
-[Evidence and next discriminator](robotwin-coefficient-steering/EVALUATION.md).
+also fails the matched closure and four dose/grip variants. Finger settling
+does not prove adequate grasp/contact or scene identity. The separate
+command-plan diagnostic retains all12 identities, including failed04, without
+calling it a competent teacher. Paid11 has77 rows and new04 has13, with durable
+whole-case RNG/cursor recovery. The initial full12 seal failed because official
+model state is(1,32), while the consumer expected(1,14). A narrow correction
+passes12 cases; the corrected readout1 and bridge3 also pass without repeating
+carried suites. The allocated sealer validates all90 rows; copied metadata and
+JUnit hashes pass parent review. Paid tensors and failed04 remain unchanged.
+
+Two fixed5000 command fits now run on distinct GPUs, with1,409 action/499 KV
+updates and full recoveries. Each has900 inclusive GPU-seconds reserved inside
+the original A1 residual. There is no new robot interaction or tested robot
+benefit yet, and no source/student admission. Closed phone cost is3,625
+GPU-seconds/23,922 actions; active fit reservations are separate from actual
+terminal charges. [Evidence and next discriminator](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through160,080
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through180,020
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three

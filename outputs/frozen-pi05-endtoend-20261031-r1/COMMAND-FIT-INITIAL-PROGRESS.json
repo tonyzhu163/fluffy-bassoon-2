@@ -1,0 +1,306 @@
+{
+  "format": "command_fit_initial_saved_metadata_v1",
+  "checked_unix": 1793481499.8549876,
+  "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+  "heads": {
+    "action": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1",
+      "allocation.json": {
+        "metadata": {
+          "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+          "admitted": true,
+          "operation": "fit",
+          "kind": "action",
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "request_sha256": "9514b69420a1389eb76a377d2c44a32fc2bbc7e14f8d708a5cd6c9382ef2341d",
+          "hostname": "job-8bsqknljwduh-master-0",
+          "gpu_count": 1,
+          "private_motor_context": true,
+          "maximum_robot_actions": 0,
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1",
+          "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481359000000-0010",
+          "driver_deadline_unix": 1793482139.0,
+          "authority_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
+            "sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
+          },
+          "resource_plan_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/resource-plan.json",
+            "sha256": "509216280784657dcc4168939f4b7b410b6c0b60f96189a2fd6721becd97b484"
+          },
+          "reserved_gpu_seconds": 900,
+          "started_unix": 1793481359.0
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/allocation.json",
+          "sha256": "2e48bcba05d7a6a529c7dd45e54456ff8fef4f8206c8e6c4ec267efa69d1ac5a",
+          "bytes": 1878,
+          "mtime": 1793481371.4321344
+        }
+      },
+      "gpu-probe.json": {
+        "metadata": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-8bsqknljwduh-master-0",
+          "probe_pid": 302,
+          "created_at_utc": "2026-10-31T21:16:09.511078+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "44abed9c-db93-7b60-614d-abdf6a513024",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:a4:00.0",
+              "uuid": "GPU-cb666425-37b8-aecb-e638-28c951ced1ef",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-cb666425-37b8-aecb-e638-28c951ced1ef",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 0.0,
+                "pci_bus_id": "00000000:A4:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-cb666425-37b8-aecb-e638-28c951ced1ef"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-cb666425-37b8-aecb-e638-28c951ced1ef"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-cb666425-37b8-aecb-e638-28c951ced1ef": 0.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-cb666425-37b8-aecb-e638-28c951ced1ef"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-cb666425-37b8-aecb-e638-28c951ced1ef",
+              "pid": 302,
+              "process_name": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-allocation-r1/gpu-probe.json",
+          "sha256": "6cbda2ba6cf05333a1abbfac519ec5d920d128d4cb6d6469b74f3300b13f7dd0",
+          "bytes": 2876,
+          "mtime": 1793481369.6767802
+        }
+      },
+      "progress": {
+        "complete": false,
+        "format": "robotwin_fixed12_reactive_learning_curve_v1",
+        "iteration": 364,
+        "milestones": {
+          "0": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009425342990401602,
+                "decoded_arm12_MSE": 0.004340937756023038,
+                "decoded_gripper2_MSE": 0.039931773234290695,
+                "decoded_physical14_MSE": 0.009425342990401602,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010162620623304974,
+                "decoded_arm12_MSE": 0.004860411888395382,
+                "decoded_gripper2_MSE": 0.041975875511586276,
+                "decoded_physical14_MSE": 0.010162620623304974,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000000.pt",
+              "sha256": "4e85c73f253de46095790e61fde9c58bbb402795632d616e76bb1d72dd0fced8"
+            }
+          },
+          "100": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009884366752841033,
+                "decoded_arm12_MSE": 0.004570554085814099,
+                "decoded_gripper2_MSE": 0.041767240488689725,
+                "decoded_physical14_MSE": 0.009884366752841033,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010880247864406556,
+                "decoded_arm12_MSE": 0.005530486864569996,
+                "decoded_gripper2_MSE": 0.042978813023572524,
+                "decoded_physical14_MSE": 0.010880247864406556,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000100.pt",
+              "sha256": "85a82fbd69c43f371a5fb92ea865ab595fd662d3a0647e5d1fa91346ae52f5c2"
+            }
+          }
+        },
+        "new_robot_actions": 0,
+        "primary_endpoint": null,
+        "recovery": {
+          "iteration": 364,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-000364-f651b4b0cdca4de9befb2a717f608e61.pt",
+          "sha256": "db97f1ffae45033c6e23dd1a76c558b2699c6288ef0eecfaa8fc7da5f4442dc0"
+        }
+      },
+      "latest_complete_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-000364-f651b4b0cdca4de9befb2a717f608e61.pt",
+        "sha256": "db97f1ffae45033c6e23dd1a76c558b2699c6288ef0eecfaa8fc7da5f4442dc0",
+        "bytes": 1776097,
+        "mtime": 1793481499.8635135
+      },
+      "recovery_hash_matches": true
+    },
+    "kv": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1",
+      "allocation.json": {
+        "metadata": {
+          "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+          "admitted": true,
+          "operation": "fit",
+          "kind": "kv",
+          "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+          "request_sha256": "9514b69420a1389eb76a377d2c44a32fc2bbc7e14f8d708a5cd6c9382ef2341d",
+          "hostname": "job-ojt0dkom0woh-master-0",
+          "gpu_count": 1,
+          "private_motor_context": true,
+          "maximum_robot_actions": 0,
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1",
+          "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+          "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+          "clock_contract": {
+            "format": "frozen_pi05_shared_gpu_clock_v1",
+            "phase_id": "frozen-pi05-endtoend-20261031-r1",
+            "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+            "maximum_gpu_seconds": 28800,
+            "maximum_actions": 300000,
+            "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+          },
+          "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793481433000000-0011",
+          "driver_deadline_unix": 1793482213.0,
+          "authority_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-diagnostic-fits-r1/COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
+            "sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
+          },
+          "resource_plan_receipt": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/resource-plan.json",
+            "sha256": "76291fec120ca7ef6b8b0775127dd2b7ecfdee0c77d9ec40cb6525ae29bf4fbd"
+          },
+          "reserved_gpu_seconds": 900,
+          "started_unix": 1793481433.0
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/allocation.json",
+          "sha256": "47b946353021a31084051cb1cf6f53f25a616ada4a7b163851981f9f6a74f240",
+          "bytes": 1862,
+          "mtime": 1793481436.5209174
+        }
+      },
+      "gpu-probe.json": {
+        "metadata": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-ojt0dkom0woh-master-0",
+          "probe_pid": 117,
+          "created_at_utc": "2026-10-31T21:17:15.911955+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "0c8b2ef6-39dd-b281-d4af-cd7ad74b487d",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:a3:00.0",
+              "uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 0.0,
+                "pci_bus_id": "00000000:A3:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4": 0.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+              "pid": 117,
+              "process_name": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        },
+        "file": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-allocation-r1/gpu-probe.json",
+          "sha256": "049d4e58da8c6eb8d325ed7d6930b2c7eb054dc1312ea3f46173db0aced85734",
+          "bytes": 2876,
+          "mtime": 1793481436.0964308
+        }
+      }
+    }
+  }
+}

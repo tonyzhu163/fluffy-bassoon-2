@@ -1,0 +1,65 @@
+{
+  "cache-tests": {
+    "status": "passed",
+    "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+    "arguments": [
+      "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_robotwin_cache_state_abi.py",
+      "tests/test_robotwin_teacher_bank.py",
+      "-k",
+      "state_abi or full_twelve_cache_join or full_cache_join_rejects or two_different_anchors",
+      "--junitxml=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/cache-tests.junit.xml"
+    ],
+    "return_code": 0,
+    "error": null
+  },
+  "readout-test": {
+    "status": "passed",
+    "source_commit": "235fcc00f0ddf7a07590604daba9e79c9a4c3c6d",
+    "arguments": [
+      "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_robotwin_command_diagnostic_readout.py::test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger",
+      "--junitxml=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/readout-test.junit.xml"
+    ],
+    "return_code": 0,
+    "error": null
+  },
+  "seal": {
+    "status": "passed",
+    "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+    "arguments": [
+      "bash",
+      "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache-state-abi-cpu-20261101-r1/outputs/robotwin-command-diagnostic-20261101-r1/DATA-PAYLOAD.sh"
+    ],
+    "return_code": 0,
+    "error": null
+  },
+  "bridge-tests": {
+    "status": "passed",
+    "source_commit": "52022ca02e6ae7f2803bec0e082faf4da21cfef1",
+    "arguments": [
+      "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]",
+      "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]",
+      "tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration",
+      "--junitxml=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/cpu-r1/bridge-tests.junit.xml"
+    ],
+    "return_code": 0,
+    "error": null
+  }
+}
