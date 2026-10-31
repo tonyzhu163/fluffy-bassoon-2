@@ -83,6 +83,7 @@ mkdir -p "$LIBERO_CONFIG_PATH"
 import importlib.metadata as md, json, pathlib, sys
 import yaml
 out, repo = map(pathlib.Path, sys.argv[1:])
+sys.path.insert(0, str(repo))
 config = pathlib.Path(__import__('os').environ['LIBERO_CONFIG_PATH'])
 libero = repo/'LIBERO/libero/libero'
 paths = dict(benchmark_root=str(libero), bddl_files=str(libero/'bddl_files'),
