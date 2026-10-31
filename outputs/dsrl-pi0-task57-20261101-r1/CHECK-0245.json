@@ -1,0 +1,103 @@
+{
+  "cluster": "Baige",
+  "job_id": "job-psgxs9n5b08w",
+  "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+  "trigger_shanghai": "2026-11-01T02:44:49+08:00",
+  "direct_audit_shanghai": "2026-11-01T02:51:46.989725+08:00",
+  "scheduler_state": "Running",
+  "panels": [
+    {
+      "optimizer_updates": 0,
+      "replay_query_rows": 520,
+      "training_primitive_actions": 10400,
+      "successes": 4,
+      "episodes": 10,
+      "panel_actions": 3520
+    },
+    {
+      "optimizer_updates": 10000,
+      "replay_query_rows": 1005,
+      "training_primitive_actions": 20074,
+      "successes": 0,
+      "episodes": 10,
+      "panel_actions": 4000
+    },
+    {
+      "optimizer_updates": 20000,
+      "replay_query_rows": 1504,
+      "training_primitive_actions": 30048,
+      "successes": 2,
+      "episodes": 10,
+      "panel_actions": 3604
+    },
+    {
+      "optimizer_updates": 30000,
+      "replay_query_rows": 2003,
+      "training_primitive_actions": 39833,
+      "successes": 8,
+      "episodes": 10,
+      "panel_actions": 2421
+    },
+    {
+      "optimizer_updates": 40000,
+      "replay_query_rows": 2507,
+      "training_primitive_actions": 49664,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1980
+    },
+    {
+      "optimizer_updates": 50000,
+      "replay_query_rows": 3011,
+      "training_primitive_actions": 59490,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 2308
+    }
+  ],
+  "last_complete_burst": {
+    "updates": 50900,
+    "episodes": 212,
+    "training_primitives": 60143,
+    "last_checkpoint_updates": 50620,
+    "replay_rows": 3045,
+    "physical_actions": 77976,
+    "time_unix": 1793472700.9234893,
+    "motor_frozen": true
+  },
+  "full_recovery": {
+    "updates": 50620,
+    "episodes": 210,
+    "training_primitives": 59869,
+    "last_checkpoint_updates": 50620
+  },
+  "full_recovery_sha256": "9b0aa7c04c2e946d90ab218a943dc798b95768bf885caac09a2bdfa712674af2",
+  "full_recovery_hash_matches": true,
+  "verified_evaluation_checkpoint_updates": [
+    0,
+    10000,
+    20000,
+    30000,
+    40000,
+    50000
+  ],
+  "physical_cost": {
+    "known_actions": 77976,
+    "uncertain_actions": 400,
+    "episodes": 272,
+    "pending": {
+      "episode": "000272-training-050900",
+      "role": "training",
+      "maximum_actions": 400
+    }
+  },
+  "conservative_phase_actions": 78776,
+  "current_run_output_bytes": 1080703946,
+  "live_gpu_context_verified": true,
+  "final_motor_hash_comparison_pending": true,
+  "prior_gpu_seconds": 660,
+  "prior_actions": 400,
+  "decision": "NOTIFY",
+  "conclusion": "Single-seed native40% to learned100% gain observed in two consecutive panels; full run and published three-seed aggregate still pending",
+  "next_action": "Continue immutable500k-update recipe within shared phase caps and inspect next20-minute snapshot"
+}

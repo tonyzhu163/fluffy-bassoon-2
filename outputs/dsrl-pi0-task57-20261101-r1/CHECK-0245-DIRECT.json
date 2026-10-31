@@ -1,0 +1,414 @@
+{
+  "hostname": "job-psgxs9n5b08w-master-0",
+  "checked_unix": 1793472706.9897246,
+  "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+  "contract": {
+    "format": "original_pi0_task57_replication_v1",
+    "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+    "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+    "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+    "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+    "seed": 0,
+    "task_id": 57,
+    "motor": "pi0_libero",
+    "native_horizon": 50,
+    "query_frequency": 20,
+    "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+    "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+    "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+    "data_role": "target-online-baseline",
+    "target_only": true,
+    "source_assembly_admission": false,
+    "max_actions": 1000000,
+    "max_gpu_seconds": 36000,
+    "max_bytes": 68719476736,
+    "prior_actions": 400,
+    "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+    "departures": [
+      "local scalar/media handling",
+      "explicit equivalent prefetch recovery",
+      "complete-boundary recovery and resource stopping",
+      "project-local compilation cache"
+    ],
+    "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+  },
+  "progress": {
+    "updates": 50900,
+    "episodes": 212,
+    "training_primitives": 60143,
+    "last_checkpoint_updates": 50620,
+    "replay_rows": 3045,
+    "physical_actions": 77976,
+    "time_unix": 1793472700.9234893,
+    "motor_frozen": true
+  },
+  "recovery": {
+    "path": "recovery-1.pkl",
+    "sha256": "9b0aa7c04c2e946d90ab218a943dc798b95768bf885caac09a2bdfa712674af2",
+    "bytes": 118572601,
+    "progress": {
+      "updates": 50620,
+      "episodes": 210,
+      "training_primitives": 59869,
+      "last_checkpoint_updates": 50620
+    },
+    "contract": {
+      "format": "original_pi0_task57_replication_v1",
+      "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+      "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+      "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+      "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "seed": 0,
+      "task_id": 57,
+      "motor": "pi0_libero",
+      "native_horizon": 50,
+      "query_frequency": 20,
+      "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+      "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+      "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+      "data_role": "target-online-baseline",
+      "target_only": true,
+      "source_assembly_admission": false,
+      "max_actions": 1000000,
+      "max_gpu_seconds": 36000,
+      "max_bytes": 68719476736,
+      "prior_actions": 400,
+      "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+      "departures": [
+        "local scalar/media handling",
+        "explicit equivalent prefetch recovery",
+        "complete-boundary recovery and resource stopping",
+        "project-local compilation cache"
+      ],
+      "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+    },
+    "boundary": "complete collection episode and complete optimizer burst",
+    "payload_sha256_matches": true
+  },
+  "evaluation_checkpoints": [
+    {
+      "path": "000000.pkl",
+      "sha256": "6bd5d6c4b5134c6baf5725f769f0046a474b7db3d6ee9b22a6c3e49d2117432b",
+      "bytes": 36696863,
+      "updates": 0,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "010000.pkl",
+      "sha256": "fa93c24efc881f6ff42e06ba384383471e3167d439ccfa1bfb0ab1d24461022a",
+      "bytes": 36696913,
+      "updates": 10000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "020000.pkl",
+      "sha256": "8807564065dc6d435203e866cd7b883941bbdd02658b7c016819c3bf1d05c5a3",
+      "bytes": 36696914,
+      "updates": 20000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "030000.pkl",
+      "sha256": "cc782357fa6da25352559a32d69515e41f4aa11c779b73473dbe0027e5852b80",
+      "bytes": 36696914,
+      "updates": 30000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "040000.pkl",
+      "sha256": "d14816175fd93c96347f20a3b1c6739165bf05751e6b1cb14ed5c2ada18e618b",
+      "bytes": 36696914,
+      "updates": 40000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "050000.pkl",
+      "sha256": "ebb2fa6ea77a8b83bd8da756f640d7cb564b88bda739f5fdd7edee8e3920170a",
+      "bytes": 36696914,
+      "updates": 50000,
+      "payload_sha256_matches": true
+    }
+  ],
+  "physical_cost": {
+    "known_actions": 77976,
+    "uncertain_actions": 400,
+    "episodes": 272,
+    "pending": {
+      "episode": "000272-training-050900",
+      "role": "training",
+      "maximum_actions": 400
+    }
+  },
+  "bindings": {
+    "motor-binding.json": {
+      "pid": 423,
+      "kind": "compute",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "renderer-binding.json": {
+      "pid": 423,
+      "kind": "graphics",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "qualification.json": {
+      "same_noise_max_delta": 0.0,
+      "model": "pi0_libero",
+      "horizon": 50,
+      "execute_steps": 20,
+      "extra_physical_actions": 0,
+      "original_rng_restored": true
+    },
+    "motor-before.json": {
+      "sha256": "2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903",
+      "leaves": 50,
+      "elements_by_dtype": {
+        "bfloat16": 3238048528
+      }
+    }
+  },
+  "current_pid_gpu_contexts": [
+    {
+      "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "type": "C+G"
+    }
+  ],
+  "output_bytes": 1080703946,
+  "metrics": [
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/avg_return": 0.4
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/success_rate": 0.4
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/avg_episode_len": 352.0
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/Reward >= 1": 0.4
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "num_online_samples": 1005,
+        "num_online_trajs": 51,
+        "env_steps": 20074
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/avg_return": 0.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/success_rate": 0.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/avg_episode_len": 400.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/Reward >= 1": 0.0
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "num_online_samples": 1504,
+        "num_online_trajs": 77,
+        "env_steps": 30048
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/avg_return": 0.2
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/success_rate": 0.2
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/avg_episode_len": 360.4
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/Reward >= 1": 0.2
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "num_online_samples": 2003,
+        "num_online_trajs": 117,
+        "env_steps": 39833
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/avg_return": 0.8
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/success_rate": 0.8
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/avg_episode_len": 242.1
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/Reward >= 1": 0.8
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "num_online_samples": 2507,
+        "num_online_trajs": 162,
+        "env_steps": 49664
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/avg_episode_len": 198.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "num_online_samples": 3011,
+        "num_online_trajs": 208,
+        "env_steps": 59490
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/avg_episode_len": 230.8
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    }
+  ],
+  "motor_after_present": false,
+  "worker_time_present": false
+}

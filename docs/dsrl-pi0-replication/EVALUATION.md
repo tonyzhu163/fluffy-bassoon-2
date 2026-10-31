@@ -6,35 +6,56 @@ The original `pi0_libero` seed0 pilot is running on Baige as
 The [method contract](../dsrl-pi0-replication.md) fixes the original DSRL,
 OpenPI and LIBERO sources and distinguishes this work from Pi0.5.
 
-| Verified panel | Optimizer updates | Replay query rows | Successes | Episodes | Executed panel actions |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Initial native Pi0 | 0 | 520 | 4 | 10 | 3520 |
+The single-seed pilot has improved from 4/10 native successes to 10/10 learned
+successes at both 40k and 50k optimizer updates. The full run is still active;
+this does not establish the paper's three-seed aggregate or its sample-efficiency
+confidence interval.
 
-The initial native panel completed at2026-11-01 02:18:55 Shanghai, after the
-authors' replay>500 warmup and before the first SAC update. It uses the original
-random reset population,400-action horizon, independent H50x32 Gaussian noise,
+| Panel | Optimizer updates | Replay query rows | Training primitive actions | Successes | Episodes | Panel actions |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial native Pi0 | 0 | 520 | 10400 | 4 | 10 | 3520 |
+| Learned SAC | 10000 | 1005 | 20074 | 0 | 10 | 4000 |
+| Learned SAC | 20000 | 1504 | 30048 | 2 | 10 | 3604 |
+| Learned SAC | 30000 | 2003 | 39833 | 8 | 10 | 2421 |
+| Learned SAC | 40000 | 2507 | 49664 | 10 | 10 | 1980 |
+| Learned SAC | 50000 | 3011 | 59490 | 10 | 10 | 2308 |
+
+The initial native panel completed at 2026-11-01 02:18:55 Shanghai after
+replay >500 warmup and before the first SAC update. It uses the original random
+reset population, 400-action horizon, independent H50x32 Gaussian noise,
 execute20 interface, and shared training/evaluation environment. No extra
-settling or scene selection was introduced. The40% ten-episode baseline is
-above the paper's roughly20% aggregate; one panel and one seed cannot establish
-or refute the reported three-seed result.
+settling or scene selection was introduced. Its 40% baseline is above the
+paper's roughly 20% aggregate. The learned panels use the original stochastic
+SAC noise policy; record all panels, including the initial decline.
 
-At02:19:58,27 complete training episodes and800 optimizer updates were
-verified, with540 replay rows and14,320 executed actions including the native
-panel. Full warmup recovery checkpoints and the initial evaluation policy/RNG
-snapshot are retained. Learned-policy success and replication of the reported
-improvement remain pending; evaluate10 episodes at each exact10k updates and
-compare at replay query counts, separately from primitive actions.
+The first 10/10 panel occurred at 2,507 queried replay records, after 49,664
+training primitive actions. Sample, primitive-action and optimizer-update
+counts are separate units. This is directional evidence for the reported
+steering gain, with one seed and only 10 evaluation episodes per panel; it is
+not a claim of better sample efficiency than the published aggregate.
 
-All10 Linux CPU checks passed with the pinned Policy API and next-update
-optimizer recovery. On sm_120 the original JAX0.5 Triton compiler aborts at
+At the direct allocation audit (`2026-11-01T02:51:46.989725+08:00`), training had reached
+50,900 updates,212 training episodes and3,045 replay rows. The complete
+recovery at50,620 updates and all six retained evaluation policy/RNG snapshots
+(0 through 50k) matched their saved SHA256 hashes. The current process still
+held the allocated GPU's compute and graphics contexts. Current-run output was
+1,080,703,946 bytes. The physical ledger had 77,976 known actions plus 400
+pending actions; retain the additional 400 pending actions from failed R3,
+for 78,776 conservatively charged phase actions at that snapshot. The final
+before/after motor hash comparison remains pending the run's terminal cleanup.
+
+All 10 Linux CPU checks passed with the pinned Policy API and next-update
+optimizer recovery. On sm_120 the original JAX 0.5 Triton compiler aborts at
 first inference; the active run disables Triton GEMM while preserving package
 pins, bfloat16 weights and the scientific recipe. Official GCS Pi0 weights
 passed file hashes; byte equality to the removed original S3 release remains
-unverified. The shared phase ceilings remain36,000 GPU-seconds,1M physical
-actions and64GiB output, including660 conservatively charged GPU-seconds and
+unverified. The shared phase ceilings remain 36,000 GPU-seconds, 1M physical
+actions and 64GiB output, including 660 conservatively charged GPU-seconds and
 400 unresolved actions from failed startup identities.
 
 [Initial receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
-[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/curve-through-0220.json),
-[raw log](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-R4-CHECK-0220.log),
+[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245.json),
+[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-DIRECT.json),
+[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-CURVE.csv),
+[console evidence](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-EVIDENCE.log),
 [launch plan](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-LAUNCH-PLAN.json).
