@@ -46,7 +46,7 @@ actuator parity, range headroom, clipping behavior, or an inverse for KV/noise.
 Construct `CoefficientSteering(env, interface_contract, interface_sha256=...,
 post_command_transform=None, condition_contract=None)`, then `attach_corpus`
 before the first reset. `set_coefficients(arm, c)`, `reset(task, seed,
-motor_seed=...)`, `step(c)`, `snapshot()`, `physical_basis()` and
+motor_seed=..., paired_instruction=None)`, `step(c)`, `snapshot()`, `physical_basis()` and
 `mapping_sha256()` form the public API. `post_command_transform` and
 `condition_contract` are public bindings. Optional calibration is called as
 `transform(base_decoded, requested_after_mapping) -> (final_commands, audit)`;
@@ -59,7 +59,7 @@ stay under `audit_only_post_command_transform`, never in public features.
 `meta_rl/robotwin_steering_screen.py:run_complete_episode` is the common loop.
 It accepts a control, dict spec, canonical CampaignBudget, run_id and phase.
 Spec fields: id/task/case/reset_seed/motor_seed/arm/coefficients/horizon;
-optional method, policy_version, expected_reset. `method` is preserved for
+optional method, policy_version, expected_reset, paired_instruction. `method` is preserved for
 lineage accounting; it is not replaced by the mapping arm. A whole native
 episode must fit before reset; each chunk receives a durable intent before
 execution. No episode is cut to meet a quota. Reset-policy actions must be
@@ -74,6 +74,24 @@ complete receipt, never this loop. `on_chunk`, `on_episode`, and `before_step`
 callbacks do not add a simulator/logger/ledger. Receipts bind complete raw
 episode manifests plus chunk SHA refs, actual costs/reset content and control
 RNG. Partial episodes are never exported as complete.
+
+For every repeated scene, use `paired_reset_fields(original_complete_record)`.
+It returns `expected_reset` (actual seed/raw-observation/public-feature hashes)
+and `paired_instruction` (the original one-element actual instruction list),
+checking that the baseline receipt and reset identity agree. The common runner
+requires both fields when an expected identity is supplied. Source-validation
+milestones, condition-cross and student support/query or lesion pairs share
+this API. No stage rewrites text independently.
+
+The backend binds this instruction before every encoding and raw corpus frame
+for the whole episode. Simulator-sampled text remains separately in
+`reset_info.instruction_binding`, decision metadata `paired_instruction` and
+each next native result's `info.paired_instruction`; audit never enters public
+features. Raw RGB/proprioception are untouched and all identity guards remain
+exact. An unpaired reset clears the binding. The initial paired qualification
+also repeats the actual effective input and requires exact public features,
+prefix mask and native K/V cache before decoded zero-parity/frozen checks and
+before any real command. This numerical check adds no robot episode.
 
 Typed decision metadata contains authoritative `steering_coefficients` (the
 actual clipped4D choice), separate `proposed_steering_coefficients`,
@@ -175,3 +193,17 @@ automatic continuation. Terminal scheduler GPU costs are settled by the
 resource owner against the same cumulative reservation, separately from driver
 wall time. Fresh CPU qualification covers the new mapping/driver/backend tests;
 the earlier41-test hook result does not qualify this new executable.
+
+An explicit diagnosed instruction-mismatch migration is the sole exception to
+the same-code boundary rule: `--resume ... --resume-sha256 ...` plus
+`--paired-reset-migration ... --paired-reset-migration-sha256 ...`. It accepts
+only the exact pre-command paired-reset RuntimeError after the complete native
+bank, binds predecessor result/recovery/terminal/cost/closeout and actual raw
+reset/NPZ/zero-chunk manifest evidence, checks original episode language
+constancy, and retries only the identical pending search with original text.
+Old records and outputs remain immutable. Under the canonical ledger lock the
+old tip and all actual charges must remain, with zero pending/uncertain costs
+and no command reservation for that failed case; only this fresh run's source
+registration may follow the old tip. It grants no new resources, repetitions,
+refunds, or general failure-resume switch. The source owner supplies and reviews
+the SHA-bound proof after predecessor termination.

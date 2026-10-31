@@ -1,6 +1,24 @@
 # Frozen-Motus coefficient steering evaluation
 
-## Live interface qualification, 2026-10-31
+## Current repair R2, 18:57 Shanghai
+
+Successor `job-zp47pliu429f`, exact source `969fb44c`, passed108 allocated CPU
+checks and the actual-artifact migration dry-run, with the old journal unchanged.
+On the GPU, re-encoding saved original images/state with the original prompt
+reproduces the original public features, prefix mask and all18 KV caches exactly.
+Strict prepared-input equality holds; zero edits/native decoding remain exact,
+the real KV gradient is0.00363427, motor gradients are0 and fingerprint721a
+is unchanged at qualification. The16 native episodes were reused, not rerun.
+
+The first four new steering episodes (three noise, one KV) all time out at400
+actions. This is an incomplete search: no ranking, reachability conclusion,
+teacher admission or learned-performance claim is available yet. Its1600 new
+actions bring the canonical count to6955, with no pending/uncertain charge at
+that snapshot. The old632 settled GPU-seconds and the new6480 reservation
+share the original phase/A1 limits. See [repair evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-INITIAL-RESULT.md).
+
+## Initial interface qualification and stopped R1
+
 
 Baige `job-hm6fgvu3p4a6`, exact source `8248b1ce`, uses the frozen Motus
 pi0.5 motor through pinned RLinf/RoboTwin. This is runtime qualification,

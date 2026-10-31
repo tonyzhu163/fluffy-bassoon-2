@@ -1,0 +1,70 @@
+{
+  "status": "source_prepared_not_allocated_CPU_or_GPU_qualified",
+  "base_main": "d612e1082cc304df0211452eba8f77055a07072a",
+  "predecessor": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+  "diagnosis": "Identical actual seed, main/wrist RGB and proprioception; different constructor-metadata-derived official instruction changes public VLM features. Individual internal descriptor/RNG contributions were not replayed.",
+  "historical_instruction_constant": true,
+  "historical_complete_native_episodes": 16,
+  "historical_native_chunks": 175,
+  "retained_actions": 5355,
+  "retained_gpu_seconds": 632,
+  "failed_search_actions": 0,
+  "api": {
+    "spec": [
+      "expected_reset",
+      "paired_instruction"
+    ],
+    "helper": "paired_reset_fields(record)",
+    "reset": "reset(task, seed, *, motor_seed, paired_instruction=None)",
+    "lifetime": "entire episode before every encode and raw corpus frame",
+    "audit": "reset_info.instruction_binding and native_result.info.paired_instruction"
+  },
+  "checks": [
+    "strict actual seed/raw observation/public feature hashes retained",
+    "same-input exact repeat prefix/mask/cache/features before first new command",
+    "existing motor fingerprint/native and zero decoded parity and isolated KV gradient gate",
+    "exact closed native record/manifest and zero-command failed case migration",
+    "canonical old journal tip and costs with fresh successor registration only"
+  ],
+  "static_only": [
+    "Python AST",
+    "Git diff --check"
+  ],
+  "allocated_tests_run_here": 0,
+  "new_resources_requested_here": 0,
+  "evidence": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-INSTRUCTION-SOURCE.json",
+      "sha256": "b59cd9657d4b466002faa02c3d764700c4fb13a265def07d0087fe79adfc488c",
+      "bytes": 22511
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-INSTRUCTION-SOURCE.md",
+      "sha256": "3f047e8c18e873a5620930711e6dd0e794c6177d094a46b051369d7e3129f94b",
+      "bytes": 1853
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-FAILED-RESET-METADATA.json",
+      "sha256": "fef38828a3e3022a4da859b82bdc6444b2bad3019e94cf22b3ff286e2867c66a",
+      "bytes": 4573
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-FAILED-RESET-ARRAYS.json",
+      "sha256": "5cadc7e7fde56ba12bb07d5fbf79b1cbb9fc7b27f917c75211a387760558f1df",
+      "bytes": 2105
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-NATIVE-LANGUAGE-CONSTANCY.json",
+      "sha256": "6a567e789c99ecee041e38993a113db5a574ec629c4b6823c83fdca0818101b3",
+      "bytes": 133805
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/A1-TERMINAL-RECEIPT.json",
+      "sha256": "478d18f4081d1d4218898bb3132003cb29d53cb92136e2b65a8759a815c00580",
+      "bytes": 11758
+    }
+  ],
+  "latest_reviewed_main": "7c862ae203d5dd496b04aa5013ab4689a0d4043e",
+  "latest_main_compatibility": "No src/tests/driver-contract changes from starting d612 through reviewed7c862; metadata advances only in these areas.",
+  "c136_static_review": "Two narrow blockers corrected before allocated qualification: optional no-writer step audit and predecessor canonical journal root/tip/count anchors."
+}

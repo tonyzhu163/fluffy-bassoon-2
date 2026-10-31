@@ -1,0 +1,49 @@
+{
+  "format": "frozen_pi05_actual_migration_cpu_dryrun_v1",
+  "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+  "proof_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/a1-r2/A1-R2-MIGRATION.json",
+  "proof_sha256": "04c7c7c078b2e344ba9ac0aa574c592dd32192030e246752e49c4f3243c84097",
+  "passed": true,
+  "result": {
+    "id": "search-place_phone_stand-01-noise-0",
+    "task": "place_phone_stand",
+    "case": 1,
+    "reset_seed": 310310997,
+    "motor_seed": 20261032,
+    "arm": "noise",
+    "coefficients": [
+      -0.6524403691291809,
+      -0.3868787884712219,
+      -0.5385453104972839,
+      0.7810001969337463
+    ],
+    "stage": "search",
+    "horizon": 400,
+    "expected_reset": {
+      "actual_seed": 310310997,
+      "observation_sha256": "3376be7ae1dd96bba6ff36536be1f64c8c3f4ff50eea64aa7af8a3a7346dc076",
+      "features_sha256": "4e32ab7e86c3661033d460ba9398570bb0926ccdade79358b15c9bdbec23cea0"
+    },
+    "paired_instruction": [
+      "Carry the thin metallic phone to the flat base phonestand."
+    ]
+  },
+  "prospective_allocation": {
+    "prospective_migration_only": true,
+    "actual_gpu_admission": false,
+    "prior_a1_gpu_seconds": 632,
+    "prior_phase_gpu_seconds": 632,
+    "action_ledger": {
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget"
+    }
+  },
+  "canonical_snapshot_sha256_before": "66c3d709788eef946cbe5cda00c578b10329cd582a9dec5bffa01faa6b07d9c9",
+  "canonical_snapshot_sha256_after": "66c3d709788eef946cbe5cda00c578b10329cd582a9dec5bffa01faa6b07d9c9",
+  "event_count_before": 352,
+  "event_count_after": 352,
+  "canonical_journal_unchanged": true,
+  "campaign_budget_constructed": false,
+  "model_constructed": false,
+  "robot_actions": 0,
+  "gpu_seconds": 0
+}

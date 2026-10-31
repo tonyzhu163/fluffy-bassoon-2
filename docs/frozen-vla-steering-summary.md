@@ -52,8 +52,10 @@ succeeds; the first five development episodes include four timeouts. The
 first screen run subsequently stopped before its first steering action: all16
 native episodes completed (phone1/8, object3/8), but a repeated physical case
 received a different instruction. Images/state match exactly; strict pairing
-is preserved while instruction reuse is repaired. No new learned controller,
-source-data improvement or AD/DPT/memory result follows. Renderer warnings
+is preserved. The explicitly migrated repair now reproduces saved original
+features/prefix caches exactly and has completed four steering trials, all
+timeouts; the full search is ongoing. No new learned controller, source-data
+improvement or AD/DPT/memory result follows. Renderer warnings
 are retained but do not explain the matched-pixel instruction difference. See
 [verified scope and limits](robotwin-coefficient-steering/EVALUATION.md) and
 [new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).

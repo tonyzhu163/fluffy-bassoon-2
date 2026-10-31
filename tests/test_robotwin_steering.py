@@ -97,7 +97,9 @@ def simulate_plan(all_search_fail=False):
         success = not (spec["stage"] == "development" and spec["task"] == TASKS[0] and spec["case"] < 3)
         if spec["stage"] == "search" and all_search_fail: success = False
         records[spec["id"]] = dict(spec=spec, success=success, primitive_steps=400,
-            reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="obs", features_sha256="features"))
+            reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="obs", features_sha256="features"),
+            reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="obs", features_sha256="features",
+                            instruction=[f"actual instruction for {spec['task']} {spec['case']}"]))
     return plan, records
 
 
