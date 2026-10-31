@@ -36,6 +36,25 @@ FEATURE_DIM = 2048 + 14
 RESET_ATTEMPTS = 32
 
 
+def validate_paired_instruction(value):
+    """Canonical scalar-episode language binding; never execute or normalize text."""
+    if (not isinstance(value, (list, tuple)) or len(value) != 1
+            or not isinstance(value[0], str) or not value[0].strip()):
+        raise ValueError("paired_instruction must contain one nonempty actual instruction")
+    return tuple(value)
+
+
+def bind_paired_instruction(raw, instruction):
+    """Bind language before encoding while preserving sampled text and physical arrays."""
+    bound = validate_paired_instruction(instruction)
+    sampled = validate_paired_instruction(raw["task_descriptions"])
+    result = dict(raw, task_descriptions=list(bound))
+    audit = dict(schema="robotwin_paired_instruction_v1", sampled_instruction=list(sampled),
+                 bound_instruction=list(bound), sampled_observation_sha256=_observation_hash(raw),
+                 effective_observation_sha256=_observation_hash(result))
+    return result, audit
+
+
 def load_benchmark_episode_limits(robotwin_root, tasks):
     """Read the pinned benchmark's control-action horizons without a fallback."""
     import yaml
@@ -497,6 +516,7 @@ class _RoboTwinBackend:
         self.prefix_calls = self.motor_queries = 0
         self._prepared = self._prefix_mask = self._kv_cache = None
         self._raw_obs = None
+        self._paired_instruction = self._instruction_binding = None
         self.contract = dict(
             model_path=str(model_path), norm_stats_path=str(norm_stats),
             norm_stats_sha256=_sha256(norm_stats),
@@ -524,6 +544,13 @@ class _RoboTwinBackend:
     def _encode(self, raw):
         from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
 
+        # The same binding applies at reset AND every following observation.
+        # Keep simulator-sampled text in audit, outside public model inputs.
+        instruction = getattr(self, "_paired_instruction", None)
+        if instruction is not None:
+            raw, self._instruction_binding = bind_paired_instruction(raw, instruction)
+        else:
+            self._instruction_binding = None
         torch = self.torch
         views = [raw["main_images"][0], raw["wrist_images"][0, 0], raw["wrist_images"][0, 1]]
         for view in views:
@@ -557,12 +584,15 @@ class _RoboTwinBackend:
         if any(p._version != self._versions[n] for n, p in self.model.named_parameters()):
             raise RuntimeError("Frozen motor parameters were modified")
 
-    def reset(self, task_name, seed):
+    def reset(self, task_name, seed, *, paired_instruction=None):
         # RoboTwin seeds NumPy and Torch globally during setup_demo. Keep that
         # scene randomization independent of the steering learner's streams.
         torch = self.torch
         saved = (random.getstate(), np.random.get_state(), torch.get_rng_state(),
                  torch.cuda.get_rng_state_all())
+        self._paired_instruction = (None if paired_instruction is None
+                                    else validate_paired_instruction(paired_instruction))
+        self._instruction_binding = None
         try:
             random.seed(seed)
             np.random.seed(seed)
@@ -606,12 +636,15 @@ class _RoboTwinBackend:
             raise RuntimeError("Task's actual renderer does not match allocated GPU")
         self._check_frozen()
         features = self._encode(raw)
+        raw = self._raw_obs
         reset_info = dict(task=task_name, requested_seed=int(seed), actual_seed=actual_seed,
                               instruction=list(raw["task_descriptions"]),
                               observation_sha256=_observation_hash(raw),
                               features_sha256=hashlib.sha256(features.tobytes()).hexdigest(),
                               actual_render_pci=actual_pci, reset_policy_actions=0,
                               reset_internal_physics_steps="not separately instrumented")
+        if self._instruction_binding is not None:
+            reset_info["instruction_binding"] = deepcopy(self._instruction_binding)
         if getattr(self, "task_episode_limits", None) is not None:
             reset_info["episode_limit"] = self.episode_limit
         if self.corpus_writer is not None:
@@ -681,6 +714,10 @@ class _RoboTwinBackend:
         torch = self.torch
         writer = self.corpus_writer
         metadata, self._decision_metadata = self._decision_metadata, {}
+        if getattr(self, "_instruction_binding", None) is not None:
+            if "paired_instruction" in metadata:
+                raise ValueError("Instruction audit must come from the executed backend binding")
+            metadata = dict(metadata, paired_instruction=deepcopy(self._instruction_binding))
         if self._last_residual_metadata is not None:
             if "frozen_pi05_residual" in metadata:
                 raise ValueError("Reserved residual metadata must come from the executed backend hook")
@@ -705,6 +742,14 @@ class _RoboTwinBackend:
         # The wrapper pads observations but the final public observation is real.
         raw = obs[-1]
         features = self._encode(raw)
+        # _encode applies the episode language binding before both prefix and
+        # corpus capture. The simulator's original text remains audit-only.
+        if getattr(self, "_paired_instruction", None) is not None:
+            raw = self._raw_obs
+            if writer is not None:
+                native_feedback = dict(native_feedback, native_info=dict(
+                    native_feedback.get("native_info") or {},
+                    paired_instruction=deepcopy(self._instruction_binding)))
         reward = float(torch.as_tensor(rewards).sum())
         if writer is not None:
             writer.complete_native(next_raw=raw, next_features=features,
@@ -832,14 +877,16 @@ class RobotwinNoiseEnv:
         if self.corpus_writer is not None:
             self.backend._decision_metadata = deepcopy(metadata)
 
-    def reset(self, task_name, seed):
+    def reset(self, task_name, seed, *, paired_instruction=None):
         if task_name not in SOURCE_TASKS + HELDOUT_TASKS:
             raise ValueError("Task is outside the explicit VLRLA twelve-task inventory")
         if type(seed) is not int or seed < 0:
             raise ValueError("seed must be a nonnegative integer")
         self.episode_limit = self.episode_limit_for_task(task_name)
         self.backend.episode_limit = self.episode_limit
-        features, info = self.backend.reset(task_name, seed)
+        options = ({} if paired_instruction is None else
+                   dict(paired_instruction=validate_paired_instruction(paired_instruction)))
+        features, info = self.backend.reset(task_name, seed, **options)
         self.elapsed_steps = 0
         self.active = True
         self.last_reset_info = info

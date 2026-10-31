@@ -216,12 +216,13 @@ class CoefficientSteering:
         self.env.backend.kv_adapter = self.kv if arm == "kv" else None
         self.env.backend.action_residual = self.action if arm == "action" else None
 
-    def reset(self, task, seed, *, motor_seed):
+    def reset(self, task, seed, *, motor_seed, paired_instruction=None):
         if task not in TASKS:
             raise ValueError("Only the two declared source candidate tasks are admitted")
         self.motor_rng = np.random.default_rng(motor_seed)
         self.previous_agent_command = np.zeros(14, np.float32)
-        features = self.env.reset(task, seed)
+        options = {} if paired_instruction is None else dict(paired_instruction=paired_instruction)
+        features = self.env.reset(task, seed, **options)
         cache = self.env.backend._kv_cache
         if len(cache) != self.interface["kv_layers"] or any(
             any(t.shape[-2:] != (self.interface["kv_heads"], self.interface["head_dim"]) for t in pair)
