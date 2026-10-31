@@ -49,14 +49,15 @@ saved observations with a competent final same-motor teacher. The present
 target57 records remain excluded from source pretraining.
 [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
 New targeted Motus/RoboTwin evidence (2026-10-31): the fixed4D screen has no
-qualifying rescue; the next supervised attempt fails before fitting at the
-third teacher replay. CPU inspection verifies all608 issued requests exactly.
-A native-H32 event-aligned successor is now running under the original budget.
-At23:17:54 live frozen/zero/native/KV-gradient checks pass; fixed02control
-fails400 while aligned02/00/01/03 succeed193each. All12 source cases must pass
-before canonical plan-imitation fits; no learned capacity/RL-corpus/Transformer
-result exists yet. Scheduling and planner histories differ, so this is not
-causal rescue or an in-context adaptation result. All demonstrations remain.
+qualifying rescue. A supervised attempt fails teacher02 replay before fitting;
+CPU inspection verifies all608 issued requests. Its event-aligned native-H32
+successor improves the observed02 replay but fails the fixed all12 gate at04:
+fixed02control400fail, aligned02/00/01/03success193each, aligned04natural400fail.
+05..11 remain unrun and all demonstrations retained. No cache, fit, learned
+capacity or Transformer result exists. Early frozen/zero/native/KV-gradient
+checks pass; no separate final full motor hash on failure. Total new cost298
+GPU-seconds/1572actions. Scheduling/planner histories differ, preventing a
+causal rescue claim; saved physical logs will guide diagnosis before any retry.
 [Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
