@@ -1,0 +1,72 @@
+{
+  "status": "wrapper_prepared_static_only_no_actual_job",
+  "base_main": "df258b246226bd7f4abd6c499687be1ef2d96e47",
+  "entrypoint": "scripts/diagnostics/robotwin_partial11_cache.py",
+  "profile": "PROFILE.json",
+  "profile_sha256": "4f2351d0218ff145423afebe6bb3bc662891acd9da41324f3a07fb01b720d46f",
+  "inputs": "outputs/robotwin-fixed-teacher-bank-20261101-r1/INPUTS.json",
+  "inputs_sha256": "2670a58da8e3228537e36bc6f2ff38ee29ad64dbc61065439378e7da5d32f480",
+  "carried_bank": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py",
+      "sha256": "ddde178ef9a11e8eab1e886d4094daeb762aaa620cd749439ee61688309d8b4a",
+      "bytes": 33813,
+      "identical_to_061874": true
+    },
+    {
+      "path": "tests/test_robotwin_teacher_bank.py",
+      "sha256": "57b02efef2ac0ee0b60b2352a4e747deaa29d18b9d13bdbcb03b2e7502c251f0",
+      "bytes": 26025,
+      "identical_to_061874": true
+    }
+  ],
+  "focused_CPU_command": "python -m pytest -q tests/test_robotwin_partial11_cache.py --junitxml=<fresh-owned-receipt>/partial11-wrapper.junit.xml",
+  "prepared_new_cases": 23,
+  "tests_executed_here": 0,
+  "proposed_resource": {
+    "maximum_aggregate_gpu_seconds": 1200,
+    "maximum_new_output_bytes": 12884901888,
+    "maximum_robot_actions": 0,
+    "gpus": 1,
+    "cpus": 8,
+    "ram_gib": 64,
+    "shm_gib": 2
+  },
+  "required_actual_ticket_fields": [
+    "mode",
+    "source_commit",
+    "run_id",
+    "hostname",
+    "gpu_count",
+    "output",
+    "cache_root",
+    "phase_output_root",
+    "clock_root",
+    "resource_attempt",
+    "pair_resource_attempt",
+    "scope_sha256",
+    "profile_sha256",
+    "prior_cache_gpu_seconds",
+    "maximum_robot_actions",
+    "reserved_gpu_seconds",
+    "scheduler_start_unix",
+    "driver_deadline_unix"
+  ],
+  "actual_ticket": null,
+  "actual_host_probe": null,
+  "actual_clock_attempt": null,
+  "actual_dispatch": null,
+  "actual_ticket_rules": {
+    "mode": "robotwin_partial11_model_cache_v1",
+    "gpu_count": 1,
+    "maximum_robot_actions": 0,
+    "prior_cache_gpu_seconds": "0 first attempt; exact finished preceding cost plus earlier costs on continuation",
+    "reserved_gpu_seconds": "660..min(1200-actual-prior-cache-cost,actual-residual-phase-cap)",
+    "scheduler_start_unix": "same original begin row; includes startup, never reset after model load",
+    "driver_deadline_unix": "<=original start+reservation-180s",
+    "pair_resource_attempt": "separate existing registered04 pair hold, keep at least600 or actual larger reservation"
+  },
+  "scope": "PARTIAL11/77 exact captured rows only; full12 seal/normalizer/fit gates unchanged",
+  "resumption": "Fresh output/run; exact original clock closeout/cost; exact progress+4domain RNG; completed cases reused, interrupted case files retained; no new1200 reset",
+  "parent_owns_all_resource_processes": true
+}
