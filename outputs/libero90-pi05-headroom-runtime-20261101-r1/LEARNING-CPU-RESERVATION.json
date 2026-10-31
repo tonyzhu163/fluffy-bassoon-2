@@ -1,0 +1,22 @@
+{
+  "source_commit": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "maximum_cpu_worker_seconds": 180,
+  "prior_phase_cpu_charge": 90,
+  "maximum_phase_cpu_worker_seconds": 600,
+  "remaining_unassigned_after_hold": 330,
+  "gpus": 0,
+  "cpus": 2,
+  "memory_gib": 16,
+  "maximum_scheduler_minutes": 2,
+  "absolute_deadline_from_start_seconds": 90,
+  "outer_timeout_seconds": 105,
+  "cleanup_kill_seconds": 5,
+  "scheduler_allowance_seconds": 60,
+  "command_sha256": "1a75316448fd5e32da3f5d90b70fe76231b510c2106caec25525d7dbfbf9fb15",
+  "automatic_retry": false,
+  "tests": [
+    "tests/test_vla_target_online_dsrl_headroom.py::test_explicit_learning_child_retains_original_screen_hashes_and_clock",
+    "tests/test_vla_target_online_dsrl_headroom_learning.py"
+  ],
+  "screen_suite_not_repeated": true
+}

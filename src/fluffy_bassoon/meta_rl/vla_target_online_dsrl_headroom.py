@@ -223,7 +223,47 @@ def run_screen(motor, server_factory, *, root, contract, deadline, resume=False)
             server.close()
 
 
-def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resume=False, stage='screen'):
+def admit_learning_code(root, original, proposed, source, screen_source):
+    """Explicit screen-to-trainer child pin; never rewrite the producer plan.
+
+    This one migration is allowed before SGD. Later learning slices must use
+    the admitted trainer pin. The original worker contract/cost ledger stays.
+    """
+    root = Path(root)
+    if original == proposed:
+        return
+    if ({k: v for k, v in original.items() if k != 'source_commit'} !=
+            {k: v for k, v in proposed.items() if k != 'source_commit'}
+            or screen_source != original['source_commit']):
+        raise ValueError('Explicit screen child may change code pin only, never frozen science or costs')
+    admission_path = root / 'screen-to-learning-source.json'
+    if admission_path.exists():
+        admission = json.loads(admission_path.read_text())
+        if admission['screen_source'] != screen_source or admission['learning_source'] != source:
+            raise ValueError('Only the already admitted trainer code may resume')
+        return
+    experiment = root / 'experiment'
+    selection_path = experiment / 'frozen-selection.json'
+    plan_path = experiment / 'plan.json'
+    selection = json.loads(selection_path.read_text())
+    if (selection['optimizer_updates'] != 0 or not selection['selected_before_any_sgd']
+            or selection['plan_sha256'] != onset.sha256(plan_path)):
+        raise ValueError('Code child requires original frozen pre-SGD selection')
+    for state in experiment.glob('case-learn-*/state.json'):
+        if json.loads(state.read_text())['model']['updates'] > 0:
+            raise ValueError('Cannot admit a different implementation after target SGD')
+    ledger = json.loads((root / 'worker-time.json').read_text())
+    onset.write_json(admission_path, dict(format='pi05_headroom_screen_child_v1',
+        screen_source=screen_source, learning_source=source,
+        original_screen_plan_sha256=onset.sha256(plan_path), frozen_selection_sha256=onset.sha256(selection_path),
+        inherited_actual_actions=onset.joint_charge(experiment),
+        inherited_gpu_seconds=sum(row.get('charged_seconds', row['reserved_seconds']) for row in ledger['attempts']),
+        original_worker_contract_sha256=content_hash(original), source_changed_before_sgd=True,
+        original_worker_contract_preserved=True, raw_data_copied_or_recounted=False))
+
+
+def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resume=False,
+                    stage='screen', screen_source=None):
     if not re.fullmatch('[A-Za-z0-9-]+', run) or type(slice_seconds) is not int or not 600 <= slice_seconds <= MAX_JOB_SECONDS - 60:
         raise ValueError('Require immutable run and a job slice strictly below8h')
     contract = dict(plan(source), run_id=run)
@@ -231,8 +271,13 @@ def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resu
     ledger = root / 'worker-time.json'
     if ledger.exists():
         data = json.loads(ledger.read_text())
-        if not resume or data['contract'] != contract or data['worker_seconds'] != MAX_SECONDS:
+        if not resume or data['worker_seconds'] != MAX_SECONDS:
             raise ValueError('Only the original whole-phase source/cost clock may resume')
+        if data['contract'] != contract:
+            if stage != 'learn':
+                raise ValueError('Screen source is immutable')
+            admit_learning_code(root, data['contract'], contract, source, screen_source)
+            contract = data['contract']
         prior = sum(row.get('charged_seconds', row['reserved_seconds']) for row in data['attempts'])
     else:
         if resume:
@@ -268,6 +313,7 @@ def main(argv=None):
     clock.add_argument('--slice-seconds', type=int, required=True)
     clock.add_argument('--started-unix', type=float, required=True)
     clock.add_argument('--stage', choices=('screen', 'learn'), required=True)
+    clock.add_argument('--screen-source')
     clock.add_argument('--resume', action='store_true')
     close = sub.add_parser('finish')
     close.add_argument('--root', type=Path, required=True); close.add_argument('--attempt', type=Path, required=True)
@@ -279,13 +325,14 @@ def main(argv=None):
     for name in ('source-commit', 'expected-hostname', 'simulator-pythonpath'):
         run.add_argument('--' + name, required=True)
     run.add_argument('--selection-sha256')
+    run.add_argument('--screen-source')
     run.add_argument('--stop-unix', type=float, required=True)
     run.add_argument('--port', type=int, default=8797)
     run.add_argument('--resume', action='store_true')
     args = ap.parse_args(argv)
     if args.operation == 'begin':
         value = prepare_attempt(args.root, args.source, args.run, slice_seconds=args.slice_seconds,
-            started_unix=args.started_unix, resume=args.resume, stage=args.stage)
+            started_unix=args.started_unix, resume=args.resume, stage=args.stage, screen_source=args.screen_source)
         print(f'{value["attempt"]}\t{value["stop_unix"]}\t{value["slice_seconds"]}')
         return
     if args.operation == 'finish':

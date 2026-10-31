@@ -3,6 +3,42 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Weak-native selection running; online continuation qualified
+
+Baige `job-sdxpm3y64pd9` runs the predeclared12-task native screen on the same
+official frozen OpenPI40 pi0.5. At00:50 Shanghai, its first real episode is
+verified: task0/state0 times out400 primitives plus10 settling,410 all-in,
+zero optimizer steps and no SAC actor. Actual allocation/CUDA/own-PID and the
+whole C565 motor-before signature pass. This is execution evidence, not a
+native task success rate or a learning result. The full240-episode screen and
+separate weak-query confirmations remain pending at this observation.
+[Launch and actual episode](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-GPU-LAUNCH.json).
+
+The prospective rule requires2–8 native successes of20 in both screening and
+query confirmation, with fixed candidates/ranking and at most3 confirmations.
+Selected task/query bank freezes before any SGD. A fresh initial-native panel
+must again satisfy that weak band in the learning process; otherwise stop
+without task substitution. This addresses the ceiling of the finished task57
+experiment. All selections, rejected candidates and target development exposure
+remain disclosed; no target records enter source40/meta-pretraining.
+
+Screen source7a69 passed4/4 focused Linux CPU checks; learning successorb665
+passed exactly3 new continuation/migration checks, not a fresh seven-test suite
+at one pin. Actual zero-GPU2CPU/16GiB attestations and inclusive90+74=164
+CPU-worker-seconds are retained,436 of the fresh600 remain. The prepared child
+keeps the original screen output/clock/action lineage and a separate pinned
+code worktree. After selection/readmission it uses fresh ordinary SAC and the
+fixed500k endpoint,20k-update panels and native/tied/initialized-SAC controls;
+no favorable checkpoint choice. Tests are software evidence, not robot gains.
+[Saved proof review](../../outputs/libero90-pi05-headroom-online-20261101-r1/RUNTIME-PARENT-REVIEW.json).
+
+The first screen slice reserves7200 inclusive GPU-seconds against the declared
+57600-second whole lineage and10800-second screen sublimit. Every allocation
+is strictly under8hours. All startup/failures/retries/controls/queries share
+the1M-action/64GiB ceilings. These are separate from task57 and RoboTwin;
+whole frozen-motor identity, real episodes, conservative physical intents and
+full RNG/replay/optimizer recovery remain required on continuation.
+
 ## Task57 fixed500k DSRL curve complete
 
 Baige `job-iudscqfntb4e` succeeded, exit0, at500,220 actual SAC updates under

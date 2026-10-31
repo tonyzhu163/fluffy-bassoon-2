@@ -90,3 +90,32 @@ def test_native_screen_resumes_exact_cursor_and_rejects_ceiling_confirmation(mon
     assert frozen['selected_before_any_sgd'] and frozen['optimizer_updates'] == 0
     assert len(frozen['query_bank']) == 20 and frozen['source_assembly_admission'] is False
     assert result['all_in_actions'] == 3930  #280×(4actual+10settle)+one unresolved10.
+
+
+def test_explicit_learning_child_retains_original_screen_hashes_and_clock(tmp_path):
+    source, child, run = 'a' * 40, 'b' * 40, 'headroom-child-fixture'
+    first = phase.prepare_attempt(tmp_path, source, run, stage='screen',
+        slice_seconds=7140, started_unix=1000.)
+    phase.finish(tmp_path, first['attempt'], 0, now=1100.)
+    experiment = tmp_path / 'experiment'
+    experiment.mkdir()
+    producer_plan = phase.plan(source)
+    phase.onset.write_json(experiment / 'plan.json', producer_plan)
+    phase.onset.write_json(experiment / 'frozen-selection.json', dict(optimizer_updates=0,
+        selected_before_any_sgd=True, plan_sha256=phase.onset.sha256(experiment / 'plan.json')))
+    with pytest.raises(ValueError, match='Explicit screen child'):
+        phase.prepare_attempt(tmp_path, child, run, stage='learn', slice_seconds=7140,
+            started_unix=2000., resume=True)
+    second = phase.prepare_attempt(tmp_path, child, run, stage='learn', slice_seconds=7140,
+        started_unix=2000., resume=True, screen_source=source)
+    ledger = json.loads((tmp_path / 'worker-time.json').read_text())
+    admission = json.loads((tmp_path / 'screen-to-learning-source.json').read_text())
+    assert ledger['contract']['source_commit'] == source
+    assert ledger['attempts'][0]['charged_seconds'] == 160
+    assert admission['learning_source'] == child and admission['screen_source'] == source
+    assert admission['inherited_gpu_seconds'] == 160
+    assert admission['original_screen_plan_sha256'] == phase.onset.sha256(experiment / 'plan.json')
+    phase.finish(tmp_path, second['attempt'], 0, now=2100.)
+    with pytest.raises(ValueError, match='already admitted trainer'):
+        phase.prepare_attempt(tmp_path, 'c' * 40, run, stage='learn', slice_seconds=7140,
+            started_unix=3000., resume=True, screen_source=source)

@@ -35,26 +35,31 @@ head's attainable loss. The expert replay bypasses this unused head, so the
 bound does not explain04's replay failure.
 [Support report](../../outputs/frozen-pi05-endtoend-20261031-r1/ACTION-SUPPORT-CPU-RESULT.md).
 
-Independent suffix job `job-4352gzlcnq9f` executes the original unrun05–11 once
-under the unchanged event protocol, retaining failures and admitting no fits.
-At00:24 Shanghai,05–08 are four verified successes of193 actions each;09–11 are
-not yet verified. The772-action closed prefix is not a complete in-flight cost
-snapshot. Expected coverage target is7/7, not teacher-bank admission:04 remains
-a known failure even if the suffix succeeds. Qualification on05 passes actual
-GPU/own-PID, exact native/zero parity, nonzero KV gradient0.0152458 and zero
-motor gradients;721a before/after signatures match. The next discriminating
-physical proposal uses equal-length prelift holds to separate added time from
-extra gripper closure, with a prospective protocol and no inherited fit gate.
+Independent suffix job `job-4352gzlcnq9f` is now terminalSucceeded/exit0:
+all original05–11 succeed once,193 actions each,1351 new actions. The expected
+7/7 diagnostic coverage target is met. Across the fixed identities,04 remains
+the sole failure; this does not pass the all12 fitting gate or silently assemble
+a mixed-run expert bank. No cache or fit ran. Frozen721a final signature
+matches, full270181B recovery hashes to5c0829d3, and producer canonical totals
+are21522 actual/charged with zero pending/uncertain. The owner checked all49 new
+chunk metadata and7 manifests and independently summed1351 actions; no full
+historical journal replay or checkpoint deserialize is claimed.
+[Terminal receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-SUFFIX-TERMINAL-RECEIPT.json).
 
-The closed event child used298 GPU-seconds/1572 actions, bringing settled
-GPU/action totals to2334/20171. The suffix holds1800 additional GPU-seconds and
-at most2800 actions inside the same declared caps. CPU spend is1203/1800,597
-remaining after physical/suffix/support qualification. These branches add no
-RL histories, source teacher, AD/DPT labels or memory result. The original
-grant/header, failed cases and complete recoveries remain intact. Parent review
-matches17 physical-report files and10 support-report files to saved remote
-hashes and verifies their JUnit metadata; no arrays, models or tests ran on the
-development host. [Review](../../outputs/frozen-pi05-endtoend-20261031-r1/PARALLEL-BRANCHES-PARENT-REVIEW.json).
+The suffix costs318 inclusive GPU-seconds, releasing1482 of its1800 reservation.
+All targeted GPU attempts are closed at2652GPU-seconds/21522 actions; CPU spend
+is1203/1800,597 remaining before the separately authorized wide-head CPU test.
+The original grant/header, failed cases and complete recoveries remain intact.
+The next prospective physical test uses two equal-length prelift holds to
+separate added time from extra gripper closure on04, with latest-B RNG ancestry
+and no automatic teacher-bank or fitting admission. A separately declared
+partial cache can prepare known records but cannot rewrite the ended all12-
+before-cache contract or admit training without a qualified complete bank.
+
+Parent review matches17 physical-report files and10 support-report files to
+saved remote hashes and verifies JUnit metadata. The LIBERO baseline uses a
+separate motor, action ledger and CPU/GPU phase; none of these phone checks
+block it. [Review](../../outputs/frozen-pi05-endtoend-20261031-r1/PARALLEL-BRANCHES-PARENT-REVIEW.json).
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 

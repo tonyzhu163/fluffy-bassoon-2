@@ -54,15 +54,15 @@ lost before gripper opening, consistent with grasp/early-transport failure but
 without contact-level causal identification. A separate captured-plan audit
 finds a nonzero imitation floor for the unused ±0.05rad/zero-gripper head;
 expert replay bypasses that head, so this is a distinct support limitation.
-The original05–11 suffix is a diagnostic continuation, not a filtered fitting
-bank. No learned capacity or Transformer result exists.
+The original05–11 suffix succeeds7/7 as a diagnostic continuation; the fixed
+bank remains11/12 because04 fails, not a filtered fitting bank. No learned capacity or Transformer result exists.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
 A new development protocol keeps the same official frozen pi0.5 and selects
 weak native success prospectively from12 fixed LIBERO90 tasks. Screening and
 separate query confirmation both require2–8/20, then freeze the selected task
 before fresh ordinary DSRL. Untrained controls and the full500k-update endpoint
-are predeclared. No new screen or training outcome is yet available; this
+are predeclared. No completed screen or training result is yet available; this
 addresses the ceiling of the finished task57 test, not a demonstrated gain.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
