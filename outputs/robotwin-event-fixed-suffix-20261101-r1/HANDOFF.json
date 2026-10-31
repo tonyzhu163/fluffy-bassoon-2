@@ -1,0 +1,81 @@
+{
+  "status": "STATIC_ONLY_CPU_QUALIFICATION_AND_ACTUAL_RESOURCE_ADMISSION_PENDING",
+  "base_main_reviewed": "940aef2e22b6e4c8829a2ef199ba5738e6d6148e",
+  "original_executor_pin": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+  "manifest": {
+    "path": "outputs/robotwin-event-fixed-suffix-20261101-r1/MANIFEST.json",
+    "sha256": "d19afcd37f1bcd23a594cfb67287b1b59ed5db04cfabdded85177177a15e9886",
+    "bytes": 5407
+  },
+  "static_bytes": {
+    "path": "outputs/robotwin-event-fixed-suffix-20261101-r1/STATIC-BYTES.json",
+    "sha256": "8cf3fa523a7c0f49694217b89dfe1d212a1054cbd150e68b5d03c5e66309b7c6",
+    "bytes": 3465
+  },
+  "entrypoint": "scripts/diagnostics/robotwin_event_suffix.py",
+  "qualification": {
+    "command": "python -m pytest -q tests/test_robotwin_event_suffix.py --junitxml=<fresh-owned-receipt>/suffix.junit.xml",
+    "prepared_cases": 29,
+    "executed_here": 0,
+    "owner": "parent/finish_assembly",
+    "clock": "one necessary allocated gate from actual remaining shared CPU1800 envelope, owner binds/settles; no new allowance"
+  },
+  "predecessor": {
+    "result": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+      "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+    },
+    "recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+      "sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
+      "bytes": 223589
+    },
+    "terminal": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/event-suffix-r1/predecessor-terminal.json",
+      "sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef"
+    },
+    "allocation_closeout": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/allocation-closeout.json",
+      "sha256": "6a2822cc524e2042cab646996d5879834a2723d81b832597cdb9cfb107dd469f"
+    }
+  },
+  "runtime_admission": {
+    "run_id": null,
+    "output": null,
+    "allocation": null,
+    "actual_host": null,
+    "probe": null,
+    "reservation": null
+  },
+  "scope": {
+    "case_ids": [
+      "phone-05",
+      "phone-06",
+      "phone-07",
+      "phone-08",
+      "phone-09",
+      "phone-10",
+      "phone-11"
+    ],
+    "whole_bank_retained": 12,
+    "whole_split": "8TRAIN4VAL",
+    "maximum_native_episodes": 7,
+    "maximum_new_actions": 2800,
+    "maximum_all_in_gpu_seconds": 1800,
+    "prior_phase_gpu_seconds": 2334,
+    "prior_physical_actions": 20171,
+    "canonical_journal_events": 1331,
+    "canonical_tip": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "cpu_diagnosis_independent": true
+  },
+  "qualification_uses_first05_episode": true,
+  "extra_physical_qualification_episodes": 0,
+  "no_cache_fits_source_student_admission": true,
+  "expectation": {
+    "target": "7/7 original suffix teachers executable",
+    "prediction": "uncertain because fixed04 failed",
+    "required_results": "actual per-case outcomes, coverage and retained physical/command audits; target failure separate from statistical surprise; no causal conclusion"
+  },
+  "resource_observations_performed": false,
+  "tests_model_simulator_execution_here": false
+}

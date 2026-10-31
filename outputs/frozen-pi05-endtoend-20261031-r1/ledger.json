@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "event_aligned_teacher04_failed_before_cache_fit; bounded_CPU_physical_diagnosis_pending_pin",
+  "state": "original_suffix_running; saved_physical_and_support_diagnoses_complete; all12_gate_false; independent_LIBERO_headroom_screen_preparing",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -74,6 +74,19 @@
       "teacher_gate_failed": "phone-04",
       "terminal_receipt_path": "EVENT-CAPACITY-TERMINAL-RECEIPT.json",
       "terminal_receipt_sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef"
+    },
+    {
+      "role": "original_unrun_event_suffix_diagnostic",
+      "job_id": "job-4352gzlcnq9f",
+      "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+      "reserved_seconds": 1800,
+      "charged_seconds": null,
+      "settled": false,
+      "status": "Running_at_0024",
+      "maximum_new_actions": 2800,
+      "maximum_complete_episodes": 7,
+      "launch_receipt_path": "EVENT-SUFFIX-GPU-LAUNCH.json",
+      "launch_receipt_sha256": "8c949771476021e05bdee8a5931485f0acc061072e70814f9bcfa7e9bdeaa032"
     }
   ],
   "cpu_attempts": [
@@ -232,15 +245,51 @@
       "receipt_path": "EVENT-AUDIT-CPU-CHECK.json",
       "receipt_sha256": "730e557d05c66f842683db501658526a432e6da49ce26ed2b91e3364d2a31b9a",
       "same_240_envelope": true
+    },
+    {
+      "role": "saved_event_physical_diagnosis",
+      "job_id": "job-nnjau49cnk40",
+      "source_commit": "c824c0c0a00eec05526e5c43562461bfa7000c0e",
+      "reserved_seconds": 180,
+      "charged_seconds": 77,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "EVENT-DIAGNOSIS-CPU-RECEIPT.json",
+      "receipt_sha256": "a761932041a6b5b8c5d396fbec42038a5cf7db910d33ce0c0a3867070b1696ba"
+    },
+    {
+      "role": "original_unrun_suffix_qualification",
+      "job_id": "job-oamc7krpaody",
+      "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+      "reserved_seconds": 180,
+      "charged_seconds": 75,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "EVENT-SUFFIX-CPU-RECEIPT.json",
+      "receipt_sha256": "6ce24a35043a517cfacac6f2e3620590cb034a1136b43c246ab15efa79ebf689"
+    },
+    {
+      "role": "captured_plan_action_support_audit",
+      "job_id": "job-zyg23qydopt3",
+      "source_commit": "a78912decfc1e54ca33ac573d33220c988a3c44a",
+      "reserved_seconds": 180,
+      "charged_seconds": 73,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "ACTION-SUPPORT-CPU-RECEIPT.json",
+      "receipt_sha256": "43889716976bfb6b56987948c458f78e702afd2b1aac857d3e476ddc9cc751c3"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 2334,
-  "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 978,
+  "reserved_gpu_seconds": 1800,
+  "charged_cpu_worker_seconds": 1203,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 20171,
-  "reserved_actions": 0,
+  "reserved_actions": 2800,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -252,7 +301,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps. All current GPU/CPU holds are settled; charged actions20171 include the event child1572. Earlier active-prefix1172 is historical and was not a full in-flight snapshot.",
+  "accounting": "Settled GPU2334/actions20171 remain the last closed canonical snapshot. Active suffix reserves1800GPU-s and at most2800actions once;0024 observation verifies772 closed-prefix actions but is not a complete in-flight charge. CPU1203 settled/597 remaining. New independent LIBERO lineage uses its own grant/clock/actions.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -306,18 +355,18 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 822,
-  "unreserved_gpu_seconds": 26466,
+  "remaining_cpu_worker_seconds": 597,
+  "unreserved_gpu_seconds": 24666,
   "latest_action_snapshot": {
-    "checked_shanghai": "2026-10-31T23:38:00+08:00",
-    "actual": 20171,
-    "charged": 20171,
-    "pending": 0,
-    "uncertain": 0,
-    "terminal": true,
-    "latest_child_actions": 1572,
-    "journal_events": 1331,
-    "journal_sha256": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "checked_shanghai": "2026-11-01T00:24:00+08:00",
+    "terminal": false,
+    "actual": null,
+    "charged": null,
+    "pending": null,
+    "uncertain": null,
+    "last_closed_base_actions": 20171,
+    "verified_closed_prefix_new_actions": 772,
+    "not_full_inflight_snapshot": true,
     "independent_full_journal_replay": false
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
@@ -371,13 +420,13 @@
     "teacher_filtering": false,
     "fit_updates": 0,
     "source_teacher_admitted": false,
-    "next_step": "Prepare evidence-based successor with all fixed demonstrations, exact repeated episodes/cost/recovery before GPU admission",
+    "next_step": "No physical teacher/fit admission from CPU support audit; bounded prospectively controlled04 proposal only after exact code and canonical-writer admission.",
     "reference_requests_exact": true,
     "physical_trajectory_timing_qualified": false,
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 822,
+  "unreserved_cpu_worker_seconds": 597,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,
@@ -393,8 +442,8 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 4866,
-  "unreserved_a1_actions": 9829,
+  "unreserved_a1_gpu_seconds": 3066,
+  "unreserved_a1_actions": 7029,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
     "CPU_qualified": true,
@@ -414,7 +463,7 @@
     "actual_gpu_seconds": 298,
     "full_recovery_sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
     "final_full_motor_hash_emitted": false,
-    "next_step": "Concrete readonly<=180CPU diagnosis of fixed02/aligned02/aligned04; no simulator/model/ledger/checkpoint load or new GPU"
+    "next_step": "No repoll: inspect completed physical/support reports. Original05\u201311 suffix diagnostic running independently; all12 fit gate remains false."
   },
   "latest_action_snapshot_history": [
     {
@@ -434,5 +483,26 @@
     "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
     "new_actions": 1172,
     "not_a_full_inflight_snapshot": true
+  },
+  "last_closed_action_snapshot_before_active_suffix": {
+    "checked_shanghai": "2026-10-31T23:38:00+08:00",
+    "actual": 20171,
+    "charged": 20171,
+    "pending": 0,
+    "uncertain": 0,
+    "terminal": true,
+    "latest_child_actions": 1572,
+    "journal_events": 1331,
+    "journal_sha256": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "independent_full_journal_replay": false
+  },
+  "latest_active_suffix_prefix": {
+    "checked_shanghai": "2026-11-01T00:24:00+08:00",
+    "job_id": "job-4352gzlcnq9f",
+    "episodes_complete": 4,
+    "episodes_total": 7,
+    "verified_closed_prefix_new_actions": 772,
+    "not_full_inflight_snapshot": true,
+    "evidence": "EVENT-SUFFIX-INITIAL-ADVANCEMENT.json"
   }
 }

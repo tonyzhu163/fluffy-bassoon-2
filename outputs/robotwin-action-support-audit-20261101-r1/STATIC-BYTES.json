@@ -1,0 +1,105 @@
+{
+  "status": "AST_only_runtime_unqualified",
+  "reviewed_origin_main": "940aef2e22b6e4c8829a2ef199ba5738e6d6148e",
+  "dependency_base": "Only the five new audit files were copied from steering-redesign into a fresh detached worktree of this reviewed main. Existing qualified Audit/head helpers remain unchanged.",
+  "files": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_action_support_audit.py",
+      "sha256": "5550a421db1ec2296a59afb7d541ef926a01750e436f23734ed417000b3295d6",
+      "bytes": 17948
+    },
+    {
+      "path": "scripts/diagnostics/robotwin_action_support_audit.py",
+      "sha256": "5ef580c63d91d2ff437365edf37ed0db4dc4eefa104eb400abda67544bac5db6",
+      "bytes": 204
+    },
+    {
+      "path": "tests/test_robotwin_action_support_audit.py",
+      "sha256": "d092b213c2a8e3ce887eef5fea41757aab8cc08d2acba3cc1bc137a2d45f5c42",
+      "bytes": 5703
+    },
+    {
+      "path": "outputs/robotwin-action-support-audit-20261101-r1/INPUTS.json",
+      "sha256": "a93fba211f31be0fbcb77972b6d752f43fc96cef34a734055e1e9df1b9de3ec4",
+      "bytes": 3694
+    }
+  ],
+  "unchanged_dependency_source_bytes": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_replay_diagnosis.py",
+      "sha256": "b3c3e2ee8213d52eca5d3a3b97a34bfba418502ad210973a23e12493ba8c4359",
+      "bytes": 26545
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py",
+      "sha256": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+      "bytes": 19779
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_reactive_capacity.py",
+      "sha256": "a501b515947f2e76a1c93fb8025fa6c405d68692248356161afa985d2de9672c",
+      "bytes": 21041
+    },
+    {
+      "path": "src/fluffy_bassoon/rl/pi05_residual.py",
+      "sha256": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+      "bytes": 12064
+    }
+  ],
+  "required_helper_symbols": [
+    "Audit",
+    "json_write",
+    "validate_reset_identity"
+  ],
+  "static_changes": [
+    "Actual joint-limit admission uses the Float32 make_heads buffers.",
+    "Coordinate interval endpoints use Float32 radius cast to captured base dtype and native-dtype rounded addition/subtraction before joint clipping; MSE accumulation uses Float64.",
+    "One endpoint regression covers upper/lower joint admission and upper/lower rounded addition."
+  ],
+  "original_profile_sha256": "a93fba211f31be0fbcb77972b6d752f43fc96cef34a734055e1e9df1b9de3ec4",
+  "Mac_tests_run": 0,
+  "model_forwards": 0,
+  "new_robot_actions": 0,
+  "actual_arm_bound": 0.05,
+  "counterfactual_arm_bound": 2.0,
+  "test_cases_prepared_not_run": 13,
+  "allocated_test_scope": [
+    "tests/test_robotwin_action_support_audit.py"
+  ],
+  "allocation": {
+    "gpu_count": 0,
+    "minimum_cpu_cores": 2,
+    "minimum_memory_bytes": 17179869184,
+    "maximum_cpu_worker_seconds": 180,
+    "maximum_phase_cpu_worker_seconds": 1800,
+    "scope": "Tests, zero-GPU attestation, read-only captured-array inspection and cleanup share the original absolute clock. Runtime owner supplies actual prior phase charges; no new authority or resource claim is created."
+  },
+  "terminal_copy_required_before_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robotwin-action-support-audit-20261101-r1/EVENT-CAPACITY-TERMINAL-RECEIPT.json",
+    "sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef"
+  },
+  "entry": "PYTHONPATH=src \"$CPU_PYTHON\" scripts/diagnostics/robotwin_action_support_audit.py --inputs outputs/robotwin-action-support-audit-20261101-r1/INPUTS.json --inputs-sha256 a93fba211f31be0fbcb77972b6d752f43fc96cef34a734055e1e9df1b9de3ec4 --allocation \"$ALLOCATION\" --allocation-sha256 \"$ALLOCATION_SHA\" --zero-gpu-proof \"$ZERO_GPU_PROOF\" --zero-gpu-proof-sha256 \"$ZERO_GPU_PROOF_SHA\" --source-commit \"$SOURCE\" --output \"$CPU_RUN/inspection\" --deadline-unix \"$ORIGINAL_DEADLINE\"",
+  "allocation_fields": [
+    "source_commit",
+    "hostname",
+    "gpu_count",
+    "deadline_unix",
+    "phase_id",
+    "prior_phase_cpu_charge",
+    "maximum_phase_cpu_worker_seconds",
+    "maximum_cpu_worker_seconds",
+    "started_unix",
+    "inspection_output",
+    "output",
+    "zero_gpu_attestation_sha256"
+  ],
+  "zero_gpu_proof_fields": [
+    "passed",
+    "hostname",
+    "device_count_before_mask",
+    "cuda_initialized_before_mask",
+    "actual_cpu_cores",
+    "actual_memory_bytes"
+  ],
+  "interpretation": "Coordinatewise theoretical support lower bound for four known successful TRAIN00\u201303 submitted plans. Native-executed masks are separate cost diagnostics; raw grippers remain unchanged. No optimizer, fit, teacher eligibility, task impossibility or coupled-network attainability claim."
+}

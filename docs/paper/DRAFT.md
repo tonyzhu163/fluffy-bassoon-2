@@ -48,17 +48,22 @@ AD can predict actual z from same-motor SAC learning histories; DPT can label
 saved observations with a competent final same-motor teacher. The present
 target57 records remain excluded from source pretraining.
 [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
-New targeted Motus/RoboTwin evidence (2026-10-31): the fixed4D screen has no
-qualifying rescue. A supervised attempt fails teacher02 replay before fitting;
-CPU inspection verifies all608 issued requests. Its event-aligned native-H32
-successor improves the observed02 replay but fails the fixed all12 gate at04:
-fixed02control400fail, aligned02/00/01/03success193each, aligned04natural400fail.
-05..11 remain unrun and all demonstrations retained. No cache, fit, learned
-capacity or Transformer result exists. Early frozen/zero/native/KV-gradient
-checks pass; no separate final full motor hash on failure. Total new cost298
-GPU-seconds/1572actions. Scheduling/planner histories differ, preventing a
-causal rescue claim; saved physical logs will guide diagnosis before any retry.
-[Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
+New targeted Motus/RoboTwin evidence: event-aligned teacher04 fails before
+any fit, after four aligned successes. Saved physical logs show phone elevation
+lost before gripper opening, consistent with grasp/early-transport failure but
+without contact-level causal identification. A separate captured-plan audit
+finds a nonzero imitation floor for the unused ±0.05rad/zero-gripper head;
+expert replay bypasses that head, so this is a distinct support limitation.
+The original05–11 suffix is a diagnostic continuation, not a filtered fitting
+bank. No learned capacity or Transformer result exists.
+[Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
+
+A new development protocol keeps the same official frozen pi0.5 and selects
+weak native success prospectively from12 fixed LIBERO90 tasks. Screening and
+separate query confirmation both require2–8/20, then freeze the selected task
+before fresh ordinary DSRL. Untrained controls and the full500k-update endpoint
+are predeclared. No new screen or training outcome is yet available; this
+addresses the ceiling of the finished task57 test, not a demonstrated gain.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
