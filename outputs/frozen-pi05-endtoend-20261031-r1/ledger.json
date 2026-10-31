@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "capacity_stopped_at_teacher02_replay; bounded_CPU_diagnosis_pending; task57_separate_running",
+  "state": "capacity_teacher02_replay_diagnosed_requests_exact; successor_proposal_pending; task57_separate_terminal",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -167,12 +167,28 @@
       "passed_tests": 10,
       "failed_tests": 0,
       "implementation_and_tests_unchanged": true
+    },
+    {
+      "role": "closed_teacher_replay_diagnosis",
+      "job_id": "job-a3luoqs9bwkn",
+      "source_commit": "4bbf6e5ce47b69273b2e71e0f6201b88dec30bcd",
+      "maximum_worker_seconds": 300,
+      "reserved_seconds": 300,
+      "charged_seconds": 81,
+      "released_seconds": 219,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "passed_tests": 13,
+      "failed_tests": 0,
+      "receipt_path": "REPLAY-DIAGNOSIS-CPU-RECEIPT.json",
+      "receipt_sha256": "a308c55453d4894aa72ce38d6e609d506068963b7140a9fc8e72f2707a561e7b"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 2036,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 746,
+  "charged_cpu_worker_seconds": 827,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 18599,
   "reserved_actions": 0,
@@ -241,7 +257,7 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 1054,
+  "remaining_cpu_worker_seconds": 973,
   "unreserved_gpu_seconds": 26764,
   "latest_action_snapshot": {
     "checked_shanghai": "2026-10-31T19:18:58+08:00",
@@ -305,9 +321,13 @@
     "teacher_filtering": false,
     "fit_updates": 0,
     "source_teacher_admitted": false,
-    "next_step": "One bounded allocated CPU comparison of teacher00/01/02 commands, scenes and cadence under existing1054CPU balance"
+    "next_step": "Prepare evidence-based successor with all fixed demonstrations, exact repeated episodes/cost/recovery before GPU admission",
+    "reference_requests_exact": true,
+    "physical_trajectory_timing_qualified": false,
+    "diagnosis_job": "job-a3luoqs9bwkn",
+    "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 1054,
+  "unreserved_cpu_worker_seconds": 973,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,

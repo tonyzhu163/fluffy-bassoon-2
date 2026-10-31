@@ -32,21 +32,19 @@ Current scientific readout,2026-10-31:
   work or simply repeating a larger PPO collection with the same recipe.
 
 Current human priority remains **DSRL first; native PPO afterward**. The
-single-seed task57 PixelSAC curve updates only the noise controller while the
-entire official OpenPI LIBERO40 pi0.5 motor stays frozen. Native query success
-starts at10/10. Learned panels through380120 updates retain10/10, with lower
-observed episode costs, but the390080 panel falls to9/10: paired state48 times
-out at400 actions versus native success at152. Its1518 query primitives exceed
-native1451; the next400160/410020 panels return10/10. This variability prevents
-interpreting the earlier
-shorter episodes as reliable competence preservation. Stochastic controller
-sampling and learned-policy instability remain competing explanations; final
-native stability control is still pending. Rare training timeouts and later
-successes with different actor/RNG do not isolate recovery. Preserve the fixed
-500k endpoint, without selecting a favorable checkpoint. No success, memory,
-transfer or total sample-efficiency gain is established. Target57 data remain
-excluded from source pretraining; current counters are in
-[coordination](../outputs/coordination.md).
+single-seed task57 PixelSAC run is complete at500,220 updates. The entire
+OpenPI LIBERO40 pi0.5 motor's before/after signature matches. Final learned
+and final native queries both score10/10; learned behavior uses1244 primitives
+versus1451 native (14.27% fewer), plus100 settling each. Initial and final
+native totals agree. The fixed52-panel curve retains the390080-update9/10
+regression; all other panels are10/10. These reused ten ceiling cases establish
+no higher success rate, memory, transfer or overall sample efficiency. Noise
+parameterization and learning are not isolated by an untrained tied-noise
+control. Training finishes1890/1892 successes. Total cost is28,686 GPU-seconds,
+332,977 all-in simulator actions and38.91GB. Full recovery bytes and final
+motor identity are verified; terminal restore and an independent full-journal
+replay were not performed. Target57 data remain excluded from source
+pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
 The targeted Motus/RoboTwin fixed4D screen has no eligible rescue. The
 subsequent supervised reactive-capacity run passes actual zero/native parity,
@@ -54,10 +52,15 @@ frozen-motor qualification and a nonzero KV gradient. It stops before either
 fit: published teacher00/01 succeed at104 actions each, but teacher02 fails
 its full400-action replay. Seed and initial drive targets match; object/physical
 state and replay timing remain unestablished. All12 fixed demonstrations stay
-included. A bounded CPU command/scene/cadence diagnosis precedes another GPU
-attempt. Actual cumulative cost is2036 GPU-seconds/18599 actions under the
-original budget. No learned capacity, new RL teacher or meta-learning result
-is established. See [evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
+included. The allocated CPU diagnosis confirms all608 issued teacher requests exactly
+match the source, with seeds/instructions/initial drive targets equal. Physics
+and scene compatibility remain unresolved; arm/gripper timing differs between
+source dense execution and native chunk delivery. Similar transition patterns
+also occur in the two successful replays, so timing is not an established cause.
+All13 tests pass; no fit or new actions occurred. A concrete corrective proposal
+precedes another GPU attempt, retaining all demonstrations. Actual cumulative
+cost stays2036 GPU-seconds/18599 actions; CPU827/1800,973 remain. No learned
+capacity, new RL teacher or meta-learning result is established. See [evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use

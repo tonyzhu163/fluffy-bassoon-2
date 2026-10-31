@@ -1,0 +1,115 @@
+{
+  "format": "root_terminal_and_replay_saved_artifact_review_v1",
+  "owner_commit": "87d4200fd5bf18767862a0c7bf0a039fe7acfe31",
+  "reviewed_shanghai": "2026-10-31T22:33:23+08:00",
+  "copied_exact_git_files": 26,
+  "cpu_artifact_checks": {
+    "zero-gpu-attestation.json": {
+      "sha256": "a70f186a55da7ce7c7a9828b3636dfb610f6fc87d40213c9510015131723042d",
+      "bytes": 1059,
+      "matched": true
+    },
+    "allocation.json": {
+      "sha256": "f3e071d85e660f911d08e20d797fcd4ca1512e16db2ca5652012afb48306e9ca",
+      "bytes": 1069,
+      "matched": true
+    },
+    "cpu-worker-clock.json": {
+      "sha256": "5058e11f3d00e017e8bd480b450f7739d4da1548a1d122fd2d0acf3af0b2a1e1",
+      "bytes": 590,
+      "matched": true
+    },
+    "summary.json": {
+      "sha256": "b9c9306eb29ac47abfaaba0d2e55b7c27e8c3a53008f48d593ffa6e5bf848297",
+      "bytes": 697,
+      "matched": true
+    },
+    "exit-code.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "matched": true
+    },
+    "replay.junit.xml": {
+      "sha256": "3bfd81dcffd38b3d38f13171e5e7c72736188d0172ccf6745432b590259a8efb",
+      "bytes": 2097,
+      "matched": true
+    },
+    "tests.log": {
+      "sha256": "3844790ac50474f0fb53e0d1080647286d51d017198bc11a2575bd6b69c54fda",
+      "bytes": 99,
+      "matched": true
+    },
+    "inspection.log": {
+      "sha256": "65d853416ebf77eb1232995a87c23246f6a588b61b994f0bfd796e08956dfff9",
+      "bytes": 142,
+      "matched": true
+    },
+    "inspection/report.json": {
+      "sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d",
+      "bytes": 180568,
+      "matched": true
+    },
+    "inspection/phone-02-reset.png": {
+      "sha256": "060db2df7f79424ea4ecf1377d57157948eb0b581c2e9dab5eab57297aefae7e",
+      "bytes": 275052,
+      "matched": true
+    },
+    "inspection/phone-02-final.png": {
+      "sha256": "7191973ec0705558b16ba654112f7923635ef2bc54122d6945b28576243e14ae",
+      "bytes": 324217,
+      "matched": true
+    }
+  },
+  "junit": {
+    "total": 13,
+    "failed": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "cpu_receipt_sha256": "a308c55453d4894aa72ce38d6e609d506068963b7140a9fc8e72f2707a561e7b",
+  "task57_terminal_receipt_sha256": "53b3ce2f7ffb9530c20dfd972c5a33ead1058fd17ac1570a2ca59889ca9560ab",
+  "cpu_total": 827,
+  "cpu_remaining": 973,
+  "phase_gpu_actions_unchanged": true,
+  "task57_terminal": true,
+  "task57_full_independent_journal_replay": false,
+  "new_models_tests_or_runtime_queries_by_root": 0,
+  "visual_review": {
+    "panels": [
+      "phone-02-reset.png",
+      "phone-02-final.png"
+    ],
+    "initial_head_view": "Visually closely matched phone/stand arrangement; not full scene proof",
+    "initial_wrist_views": "Differ visibly; camera/physical-pose cause unresolved",
+    "final": "Different phone/gripper-relative geometry; source frame128 and actual command400 are not synchronized physics"
+  },
+  "scope_limit": "Root verified saved metadata, exact artifact bytes and two generated PNGs only; all numerical inspection/tests ran in the allocated CPU job; no retry/filter/fit/source admission.",
+  "qualified_source_commit": "4bbf6e5ce47b69273b2e71e0f6201b88dec30bcd",
+  "qualified_code_blobs": {
+    "outputs/robotwin-replay-diagnosis-20261031-r1/PLAN.md": {
+      "git_blob": "53cbd4aa2e8bee36091e612eb699ca714c4cbbf0",
+      "sha256": "2401b61bb94199cc62ddf2c916e70d89c7b2545cc0a3b809a81f0ac5ac905856",
+      "bytes": 7998
+    },
+    "outputs/robotwin-replay-diagnosis-20261031-r1/SOURCE.json": {
+      "git_blob": "370275e627c9392a7b10ae2e86fd3dcf8639baa8",
+      "sha256": "b20b5be52f1ac40506f3aa97f13c45b71a5a53faf5837150df7d0e89c509e8c5",
+      "bytes": 4764
+    },
+    "scripts/diagnostics/robotwin_replay_diagnosis.py": {
+      "git_blob": "676e92d0179f81f64a40b87a315cab887001dec9",
+      "sha256": "8ddad841fa0feab5074487afacecc2d22fab1865be1ba589d877b4ba5f888687",
+      "bytes": 199
+    },
+    "src/fluffy_bassoon/meta_rl/robotwin_replay_diagnosis.py": {
+      "git_blob": "acaa4b119e112e8fead5cf3cc6d4839572d044ee",
+      "sha256": "b3c3e2ee8213d52eca5d3a3b97a34bfba418502ad210973a23e12493ba8c4359",
+      "bytes": 26545
+    },
+    "tests/test_robotwin_replay_diagnosis.py": {
+      "git_blob": "b1fb18dc051bc11f36e7c3b9fc20a0837c9adb77",
+      "sha256": "debb6835728aa5af34fab10bf6045d48ec794d5d2fe10263e34d9a88516b6ec7",
+      "bytes": 11056
+    }
+  }
+}
