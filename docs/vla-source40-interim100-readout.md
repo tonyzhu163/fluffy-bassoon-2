@@ -1,3 +1,5 @@
+# Interim100 LIBERO90 readout profile
+
 The additive `interim100-libero90` profile reuses the existing firstwave planner, launcher, candidate loader and common-motor evaluator. The default `legacy500` profile retains its98 cases /626 episodes /250k-action /6-GPU-hour declaration and fixed500 admission. No existing run or worktree is migrated.
 
 The new profile is prepared, **unfunded and unlaunched**. It fixes all90 LIBERO90 tasks at state0 /scene seed123 /H400 +10 settling. Native and AD/DPT full/static run K0 on every task. The nine predeclared IDs0,10,…80 additionally run AD/DPT full and same-weight episode-reset at K1, with one actual support and a separate query. Static weights never replace reset controls; K0 reset reuse retains the existing identity/RNG proof.

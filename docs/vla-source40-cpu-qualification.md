@@ -1,3 +1,5 @@
+# Source40 CPU qualification launcher
+
 The CPU qualification is a separate Baige0-GPU /4-CPU /16-GiB /30-minute allocation. It consumes no GPU budget and grants no resource authority. The coordinator submits the allocation; the launcher submits nothing.
 
 `vla_source40_cpu_qualification.sh SOURCE RUN PLAN PLAN_FILE_SHA LEDGER [--capture-assemble] [--test-file tests/test_extra.py]` requires a fresh output identity and exact clean source. It uses the existing qualified Python3.12/cp312 `lerobot-v044-8fff0fde` runtime plus the pytest overlay, without the cp311/cu128 student overlay. Before applying its own empty CUDA mask, CUDA-capable Torch must report zero devices and an uninitialized CUDA context. The proof retains the original allocation visibility, exact runtime/ABI/module path and actual cgroup CPU/memory limits and affinity. Scheduler requests are distinguished from measured limits.
