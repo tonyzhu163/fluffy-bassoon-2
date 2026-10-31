@@ -1,0 +1,775 @@
+{
+  "schema": "saved_steering_headroom_audit_v1",
+  "generated_utc": "2026-10-31T08:34:55.548494+00:00",
+  "remote_main_reviewed_at_start": "fd4a7c91207210951e5bbfc3ecb80c61fedd9052",
+  "scope": "Saved CSV/JSON/count arithmetic only on macOS; no tests, models, robot/simulator actions, GPU work, scheduler query, monitor or source expansion.",
+  "sources": [
+    {
+      "path": "outputs/libero40-fixed100-target-plan-20261031-r1/case-results.csv",
+      "bytes": 2180,
+      "sha256": "0072f6de5a1351242e8f31b85b805181882d73a72fa69f7d3460954bdd6a49ad",
+      "git_blob_sha1": "84997311ad07947758ebfa991c8fcfbb49a30002",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/libero40-fixed100-target-plan-20261031-r1/case-results.csv"
+    },
+    {
+      "path": "outputs/libero40-train-corpus-statistics-20261030-r1/summary.json",
+      "bytes": 197307,
+      "sha256": "befd494cea8860afd786a07e9273456793c09834712faab7ade97a4fb85a6f81",
+      "git_blob_sha1": "fb4d38f8cd61578480b7434ff505f2b503b78fb9",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/libero40-train-corpus-statistics-20261030-r1/summary.json"
+    },
+    {
+      "path": "outputs/libero40-fixed100-target-plan-20261031-r1/RESULT.md",
+      "bytes": 3666,
+      "sha256": "bdb97fcd1df23bc83b3d2ee4987635c8179cfaccb0fbd949cb1c5cdb08d4d3d9",
+      "git_blob_sha1": "961570f0099328669c74423997b233b5a8055894",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/libero40-fixed100-target-plan-20261031-r1/RESULT.md"
+    },
+    {
+      "path": "outputs/libero40-fixed100-target-plan-20261031-r1/cost-receipt.json",
+      "bytes": 6876,
+      "sha256": "50a6baff8228210ba174dcb23353eaa58a77a72ebad2408dfe8e1160d084935f",
+      "git_blob_sha1": "d93b009a790f0a0c6ca3c311c566cffe1c91d043",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/libero40-fixed100-target-plan-20261031-r1/cost-receipt.json"
+    },
+    {
+      "path": "outputs/libero40-train-corpus-statistics-20261030-r1/README.md",
+      "bytes": 4473,
+      "sha256": "adb9c008fbcea9e9691780159c96375639d21fd13ab6d1cd813fede49776f5f3",
+      "git_blob_sha1": "7d118dcfebce80b321607750d8e5aec0cf2b54e4",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/libero40-train-corpus-statistics-20261030-r1/README.md"
+    },
+    {
+      "path": "docs/frozen-vla-libero/EVALUATION.md",
+      "bytes": 44691,
+      "sha256": "97e46989d1dbf87e7a98ab8e927930869dd9b2f5364d31cce9b91baea278e84b",
+      "git_blob_sha1": "16f5910bf69542c15993dfb9285d703b6239d390",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/docs/frozen-vla-libero/EVALUATION.md"
+    },
+    {
+      "path": "outputs/icrl-headroom-diagnosis-20261031-r1/PLAN.md",
+      "bytes": 12985,
+      "sha256": "c54d4c7a5163a3253d952be7670b17ade720722a0d181ace21ffbeffd8ff585c",
+      "git_blob_sha1": "76628648ee9142ea8171257d1151cc6048773cd3",
+      "url": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/fd4a7c91207210951e5bbfc3ecb80c61fedd9052/outputs/icrl-headroom-diagnosis-20261031-r1/PLAN.md"
+    }
+  ],
+  "panel": {
+    "K0_task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89
+    ],
+    "K1_task_ids": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80
+    ],
+    "K0_successes": {
+      "native/k0": 28,
+      "ad_full/k0": 29,
+      "ad_static/k0": 29,
+      "dpt_full/k0": 28,
+      "dpt_static/k0": 28
+    },
+    "K1_successes": {
+      "native/k0": 6,
+      "ad_full/k1": 6,
+      "ad_episode_reset/k1": 6,
+      "dpt_full/k1": 5,
+      "dpt_episode_reset/k1": 6
+    },
+    "all_five_K0_same_outcome": {
+      "cases": 81,
+      "all_success": 24,
+      "all_failure": 57
+    }
+  },
+  "inference": {
+    "effect": "P(treatment success, comparator failure) - P(treatment failure, comparator success); observed estimate (wins-losses)/whole-panel n.",
+    "interval": "Conservative pointwise >=95% paired risk-difference interval under iid pair sampling: subtract simultaneous bounds of two marginal 97.5% Clopper-Pearson intervals via Bonferroni. Not a Wald interval, equivalence bound, or CI obtained by conditioning on discordant cases.",
+    "interval_formula": "[L_CP(w,n;alpha=.025)-U_CP(l,n;alpha=.025), U_CP(w,n;alpha=.025)-L_CP(l,n;alpha=.025)]",
+    "coverage_argument": "Each marginal misses with probability <=.025. Union bound gives joint coverage >=.95; subtraction covers p_win-p_loss. The two category counts need not be independent; case pairs must satisfy the binomial sampling model.",
+    "exact_test": "Two-sided conditional McNemar: min(1,2*P[Binomial(w+l,.5)<=min(w,l)]); D=0 returns1.",
+    "multiplicity": "Holm p-adjustment separately within four K0/native, six K1, and two K0/full-static audit-defined families. CIs are pointwise, not simultaneous across comparisons.",
+    "assumptions_and_limits": [
+      "These are all90 fixed task/state0/seed123 cases, not random independent training seeds; K1 reuses nine tasks from that bank.",
+      "Intervals are conditional sampling-model sensitivity summaries. Task-family dependence, heterogeneous effects, shared models and cross-process decoding mean they are not guaranteed population or across-training-seed confidence statements.",
+      "Exact McNemar assumes independent case pairs and equal win/loss chance under its null. Its exactness does not cure the panel-design limitations.",
+      "The empirical whole-panel risks/counts are exact descriptions of this saved bank; inferential uncertainty about unseen tasks/states/execution or training seeds is not identified by one observation per cell.",
+      "K1 comparisons with native use native K0 on the same nine cases; K1 learned policies paid actual support, while native has no support. Full/reset is the closer equal-support-cost history control.",
+      "No post-hoc informative-case-only denominator; no power analysis, equivalence test or claim that absent significance bounds all practically relevant effects."
+    ]
+  },
+  "K0_vs_native": [
+    {
+      "treatment": "ad_full/k0",
+      "comparator": "native/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 29,
+      "comparator_successes": 28,
+      "wins": 3,
+      "losses": 2,
+      "ties": 85,
+      "both_success": 26,
+      "both_failure": 59,
+      "risk_difference": 0.011111111111111112,
+      "risk_difference_pp": 1.1111111111111112,
+      "risk_difference_95pct_conservative_ci": [
+        -0.08191845903954742,
+        0.10236647808023025
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -8.191845903954743,
+        10.236647808023026
+      ],
+      "win_probability_97_5pct_CP": [
+        0.005313039140852405,
+        0.10423187005471574
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0018653919744854863,
+        0.08723149818039982
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          33,
+          59,
+          82
+        ],
+        "losses": [
+          77,
+          79
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "ad_static/k0",
+      "comparator": "native/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 29,
+      "comparator_successes": 28,
+      "wins": 4,
+      "losses": 3,
+      "ties": 83,
+      "both_success": 25,
+      "both_failure": 58,
+      "risk_difference": 0.011111111111111112,
+      "risk_difference_pp": 1.1111111111111112,
+      "risk_difference_95pct_conservative_ci": [
+        -0.09433521855428939,
+        0.11502673284721521
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -9.433521855428939,
+        11.50267328472152
+      ],
+      "win_probability_97_5pct_CP": [
+        0.009896651500426346,
+        0.12033977198806761
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.005313039140852405,
+        0.10423187005471574
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          29,
+          33,
+          53,
+          59
+        ],
+        "losses": [
+          64,
+          70,
+          77
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_full/k0",
+      "comparator": "native/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 28,
+      "comparator_successes": 28,
+      "wins": 2,
+      "losses": 2,
+      "ties": 86,
+      "both_success": 26,
+      "both_failure": 60,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.08536610620591434,
+        0.08536610620591434
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -8.536610620591434,
+        8.536610620591434
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0018653919744854863,
+        0.08723149818039982
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0018653919744854863,
+        0.08723149818039982
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          33,
+          59
+        ],
+        "losses": [
+          64,
+          77
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_static/k0",
+      "comparator": "native/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 28,
+      "comparator_successes": 28,
+      "wins": 1,
+      "losses": 1,
+      "ties": 88,
+      "both_success": 27,
+      "both_failure": 61,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.0686765751361611,
+        0.0686765751361611
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -6.86765751361611,
+        6.86765751361611
+      ],
+      "win_probability_97_5pct_CP": [
+        0.00013975448017561343,
+        0.06881632961633671
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.00013975448017561343,
+        0.06881632961633671
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          33
+        ],
+        "losses": [
+          77
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    }
+  ],
+  "K1_full_reset_native": [
+    {
+      "treatment": "ad_full/k1",
+      "comparator": "native/k0",
+      "n_case_pairs": 9,
+      "treatment_successes": 6,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 0,
+      "ties": 9,
+      "both_success": 6,
+      "both_failure": 3,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.3854665078056033,
+        0.3854665078056033
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -38.546650780560334,
+        38.546650780560334
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": []
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "ad_episode_reset/k1",
+      "comparator": "native/k0",
+      "n_case_pairs": 9,
+      "treatment_successes": 6,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 0,
+      "ties": 9,
+      "both_success": 6,
+      "both_failure": 3,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.3854665078056033,
+        0.3854665078056033
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -38.546650780560334,
+        38.546650780560334
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": []
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_full/k1",
+      "comparator": "native/k0",
+      "n_case_pairs": 9,
+      "treatment_successes": 5,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 1,
+      "ties": 8,
+      "both_success": 5,
+      "both_failure": 3,
+      "risk_difference": -0.1111111111111111,
+      "risk_difference_pp": -11.11111111111111,
+      "risk_difference_95pct_conservative_ci": [
+        -0.5298817126166182,
+        0.38406984158553986
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -52.98817126166182,
+        38.40698415855399
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0013966662200634583,
+        0.5298817126166182
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": [
+          60
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_episode_reset/k1",
+      "comparator": "native/k0",
+      "n_case_pairs": 9,
+      "treatment_successes": 6,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 0,
+      "ties": 9,
+      "both_success": 6,
+      "both_failure": 3,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.3854665078056033,
+        0.3854665078056033
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -38.546650780560334,
+        38.546650780560334
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": []
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "ad_full/k1",
+      "comparator": "ad_episode_reset/k1",
+      "n_case_pairs": 9,
+      "treatment_successes": 6,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 0,
+      "ties": 9,
+      "both_success": 6,
+      "both_failure": 3,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.3854665078056033,
+        0.3854665078056033
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -38.546650780560334,
+        38.546650780560334
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": []
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_full/k1",
+      "comparator": "dpt_episode_reset/k1",
+      "n_case_pairs": 9,
+      "treatment_successes": 5,
+      "comparator_successes": 6,
+      "wins": 0,
+      "losses": 1,
+      "ties": 8,
+      "both_success": 5,
+      "both_failure": 3,
+      "risk_difference": -0.1111111111111111,
+      "risk_difference_pp": -11.11111111111111,
+      "risk_difference_95pct_conservative_ci": [
+        -0.5298817126166182,
+        0.38406984158553986
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -52.98817126166182,
+        38.40698415855399
+      ],
+      "win_probability_97_5pct_CP": [
+        0.0,
+        0.3854665078056033
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.0013966662200634583,
+        0.5298817126166182
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [],
+        "losses": [
+          60
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    }
+  ],
+  "K0_full_vs_static_secondary": [
+    {
+      "treatment": "ad_full/k0",
+      "comparator": "ad_static/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 29,
+      "comparator_successes": 29,
+      "wins": 3,
+      "losses": 3,
+      "ties": 84,
+      "both_success": 26,
+      "both_failure": 58,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.09891883091386333,
+        0.09891883091386333
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -9.891883091386333,
+        9.891883091386333
+      ],
+      "win_probability_97_5pct_CP": [
+        0.005313039140852405,
+        0.10423187005471574
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.005313039140852405,
+        0.10423187005471574
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          64,
+          70,
+          82
+        ],
+        "losses": [
+          29,
+          53,
+          79
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    },
+    {
+      "treatment": "dpt_full/k0",
+      "comparator": "dpt_static/k0",
+      "n_case_pairs": 90,
+      "treatment_successes": 28,
+      "comparator_successes": 28,
+      "wins": 1,
+      "losses": 1,
+      "ties": 88,
+      "both_success": 27,
+      "both_failure": 61,
+      "risk_difference": 0.0,
+      "risk_difference_pp": 0.0,
+      "risk_difference_95pct_conservative_ci": [
+        -0.0686765751361611,
+        0.0686765751361611
+      ],
+      "risk_difference_95pct_conservative_ci_pp": [
+        -6.86765751361611,
+        6.86765751361611
+      ],
+      "win_probability_97_5pct_CP": [
+        0.00013975448017561343,
+        0.06881632961633671
+      ],
+      "loss_probability_97_5pct_CP": [
+        0.00013975448017561343,
+        0.06881632961633671
+      ],
+      "exact_two_sided_McNemar_p": 1.0,
+      "discordant_task_ids": {
+        "wins": [
+          59
+        ],
+        "losses": [
+          64
+        ]
+      },
+      "Holm_adjusted_p_within_audit_family": 1.0
+    }
+  ],
+  "source_recovery_reconciliation": {
+    "status": "RESOLVED_FROM_ORIGINAL_SAVED_RECEIPT",
+    "denominator_complete_K4_cases": 527,
+    "any_failure_then_later_success_cases": 60,
+    "any_failure_then_later_success_rate": 0.11385199240986717,
+    "all_four_warmup_recovery_cases": 44,
+    "all_four_learned_recovery_cases": 8,
+    "warmup_learned_transition_recovery_cases": 8,
+    "learned_failure_then_later_learned_success_cases": 10,
+    "learned_pair_rate_over_all_K4_cases": 0.018975332068311195,
+    "learned_pair_transition_case_ids": [
+      "libero_10:08/train/case-00003",
+      "libero_10:09/train/case-00004"
+    ],
+    "learned_pair_case_ids": [
+      "libero_spatial:04/train/case-00010",
+      "libero_spatial:05/train/case-00016",
+      "libero_spatial:09/train/case-00011",
+      "libero_object:03/train/case-00009",
+      "libero_goal:05/train/case-00008",
+      "libero_10:02/train/case-00006",
+      "libero_10:04/train/case-00007",
+      "libero_10:08/train/case-00003",
+      "libero_10:09/train/case-00004",
+      "libero_10:09/train/case-00005"
+    ],
+    "ordered_failure_success_episode_pairs": 132,
+    "first_episode_failure_then_later_success_cases": 27,
+    "all_success_K4_cases": 454,
+    "aggregate": {
+      "episodes": 2108,
+      "complete_k4_cases": 527,
+      "actual_state_ids_summed_across_goals": 527,
+      "nominal_state_vectors_summed_across_goals": 527,
+      "measured_post_settle_states_summed_across_goals": null,
+      "successes": 2014,
+      "failures": 94,
+      "charged_total_actions": 326277,
+      "committed_episode_primitives": 304797,
+      "committed_episode_settling": 21080,
+      "query_chunks": 31351,
+      "final_optimizer_updates_sum": 233580,
+      "episodes_with_measured_post_settle_state_hash": 0
+    },
+    "stages": {
+      "warmup": {
+        "episodes": 1332,
+        "successes": 1256,
+        "failures": 76,
+        "success_missing": 0,
+        "chunks": 20436,
+        "primitive_steps": 198863,
+        "settling_steps": 13320
+      },
+      "learned": {
+        "episodes": 776,
+        "successes": 758,
+        "failures": 18,
+        "success_missing": 0,
+        "chunks": 10915,
+        "primitive_steps": 105934,
+        "settling_steps": 7760
+      },
+      "mixed": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_missing": 0,
+        "chunks": 0,
+        "primitive_steps": 0,
+        "settling_steps": 0
+      },
+      "missing": {
+        "episodes": 0,
+        "successes": 0,
+        "failures": 0,
+        "success_missing": 0,
+        "chunks": 0,
+        "primitive_steps": 0,
+        "settling_steps": 0
+      }
+    },
+    "interpretation": "10 is a subset of60:8 entirely learned cases plus2 transition cases. These are recorded within-K4 recoveries, not evidence of algorithmic improvement, a memory effect, or a causal reward response.44 recovery cases are entirely untrained warmup. SAC weights/exploration can change between episodes; stage rates use different chronological cases and sampling distributions.",
+    "snapshot_limit": "527 cases/2108episodes is the historical source snapshot, not the later2332episode bank. Do not silently change denominators or treat nominal start hashes as measured post-settle physical states (all2108 missing)."
+  },
+  "repeat_uncertainty": {
+    "source": "docs/frozen-vla-libero/EVALUATION.md: separate historical native student/noise-wave comparison",
+    "reported_native_outcome_flips": 4,
+    "historical_pairs": 90,
+    "scope": "Reported matched initial scene/seed/input/noise but differing decoded actions across processes; not repeated fixed100 observations and not a calibrated iid flip probability for this panel.",
+    "current_fixed100_replicates_per_method_case": 1,
+    "claim": "Repeat and training-seed variance remain unresolved. Do not subtract4/90 from effects or equate it with an irreducible noise floor."
+  },
+  "method_references": [
+    "https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/mcnemar.htm",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC9447366/"
+  ],
+  "implementation_note": "The conservative Bonferroni-CP construction is explicitly derived here; the matched-pairs reference is background, not a claim to implement its tighter melded interval."
+}
