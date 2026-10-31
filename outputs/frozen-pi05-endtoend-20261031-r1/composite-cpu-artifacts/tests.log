@@ -1,0 +1,329 @@
+.........................FFF............................................ [ 79%]
+.....F.............                                                      [100%]
+=================================== FAILURES ===================================
+_ test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[None] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a01e998eb90>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ0')
+cross_outcome = None
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+>           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError
+_ test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[boundary_stop] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a01e996b490>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ1')
+cross_outcome = 'boundary_stop'
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+>           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError
+_ test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[passed] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a01f74db850>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ2')
+cross_outcome = 'passed'
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+>           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError
+_ test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_runner_executes_sh0')
+
+    def test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift(tmp_path):
+        torch.set_num_threads(1)
+        p = profile()
+        models = {}
+        for objective in ("ad", "dpt"):
+            for mode in ("full", "static"):
+                torch.manual_seed(7)
+                policy = HistoryNoisePolicy(HistoryConfig(17,4,width=8,layers=1,heads=2,context_length=16))
+                models[objective+"-"+mode] = (policy, dict(contract=dict(mode=mode,
+                    train_metadata=dict(noise_contract=p["interface"]))))
+        plan = dict(format=FORMAT,profile=p,objectives=["ad","dpt"],schedule=matrix_schedule(p,["ad","dpt"]),
+            models={key:{} for key in models},assemblies={"ad":{},"dpt":{}},teachers={c:{} for c in p["conditions"]},
+            source_actual_seeds=[],source_initial_observation_sha256=[])
+        control, guard = TinyCanonicalControl(tmp_path/"corpus"), Guard()
+        sink = BoundedTeacherRecovery(tmp_path/"recovery", guard=guard, control=control)
+        def factory(condition, seed):
+            return FrozenReference(dict(native_dim=3, device="cpu", mode="fixed_coefficients", coefficients=np.zeros(4,np.float32),
+                identity="a"*64,condition=condition,lineage="fixture-reference",updates=0,reference={}),seed=seed)
+        with _budget(tmp_path/"ledger",p,"readout-fixture") as budget:
+>           result = run_readout(plan, control=control, budget=budget, students=models, teacher_factory=factory,
+                stationary_factory=factory,
+                select_condition=lambda _:None, output=tmp_path/"matrix",run_id="readout-fixture",source_commit="f"*40,
+                guard=guard,checkpoint=sink)
+
+tests/test_steering_history_pipeline.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan = {'format': 'frozen_vla_4d_physical_student_readout_v1', 'profile': {'format': 'frozen_vla_4d_history_profile_v1', 'sco...'left', 'policy': 'ad-full', 'k': 4, ...}, ...], 'maximum_complete_episodes': 144, 'maximum_actions': 86400, ...}, ...}
+control = <test_steering_history_pipeline.TinyCanonicalControl object at 0x7a01de4928d0>
+budget = <fluffy_bassoon.rl.robotwin_campaign_budget.CampaignBudget object at 0x7a01de493e50>
+students = {'ad-full': (HistoryNoisePolicy(
+  (core): GatedTransformerXLCore(
+    (input_projection): Linear(in_features=24, out_...n_metadata': {'noise_contract': {'arm': 'kv', 'coefficient_dim': 4, 'native_horizon': 32, 'denoise_steps': 5, ...}}}})}
+teacher_factory = <function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.<locals>.factory at 0x7a01de4f9f80>
+stationary_factory = <function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.<locals>.factory at 0x7a01de4f9f80>
+select_condition = <function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.<locals>.<lambda> at 0x7a01de4fb7e0>
+output = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_runner_executes_sh0/matrix')
+run_id = 'readout-fixture'
+source_commit = 'ffffffffffffffffffffffffffffffffffffffff'
+guard = <test_steering_history_pipeline.Guard object at 0x7a01de490110>
+checkpoint = <fluffy_bassoon.meta_rl.steering_condition_collection.BoundedTeacherRecovery object at 0x7a01de493290>
+episode_runner = <function run_complete_episode at 0x7a01f57f4f40>
+
+    def run_readout(plan, *, control, budget, students, teacher_factory, stationary_factory, select_condition,
+                    output, run_id, source_commit, guard, checkpoint, episode_runner=None):
+        """Execute the bound grid using the SAME actual complete-episode runner.
+    
+        guard.admit_episode() reserves the existing remaining wall/cleanup budget;
+        guard() checks it and shared storage between chunks. checkpoint is the
+        owner's existing (event,payload,immutable=...) full recovery sink. No new
+        ledger is created. Source collection must yield its existing serial ledger.
+        """
+        import numpy as np
+        if episode_runner is None:
+            from .robotwin_steering_screen import run_complete_episode
+            episode_runner = run_complete_episode
+        from .robotwin_steering_screen import paired_reset_fields, PHASE_CAPS
+        validate_plan(plan)
+        profile, schedule = plan["profile"], plan["schedule"]
+        if (budget.header["total_actions"] != 300000 or budget.header["phase_caps"] != PHASE_CAPS
+                or budget.header["campaign_id"] != profile["shared_reservation"]["pilot_id"]
+                or set(budget.header["source_caps"]) != {r["lineage_id"] for r in profile["lineage_slots"]}
+                or run_id != budget.run_id or source_commit != budget.source_commit
+                or budget.header["contract"].get("scope_sha256") != profile["scope_sha256"]
+                or budget.snapshot()["unresolved_decisions"]
+>               or budget.remaining(phase=PHASE) < schedule["maximum_actions"]):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: CampaignBudget.remaining() missing 1 required keyword-only argument: 'method'
+
+src/fluffy_bassoon/meta_rl/steering_history_readout.py:320: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[None]
+FAILED tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[boundary_stop]
+FAILED tests/test_robotwin_steering_source.py::test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[passed]
+FAILED tests/test_steering_history_pipeline.py::test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift
+4 failed, 87 passed in 60.84s (0:01:00)

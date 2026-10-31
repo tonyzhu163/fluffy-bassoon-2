@@ -225,7 +225,7 @@ class HistoryNoisePolicy(nn.Module):
         return torch.stack(losses)[valid].mean()
 
 
-def sample_batch(trials, policy, rng, *, batch_size, max_context=None, mode="full"):
+def sample_batch(trials, policy, rng, *, batch_size, max_context=None, mode="full", max_episodes=None):
     """Sample complete trials or random-length causal prefixes ending at a query.
 
     Random windows train different context lengths. Each window starts from a
@@ -234,15 +234,27 @@ def sample_batch(trials, policy, rng, *, batch_size, max_context=None, mode="ful
     """
     if mode not in MODES or batch_size < 1 or (max_context is not None and max_context < 1):
         raise ValueError("Invalid batch/context/reset mode")
+    if max_episodes is not None and (type(max_episodes) is not int or max_episodes < 1 or max_context is not None):
+        raise ValueError("Complete-episode windows require a positive episode cap and no decision-window cap")
     windows = []
     for index in rng.integers(len(trials), size=batch_size):
         trial = trials[int(index)]
         end, start = len(trial["observations"]), 0
-        if max_context is not None:
+        if max_episodes is not None:
+            boundaries = np.flatnonzero(trial["episode_starts"])
+            end_episode = int(rng.integers(1, len(boundaries) + 1))
+            count = int(rng.integers(1, min(max_episodes, end_episode) + 1))
+            start = int(boundaries[end_episode - count])
+            end = int(boundaries[end_episode]) if end_episode < len(boundaries) else end
+        elif max_context is not None:
             end = int(rng.integers(1, end + 1))
             length = int(rng.integers(1, min(max_context, end) + 1))
             start = end - length
-        windows.append((trial_tokens(trial, mode=mode)[start:end], trial["target_noise"][start:end],
+        tokens = trial_tokens(trial, mode=mode)[start:end].copy()
+        if max_episodes is not None:
+            # Fresh memory cannot consume the final feedback of an unseen prior episode.
+            tokens[0, trial["observations"].shape[1]:-1] = 0
+        windows.append((tokens, trial["target_noise"][start:end],
                         trial["episode_starts"][start:end]))
     longest = max(len(window[0]) for window in windows)
     device = next(policy.parameters()).device

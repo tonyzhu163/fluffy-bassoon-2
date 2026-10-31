@@ -1,0 +1,721 @@
+{
+  "format": "task57_due_light_saved_metadata_v1",
+  "checked_shanghai": "2026-10-31T21:21:02.753219+08:00",
+  "read_completed_unix": 1793452866.1314738,
+  "job_id": "job-iudscqfntb4e",
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+  "index_snapshot_sha256": "106aba1ebc57598cb4bdd66905bda671e14f5d8a985d2d9ae866db164cf6c53b",
+  "phase": "learned_panel",
+  "completed": false,
+  "exit_code": null,
+  "training": {
+    "episodes": 1777,
+    "chunks": 23998,
+    "primitive_steps": 227944,
+    "settling_steps": 17770
+  },
+  "training_successes": 1775,
+  "failed_training": [
+    {
+      "episode": 576,
+      "state": 16,
+      "updates": 152060,
+      "primitives": 400
+    },
+    {
+      "episode": 1404,
+      "state": 4,
+      "updates": 371940,
+      "primitives": 400
+    }
+  ],
+  "optimizer_updates": 470100,
+  "replay_rows": 23998,
+  "latest_metrics": {
+    "actor_loss": 5.186247825622559,
+    "critic_loss": 0.003371112048625946,
+    "entropy": -12.549783706665039,
+    "mean_pi_avg": 0.07166920602321625,
+    "mean_pi_max": 3.0970962047576904,
+    "mean_pi_min": -3.100033760070801,
+    "mean_pi_norm": 5.63189697265625,
+    "next_actions_max": 0.9996908903121948,
+    "next_actions_mean": 0.04336002469062805,
+    "next_actions_min": -0.9990862011909485,
+    "next_actions_sampled": 0.04336002469062805,
+    "next_actions_std": 0.6685836911201477,
+    "next_log_probs": 18.48471450805664,
+    "next_q_pi": -4.387351989746094,
+    "q": -5.250083923339844,
+    "q_pi_in_actor": -5.167738914489746,
+    "std_pi_avg": 0.5330909490585327,
+    "std_pi_max": 1.086287498474121,
+    "std_pi_min": 0.021744893863797188,
+    "std_pi_norm": 3.100179672241211,
+    "target_actor_entropy": -18.48471450805664,
+    "target_q": -5.24871826171875,
+    "temperature": 0.0014748452231287956,
+    "temperature_loss": 0.005088535137474537
+  },
+  "metrics_finite": true,
+  "latest_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/recovery-1.pkl",
+    "expected_sha256": "cfb758761efa9ddf82bce2e45fe8e24ea9af5f9feb5855e351d6c1866a3781d3",
+    "actual_sha256": "cfb758761efa9ddf82bce2e45fe8e24ea9af5f9feb5855e351d6c1866a3781d3",
+    "matched": true,
+    "bytes": 643770885
+  },
+  "rotating_slot_retries": 0,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "threshold_updates": 0,
+      "actual_updates": 0,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1451,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-010000",
+      "threshold_updates": 10000,
+      "actual_updates": 10220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1407,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-020000",
+      "threshold_updates": 20000,
+      "actual_updates": 20240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1378,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-030000",
+      "threshold_updates": 30000,
+      "actual_updates": 30200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1355,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-040000",
+      "threshold_updates": 40000,
+      "actual_updates": 40160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1320,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-050000",
+      "threshold_updates": 50000,
+      "actual_updates": 50080,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1343,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-060000",
+      "threshold_updates": 60000,
+      "actual_updates": 60000,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1304,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-070000",
+      "threshold_updates": 70000,
+      "actual_updates": 70260,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1279,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-080000",
+      "threshold_updates": 80000,
+      "actual_updates": 80100,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1264,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-090000",
+      "threshold_updates": 90000,
+      "actual_updates": 90160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-100000",
+      "threshold_updates": 100000,
+      "actual_updates": 100220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1270,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-110000",
+      "threshold_updates": 110000,
+      "actual_updates": 110200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-120000",
+      "threshold_updates": 120000,
+      "actual_updates": 120220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1239,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-130000",
+      "threshold_updates": 130000,
+      "actual_updates": 130060,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1273,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-140000",
+      "threshold_updates": 140000,
+      "actual_updates": 140020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1257,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-150000",
+      "threshold_updates": 150000,
+      "actual_updates": 150200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1258,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-160000",
+      "threshold_updates": 160000,
+      "actual_updates": 160240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1261,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-170000",
+      "threshold_updates": 170000,
+      "actual_updates": 170160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1245,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-180000",
+      "threshold_updates": 180000,
+      "actual_updates": 180120,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1286,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-190000",
+      "threshold_updates": 190000,
+      "actual_updates": 190020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1290,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-200000",
+      "threshold_updates": 200000,
+      "actual_updates": 200320,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1261,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-210000",
+      "threshold_updates": 210000,
+      "actual_updates": 210160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1269,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-220000",
+      "threshold_updates": 220000,
+      "actual_updates": 220040,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1243,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-230000",
+      "threshold_updates": 230000,
+      "actual_updates": 230100,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1246,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-240000",
+      "threshold_updates": 240000,
+      "actual_updates": 240200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1256,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-250000",
+      "threshold_updates": 250000,
+      "actual_updates": 250260,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1242,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-260000",
+      "threshold_updates": 260000,
+      "actual_updates": 260000,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1217,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-270000",
+      "threshold_updates": 270000,
+      "actual_updates": 270040,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1224,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-280000",
+      "threshold_updates": 280000,
+      "actual_updates": 280260,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1232,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-290000",
+      "threshold_updates": 290000,
+      "actual_updates": 290200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1256,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-300000",
+      "threshold_updates": 300000,
+      "actual_updates": 300240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1241,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-310000",
+      "threshold_updates": 310000,
+      "actual_updates": 310200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1225,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-320000",
+      "threshold_updates": 320000,
+      "actual_updates": 320100,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1262,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-330000",
+      "threshold_updates": 330000,
+      "actual_updates": 330220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1252,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-340000",
+      "threshold_updates": 340000,
+      "actual_updates": 340080,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1251,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-350000",
+      "threshold_updates": 350000,
+      "actual_updates": 350040,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1226,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-360000",
+      "threshold_updates": 360000,
+      "actual_updates": 360020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1230,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-370000",
+      "threshold_updates": 370000,
+      "actual_updates": 370080,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1271,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-380000",
+      "threshold_updates": 380000,
+      "actual_updates": 380120,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1248,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-390000",
+      "threshold_updates": 390000,
+      "actual_updates": 390080,
+      "episodes": 10,
+      "successes": 9,
+      "primitives": 1518,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-400000",
+      "threshold_updates": 400000,
+      "actual_updates": 400160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1358,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-410000",
+      "threshold_updates": 410000,
+      "actual_updates": 410020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1232,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-420000",
+      "threshold_updates": 420000,
+      "actual_updates": 420180,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1235,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-430000",
+      "threshold_updates": 430000,
+      "actual_updates": 430160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1226,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-440000",
+      "threshold_updates": 440000,
+      "actual_updates": 440220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1267,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-450000",
+      "threshold_updates": 450000,
+      "actual_updates": 450140,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-460000",
+      "threshold_updates": 460000,
+      "actual_updates": 460140,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1265,
+      "settling_actions": 100
+    }
+  ],
+  "newest_complete_panel_pairs": [
+    {
+      "state": 40,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 125,
+      "settling_steps": 10,
+      "primitive_delta": -19,
+      "episode_random_seed": 2102987167,
+      "initial_state_vector_sha256": "0eb4a8d9a1bdde3ac8202221833398a6e0667100f15a577b022d31f7ae10abfd",
+      "initial_observation_sha256": "fd5d50587c5cfb7a87c57d0921e7574da868be47f2bc253a8d49b30fbcd8d586",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 41,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 115,
+      "settling_steps": 10,
+      "primitive_delta": -19,
+      "episode_random_seed": 932631343,
+      "initial_state_vector_sha256": "5af380d65e03e0e5e76d8b84a6e0c4e9f1a225d6230cae7eaf9d3dbf75e80176",
+      "initial_observation_sha256": "25503140d17c3f24eee1661d3cdf8cf9179071383f6a647beb0587a1b6968926",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 42,
+      "success": true,
+      "native_primitives": 153,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -20,
+      "episode_random_seed": 4062358908,
+      "initial_state_vector_sha256": "79026b66c7be8f2a116d46e2431703d81041f96bed84f3b2d6dd4698320633eb",
+      "initial_observation_sha256": "b54147e5c53f8beaadd86b9cd5aaeab51753599fbde852b54068c56636d2c7f3",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 43,
+      "success": true,
+      "native_primitives": 141,
+      "primitives": 122,
+      "settling_steps": 10,
+      "primitive_delta": -19,
+      "episode_random_seed": 1387848887,
+      "initial_state_vector_sha256": "837ab7a00f495f131d206b4467c0e79b6a4ebf5ffbf730e37e411124d7bdfb40",
+      "initial_observation_sha256": "5e66c51afe7c9884b063fe70e0c1ec9afb579f280a2f245a5170a7ad76ed7f60",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 44,
+      "success": true,
+      "native_primitives": 163,
+      "primitives": 125,
+      "settling_steps": 10,
+      "primitive_delta": -38,
+      "episode_random_seed": 2877548848,
+      "initial_state_vector_sha256": "af66a55f574627d2e2ae77f913a9b8b8d3fbe3385692c9a4f48422614f0029fd",
+      "initial_observation_sha256": "0f72e92c913776eb297576aa02cd9baa03184c585188f6b970d90ef3856f1760",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 45,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 145,
+      "settling_steps": 10,
+      "primitive_delta": 2,
+      "episode_random_seed": 384253523,
+      "initial_state_vector_sha256": "e142b3da1d0f3fee94f4a8e012fcebb253c79343943a0a1d1acb6d5ebb8b0478",
+      "initial_observation_sha256": "db39c4c67433467ba16d21e729a59264b39dfbf0a482e90d9b0346d9571a371f",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 46,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 123,
+      "settling_steps": 10,
+      "primitive_delta": -11,
+      "episode_random_seed": 4088019402,
+      "initial_state_vector_sha256": "2784da4aab953ff2de1f827df9b2ad9cdcebfb4f41464260175ac70baa764378",
+      "initial_observation_sha256": "1a237a710154485b1ff14c159cdd833460772defdb861f00af9fa9c14197e41a",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 47,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 122,
+      "settling_steps": 10,
+      "primitive_delta": -22,
+      "episode_random_seed": 2734817570,
+      "initial_state_vector_sha256": "a12c4e1491885d9247adae903f70c67bc4297dc167d0e23fe78c8e9ffc526540",
+      "initial_observation_sha256": "5e152de7e254e9238941d0a9d401ef31f079c38b8bbd7b04dd5b95e1d9f4a1ac",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 48,
+      "success": true,
+      "native_primitives": 152,
+      "primitives": 122,
+      "settling_steps": 10,
+      "primitive_delta": -30,
+      "episode_random_seed": 2295547926,
+      "initial_state_vector_sha256": "3b66e58ecc01ce3b4ecf07672e5c02f2e569246471ef1e49f8eb08218cbab128",
+      "initial_observation_sha256": "ad585c0f65f927ed5d33a3cfd70f851675ab883160658cae489775d4c6af3b10",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 49,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -10,
+      "episode_random_seed": 2972083184,
+      "initial_state_vector_sha256": "3fa764eb79349d72033bad586fa1d5be36dc57e6908d0dd49196b68d308f6d76",
+      "initial_observation_sha256": "cf66230bf684aa2748b7077f1a47a394ad6879baae39ee989d0e7ed64203181b",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    }
+  ],
+  "newest_panel_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/learned-460000-recovery.pkl",
+    "expected_sha256": "d382d0a1dfbecb7eb64a28e1cb0e5b8dbb6a54a67aa15710fa66a06b20bcac78",
+    "actual_sha256": "d382d0a1dfbecb7eb64a28e1cb0e5b8dbb6a54a67aa15710fa66a06b20bcac78",
+    "matched": true,
+    "bytes": 631170503
+  },
+  "newest_panel_query_weights_replay_unchanged": true,
+  "active_panel": {
+    "name": "learned-470000",
+    "actual_optimizer_updates": 470100,
+    "query_cursor": 1
+  },
+  "newest_raw": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/raw/learned-470000-state-40-1793452851183077113.pkl.gz",
+    "expected_sha256": "b50c4be2c13ffc8df15ec7ef3cf63c70fad744e0eb25640d12450ba60bff4452",
+    "actual_sha256": "b50c4be2c13ffc8df15ec7ef3cf63c70fad744e0eb25640d12450ba60bff4452",
+    "matched": true,
+    "bytes": 2957745
+  },
+  "newest_rpc": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793452851073089101.json",
+    "episode_id": "learned-470000-state-40",
+    "kind": "step",
+    "role": "query",
+    "returned": true,
+    "actual_steps": 3,
+    "maximum_steps": 10,
+    "outcome_status": "complete",
+    "checks": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793452851073089101-input.pkl.gz",
+        "expected_sha256": "fe089309405b865d06fa0dcedc16beae74973c6029ea5d22a1d6fe643adfbc04",
+        "actual_sha256": "fe089309405b865d06fa0dcedc16beae74973c6029ea5d22a1d6fe643adfbc04",
+        "matched": true,
+        "bytes": 194468
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793452851073089101.pkl.gz",
+        "expected_sha256": "6d64666bb39f37acb4976c1103657176dc934f7cd04b2110518648b73966030c",
+        "actual_sha256": "6d64666bb39f37acb4976c1103657176dc934f7cd04b2110518648b73966030c",
+        "matched": true,
+        "bytes": 195326
+      }
+    ]
+  },
+  "rpc_metadata_rows_read": 15,
+  "producer_costs": {
+    "training": {
+      "known_actions": 245714,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 227944,
+      "settling_steps": 17770,
+      "reset_attempts": 1777
+    },
+    "query": {
+      "known_actions": 65003,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 60293,
+      "settling_steps": 4710,
+      "reset_attempts": 471
+    },
+    "qualification": {
+      "known_actions": 10,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 10,
+      "reset_attempts": 1
+    }
+  },
+  "all_in_action_charge": 310727,
+  "producer_counter_sum_matches": true,
+  "independent_journal_replay": false,
+  "previous_partial_tail_not_reused_as_verified_prefix": true,
+  "storage_snapshot_bytes": 35551257261,
+  "maximum_storage_bytes": 68719476736,
+  "worker": {
+    "attempts": 1,
+    "maximum_gpu_seconds": 36000,
+    "reserved_seconds": 36000,
+    "active_elapsed_seconds": 26049.753219127655,
+    "final_charge": false
+  },
+  "next_check_shanghai": "2026-10-31T21:36:00+08:00"
+}

@@ -1,4 +1,33 @@
-# Frozen-Motus coefficient steering evaluation
+# Frozen Motus steering evaluation
+
+## Current capacity run stopped before fitting
+
+Baige `job-471ns3j0v2n4`, source `8fb991c8`, is terminalFailed/exit1. Actual
+one-GPU/own-PID checks pass. At qualification, motor fingerprint721a remains
+fixed, decoded zero/native maximum error is0, real KV gradient0.00309944 and
+motor gradients0. Repeated paired prefix/mask/features/cache are exact. The
+complete400-action qualification episode times out. No fit or optimizer update
+runs; a fresh terminal full-motor rehash is not claimed.
+
+| Fixed teacher replay | Actions | Outcome |
+| --- | ---: | --- |
+| Phone00 |104|Success|
+| Phone01 |104|Success|
+| Phone02, seed2 |400|Timeout|
+
+The code stops before cache creation or either100-update fit. Matching seed
+and initial drive targets do not prove object poses or measured joint state
+match. Cause is unestablished, not a negative learned-steering result. Keep all
+fixed8TRAIN/4VAL demonstrations, including02. The next bounded allocated CPU
+comparison checks delivered commands/indices/masks, initial scenes/cameras and
+author-versus-native timing. No teacher filtering, fitting fallback or blind
+retry is admitted.
+
+This attempt costs266 all-in GPU-seconds/1008 actions; cumulative2036/18599
+leave5164 GPU-seconds/11401 actions in A1 and26764/281401 in the whole phase.
+Pending/uncertain actions are0. The41381-byte driver/RNG recovery is preserved
+at SHA `c59c91799938c928bdd683a6ce681cfa3f9853fe0c829c05fe6657fe30af5d5b`.
+CPU totals746/1800,1054 remaining. [Terminal evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-GPU-RESULT.md).
 
 ## Completed restricted screen, 19:18 Shanghai
 
@@ -69,6 +98,30 @@ redesign is authorized by this finding.
 [Exact CPU evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/PHONE-STAGE0-CPU-RESULT.md),
 [metadata/source conventions](../../outputs/frozen-pi05-endtoend-20261031-r1/phone-data-preparation/source-conventions.json).
 [Complete public-state source chain](../../outputs/frozen-pi05-endtoend-20261031-r1/PUBLIC-STATE-SOURCE.md).
+
+## Software qualification retains failed attempts
+
+| CPU attempt | Tests | Outcome | Worker-seconds |
+| --- | ---: | --- | ---: |
+| e5f685d1 / job-mjw4gq2e94d3 |91|87pass/4fail|134|
+| 88bf7018 / job-nneqgcplclpy |42|32pass/10blocked|121|
+| 8fb991c8 / job-qh4pau3eh6v8 |10 affected|10pass|74|
+
+The first gate found three fixture mapping assertions and a real missing-method
+budget call, repaired in both CLI/driver paths without changing the canonical
+budget API. All10 affected source/pipeline cases pass in the second gate.
+Its22 capacity passes remain; ten further cases were blocked before assertions
+because my combined tree omitted the required metadata fixture. The final child
+restores the exact existing inventory bytes, changes no runtime/tests, and passes
+those ten, including the actual-author JPEG codec check. All32 capacity cases
+are qualified across this retained evidence, not a fresh full-suite rerun.
+
+All attempts attest0GPU/2CPU/16GiB, with no VLA or simulator. These329 seconds
+share the original600-second envelope;271 unused seconds return within the
+same phase. Together with earlier417, actual CPU use is746/1800. Software
+qualification admits no source teacher or memory/performance claim.
+[Failed gate](../../outputs/frozen-pi05-endtoend-20261031-r1/COMPOSITE-CPU-RESULT.md),
+[capacity rollup](../../outputs/frozen-pi05-endtoend-20261031-r1/CAPACITY-CPU-ROLLUP.json).
 
 ## Repair qualification (historical)
 

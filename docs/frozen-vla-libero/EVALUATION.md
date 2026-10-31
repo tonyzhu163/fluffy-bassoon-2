@@ -15,6 +15,10 @@ query-panel failure; earlier complete panels through380120 are all10/10.
 Latest recovery/milestone/raw-RPC hashes pass, query weights/replay stay fixed
 and losses are finite. No run, recipe, case or budget changed.
 [Saved receipt](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1956.md).
+Subsequent400160/410020-update panels return10/10 at1358/1232 primitives
+plus100 settling. The earlier9/10 stays in the fixed curve; this rebound does
+not select a different endpoint or establish reliable improvement.
+[Next saved check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-2016.md).
 
 This regression weakens the earlier descriptive completion-cost trend. One
 stochastic panel is insufficient to attribute a cause: actor sampling and
@@ -47,6 +51,8 @@ below; every intervening panel remains in immutable dated receipts.
 |90160|10/10|1309|100|
 |100220|10/10|1270|100|
 |390080|9/10|1518|100|
+|400160|10/10|1358|100|
+|410020|10/10|1232|100|
 
 All panels use the same10 physical cases, recorded query seeds and initial
 observation hashes. Queries change no weights/replay and perform no SGD.

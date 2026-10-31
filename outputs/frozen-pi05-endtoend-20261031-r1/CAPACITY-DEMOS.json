@@ -1,0 +1,567 @@
+{
+  "format": "robotwin_whole_demo_reactive_capacity_v1",
+  "task": "place_phone_stand",
+  "dataset_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "archive_sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+  "archive_bytes": 255542392,
+  "source_inventory_sha256": "e60cb3bd863bb6d8a014aadad652d64bb1834535f8e9cff6d53476fcd840102b",
+  "schema": {
+    "state": "joint_action/vector",
+    "actions": "joint_action/vector",
+    "state_units": "aloha_physical_drive_target14",
+    "action_units": "aloha_absolute_joint_target14",
+    "camera_order": [
+      "head",
+      "left_wrist",
+      "right_wrist"
+    ],
+    "images": [
+      "observation/head_camera/rgb",
+      "observation/left_camera/rgb",
+      "observation/right_camera/rgb"
+    ],
+    "image_encoding": "jpeg",
+    "action_offset": 0,
+    "target_kind": "author_recorded_drive_target",
+    "image_decoder": "opencv_imdecode_color_as_native_channels"
+  },
+  "alignment_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-reactive-capacity-20261031-r1/outputs/robotwin-reactive-capacity-20261031-r1/AUTHOR-CONVENTION.json",
+    "sha256": "21fc9e241395be3d0756edb87bc0eb7468c395c3377cb3adf0781076c118b96b"
+  },
+  "episodes": [
+    {
+      "id": "phone-00",
+      "canonical_index": 0,
+      "member": "aloha-agilex_clean_50/data/episode0.hdf5",
+      "split": "train",
+      "reset_seed": 0,
+      "instruction": "Take the metallic phone with glass screen front to the small plastic phonestand.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode0.json",
+        "sha256": "0b7f40e2a5e07d526bba388df970d047c44738190792182759d5debac6c1758d"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 131,
+      "qualified_action_count": 131,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-01",
+      "canonical_index": 1,
+      "member": "aloha-agilex_clean_50/data/episode1.hdf5",
+      "split": "train",
+      "reset_seed": 1,
+      "instruction": "Move the phone with buttons and screen onto the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode1.json",
+        "sha256": "b39bb9b8ddea21e2eede1656cc53660b24fd7fa3f0c091a9ce89deaaea7f5035"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 130,
+      "qualified_action_count": 130,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-02",
+      "canonical_index": 2,
+      "member": "aloha-agilex_clean_50/data/episode2.hdf5",
+      "split": "train",
+      "reset_seed": 2,
+      "instruction": "Carry the compact phone to the curved phonestand with phone slot.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode2.json",
+        "sha256": "9813840710c6077b7af845b707c6104274ed130cc21b9ead5c9e758b817c99f3"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 129,
+      "qualified_action_count": 129,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-03",
+      "canonical_index": 3,
+      "member": "aloha-agilex_clean_50/data/episode3.hdf5",
+      "split": "train",
+      "reset_seed": 3,
+      "instruction": "Lift the compact phone onto the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode3.json",
+        "sha256": "d13c4cc0f5ade4f2ea7c0d3014c4e3c2bdacdd7da94e16deb12af739ce41107b"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 128,
+      "qualified_action_count": 128,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-04",
+      "canonical_index": 4,
+      "member": "aloha-agilex_clean_50/data/episode4.hdf5",
+      "split": "train",
+      "reset_seed": 4,
+      "instruction": "Take the black phone to the green phone rack.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode4.json",
+        "sha256": "180b43568a03e60de4363c1523e82667404d9db7b0fc8633daab768ea9bde74f"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 140,
+      "qualified_action_count": 140,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-05",
+      "canonical_index": 5,
+      "member": "aloha-agilex_clean_50/data/episode5.hdf5",
+      "split": "train",
+      "reset_seed": 6,
+      "instruction": "Move the glass and metal smartphone onto the metal adjustable phone clamp.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode5.json",
+        "sha256": "ff400e201154ba4d24d61107d499c1188b1bd0a44ad6d2aa7126fc631855d3bc"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 125,
+      "qualified_action_count": 125,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-06",
+      "canonical_index": 6,
+      "member": "aloha-agilex_clean_50/data/episode6.hdf5",
+      "split": "train",
+      "reset_seed": 9,
+      "instruction": "Take the flat phone to the phonestand for holding phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode6.json",
+        "sha256": "5f1e1ca6e2d39c26882b5c1d7db665d6bff12849c5a7a2f2435c0477e1e5e526"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 132,
+      "qualified_action_count": 132,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-07",
+      "canonical_index": 7,
+      "member": "aloha-agilex_clean_50/data/episode7.hdf5",
+      "split": "train",
+      "reset_seed": 10,
+      "instruction": "Put the glass and metal smartphone atop the phonestand for holding phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode7.json",
+        "sha256": "7fb606052e2d1ed2e82ba0344fac5a888d9e4ff777844cab89a9028f7dce49ca"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 132,
+      "qualified_action_count": 132,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-08",
+      "canonical_index": 8,
+      "member": "aloha-agilex_clean_50/data/episode8.hdf5",
+      "split": "validation",
+      "reset_seed": 11,
+      "instruction": "Lift the rectangular phone onto the compact phonestand.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode8.json",
+        "sha256": "97d73f28262bc704a54976f00483fb16550c714fe1f115c7d533ea74fe16ea76"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base1",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 126,
+      "qualified_action_count": 126,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-09",
+      "canonical_index": 9,
+      "member": "aloha-agilex_clean_50/data/episode9.hdf5",
+      "split": "validation",
+      "reset_seed": 14,
+      "instruction": "Put the phone with polished silver border atop the light brown phone holder.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode9.json",
+        "sha256": "9a17209f6bf898d7711de62f2a7fa275a0ed7eb7175438cdb62b933e7298aa95"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base2",
+          "{B}": "078_phonestand/base2",
+          "{a}": "right"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 126,
+      "qualified_action_count": 126,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-10",
+      "canonical_index": 10,
+      "member": "aloha-agilex_clean_50/data/episode10.hdf5",
+      "split": "validation",
+      "reset_seed": 16,
+      "instruction": "Carry the glass-faced phone to the phone holder with cutout underneath.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode10.json",
+        "sha256": "1aa48722f05b4b4cc09b8e2edc9cec3265bfe50b45aa8935ef2a73d63d108b87"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base0",
+          "{B}": "078_phonestand/base2",
+          "{a}": "left"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 125,
+      "qualified_action_count": 125,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    },
+    {
+      "id": "phone-11",
+      "canonical_index": 11,
+      "member": "aloha-agilex_clean_50/data/episode11.hdf5",
+      "split": "validation",
+      "reset_seed": 18,
+      "instruction": "Lift the silver phone with black screen onto the angled holder for phones.",
+      "instruction_selection": "first published seen instruction, fixed before fitting",
+      "instruction_ref": {
+        "member": "aloha-agilex_clean_50/instructions/episode11.json",
+        "sha256": "d7f4191eeb53eeb19ef8f36e8e8421a923507d1e254978a52772a28e38838050"
+      },
+      "scene_metadata": {
+        "cluttered_table_info": [],
+        "texture_info": {
+          "wall_texture": null,
+          "table_texture": null
+        },
+        "info": {
+          "{A}": "077_phone/base1",
+          "{B}": "078_phonestand/base2",
+          "{a}": "right"
+        }
+      },
+      "seed_scene_refs": {
+        "seeds": {
+          "member": "aloha-agilex_clean_50/seed.txt",
+          "sha256": "5468d3f1e1a217194f0385981d462e6a1b81dcee91321a6c849f5d3c4cdc5b6b"
+        },
+        "scenes": {
+          "member": "aloha-agilex_clean_50/scene_info.json",
+          "sha256": "032398f87e0f74994c7121ed48d9a1c0f5d4c33573e88e34e06967b5a02a3217"
+        }
+      },
+      "qualified_state_count": 129,
+      "qualified_action_count": 129,
+      "explicit_success": null,
+      "success_provenance": "author_success_filtered_collection"
+    }
+  ],
+  "actual_whole_files": {
+    "phone-00": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode0.hdf5",
+      "sha256": "36c421f91fa12a466769311513526219fadd5cd7e09369fb3e95c3cc6e117eaa",
+      "bytes": 6920321
+    },
+    "phone-01": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode1.hdf5",
+      "sha256": "2711486f15b30b8e8fad011050839a53a7f1aa0df4e6f03b47ffd156f7056a16",
+      "bytes": 7868500
+    },
+    "phone-02": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode2.hdf5",
+      "sha256": "ea7f61b910463364bad00da055e7ff1afc8d2f299474bebb3ced08d575a5f555",
+      "bytes": 8319466
+    },
+    "phone-03": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode3.hdf5",
+      "sha256": "6d22e5d96893b287a3bea645e04f4b3c0b8b2ace896d22718ca07af2d5834b0f",
+      "bytes": 7329672
+    },
+    "phone-04": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+      "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+      "bytes": 7256080
+    },
+    "phone-05": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode5.hdf5",
+      "sha256": "3d76b3c4eb23de8327a1ccb5cd5eefcf94c5d4f31f61ffcf8d2fab98491b8ecd",
+      "bytes": 6590425
+    },
+    "phone-06": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode6.hdf5",
+      "sha256": "10cd5b9a11475fd95aecb84698a0c7289f503de4841f3a20236416db84bd62fa",
+      "bytes": 8770192
+    },
+    "phone-07": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode7.hdf5",
+      "sha256": "85424049a804084d1d2dd22fbe47b1b4c93db8453f7494fa656926afe43b4740",
+      "bytes": 6688288
+    },
+    "phone-08": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode8.hdf5",
+      "sha256": "14d481715ff3abcd1910f8c7fa1e6114c514ec141a2cb228363f00778beb2a5d",
+      "bytes": 6631540
+    },
+    "phone-09": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode9.hdf5",
+      "sha256": "b7c836ed9145cb304d4a0fd72f14941d4e100601dcb10c08a2636f9db7b47066",
+      "bytes": 5993224
+    },
+    "phone-10": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode10.hdf5",
+      "sha256": "421a36499639a5c40a3ae23524ac19e46022c36a48c753bf03ca8ba38253b540",
+      "bytes": 7953175
+    },
+    "phone-11": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode11.hdf5",
+      "sha256": "2a17d9a28296c83f6c047ccea619b674a44f2b47df4195e8fed8ad7280298885",
+      "bytes": 6985219
+    }
+  },
+  "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+  "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+  "readiness": "author convention bound; official transform roundtrip and physical replay pending"
+}

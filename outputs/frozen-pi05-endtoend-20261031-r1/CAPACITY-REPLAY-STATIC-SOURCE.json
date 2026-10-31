@@ -1,0 +1,118 @@
+{
+  "format": "capacity_replay_static_source_handoff_v1",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "source_path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/_base_task.py",
+  "source_sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+  "functions": [
+    {
+      "name": "Base_Task.compress_path",
+      "first_line": 444,
+      "last_line": 451,
+      "text": "    def compress_path(self, path, tolerance=1e-5):\n        compressed = [path[0]]\n        for i in range(1, len(path)):\n            if not np.allclose(path[i], compressed[-1], atol=tolerance, rtol=0):\n                compressed.append(path[i])\n        if len(compressed) == 1:\n            compressed.append(compressed[0].copy() + np.random.normal(0, 2e-4, 6))\n        return np.array(compressed)"
+    },
+    {
+      "name": "Base_Task.downsample_trajectory",
+      "first_line": 453,
+      "last_line": 460,
+      "text": "    def downsample_trajectory(self, positions, velocities, max_points=500):\n        n_points = positions.shape[0]\n        assert positions.shape[0] == velocities.shape[0]\n        if n_points <= max_points:\n            return positions, velocities\n        indices = np.linspace(0, n_points - 1, max_points).astype(int)\n        indices = np.unique(indices)\n        return positions[indices], velocities[indices]"
+    }
+  ],
+  "already_saved_teacher_reset_metadata": [
+    {
+      "episode": "capacity-teacher-phone-00",
+      "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-r1/experiment/corpus/episodes/episode-3505bd16d5014eb48ff0bfdc46ffc05f/reset.json",
+      "reset_sha256": "9379bab84390d1b1d5d7c565cc6fe945ba00ff8bd5b4d6659a0a0a9b306be93b",
+      "reset_top_keys": [
+        "context",
+        "episode_id",
+        "initial_observation",
+        "previous_episode_id",
+        "reset_info",
+        "schema"
+      ],
+      "reset_info_keys": [
+        "actual_render_pci",
+        "actual_seed",
+        "corpus_episode_id",
+        "episode_limit",
+        "features_sha256",
+        "instruction",
+        "instruction_binding",
+        "observation_sha256",
+        "requested_seed",
+        "reset_internal_physics_steps",
+        "reset_policy_actions",
+        "task"
+      ],
+      "saved_task_config": null,
+      "saved_get_info": null,
+      "reset_metadata": null,
+      "actual_seed": 0
+    },
+    {
+      "episode": "capacity-teacher-phone-01",
+      "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-r1/experiment/corpus/episodes/episode-5679cee06e004fe0bb677789fb2e8b10/reset.json",
+      "reset_sha256": "1b9b1ea990b97ec6b5609c561bee4e4862b30a033f9bc363b48acec1e0b04b95",
+      "reset_top_keys": [
+        "context",
+        "episode_id",
+        "initial_observation",
+        "previous_episode_id",
+        "reset_info",
+        "schema"
+      ],
+      "reset_info_keys": [
+        "actual_render_pci",
+        "actual_seed",
+        "corpus_episode_id",
+        "episode_limit",
+        "features_sha256",
+        "instruction",
+        "instruction_binding",
+        "observation_sha256",
+        "requested_seed",
+        "reset_internal_physics_steps",
+        "reset_policy_actions",
+        "task"
+      ],
+      "saved_task_config": null,
+      "saved_get_info": null,
+      "reset_metadata": null,
+      "actual_seed": 1
+    },
+    {
+      "episode": "capacity-teacher-phone-02",
+      "reset_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-r1/experiment/corpus/episodes/episode-a6bbff8798f84bdcb0f3696a8c87a86e/reset.json",
+      "reset_sha256": "f6ba7191e7b802ff43f196578df01f3fb5c9e169a98a27ca268b6118a9e4d2c9",
+      "reset_top_keys": [
+        "context",
+        "episode_id",
+        "initial_observation",
+        "previous_episode_id",
+        "reset_info",
+        "schema"
+      ],
+      "reset_info_keys": [
+        "actual_render_pci",
+        "actual_seed",
+        "corpus_episode_id",
+        "episode_limit",
+        "features_sha256",
+        "instruction",
+        "instruction_binding",
+        "observation_sha256",
+        "requested_seed",
+        "reset_internal_physics_steps",
+        "reset_policy_actions",
+        "task"
+      ],
+      "saved_task_config": null,
+      "saved_get_info": null,
+      "reset_metadata": null,
+      "actual_seed": 2
+    }
+  ],
+  "merged_env_task_config_or_get_info_available": false,
+  "availability_limit": "No merged env.task_config/get_info found in the three bound result reset_info or referenced reset JSONs; the nominated runtime output directory is absent. No constructor/import/replay was used to recover missing values.",
+  "causal_claim": false
+}
