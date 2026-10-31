@@ -1,0 +1,58 @@
+{
+  "stage": "A",
+  "cluster": "Baige",
+  "job_id": "job-cth8mugcqgzl",
+  "job_name": "mwj_1101_libero90_headroom_g1_r1_4ec35eb",
+  "submitted_at_shanghai": "2026-11-01 00:48:06",
+  "running_at_shanghai": "2026-11-01 00:48:14",
+  "source_commit": "4ec35eb9f563813e43293f797e8141a12fb0c4be",
+  "grant_source_commit": "0e487adf2783c9c7bdc01fadd018b297f7f157b2",
+  "grant_sha256": "893c368f8285bf18eed28d414bacfa2a45ea1ee6d4b459db49ff744823e987d3",
+  "run_id": "libero90-pi05-headroom-screen-20261101-s0-r1",
+  "allocation": {
+    "gpus": 1,
+    "type": "NVIDIA RPBZZZ6",
+    "cpu_cores": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "maximum_minutes": 180,
+    "automatic_retry": false
+  },
+  "gpu_probe": {
+    "status": "passed",
+    "timestamp_shanghai": "2026-11-01 00:48:28",
+    "hostname": "job-cth8mugcqgzl-master-0",
+    "probe_pid": 561
+  },
+  "deployment": {
+    "method": "Git bundle via authenticated existing mwj-clean WebIDE",
+    "bundle_sha256": "beb0b9e7c9aee602634800d4547038d254928f98fee6c6f3ecab3ffd7f6567d1",
+    "bundle_remote": "/mowenjie/fluffy-bassoon-2/fb2-headroom-20b0e42-20261101.bundle",
+    "clean_detached_source_verified": true,
+    "storage_free_bytes": 1104716759040,
+    "storage_write_probe": true,
+    "runtime_paths_present": true,
+    "motor_ready_receipt_verified": true
+  },
+  "prelaunch_cpu_failure": {
+    "job_id": "job-ljovz1pyz72a",
+    "exit_code": 128,
+    "scheduler_seconds": 31,
+    "gpus": 0,
+    "simulator_actions": 0,
+    "reason": "Canonical origin points to old fb2-poc-27d7b96.bundle; exact source absent",
+    "resolution": "Imported verified incremental Git bundle; no origin URL or existing worktree changed"
+  },
+  "monitor_id": "continue-libero90-headroom-and-gated-steering-experiments",
+  "first_real_progress": {
+    "checked_at_shanghai": "2026-11-01 00:51",
+    "episode_timestamp_shanghai": "2026-11-01 00:50:19",
+    "identity": "libero90-00-state1-native-r0",
+    "success": false,
+    "primitive_steps": 400,
+    "cumulative_actions": 420,
+    "minimum_verified_completed_episodes": 1,
+    "qualification_inferred_from_reaching_episode": "Motor parameter signature and same-noise replay checks precede every first episode; no final after-signature claim while run is active"
+  },
+  "next_check_shanghai": "2026-11-01 01:10 (approximately; 20-minute heartbeat)"
+}
