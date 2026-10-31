@@ -53,6 +53,15 @@ the existing phase_output_root and exact action_ledger header/root. It includes:
   path/SHA references, and control_qualification referencing the student's
   binding of ORIGINAL A1 plan/interface/qualification/completed episode.
 
+`source_corpus_root` is a separate append-only canonical phase directory under
+the shared output root, outside immutable per-job outputs. Reopening it must
+retain the exact contract and runtime (including actual recorded renderer
+binding); no runtime or old record is rewritten to accommodate a new host/GPU.
+Only new episode/chunk files and the existing corpus inspection/counter views
+are appended/updated. This keeps a resumed12→24 lineage in one original corpus
+instead of inventing a copied or concatenated replacement bank. Source resume
+checks this root against the actual captured boundary before model/reset.
+
 The entry point verifies the existing ledger genesis before opening the same
 canonical `CampaignBudget`. It verifies native task horizons and source joint
 limits, actual free space and an exclusive write/flush/fsync/unlink probe before
@@ -67,6 +76,8 @@ actor/private stream. Updates0 uses bounded uniform even if observed chunks
 already crossed32; learned validation samples the actual frozen actor. No
 validation transition enters source replay or updates. Fixed case-specific
 private innovations pair milestones without consuming source RNG.
+Both validation cases receive whole-panel action/time admission before either
+reset, so a healthy operational boundary cannot silently repeat a paid case.
 Milestones12/24 set the common runner's `expected_reset` to baseline0's actual
 accepted seed/observation/features hashes and `paired_instruction` to its exact
 `reset_info.instruction` list. The common backend binds that actual instruction
@@ -115,8 +126,30 @@ the common episode wrapper and all actual source/validation reset identities.
 Updates0 is not silently replaced with an untrained neural actor for A2.
 The helper owns the exact24-grid, paired RNG/reset checks and measured.25
 within-condition mismatch and.125 aggregate blind criteria. No mean-mode or
-additional episode is introduced. A partial A2 panel preserves its own cursor
-and blocks automatic source-entry resume; the execution owner reconciles it.
+additional episode is introduced. A clean closed A2 boundary is adopted only
+from its actual helper checkpoint plus boundary JSON, complete committed IDs,
+exact saved ledger charges and source-global checkpoint. It forwards that exact
+state to the helper's grid-prefix validator. Failed or partial episodes cannot
+resume. The helper's explicit pre-pending episode admission is not repeated
+after saving its pending cursor, avoiding a second deadline rejection race.
+
+The adapter consumes the student's ORIGINAL balanced24 `blind_selection`
+receipt and exact prefix final-controller references; it does not derive a
+second selector. Missing/failed A2 evidence keeps both AD/DPT scientific
+admission pending. After the actual helper completes and passes, source calls
+the same builder with the original six publications, original A2 rich reference
+as `condition_cross=...`, and a NEW `balanced-024-with-cross.json`. Previously
+published12/24 pending data and their actual qualification references are never
+overwritten. Only the24 prefix has this one funded grid; no extra12-case grid
+or early scientific fit is implied. The student verifier independently reads
+the original plan/raw24 evidence and recomputes contrasts and policy/mode
+bindings before allowing an objective's fit.
+
+An explicitly owner-admitted later allocation may use `--resume` for a complete
+24-source prefix whose A2 stage was deferred, or for the actual closed A2 cursor.
+The same exact code/profile/corpus/journal/teacher recoveries are required;
+completed source episodes are skipped and original pending prefixes reused.
+No completed/failed full grid is automatically repeated.
 
 ## Focused allocated CPU gate
 

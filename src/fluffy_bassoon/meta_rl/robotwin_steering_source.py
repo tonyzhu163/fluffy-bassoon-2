@@ -29,7 +29,7 @@ from .steering_condition_collection import (
     collect_round_robin, lineage_specs, make_learner,
 )
 from .robotwin_steering_screen import (
-    read_bound, restricted_summary, run_complete_episode, sha, verify_source_conventions,
+    paired_reset_fields, read_bound, restricted_summary, run_complete_episode, sha, verify_source_conventions,
 )
 from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
 from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter, _atomic_json
@@ -127,6 +127,10 @@ def validate_source_admission(scope, allocation, profile, *, source, hostname, o
             or Path(allocation["output"]).resolve() != Path(output).resolve()
             or not Path(output).resolve().is_relative_to(Path(allocation["phase_output_root"]).resolve())):
         raise ValueError("Actual owner allocation must bind exact source/profile/host/GPU/fresh shared output")
+    corpus = Path(allocation["source_corpus_root"]).resolve()
+    if (not corpus.is_relative_to(Path(allocation["phase_output_root"]).resolve())
+            or corpus.is_relative_to(Path(output).resolve())):
+        raise ValueError("Use the one append-only phase source corpus, separate from immutable per-job output")
     costs = [allocation[k] for k in ("reserved_gpu_seconds", "prior_phase_gpu_seconds",
                                     "other_reserved_phase_gpu_seconds")]
     if any(type(v) is not int or v < 0 for v in costs) or costs[0] < 1 or sum(costs) > 28800:
@@ -149,8 +153,9 @@ def validate_source_admission(scope, allocation, profile, *, source, hostname, o
     # final versions and two rolling slots plus one in-progress replacement.
     full = allocation["max_full_recovery_bytes"]
     reserved = allocation["recovery_output_reservation_bytes"]
+    other = allocation["other_future_output_reservation_bytes"]
     if (type(full) is not int or full < 1 or type(reserved) is not int or reserved < 60*full
-            or reserved+allocation["other_future_output_reservation_bytes"] > 64 << 30):
+            or type(other) is not int or other < 0 or reserved+other > 64 << 30):
         raise ValueError("Admit actual recovery-size/retention plus other phase output within64GiB")
 
 
@@ -165,7 +170,14 @@ class RuntimeGuard:
             paths = [Path(directory)/name for name in (*dirs, *files)]
             if any(p.is_symlink() for p in paths):
                 raise RuntimeError("Canonical shared output rejects symlinks")
-            used += sum((Path(directory)/name).stat().st_size for name in files)
+            for name in files:
+                try:
+                    used += (Path(directory)/name).stat().st_size
+                except FileNotFoundError:
+                    # An overlapping prefix fit may atomically rename a
+                    # temporary checkpoint between walk and stat. Its bound
+                    # remains in the owner's shared output reservations.
+                    continue
         if used+self.allocation["max_full_recovery_bytes"] > 64 << 30:
             raise RuntimeError("Shared output cannot retain the next full recovery safely")
         return used
@@ -175,9 +187,11 @@ class RuntimeGuard:
         if time.time() >= self.allocation["driver_deadline_unix"]-10:
             raise RuntimeError("Original source allocation clock exhausted; latest recoveries preserved")
 
-    def admit_episode(self):
+    def admit_episode(self, *, episodes=1):
         self()
-        required = (self.maximum_episode_seconds+self.allocation["maximum_episode_update_seconds"]
+        if type(episodes) is not int or episodes < 1:
+            raise ValueError("Whole-episode admission needs a positive declared group size")
+        required = (episodes*(self.maximum_episode_seconds+self.allocation["maximum_episode_update_seconds"])
                     +self.allocation["cleanup_reserve_seconds"])
         if self.stopping or self.allocation["driver_deadline_unix"]-time.time() <= required:
             raise BoundaryStop("No next complete episode/update/recovery fits the finite remaining clock")
@@ -252,17 +266,12 @@ def restore_global_rng(saved):
 def paired_validation_spec(spec, baseline):
     """Use the common paired-reset API; never rewrite text/features locally."""
     first = baseline.get("spec", {})
-    instruction = baseline.get("reset_info", {}).get("instruction")
-    identity = baseline.get("reset_identity", {})
     if (baseline.get("complete") is not True or first.get("milestone") != 0
             or first.get("phase") != "source_validation"
             or any(first.get(k) != spec.get(k) for k in
-                ("task", "case", "method", "reset_seed", "motor_seed"))
-            or not isinstance(instruction, list) or len(instruction) != 1
-            or not isinstance(instruction[0], str) or not instruction[0].strip()
-            or set(identity) != {"actual_seed", "observation_sha256", "features_sha256"}):
+                ("task", "case", "method", "reset_seed", "motor_seed"))):
         raise ValueError("Fixed validation must bind its actual complete baseline case and original instruction")
-    return dict(deepcopy(spec), expected_reset=deepcopy(identity), paired_instruction=deepcopy(instruction))
+    return dict(deepcopy(spec), **paired_reset_fields(baseline))
 
 
 def validate_resume_ledger(prior, ledger, captured):
@@ -307,13 +316,36 @@ def validate_opened_resume(prior, budget, *, run_id, source_commit):
         raise ValueError("Canonical journal advanced beyond the exact fresh resume registration; no model/reset admitted")
 
 
+def closed_cross_cursor(prior):
+    """Adopt only the actual helper's hash-bound closed cursor, never a failed panel."""
+    result = prior.get("condition_cross_result")
+    if (not isinstance(result, dict) or result.get("complete") is not False
+            or result.get("status") != "boundary_stop" or result.get("phase") != "condition_cross"):
+        raise ValueError("No exact closed A2 boundary receipt to resume")
+    saved = BoundedTeacherRecovery.load(result["recovery_ref"])
+    state = saved["collector"]
+    if (saved.get("event") != "condition_cross_boundary_stop"
+            or state.get("format") != "source_only_frozen_condition_cross_v1"
+            or state.get("status") != "boundary_stop" or state.get("pending") is not None
+            or state.get("active_actor_rng") is not None
+            or state.get("canonical_actions") != prior["actions"]
+            or read_reference(result) != state
+            or result.get("episode_ids") != [r["spec"]["id"] for r in state["records"]]
+            or any(r.get("complete") is not True for r in state["records"])
+            or result.get("actual_actions") != sum(r["primitive_steps"] for r in state["records"])):
+        raise ValueError("A2 cursor, original boundary receipt and saved canonical charges disagree")
+    return state
+
+
 def run_source_collection(*, control, budget, profile, distribution, output, guard,
                           archive, run_id, student_profiles, control_qualification,
-                          source_commit, device="cuda", prior=None, prefix_builder=None, after_source=None):
+                          source_commit, corpus_root, device="cuda", prior=None, prefix_builder=None, after_source=None):
     """Wire six teachers, fixed physical validation and immutable prefix receipts."""
     output = Path(output)
-    teachers, published, publications = {}, [], {}
-    balanced, publishing = set(), [False]
+    teachers, publications = {}, {}
+    published = [] if prior is None else deepcopy(prior["immutable_prefixes"])
+    balanced = {n for n in (12, 24) if any(Path(ref["path"]).name == f"balanced-{n:03d}.json" for ref in published)}
+    publishing = [False]
     global_sink = BoundedTeacherRecovery(output/"orchestration-recovery", guard=guard, control=control)
     if prefix_builder is None:
         from .steering_history_prefix import build_prefix
@@ -385,8 +417,10 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         teachers[lineage.method] = teacher
 
     def episode(current, spec, ledger, **kwargs):
+        pre_admitted = kwargs.pop("_source_pre_admitted", False)
         try:
-            guard.admit_episode()
+            if not pre_admitted:
+                guard.admit_episode()
         except BoundaryStop:
             # collect_lineage saved episode_begin but no reset or command has
             # happened. Explicitly clear only this provably unstarted episode.
@@ -413,6 +447,11 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         return record
 
     def validate(checkpoint_ref, specs):
+        # Admit the fixed two-case panel before opening either case. A healthy
+        # clock boundary cannot leave one paid case to be silently repeated.
+        guard.admit_episode(episodes=2)
+        if budget.remaining(phase="source_validation", method=specs[0]["method"]) < 2*(profile.episode_limit+profile.reset_action_bound):
+            raise BoundaryStop("The complete fixed two-case validation panel does not fit")
         saved = BoundedTeacherRecovery.load(checkpoint_ref)["collector"]
         lineage = teachers[specs[0]["method"]].lineage
         baseline = None
@@ -431,7 +470,7 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
             frozen = FrozenSourceBehavior(saved, profile, lineage, spec,
                 archive_actor=identify, guard=guard, device=device)
             records.append(episode(control, spec, budget, run_id=run_id,
-                                   phase="source_validation", controller=frozen))
+                                   phase="source_validation", controller=frozen, _source_pre_admitted=True))
         path = output/"validation"/(specs[0]["id"].rsplit(":", 1)[0]+".json")
         _atomic_json(path, dict(complete=True, phase="source_validation",
             episode_ids=[s["id"] for s in specs], source_checkpoint=checkpoint_ref,
@@ -457,8 +496,23 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         if status == "initial_prefix_complete" and after_source is not None:
             post_entered = True
             cross_result = after_source(control=control, budget=budget, profile=profile, distribution=distribution,
-                teachers=teachers, run_id=run_id, output=output, guard=guard, archive=archive, episode_runner=episode)
-            post_completed = True
+                teachers=teachers, run_id=run_id, output=output, guard=guard, archive=archive, episode_runner=episode,
+                balanced_prefix=next(ref for ref in published if Path(ref["path"]).name == "balanced-024.json"),
+                cross_state=closed_cross_cursor(prior) if prior is not None and prior.get("post_source_entered")
+                    and not prior.get("post_source_completed") else None)
+            post_completed = cross_result.get("complete") is True
+            if cross_result.get("status") == "boundary_stop":
+                status = "boundary_stop"
+            if post_completed and cross_result.get("criterion_pass") is True:
+                pending_ref = next(ref for ref in published if Path(ref["path"]).name == "balanced-024.json")
+                pending_prefix = read_reference(pending_ref)
+                path = output/"prefixes"/"balanced-024-with-cross.json"
+                prefix_builder(student_profiles[24], pending_prefix["source_publications"],
+                    control_qualification=control_qualification, condition_cross=cross_result,
+                    output=path, expected_hostname=socket.gethostname())
+                published.append(dict(path=str(path), sha256=sha(path),
+                    original_pending_prefix=pending_ref, actual_condition_cross=cross_result,
+                    objective_admission="requires separate objective-level admission; never implied by complete data"))
     except BoundaryStop as exc:
         status, error = "boundary_stop", str(exc)
     except BaseException as exc:
@@ -478,6 +532,7 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         ledger_root = str(Path(budget.root).resolve())
         state = dict(format=FORMAT, status=status, error=error, source_commit=source_commit,
             ledger_root=ledger_root, action_ledger=dict(budget.header, root=ledger_root),
+            corpus_root=str(Path(corpus_root).resolve()),
             profile=profile.contract(), teachers=references, closed_physical_boundary=closed,
             complete_episodes={k: len(t.completed_episodes) for k, t in teachers.items()},
             actual_optimizer_cycles={k: t.learner.updates for k, t in teachers.items()},
@@ -495,13 +550,22 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
 
 
 def run_source_condition_cross(*, control, budget, profile, distribution, teachers,
-                               run_id, output, guard, archive, episode_runner):
+                               run_id, output, guard, archive, episode_runner, balanced_prefix, cross_state=None):
     """Only bind actual source controllers/receipts to the owner's existing A2 helper."""
     from .steering_condition_cross import run_condition_cross
     from .steering_condition_collection import SOURCE_METHOD_KEYS
 
     keys = SOURCE_METHOD_KEYS[2:4]
-    final, scores, resets, validation_refs = {}, {}, [], []
+    prefix = read_reference(balanced_prefix)
+    if (prefix.get("completed") is not True or prefix.get("source_only") is not True
+            or prefix.get("source_task") != profile.task
+            or prefix.get("interface", {}).get("mapping_sha256") != profile.mapping_sha256
+            or {row["lineage_id"] for row in prefix.get("lineages", [])} != set(teachers)):
+        raise ValueError("A2 must use the actual balanced immutable source prefix")
+    selection_ref = prefix["blind_selection"]
+    selection = read_reference(selection_ref)
+    lineages = {row["lineage_id"]: row for row in prefix["lineages"]}
+    final, resets = {}, []
     for key in keys:
         teacher = teachers[key]
         if teacher.learner.updates < 1 or teacher.last_recovery.get("retention") != "immutable":
@@ -510,33 +574,39 @@ def run_source_condition_cross(*, control, budget, profile, distribution, teache
                                    new_physical_actions=0, source_method=key))
             return dict(path=str(path), sha256=sha(path), criterion_pass=False, status="not_admitted")
         descriptor = archive.identify(teacher.learner, "sac")
-        final[key] = dict(teacher.last_recovery, policy_sha256=descriptor["policy_sha256"],
+        final[key] = dict(lineages[key]["final_recovery"], policy_sha256=descriptor["policy_sha256"],
             optimizer_updates=teacher.learner.updates, source_method=key, sampling_mode="sampled_gaussian")
-        ref = teacher.validation_receipts["24"]
-        panel = read_reference(ref)
-        if panel.get("complete") is not True or len(panel.get("results", [])) != 2:
-            raise ValueError("Blind selection needs both actual final source-validation outcomes")
-        scores[key] = sum(r["success"] for r in panel["results"])
-        validation_refs.append(ref)
     for teacher in teachers.values():
         resets.extend(r["reset_identity"] for r in teacher.completed_episodes)
         for ref in teacher.validation_receipts.values():
             resets.extend(r["reset_identity"] for r in read_reference(ref)["results"])
-    selected = max(keys, key=lambda key: scores[key])  # Fixed minusTRAIN1-first tie.
-    alias = "source_validation_selected_blind"
-    path = Path(output)/"condition-cross-blind-selection.json"
-    _atomic_json(path, dict(selected_method=alias, selected_source_method=selected,
-        selected_from="source_validation", cross_cases_opened=False, controller_ref=final[selected],
-        final_validation_successes=scores, source_validation_refs=validation_refs))
+    selected, alias = selection["selected_source_method"], selection["selected_method"]
+    if selected not in keys or selection["controller_ref"] != final[selected]:
+        raise ValueError("Canonical source-validation blind receipt differs from the actual acting controller reference")
     controllers = {key: teachers[key] for key in keys}
     controllers[alias] = teachers[selected]
     final[alias] = deepcopy(final[selected])
     sink = BoundedTeacherRecovery(Path(output)/"condition-cross-recovery", guard=guard, control=control)
+    admitted = [False]
+    def should_start_episode():
+        try:
+            guard.admit_episode()
+            admitted[0] = True
+            return True
+        except BoundaryStop:
+            return False  # Only the known pre-RPC boundary signal is converted.
+    def admitted_episode(*args, **kwargs):
+        if not admitted[0]:
+            raise RuntimeError("A2 episode lacked its explicit pre-pending admission")
+        admitted[0] = False
+        # The helper already reserved complete-episode clock headroom BEFORE
+        # its pending save. Never reject a second time after that checkpoint.
+        return episode_runner(*args, **kwargs, _source_pre_admitted=True)
     return run_condition_cross(control, budget, profile, distribution, controllers,
         run_id=run_id, output=Path(output)/"condition-cross", guard=guard,
         controller_refs=final, context_blind_method=alias,
-        blind_selection_ref=dict(path=str(path), sha256=sha(path)), source_reset_identities=resets,
-        checkpoint=sink, episode_runner=episode_runner)
+        blind_selection_ref=selection_ref, source_reset_identities=resets,
+        checkpoint=sink, episode_runner=admitted_episode, should_start_episode=should_start_episode, state=cross_state)
 
 
 def parser():
@@ -605,15 +675,26 @@ def main(argv=None):
     prior = None
     if args.resume:
         prior = read_bound(args.resume, args.resume_sha256)
-        if (prior.get("format") != FORMAT or prior.get("status") != "boundary_stop"
+        stopped = prior.get("status") == "boundary_stop"
+        deferred_cross = (prior.get("status") == "initial_prefix_complete"
+            and prior.get("post_source_entered") is False and allocation.get("run_condition_cross") is True
+            and len(prior.get("complete_episodes", {})) == 6
+            and set(prior["complete_episodes"].values()) == {24})
+        if (prior.get("format") != FORMAT or not (stopped or deferred_cross)
                 or prior.get("source_commit") != source or prior.get("closed_physical_boundary") is not True
                 or prior.get("profile") != profile.contract()):
             raise ValueError("Resume only exact closed source boundaries; failures require owner reconciliation")
         if prior.get("post_source_entered") and not prior.get("post_source_completed"):
-            raise ValueError("Preserve the existing A2 cursor/recovery; no automatic restarted cross panel")
+            if not allocation.get("run_condition_cross", False):
+                raise ValueError("Resume cannot silently drop the pending closed A2 cursor")
+            closed_cross_cursor(prior)
+        if prior.get("corpus_root") != str(Path(allocation["source_corpus_root"]).resolve()):
+            raise ValueError("Resume must retain the same append-only phase corpus and immutable original records")
         captured = BoundedTeacherRecovery.load(prior["global_recovery"])
         validate_resume_ledger(prior, allocation["action_ledger"], captured)
     guard = RuntimeGuard(allocation)
+    if prior is not None:
+        guard.maximum_episode_seconds = max(guard.maximum_episode_seconds, prior["maximum_episode_seconds"])
     guard.admit_episode()
     args.output.mkdir(parents=True, exist_ok=False)
     if os.statvfs(args.output).f_bavail*os.statvfs(args.output).f_frsize < 16 << 30:
@@ -637,6 +718,14 @@ def main(argv=None):
                 validate_opened_resume(prior, budget, run_id=args.run_id, source_commit=source)
             if budget.snapshot()["unresolved_decisions"]:
                 raise ValueError("Unresolved physical charges prohibit new model/reset execution")
+            corpus_root = Path(allocation["source_corpus_root"])
+            if prior is None and (corpus_root/"contract.json").exists():
+                raise ValueError("Fresh source collection cannot adopt another corpus without a bound closed recovery")
+            writer = RobotwinCorpusWriter(corpus_root, dict(schema=FORMAT, source_commit=source,
+                motor_sha256=profile.motor_sha256, interface_sha256=args.interface_sha256,
+                profile_sha256=args.profile_sha256, role="source_condition_changing_policy_and_fixed_validation"))
+            if writer._stats["unresolved_decisions"]:
+                raise ValueError("Existing source corpus has unresolved physical intents; no reset admitted")
             env = RobotwinNoiseEnv(model_path=args.model_path, norm_stats=args.norm_stats,
                 robotwin_root=args.robotwin_root, rlinf_root=args.rlinf_root,
                 output_dir=args.output/"runtime", action_horizon=32, num_steps=5, task_episode_limits=limits)
@@ -658,9 +747,6 @@ def main(argv=None):
             control.post_command_transform = env.backend.post_command_transform = distribution
             env.backend.contract = dict(env.backend.contract, coefficient_steering=control.config())
             env.contract = env.backend.contract
-            writer = RobotwinCorpusWriter(args.output/"corpus", dict(schema=FORMAT, source_commit=source,
-                motor_sha256=profile.motor_sha256, interface_sha256=args.interface_sha256,
-                profile_sha256=args.profile_sha256, role="source_condition_changing_policy_and_fixed_validation"))
             control.attach_corpus(writer)
             if env.frozen_fingerprint() != qualification["frozen_after"]:
                 raise ValueError("Loaded frozen tensors differ from completed A1 qualification")
@@ -670,6 +756,7 @@ def main(argv=None):
             run_source_collection(control=control, budget=budget, profile=profile,
                 distribution=distribution, output=args.output, guard=guard, archive=archive,
                 run_id=args.run_id, prior=prior, source_commit=source, student_profiles=student_profiles,
+                corpus_root=corpus_root,
                 control_qualification=control_qualification, prefix_builder=build_prefix,
                 after_source=run_source_condition_cross if allocation.get("run_condition_cross", False) else None)
             if env.frozen_fingerprint() != qualification["frozen_after"]:

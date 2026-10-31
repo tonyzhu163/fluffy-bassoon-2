@@ -1,0 +1,16 @@
+# All array/model commands run on the exact allocated Linux hostname and reviewed commit.
+# Bind file paths and hashes to actual immutable artifacts. No scheduler submission here.
+python -m pytest -q tests/test_steering_history.py tests/test_vla_history.py --junitxml=<receipt-dir>/junit.xml
+
+python -m fluffy_bassoon.meta_rl.steering_history export --profile <bound-profile.json> --profile-sha256 <file-sha256> --prefix <immutable-prefix.json> --prefix-sha256 <file-sha256> --objective ad --output <fresh-ad-export> --expected-hostname <allocated-linux-host>
+python -m fluffy_bassoon.meta_rl.steering_history export --profile <bound-profile.json> --profile-sha256 <file-sha256> --prefix <immutable-prefix.json> --prefix-sha256 <file-sha256> --objective dpt --output <fresh-dpt-export> --expected-hostname <allocated-linux-host>
+
+# Each call emits TWO structured argv lists for existing vla_history_train, full/static.
+# Sole owner executes admitted argv under ONE shared fit clock, at most1440GPU-s total.
+python -m fluffy_bassoon.meta_rl.steering_history fit-commands --assembly <fresh-ad-export/assembly.json> --assembly-sha256 <file-sha256> --output <fresh-fit-root> --source-commit <this-qualified-commit> --expected-hostname <allocated-linux-host>
+python -m fluffy_bassoon.meta_rl.steering_history fit-commands --assembly <fresh-dpt-export/assembly.json> --assembly-sha256 <file-sha256> --output <fresh-fit-root> --source-commit <this-qualified-commit> --expected-hostname <allocated-linux-host>
+
+# Frozen live readout uses the SAME robotwin_steering_screen.run_complete_episode callback.
+# Load/admit candidate via steering_history.load_student, wrap FrozenCoefficientController
+# and DriverCoefficientStudent(control=actual_CoefficientSteering), reserve student_evaluation.
+# Bind steering_history.evaluation_plan before any locked query is opened; no larger profile.

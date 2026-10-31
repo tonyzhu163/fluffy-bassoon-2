@@ -1,0 +1,5 @@
+# Existing allocation only. Bind immutable artifacts and actual clean composite pin.
+python -m pytest -q tests/test_vla_history.py tests/test_steering_history.py tests/test_steering_history_pipeline.py tests/test_steering_history_cross_admission.py --junitxml=<receipt-dir>/junit.xml
+
+# Only after the original source + A2 + objective gates and completed scientific fits:
+python -m fluffy_bassoon.meta_rl.steering_history_readout --plan <bound-plan.json> --plan-sha256 <file-sha> --scope <original-SCOPE.json> --scope-sha256 <file-sha> --allocation <owner-ticket.json> --allocation-sha256 <file-sha> --joint-conventions <original-conventions.json> --joint-conventions-sha256 <file-sha> --output <fresh-output> --model-path <actual-motor-dir> --norm-stats <actual-norm-stats> --rlinf-root <actual-rlinf-root> --robotwin-root <actual-robotwin-root> --gpu-probe <actual-probe.json> --source-commit <qualified-composite-pin> --run-id <fresh-run-id> --expected-hostname <allocated-linux-host>
