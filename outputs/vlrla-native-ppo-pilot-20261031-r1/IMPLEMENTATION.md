@@ -7,7 +7,10 @@ global2048/micro32/five epochs. It is a target-online qualification, excluded
 from all source6/source40 meta-training banks. The full published25-iteration
 history-generation schedule is **not** funded or reproduced here.
 
-The upstream c605 PPO implementation, GAE, masks, FlowSDE0.3 and optimizer are
+The new YAML copies the official c605 root configuration with explicit pilot
+overrides; its nested env/model/FSDP defaults still come from the clean source.
+Hydra forbids inheriting that root as a defaults child because it defines
+`hydra.searchpath`. The upstream PPO implementation, GAE, masks, FlowSDE0.3 and optimizer are
 unchanged. The new entry installs narrow worker/runner subclasses without
 editing either upstream checkout. It synchronizes weights and calls the
 official `evaluate()` before training and after iteration2 on the same128
