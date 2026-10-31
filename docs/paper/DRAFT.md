@@ -48,25 +48,26 @@ AD can predict actual z from same-motor SAC learning histories; DPT can label
 saved observations with a competent final same-motor teacher. The present
 target57 records remain excluded from source pretraining.
 [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
-New targeted Motus/RoboTwin evidence retains a fixed11/12 expert bank.
-Original04 fails despite event alignment; a matched grip-closure pair and
-a later one-versus-five-hold × current/close four-case follow-up all fail.
-Frozen motor and paired prelude identities pass. Recorded finger settling
-plateaus without a stable-grasp proof. These negative recipes do not identify
-a unique mechanism or reject the full reactive class. No full
-bank, learned capacity, source RL or Transformer result follows. Partial11
-caching is preparation only. [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
+New targeted Motus/RoboTwin evidence retains11/12 physical teacher successes.
+Original04 also fails the matched closure and dose/grip interventions. These
+negative recipes do not identify a unique mechanism or reject reactive
+policies. A separate command-plan diagnostic retains all12, including failed04.
+Its paid11 cache plus13 new04 records are preserved with complete whole-case
+RNG/cursor publication; the full12 consumer seal fails before fitting.
+Allocated predicate inspection confirms official state(1,32) versus a
+consumer(1,14) guard; a narrow correction and full90-row seal remain pending.
+No learned capacity, source RL or Transformer result follows.
+[Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
-The weak-native pi0.5 pilot selects task44 at5/20 in native screening and
-separate confirmation. Fresh controls score native6/20, untrained tied
-Gaussian13/20 and initialized SAC8/20. The learned20,580-update panel scores
-1/20; the40,140 panel rebounds20/20 with1,651 query primitives+200 settling.
-The60k panel repeats20/20 (1,678+200 actions). This is interim ordinary RL
-improvement over every initial control on a
-reused development bank of ten physical states with two draws each. All
-panels remain; fixed500k, final native and
-last-three persistence are pending. No memory, new-task transfer or overall
-sample-efficiency claim follows. [Evidence](../../outputs/libero90-pi05-headroom-online-20261101-r1/EARLY-REGRESSION.md).
+The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
+confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
+initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
+from40,140 through140,080 scores20/20. All panels are retained. This is interim
+ordinary RL improvement on a reused development bank of ten physical states
+with two draws each. Fixed500k, final native and last-three persistence remain
+pending. No memory, population, new-task transfer or overall sample-efficiency
+claim follows. [Evidence](../frozen-vla-libero/EVALUATION.md).
+
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD

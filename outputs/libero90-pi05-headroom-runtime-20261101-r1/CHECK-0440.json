@@ -1,0 +1,375 @@
+{
+  "format": "pi05_headroom_due_light_check_v1",
+  "checked_unix": 1793479226.9422731,
+  "job_id": "job-w8deahieli8q",
+  "source_commit": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "task_id": 44,
+  "phase": "training",
+  "completed": false,
+  "index_sha256": "13b4b6b2e4d539eeb2a025ec36c4f7c235f0111424f24d0b0e959c68e97eaadf",
+  "updates": 154920,
+  "replay_rows": 8240,
+  "training": {
+    "episodes": 799,
+    "chunks": 8240,
+    "primitive_steps": 78937,
+    "settling_steps": 7990
+  },
+  "train_successes": 760,
+  "train_failures": 39,
+  "last_training_receipt": {
+    "initial_state": 38,
+    "scene_seed": 123,
+    "instruction": "turn on the stove",
+    "task_id": 44,
+    "suite": "libero_90",
+    "semantic_task": "KITCHEN_SCENE9_turn_on_the_stove",
+    "success": true,
+    "chunks": 8,
+    "primitive_steps": 74,
+    "raw_return": 1.0,
+    "initial_observation_sha256": "226fc54ca36ce43d08428d1d0a4e8c50c87def380765f2f32d5826be665a23c0",
+    "initial_state_vector_sha256": "e1330ab7390803b7537ba0b8c01ed56fb473cd96df5cae4b77f238b070667fea",
+    "initial_simulator_state_sha256": "551fa022ad460e070618a2fe1f72637ec3bb34618391ffb01565dd5185eecad9",
+    "initial_public_observation_hashes": {
+      "image": "a82df862ac99841c6f3064b04df64877ea5ac401352ca98aa91fca825a2a2c3d",
+      "wrist": "73d93624245d5da7197047c304d591d1dbf6e5da3cbfa05a6157642e53f05838",
+      "state": "30e5398d1792974ad163faca241b1231eb3e70ce3a39623945dcdc0d7550bd1a"
+    },
+    "initial_simulator_state": [
+      0.5000000000000003,
+      0.013935472601403489,
+      -0.15521810853919843,
+      0.008683177274490686,
+      -2.41260973288765,
+      0.004138263671770151,
+      2.202269492145734,
+      0.804870284433208,
+      0.03873124824485979,
+      -0.03872704555326383,
+      -0.13667342011185246,
+      0.11935622726104186,
+      0.8994107258211033,
+      0.7071067800833553,
+      -6.849749419260324e-05,
+      4.83186973186113e-05,
+      0.7071067773211803,
+      0.053624035685531056,
+      0.014127959540374147,
+      0.8991707330326614,
+      0.7071065468067493,
+      -7.827453979201511e-05,
+      8.430146743925942e-05,
+      0.7071070062086748,
+      0.0,
+      -0.013301402595307675,
+      0.019681221871683762,
+      0.013195950818132305,
+      0.03443410039625731,
+      -0.0012646041806071173,
+      -0.04241690750657809,
+      0.0009316832367080379,
+      0.003170765263718946,
+      -0.003205983507586154,
+      4.2493682935988765e-10,
+      -2.4014307944830477e-09,
+      6.194583112743735e-06,
+      -1.818206676343904e-07,
+      1.0609742901344553e-06,
+      7.225038221311579e-11,
+      -4.198557209331164e-11,
+      -1.3103093061899468e-09,
+      6.028874603447532e-06,
+      5.043512066565751e-08,
+      1.595514257077314e-06,
+      2.3271879483464978e-12,
+      0.0
+    ],
+    "data_role": "target-onlineDEV",
+    "completed": true,
+    "training_episode": 798,
+    "target_optimizer_updates_before": 154760,
+    "target_optimizer_updates": 154920,
+    "replay_rows": 8240,
+    "update_metrics": {
+      "actor_loss": 3.2444257736206055,
+      "critic_loss": 0.004143911879509687,
+      "entropy": -15.989667892456055,
+      "mean_pi_avg": 0.03149130940437317,
+      "mean_pi_max": 3.104916572570801,
+      "mean_pi_min": -3.173076868057251,
+      "mean_pi_norm": 5.978619575500488,
+      "next_actions_max": 0.9991826415061951,
+      "next_actions_mean": 0.0007348357466980815,
+      "next_actions_min": -0.9992812871932983,
+      "next_actions_sampled": 0.0007348357466980815,
+      "next_actions_std": 0.6662578582763672,
+      "next_log_probs": 16.022174835205078,
+      "next_q_pi": -2.579578399658203,
+      "q": -3.463247776031494,
+      "q_pi_in_actor": -3.1677913665771484,
+      "std_pi_avg": 0.43987101316452026,
+      "std_pi_max": 1.3991234302520752,
+      "std_pi_min": 0.08574894815683365,
+      "std_pi_norm": 2.538602828979492,
+      "target_actor_entropy": -16.022174835205078,
+      "target_q": -3.4643282890319824,
+      "temperature": 0.004792742896825075,
+      "temperature_loss": 4.951913433615118e-05
+    },
+    "actor_fixed_within_episode": true,
+    "behavior": "target_sac",
+    "policy_signature": "287db02d96c852191617bb333d8011b0a1b110a85e2d0059544f46c4e7be7af8",
+    "trace": "raw/training-000798-1793479212200961974.pkl.gz",
+    "trace_sha256": "db8b238b566f9b73917e007bc49a5f5739f8a3960befa222e0f75505ff6b8168"
+  },
+  "last_losses_finite": true,
+  "newest_raw_trace": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/raw/training-000798-1793479212200961974.pkl.gz",
+    "sha256": "db8b238b566f9b73917e007bc49a5f5739f8a3960befa222e0f75505ff6b8168",
+    "bytes": 1240924
+  },
+  "newest_raw_trace_matches": true,
+  "full_recovery": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "3c6c55374b76fa2db70ab23cd83ea48ccbe588c798bc862b825612413f5891e2",
+      "updates": 155080,
+      "replay_rows": 8248,
+      "signature": "14fc9460c5802e6fa7adbfdafaa384e8fca3476d7357817fc563edd5dcbb8f0c"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "3c6c55374b76fa2db70ab23cd83ea48ccbe588c798bc862b825612413f5891e2",
+      "bytes": 245410547
+    },
+    "stable": true
+  },
+  "stable_recovery_read_limit": 2,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "kind": "initial_native",
+      "queries": 20,
+      "successes": 6,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 6447,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_tied-000000",
+      "kind": "initial_tied",
+      "queries": 20,
+      "successes": 13,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 4490,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_sac-000000",
+      "kind": "initial_sac",
+      "queries": 20,
+      "successes": 8,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 5898,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "learned-020000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 1,
+      "actual_updates": 20580,
+      "threshold_updates": 20000,
+      "primitive_steps": 7683,
+      "settling_steps": 200,
+      "policy_signature": "bb52982822065b6dcd9347e5c6daa94a5b9d0a4a7e616afd89ac543b521f478e"
+    },
+    {
+      "name": "learned-040000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 40140,
+      "threshold_updates": 40000,
+      "primitive_steps": 1651,
+      "settling_steps": 200,
+      "policy_signature": "2ea85c0b6f2bc04c289b8326f4dee419d9dbd4ec0d5edc65e5af14f69b48a631"
+    },
+    {
+      "name": "learned-060000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 60000,
+      "threshold_updates": 60000,
+      "primitive_steps": 1678,
+      "settling_steps": 200,
+      "policy_signature": "b6ec9603d4a00bfb485ca500c855956fe7acb3723c7086e8cffcd327be9e8b77"
+    },
+    {
+      "name": "learned-080000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 80140,
+      "threshold_updates": 80000,
+      "primitive_steps": 1582,
+      "settling_steps": 200,
+      "policy_signature": "df1f1a0e49b1b576beb3bed10431b736e4f03e584915f513fdc80e85376f6653"
+    },
+    {
+      "name": "learned-100000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 100020,
+      "threshold_updates": 100000,
+      "primitive_steps": 1519,
+      "settling_steps": 200,
+      "policy_signature": "9550ae45e5aa5a0bde7e49bf3c201fdfce4c309bda80bf2f2455effb9bae83b1"
+    },
+    {
+      "name": "learned-120000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 120000,
+      "threshold_updates": 120000,
+      "primitive_steps": 1532,
+      "settling_steps": 200,
+      "policy_signature": "a3757d793a48d9da810c324fbdd54fe1c0a9a681ff08ccb27c1d507ada938234"
+    },
+    {
+      "name": "learned-140000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 140080,
+      "threshold_updates": 140000,
+      "primitive_steps": 1511,
+      "settling_steps": 200,
+      "policy_signature": "7682be1285f201d386b5b1b2f5408892609d470c6dd4757f110f70feb133cdf1",
+      "optimizer_update_overshoot": 80,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-140000-recovery.pkl",
+        "sha256": "749be678ffbc046f42440c6167550057f02503d5ab71892bc81a6bf580997464",
+        "bytes": 226402501
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "active_panel": null,
+  "whole_phase_action_charge": 219697,
+  "learning_case_action_charge": 122918,
+  "costs": {
+    "training": {
+      "known_actions": 86927,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 78937,
+      "settling_steps": 7990,
+      "reset_attempts": 799
+    },
+    "query": {
+      "known_actions": 35991,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 33991,
+      "settling_steps": 2000,
+      "reset_attempts": 200
+    },
+    "qualification": {
+      "known_actions": 0,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 0,
+      "reset_attempts": 0
+    }
+  },
+  "maximum_total_actions": 1000000,
+  "storage": {
+    "actual_output_bytes": 11109842127,
+    "full_slot_logical_bytes": 490212859,
+    "maximum_full_checkpoint_bytes": 245207805,
+    "maximum_complete_trace_bytes": 5871030,
+    "next_episode_reservation_bytes": 4294967296,
+    "hardlinks_counted_once": true
+  },
+  "output_bytes": 11109842127,
+  "maximum_output_bytes": 68719476736,
+  "free_PFS_bytes": 1054951342080,
+  "attempt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793468637000000-0001",
+    "started_unix": 1793468637.0,
+    "slice_seconds": 25140,
+    "reserved_seconds": 25200,
+    "status": "started",
+    "scheduler_allowance_seconds": 60
+  },
+  "settled_prior_GPU_seconds": 3076,
+  "active_elapsed_seconds": 10589.942273139954,
+  "observed_conservative_elapsed_GPU_seconds": 13726,
+  "phase_interrupted_reservation_GPU_seconds": 28276,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_job_GPU_seconds": 25200,
+  "motor_before": {
+    "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "leaves": 51,
+    "elements_by_dtype": {
+      "bfloat16": 3353433872
+    }
+  },
+  "motor_before_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793468650700888326/motor-before.json",
+    "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+    "bytes": 156
+  },
+  "final_motor_after_pending": true,
+  "stop_reason": null,
+  "next_owned_check": "2026-11-01 05:00 Asia/Shanghai",
+  "verification_limits": "Current counters, stable latest full recovery, newly completed learned panels and newest closed raw trace bytes only. Old control/milestone hashes not repeated; no journal forest, tensor deserialization, saved-array analysis, model/test/simulator execution, or job control.",
+  "newest_RPC_sample": {
+    "record": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793479221365254902.json",
+      "sha256": "4ae0d58bd07e251f094202e856133a03b2f4d88b3f98e6aca7f38daa5a2f22a3",
+      "bytes": 448
+    },
+    "metadata": {
+      "kind": "step",
+      "role": "training",
+      "episode_id": "training-000799",
+      "maximum_steps": 10,
+      "actual_steps": 2,
+      "returned": true,
+      "input_path": "1793479221365254902-input.pkl.gz",
+      "input_sha256": "4d7d39a30b699a7b98db033438822e906552cdf4962e575b0d63bd818bf5de60",
+      "outcome_status": "complete",
+      "outcome_path": "1793479221365254902.pkl.gz",
+      "outcome_sha256": "01ff718567d5567bf78725d3f02501f2f0ba9e1cd9527f378e7644b79fe7aa48"
+    },
+    "referenced_bytes": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793479221365254902-input.pkl.gz",
+        "sha256": "4d7d39a30b699a7b98db033438822e906552cdf4962e575b0d63bd818bf5de60",
+        "bytes": 117180
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793479221365254902.pkl.gz",
+        "sha256": "01ff718567d5567bf78725d3f02501f2f0ba9e1cd9527f378e7644b79fe7aa48",
+        "bytes": 116831
+      }
+    ],
+    "referenced_byte_hashes_match": true
+  },
+  "RPC_verification_scope": "One name listing and at most3 latest JSON metadata records; raw referenced bytes may be rehashed separately, no journal history replay."
+}

@@ -3,13 +3,13 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## Task44 ordinary SAC: early regression followed by20/20 rebound
+## Task44 ordinary SAC: early regression and repeated20/20 panels
 
-Task44 (`turn on the stove`) was selected at native5/20 in both screening and
+Task44 (`turn on the stove`) was selected at native5/20 in screening and
 separate confirmation. Preferred77 screened4/20 but confirmed0/20 and was
 rejected beforeSGD. Fresh-process native readmission6/20 passed the frozen
-2–8 band. The entire official OpenPI40 pi0.5 remains frozen. The query bank is ten
-physical states40–49, two private-noise draws each, reused at every checkpoint.
+2–8 band. The entire official OpenPI40 pi0.5 remains frozen. Queries reuse ten
+physical states40–49 with two private-noise draws each.
 
 | Fixed20-case query condition | Success | Actual updates |
 | --- | ---: | ---: |
@@ -22,42 +22,41 @@ physical states40–49, two private-noise draws each, reused at every checkpoint
 | Fourth learned panel |20/20|80,140|
 | Fifth learned panel |20/20|100,020|
 | Sixth learned panel |20/20|120,000|
+| Seventh learned panel |20/20|140,080|
 
-The second panel reverses the first panel's regression and exceeds every
-untrained control. It uses1,651 query primitives+200 settling. Initial
-identities/private seeds match native, acting weights stay fixed, and queries
-neither update nor enter replay. The newest immutable milestone, stable full
-recovery and raw trace hashes pass in the sole execution owner's check. This
-is promising interim ordinary RL evidence, not a selected final checkpoint or
-a completed replication. The60k panel repeats20/20 with1,678 primitives+200 settling. The80k panel also scores20/20 (1,582+200 actions). All learned
-panels stay in the curve; the fixed endpoint and persistence test remain pending. The untrained
-tied control's13/20 advantage also shows why a native-only gap cannot isolate
-learning. [Owned check](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240.json).
+The repeated learned panels exceed every untrained control on this selected
+development bank. The latest140,080 panel uses1,511 query primitives+200
+settling actions. The early1/20 panel remains in the curve. The tied control's
+13/20 advantage illustrates why a native-only comparison cannot isolate
+learning. Low entropy and concentration also coexist with the later excellent
+panels, so they alone do not explain the early failure. Replay coverage,
+critic fit and transient learning remain competing explanations; narrow
+pinned-source checks found no concrete scale/order/reward/entropy mismatch.
 
-At02:40 the learner has53,120 updates and189 training episodes:151 successes,
-38 failures, adding100 successes/3 failures since02:20. Losses remain finite.
-Low temperature (.00911), entropy near−16 and large pre-tanh means coexist
-with the new excellent query performance, so concentration alone does not
-explain20k's failure. Replay coverage, critic fit, state generalization and
-early transient learning remain competing explanations. Narrow pinned-source
-checks found no concrete scale/order/reward/entropy mismatch. Existing60k/80k
-panels test persistence without retuning. [Evidence and limitations](../../outputs/libero90-pi05-headroom-online-20261101-r1/EARLY-REGRESSION.md).
+The04:40 owner check verifies154,920 updates/799 training episodes,
+760 successes/39 failures. Its later stable recovery155,080 is a separate
+advancing snapshot, not an atomic match to the index. Newest immutable140k
+checkpoint, raw/RPC bytes and all query identities pass; acting weights stay
+fixed and queries neither update nor enter replay. Losses remain finite.
+Whole-phase219,697 actions/11.11GB include screening, controls and learning;
+prior screen3,076 plus active10,589.94 GPU-seconds is not a final charge.
+[Owned proof](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0440-PROOF.json).
 
-Baige job-w8deahieli8q/sourceb665 continues the fixed500k endpoint, all20k
-panels, last-three gain criterion and final native. Current whole-phase charge
-is156,664 actions/7.44GB; screen settled3,076 GPU-seconds and active3,379.4
-seconds is not a terminal charge. This child reserves25,200 in the original
-57,600/1M/64GiB lineage. No task/checkpoint substitution or extra learner seed.
-The03:00 owned check verifies73,960 updates/304 training episodes
-(265 successes/39 failures),169,553 phase actions/8.13GB, finite losses and
-stable recovery/newest60k milestone/raw/RPC evidence. Next03:20Shanghai.
+Baige job-w8deahieli8q/sourceb665 continues the fixed first whole burst≥500k,
+all20k panels, last-three gain criterion and final native. This child reserves
+25,200 seconds in the original57,600/1M/64GiB lineage. The next check is05:00.
+No checkpoint/task/seed substitution, retuning or extra learner seed is used.
+The fixed endpoint and persistence test discriminate sustained improvement
+from a favorable interim checkpoint. This is promising ordinary RL evidence,
+not a completed replication or meta-learning result.
 
-All240 screens and40 confirmations remain retained. Selection and target
-trajectories are disclosed development exposure, excluded from source40/new
-meta-pretraining. Screen7a69→learningb665 preserves the original clocks/actions
-and immutable code worktree. NativeH10 differs from paper pi0H50: this is an
-adapted single-seed pilot. No memory, unseen-task transfer, full-suite or total
+All240 screens and40 confirmations are retained. Selection and target histories
+are disclosed development exposure and excluded from source40/new pretraining.
+Screen7a69→learningb665 preserves clocks/actions and immutable worktrees.
+NativeH10 differs from the paper's pi0H50: this is an adapted single-seed pilot.
+No population, memory, unseen-task transfer, full-suite or overall
 sample-efficiency claim follows. [Selection/launch](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-TERMINAL-RECEIPT.json).
+
 
 ## Task57 fixed500k DSRL curve complete
 

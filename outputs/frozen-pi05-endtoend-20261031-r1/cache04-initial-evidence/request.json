@@ -1,0 +1,95 @@
+{
+  "status": "OWNER_BOUND_ALLOCATED_CACHE04_ONLY",
+  "operation": "cache04",
+  "profile": {
+    "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+    "seed": 20261031,
+    "updates": 5000,
+    "global_batch": 2,
+    "learning_rate": 0.001,
+    "milestones": [
+      0,
+      100,
+      500,
+      2000,
+      5000
+    ],
+    "primary_endpoint": 5000,
+    "selection": "fixed_final_endpoint",
+    "optimizer": "AdamW",
+    "weight_decay": 0.0,
+    "gradient_clip": 1.0,
+    "execution_microbatch": 1,
+    "rank": 4,
+    "kv_scale": 0.1,
+    "kv_layers": [
+      -1
+    ],
+    "wide_contract_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+    "whole_split": {
+      "phone-00": "train",
+      "phone-01": "train",
+      "phone-02": "train",
+      "phone-03": "train",
+      "phone-04": "train",
+      "phone-05": "train",
+      "phone-06": "train",
+      "phone-07": "train",
+      "phone-08": "validation",
+      "phone-09": "validation",
+      "phone-10": "validation",
+      "phone-11": "validation"
+    },
+    "labels": "captured full submitted plans; native executed masks are physical costs only",
+    "maximum_new_robot_actions": 0,
+    "maximum_fit_output_bytes": 17179869184,
+    "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+    "source_eligible": false,
+    "successful_teacher_bank_eligible": false,
+    "diagnostic_bank_format": "robotwin_fixed12_command_diagnostic_bank_v1",
+    "complete_cache_format": "robotwin_fixed12_complete_command_diagnostic_cache_v1",
+    "failed04_label_source": "original be247 event-teacher-phone-04; no later recipe substitution",
+    "maximum_cache04_output_bytes": 2147483648
+  },
+  "bank": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cache04-allocation-r1/bank.json",
+    "sha256": "5087dc5a230cb5bb9c635c5bc0f75bddcf2d15a7b080674fa4ee8a653f38cc0e"
+  },
+  "cache_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/partial11-cache-r1/frozen-pi05-partial11-cache-20261101-r1/partial-cache.json",
+      "sha256": "ebee3741b51099df9c41cdf42ed108058b447e5831a15b13285f201f1808c8ba"
+    }
+  ],
+  "complete_cache_sha256": null,
+  "wide_configuration": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache04-recovery-20261101-r2/outputs/robotwin-wide-action-head-20261101-r1/CONFIG.json",
+    "sha256": "e208fa1911ca39ee75537a84aa00a7fadf19e67bba508d55dbeb94d06429a433"
+  },
+  "runtime_blob_sha256": {
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_curve.py": "6647aa199fcad0a74415d1fddaf61f8b234b8743745e218064b935445cc62d5a",
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+    "src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py": "91de73d421537fa01715da12a2aecfc19bdbf1a5edb47054d9274590c7792506",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+    "src/fluffy_bassoon/meta_rl/robotwin_demo_capacity.py": "fabdd092f888bb801cb434673441a461b0f320c73cced46e782d5192c17aa836",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "0acc9c0a5fc82cc827f109e42937f2adf8134fcd45ab01a7f5fcc4943867120d",
+    "src/fluffy_bassoon/rl/pi05_residual.py": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_bank.py": "8a8d11b2fff1ee74be865bfe54ccb1d1b25d7dd7400aba3d9d5489eb548239be",
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_curve.py": "865f1f4798e95cdad25f8ce54814700daf70a0e1d582845b24537026f42ee513",
+    "src/fluffy_bassoon/meta_rl/robotwin_cache04_recovery.py": "cf2c2befdec53dbeae16ef4ec0398964b1499d428e60819de674c5ef16c8612c",
+    "src/fluffy_bassoon/meta_rl/robotwin_partial11_cache.py": "4850b43b6272ba6e8e1f13b4b017f8856f469a45ac2bc91042ff2d406c5107f8"
+  },
+  "resume": null,
+  "partial11_cursor": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/partial11-cache-r1/frozen-pi05-partial11-cache-20261101-r1/cursor.json",
+    "sha256": "0edbb0512094bd87ab3b0ddb746a2b4aa8bc2a66f689b9bd5ee44a9e3e3387d7"
+  },
+  "partial11_closeout": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/partial11-cache-allocation-r1/allocation-closeout.json",
+    "sha256": "20195ec978bf5172cfafbf46575172cd7bc7b9fcf4e44d4f73efcc8e084d266e"
+  },
+  "cache04_resume": null
+}

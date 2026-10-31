@@ -1,0 +1,546 @@
+{
+  "format": "three_row_cache_schema_inspection_v1",
+  "hostname": "job-7dolnmsiqfmx-master-0",
+  "inputs_sha256": "9d4ed206db12931b7cea5cfb03dbf72719c37a2d2f9565f9b9df8376a14db74e",
+  "sealer_source": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache04-recovery-20261101-r2/src/fluffy_bassoon/meta_rl/robotwin_teacher_bank.py",
+    "sha256": "91de73d421537fa01715da12a2aecfc19bdbf1a5edb47054d9274590c7792506"
+  },
+  "request": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-cache04-allocation-r1/request.json",
+    "sha256": "6c0d44e587991fc8e7bf214697d189a488f54b25fd2b8ded2dc09d694b1560fd"
+  },
+  "new04_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/cache04/command-diagnostic-cache04-r1/partial-cache.json",
+    "sha256": "ae4b8251734d863b45b7e78f70a0428ae2e1ce2d90a0b757c51111c6abdd5057"
+  },
+  "rows": [
+    {
+      "selection": "first_paid11",
+      "teacher_id": "phone-00",
+      "anchor": 0,
+      "payload_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/partial11-cache-r1/frozen-pi05-partial11-cache-20261101-r1/phone-00/sample-0000.pt",
+        "sha256": "af120d16430f1c03d49ecf992e3f6efc9e38582972b1d3d54fe01542a6363437"
+      },
+      "saved_context": {
+        "teacher_id": "phone-00",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-00",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-6e8c7c8c5ee34c02b4f168076cb2bd81/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "a1e2e4c588bb9ee977e52366a8cd5b85368f0a01b9c92c391e2daba8170442db"
+        },
+        "original_source": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode0.hdf5",
+          "sha256": "36c421f91fa12a466769311513526219fadd5cd7e09369fb3e95c3cc6e117eaa",
+          "bytes": 6920321
+        }
+      },
+      "expected_context": {
+        "teacher_id": "phone-00",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-00",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-6e8c7c8c5ee34c02b4f168076cb2bd81/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "a1e2e4c588bb9ee977e52366a8cd5b85368f0a01b9c92c391e2daba8170442db"
+        },
+        "original_source": {
+          "bytes": 6920321,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode0.hdf5",
+          "sha256": "36c421f91fa12a466769311513526219fadd5cd7e09369fb3e95c3cc6e117eaa"
+        }
+      },
+      "predicates": {
+        "format_correct": true,
+        "context_exact": true,
+        "submitted_shape_32": true,
+        "executed_shape_32": true,
+        "submitted_bool": true,
+        "executed_bool": true,
+        "submitted_prefix": true,
+        "executed_prefix": true,
+        "executed_subset_submitted": true,
+        "executed_count_matches_receipt": true,
+        "submitted_count_matches_receipt": true,
+        "data_valid_matches_submitted": true,
+        "teacher_matches_full_proposal": true,
+        "data_keys_exact": true,
+        "features_shape_1x2062": true,
+        "state_shape_1x14": false,
+        "base_shape_1x32x14": true,
+        "target_shape_1x32x32": true
+      },
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "fields": {
+        "state": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "9e302316b9d12ce7a3a8a1b8e4594d9a33027b7f42a1288ab0be81c8fbd6ab2c",
+          "elements": 32
+        },
+        "features": {
+          "shape": [
+            1,
+            2062
+          ],
+          "dtype": "torch.float32",
+          "sha256": "93cbf6ce00ed199848cccf5a0de75b010062072900279e7b52e3e575bd9ca5a6",
+          "elements": 2062
+        },
+        "base14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "005285a6f0d6e882cf7f9f8ef47690b1e44d0081102d00f84b9b4db8fed7cc59",
+          "elements": 448
+        },
+        "target32": {
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "c3782f7679c1022cee6011e5e64886bc9073c22ba3db8300333c3ed4d299d959",
+          "elements": 1024
+        },
+        "teacher14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "950f0861bfa41ba30a8cd69ad07280674ba37b8f41ae53ed50aa12dedcd369ea",
+          "elements": 448
+        },
+        "valid": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.bool",
+          "sha256": "e953163a9318bc36a23b912d397d423797d5423368af75b005d3829a0e098071",
+          "elements": 32
+        }
+      },
+      "full_known_proposed_plan14": {
+        "shape": [
+          32,
+          14
+        ],
+        "dtype": "torch.float32",
+        "sha256": "2fbf57864c384e007de34d05954c5acf955b2b256d074a3fc25803c56db24190",
+        "elements": 448
+      },
+      "submitted_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "2ea74d20de773b55d260fb91035b4fa875341db47bdc31fc2ebc3c8d5cd673b1",
+        "elements": 32
+      },
+      "executed_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "2ea74d20de773b55d260fb91035b4fa875341db47bdc31fc2ebc3c8d5cd673b1",
+        "elements": 32
+      },
+      "submitted_count": 32,
+      "executed_count": 32,
+      "receipt_valid_actions": 32,
+      "receipt_native_actual_actions": 32,
+      "canonical_native_actual_actions": 32,
+      "canonical_chunk": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus/episodes/episode-6e8c7c8c5ee34c02b4f168076cb2bd81/chunks/000001.json",
+        "sha256": "ad55500371dd18e345ca9ef2474ac430975da801e1e3c00fa24cfb92236be58b"
+      }
+    },
+    {
+      "selection": "first_new04",
+      "teacher_id": "phone-04",
+      "anchor": 0,
+      "payload_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/cache04/command-diagnostic-cache04-r1/payload/phone-04/sample-0000.pt",
+        "sha256": "309c607fcbb726a2717ce3c99c887c70f4455d897d08030967522a10f2b65f3f"
+      },
+      "saved_context": {
+        "teacher_id": "phone-04",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-04",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-555e8603a6ab40028d564dce6dbe476c/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "172206a214712de4dc5a2f7b04d92747fe3a4dede12add1b026c36aa7ba1492e"
+        },
+        "original_source": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+          "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+          "bytes": 7256080
+        }
+      },
+      "expected_context": {
+        "teacher_id": "phone-04",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-04",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-555e8603a6ab40028d564dce6dbe476c/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "172206a214712de4dc5a2f7b04d92747fe3a4dede12add1b026c36aa7ba1492e"
+        },
+        "original_source": {
+          "bytes": 7256080,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+          "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8"
+        }
+      },
+      "predicates": {
+        "format_correct": true,
+        "context_exact": true,
+        "submitted_shape_32": true,
+        "executed_shape_32": true,
+        "submitted_bool": true,
+        "executed_bool": true,
+        "submitted_prefix": true,
+        "executed_prefix": true,
+        "executed_subset_submitted": true,
+        "executed_count_matches_receipt": true,
+        "submitted_count_matches_receipt": true,
+        "data_valid_matches_submitted": true,
+        "teacher_matches_full_proposal": true,
+        "data_keys_exact": true,
+        "features_shape_1x2062": true,
+        "state_shape_1x14": false,
+        "base_shape_1x32x14": true,
+        "target_shape_1x32x32": true
+      },
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "fields": {
+        "state": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "9e302316b9d12ce7a3a8a1b8e4594d9a33027b7f42a1288ab0be81c8fbd6ab2c",
+          "elements": 32
+        },
+        "features": {
+          "shape": [
+            1,
+            2062
+          ],
+          "dtype": "torch.float32",
+          "sha256": "f88387c8a7d64d4413dd5f934f4f1a71928d2043c7414bd787c0ae4bad2cfd19",
+          "elements": 2062
+        },
+        "base14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "bec43f820feaa68941164ab2bf383d16315b940b7df5d4df8a9f3a92f40ece5d",
+          "elements": 448
+        },
+        "target32": {
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "a2fa665983a19a153ee5e21a2c7161f099be9fd71faa48cbb83bda9522d5176b",
+          "elements": 1024
+        },
+        "teacher14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "b62a91f3dd77f43661214be44edcea66b949241be69fc21e3bc68cc6e6954293",
+          "elements": 448
+        },
+        "valid": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.bool",
+          "sha256": "e953163a9318bc36a23b912d397d423797d5423368af75b005d3829a0e098071",
+          "elements": 32
+        }
+      },
+      "full_known_proposed_plan14": {
+        "shape": [
+          32,
+          14
+        ],
+        "dtype": "torch.float32",
+        "sha256": "b24c16b62d21e1bbd586158cf89aff954b0d6aa19904f157370e18e5f0cb9a2b",
+        "elements": 448
+      },
+      "submitted_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "2ea74d20de773b55d260fb91035b4fa875341db47bdc31fc2ebc3c8d5cd673b1",
+        "elements": 32
+      },
+      "executed_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "2ea74d20de773b55d260fb91035b4fa875341db47bdc31fc2ebc3c8d5cd673b1",
+        "elements": 32
+      },
+      "submitted_count": 32,
+      "executed_count": 32,
+      "receipt_valid_actions": 32,
+      "receipt_native_actual_actions": 32,
+      "canonical_native_actual_actions": 32,
+      "canonical_chunk": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus/episodes/episode-555e8603a6ab40028d564dce6dbe476c/chunks/000001.json",
+        "sha256": "ff0fbef9e96719156cfc1c567c36c104bfa60e40e75b938d77118197b185237b"
+      }
+    },
+    {
+      "selection": "last_new04",
+      "teacher_id": "phone-04",
+      "anchor": 12,
+      "payload_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/cache04/command-diagnostic-cache04-r1/payload/phone-04/sample-0012.pt",
+        "sha256": "8b1dc79f9bdf76d2035db805c463de2c5790125809a9d6b94d2cdf7e244c8123"
+      },
+      "saved_context": {
+        "teacher_id": "phone-04",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-04",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-555e8603a6ab40028d564dce6dbe476c/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "172206a214712de4dc5a2f7b04d92747fe3a4dede12add1b026c36aa7ba1492e"
+        },
+        "original_source": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+          "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+          "bytes": 7256080
+        }
+      },
+      "expected_context": {
+        "teacher_id": "phone-04",
+        "split": "train",
+        "producer_result": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+          "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+        },
+        "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "profile": {
+          "kind": "original_event_h32_v1",
+          "producer_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014"
+        },
+        "record_id": "event-teacher-phone-04",
+        "episode_manifest_ref": {
+          "path": "episodes/episode-555e8603a6ab40028d564dce6dbe476c/manifest.json",
+          "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus",
+          "sha256": "172206a214712de4dc5a2f7b04d92747fe3a4dede12add1b026c36aa7ba1492e"
+        },
+        "original_source": {
+          "bytes": 7256080,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+          "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8"
+        }
+      },
+      "predicates": {
+        "format_correct": true,
+        "context_exact": true,
+        "submitted_shape_32": true,
+        "executed_shape_32": true,
+        "submitted_bool": true,
+        "executed_bool": true,
+        "submitted_prefix": true,
+        "executed_prefix": true,
+        "executed_subset_submitted": true,
+        "executed_count_matches_receipt": true,
+        "submitted_count_matches_receipt": true,
+        "data_valid_matches_submitted": true,
+        "teacher_matches_full_proposal": true,
+        "data_keys_exact": true,
+        "features_shape_1x2062": true,
+        "state_shape_1x14": false,
+        "base_shape_1x32x14": true,
+        "target_shape_1x32x32": true
+      },
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "fields": {
+        "state": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "20058e756545110496692c1f7ed7e087e66770e6365539d93f6df5395f338bfe",
+          "elements": 32
+        },
+        "features": {
+          "shape": [
+            1,
+            2062
+          ],
+          "dtype": "torch.float32",
+          "sha256": "20102cf775a19390a9e7eb4641cc9f6ccb859cf14eff84d1eb59d79bc7f04670",
+          "elements": 2062
+        },
+        "base14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "c0a16d60df07bb67aa56bdc7e7f984e8f0410be10f44ddf3c1a3a563f26ed6aa",
+          "elements": 448
+        },
+        "target32": {
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float32",
+          "sha256": "3f50fd4cf722290147f1d2802b092b460c64eb2f910a179a246f137af8809d2f",
+          "elements": 1024
+        },
+        "teacher14": {
+          "shape": [
+            1,
+            32,
+            14
+          ],
+          "dtype": "torch.float32",
+          "sha256": "3fa4fdc2af1af549eebb8d10b739babb8b8107cfb425d0b57fc2a2fd3295c712",
+          "elements": 448
+        },
+        "valid": {
+          "shape": [
+            1,
+            32
+          ],
+          "dtype": "torch.bool",
+          "sha256": "5b7ac3d1cd181148056bfa0022419075a383abc5557b813337777e867c816287",
+          "elements": 32
+        }
+      },
+      "full_known_proposed_plan14": {
+        "shape": [
+          32,
+          14
+        ],
+        "dtype": "torch.float32",
+        "sha256": "8702c052a3c64f8fc8726db64d5f532e8f38885208cd3970960d3da18744521b",
+        "elements": 448
+      },
+      "submitted_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "975508c3b0fc92d8ccb1829dcba769f99c6b4d7b84c007874f85fd52910cb191",
+        "elements": 32
+      },
+      "executed_mask": {
+        "shape": [
+          32
+        ],
+        "dtype": "torch.bool",
+        "sha256": "975508c3b0fc92d8ccb1829dcba769f99c6b4d7b84c007874f85fd52910cb191",
+        "elements": 32
+      },
+      "submitted_count": 16,
+      "executed_count": 16,
+      "receipt_valid_actions": 16,
+      "receipt_native_actual_actions": 16,
+      "canonical_native_actual_actions": 16,
+      "canonical_chunk": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/corpus/episodes/episode-555e8603a6ab40028d564dce6dbe476c/chunks/000013.json",
+        "sha256": "b1dc8a1f780cb637999207d1b080547050299e3bf347792dbaf783912847b51d"
+      }
+    }
+  ],
+  "maximum_rows": 3,
+  "model_or_weights_loaded": false,
+  "simulator_or_actions": 0,
+  "cache_arrays_transferred": false,
+  "payloads_rewritten": false,
+  "sealer_guard_relaxed": false,
+  "seal_PASS_claim": false,
+  "scope": "Only three specified savedCPU cache rows; false predicates are observations, not full-cache admission"
+}

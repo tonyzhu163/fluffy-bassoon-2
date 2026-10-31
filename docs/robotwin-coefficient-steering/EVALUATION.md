@@ -101,23 +101,57 @@ a full12 seal, successful04 or fitting/source admission.
 [CPU proof](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL-FACTORIAL-CPU-RECEIPT.json),
 [cache closeout](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL11-TERMINAL-RECEIPT.json).
 
-The required new diagnostic42 plus curve42 tests pass on exact06 in a
-zero-GPU Linux allocation. The optional fitted-bridge suite separately yields
-5 passes/3 fixture failures because its TinyMotor lacks the real frozen-model
-interface; the overall wrapper exit1 is preserved. The93-second CPU charge is
-counted once. Optional bridge qualification cannot gate the independent cache
-path. Before GPU dispatch, the execution owner identified absent cache cursor/
-RNG publication; a narrow closed-case preservation successor and focused
-qualification remain necessary. A linked120-second CPU-only correction grant
-keeps the original1,800-second allowance intact; no passed84/5 bodies repeat.
-[Actual qualification](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-DIAGNOSTIC-CPU-RECEIPT.json).
+The required diagnostic42 plus curve42 tests pass on exact06 in a zero-GPU
+Linux allocation. The optional fitted-bridge suite has5 passes/3 fixture
+failures; the overall wrapper exit1 and93-second charge are retained. A
+separate preservation job on d442 passes33/33 new recovery tests; three
+optional bridge fixtures fail on another missing fake-backend attribute,
+and the optional readout does not run. That wrapper also retains exit1,
+charging98 of its separate120 CPU-worker-seconds. These failures do not
+override independently qualified cache preservation or authorize a fit.
+[Recovery qualification](../../outputs/frozen-vla-preservation-software-qual-20261101-r1/RECEIPT.json).
 
-The next prospective command-capacity diagnostic may retain all original12
-identities/8TRAIN4VAL including failed04, explicitly labeling its replay failed.
-It asks whether reactive heads can imitate known submitted command plans, not
-whether all teachers succeeded. This requires a new diagnostic profile/adapter
-and linked finite resource plan; the old success gate/seal remains unchanged.
-No further blind dwell retry or actual fit is admitted by these closeouts.
+The d442 cache04 GPU job closes13 original04 rows and immutable before/after
+whole-case RNG/cursor recoveries. All13 payload byte hashes match; the paid11
+manifest is unchanged. Frozen721a qualification passes and no robot action
+runs. The subsequent full12 sealer fails at its combined mask/label/context
+schema guard, so the allocation remains Failed/exit1 despite completed
+encoding. Its173 GPU-seconds bring the phase to3,625, with23,922 actions
+unchanged and no active GPU hold. Checkpoint byte/ZIP-CRC checks do not imply
+an actual restore. [Terminal evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/CACHE04-TERMINAL-RECEIPT.json).
+
+Expected target: admit the complete retained command-plan cache before any
+fit. Actual: encoding/recovery succeed while consumer validation fails.
+Allocated CPU inspection of the first paid00, first04 and last04 rows confirms
+float32 official state shaped(1,32). The only failed predicate in each is the
+sealer's hardcoded(1,14) state expectation; every other enumerated schema,
+context, mask, label and cost predicate passes. This isolates the observed
+failure in those three rows; it does not validate the full90 rows.
+[Measured predicate report](../../outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/schema-inspection.json).
+
+Consumer400eed69 changes that one expectation to(1,32), preserving full model
+state and every other guard. Two independent static reviews pass. The next
+bounded CPU job qualifies12 focused cases, then may run the existing sealer
+on all paid77+new13 rows and closed04 recovery, with fresh output only. No
+payload conversion, model call, GPU reencoding or fit is admitted. This is a
+repair of a concrete ABI mismatch, rather than another physical hypothesis.
+
+Independent f3 readout qualification passes56/57 tests. The sole failed fixture
+compares an empty unresolved-decision mapping with integer0 after its three
+synthetic400-step episodes; production behavior is unchanged. Fixture235
+corrects the comparison to{}. Its one selector remains unexecuted. The old
+wrapper remains Failed/exit1, charging69/120 CPU-worker-seconds. A new finite
+300-second CPU correction/seal allowance is separate from the old1,775/1,800,
+98/120 and69/120 costs; no old cap is reset. Optional bridge fixtures cannot
+gate an independently qualified cache seal.
+[Readout receipt](../../outputs/frozen-vla-readout-software-qual-20261101-r1/RECEIPT.json).
+
+This new diagnostic keeps whole8TRAIN/4VAL and failed04 explicitly false; it
+imitates known submitted command plans rather than claiming all teachers
+succeed. The old successful-teacher gate remains unchanged. No learned head,
+chronological RL source corpus, competent noise teacher or AD/DPT result
+exists yet. There is no filtered or reduced bank.
+
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 

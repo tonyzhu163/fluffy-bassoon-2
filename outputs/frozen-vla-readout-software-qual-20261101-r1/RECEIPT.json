@@ -1,0 +1,156 @@
+{
+  "format": "readout_CPU_and_bounded_schema_receipt_v1",
+  "job_id": "job-7dolnmsiqfmx",
+  "source_commit": "f3d0d52ba040a4bcdf3aee3ffd0c39644006f500",
+  "required_readout_tests": "56PASS/1fixtureFAIL",
+  "JUnit": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "tests": "57",
+      "time": "2.771",
+      "timestamp": "2026-11-01T04:48:28.215206+08:00",
+      "hostname": "job-7dolnmsiqfmx-master-0"
+    }
+  ],
+  "failure": "test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger compares emptydict unresolved_decisions to0 after complete three syntheticH400 episodes; no productionreadout occurred",
+  "wrapper_exit_code": 1,
+  "actual_GPU_count": 0,
+  "actual_CPU_cores": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "charged_CPU_worker_seconds": 69,
+  "maximum_phase_CPU_worker_seconds": 120,
+  "remaining_same_phase_CPU_worker_seconds": 51,
+  "old_original1775_and_first_linked98_untouched": true,
+  "schema_inspection_completed": true,
+  "schema_max_rows": 3,
+  "schema_maximum_seconds": 20,
+  "schema_findings": [
+    {
+      "selection": "first_paid11",
+      "teacher_id": "phone-00",
+      "anchor": 0,
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "state_shape": [
+        1,
+        32
+      ],
+      "state_dtype": "torch.float32",
+      "submitted": 32,
+      "executed": 32
+    },
+    {
+      "selection": "first_new04",
+      "teacher_id": "phone-04",
+      "anchor": 0,
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "state_shape": [
+        1,
+        32
+      ],
+      "state_dtype": "torch.float32",
+      "submitted": 32,
+      "executed": 32
+    },
+    {
+      "selection": "last_new04",
+      "teacher_id": "phone-04",
+      "anchor": 12,
+      "failed_predicates": [
+        "state_shape_1x14"
+      ],
+      "state_shape": [
+        1,
+        32
+      ],
+      "state_dtype": "torch.float32",
+      "submitted": 16,
+      "executed": 16
+    }
+  ],
+  "schema_scope": "Only3 specifiedsavedrows; full90cache stillnotadmitted. Exact(1,14)consumerpredicate is the ONLYobservedfailure, actualpreparedstate(1,32). No reshape/truncation/rewrite/modelweights/SGD/simulator/actions.",
+  "refs": [
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/allocation.json",
+      "sha256": "02b285a05507123f0526e39a667e38039a36af3d7988e85bba51b33f064133a0",
+      "bytes": 1406
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/cpu-worker-clock.json",
+      "sha256": "123c4add8f819327d0993d5a078dbd7842a9114b1504a35f626f962f10ac66c4",
+      "bytes": 586
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/exit-code.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/readout.junit.xml",
+      "sha256": "3ab3531d689c80753887046ed1dc7608d1724c5a7c8e0d460a96bc08ef95f729",
+      "bytes": 11979
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/readout.log",
+      "sha256": "436fbf33db111d9cd28fa9dec247417141dc8892527a8c0289a6509b2057dd38",
+      "bytes": 2672
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/schema-inspection.json",
+      "sha256": "f4138385cc05a39387cf083bb31a435685aa7b609051d4a340c26161a1ecca9f",
+      "bytes": 20411
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/schema-inspection.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/summary.json",
+      "sha256": "2b26df56acd23dbf7148f27649e4e0fbbacb668a76a3942fb3cfc16da05436ab",
+      "bytes": 933
+    },
+    {
+      "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/evidence/zero-gpu-attestation.json",
+      "sha256": "693b2fc9cf270659a44cd059df1a42a2bd06412bc455e3594defeb8d1c28dc87",
+      "bytes": 871
+    }
+  ],
+  "command": {
+    "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/CPU-COMMAND.sh",
+    "sha256": "9a9510172795bf0235eb98c8fcd020428e9970196cd394d5c04762ad7b1c7c90",
+    "bytes": 6609
+  },
+  "inspector": {
+    "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/SCHEMA-INSPECT.py",
+    "sha256": "ce17a464feb1cf81dc318f4f7b6a2fb6085f359a3fefac7f10481e2bf02e1282",
+    "bytes": 4825
+  },
+  "inspector_Git_commit": "3c9506857450d2910627721adfe0dd28317c9e5b",
+  "grant": {
+    "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/GRANT-COPY.json",
+    "sha256": "b48043abfeaa08f65eb1854e6fd0a18412dd3609fd1eea8057f6a85b94080e98",
+    "bytes": 2242
+  },
+  "addendum": {
+    "path": "outputs/frozen-vla-readout-software-qual-20261101-r1/SCHEMA-INSPECTION-ADDENDUM-COPY.json",
+    "sha256": "36f3e703dd0af9c965c49a6caad8a1b88386742f3633df055242a8e42e82b1dd",
+    "bytes": 2001
+  },
+  "optional_bridge_rerun": false,
+  "no_GPU_or_fit_readout_admission": true,
+  "scheduler": {
+    "status": "Failed",
+    "created": "2026-11-01 04:48:15 Asia/Shanghai",
+    "ended": "2026-11-01 04:48:59 Asia/Shanghai",
+    "UI_duration_seconds": 30,
+    "screenshot_sha256": "df1d702e4891018975c06eb01a8d73cf1119828a03a72fa94daac528942b10d2"
+  },
+  "field_hash_algorithm": "SHA256(str(torch_dtype)+str(tuple(shape))+contiguousCPU tensor bytes viewed as uint8); only field hashes/shapes/scalars transferred"
+}

@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "phone_factorial_and_partial11_cache_terminal; all12_false; task44_SAC_active_separate_phase",
+  "state": "diagnostic04_encoding_closed_full12_seal_failed; no_fit; task44_active_separate_phase",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -152,6 +152,22 @@
       "terminal_receipt_sha256": "11319c2a85c8c65e2d26c7c55edacddb8936804e8b94366d8d305e2754715f7d",
       "lineage": "frozen-pi05-endtoend-20261031-r1/partial11-model-cache",
       "lineage_seconds": 1200
+    },
+    {
+      "role": "command_diagnostic_original04_model_cache",
+      "job_id": "job-5elum703js2h",
+      "source_commit": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
+      "reserved_seconds": 600,
+      "charged_seconds": 173,
+      "released_seconds": 427,
+      "settled": true,
+      "status": "Failed_full12_seal_after_complete_cache04",
+      "actual_new_actions": 0,
+      "fit_updates": 0,
+      "lineage": "fixed12-command-diagnostic/cache04",
+      "lineage_seconds": 600,
+      "terminal_receipt_path": "CACHE04-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "201ea17997d172701f8c40a21d12da1b0d96af87056e7725cc80bf1fdb9ba48e"
     }
   ],
   "cpu_attempts": [
@@ -455,7 +471,7 @@
     }
   ],
   "physical_action_reservations": [],
-  "charged_gpu_seconds": 3452,
+  "charged_gpu_seconds": 3625,
   "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
@@ -472,7 +488,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "GPUactual3452/23922actions, cache04conditional600hold within oldA1, noactualnewGPUyet. CPUactual1775/1800,25remaining: combinedwrapperFailedexit1 with required06diagnostic+curve84/84PASS, separateBBBbridge5PASS/3fixtureFAIL.93chargedONCE,110holdsettled17released. Required sourceindependentlyqualified; optionalbridgeunqualified andnotcache/fitgate.",
+  "accounting": "GPU actual3625 once, actions23922 unchanged; no GPU holds. Cache04 thirteen payloads and closed whole-case RNG/cursor complete, full12 seal Failed exit1. No reencode/GPU retry; allocated CPU schema diagnosis and narrow consumer repair only. Original CPU1775/1800/25unused unchanged; separate preservation98/120/22unused. Required33PASS, optional bridge3FAIL/readout not run; fresh independent readout CPU120 has separate grant.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -527,7 +543,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 25,
-  "unreserved_gpu_seconds": 24748,
+  "unreserved_gpu_seconds": 25175,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -602,7 +618,7 @@
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 3748,
+  "remaining_a1_gpu_seconds": 3575,
   "remaining_a1_actions": 6078,
   "retry_launched": true,
   "source_teacher_admitted": false,
@@ -610,7 +626,7 @@
   "preserve_initial_grant_and_header": true,
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 25348,
+  "remaining_phase_gpu_seconds": 25175,
   "remaining_phase_actions": 276078,
   "selected_arm": null,
   "eligible_arms": [],
@@ -673,8 +689,8 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 3148,
-  "unreserved_a1_actions": 7678,
+  "unreserved_a1_gpu_seconds": 3575,
+  "unreserved_a1_actions": 6078,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
     "CPU_qualified": true,
@@ -804,11 +820,38 @@
   "gpu_reservations": [
     {
       "role": "command_diagnostic_original04_cache",
-      "source_commit": "06b1425607783082df071f4dc21414a096a6f5d8",
+      "source_commit": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
       "maximum_seconds": 600,
-      "state": "mandatory_closed_case_recovery_source_migration_and_linked_CPU_PASS_pending",
-      "authority_path": "COMMAND-DIAGNOSTIC-CACHE04-CHILD-AUTHORITY.json",
-      "actual_allocation_created": false
+      "state": "settled_cache_encoding_complete_full12_seal_failed",
+      "actual_allocation_created": true,
+      "job_id": "job-5elum703js2h",
+      "actual_seconds": 173,
+      "released_seconds": 427,
+      "GPU_reencode_or_retry_admitted": false,
+      "authority_path": "COMMAND-DIAGNOSTIC-CACHE04-CHILD-AUTHORITY.json"
     }
-  ]
+  ],
+  "command_diagnostic_cache04": {
+    "records": 13,
+    "closed_case_recovery_complete": true,
+    "closed_cursor_sha256": "1e929c787dcddc705a5447fc0cb1ac85bc7657016af25cd7de0077fbd96bdc46",
+    "recovery_sha256": "e33633b805d1e2448611b09ef010aee067f50e44f2cabb60ff1373f11307462f",
+    "paid11_manifest_unchanged_sha256": "ebee3741b51099df9c41cdf42ed108058b447e5831a15b13285f201f1808c8ba",
+    "full12_diagnostic_seal": false,
+    "fit_admitted": false,
+    "original04_success": false,
+    "new_actions": 0,
+    "next_step": "New bounded300CPU correction phase:12case source qualification then full90 existing CPUseal; independent readout1/optionalbridge3, no GPU reencode.",
+    "schema_diagnosis": {
+      "job_id": "job-7dolnmsiqfmx",
+      "three_rows_only": true,
+      "actual_state": [
+        1,
+        32
+      ],
+      "only_failed_predicate": "state_shape_1x14",
+      "full90_validation_pending": true,
+      "same_paid_tensors_unchanged": true
+    }
+  }
 }
