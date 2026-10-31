@@ -3,15 +3,24 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## Task57 DSRL preserves10/10 with shorter observed query episodes
+## Task57 first query regression on a near-ceiling curve
 
-Baigejob-iudscqfntb4e is active at fixed sourced001556. At16:16:28Shanghai
-on2026-10-31 it has665/666 training successes,9,285 replay chunks,175,840
-SAC updates,120,473 all-in actions and10.43GB outputs. Newest complete panel:
-actual170,160 updates,10/10successes,1,245primitives+100settles versus native
-1,451+100. Latest full/newest milestone/raw/RPC/paired identity hashes match;
-losses are finite. No runtime failure, exit or retry occurred. [Current saved
-check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1616.md).
+Baige `job-iudscqfntb4e` remains active on fixed source `d001556`. At the
+19:56 Shanghai check it has399880 SAC updates,1509/1511 training successes,
+265079 all-in actions and28.53GB outputs. The390080-update query panel scores
+9/10 at1518 primitives+100 settling, versus native10/10 at1451+100. State48
+times out at400 actions; native succeeds at152. Its actual query seed2295547926,
+nominal state and initial-observation hashes match. This is the first saved
+query-panel failure; earlier complete panels through380120 are all10/10.
+Latest recovery/milestone/raw-RPC hashes pass, query weights/replay stay fixed
+and losses are finite. No run, recipe, case or budget changed.
+[Saved receipt](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1956.md).
+
+This regression weakens the earlier descriptive completion-cost trend. One
+stochastic panel is insufficient to attribute a cause: actor sampling and
+learning instability remain plausible, while the prescribed final native
+rerun can check runtime drift. Preserve the fixed500k endpoint and full curve;
+no favorable checkpoint selection or extra control is launched.
 
 The first training timeout is zero-indexed episode576/state16,400 primitives,
 collected at151,260updates and followed by800updates. Earlier episode536
@@ -21,8 +30,8 @@ one failure/later-success record, not causal recovery or ICRL evidence. The
 failure trace rehashed correctly. It does not turn the near-ceiling bank into
 a rich recovery corpus. [Bound failure metadata](../../outputs/dsrl-pi05-task57-20261031-r1/first-failure-1616.json).
 
-The first ten learned checkpoints are below; later panels remain in the
-immutable dated receipts.
+The first ten learned checkpoints and the first later query regression are
+below; every intervening panel remains in immutable dated receipts.
 
 | Actual optimizer updates | Query success | Query primitives | Settling actions |
 | ---: | ---: | ---: | ---: |
@@ -37,6 +46,7 @@ immutable dated receipts.
 |80100|10/10|1264|100|
 |90160|10/10|1309|100|
 |100220|10/10|1270|100|
+|390080|9/10|1518|100|
 
 All panels use the same10 physical cases, recorded query seeds and initial
 observation hashes. Queries change no weights/replay and perform no SGD.
@@ -48,8 +58,9 @@ or overall sample-efficiency gain after training/evaluation cost. The10 cases
 are reused across checkpoints; these panels are not independent replications.
 
 There is no observed binary-success headroom. The reward also penalizes each
-queried chunk, so all-success histories can still contain cost optimization;
-they currently contain no failure-recovery examples. Noise parameterization
+queried chunk, so successful histories can contain cost optimization. Two
+training timeouts now appear, but they do not establish a rich causal
+failure-recovery corpus. Noise parameterization
 and learning may both affect cost; no matched untrained tied-noise query panel
 was included. The prescribed final native rerun can test runtime stability,
 while later robustness claims would require a separate declared comparison.

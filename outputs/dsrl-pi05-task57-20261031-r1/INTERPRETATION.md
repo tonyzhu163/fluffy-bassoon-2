@@ -1,7 +1,22 @@
-# Task57 native ceiling: interpretation and proposed next comparison
+# Task57 curve: interpretation and next comparison
 
 Read-only discussion, 2026-10-31. This note does not change the active run,
 launch another experiment, select new cases or spend another budget.
+
+## Current material result,19:56 Shanghai
+
+The390080-update panel is9/10,1518 query primitives+100 settling, versus
+native10/10,1451+100. State48 fails at400 actions after native success152,
+with the same query seed2295547926 and recorded actual initial input hashes.
+Earlier panels through380120 remain10/10. Thus the early shorter-episode
+trend does not establish reliable preservation of success. The active run has
+399880 updates and1509/1511 training successes. Recovery/milestone/raw-RPC
+checks and finite losses pass. The fixed500k endpoint and final native control
+remain unchanged; no favorable target checkpoint is selected. Sampling and
+learned-policy instability remain competing explanations; runtime drift is
+not isolated until the scheduled final native rerun. Historical observations
+and read-only proposals below retain their dates.
+[Exact saved check](CHECK-1956.md).
 
 ## Observed
 

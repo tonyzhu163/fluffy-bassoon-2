@@ -35,6 +35,40 @@ reset semantics plus actual executable/cost admission remain pending. The
 provisional5400 GPU-seconds/10000 actions fit the remaining A1 caps but are
 not a launch reservation. No capacity model or result exists yet.
 
+A positive result for the full reactive class would not qualify the existing
+fixed4D coefficient collector or its AD/DPT labels. The interface bridge is
+unresolved: source collection requires an actually qualified teacher and
+compatible labels under that same interface. Released supervised demos are
+capacity diagnostics, not a replacement for chronological RL histories.
+
+## Actual phone data qualification and public-state limitation
+
+Baige `job-rh3ldkdapfv9`, exact source `9e1953e6`, succeeded with11/11 tests,
+actual0GPU/2CPU/16GiB and86 conservative CPU-worker-seconds. Phase CPU use is
+417/1800,1383 remaining; GPU/action cost is0. All12 whole phone candidates
+are saved with actual seeds, scene metadata and fixed first-seen instructions.
+All explicit success flags are absent. Temporal action alignment and simulator
+replay remain unqualified; this is no expert/capacity/performance claim.
+
+Saved A1 commands have17760 issued slots and17591 actual valid slots. Raw
+native grippers6/13 are finite but exceed[0,1]: valid minima
+[-.0101426,-.0069030], maxima[1.0090805,1.0086253], outside counts2362/5913.
+The actuator's existing clipping is canonical. Any calibration headroom guard
+must check transformed arms while preserving raw native grippers bitwise.
+
+Pinned RoboTwin get_obs stores commanded drive targets plus gripper values;
+vector_env.update_obs assigns that joint_action/vector to public state. This
+is not measured articulation qpos. Along with the previous requested command,
+current target feedback may expose calibration bias after one chunk away from
+clipping/transients. Both signals are already in the static student's2076D
+input. A gap against one fixed blind teacher does not establish history or
+reward necessity. Retain first-query/static/reward-lesion controls and report
+system identification honestly if reward feedback is unnecessary. No condition
+redesign is authorized by this finding.
+
+[Exact CPU evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/PHONE-STAGE0-CPU-RESULT.md),
+[metadata/source conventions](../../outputs/frozen-pi05-endtoend-20261031-r1/phone-data-preparation/source-conventions.json).
+
 ## Repair qualification (historical)
 
 The repair passed108 allocated CPU checks plus an actual-artifact migration
