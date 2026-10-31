@@ -76,6 +76,17 @@ all reactive policies or establish a unique contact/approach/transport cause.
 Repeated native holds also consume TOPP/RNG operations, so this is not a pure
 elapsed-time contrast. [Four-case receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/FACTORIAL-TERMINAL-RECEIPT.json).
 
+Saved scalar diagnosis finds that the five-close finger coordinates nearly
+plateau after hold2: (.035652,.037593)m versus (.035659,.037552)m after hold5.
+The extra change beyond one hold is only about.27/.97mm; the five-current
+endpoint largely converges despite the requested contrast. Both fingers then
+reach0/0 after lift in every condition, while phone height falls before release.
+Observable settling occurred; adequate contact or a stable grasp was not
+established. This weakens simple insufficient-settling rescue, without proving
+a unique approach/contact/path/transport cause or author-scene identity.
+No further blind hold retry follows.
+[Scalar report](../../outputs/robotwin-prelift-factorial-diagnosis-20261101-r1/REPORT.md).
+
 The targeted phase closes these jobs at3,452 GPU-seconds/23,922 actions with
 no active holds. Old-phase CPU is1,682/1,800,118 remaining.
 One composite qualification passes29 partial-wrapper and33 factorial cases plus

@@ -51,8 +51,9 @@ target57 records remain excluded from source pretraining.
 New targeted Motus/RoboTwin evidence retains a fixed11/12 expert bank.
 Original04 fails despite event alignment; a matched grip-closure pair and
 a later one-versus-five-hold × current/close four-case follow-up all fail.
-Frozen motor and paired prelude identities pass. These negative recipes do
-not identify a unique mechanism or reject the full reactive class. No full
+Frozen motor and paired prelude identities pass. Recorded finger settling
+plateaus without a stable-grasp proof. These negative recipes do not identify
+a unique mechanism or reject the full reactive class. No full
 bank, learned capacity, source RL or Transformer result follows. Partial11
 caching is preparation only. [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 

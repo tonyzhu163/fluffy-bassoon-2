@@ -52,6 +52,9 @@ fails both400 despite actual extra finger closure. Its one-versus-five-hold
 four-case follow-up also fails all four400, with matched preludes, nonzero
 closure contrast and unchanged frozen motor. This rules out rescue by these
 particular recipes, not the full reactive class or a unique failure mechanism.
+Saved finger coordinates nearly plateau after hold2; all phone-height losses
+precede release, weakening simple insufficient-settling rescue without proving
+stable grasp/contact or source-scene identity.
 Known phone cost is3,452 GPU-seconds/23,922 actions; CPU1,682/1,800. The
 zero-action PARTIAL11 cache closes at77 rows (49TRAIN/28VAL),1.378GB; all
 payload hashes and frozen motor identity pass. No full-bank/fit/source admission. Failed04 is retained; no filtered bank.
