@@ -68,6 +68,7 @@ redesign is authorized by this finding.
 
 [Exact CPU evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/PHONE-STAGE0-CPU-RESULT.md),
 [metadata/source conventions](../../outputs/frozen-pi05-endtoend-20261031-r1/phone-data-preparation/source-conventions.json).
+[Complete public-state source chain](../../outputs/frozen-pi05-endtoend-20261031-r1/PUBLIC-STATE-SOURCE.md).
 
 ## Repair qualification (historical)
 
