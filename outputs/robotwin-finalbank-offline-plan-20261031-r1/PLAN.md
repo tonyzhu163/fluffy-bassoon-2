@@ -1,15 +1,19 @@
 # Final RoboTwin source-bank offline handoff
 
-Status: **STATIC executable preparation; not CPU-qualified, admitted or
-launched.** No new allocation, corpus projection, payload scan, teacher label,
-model fit, robot action or VLA query has run for this plan. The execution
-owner reviews the immutable bank, residual costs and launch admission.
+Status: **Final100 executable preparation; final bank, teacher panel and fits
+not admitted or launched.** The fixed closed-SAC65 compatibility path is now
+allocated-CPU-qualified at `80ffd1bba1c27ce40cc7f7d36682250e6fe97a07`.
+See the [measured handoff](MEASURED-HANDOFF-20261031.md) for actual R6 receipts,
+closed CPU accounting, exact SAC100 source/teacher identities and unchanged
+remaining resource proposals. The execution owner retains final-bank and
+resource admission. This documentation update starts no new work.
 
 Later compatibility preparation: production acting-policy paths are absolute.
-The [single bounded SAC65 CPU gate](../robotwin-sac65-cpu-compat-20261031-r1/PLAN.md)
+The [completed bounded SAC65 CPU gate](../robotwin-sac65-cpu-compat-20261031-r6/PLAN.md)
 adds a projection-specific checked archive alias and exact source/ancestry
-bindings. Its new reader candidate requires qualification; the earlier static
-acceptance applies only to its recorded old bytes. No gate has launched.
+bindings. R6 passed150 fixtures, full reference projection and paired export/
+audit. That qualification covers its recorded65-round inputs; it does not
+admit the final100 train/validation bank or qualify teacher competence.
 
 The next proposed reference is four matched Transformer fits on the **complete
 SAC source100 bank**: AD full/static and DPT full/static. This continues the
@@ -33,7 +37,7 @@ selected duration against frozen total/task counters. Passing only the last
 continuation root cannot provide the full bank. Symlinking old directories
 also fails its resolved-path containment check.
 
-The owner and optimization owner identified no existing full assembler.
+At initial review the owner and optimization owner identified no full assembler.
 Reuse the qualified metadata reader at c62be996:
 `outputs/robotwin-trained-handoff-control-20261030-r1/control.py:corpus_chain`.
 Its exact file SHA is
@@ -61,14 +65,16 @@ PPO/reset moved from e825 through570 and the prepared0c16 continuation path.
 Producer execution pins and original contracts remain per root; the outer
 manifest's consuming-executor rebinding does not rewrite producer history.
 The26 supplied collection contracts agree on scientific fields after excluding
-only executor/resume-manifest identity fields. Runtime-file equality, path
-collisions and raw completeness have not yet been checked by this plan.
+only executor/resume-manifest identity fields. R6 checked runtime-file equality,
+collisions and complete byte projection on this fixed65 reference. Final100
+still needs its own complete closed inputs and admission.
 
 ## Byte-preserving assembly and admission
 
 [project_corpus.py](project_corpus.py) is the sole new thin assembly helper;
-it does not implement another converter, teacher or trainer. It is source
-preparation only. It imports the exact c62 reader by SHA and constructs a fresh
+it does not implement another converter, teacher or trainer. It is qualified
+on the fixed R6 reference; final100 admission remains pending. It imports the
+exact c62 reader by SHA and constructs a fresh
 flat projection using hardlinks, with explicit capacity-checked copying only
 when cross-filesystem copying is requested. Original files are never edited,
 chmodded, deleted or used as an output directory.
@@ -273,17 +279,17 @@ python3 run_offline.py --bindings bindings.template.json \
   --bindings-sha256 <template-SHA256> --phase fit
 ```
 
-The proposed costs are separate reservations, all currently unadmitted:
+The remaining proposed costs are separate, all currently unadmitted. R1–R6
+CPU qualification is completed and accounted separately in the measured handoff:
 
 | Phase | Resource | Maximum scheduler seconds | New robot actions |
 | --- | --- | ---: | ---: |
-| Closed-prefix compatibility gate | 0GPU/8CPU/64GiB | 1,800 | 0 |
 | Final100 projection/export admission | 0GPU/8CPU/64GiB | 7,200 | 0 |
 | Source teacher panel, all new | 1GPU | 3,600 | 32,400 |
 | Four sequential500-update fits | 1GPU/8CPU/32GiB | 3,600 | 0 |
 
 The default proposed GPU ceiling totals7,200s; verified sample reuse would
-reduce it to6,300s. CPU allocation wall ceilings total9,000s, not GPU time.
+reduce it to6,300s. Remaining CPU allocation wall ceiling is7,200s, not GPU time.
 These ceilings are not a combined reservation or permission to launch.
 
 For final CPU work, an owner-supervised outer6,900s deadline starts before
@@ -295,8 +301,9 @@ time. If the CPU gate or final assembly cannot finish inside its phase cap,
 preserve evidence and request a separately reconciled continuation; never add
 another cap silently. This is zero new robot data, not zero computation.
 
-Before final100, the owner can review a separate closed65 reference gate to
-discover compatibility now. Required allocated Linux checks:
+The completed closed65 gate supplies reference compatibility. Final100 still
+requires its own inputs/admission; the original qualification checklist below
+records the intended scope, with R6 results bounded by the measured handoff:
 
 - Focused existing native corpus/policy/trainer tests plus meaningful helper
   fixtures: ancestry cycle/hash mismatch,65-as-final rejection, selected-prefix
@@ -321,7 +328,7 @@ discover compatibility now. Required allocated Linux checks:
 
 Helper AST/static checks alone do not qualify assembly, collision freedom,
 full raw coverage, teacher quality, fit completion or robot performance.
-Owner reservations and the above receipts remain pending. No new frozen target
+Final100/teacher/fit reservations and their own receipts remain pending. No new frozen target
 evaluation is authorized here: final model hashes require a new reviewed
 evaluation plan/admission, never substitution into the old fixed-SAC5 plan or
 reuse of its sealed action/time remainder.
