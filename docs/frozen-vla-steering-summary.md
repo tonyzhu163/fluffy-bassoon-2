@@ -55,7 +55,8 @@ exactly match the four successful targets; this cannot explain04 because its
 expert replay bypasses that head. Original05–11 diagnostic execution is complete:7/7 succeed193actions each.
 The fixed bank remains11/12, with04 failed; no mixed-run bank is silently admitted.
 There is no fit, teacher-bank admission, learned-capacity or ICRL result.
-Settled targeted GPU/actions2652/21522, no GPU hold; CPU1203/1800. [Evidence
+Settled targeted GPU/actions2652/21522, no active GPU job. The prospective
+wide-head40 synthetic checks pass (74CPU-s); targeted CPU1277/1800. [Evidence
 and competing explanations](robotwin-coefficient-steering/EVALUATION.md).
 
 The next LIBERO baseline follows the human's request for weak native success
@@ -64,12 +65,14 @@ screen and separate weak-query confirmation are fixed:2–8 successes of20,
 ranked nearest4 then task ID. The task/query bank freezes before fresh SAC;
 another fresh native control must remain weak before SGD. The fixed500k curve
 and untrained tied/SAC controls distinguish learning from noise parameterization.
-Native screening is running on Baige job-sdxpm3y64pd9. At00:50 Shanghai its
-first real episode completed (task0/state0 failure400+10settling), with actual
-GPU probe and frozen C565 motor identity verified. One episode is not a task
-rate. The screen4 checks and continuation3 new checks pass on allocated CPU,
-164 inclusive CPU-seconds total. No SAC actor or optimizer exists in screening;
-fixed weak selection and fresh initial-native readmission precede learning.
+Native screening is running on Baige job-sdxpm3y64pd9. The01:10 owned check
+verifies151/240 completed episodes: task44 is5/20 (25%) and59 is3/20 (15%),
+with20 distinct physical-state hashes per completed task. Both meet the screen
+band; the full fixed ranking and separate query confirmation still precede
+selection. No SAC actor/SGD exists yet. The screen4 and continuation3 new CPU
+checks pass (164CPU-s total), and explicit child migration preserves original
+costs and source ancestry. Native0/20 and20/20 tasks are retained rather than
+substituted after learning starts. No robot learning gain is yet established.
 This development selection and its failed candidates stay disclosed, excluded
 from source40/meta-pretraining. [Authority and bounded phase](../outputs/libero90-pi05-headroom-online-20261101-r1/GRANT.json).
 
