@@ -1,0 +1,41 @@
+{
+  "format": "robotwin_camera_jpeg_static_source_v1",
+  "checked_utc": "2026-10-31T12:32:46.629660+00:00",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/camera/camera.py",
+      "sha256": "49ff2005d14749caa5fd9698d35f6f937664bde89cfdf0ab93675204c85bbf33",
+      "functions": [
+        {
+          "function": "get_rgb",
+          "first_line": 323,
+          "last_line": 329,
+          "text": "    def get_rgb(self) -> dict:\n        rgba = self.get_rgba()\n        rgb = {}\n        for camera_name, camera_data in rgba.items():\n            rgb[camera_name] = {}\n            rgb[camera_name][\"rgb\"] = camera_data[\"rgba\"][:, :, :3]  # Exclude alpha channel\n        return rgb"
+        }
+      ],
+      "upstream_channel_context": {
+        "first_line": 334,
+        "last_line": 337,
+        "text": "        def _get_rgba(camera):\n            camera_rgba = camera.get_picture(\"Color\")\n            camera_rgba_img = (camera_rgba * 255).clip(0, 255).astype(\"uint8\")\n            return camera_rgba_img"
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/pkl2hdf5.py",
+      "sha256": "e119b4093c25f881c535a041bf1895e182ba00564d6ca57f6d6fe4fb62b2666c",
+      "functions": [
+        {
+          "function": "images_encoding",
+          "first_line": 10,
+          "last_line": 22,
+          "text": "def images_encoding(imgs):\n    encode_data = []\n    padded_data = []\n    max_len = 0\n    for i in range(len(imgs)):\n        success, encoded_image = cv2.imencode(\".jpg\", imgs[i])\n        jpeg_data = encoded_image.tobytes()\n        encode_data.append(jpeg_data)\n        max_len = max(max_len, len(jpeg_data))\n    # padding\n    for i in range(len(imgs)):\n        padded_data.append(encode_data[i].ljust(max_len, b\"\\0\"))\n    return encode_data, max_len"
+        }
+      ]
+    }
+  ],
+  "source_functions_executed": false,
+  "images_or_arrays_loaded": false,
+  "model_simulator_imports": false,
+  "new_test_or_allocation": false,
+  "channel_statement": "The source scales/casts SAPIEN Color, then get_rgb keeps channels0,1,2 and drops alpha. No channel permutation appears before images_encoding passes the array directly to cv2.imencode. Codec decode parity has not been numerically tested in this handoff."
+}
