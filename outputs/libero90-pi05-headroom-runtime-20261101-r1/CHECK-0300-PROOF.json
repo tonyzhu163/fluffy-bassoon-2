@@ -1,0 +1,49 @@
+{
+  "format": "pi05_headroom_due_check_proof_v1",
+  "receipt_sha256": "93a1246dc81eb76e682962cb5856d9ade9cd90382ca4f70bf3a0fccb50e06c25",
+  "reader_sha256": "b871260505f3cd759189cd1a5574d4747d4ffec00275a5bf1d1962feaf247a27",
+  "reader_git_blob": "2d2fa3aae7a388962339cf801512ff0a6c8ed35f",
+  "reader_immutability": "Dated reader committed with this receipt; Git blob is the exact execution source.",
+  "scheduler": {
+    "job_id": "job-w8deahieli8q",
+    "state": "Running",
+    "checked_at": "2026-11-01 03:07 Asia/Shanghai",
+    "UI_elapsed_seconds": 5009,
+    "screenshot": "check-0300-scheduler.jpg",
+    "screenshot_sha256": "2a854e6bf1e7df52bf21249d128fc416ff3252c90adc74634ad11b4849dbcbc4",
+    "row_text": "mwj_1101_l90_headroom_sac_g1_r1_b665565 / job-w8deahieli8q / \u8fd0\u884c\u4e2d / CPU16 /96GiB / NVIDIA RPBZZZ6*1 / 2026-11-01 01:43:50 /1\u5c0f\u65f623\u520629\u79d2"
+  },
+  "caps": {
+    "phase_GPU_seconds": 57600,
+    "job_GPU_seconds": 25200,
+    "all_in_actions": 1000000,
+    "storage_bytes": 68719476736
+  },
+  "checks": {
+    "actions_within_cap": true,
+    "storage_within_cap": true,
+    "reservations_within_phase": true,
+    "job_elapsed_within_cap": true,
+    "stable_full_checkpoint": true,
+    "newest_raw_trace_matches": true,
+    "finite_losses": true,
+    "new_panel_weights_fixed": true,
+    "new_panel_initials_match": true,
+    "query_replay_isolated": true
+  },
+  "one_RPC_proof": {
+    "path": "CHECK-0300-RPC-PROOF.json",
+    "sha256": "206b9376d5eb0fd42633f40da99ac180d78bae189028612524d374b36ece5345",
+    "scope": "Returned complete current step metadata plus input/outcome byte hashes only. Training304 RPC and closed training303 raw trace are different episodes; no full journal reconciliation."
+  },
+  "carried_previous_proof": {
+    "git_commit": "8dd2519b837e43bfff445cfa09f41f4ebf27e6f3",
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240-PROOF.json",
+    "sha256": "8e5c17ed9e1d6605876294826a5df8e449802ad5e292511277d4c0c47ffba851"
+  },
+  "reader_limit": "At most three newest RPC metadata records after one directory-name listing. The reader checks status while producer uses outcome_status; independent RPC proof verifies returned=true/outcome_status=complete for the selected current record. No claim it is the absolutely newest returned RPC.",
+  "scientific_scope": "One outcome-selected development goal/seed. Prespecified60k panel is20/20 after the prespecified40k20/20;20k was1/20. Fixed500k endpoint,last-three sustained criterion and final native remain pending. No favorable checkpoint selection or meta-learning claim.",
+  "final_motor_after_pending": true,
+  "next_owned_check": "2026-11-01 03:20 Asia/Shanghai",
+  "no_run_changes": true
+}
