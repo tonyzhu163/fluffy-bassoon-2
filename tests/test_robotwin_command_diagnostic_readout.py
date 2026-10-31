@@ -275,7 +275,7 @@ def test_common_loop_natural400_and_full_episode_admission_use_existing_canonica
             spec=dict(spec,expected_reset=dict(actual_seed=spec['reset_seed'],observation_sha256='o',features_sha256='f'))
             record=readout.run_complete_episode(control,spec,budget,run_id='synthetic')
             assert record['complete'] and record['primitive_steps']==400 and record['chunks']==13
-        assert budget.snapshot()['actual_actions']==1200 and budget.snapshot()['unresolved_decisions']==0
+        assert budget.snapshot()['actual_actions']==1200 and budget.snapshot()['unresolved_decisions']=={}
         with pytest.raises(RuntimeError,match='full native-episode admission'):
             readout.run_complete_episode(control,specs[3],budget,run_id='synthetic')
         assert control.resets==3
