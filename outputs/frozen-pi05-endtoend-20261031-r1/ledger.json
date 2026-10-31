@@ -472,7 +472,7 @@
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 3625,
-  "reserved_gpu_seconds": 0,
+  "reserved_gpu_seconds": 1800,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 23922,
@@ -543,7 +543,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 25,
-  "unreserved_gpu_seconds": 25175,
+  "unreserved_gpu_seconds": 23375,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -689,7 +689,7 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 3575,
+  "unreserved_a1_gpu_seconds": 1775,
   "unreserved_a1_actions": 6078,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
@@ -829,6 +829,18 @@
       "released_seconds": 427,
       "GPU_reencode_or_retry_admitted": false,
       "authority_path": "COMMAND-DIAGNOSTIC-CACHE04-CHILD-AUTHORITY.json"
+    },
+    {
+      "role": "independent_command_diagnostic_action_KV5000_fits",
+      "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+      "maximum_seconds": 1800,
+      "per_head_seconds": 900,
+      "state": "funded_conditional_actual_CPU12_PASS_full90_seal_and_resource_binding_pending",
+      "authority_path": "COMMAND-DIAGNOSTIC-FIT-CHILD-AUTHORITY.json",
+      "authority_sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d",
+      "actual_allocation_created": false,
+      "actual_actions": 0,
+      "no_resource_cap_expansion": true
     }
   ],
   "command_diagnostic_cache04": {
@@ -853,5 +865,15 @@
       "full90_validation_pending": true,
       "same_paid_tensors_unchanged": true
     }
+  },
+  "command_diagnostic_fits": {
+    "state": "funded_conditional_two_heads900_each",
+    "actual_fits": 0,
+    "actual_complete_cache": false,
+    "max_updates_each": 5000,
+    "primary_candidate": 5000,
+    "VAL_selection": false,
+    "readout_funded": false,
+    "authority_sha256": "4f649dd1394ca9f5359c28f37a48c6bc5a0449024cc4bca4630a382ce2aafb3d"
   }
 }
