@@ -90,7 +90,7 @@ def main(started,gate):
             phases.append(dict(name=name,**result));gate.write(out/'phases.json',phases)
             return result
         roots={}
-        for family in ('auxiliary','ad','teacher'):
+        def stage_family(family):
             bound=profile[family] if family!='auxiliary' else dict(root=str(code),pin=a.code_commit,
                 bootstrap=profile['auxiliary_bootstrap'])
             stage_out=out/('stage-'+family);stage_out.mkdir()
@@ -103,6 +103,7 @@ def main(started,gate):
             gate.require(local['completed'] and local['full_clean_git_status']
                 and local['original_head']==local['effective_head']==bound['pin'],'Wrong local source identity')
             roots[family]=Path(local['effective_code_root'])
+        for family in ('auxiliary','ad'):stage_family(family)
         auxiliary=roots['auxiliary'];reader=out/'private/qualified-c62-reader.py'
         result=run('reader',['git','--no-pager','show',gate.READER_PIN+':'+gate.READER_PATH],auxiliary,reader,10)
         gate.require(result['returncode']==0 and sha(reader)==gate.READER_SHA,'Qualified corpus reader changed')
@@ -140,6 +141,7 @@ def main(started,gate):
         # AD is first and gets an independent durable receipt before teacher work.
         passed,results['ad']=worker('ad','software-tests')
         gate.require(passed,'AD software qualification failed; no automatic retry')
+        stage_family('teacher')
         passed,results['teacher_tests']=worker('teacher','software-tests')
         if passed:
             passed,results['teacher_source']=worker('teacher','source-admit')
