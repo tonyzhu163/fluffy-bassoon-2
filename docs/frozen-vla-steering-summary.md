@@ -243,6 +243,16 @@ The combined AD-first request remains pending, with7061CPU-s left only if
 approved. Full bank materialization, two fits and sampled readout are not yet
 executed. [Fault analysis and closure](../outputs/robotwin-source100-ad-first-20261031-r1/SOFTWARE-OUTCOME.md).
 
+The distinct sampled-readout implementation f7594a0 subsequently passes all48
+allocated CPU regressions, with valid terminal summary and clean teardown;
+its job is Success/exit0. This covers sampling/private RNG, support trace and
+clock isolation, artifact selection and costs/resume. It adds31CPU-s, so
+aggregate software cost is170CPU-worker-s/1360core/0GPU, counted once inside
+the pending7200CPU-s request.7030 remains only if approved. Fixtures are not
+actual500 model payloads or robot outcomes; production bank, fits and physical
+readout still await the phase decision. No further routine test retry is
+needed. [Readout qualification](../outputs/robotwin-ad500-software-qual-20261031-r1/RESULTS.md).
+
 ## Literature guides targeted choices
 
 - [VLRLA's simulation history teacher](https://arxiv.org/html/2610.19517v1)

@@ -39,7 +39,9 @@ bounded development phase, not completion of the larger benchmark matrix.
   this phase adds no mean-only condition.
 - Save25/100/500 full optimizer/sampler/RNG recoveries and source curves.
 - Primary weights: candidate-000500.pt, fixed before target readout.
-- Static-mode semantics stay explicit; do not relabel it as a memoryless MLP.
+- Static training and deployment both erase prior noise/reward/cross-step
+  cache while retaining current features and real episode/primitive clocks.
+  It is the same transformer family, not a memoryless MLP architecture.
 - Qualify the new objective route and final100 bank on allocated CPU before
   GPU fitting. Failed qualification spends no GPU-fit allocation.
 
@@ -114,6 +116,11 @@ These are fresh-phase requests, not unused balances from closed campaigns.
   remains only if the pending combined phase is approved. The new sampled
   readout's fixtures still need actual allocated qualification. See
   [SOFTWARE-OUTCOME.md](SOFTWARE-OUTCOME.md).
+- Distinct sampled readout f7594a03cb8f0f683d366193ed278b7435a4378c now passes
+  all48 allocated CPU fixtures in a Success/exit0 job,31 additional CPU-s.
+  Aggregate software170 is counted once; remaining CPU capacity is7030 only
+  after approval. Actual final100 bank/500 weights/native GPU readout remain
+  separate runtime prerequisites. Earlier failed statuses stay unchanged.
 - Do not borrow LIBERO's32h pool, its1180s remainder, sealed native-panel time,
   or any closed CPU qualification balance.
 - No part of this phase is funded yet. The resource decision covers these

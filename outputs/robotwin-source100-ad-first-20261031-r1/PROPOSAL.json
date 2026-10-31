@@ -10,7 +10,7 @@
   "source_final_coordinator_sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
   "ad_code_commit": "7401cd50c038a4cb35149eceeb72128e9a368cc3",
   "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
-  "regressions": "AD108PASS; teacher/source57PASS/3legacydeselected; actualsourceactor/RNG/countersPASS. Both softwarewrappersFailed/exit1; new sampledreadout regressions pending.",
+  "regressions": "AD108PASS;sourcecompat57PASS/3legacydeselected;actualsourceactor/RNG/countersPASS;sampledreadout48PASS in distinct Success job. Original two wrappersremainFailed; no production-bank/fit/nativeGPU admission.",
   "teacher_panel_required_for_ad": false,
   "objectives": [
     "ad"
@@ -41,7 +41,7 @@
   ],
   "new_source_actions": 0,
   "readout": {
-    "profile_status": "being prepared by existing native owner",
+    "profile_status": "sampled source100AD500 software-qualified on allocated CPU; actual bank/model/nativeGPU payload prerequisites remain",
     "tasks": [
       "adjust_bottle",
       "move_stapler_pad"
@@ -146,5 +146,24 @@
     "automatic_retry": false,
     "wrapper_e2e_success": false,
     "future_cpu_remaining_only_if_approved": 7061
-  }
+  },
+  "readout_code_commit": "f7594a03cb8f0f683d366193ed278b7435a4378c",
+  "readout_auxiliary_commit": "610782452c5e5814937b7aa0fd052a46491d36bc",
+  "readout_software_qualification": {
+    "job_id": "job-c99opabpzxez",
+    "scheduler_status": "Succeeded",
+    "exit_code": 0,
+    "passed_cases": 48,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "actual_worker_seconds": 31,
+    "actual_core_seconds": 248,
+    "gpu_seconds": 0,
+    "unused_fresh_envelope_seconds_sealed": 269,
+    "actual_model500_payload_admitted": false
+  },
+  "aggregate_software_actual_worker_seconds": 170,
+  "aggregate_software_actual_core_seconds": 1360,
+  "future_cpu_remaining_only_if_approved": 7030
 }

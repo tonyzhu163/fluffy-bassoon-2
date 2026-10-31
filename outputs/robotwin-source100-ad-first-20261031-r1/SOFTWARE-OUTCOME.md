@@ -32,3 +32,24 @@ seconds are sealed, not retry capacity. No retry is needed merely to retain
 component passes. The pending7200s combined phase includes139 once and leaves
 at most7061 future CPU-worker-s only after its human decision. No production
 bank/GPU/fit/readout authority is inferred from these results.
+
+## Distinct sampled-readout qualification
+
+Fresh job-c99opabpzxez succeeds/exit0 at readout
+f7594a03cb8f0f683d366193ed278b7435a4378c and auxiliary
+610782452c5e5814937b7aa0fd052a46491d36bc. It runs ONLY the48 readout cases,
+with0failure/error/skip; earlier AD/teacher/source checks are not repeated.
+The XML contains48 unique cases in tests.test_robotwin_ad500_readout.
+
+Coverage: learned-Gaussian sampling/std/bound1.5, RNG-only query reseeding,
+preserved support history, equal K1 clocks, exact support transitions and
+negative intermediate-feedback drift, source100/500 selectors, cases/costs/
+resume/ownership. These are CPU fixtures, not actual500 weights or native
+robot outcomes. Valid terminal summary and clean owned teardown pass. The
+earlier two Failed jobs remain unchanged.
+
+New actual31CPU-worker-s/248core/0GPU; fresh300s allowance closes with269
+unused sealed. Aggregate software cost170CPU-worker-s/1360core/0GPU is counted
+once inside the pending7200s phase, leaving7030 only if approved. No old
+sealed credit is reused, and no production-bank/GPU admission is implied.
+Primary receipts: ../robotwin-ad500-software-qual-20261031-r1/{RESULTS.md,CLOSURE.json}.
