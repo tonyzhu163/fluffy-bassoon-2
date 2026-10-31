@@ -14,9 +14,13 @@ def _write(path, value):
     temporary.replace(path)
 
 
-def begin(root, contract, *, slice_seconds, worker_seconds, resume=False, now=None):
+def begin(root, contract, *, slice_seconds, worker_seconds, resume=False, now=None,
+          allow_short_slice=False):
     """An unclosed attempt stays charged at its full reserved slice."""
-    if (type(slice_seconds) is not int or not 600 <= slice_seconds <= 86400
+    if type(allow_short_slice) is not bool:
+        raise ValueError('Short-slice admission must be an explicit boolean')
+    minimum_slice = 60 if allow_short_slice else 600
+    if (type(slice_seconds) is not int or not minimum_slice <= slice_seconds <= 86400
             or type(worker_seconds) is not int or not slice_seconds + 60 <= worker_seconds <= 86400):
         raise ValueError('Require a bounded slice and at most24 cumulative worker-hours')
     root = Path(root)
