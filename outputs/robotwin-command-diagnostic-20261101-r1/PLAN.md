@@ -87,7 +87,15 @@ Before dispatch the owner binds an actual resource-plan receipt containing
 `prior_cost_receipts:[{path,sha256},...]`, `storage_admission:{path,sha256}`,
 `fit_topology:"separate_one_gpu_physical_allocations"` and
 `other_fit_ticket_receipts:[{path,sha256},...]` for every other already booked
-fit allocation. Current ticket is supplied directly, avoiding a hash cycle.
+fit allocation. Current ticket is supplied directly. Staged admission is mandatory: book/start
+head A through its immutable `<fresh-id>-resource-admission.json` receipt BEFORE
+booking head B. Then B's plan references A's immutable ticket; A never references
+a future B. The marker is emitted after actual source/clock/GPU/storage checks
+and before model load, so B can be admitted while A loads/qualifies/fits. This
+avoids mutually recursive ticket/plan hashes without serializing training or
+adding a launcher/observer/ledger. Booking both before either has an admitted
+packet is unsupported and fails closed. The receipt is resource admission only,
+not bank/model/fit qualification.
 Each prior/storage receipt is hash checked. Existing qualified7eef begin/finish
 helper books fixed lineages `fixed12-command-diagnostic/cache04`, `/fit-action` or `/fit-kv`
 with matching per-head `lineage_seconds`; every actual/open/failed/resumed
