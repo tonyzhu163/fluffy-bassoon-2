@@ -1,0 +1,177 @@
+{
+  "format": "command_fit_owned_initial_read_v1",
+  "checked_unix": 1793481634.189555,
+  "heads": {
+    "action": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1",
+      "progress": {
+        "complete": false,
+        "format": "robotwin_fixed12_reactive_learning_curve_v1",
+        "iteration": 1409,
+        "milestones": {
+          "0": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009425342990401602,
+                "decoded_arm12_MSE": 0.004340937756023038,
+                "decoded_gripper2_MSE": 0.039931773234290695,
+                "decoded_physical14_MSE": 0.009425342990401602,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010162620623304974,
+                "decoded_arm12_MSE": 0.004860411888395382,
+                "decoded_gripper2_MSE": 0.041975875511586276,
+                "decoded_physical14_MSE": 0.010162620623304974,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000000.pt",
+              "sha256": "4e85c73f253de46095790e61fde9c58bbb402795632d616e76bb1d72dd0fced8"
+            }
+          },
+          "100": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.009884366752841033,
+                "decoded_arm12_MSE": 0.004570554085814099,
+                "decoded_gripper2_MSE": 0.041767240488689725,
+                "decoded_physical14_MSE": 0.009884366752841033,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.010880247864406556,
+                "decoded_arm12_MSE": 0.005530486864569996,
+                "decoded_gripper2_MSE": 0.042978813023572524,
+                "decoded_physical14_MSE": 0.010880247864406556,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000100.pt",
+              "sha256": "85a82fbd69c43f371a5fb92ea865ab595fd662d3a0647e5d1fa91346ae52f5c2"
+            }
+          },
+          "500": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.007377050912132623,
+                "decoded_arm12_MSE": 0.0038062424358260645,
+                "decoded_gripper2_MSE": 0.028801902372456757,
+                "decoded_physical14_MSE": 0.007377050912132623,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.011099637797867348,
+                "decoded_arm12_MSE": 0.005521748553811838,
+                "decoded_gripper2_MSE": 0.04456697210636256,
+                "decoded_physical14_MSE": 0.011099637797867348,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/endpoint-000500.pt",
+              "sha256": "ee296c912cbd07d1ef6ee61552a10eea76f875b2cc591a1e21987cfadde78aba"
+            }
+          }
+        },
+        "new_robot_actions": 0,
+        "primary_endpoint": null,
+        "recovery": {
+          "iteration": 1409,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-001409-b00200f01c1d4dcebbfbf7b50195ffc4.pt",
+          "sha256": "96c8d01909dbcbb6eb0b838fe09df76ec60d98e6864c73358dd43614072808c1"
+        }
+      },
+      "recovery_sha256": "96c8d01909dbcbb6eb0b838fe09df76ec60d98e6864c73358dd43614072808c1",
+      "recovery_hash_matches": true,
+      "recovery_bytes": 1776545,
+      "complete_update_mtime": 1793481634.1397908,
+      "milestone_endpoint_times": {
+        "0": 1793481466.7883885,
+        "100": 1793481477.4033587,
+        "500": 1793481516.743809
+      },
+      "console_tail": " SAPIEN builtin libvulkan.\n  warn(\"Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.\")\n/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:73: UserWarning: Failed to find Vulkan ICD file. This is probably due to an incorrect or partial installation of the NVIDIA driver. SAPIEN will attempt to provide an ICD file anyway but it may not work.\n  warn(\nINFO:root:Loaded norm stats from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training\nINFO:RLinf:openpi: converted OpenPI PyTorch checkpoint keys from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors in memory\nINFO:RLinf:openpi param dtypes: img.stem.weight=torch.float32, img.pos_embedding=torch.float32, llm.layers.0.pre_attention_norms.0.scale=torch.float32, llm.layers.0.attn.q_proj.0.weight=torch.bfloat16, action_out_proj.weight=torch.float32\nINFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=32, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors precision=None num_steps=5 action_horizon=32 action_chunk=32\n"
+    },
+    "kv": {
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1",
+      "progress": {
+        "complete": false,
+        "format": "robotwin_fixed12_reactive_learning_curve_v1",
+        "iteration": 499,
+        "milestones": {
+          "0": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.015104611434645353,
+                "decoded_arm12_MSE": 0.004340937756023038,
+                "decoded_gripper2_MSE": 0.039931773234290695,
+                "decoded_physical14_MSE": 0.009425342990401602,
+                "flow_velocity_padded18_MSE": 0.00026533681023473154,
+                "flow_velocity_physical14_MSE": 0.034183679219539756,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.015820306542861675,
+                "decoded_arm12_MSE": 0.004860411888395382,
+                "decoded_gripper2_MSE": 0.041975875511586276,
+                "decoded_physical14_MSE": 0.010162620623304974,
+                "flow_velocity_padded18_MSE": 0.0003788024270241814,
+                "flow_velocity_physical14_MSE": 0.035673669747276496,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-000000.pt",
+              "sha256": "0594149fa6886d9eb36789cd8389a7cd5b22870a5372bd225dc63fc95f1ac5bb"
+            }
+          },
+          "100": {
+            "diagnostics": {
+              "train": {
+                "MSE": 0.015085457444903904,
+                "decoded_arm12_MSE": 0.004330604732874745,
+                "decoded_gripper2_MSE": 0.039928913123973196,
+                "decoded_physical14_MSE": 0.009416077434796135,
+                "flow_velocity_padded18_MSE": 0.0002653203442102635,
+                "flow_velocity_physical14_MSE": 0.03413991894028992,
+                "valid_submitted_slots": 1968
+              },
+              "validation": {
+                "MSE": 0.015807253138128936,
+                "decoded_arm12_MSE": 0.004854154439726699,
+                "decoded_gripper2_MSE": 0.0419523261310368,
+                "decoded_physical14_MSE": 0.010153893075247262,
+                "flow_velocity_padded18_MSE": 0.0003790536100366028,
+                "flow_velocity_physical14_MSE": 0.035643510786550384,
+                "valid_submitted_slots": 896
+              }
+            },
+            "policy": {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/endpoint-000100.pt",
+              "sha256": "4124340f600092bc894a8732cf38e4b18bd6aed85911ab84d4d462bb3417a860"
+            }
+          }
+        },
+        "new_robot_actions": 0,
+        "primary_endpoint": null,
+        "recovery": {
+          "iteration": 499,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/recoveries/update-000499-92959a372895445182271c4041e82975.pt",
+          "sha256": "d98d4a5950e8e38c027daf510c11221e74e9e0e8a3975879b687eb7b4297f03e"
+        }
+      },
+      "recovery_sha256": "d98d4a5950e8e38c027daf510c11221e74e9e0e8a3975879b687eb7b4297f03e",
+      "recovery_hash_matches": true,
+      "recovery_bytes": 314922,
+      "complete_update_mtime": 1793481621.900608,
+      "milestone_endpoint_times": {
+        "0": 1793481535.277521,
+        "100": 1793481564.475329
+      },
+      "console_tail": " SAPIEN builtin libvulkan.\n  warn(\"Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.\")\n/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:73: UserWarning: Failed to find Vulkan ICD file. This is probably due to an incorrect or partial installation of the NVIDIA driver. SAPIEN will attempt to provide an ICD file anyway but it may not work.\n  warn(\nINFO:root:Loaded norm stats from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training\nINFO:RLinf:openpi: converted OpenPI PyTorch checkpoint keys from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors in memory\nINFO:RLinf:openpi param dtypes: img.stem.weight=torch.float32, img.pos_embedding=torch.float32, llm.layers.0.pre_attention_norms.0.scale=torch.float32, llm.layers.0.attn.q_proj.0.weight=torch.bfloat16, action_out_proj.weight=torch.float32\nINFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=32, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/model.safetensors precision=None num_steps=5 action_horizon=32 action_chunk=32\n"
+    }
+  }
+}

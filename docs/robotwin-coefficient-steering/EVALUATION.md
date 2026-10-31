@@ -133,9 +133,10 @@ Consumer400eed69 changes that one expectation to(1,32), preserving full model
 state and every other guard. Two independent static reviews pass. The correction job-qzpsryt5bul9 now reports12/12 focused passes and a successful
 existing full90-row/all12 CPU seal, retaining paid77+new13 and failed04. This
 is a repair of a concrete ABI mismatch, rather than another physical hypothesis.
-The execution owner reports exit0/103 inclusive CPU-worker-seconds; its copied
-producer packet is pending. No payload conversion, VLA, GPU or robot action
-ran. [Saved owner handoff](../../outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/OWNER-HANDOFF.json).
+The allocation closes exit0/103 inclusive CPU-worker-seconds. Copied JUnit,
+zero-GPU/clock and terminal metadata hashes pass parent review; all90 tensor
+validation remains the allocated producer's proof, not a Mac tensor audit. No payload conversion, VLA, GPU or robot action
+ran. [Copied CPU proof](../../outputs/frozen-vla-cache-readout-correction-cpu-20261101-r1/PARENT-REVIEW.json).
 
 Independent f3 readout qualification passes56/57 tests. The sole failed fixture
 compares an empty unresolved-decision mapping with integer0 after its three
@@ -157,7 +158,19 @@ command-fit children now have900 inclusive GPU-seconds each reserved inside
 the original A1 residual, with actual runtime/resource admission still pending.
 Each will measure update time/capacity inside the retained scientific run;
 insufficient time must leave a full incomplete recovery, not a truncated
-endpoint or a favorable validation choice. No readout GPU is funded yet.
+endpoint or a favorable validation choice. A conditional1,500-second readout reservation now fits the same old A1
+residual:15 fixed native/action5000/KV5000 episodes,6,000 controller actions,
+with qualification embedded in the first native episode. It may launch only
+after both actual5000 endpoints and runtime/resource admission; no early
+checkpoint substitution or additional episode is admitted. The actual two fit allocations now run on distinct
+physical GPUs: actionjob-8bsqknljwduh has1,409 complete updates with0/100/500
+milestones, and KVjob-ojt0dkom0woh has499 with0/100. Latest full recovery byte
+hashes match; source pre-SGD all90 parity/frozen gates precede the observed
+updates. No final model signature or physical robot result is claimed yet.
+Endpoint0→100 wall intervals are10.615s/29.198s, including milestone evaluation
+and checkpointing, so they are not pure optimizer-throughput benchmarks.
+Both retain the fixed5000 endpoint and independent900-second ceilings.
+[Actual advancement](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-FIT-0520-PARENT-REVIEW.json).
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved

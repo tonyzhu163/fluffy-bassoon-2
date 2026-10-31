@@ -55,15 +55,16 @@ policies. A separate command-plan diagnostic retains all12, including failed04.
 Its paid11 cache plus13 new04 records are preserved with complete whole-case
 RNG/cursor publication; the full12 consumer seal fails before fitting.
 Allocated predicate inspection confirms official state(1,32) versus a
-consumer(1,14) guard. The execution owner now reports the narrow correction
-and full90-row CPU seal passing; no head has been trained yet.
-No learned capacity, source RL or Transformer result follows.
+consumer(1,14) guard. The narrow correction and full90-row CPU seal pass.
+Action and KV command-imitation fits now have real optimizer progress on
+separate GPUs toward fixed5000 endpoints. No final capacity, physical benefit,
+source RL or Transformer result is available yet.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through160,080 scores20/20. All panels are retained. This is interim
+from40,140 through180,020 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
