@@ -31,6 +31,18 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
+Execution status at2026-10-31 10:30 Shanghai: the goal remains incomplete and the next
+material runs await the two already-requested resource decisions: LIBERO
+29.5additionalGPUh/150GB, and RoboTwin AD-first3GPUh plus2aggregateCPU-worker
+hours/128GiB/60,000target actions. All current experiment jobs are terminal;
+LIBERO's original32h pool has1180GPU-s unassigned. RoboTwin's final100 AD-only
+export profile is now statically accepted; no new source collection is needed
+for its first AD fits. Its7020s CPU request and6720s parent leave10s unrequested
+within the conditional7030s balance. No production bank/fit/readout is admitted.
+Further readiness restatements do not advance the experiment. Resume the
+corresponding prepared runs after direct human approval; preserve the full
+benchmark/method goal and do not infer approval from automated continuations.
+
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before
 expanding that experiment. Verified numerical results stay in the method's

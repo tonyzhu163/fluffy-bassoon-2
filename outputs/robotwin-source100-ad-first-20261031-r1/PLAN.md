@@ -6,10 +6,14 @@ bounded development phase, not completion of the larger benchmark matrix.
 - Existing implementation owner: native RoboTwin history exporter/evaluator.
 - Reuse the qualified exporter, trainer, controller and real robot loop.
 - AD/BC-only routing is committed at
-  `7401cd50c038a4cb35149eceeb72128e9a368cc3`. Focused regressions are prepared
-  but still require allocated Linux execution. The source100/500-update
-  evaluation profile is being prepared by the same owner. Pin/review each
-  component's resulting commit before its execution.
+  `7401cd50c038a4cb35149eceeb72128e9a368cc3`; its108 focused allocated CPU
+  tests passed. The sampled source100/500-update readout atf7594a03 passes48
+  distinct allocated CPU tests. The final100 AD-only export profile is
+  statically accepted at53f5361abf1bbfcd8cb586b4de764dfe6869922f, with
+  profileSHA1a10e71d2f2049be122168d7e846817f0e0341eedb9eb8bbb41ff3c2ddcb2f8e.
+  Its actual bank, host, model and funding bindings remain absent. The
+  prepared7020s CPU reservation/6720s parent fits inside conditional7030s
+  remaining;10s is unrequested. No production allocation has launched.
 - No new controller, source collector, teacher panel or benchmark adapter.
 - AD labels: actual executed steering noise. Validation: behavior cloning on
   actual held-out source episodes. No mean-teacher competence requirement.
