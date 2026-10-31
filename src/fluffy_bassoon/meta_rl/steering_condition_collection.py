@@ -253,7 +253,7 @@ class CoefficientTeacher:
         if (learner.observation_dim != profile.public_dim or learner.action_dim != 4
                 or learner.action_limit != 1. or learner.config.batch_size != 32
                 or learner.config.warmup_chunks != 32 or learner.config.utd != 4
-                or learner.target_replay_mode is not None):
+                or learner.target_replay_mode is not None or learner.seed != lineage.learner_seed):
             raise ValueError("Teacher dimensions/bounds differ from the actual mapping")
         if lineage not in lineage_specs(profile.learner_seed):
             raise ValueError("Require one of the six independent source lineages")
@@ -359,7 +359,7 @@ class CoefficientTeacher:
 
     def finish_episode(self, receipt):
         if (self.active_episode is None or receipt.get("complete") is not True
-                or receipt.get("spec", {}).get("id") != self.active_episode["id"]
+                or receipt.get("spec") != self.active_episode
                 or receipt.get("primitive_steps") != self.episode_steps
                 or receipt.get("chunks") != self.decision_count
                 or len(receipt.get("corpus_refs", [])) != self.decision_count):
@@ -594,6 +594,11 @@ def collect_round_robin(teachers, *, episode_target=24, **callbacks):
     """Six real independent learner lineages, balanced at episode boundaries."""
     if set(teachers) != set(SOURCE_METHOD_KEYS):
         raise ValueError("All six predeclared source methods must be present")
+    if (len({id(t.learner) for t in teachers.values()}) != 6
+            or len({t.learner.seed for t in teachers.values()}) != 6
+            or any(t.lineage.method != key for key, t in teachers.items())
+            or len({_state_digest(t.profile.contract()) for t in teachers.values()}) != 1):
+        raise ValueError("Require six independent learners under one exact source profile")
     if episode_target not in (24, 48):
         raise ValueError("Only the initial24 or explicitly admitted upper48 prefix")
     for episode in range(episode_target):
