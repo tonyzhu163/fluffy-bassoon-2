@@ -1,37 +1,49 @@
 # Frozen Motus steering evaluation
 
-## Event-aligned successor: live qualification and first four teachers
+## Event-aligned successor stopped before fitting at teacher04
 
-Snapshot23:17:54 Shanghai: Baige `job-2rkimbvypowd` runs exact `be247676`,
-using the original A1 remainder, at most5164 all-in GPU-seconds/10000 new
-physical actions/25episodes. Native H32 executor and the complete8TRAIN/4VAL
-source bank remain unchanged. The new expert schedule splits at deterministic
-gripper-phase boundaries and adds explicit final-command holds. All12 CPU
-preflights fit7chunks/224 submitted slots. Actual qualification comprises the
-original24 tests plus2 affected getter checks on the successor:22 unchanged
-carried nodes+2 updated nodes=24 distinct cases,26 actual executions across
-pins. CPU151/240seconds; phase978/1800,822 remain. No fresh fullbe247 suite is
-claimed. [Exact CPU evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-CPU-RESULT.md).
+Baige `job-2rkimbvypowd`, source `be247676`, is terminalFailed/exit1. The
+predeclared all12-teacher gate stopped at phone04's natural400-action timeout,
+without budget truncation. Fixed-H32 phone02 control also failed400; aligned
+02,00,01,03 each succeeded193. Teachers05..11 remain unrun, all original
+8TRAIN/4VAL demonstrations retained. No cache, KV/action fit, loss or optimizer
+update exists. Earlier partial successes did not qualify the full teacher bank.
+[Terminal result](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RESULT.md).
 
-Real GPU/CUDA/ownPID and full frozen721a/zero/native parity/KV-gradient checks
-pass. KV gradient is0.00427614 with zero motor gradients. The fixed-H32 phone02
-control fails again at400 actions. The first aligned02,00,01,03 each succeed
-at193. Public seed/observation/features match for the repeated02 cases; global
-planner RNG histories are not paired. This comparison changes scheduling and
-does not establish causal rescue, learned capacity, adaptation or ICRL. Only
-these four aligned successes are verified; ALL12 must succeed before caching
-or fitting. Closed-prefix1172 new actions and an opaque full recovery are
-saved; in-flight cost is not independently counted in this snapshot.
-[First real progression](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-FIRST-PROGRESS.md).
+The failed04 record reaches source_cursor140 and final-target holds by request
+accounting. This rules out an unconsumed reference suffix as the simple
+accounting explanation, without proving delivery of the dense physical path.
+Source frames, full H32 proposed plans, last16 submitted slots and actual masks
+remain distinct. Scheduling and global planner RNG history differ between02
+control and aligned replay, so the observed02 improvement is not a causal
+rescue claim. The native executor remained unchanged. The non-universal replay
+result still does not evaluate a learned reactive class or ICRL.
 
-If all12 pass, the fixed next stage imitates full expert submitted plans from
-actual canonical observations with100 updates per KV/action head, followed by
-the original4 opened DEV cases×3conditions. Native executed masks remain
-separate physical-cost evidence because later submitted waypoints can affect
-earlier planned motion. Control/old rollouts and future schedule/audit fields
-are excluded from learned inputs. No locked32 case, RL/source teacher or
-AD/DPT history is admitted by this capacity experiment. A short bounded-head
-negative would not reject the full reactive class. Next owned check23:38.
+Real GPU/ownPID, zero/native parity and KV-gradient qualification passed early:
+721a before/after equal, parity error0, KV gradient0.00427614 and zero motor
+gradients. The failure branch emits no separate final full parameter hash;
+none is claimed. Full223589B recovery rehashes to0403db7c; it was not
+deserialized or restore-tested. The owner rehashed21 referenced JSONs and four
+failed04 binary endpoints; no typed arrays or full1331-event journal replay
+was performed in terminal verification. Producer canonical totals20171 actual
+and charged, zero pending/uncertain, match the1572 new closed-episode actions.
+[Receipt and limits](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RECEIPT.json).
+
+This child costs298 all-in GPU-seconds; cumulative phase/A1 spend2334. The
+unused4866 seconds of its5164 reservation are released inside the original
+phase. A1 now has4866GPU-seconds/9829actions remaining; whole phase26466/
+279829. CPU978/1800 used,822 remain. The 24 original checks plus2 affected
+successor checks and all12 schedule preflights remain valid software evidence,
+not physical-teacher success. No runtime polling or blind retry is needed.
+
+The new audit actually retains actor variants/world poses, named measured
+joint positions, nominal/drive gripper values and cached camera metadata. The
+next discriminating step is one bounded read-only CPU comparison of fixed02,
+aligned02 and failed04, using these saved quantities and exact source metadata.
+It must separate requests/drive targets from measured motion and unavailable
+source physics timestamps. This fits at most180 CPU-worker-seconds inside the
+822 residual; concrete code/inputs remain pending. No model, simulator, new
+robot actions, teacher filtering, fitting or GPU retry follows automatically.
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 

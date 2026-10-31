@@ -47,17 +47,18 @@ replay were not performed. Target57 data remain excluded from source
 pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
 The targeted Motus/RoboTwin fixed4D screen still has no eligible rescue. A
-supervised capacity attempt then failed before fitting at teacher02 replay;
-CPU diagnosis showed all608 issued requests were exact, leaving physical
-execution/scene compatibility unresolved. The event-aligned native-H32
-successor is now running. At23:17:54, live frozen-motor/parity/gradient checks
-pass; fixed02 control fails400 while aligned02/00/01/03 each succeed193.
-This one changed-schedule comparison is not a causal rescue or learned result.
-All12 must succeed before canonical plan-imitation100-update/head fits and the
-fixed tiny DEV panel. It uses the original5164GPU-second/10000-new-action A1
-remainder, not a new allowance. Phase CPU978/1800,822 remain after the carried
-24-case plus2affected qualification. No new RL teacher, meta-learning or
-capacity result is established. [Current evidence and limits](robotwin-coefficient-steering/EVALUATION.md).
+supervised capacity attempt failed before fitting at teacher02; CPU diagnosis
+confirmed exact requests while physical execution/scene compatibility remained
+unresolved. Its event-aligned native-H32 successor also stops before fitting:
+fixed02 control fails400, aligned02/00/01/03 succeed193each, then aligned04
+fails its natural400 cutoff. Teachers05..11 stay unrun, all twelve demos remain.
+No cache, optimizer update or learned capacity/ICRL result exists. Event-aligned
+replay is not uniformly sufficient; one02 comparison does not isolate causality.
+Actual physical-state logs now support a bounded three-case CPU diagnosis
+before another proposal. Child cost298GPU-s/1572actions; cumulative2334/
+20171. A1remaining4866GPU-s/9829actions, CPU822remain. Early live frozen/zero/
+gradient checks passed; failure emitted no separate final motor hash. [Evidence
+and limits](robotwin-coefficient-steering/EVALUATION.md).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use

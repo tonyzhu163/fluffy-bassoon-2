@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "event_aligned_successor_running; first4teachers_success; all12gate_andfits_pending",
+  "state": "event_aligned_teacher04_failed_before_cache_fit; bounded_CPU_physical_diagnosis_pending_pin",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -59,15 +59,21 @@
       "job_id": "job-2rkimbvypowd",
       "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
       "reserved_seconds": 5164,
-      "charged_seconds": 0,
-      "settled": false,
-      "status": "Running",
+      "charged_seconds": 298,
+      "settled": true,
+      "status": "Failed",
       "worker_slice_seconds": 5104,
       "scheduler_allowance_seconds": 60,
       "maximum_new_actions": 10000,
       "maximum_complete_episodes": 25,
       "launch_receipt_path": "EVENT-CAPACITY-GPU-LAUNCH.json",
-      "launch_receipt_sha256": "5ed3cf2d6a802b933aff63ca9e9c8d09bad3fcbdc8c4e9e4da69c541816bd3ee"
+      "launch_receipt_sha256": "5ed3cf2d6a802b933aff63ca9e9c8d09bad3fcbdc8c4e9e4da69c541816bd3ee",
+      "released_seconds": 4866,
+      "actual_new_actions": 1572,
+      "fit_updates": 0,
+      "teacher_gate_failed": "phone-04",
+      "terminal_receipt_path": "EVENT-CAPACITY-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef"
     }
   ],
   "cpu_attempts": [
@@ -228,20 +234,13 @@
       "same_240_envelope": true
     }
   ],
-  "physical_action_reservations": [
-    {
-      "job_id": "job-2rkimbvypowd",
-      "maximum_new_actions": 10000,
-      "included_in_original_A1": true,
-      "includes_active_child_actions_until_terminal_settlement": true
-    }
-  ],
-  "charged_gpu_seconds": 2036,
-  "reserved_gpu_seconds": 5164,
+  "physical_action_reservations": [],
+  "charged_gpu_seconds": 2334,
+  "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 978,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 18599,
-  "reserved_actions": 10000,
+  "charged_actions": 20171,
+  "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -253,7 +252,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps. Active child reservation includes its new cost until terminal settlement; charged_actions here is settled historical cost, while active closed-prefix counts are separately labeled lower bounds.",
+  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps. All current GPU/CPU holds are settled; charged actions20171 include the event child1572. Earlier active-prefix1172 is historical and was not a full in-flight snapshot.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -308,30 +307,31 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 822,
-  "unreserved_gpu_seconds": 21600,
+  "unreserved_gpu_seconds": 26466,
   "latest_action_snapshot": {
-    "checked_shanghai": "2026-10-31T19:18:58+08:00",
-    "actual": 18599,
-    "charged": 18599,
+    "checked_shanghai": "2026-10-31T23:38:00+08:00",
+    "actual": 20171,
+    "charged": 20171,
     "pending": 0,
     "uncertain": 0,
-    "new_R2_actions": 12236,
-    "original_R1_actions_reused_once": 5355,
     "terminal": true,
-    "capacity_new_actions": 1008
+    "latest_child_actions": 1572,
+    "journal_events": 1331,
+    "journal_sha256": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "independent_full_journal_replay": false
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 5164,
-  "remaining_a1_actions": 11401,
+  "remaining_a1_gpu_seconds": 4866,
+  "remaining_a1_actions": 9829,
   "retry_launched": true,
   "source_teacher_admitted": false,
   "selection_evaluable": true,
   "preserve_initial_grant_and_header": true,
-  "remaining_a1_after_settled_before_active_hold": 5164,
+  "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 26764,
-  "remaining_phase_actions": 281401,
+  "remaining_phase_gpu_seconds": 26466,
+  "remaining_phase_actions": 279829,
   "selected_arm": null,
   "eligible_arms": [],
   "capacity_preparation": {
@@ -393,14 +393,8 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 0,
-  "unreserved_a1_actions": 1401,
-  "active_child_known_closed_action_prefix": {
-    "job_id": "job-2rkimbvypowd",
-    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
-    "new_actions": 1172,
-    "not_a_full_inflight_snapshot": true
-  },
+  "unreserved_a1_gpu_seconds": 4866,
+  "unreserved_a1_actions": 9829,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
     "CPU_qualified": true,
@@ -410,6 +404,35 @@
     "aligned_teachers_verified_success": 4,
     "all12_success_qualified": false,
     "fit_result_verified": false,
-    "next_check_shanghai": "2026-10-31T23:38:00+08:00"
+    "next_check_shanghai": null,
+    "state": "terminal_teacher04_gate_failure",
+    "scheduler_status": "Failed",
+    "exit_code": 1,
+    "aligned_teachers_attempted": 5,
+    "cache_created": false,
+    "actual_new_actions": 1572,
+    "actual_gpu_seconds": 298,
+    "full_recovery_sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
+    "final_full_motor_hash_emitted": false,
+    "next_step": "Concrete readonly<=180CPU diagnosis of fixed02/aligned02/aligned04; no simulator/model/ledger/checkpoint load or new GPU"
+  },
+  "latest_action_snapshot_history": [
+    {
+      "checked_shanghai": "2026-10-31T19:18:58+08:00",
+      "actual": 18599,
+      "charged": 18599,
+      "pending": 0,
+      "uncertain": 0,
+      "new_R2_actions": 12236,
+      "original_R1_actions_reused_once": 5355,
+      "terminal": true,
+      "capacity_new_actions": 1008
+    }
+  ],
+  "last_active_prefix_before_terminal": {
+    "job_id": "job-2rkimbvypowd",
+    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
+    "new_actions": 1172,
+    "not_a_full_inflight_snapshot": true
   }
 }
