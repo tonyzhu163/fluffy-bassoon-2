@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "four_case_prelift_factorial_all_fail; all12_false; task44_SAC_active_separate_phase; independent_partial11_cache_closeout_pending",
+  "state": "phone_factorial_and_partial11_cache_terminal; all12_false; task44_SAC_active_separate_phase",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -136,6 +136,22 @@
       "fit_updates": 0,
       "terminal_receipt_path": "FACTORIAL-TERMINAL-RECEIPT.json",
       "terminal_receipt_sha256": "2da5b0bf18eb0c444b32e9cb6514970a5c5aeaa828b4552e5f3316999e7c5899"
+    },
+    {
+      "role": "partial11_model_cache",
+      "job_id": "job-p94g7qdx8665",
+      "source_commit": "7eef998223aa93c91bc16f9599979aa3dc7f522d",
+      "reserved_seconds": 1200,
+      "charged_seconds": 154,
+      "released_seconds": 1046,
+      "settled": true,
+      "status": "Succeeded",
+      "actual_new_actions": 0,
+      "fit_updates": 0,
+      "terminal_receipt_path": "PARTIAL11-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "11319c2a85c8c65e2d26c7c55edacddb8936804e8b94366d8d305e2754715f7d",
+      "lineage": "frozen-pi05-endtoend-20261031-r1/partial11-model-cache",
+      "lineage_seconds": 1200
     }
   ],
   "cpu_attempts": [
@@ -410,7 +426,7 @@
     }
   ],
   "physical_action_reservations": [],
-  "charged_gpu_seconds": 3298,
+  "charged_gpu_seconds": 3452,
   "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 1682,
   "reserved_cpu_worker_seconds": 0,
@@ -427,7 +443,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "F settled310GPU-s/1600actions once; old known phase3298GPU-s/23922actions, zero pending/uncertain actions. Partial11 cache1200 remains conservatively held until its own owner closeout (F receipt later whole-clock3452 is not an F cost). CPU1682/1800,118remaining. LIBERO164/600 separate. No clock/header replacement or borrowed capacity.",
+  "accounting": "All targeted GPU attempts settled once:3452GPU-s/23922actions,zero active holds/pending/uncertain actions. Latest F310 plus cache154; cache0actions/77rows/1.378GB is PARTIAL11, not full12 or fit/source admission. CPU1682/1800,118remaining; LIBERO164/600 separate. Original grants/header preserved.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -482,7 +498,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 118,
-  "unreserved_gpu_seconds": 24302,
+  "unreserved_gpu_seconds": 25348,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -557,7 +573,7 @@
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 3902,
+  "remaining_a1_gpu_seconds": 3748,
   "remaining_a1_actions": 6078,
   "retry_launched": true,
   "source_teacher_admitted": false,
@@ -565,7 +581,7 @@
   "preserve_initial_grant_and_header": true,
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 25502,
+  "remaining_phase_gpu_seconds": 25348,
   "remaining_phase_actions": 276078,
   "selected_arm": null,
   "eligible_arms": [],
@@ -628,7 +644,7 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 2702,
+  "unreserved_a1_gpu_seconds": 3748,
   "unreserved_a1_actions": 7678,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
@@ -729,8 +745,17 @@
     "lineage_seconds": 1200,
     "maximum_new_actions": 0,
     "maximum_output_bytes": 12884901888,
-    "status": "formal_closeout_pending",
+    "status": "complete_partial11",
     "admitted_scope": "partial11_only_no_fit_or_full_seal",
-    "latest_phase_clock_observation_in_F_receipt": 3452
+    "latest_phase_clock_observation_in_F_receipt": 3452,
+    "charged_seconds": 154,
+    "settled": true,
+    "record_count": 77,
+    "cases": 11,
+    "train_rows": 49,
+    "validation_rows": 28,
+    "output_bytes": 1377989403,
+    "fit_eligible": false,
+    "full12_eligible": false
   }
 }

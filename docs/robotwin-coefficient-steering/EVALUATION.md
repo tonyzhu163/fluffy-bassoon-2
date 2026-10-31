@@ -76,14 +76,25 @@ all reactive policies or establish a unique contact/approach/transport cause.
 Repeated native holds also consume TOPP/RNG operations, so this is not a pure
 elapsed-time contrast. [Four-case receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/FACTORIAL-TERMINAL-RECEIPT.json).
 
-After F, known targeted costs are3,298 GPU-seconds/23,922 actions before the
-independent partial-cache closeout. Old-phase CPU is1,682/1,800,118 remaining.
+The targeted phase closes these jobs at3,452 GPU-seconds/23,922 actions with
+no active holds. Old-phase CPU is1,682/1,800,118 remaining.
 One composite qualification passes29 partial-wrapper and33 factorial cases plus
 real04 schedule preflight on zero-GPU2CPU/16GiB,88 inclusive CPU-worker-seconds.
 The original bank44, wide40, resource3 and parallel14 checks are retained, not
-repeated. A separately scoped zero-action PARTIAL11 cache may prepare known
-records; it cannot seal a full bank, fit a model or manufacture a successful04.
-[CPU proof](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL-FACTORIAL-CPU-RECEIPT.json).
+repeated. The zero-action PARTIAL11 cache also closes successfully:11 cases/77 rows
+(49TRAIN/28VAL),1,377,989,403 bytes and154 GPU-seconds. The execution owner
+checks all77 payload hashes, immutable cursor/RNG-recovery bytes and unchanged
+721a motor. The canonical action tail stays unchanged. It is preparation, not
+a full12 seal, successful04 or fitting/source admission.
+[CPU proof](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL-FACTORIAL-CPU-RECEIPT.json),
+[cache closeout](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL11-TERMINAL-RECEIPT.json).
+
+The next prospective command-capacity diagnostic may retain all original12
+identities/8TRAIN4VAL including failed04, explicitly labeling its replay failed.
+It asks whether reactive heads can imitate known submitted command plans, not
+whether all teachers succeeded. This requires a new diagnostic profile/adapter
+and linked finite resource plan; the old success gate/seal remains unchanged.
+No further blind dwell retry or actual fit is admitted by these closeouts.
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 
