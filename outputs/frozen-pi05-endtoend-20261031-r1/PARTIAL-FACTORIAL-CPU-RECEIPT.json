@@ -1,0 +1,410 @@
+{
+  "format": "frozen_pi05_partial_factorial_CPU_receipt_v1",
+  "job_id": "job-fbngf8so25cq",
+  "component_sources": {
+    "partial11": {
+      "source_commit": "7eef998223aa93c91bc16f9599979aa3dc7f522d",
+      "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-partial11-cache-20261101-r1"
+    },
+    "factorial": {
+      "source_commit": "8632e421412388e8bb9c933b2b10cf5940dc7156",
+      "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-prelift-factorial-20261101-r1"
+    },
+    "one_original_deadline": 1793471807.0
+  },
+  "tests": {
+    "partial11-wrapper.junit.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "29",
+      "time": "1.569",
+      "timestamp": "2026-11-01T02:35:37.990744+08:00",
+      "hostname": "job-fbngf8so25cq-master-0"
+    },
+    "prelift-factorial.junit.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "33",
+      "time": "1.725",
+      "timestamp": "2026-11-01T02:35:40.042138+08:00",
+      "hostname": "job-fbngf8so25cq-master-0"
+    }
+  },
+  "actual_GPU": 0,
+  "actual_CPU": 2,
+  "actual_memory_bytes": 17179869184,
+  "charged_CPU_worker_seconds": 88,
+  "prior_phase_CPU_charge": 1594,
+  "cumulative_phase_CPU_charge": 1682,
+  "maximum_phase_CPU_worker_seconds": 1800,
+  "remaining_phase_CPU_worker_seconds": 118,
+  "maximum_attempt_CPU_seconds": 180,
+  "summary_sha256": "db6a4642e1a0cd524b5aa2c51c5906e8a24a2c104ba76494626d1a9b770b52fb",
+  "actual_preflight_sha256": "5520f4aa6352e033452d9b613895d8bd7f9332069fb920e3d228f64c8181088d",
+  "preflight": {
+    "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+    "status": "schedule_pass_only",
+    "source": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode4.hdf5",
+      "sha256": "8ec1ab7b504e7c57c26cd9a267d823f403504008ee7d3fd0ed540f6cda3b97d8",
+      "bytes": 7256080
+    },
+    "schedule": {
+      "1": {
+        "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+        "source_schedule": {
+          "format": "robotwin_gripper_event_h32_v1",
+          "reference_frames": 140,
+          "threshold": 1e-05,
+          "boundaries": [
+            0,
+            56,
+            70,
+            120,
+            134,
+            140
+          ],
+          "events": [
+            {
+              "joint": 6,
+              "direction": -1,
+              "start": 56,
+              "end_exclusive": 70
+            },
+            {
+              "joint": 6,
+              "direction": 1,
+              "start": 120,
+              "end_exclusive": 134
+            }
+          ],
+          "chunks": [
+            {
+              "start": 0,
+              "end": 32,
+              "new_frames": 32,
+              "issued_slots": 32,
+              "added_holds": 0
+            },
+            {
+              "start": 32,
+              "end": 56,
+              "new_frames": 24,
+              "issued_slots": 32,
+              "added_holds": 8
+            },
+            {
+              "start": 56,
+              "end": 70,
+              "new_frames": 14,
+              "issued_slots": 32,
+              "added_holds": 18
+            },
+            {
+              "start": 70,
+              "end": 102,
+              "new_frames": 32,
+              "issued_slots": 32,
+              "added_holds": 0
+            },
+            {
+              "start": 102,
+              "end": 120,
+              "new_frames": 18,
+              "issued_slots": 32,
+              "added_holds": 14
+            },
+            {
+              "start": 120,
+              "end": 134,
+              "new_frames": 14,
+              "issued_slots": 32,
+              "added_holds": 18
+            },
+            {
+              "start": 134,
+              "end": 140,
+              "new_frames": 6,
+              "issued_slots": 32,
+              "added_holds": 26
+            }
+          ],
+          "full_schedule_slots": 224,
+          "full_schedule_added_holds": 84,
+          "minimum_slots_to_issue_every_original_frame": 198,
+          "native_episode_limit": 400,
+          "admissible": true,
+          "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+        },
+        "entries": [
+          {
+            "kind": "source",
+            "source_chunk": 0,
+            "start": 0,
+            "end": 32
+          },
+          {
+            "kind": "source",
+            "source_chunk": 1,
+            "start": 32,
+            "end": 56
+          },
+          {
+            "kind": "source",
+            "source_chunk": 2,
+            "start": 56,
+            "end": 70
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 0,
+            "probe_holds": 1
+          },
+          {
+            "kind": "source",
+            "source_chunk": 3,
+            "start": 70,
+            "end": 102
+          },
+          {
+            "kind": "source",
+            "source_chunk": 4,
+            "start": 102,
+            "end": 120
+          },
+          {
+            "kind": "source",
+            "source_chunk": 5,
+            "start": 120,
+            "end": 134
+          },
+          {
+            "kind": "source",
+            "source_chunk": 6,
+            "start": 134,
+            "end": 140
+          }
+        ],
+        "reference_frames": 140,
+        "insertion_after_source_chunk": 2,
+        "original_full_slots": 224,
+        "full_slots_with_probe": 256,
+        "minimum_slots_to_issue_every_original_frame": 230,
+        "native_episode_limit": 400,
+        "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+      },
+      "5": {
+        "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+        "source_schedule": {
+          "format": "robotwin_gripper_event_h32_v1",
+          "reference_frames": 140,
+          "threshold": 1e-05,
+          "boundaries": [
+            0,
+            56,
+            70,
+            120,
+            134,
+            140
+          ],
+          "events": [
+            {
+              "joint": 6,
+              "direction": -1,
+              "start": 56,
+              "end_exclusive": 70
+            },
+            {
+              "joint": 6,
+              "direction": 1,
+              "start": 120,
+              "end_exclusive": 134
+            }
+          ],
+          "chunks": [
+            {
+              "start": 0,
+              "end": 32,
+              "new_frames": 32,
+              "issued_slots": 32,
+              "added_holds": 0
+            },
+            {
+              "start": 32,
+              "end": 56,
+              "new_frames": 24,
+              "issued_slots": 32,
+              "added_holds": 8
+            },
+            {
+              "start": 56,
+              "end": 70,
+              "new_frames": 14,
+              "issued_slots": 32,
+              "added_holds": 18
+            },
+            {
+              "start": 70,
+              "end": 102,
+              "new_frames": 32,
+              "issued_slots": 32,
+              "added_holds": 0
+            },
+            {
+              "start": 102,
+              "end": 120,
+              "new_frames": 18,
+              "issued_slots": 32,
+              "added_holds": 14
+            },
+            {
+              "start": 120,
+              "end": 134,
+              "new_frames": 14,
+              "issued_slots": 32,
+              "added_holds": 18
+            },
+            {
+              "start": 134,
+              "end": 140,
+              "new_frames": 6,
+              "issued_slots": 32,
+              "added_holds": 26
+            }
+          ],
+          "full_schedule_slots": 224,
+          "full_schedule_added_holds": 84,
+          "minimum_slots_to_issue_every_original_frame": 198,
+          "native_episode_limit": 400,
+          "admissible": true,
+          "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+        },
+        "entries": [
+          {
+            "kind": "source",
+            "source_chunk": 0,
+            "start": 0,
+            "end": 32
+          },
+          {
+            "kind": "source",
+            "source_chunk": 1,
+            "start": 32,
+            "end": 56
+          },
+          {
+            "kind": "source",
+            "source_chunk": 2,
+            "start": 56,
+            "end": 70
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 0,
+            "probe_holds": 5
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 1,
+            "probe_holds": 5
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 2,
+            "probe_holds": 5
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 3,
+            "probe_holds": 5
+          },
+          {
+            "kind": "probe",
+            "start": 70,
+            "end": 70,
+            "source_chunk": null,
+            "probe_repetition_index": 4,
+            "probe_holds": 5
+          },
+          {
+            "kind": "source",
+            "source_chunk": 3,
+            "start": 70,
+            "end": 102
+          },
+          {
+            "kind": "source",
+            "source_chunk": 4,
+            "start": 102,
+            "end": 120
+          },
+          {
+            "kind": "source",
+            "source_chunk": 5,
+            "start": 120,
+            "end": 134
+          },
+          {
+            "kind": "source",
+            "source_chunk": 6,
+            "start": 134,
+            "end": 140
+          }
+        ],
+        "reference_frames": 140,
+        "insertion_after_source_chunk": 2,
+        "original_full_slots": 224,
+        "full_slots_with_probe": 384,
+        "minimum_slots_to_issue_every_original_frame": 358,
+        "native_episode_limit": 400,
+        "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+      }
+    },
+    "close_endpoint": 0.0,
+    "whole_original_bank_retained": true,
+    "new_robot_actions": 0,
+    "model_forwards": 0,
+    "SGD": 0,
+    "interpretation": "Plan qualification only; no physical/mechanism success or GPU admission"
+  },
+  "raw_evidence": {
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/summary.json": "db6a4642e1a0cd524b5aa2c51c5906e8a24a2c104ba76494626d1a9b770b52fb",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/partial11-wrapper.junit.xml": "f81a53da6d469d12e787da4b90b0fbc1d43df17cac9ef23300b214e40a5a4e4a",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/cpu-worker-clock.json": "550e0262595a7d52395774f11a1f25b512f0b24bae81c494ad5018b32a5384c5",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/factorial-tests-preflight.log": "0c7bacc95a511d6320e4142f3cfd80ae330101ae91b844a9578e168406ea5790",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/partial11-tests.log": "d068f20e45d527144600a2a5351a6aed172b24a56b8d1b9520ddea44f2c19e3e",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/preflight04-factorial.json": "5520f4aa6352e033452d9b613895d8bd7f9332069fb920e3d228f64c8181088d",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/allocation.json": "28180bc084801bd7767bc4d74ca52eec093a202703eb77fa15289f932ae655d3",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/zero-gpu-attestation.json": "d1c50272c8dddb727956139d994d8b8f81f293db848b2fb429b655482d0d0f4f",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/component-sources.json": "6065db1a2c74312b21296f31d8574be8cad92672a1064283864d16d3f62cc606",
+    "outputs/frozen-pi05-endtoend-20261031-r1/partial-factorial-cpu-evidence/prelift-factorial.junit.xml": "81dc3100be5d7eebf603701b0e18668c089ba785fecf0a0b0de7ebf9aff4f2d5"
+  },
+  "old_suites_not_repeated": true,
+  "scientific_producer_merge": false,
+  "collection_or_fit_admission": false,
+  "partial11_only": true,
+  "scheduler_status": "Succeeded",
+  "scheduler_created": "2026-11-01 02:35:07 Asia/Shanghai",
+  "scheduler_ended": "2026-11-01 02:35:51 Asia/Shanghai",
+  "scheduler_UI_seconds": 30
+}
