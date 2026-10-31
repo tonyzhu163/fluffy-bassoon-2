@@ -36,7 +36,9 @@ reserves400 actions durably; completed episodes settle exact cost. A process
 failure retains its unresolved reservation. Same-input motor qualification
 restores the motor RNG, executes no additional physical actions, and verifies
 the actual renderer and model process on the allocated GPU. Hash all motor
-parameters before and after execution.
+parameters before and after execution. The pinned Policy exposes its original
+model through the functools-wrapped bound sample_actions method; use that
+reference for hashing because this release has no Policy._model attribute.
 
 Complete recovery includes serialized SAC TrainStates/Adam/target/temperature,
 agent RNG, compact filled replay plus capacity/trajectory cursor, both pending
