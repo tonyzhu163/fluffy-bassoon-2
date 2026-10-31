@@ -125,6 +125,12 @@ def finalbank_phase(phase, ctx, code, receipts, allocation):
         raise ValueError('Wrong actual final validation-inclusive ancestry/tip')
     tools=code/'outputs/robotwin-finalbank-offline-plan-20261031-r1'
     if phase=='reuse':
+        free=shutil.disk_usage(base).free
+        if free<16<<30:raise ValueError('Need16GiB free before readonly projection reuse/export')
+        probe=private/'reuse-write-probe'
+        with probe.open('xb') as stream:
+            stream.write(b'final100-ad-reuse');stream.flush();os.fsync(stream.fileno())
+        probe.unlink()
         if (not residual or projection!=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/projection')
                 or f['reused_projection']['sha256']!='fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf'
                 or (projection/'ASSEMBLY-INCOMPLETE').exists()):
@@ -152,6 +158,7 @@ def finalbank_phase(phase, ctx, code, receipts, allocation):
         (base/'projection-reuse.json').write_text(json.dumps(dict(status='readonly_complete_projection_reuse',
             projection=f['reused_projection'],producer_terminal=f['producer_terminal'],producer_cleanup=f['producer_cleanup'],
             roots=62,unique_files=218673,unique_file_bytes=87636354374,retained_logical_storage_reserve_bytes=89<<30,
+            free_bytes=free,write_fsync_probe=True,
             raw_rehash_repeated=False,original_producer_fullSHA_phase_pass=True,
             source_case_and_array_admission='Still required in unchanged export/load validators'),indent=2)+'\n')
     elif phase=='inventory':
