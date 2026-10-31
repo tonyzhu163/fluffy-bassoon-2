@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="91" time="60.843" timestamp="2026-10-31T20:24:06.075073+08:00" hostname="job-mjw4gq2e94d3-master-0"><testcase classname="tests.test_steering_actuator_condition" name="test_actual_constant_mode_inverse_is_supported_and_grippers_exact[-1-action]" time="0.002" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_constant_mode_inverse_is_supported_and_grippers_exact[-1-decoded_ALOHA_joint_coefficients]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_constant_mode_inverse_is_supported_and_grippers_exact[1-action]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_constant_mode_inverse_is_supported_and_grippers_exact[1-decoded_ALOHA_joint_coefficients]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_external_command_inverse_is_never_a_kv_or_noise_coefficient_label[noise]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_external_command_inverse_is_never_a_kv_or_noise_coefficient_label[kv]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_external_command_inverse_is_never_a_kv_or_noise_coefficient_label[noise_coefficients]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_external_command_inverse_is_never_a_kv_or_noise_coefficient_label[native_KV_coefficients]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_clipping_is_audited_and_invalidates_inverse_proof" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_distribution_has_one_static_contract_and_explicit_boundary_selection" time="0.050" /><testcase classname="tests.test_steering_actuator_condition" name="test_torch_callback_preserves_input_layout_device_dtype_and_no_mutation" time="0.004" /><testcase classname="tests.test_steering_actuator_condition" name="test_reject_outside_range_and_nonzero_gripper_condition" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_reset_parity_uses_actual_public_hashes_and_accepted_seed" time="0.000" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_native_out_of_range_raw_grippers_stay_bitwise_for_native_clamp[-1-numpy]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_native_out_of_range_raw_grippers_stay_bitwise_for_native_clamp[-1-torch]" time="0.002" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_native_out_of_range_raw_grippers_stay_bitwise_for_native_clamp[1-numpy]" time="0.001" /><testcase classname="tests.test_steering_actuator_condition" name="test_actual_native_out_of_range_raw_grippers_stay_bitwise_for_native_clamp[1-torch]" time="0.002" /><testcase classname="tests.test_robotwin_steering_source" name="test_selection_recomputes_confirmed_rescue_and_fixed_tie_rule" time="0.005" /><testcase classname="tests.test_robotwin_steering_source" name="test_selection_without_true_repeated_recovery_is_inconclusive_not_eligible" time="0.003" /><testcase classname="tests.test_robotwin_steering_source" name="test_validation_crossed_warmup_counter_uses_uniform_until_completed_update" time="2.073" /><testcase classname="tests.test_robotwin_steering_source" name="test_frozen_learned_validation_uses_existing_actor_archive_and_no_observe_update" time="0.068" /><testcase classname="tests.test_robotwin_steering_source" name="test_global_resume_restores_real_python_numpy_torch_streams" time="0.001" /><testcase classname="tests.test_robotwin_steering_source" name="test_source_admission_reuses_existing_ledger_and_cumulative_resource_envelope" time="0.400" /><testcase classname="tests.test_robotwin_steering_source" name="test_shared_storage_snapshot_tolerates_only_vanished_atomic_fit_temporary" time="0.001" /><testcase classname="tests.test_robotwin_steering_source" name="test_fixed_validation_uses_common_baseline_instruction_and_actual_reset_identity" time="0.001" /><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[None]" time="8.685"><failure message="assert {} == 0">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a01e998eb90&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ0')
+cross_outcome = None
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+&gt;           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError</failure></testcase><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[boundary_stop]" time="9.012"><failure message="assert {} == 0">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a01e996b490&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ1')
+cross_outcome = 'boundary_stop'
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+&gt;           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError</failure></testcase><testcase classname="tests.test_robotwin_steering_source" name="test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink[passed]" time="9.020"><failure message="assert {} == 0">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a01f74db850&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_orchestration_publ2')
+cross_outcome = 'passed'
+
+    @pytest.mark.parametrize("cross_outcome", [None, "boundary_stop", "passed"])
+    def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path, cross_outcome):
+        tiny_factory(monkeypatch)
+        p, output = profile(), tmp_path/"source"
+        output.mkdir()
+        _, pair = make_pair()
+        distribution = CalibrationDistribution(pair)
+        control = SimpleNamespace(active=False, post_command_transform=distribution,
+            condition_contract=distribution.contract(), interface_sha256=p.interface_sha256,
+            episode_limit_for_task=lambda task: 400, set_coefficients=lambda *args: None,
+            mapping_sha256=lambda: p.mapping_sha256, snapshot=lambda: dict(actual_control_state=True))
+        class Guard:
+            maximum_episode_seconds = .1
+            def __call__(self):
+                pass
+            def admit_episode(self, *, episodes=1):
+                pass
+        guard, received, validation_modes = Guard(), [], []
+        def runner(current, spec, budget, *, controller, run_id, phase, **kwargs):
+            assert distribution.selected_sign == controller.lineage.sign
+            obs = np.zeros(2062, np.float32)
+            action = controller.act(obs)
+            if phase == "source_validation":
+                validation_modes.append(controller.decision_metadata()["source_warmup"])
+                if spec["milestone"]:
+                    assert spec["paired_instruction"] == ["Original fixture instruction"]
+                    assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
+            key = run_id+":"+spec["id"]
+            reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
+                task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
+            assert reserve.execute
+            budget.resolve(key, 1)
+            ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
+            controller.observe(obs, action, 1., obs, True, False, 1, ref)
+            return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
+                success=True, reset_info=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64,
+                    features_sha256="b"*64, instruction=["Original fixture instruction"]),
+                reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
+                episode_manifest_ref=ref)
+        monkeypatch.setattr(source, "run_complete_episode", runner)
+        def builder(student_profile, publications, *, output, **kwargs):
+            count = student_profile["prefix_episodes"]
+            assert len(publications) == 6
+            assert all(len(item["complete_episode_manifests"]) == count for item in publications.values())
+            assert sorted(item["lineage"]["partition"] for item in publications.values()) == ["train"]*4+["validation"]*2
+            for item in publications.values():
+                assert item["final_full_state"]["retention"] == "immutable"
+                current = BoundedTeacherRecovery.load(item["final_full_state"])["collector"]
+                validation_ref = item["source_validation_receipts"][str(count)]["input_checkpoint"]
+                validated = BoundedTeacherRecovery.load(validation_ref)["collector"]
+                assert item["final_full_state"] != validation_ref
+                assert _state_digest(current["learner"]) == _state_digest(validated["learner"])
+            received.append(count)
+            if "condition_cross" in kwargs:
+                assert count == 24 and kwargs["condition_cross"]["criterion_pass"] is True
+                assert output.name == "balanced-024-with-cross.json"
+            source._atomic_json(output, dict(completed=True, actual_prefix=count, gates="pending",
+                                            source_publications=publications))
+        with CampaignBudget(tmp_path/"ledger", campaign_id="test-only", total_actions=300000,
+                source_caps=p.source_caps(), phase_caps=source.PHASE_CAPS,
+                contract=dict(scope_sha256=p.scope_sha256), run_id="test", source_commit="a"*40) as budget:
+            status = source.run_source_collection(control=control, budget=budget, profile=p,
+                distribution=distribution, output=output, guard=guard,
+                archive=source.existing_actor_archive(output/"actors"), run_id="test", device="cpu",
+                source_commit="a"*40,
+                corpus_root=tmp_path/"phase-corpus",
+                student_profiles={12: dict(prefix_episodes=12), 24: dict(prefix_episodes=24)},
+                control_qualification=dict(path="pending-owner-proof", sha256="a"*64), prefix_builder=builder,
+                after_source=(lambda **kwargs: dict(status=cross_outcome, complete=cross_outcome == "passed",
+                    criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
+                    recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
+            assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
+&gt;           assert budget.snapshot()["unresolved_decisions"] == 0
+E           assert {} == 0
+
+tests/test_robotwin_steering_source.py:266: AssertionError</failure></testcase><testcase classname="tests.test_robotwin_steering_source" name="test_cross_adapter_selects_one_fixed_source_validation_blind_and_preserves_refs" time="0.015" /><testcase classname="tests.test_robotwin_steering_source" name="test_resume_binds_saved_root_global_capture_tip_and_event_count_not_equal_totals" time="0.018" /><testcase classname="tests.test_robotwin_steering_source" name="test_resume_under_lock_allows_only_one_exact_new_run_registration" time="0.017" /><testcase classname="tests.test_robotwin_steering_source" name="test_closed_cross_cursor_is_actual_checkpoint_receipt_and_exact_saved_charges" time="0.007" /><testcase classname="tests.test_steering_condition_cross" name="test_declared_aggregate_blind_threshold_allows_one_condition_to_tie_blind" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_summary_requires_all24_complete_predeclared_cells[missing]" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_summary_requires_all24_complete_predeclared_cells[duplicate]" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_summary_requires_all24_complete_predeclared_cells[partial]" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_summary_requires_all24_complete_predeclared_cells[wrong_condition]" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_one_failed_matched_mismatch_direction_cannot_pass_on_aggregate_blind_only" time="0.001" /><testcase classname="tests.test_steering_condition_cross" name="test_sampled_actor_draws_pair_privately_without_source_rng_replay_or_optimizer_changes" time="0.006" /><testcase classname="tests.test_steering_condition_cross" name="test_actual_common_runner_and_corpus_complete24_cells_pair_prompts_and_freeze_all_source_state" time="1.076" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[blind_after_open]" time="0.021" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[blind_wrong_source]" time="0.019" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[sampling]" time="0.020" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[source_overlap]" time="0.036" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[wrong_mapping]" time="0.016" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_rejects_unbound_or_leaking_setup_before_any_command[tampered_ref]" time="0.020" /><testcase classname="tests.test_steering_condition_cross" name="test_cross_does_not_resume_failed_or_pending_episode_state" time="0.021" /><testcase classname="tests.test_steering_condition_cross" name="test_owner_pre_rpc_boundary_stops_without_pending_then_resumes_exact_next_cell" time="1.161" /><testcase classname="tests.test_vla_history" name="test_tokens_contain_only_previous_real_outcomes" time="0.001" /><testcase classname="tests.test_vla_history" name="test_dataset_rejects_fixed_teacher_ad_and_fake_boundaries" time="0.001" /><testcase classname="tests.test_vla_history" name="test_ragged_serialization_and_checksum" time="0.004" /><testcase classname="tests.test_vla_history" name="test_sequence_padding_does_not_affect_loss_or_gradients" time="0.031" /><testcase classname="tests.test_vla_history" name="test_frozen_deployment_weights_and_causal_reset_controls" time="0.014" /><testcase classname="tests.test_vla_history" name="test_variable_context_batches_use_masked_real_labels" time="0.015" /><testcase classname="tests.test_vla_history" name="test_supervised_path_fits_labels_and_exports_frozen_candidate" time="0.133" /><testcase classname="tests.test_steering_history" name="test_exact_four_block_grid_charges_support_once" time="0.001" /><testcase classname="tests.test_steering_history" name="test_actual_corpus_exports_requested_coefficients_not_native_noise_or_audit_commands[ad]" time="0.852" /><testcase classname="tests.test_steering_history" name="test_actual_corpus_exports_requested_coefficients_not_native_noise_or_audit_commands[dpt]" time="0.837" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[case]" time="0.701" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[seed]" time="0.699" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[observation]" time="0.703" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[mapping]" time="0.730" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[partial]" time="0.748" /><testcase classname="tests.test_steering_history" name="test_admission_rejects_split_leakage_wrong_mapping_and_partial_prefix[query]" time="0.667" /><testcase classname="tests.test_steering_history" name="test_dpt_oracle_is_independent_of_uninformative_behavior_learning" time="0.807" /><testcase classname="tests.test_steering_history" name="test_memory_snapshots_pair_query_rng_without_query_feedback_contaminating_support" time="0.009" /><testcase classname="tests.test_steering_history" name="test_complete_reset_clears_memory_and_all_previous_feedback" time="0.005" /><testcase classname="tests.test_steering_history" name="test_reward_shuffle_preserves_every_observation_action_boundary_and_action_rng" time="0.007" /><testcase classname="tests.test_steering_history" name="test_query_nll_is_per_k_and_target_labels_never_feed_back" time="0.005" /><testcase classname="tests.test_steering_history" name="test_profile_fails_closed_when_shared_evaluation_slice_is_too_small" time="0.001" /><testcase classname="tests.test_steering_history" name="test_episode_windows_preserve_boundaries_limit_context_and_pair_full_static_positions" time="0.003" /><testcase classname="tests.test_steering_history" name="test_wrapped_collector_recovery_binds_mapping_and_complete_update_boundary" time="0.710" /><testcase classname="tests.test_steering_history" name="test_last_valid_public_request_excludes_hidden_commands_and_unexecuted_tail" time="0.001" /><testcase classname="tests.test_steering_history" name="test_live_adapter_delegates_2076_projection_to_the_single_driver_owner" time="0.003" /><testcase classname="tests.test_steering_history" name="test_zero_valid_terminal_receipt_closes_without_synthetic_action_or_feedback" time="0.065" /><testcase classname="tests.test_steering_history" name="test_final_only_selection_never_promotes_a_partial_and_retains_complete_resume[False]" time="0.836" /><testcase classname="tests.test_steering_history" name="test_final_only_selection_never_promotes_a_partial_and_retains_complete_resume[True]" time="0.907" /><testcase classname="tests.test_steering_history_pipeline" name="test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift" time="0.026"><failure message="TypeError: CampaignBudget.remaining() missing 1 required keyword-only argument: 'method'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_runner_executes_sh0')
+
+    def test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift(tmp_path):
+        torch.set_num_threads(1)
+        p = profile()
+        models = {}
+        for objective in ("ad", "dpt"):
+            for mode in ("full", "static"):
+                torch.manual_seed(7)
+                policy = HistoryNoisePolicy(HistoryConfig(17,4,width=8,layers=1,heads=2,context_length=16))
+                models[objective+"-"+mode] = (policy, dict(contract=dict(mode=mode,
+                    train_metadata=dict(noise_contract=p["interface"]))))
+        plan = dict(format=FORMAT,profile=p,objectives=["ad","dpt"],schedule=matrix_schedule(p,["ad","dpt"]),
+            models={key:{} for key in models},assemblies={"ad":{},"dpt":{}},teachers={c:{} for c in p["conditions"]},
+            source_actual_seeds=[],source_initial_observation_sha256=[])
+        control, guard = TinyCanonicalControl(tmp_path/"corpus"), Guard()
+        sink = BoundedTeacherRecovery(tmp_path/"recovery", guard=guard, control=control)
+        def factory(condition, seed):
+            return FrozenReference(dict(native_dim=3, device="cpu", mode="fixed_coefficients", coefficients=np.zeros(4,np.float32),
+                identity="a"*64,condition=condition,lineage="fixture-reference",updates=0,reference={}),seed=seed)
+        with _budget(tmp_path/"ledger",p,"readout-fixture") as budget:
+&gt;           result = run_readout(plan, control=control, budget=budget, students=models, teacher_factory=factory,
+                stationary_factory=factory,
+                select_condition=lambda _:None, output=tmp_path/"matrix",run_id="readout-fixture",source_commit="f"*40,
+                guard=guard,checkpoint=sink)
+
+tests/test_steering_history_pipeline.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan = {'format': 'frozen_vla_4d_physical_student_readout_v1', 'profile': {'format': 'frozen_vla_4d_history_profile_v1', 'sco...'left', 'policy': 'ad-full', 'k': 4, ...}, ...], 'maximum_complete_episodes': 144, 'maximum_actions': 86400, ...}, ...}
+control = &lt;test_steering_history_pipeline.TinyCanonicalControl object at 0x7a01de4928d0&gt;
+budget = &lt;fluffy_bassoon.rl.robotwin_campaign_budget.CampaignBudget object at 0x7a01de493e50&gt;
+students = {'ad-full': (HistoryNoisePolicy(
+  (core): GatedTransformerXLCore(
+    (input_projection): Linear(in_features=24, out_...n_metadata': {'noise_contract': {'arm': 'kv', 'coefficient_dim': 4, 'native_horizon': 32, 'denoise_steps': 5, ...}}}})}
+teacher_factory = &lt;function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.&lt;locals&gt;.factory at 0x7a01de4f9f80&gt;
+stationary_factory = &lt;function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.&lt;locals&gt;.factory at 0x7a01de4f9f80&gt;
+select_condition = &lt;function test_actual_runner_executes_shared_prefix_grid_without_query_feedback_or_text_drift.&lt;locals&gt;.&lt;lambda&gt; at 0x7a01de4fb7e0&gt;
+output = PosixPath('/tmp/pytest-of-root/pytest-0/test_actual_runner_executes_sh0/matrix')
+run_id = 'readout-fixture'
+source_commit = 'ffffffffffffffffffffffffffffffffffffffff'
+guard = &lt;test_steering_history_pipeline.Guard object at 0x7a01de490110&gt;
+checkpoint = &lt;fluffy_bassoon.meta_rl.steering_condition_collection.BoundedTeacherRecovery object at 0x7a01de493290&gt;
+episode_runner = &lt;function run_complete_episode at 0x7a01f57f4f40&gt;
+
+    def run_readout(plan, *, control, budget, students, teacher_factory, stationary_factory, select_condition,
+                    output, run_id, source_commit, guard, checkpoint, episode_runner=None):
+        """Execute the bound grid using the SAME actual complete-episode runner.
+    
+        guard.admit_episode() reserves the existing remaining wall/cleanup budget;
+        guard() checks it and shared storage between chunks. checkpoint is the
+        owner's existing (event,payload,immutable=...) full recovery sink. No new
+        ledger is created. Source collection must yield its existing serial ledger.
+        """
+        import numpy as np
+        if episode_runner is None:
+            from .robotwin_steering_screen import run_complete_episode
+            episode_runner = run_complete_episode
+        from .robotwin_steering_screen import paired_reset_fields, PHASE_CAPS
+        validate_plan(plan)
+        profile, schedule = plan["profile"], plan["schedule"]
+        if (budget.header["total_actions"] != 300000 or budget.header["phase_caps"] != PHASE_CAPS
+                or budget.header["campaign_id"] != profile["shared_reservation"]["pilot_id"]
+                or set(budget.header["source_caps"]) != {r["lineage_id"] for r in profile["lineage_slots"]}
+                or run_id != budget.run_id or source_commit != budget.source_commit
+                or budget.header["contract"].get("scope_sha256") != profile["scope_sha256"]
+                or budget.snapshot()["unresolved_decisions"]
+&gt;               or budget.remaining(phase=PHASE) &lt; schedule["maximum_actions"]):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: CampaignBudget.remaining() missing 1 required keyword-only argument: 'method'
+
+src/fluffy_bassoon/meta_rl/steering_history_readout.py:320: TypeError</failure></testcase><testcase classname="tests.test_steering_history_pipeline" name="test_builder_uses_real_sink_validation_input_and_published_state_identity" time="2.008" /><testcase classname="tests.test_steering_history_pipeline" name="test_execution_microbatches_preserve_global_valid_position_loss_and_one_step" time="0.704" /><testcase classname="tests.test_steering_history_cross_admission" name="test_original_raw24_not_pass_flags_admits_both_objectives[ad]" time="1.486" /><testcase classname="tests.test_steering_history_cross_admission" name="test_original_raw24_not_pass_flags_admits_both_objectives[dpt]" time="1.529" /><testcase classname="tests.test_steering_history_cross_admission" name="test_failed_raw24_cannot_be_admitted_by_success_flags" time="1.560" /><testcase classname="tests.test_steering_history_cross_admission" name="test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher[sampling-actor/update/RNG]" time="1.478" /><testcase classname="tests.test_steering_history_cross_admission" name="test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher[actor-actor/update/RNG]" time="1.512" /><testcase classname="tests.test_steering_history_cross_admission" name="test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher[duplicate-duplicated]" time="1.560" /><testcase classname="tests.test_steering_history_cross_admission" name="test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher[teacher-canonical collector full recovery]" time="1.519" /><testcase classname="tests.test_steering_history_cross_admission" name="test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher[calibration-original source full-recovery]" time="1.454" /><testcase classname="tests.test_steering_history_cross_admission" name="test_missing_a2_remains_pending" time="0.001" /><testcase classname="tests.test_steering_history_cross_admission" name="test_source_admission_calls_production_cross_gate" time="0.705" /><testcase classname="tests.test_steering_history_cross_admission" name="test_original_cross_does_not_qualify_smaller_pending_prefix" time="1.573" /></testsuite></testsuites>
