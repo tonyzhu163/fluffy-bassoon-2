@@ -248,6 +248,22 @@ def restore_global_rng(saved):
         raise ValueError("Cannot silently discard captured CUDA RNG state")
 
 
+def paired_validation_spec(spec, baseline):
+    """Use the common paired-reset API; never rewrite text/features locally."""
+    first = baseline.get("spec", {})
+    instruction = baseline.get("reset_info", {}).get("instruction")
+    identity = baseline.get("reset_identity", {})
+    if (baseline.get("complete") is not True or first.get("milestone") != 0
+            or first.get("phase") != "source_validation"
+            or any(first.get(k) != spec.get(k) for k in
+                ("task", "case", "method", "reset_seed", "motor_seed"))
+            or not isinstance(instruction, list) or len(instruction) != 1
+            or not isinstance(instruction[0], str) or not instruction[0].strip()
+            or set(identity) != {"actual_seed", "observation_sha256", "features_sha256"}):
+        raise ValueError("Fixed validation must bind its actual complete baseline case and original instruction")
+    return dict(deepcopy(spec), expected_reset=deepcopy(identity), paired_instruction=deepcopy(instruction))
+
+
 def run_source_collection(*, control, budget, profile, distribution, output, guard,
                           archive, run_id, student_profiles, control_qualification,
                           source_commit, device="cuda", prior=None, prefix_builder=None, after_source=None):
@@ -348,8 +364,16 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
     def validate(checkpoint_ref, specs):
         saved = BoundedTeacherRecovery.load(checkpoint_ref)["collector"]
         lineage = teachers[specs[0]["method"]].lineage
+        baseline = None
+        if specs[0]["milestone"] != 0:
+            baseline_ref = teachers[lineage.method].validation_receipts.get("0")
+            if baseline_ref is None:
+                raise ValueError("Later validation cannot sample a new unpaired baseline instruction")
+            baseline = read_reference(baseline_ref)["results"]
         records = []
-        for spec in specs:
+        for index, spec in enumerate(specs):
+            if baseline is not None:
+                spec = paired_validation_spec(spec, baseline[index])
             if control.active:
                 raise RuntimeError("Condition cannot switch during a physical episode")
             distribution.select(lineage.sign)
