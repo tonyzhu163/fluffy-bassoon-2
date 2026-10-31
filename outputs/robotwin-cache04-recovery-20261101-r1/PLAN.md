@@ -75,3 +75,32 @@ Use the same diagnostic GPU-PAYLOAD cache04 command with the new source pin,
 updated runtime hashes and actual request fields. The payload still books and
 closes no allocation or clock. Actual data/parity/model capacity/cost remain
 required, and no new success/source/student eligibility is implied.
+
+
+## Bounded review correction after 8f594dcc
+
+The actual DATA payload now dispatches reconcile-cache04 to committed_receipt
+and readout-bindings to the existing canonical builder with both inputs audited.
+Focused tests execute the production heredoc, and cover the public diagnostic
+sealer's accepted published completion and refused raw/initial/changed proofs.
+No bulk core or numerical fit branch is replaced by those wrapper tests.
+
+The fixed cache root is checked before fresh model initialization and again at
+the direct recovery entry. Any completed child blocks ALL further GPU encoding,
+including an attempt to resume an older failed sibling. Resume never resets the
+aggregate600 lineage. CPU reconciliation additionally compares the completed
+recovery with the actual current published cursor, rejecting orphan snapshots.
+Existing _ensure_directory now persists every newly created parent ancestor;
+the qualified publisher itself remains byte-identical.
+
+Successful paid11 closure requires consistent nested/top-level exit0 and no
+owner error. Diagnosed failed04 resume permits its recorded nonzero child exit,
+but requires top/nested consistency and no owner settlement/cleanup error.
+No actual historical receipt is claimed defective by these negative fixtures.
+
+The combined new suite is33 prepared cases/15 functions, ZERO executed locally.
+Run it only in the parent's existing LINKED120 qualification after final static
+review, retaining old1775/1800 CPU accounting. The old84 files remain byte-exact06
+and carry their actual06 pass evidence; this does not claim they executed on the
+new recovery source. No old84 repeat, modelGPU admission, budget reset or new
+science follows from this static successor.
