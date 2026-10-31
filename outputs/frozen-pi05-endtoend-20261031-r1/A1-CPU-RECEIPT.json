@@ -1,0 +1,45 @@
+{
+  "format": "frozen_pi05_a1_cpu_receipt_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+  "reviewed_latest_main": "2f0d84fd1cf72020579b0d5fd85672b0a9bdc5f0",
+  "latest_main_relevant_code_unchanged_since": "fab7d03566b72a7eda27bc2eb2cf0b229d7da822",
+  "job_id": "job-876fmw17b3c6",
+  "run_id": "frozen-pi05-endtoend-a1-cpu-20261031-r1",
+  "scheduler": {
+    "status": "Succeeded",
+    "gpu_count": 0,
+    "cpu_cores": 2,
+    "memory_gib": 16,
+    "shared_memory_gib": 2,
+    "created_shanghai": "2026-10-31T17:41:39+08:00",
+    "ended_shanghai": "2026-10-31T17:42:20+08:00",
+    "ui_duration_seconds": 30,
+    "automatic_retry": false,
+    "maximum_minutes": 29
+  },
+  "passed": true,
+  "tests": 71,
+  "per_file": {
+    "tests.test_pi05_residual": 21,
+    "tests.test_robotwin_noise": 22,
+    "tests.test_robotwin_steering": 18,
+    "tests.test_robotwin_campaign_budget": 10
+  },
+  "charged_cpu_worker_seconds": 79,
+  "remaining_shared_phase_cpu_worker_seconds": 1721,
+  "gpu_seconds": 0,
+  "robot_actions": 0,
+  "command_clipboard_byte_match": true,
+  "command_sha256": "b70215f9e89d75d424abed0bc2e47ae57b2b818bd025806a88190736fe588af3",
+  "files_sha256": {
+    "summary.json": "dd280f102abcf73969d618f6c226af9e6294e3c20440a36bbc8e0deacb7760f2",
+    "cpu-worker-clock.json": "d743355f94e9cbed94387f84226b4a7a2834193b40fb9212073b45dfda069c35",
+    "zero-gpu-attestation.json": "ed52cefda57f455a481621503d8034505b366f53c05d13a4f16e8c5d04da06aa",
+    "tests.log": "43d42e0e2afbe769c657b37a92cba839a39db4924d96e8ce974ff22e277f1bc6",
+    "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "junit.xml": "93f0d2f5f4649349e5a7dd8b0eb1caeb550af7a17c9b1d61fef668ef3c813238"
+  },
+  "qualification": "Synthetic mapping/backend/ledger checks; no live motor or steering benefit claim",
+  "repeated_foundation_tests_reason": "8248 changes residual test and backend alongside new driver; four-file focused command explicitly requested."
+}
