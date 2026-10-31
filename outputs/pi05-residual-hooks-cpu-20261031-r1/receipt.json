@@ -1,0 +1,87 @@
+{
+  "format": "pi05_residual_independent_cpu_receipt_v1",
+  "status": "complete",
+  "source_commit": "4cbc96aff63c61797c19dd421b6da97556bc40fc",
+  "job_id": "job-bxx9mhcoxv50",
+  "run_id": "pi05-residual-hooks-cpu-20261031-r1",
+  "scheduler": {
+    "status": "Succeeded",
+    "created_shanghai": "2026-10-31T16:51:09+08:00",
+    "ended_shanghai": "2026-10-31T16:51:48+08:00",
+    "ui_duration_seconds": 30,
+    "gpu_count": 0,
+    "cpu_cores": 2,
+    "memory_gib": 16,
+    "shared_memory_gib": 2,
+    "maximum_minutes": 9,
+    "automatic_retry": false
+  },
+  "tests": {
+    "total": 41,
+    "passed": 41,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 1.61,
+    "by_file": {
+      "tests.test_pi05_residual": 19,
+      "tests.test_robotwin_noise": 22
+    },
+    "allowed_files": [
+      "tests/test_pi05_residual.py",
+      "tests/test_robotwin_noise.py"
+    ]
+  },
+  "actual_attestation": {
+    "pre_mask_gpu_count": 0,
+    "cuda_initialized_before_mask": false,
+    "actual_cpu_cores": 2.0,
+    "actual_memory_bytes": 17179869184,
+    "torch_version": "2.11.0+cu128",
+    "python": "3.11.17 (main, Oct 14 2026, 01:05:33) [Clang 23.1.3 ]",
+    "runtime": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python"
+  },
+  "cost": {
+    "maximum_cpu_worker_seconds": 600,
+    "charged_cpu_worker_seconds": 80,
+    "remaining_cpu_worker_seconds": 520,
+    "attempts": 1,
+    "gpu_seconds": 0,
+    "robot_actions": 0,
+    "closed_grant_borrowing": false
+  },
+  "source_clean_before_and_after": true,
+  "deployed_via": "Git bundle",
+  "environment_mutations": false,
+  "direct_known_python_instead_of_uv": true,
+  "command_sha256": "2b1e39270a3983c8db135795681ea6e0d81b8e13cebb5340289672594daf41df",
+  "clipboard_command_byte_match": true,
+  "main_review": {
+    "own": "caff7b7160764e6b7eeec35770427d266142a8b9",
+    "parent_metadata_only_successors": [
+      "f8eafef051667f1acb28f224872433ee9a47f24f",
+      "d0853cbe7fbdd0b646f9053c6c2796816257cd76"
+    ],
+    "affected_source_and_test_paths_unchanged_from_reviewed_base": true
+  },
+  "files_sha256": {
+    "summary.json": "603db8cc0c213de470e7a93be1a43691350494b4daafc54ecb2a8eee81e234bc",
+    "cpu-worker-clock.json": "2feb63df9e447810a33a51483be14f9b86e1e751c00bcedd7ac5da6606902b98",
+    "zero-gpu-attestation.json": "ea3b3dc18515bdbfe691f904ab10541a000e231d697b6bd8a629e21d312a573c",
+    "tests.log": "28de0797b4de6cf0f71f6b377fff63563f6b237334139f9014076c4d3a70a3c4",
+    "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "junit.xml": "63f217a10a10093a40e5d1b61a6fc060c688647e23a23da8761b12cded97b98b"
+  },
+  "scope": {
+    "synthetic_only": true,
+    "real_vla_weights": false,
+    "real_simulator": false,
+    "robot_actions": 0,
+    "optimizer_training": false,
+    "synthetic_backward_checks": true,
+    "current_dsrl_runtime_unchanged": true,
+    "gpu_screen_funded": false,
+    "live_motor_parity_qualified": false,
+    "steering_benefit_established": false
+  }
+}
