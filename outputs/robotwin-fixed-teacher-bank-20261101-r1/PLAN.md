@@ -20,7 +20,8 @@ The source owner provided the prospective E wire schema in
 `robotwin_phone04_prelift_closure_pair_v1`. Both04 conditions must finish before
 selection. The predeclared priority is successful close_endpoint first,
 otherwise successful hold_current, otherwise no bank admission. The assembler
-recomputes this selector from BOTH original complete records. A nomination flag
+validates the FULL original04 spec, actual reset seed/text and hash-bound closed
+reset/manifest/final native chunk for BOTH rows BEFORE computing the selector. A nomination flag
 alone, missing/duplicate/failed04, foreign task/motor/norm/case/seed/text/split/
 source/profile or reordered bank is refused. The accepted04 binding contains
 an immutable prospective PROFILE reference, its exact producer commit and the
@@ -75,7 +76,9 @@ it. It ALWAYS publishes an explicit partial/preparation receipt with complete
 and fit flags false. It never publishes normalizers or launches training.
 `seal_full_cache` requires a revalidated complete fixed12 bank, exact per-case
 producer/profile/record/source context, every unique chunk, correct native sums,
-and SHA-bound saved target/mask/input payloads. Only then does it publish fixed12
+and SHA-bound saved target/mask/input payloads. Each saved canonical_chunk must
+match the exact path/SHA resolved from its episode manifest at its anchor; a
+canonical identity may not be reused under another anchor, even at equal cost. Only then does it publish fixed12
 DATA eligibility; resource_fit_admitted remains false. Existing all12-before-cache
 producer code is never changed or retroactively relaxed.
 
@@ -83,7 +86,10 @@ producer code is never changed or retroactively relaxed.
 (`backend.env is None`); that backend already loads its frozen model without
 constructing a physical scene. Actual one-GPU CUDA, saved host/UUID probe,
 motor/norm/frozen-parameter bindings, disabled residual hooks and before/after
-frozen checks are required. Parent supplies a SHA-bound
+frozen checks are required. Existing verify_selected_cuda/selected_device checks
+bind the CURRENT CUDA PCI/UUID to the scheduler-selected NVML allocation, then
+compare both saved receipts to that current CUDA identity. CUDA UUID and mapped
+NVML UUID remain separate namespaces. Parent supplies a SHA-bound
 `robotwin_model_only_cache_qualification_v1` receipt containing status/hostname,
 gpu_probe ref/cuda_uuid/motor_sha256/normalization_sha256/frozen_parameter_sha256.
 The parent retains exact hardware/model qualification and all resource admission.

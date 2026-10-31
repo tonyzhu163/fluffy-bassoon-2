@@ -18,6 +18,7 @@ from .robotwin_event_schedule import build_schedule, scheduled_request
 from .robotwin_reactive_fit import cpu
 from .warmstart import atomic_save
 from fluffy_bassoon.rl.robotwin_corpus import _atomic_json
+from fluffy_bassoon.baige_gpu import verify_selected_cuda, selected_device
 
 FORMAT = 'robotwin_fixed12_captured_teacher_bank_v1'
 DEMOS_SHA = 'a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4'
@@ -46,6 +47,56 @@ def _closed(result):
             or actions['actual_actions']!=actions['charged_actions']
             or actions['pending_actions'] or actions['uncertain_actions'] or actions['unresolved_decisions']):
         raise ValueError('Only closed canonical producer costs; never refund or hide an attempt')
+
+
+def _validate_record_spec(row,episode,*,require_success):
+    spec=row['spec'];ordinal=episode['canonical_index']
+    if (row.get('complete') is not True or type(row.get('success')) is not bool
+            or (require_success and row['success'] is not True)
+            or spec['teacher_id']!=episode['id'] or spec['task']!='place_phone_stand' or spec['horizon']!=400
+            or spec['case']!=ordinal or spec['reset_seed']!=episode['reset_seed']
+            or spec['expected_teacher_seed']!=episode['reset_seed']
+            or spec['paired_instruction']!=[episode['instruction']]
+            or spec['motor_seed']!=20261201+ordinal or spec['arm']!='action' or spec['coefficients']!=[0.]*4
+            or row['reset_info']['actual_seed']!=episode['reset_seed']
+            or row['reset_info']['instruction']!=[episode['instruction']]
+            or not row.get('episode_manifest_ref') or type(row['primitive_steps']) is not int
+            or not 0<row['primitive_steps']<=400):
+        raise ValueError('Failed/foreign teacher task/seed/text/motor/profile cannot enter fixed12')
+
+
+def _closed_manifest(row,audit):
+    ref=row['episode_manifest_ref'];path=audit.nested(Path(ref['root']),ref)
+    manifest=audit.json(dict(path=str(path),sha256=ref['sha256']))
+    reset_path=path.with_name('reset.json')
+    reset=audit.json(dict(path=str(reset_path),sha256=file_sha(reset_path)))
+    validate_reset_identity(reset,row['reset_info'],manifest)
+    if (manifest['pending_decision'] is not None or manifest['completed_chunks']!=row['chunks']
+            or len(manifest['chunks'])!=row['chunks'] or not manifest['chunks']
+            or manifest['executed_primitive_steps']!=row['primitive_steps']):
+        raise ValueError('Teacher closed-manifest counters/pending state differ')
+    last_ref=manifest['chunks'][-1];last_path=audit.nested(path.parent,last_ref)
+    last=audit.json(dict(path=str(last_path),sha256=last_ref['sha256']))
+    if (last['status']!='complete' or last['episode_id']!=manifest['episode_id']
+            or last['context']['trial_id']!=row['spec']['id']
+            or last['chunk_index']!=row['chunks'] or last['learning_result']['budget_truncated']
+            or not (last['learning_result']['terminated'] or last['learning_result']['truncated'])
+            or last['native_result']['success'] is not row['success']):
+        raise ValueError('Teacher actual final native chunk is not the declared closed outcome')
+    return path,manifest
+
+
+def _bind_current_cuda(qualification,probe):
+    # Existing Baige check joins actual CUDA PCI/UUID to the current scheduler
+    # selection. Saved same-host receipts alone are not allocation proof.
+    current_nvml=verify_selected_cuda(torch);current=selected_device()
+    current_cuda=str(torch.cuda.get_device_properties(0).uuid)
+    if (current['uuid']!=current_nvml or current['cuda_uuid']!=current_cuda
+            or qualification['cuda_uuid']!=current_cuda
+            or probe['devices'][0]['cuda_uuid']!=current_cuda
+            or probe['devices'][0]['uuid']!=current_nvml):
+        raise ValueError('Saved model/probe GPU differs from current selected CUDA allocation')
+    return current_cuda
 
 
 def assemble_bank(demo_ref, interface_ref, result_refs, *, audit, accepted04_ref=None):
@@ -97,16 +148,16 @@ def assemble_bank(demo_ref, interface_ref, result_refs, *, audit, accepted04_ref
                 or [r['spec']['condition'] for r in value['records']]!=profile['conditions']
                 or any(r.get('complete') is not True for r in value['records'])):
             raise ValueError('Both complete source-bound04 conditions required before selection')
+        for r in value['records']:
+            _validate_record_spec(r,demos['episodes'][4],require_success=False)
+            spec=r['spec']
+            if (spec['id']!='prelift04-'+spec['condition']
+                    or spec['stage']!='prelift_closure_diagnostic' or spec['method']!='prelift_'+spec['condition']):
+                raise ValueError('04 pair contains a foreign case/spec/text/profile')
+            _closed_manifest(r,audit)
         selected04=next((r for c in profile['bank_candidate_priority'] for r in value['records']
                          if r['spec']['condition']==c and r['success'] is True),None)
         if selected04 is None:raise ValueError('Neither04 condition succeeded; no complete fitting bank')
-        for r in value['records']:
-            spec=r['spec']
-            if (spec['id']!='prelift04-'+spec['condition'] or spec['teacher_id']!='phone-04'
-                    or spec['stage']!='prelift_closure_diagnostic' or spec['method']!='prelift_'+spec['condition']
-                    or spec['reset_seed']!=4 or spec['motor_seed']!=20261205
-                    or spec['paired_instruction']!=[demos['episodes'][4]['instruction']]):
-                raise ValueError('04 pair contains a foreign case/spec/text/profile')
     entries=[]
     for episode in demos['episodes']:
         identity=episode['id'];ordinal=episode['canonical_index']
@@ -118,16 +169,7 @@ def assemble_bank(demo_ref, interface_ref, result_refs, *, audit, accepted04_ref
         matches=[r for r in value['records'] if r['spec']['id']==record_id]
         if len(matches)!=1:raise ValueError('Missing/duplicate original teacher record')
         row=matches[0];spec=row['spec']
-        if (row.get('complete') is not True or row.get('success') is not True
-                or spec['teacher_id']!=identity or spec['task']!='place_phone_stand' or spec['horizon']!=400
-                or spec['case']!=ordinal or spec['reset_seed']!=episode['reset_seed']
-                or spec['expected_teacher_seed']!=episode['reset_seed']
-                or spec['paired_instruction']!=[episode['instruction']]
-                or spec['motor_seed']!=20261201+ordinal or spec['arm']!='action' or spec['coefficients']!=[0.]*4
-                or row['reset_info']['actual_seed']!=episode['reset_seed']
-                or row['reset_info']['instruction']!=[episode['instruction']]
-                or not row.get('episode_manifest_ref') or not 0<row['primitive_steps']<=400):
-            raise ValueError('Failed/foreign teacher task/seed/text/motor/profile cannot enter fixed12')
+        _validate_record_spec(row,episode,require_success=True)
         if producer=='04':
             profile_ref=accepted['profile'];convention='prelift_profile_v1'
             result_ref=accepted['result']
@@ -334,6 +376,8 @@ def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allo
     bank=_recheck_bank(bank,deadline);available=validate_bank(bank,complete=not allow_partial)
     audit=Audit(deadline);demos=audit.json(bank['demos']);interface=audit.json(bank['interface'])
     qualification=audit.json(model_qualification_ref);probe=audit.json(qualification['gpu_probe'])
+    if len(probe['devices'])!=1:raise ValueError('One actual probed GPU required')
+    _bind_current_cuda(qualification,probe)  # Before any encode/decode.
     frozen=backend.frozen_fingerprint()
     if (qualification.get('format')!='robotwin_model_only_cache_qualification_v1'
             or qualification.get('status')!='passed' or qualification['hostname']!=socket.gethostname()
@@ -365,7 +409,7 @@ def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allo
 def seal_full_cache(bank,cache_receipts,*,deadline):
     """Join sealed per-case caches only once the full fixed12 bank qualifies."""
     bank=_recheck_bank(bank,deadline);validate_bank(bank,complete=True)
-    expected={e['id']:e for e in bank['entries']};actual={};records=[]
+    expected={e['id']:e for e in bank['entries']};actual={};records=[];canonical_seen=set();manifests={}
     for receipt in cache_receipts:
         value=Audit(deadline).json(receipt)
         if value.get('format')!='robotwin_fixed12_cache_receipt_v1' or value.get('fit_eligible') is not False:
@@ -381,6 +425,25 @@ def seal_full_cache(bank,cache_receipts,*,deadline):
             if key in actual:raise ValueError('Duplicate cache chunk')
             audit=Audit(deadline);audit.bound(row['path'],row['sha256'])
             saved=torch.load(row['path'],map_location='cpu',weights_only=False)
+            if identity not in manifests:
+                manifests[identity]=_closed_manifest(entry['record'],Audit(deadline))
+            manifest_path,manifest=manifests[identity];anchor=row['anchor']
+            if type(anchor) is not int or not 0<=anchor<len(manifest['chunks']):
+                raise ValueError('Cache anchor is outside the canonical episode manifest')
+            original=manifest['chunks'][anchor]
+            canonical_path=audit.nested(manifest_path.parent,original)
+            canonical=dict(path=str(canonical_path),sha256=original['sha256'])
+            if saved.get('canonical_chunk')!=canonical:
+                raise ValueError('Saved cache canonical chunk differs from its exact episode anchor')
+            canonical_key=(str(canonical_path.resolve()),original['sha256'])
+            if canonical_key in canonical_seen:raise ValueError('Canonical chunk reused under another cache anchor')
+            canonical_seen.add(canonical_key)
+            native=audit.json(canonical)
+            if (native['status']!='complete' or native['episode_id']!=manifest['episode_id']
+                    or native['context']['trial_id']!=entry['record']['spec']['id']
+                    or native['chunk_index']!=anchor+1
+                    or native['native_result']['executed_primitive_steps']!=row['native_actual_actions']):
+                raise ValueError('Canonical chunk identity/native cost differs from cached anchor')
             submitted=saved['submitted_plan_mask'];executed=saved['native_executed_mask']
             if (saved['format']!='robotwin_captured_plan_cache_v1' or saved['context']!=wanted
                     or submitted.shape!=(32,) or executed.shape!=(32,)

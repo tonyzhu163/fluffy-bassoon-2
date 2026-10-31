@@ -18,6 +18,7 @@ from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
 class MetadataAudit:
     def __init__(self,values):self.values=values
     def json(self,ref):return deepcopy(self.values[ref['path']])
+    def nested(self,root,ref):return Path(root)/ref['path']
 
 
 def record(i,success=True,condition=None):
@@ -54,6 +55,30 @@ def metadata_fixture(monkeypatch):
         records=[record(4,False,'hold_current'),record(4,True,'close_endpoint')])
     binding=dict(format='robotwin_fixed12_accepted04_profile_v1',profile=eref,result=dict(path='e',sha256='f'*64),source_commit=module.E_SOURCE)
     values=dict(demos=demos,interface=interface,event=event,suffix=suffix,profile=profile,e=e,binding=binding)
+    # Real-shaped closed reset/manifest/final-chunk metadata for BOTH E rows.
+    # These synthetic metadata refs are resolved by MetadataAudit, not claimed
+    # as real producer SHA receipts. Real writer/NPZ tests below use real Audit.
+    for row in e['records']:
+        condition=row['spec']['condition'];identity='synthetic-'+condition
+        root=Path('/canonical/E');directory=root/'episodes'/identity
+        row['reset_info']['corpus_episode_id']=identity
+        chunks=[]
+        for index in range(row['chunks']):
+            path=directory/'chunks'/f'{index+1:06d}.json'
+            chunk=dict(status='complete',episode_id=identity,chunk_index=index+1,
+                context=dict(trial_id=row['spec']['id']),
+                learning_result=dict(budget_truncated=False,terminated=row['success'] and index==row['chunks']-1,
+                                     truncated=not row['success'] and index==row['chunks']-1),
+                native_result=dict(success=row['success'],executed_primitive_steps=32))
+            values[str(path)]=chunk;chunks.append(dict(path=str(path.relative_to(directory)),sha256=module.digest(chunk)))
+        manifest=dict(episode_id=identity,pending_decision=None,completed_chunks=row['chunks'],
+            executed_primitive_steps=row['primitive_steps'],chunks=chunks)
+        values[str(directory/'manifest.json')]=manifest
+        values[str(directory/'reset.json')]=dict(episode_id=identity,
+            reset_info={k:v for k,v in row['reset_info'].items() if k!='corpus_episode_id'})
+        row['episode_manifest_ref']=dict(root=str(root),path=str((directory/'manifest.json').relative_to(root)),sha256=module.digest(manifest))
+    real_sha=module.file_sha
+    monkeypatch.setattr(module,'file_sha',lambda path:module.digest(values[str(path)]) if str(path) in values else real_sha(path))
     refs={name:dict(path=name,sha256=module.PRODUCERS[name][1]) for name in ('event','suffix')}
     args=(dict(path='demos',sha256=module.DEMOS_SHA),dict(path='interface',sha256=module.INTERFACE_SHA),refs)
     return args,values,dict(path='binding',sha256='e'*64)
@@ -72,10 +97,12 @@ def test_eleven_successes_preserve_pending04_and_never_fit(monkeypatch):
 def test_full12_requires_both_outcomes_and_predeclared_close_first_selector(monkeypatch):
     args,values,binding=metadata_fixture(monkeypatch)
     values['e']['records'][0]['success']=True
+    values['/canonical/E/episodes/synthetic-hold_current/chunks/000007.json']['native_result']['success']=True
     bank=module.assemble_bank(*args,audit=MetadataAudit(values),accepted04_ref=binding)
     assert module.validate_bank(bank,complete=True)==module.IDS
     assert bank['entries'][4]['record']['spec']['condition']=='close_endpoint'
     values['e']['records'][1]['success']=False
+    values['/canonical/E/episodes/synthetic-close_endpoint/chunks/000007.json']['native_result']['success']=False
     bank=module.assemble_bank(*args,audit=MetadataAudit(values),accepted04_ref=binding)
     assert bank['entries'][4]['record']['spec']['condition']=='hold_current'
 
@@ -233,21 +260,38 @@ def complete_cache_fixture(tmp_path,monkeypatch):
     monkeypatch.setattr(module,'_recheck_bank',lambda value,deadline:value)
     rows=[]
     for entry in bank['entries']:
-        entry['record'].update(chunks=1,primitive_steps=3)
+        identity='sealed-'+entry['id'];directory=tmp_path/'canonical'/identity
+        (directory/'chunks').mkdir(parents=True)
+        record=entry['record'];record.update(chunks=2,primitive_steps=64)
+        record['reset_info']['corpus_episode_id']=identity
+        reset=dict(episode_id=identity,reset_info={k:v for k,v in record['reset_info'].items() if k!='corpus_episode_id'})
+        (directory/'reset.json').write_text(json.dumps(reset))
+        canonical=[]
+        for anchor in range(2):
+            path=directory/'chunks'/f'{anchor+1:06d}.json'
+            path.write_text(json.dumps(dict(status='complete',episode_id=identity,chunk_index=anchor+1,
+                context=dict(trial_id=record['spec']['id']),
+                learning_result=dict(budget_truncated=False,terminated=anchor==1,truncated=False),
+                native_result=dict(success=True,executed_primitive_steps=32))))
+            canonical.append(dict(path=str(path),sha256=file_sha(path)))
+        manifest=dict(episode_id=identity,pending_decision=None,completed_chunks=2,executed_primitive_steps=64,
+            chunks=[dict(path='chunks/'+Path(r['path']).name,sha256=r['sha256']) for r in canonical])
+        manifest_path=directory/'manifest.json';manifest_path.write_text(json.dumps(manifest))
+        record['episode_manifest_ref']=dict(root=str(directory),path='manifest.json',sha256=file_sha(manifest_path))
         context=dict(teacher_id=entry['id'],split=entry['split'],producer_result=entry['producer_result'],
-            producer_commit=entry['producer_commit'],profile=entry['profile'],record_id=entry['record']['spec']['id'],
-            episode_manifest_ref=entry['record']['episode_manifest_ref'],original_source=entry['original_source'])
-        submitted=torch.ones(32,dtype=torch.bool);executed=torch.arange(32)<3;target=torch.zeros(32,14)
-        payload=dict(format='robotwin_captured_plan_cache_v1',context=context,submitted_plan_mask=submitted,
-            native_executed_mask=executed,full_known_proposed_plan14=target,
-            data=dict(valid=submitted[None],teacher14=target[None].clone(),target32=torch.zeros(1,32,32),
-                base14=torch.zeros(1,32,14),features=torch.zeros(1,2062),state=torch.zeros(1,14),
-                cache=(),mask=torch.ones(1,1,dtype=torch.bool)))
-        path=tmp_path/(entry['id']+'.pt');torch.save(payload,path)
-        rows.append(dict(path=str(path),sha256=file_sha(path),context=context,anchor=0,
-                         valid_actions=32,native_actual_actions=3))
-    receipt=tmp_path/'cache.json'
-    value=dict(format='robotwin_fixed12_cache_receipt_v1',fit_eligible=False,records=rows)
+            producer_commit=entry['producer_commit'],profile=entry['profile'],record_id=record['spec']['id'],
+            episode_manifest_ref=record['episode_manifest_ref'],original_source=entry['original_source'])
+        for anchor in range(2):
+            submitted=torch.ones(32,dtype=torch.bool);executed=torch.ones(32,dtype=torch.bool);target=torch.zeros(32,14)
+            payload=dict(format='robotwin_captured_plan_cache_v1',context=context,canonical_chunk=canonical[anchor],
+                submitted_plan_mask=submitted,native_executed_mask=executed,full_known_proposed_plan14=target,
+                data=dict(valid=submitted[None],teacher14=target[None].clone(),target32=torch.zeros(1,32,32),
+                    base14=torch.zeros(1,32,14),features=torch.zeros(1,2062),state=torch.zeros(1,14),
+                    cache=(),mask=torch.ones(1,1,dtype=torch.bool)))
+            path=tmp_path/(entry['id']+f'-{anchor}.pt');torch.save(payload,path)
+            rows.append(dict(path=str(path),sha256=file_sha(path),context=context,anchor=anchor,
+                             valid_actions=32,native_actual_actions=32))
+    receipt=tmp_path/'cache.json';value=dict(format='robotwin_fixed12_cache_receipt_v1',fit_eligible=False,records=rows)
     receipt.write_text(json.dumps(value))
     return bank,receipt,value
 
@@ -256,21 +300,69 @@ def test_full_twelve_cache_join_is_data_eligibility_not_resource_fit_admission(t
     bank,path,_=complete_cache_fixture(tmp_path,monkeypatch)
     result=module.seal_full_cache(bank,[dict(path=str(path),sha256=file_sha(path))],deadline=time.time()+60)
     assert result['complete'] is True and result['fixed12_fit_eligible'] is True
-    assert result['resource_fit_admitted'] is False and len(result['records'])==12
+    assert result['resource_fit_admitted'] is False and len(result['records'])==24
 
 
 @pytest.mark.parametrize('fault',['missing04','duplicate04','foreign_profile','native_tail','changed_label','future_input'])
 def test_full_cache_join_rejects_missing_duplicate_or_corrupted_provenance_masks_labels(tmp_path,monkeypatch,fault):
     bank,path,value=complete_cache_fixture(tmp_path,monkeypatch)
-    if fault=='missing04':value['records'].pop(4)
-    elif fault=='duplicate04':value['records'].append(deepcopy(value['records'][4]))
-    elif fault=='foreign_profile':value['records'][4]['context']['profile']['sha256']='0'*64
+    i04=next(i for i,r in enumerate(value['records']) if r['context']['teacher_id']=='phone-04')
+    if fault=='missing04':value['records'].pop(i04)
+    elif fault=='duplicate04':value['records'].append(deepcopy(value['records'][i04]))
+    elif fault=='foreign_profile':value['records'][i04]['context']['profile']['sha256']='0'*64
     else:
-        row=value['records'][4];saved=torch.load(row['path'],weights_only=False)
-        if fault=='native_tail':saved['native_executed_mask'][5]=True
+        row=value['records'][i04];saved=torch.load(row['path'],weights_only=False)
+        if fault=='native_tail':saved['native_executed_mask'][5]=False
         if fault=='changed_label':saved['data']['teacher14'][0,0,0]=1.
         if fault=='future_input':saved['data']['condition']=torch.zeros(1)
         torch.save(saved,row['path']);row['sha256']=file_sha(row['path'])
     path.write_text(json.dumps(value))
     with pytest.raises(ValueError):
         module.seal_full_cache(bank,[dict(path=str(path),sha256=file_sha(path))],deadline=time.time()+60)
+
+
+@pytest.mark.parametrize('fault',['task','horizon','actual_seed','actual_instruction','open_manifest','reset_json'])
+def test_nonselected_hold_condition_must_pass_full_spec_reset_and_closed_manifest(monkeypatch,fault):
+    args,v,binding=metadata_fixture(monkeypatch)
+    hold=v['e']['records'][0]
+    assert v['e']['records'][1]['success'] is True  # close_endpoint remains selected.
+    if fault=='task':hold['spec']['task']='foreign_task'
+    if fault=='horizon':hold['spec']['horizon']=32
+    if fault=='actual_seed':hold['reset_info']['actual_seed']=999
+    if fault=='actual_instruction':hold['reset_info']['instruction']=['foreign text']
+    if fault=='open_manifest':v['/canonical/E/episodes/synthetic-hold_current/manifest.json']['pending_decision']='still_open'
+    if fault=='reset_json':v['/canonical/E/episodes/synthetic-hold_current/reset.json']['reset_info']['actual_seed']=999
+    with pytest.raises(ValueError):module.assemble_bank(*args,audit=MetadataAudit(v),accepted04_ref=binding)
+
+
+def test_two_different_anchors_cannot_alias_one_unchanged_legitimate_sample(tmp_path,monkeypatch):
+    bank,path,value=complete_cache_fixture(tmp_path,monkeypatch)
+    first,second=value['records'][:2]
+    assert first['context']==second['context'] and first['native_actual_actions']==second['native_actual_actions']==32
+    assert first['anchor']==0 and second['anchor']==1
+    # Keep both anchors and the whole episode's64 cost intact. This is the
+    # exact old acceptance gap: an unchanged valid .pt file/hash used twice.
+    second['path']=first['path'];second['sha256']=first['sha256']
+    path.write_text(json.dumps(value))
+    with pytest.raises(ValueError,match='canonical chunk'):
+        module.seal_full_cache(bank,[dict(path=str(path),sha256=file_sha(path))],deadline=time.time()+60)
+
+
+@pytest.mark.parametrize('fault',[None,'saved_model_cuda','saved_probe_cuda','saved_probe_nvml'])
+def test_model_free_gpu_receipts_bind_current_selected_cuda_and_nvml_namespaces(monkeypatch,fault):
+    current_cuda='3bd05a83-1e0b-2486-2f87-f3070d6edda2'
+    current_nvml='GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7'
+    monkeypatch.setattr(module,'verify_selected_cuda',lambda _:current_nvml)
+    monkeypatch.setattr(module,'selected_device',lambda:dict(uuid=current_nvml,cuda_uuid=current_cuda))
+    monkeypatch.setattr(module.torch.cuda,'get_device_properties',lambda _:SimpleNamespace(uuid=current_cuda))
+    qualification=dict(cuda_uuid=current_cuda);probe=dict(devices=[dict(cuda_uuid=current_cuda,uuid=current_nvml)])
+    if fault=='saved_model_cuda':qualification['cuda_uuid']='other-CUDA'
+    if fault=='saved_probe_cuda':probe['devices'][0]['cuda_uuid']='other-CUDA'
+    if fault=='saved_probe_nvml':probe['devices'][0]['uuid']='GPU-other'
+    if fault:
+        with pytest.raises(ValueError,match='current selected CUDA'):
+            module._bind_current_cuda(qualification,probe)
+    else:
+        # The two legitimate identifiers differ; never compare CUDA UUID to NVML UUID.
+        assert current_cuda!=current_nvml
+        assert module._bind_current_cuda(qualification,probe)==current_cuda

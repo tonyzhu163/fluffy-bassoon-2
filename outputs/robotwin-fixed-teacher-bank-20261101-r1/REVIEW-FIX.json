@@ -1,0 +1,28 @@
+{
+  "status": "source_fixes_AST_only_runtime_unexecuted",
+  "supersedes": "70bdf313a763e64b9d0edeacfee1659644155eda",
+  "corrections": [
+    "Full spec/reset/closed-manifest validation on BOTH E04 rows before selector",
+    "Saved canonical chunk bound to exact manifest anchor with canonical-identity reuse refusal",
+    "Current selected CUDA/PCI/NVML mapping bound to both saved GPU receipts before encode/decode"
+  ],
+  "focused_tests": {
+    "nonselected_hold_negatives": [
+      "task",
+      "horizon",
+      "actual_seed",
+      "actual_instruction",
+      "open_manifest",
+      "reset_json"
+    ],
+    "equal_cost_alias": "Two legitimate32-cost samples with distinct canonical chunks; second anchor references same unchanged first .pt/hash; rejection required",
+    "current_device": "Model-free saved qualification/probe CUDA mismatches and saved mapped NVML mismatch; legitimate CUDA and NVML namespaces remain distinct",
+    "valid_seal_fixture": "Real SHA-bound closed reset/manifest and two distinct canonical chunk JSON paths/SHAs per episode",
+    "prepared_cases": 44,
+    "new_cases": 11,
+    "executed_here": 0
+  },
+  "unchanged_runtime": true,
+  "unchanged_wide_head": true,
+  "resource_policy": "No new envelope/job/runtime; parent retains actual allocated qualification/deployment; any launched prior source/output/result/cost remains immutable"
+}
