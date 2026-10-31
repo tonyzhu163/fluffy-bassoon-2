@@ -259,7 +259,7 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
     deadline = float(os.environ['DSRL_REPLICATION_DEADLINE'])
     if env is not eval_env or replay_buffer is not online_replay_buffer:
         raise ValueError('Preserve the authors shared environment/replay')
-    capture = CaptureEnv(env, output/'physical', bind=lambda:
+    capture = CaptureEnv(env, output/'physical', action_limit=MAX_ACTIONS-contract['prior_actions'], bind=lambda:
         attest_process_gpu(output/'renderer-binding.json', graphics=True))
     iterator = Prefetch(lambda: replay_buffer.sample(variant.batch_size), jax.device_put)
     progress = dict(updates=0, episodes=0, training_primitives=0, last_checkpoint_updates=0)
@@ -294,7 +294,7 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
     try:
         while progress['updates'] <= variant.max_steps:
             # One collection episode and at most one10-query panel per burst.
-            if time.time()+600 >= deadline or capture.charged+4400 > MAX_ACTIONS:
+            if time.time()+600 >= deadline or capture.charged+4400 > capture.action_limit:
                 stop_reason = 'whole_episode_and_evaluation_reservation'
                 break
             size = sum(path.stat().st_size for path in output.rglob('*') if path.is_file())
@@ -363,7 +363,10 @@ def main(argv=None):
     parser.add_argument('--source-commit', required=True)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--deadline-unix', required=True, type=float)
+    parser.add_argument('--prior-actions', type=int, default=0)
     args = parser.parse_args(argv)
+    if not 0 <= args.prior_actions < MAX_ACTIONS-4400:
+        raise ValueError('Require a remaining complete collection/evaluation budget')
     if sys.platform != 'linux' or not socket.gethostname().startswith('job-'):
         raise RuntimeError('Run only in the allocated Linux job')
     if not 600 < args.deadline_unix-time.time() <= MAX_SECONDS:
@@ -395,6 +398,8 @@ def main(argv=None):
         legacy_s3_byte_equivalence=receipt.get('legacy_s3_byte_equivalence', 'not independently established'),
         data_role='target-online-baseline', target_only=True, source_assembly_admission=False,
         max_actions=MAX_ACTIONS, max_gpu_seconds=MAX_SECONDS, max_bytes=MAX_BYTES,
+        prior_actions=args.prior_actions,
+        xla_flags_at_backend_initialization=os.environ.get('XLA_FLAGS',''),
         departures=['local scalar/media handling', 'explicit equivalent prefetch recovery',
                     'complete-boundary recovery and resource stopping', 'project-local compilation cache'],
         recipe='unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations')

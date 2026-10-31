@@ -6,8 +6,12 @@ TASK_SOURCE=${1:?exact reviewed runner source}
 TASK_RUN=${2:?fresh scientific run identity}
 TASK_QUAL=${3:?allocated full qualification output directory}
 TASK_PRIOR=${4:?conservatively charged GPU seconds from prior allocations}
+TASK_PRIOR_ACTIONS=${5:?conservatively charged physical actions from prior allocations}
 [[ "$TASK_PRIOR" =~ ^[0-9]+$ ]]
+[[ "$TASK_PRIOR_ACTIONS" =~ ^[0-9]+$ ]]
 test "$TASK_PRIOR" -lt 35000
+test "$TASK_PRIOR_ACTIONS" -lt 995600
+ulimit -c 0
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PREP=dsrl-pi0-task57-20261101-prep-r7
 TASK_RUNTIME=dsrl-pi0-task57-20261101-prep-r4
@@ -62,6 +66,9 @@ PY
 export FLUFFY_GPU_EXECUTION=baige
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
+# JAX0.5 Triton aborts on bf16 conversion on this sm_120 GPU. Keep dtype/model
+# unchanged and initialize the backend with Triton GEMM disabled.
+export XLA_FLAGS='--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false'
 "$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --baige-exclusive-training --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
@@ -77,4 +84,5 @@ timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PY" \
   --dsrl-root "$TASK_REPO" --checkpoint "$TASK_CHECKPOINT" \
   --checkpoint-receipt "$TASK_ROOT/outputs/$TASK_PREP/checkpoint-receipt.json" \
   --source-commit "$TASK_SOURCE" --output "$TASK_OUT/experiment" \
+  --prior-actions "$TASK_PRIOR_ACTIONS" \
   --deadline-unix "$((TASK_STARTED + 35640 - TASK_PRIOR))"
