@@ -42,14 +42,39 @@
       "allocation_attested": true,
       "disk_free_bytes": 1104528015360,
       "write_probe": true
+    },
+    {
+      "job_id": "job-wuukgm7872q9",
+      "name": "mwj_1101_dsrl_pi0_task57_prep_r3_6effe41",
+      "source_commit": "6effe419b1190be1dd8b3d12e765c5ddcae7528b",
+      "created_shanghai": "2026-11-01T01:00:11+08:00",
+      "ended_shanghai": "2026-11-01T01:05:53+08:00",
+      "resources": {
+        "gpu_count": 0,
+        "cpu_cores": 4,
+        "memory_gib": 32
+      },
+      "scheduler_running_seconds": 329,
+      "conservative_worker_seconds": 420,
+      "exit_code": 1,
+      "stage": "post-install import check",
+      "failure_log": "ImportError: cannot import name 'train_utils_sim' from 'examples' (unknown location)",
+      "installed_environment_preserved": true,
+      "checkpoint_downloaded": false,
+      "tests_run": false,
+      "models_loaded": false,
+      "simulator_actions": 0
     }
   ],
   "next_attempt": {
-    "identity": "dsrl-pi0-task57-20261101-prep-r3",
+    "identity": "dsrl-pi0-task57-20261101-prep-r4",
     "deployment": "Git bundle based on recent main3b71a31; exact new source verification before worktree execution",
-    "maximum_scheduler_minutes": 27,
-    "inner_timeout_seconds": 1500,
+    "maximum_scheduler_minutes": 19,
+    "inner_timeout_seconds": 1020,
     "automatic_retry": false,
-    "diagnosis": "Use bundled ensurepip wheel only to install uv into fresh tools directory; preserve original pip-free training venv"
+    "diagnosis": "Explicitly add the pinned DSRL repository to sys.path before import; setuptools editable installation exposes jaxrl2 but not examples",
+    "maximum_all_in_worker_seconds": 1140,
+    "prior_conservative_cpu_worker_seconds": 600,
+    "maximum_cumulative_cpu_worker_seconds": 1800
   }
 }
