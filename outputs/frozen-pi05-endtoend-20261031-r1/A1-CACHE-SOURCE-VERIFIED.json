@@ -1,0 +1,18 @@
+{
+  "format": "motus_native_cache_source_evidence_v1",
+  "source_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+  "kv_heads": 1,
+  "head_dim": 256,
+  "kv_layers": 18,
+  "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/modules/gemma.py",
+  "sha256": "552625553b40efb52e0880cdf663d0097fe008e1943ab205d9cfe00cc9c5ae78",
+  "lines": "69\u201386 config;320\u2013321 K/V shapes;342 cache;559 layers;633 loop",
+  "consumer": "pi0.py imports native Torch gemma at33, config107\u2013114, build_prefix_cache411\u2013434",
+  "configuration": {
+    "path": "examples/embodiment/config/model/pi0_5.yaml",
+    "sha256": "4c2fe0aa37d86ce42cc05a7edc11df0d49983948558cc5caf0e075969f644eed",
+    "lines": "34\u201335 gemma_2b/gemma_300m"
+  },
+  "inspection": "Static source only; actual allocated cache shape still checked by control",
+  "metadata_correction": "Correct config path supplied as shorthand in first receipt; native gemma absolute path/SHA and1/256/18 values unchanged. Original launch-side metadata remains preserved; this file is not a runtime input."
+}
