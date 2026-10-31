@@ -140,6 +140,14 @@ def finalbank_phase(phase, ctx, code, receipts, allocation):
             raise ValueError('Only the complete paid r1 projection may be reused readonly')
         projected=read_ref(f['reused_projection']);terminal=read_ref(f['producer_terminal']);cleanup=read_ref(f['producer_cleanup'])
         retained=read_ref(f['producer_storage'])
+        if base.name=='robotwin-final100-ad-export-20261031-r4':
+            old=read_ref(f['retained_failed_output_accounting'])
+            if (old['status']!='measured_closed_failed_outputs_no_dereference'
+                    or old['R1_projection_logical_bytes']!=retained['logical_bytes']
+                    or old['R2_logical_bytes']!=25020 or old['R3_logical_bytes']!=130489688
+                    or old['R1_projection_logical_bytes']+old['R2_logical_bytes']+old['R3_logical_bytes']!=old['retained_total_logical_bytes']
+                    or old['retained_total_logical_bytes']>89<<30):
+                raise ValueError('Retained failed output storage is not covered by the same89GiB reserve')
         phase_proof=[x for x in terminal['phases'] if x['name']=='finalbank-projection']
         if (terminal['run_id']!='robotwin-final100-ad-export-20261031-r1' or terminal['status']!='incomplete'
                 or terminal['cleanup_error'] is not None or len(phase_proof)!=1
