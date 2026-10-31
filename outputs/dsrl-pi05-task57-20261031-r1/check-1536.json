@@ -1,0 +1,398 @@
+{
+  "format": "task57_due_light_saved_metadata_v1",
+  "checked_shanghai": "2026-10-31T15:37:00.378646+08:00",
+  "read_completed_unix": 1793432222.2410462,
+  "job_id": "job-iudscqfntb4e",
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+  "index_snapshot_sha256": "615f165e04d7f63dbdcbd4ccde2472287ea0701dd357ea205f666db55ac15828",
+  "phase": "training",
+  "completed": false,
+  "exit_code": null,
+  "training": {
+    "episodes": 480,
+    "chunks": 6769,
+    "primitive_steps": 64565,
+    "settling_steps": 4800
+  },
+  "training_successes": 480,
+  "failed_training": [],
+  "optimizer_updates": 125520,
+  "replay_rows": 6769,
+  "latest_metrics": {
+    "actor_loss": 4.8528032302856445,
+    "critic_loss": 0.002494393615052104,
+    "entropy": -15.889410018920898,
+    "mean_pi_avg": 0.10195434093475342,
+    "mean_pi_max": 3.312995433807373,
+    "mean_pi_min": -2.8736319541931152,
+    "mean_pi_norm": 5.575983047485352,
+    "next_actions_max": 0.999638020992279,
+    "next_actions_mean": 0.07037007063627243,
+    "next_actions_min": -0.9988370537757874,
+    "next_actions_sampled": 0.07037007063627243,
+    "next_actions_std": 0.6654540300369263,
+    "next_log_probs": 19.446369171142578,
+    "next_q_pi": -4.1193108558654785,
+    "q": -4.9777703285217285,
+    "q_pi_in_actor": -4.817644119262695,
+    "std_pi_avg": 0.4421711266040802,
+    "std_pi_max": 0.9992183446884155,
+    "std_pi_min": 0.028930529952049255,
+    "std_pi_norm": 2.58774733543396,
+    "target_actor_entropy": -19.446369171142578,
+    "target_q": -4.969196319580078,
+    "temperature": 0.0022127488628029823,
+    "temperature_loss": 0.00024470785865560174
+  },
+  "metrics_finite": true,
+  "latest_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/recovery-0.pkl",
+    "expected_sha256": "affb4b04160242b5401a657c109d217084c47c2806fa4d515f9282f8ea1f6ef8",
+    "actual_sha256": "affb4b04160242b5401a657c109d217084c47c2806fa4d515f9282f8ea1f6ef8",
+    "matched": true,
+    "bytes": 207880437
+  },
+  "rotating_slot_retries": 0,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "threshold_updates": 0,
+      "actual_updates": 0,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1451,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-010000",
+      "threshold_updates": 10000,
+      "actual_updates": 10220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1407,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-020000",
+      "threshold_updates": 20000,
+      "actual_updates": 20240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1378,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-030000",
+      "threshold_updates": 30000,
+      "actual_updates": 30200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1355,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-040000",
+      "threshold_updates": 40000,
+      "actual_updates": 40160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1320,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-050000",
+      "threshold_updates": 50000,
+      "actual_updates": 50080,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1343,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-060000",
+      "threshold_updates": 60000,
+      "actual_updates": 60000,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1304,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-070000",
+      "threshold_updates": 70000,
+      "actual_updates": 70260,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1279,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-080000",
+      "threshold_updates": 80000,
+      "actual_updates": 80100,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1264,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-090000",
+      "threshold_updates": 90000,
+      "actual_updates": 90160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-100000",
+      "threshold_updates": 100000,
+      "actual_updates": 100220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1270,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-110000",
+      "threshold_updates": 110000,
+      "actual_updates": 110200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-120000",
+      "threshold_updates": 120000,
+      "actual_updates": 120220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1239,
+      "settling_actions": 100
+    }
+  ],
+  "newest_complete_panel_pairs": [
+    {
+      "state": 40,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 124,
+      "settling_steps": 10,
+      "primitive_delta": -20,
+      "episode_random_seed": 2102987167,
+      "initial_state_vector_sha256": "0eb4a8d9a1bdde3ac8202221833398a6e0667100f15a577b022d31f7ae10abfd",
+      "initial_observation_sha256": "fd5d50587c5cfb7a87c57d0921e7574da868be47f2bc253a8d49b30fbcd8d586",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 41,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 114,
+      "settling_steps": 10,
+      "primitive_delta": -20,
+      "episode_random_seed": 932631343,
+      "initial_state_vector_sha256": "5af380d65e03e0e5e76d8b84a6e0c4e9f1a225d6230cae7eaf9d3dbf75e80176",
+      "initial_observation_sha256": "25503140d17c3f24eee1661d3cdf8cf9179071383f6a647beb0587a1b6968926",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 42,
+      "success": true,
+      "native_primitives": 153,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -20,
+      "episode_random_seed": 4062358908,
+      "initial_state_vector_sha256": "79026b66c7be8f2a116d46e2431703d81041f96bed84f3b2d6dd4698320633eb",
+      "initial_observation_sha256": "b54147e5c53f8beaadd86b9cd5aaeab51753599fbde852b54068c56636d2c7f3",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 43,
+      "success": true,
+      "native_primitives": 141,
+      "primitives": 123,
+      "settling_steps": 10,
+      "primitive_delta": -18,
+      "episode_random_seed": 1387848887,
+      "initial_state_vector_sha256": "837ab7a00f495f131d206b4467c0e79b6a4ebf5ffbf730e37e411124d7bdfb40",
+      "initial_observation_sha256": "5e66c51afe7c9884b063fe70e0c1ec9afb579f280a2f245a5170a7ad76ed7f60",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 44,
+      "success": true,
+      "native_primitives": 163,
+      "primitives": 125,
+      "settling_steps": 10,
+      "primitive_delta": -38,
+      "episode_random_seed": 2877548848,
+      "initial_state_vector_sha256": "af66a55f574627d2e2ae77f913a9b8b8d3fbe3385692c9a4f48422614f0029fd",
+      "initial_observation_sha256": "0f72e92c913776eb297576aa02cd9baa03184c585188f6b970d90ef3856f1760",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 45,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 124,
+      "settling_steps": 10,
+      "primitive_delta": -19,
+      "episode_random_seed": 384253523,
+      "initial_state_vector_sha256": "e142b3da1d0f3fee94f4a8e012fcebb253c79343943a0a1d1acb6d5ebb8b0478",
+      "initial_observation_sha256": "db39c4c67433467ba16d21e729a59264b39dfbf0a482e90d9b0346d9571a371f",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 46,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 117,
+      "settling_steps": 10,
+      "primitive_delta": -17,
+      "episode_random_seed": 4088019402,
+      "initial_state_vector_sha256": "2784da4aab953ff2de1f827df9b2ad9cdcebfb4f41464260175ac70baa764378",
+      "initial_observation_sha256": "1a237a710154485b1ff14c159cdd833460772defdb861f00af9fa9c14197e41a",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 47,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 123,
+      "settling_steps": 10,
+      "primitive_delta": -21,
+      "episode_random_seed": 2734817570,
+      "initial_state_vector_sha256": "a12c4e1491885d9247adae903f70c67bc4297dc167d0e23fe78c8e9ffc526540",
+      "initial_observation_sha256": "5e152de7e254e9238941d0a9d401ef31f079c38b8bbd7b04dd5b95e1d9f4a1ac",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 48,
+      "success": true,
+      "native_primitives": 152,
+      "primitives": 123,
+      "settling_steps": 10,
+      "primitive_delta": -29,
+      "episode_random_seed": 2295547926,
+      "initial_state_vector_sha256": "3b66e58ecc01ce3b4ecf07672e5c02f2e569246471ef1e49f8eb08218cbab128",
+      "initial_observation_sha256": "ad585c0f65f927ed5d33a3cfd70f851675ab883160658cae489775d4c6af3b10",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 49,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -10,
+      "episode_random_seed": 2972083184,
+      "initial_state_vector_sha256": "3fa764eb79349d72033bad586fa1d5be36dc57e6908d0dd49196b68d308f6d76",
+      "initial_observation_sha256": "cf66230bf684aa2748b7077f1a47a394ad6879baae39ee989d0e7ed64203181b",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    }
+  ],
+  "newest_panel_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/learned-120000-recovery.pkl",
+    "expected_sha256": "eff695461e86e6f02c8d519c995b2fe634c1853a4cc7cd6b99bce3a7e62c969d",
+    "actual_sha256": "eff695461e86e6f02c8d519c995b2fe634c1853a4cc7cd6b99bce3a7e62c969d",
+    "matched": true,
+    "bytes": 201175880
+  },
+  "newest_panel_query_weights_replay_unchanged": true,
+  "active_panel": null,
+  "newest_raw": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/raw/training-000479-1793432215253078868.pkl.gz",
+    "expected_sha256": "631d18b36f1dbfbaf4f10179a7a8483c2097baccd13bf1b2ff026aa1c0fa38ab",
+    "actual_sha256": "631d18b36f1dbfbaf4f10179a7a8483c2097baccd13bf1b2ff026aa1c0fa38ab",
+    "matched": true,
+    "bytes": 2995008
+  },
+  "newest_rpc": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793432212152661626.json",
+    "episode_id": "training-000479",
+    "kind": "step",
+    "role": "training",
+    "returned": true,
+    "actual_steps": 3,
+    "maximum_steps": 10,
+    "outcome_status": "complete",
+    "checks": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793432212152661626-input.pkl.gz",
+        "expected_sha256": "97076a3e0bf5d0ef334b3201b0c5c6f6aa90cf38c55e40ed0e40d75bc35c3a91",
+        "actual_sha256": "97076a3e0bf5d0ef334b3201b0c5c6f6aa90cf38c55e40ed0e40d75bc35c3a91",
+        "matched": true,
+        "bytes": 197564
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793432212152661626.pkl.gz",
+        "expected_sha256": "6f72f43a3dd18cc3dde74f53fbbe974cf539d59f2b8db232702e01be83e1c016",
+        "actual_sha256": "6f72f43a3dd18cc3dde74f53fbbe974cf539d59f2b8db232702e01be83e1c016",
+        "matched": true,
+        "bytes": 197264
+      }
+    ]
+  },
+  "rpc_metadata_rows_read": 8,
+  "producer_costs": {
+    "training": {
+      "known_actions": 69365,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 64565,
+      "settling_steps": 4800,
+      "reset_attempts": 480
+    },
+    "query": {
+      "known_actions": 18528,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 17228,
+      "settling_steps": 1300,
+      "reset_attempts": 130
+    },
+    "qualification": {
+      "known_actions": 10,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 10,
+      "reset_attempts": 1
+    }
+  },
+  "all_in_action_charge": 87903,
+  "producer_counter_sum_matches": true,
+  "independent_journal_replay": false,
+  "previous_partial_tail_not_reused_as_verified_prefix": true,
+  "storage_snapshot_bytes": 7197275690,
+  "maximum_storage_bytes": 68719476736,
+  "worker": {
+    "attempts": 1,
+    "maximum_gpu_seconds": 36000,
+    "reserved_seconds": 36000,
+    "active_elapsed_seconds": 5407.378645658493,
+    "final_charge": false
+  },
+  "next_check_shanghai": "2026-10-31T15:56:00+08:00"
+}

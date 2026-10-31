@@ -116,4 +116,4 @@ print(json.dumps(dict(format='task57_due_light_saved_metadata_v1',
     worker=dict(attempts=len(clock['attempts']), maximum_gpu_seconds=clock['worker_seconds'],
         reserved_seconds=sum(row['reserved_seconds'] for row in clock['attempts']),
         active_elapsed_seconds=snapshot_time-clock['attempts'][-1]['started_unix'], final_charge=False),
-    next_check_shanghai='2026-10-31T15:36:00+08:00'), indent=2))
+    next_check_shanghai=sys.argv[2] if len(sys.argv) > 2 else '2026-10-31T15:36:00+08:00'), indent=2))
