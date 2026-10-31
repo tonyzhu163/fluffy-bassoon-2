@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "A1_R1_terminal_paired_instruction_failure_before_search; exact_repair_and_migration_pending; task57_separate_running",
+  "state": "A1_R2_running_after_actual_prefix_repair; partial_search_no_selection; task57_separate_running",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -17,6 +17,16 @@
       "status": "Failed",
       "reservation_receipt_sha256": "e660ad5ccee3c8998ec350f769c0ff35ad76a157fb7c762b1000f7fa8c5c5650",
       "terminal_receipt_sha256": "478d18f4081d1d4218898bb3132003cb29d53cb92136e2b65a8759a815c00580"
+    },
+    {
+      "job_id": "job-zp47pliu429f",
+      "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+      "reserved_seconds": 6480,
+      "charged_seconds": null,
+      "settled": false,
+      "status": "Running",
+      "child_authority_path": "A1-R2-CHILD-AUTHORITY.json",
+      "child_authority_sha256": "ad3fd32f1fa48dec68398ae327391c1926275285e13d68b271cdf8e609f1a937"
     }
   ],
   "cpu_attempts": [
@@ -52,14 +62,25 @@
       "actual_gpu_count": 0,
       "receipt_path": "STUDENT-CPU-RECEIPT.json",
       "receipt_sha256": "0318154029d6a714d6d2f45eab74434817c390af04c6b1f6f351b35cfc8a7389"
+    },
+    {
+      "job_id": "job-qjzz6mk1hqrl",
+      "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
+      "maximum_worker_seconds": 600,
+      "reserved_seconds": 600,
+      "charged_seconds": 87,
+      "settled": true,
+      "actual_gpu_count": 0,
+      "receipt_path": "PAIRED-CPU-RECEIPT.json",
+      "receipt_sha256": "7863d6b7aec40dfe8a2c42705c496cb4f13eb203033f6e709d1ad8e6e8bcad04"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 632,
-  "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 244,
+  "reserved_gpu_seconds": 6480,
+  "charged_cpu_worker_seconds": 331,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 5355,
+  "charged_actions": 6955,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
@@ -126,23 +147,26 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 1556,
-  "unreserved_gpu_seconds": 28168,
+  "remaining_cpu_worker_seconds": 1469,
+  "unreserved_gpu_seconds": 21688,
   "latest_action_snapshot": {
-    "actual": 5355,
-    "charged": 5355,
+    "checked_shanghai": "2026-10-31T18:57:58+08:00",
+    "actual": 6955,
+    "charged": 6955,
     "pending": 0,
     "uncertain": 0,
-    "terminal": true,
-    "independent_closed_episode_action_sum": 5355,
-    "independent_full_journal_replay": false
+    "new_R2_actions": 1600,
+    "original_R1_actions_reused_once": 5355,
+    "terminal": false
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 6568,
-  "remaining_a1_actions": 24645,
-  "retry_launched": false,
+  "remaining_a1_gpu_seconds": 88,
+  "remaining_a1_actions": 23045,
+  "retry_launched": true,
   "source_teacher_admitted": false,
   "selection_evaluable": false,
-  "preserve_initial_grant_and_header": true
+  "preserve_initial_grant_and_header": true,
+  "remaining_a1_after_settled_before_active_hold": 6568,
+  "repair_live_prefix_regression_passed": true
 }
