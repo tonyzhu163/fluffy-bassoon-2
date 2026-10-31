@@ -1,0 +1,127 @@
+{
+  "format": "linked_preservation_CPU_receipt_v1",
+  "job_id": "job-xnwsxmjbbjcs",
+  "source_commit": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
+  "cache_recovery": "PASS33/33",
+  "bridge_fixture": "FAIL3/3;fake backend lacks native_horizon",
+  "optional_readout": "NOT_RUN; preceding bridge subprocess failed",
+  "overall_wrapper_passed": false,
+  "exit_code": 1,
+  "actual_gpu": 0,
+  "actual_cpu": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "charged_CPU_worker_seconds": 98,
+  "maximum_linked_CPU_worker_seconds": 120,
+  "remaining_linked_CPU_worker_seconds": 22,
+  "old_phase_CPU_charge": 1775,
+  "old_phase_CPU_ceiling": 1800,
+  "old_phase_remaining25_untouched": true,
+  "tests": {
+    "cache-recovery.junit.xml": [
+      {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "33",
+        "time": "2.037",
+        "timestamp": "2026-11-01T04:28:01.607255+08:00",
+        "hostname": "job-xnwsxmjbbjcs-master-0"
+      }
+    ],
+    "bridge-fixture.junit.xml": [
+      {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "3",
+        "skipped": "0",
+        "tests": "3",
+        "time": "2.112",
+        "timestamp": "2026-11-01T04:28:04.916127+08:00",
+        "hostname": "job-xnwsxmjbbjcs-master-0"
+      }
+    ]
+  },
+  "refs": [
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/allocation.json",
+      "sha256": "5f7a790ffdcfe184fd592bc2b4a16224b1ca10c9f6147d006b7aff09af574a44",
+      "bytes": 1520
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/bridge-fixture.junit.xml",
+      "sha256": "09d2c3e2e5dea09992f278405f6a9e7318504d5f44397dac374276d73b096922",
+      "bytes": 20561
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/bridge-fixture.log",
+      "sha256": "441acee76178eb447eaee186d2757e96d84032ca32b1c086b2899b709e368d00",
+      "bytes": 20358
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/cache-recovery.junit.xml",
+      "sha256": "58d2ad1e978b46b08e3957fc8fd3aef5326f2a01a91d58aa313bfae6605d0f17",
+      "bytes": 5272
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/cache-recovery.log",
+      "sha256": "a62ada063632b3b8a0afb1cae0b642cd5f463541998994c479c6491e29d7b185",
+      "bytes": 99
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/components.json",
+      "sha256": "89d85c925a978f911123cf7d46b8dd063c0fd2123c5c94436f5552b921080f70",
+      "bytes": 938
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/cpu-worker-clock.json",
+      "sha256": "6309ce63afad8d313ceeca30eaefb05c8e31fdd3b0219cc91736b531e779c635",
+      "bytes": 661
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/exit-code.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/summary.json",
+      "sha256": "9c7947d497291e0d13419013e58b7fdfede38b57f3744e94ababee838f1461f1",
+      "bytes": 2572
+    },
+    {
+      "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/evidence/zero-gpu-attestation.json",
+      "sha256": "4b6d883e03f0cf74466124b6027c6dbf2c76b405fa284a7237f8a84060a79d30",
+      "bytes": 1054
+    }
+  ],
+  "command": {
+    "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/CPU-COMMAND.sh",
+    "sha256": "0525e78c568b4399e16b524ec6ba83dc88f6021fb86dbc008a4cb5db32031ad2",
+    "bytes": 7379
+  },
+  "grant": {
+    "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/GRANT-COPY.json",
+    "sha256": "cd355b96332a6868fa153318a2be5323f232b71d4ba6d746daa0b15a044e3c71",
+    "bytes": 2176
+  },
+  "addendum": {
+    "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/OPTIONAL-READOUT-ADDENDUM-COPY.json",
+    "sha256": "aa8c0dfcfed6c3b756ea1d1fe1be8bd63010845916251c4bbbef07e64911e7c7",
+    "bytes": 1492
+  },
+  "code": {
+    "path": "outputs/frozen-vla-preservation-software-qual-20261101-r1/DEPLOYMENT.json",
+    "sha256": "6e4a6026b2e37e3f98f144e36d4971cb0a546a00c4237b98f7098d9adf065645",
+    "bytes": 1585
+  },
+  "no_actual_model_bank_simulator_or_actions": true,
+  "retry_performed": false,
+  "component_results_separate": true,
+  "scheduler": {
+    "status": "Failed",
+    "created": "2026-11-01 04:27:21 Asia/Shanghai",
+    "ended": "2026-11-01 04:28:44 Asia/Shanghai",
+    "UI_duration_seconds": 69,
+    "screenshot_sha256": "ddce8a0e963b283e6dd7cb9f42a2129accd6d02c2eefa83bf8f266fe025a60c2"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format": "linked_preservation_CPU_qualification_v1",
+  "source_commit": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
+  "phase_id": "frozen-vla-preservation-software-qual-20261101-r1",
+  "passed": false,
+  "exit_code": 1,
+  "error": "Traceback (most recent call last):\n  File \"<stdin>\", line 36, in <module>\n  File \"<stdin>\", line 33, in run\n  File \"/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]', 'tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]', 'tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration', '--junitxml=/mowenjie/fluffy-bassoon-2/outputs/frozen-vla-preservation-software-qual-20261101-r1/cpu-r1/bridge-fixture.junit.xml']' returned non-zero exit status 1.\n",
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+  "components": {
+    "cache-recovery": {
+      "source_commit": "d4425999d4c4ef1c572cc28abe9003f012aaeedf",
+      "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-cache04-recovery-20261101-r2",
+      "status": "passed",
+      "tests": [
+        "tests/test_robotwin_cache04_recovery.py"
+      ]
+    },
+    "bridge-fixture": {
+      "source_commit": "008fffa0282c21ebdfab387872a46603f0779c42",
+      "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-fitted-physical-cpu-20261101-r2",
+      "status": "started",
+      "tests": [
+        "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]",
+        "tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]",
+        "tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration"
+      ]
+    }
+  },
+  "no_actual_bank": true,
+  "no_vla_model": true,
+  "no_simulator": true,
+  "robot_actions": 0,
+  "charged_cpu_worker_seconds": 98,
+  "maximum_cpu_worker_seconds": 120,
+  "charged_gpu_seconds": 0,
+  "old_phase_25_seconds_untouched": true
+}
