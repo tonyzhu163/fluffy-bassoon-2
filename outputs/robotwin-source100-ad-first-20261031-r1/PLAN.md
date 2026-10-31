@@ -90,6 +90,11 @@ These are fresh-phase requests, not unused balances from closed campaigns.
   checkpoints. Check actual capacity/writeability in the allocation.
 - CPU and GPU ceilings include startup/failure/cleanup. Nested stage clocks
   overlap their enclosing allocation and are not added twice.
+- Software qualification is at most600s INSIDE the7200s CPU total, not an
+  additional allocation. Start one6900s CPU parent deadline before probe/tests;
+  projection/export/admission receive only the actual remaining time.
+- The GPU parent deadline is at most10500s inside the10800s scheduler envelope;
+  its300s outer margin is part of the1500s shared setup/contingency allowance.
 - Do not borrow LIBERO's32h pool, its1180s remainder, sealed native-panel time,
   or any closed CPU qualification balance.
 - No part of this phase is funded yet. The resource decision covers these
