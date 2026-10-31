@@ -61,9 +61,12 @@ fixed5000 endpoints, retaining3,399/2,655 updates and full recoveries for
 explicit continuation. Qualified resource migration now permits both exact-state
 continuations to advance. Action reaches fixed5,000 with endpoint/recovery and
 frozen721a verification, charging727 new GPU-seconds; decoded plan MSE is
-0.00547043 TRAIN/0.03020526 VAL. KV is4,727 in the saved06:20 observation.
-Required54 resource-gate CPU checks and actual KV5,000 precede the funded
-fixed15-case physical readout. No physical benefit, source RL or Transformer
+0.00547043 TRAIN/0.03020526 VAL. KV also completes5,000, with decoded14D
+MSE0.00915935 TRAIN/0.00989701 VAL. Required54 resource-gate checks and the
+optional cached wide report pass. Gripper clipping barely changes the wide
+head's validation regression. The first fixed15 readout dispatch fails in
+wrapped-callable provenance before any model/environment or episode,75GPU-s
+and zero actions; a narrow repair retains its1,425 remaining seconds. No physical benefit, source RL or Transformer
 result is available yet, and validation never selects an earlier endpoint.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 

@@ -1,0 +1,407 @@
+{
+  "format": "pi05_headroom_due_light_check_v1",
+  "checked_unix": 1793486433.6216607,
+  "job_id": "job-w8deahieli8q",
+  "source_commit": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "task_id": 44,
+  "phase": "training",
+  "completed": false,
+  "index_sha256": "4e41033ce94b6858961ab1dc8df4da482023b64ecda5a92e00a944e03ec6bc0f",
+  "updates": 235660,
+  "replay_rows": 12277,
+  "training": {
+    "episodes": 1303,
+    "chunks": 12277,
+    "primitive_steps": 116943,
+    "settling_steps": 13030
+  },
+  "train_successes": 1264,
+  "train_failures": 39,
+  "last_training_receipt": {
+    "initial_state": 22,
+    "scene_seed": 123,
+    "instruction": "turn on the stove",
+    "task_id": 44,
+    "suite": "libero_90",
+    "semantic_task": "KITCHEN_SCENE9_turn_on_the_stove",
+    "success": true,
+    "chunks": 8,
+    "primitive_steps": 74,
+    "raw_return": 1.0,
+    "initial_observation_sha256": "c5cf658267de9d246778e924ca3e0f1fe720abf9c6c69b0c304dcbace7bc2ddf",
+    "initial_state_vector_sha256": "5c2a11691f406fd3ed9b69cdb437a7d46b364aacdb2bf97cad2a2649e46bbf07",
+    "initial_simulator_state_sha256": "04a387a3f20a17c1302e8acc80bc6721172e01af7d69fd62af54b9d85fe5261c",
+    "initial_public_observation_hashes": {
+      "image": "40d7814800ed3f1868841785a0d1b52f1029f789a5b619ae922b1659fa86871e",
+      "wrist": "077cc017f445790825b541207c24bcf2f1ef62e2257e22a79ae605420aa194a5",
+      "state": "dbd57948007c7436b70c8913315c7c1d282674027d11e6f70266723c7b5ec49b"
+    },
+    "initial_simulator_state": [
+      0.5000000000000003,
+      0.007392501186593777,
+      -0.15753417496981076,
+      -0.01169057852882085,
+      -2.4414317381253485,
+      -0.003368972101256454,
+      2.2283821922554607,
+      0.7837731189407127,
+      0.03872759292057416,
+      -0.03873073605335535,
+      -0.17444062919911033,
+      0.09968421554828222,
+      0.8994107258211033,
+      0.7071067800833553,
+      -6.849749419260115e-05,
+      4.831869731861204e-05,
+      0.7071067773211803,
+      0.026284312871919558,
+      0.0060836245755571585,
+      0.8991707330326614,
+      0.7071065468067493,
+      -7.827453979201435e-05,
+      8.430146743926062e-05,
+      0.7071070062086748,
+      0.0,
+      -0.010976027137182728,
+      0.0020976397291902087,
+      0.008941003701292576,
+      0.0019980263064009614,
+      0.005868525706138882,
+      -0.005433091155516432,
+      -0.0051111226429414345,
+      0.003205228193388087,
+      -0.0031710876436558655,
+      4.2493682976344555e-10,
+      -2.401430794712841e-09,
+      6.19458311274454e-06,
+      -1.8182066765142507e-07,
+      1.0609742901620618e-06,
+      7.225038217787282e-11,
+      -4.198557228376123e-11,
+      -1.310309305974441e-09,
+      6.028874603443828e-06,
+      5.043512067930721e-08,
+      1.5955142570627153e-06,
+      2.327188686548921e-12,
+      0.0
+    ],
+    "data_role": "target-onlineDEV",
+    "completed": true,
+    "training_episode": 1302,
+    "target_optimizer_updates_before": 235500,
+    "target_optimizer_updates": 235660,
+    "replay_rows": 12277,
+    "update_metrics": {
+      "actor_loss": 3.15818190574646,
+      "critic_loss": 0.0023310226388275623,
+      "entropy": -16.832347869873047,
+      "mean_pi_avg": 0.005969098303467035,
+      "mean_pi_max": 3.088052988052368,
+      "mean_pi_min": -3.210279703140259,
+      "mean_pi_norm": 5.927475452423096,
+      "next_actions_max": 0.9985711574554443,
+      "next_actions_mean": -0.023235609754920006,
+      "next_actions_min": -0.9991378784179688,
+      "next_actions_sampled": -0.023235609754920006,
+      "next_actions_std": 0.6603662967681885,
+      "next_log_probs": 12.740655899047852,
+      "next_q_pi": -2.414501190185547,
+      "q": -3.3030221462249756,
+      "q_pi_in_actor": -3.093712091445923,
+      "std_pi_avg": 0.43689101934432983,
+      "std_pi_max": 0.9239438772201538,
+      "std_pi_min": 0.06166302412748337,
+      "std_pi_norm": 2.5228271484375,
+      "target_actor_entropy": -12.740655899047852,
+      "target_q": -3.29610538482666,
+      "temperature": 0.0038301118183881044,
+      "temperature_loss": -0.0031879853922873735
+    },
+    "actor_fixed_within_episode": true,
+    "behavior": "target_sac",
+    "policy_signature": "2a6735e562d2ff9000b51e45ade3a7a6abd72941a6868f8f8f8fe492d0e2df4a",
+    "trace": "raw/training-001302-1793486417592793616.pkl.gz",
+    "trace_sha256": "46c8151aa139fd592caac81c0e6dc9ab2fc65de439f781fe371b7cc01ebb397a"
+  },
+  "last_losses_finite": true,
+  "newest_raw_trace": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/raw/training-001302-1793486417592793616.pkl.gz",
+    "sha256": "46c8151aa139fd592caac81c0e6dc9ab2fc65de439f781fe371b7cc01ebb397a",
+    "bytes": 1246021
+  },
+  "newest_raw_trace_matches": true,
+  "full_recovery": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "e357abf257f6a26f8a0ea60bef98a5726ad43415a4d057267ad2f7fbf58db494",
+      "updates": 235800,
+      "replay_rows": 12284,
+      "signature": "11e78502e10cad5f2cadd0f21e28e70bcc0fb0c26d883df06691f3dedfbe0eef"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "e357abf257f6a26f8a0ea60bef98a5726ad43415a4d057267ad2f7fbf58db494",
+      "bytes": 347696232
+    },
+    "stable": true
+  },
+  "stable_recovery_read_limit": 2,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "kind": "initial_native",
+      "queries": 20,
+      "successes": 6,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 6447,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_tied-000000",
+      "kind": "initial_tied",
+      "queries": 20,
+      "successes": 13,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 4490,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_sac-000000",
+      "kind": "initial_sac",
+      "queries": 20,
+      "successes": 8,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 5898,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "learned-020000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 1,
+      "actual_updates": 20580,
+      "threshold_updates": 20000,
+      "primitive_steps": 7683,
+      "settling_steps": 200,
+      "policy_signature": "bb52982822065b6dcd9347e5c6daa94a5b9d0a4a7e616afd89ac543b521f478e"
+    },
+    {
+      "name": "learned-040000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 40140,
+      "threshold_updates": 40000,
+      "primitive_steps": 1651,
+      "settling_steps": 200,
+      "policy_signature": "2ea85c0b6f2bc04c289b8326f4dee419d9dbd4ec0d5edc65e5af14f69b48a631"
+    },
+    {
+      "name": "learned-060000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 60000,
+      "threshold_updates": 60000,
+      "primitive_steps": 1678,
+      "settling_steps": 200,
+      "policy_signature": "b6ec9603d4a00bfb485ca500c855956fe7acb3723c7086e8cffcd327be9e8b77"
+    },
+    {
+      "name": "learned-080000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 80140,
+      "threshold_updates": 80000,
+      "primitive_steps": 1582,
+      "settling_steps": 200,
+      "policy_signature": "df1f1a0e49b1b576beb3bed10431b736e4f03e584915f513fdc80e85376f6653"
+    },
+    {
+      "name": "learned-100000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 100020,
+      "threshold_updates": 100000,
+      "primitive_steps": 1519,
+      "settling_steps": 200,
+      "policy_signature": "9550ae45e5aa5a0bde7e49bf3c201fdfce4c309bda80bf2f2455effb9bae83b1"
+    },
+    {
+      "name": "learned-120000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 120000,
+      "threshold_updates": 120000,
+      "primitive_steps": 1532,
+      "settling_steps": 200,
+      "policy_signature": "a3757d793a48d9da810c324fbdd54fe1c0a9a681ff08ccb27c1d507ada938234"
+    },
+    {
+      "name": "learned-140000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 140080,
+      "threshold_updates": 140000,
+      "primitive_steps": 1511,
+      "settling_steps": 200,
+      "policy_signature": "7682be1285f201d386b5b1b2f5408892609d470c6dd4757f110f70feb133cdf1"
+    },
+    {
+      "name": "learned-160000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 160080,
+      "threshold_updates": 160000,
+      "primitive_steps": 1508,
+      "settling_steps": 200,
+      "policy_signature": "11cddfb229d384de079d10ce30535231e4bd80c93a63ccdef1b19800285bbbf5"
+    },
+    {
+      "name": "learned-180000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 180020,
+      "threshold_updates": 180000,
+      "primitive_steps": 1513,
+      "settling_steps": 200,
+      "policy_signature": "45ae58ce2531763c3a9ad7c2fc1bfce8b61b338a262a42902dd01af850a71b5f"
+    },
+    {
+      "name": "learned-200000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 200080,
+      "threshold_updates": 200000,
+      "primitive_steps": 1529,
+      "settling_steps": 200,
+      "policy_signature": "e062e0c01c53b5a8086ad2d4f47c827356f410bb1076fe9f5cce6d69771ef471"
+    },
+    {
+      "name": "learned-220000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 220040,
+      "threshold_updates": 220000,
+      "primitive_steps": 1510,
+      "settling_steps": 200,
+      "policy_signature": "56d594d2bf6d7866ef1d2b6d8273349c78bb1b8de07ef64d6e8904cf4251ace4"
+    }
+  ],
+  "active_panel": null,
+  "whole_phase_action_charge": 269603,
+  "learning_case_action_charge": 172824,
+  "costs": {
+    "training": {
+      "known_actions": 129973,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 116943,
+      "settling_steps": 13030,
+      "reset_attempts": 1303
+    },
+    "query": {
+      "known_actions": 42851,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 40051,
+      "settling_steps": 2800,
+      "reset_attempts": 280
+    },
+    "qualification": {
+      "known_actions": 0,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 0,
+      "reset_attempts": 0
+    }
+  },
+  "maximum_total_actions": 1000000,
+  "storage": {
+    "actual_output_bytes": 14493115745,
+    "full_slot_logical_bytes": 694834505,
+    "maximum_full_checkpoint_bytes": 347518628,
+    "maximum_complete_trace_bytes": 5871030,
+    "next_episode_reservation_bytes": 4294967296,
+    "hardlinks_counted_once": true
+  },
+  "output_bytes": 14493115745,
+  "maximum_output_bytes": 68719476736,
+  "free_PFS_bytes": 1037310099456,
+  "attempt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793468637000000-0001",
+    "started_unix": 1793468637.0,
+    "slice_seconds": 25140,
+    "reserved_seconds": 25200,
+    "status": "started",
+    "scheduler_allowance_seconds": 60
+  },
+  "settled_prior_GPU_seconds": 3076,
+  "active_elapsed_seconds": 17796.62166070938,
+  "observed_conservative_elapsed_GPU_seconds": 20933,
+  "phase_interrupted_reservation_GPU_seconds": 28276,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_job_GPU_seconds": 25200,
+  "motor_before": {
+    "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "leaves": 51,
+    "elements_by_dtype": {
+      "bfloat16": 3353433872
+    }
+  },
+  "motor_before_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793468650700888326/motor-before.json",
+    "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+    "bytes": 156
+  },
+  "final_motor_after_pending": true,
+  "stop_reason": null,
+  "next_owned_check": "2026-11-01 07:00 Asia/Shanghai",
+  "verification_limits": "Current counters, stable latest full recovery, newly completed learned panels and newest closed raw trace bytes only. Old control/milestone hashes not repeated; no journal forest, tensor deserialization, saved-array analysis, model/test/simulator execution, or job control.",
+  "newest_RPC_sample": {
+    "record": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793486428755673155.json",
+      "sha256": "2ddb11ee9b459515be7218bb9df69e97a543bac7238f3606a0a0bc69bdf90dd8",
+      "bytes": 449
+    },
+    "metadata": {
+      "kind": "step",
+      "role": "training",
+      "episode_id": "training-001303",
+      "maximum_steps": 10,
+      "actual_steps": 10,
+      "returned": true,
+      "input_path": "1793486428755673155-input.pkl.gz",
+      "input_sha256": "f5c78781afc5bf4f4977cbde2a2157a735d9b05b8ffb14560f971c94555e1548",
+      "outcome_status": "complete",
+      "outcome_path": "1793486428755673155.pkl.gz",
+      "outcome_sha256": "8d7e32b090f95981fc842fd1148567772e77aeabcf0dfd8d5227e24398f3d07d"
+    },
+    "referenced_bytes": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793486428755673155-input.pkl.gz",
+        "sha256": "f5c78781afc5bf4f4977cbde2a2157a735d9b05b8ffb14560f971c94555e1548",
+        "bytes": 123250
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793486428755673155.pkl.gz",
+        "sha256": "8d7e32b090f95981fc842fd1148567772e77aeabcf0dfd8d5227e24398f3d07d",
+        "bytes": 123017
+      }
+    ],
+    "referenced_byte_hashes_match": true
+  },
+  "RPC_verification_scope": "One name listing and at most3 latest JSON metadata records; raw referenced bytes may be rehashed separately, no journal history replay."
+}

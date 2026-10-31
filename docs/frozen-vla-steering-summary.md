@@ -64,9 +64,13 @@ unchanged. The narrow resource migration passes29 CPU cases and real checkpoint
 inspection. The linked action fit completes5,000 at727 new GPU-seconds with
 matching endpoint/recovery, all90 parity and frozen721a checks. Its decoded
 plan MSE is0.00547043 TRAIN/0.03020526 VAL; no physical benefit follows. KV
-is4,727 in the saved06:20 observation. Resource-only readout949 has static
-PASS; exactly54 affected CPU cases run under180 worker-seconds before the
-fixed15-episode readout, which still needs actual KV5,000 admission. No
+subsequently completes5,000 at1,066 new GPU-seconds, with endpoint/recovery
+and frozen721a checks. Actual54 readout-resource CPU cases and optional
+all90 analysis pass in85/180 worker-seconds. Clipping barely changes the
+wide head's worsened validation grip error; the fixed robot readout remains
+necessary. Its first dispatch fails in wrapped-callable provenance before
+model/env/episode construction,75 GPU-seconds/zero actions. A narrow repair
+keeps the same1,425 remaining seconds and all15 cases/6,000 actions. No
 validation checkpoint selection, source/student claim or extra approval gate.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 

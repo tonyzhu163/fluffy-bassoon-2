@@ -207,22 +207,36 @@ frozen motor721a checks pass. Training/validation decoded14D plan MSE are
 0.00547043/0.03020526; validation gripper MSE0.15009219 dominates that aggregate.
 The final head gradient is finite and nonzero. These are command-plan fit
 measurements, not physical competence. The primary endpoint remains5,000;
-validation does not select an earlier checkpoint. KV is still running at4,727
-in this saved observation. Closed phase GPU cost is5,916, with1,800 KV and1,500
-readout seconds held separately. Endpoint CRC is null in the saved receipt;
+validation does not select an earlier checkpoint. KV was still running at4,727
+in that saved observation; it subsequently completes5,000 at1,066 new GPU-seconds.
+Its endpoint/full recovery hashes, all90 parity and source postfit721a checks
+pass. Decoded14D plan MSE is0.00915935 TRAIN/0.00989701 VAL; its mixed flow
+objective is separate from decoded physical MSE. Closed fit-phase GPU cost
+is6,982, retaining all original costs. Endpoint CRC is null in the saved receipt;
 there is no new terminal restore claim.
 [Action endpoint and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/ACTION5000-0620-PARENT-REVIEW.json).
 
 The unchanged235 readout guard rejects the linked-family resource names.
-Resource-only successor949c88fe has independent static PASS and preserves
-policy/episode/RNG mathematics. Its one allocated CPU gate, job-4jq7u25x1sv6,
-qualifies exactly43 new and11 affected legacy resource cases under a new
-180-worker-second total. Optional cached wide-head error analysis may use
-only remaining time after these54 cases; it cannot hold readout or create a
-new allocation. After both actual5,000 endpoints and required CPU PASS, the
-funded unchanged15-episode physical readout may launch with actual linked
-closeouts/runtime admission. No additional confirmation or favorable prefix
-selection is needed. No source teacher, chronological RL corpus or AD/DPT
+Resource-only successor949c88fe passes the actual54 focused CPU cases.
+The optional all90 cached wide-head report also passes in the same job,85
+inclusive CPU-worker-seconds of180. It reconstructs the GPU metrics within
+roundoff. Validation gripper error remains0.14885749 after actuator clipping
+versus native0.04192132, concentrated in cases09/11; raw overshoot alone does
+not account for that result. Independent per-slot interval floors are zero,
+which does not establish network or robot capacity.
+[Cached-plan analysis](../../outputs/frozen-pi05-endtoend-20261031-r1/WIDE5000-CACHED-PLAN-RESULT.md).
+
+The fixed15 readout job-ctc5ji8fr720 passes CUDA/own-PID/resource admission but
+exits1 before any model/environment/ledger construction or episode. An
+approved contextmanager-wrapped callable resolves through inspect.getfile
+to Python contextlib.py, failing the repository provenance check. It charges
+75 GPU-seconds and zero actions, leaving1,425 in the same1,500 lineage. Global
+closed cost is7,057 and physical actions remain23,922. The existing code owner
+is preparing a narrow safe-unwrapping successor with the same containment/
+hash checks and focused allocated CPU regression. No blind retry, changed
+scientific gate, favorable prefix selection or additional approval is needed.
+[Failure and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/CPU54-KV5000-READOUT-FAILURE-PARENT-REVIEW.json).
+No physical outcome, source teacher, chronological RL corpus or AD/DPT
 eligibility follows from these offline fits.
 
 
