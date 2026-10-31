@@ -1,0 +1,70 @@
+# Inherits the author's released PPO learner. This is a two-iteration onset
+# pilot at the VLRLA appendix H400, not the reported H200 demo score protocol.
+defaults:
+  - robotwin_adjust_bottle_ppo_openpi_pi05
+  - _self_
+
+hydra:
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor, env, rollout: ${oc.env:NATIVE_PPO_PLACEMENT}
+
+runner:
+  max_epochs: 2
+  max_steps: 2
+  only_eval: false
+  val_check_interval: 2 # enables eval workers; explicit runner calls own cadence
+  save_interval: -1
+  use_training_pipeline: false
+  overlap_env_bootstrap: false
+  enable_decoupled_mode: false
+  per_worker_log: true
+  logger:
+    log_path: ${oc.env:NATIVE_PPO_OUTPUT}
+    experiment_name: official-native
+    logger_backends: [tensorboard]
+
+env:
+  train:
+    max_episode_steps: 400
+    max_steps_per_rollout_epoch: 400
+    assets_path: ${oc.env:ROBOTWIN_ASSETS_PATH}
+    task_config:
+      step_lim: 400
+    video_cfg:
+      save_video: false
+  eval:
+    max_episode_steps: 400
+    max_steps_per_rollout_epoch: 400
+    assets_path: ${oc.env:ROBOTWIN_ASSETS_PATH}
+    task_config:
+      step_lim: 400
+    video_cfg:
+      save_video: false
+
+actor:
+  optim:
+    # Explicit upstream defaults; stopping at2 does not shorten a25-step LR
+    # schedule because this released recipe uses constant LR/no warmup.
+    lr_scheduler: constant
+    total_training_steps: 0
+    lr_warmup_steps: 0
+  model:
+    model_path: ${oc.env:NATIVE_PPO_MODEL}
+  fsdp_config:
+    # Complete DCP model/Adam/scheduler is retained at0/1/2; omit redundant
+    # full-weight exports so the pilot stays within64GiB fresh storage.
+    save_full_model_weights: false
+
+native_pilot:
+  mode: ${oc.env:NATIVE_PPO_MODE,train}
+  output: ${oc.env:NATIVE_PPO_OUTPUT}
+  accounting_root: ${oc.env:NATIVE_PPO_ACCOUNTING_ROOT}
+  attempt: ${oc.env:NATIVE_PPO_ATTEMPT,attempt-0001}
+  deadline_unix: ${oc.env:NATIVE_PPO_DEADLINE}
+  world_size: ${oc.env:NATIVE_PPO_WORLD}
+  initializer_revision: ${oc.env:NATIVE_PPO_INITIALIZER_REVISION}
