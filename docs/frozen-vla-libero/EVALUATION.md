@@ -3,6 +3,24 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Native/tied 384-episode screen complete: task 59 selected
+
+Baige `job-cth8mugcqgzl`, source `4ec35eb9`, completed all384 episodes, exit0.
+The launch-pinned rule selects task59: native **3/16** and untrained tied noise
+**9/16**; runner-up task64 scores4/16 and3/16. These are8 development states
+with2 draws per arm, with no SGD. All384 identities/seeds/roles and the fixed
+ranking passed an independent saved-JSON audit. The whole frozen official
+OpenPI pi0.5 signature is unchanged (c565); same-noise replay delta0.
+
+Charged cost is **3,890 GPU-seconds** including scheduler allowance and
+**134,629 all-in simulator actions**, within3h/170k caps. Final storage and all
+raw trace/physical-intent hashes were not independently audited. This run is
+separate from the concurrently amended240-native screen below, with overlapping
+development exposure disclosed. No learned DSRL/ICRL gain is established by the
+untrained noise-distribution contrast. No duplicate online learner was launched;
+interface experiments still require a qualified learned positive control.
+[Full12-task table, Wilson intervals and terminal audit](../../outputs/libero90-pi05-headroom-screen-20261101-r1/RESULTS.md).
+
 ## Weak-native selection running; online continuation qualified
 
 Baige `job-sdxpm3y64pd9` runs the predeclared12-task native screen on the same
