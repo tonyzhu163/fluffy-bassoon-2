@@ -50,9 +50,10 @@ physical states40–49 with two private-noise draws each.
 | Ninth learned panel |20/20|180,020|
 | Tenth learned panel |20/20|200,080|
 | Eleventh learned panel |20/20|220,040|
+| Twelfth learned panel |20/20|240,080|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest220,040 panel uses1,510 query primitives+200
+development bank. The latest240,080 panel uses1,508 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -60,16 +61,17 @@ panels, so they alone do not explain the early failure. Replay coverage,
 critic fit and transient learning remain competing explanations; narrow
 pinned-source checks found no concrete scale/order/reward/entropy mismatch.
 
-The06:40 owner check verifies235,660 updates/1,303 training episodes,
-1,264 successes/39 failures. No newer complete panel follows220,040 yet.
+The07:20 owner check verifies260,040 updates/1,457 training episodes,
+1,418 successes/39 failures. The260k panel is incomplete at12/20 episodes;
+it supplies no new completed score. The last complete240,080 panel is20/20.
 Stable full recovery/new raw/RPC hashes and finite losses pass. Whole-phase
-269,603 actions/14.493GB include screening, controls and learning; screen3,076
-plus active17,796.62 GPU-seconds is not a final charge.
-[Saved owner observation](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0640.json).
+285,368 actions/15.55GB include screening, controls and learning; screen3,076
+plus active20,312 GPU-seconds is not a final charge.
+[Owned proof](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0720-PROOF.json).
 
 Baige job-w8deahieli8q/sourceb665 continues the fixed first whole burst≥500k,
 all20k panels, last-three gain criterion and final native. This child reserves
-25,200 seconds in the original57,600/1M/64GiB lineage. The next check is07:00.
+25,200 seconds in the original57,600/1M/64GiB lineage. The next check is07:40.
 No checkpoint/task/seed substitution, retuning or extra learner seed is used.
 The fixed endpoint and persistence test discriminate sustained improvement
 from a favorable interim checkpoint. This is promising ordinary RL evidence,

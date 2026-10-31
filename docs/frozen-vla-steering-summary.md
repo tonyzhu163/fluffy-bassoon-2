@@ -70,11 +70,15 @@ all90 analysis pass in85/180 worker-seconds. Clipping barely changes the
 wide head's worsened validation grip error; the fixed robot readout remains
 necessary. Its first dispatch fails in wrapped-callable provenance before
 model/env/episode construction,75 GPU-seconds/zero actions. The narrow547
-repair passes four allocated CPU cases; the retry now completes real episodes
-with unchanged motor, parity/KV-gradient and full recovery checks. It keeps
-the same1,425 remaining seconds and all15 cases/6,000 actions. The complete
-robot comparison is still pending. No
-validation checkpoint selection, source/student claim or extra approval gate.
+repair passes four allocated CPU cases. The retry completes all15 natural
+400-action episodes: native0/5, wide5,000 0/5 and KV5,000 0/5. Frozen motor,
+fixed heads, paired initial states/noise and full recovery hashes pass. It
+uses641 new GPU-seconds; readout totals716 including the failed75, and phase
+cost is7,698 GPU-seconds/29,922 actions. No physical improvement is observed.
+Saved first-chunk metadata confirms both learned hooks after reset and
+nonidentical issued bytes in all five cases; it does not measure numerical
+or physical effect magnitude. No source teacher/student or new physics is admitted. This is not a negative AD/DPT
+or full-class capacity test. No validation checkpoint selection is used.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and

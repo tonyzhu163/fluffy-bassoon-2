@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "both5000_complete_readout547_R2_running_first2_verified",
+  "state": "fixed15_complete_all0of5_no_useful_fitted_candidate_phone_compute_unadmitted",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -511,12 +511,12 @@
       "canonical_action_header_unchanged": true
     }
   ],
-  "charged_gpu_seconds": 7057,
-  "reserved_gpu_seconds": 1425,
+  "charged_gpu_seconds": 7698,
+  "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 25042,
-  "reserved_actions": 4880,
+  "charged_actions": 29922,
+  "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -528,7 +528,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "ClosedGPU7057 retains failed94975 and all old/linked rows. ActiveR2 reserves1425 same readoutlineage1500; global28800/originalA17200/header unchanged. Produceractions25042 includes active third episode;readoutwhole6000 remains with4880 unconsumed,old23922 origin fixed,78A1actions unrequested. NewCPU4passed74/120,46unusedsealed;allolderCPUbalancesuntouched.",
+  "accounting": "ClosedGPU7698=originalA1closed5905(includingreadout75+641)+linkedfits1793. Readoutlineage716/1500closed,784unusednotborrowed;originalglobal28800/header unchanged. Canonical29922actions,pending0/uncertain0;oldA1only78remaining. CPU4closed74/120,46unusedsealed;allolderCPUbalancesuntouched. No new A1/source/student/physics admission;future producer is CODE-ONLY/unfunded.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -583,7 +583,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 25,
-  "unreserved_gpu_seconds": 20318,
+  "unreserved_gpu_seconds": 21102,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -658,16 +658,16 @@
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 1936,
-  "remaining_a1_actions": 4958,
+  "remaining_a1_gpu_seconds": 1295,
+  "remaining_a1_actions": 78,
   "retry_launched": true,
   "source_teacher_admitted": false,
   "selection_evaluable": true,
   "preserve_initial_grant_and_header": true,
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
-  "remaining_phase_gpu_seconds": 21743,
-  "remaining_phase_actions": 274958,
+  "remaining_phase_gpu_seconds": 21102,
+  "remaining_phase_actions": 270078,
   "selected_arm": null,
   "eligible_arms": [],
   "capacity_preparation": {
@@ -729,7 +729,7 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 511,
+  "unreserved_a1_gpu_seconds": 1295,
   "unreserved_a1_actions": 78,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
@@ -891,16 +891,17 @@
     {
       "role": "fixed15_command_diagnostic_native_action5000_KV5000_readout",
       "maximum_seconds": 1500,
-      "state": "R2_active_same1425_after_closed75",
+      "state": "settled_all15_complete_no_physical_gain",
       "actual_allocation_created": true,
       "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
       "authority_path": "COMMAND-DIAGNOSTIC-READOUT-CHILD-AUTHORITY.json",
       "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
       "maximum_actions": 6000,
-      "actual_seconds": 75,
-      "reserved_active_seconds": 1425,
+      "actual_seconds": 716,
+      "reserved_active_seconds": 0,
       "job_id": "job-mmkuln33iof5",
-      "current_attempt_final_seconds": null
+      "current_attempt_final_seconds": 641,
+      "released_seconds": 784
     },
     {
       "role": "linked_same5000_command_fit_continuations",
@@ -994,7 +995,7 @@
     "actual_complete_heads": 2
   },
   "command_diagnostic_readout": {
-    "state": "R2_running_real2of15_no_final_method_score",
+    "state": "Succeeded_15_complete_each_method0of5_no_source_admission",
     "GPU_ceiling": 1500,
     "action_ceiling": 6000,
     "episode_ceiling": 15,
@@ -1005,22 +1006,29 @@
     "new_resource_CPU_grant": "outputs/command-readout-linked-resource-cpu-20261101-r1/GRANT.json",
     "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
     "actual_CPU_job": "job-m2fjc44f7rja",
-    "actual_exit_code": null,
-    "actual_GPU_seconds": null,
+    "actual_exit_code": 0,
+    "actual_GPU_seconds": 641,
     "remaining_same_lineage_GPU_seconds": 1425,
-    "actual_episodes": 2,
-    "actual_new_actions": 1120,
+    "actual_episodes": 15,
+    "actual_new_actions": 6000,
     "required_CPU_PASS": 4,
     "required_CPU_charge": 74,
     "prior_failed_GPU_seconds": 75,
-    "current_GPU_reservation": 1425,
-    "actual_new_actions_closed_prefix": 800,
-    "producer_current_new_actions": 1120,
-    "next_check_shanghai": "2026-11-01 07:20",
-    "closed_readout_GPU_seconds": 75,
-    "current_action_counter_not_terminal": true
+    "current_GPU_reservation": 0,
+    "actual_new_actions_closed_prefix": 6000,
+    "producer_current_new_actions": 6000,
+    "next_check_shanghai": null,
+    "closed_readout_GPU_seconds": 716,
+    "current_action_counter_not_terminal": false,
+    "scores": {
+      "native": "0/5",
+      "wide5000": "0/5",
+      "KV5000": "0/5"
+    },
+    "hook_effect_saved_metadata_audit_pending": false,
+    "hook_effect_saved_metadata_verified": true
   },
-  "original_A1_closed_GPU_seconds": 5264,
+  "original_A1_closed_GPU_seconds": 5905,
   "linked_continuation_extension": {
     "extension_id": "command-fit-linked-continuation-20261101-r1",
     "additional_cap": 3600,
@@ -1072,5 +1080,26 @@
     "source_receipt": "COMMAND-READOUT-R2-FIRST-PROGRESS.json",
     "full_journal_replay": false,
     "not_final_GPU_charge": true
+  },
+  "latest_readout_terminal_snapshot": {
+    "actual_actions": 29922,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "readout_actions": 6000,
+    "closed_episodes": 15,
+    "whole_phase_GPU_seconds": 7698,
+    "full_recovery_SHA": "aa44ce2d60c0352265c1138b078cba8106a86a69f875f7577e691a9705cee1c4",
+    "source_receipt": "COMMAND-READOUT-R2-SUMMARY.json",
+    "full_journal_replay": false
+  },
+  "next_stage_code_only": {
+    "scope": "missing exact fitted_physical_A1_v1 +motor qualification producer against existing factory/schema",
+    "head": null,
+    "funded": false,
+    "GPU_admission": false,
+    "provisional_max_episodes": 23,
+    "provisional_max_actions": 9200,
+    "provisional_max_GPU_seconds": 2400,
+    "old_A1_or_closed_readout_refill": false
   }
 }
