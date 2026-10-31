@@ -191,8 +191,22 @@ contract. An explicit linked3,600-second credit (two1,800 children) and a new
 200-second focused CPU gate are funded under the per-job standing authority.
 They use the same original global28,800 clock/cap; original A1 charges and
 its1,500-second readout hold stay separately inside7,200. No old cap or ledger
-is reset. The next test is qualified exact-state continuation to5000, followed
-by the unchanged15-case readout, not selection of a favorable prefix.
+is reset. The operational successor3d35 passes29 focused tests plus actual small
+predecessor inspections on allocated zero-GPU Linux, charging77/200 CPU-worker
+seconds. It retains protected400 mathematics/strict scientific contract and
+records the new execution provenance separately. Actual resumed action3,614
+and KV2,906 updates exceed their saved3,399/2,655 boundaries; new full recovery
+hashes and distinct allocated GPU probes pass. No prefix replay, new robot
+action or final5000 endpoint is claimed.
+[Resume proof](../../outputs/frozen-pi05-endtoend-20261031-r1/LINKED-RESUME-PARENT-REVIEW.json).
+
+The unchanged235 readout resource guard rejects the new linked-family names.
+A separate narrow resource-only successor is being prepared by the readout
+owner, with180 CPU-worker-seconds reserved for focused cases; it does not
+hold the independent fits. No model/episode/seed/horizon/loader change or
+old57-test rerun is requested. The next discriminating test remains fixed5000
+completion followed by the unchanged15-case physical readout, with honest
+resource admission and no favorable prefix selection.
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved

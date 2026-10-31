@@ -60,14 +60,16 @@ JUnit hashes pass parent review. Paid tensors and failed04 remain unchanged.
 Both initial command fits hit their time guards before5000: action3,399/KV2,655.
 Full recoveries and0/100/500/2000 milestones survive; robot evaluation remains
 held. Their1,564 GPU-seconds bring closed phone cost to5,189 with23,922 actions
-unchanged. A narrow resource-admission migration and explicit linked continuation
-are being prepared to finish the same optimizer/RNG schedule. No capacity,
+unchanged. The narrow resource migration passes29 CPU cases and real checkpoint
+inspection; both continuations now advance from the same optimizer/RNG
+state toward5000 on separate GPUs. A later readout resource guard also needs
+a narrow linked-family update, while physical readout stays held. No capacity,
 physical benefit or source/student claim follows from incomplete prefixes.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through180,020
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through200,080
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three

@@ -942,7 +942,7 @@
     "seal_evidence": "Copied zeroGPU/CPUclock/JUnit/terminal/fullcache metadata verified; all90 tensor validation by allocated producer, no independent Mac tensor claim."
   },
   "command_diagnostic_fits": {
-    "state": "linked_resumes_submitted_after_CPU29_and_inspectorPASS_actual_advancement_pending",
+    "state": "linked_resumes_both_advancing_with_old_optimizer_RNG_contract_gates",
     "actual_fits": 0,
     "actual_complete_cache": true,
     "max_updates_each": 5000,
@@ -1008,15 +1008,17 @@
         "kind": "action",
         "job_id": "job-535ggybsgppf",
         "created_shanghai": "2026-11-01 06:05:58",
-        "status": "owner_reported_submitted_modelqual_inprogress",
-        "post_resume_SGD_verified": false
+        "status": "Running_actual_postresume_updates",
+        "post_resume_SGD_verified": 3614,
+        "latest_full_recovery_hash_matches": true
       },
       {
         "kind": "kv",
         "job_id": "job-76gonbaui824",
         "created_shanghai": "2026-11-01 06:07:11",
-        "status": "owner_reported_submitted_modelqual_inprogress",
-        "post_resume_SGD_verified": false
+        "status": "Running_actual_postresume_updates",
+        "post_resume_SGD_verified": 2906,
+        "latest_full_recovery_hash_matches": true
       }
     ],
     "execution_source": "3d35b3201a4d1131876c9251b6583464bac04982",
@@ -1026,7 +1028,9 @@
       "PASS": 29,
       "actual_small_recovery_inspector": "PASS, contained notCUDArestored",
       "charged_seconds": 77
-    }
+    },
+    "actual_CPU_packet_verified": true,
+    "actual_CPU_charge": 77
   },
   "remaining_unassigned_future_global_GPU_envelope": 18000
 }
