@@ -1,0 +1,41 @@
+{
+  "time": "2026-10-29T04:41:07.948979+00:00",
+  "worker_pids": [
+    1087894,
+    1087895
+  ],
+  "driver_pid": 881197,
+  "allocated_uuid": "GPU-903c12ee-f081-9a51-3c1c-6be0959a8196",
+  "allocated_nvidia_smi_index": "0",
+  "our_gpu_processes": [
+    {
+      "gpu": "0",
+      "pid": 881197,
+      "type": "C"
+    },
+    {
+      "gpu": "0",
+      "pid": 1087894,
+      "type": "G"
+    },
+    {
+      "gpu": "0",
+      "pid": 1087895,
+      "type": "G"
+    }
+  ],
+  "misplaced": [],
+  "workers_listed": [
+    1087894,
+    1087895
+  ],
+  "cuda_visible_devices": "0",
+  "mujoco_egl_device_id": null,
+  "visible_gpus": [
+    "0, GPU-903c12ee-f081-9a51-3c1c-6be0959a8196, 00000000:D6:00.0"
+  ],
+  "compute_apps": [
+    "881197, GPU-903c12ee-f081-9a51-3c1c-6be0959a8196, 6920 MiB"
+  ],
+  "nvidia_smi": "Thu Oct 29 04:41:07 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 570.86.10              Driver Version: 570.86.10      CUDA Version: 12.8     |\n|-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 3090        On  |   00000000:D6:00.0 Off |                  N/A |\n| 30%   43C    P2            105W /  300W |    7862MiB /  24576MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n                                                                                         \n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A          881197      C   ...1a82eb-20261029-r1/bin/python       6920MiB |\n|    0   N/A  N/A         1087894      G   ...1a82eb-20261029-r1/bin/python        456MiB |\n|    0   N/A  N/A         1087895      G   ...1a82eb-20261029-r1/bin/python        456MiB |\n+-----------------------------------------------------------------------------------------+\n"
+}
