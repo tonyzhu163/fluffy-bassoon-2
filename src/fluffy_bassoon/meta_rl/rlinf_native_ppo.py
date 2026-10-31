@@ -350,7 +350,12 @@ def cpu_qualify(args):
     write(root/'cpu-worker-clock.json', dict(status='started', started_unix=args.started_unix,
         maximum_cpu_worker_seconds=1800, charged_gpu_seconds=0, source_commit=args.source))
     attestation = require_zero_gpu(torch)
-    attestation['resources'] = cgroup_resources()
+    resources = cgroup_resources()
+    resources['requested'] = dict(cpu_cores=8, memory_bytes=64*1024**3, gpu_count=0)
+    cores, memory = resources['effective_cpu_quota_cores'], resources['memory_limit_bytes']
+    resources['cgroup_matches_request'] = dict(cpu=None if cores is None else cores == 8,
+        memory=None if memory is None else memory == 64*1024**3)
+    attestation['resources'] = resources
     write(root / 'zero-gpu-attestation.json', attestation)
     checked_checkout(args.code, args.source)
     checked_checkout(os.environ['REPO_PATH'], RLINF_PIN)
