@@ -212,8 +212,8 @@ in that saved observation; it subsequently completes5,000 at1,066 new GPU-second
 Its endpoint/full recovery hashes, all90 parity and source postfit721a checks
 pass. Decoded14D plan MSE is0.00915935 TRAIN/0.00989701 VAL; its mixed flow
 objective is separate from decoded physical MSE. Closed fit-phase GPU cost
-is6,982, retaining all original costs. Endpoint CRC is null in the saved receipt;
-there is no new terminal restore claim.
+is6,982, retaining all original costs. The owner's ZIP check returns no bad member (testzip None); there is no new
+terminal deserialize/restore claim.
 [Action endpoint and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/ACTION5000-0620-PARENT-REVIEW.json).
 
 The unchanged235 readout guard rejects the linked-family resource names.
