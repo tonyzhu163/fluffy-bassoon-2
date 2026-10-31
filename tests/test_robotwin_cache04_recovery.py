@@ -106,13 +106,13 @@ def resume_fixture(tmp_path):
     def interrupt(destination):raise RuntimeError('stop before first encoded input')
     with pytest.raises(RuntimeError):recovery.run_boundary(out,binding,'oldattempt',{},interrupt,guard=lambda:None,deadline=1e20)
     cursor=ref(out/'cursor.json')
-    row=dict(path='oldattempt',status='finished',charged_seconds=70,reserved_seconds=300,slice_overrun=False)
-    close=tmp_path/'close.json';_atomic_json(close,dict(attempt=row,source_commit=binding['source_commit'],charged_gpu_seconds=70))
+    row=dict(path='oldattempt',status='finished',charged_seconds=70,reserved_seconds=300,slice_overrun=False,exit_code=1)
+    close=tmp_path/'close.json';_atomic_json(close,dict(attempt=row,source_commit=binding['source_commit'],charged_gpu_seconds=70,exit_code=1,error=None))
     diagnosis=tmp_path/'diagnosis.json';_atomic_json(diagnosis,dict(cursor_sha256=cursor['sha256'],reason='actual immutable diagnosed interruption'))
     return binding,dict(cursor=cursor,closeout=ref(close),diagnosis=ref(diagnosis)),dict(attempts=[row])
 
 
-@pytest.mark.parametrize('fault',['profile','bank','partial11','checkpoint','unclosed','fresh_child'])
+@pytest.mark.parametrize('fault',['profile','bank','partial11','checkpoint','unclosed','fresh_child','owner_cleanup_error','contradictory_exit'])
 def test_resume_binds_input_checkpoint_cost_and_fresh_identity(tmp_path,fault):
     binding,resume,clock=resume_fixture(tmp_path);output=tmp_path/'fresh'
     if fault=='profile':binding['profile_sha256']='changed'
@@ -121,6 +121,11 @@ def test_resume_binds_input_checkpoint_cost_and_fresh_identity(tmp_path,fault):
     if fault=='checkpoint':
         state=json.loads(Path(resume['cursor']['path']).read_text());Path(state['recovery']['path']).write_bytes(b'changed')
     if fault=='unclosed':clock['attempts'][0]['status']='started'
+    if fault in ('owner_cleanup_error','contradictory_exit'):
+        path=Path(resume['closeout']['path']);value=json.loads(path.read_text())
+        if fault=='owner_cleanup_error':value['error']='owned cleanup failed'
+        else:value['exit_code']=0
+        path.unlink();_atomic_json(path,value);resume['closeout']=ref(path)
     if fault=='fresh_child':output=Path(resume['cursor']['path']).parent
     with pytest.raises(ValueError):recovery.resume_initial(resume,binding,clock,output,deadline=1e20)
 
@@ -136,15 +141,15 @@ def test_completed_boundary_is_cpu_reconcilable_and_cannot_gpu_resume(tmp_path):
     raw=recovery.run_boundary(out,binding,'oldattempt',{},make_case(binding),guard=lambda:None,deadline=1e20)
     boundary=raw['cache04_closed_case']['cursor']
     assert recovery.committed_receipt(boundary,deadline=1e20)==raw
-    with pytest.raises(ValueError,match='initial closed boundary'):
+    with pytest.raises(ValueError,match='Completed cache04 lineage'):
         recovery.resume_initial(dict(cursor=boundary),binding,{},tmp_path/'fresh',deadline=1e20)
-    with pytest.raises(ValueError,match='last published'):
+    with pytest.raises(ValueError,match='Completed cache04 lineage'):
         recovery.resume_initial(dict(cursor=ref(out/'boundary-before-phone04.json')),binding,{},tmp_path/'fresh',deadline=1e20)
     Path(raw['records'][0]['path']).write_bytes(b'changed')
     with pytest.raises(ValueError):recovery.committed_receipt(boundary,deadline=1e20)
 
 
-@pytest.mark.parametrize('fault',[None,'cursor_records','checkpoint','active_writer'])
+@pytest.mark.parametrize('fault',[None,'cursor_records','checkpoint','active_writer','contradictory_exit','owner_cleanup_error'])
 def test_paid11_binding_is_hash_bound_complete_and_never_reencodes_them(tmp_path,fault):
     ids=[f'phone-{i:02d}' for i in range(12) if i!=4];entries=[];rows=[]
     for identity in ids:
@@ -169,6 +174,11 @@ def test_paid11_binding_is_hash_bound_complete_and_never_reencodes_them(tmp_path
         attempt=dict(path='paid-attempt',status='finished',slice_overrun=False,charged_seconds=10,exit_code=0)))
     request=dict(partial11_cursor=ref(c),cache_receipts=[ref(receipt)],partial11_closeout=ref(close))
     if fault=='checkpoint':checkpoint.write_bytes(b'changed')
+    if fault in ('contradictory_exit','owner_cleanup_error'):
+        value=json.loads(close.read_text())
+        if fault=='contradictory_exit':value['exit_code']=1
+        else:value['error']='owner settlement/cleanup failure'
+        close.unlink();_atomic_json(close,value);request['partial11_closeout']=ref(close)
     if fault is not None:
         with pytest.raises(ValueError):recovery.partial11_binding(request,dict(entries=entries,frozen_parameter_sha256='frozen'),deadline=1e20)
     else:
@@ -200,3 +210,93 @@ def test_cache04_keeps_same_aggregate600_and_all_old_attempts(fault):
     if fault is None:recovery.validate_cache_budget({'attempts':rows},'fresh')
     else:
         with pytest.raises(ValueError):recovery.validate_cache_budget({'attempts':rows},'fresh')
+
+
+
+def run_data_payload(monkeypatch,tmp_path,operation,request):
+    """Execute the production heredoc, including audited request and output paths."""
+    script=Path(__file__).resolve().parents[1]/'outputs/robotwin-command-diagnostic-20261101-r1/DATA-PAYLOAD.sh'
+    source=script.read_text().split("python - <<'PY'\n",1)[1].rsplit('\nPY',1)[0]
+    path=tmp_path/'data-request.json';_atomic_json(path,request)
+    output=tmp_path/'data-output.json'
+    for key,value in dict(DATA_OPERATION=operation,DATA_REQUEST=str(path),DATA_REQUEST_SHA=recovery.file_sha(path),
+                          DATA_OUTPUT=str(output),OWNER_DATA_DEADLINE='1e20').items():monkeypatch.setenv(key,value)
+    exec(compile(source,str(script),"exec"),{'__name__':'__main__'})
+    return json.loads(output.read_text())
+
+
+def test_actual_data_payload_reconciles_completed04_on_cpu(tmp_path,monkeypatch):
+    binding=fixture(tmp_path);out=tmp_path/'done'
+    expected=recovery.run_boundary(out,binding,'attempt',{},make_case(binding),guard=lambda:None,deadline=1e20)
+    assert run_data_payload(monkeypatch,tmp_path,'reconcile-cache04',
+        dict(cache04_cursor=expected['cache04_closed_case']['cursor']))==expected
+
+
+def test_actual_data_payload_resolves_audited_readout_inputs(tmp_path,monkeypatch):
+    from fluffy_bassoon.meta_rl import robotwin_command_diagnostic_bank as bank
+    b=tmp_path/'bank.json';p=tmp_path/'proposal.json'
+    _atomic_json(b,dict(exact='bank'));_atomic_json(p,dict(exact='proposal'));seen=[]
+    def resolve(actual_bank,actual_proposal,*,deadline):
+        seen.append((actual_bank,actual_proposal,deadline));return dict(resolved=True,admitted=False)
+    monkeypatch.setattr(bank,'readout_bindings',resolve)
+    assert run_data_payload(monkeypatch,tmp_path,'readout-bindings',dict(bank=ref(b),proposal=ref(p)))==dict(resolved=True,admitted=False)
+    assert seen==[({'exact':'bank'},{'exact':'proposal'},1e20)]
+
+
+def test_actual_data_payload_refuses_unknown_operation(tmp_path,monkeypatch):
+    with pytest.raises(ValueError,match='Only assemble'):
+        run_data_payload(monkeypatch,tmp_path,'unreviewed-operation',{})
+    assert not (tmp_path/'data-output.json').exists()
+
+
+@pytest.mark.parametrize('fault',[None,'raw04','initial_boundary','changed_receipt'])
+def test_public_diagnostic_sealer_requires_committed04_before_core(tmp_path,monkeypatch,fault):
+    from fluffy_bassoon.meta_rl import robotwin_command_diagnostic_bank as bank
+    binding=fixture(tmp_path);out=tmp_path/'done'
+    receipt=recovery.run_boundary(out,binding,'attempt',{},make_case(binding),guard=lambda:None,deadline=1e20)
+    if fault=='raw04':receipt.pop('cache04_closed_case')
+    if fault=='initial_boundary':receipt['cache04_closed_case']['cursor']=ref(out/'boundary-before-phone04.json')
+    if fault=='changed_receipt':receipt['records'][0]['native_actual_actions']+=1
+    path=tmp_path/'receipt.json';_atomic_json(path,receipt);called=[]
+    # Isolate the added public proof gate; the existing bulk core has its own
+    # qualified suite. No physical tensor/source admission is invented here.
+    result=dict(core_sealer_reached=True)
+    def core_seal(actual_bank,actual_refs,*,deadline,_api):
+        assert actual_bank=={'exact_bank':True} and actual_refs==[ref(path)] and deadline==1e20 and _api is bank
+        called.append(True);return result
+    checked=[]
+    monkeypatch.setattr(bank.core,'seal_full_cache',core_seal)
+    monkeypatch.setattr(bank,'validate_complete_cache',lambda value:checked.append(value))
+    if fault is None:
+        assert bank.seal_full_cache({'exact_bank':True},[ref(path)],deadline=1e20) is result
+        assert called==[True] and checked==[result]
+    else:
+        with pytest.raises(ValueError):bank.seal_full_cache({'exact_bank':True},[ref(path)],deadline=1e20)
+        assert called==[] and checked==[]
+
+
+
+def test_completed_sibling_forbids_restarting_older_failed_child(tmp_path):
+    binding,resume,clock=resume_fixture(tmp_path)
+    state,rng=recovery.resume_initial(resume,binding,clock,tmp_path/'second',deadline=1e20)
+    state['cursor_ref']=deepcopy(resume['cursor'])
+    recovery.run_boundary(tmp_path/'second',binding,'secondattempt',{},make_case(binding),guard=lambda:None,
+                          deadline=1e20,resume_state=state,resume_rng=rng)
+    old=Path(resume['cursor']['path']).read_bytes()
+    with pytest.raises(ValueError,match='Completed cache04 lineage'):
+        recovery.resume_initial(resume,binding,clock,tmp_path/'third',deadline=1e20)
+    with pytest.raises(ValueError,match='Completed cache04 lineage'):
+        recovery.validate_lineage_head(tmp_path,resume,deadline=1e20)
+    assert Path(resume['cursor']['path']).read_bytes()==old and not (tmp_path/'third').exists()
+
+
+def test_unpublished_complete_orphan_is_not_cpu_reconcilable(tmp_path):
+    binding=fixture(tmp_path);out=tmp_path/'done'
+    recovery.run_boundary(out,binding,'attempt',{},make_case(binding),guard=lambda:None,deadline=1e20)
+    complete=ref(out/'boundary-after-phone04.json')
+    # Reconstruct the failed pointer-publication state: a saved completed
+    # checkpoint exists, but the actual public cursor still names the initial.
+    initial=json.loads((out/'boundary-before-phone04.json').read_text())
+    _atomic_json(out/'cursor.json',initial,replace=True)
+    with pytest.raises(ValueError,match='actually published'):
+        recovery.committed_receipt(complete,deadline=1e20)

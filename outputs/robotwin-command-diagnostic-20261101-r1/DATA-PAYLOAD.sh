@@ -19,6 +19,11 @@ if os.environ['DATA_OPERATION']=='assemble':
     value=bank.assemble_bank(r['demos'],r['interface'],r['result_refs'],audit=audit)
 elif os.environ['DATA_OPERATION']=='seal':
     value=bank.seal_full_cache(audit.json(r['bank']),r['cache_receipts'],deadline=audit.deadline)
+elif os.environ['DATA_OPERATION']=='readout-bindings':
+    value=bank.readout_bindings(audit.json(r['bank']),audit.json(r['proposal']),deadline=audit.deadline)
+elif os.environ['DATA_OPERATION']=='reconcile-cache04':
+    from fluffy_bassoon.meta_rl.robotwin_cache04_recovery import committed_receipt
+    value=committed_receipt(r['cache04_cursor'],deadline=audit.deadline)
 else:raise ValueError('Only assemble or seal or readout-bindings or reconcile-cache04')
 _atomic_json(Path(os.environ['DATA_OUTPUT']),value)
 PY

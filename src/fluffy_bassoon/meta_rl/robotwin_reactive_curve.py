@@ -24,7 +24,7 @@ from fluffy_bassoon.baige_gpu import verify_selected_cuda, selected_device
 from fluffy_bassoon.rl.pi05_residual import ReactiveKVResidual
 from fluffy_bassoon.rl.robotwin_wide_action import WideActionResidual
 from fluffy_bassoon.rl.robotwin_noise import _RoboTwinBackend
-from fluffy_bassoon.rl.robotwin_corpus import _atomic_json, _fsync_directory
+from fluffy_bassoon.rl.robotwin_corpus import _atomic_json, _fsync_directory, _ensure_directory
 from .checkpoint import rng_state, restore_rng
 from .warmstart import atomic_save
 from .robotwin_demo_capacity import file_sha, masked_mse, reactive_flow_loss
@@ -361,7 +361,7 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
     root=Path(subprocess.check_output(['git','rev-parse','--show-toplevel'],text=True).strip()).resolve()
     extra=() if _validate is None else (_validate,)
     if _api is not None:
-        from .robotwin_cache04_recovery import cache04,publish_cursor,committed_receipt
+        from .robotwin_cache04_recovery import cache04,publish_cursor,committed_receipt,validate_lineage_head
         extra+= (cache04,publish_cursor,committed_receipt)
     validate_runtime_blobs(request['runtime_blob_sha256'],root,_api=_api,_core_bank_sha=_core_bank_sha,
         _extra_runtime=extra)
@@ -374,7 +374,9 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
     nvml=verify_selected_cuda(torch);selected=selected_device()
     if selected['uuid']!=nvml or selected['cuda_uuid']!=probe['devices'][0]['cuda_uuid']:
         raise ValueError('Current selected GPU differs from saved allocation proof')
-    parent=a.output.parent;parent.mkdir(parents=True,exist_ok=True)
+    parent=a.output.parent;_ensure_directory(parent)
+    if _operation=='cache04':
+        validate_lineage_head(parent,request.get('cache04_resume'),deadline=audit.deadline)
     if request.get('resume') is not None:
         Path(request['resume']['path']).resolve().relative_to(parent.resolve())
     import os

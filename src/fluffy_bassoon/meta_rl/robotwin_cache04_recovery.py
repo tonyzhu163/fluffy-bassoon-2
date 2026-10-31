@@ -82,6 +82,7 @@ def partial11_binding(request,bank,*,deadline):
     close_ref=request['partial11_closeout'];close=audit.json(close_ref);row=close['attempt']
     if (row['path']!=cursor['resource_attempt'] or row['status']!='finished' or row.get('slice_overrun') is not False
             or close['source_commit']!=cursor['source_commit'] or row.get('exit_code')!=0
+            or close.get('exit_code')!=0 or close.get('error') is not None
             or row['charged_seconds']!=close['charged_gpu_seconds']):
         raise ValueError('Bind the actual completed paid11 allocation closure; no active writer')
     return dict(cursor=deepcopy(cursor_ref),checkpoint=deepcopy(recovery),cache_receipts=deepcopy(refs),closeout=deepcopy(close_ref))
@@ -99,7 +100,25 @@ def read_snapshot(cursor_ref,*,deadline):
     return state,saved['global_rng']
 
 
+def validate_lineage_head(cache_root,resume,*,deadline):
+    """A completed child anywhere in this fixed lineage forbids more encoding."""
+    root=Path(cache_root).resolve();audit=Audit(deadline)
+    cursors=list(root.glob('*/cursor.json'))
+    for path in cursors:
+        state=audit.json(dict(path=str(path),sha256=file_sha(path)))
+        if (path.is_symlink() or path.parent.is_symlink() or state.get('format')!=FORMAT
+                or Path(state['output']).resolve()!=path.parent.resolve()
+                or Path(state['binding']['cache_root']).resolve()!=root
+                or state.get('boundary') not in ('before_phone04','after_phone04')):
+            raise ValueError('Exact fixed-root closed-case lineage required')
+        if state['boundary']=='after_phone04':
+            raise ValueError('Completed cache04 lineage requires CPU reconciliation, never another GPU resume')
+    if cursors and resume is None:
+        raise ValueError('Existing cache04 boundary requires explicit resume/reconciliation, not a fresh600 reset')
+
+
 def resume_initial(resume,binding,clock,output,*,deadline):
+    validate_lineage_head(binding['cache_root'],resume,deadline=deadline)
     state,rng=read_snapshot(resume['cursor'],deadline=deadline);audit=Audit(deadline)
     if (state['binding']!=binding or state['boundary']!='before_phone04' or state['complete_cases']!=[] or state['records']!=[]
             or rng['motor_rng']!=binding['motor_anchors']['initial']):
@@ -110,7 +129,9 @@ def resume_initial(resume,binding,clock,output,*,deadline):
     if latest!=state:raise ValueError('Resume must use the last published closed boundary, not a stale initial copy')
     close=audit.json(resume['closeout']);row=close['attempt']
     if (row['path']!=state['resource_attempt'] or row['status']!='finished' or row.get('slice_overrun') is not False
-            or close['source_commit']!=binding['source_commit'] or type(row['charged_seconds']) is not int
+            or close['source_commit']!=binding['source_commit'] or close.get('error') is not None
+            or type(close.get('exit_code')) is not int or row.get('exit_code')!=close['exit_code']
+            or type(row['charged_seconds']) is not int
             or row['charged_seconds']!=close['charged_gpu_seconds']
             or [r for r in clock['attempts'] if r['path']==row['path']]!=[row]):
         raise ValueError('Actual same-clock predecessor cost/clean closure required before resuming')
@@ -125,6 +146,9 @@ def committed_receipt(cursor_ref,*,deadline):
     state,rng=read_snapshot(cursor_ref,deadline=deadline);audit=Audit(deadline)
     if (state['boundary']!='after_phone04' or state['complete_cases']!=['phone-04']
             or rng['motor_rng']!=state['binding']['motor_anchors']['final']):raise ValueError('Complete04 boundary required')
+    latest=Path(state['output'])/'cursor.json'
+    if audit.json(dict(path=str(latest),sha256=file_sha(latest)))!=state:
+        raise ValueError('Completed recovery must be the actually published closed boundary, not an orphan snapshot')
     raw=audit.json(state['payload_receipt'])
     if raw['records']!=state['records'] or digest(raw['bank'])!=state['binding']['bank_sha256']:
         raise ValueError('Completed cache receipt/bank differs from closed boundary')
@@ -214,6 +238,7 @@ def cache04(api,backend,bank,request,ticket,clock,output,qualification,*,source,
     if file_sha(Path(inspect.getfile(publish_cursor)))!=PUBLISHER_SHA:
         raise ValueError('Byte-exact qualified7eef publication API required')
     validate_cache_budget(clock,ticket['resource_attempt'])
+    validate_lineage_head(Path(output).parent,request.get('cache04_resume'),deadline=deadline)
     bank=api._recheck_bank(bank,deadline);api.validate_bank(bank,complete=True)
     partial=partial11_binding(request,bank,deadline=deadline);anchors=motor_anchors(bank,deadline=deadline)
     binding=dict(source_commit=source,profile_sha256=digest(request['profile']),bank_ref=deepcopy(request['bank']),
@@ -228,8 +253,6 @@ def cache04(api,backend,bank,request,ticket,clock,output,qualification,*,source,
     if resume is not None:
         old,saved=resume_initial(resume,binding,clock,output,deadline=deadline)
         old['cursor_ref']=deepcopy(resume['cursor'])
-    elif any(Path(output).parent.glob('*/cursor.json')):
-        raise ValueError('Existing cache04 boundary requires explicit resume/reconciliation, not a fresh600 reset')
     # Pass a child deadline separately so it cannot silently alter the stable
     # identity stored at either boundary.
     def case(destination):
