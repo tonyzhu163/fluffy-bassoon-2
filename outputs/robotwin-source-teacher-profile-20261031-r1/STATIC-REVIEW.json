@@ -1,0 +1,62 @@
+{
+  "status": "STATIC_ONLY_NOT_CPU_QUALIFIED_NOT_ADMITTED",
+  "baseline": "f46101faa730e63ed5cea7e8617d434871958de7",
+  "profile_plan_sha256": "ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602",
+  "unchanged_guard_functions": [
+    "read_fixed_plan",
+    "process_start_ticks",
+    "_set_parent_death_signal",
+    "arm_parent_death_guard",
+    "live_group",
+    "cleanup_group",
+    "run_command"
+  ],
+  "default_development_plan_unchanged": true,
+  "native_backend_unchanged": true,
+  "legacy_agents_and_control_loop_shared": true,
+  "prepared_fixture_cases": {
+    "tests/test_robotwin_source_teacher_profile.py": 29,
+    "tests/test_robotwin_history_evaluate.py": 11,
+    "tests/test_robotwin_history_live.py": 11,
+    "tests/test_robotwin_parent_guard.py": 9
+  },
+  "expected_cpu_total": 60,
+  "actual_tests_executed": 0,
+  "new_robot_actions": 0,
+  "new_gpu_jobs": 0,
+  "paid_sample_reuse_admitted": false,
+  "AD_requires_mean_teacher_panel": false,
+  "files": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_history_live.py",
+      "sha256": "54bbe15a2e366f9461a3970074eb905f1d3724709cdb0d2add4e3d804cd8919a",
+      "bytes": 29246
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_history_evaluate.py",
+      "sha256": "9408a67819a4fcbb803099624ffcb5e84ee6fe2f0f5f6cce26ab3fb10900aaa2",
+      "bytes": 25401
+    },
+    {
+      "path": "tests/test_robotwin_source_teacher_profile.py",
+      "sha256": "0461d8b7fe714f727ba2a9a0c42f4d7bb02242f5e76c73f52daf5de87ce7ba0a",
+      "bytes": 14693
+    },
+    {
+      "path": "outputs/robotwin-source-teacher-profile-20261031-r1/COMMANDS.txt",
+      "sha256": "5062b84def432094cd552ffce0388868aaec2704d3199dacaedb10637d08e516",
+      "bytes": 2498
+    },
+    {
+      "path": "outputs/robotwin-source-teacher-profile-20261031-r1/HANDOFF.md",
+      "sha256": "55d5fd6bfdaa14ce525f548ab057b52c40275c4b01c6922528ff3f8063621f29",
+      "bytes": 7875
+    },
+    {
+      "path": "outputs/robotwin-source-teacher-profile-20261031-r1/plan.json",
+      "sha256": "ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602",
+      "bytes": 11588
+    }
+  ],
+  "qualification_fake_ledger": "Context-managed SourceBudget in allowance test; no production CampaignBudget import or ledger access"
+}

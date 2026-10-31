@@ -1,0 +1,95 @@
+{
+  "status": "STATIC_REVIEW_ONLY_NOT_CPU_QUALIFIED_NOT_RESOURCE_ADMITTED_NOT_LAUNCHED",
+  "parent_commit": "5f394066dc79ca61cb5cfd1a586b1c52783e7d07",
+  "file_sha256": {
+    "src/fluffy_bassoon/meta_rl/robotwin_history_live.py": "b400895f002e1d952de5fa94fd51cf1144042e542b393fa211c4c35e7aa27365",
+    "src/fluffy_bassoon/meta_rl/robotwin_history_evaluate.py": "a578c31eddc343a1be437c4cf19dd3096ac34284f152be16bf598db9b6007652",
+    "src/fluffy_bassoon/meta_rl/robotwin_history.py": "a6ac660a675768387fc657e76db52951e2e38dd605da3828b3690c2552c538d1",
+    "tests/test_robotwin_ad500_readout.py": "85e16c9319ffe024cfdbf4f1a3da2a62f236f2bee80eda7bdaa39a6b3bdaf837",
+    "docs/robotwin-history-evaluation.md": "7a777b710ce5d7b00b76b482a4cb4edc393f4783e9ed945f13411b2d66ce95a8",
+    "outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json": "e98957126989a0cfa9acc3286879bbf90b6379a20617350eb1f33753f435571a",
+    "outputs/robotwin-ad500-readout-20261031-r1/HANDOFF.md": "9e8d709244d5c91aac4c0bfa4e00bb2cf60a7f0d91a56f7053c882769e17647d",
+    "outputs/robotwin-ad500-readout-20261031-r1/COMMANDS.txt": "eaf26b786e3c24adedd4b15cc55ada39d8596655e9a5fa538b118985e60bfd06"
+  },
+  "static_AST_unchanged": [
+    "robotwin_history_evaluate.py:load_agent",
+    "robotwin_history_evaluate.py:SourceTeacherAgent",
+    "robotwin_history_evaluate.py:QuerySACAgent",
+    "robotwin_history_evaluate.py:StudentAgent",
+    "robotwin_history_evaluate.py:ReferenceAgent",
+    "robotwin_history_evaluate.py:load_source_teacher",
+    "robotwin_history_evaluate.py:assert_runtime",
+    "robotwin_history_evaluate.py:renderer_records",
+    "robotwin_history_evaluate.py:_atomic",
+    "robotwin_history_evaluate.py:episode_schedule",
+    "robotwin_history_evaluate.py:support_case_bank",
+    "robotwin_history_evaluate.py:action_seed_bank",
+    "robotwin_history_evaluate.py:trial_profile",
+    "robotwin_history_evaluate.py:admit_plan:source_branch",
+    "robotwin_history_evaluate.py:validate_plan:source_branch",
+    "robotwin_history_live.py:entire_module_except_template_SHA"
+  ],
+  "AST_and_JSON": "PASS",
+  "git_diff_check": "PASS",
+  "prepared_CPU_cases": 48,
+  "tests_executed": false,
+  "model_computation_executed": false,
+  "topology": {
+    "workers": 12,
+    "independent_queries_or_pairs_per_worker": 8,
+    "K0_episodes": 64,
+    "K1_episodes": 64,
+    "max_actions": 51200,
+    "SGD_updates": 0,
+    "paid_reuse": false,
+    "max_GPU_seconds_proposal_only": 5400
+  },
+  "missing_bindings": [
+    "actual ADfull/static candidate-000500.pt paths and hashes",
+    "fit commit",
+    "final100 AD/BC index hashes"
+  ],
+  "note": "One sampled readout successor only. Execution owner proposes a separate <=300s CPU-only48-case gate after exact static review; no launch/admission here. Closed139CPU-s/461sealed baseline envelope is unchanged;7401/063d results immutable.",
+  "AST_comparison_base": "5f394066dc79ca61cb5cfd1a586b1c52783e7d07",
+  "seed_reconciliation": {
+    "previous_support_base": 32261030,
+    "canonical_support_base": 32161030,
+    "query_base": 22261030,
+    "confirmed_by": "master coordinator: existing pending human-phase PLAN/PROPOSAL",
+    "outcomes_exist": false,
+    "resources_or_active_gate_changed": false
+  },
+  "inference_migration": {
+    "previous_primary": "deterministic_mean",
+    "new_primary": {
+      "distribution": "learned_diagonal_gaussian",
+      "deterministic": false,
+      "generator": "private_torch_generator",
+      "physical_transform": "clip[-1.5,1.5]",
+      "seed_policy": "declared_support_and_query_episode_seeds"
+    },
+    "confirmed_by": "pre-outcome master/LIBERO method steering routed by execution owner",
+    "new_conditions": 0,
+    "new_physical_cases": 0,
+    "new_outcomes": 0,
+    "resource_admission": false,
+    "note": "Mean legacy defaults/old pins/raw results preserved; no tests run on Mac or in closed CPU envelope"
+  },
+  "support_trace_fix": {
+    "scope": "same existing action loop; support decisions only",
+    "fields": [
+      "typed input features before dispatch",
+      "typed proposed physical noise",
+      "actual duration",
+      "reward",
+      "end",
+      "trunc",
+      "typed following features"
+    ],
+    "per_episode_support_trace_sha256_required": true,
+    "comparison": "full/reset exact row equality before query",
+    "negative_regressions": "changed intermediate reward or features while proposal SHA/return/duration/chunks/outcome stay equal",
+    "new_conditions": 0,
+    "new_physical_cases": 0
+  }
+}

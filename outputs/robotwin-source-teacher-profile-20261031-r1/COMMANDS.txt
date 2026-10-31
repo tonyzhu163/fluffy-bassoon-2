@@ -1,0 +1,20 @@
+REVIEW ONLY. No allocation, resource/action reservation or execution admission.
+Use a fresh exact candidate checkout and actual allocated Linux host. Preserve
+the existing root-owned CPU/GPU visibility, import isolation and lifetime guards.
+
+NECESSARY ALLOCATED CPU SOFTWARE CHECK (inside proven zero-GPU context):
+python -m pytest -q tests/test_robotwin_source_teacher_profile.py tests/test_robotwin_history_evaluate.py tests/test_robotwin_history_live.py tests/test_robotwin_parent_guard.py --junitxml=<fresh-output>/fixtures.junit.xml
+
+ACTUAL CPU SOURCE/ACTOR ADMISSION (same isolated zero-GPU context, no simulator):
+python -c 'import json,sys,torch; from fluffy_bassoon.meta_rl.robotwin_history_live import read_source_teacher_plan; from fluffy_bassoon.meta_rl.robotwin_history_evaluate import admit_plan; assert not torch.cuda.is_initialized(); result=admit_plan(read_source_teacher_plan(sys.argv[1],sys.argv[2])); assert not torch.cuda.is_initialized(); print(json.dumps(result,indent=2))' <exact-code>/outputs/robotwin-source-teacher-profile-20261031-r1/plan.json ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602
+
+EXISTING FINAL100 METADATA GUARDS, separate pinned exporter checkout ef4d0ce9ed410973dfc7474c89d58e550d5c3225:
+python -m pytest -q tests/test_robotwin_finalbank_index_bindings.py --junitxml=<fresh-output>/final100-index.junit.xml
+
+FUTURE GPU SOURCE TEACHER COMMAND, only after CPU qualification AND separate owner resource/action admission:
+python -m fluffy_bassoon.meta_rl.robotwin_history_live --profile source-teacher100 --plan <exact-code>/outputs/robotwin-source-teacher-profile-20261031-r1/plan.json --plan-sha ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602 --output <fresh-teacher-output> --campaign-root <fresh-separate-teacher-ledger> --campaign-id <new-teacher-id> --source-commit <full-reviewed-candidate-pin> --expected-hostname <actual-allocated-host> --robotwin-root /mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin --rlinf-root /mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf --wall-seconds 3500 --prior-gpu-seconds 0 --unit-start-reserve 300 --final-reserve 60
+
+This full72-new/32400-action profile does not authorize a reduced48-new profile
+or infer paid24 sample reuse. It is not a final100 exporter/fitter command and
+sets no teacher-review admission flag. Code/profile/source/index/resource proof
+and actual costs remain separately bound by the execution owner.

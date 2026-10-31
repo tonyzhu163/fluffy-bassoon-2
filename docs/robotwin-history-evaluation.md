@@ -62,7 +62,7 @@ accepted seed, raw initial-observation hash and public feature hash must match
 episode by episode before a policy motor query. Prior native-before/after
 single episodes or a different case bank cannot supply this receipt.
 
-All students use the predeclared deterministic clipped physical mean. SAC
+The fixed100 panel students use the predeclared deterministic clipped physical mean. SAC
 uses its deterministic physical `1.5*tanh(mean)` labeling convention. Native
 Gaussian is the motor's UNCLIPPED standard Gaussian; the separate native-zero
 condition supplies zero initial noise. Applying the steering bound to native
@@ -98,3 +98,66 @@ support/query description divides the EXISTING eight episodes; it adds no
 support episodes. One K8 trial per target/condition is a small development
 screen, with correlated episode outcomes. It neither selects models on target
 results nor establishes ICRL or deterministic teacher expertise.
+
+## Source100 AD500 isolated-query readout
+
+The explicit `ad500-source100` live profile uses the same runtime, controller,
+action reservation loop and fresh-process lifecycle. The legacy fixed100 and
+source-teacher100 plan readers keep their separate immutable hashes. Its
+prepared topology is in
+`outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json`; this template
+cannot run. A separately hashed bound copy may replace only `models`,
+`fit_commit`, `train_index_sha256` and `validation_index_sha256` with actual
+post-fit artifacts. Every other plan field must equal the pinned template.
+
+The selector requires the source-only AD full/static `candidate-000500.pt`
+endpoints, exact fixed500 recipe, teacher-free SAC100 AD/BC train/validation
+metadata and index hashes. It rejects best-validation files, earlier endpoints,
+partial banks and DPT labels. CPU artifact admission checks equal source
+normalization across full/static. This admission measures no robot competence.
+
+| Condition on each of two DEV tasks | Independent trials | Episodes |
+| --- | --- | --- |
+| Native, frozen sampled SAC100, AD full, AD static at K0 | Eight fresh queries per condition | 32 per task |
+| AD full at K1, same full weights with episode reset at K1 | Eight fresh support/query pairs per condition | 32 per task |
+
+The 12 condition/task workers each load one motor. Within each worker, every
+K0 query starts a new controller trial; every K1 support/query pair starts a
+new trial. Query feedback never enters another pair. K1 retains failed support
+episodes. The paired reset lesion clears recurrent cache, previous noise,
+previous reward and the carry flag at the query boundary, while both K1 arms
+retain query episode clock1. It does not imply equality to K0 clock0. Static
+retains its independently trained, per-decision feedback/recurrence removal.
+
+The support environment bank is disjoint from the fixed query bank. Accepted
+support seeds must also be disjoint from all accepted queries, and the reset
+arm must match the full arm's support reset cases and complete support records.
+Each support row includes a digest of every decision's typed input features and
+physical noise, actual duration/reward/end/truncation, and following features.
+Inputs are hashed before dispatch to protect against buffer reuse. Matching
+aggregate episode totals and proposal hashes alone is insufficient. A differing
+support trace stops the reset arm before its query, including during recovery.
+Native queries establish accepted seeds/raw observations/public feature hashes
+for all conditions. Mismatches stop before acting on the mismatched case.
+
+Native noise remains unclipped Gaussian. Frozen SAC100 uses its sampled
+physical tanh action, with a separate declared private action seed per query;
+it does not restore the source teacher's K4 RNG stream. For this new AD500
+readout, students sample the learned diagonal Gaussian with their private
+Torch generator (`deterministic=False`), then apply the controller's existing
+physical clip to[-1.5,1.5]. Both the learned mean and exported `log_std` enter
+that sample. The plan's explicit `student_inference` binds the distribution,
+private generator, transform and declared support/query seeds; CPU admission,
+execution and resume receipts enforce it. Each support and query episode has
+its own predeclared stream. `reseed_action_rng` changes only the action generator
+between episodes, preserving support memory and clocks. Same-weight K1 full/reset
+support traces and query innovations remain paired. This pre-outcome migration
+adds no condition or physical case; legacy fixed100 mean defaults and historical
+readout preparations retain their original pins.
+
+Fresh execution is bounded by 128 episodes and 51,200 actions at400 steps,
+zero SGD, no saved-control reuse, and a separately proposed5400 GPU-second cap.
+K0/K1 complete-unit allowances are3200/6400 actions. Recovery uses only complete,
+hash-checked units under the same plan/commit/cumulative ledger and clock.
+These preparation caps grant no resources. This two-task K0/K1 development
+readout does not fulfill the larger0/2/4/8 six-task adaptation protocol.
