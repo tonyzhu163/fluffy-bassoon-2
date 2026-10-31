@@ -190,7 +190,8 @@ def test_same_canonical_ledger_and_whole_episode_stop_precede_reset():
 
 def test_balanced_round_robin_uses_each_actual_independent_lineage(monkeypatch):
     p, order = profile(), []
-    teachers = {s.method: SimpleNamespace(completed_episodes=[]) for s in lineage_specs()}
+    teachers = {s.method: SimpleNamespace(completed_episodes=[], lineage=s, profile=p,
+                learner=SimpleNamespace(seed=s.learner_seed)) for s in lineage_specs()}
     def collect(t, **kwargs):
         key = next(k for k, item in teachers.items() if item is t)
         order.append(key)
@@ -200,6 +201,9 @@ def test_balanced_round_robin_uses_each_actual_independent_lineage(monkeypatch):
     result = collect_round_robin(teachers)
     assert order == list(SOURCE_METHOD_KEYS)*24
     assert result["completed"] == dict.fromkeys(SOURCE_METHOD_KEYS, 24)
+    teachers[SOURCE_METHOD_KEYS[1]].learner = teachers[SOURCE_METHOD_KEYS[0]].learner
+    with pytest.raises(ValueError, match="six independent"):
+        collect_round_robin(teachers)
 
 
 def test_dpt_cannot_use_an_algebraic_but_unqualified_inverse():
