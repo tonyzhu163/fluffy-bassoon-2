@@ -165,6 +165,20 @@ def test_source_admission_reuses_existing_ledger_and_cumulative_resource_envelop
         source.validate_source_admission(scope, dict(allocation, recovery_output_reservation_bytes=59999999), p, **args)
 
 
+def test_fixed_validation_uses_common_baseline_instruction_and_actual_reset_identity():
+    spec = dict(task="place_phone_stand", case=0, method="sac_calibration_minus_train0",
+                reset_seed=2, motor_seed=3, phase="source_validation", milestone=12)
+    identity = dict(actual_seed=4, observation_sha256="a"*64, features_sha256="b"*64)
+    baseline = dict(spec=dict(spec, milestone=0), complete=True, reset_identity=identity,
+                    reset_info=dict(instruction=["Put the phone into the stand."]))
+    paired = source.paired_validation_spec(spec, baseline)
+    assert paired["expected_reset"] == identity
+    assert paired["paired_instruction"] == baseline["reset_info"]["instruction"]
+    assert "paired_instruction" not in spec
+    with pytest.raises(ValueError, match="original instruction"):
+        source.paired_validation_spec(spec, dict(baseline, reset_info=dict(instruction=[])))
+
+
 def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_sink(monkeypatch, tmp_path):
     tiny_factory(monkeypatch)
     p, output = profile(), tmp_path/"source"
@@ -196,7 +210,8 @@ def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_si
         ref = dict(path=str(output/(key.replace(":", "_")+".json")), sha256="a"*64)
         controller.observe(obs, action, 1., obs, True, False, 1, ref)
         return dict(spec=spec, complete=True, primitive_steps=1, chunks=1, wall_seconds=.001,
-            success=True, reset_info=dict(actual_seed=spec["reset_seed"]), corpus_refs=[ref],
+            success=True, reset_info=dict(actual_seed=spec["reset_seed"], instruction=["Original fixture instruction"]),
+            reset_identity=dict(actual_seed=spec["reset_seed"], observation_sha256="a"*64, features_sha256="b"*64), corpus_refs=[ref],
             episode_manifest_ref=ref)
     monkeypatch.setattr(source, "run_complete_episode", runner)
     def builder(student_profile, publications, *, output, **kwargs):

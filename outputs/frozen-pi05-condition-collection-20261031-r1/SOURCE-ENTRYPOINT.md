@@ -67,6 +67,13 @@ actor/private stream. Updates0 uses bounded uniform even if observed chunks
 already crossed32; learned validation samples the actual frozen actor. No
 validation transition enters source replay or updates. Fixed case-specific
 private innovations pair milestones without consuming source RNG.
+Milestones12/24 set the common runner's `expected_reset` to baseline0's actual
+accepted seed/observation/features hashes and `paired_instruction` to its exact
+`reset_info.instruction` list. The common backend binds that actual instruction
+before encoding and recording for the entire episode; this entry point does
+not rewrite text/features or weaken any initial-input equality check. The
+diagnosed common paired-instruction fix must be included and qualified in the
+deployed composite before these later source-validation milestones can run.
 
 At balanced12 and24, after ALL six TRAIN/VAL lineages have complete episodes,
 completed update boundaries and fixed validation receipts, orchestration calls
