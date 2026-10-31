@@ -1,0 +1,3 @@
+Checked2026-10-31T21:57:50+08:00: task57 job-iudscqfntb4e remains Running at498,960 optimizer updates,1885/1887training successes,25,441replay rows; finite losses. Latest complete490,220panel10/10 at1243primitives+100settling. Fixed500k/finalnative not yet complete at snapshot.
+
+Latest full recovery,newest immutable milestone and sampled raw/RPC hashes match; ten paired initial state/observation/seed identities pass. Producer charge329,431actions; storage38,693,902,577bytes;28,257.37active seconds is not final GPU charge. No journal forest or case/budget change. Same two training timeouts and390kquery failure retained. Next22:16.
