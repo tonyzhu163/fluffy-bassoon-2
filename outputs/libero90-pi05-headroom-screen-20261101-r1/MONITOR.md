@@ -17,3 +17,7 @@ The earlier slow metadata helper did finish. The copy observed in the developmen
 ## Terminal closeout
 
 The owned384-run is complete, exit0, selected59/runner64. Final independent saved-JSON audit verifies all384 identities/seeds/roles, ranking, final whole-motor equality and bounded closed clock:3890GPU-s/134629actions. See [RESULTS.md](RESULTS.md) and [FINAL-AUDIT.json](FINAL-AUDIT.json). No further scheduler polling or retry for job-cth8mugcqgzl is needed. The continuation heartbeat now reads saved main/owner evidence only and prepares the NEXT-INTERFACES sequence after a qualified positive control, without creating duplicate online DSRL training or silently substituting a different task/case contract.
+
+## Saved-reference gate and static preparation
+
+The 02:15 saved-main check found no published selected-task/trained-endpoint result from the separate online owner. Its continuation CPU receipt is software evidence only. [Gate receipt](REFERENCE-GATE-CHECK.json) binds the exact saved records; no owner scheduler or live files were queried. [Static interface preparation](INTERFACE-PREPARATION.md) fixes a prospective 32D timing contrast, three candidates and 29,930 maximum actions, without a launch grant or GPU actions. Recheck saved owner records on the existing cadence; do not infer learning from untrained native/tied scores.
