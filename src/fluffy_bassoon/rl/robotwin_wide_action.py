@@ -117,6 +117,12 @@ class WideActionResidual(ReactiveALOHAActionResidual):
         result=super().forward(base_actions,public_features)
         arms=result.base_actions[...,list(ARM_INDICES)]
         lower=self.arm_lower.to(arms);upper=self.arm_upper.to(arms)
+        # A lower-precision command must not round a source limit outward.
+        # Requiring exact representability also makes the final clipped bound
+        # safe in the output dtype. The approved +/-10 limits are exact.
+        if (not torch.equal(lower.to(self.arm_lower),self.arm_lower)
+                or not torch.equal(upper.to(self.arm_upper),self.arm_upper)):
+            raise ValueError('Command dtype cannot exactly represent source arm limits')
         if ((arms<lower).any() or (arms>upper).any()):
             raise ValueError('Native base ARM exceeds actual source limits; reject rather than break zero parity')
         proposal=_ExactZeroAdd.apply(result.base_actions,result.requested_delta)

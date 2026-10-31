@@ -27,7 +27,9 @@ including signed zeros and gripper values outside[0,1]. A tiny exact-zero add
 retains the ordinary delta gradient at zero, so this guarantee also holds under
 autograd rather than suppressing initialization gradients. Edits clip only to
 the12 actual arm URDF headroom. An out-of-range native arm is rejected rather
-than silently repaired. Grippers receive editable deltas without a policy-level
+than silently repaired. Command dtypes that cannot exactly represent the source
+arm limits are rejected, preventing outward rounding during native validation
+or final clipped output. Approved +/-10 limits remain unchanged. Grippers receive editable deltas without a policy-level
 absolute clamp; the unchanged native actuator later applies its existing clip.
 Native motor/norm/executor/H32/TOPP/compression/gripper actuator code is unchanged.
 The generic head checks all finite/shape/device inputs and detaches public/base

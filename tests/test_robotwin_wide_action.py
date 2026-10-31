@@ -153,3 +153,37 @@ def test_assign_true_cannot_install_changed_high_precision_protected_buffers(buf
     assert module.config()==configuration and module.contract_sha256()==sha
     after=module.state_dict()
     assert all(after[k].dtype==v.dtype and torch.equal(after[k],v) for k,v in before.items())
+
+
+@pytest.mark.parametrize('side',['lower','upper'])
+@pytest.mark.parametrize('dtype',[torch.float16,torch.bfloat16])
+def test_inexact_source_limit_cannot_round_outward_in_low_precision_commands(side,dtype):
+    prototype=head().config();lower=prototype['joint_lower'];upper=prototype['joint_upper']
+    if side=='upper':upper[0]=2.8
+    else:lower[0]=-2.8
+    module=WideActionResidual(joint_lower=lower,joint_upper=upper,**prototype['source_bindings'])
+    base=torch.zeros(1,32,14,dtype=dtype);features=torch.zeros(1,2062,dtype=dtype)
+    source=getattr(module,'arm_'+side)[0]
+    rounded=source.to(dtype)
+    assert rounded.float()!=source  # The +/-1 or approved +/-10 fixtures miss this case.
+    # Try both zero-native commands and nonzero outputs: unsafe dtype/source
+    # combinations are refused before any native command can be returned.
+    for edit in (0.,10.):
+        with torch.no_grad():module.output.bias.fill_(edit)
+        with pytest.raises(ValueError,match='exactly represent source arm limits'):
+            module(base,features)
+    if dtype==torch.float16:
+        # Float16 2.8 rounds outward to2.80078125. This native arm is actually
+        # outside the float32 source bound, even though the old cast test allowed it.
+        base[...,0]=rounded
+        assert (base[...,0].float()>source).all() if side=='upper' else (base[...,0].float()<source).all()
+        with pytest.raises(ValueError,match='exactly represent source arm limits'):
+            module(base,features)
+    # Float32 commands still use the exact source limits; both the zero head
+    # and a saturated edit remain admissible and respect those same limits.
+    precise=base.float();precise[...,0]=0.
+    for edit in (0.,10.):
+        with torch.no_grad():module.output.bias.fill_(edit)
+        result=module(precise,features.float())
+        assert (result.actions[...,ARMS]>=module.arm_lower).all()
+        assert (result.actions[...,ARMS]<=module.arm_upper).all()
