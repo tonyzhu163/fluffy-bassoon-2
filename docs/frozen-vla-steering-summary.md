@@ -52,12 +52,17 @@ LIBERO source expansion remains pending; it is not divided into smaller jobs
 to bypass the threshold. Actual allocations and first progress still need
 verification. The original32h pool and RoboTwin grant remain separate.
 
-First actual launch evidence: RoboTwin job-twcl47ph8lnz is Running on its
-0GPU/8CPU/64GiB allocation; source inventory passed218,947files/87,674,977,118
-bytes over62closed roots, and full projection is next. LIBERO worker0
-job-zt7xex96p71j is Running on1GPU/16CPU/96GiB since11:57:38Shanghai;
-remaining five submissions and actual probe/firstepisodes are being verified
-by its dedicated owner. These are execution milestones, not robot outcomes.
+Verified launch evidence at12:03Shanghai: all six LIBERO allocations passed
+actual GPU/CUDA probes on six distinct UUIDs and completed real simulator
+episodes, with41groups/16,576charged actions so far and zero deploymentSGD.
+Motor signatures match the official40-task checkpoint. These are execution
+milestones, not a completed performance comparison. The exact launch and
+initial receipts are under outputs/libero40-fixed100-target-plan-20261031-r1;
+next owned runtime check12:22Shanghai. The dedicated delegate retains sole
+LIBERO launch/recovery ownership. This chat's monitor covers LIBERO only;
+RoboTwin's execution owner and the existing coordinator cover that phase.
+RoboTwin job-twcl47ph8lnz has passed source inventory218,947files/
+87,674,977,118bytes/62closed roots; projection and AD fits/readout follow.
 
 For an unexpected result, record the observation, what is known, competing
 explanations, the next discriminating experiment, and the decision before
