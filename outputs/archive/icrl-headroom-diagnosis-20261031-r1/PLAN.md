@@ -1,3 +1,23 @@
+> **Superseded 2026-10-31.** The governing plan is
+> [frozen pi0.5 steering competence and useful histories](../../frozen-pi05-steering-screen-20261031-r1/PLAN.md),
+> with the [saved steering-headroom audit](../../steering-headroom-audit-20261031-r1/AUDIT.md).
+> Kept as historical context. Its oracle-ceiling, power-as-equivalence, 30%
+> recovery and bandit requirements are not a current contract. Corrections
+> (the first and fourth are also marked inline):
+>
+> - Source recovery: 60/527 K4 cases contain a failure followed by a later
+>   success; 10/527 is the subset with learned-behavior failure and success.
+>   44 of the 60 occur entirely during warmup.
+> - The 81/90 agreement shows these four controllers agree with native. It does
+>   not show that the motor fixes the outcome for every possible controller.
+> - The bounded tracker is an achieved diagnostic policy, not an upper bound
+>   on residual steering. VLRLA-bridge steers the native KV cache, which the
+>   existing feature bridge does not implement.
+> - The ManiSkill instruction-swap run failed all three of its predeclared
+>   criteria; the gaps cited below were selected from it.
+> - The fixed100 intervals (about ±7–11 points at K0) are conditional on that
+>   fixed bank, not bounds for unseen tasks, states or seeds.
+
 # Why no adaptation result yet, and a headroom-first redesign
 
 Written 2026-10-31 Asia/Shanghai from saved results on `main` (`f7dde2c`) and
@@ -22,14 +42,14 @@ how much they constrain the result:
   [per-case CSV](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/libero-fixed100-closure-20261031/outputs/libero40-fixed100-target-plan-20261031-r1/case-results.csv).
 - Privileged knowledge barely helps. The tracker gate's external oracle
   scores 4/6 against zero 3/6, and 1/2 at −45°
-  ([tracker](../pi05-tracker-gate-baige-20261028-r2/RESULTS.md),
-  [support/probe](../pi05-support-probe-baige-20261028-r1/AUDIT-20261028-2148.md)).
+  ([tracker](../../pi05-tracker-gate-baige-20261028-r2/RESULTS.md),
+  [support/probe](../../pi05-support-probe-baige-20261028-r1/AUDIT-20261028-2148.md)).
   In Meta-World reach no noise arm or native sample ever reaches goals 1
   or 3; the best fixed arm adds about 6 points
-  ([partial results](../metaworld-pi05-noise-baige-20261029-r2/PARTIAL-RESULTS.md)).
+  ([partial results](../../metaworld-pi05-noise-baige-20261029-r2/PARTIAL-RESULTS.md)).
   In ManiSkill S0, fixed arms are at ceiling (59/64), and the first chunk
   differs between arms (0.052) about as much as between native repeats
-  (0.039) ([S0 results](../noise-mode-icrl-20261029-s0-r1/RESULTS.md)).
+  (0.039) ([S0 results](../../noise-mode-icrl-20261029-s0-r1/RESULTS.md)).
 
 Steering through noise or a bounded residual re-selects behaviour the motor
 already has. Where the motor lacks a skill there is nothing to select, and
@@ -40,7 +60,9 @@ above native.
 ### 2. The training histories contain no learning to distil
 
 The LIBERO source corpus has 94 failures in 2,108 episodes; 454 of 527 K4
-trials are four successes, and 10 show a failure followed by a success
+trials are four successes, and 10 show a learned-behavior failure followed
+by a learned success (*corrected:* 60 contain any failure followed by a later
+success, 44 of them entirely during warmup)
 ([evaluation](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/libero-fixed100-closure-20261031/docs/frozen-vla-libero/EVALUATION.md#2026-10-30-broad-controls-and-baseline-readout)).
 Algorithm distillation imitates the improvement present in its histories.
 These histories show a competent SAC repeating success, so the target is
@@ -54,7 +76,7 @@ competence, not recovery.
 - RoboTwin bottle: reward-blind 8/8, normal 7/8, cache-reset 6/8
   ([final campaign](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/robotwin-native-wholetrials/outputs/robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md)).
 - Native CTM/XL PPO normal/wiped/blind: CTM 75.0/50.0/62.5%, XL
-  50.0/62.5/75.0% ([final audit](../pi05-live-bridge-poc-baige-20261028-r1/FINAL-AUDIT-20261028.md)).
+  50.0/62.5/75.0% ([final audit](../../pi05-live-bridge-poc-baige-20261028-r1/FINAL-AUDIT-20261028.md)).
 
 Where history matters, the controllers use it to identify the task from
 observations. That is context-conditioned imitation, not in-context RL.
@@ -78,7 +100,7 @@ DPT validation NLL rose from fit update 25 to 100.
 Calibration ended at 4.55% query accuracy against the paper's 30.63%.
 Clipped updates grew to 72% before the collapse, amplification runs mainly
 through the short-term recurrence, and least squares on the same data scores
-32% ([collapse report](../cmm-collapse-debug-20261028-r1/REPORT.md)). Changing
+32% ([collapse report](../../cmm-collapse-debug-20261028-r1/REPORT.md)). Changing
 the decay start did not help. No CMM comparison is interpretable until this
 is fixed.
 
@@ -168,7 +190,8 @@ Candidate tasks, cheapest first:
 
 1. **Prompt arms with a hidden target.** The motor follows instructions
    for some objects: ManiSkill explicit-minus-vague gaps of +17, +31 and +10
-   points for carrot, banana and hamburger (toy bear −2)
+   points for carrot, banana and hamburger (toy bear −2); *corrected:* the
+   run failed its explicit-success, swap-follow and gap criteria
    ([instruction swap](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/instruction-swap-maniskill/outputs/pi05-instruction-swap-thu2-20261029-r1/RESULTS.md)).
    Hide which of k reachable objects is rewarded; the arms are instructions.
    The oracle is the correct instruction, random scores about 1/k, and

@@ -1,4 +1,4 @@
-> **Archived 2026-10-31.** Snapshot of `outputs/coordination.md` at `f7dde2c`, taken when the [headroom diagnosis](../../icrl-headroom-diagnosis-20261031-r1/PLAN.md) closed the first robot phase. Rows are as last recorded, not re-queried. Live file: [coordination.md](../../coordination.md).
+> **Archived 2026-10-31.** Snapshot of `outputs/coordination.md` at `f7dde2c`, taken when the [headroom diagnosis](../icrl-headroom-diagnosis-20261031-r1/PLAN.md) closed the first robot phase. Rows are as last recorded, not re-queried. Live file: [coordination.md](../../coordination.md).
 
 # CTM in-context RL: coordination
 

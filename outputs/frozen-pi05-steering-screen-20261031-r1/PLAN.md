@@ -46,7 +46,7 @@ Sources: [VLRLA protocol](../../docs/vlrla-protocol.md),
 [existing feature bridge](../../docs/pi05-feature-bridge.md),
 [instruction swap](../pi05-instruction-swap-thu2-20261029-r1/RESULTS.md),
 [DSRL task57 plan](../dsrl-pi05-task57-20261031-r1/PLAN.md).
-The [earlier diagnosis](../icrl-headroom-diagnosis-20261031-r1/PLAN.md)
+The [earlier diagnosis](../archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md)
 remains historical context; its universal oracle-ceiling, power-as-equivalence,
 30% recovery and optimal-bandit requirements are not this screen's contract.
 

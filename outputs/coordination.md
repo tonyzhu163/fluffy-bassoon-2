@@ -32,19 +32,16 @@ Contracts: [support/probe](../docs/ctm-support-probe.md),
 [PPO replay](../docs/pi05-bridge-policy.md).
 Results: [meta-RL evaluation](../src/fluffy_bassoon/meta_rl/EVALUATION.md).
 
-### Diagnosis and proposed redesign (2026-10-31, awaiting user decision)
+### Redesign (2026-10-31)
 
-No robot comparison so far shows memory or adaptation, and the setups could
-not have shown it. The motor fixes almost every outcome (oracle about one case
-above native), source histories contain almost no failure-then-success, the
-learners respond to history observations but not reward, and panels are no
-larger than the run-to-run noise. Proposed order: H0 detectable-effect audit
-from saved data (CPU, can start now); H1 oracle headroom screen over
-semantic options, per-chunk noise and residual; H2 histories that contain
-learning; H3 GRU RL²/DPT with reward-shuffle and reset controls; H4 CTM vs
-XL/GRU. Proposed pauses, not yet decided: LIBERO AD/DPT scaling on the current
-corpus and the RoboTwin final100 export.
-[Diagnosis and plan](icrl-headroom-diagnosis-20261031-r1/PLAN.md).
+No robot comparison so far shows memory or adaptation. The governing plan is
+the [frozen pi0.5 steering screen](frozen-pi05-steering-screen-20261031-r1/PLAN.md):
+first show a controller can improve the frozen motor on cases it fails, then
+show experience changes a useful later decision. The
+[steering-headroom audit](steering-headroom-audit-20261031-r1/AUDIT.md) gives
+the paired fixed100 evidence. The earlier
+[headroom diagnosis](archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
+archived as superseded, with corrections listed at its top.
 
 ## Coordination rules in force
 
