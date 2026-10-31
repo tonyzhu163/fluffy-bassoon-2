@@ -44,6 +44,16 @@ noise cannot directly label steering of the original frozen motor. AD can
 instead predict actual z from fixed-motor SAC learning histories; DPT can
 later label saved query observations with a competent final same-motor SAC
 teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
+New targeted Motus/RoboTwin interface qualification (2026-10-31): allocated
+CPU71/71 passed; actual native/zero-edit decoding is exact, the KV adapter
+receives a nonzero frozen-suffix gradient, and the motor hash stays fixed.
+A real native phone episode completed successfully. The first source-development
+run then stopped on an instruction-pairing defect before any steering action,
+preserving16 native episodes. No new learned steering, RL-history improvement
+or Transformer adaptation result is established. This supports runtime
+compatibility, not the central robotic-performance claim.
+[Qualification and limitations](../robotwin-coefficient-steering/EVALUATION.md).
+
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
 full/static26/90; DPT full26/90/static27/90. On the fixed-nine K1 panel,

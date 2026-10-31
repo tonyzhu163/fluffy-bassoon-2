@@ -31,22 +31,32 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
-Current priority: **DSRL first; native PPO afterward**, explicitly chosen by
-the human. Train the noise controller while the entire official pi0.5 stays
-frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
-with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
-and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
-implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At15:37:00 the run has480/480 training successes,6,769 replay chunks,
-125,520 SAC updates and87,903 all-in actions. Completed learned panels through
-actual120,220 updates preserve native10/10. The newest uses1,239 query
-primitives versus native1,451; this continues the small-bank completion-cost
-trend, without a success-rate, memory or overall sample-efficiency claim.
-No failure/recovery histories have emerged. Recovery, milestone and sampled
-raw/RPC hashes passed; no new journal traversal was performed. Continue the
-fixed curve under its caps. Current operational status is in
-[coordination](../outputs/coordination.md). [Saved check](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md),
-[interpretation](../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
-See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
+Current human priority remains **DSRL first; native PPO afterward**. The
+single-seed task57 PixelSAC curve updates only the noise controller while the
+entire official OpenPI LIBERO40 pi0.5 motor stays frozen. Native query success
+starts at10/10, and all completed learned panels remain at that ceiling.
+Lower query action cost is descriptive evidence on the same small reused bank,
+not greater success, memory, transfer or overall sample efficiency after
+training cost. One training timeout has since occurred amid overwhelmingly
+successful episodes; later successes change actor/RNG and do not isolate
+causal recovery. Continue the declared500k curve and final native stability
+control. Task57 records remain target-online data excluded from source
+pretraining. Current counters and cost receipts are in
+[coordination](../outputs/coordination.md).
+
+The new targeted Motus/RoboTwin phase now has actual live interface evidence:
+zero learned-KV/fixed-KV/joint edits preserve native decoding exactly, a real
+KV-adapter gradient is nonzero with zero motor gradients, and the full motor
+fingerprint remains unchanged. The first complete native phone episode
+succeeds; the first five development episodes include four timeouts. The
+first screen run subsequently stopped before its first steering action: all16
+native episodes completed (phone1/8, object3/8), but a repeated physical case
+received a different instruction. Images/state match exactly; strict pairing
+is preserved while instruction reuse is repaired. No new learned controller,
+source-data improvement or AD/DPT/memory result follows. Renderer warnings
+are retained but do not explain the matched-pixel instruction difference. See
+[verified scope and limits](robotwin-coefficient-steering/EVALUATION.md) and
+[new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use
