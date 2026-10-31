@@ -3,8 +3,8 @@
   "base_main": "17d5924ba6f66a3754355d23732c6d6f755e892a",
   "entrypoint": "scripts/diagnostics/robotwin_reactive_curve.py",
   "profile_sha256": "21eb04ec3ec3511868bae38d17de9d9811b9a58953820491a2901ceaa5f882b3",
-  "prepared_test_functions": 14,
-  "prepared_CPU_cases": 40,
+  "prepared_test_functions": 15,
+  "prepared_CPU_cases": 42,
   "tests_executed_here": 0,
   "command": "python -m pytest -q tests/test_robotwin_reactive_curve.py --junitxml=<fresh-owned-receipt>/reactive-curve.junit.xml",
   "actual_full12_bank": null,
@@ -20,5 +20,8 @@
   },
   "blocker": "Existing2E adapter rejects prospective4F. Full12/fit eligibility remains false until explicit adapter and real data admission.",
   "resource_owner": "Existing parent/finish_assembly only; code-only source owner allocated/observed nothing",
-  "accounting": "One existing-owner inclusive GPU clock; prior costs/reservations/linked continuation explicit, no budget/reset/ledger here"
+  "accounting": "One existing-owner inclusive GPU clock; prior costs/reservations/linked continuation explicit, no budget/reset/ledger here",
+  "supersedes_static_candidate": "038d76865fb06ec7e1f85df2cc601205ca0fe497",
+  "review": "Reviewer found no other substantive blocker; narrow boundary correction awaiting final exact delta review",
+  "boundary_fix": "KV compares publicfloat32 boundary. Action requires rawhook dtype == cachebase dtype and bitwise rawhook zero identity. Two prepared precision regressions;0 executed."
 }
