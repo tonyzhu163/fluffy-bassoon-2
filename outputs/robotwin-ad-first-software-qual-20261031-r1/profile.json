@@ -1,0 +1,82 @@
+{
+  "schema": "robotwin_software_qualification_profile_v1",
+  "run_id": "robotwin-ad-first-software-qual-20261031-r1",
+  "task_prefix": "mwj_1031_robotwin_ad_software_r1_",
+  "scheduler_cap_seconds": 600,
+  "global_work_seconds": 500,
+  "external_TERM_seconds": 570,
+  "external_KILL_seconds": 580,
+  "cleanup_reserve_seconds": 30,
+  "bootstrap_wait_seconds": 120,
+  "gpus": 0,
+  "cpus": 8,
+  "memory_gib": 64,
+  "shm_gib": 2,
+  "site_packages": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages",
+  "shared_runtime_metadata_sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+  "CPU_accounting": {
+    "proposed_combined_phase_seconds": 7200,
+    "software_cap_included": true,
+    "phase_budget_human_approval": "pending",
+    "authority": "AGENTS necessary CPU tests; no GPU/full-bank/fit/readout authority",
+    "old_sealed_credit": 0
+  },
+  "auxiliary_bootstrap": [
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/software_profile.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/job-software.sh",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py",
+    "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py"
+  ],
+  "ad": {
+    "root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-ad-first-software-20261031-r1",
+    "pin": "7401cd50c038a4cb35149eceeb72128e9a368cc3",
+    "tests": [
+      "tests/test_robotwin_history_corpus.py",
+      "tests/test_robotwin_offline_compat_gate.py",
+      "tests/test_robotwin_finalbank_index_bindings.py",
+      "tests/test_robotwin_ad_first.py"
+    ],
+    "expected_tests": 108,
+    "bootstrap": [
+      "src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py",
+      "outputs/robotwin-finalbank-offline-plan-20261031-r1/run_offline.py",
+      "tests/test_robotwin_history_corpus.py",
+      "tests/test_robotwin_offline_compat_gate.py",
+      "tests/test_robotwin_finalbank_index_bindings.py",
+      "tests/test_robotwin_ad_first.py"
+    ]
+  },
+  "teacher": {
+    "root": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-source-teacher-software-20261031-r1",
+    "pin": "336e96681ee4018bc271dd8b9bd4d1016d8389eb",
+    "tests": [
+      "tests/test_robotwin_source_teacher_profile.py",
+      "tests/test_robotwin_history_evaluate.py",
+      "tests/test_robotwin_history_live.py",
+      "tests/test_robotwin_parent_guard.py"
+    ],
+    "expected_tests": 57,
+    "plan": "outputs/robotwin-source-teacher-profile-20261031-r1/plan.json",
+    "plan_sha256": "ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602",
+    "deselected_nodes": [
+      "tests/test_robotwin_history_live.py::test_child_closes_at_real_ledger_k8_boundary_and_no_step_occurs_in_parity",
+      "tests/test_robotwin_history_live.py::test_child_exception_preserves_pending_reservation_and_stops_recovery",
+      "tests/test_robotwin_history_live.py::test_insufficient_k8_allowance_never_loads_agent_or_prepares_runtime"
+    ],
+    "bootstrap": [
+      "src/fluffy_bassoon/meta_rl/robotwin_history_evaluate.py",
+      "src/fluffy_bassoon/meta_rl/robotwin_history_live.py",
+      "outputs/robotwin-source-teacher-profile-20261031-r1/plan.json",
+      "tests/test_robotwin_source_teacher_profile.py",
+      "tests/test_robotwin_history_evaluate.py",
+      "tests/test_robotwin_history_live.py",
+      "tests/test_robotwin_parent_guard.py"
+    ]
+  }
+}
