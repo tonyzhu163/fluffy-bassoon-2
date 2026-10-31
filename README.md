@@ -77,22 +77,22 @@ Keep method contracts beside implementations, verified results in
 `EVALUATION.md`, and raw evidence in each run's `outputs/<run-id>/`. Never commit
 credentials or machine-local authentication configuration.
 
-Planning documents and selected compact result bundles are tracked exceptions
-in `outputs/` (force-add them). Published bundles retain reports, figures,
-curve data and audit evidence; checkpoints and bulk run outputs stay untracked.
-
-For planning documents:
+Planning documents and compact result bundles are tracked exceptions in
+`outputs/` (force-add them):
 
 - `outputs/coordination.md` is the single live coordination file: question,
   ground rules, current state, job status and plan. Every agent and server
-  updates this file instead of starting another one.
-- Dated plans, handoffs and working notes live in `outputs/<run-id>/`.
-- Archive, do not delete. When a plan is superseded or retired, `git mv` its
-  tracked files to `outputs/archive/<run-id>/`, add a status line at the top
-  and update links to it. Cluster run directories and cited receipts keep their
-  original `outputs/<run-id>/` paths; only the tracked documents move.
-- Archive `coordination.md` when a phase closes, an item is retired or the file
-  passes about 300 lines: copy it to
-  `outputs/archive/coordination/coordination-<YYYYMMDD>.md` with links fixed
-  for the new location, then trim the live file to current work and point it
-  at the new snapshot.
+  updates this file instead of starting another one. Snapshot it to
+  `outputs/archive/coordination/coordination-<YYYYMMDD>.md` (links fixed for
+  the new location) when a phase closes or it passes about 300 lines, then
+  trim it to current work and point it at the snapshot.
+- Dated plans, handoffs and working notes live in `outputs/<run-id>/`. Run
+  folders are never moved, so links and receipts stay valid. When a run is
+  superseded or retired, add one status line at the top of its main document
+  naming the replacement.
+- Track reports, plans, figures, curve data and audit summaries. Checkpoints,
+  raw trajectories, videos and bulk inputs stay untracked; for a file above
+  about 5 MB or a copy of another run's file, record its hash and cluster path
+  instead.
+- Git history keeps everything committed, so tracked scratch files (empty
+  locks, partial writes) may be deleted.
