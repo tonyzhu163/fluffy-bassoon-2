@@ -243,3 +243,16 @@ def test_two_backend_wrappers_cannot_share_one_motor_during_fit(tmp_path):
         with pytest.raises(ValueError,match='already fitting'):
             curve.fit_curve('kv',b,{},[],{},tmp_path/'fit',guard=lambda:None,deadline=1e20,contract={})
     finally:curve._MOTOR_CONTEXTS.remove(identity)
+
+
+@pytest.mark.parametrize('kind',['action','kv'])
+def test_native_public_float32_boundary_does_not_hide_action_training_dtype_mismatch(tmp_path,kind):
+    rows=records(tmp_path);backend=Backend()
+    backend.model.decode_actions=lambda targets,state:targets[...,:14].to(torch.bfloat16)
+    class IdentityKV(torch.nn.Module):
+        def forward(self,cache,mask,features):return cache
+    if kind=='action':
+        with pytest.raises(ValueError,match='runtime dtype'):
+            curve.parity_check(kind,TinyHead(),backend,rows,guard=lambda:None)
+    else:
+        assert curve.parity_check(kind,IdentityKV(),backend,rows,guard=lambda:None)['actual_cached_rows']==3
