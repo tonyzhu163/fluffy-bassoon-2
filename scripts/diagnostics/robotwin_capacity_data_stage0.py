@@ -77,6 +77,8 @@ def plain_metadata(bundle,candidates):
     """Bind actual seed/scene/instruction sidecars. Pickles are never opened."""
     root=PurePosixPath(candidates[0][1].filename).parent.parent
     seed_name=str(root/'seed.txt');scene_name=str(root/'scene_info.json')
+    if bundle.getinfo(seed_name).file_size>65536 or bundle.getinfo(scene_name).file_size>2<<20:
+        raise ValueError('Unbounded plain metadata sidecar before decompression')
     seed_bytes=bundle.read(seed_name);scene_bytes=bundle.read(scene_name)
     if len(seed_bytes)>65536 or len(scene_bytes)>2<<20: raise ValueError('Unbounded plain metadata sidecar')
     seeds=[int(value) for value in seed_bytes.decode().split()]
@@ -101,6 +103,24 @@ def episode_sidecars(bundle,metadata,index):
         selected_instruction=seen[0],instruction_selection='first published seen instruction, fixed before fitting',
         instruction_ref=dict(member=name,sha256=hashlib.sha256(payload).hexdigest()),
         seed_scene_refs=metadata['refs'])
+
+
+def select_whole_episodes(episodes):
+    successes=[r for r in episodes if r['explicit_success'] is True]
+    unknown=[r for r in episodes if r['explicit_success'] is None]
+    if len(successes)>=12:
+        chosen=successes[:12];status='explicit_success_metadata'
+    elif unknown:
+        chosen=[r for r in episodes if r['explicit_success'] is not False][:12]
+        status='canonical_expert_candidates_split_pending_author_success_and_alignment_review'
+    else:
+        chosen=[];status='insufficient_explicit_successes_no_teacher_split'
+    return dict(status=status,train=[r['canonical_index'] for r in chosen[:8]],
+        validation=[r['canonical_index'] for r in chosen[8:12]],
+        ordered_candidate_indices=[r['canonical_index'] for r in episodes],
+        explicit_success_indices=[r['canonical_index'] for r in successes],
+        unknown_success_indices=[r['canonical_index'] for r in unknown],whole_episode_split=True,
+        command_state_alignment_qualified=False)
 
 
 def hdf5_inventory(path,guard):
@@ -303,14 +323,7 @@ def main(argv=None):
                 # Lack of success metadata is a real qualification question,
                 # not permission to decompress all50 or invent twelve successes.
                 if len(result['episodes'])>=12 and unknown: break
-            chosen=selected[:12] if len(selected)>=12 else result['episodes'][:12]
-            result['selection']=dict(status='explicit_success_metadata' if chosen else 'pending_author_success_and_alignment_review',
-                train=[r['canonical_index'] for r in chosen[:8]],validation=[r['canonical_index'] for r in chosen[8:12]],
-                ordered_candidate_indices=[r['canonical_index'] for r in result['episodes']],
-                unknown_success_indices=[r['canonical_index'] for r in unknown],whole_episode_split=True,
-                command_state_alignment_qualified=False)
-            if unknown:
-                result['selection']['status']='canonical_expert_candidates_split_pending_author_success_and_alignment_review'
+            result['selection']=select_whole_episodes(result['episodes'])
         result.update(status='inventory_complete_alignment_review_required',storage_bytes=storage(),
                       elapsed_seconds=time.monotonic()-started,hdf5_import_only=True,model_readiness=False)
         if args.a1_corpus:

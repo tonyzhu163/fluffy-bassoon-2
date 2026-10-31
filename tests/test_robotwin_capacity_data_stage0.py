@@ -72,6 +72,29 @@ def test_actual_plain_sidecar_schema_binds_seed_and_first_seen_without_pickle(tm
     assert episode['instruction_ref']['member']=='clean/instructions/episode11.json'
 
 
+@pytest.mark.parametrize('oversize',['seed','scene'])
+def test_sidecar_cap_is_enforced_before_decompression(tmp_path,monkeypatch,oversize):
+    path=tmp_path/'demos.zip'
+    with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED) as data:
+        for i in range(12):data.writestr(f'clean/data/episode{i}.hdf5',b'fixture')
+        data.writestr('clean/seed.txt','0\n' if oversize!='seed' else '0'*65537)
+        data.writestr('clean/scene_info.json','{}' if oversize!='scene' else ' '*(2**21+1))
+    with zipfile.ZipFile(path) as data:
+        candidates=stage.ordered_hdf5(data)
+        monkeypatch.setattr(data,'read',lambda *args:pytest.fail('decompressed before length gate'))
+        with pytest.raises(ValueError,match='before decompression'):stage.plain_metadata(data,candidates)
+
+
+def test_known_failed_demos_never_become_explicit_success_teacher_split():
+    rows=[dict(canonical_index=i,explicit_success=i<9) for i in range(12)]
+    selection=stage.select_whole_episodes(rows)
+    assert selection['status']=='insufficient_explicit_successes_no_teacher_split'
+    assert selection['train']==selection['validation']==[]
+    unknown=stage.select_whole_episodes([dict(canonical_index=i,explicit_success=None) for i in range(12)])
+    assert unknown['status']!='explicit_success_metadata'
+    assert unknown['train']==list(range(8)) and unknown['validation']==list(range(8,12))
+
+
 def test_model_import_firewall_rejects_without_importing_model():
     with pytest.raises(ImportError,match='rejects'):
         stage.NoModels().find_spec('torch')
