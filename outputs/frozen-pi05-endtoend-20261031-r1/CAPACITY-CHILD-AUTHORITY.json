@@ -1,0 +1,42 @@
+{
+  "format": "frozen_pi05_capacity_successor_authority_v1",
+  "approved": true,
+  "authority_basis": "Explicit root delegation after actual 32-case qualification; original A1 full-reactive capacity candidate, no further ACK required",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "parent_grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
+  "source_commit": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f",
+  "reviewed_main": "cc03ad217139237800809294afaf0a1c288927ea",
+  "run_id": "frozen-pi05-reactive-capacity-20261031-r1",
+  "cpu_rollup_sha256": "f6f5391337131391a6282a87d6f2a251188b0ec817b0be6fb7160528300d3582",
+  "predecessor_actions": 17591,
+  "predecessor_gpu_seconds": 1770,
+  "maximum_new_gpu_seconds": 5430,
+  "maximum_new_actions": 10000,
+  "maximum_complete_episodes": 25,
+  "maximum_phase_gpu_seconds": 28800,
+  "maximum_phase_actions": 300000,
+  "maximum_a1_gpu_seconds": 7200,
+  "maximum_a1_actions": 30000,
+  "maximum_output_bytes": 68719476736,
+  "required_gates": [
+    "actual allocated GPU/CUDA/own PID",
+    "frozen motor hash and same-noise zero/native parity",
+    "real suffix gradient",
+    "complete qualification episode",
+    "all 12 teacher replays successful plus native transform round-trips before either fit"
+  ],
+  "fit_config": {
+    "seed": 20261031,
+    "rank": 4,
+    "kv_scale": 0.1,
+    "gripper_bound": 0.0,
+    "updates": 100,
+    "global_batch": 2,
+    "learning_rate": 0.001,
+    "validate_every": 25
+  },
+  "no_locked_panel": true,
+  "no_source_rl": true,
+  "no_meta_training": true,
+  "actual_gpu_admission": false
+}

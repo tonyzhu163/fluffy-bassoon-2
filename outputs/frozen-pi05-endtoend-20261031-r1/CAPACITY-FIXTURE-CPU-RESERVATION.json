@@ -1,0 +1,33 @@
+{
+  "format": "frozen_pi05_capacity_fixture_cpu_reservation_v1",
+  "source_commit": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "prior_qualification_charge": 255,
+  "prior_phase_cpu_charge": 672,
+  "maximum_cpu_worker_seconds": 345,
+  "qualification_aggregate_ceiling": 600,
+  "maximum_phase_cpu_worker_seconds": 1800,
+  "phase_unassigned_while_hold": 783,
+  "requested_gpu_count": 0,
+  "requested_cpu_cores": 2,
+  "requested_memory_bytes": 17179869184,
+  "command_sha256": "b4fca8c93b0a8741ec37cb086b3f3f4c715aba0a710cf08e34d5e342c6218506",
+  "prior_second_clock_sha256": "46f15a9d06364d17d0aa23a6cc169ec114174016cb2dbad291484d5db6541869",
+  "tests": [
+    "tests/test_robotwin_reactive_capacity.py::test_actual_metadata_composition_keeps_absent_flags_and_fixed_whole_split",
+    "tests/test_robotwin_reactive_capacity.py::test_fail_closed_demo_identity_and_author_binding",
+    "tests/test_robotwin_reactive_capacity.py::test_hdf5_reader_rejects_extra_or_truncated_timeline",
+    "tests/test_robotwin_reactive_capacity.py::test_author_jpeg_writer_inverse_retains_native_channels_camera_order_and_state",
+    "tests/test_robotwin_reactive_capacity.py::test_native_paired_plan_charges_all_teachers_and_arms_without_locked_panel"
+  ],
+  "expected_cases": 10,
+  "actual_allocation": true,
+  "gpu_admitted": false,
+  "job_id": "job-qh4pau3eh6v8",
+  "scheduler_created_shanghai": "2026-10-31T21:06:21+08:00",
+  "maximum_scheduler_minutes": 4,
+  "automatic_retry": false,
+  "submitted_once": true,
+  "command_readback_equal": true,
+  "status": "results_pending"
+}
