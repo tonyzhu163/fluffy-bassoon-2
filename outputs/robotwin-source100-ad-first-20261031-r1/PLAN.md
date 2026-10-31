@@ -32,6 +32,11 @@ bounded development phase, not completion of the larger benchmark matrix.
 - Both fits reuse the same source bank; count its physical collection once.
 - Existing recipe: batch8, max-window128, width128,2 layers,4 heads,
   context300, LR3e-4; preserve actual valid-token weighting.
+- AD uses Gaussian sequence NLL with a learned1024D log_std vector. Primary
+  source100 readout samples that learned Gaussian and applies the existing
+  physical bound1.5, using the controller's private generator. This is fixed
+  before any new robot outcomes. Legacy mean-mode results stay separate;
+  this phase adds no mean-only condition.
 - Save25/100/500 full optimizer/sampler/RNG recoveries and source curves.
 - Primary weights: candidate-000500.pt, fixed before target readout.
 - Static-mode semantics stay explicit; do not relabel it as a memoryless MLP.

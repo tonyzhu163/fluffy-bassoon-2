@@ -225,6 +225,13 @@ cases and independent paired query randomness alongside the AD fit path.
 This initial development readout does not replace the larger0/1/2/4/8 or
 full-suite protocol. No new controller or benchmark adapter is required.
 
+For the source100 AD500 phase, predeclare sampled deployment of the learned
+Gaussian (then the existing bound1.5 clip). The native model trains Gaussian
+NLL and learns log_std, whereas the legacy robot caller selected its mean.
+Keep legacy mean-mode results separate; add no new inference-mode condition
+inside the fixed phase. This choice precedes new target outcomes and uses
+the existing private sampling generator with independent paired query seeds.
+
 ## Literature guides targeted choices
 
 - [VLRLA's simulation history teacher](https://arxiv.org/html/2610.19517v1)
