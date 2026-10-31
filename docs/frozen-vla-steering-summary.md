@@ -31,14 +31,28 @@ Current scientific readout,2026-10-31:
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
 
-Current priority: the human requested faithful VLRLA PPO replication. Hold
-the proposed AD100/500 sweep; no implementation or allocation occurred. Use
-native action-expert PPO with the VLM frozen, an explicit matched SFT baseline,
-and the existing RLinf route. A bounded two-iteration qualification/onset
-pilot is specified under outputs/vlrla-native-ppo-pilot-20261031-r1/GRANT.json;
-its full25-iteration result remains unproven. New code/runtime qualification
-and actual allocation are pending. Existing RoboTwin source100 export is
-preserved by its owner; new AD GPU fits/readout are deferred.
+Current priority: **DSRL first; native PPO afterward**, explicitly chosen by
+the human. Train the noise controller while the entire official pi0.5 stays
+frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
+with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
+and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
+implementation and new-profile qualification are pending, no DSRL GPU launch.
+See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
+
+The compatible collection records actual steering noise under the same frozen
+motor: AD can predict that noise from ordered learning histories; DPT can use
+a later competent final SAC noise teacher to label saved query observations.
+Native PPO changes the action expert, so its noise seeds cannot automatically
+label the original frozen motor. Physical-action learning remains possible.
+See [data contract](../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
+
+Native PPO GPU dispatch is held. Its allocated CPU qualification completed:
+274 conservative worker-seconds total, no GPU/actions/SGD; the latest three
+changed data regressions passed. The explicit human instruction authorizes25
+TOTAL iterations after the pilot passes, matched to the same128 starting-model
+cases; this is queued behind DSRL, not an extra25 after the pilot's2. The
+existing6GPUh pilot cap remains unchanged. AD100/500 fits are also held;
+existing RoboTwin export continues under its separate owner.
 
 The fixed100 LIBERO phase is now audited terminal: native28/90; AD full/static
 29/90each; DPT full/static28/90each. ADK1full/reset/nativeK0all6/9with the same
@@ -48,7 +62,7 @@ or sample-efficiency result. Full/static aggregate ties conceal per-case swaps.
 Earlier100/500data/optimizer/native-wave changes prevent an early-stopping or
 scaling conclusion. Recorded competing explanations and a proposed fixed-bank
 contrast remain in the analysis; the new human PPO priority supersedes that
-proposal. No further collection is justified by this result alone.
+proposal. That result alone does not justify repeating the same source collection.
 
 The completed486groups/522episodes cost172045actions,7126conservativeGPU-s
 (6846scheduler-s) and8.61GB. All522trace/contextarchives,486group recoveries
