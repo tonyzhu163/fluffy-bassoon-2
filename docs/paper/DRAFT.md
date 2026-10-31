@@ -31,26 +31,32 @@ high-performance or sample-efficiency benefit. Historical500versus100 changes
 both data and native wave, so it does not isolate scaling or overfitting.
 Current human priority is ordinary DSRL first on the entirely frozen official
 pi0.5, followed by native action-expert PPO; further offline-student sweeps
-are held. The fresh task57 pi0.5-adapted PixelSAC curve is running toward500k optimizer
-updates, within10GPUh/1M all-in actions/64GiB. Native query is10/10; learned
-panels through380120 remain10/10 with shorter observed episodes. At390080
-updates the panel drops to9/10,1518 query primitives versus native1451: paired
-state48 times out400 versus native success152; the next two panels return10/10.
-These repeated panels do not
-establish reliable success preservation, memory or total sample efficiency;
-final native stability control remains pending. Native PPO
-GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
-model cases are explicitly authorized after the pilot passes. Its sampling
-noise cannot directly label steering of the original frozen motor. AD can
-instead predict actual z from fixed-motor SAC learning histories; DPT can
-later label saved query observations with a competent final same-motor SAC
-teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
+are held. The fresh task57 pi0.5-adapted PixelSAC run completes500,220 updates while
+keeping the entire motor frozen. Final learned and native panels both score
+10/10; learned behavior uses1244 query primitives versus native1451 (14.27%
+fewer), plus100 settling each. Initial/final native totals agree. The fixed
+52-panel curve retains one9/10 regression at390080 updates. One seed and ten
+reused ceiling cases establish no higher success, memory, transfer or total
+sample efficiency. All-in cost is28,686 GPU-seconds/332,977 actions; training
+success is1890/1892. Recovery bytes and final motor identity are verified,
+without a new terminal restore or complete independent journal replay.
+[Terminal result](../../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
+Native PPO GPU dispatch is held; its later25 TOTAL iterations plus the same
+128 starting-model cases remain authorized after the pilot passes. Its
+sampling noise cannot directly label steering of the original frozen motor.
+AD can predict actual z from same-motor SAC learning histories; DPT can label
+saved observations with a competent final same-motor teacher. The present
+target57 records remain excluded from source pretraining.
+[Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
 New targeted Motus/RoboTwin result (2026-10-31): actual zero/native parity
 and a frozen-suffix KV gradient pass. The completed fixed4D screen yields no
 qualifying rescue. A supervised capacity attempt then stops before fitting:
 the third fixed published demonstration fails native-route replay after two
-successes. This is data/execution compatibility evidence, without a learned
-capacity, RL-corpus or Transformer-adaptation result. No teacher is excluded.
+successes. An allocated13-test CPU diagnosis then verifies all608 issued requests exactly
+match the demonstrations, with equal seeds/language/initial drive targets.
+Physical trajectory timing and full scene identity remain unqualified; no
+teacher is excluded. This remains data/execution compatibility evidence,
+without learned capacity, RL corpus or Transformer-adaptation results.
 [Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

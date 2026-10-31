@@ -3,87 +3,66 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
-## Task57 first query regression on a near-ceiling curve
+## Task57 fixed500k DSRL curve complete
 
-Baige `job-iudscqfntb4e` remains active on fixed source `d001556`. At the
-19:56 Shanghai check it has399880 SAC updates,1509/1511 training successes,
-265079 all-in actions and28.53GB outputs. The390080-update query panel scores
-9/10 at1518 primitives+100 settling, versus native10/10 at1451+100. State48
-times out at400 actions; native succeeds at152. Its actual query seed2295547926,
-nominal state and initial-observation hashes match. This is the first saved
-query-panel failure; earlier complete panels through380120 are all10/10.
-Latest recovery/milestone/raw-RPC hashes pass, query weights/replay stay fixed
-and losses are finite. No run, recipe, case or budget changed.
-[Saved receipt](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1956.md).
-Subsequent400160/410020-update panels return10/10 at1358/1232 primitives
-plus100 settling. The earlier9/10 stays in the fixed curve; this rebound does
-not select a different endpoint or establish reliable improvement.
-[Next saved check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-2016.md).
+Baige `job-iudscqfntb4e` succeeded, exit0, at500,220 actual SAC updates under
+fixed source `d001556`. The entire official OpenPI LIBERO40 pi0.5 motor stayed
+frozen; only the noise controller learned. The predeclared endpoint and native
+stability control are complete. [Terminal receipt](../../outputs/dsrl-pi05-task57-20261031-r1/TERMINAL-RECEIPT.json).
 
-This regression weakens the earlier descriptive completion-cost trend. One
-stochastic panel is insufficient to attribute a cause: actor sampling and
-learning instability remain plausible, while the prescribed final native
-rerun can check runtime drift. Preserve the fixed500k endpoint and full curve;
-no favorable checkpoint selection or extra control is launched.
+| Fixed query panel | Success | Primitive actions | Settling actions |
+| --- | ---: | ---: | ---: |
+| Initial native |10/10|1451|100|
+| Learned,390080 updates |9/10|1518|100|
+| Learned,500220 updates |10/10|1244|100|
+| Final native |10/10|1451|100|
 
-The first training timeout is zero-indexed episode576/state16,400 primitives,
-collected at151,260updates and followed by800updates. Earlier episode536
-succeeded143primitives; later616/656 succeeded133/134. Nominal state and
-initial-observation hashes match, but actor weights and RNG differ: this is
-one failure/later-success record, not causal recovery or ICRL evidence. The
-failure trace rehashed correctly. It does not turn the near-ceiling bank into
-a rich recovery corpus. [Bound failure metadata](../../outputs/dsrl-pi05-task57-20261031-r1/first-failure-1616.json).
+Final learned behavior uses207 fewer primitives (14.27%) on these ten cases;
+including settling,1344 versus1551 actions (13.35% fewer). Success does not
+improve. All50 learned checkpoints and both native panels remain in the saved
+curve:520 queries,519 successes. The sole query failure at390080 is retained:
+state48 times out400 versus native success152, with matched query seed and
+initial-input hashes. Subsequent recovery of the aggregate score does not
+remove that regression or select a favorable checkpoint. The same ten states
+and query seeds are reused throughout; these are not independent replications.
 
-The first ten learned checkpoints and the first later query regression are
-below; every intervening panel remains in immutable dated receipts.
+Training finishes1890/1892 successful episodes and25,504 replay chunks. The
+same two training timeouts remain in the corpus. One failure followed by later
+success with changed weights/RNG does not establish causal recovery or ICRL.
+The reward penalizes each queried chunk, so a near-ceiling bank can still
+support cost optimization. There is no matched untrained tied-noise query
+panel; noise parameterization and learning may both affect cost. The final
+native control repeats10/10 and its starting1451 primitives, limiting a simple
+runtime-drift explanation without identifying the cause of the learned
+policy's intermittent regression.
 
-| Actual optimizer updates | Query success | Query primitives | Settling actions |
-| ---: | ---: | ---: | ---: |
-| Native0 |10/10|1451|100|
-|10220|10/10|1407|100|
-|20240|10/10|1378|100|
-|30200|10/10|1355|100|
-|40160|10/10|1320|100|
-|50080|10/10|1343|100|
-|60000|10/10|1304|100|
-|70260|10/10|1279|100|
-|80100|10/10|1264|100|
-|90160|10/10|1309|100|
-|100220|10/10|1270|100|
-|390080|9/10|1518|100|
-|400160|10/10|1358|100|
-|410020|10/10|1232|100|
+Actual resource use is28,686 conservative GPU-seconds (one allocation,
+28,631 scheduler seconds),332,977 all-in simulator actions and38,906,245,784
+output bytes. Actions split into261,157 training,71,810 query and10 initial
+qualification settling. The original36,000GPU-second/1M-action/64GiB caps
+were respected;7,314 unused GPU-seconds are released, not a new allowance.
+A14.27% query-cost reduction after this training does not establish overall
+sample efficiency. This single-seed ceiling-bank adaptation establishes no
+higher success rate, memory benefit or new-task transfer.
 
-All panels use the same10 physical cases, recorded query seeds and initial
-observation hashes. Queries change no weights/replay and perform no SGD.
-At100,220 updates the panel uses181 fewer primitives than native (12.5%);
-including settling,1,370 versus1,551actions (11.7% fewer). All10 cases are
-shorter at that checkpoint. This is a descriptive small-bank completion-cost
-signal, not a success-rate gain, independent-seed result, deployment adaptation
-or overall sample-efficiency gain after training/evaluation cost. The10 cases
-are reused across checkpoints; these panels are not independent replications.
+The complete motor before/after signature matches `c565dd3f`. Latest full
+recovery and immutable final-native recovery match their saved hashes. The
+pinned save/restore code covers actor/critics/targets/temperature, optimizers,
+replay, sampler and global/private/motor RNG; terminal verification rehashed
+bytes, without a new deserialize/restore test. All final native initial-case
+pairs and newly sampled raw/RPC hashes match, producer counters agree and
+report zero uncertain actions. Independent full journal reconciliation reaches
+only the earlier32,740-action prefix; the entire332,977-action forest was not
+independently replayed. [Result and audit limits](../../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
-There is no observed binary-success headroom. The reward also penalizes each
-queried chunk, so successful histories can contain cost optimization. Two
-training timeouts now appear, but they do not establish a rich causal
-failure-recovery corpus. Noise parameterization
-and learning may both affect cost; no matched untrained tied-noise query panel
-was included. The prescribed final native rerun can test runtime stability,
-while later robustness claims would require a separate declared comparison.
-Keep the fixed500k schedule under its original caps; no case or recipe changes.
-
-Saved latest and immutable100k recovery hashes, newest raw traces and sampled
-RPC input/outcome hashes match. Independent full cost reconciliation reaches
-the earlier32,740-action prefix. The later journal walk was bounded/partial;
-producer counters report zero uncertain actions, but no complete independent
-new-tail reconciliation is claimed yet. Final motor after-hash and terminal
-reconciliation remain pending. [Latest saved check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1516.md),
-[earlier complete prefix](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1436.md).
-
-The motor is pi0.5, whereas the DSRL paper used pi0. This is an adapted
-single-seed baseline. Target57 records remain excluded from source40
-pretraining and count as development exposure. [Interpretation and proposed
-next comparison](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
+This is a pi0.5 adaptation of DSRL's pi0 experiment, with nativeH10/execute10
+rather thanH50/execute20. It validates actual frozen-motor SAC updates and a
+small-bank behavior-cost signal, not literal numerical reproduction of the
+paper's success improvement. Train states0..39 and query40..49 remain fixed.
+All task57 trajectories are target-online development data, excluded from
+source40/new meta-pretraining. Task57 stays in full90 reporting with exposure
+disclosed. No further runtime polling or new fit is admitted by completion.
+[Interpretation and historical curve](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
 
 ## Fixed100 LIBERO90 screen complete
 

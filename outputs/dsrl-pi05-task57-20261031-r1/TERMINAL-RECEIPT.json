@@ -1,0 +1,348 @@
+{
+  "format": "pi05_task57_fixed500k_terminal_receipt_v1",
+  "job_id": "job-iudscqfntb4e",
+  "scheduler_status": "Succeeded",
+  "scheduler_created_shanghai": "2026-10-31T14:06:36+08:00",
+  "scheduler_ended_shanghai": "2026-10-31T22:04:06+08:00",
+  "scheduler_ui_seconds": 28631,
+  "saved_exit_code": 0,
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+  "actual_optimizer_updates": 500220,
+  "nominal_optimizer_stop": 500000,
+  "training": {
+    "episodes": 1892,
+    "chunks": 25504,
+    "primitive_steps": 242237,
+    "settling_steps": 18920
+  },
+  "training_successes": 1890,
+  "training_failures": [
+    {
+      "episode": 576,
+      "state": 16,
+      "updates": 152060,
+      "primitives": 400
+    },
+    {
+      "episode": 1404,
+      "state": 4,
+      "updates": 371940,
+      "primitives": 400
+    }
+  ],
+  "replay_rows": 25504,
+  "panel_count": 52,
+  "query_episodes": 520,
+  "query_successes": 519,
+  "query_failures": [
+    {
+      "name": "learned-390000",
+      "threshold_updates": 390000,
+      "actual_updates": 390080,
+      "episodes": 10,
+      "successes": 9,
+      "primitives": 1518,
+      "settling_actions": 100
+    }
+  ],
+  "initial_native": {
+    "name": "initial_native-000000",
+    "threshold_updates": 0,
+    "actual_updates": 0,
+    "episodes": 10,
+    "successes": 10,
+    "primitives": 1451,
+    "settling_actions": 100
+  },
+  "final_learned": {
+    "name": "learned-500000",
+    "threshold_updates": 500000,
+    "actual_updates": 500220,
+    "episodes": 10,
+    "successes": 10,
+    "primitives": 1244,
+    "settling_actions": 100
+  },
+  "final_native": {
+    "name": "final_native-500000",
+    "threshold_updates": 500000,
+    "actual_updates": 500220,
+    "episodes": 10,
+    "successes": 10,
+    "primitives": 1451,
+    "settling_actions": 100
+  },
+  "final_learned_primitive_reduction_vs_final_native": 207,
+  "final_learned_primitive_reduction_fraction": 0.14266023432115782,
+  "costs": {
+    "training": {
+      "known_actions": 261157,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 242237,
+      "settling_steps": 18920,
+      "reset_attempts": 1892
+    },
+    "query": {
+      "known_actions": 71810,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 66610,
+      "settling_steps": 5200,
+      "reset_attempts": 520
+    },
+    "qualification": {
+      "known_actions": 10,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 10,
+      "reset_attempts": 1
+    }
+  },
+  "total_action_charge": 332977,
+  "producer_cost_sum_matches": true,
+  "maximum_action_charge": 1000000,
+  "storage_snapshot_bytes": 38906245784,
+  "maximum_storage_bytes": 68719476736,
+  "charged_gpu_seconds": 28686,
+  "maximum_gpu_seconds": 36000,
+  "unused_gpu_seconds": 7314,
+  "clock": {
+    "sha256": "510dd4b3002938036bd1fed9ae332d764b7cf42fad5ad2be21fd70547ed86390",
+    "bytes": 4330,
+    "value": {
+      "format": "source40_ppo_worker_time_v1",
+      "contract": {
+        "format": "openpi_pi05_task57_dsrl_v1",
+        "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+        "reviewed_main_commit": "f7dde2c94baee3ee59c4450a0ed30543d1cba67f",
+        "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+        "data_role": "target-online-baseline",
+        "target_only": true,
+        "source_assembly_admission": false,
+        "source_checkpoint_reused": false,
+        "task_id": 57,
+        "suite": "libero_90",
+        "train_states": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "query_states": [
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        "scene_seed": 123,
+        "learner_seed": 0,
+        "horizon": 400,
+        "settling_steps": 10,
+        "motor_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+        "model_config": "pi05_libero",
+        "motor_parameter_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "entire_motor_frozen": true,
+        "native_horizon": 10,
+        "execute_steps": 10,
+        "nominal_optimizer_stop": 500000,
+        "maximum_optimizer_updates": 500780,
+        "complete_burst_overshoot_maximum": 780,
+        "learned_query_interval_updates": 10000,
+        "query_episodes_per_panel": 10,
+        "maximum_total_actions": 1000000,
+        "maximum_gpu_seconds": 36000,
+        "maximum_output_bytes": 68719476736,
+        "prefix_features_recorded": false,
+        "training_state_schedule": "completed training episode modulo40; no outcome selection",
+        "query_schedule": "initial native; first complete burst crossing each10k; final native",
+        "native_sampling": "independent H10x32 Gaussian through explicit custom-noise path",
+        "query_seed_bank": "onset._seed(target(state),query,0), fixed across panels",
+        "recipe": {
+          "warmup_condition": "replay >500 query chunks after a complete episode",
+          "batch_size": 256,
+          "update_to_data": 20,
+          "fixed_weights_within_episode": true,
+          "actor_lr": 0.0001,
+          "critic_lr": 0.0003,
+          "temp_lr": 0.0003,
+          "hidden_dims": [
+            128,
+            128,
+            128
+          ],
+          "cnn_features": [
+            32,
+            32,
+            32,
+            32
+          ],
+          "cnn_strides": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "latent_dim": 50,
+          "discount": 0.999,
+          "tau": 0.005,
+          "num_qs": 10,
+          "target_entropy": "auto",
+          "masks": "0 on success, 1 on timeout/failure",
+          "reward": "-1 per chunk, 0 on success",
+          "action_bounds": "Gaussian warmup unbounded; learned32D noise clipped[-1,1]",
+          "query_behavior": "Native independent H10 Gaussian before any update; stochastic sample_actions SAC after update",
+          "upstream_collection": "examples/train_utils_sim.py:collect_traj at DSRL7f48937",
+          "upstream_evaluation": "examples/train_utils_sim.py:perform_control_eval at DSRL7f48937",
+          "interface": "Official image64 pixels + proprio8, one camera; no VLA-prefix student features",
+          "departures": "Frozen pi0.5 H10/execute10 and actual-duration discount; explicit train0..39/query40..49 state banks; first-postburst evaluation thresholds"
+        },
+        "recovery": "two atomic full slots; immutable milestone hardlinks; SHA-bound atomic query cursor",
+        "interpretation": "Single-seed pi0.5-adapted DSRL curve on authors predeclared task57; not literal pi0 reproduction or convergence guarantee",
+        "run_id": "dsrl-pi05-task57-20261031-s0-r1"
+      },
+      "worker_seconds": 36000,
+      "attempts": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/attempts/1793426813000000-0000",
+          "started_unix": 1793426813.0,
+          "slice_seconds": 35940,
+          "reserved_seconds": 36000,
+          "status": "finished",
+          "scheduler_allowance_seconds": 60,
+          "ended_unix": 1793455438.5466256,
+          "exit_code": 0,
+          "charged_seconds": 28686,
+          "slice_overrun": false
+        }
+      ]
+    }
+  },
+  "latest_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/recovery-0.pkl",
+    "expected_sha256": "f4339f69a7e5e40a55dcd37feda40c510b62fa76ebd488551c289d032ce2a83e",
+    "actual_sha256": "f4339f69a7e5e40a55dcd37feda40c510b62fa76ebd488551c289d032ce2a83e",
+    "matched": true,
+    "bytes": 681875808
+  },
+  "final_native_immutable_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/final_native-500000-recovery.pkl",
+    "expected_sha256": "f4339f69a7e5e40a55dcd37feda40c510b62fa76ebd488551c289d032ce2a83e",
+    "actual_sha256": "f4339f69a7e5e40a55dcd37feda40c510b62fa76ebd488551c289d032ce2a83e",
+    "matched": true,
+    "bytes": 681875808
+  },
+  "all_final_native_initial_pairs_equal": true,
+  "final_motor_parameter_proof": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/runtime-attempts/1793426835260274867/motor-parameters-after.json",
+    "sha256": "2982c6d8c5554fc4e6353b491fc19d4544d3a819c3233f7701475f495591f715",
+    "bytes": 480,
+    "value": {
+      "before": {
+        "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "leaves": 51,
+        "elements_by_dtype": {
+          "bfloat16": 3353433872
+        }
+      },
+      "after": {
+        "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "leaves": 51,
+        "elements_by_dtype": {
+          "bfloat16": 3353433872
+        }
+      },
+      "equal": true,
+      "expected_parameter_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9"
+    }
+  },
+  "final_motor_proof_artifact_sha256": "1ee4e9b396f3f941d398135fad69baadc25b288afe985c28964f5a1c18b4a236",
+  "sampled_raw_rpc_hashes_match": true,
+  "recovery_schema": {
+    "source_files": {
+      "vla_libero.py": {
+        "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+        "file_sha256": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711"
+      },
+      "vla_source40_corpus.py": {
+        "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+        "file_sha256": "4ba242a0c20068f72fa232d5aa0ba34160ede310c19c5a1bfd7525440884c430"
+      },
+      "vla_target_online_dsrl_task57.py": {
+        "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+        "file_sha256": "5686aea07754bafa71772d27ea91b44b25470a404e5ff545222ee4c71e4a8b4f"
+      }
+    },
+    "payload_fields": [
+      "serialized actor/critic/target critic/temperature TrainStates",
+      "agent PRNG",
+      "full replay rows",
+      "optimizer update count",
+      "sampler bit-generator state",
+      "NumPy global RNG",
+      "Python RNG",
+      "exact scientific contract",
+      "complete-physical-episode boundary",
+      "training cursor/receipts in progress",
+      "encoded motor JAX RNG under progress.motor_rng"
+    ],
+    "optimizer_state": "Official Flax TrainState serialization is included in the agent bytes; final artifact was hash-verified, not deserialized or restore-tested anew at terminal.",
+    "terminal_verification_limit": "No new model/GPU/test or terminal checkpoint deserialize. Recovery field coverage follows pinned save/restore source and prior allocated recovery tests; full final bytes and immutable links rehashed."
+  },
+  "journal_verification": {
+    "producer_cumulative_action_charge": 332977,
+    "previous_independently_verified_prefix_actions": 32740,
+    "terminal_independent_full_journal_replay": false,
+    "limit": "The prior independently verified prefix is not extended to the entire332977. Terminal uses producer counters plus newly sampled raw/RPC hashes."
+  },
+  "scientific_limit": "One seed on a predeclared task with ten ceiling native query states. Final success equals native10/10; shorter query behavior is descriptive and is not deployment sample-efficiency or meta-learning proof. Entire50-checkpoint curve and390k regression retained.",
+  "next_runtime_check": null,
+  "final_learned_immutable_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/learned-500000-recovery.pkl",
+    "bytes": 681875808,
+    "actual_sha256": "f4339f69a7e5e40a55dcd37feda40c510b62fa76ebd488551c289d032ce2a83e",
+    "matched_final_native_immutable_recovery": true,
+    "meaning": "Independent exact final500k archive hash equals the final-native archive, consistent with query RNG/learner isolation."
+  }
+}

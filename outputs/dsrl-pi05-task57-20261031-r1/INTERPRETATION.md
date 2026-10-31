@@ -3,7 +3,27 @@
 Read-only discussion, 2026-10-31. This note does not change the active run,
 launch another experiment, select new cases or spend another budget.
 
-## Current material result,19:56 Shanghai
+## Fixed endpoint complete,22:04 Shanghai
+
+Task57 is terminal Succeeded/exit0 at500,220 updates. Final learned and
+final native both score10/10, with1244 versus1451 primitives plus100 settling
+each (14.27% fewer primitives). Initial/final native totals agree. The
+390080-update9/10 panel remains the sole query regression across all52 panels;
+no checkpoint was selected by target score. Training1890/1892, all-in332,977
+actions and28,686 GPU-seconds. Entire-motor before/after hashes match and full
+recovery bytes rehash correctly. No new terminal restore or independent full
+journal replay is claimed. [Exact terminal evidence](TERMINAL-RECEIPT.json).
+
+This supports actual noise-controller learning and lower final completion cost
+on this one reused bank. It does not reproduce a success-rate improvement,
+prove reliable competence across seeds, or establish memory, transfer or total
+sample efficiency after training costs. An untrained tied-noise control is
+absent. Native stability makes simple runtime drift less plausible; stochastic
+sampling and learned-policy instability remain explanations for the retained
+regression. Target57 stays development-only, outside source pretraining.
+The dated observations/proposals below are historical, not new launch authority.
+
+## Historical material result,19:56 Shanghai
 
 The390080-update panel is9/10,1518 query primitives+100 settling, versus
 native10/10,1451+100. State48 fails at400 actions after native success152,

@@ -1,0 +1,7 @@
+Task57 completed exit0 at500,220actual SAC updates. Final learned policy and final native both scored10/10 on the same ten query states/seeds; learned behavior used1244primitives versus1451native (207fewer,14.27%). Settling cost100actions for eachpanel is separate. Initial and final native totals both1451primitives.
+
+The saved curve contains52complete panels/520query episodes,519successes;390,080updates had the sole9/10panel. Training1890/1892successes,25,504replay chunks; both training timeouts retained. This ceiling-bank single-seed result demonstrates preserved final success with shorter behavior on these cases, without establishing higher success, deployment sample efficiency or a meta-learning benefit.
+
+The entire frozen motor parameter signature remainsc565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9 before/after. Latest full learner/replay/optimizer/sampler/global+motorRNG recovery and final-native immutable recovery have matching saved/actual hashes. Field coverage is documented from the pinned save/restore code; no new terminal deserialize/model/test was run.
+
+Actual settled GPU charge28,686seconds of36,000,unused7314released. Producer costs261,157training+71,810query+10qualification=332,977simulator actions; storage38,906,245,784bytes. The prior independent32740-action prefix is not a full332977-action journal reconciliation; final proof retains this limit and verifies new raw/RPC samples,complete panels and counters. No further runtime polling is needed.

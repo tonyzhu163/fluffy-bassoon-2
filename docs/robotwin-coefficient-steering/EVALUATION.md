@@ -1,5 +1,35 @@
 # Frozen Motus steering evaluation
 
+## Closed replay diagnosis: requests exact, physics unresolved
+
+The one corrected4bb inspection succeeded on Baige `job-a3luoqs9bwkn`:
+13/13 focused tests, actual0GPU/2CPU/16GiB,81 all-in CPU-worker-seconds.
+All608 valid teacher00/01/02 requests exactly match admitted HDF5 commands,
+including final-target holds; all seeds, instructions and14 initial drive
+targets match. This rules out a wrong reference index or altered issued command
+in these inspected records. Failed02 nonterminal arm end-drive residuals are
+at most0.00036648rad and gripper residual0. Successful00/01 terminal comparisons
+are partial-command qualified. Drive targets are not measured joints or object
+poses. No cache, fit, simulator or model ran in this inspection.
+
+Reference02 closes the gripper at frames50..63 while the arm is stationary
+47..70; opening109..122 occurs in stationary106..128. Successful00/01 have
+similar hold/transition patterns. Native arm compression/TOPP retiming and
+separate original-slot gripper timing differ from author dense execution;
+this is a candidate mechanism, not an explanation established by these traces.
+The saved reset head images appear closely matched, while wrist views differ.
+Native actor poses, measured joints, camera matrices and merged task_config
+were not saved, so scene identity remains unproven. Final images compare source
+frame128 with actual command400, without synchronized physics timing.
+
+The fixed8TRAIN/4VAL demonstrations, including failed02, remain intact. The
+next step is a narrow successor proposal with retained/repeated episodes,
+recovery and costs before dispatch. There is no automatic teacher exclusion,
+refit, executor change, GPU retry or source admission. Whole phase CPU spend
+is827/1800 with973 remaining; GPU/action spend stays2036/18599. Earlier gates
+and their failures remain below. [Report and exact evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/REPLAY-DIAGNOSIS-RESULT.md),
+[parent saved-artifact review](../../outputs/frozen-pi05-endtoend-20261031-r1/REPLAY-DIAGNOSIS-PARENT-REVIEW.json).
+
 ## Current capacity run stopped before fitting
 
 Baige `job-471ns3j0v2n4`, source `8fb991c8`, is terminalFailed/exit1. Actual
