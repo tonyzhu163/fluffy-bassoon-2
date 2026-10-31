@@ -38,6 +38,19 @@ def verify_condition_cross(profile,prefix,*,objective):
     from .robotwin_history_corpus import parameter_digest,CorpusReader,_decode
     from .steering_condition_collection import _state_digest
     from .steering_history_prefix import _physical_case
+    from .warmstart import checked_load
+    calibration=plan.get("condition_contract")
+    if (not isinstance(calibration,dict)
+            or [r.get("condition_id") for r in calibration.get("conditions",[])]!=conditions
+            or [r.get("sign") for r in calibration["conditions"]]!=[-1,1]
+            or any(r.get("mapping_sha256")!=interface["mapping_sha256"]
+                   or r.get("motor_sha256")!=interface["motor_sha256"] for r in calibration["conditions"])):
+        raise ValueError("A2 hidden calibration identities differ from the source conditions/mapping/motor")
+    for slot in prefix["lineages"]:
+        original=checked_load(reference(slot["final_recovery"]),slot["final_recovery"]["sha256"],weights_only=False)
+        if (original.get("format")!="source_coefficient_full_recovery_v1"
+                or original.get("control",{}).get("mapping",{}).get("condition_audit_contract")!=calibration):
+            raise ValueError("A2 hidden calibration differs from the original source full-recovery contract")
     identities={}
     for method in primary:
         slot=next(x for x in prefix["lineages"] if x["lineage_id"]==method)
@@ -136,6 +149,10 @@ def verify_condition_cross(profile,prefix,*,objective):
                     or meta.get("frozen_controller_ref")!=refs[spec["method"]]
                     or meta.get("cross_actor_sampling_mode")!="sampled_gaussian"
                     or meta.get("cross_actor_innovation_seed")!=1930000000+997*scene
+                    or meta.get("steering_condition_id")!=spec["condition_id"]
+                    or meta.get("steering_mapping_sha256")!=interface["mapping_sha256"]
+                    or meta.get("steering_interface_sha256")!=interface["control_interface_sha256"]
+                    or meta.get("coefficient_steering",{}).get("audit_only",{}).get("mapping",{}).get("condition_audit_contract")!=calibration
                     or meta.get("optimizer_updates")!=identities[spec["method"]][1]):
                 raise ValueError("A2 raw records used another actor, counter or sampling convention")
             native=chunk["native_result"];outcome=chunk["learning_result"]

@@ -4,6 +4,7 @@ Tiny synthetic worlds verify admission semantics, not physical robot success.
 """
 from copy import deepcopy
 import json
+import random
 
 import numpy as np
 import pytest
@@ -22,6 +23,23 @@ def raw_cross(source, tmp_path):
     p, prefix = deepcopy(source)
     p["prefix_episodes"] = 24
     prefix["source_publications"] = {}
+    calibration=dict(conditions=[dict(condition_id=c,sign=sign,
+        mapping_sha256=p["interface"]["mapping_sha256"],motor_sha256=p["interface"]["motor_sha256"])
+        for c,sign in zip(p["conditions"],(-1,1))])
+    for slot in prefix["lineages"]:
+        state=torch.load(slot["final_recovery"]["path"],weights_only=False)
+        full=dict(format="source_coefficient_full_recovery_v1",python_rng=random.getstate(),
+            numpy_rng=np.random.get_state(),torch_rng=torch.get_rng_state(),cuda_rng=None,event="published_prefix_full_state",
+            control=dict(mapping=dict(condition_audit_contract=calibration)),
+            collector=dict(format="source_coefficient_teacher_v1",learner=state,active_episode=None,pending=None,
+                pending_update_cycles=0,updating=False,
+                lineage=dict(method=slot["lineage_id"],partition=slot["partition"],learner_seed=slot["seed"]),
+                profile=dict(task=p["source_task"],motor_sha256=p["interface"]["motor_sha256"],
+                    mapping_sha256=p["interface"]["mapping_sha256"],interface_sha256=p["interface"]["control_interface_sha256"],
+                    scope_sha256=p["scope_sha256"])))
+        path=tmp_path/(slot["lineage_id"]+"-full.pt")
+        torch.save(full,path)
+        slot["final_recovery"]=dict(ref(path),retention="immutable",size_bytes=path.stat().st_size)
     methods = [p["teacher_lineage_ids"][c] for c in p["conditions"]]
     controller_refs, frozen = {}, {}
     writer = RobotwinCorpusWriter(tmp_path / "cross-corpus", {"source_commit": "f" * 40})
@@ -51,7 +69,7 @@ def raw_cross(source, tmp_path):
     validation_refs = []
     for method in methods:
         slot = next(x for x in prefix["lineages"] if x["lineage_id"] == method)
-        state = torch.load(slot["final_recovery"]["path"], weights_only=False)
+        state = sh._source_state(slot["final_recovery"],lineage=slot,profile=p)
         sha = parameter_digest(state["actor"])
         controller_refs[method] = dict(slot["final_recovery"], policy_sha256=sha,
             optimizer_updates=state["updates"], source_method=method, sampling_mode="sampled_gaussian")
@@ -98,11 +116,15 @@ def raw_cross(source, tmp_path):
                     records.append(episode(spec, dict(policy_version=f"frozen-cross:{method}:{controller_refs[method]['policy_sha256']}",
                         frozen_controller_ref=controller_refs[method], cross_actor_sampling_mode="sampled_gaussian",
                         cross_actor_innovation_seed=1930000000 + 997 * case,
+                        steering_condition_id=condition,steering_mapping_sha256=p["interface"]["mapping_sha256"],
+                        steering_interface_sha256=p["interface"]["control_interface_sha256"],
+                        coefficient_steering=dict(audit_only=dict(mapping=dict(condition_audit_contract=calibration))),
                         optimizer_updates=controller_refs[method]["optimizer_updates"]), success))
         plan = dict(format="source_only_frozen_condition_cross_v1", profile=control, specs=specs,
             controller_refs=controller_refs, condition_blind_method=blind, frozen=frozen,
             blind_selection_ref=selection_ref, actor_seeds_by_scene=[1930000000 + 997 * i for i in range(4)],
             paired_gap=.25, aggregate_blind_gap=.125, source_sgd=0)
+        plan["condition_contract"]=deepcopy(calibration)
         plan_ref = json_ref(tmp_path / "plan.json", plan)
         result = dict(format=plan["format"], status="complete", plan_sha256=sh.content_hash(plan),
             records=records, pending=None, active_actor_rng=None,
@@ -132,6 +154,7 @@ def test_failed_raw24_cannot_be_admitted_by_success_flags(raw_cross):
 @pytest.mark.parametrize("mutation,expected", [
     ("sampling", "actor/update/RNG"), ("actor", "actor/update/RNG"),
     ("duplicate", "duplicated"), ("teacher", "different actual acting"),
+    ("calibration", "original source full-recovery"),
 ])
 def test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher(raw_cross, tmp_path, mutation, expected):
     p, prefix, plan, result = raw_cross()
@@ -144,6 +167,8 @@ def test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher(raw_cross, tmp_
         plan["controller_refs"][method]["optimizer_updates"] += 1
     elif mutation == "duplicate":
         result["records"][-1] = deepcopy(result["records"][0])
+    elif mutation == "calibration":
+        plan["condition_contract"]["conditions"][0]["bias_radians"]=[999.]*14
     else:
         q = sh.read_json(prefix["teacher_qualifications"]["left"])
         other = next(x for x in prefix["lineages"] if x["lineage_id"] == p["teacher_lineage_ids"]["right"])
