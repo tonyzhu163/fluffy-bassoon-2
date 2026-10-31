@@ -52,8 +52,9 @@ bash scripts/diagnostics/vla_target_online_dsrl_task57.sh \
 
 The run output must be fresh and distinct from the grant/plan directory. The
 pause and slice length change execution only, never scientific phase limits.
-The launcher checks the actual allocated GPU and runs only the new glue/recovery
-tests before model execution. It never requests an allocation itself. Setup-only
+New glue/recovery tests run once on allocated0GPU Linux before the exact source
+is admitted. The launcher checks the actual allocated GPU and never requests
+an allocation itself. Setup-only
 failure can resume with its old cost journal; missing scientific recovery after
 training/query actions is rejected. Protected prior onset/six/long runs are not
 modified or reused.

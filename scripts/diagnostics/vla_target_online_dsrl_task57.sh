@@ -27,7 +27,6 @@ TASK_PROBE=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
 TASK_OPENPI=$TASK_OLD/third_party/openpi-215abfb
 TASK_DSRL=$TASK_ROOT/deps/dsrl-pi0-7f48937-20261029-r1/repo
 TASK_DSRL_OVERLAY=$TASK_ROOT/envs/dsrl-pi0-overlay-20261029-r1
-TASK_TEST=$TASK_ROOT/envs/pytest-overlay-20261029-r1
 TASK_LIBERO=$TASK_ROOT/deps/libero-dsrl-87edbd1-20261029-r1/repo
 TASK_SIM=/mowenjie/envs/wam-libero-plus-py310/bin/python
 if [ "${#TASK_RESUME[@]}" -eq 0 ]; then test ! -e "$TASK_OUT"; mkdir -p "$TASK_OUT";
@@ -66,10 +65,8 @@ export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
 "$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
   --baige-container --baige-exclusive-training --output "$TASK_ATTEMPT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_ATTEMPT/gpu-probe.json
-CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=$TASK_TEST:$TASK_WT/src \
-  "$TASK_PROBE" -m pytest -q -p no:cacheprovider \
-  tests/test_vla_target_online_dsrl_task57.py tests/test_vla_target_online_dsrl_task57_recovery.py \
-  > "$TASK_ATTEMPT/task57-tests.log" 2>&1
+# New glue/recovery tests are qualified once on allocated0GPU Linux before
+# this exact source is admitted. Do not repeat CPU tests on paid GPU time.
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export OPENPI_DATA_HOME=$TASK_OLD/cache/openpi-215abfb
 export LIBERO_CONFIG_PATH=$TASK_ROOT/cache/libero-dsrl-87edbd1-20261029-r1
