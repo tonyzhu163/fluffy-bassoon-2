@@ -9,7 +9,7 @@ OpenPI and LIBERO sources and distinguishes this work from Pi0.5.
 The single-seed pilot improved from 4/10 native successes to its first 10/10
 learned panel at 40k optimizer updates. It then scored 10/10 in 16 consecutive
 panels through 190k. The latest panel scored 10/10 at
-290k updates, after 15,003 replay query rows and 291,754 training primitive
+320k updates, after 16,505 replay query rows and 320,769 training primitive
 actions. The 200k panel scored 9/10; the full curve retains this dip and the
 subsequent panels. The run is still active, with one seed and 10 evaluation
 episodes per panel. It does not establish the paper's three-seed aggregate or
@@ -47,6 +47,9 @@ its sample-efficiency confidence interval.
 | Learned SAC | 270000 | 14006 | 272445 | 10 | 10 | 1500 |
 | Learned SAC | 280000 | 14505 | 282136 | 10 | 10 | 1634 |
 | Learned SAC | 290000 | 15003 | 291754 | 10 | 10 | 1452 |
+| Learned SAC | 300000 | 15504 | 301398 | 10 | 10 | 1372 |
+| Learned SAC | 310000 | 16006 | 311130 | 10 | 10 | 1430 |
+| Learned SAC | 320000 | 16505 | 320769 | 10 | 10 | 1513 |
 
 The initial native panel completed at 2026-11-01 02:18:55 Shanghai after
 replay >500 warmup and before the first SAC update. It uses the original random
@@ -62,18 +65,21 @@ counts are separate units. This is directional evidence for the reported
 steering gain, with one seed and only 10 evaluation episodes per panel; it is
 not a claim of better sample efficiency than the published aggregate.
 
-At the direct allocation audit (`2026-11-01T05:26:13.771310+08:00`), the last published
-progress was 299,660 updates, 1,675 training episodes and 15,483 replay rows. The
-complete recovery at 292,760 updates and all 30 retained evaluation
-policy/RNG snapshots (0 through 290k) matched their saved SHA256 hashes.
+At the direct allocation audit (`2026-11-01T05:45:38.933098+08:00`), the last published
+progress was 329,800 updates, 1,868 training episodes and 16,990 replay rows. The
+complete recovery at 323,100 updates and all 34 retained evaluation
+policy/RNG snapshots (0 through 330k) matched their saved SHA256 hashes.
+The 330k snapshot was written before its evaluation; the 330k result had not
+yet been published at the independent metrics read. The latest complete panel
+in this receipt is 320k.
 The current process still held the allocated GPU's compute and graphics
-contexts. Current-run output was 5,032,013,335 bytes. The physical ledger,
+contexts. Current-run output was 5,559,121,101 bytes. The physical ledger,
 read separately during a live collection/update boundary, contained
-357,907 known actions and 0 pending actions. Retain
-the additional 400 pending actions from failed R3, for 358,307 conservatively
+391,934 known actions and 400 pending actions. Retain
+the additional 400 pending actions from failed R3, for 392,734 conservatively
 charged phase actions at that ledger read. Counting conservatively from job
 creation through this audit, plus prior failures, bounds cumulative GPU time
-at 12,313 seconds; the final worker lifetime is pending. The final before/after
+at 13,478 seconds; the final worker lifetime is pending. The final before/after
 motor hash comparison remains pending the run's terminal cleanup.
 
 During the 04:45 check, one NVML query reported compute-only activity for the
@@ -99,8 +105,8 @@ actions and 64 GiB output, including 660 conservatively charged GPU-seconds and
 400 unresolved actions from failed startup identities.
 
 [Initial receipt](../../outputs/dsrl-pi0-task57-20261101-r1/INITIAL-NATIVE-RESULT.json),
-[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0525.json),
-[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0525-DIRECT.json),
-[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0525-CURVE.csv),
+[current audit](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0545.json),
+[direct checkpoint and metrics receipt](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0545-DIRECT.json),
+[observed curve](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0545-CURVE.csv),
 [console evidence](../../outputs/dsrl-pi0-task57-20261101-r1/CHECK-0245-EVIDENCE.log),
 [launch plan](../../outputs/dsrl-pi0-task57-20261101-r1/GPU-LAUNCH-PLAN.json).
