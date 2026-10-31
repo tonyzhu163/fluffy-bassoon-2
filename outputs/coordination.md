@@ -41,7 +41,10 @@ show experience changes a useful later decision. The
 [steering-headroom audit](steering-headroom-audit-20261031-r1/AUDIT.md) gives
 the paired fixed100 evidence. The earlier
 [headroom diagnosis](archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
-archived as superseded, with corrections listed at its top.
+archived as superseded, with corrections listed at its top. A
+[proposed amendment](steering-interface-criteria-20261031-r1/PROPOSAL.md)
+adds search reachability, condition dependence and per-condition data reuse
+to interface selection; not adopted until the user decides.
 
 ## Coordination rules in force
 
