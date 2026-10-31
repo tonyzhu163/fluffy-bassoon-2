@@ -1,0 +1,7 @@
+The one allocated CPU inspection completed exit0:13/13tests passed in1.23s,actual0GPU/2CPU/16GiB,81all-in worker-seconds. Phase CPU total827/1800,973remaining;219unused from the300hold released. No model/simulator/SGD/newrobotactions or live ledger/checkpoint load.
+
+All608valid teacher requests match the admitted HDF5 references exactly, including the final-target hold. Teacher00/01/02 each match their saved seed,instruction and all14initial drive targets. Failed02 nonterminal end-drive arm residuals are at most0.00036648rad with gripper residual0; terminal-success end-state comparisons for00/01 are explicitly partial-command qualified. This establishes request/nominal drive-target evidence, without proving measured joint/object trajectories.
+
+The source executor compresses/re-times arms and separately allocates gripper timing, while the author data comes from dense execution/save_freq15 plus boundary captures. Cadence and native stationary-arm planner jitter are candidate mechanisms, not an established cause of02failure. Native actor variant/poses,merged task_config/get_info and camera matrices were not saved,so full scene identity remains unproven.
+
+The twelve saved paired PNG panels and608-row command CSV are retained. Viewing the failed02final panel shows different phone/gripper-relative geometry across source/actual views; these are sourceframe128 versus actualcommand400 and are not synchronized physics states. No teacher exclusion,refit,executor change or GPU retry follows from this inspection.
