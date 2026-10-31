@@ -16,7 +16,10 @@ from .robotwin_event_schedule import build_schedule
 from .robotwin_reactive_fit import ReplayTeacherHead
 
 FORMAT='robotwin_phone04_prelift_closure_pair_v1'
+FACTORIAL_FORMAT='robotwin_phone04_prelift_dose_grip_factorial_v1'
 CONDITIONS=('hold_current','close_endpoint')
+FACTORIAL_CASES=((1,'hold_current'),(1,'close_endpoint'),(5,'hold_current'),(5,'close_endpoint'))
+FACTORIAL_PRIORITY=('dose1-close_endpoint','dose1-hold_current','dose5-close_endpoint','dose5-hold_current')
 JOINT=6
 
 
@@ -24,8 +27,11 @@ def sha_json(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
 
-def probe_schedule(targets):
-    """Only insert one H32 command after the original first closing phase."""
+def probe_schedule(targets,probe_holds=1,*,protocol=FORMAT):
+    """Keep the qualified one-hold default; new factorial admits only1 or5."""
+    if (type(probe_holds) is not int or probe_holds not in (1,5)
+            or protocol not in (FORMAT,FACTORIAL_FORMAT) or (protocol==FORMAT and probe_holds!=1)):
+        raise ValueError('Exactly the old one hold or prospectively declared factorial1/5 holds')
     schedule=build_schedule(targets)
     closing=[e for e in schedule['events'] if e['joint']==JOINT and e['direction']==-1]
     if (len(targets)!=140 or not closing or closing[0]['start']!=56
@@ -36,10 +42,14 @@ def probe_schedule(targets):
     entries=[]
     for index,chunk in enumerate(schedule['chunks']):
         entries.append(dict(kind='source',source_chunk=index,start=chunk['start'],end=chunk['end']))
-        if index==2:entries.append(dict(kind='probe',start=70,end=70,source_chunk=None))
-    return dict(format=FORMAT,source_schedule=schedule,entries=entries,reference_frames=140,
-        insertion_after_source_chunk=2,original_full_slots=224,full_slots_with_probe=256,
-        minimum_slots_to_issue_every_original_frame=230,native_episode_limit=400,
+        if index==2:
+            for repeat in range(probe_holds):
+                entry=dict(kind='probe',start=70,end=70,source_chunk=None)
+                if protocol==FACTORIAL_FORMAT:entry.update(probe_repetition_index=repeat,probe_holds=probe_holds)
+                entries.append(entry)
+    return dict(format=protocol,source_schedule=schedule,entries=entries,reference_frames=140,
+        insertion_after_source_chunk=2,original_full_slots=224,full_slots_with_probe=224+32*probe_holds,
+        minimum_slots_to_issue_every_original_frame=198+32*probe_holds,native_episode_limit=400,
         target_kind='current public12 arm drives+2 nominal grippers; change only active grip for treatment')
 
 
@@ -61,10 +71,15 @@ def preflight04(profile,demos,*,guard):
     ref=demos['actual_whole_files']['phone-04'];path=Path(ref['path'])
     if not path.is_absolute() or path.is_symlink() or file_sha(path)!=ref['sha256']:
         raise ValueError('Exact original04 file required, no new teacher')
-    guard();_,targets=read_episode(path,row,demos['schema']);plan=probe_schedule(targets)
-    if plan!=profile['expected_schedule']:raise ValueError('Fixed real04 profile schedule differs')
+    guard();_,targets=read_episode(path,row,demos['schema'])
+    if profile['format']==FACTORIAL_FORMAT:
+        plan={str(n):probe_schedule(targets,n,protocol=FACTORIAL_FORMAT) for n in (1,5)}
+        if plan!=profile['expected_schedules']:raise ValueError('Fixed factorial real04 schedules differ')
+    else:
+        plan=probe_schedule(targets)
+        if plan!=profile['expected_schedule']:raise ValueError('Fixed real04 profile schedule differs')
     guard()
-    return dict(format=FORMAT,status='schedule_pass_only',source=ref,schedule=plan,
+    return dict(format=profile['format'],status='schedule_pass_only',source=ref,schedule=plan,
         close_endpoint=float(targets[69,6]),whole_original_bank_retained=True,
         new_robot_actions=0,model_forwards=0,SGD=0,
         interpretation='Plan qualification only; no physical/mechanism success or GPU admission')
@@ -149,7 +164,7 @@ class PreliftHead(ReplayTeacherHead):
     def __init__(self):
         super().__init__();self.plan=None;self.execution_index=0;self.probe_target=None;self.condition=None
     def config(self):
-        return dict(kind=FORMAT,reference=self.reference,plan=self.plan,condition=self.condition,
+        return dict(kind=FORMAT if self.plan is None else self.plan['format'],reference=self.reference,plan=self.plan,condition=self.condition,
             policy_inputs='expert diagnostic only; no learned policy/cache/fit admission')
     def forward(self,base,features):
         if self.targets is None or self.plan is None:raise ValueError('No complete source04 reference')
@@ -171,9 +186,9 @@ class PreliftControl(EventEpisodeControl):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.probe_plan=None;self.condition=None;self.probe_current14=None;self.prelude=[];self.probe_profile_ref=None
-    def select_probe(self,targets,reference,condition):
+    def select_probe(self,targets,reference,condition,*,probe_holds=1,protocol=FORMAT):
         if self.active or condition not in CONDITIONS:raise ValueError('Closed control/declared condition required')
-        self.probe_plan=probe_schedule(targets);self.schedule=None
+        self.probe_plan=probe_schedule(targets,probe_holds,protocol=protocol);self.schedule=None
         self.replay=PreliftHead().eval();self.replay.targets=torch.as_tensor(targets,device=self.env.backend.model.device)
         self.replay.plan=self.probe_plan;self.replay.reference=deepcopy(reference);self.replay.condition=condition
         self.condition=condition;self.probe_current14=None;self.prelude=[]
@@ -186,13 +201,13 @@ class PreliftControl(EventEpisodeControl):
         before=deepcopy(self.cursor);index=before['chunk_index'];entries=self.probe_plan['entries']
         entry=entries[index] if index<len(entries) else dict(kind='tail',start=140,end=140,source_chunk=None)
         self.replay.execution_index=index
-        if entry['kind']=='probe':
+        if entry['kind']=='probe' and self.probe_current14 is None:
             raw=self.env.backend._raw_obs['states']
             current=(raw.detach().cpu().numpy() if isinstance(raw,torch.Tensor) else np.asarray(raw)).reshape(14)
             self.probe_current14=current.astype(np.float32).copy()
             request=probe_request(current,0.,self.condition)
             self.replay.probe_target=torch.as_tensor(request,device=self.env.backend.model.device)
-        self._pending_metadata=dict(self._pending_metadata,prelift_probe=dict(format=FORMAT,condition=self.condition,
+        self._pending_metadata=dict(self._pending_metadata,prelift_probe=dict(format=self.probe_plan['format'],condition=self.condition,
             profile=deepcopy(self.probe_profile_ref),
             entry=entry,execution_index=index,source_cursor_before=before['source_cursor'],
             physical_slots_before=before['physical_slots'],teacher_reference=deepcopy(self.replay.reference),
@@ -296,4 +311,36 @@ def compare_pair(records,priority):
     candidate=None if selected is None else dict(condition=selected['spec']['condition'],
         record_id=selected['spec']['id'],episode_manifest_ref=selected['episode_manifest_ref'],priority=priority,admitted=False,
         meaning='Predeclared candidate only; independent exact12-bank/protocol/cache qualification required')
+    return comparison,candidate
+
+
+def run_factorial(specs,episode,global_rng,*,restore=restore_rng,verify=assert_restored_rng):
+    """Four fixed fresh episodes share ONE prospective existing RNG fork."""
+    if ([(s['probe_holds'],s['condition']) for s in specs]!=list(FACTORIAL_CASES)
+            or len({s['id'] for s in specs})!=4):
+        raise ValueError('Exactly1current/1close/5current/5close; no old-run dose baseline')
+    records=[]
+    for index,spec in enumerate(specs):
+        restore(deepcopy(global_rng));verify(global_rng)
+        records.append(episode(deepcopy(spec),qualify=(index==0)))
+    return records
+
+
+def compare_factorial(records,priority):
+    if ([(r['spec']['probe_holds'],r['spec']['condition']) for r in records]!=list(FACTORIAL_CASES)
+            or priority!=list(FACTORIAL_PRIORITY) or any(r.get('complete') is not True for r in records)):
+        raise ValueError('All FOUR closed prospective cases and fixed smallest-dose/close-first priority required')
+    pairs={str(n):compare_pair(records[i:i+2],['close_endpoint','hold_current'])[0] for n,i in ((1,0),(5,2))}
+    common=len(records[0]['prelude_signatures'])==3 and all(r['prelude_signatures']==records[0]['prelude_signatures'] for r in records)
+    first_targets=all(r['probe_target14'] is not None for r in records)
+    same_dose_anchor=first_targets and all(
+        np.array_equal(np.asarray(records[i]['probe_target14']),np.asarray(records[i+2]['probe_target14'])) for i in (0,1))
+    selected=next((r for key in priority for r in records if r['spec']['case_key']==key and r['success']),None)
+    comparison=dict(all_four_preludes_exact=common,same_grip_cross_dose_probe_targets_exact=bool(same_dose_anchor),
+        within_dose=pairs,actual_successes={r['spec']['case_key']:r['success'] for r in records},
+        recipe_comparison_eligible=bool(common and same_dose_anchor and all(p['mechanism_interpretation_eligible'] for p in pairs.values())),
+        interpretation='Matched prospective1vs5 repeated-native-hold recipes; extra TOPP micro-motion/RNG consumption precludes pure elapsed-time causality. OldE is historical only, no significance/class/fit/all12bank claim.')
+    candidate=None if selected is None else dict(case_key=selected['spec']['case_key'],probe_holds=selected['spec']['probe_holds'],
+        condition=selected['spec']['condition'],record_id=selected['spec']['id'],episode_manifest_ref=selected['episode_manifest_ref'],
+        priority=priority,admitted=False,meaning='Nomination after all four closed; explicit new-profile fixed12 assembler admission still required')
     return comparison,candidate

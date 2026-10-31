@@ -1,0 +1,451 @@
+{
+  "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+  "teacher_id": "phone-04",
+  "conditions": [
+    "hold_current",
+    "close_endpoint"
+  ],
+  "probe_doses": [
+    1,
+    5
+  ],
+  "maximum_complete_episodes": 4,
+  "maximum_new_actions": 1600,
+  "maximum_gpu_seconds": 900,
+  "expected_schedules": {
+    "1": {
+      "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+      "source_schedule": {
+        "format": "robotwin_gripper_event_h32_v1",
+        "reference_frames": 140,
+        "threshold": 1e-05,
+        "boundaries": [
+          0,
+          56,
+          70,
+          120,
+          134,
+          140
+        ],
+        "events": [
+          {
+            "joint": 6,
+            "direction": -1,
+            "start": 56,
+            "end_exclusive": 70
+          },
+          {
+            "joint": 6,
+            "direction": 1,
+            "start": 120,
+            "end_exclusive": 134
+          }
+        ],
+        "chunks": [
+          {
+            "start": 0,
+            "end": 32,
+            "new_frames": 32,
+            "issued_slots": 32,
+            "added_holds": 0
+          },
+          {
+            "start": 32,
+            "end": 56,
+            "new_frames": 24,
+            "issued_slots": 32,
+            "added_holds": 8
+          },
+          {
+            "start": 56,
+            "end": 70,
+            "new_frames": 14,
+            "issued_slots": 32,
+            "added_holds": 18
+          },
+          {
+            "start": 70,
+            "end": 102,
+            "new_frames": 32,
+            "issued_slots": 32,
+            "added_holds": 0
+          },
+          {
+            "start": 102,
+            "end": 120,
+            "new_frames": 18,
+            "issued_slots": 32,
+            "added_holds": 14
+          },
+          {
+            "start": 120,
+            "end": 134,
+            "new_frames": 14,
+            "issued_slots": 32,
+            "added_holds": 18
+          },
+          {
+            "start": 134,
+            "end": 140,
+            "new_frames": 6,
+            "issued_slots": 32,
+            "added_holds": 26
+          }
+        ],
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 84,
+        "minimum_slots_to_issue_every_original_frame": 198,
+        "native_episode_limit": 400,
+        "admissible": true,
+        "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+      },
+      "entries": [
+        {
+          "kind": "source",
+          "source_chunk": 0,
+          "start": 0,
+          "end": 32
+        },
+        {
+          "kind": "source",
+          "source_chunk": 1,
+          "start": 32,
+          "end": 56
+        },
+        {
+          "kind": "source",
+          "source_chunk": 2,
+          "start": 56,
+          "end": 70
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 0,
+          "probe_holds": 1
+        },
+        {
+          "kind": "source",
+          "source_chunk": 3,
+          "start": 70,
+          "end": 102
+        },
+        {
+          "kind": "source",
+          "source_chunk": 4,
+          "start": 102,
+          "end": 120
+        },
+        {
+          "kind": "source",
+          "source_chunk": 5,
+          "start": 120,
+          "end": 134
+        },
+        {
+          "kind": "source",
+          "source_chunk": 6,
+          "start": 134,
+          "end": 140
+        }
+      ],
+      "reference_frames": 140,
+      "insertion_after_source_chunk": 2,
+      "original_full_slots": 224,
+      "full_slots_with_probe": 256,
+      "minimum_slots_to_issue_every_original_frame": 230,
+      "native_episode_limit": 400,
+      "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+    },
+    "5": {
+      "format": "robotwin_phone04_prelift_dose_grip_factorial_v1",
+      "source_schedule": {
+        "format": "robotwin_gripper_event_h32_v1",
+        "reference_frames": 140,
+        "threshold": 1e-05,
+        "boundaries": [
+          0,
+          56,
+          70,
+          120,
+          134,
+          140
+        ],
+        "events": [
+          {
+            "joint": 6,
+            "direction": -1,
+            "start": 56,
+            "end_exclusive": 70
+          },
+          {
+            "joint": 6,
+            "direction": 1,
+            "start": 120,
+            "end_exclusive": 134
+          }
+        ],
+        "chunks": [
+          {
+            "start": 0,
+            "end": 32,
+            "new_frames": 32,
+            "issued_slots": 32,
+            "added_holds": 0
+          },
+          {
+            "start": 32,
+            "end": 56,
+            "new_frames": 24,
+            "issued_slots": 32,
+            "added_holds": 8
+          },
+          {
+            "start": 56,
+            "end": 70,
+            "new_frames": 14,
+            "issued_slots": 32,
+            "added_holds": 18
+          },
+          {
+            "start": 70,
+            "end": 102,
+            "new_frames": 32,
+            "issued_slots": 32,
+            "added_holds": 0
+          },
+          {
+            "start": 102,
+            "end": 120,
+            "new_frames": 18,
+            "issued_slots": 32,
+            "added_holds": 14
+          },
+          {
+            "start": 120,
+            "end": 134,
+            "new_frames": 14,
+            "issued_slots": 32,
+            "added_holds": 18
+          },
+          {
+            "start": 134,
+            "end": 140,
+            "new_frames": 6,
+            "issued_slots": 32,
+            "added_holds": 26
+          }
+        ],
+        "full_schedule_slots": 224,
+        "full_schedule_added_holds": 84,
+        "minimum_slots_to_issue_every_original_frame": 198,
+        "native_episode_limit": 400,
+        "admissible": true,
+        "interpretation": "Schedule retains every source frame; successful physics may stop before all are consumed"
+      },
+      "entries": [
+        {
+          "kind": "source",
+          "source_chunk": 0,
+          "start": 0,
+          "end": 32
+        },
+        {
+          "kind": "source",
+          "source_chunk": 1,
+          "start": 32,
+          "end": 56
+        },
+        {
+          "kind": "source",
+          "source_chunk": 2,
+          "start": 56,
+          "end": 70
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 0,
+          "probe_holds": 5
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 1,
+          "probe_holds": 5
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 2,
+          "probe_holds": 5
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 3,
+          "probe_holds": 5
+        },
+        {
+          "kind": "probe",
+          "start": 70,
+          "end": 70,
+          "source_chunk": null,
+          "probe_repetition_index": 4,
+          "probe_holds": 5
+        },
+        {
+          "kind": "source",
+          "source_chunk": 3,
+          "start": 70,
+          "end": 102
+        },
+        {
+          "kind": "source",
+          "source_chunk": 4,
+          "start": 102,
+          "end": 120
+        },
+        {
+          "kind": "source",
+          "source_chunk": 5,
+          "start": 120,
+          "end": 134
+        },
+        {
+          "kind": "source",
+          "source_chunk": 6,
+          "start": 134,
+          "end": 140
+        }
+      ],
+      "reference_frames": 140,
+      "insertion_after_source_chunk": 2,
+      "original_full_slots": 224,
+      "full_slots_with_probe": 384,
+      "minimum_slots_to_issue_every_original_frame": 358,
+      "native_episode_limit": 400,
+      "target_kind": "current public12 arm drives+2 nominal grippers; change only active grip for treatment"
+    }
+  },
+  "case_profiles": [
+    {
+      "profile": {
+        "case_key": "dose1-hold_current",
+        "probe_holds": 1,
+        "condition": "hold_current",
+        "teacher_id": "phone-04",
+        "reset_seed": 4,
+        "motor_seed": 20261205,
+        "instruction": "Take the black phone to the green phone rack.",
+        "schedule_sha256": "f8800e497625949671a3bfb311b0b72f0ca2239c66565eb5e042e434794a15ba"
+      },
+      "sha256": "2a75626bf4c2593842e8d2708e630bea925f94d612da2220143fefdc76631ade"
+    },
+    {
+      "profile": {
+        "case_key": "dose1-close_endpoint",
+        "probe_holds": 1,
+        "condition": "close_endpoint",
+        "teacher_id": "phone-04",
+        "reset_seed": 4,
+        "motor_seed": 20261205,
+        "instruction": "Take the black phone to the green phone rack.",
+        "schedule_sha256": "f8800e497625949671a3bfb311b0b72f0ca2239c66565eb5e042e434794a15ba"
+      },
+      "sha256": "657abb0421cfdbe598c324f202eadaa6f93b94c064ea6cd1fbeedd1a822df15b"
+    },
+    {
+      "profile": {
+        "case_key": "dose5-hold_current",
+        "probe_holds": 5,
+        "condition": "hold_current",
+        "teacher_id": "phone-04",
+        "reset_seed": 4,
+        "motor_seed": 20261205,
+        "instruction": "Take the black phone to the green phone rack.",
+        "schedule_sha256": "75e0a0ba317a27c03423ee3be188840385837bd5c9d258abeab414cb807fe687"
+      },
+      "sha256": "e5f18ffd9cf729bd470f9047c41d27d4b12a2e3d8b7c35afd8319e58e9baa1c2"
+    },
+    {
+      "profile": {
+        "case_key": "dose5-close_endpoint",
+        "probe_holds": 5,
+        "condition": "close_endpoint",
+        "teacher_id": "phone-04",
+        "reset_seed": 4,
+        "motor_seed": 20261205,
+        "instruction": "Take the black phone to the green phone rack.",
+        "schedule_sha256": "75e0a0ba317a27c03423ee3be188840385837bd5c9d258abeab414cb807fe687"
+      },
+      "sha256": "34ff6f3054b7377f8d18447a1f4dcc8f2e2f3bb93bc1ba6cb655693ea628e9ad"
+    }
+  ],
+  "demos_sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4",
+  "diagnosis": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-event-diagnosis-cpu-20261101-r1/inspection/report.json",
+    "sha256": "933b3f4452447a47a266d424c5b1bc0cd36c670071635173ea15c2c87ffafd0e"
+  },
+  "whole_split": {
+    "phone-00": "train",
+    "phone-01": "train",
+    "phone-02": "train",
+    "phone-03": "train",
+    "phone-04": "train",
+    "phone-05": "train",
+    "phone-06": "train",
+    "phone-07": "train",
+    "phone-08": "validation",
+    "phone-09": "validation",
+    "phone-10": "validation",
+    "phone-11": "validation"
+  },
+  "historical_result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-pair-r2/experiment/result.json",
+    "sha256": "4cb73332320944a02de21493b0580f01e7b94abea70809d820831a3dd9633245"
+  },
+  "historical_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-pair-r2/experiment/recovery.pt",
+    "sha256": "d3d17ab158454575e05f629294a0dd5f65c28eea57fa5ad03df6a77ea3c2a5f9"
+  },
+  "original_failure_result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+    "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+  },
+  "original_failure_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+    "sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153"
+  },
+  "previous_profile_sha256": "0072b8c2c8239fb28d2cee7999f6614c770cd4c11ade6404c6fd285751a77ba1",
+  "scalar_packet_manifest_sha256": "e7e5bcb14e1e877a57eeedf7ef8759ccea4e520630b7624cf1ea432cdad5f146",
+  "bank_candidate_priority": [
+    "dose1-close_endpoint",
+    "dose1-hold_current",
+    "dose5-close_endpoint",
+    "dose5-hold_current"
+  ],
+  "anchor": "Capture actual public14 ONCE after C3/sourcecursor70 per fresh episode; repeat that frozen anchor across1 or5 native H32 calls, changing only leftgrip6 for close.",
+  "rng": "After initialization fork exact latest closed E authoritative close_endpoint (historical one-hold) global Python/NumPy/TorchCPU/CUDA state before ALL FOUR fresh resets; privateVLAseed20261205each. Qualify firstcase only with global RNG preserved. Preserve all four poststates/privatecontrol states; final authoritative branch dose5-close_endpoint.",
+  "unchanged": "All140 originalframes/order, original8TRAIN4VAL/failures, frozenmotor/nativeH32/400/TOPP/actuator/interfacebound0.05; no adaptiveqpos/contact policy or observer changes.",
+  "expected_outcomes": {
+    "physical": "Fiveholds should advance measured preliftclosure beyond matchedonehold if dwell matters; measure notassume.",
+    "five_only_success": "Matchednewoneholdfail +fiveholdsuccess supports repeated-native-hold recipe on this prefix; extraTOPP micro-motion/RNG consumption meansnotpureelapsedtimecause.",
+    "one_hold_success": "Newoneholdsuccess forbids attributing gain versus historicaloldE to dose; report changedfork/newmatchedoutcomes.",
+    "both_doses_fail": "With adequatelyadvancedclosure weakenssimpletimingrescue, notresidualclass. Ifclosurestillweak, dose remains insufficiently manipulated.",
+    "invalid": "UnequalC1-C3 preludes/other13/within-gripcross-doseanchors or degeneratecontrast makesrecipecomparisoninconclusive; retain all outcomes, no blind retry."
+  },
+  "all_twelve_teacher_gate_passed": false,
+  "cache_fit_source_student_admitted": false,
+  "bank_rule": "Only after ALL FOUR naturally complete outcomes choose successful smallestdose thenclose priority; candidateadmittedfalse. Explicit newprofile exact12 assembler extension required; retain all failed rows/oldE null candidate."
+}
