@@ -21,6 +21,11 @@ live status in the single `outputs/coordination.md` (archived per the
   interactive zsh (`zsh -ic`) when needed to load the shell function.
 - Keep the main clone on `main`. Use detached worktrees for changes and
   commit-pinned runs.
+- Merge verified feature branches into `main` promptly, and rebase onto
+  `main` before starting new work; long-lived parallel branches diverge into
+  conflicting copies of the same commits. Push `outputs/coordination.md`
+  edits straight to `main`, changing only your own row, never only on a
+  feature branch.
 - For new runs, review and use the latest code on `main` before launch,
   recording its exact commit and relevant validation. Keep active runs
   immutable and record any later migration explicitly.
