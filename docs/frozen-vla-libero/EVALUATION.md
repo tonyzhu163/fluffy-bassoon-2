@@ -5,11 +5,14 @@ Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
 ## Task57 DSRL preserves10/10 with shorter observed query episodes
 
-Baigejob-iudscqfntb4e is active at fixed sourced001556. The15:19:38Shanghai
-snapshot on2026-10-31 contains389/389 successful training episodes,5,544
-replay chunks and101,020 optimizer updates, with72,601 all-in simulator actions
-and5.85GB outputs. Actor/critic/temperature metrics are finite. No training
-failure/recovery episode has appeared.
+Baigejob-iudscqfntb4e is active at fixed sourced001556. The15:37:00Shanghai
+snapshot on2026-10-31 contains480/480 successful training episodes,6,769
+replay chunks and125,520 optimizer updates, with87,903 all-in simulator actions
+and7.20GB outputs. Losses remain finite; full/newest-milestone/raw/RPC hashes
+match, with no new journal traversal. No training failure/recovery appeared.
+Newest complete panel:actual120,220 updates,10/10successes,1,239primitives
+plus100settles versus native1,451+100. The first ten checkpoints are below;
+full subsequent panels remain in the dated receipts. [Latest check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md).
 
 | Actual optimizer updates | Query success | Query primitives | Settling actions |
 | ---: | ---: | ---: | ---: |

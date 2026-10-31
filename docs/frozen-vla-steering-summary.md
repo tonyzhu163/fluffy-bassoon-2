@@ -36,16 +36,14 @@ the human. Train the noise controller while the entire official pi0.5 stays
 frozen. The new single-seed task57 profile follows the authors' PixelSAC recipe
 with pi0.5 H10 adaptation, varied training states0..39, matched query states40..49
 and a500k optimizer-update stop. It has a fresh <=10GPUh/1M-action/64GiB ceiling;
-implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At15:19:38 the run has389/389 training successes,5,544 replay chunks,
-101,020 SAC updates and72,601 all-in actions. Completed learned panels through
-actual100,220 updates all preserve native10/10. The latest uses1,270 query
-primitives versus native1,451 (12.5% fewer;11.7% including settling), with all10
-cases shorter. This is a small-bank cost signal, not greater success, memory
-benefit or overall sample efficiency after training cost. No failure/recovery
-histories have emerged. Full recoveries and sampled trace/RPC hashes passed;
-the new journal tail has only partial independent reconciliation. Continue the
-already authorized fixed curve under its caps; no case or recipe change.
-[Saved check](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1516.md),
+implementation and new-profile qualification are complete:16/16 allocated CPU checks passed,80 worker-seconds/0GPU. Baige job-iudscqfntb4e was submitted at14:06:36Shanghai; actual GPU/motorC565/same-noise checks passed. At15:37:00 the run has480/480 training successes,6,769 replay chunks,
+125,520 SAC updates and87,903 all-in actions. Completed learned panels through
+actual120,220 updates preserve native10/10. The newest uses1,239 query
+primitives versus native1,451; this continues the small-bank completion-cost
+trend, without a success-rate, memory or overall sample-efficiency claim.
+No failure/recovery histories have emerged. Recovery, milestone and sampled
+raw/RPC hashes passed; no new journal traversal was performed. Continue the
+fixed curve under its caps; next owner check15:56. [Saved check](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md),
 [interpretation](../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
 See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
 
