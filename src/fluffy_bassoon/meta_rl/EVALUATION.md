@@ -433,8 +433,9 @@ checkpoint SHA and263-member ZIP CRCs, unchanged motor/source RNG and zero
 pending/uncertain canonical heads passed independent audits.
 
 The small one-seed/two-development-task panels do not establish a memory or
-adaptation advantage. Native references use another seed bank and are unpaired;
-SAC remains an independent ongoing arm. No complete three-arm ranking is claimed.
+adaptation advantage. The contemporaneous native probes use another seed bank
+and are unpaired. SAC was still ongoing at this PPO-only audit; its completed
+endpoint is recorded below.
 The [complete paired report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-PPO-RESULTS.md)
 contains exact checkpoint identities, episode1/2/4/8 traces, costs and audits.
 
@@ -450,3 +451,37 @@ The same-weight saved `memory_reset` condition is a recurrent-cache reset lesion
 it retains explicit previous-noise/reward across episodes. It must not be
 called fully memoryless. The separately trained episode-reset arm clears both
 cache and explicit feedback. Exact570 source confirms these independent flags.
+
+## RoboTwin original three-arm campaign complete, 2026-10-31
+
+Feature-conditioned DSRL-style SAC completed100 balanced source rounds /600
+complete K4 trials /2400 episodes, using1003790 source actions and638500 updates
+per actor, critic and temperature optimizer (1915500 optimizer steps total).
+This is not an authors' PixelSAC reproduction. All10/25/50/100 evaluation stages
+are complete. Baige `job-gv77bzhyeroo` and its pod finished Success/exit0;
+actual scheduler running time was32230GPU-seconds, distinct from the supervisor
+and pod clocks. No additional source actions or source updates occurred during
+the final evaluation.
+
+Stage100 source validation was2/24. Frozen SAC achieved6/8 bottle and2/8 stapler;
+online SAC achieved5/8 and0/8, with3320 additional joint target updates using
+fresh target replay. Those target updates are not source SGD. Both conditions
+are stochastic; their first sampled noise, motor action and next observation
+agree, while online updates after the first chunk change later trajectories.
+All56 final validation/target reset cases match the PPO/reset actual seeds,
+initial public features and raw observations. Independent checkpoint SHA/210
+ZIP-member CRCs,640 native action masks totaling19700 final-evaluation actions,
+61 zero-exit children, unchanged motor, restored source RNG and closed canonical
+pending0/uncertain0 checks passed. Full replay/Adam/RNG/corpus recoveries remain
+preserved; this final audit did not rehash every RGB payload.
+
+The three source banks total2932424 actions /1800 whole K4 trials /7200 episodes.
+Across the final one-seed/two-development-task panels, neither persistent memory
+nor online target adaptation has an established advantage. The
+[final campaign report](../../../outputs/robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md)
+and [SAC endpoint](../../../outputs/robotwin-native-continuation-sac-20261030-r1/FINAL-RESULTS.md)
+retain episode1/2/4/8 outcomes, recovery identities, actual costs and limits.
+The separate fixed-SAC65 CPU converter/export qualification passed150 tests and
+390 K4 /651638 actions; it does not qualify mean-teacher competence, final100
+student fits or adaptation. Early student fits still use only the early SAC5
+subset. Further fits and teacher measurements remain separate resource proposals.
