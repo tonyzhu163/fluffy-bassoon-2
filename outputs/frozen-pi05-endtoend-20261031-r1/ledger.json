@@ -942,7 +942,7 @@
     "seal_evidence": "Copied zeroGPU/CPUclock/JUnit/terminal/fullcache metadata verified; all90 tensor validation by allocated producer, no independent Mac tensor claim."
   },
   "command_diagnostic_fits": {
-    "state": "both_initial_jobs_terminal_incomplete_linked_resource_repair_pending",
+    "state": "linked_resumes_both_advancing_with_old_optimizer_RNG_contract_gates",
     "actual_fits": 0,
     "actual_complete_cache": true,
     "max_updates_each": 5000,
@@ -983,13 +983,15 @@
     }
   },
   "command_diagnostic_readout": {
-    "state": "funded_conditional_both5000_endpoints_pending",
+    "state": "held_true5000_and_narrow_linked_family_readout_gate_fix_CPU_pending",
     "GPU_ceiling": 1500,
     "action_ceiling": 6000,
     "episode_ceiling": 15,
     "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
     "actual_job": null,
-    "no_source_student_eligibility": true
+    "no_source_student_eligibility": true,
+    "code_owner": "01a18762-9db6-74c2-940a-96524803e454",
+    "new_resource_CPU_grant": "outputs/command-readout-linked-resource-cpu-20261101-r1/GRANT.json"
   },
   "original_A1_closed_GPU_seconds": 5189,
   "linked_continuation_extension": {
@@ -1000,8 +1002,35 @@
     "old_A1_cap_immutable": 7200,
     "combined_A1_plus_linked_cap": 10800,
     "same_global_clock_max": 28800,
-    "source_resource_binding_fix_pending": true,
-    "actual_jobs": []
+    "source_resource_binding_fix_pending": false,
+    "actual_jobs": [
+      {
+        "kind": "action",
+        "job_id": "job-535ggybsgppf",
+        "created_shanghai": "2026-11-01 06:05:58",
+        "status": "Running_actual_postresume_updates",
+        "post_resume_SGD_verified": 3614,
+        "latest_full_recovery_hash_matches": true
+      },
+      {
+        "kind": "kv",
+        "job_id": "job-76gonbaui824",
+        "created_shanghai": "2026-11-01 06:07:11",
+        "status": "Running_actual_postresume_updates",
+        "post_resume_SGD_verified": 2906,
+        "latest_full_recovery_hash_matches": true
+      }
+    ],
+    "execution_source": "3d35b3201a4d1131876c9251b6583464bac04982",
+    "scientific_source": "400eed69ead8b8672686c62f33ed5531f6f60558",
+    "actual_CPU_report": {
+      "job_id": "job-ymuckbd2r4gq",
+      "PASS": 29,
+      "actual_small_recovery_inspector": "PASS, contained notCUDArestored",
+      "charged_seconds": 77
+    },
+    "actual_CPU_packet_verified": true,
+    "actual_CPU_charge": 77
   },
   "remaining_unassigned_future_global_GPU_envelope": 18000
 }
