@@ -27,7 +27,8 @@ from .robotwin_replay_diagnosis import Audit
 from .robotwin_demo_capacity import file_sha,validate_demo_manifest
 from .robotwin_reactive_fit import ReactiveEpisodeControl,make_heads
 from .robotwin_reactive_capacity import CONFIG,validate_capacity_locked
-from .robotwin_event_replay import physical_audit
+from .robotwin_event_replay import physical_audit,EventEpisodeControl
+from .robotwin_prelift_probe import observe_native_plans
 from .robotwin_steering_screen import run_complete_episode,qualify_real_motor,verify_source_conventions
 
 FORMAT='robotwin_command_diagnostic_physical_readout_v1'
@@ -105,7 +106,7 @@ def validate_endpoints(results,interface,interface_sha,*,device):
     return heads,bindings
 
 
-class ReadoutControl(ReactiveEpisodeControl):
+class ReadoutControl(EventEpisodeControl):
     """Pure full-head hooks on the existing controller, never post-decode4D."""
     def __init__(self,env,heads,writer,interface,bindings):
         super().__init__(env,heads,writer,interface);self.bindings=deepcopy(bindings)
@@ -119,7 +120,12 @@ class ReadoutControl(ReactiveEpisodeControl):
                 raise RuntimeError('Readonly endpoint changed')
         backend._check_frozen()
     def step(self,value):
-        self.assert_frozen();result=super().step(value);self.assert_frozen();return result
+        self.assert_frozen()
+        with observe_native_plans(self.env.backend.env.venv.envs[0].task) as plans:
+            result=super().step(value)
+        self.last_audit['native_plan_observation']=plans
+        for key in ('cursor_before','cursor_after'):self.last_audit.pop(key,None)  # No teacher/source cursor in this panel.
+        self.assert_frozen();return result
     def snapshot(self):
         return dict(super().snapshot(),active=self.active,frozen_endpoints=deepcopy(self.references),readonly=True)
 
@@ -235,7 +241,7 @@ def main(argv=None):
     for ref in plan['prior_cost_receipts']:audit.json(ref)
     audit.json(plan['storage_admission'])
     for obj in (main,load_frontend,WideActionResidual,_RoboTwinBackend,ReactiveEpisodeControl,run_complete_episode,qualify_real_motor,
-                physical_audit,validate_capacity_locked,Audit,selected_device,rng_state,atomic_save,CampaignBudget,RobotwinCorpusWriter):
+                physical_audit,observe_native_plans,validate_capacity_locked,Audit,selected_device,rng_state,atomic_save,CampaignBudget,RobotwinCorpusWriter):
         path=Path(inspect.getfile(obj)).resolve();rel=str(path.relative_to(root))
         if request['runtime_blob_sha256'].get(rel)!=file_sha(path):raise ValueError('Loaded readout/runtime blob differs: '+rel)
     for rel,digest in request['runtime_blob_sha256'].items():
@@ -264,6 +270,7 @@ def main(argv=None):
         demos=request['demos'],interface=request['interface'],joint_conventions=request['joint_conventions'],fit_results=request['fit_results'],runtime_blob_sha256=request['runtime_blob_sha256'],source_commit=source)
     saved=None;forks={};state=dict(format=FORMAT,contract=contract,status='running',next_cell=0,records=[],pending=None,control_active=False,
         actions=deepcopy(head['actions']),action_ledger=deepcopy(head['action_ledger']),physical_resets={},closed_controls=[],post_rng_refs=[],
+        native_reset_audit_refs=[],native_chunk_audit_refs=[],optional_audit_unavailable=[],
         readonly=True,diagnostic_purpose=DIAGNOSTIC,source_eligible=False,fit_updates=0,new_source_actions=0,locked32_or_population_claim=False)
     origin=request.get('resume') or request['origin_recovery']
     if any(terminal['full_recovery'][k]!=origin[k] for k in ('path','sha256')):
@@ -312,14 +319,20 @@ def main(argv=None):
                 restore_rng(saved['global_rng']);state['previous_recovery']=origin;state['actions']=budget.snapshot();persist(True)
                 def episode(spec,*,qualify):
                     guard();key=spec['record_id']
+                    def optional_audit(kind,publish):
+                        try:state['native_'+kind+'_audit_refs'].append(publish(a.output/'native-audits'))
+                        except (OSError,ValueError,TypeError) as error:
+                            state['optional_audit_unavailable'].append(dict(cell=spec['id'],kind=kind,reason=type(error).__name__))
                     def before(current,actual):
-                        physical=initial_physical_identity(physical_audit(current.env.backend.env.venv.envs[0].task))
+                        physical=initial_physical_identity(current.reset_physical_audit)
                         if key in state['physical_resets'] and state['physical_resets'][key]!=physical:raise ValueError('Matched initial actor/measured/drive identity differs')
                         state['physical_resets'][key]=physical
+                        optional_audit('reset',current.publish_reset_audit)
                         if qualify:state['qualification']=qualify_first_native(current,actual,a.output,interface)
                         current.assert_frozen()
                     def chunk(_):
                         guard();state['actions']=budget.snapshot()
+                        optional_audit('chunk',control.publish_chunk_audit)
                         if sum(r['primitive_steps'] for r in state['records'])+control.elapsed_steps>6000:raise RuntimeError('Panel controller-action ceiling')
                         persist(False)
                     result=run_complete_episode(control,spec,budget,run_id=run_id,phase='a1',before_step=before,on_chunk=chunk)

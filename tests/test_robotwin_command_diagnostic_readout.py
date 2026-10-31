@@ -135,18 +135,25 @@ def test_actual_endpoint_rejects_changed_final_abi_or_provenance(endpoint_pair,f
 class Env:
     active=False;elapsed_steps=0;native_horizon=32
     contract=dict(synthetic_test_only=True)
-    def __init__(self):
+    def __init__(self,root):
+        self.root=root
         self.backend=SimpleNamespace(model=SimpleNamespace(device=torch.device('cpu')),
             kv_adapter=None,action_residual=None,post_decode_residual=None,post_command_transform=None,
+            env=SimpleNamespace(venv=SimpleNamespace(envs=[SimpleNamespace(task=SimpleNamespace(robot=SimpleNamespace()))])),
             _check_frozen=lambda:None)
         self.noises=[]
     def record_decision_metadata(self,value):self.metadata=value
-    def step(self,noise):self.noises.append(noise.copy());return 'existing env.step result'
+    def step(self,noise):
+        self.noises.append(noise.copy());self.elapsed_steps+=32
+        relative=f'episodes/synthetic/chunks/{len(self.noises):06d}.json'
+        path=self.root/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('{}')
+        return np.zeros(2062,np.float32),0.,False,False,dict(primitive_steps=32,issued_primitive_steps=32,corpus_chunk=relative)
 
 
 def control_fixture(endpoint_pair):
     results,interface=endpoint_pair;heads,bindings=readout.validate_endpoints(results,interface,'f'*64,device='cpu')
-    env=Env();writer=SimpleNamespace(register_runtime=lambda value:None)
+    root=Path(results['action']['primary_endpoint']['path']).parent/'corpus'
+    env=Env(root);writer=SimpleNamespace(root=root,register_runtime=lambda value:None)
     return readout.ReadoutControl(env,heads,writer,interface,bindings)
 
 
@@ -156,7 +163,9 @@ def test_pure_full_head_routing_and_existing_private_full1024_noise(endpoint_pai
     control.set_coefficients(arm,[0.]*4)
     assert control.env.backend.kv_adapter is (control.heads['kv'] if arm=='kv' else None)
     assert control.env.backend.action_residual is (control.heads['action'] if arm=='action' else None)
-    assert control.step([0.]*4)=='existing env.step result'
+    assert control.step([0.]*4)[-1]['primitive_steps']==32
+    assert control.last_audit['native_plan_observation']['available'] is False
+    assert control.last_audit['physical_after_audit']['actors']['phone']['available'] is False
     expected=np.random.default_rng(20261309).standard_normal((32,32)).astype(np.float32)
     np.testing.assert_array_equal(control.env.noises[0],expected)
     assert control.env.metadata['capacity_motor_rng_before']!=control.env.metadata['capacity_motor_rng_after']
