@@ -148,17 +148,28 @@ revision is a later extension.
 ## Coordination review 2026-10-31
 
 Consolidated at 2026-10-31 ~13:45 Shanghai from the two branch rows above;
-no job state was re-queried. For the owning agents:
+no job state was re-queried. Since then, the seven active tips
+(`frozen-vla-poc`, `libero-fixed100-closure-20261031`,
+`libero-cached-prefix-b1`, `robotwin-native-wholetrials`,
+`robotwin-migration-refs`, `robotwin-ad500-readout`,
+`robotwin-trained-continuation`) are merged into `main`; older branches they
+contain are included. For the owning agents:
 
 1. **One file, on `main`.** Both branches edited `outputs/coordination.md`
    independently and conflicted on the same table line; `main` was two days
    stale. Rebase onto this commit and push coordination edits to `main`
-   (row-local edits only) so the next merge is clean.
-2. **Budget contract mismatch.** The LIBERO/RoboTwin focus row now records
-   the 2026-10-30 human decision of roughly **1M source actions per
-   learner**, superseding the 2026-10-29 "1M per benchmark, shared" text.
-   `codex/robotwin-native-wholetrials` still carries the old wording: confirm
-   which ledger the RoboTwin R4 export and AD deferral are charged against.
+   (row-local edits only) so the next merge is clean. Merge notes: this
+   file kept `main`'s consolidated rows; `robotwin_history_corpus.py` kept
+   the migration-refs lineage and `robotwin_history{,_evaluate}.py` the
+   AD500 lineage; the r6 SAC65 run files kept the R4 lineage (`7332c21`);
+   `robotwin_noise_compare.py` takes trained-continuation's version, because
+   auto-merge had duplicated the stale resume-load block after the CUDA
+   check; `EVALUATION.md` keeps every RoboTwin section from both sides.
+2. **Budget: 1M source actions per learner (user, 2026-10-31).** The user
+   confirmed roughly **1M source actions per learner**, superseding the
+   2026-10-29 "1M per benchmark, shared" cap. Charge each learner's source,
+   validation, settling and retry actions to its own ledger; do not borrow
+   across learners or benchmarks. No additional LIBERO GPU allowance.
 3. **Native VLRLA PPO is the shared priority.** Both rows defer new AD GPU
    work for it; `frozen-vla-poc` (`finish_ppo`/`finish_assembly`) is the sole
    launcher. RoboTwin owners must not allocate for it. No PPO job exists
@@ -176,8 +187,8 @@ no job state was re-queried. For the owning agents:
 6. **Stale rows.** RoboTwin GRPO, MetaWorld pilot r2, native-context r3 and
    CMM 48876/48983/48984 were last checked 2026-10-28. Owners: refresh or
    move them to completed work.
-7. **Evidence links.** The RoboTwin row links to the branch, because its run
-   records are not on `main` yet; the LIBERO row has no evidence link.
+7. **Evidence links.** RoboTwin run records are now on `main` and linked
+   relatively; the LIBERO row still has no evidence link.
 
 ## Ongoing work and pending checks
 
@@ -191,7 +202,7 @@ does not alone establish that a job remains running.
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
 | LIBERO frozen-VLA robotic performance | LIBERO fixed100 phase closed; new human priority native VLRLA-recipe PPO | **2026-10-31 12:58 Shanghai:** All6LIBERO jobs succeeded/486groups522episodes, rawtrace/context/recovery auditpassed3541refs. Native28/90,ADfull/static29each,DPT28each;ADK1full/reset6/6,DPT5/6;no memory/topline/sample-efficiency gain. Costs172045actions/7126conservativeGPU-s(6846UI)/8.61GB; unused9074s closed, no borrowing. AD100/500proposalheld(noimplementation). NativePPOpilot runvlrla-native-ppo-pilot-20261031-r1 specified6GPUh/1Mactions/64GiB understanding<=10; officialRLinf c605/releasedSFTfa8, frozenVLM/trainexpert,2fullglobal2048iterations+matched128before/after. 8GPUpreferred or4GPU×16accum preservesbatch; viable4GPUcapacityfound, retainedruntimeidentified; entry/CPUqualificationpending, noPPOjobyet. finish_ppo implements;finish_assemblysolelauncher. ExistingRoboTwinexport recovery staysowner-managed/newADGPUdeferred;25hLIBEROsource stillpending. |
-| RoboTwin matched noise steering | R4 CPU export running; new AD GPU work deferred for native PPO priority | **Last check2026-10-31 13:30Shanghai:** Baige job-vth2qv6r4lxu/hostsame-master-0 Running13:17:19,0GPU8CPU64GiBshm2/5700scheduler5400parent/retryOFF. Immutableaux7332c218/sourcee5675998/profile46137ade. Combinedstatic/Git/19hashes/mainacca706/storage/write/actualoneCUA0GPUproof18.673s/autobootstrap17.063sPASS. AdoptedactualR3 ALL146tests0fail/error/skip withnew_tests_run0; readonlyR1paidprojectionreusePASS0.650s/clean, trainexportinprogress/noindicesyet/noexit/failure, actualschedulerRunning13:30; fulltrain/BCVALarray/index/dataadmission/finalcleanup/terminalcostPENDING. Strictstorage/symlink/sourceguards unchanged. PhaseCPU1298actual+activeR4costpending,5700cap+202unrequested within7200; retainedR1+R2+R3=87856041052B within89GiBreserve, R4+89GiB<=128GiB. NewADGPU10800s/target60000actions entirelyunspent, DEFERRED for directhuman native-action VLRLAPPOreplicationpriority; source root/PPOowners solepilotlaunchers, no duplicateallocation. Original100-round3learnercampaign/all10/25/50/100evals COMPLETE and source monitorDELETED; source2932424actions/1800K4/7200E, no memory/adaptationadvantageestablished, neverresume. R1/R2/R3CPUfailures889/150/89s preserved; R3e567146actualsoftwarePASS separatefromfaileddatawrapper. RootCPUmonitor ACTIVEuntilcompleteaudited/alladmittedworkclosed/costsettled. [current handoff](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/robotwin-native-wholetrials/outputs/robotwin-final100-ad-export-20261031-r1/CURRENT.md); [R4 startup](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/robotwin-native-wholetrials/outputs/robotwin-final100-ad-export-20261031-r4/STARTUP.md); [R3 audit](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/robotwin-native-wholetrials/outputs/robotwin-final100-ad-export-20261031-r3/RESULTS.md); [original closure](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/codex/robotwin-native-wholetrials/outputs/robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
+| RoboTwin matched noise steering | R4 CPU export running; new AD GPU work deferred for native PPO priority | **Last check2026-10-31 13:30Shanghai:** Baige job-vth2qv6r4lxu/hostsame-master-0 Running13:17:19,0GPU8CPU64GiBshm2/5700scheduler5400parent/retryOFF. Immutableaux7332c218/sourcee5675998/profile46137ade. Combinedstatic/Git/19hashes/mainacca706/storage/write/actualoneCUA0GPUproof18.673s/autobootstrap17.063sPASS. AdoptedactualR3 ALL146tests0fail/error/skip withnew_tests_run0; readonlyR1paidprojectionreusePASS0.650s/clean, trainexportinprogress/noindicesyet/noexit/failure, actualschedulerRunning13:30; fulltrain/BCVALarray/index/dataadmission/finalcleanup/terminalcostPENDING. Strictstorage/symlink/sourceguards unchanged. PhaseCPU1298actual+activeR4costpending,5700cap+202unrequested within7200; retainedR1+R2+R3=87856041052B within89GiBreserve, R4+89GiB<=128GiB. NewADGPU10800s/target60000actions entirelyunspent, DEFERRED for directhuman native-action VLRLAPPOreplicationpriority; source root/PPOowners solepilotlaunchers, no duplicateallocation. Original100-round3learnercampaign/all10/25/50/100evals COMPLETE and source monitorDELETED; source2932424actions/1800K4/7200E, no memory/adaptationadvantageestablished, neverresume. R1/R2/R3CPUfailures889/150/89s preserved; R3e567146actualsoftwarePASS separatefromfaileddatawrapper. RootCPUmonitor ACTIVEuntilcompleteaudited/alladmittedworkclosed/costsettled. [current handoff](robotwin-final100-ad-export-20261031-r1/CURRENT.md); [R4 startup](robotwin-final100-ad-export-20261031-r4/STARTUP.md); [R3 audit](robotwin-final100-ad-export-20261031-r3/RESULTS.md); [original closure](robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
 | Baige environment maintenance | `environment-cleanup-baige-20261029-r1` | **2026-10-29 18:17 Shanghai: complete.** Current project reduced from5 UV virtual environments +2 overlays to1 environment +2 overlays. Four closed Can/ML10-baseline/RoboTwin envs preserved in an819MiB verified recovery archive before removing expanded copies. Seven legacy shared envs and one overlay, managed Python, uv cache, inputs and checkpoints retained. [Inventory and restore](environment-cleanup-baige-20261029-r1/README.md). |
 | Meta-World released pi0.5 noise screen | Baige **`job-orgyjb0z9h6d`**, source `4d4f46f`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17:43 Shanghai: stopped at user request; monitor PAUSED.** Three closed544-row conditions preserved (1,632episodes); push-hidden incomplete/unflushed. Two reach conditions independently audited: visible G1+6.25pp/G2=0pp; hidden G1−3.125pp/G2−12.5pp; both lack coverage of goals1/3. This rejects the tested16-arm bank for cached selection; it does not test learned continuous DSRL. No final summary or end-of-run motor hash; no training/new allocation. [Pause and preservation](metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). Next: remain paused; user shifted focus to LIBERO/RoboTwin learned steering. |
 | LIBERO / RoboTwin learned steering focus | Owners `Plan VLA in-context learning` and `Clarify DSLR online RL post-training` | **2026-10-30 23:56 Shanghai:** human accepted roughly1M source actions PER LEARNER, no additional LIBERO GPU allowance. LIBERO initial all40 collection/fitting/PPO and broad first comparisons complete; targeted baseline continuations active. RoboTwin owner reports all3 serial collectors resumed and passed complete-round process restart; first students/comparison running alongside collection; boundary source actions PPO384343,SAC411497,reset392770. Do not double-launch or borrow RoboTwin budget. After minimal smoke, overlap collection/fitting/evaluation; fresh PPO rollouts remain separate from SAC/offline histories. Meta-World remains paused. |
