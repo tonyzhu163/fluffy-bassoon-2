@@ -63,6 +63,7 @@ def plan(source):
             confirmation_successes_inclusive=[2, 8], no_eligible_or_confirmed='abort before any SGD'),
         confirmation_cases={str(task): query_bank(task) for task in CANDIDATES},
         confirmation_distinct_states=10, confirmation_noise_draws_per_state=2,
+        physical_reset_seed=123, private_seed_convention='onset._seed(case,query,0); changes motor/noise RNG only, never physical reset seed',
         training_states=list(range(40)), learner_seed=0, entire_motor_frozen=True,
         motor_receipt_sha256=qualified.PI05_RECEIPT,
         motor_parameter_sha256=qualified.MOTOR_PARAMETER_SHA256,
@@ -155,7 +156,8 @@ def run_screen(motor, server_factory, *, root, contract, deadline, resume=False)
         rows, summary = qualified.native_query(sim, motor, learner, case)
         qualified._annotate(rows, episode_id=identity, state=case['initial_state'], updates=0)
         for row in rows:
-            row.update(data_role=DATA_ROLE, bank=case['bank'], noise_draw=case['noise_draw'])
+            row.update(data_role=DATA_ROLE, bank=case['bank'], noise_draw=case['noise_draw'],
+                physical_reset_seed=case['scene_seed'], private_noise_seed=summary['episode_random_seed'])
         summary.update(case=case, data_role=DATA_ROLE, native_only=True,
             source_assembly_admission=False, policy_signature=learner.frozen_signature())
         return onset.save_trace(directory, identity, rows, summary, contract)
