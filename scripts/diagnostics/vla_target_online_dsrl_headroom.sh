@@ -10,17 +10,21 @@ shift 4
 TASK_RESUME=()
 TASK_SELECTION=()
 TASK_SCREEN_SOURCE=()
+TASK_CODE_WORKTREE=
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --resume) TASK_RESUME=(--resume); shift;;
     --selection-sha256) TASK_SELECTION=(--selection-sha256 "${2:?selection SHA}"); shift 2;;
     --screen-source) TASK_SCREEN_SOURCE=(--screen-source "${2:?original screen source}"); shift 2;;
+    --code-worktree) TASK_CODE_WORKTREE=${2:?exact immutable trainer code worktree}; shift 2;;
     *) exit 2;;
   esac
 done
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_OLD=/mowenjie/fluffy-bassoon
-TASK_WT=$TASK_ROOT/worktrees/$TASK_RUN
+# Phase identity owns output/clock/actions. The immutable implementation
+# checkout may be a separately pinned trainer child; never replace screen WT.
+TASK_WT=${TASK_CODE_WORKTREE:-$TASK_ROOT/worktrees/$TASK_RUN}
 TASK_OUT=$TASK_ROOT/outputs/$TASK_RUN
 TASK_MODEL=$TASK_OLD/envs/openpi-215abfb/bin/python
 TASK_PROBE=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
