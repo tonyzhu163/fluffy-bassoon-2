@@ -19,6 +19,7 @@ physical states40–49, two private-noise draws each, reused at every checkpoint
 | First learned panel |1/20|20,580|
 | Second learned panel |20/20|40,140|
 | Third learned panel |20/20|60,000|
+| Fourth learned panel |20/20|80,140|
 
 The second panel reverses the first panel's regression and exceeds every
 untrained control. It uses1,651 query primitives+200 settling. Initial
@@ -26,7 +27,7 @@ identities/private seeds match native, acting weights stay fixed, and queries
 neither update nor enter replay. The newest immutable milestone, stable full
 recovery and raw trace hashes pass in the sole execution owner's check. This
 is promising interim ordinary RL evidence, not a selected final checkpoint or
-a completed replication. The60k panel repeats20/20 with1,678 primitives+200 settling. All learned
+a completed replication. The60k panel repeats20/20 with1,678 primitives+200 settling. The80k panel also scores20/20 (1,582+200 actions). All learned
 panels stay in the curve; the fixed endpoint and persistence test remain pending. The untrained
 tied control's13/20 advantage also shows why a native-only gap cannot isolate
 learning. [Owned check](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240.json).
