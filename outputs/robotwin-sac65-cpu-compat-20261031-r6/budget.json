@@ -1,0 +1,78 @@
+{
+  "schema": "robotwin_same_cpu_grant_residual_v1",
+  "run_id": "robotwin-sac65-cpu-compat-20261031-r6",
+  "closed_old_envelope": {
+    "id": "robotwin-sac65-cpu-preflight-r1-r4-1800",
+    "status": "CLOSED",
+    "scheduler_limit_seconds": 1800,
+    "actual_scheduler_seconds": 620,
+    "unused_sealed_seconds": 1180,
+    "predecessors": [
+      {
+        "file": "predecessor-r1-accounting.json",
+        "allocation_id": "job-eahrz09v6kkk",
+        "code_commit": "29df647fd30469fc04743baf47ba331718c9d1a2",
+        "scheduler_seconds": 149,
+        "sha256": "8e26ce12a16cc63a8636c345e74c9e453a153945050a447d6ae29e74eebf3260"
+      },
+      {
+        "file": "predecessor-r2-accounting.json",
+        "allocation_id": "job-wcfjtype0eec",
+        "code_commit": "16d8af8c6a1a6c7cd6980cbbc848deabafa1a6e6",
+        "scheduler_seconds": 150,
+        "sha256": "2f60430cc856aa8615b6a1e98c197b88058fae96f64bc91a61f061da223f6087"
+      },
+      {
+        "file": "predecessor-r3-accounting.json",
+        "allocation_id": "job-0mb2yh59u58h",
+        "code_commit": "b3b0c37237fe7eceb454c2584fd9365ccfe57aa8",
+        "scheduler_seconds": 150,
+        "sha256": "5aadbf67abb219bc44b5411454b2f2b103fa63f87ab583ab1830a0e7821ead50"
+      },
+      {
+        "file": "predecessor-r4-accounting.json",
+        "allocation_id": "job-tw0hcz9ds2gy",
+        "code_commit": "57f37001e2009e051797b7639a11042ab0fd1e57",
+        "scheduler_seconds": 171,
+        "sha256": "77e90aeeee44352a36de9a6bcffab275e3005aa161bbb33ff113a3a1057b22c9"
+      }
+    ]
+  },
+  "qualification_grant": {
+    "id": "robotwin-sac65-cpu-compat-20261031-r5",
+    "original_scheduler_limit_seconds": 1800,
+    "charged_scheduler_seconds": 71,
+    "arithmetic_residual_seconds": 1729,
+    "unused_sealed_seconds": 49,
+    "prior_allocation": {
+      "file": "predecessor-r5-accounting.json",
+      "allocation_id": "job-ykpoq2b043kr",
+      "code_commit": "2d1629b841d52ed96712552dee6f5a8387460cd8",
+      "scheduler_seconds": 71,
+      "sha256": "9be36ce2ee0e0469d60723a83b481db43505ef8c7f35fbf7c032f3c62233060f"
+    },
+    "old_budget_credit_seconds": 0,
+    "old_sealed_borrow_seconds": 0
+  },
+  "current_run": {
+    "id": "robotwin-sac65-cpu-compat-20261031-r6",
+    "status": "DIAGNOSED_RESIDUAL_PREPARED_NOT_ALLOCATED",
+    "scheduler_cap_seconds": 1680,
+    "global_work_seconds": 1580,
+    "external_TERM_seconds": 1650,
+    "external_KILL_seconds": 1660,
+    "cleanup_reserve_seconds": 30,
+    "bootstrap_wait_seconds": 120,
+    "local_code_stage_seconds": 30,
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "automatic_resubmission": false,
+    "actual_allocation_id": null,
+    "actual_scheduler_seconds": null
+  },
+  "authority": {
+    "basis": "Existing human AGENTS CPU-test scope; execution-owner diagnosed same-grant residual path fix, no fresh1800/refund/old-sealed borrowing/GPU/robot/fit authority",
+    "source": "553d0fd1048a2d0edd196ba42790ca49ee2d7814 actual cost and runtime path metadata"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "PROPOSED_STATIC_EXPECTATIONS_NOT_EXECUTED",
+  "cases": [
+    {
+      "name": "header-only",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n",
+      "expected": "wait"
+    },
+    {
+      "name": "missing-worker-cells",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n    32 row\n      33 cell\n        34 text Worker\n      35 cell\n        36 text 1\n      37 cell\n        38 text 不使用加速芯片\n",
+      "expected": "wait"
+    },
+    {
+      "name": "missing-cell-text",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n    32 row\n      33 cell\n        34 text Worker\n      35 cell\n        36 text 1\n      37 cell\n        38 text 不使用加速芯片\n      39 cell\n      40 cell\n        41 text 64 GiB\n",
+      "expected": "wait"
+    },
+    {
+      "name": "complete-valid",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n    32 row\n      33 cell\n        34 text Worker\n      35 cell\n        36 text 1\n      37 cell\n        38 text 不使用加速芯片\n      39 cell\n        40 text 8 核\n      41 cell\n        42 text 64 GiB\n",
+      "expected": "ready"
+    },
+    {
+      "name": "complete-wrong-resources",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n    32 row\n      33 cell\n        34 text Worker\n      35 cell\n        36 text 1\n      37 cell\n        38 text 不使用加速芯片\n      39 cell\n        40 text 4 核\n      41 cell\n        42 text 64 GiB\n",
+      "expected": "reject"
+    },
+    {
+      "name": "multiple-roles",
+      "ready": {
+        "task_name": "mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa"
+      },
+      "ax": "1 AXWebArea fixture\n  2 text mwj_1031_robotwin_sac65_cpu_r3_aaaaaaa\n  3 text 运行中\n  4 text ID:  job-fixture123\n  5 text job-fixture123-master-0\n  20 table\n    21 row\n      22 cell\n        23 text 类型\n      24 cell\n        25 text 实例数量\n      26 cell\n        27 text GPU类型 * 卡数\n      28 cell\n        29 text CPU\n      30 cell\n        31 text 内存\n    32 row\n      33 cell\n        34 text Worker\n      35 cell\n        36 text 1\n      37 cell\n        38 text 不使用加速芯片\n      39 cell\n        40 text 8 核\n      41 cell\n        42 text 64 GiB\n    43 row\n      44 cell\n        45 text ParameterServer\n      46 cell\n        47 text 1\n      48 cell\n        49 text 不使用加速芯片\n      50 cell\n        51 text 8 核\n      52 cell\n        53 text 64 GiB\n",
+      "expected": "reject"
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "format": "robotwin_full_reset100_comparison_v1",
+  "full_summary_sha256": "9a5ed68812e50eb25d6aedc75332fb6685d9fb4748c7149e5658834c05d595eb",
+  "reset_summary_path": "outputs/robotwin-reset100-diagnosis-20261031-r1/metadata-summary.json",
+  "reset_summary_sha256": "ff7f0e0d2deec3f27dabe17c84ed3d1da9ce56589336e3f97c1440416f2b4f56",
+  "source_training": {
+    "full_successes": 416,
+    "reset_successes": 421,
+    "episodes_per_arm": 2400,
+    "full_actual_actions": 964875,
+    "reset_actual_actions": 963759,
+    "full_valid_chunks": 31211,
+    "reset_valid_chunks": 31172
+  },
+  "source_validation100": {
+    "full_successes": 2,
+    "reset_successes": 3,
+    "episodes_per_arm": 24
+  },
+  "target100": {
+    "full_normal": [
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1596,
+        "chunks": 55,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 6,
+        "episodes": 8,
+        "actions": 1866,
+        "chunks": 63,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1557,
+        "chunks": 53,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2985,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2974,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2985,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ],
+    "trained_reset": [
+      {
+        "task": "adjust_bottle",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1429,
+        "chunks": 49,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ]
+  },
+  "interpretation": "Both source learners weak/flat; no demonstrated memory or reward-use gain on this tiny fixed target panel; sourceSAC pending"
+}

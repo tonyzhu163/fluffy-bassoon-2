@@ -1,0 +1,66 @@
+{
+  "schema": "robotwin_separate_cpu_qualification_grant_v1",
+  "run_id": "robotwin-sac65-cpu-compat-20261031-r5",
+  "closed_old_envelope": {
+    "id": "robotwin-sac65-cpu-preflight-r1-r4-1800",
+    "status": "CLOSED",
+    "scheduler_limit_seconds": 1800,
+    "actual_scheduler_seconds": 620,
+    "unused_sealed_seconds": 1180,
+    "predecessors": [
+      {
+        "file": "predecessor-r1-accounting.json",
+        "allocation_id": "job-eahrz09v6kkk",
+        "code_commit": "29df647fd30469fc04743baf47ba331718c9d1a2",
+        "scheduler_seconds": 149,
+        "sha256": "8e26ce12a16cc63a8636c345e74c9e453a153945050a447d6ae29e74eebf3260"
+      },
+      {
+        "file": "predecessor-r2-accounting.json",
+        "allocation_id": "job-wcfjtype0eec",
+        "code_commit": "16d8af8c6a1a6c7cd6980cbbc848deabafa1a6e6",
+        "scheduler_seconds": 150,
+        "sha256": "2f60430cc856aa8615b6a1e98c197b88058fae96f64bc91a61f061da223f6087"
+      },
+      {
+        "file": "predecessor-r3-accounting.json",
+        "allocation_id": "job-0mb2yh59u58h",
+        "code_commit": "b3b0c37237fe7eceb454c2584fd9365ccfe57aa8",
+        "scheduler_seconds": 150,
+        "sha256": "5aadbf67abb219bc44b5411454b2f2b103fa63f87ab583ab1830a0e7821ead50"
+      },
+      {
+        "file": "predecessor-r4-accounting.json",
+        "allocation_id": "job-tw0hcz9ds2gy",
+        "code_commit": "57f37001e2009e051797b7639a11042ab0fd1e57",
+        "scheduler_seconds": 171,
+        "sha256": "77e90aeeee44352a36de9a6bcffab275e3005aa161bbb33ff113a3a1057b22c9"
+      }
+    ]
+  },
+  "new_qualification_grant": {
+    "id": "robotwin-sac65-cpu-compat-20261031-r5",
+    "status": "PREPARED_FOR_EXECUTION_OWNER_ADMISSION_NOT_ALLOCATED",
+    "scheduler_cap_seconds": 1800,
+    "global_work_seconds": 1700,
+    "external_TERM_seconds": 1770,
+    "external_KILL_seconds": 1780,
+    "cleanup_reserve_seconds": 30,
+    "bootstrap_wait_seconds": 120,
+    "local_code_stage_seconds": 30,
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "old_budget_credit_seconds": 0,
+    "borrowed_old_sealed_seconds": 0,
+    "automatic_resubmission": false,
+    "actual_allocation_id": null,
+    "actual_scheduler_seconds": null
+  },
+  "authority": {
+    "basis": "Existing human repository AGENTS.md CPU-test authority; coordinator/execution-owner instruction is operational coordination for one necessary separate CPU qualification, not new GPU/robot/fit permission",
+    "coordinator_thread": "01a18be4-a6ab-79a2-af3d-13f76308e253",
+    "execution_owner_thread": "01a18762-9db6-74c2-940a-96524803e454",
+    "scope": "One full saved-data CPU qualification only; same150fixtures/fullSHA/sourcecoverage/pairedAD-DPTaudit. No newGPU/robot/VLA/SGD/fits/pilots."
+  }
+}

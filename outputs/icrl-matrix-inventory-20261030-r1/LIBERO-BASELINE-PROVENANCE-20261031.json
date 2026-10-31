@@ -1,0 +1,526 @@
+{
+  "status": "terminal_baseline_receipt_amendment_only",
+  "source_receipt_commit": "1a65226e0d3b6a68cf59808028245b3da5be3d07",
+  "source_receipt_path": "outputs/libero40-baseline-completion-20261030-r1/receipt.json",
+  "source_receipt_sha256": "d8f1f4277e5600e0e27db242c8909055170ba9b3894a35bedd921e657b285598",
+  "source_readme_sha256": "c9daf1b106306b2fa61cc969b80c45bc59892582b84aecf061ea94399240736b",
+  "verification_scope": "Committed local files matched byte-for-byte; JSON counts/hash identities/arithmetic checked; no model/test/allocation/remote active artifact changes",
+  "metadata_verified_at_utc": "2026-10-30T15:57:50.343981+00:00",
+  "terminal_runs": [
+    {
+      "run_id": "libero40-ppo-source-validation-20261030-r1",
+      "job_id": "job-ztzwinm2b802",
+      "source_commit": "9002a2dd352e6176c43943c1e46bf2b85eddc397",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 22753,
+      "charged_gpu_seconds": 1203,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-source-validation-20261030-r1/experiment/index.json",
+        "sha256": "3d28be445c509700f37d49ebadf991988d8bb5d33caf71af208807696ae4847e",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-source-validation-20261030-r1/worker-time.json",
+        "sha256": "7c886bd30e108032b0297b8db8c74f1315d9e28aee0985a17d83c80e4b6af444",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "full": {
+          "successes": 63,
+          "episodes": 64,
+          "by_attempt": [
+            16,
+            16,
+            15,
+            16
+          ]
+        },
+        "episode": {
+          "successes": 61,
+          "episodes": 64,
+          "by_attempt": [
+            16,
+            16,
+            14,
+            15
+          ]
+        }
+      },
+      "episodes": 128,
+      "all_trace_hashes_verified": true,
+      "weights_unchanged": true,
+      "optimizer_updates": 0,
+      "frozen_models": {
+        "full": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-source-validation-20261030-r1/experiment/frozen-full.pt",
+          "sha256": "9d8d5a08ef2a30abbef579ed810d3e6ae7c998cb576909f0c6d5c0e98889e904",
+          "verified_against_recorded_sha": true
+        },
+        "episode": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-source-validation-20261030-r1/experiment/frozen-episode.pt",
+          "sha256": "15916bf91ec15adf8ffb3d6f36b957f5e263c96b2c5c7b96e3ada58c71d010d1",
+          "verified_against_recorded_sha": true
+        }
+      },
+      "source_full_recoveries": {
+        "full": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-full-20261030-r3/experiment/learner/latest.pt",
+          "sha256": "c2f15e0918c3f211e1629416fa572027ef103510365d42b0149a83b08f3bc214",
+          "verified_against_recorded_sha": true
+        },
+        "episode": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-reset-20261030-r3/experiment/learner/latest.pt",
+          "sha256": "babe7cf68ab5efe572448629d81dea5ba4974116f2361f7f19a0b9d3eb32fcc7",
+          "verified_against_recorded_sha": true
+        }
+      }
+    },
+    {
+      "run_id": "libero40-noise-controls-20261030-w00-r1",
+      "job_id": "job-g8vas173mmy5",
+      "source_commit": "53b6c0d1bcccd6d94025762335b66a72f09a3119",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 57789,
+      "charged_gpu_seconds": 2113,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/index.json",
+        "sha256": "e3d3f233ccb367c2cbbefeabb786dd01e85303ac5d0900bf90a1265d87f2debb",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/worker-time.json",
+        "sha256": "26d670133a1c09d668f17fde48e28de2ae57b869c5c72de1247c443f35f7e17d",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "native/k0": {
+          "successes": 18,
+          "queries": 45
+        },
+        "zero/k0": {
+          "successes": 17,
+          "queries": 45
+        },
+        "tied_gaussian/k0": {
+          "successes": 17,
+          "queries": 45
+        },
+        "tied_gaussian_clipped/k0": {
+          "successes": 18,
+          "queries": 45
+        }
+      },
+      "episodes": 180,
+      "completed_groups": 180,
+      "all_group_index_hashes_verified": true,
+      "strict_common_runtime_primary_eligible": true,
+      "motor_parameters_unchanged": true
+    },
+    {
+      "run_id": "libero40-noise-controls-20261030-w01-r1",
+      "job_id": "job-834arjyjj6mp",
+      "source_commit": "53b6c0d1bcccd6d94025762335b66a72f09a3119",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 65204,
+      "charged_gpu_seconds": 2298,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w01-r1/experiment/index.json",
+        "sha256": "1d8a5092e890f19c3a25f158c7baf6a47948e07a59deadb809c93d8e3c21279a",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w01-r1/worker-time.json",
+        "sha256": "c2cf1618b439b2afdb7aa448e4aa95177dda3ac0f4682a7705cf22f417cdfa72",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "native/k0": {
+          "successes": 11,
+          "queries": 45
+        },
+        "zero/k0": {
+          "successes": 8,
+          "queries": 45
+        },
+        "tied_gaussian/k0": {
+          "successes": 11,
+          "queries": 45
+        },
+        "tied_gaussian_clipped/k0": {
+          "successes": 11,
+          "queries": 45
+        }
+      },
+      "episodes": 180,
+      "completed_groups": 180,
+      "all_group_index_hashes_verified": true,
+      "strict_common_runtime_primary_eligible": true,
+      "motor_parameters_unchanged": true
+    },
+    {
+      "run_id": "libero40-ppo-target-wave-20261030-w00-r1",
+      "job_id": "job-3ckrfuvifjwk",
+      "source_commit": "7780fb38b61fb37a3e2c0aec67ffea8e8e9c0b94",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 56639,
+      "charged_gpu_seconds": 2247,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w00-r1/experiment/index.json",
+        "sha256": "e8c9818a57384a24aeef1685ac2ab1e376e1063b55cf39ca8ab694b29ea8b873",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w00-r1/worker-time.json",
+        "sha256": "b3c09957e8308000bbffb0c59e98cac22bf91b1dae5a606741ed2876c3c625c1",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "native/k0": {
+          "successes": 17,
+          "queries": 45
+        },
+        "ppo_full/k0": {
+          "successes": 14,
+          "queries": 45
+        },
+        "ppo_trained_episode/k0": {
+          "successes": 15,
+          "queries": 45
+        },
+        "ppo_full/k1": {
+          "successes": 1,
+          "queries": 5
+        },
+        "ppo_episode_reset/k1": {
+          "successes": 1,
+          "queries": 5
+        },
+        "ppo_trained_episode/k1": {
+          "successes": 2,
+          "queries": 5
+        }
+      },
+      "episodes": 165,
+      "completed_groups": 150,
+      "all_group_index_hashes_verified": true,
+      "strict_common_runtime_primary_eligible": true,
+      "motor_parameters_unchanged": true,
+      "frozen_models": {
+        "full": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w00-r1/models/frozen-full.pt",
+          "sha256": "9d8d5a08ef2a30abbef579ed810d3e6ae7c998cb576909f0c6d5c0e98889e904",
+          "verified_against_recorded_sha": true
+        },
+        "episode": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w00-r1/models/frozen-episode.pt",
+          "sha256": "15916bf91ec15adf8ffb3d6f36b957f5e263c96b2c5c7b96e3ada58c71d010d1",
+          "verified_against_recorded_sha": true
+        }
+      }
+    },
+    {
+      "run_id": "libero40-ppo-target-wave-20261030-w01-r1",
+      "job_id": "job-mrfdf4ipqicm",
+      "source_commit": "7780fb38b61fb37a3e2c0aec67ffea8e8e9c0b94",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 52255,
+      "charged_gpu_seconds": 2279,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w01-r1/experiment/index.json",
+        "sha256": "3daf729ffac033aef20febde990e9fc5e2bf35be01c2bc1c23c86ab2e4afa547",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w01-r1/worker-time.json",
+        "sha256": "1a9176b5e7b72c2cee2a36964d600cdafd0362c53b77a2f018586eaead564395",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "native/k0": {
+          "successes": 13,
+          "queries": 45
+        },
+        "ppo_full/k0": {
+          "successes": 10,
+          "queries": 45
+        },
+        "ppo_trained_episode/k0": {
+          "successes": 11,
+          "queries": 45
+        },
+        "ppo_full/k1": {
+          "successes": 4,
+          "queries": 4
+        },
+        "ppo_episode_reset/k1": {
+          "successes": 4,
+          "queries": 4
+        },
+        "ppo_trained_episode/k1": {
+          "successes": 3,
+          "queries": 4
+        }
+      },
+      "episodes": 159,
+      "completed_groups": 147,
+      "all_group_index_hashes_verified": true,
+      "strict_common_runtime_primary_eligible": true,
+      "motor_parameters_unchanged": true,
+      "frozen_models": {
+        "full": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w01-r1/models/frozen-full.pt",
+          "sha256": "9d8d5a08ef2a30abbef579ed810d3e6ae7c998cb576909f0c6d5c0e98889e904",
+          "verified_against_recorded_sha": true
+        },
+        "episode": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-target-wave-20261030-w01-r1/models/frozen-episode.pt",
+          "sha256": "15916bf91ec15adf8ffb3d6f36b957f5e263c96b2c5c7b96e3ada58c71d010d1",
+          "verified_against_recorded_sha": true
+        }
+      }
+    },
+    {
+      "run_id": "libero40-source-sac-competence-20261030-r1",
+      "job_id": "job-qioinn358m7l",
+      "source_commit": "7780fb38b61fb37a3e2c0aec67ffea8e8e9c0b94",
+      "status": "terminal_failed_setup_zero_interactions",
+      "exit_code": 1,
+      "actual_action_charge": 0,
+      "charged_gpu_seconds": 78,
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-sac-competence-20261030-r1/worker-time.json",
+        "sha256": "0fff9eb034a0785116e93f260213948e92467f1f66bd08dddf67ca560b1b8895",
+        "verified_against_recorded_sha": false
+      }
+    },
+    {
+      "run_id": "libero40-source-sac-competence-20261030-r2",
+      "job_id": "job-zxgkfebhs4k8",
+      "source_commit": "492c289e2ecb56c6e38034097aaab69746b0fd8c",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 7540,
+      "charged_gpu_seconds": 532,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-sac-competence-20261030-r2/experiment/index.json",
+        "sha256": "ac9a9ab004cf97f798fd1534f8aca29894b7b3e5fc1324b2d44310bba493ce61",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-sac-competence-20261030-r2/worker-time.json",
+        "sha256": "b10320e6f2d5ed584440f5071431693f07f8dca42473db2316f48101b9f87dd9",
+        "verified_against_recorded_sha": false
+      },
+      "scores": {
+        "native": {
+          "successes": 16,
+          "queries": 16
+        },
+        "mean": {
+          "successes": 16,
+          "queries": 16
+        },
+        "sample": {
+          "successes": 16,
+          "queries": 16
+        }
+      },
+      "all_trace_hashes_verified": true,
+      "weights_unchanged": null,
+      "optimizer_updates": 0,
+      "source_actor_checkpoints": {
+        "libero_spatial:00": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/case-00019-source.pkl",
+          "sha256": "63164bdba9e7da8cf8ede01e8ecb5888200e2d6ddba5e538cc88343cebf57f88",
+          "verified_against_recorded_sha": true
+        },
+        "libero_spatial:01": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s01-train/experiment/case-00015-source.pkl",
+          "sha256": "885d8af2ced284daab5b97902a5d09172fde0baf9527ab80304b94860b61a024",
+          "verified_against_recorded_sha": true
+        },
+        "libero_object:00": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train/experiment/case-00011-source.pkl",
+          "sha256": "bb60a5298d4955f674b5e92d0a5c9b10561948b5abc4255297d27b0e6a9cb4cd",
+          "verified_against_recorded_sha": true
+        },
+        "libero_object:01": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o01-train/experiment/case-00014-source.pkl",
+          "sha256": "82af2ec8f704f5d63857a0c9e9258827ff7da768aa4bc87cc9db1d04691e08f2",
+          "verified_against_recorded_sha": true
+        },
+        "libero_goal:00": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g00-train/experiment/case-00013-source.pkl",
+          "sha256": "19eade9435fd6cf8e1fbf787cc5dc087542379d776d3fed30b4915d532a054fe",
+          "verified_against_recorded_sha": true
+        },
+        "libero_goal:01": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g01-train/experiment/case-00020-source.pkl",
+          "sha256": "dcc08246a63d830e5a3e3394e10a7d6330352589a9abde4e08df9146affb4d0d",
+          "verified_against_recorded_sha": true
+        },
+        "libero_10:00": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-l00-train-r1/experiment/case-00006-source.pkl",
+          "sha256": "f66bf972af0b3f5c215b856b6e8203a20c7aa8088d3ad3f5d7434d1d1e2f5ea0",
+          "verified_against_recorded_sha": true
+        },
+        "libero_10:01": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l01-train/experiment/case-00007-source.pkl",
+          "sha256": "27548ba19bfa713521b09235fad2629f5ed8f30aa334b7fbf234f2d1e5d1d7ff",
+          "verified_against_recorded_sha": true
+        }
+      },
+      "model_scope": "Eight corresponding task-specific source actors;16disjoint-source-case queries per method, not all40 or a joint SAC"
+    },
+    {
+      "run_id": "libero40-target-online-dsrl-six-20261030-r1",
+      "job_id": "job-df23nkw7ne5j",
+      "source_commit": "ba4674fafbe6d8f816979b61aa4ccd38e2912eff",
+      "status": "terminal_success",
+      "exit_code": 0,
+      "completed": true,
+      "actual_action_charge": 35558,
+      "charged_gpu_seconds": 1851,
+      "index": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-online-dsrl-six-20261030-r1/experiment/index.json",
+        "sha256": "dc0b86e4b812c9f36abb01334da62b0cc8dabb40e0a80482f133482c1bf23201",
+        "verified_against_recorded_sha": false
+      },
+      "worker_time": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-online-dsrl-six-20261030-r1/worker-time.json",
+        "sha256": "9d82d95721a4666b9e1ce917f844912d7e47e4c8cb0097b18a866e08182b50d8",
+        "verified_against_recorded_sha": false
+      },
+      "episodes": 132
+    }
+  ],
+  "terminal_component_totals": {
+    "physical_actions": 297738,
+    "charged_gpu_seconds": 12601,
+    "note": "Unique actions/time of these terminal components only; excludes original source pretraining. Includes78s failed source-SAC setup once."
+  },
+  "aggregate_scores": {
+    "noise": {
+      "native": "29/90",
+      "zero": "25/90",
+      "tied_unbounded": "28/90",
+      "tied_clipped": "29/90"
+    },
+    "ppo_target_k0": {
+      "native": "30/90",
+      "ppo_full": "24/90",
+      "ppo_trained_episode": "26/90"
+    },
+    "ppo_target_fixed9_k1": {
+      "ppo_full": "5/9",
+      "same_weight_episode_reset": "5/9",
+      "ppo_trained_episode": "5/9"
+    },
+    "source_sac_competence": {
+      "native": "16/16",
+      "mean": "16/16",
+      "sample": "16/16"
+    },
+    "six_case_onset": {
+      "budgets": [
+        0,
+        1,
+        4,
+        8,
+        13,
+        16
+      ],
+      "successes": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "queries_each": 6
+    }
+  },
+  "recomputed_wave_scores": {
+    "noise": {
+      "native/k0": "29/90",
+      "zero/k0": "25/90",
+      "tied_gaussian/k0": "28/90",
+      "tied_gaussian_clipped/k0": "29/90"
+    },
+    "ppo": {
+      "native/k0": "30/90",
+      "ppo_full/k0": "24/90",
+      "ppo_trained_episode/k0": "26/90",
+      "ppo_full/k1": "5/9",
+      "ppo_episode_reset/k1": "5/9",
+      "ppo_trained_episode/k1": "5/9"
+    }
+  },
+  "native_runs": {
+    "student_firstwave": {
+      "successes": 31,
+      "queries": 90,
+      "source_commit": "d095a2a4e66a0b79d03c9e823a183c19452d0c10",
+      "role": "Earlier student-wave comparator; separate reference here"
+    },
+    "noise_controls": {
+      "successes": 29,
+      "queries": 90,
+      "role": "Primary contemporaneous comparator for zero/tied/clipped"
+    },
+    "ppo_target_wave": {
+      "successes": 30,
+      "queries": 90,
+      "role": "Primary contemporaneous comparator for frozen PPO full/trained reset"
+    },
+    "pooling": "Do not pool31/29/30 or substitute a native control from another process/run",
+    "crossrun_check": {
+      "compared": "Student firstwave versus noise screen only",
+      "metadata_matches": 90,
+      "outcome_discordant_ids": [
+        33,
+        38,
+        44,
+        82
+      ],
+      "initial_noise_and_images_identical_on_discordant_cases": true,
+      "decoded_first_action_max_abs_delta_range": [
+        0.0019527673721313477,
+        0.0035393238067626953
+      ],
+      "interpretation": "Cross-process decoder sensitivity observed; no specific kernel cause established"
+    }
+  },
+  "source_model_selection": "source-only frozen models; existing pins preserved",
+  "active_diagnostics": {
+    "status": "excluded_from_terminal_completion",
+    "tasks": [
+      0,
+      40
+    ],
+    "selection": "outcome-selected development, not final/confirmatory",
+    "snapshot_only": true
+  },
+  "guard": {
+    "source_pin": "c166171b847ada9a20a9629a07d5a0100b517097",
+    "state": "source-prepared; staged for shared CPU gate; final gate receipt not supplied here",
+    "qualified": false,
+    "admitted": false,
+    "active_panel_pin_unchanged": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196"
+  },
+  "allocations_launched": 0,
+  "tests_executed": false,
+  "budget_changes": false
+}

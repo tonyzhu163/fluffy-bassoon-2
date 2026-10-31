@@ -1,0 +1,306 @@
+{
+  "schema": "independent_SAC65_R6_qualification_metadata_review_v1",
+  "date": "2026-10-31",
+  "timezone": "Asia/Shanghai",
+  "scope": "Static saved JSON/phase/JUnit/hash/accounting metadata review; no tests, model imports, simulator calls, arrays recomputed, scheduler queries or launches",
+  "status": "PASS_closed_SAC65_CPU_compatibility_only",
+  "actual_code": "80ffd1bba1c27ce40cc7f7d36682250e6fe97a07",
+  "allocation_id": "job-ug06puib7vek",
+  "resources": {
+    "gpus": 0,
+    "cpus": 8,
+    "memory_gib": 64,
+    "shm_gib": 2
+  },
+  "fixture_tests": {
+    "tests": 150,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "phases_seconds": {
+    "tests": 35.61923756450415,
+    "projection": 495.0450709722936,
+    "export": 683.6729155946523,
+    "audit": 9.888164619915187
+  },
+  "parent_seconds": 1254.2092063073069,
+  "source65": {
+    "rounds": 65,
+    "roots": 26,
+    "counts": {
+      "decisions": 21048,
+      "episodes": 1560,
+      "complete_K4_trials": 390,
+      "committed_source_actions": 651638,
+      "selected_actions": 651638
+    },
+    "checkpoint_sha256": "b09c13f54e4db8994c9a5d94cd6f18b6af3514d4d5ef4e63f1f91e482578b0e0",
+    "tip_sha256": "8c429b7d7a66b1374ad95a1136b783717509eef0651f457d775c39b59d5f75b6",
+    "ancestry_sha256": "5e65bc308c8d73ab21ff80452c39fec98b873171e49a1432312a8645bd07d861"
+  },
+  "projection": {
+    "unique_files": 143506,
+    "unique_file_bytes": 56795082979,
+    "full_manifest": {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/projection.json",
+      "sha256": "8f03b480cbb8bd0e57a94d9004f8fade2b845c4c5dea476f9c75e58ee5f9051c",
+      "bytes": 57812110,
+      "local_full_copy_not_duplicated": true
+    }
+  },
+  "paired_export": {
+    "index_sha256": "c697f339fa25eacc25b5972efb4f67db047ff050bb7ed116f5fc206645fade31",
+    "datasets": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/private/paired-export/ad.npz",
+        "sha256": "7c25166ad347bf1b8fc308f1d4cc1be82c487bccef9c5be0be9e90c1b06ef34d",
+        "bytes": 716092015,
+        "ZIP_CRC_members": 21,
+        "all_CRCs_passed": true
+      },
+      "dpt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/private/paired-export/dpt.npz",
+        "sha256": "34bb016cd805ac2cbbfa959fac2e917735a7505ea8c2ad7dc4f471bc59e37add",
+        "bytes": 716034306,
+        "ZIP_CRC_members": 21,
+        "all_CRCs_passed": true
+      }
+    },
+    "historical_fields_equal": true,
+    "physical_duration_sum": 651638,
+    "selected_prefix_preserved": true
+  },
+  "actual_import_proof": "Torch2.11.0+cu128 exact approved shared origin/initSHA; no pth processing/forbidden modules/CUDA/optimizer steps; all4 phase receipts reviewed",
+  "owned_cleanup": {
+    "all_phases_clean": true,
+    "final_clean": true,
+    "survivors": []
+  },
+  "payload_inspection_limit": "Final NPZ/index byte hashes and ZIP CRCs are from retained owner independent artifact audit; actual paired array/mask checks ran in allocated CPU audit. This independent review rehashes small receipts and full saved projection metadata, not all source payloads/NPZ arrays.",
+  "retained_files": [
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/exit-code.txt",
+      "retained": "sac65-r6-evidence-20261031/exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/fixtures.junit.xml",
+      "retained": "sac65-r6-evidence-20261031/fixtures.junit.xml",
+      "sha256": "597ae05a853c23320da1c45d3bbc8e1fe3943ddd4f6dd9dadcfb7f517db24c2a",
+      "bytes": 24725
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/fixtures-summary.json",
+      "retained": "sac65-r6-evidence-20261031/fixtures-summary.json",
+      "sha256": "d691b4a9ab3f18bf4e9af3b4d39ac928df8118e1404d62050600de8765b3471a",
+      "bytes": 67
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/terminal.json",
+      "retained": "sac65-r6-evidence-20261031/terminal.json",
+      "sha256": "9017855b39a727602e8f5a526b93f09eea81131b8e8f8794431f04ff17de7fa7",
+      "bytes": 8759
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/COMPATIBILITY-PASS.json",
+      "retained": "sac65-r6-evidence-20261031/COMPATIBILITY-PASS.json",
+      "sha256": "f21212645531b36508701c7bb1ede2ac0448924a3f44aa12fb8db459b18d1e10",
+      "bytes": 8890
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/tests-phase.json",
+      "retained": "sac65-r6-evidence-20261031/tests-phase.json",
+      "sha256": "5558f732c52fc24eb793e5a816b237027c8079e3ee83b5537fb88563e205c09c",
+      "bytes": 1513
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/projection-phase.json",
+      "retained": "sac65-r6-evidence-20261031/projection-phase.json",
+      "sha256": "38116eaa45133c4aa1198af94850bd7771e6288bb3130192668e330f005f4e4b",
+      "bytes": 1722
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/export-phase.json",
+      "retained": "sac65-r6-evidence-20261031/export-phase.json",
+      "sha256": "089fe5b961adcacf20db81ab2294c01b3296961696c8f06d93489ba07edd57be",
+      "bytes": 1908
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/audit-phase.json",
+      "retained": "sac65-r6-evidence-20261031/audit-phase.json",
+      "sha256": "c1473fec2595cc58f933508044dcef03a73d7564ae9cc01b8835689616daf51c",
+      "bytes": 2082
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/tests-imports.json",
+      "retained": "sac65-r6-evidence-20261031/tests-imports.json",
+      "sha256": "ddb3f64abc641c5fa619d817628f59536ceaec76f9015167c40507096e415f21",
+      "bytes": 1454
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/projection-imports.json",
+      "retained": "sac65-r6-evidence-20261031/projection-imports.json",
+      "sha256": "5585ba1860fd495866a5de47ce4c139ff90c9c74757aa08d2583047d59984ce6",
+      "bytes": 1333
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/export-imports.json",
+      "retained": "sac65-r6-evidence-20261031/export-imports.json",
+      "sha256": "61bee0092eee3f1d5d2e117d813c47790849a8ba4505dd4acd0627d653006745",
+      "bytes": 1455
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/audit-imports.json",
+      "retained": "sac65-r6-evidence-20261031/audit-imports.json",
+      "sha256": "2eaad7d7a17f0279f924eb0d9c24a6c7fec2e28cd8594d16760ec495ce0c155f",
+      "bytes": 1328
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/paired-audit.json",
+      "retained": "sac65-r6-evidence-20261031/paired-audit.json",
+      "sha256": "99cd4846ebcbe738af6f3a20a236e2a1faf31e7743708a1a735863c43e47847d",
+      "bytes": 1221
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/io-inventory.json",
+      "retained": "sac65-r6-evidence-20261031/io-inventory.json",
+      "sha256": "662c166dd125ce5f2eee0eb28cf0b3af5b6677ba8b42f905d7c33c78e13c18f2",
+      "bytes": 5211
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/projection-summary.json",
+      "retained": "sac65-r6-evidence-20261031/projection-summary.json",
+      "sha256": "21c040b3808fdb5cbea08def7febbb9e62256cfd1aa3e71724301e3ecf5f8f78",
+      "bytes": 10232
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/tests.log",
+      "retained": "sac65-r6-evidence-20261031/tests.log",
+      "sha256": "77673b7526510e3ab8d9590675b3c7e6dfbdd217123c1401a0e0b5c438fcd6a8",
+      "bytes": 261
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/export.log",
+      "retained": "sac65-r6-evidence-20261031/export.log",
+      "sha256": "6a29fbc355f47b307714aa9cc6874910e93c83caaffade6ab4d19d767a648853",
+      "bytes": 595
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/allocation-before-mask.json",
+      "retained": "sac65-r6-evidence-20261031/allocation-before-mask.json",
+      "sha256": "98fde11fa8e2e5fadf6c3e43962acebfd339d3ea5321d7f413d797956705430c",
+      "bytes": 1959
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/bootstrap-receipt.json",
+      "retained": "sac65-r6-evidence-20261031/bootstrap-receipt.json",
+      "sha256": "697c670ee0cf23fe685c4dcc5cfd038a0d4b98b3e613a3ef592bf36d219680c5",
+      "bytes": 842
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/local-code.json",
+      "retained": "sac65-r6-evidence-20261031/local-code.json",
+      "sha256": "3301ed1b97ab990246506d785c30e0d2df49edcd6831e36534d2d45cb54882c9",
+      "bytes": 1728
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/independent-final-artifacts.json",
+      "retained": "sac65-r6-evidence-20261031/owner-independent-final-artifacts.json",
+      "sha256": "8431f7d7910cd91b5093efa1af263e57034d7dc3dd900a76cc3e92ac25247b98",
+      "bytes": 5584
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/final-scheduler/actual-terminal.txt",
+      "retained": "sac65-r6-evidence-20261031/owner-actual-terminal-AX.txt",
+      "sha256": "2cf2b8ea25e2bf8fc744e48bc40f62ff8f3603fbafc9a3b3a58476bac960b5d2",
+      "bytes": 12628
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/scheduler-accounting.json",
+      "retained": "sac65-r6-evidence-20261031/scheduler-accounting.json",
+      "sha256": "dffd06066c3c97cd0999baf0e6ce9123f4333ed186a537a16dc9206d0f0c8d24",
+      "bytes": 1796
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-sac65-cpu-compat-20261031-r6/receipts/runtime/owned-final-cleanup.json",
+      "retained": "sac65-r6-evidence-20261031/owned-final-cleanup.json",
+      "sha256": "be9662eec4b2f5fdf8b5a8cddb9059a6e59415e9fbc48c7b8290a3b834897e36",
+      "bytes": 1435
+    }
+  ],
+  "measured_planning": {
+    "ratio_600_over_390": 1.5384615384615385,
+    "projection_seconds_linear": 761.6078014958364,
+    "export_seconds_linear": 1051.8044855302344,
+    "audit_seconds_linear": 15.212560953715673,
+    "projection_plus_export_seconds_linear": 1813.4122870260708,
+    "unique_bytes_linear": 87377050737,
+    "caution": "Planning scale only; actual final-root inventory/validation export/additional ancestry work/storage throughput/repeated checks remain unmeasured"
+  },
+  "scheduler_cost_status": "Closed by exact retained execution-owner terminal accounting; no remaining grant authority",
+  "teacher_competence_measured": false,
+  "source100_bank_admitted": false,
+  "student_fits": 0,
+  "new_robot_actions": 0,
+  "new_VLA_queries": 0,
+  "new_SGD": 0,
+  "new_allocations": 0,
+  "active_code_changed": false,
+  "scheduler_accounting": {
+    "job_id": "job-ug06puib7vek",
+    "code_commit": "80ffd1bba1c27ce40cc7f7d36682250e6fe97a07",
+    "actual_scheduler_status": "Success",
+    "actual_pod_status": "Success",
+    "running_started_at": "2026-10-31T07:30:23+08:00",
+    "success_at": "2026-10-31T07:51:33+08:00",
+    "scheduler_running_seconds": 1270,
+    "allocated_CPUs": 8,
+    "allocated_memory_GiB": 64,
+    "allocated_GPUs": 0,
+    "actual_CPU_core_seconds": 10160,
+    "actual_GPU_seconds": 0,
+    "pod_seconds": 1260,
+    "parent_seconds": 1254.2092063073069,
+    "operational_scheduler_cap_seconds": 1680,
+    "unused_current_cap_seconds_sealed": 410,
+    "grant_settlement": {
+      "total": 1800,
+      "R5_actual": 71,
+      "R6_actual": 1270,
+      "unused_sealed": 459,
+      "previously_sealed_with_R6_admission": 49
+    },
+    "old_envelope": {
+      "status": "closed_unchanged",
+      "actual": 620,
+      "unused_sealed": 1180
+    },
+    "known_CPU_gate_total": {
+      "actual_scheduler_seconds": 1961,
+      "CPU_core_seconds": 15688,
+      "GPU_seconds": 0
+    },
+    "evidence": {
+      "receipts/final-scheduler/actual-terminal.txt": {
+        "sha256": "2cf2b8ea25e2bf8fc744e48bc40f62ff8f3603fbafc9a3b3a58476bac960b5d2",
+        "bytes": 12628
+      },
+      "receipts/final-scheduler/actual-terminal.jpg": {
+        "sha256": "633baf64555a849dd384041e03484a231b6f47d5160e13ff47c9d75dddf1e540",
+        "bytes": 84821
+      },
+      "receipts/runtime/terminal.json": {
+        "sha256": "9017855b39a727602e8f5a526b93f09eea81131b8e8f8794431f04ff17de7fa7",
+        "bytes": 8759
+      },
+      "receipts/runtime/owned-final-cleanup.json": {
+        "sha256": "be9662eec4b2f5fdf8b5a8cddb9059a6e59415e9fbc48c7b8290a3b834897e36",
+        "bytes": 1435
+      }
+    },
+    "metering": "Actual scheduler running duration; pod and parent recorded separately. All unused capacity sealed; no new jobs/scope admitted."
+  },
+  "execution_owner_evidence_commit": "5d3255cf8a8b5d20eb42da442be088fa181e24c4"
+}

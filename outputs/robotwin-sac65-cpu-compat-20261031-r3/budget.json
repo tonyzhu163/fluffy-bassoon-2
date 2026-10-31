@@ -1,0 +1,35 @@
+{
+  "schema": "robotwin_cpu_residual_budget_v2",
+  "run_id": "robotwin-sac65-cpu-compat-20261031-r3",
+  "original_scheduler_seconds": 1800,
+  "charged_scheduler_seconds": 299,
+  "arithmetic_residual_seconds": 1501,
+  "preserved_sealed_seconds": 151,
+  "additional_sealed_seconds": 30,
+  "total_sealed_seconds": 181,
+  "scheduler_cap_seconds": 1320,
+  "global_work_seconds": 1220,
+  "external_TERM_seconds": 1290,
+  "external_KILL_seconds": 1300,
+  "cleanup_reserve_seconds": 30,
+  "bootstrap_wait_seconds": 120,
+  "gpus": 0,
+  "cpus": 8,
+  "memory_gib": 64,
+  "predecessors": [
+    {
+      "file": "predecessor-r1-accounting.json",
+      "allocation_id": "job-eahrz09v6kkk",
+      "code_commit": "29df647fd30469fc04743baf47ba331718c9d1a2",
+      "scheduler_seconds": 149,
+      "sha256": "8e26ce12a16cc63a8636c345e74c9e453a153945050a447d6ae29e74eebf3260"
+    },
+    {
+      "file": "predecessor-r2-accounting.json",
+      "allocation_id": "job-wcfjtype0eec",
+      "code_commit": "16d8af8c6a1a6c7cd6980cbbc848deabafa1a6e6",
+      "scheduler_seconds": 150,
+      "sha256": "2f60430cc856aa8615b6a1e98c197b88058fae96f64bc91a61f061da223f6087"
+    }
+  ]
+}

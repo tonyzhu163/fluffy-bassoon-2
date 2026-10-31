@@ -41,6 +41,12 @@ shuffled episode files. Returns/advantages are derived from stored rewards,
 values, masks and the recorded PPO gamma/GAE configuration; they are not new
 environment interactions.
 
+[Paired PPO corpus export](PPO-CORPUS.md) converts committed raw trials into
+standard AD/DPT-style datasets with a separately pinned source-trained teacher.
+It rebuilds teacher memory from actual history and needs no new simulator/VLA
+queries. AD joins same-task trials across real PPO updates; a fixed-policy
+trial alone supports DPT/behavior cloning, not a changing learning history.
+
 Before each optimizer update, replaying the sampled pre-tanh actions with the
 behavior policy must reproduce the recorded log probabilities within1e-4.
 The default implementation performs one full trial per PPO batch and four

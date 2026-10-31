@@ -1,0 +1,118 @@
+{
+  "status": "STATIC_RESERVATION_NOT_CHOSEN_OR_ADMITTED",
+  "preselected_teacher": "finalSOURCE100 SAC per-method snapshot; not target-adapted clone",
+  "source_snapshot": {
+    "path": "OWNER_BOUND_SAC_SOURCE_ITERATION100_RECOVERY",
+    "sha256": "OWNER_SHA256"
+  },
+  "conditions": [
+    "native_unclipped_standard_Gaussian",
+    "sac_deterministic_physical_1.5_tanh_mean",
+    "sac_frozen_stochastic_sample"
+  ],
+  "episodes_per_task_per_condition": 4,
+  "tasks": [
+    {
+      "task": "handover_mic",
+      "primitive_limit": 600,
+      "requested_seeds": [
+        3000000000,
+        3000000997,
+        3000001994,
+        3000002991
+      ],
+      "max_actions_per_condition": 2400
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "primitive_limit": 400,
+      "requested_seeds": [
+        3000010000,
+        3000010997,
+        3000011994,
+        3000012991
+      ],
+      "max_actions_per_condition": 1600
+    },
+    {
+      "task": "place_a2b_left",
+      "primitive_limit": 400,
+      "requested_seeds": [
+        3000020000,
+        3000020997,
+        3000021994,
+        3000022991
+      ],
+      "max_actions_per_condition": 1600
+    },
+    {
+      "task": "place_object_stand",
+      "primitive_limit": 400,
+      "requested_seeds": [
+        3000030000,
+        3000030997,
+        3000031994,
+        3000032991
+      ],
+      "max_actions_per_condition": 1600
+    },
+    {
+      "task": "place_phone_stand",
+      "primitive_limit": 400,
+      "requested_seeds": [
+        3000040000,
+        3000040997,
+        3000041994,
+        3000042991
+      ],
+      "max_actions_per_condition": 1600
+    },
+    {
+      "task": "scan_object",
+      "primitive_limit": 500,
+      "requested_seeds": [
+        3000050000,
+        3000050997,
+        3000051994,
+        3000052991
+      ],
+      "max_actions_per_condition": 2000
+    }
+  ],
+  "all_new": {
+    "episodes": 72,
+    "maximum_new_actions": 32400,
+    "maximum_scheduler_gpu_seconds": 3600,
+    "gpus": 1
+  },
+  "conditional_existing_stage100_sample_reuse": {
+    "episodes_reused": 24,
+    "maximum_new_episodes": 48,
+    "maximum_new_actions": 21600,
+    "maximum_scheduler_gpu_seconds": 2700,
+    "requires": [
+      "sameSOURCE100teacher/motor/normalization",
+      "runtime deterministic=False and no updates",
+      "same actual case/initial raw and feature bytes",
+      "exact source-only actor/private interaction RNG sampling convention",
+      "existing physical costs counted once in original ledger; no new sample charge"
+    ],
+    "default_reuse_admitted": false
+  },
+  "source_or_target_sgd_updates": 0,
+  "reset_contract": "fresh source-local K4 trial per task/condition; same accepted cases across conditions; native parity/resets charged as defined existing physical control-action unit",
+  "pairing": "requested and accepted seed, initial raw/feature hashes; source-validation seeds are disjoint from source training actual cases",
+  "residual_request": {
+    "original_source_parent_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+    "original_sac_total_cap": 1194400,
+    "original_sac_source_cap": 1100000,
+    "planned_stage100_source_validation_max": 10800,
+    "planned_stage100_development_targets_max": 12800,
+    "new_qualification_ledger": null,
+    "fresh_canonical_residual_snapshot": null,
+    "owner_reconciled_new_action_authority": null,
+    "owner_reconciled_new_compute_authority": null,
+    "sealed_panel_or_N6_residuals_available": false
+  },
+  "selection": "SAC100 fixed before these outcomes. Report native/mean/sample per goal and paired cases; mean/sample successes cannot select target endpoints or a new teacher automatically. Weak mean remains weak candidate; any fallback teacher is separately source-only reviewed."
+}

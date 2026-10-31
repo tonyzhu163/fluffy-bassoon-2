@@ -1,0 +1,356 @@
+{
+  "format": "robotwin_native_history_evaluation_v1",
+  "run_id": "robotwin-native-evaluation-20261030-r1",
+  "status": "prepared_not_admitted_or_launched",
+  "cases": {
+    "adjust_bottle": [
+      22261030,
+      22262027,
+      22263024,
+      22264021,
+      22265018,
+      22266015,
+      22267012,
+      22268009
+    ],
+    "move_stapler_pad": [
+      22261030,
+      22262027,
+      22263024,
+      22264021,
+      22265018,
+      22266015,
+      22267012,
+      22268009
+    ]
+  },
+  "conditions": [
+    "native",
+    "native-zero",
+    "sac5-mean",
+    "ad-full",
+    "ad-static",
+    "dpt-full",
+    "dpt-static",
+    "ad-full-reset",
+    "dpt-full-reset"
+  ],
+  "episodes_per_trial": 8,
+  "episode_limit": 400,
+  "max_episodes": 144,
+  "max_actions": 57600,
+  "student_action": "deterministic_mean",
+  "teacher": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-prefix-20261030-r1/sac-source-recovery.pt",
+    "sha256": "f2fb39571cc3d0e809dfdc454f7f6df7f48e585fc972fd4c2fb8c83d36e63a42"
+  },
+  "models": {
+    "ad-full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-ad-full/candidate-000100.pt",
+      "sha256": "02896a84a880c1ec79d1b8f2e574cd74ee5e456ec55c6280bfdc0c9906aba7b6"
+    },
+    "ad-static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-ad-static/candidate-000100.pt",
+      "sha256": "bf7a0e00483948853402e1b3440f01779930ce93a9a20638608ed67ab696da4f"
+    },
+    "dpt-full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-dpt-full/candidate-000100.pt",
+      "sha256": "241b20579fc5ba76049ce0772770d1f57f0ba437ef5b8933cad5be365e30d05f"
+    },
+    "dpt-static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-dpt-static/candidate-000100.pt",
+      "sha256": "cba9ac8dabc59db0615142302e309ca4d74320eef81b17d0b33ba4eed6e5a9ed"
+    }
+  },
+  "interface": {
+    "runtime": {
+      "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+      "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+      "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+      "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+      "task_config_name": "demo_clean",
+      "appearance_randomization": false
+    },
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "task_episode_limits": {
+      "handover_mic": 600,
+      "pick_diverse_bottles": 400,
+      "place_a2b_left": 400,
+      "place_object_stand": 400,
+      "place_phone_stand": 400,
+      "scan_object": 500,
+      "adjust_bottle": 400,
+      "move_stapler_pad": 400,
+      "place_a2b_right": 400,
+      "place_dual_shoes": 600,
+      "place_empty_cup": 500,
+      "stamp_seal": 400
+    },
+    "episode_limit": 600,
+    "observation_dim": 2062,
+    "noise_shape": [
+      32,
+      32
+    ],
+    "action_limit": 1.5
+  },
+  "runtime_contract": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "native_horizon": 32,
+    "observation_dim": 2062,
+    "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+    "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+    "task_config_name": "demo_clean",
+    "assets": {
+      "status": "passed",
+      "check": "full_archived_object_families_static_file_sizes",
+      "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+      "hf_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+      "archive_sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27",
+      "manifest_sha256": "4f4584e0f84b788c6ef30d7f8fb905c22deb32586af07b68d20291431873e216",
+      "task_object_families": {
+        "handover_mic": [
+          "018_microphone"
+        ],
+        "pick_diverse_bottles": [
+          "001_bottle"
+        ],
+        "place_a2b_left": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_object_stand": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "074_displaystand",
+          "079_remotecontrol"
+        ],
+        "place_phone_stand": [
+          "077_phone",
+          "078_phonestand"
+        ],
+        "scan_object": [
+          "024_scanner",
+          "112_tea-box"
+        ],
+        "adjust_bottle": [
+          "001_bottle"
+        ],
+        "move_stapler_pad": [
+          "048_stapler"
+        ],
+        "place_a2b_right": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_dual_shoes": [
+          "007_shoe-box",
+          "041_shoe"
+        ],
+        "place_empty_cup": [
+          "019_coaster",
+          "021_cup"
+        ],
+        "stamp_seal": [
+          "100_seal"
+        ]
+      },
+      "object_family_count": 23,
+      "checked_file_count": 443,
+      "checked_file_bytes": 959793225
+    },
+    "reset_max_attempts": 32,
+    "simulator_execution": "one physical environment; scene setup/reset/step/close on calling thread",
+    "observation_capture": "final camera read per chunk; native full-observation action accounting",
+    "capture_image_equivalence": "unqualified; requires paired allocated-runtime check",
+    "appearance_randomization": false,
+    "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
+    "task_episode_limits": {
+      "adjust_bottle": 400,
+      "handover_mic": 600,
+      "move_stapler_pad": 400,
+      "pick_diverse_bottles": 400,
+      "place_a2b_left": 400,
+      "place_a2b_right": 400,
+      "place_dual_shoes": 600,
+      "place_empty_cup": 500,
+      "place_object_stand": 400,
+      "place_phone_stand": 400,
+      "scan_object": 500,
+      "stamp_seal": 400
+    },
+    "episode_limit_policy": "per-task control-action horizon; true termination takes precedence over timeout",
+    "episode_limits_source": {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/task_config/_eval_step_limit.yml",
+      "sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551"
+    }
+  },
+  "frozen_motor_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "native_backend_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "native_backend_sha256": "eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3",
+  "capture_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-capture-qual-20261029-r1/qualification/qualification.json",
+    "sha256": "d3c28726cf6a669a1850e56eecfecb4692153ad4648d1020cdc646cf95e4cf3e",
+    "source_commit": "8114dd23e872d673ade6ea391b973c05a0dc6eb1",
+    "runtime_contract": {
+      "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+      "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+      "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+      "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+      "noise_shape": [
+        32,
+        32
+      ],
+      "native_horizon": 32,
+      "observation_dim": 2062,
+      "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+      "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+      "task_config_name": "demo_clean",
+      "assets": {
+        "status": "passed",
+        "check": "full_archived_object_families_static_file_sizes",
+        "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+        "hf_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+        "archive_sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27",
+        "manifest_sha256": "4f4584e0f84b788c6ef30d7f8fb905c22deb32586af07b68d20291431873e216",
+        "task_object_families": {
+          "handover_mic": [
+            "018_microphone"
+          ],
+          "pick_diverse_bottles": [
+            "001_bottle"
+          ],
+          "place_a2b_left": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "075_bread",
+            "077_phone",
+            "081_playingcards",
+            "086_woodenblock",
+            "107_soap",
+            "112_tea-box",
+            "113_coffee-box"
+          ],
+          "place_object_stand": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "074_displaystand",
+            "079_remotecontrol"
+          ],
+          "place_phone_stand": [
+            "077_phone",
+            "078_phonestand"
+          ],
+          "scan_object": [
+            "024_scanner",
+            "112_tea-box"
+          ],
+          "adjust_bottle": [
+            "001_bottle"
+          ],
+          "move_stapler_pad": [
+            "048_stapler"
+          ],
+          "place_a2b_right": [
+            "047_mouse",
+            "048_stapler",
+            "050_bell",
+            "057_toycar",
+            "073_rubikscube",
+            "075_bread",
+            "077_phone",
+            "081_playingcards",
+            "086_woodenblock",
+            "107_soap",
+            "112_tea-box",
+            "113_coffee-box"
+          ],
+          "place_dual_shoes": [
+            "007_shoe-box",
+            "041_shoe"
+          ],
+          "place_empty_cup": [
+            "019_coaster",
+            "021_cup"
+          ],
+          "stamp_seal": [
+            "100_seal"
+          ]
+        },
+        "object_family_count": 23,
+        "checked_file_count": 443,
+        "checked_file_bytes": 959793225
+      },
+      "reset_max_attempts": 32,
+      "simulator_execution": "one physical environment; scene setup/reset/step/close on calling thread",
+      "observation_capture": "final camera read per chunk; native full-observation action accounting",
+      "capture_image_equivalence": "unqualified; requires paired allocated-runtime check",
+      "appearance_randomization": false,
+      "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
+      "actual_render_pci": "0000:a4:00.0"
+    },
+    "frozen_fingerprint": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41"
+  },
+  "firstfit_summary": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/summary.json",
+    "sha256": "9f0a80a489ed9adf38ec34eef7af985ba2bcd53a0eb4aa6ef26ebf4fc1a1fb6c",
+    "status": "completed_all_four"
+  },
+  "train_index_sha256": "4e8d4e64eb1845a234f710342f168d3a4cdb86366d64dd6c7cef6c7c5895a4af",
+  "validation_index_sha256": "194ae0fd4588e7bd55c3cd7a0fc6eedfb010bcb8043e311eeedd8adff0b2472b",
+  "requested_resources": {
+    "gpus": 1,
+    "cpus": 16,
+    "memory_gib": 128,
+    "shared_memory_gib": 8,
+    "max_gpu_seconds": 5400
+  },
+  "process_lifetime": "nine sequential fresh processes; each condition has two complete K8 trials, at most16 accepted resets; no in-trial resume",
+  "reported_episode_indices": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "additional_deployment_sgd_updates": 0,
+  "interpretation": "one K8 trial per target/condition; actual paired development screening only; no target selection or ICRL conclusion"
+}

@@ -1,0 +1,772 @@
+{
+  "schema": "coordinator_static_native16_crossrun_pairing_audit_v1",
+  "checked_at_utc": "2026-10-30T23:06:31.393858+00:00",
+  "scope": "Read-only local saved JSON/SHA comparisons; no model/test/robot/VLA/SGD/scheduler action",
+  "owner_binding_original": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/native16-cross-run-pairing-20261031-0703.json",
+  "owner_binding_sha256": "97bb1384ab76000c03f52058d151dd8d33738bb4b300ffd7fb16791946f3116b",
+  "verified_refs": [
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-ppo100-20261031T0647.json",
+      "sha256": "aa6a3490334033b6b6250ed0ec28f5d1f023c059752920d6f4d828b85d9afe84",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-reset100-20261031T0632.json",
+      "sha256": "aea0ccc7e71f129b887625d98a22429ec70ac573a8fde35c4d483f67b3f58122",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-ppo100-20261031-input.json",
+      "sha256": "a947755971b1bbee473ac11ac523cb95bcedfdd309fb932a9ee07e2e219297b6",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/independent-audit/audit-compact.json",
+      "sha256": "e06292c637c48287afb9be0a0c8b26cbac21683390155a9aba7073118f8ff738",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/receipts/native-adjust_bottle/qualification.json",
+      "sha256": "1c6423cd2789027b515d39a31eb9cc1293dafbeeb40539d68525d06d2ac87a76",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/receipts/native-adjust_bottle/result.json",
+      "sha256": "609d58890f5c9b9b8266f2d4b9aa1ca4a029ca30a4f6b23e106423b6e35d256a",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/receipts/native-adjust_bottle/unit-receipt.json",
+      "sha256": "efca480e41aa34c8faf5a1a249d3e6bbde71fff8825bec83450037e9bcdaf7c6",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/receipts/native-move_stapler_pad/result.json",
+      "sha256": "0108b0cc9155511ec2e4685862d5342ec149ec9273949d3e1cffc94d3d2e5bfd",
+      "matches": true
+    },
+    {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-evaluation-20261030-r1/receipts/native-move_stapler_pad/unit-receipt.json",
+      "sha256": "be3d1aef895872ec8466cae2bce66feec9496361511b6778d7b723411dee4d4a",
+      "matches": true
+    }
+  ],
+  "native_cases": 16,
+  "PPO_target_records": 48,
+  "trained_reset_target_records": 16,
+  "all_actual_seed_raw_observation_feature_pairs_match": true,
+  "rows": [
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "move_stapler_pad",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:reward_blind",
+      "task": "adjust_bottle",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "adjust_bottle",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo",
+      "condition": "ppo:memory_reset",
+      "task": "move_stapler_pad",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "adjust_bottle",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22261030,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22262027,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22263024,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22264021,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22265018,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22266015,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22267012,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    },
+    {
+      "method": "ppo_reset",
+      "condition": "ppo_reset:normal",
+      "task": "move_stapler_pad",
+      "requested_seed": 22268009,
+      "matches": {
+        "actual_seed": true,
+        "initial_raw_observation": true,
+        "initial_features": true
+      }
+    }
+  ],
+  "limitations": [
+    "Cross-run matched initial-case control, not a contemporaneous randomized replication.",
+    "Native and learned policy noise samples are not common random numbers; original native noise remains unclipped standard Gaussian.",
+    "One seed and one K8 trial per two development tasks; no adaptation/generalization or statistically established performance improvement claim."
+  ],
+  "owner_independent_review": "benchmark_horizons independently verified bothnative result/unit SHA bindings, prior22135-check audit, exactcapture/motor and all64learnedcasecomparisons; no new execution.",
+  "additional_actions": 0,
+  "additional_GPU_seconds": 0
+}

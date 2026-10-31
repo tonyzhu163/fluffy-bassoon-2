@@ -1,0 +1,331 @@
+{
+  "schema": "robotwin_existing_final100_measured_resource_handoff_v1",
+  "date": "2026-10-31",
+  "timezone": "Asia/Shanghai",
+  "status": "STATIC_CONCRETE_HANDOFF_NOT_RESOURCE_ADMISSION_NOT_LAUNCH",
+  "reference_qualification": {
+    "path": "SAC65-R6-QUALIFICATION-20261031.json",
+    "sha256": "0380d5cf3d912c5412b7b60bb0b93be32cfab2202d5bf488724227824abb15af",
+    "scope": "closed SAC65 software/data-path compatibility only"
+  },
+  "source100_refs": [
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/handoffs/sac100-ordered-ancestry-20261031-0757.json",
+      "retained": "SAC100-SOURCE-REFERENCE-20261031.json",
+      "sha256": "403e35ba951a7ebe5b595ad73fbee17a84f0cc856e09758fa2fb5fddf90d9bd7",
+      "bytes": 193003
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/handoffs/sac100-continuation-manifest.json",
+      "retained": "SAC100-SOURCE-TIP-20261031.json",
+      "sha256": "b2ae61a72c03bffb5c6e174d80077fb068089dcb0660a19732f4c83bf427999a",
+      "bytes": 2194
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/checks/independent-sac100-source-20261031T0755.json",
+      "retained": "SAC100-SOURCE-AUDIT-20261031.json",
+      "sha256": "5a17c185c346476246ec5a2ef2bf8730f843b3964db1232573fb8cbf0b19e298",
+      "bytes": 19368
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/handoffs/sac100-final-ordered-ancestry-20261031-0820.json",
+      "retained": "SAC100-FINAL-REFERENCE-20261031.json",
+      "sha256": "0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e",
+      "bytes": 195950
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/handoffs/sac-final-continuation-manifest.json",
+      "retained": "SAC100-FINAL-TIP-20261031.json",
+      "sha256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4",
+      "bytes": 3752
+    },
+    {
+      "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/checks/source100-sampled-reuse-evidence-20261031.json",
+      "retained": "SAC100-SAMPLE-REUSE-CANDIDATE-20261031.json",
+      "sha256": "33674fa7a3a211cca736dc150fc3001cf883983a17acc4f9abcd3ec1382fc3a0",
+      "bytes": 50143
+    }
+  ],
+  "source100": {
+    "rounds": 100,
+    "complete_K4": 600,
+    "episodes": 2400,
+    "actions": 1003790,
+    "updates_per_optimizer": 638500,
+    "optimizer_steps_total": 1915500
+  },
+  "source100_tip": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-final-20261031-r1/sac/continuation-manifest.json",
+    "sha256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4"
+  },
+  "source100_coordinator": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0060/experiment/coordinator-recovery.pt",
+    "sha256": "20c512080f3012452343a0c7d8aff67ee03966add4497d61256854e52d5d611f"
+  },
+  "preselected_stage100_source_teacher": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+    "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+  },
+  "current_source_roots": 62,
+  "current_stage100_status": "complete",
+  "final_source_validation_in_current_closed_roots": true,
+  "pending_final_validation_root": null,
+  "required_final_bank": {
+    "training_K4": 600,
+    "training_episodes": 2400,
+    "training_actual_actions": 1003790,
+    "validation_K4": 6,
+    "validation_episodes": 24,
+    "validation_iteration": 100,
+    "train_objectives": [
+      "ad",
+      "dpt"
+    ],
+    "validation_objectives": [
+      "behavior_cloning",
+      "dpt"
+    ],
+    "source_teacher": "same fixed59588 stage100 snapshot, actual source-state/actor/counters equality to final closed tip required",
+    "episode_case_disjointness": true
+  },
+  "measured_R6": {
+    "tests": 35.61923756450415,
+    "projection": 495.0450709722936,
+    "export": 683.6729155946523,
+    "audit": 9.888164619915187
+  },
+  "scaling": {
+    "ratio_600_over_390": 1.5384615384615385,
+    "projection_seconds_linear": 761.6078014958364,
+    "export_seconds_linear": 1051.8044855302344,
+    "audit_seconds_linear": 15.212560953715673,
+    "projection_plus_export_seconds_linear": 1813.4122870260708,
+    "unique_bytes_linear": 87377050737,
+    "caution": "Planning scale only; actual final-root inventory/validation export/additional ancestry work/storage throughput/repeated checks remain unmeasured"
+  },
+  "proposed_existing_resource_contracts": {
+    "final_CPU": {
+      "gpus": 0,
+      "cpus": 8,
+      "memory_gib": 64,
+      "scheduler_cap_seconds": 7200,
+      "one_outer_parent_deadline_seconds": 6900,
+      "robot_actions": 0,
+      "admitted": false,
+      "clock": "start before projection; export receives only remaining time"
+    },
+    "teacher_all_new": {
+      "gpus": 1,
+      "scheduler_cap_seconds": 3600,
+      "episodes": 72,
+      "max_new_actions": 32400,
+      "admitted": false
+    },
+    "teacher_conditional_sample_reuse": {
+      "gpus": 1,
+      "scheduler_cap_seconds": 2700,
+      "reused_episodes": 24,
+      "new_episodes": 48,
+      "max_new_actions": 21600,
+      "admitted": false,
+      "condition": "exact same59588 source sampling/actor/RNG/cases/initial bytes/noSGD plus original paid stage100 sample cost counted once"
+    },
+    "four_fits": {
+      "gpus": 1,
+      "cpus": 8,
+      "memory_gib": 32,
+      "shm_gib": 8,
+      "scheduler_cap_seconds": 3600,
+      "parent_deadline_seconds": 3300,
+      "process_external_cap_seconds": 750,
+      "fitting_clock_seconds_each": 600,
+      "objectives": [
+        "ad",
+        "dpt"
+      ],
+      "modes": [
+        "full",
+        "static"
+      ],
+      "fits": 4,
+      "updates_each": 500,
+      "total_updates": 2000,
+      "seed": 0,
+      "exports": [
+        25,
+        100,
+        500
+      ],
+      "primary": "candidate-000500.pt",
+      "new_robot_actions": 0,
+      "admitted": false
+    }
+  },
+  "existing_source_cost_contract": {
+    "parent_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+    "total_action_cap": 1194400,
+    "source_safety_cap": 1100000,
+    "stage100_source_validation_obligation_max": 10800,
+    "stage100_development_target_obligation_max": 12800,
+    "fresh_stable_canonical_ledger_ref": null,
+    "owner_reconciled_new_teacher_action_authority": null,
+    "owner_reconciled_new_compute_authority": null,
+    "source_or_eval_cap_repurposed": false,
+    "sealed_residuals_available": false
+  },
+  "closed_CPU_accounting": {
+    "job_id": "job-ug06puib7vek",
+    "code_commit": "80ffd1bba1c27ce40cc7f7d36682250e6fe97a07",
+    "actual_scheduler_status": "Success",
+    "actual_pod_status": "Success",
+    "running_started_at": "2026-10-31T07:30:23+08:00",
+    "success_at": "2026-10-31T07:51:33+08:00",
+    "scheduler_running_seconds": 1270,
+    "allocated_CPUs": 8,
+    "allocated_memory_GiB": 64,
+    "allocated_GPUs": 0,
+    "actual_CPU_core_seconds": 10160,
+    "actual_GPU_seconds": 0,
+    "pod_seconds": 1260,
+    "parent_seconds": 1254.2092063073069,
+    "operational_scheduler_cap_seconds": 1680,
+    "unused_current_cap_seconds_sealed": 410,
+    "grant_settlement": {
+      "total": 1800,
+      "R5_actual": 71,
+      "R6_actual": 1270,
+      "unused_sealed": 459,
+      "previously_sealed_with_R6_admission": 49
+    },
+    "old_envelope": {
+      "status": "closed_unchanged",
+      "actual": 620,
+      "unused_sealed": 1180
+    },
+    "known_CPU_gate_total": {
+      "actual_scheduler_seconds": 1961,
+      "CPU_core_seconds": 15688,
+      "GPU_seconds": 0
+    },
+    "evidence": {
+      "receipts/final-scheduler/actual-terminal.txt": {
+        "sha256": "2cf2b8ea25e2bf8fc744e48bc40f62ff8f3603fbafc9a3b3a58476bac960b5d2",
+        "bytes": 12628
+      },
+      "receipts/final-scheduler/actual-terminal.jpg": {
+        "sha256": "633baf64555a849dd384041e03484a231b6f47d5160e13ff47c9d75dddf1e540",
+        "bytes": 84821
+      },
+      "receipts/runtime/terminal.json": {
+        "sha256": "9017855b39a727602e8f5a526b93f09eea81131b8e8f8794431f04ff17de7fa7",
+        "bytes": 8759
+      },
+      "receipts/runtime/owned-final-cleanup.json": {
+        "sha256": "be9662eec4b2f5fdf8b5a8cddb9059a6e59415e9fbc48c7b8290a3b834897e36",
+        "bytes": 1435
+      }
+    },
+    "metering": "Actual scheduler running duration; pod and parent recorded separately. All unused capacity sealed; no new jobs/scope admitted."
+  },
+  "selection": "source-only fixed source100 teacher and fixed500 student endpoints; no target-selected weights/bank/teacher or new PPO/reset fit arms",
+  "implementation_change": false,
+  "duplicate_wrapper": false,
+  "new_tests": false,
+  "new_allocation": false,
+  "new_actions": 0,
+  "new_VLA": 0,
+  "new_SGD": 0,
+  "final_bank_payload_qualified": false,
+  "teacher_mean_competence_measured": false,
+  "student_fits_completed": false,
+  "owner_admission_receipts": {},
+  "execution_owner_evidence_commit": "5d3255cf8a8b5d20eb42da442be088fa181e24c4",
+  "prepared_existing_plan_copies": [
+    {
+      "path": "bindings.source100.prepared-20261031.json",
+      "sha256": "dff0e465b5c5eb1d5d5c6598d458dff28b6d031346b0e1b37de7fa2f3e324624"
+    },
+    {
+      "path": "teacher-qualification.source100.prepared-20261031.json",
+      "sha256": "fa13d9cd4fbb97a89ec28e2261e169961677b4632b03736242b2a8fd14d9aabe"
+    },
+    {
+      "path": "bindings.ad-first.prepared-20261031.json",
+      "sha256": "8fd7ce2c7fd702d982b5e8a7701632c06e9f9f22b3de5b4e54c8bd29e0bcda53"
+    },
+    {
+      "path": "COMMANDS.ad-first.preview-20261031.txt",
+      "sha256": "124f2e9091b7fa4bb78073e954f3f7bca6d8e7ebb46d6e60c1556f8316bab647"
+    }
+  ],
+  "print_only_preparation": {
+    "export_commands": 2,
+    "fit_commands": 2,
+    "requested_objectives": [
+      "ad"
+    ],
+    "executed": false,
+    "models_imported": false
+  },
+  "existing_export_and_fit_requires_teacher_review": {
+    "ad": false,
+    "dpt": true
+  },
+  "R6_profile_reusable_as_final100_6900s_launch_profile": false,
+  "source100_snapshot_checked_at_utc": "2026-10-31T00:17:38.469439+00:00",
+  "final_bank_ancestry": {
+    "source": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/handoffs/sac100-final-ordered-ancestry-20261031-0820.json",
+    "retained": "SAC100-FINAL-REFERENCE-20261031.json",
+    "sha256": "0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e",
+    "bytes": 195950
+  },
+  "final_bank_tip": {
+    "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-final-20261031-r1/sac/continuation-manifest.json",
+    "sha256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4"
+  },
+  "final_bank_coordinator": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/coordinator-recovery.pt",
+    "sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+    "bytes": 1043161745,
+    "ZIP_members": 210,
+    "all_CRCs_passed": true
+  },
+  "completed_source_validation": {
+    "complete_K4": 6,
+    "episodes": 24,
+    "actions": 10180,
+    "snapshot": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+      "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+    }
+  },
+  "AD_first_code_status": "candidate prepared; allocated CPU regression/equivalence gate pending",
+  "AD_first_subset": {
+    "objectives": [
+      "ad"
+    ],
+    "train_objectives": [
+      "ad"
+    ],
+    "validation_objectives": [
+      "behavior_cloning"
+    ],
+    "teacher_inference": false,
+    "teacher_review_required": false,
+    "source_and_case_guards_unchanged": true,
+    "fits": [
+      "ad-full",
+      "ad-static"
+    ],
+    "updates_each": 500,
+    "seed": 0,
+    "primary": "candidate-000500.pt",
+    "proposed_scheduler_gpu_seconds": 1800,
+    "parent_fit_seconds": 1650,
+    "from_existing_fourfit_proposal_seconds": 3600,
+    "new_spending_admitted": false,
+    "CPU_projection_export_shared_existing_proposal_seconds": 7200,
+    "extra_AD_collector_or_wrapper": false
+  },
+  "command_previews_status": "AD-only2exports(no teacher arguments)/2fixed500fits printed without execute"
+}

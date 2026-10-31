@@ -1,0 +1,214 @@
+{
+  "status": "DIAGNOSED_SAME_GRANT_RESIDUAL_PREPARED_NOT_ALLOCATED_NOT_QUALIFIED",
+  "previous_code": "2d1629b841d52ed96712552dee6f5a8387460cd8",
+  "r5_evidence_commit": "553d0fd1048a2d0edd196ba42790ca49ee2d7814",
+  "cause": "R5 -S worker omitted the existing literal shared_runtime.pth target; Torch import failed before pytest",
+  "r5_actual": {
+    "allocation_id": "job-ykpoq2b043kr",
+    "scheduler_seconds": 71,
+    "cpu_core_seconds": 568,
+    "parent_seconds": 36.59757255483419,
+    "test_phase_start_seconds": 36.48876015841961,
+    "fixture_cases_executed": 0,
+    "capture_one_CUA_ms": 22784,
+    "bootstrap_wait_seconds": 7.098809784278274,
+    "automatic_delivery_passed": true,
+    "owned_cleanup_clean": true
+  },
+  "closed_old_envelope": {
+    "limit": 1800,
+    "actual": 620,
+    "unused_sealed": 1180,
+    "credit": 0
+  },
+  "same_r5_grant": {
+    "original": 1800,
+    "charged": 71,
+    "residual": 1729,
+    "r6_cap": 1680,
+    "unused_sealed": 49,
+    "work": 1580,
+    "TERM": 1650,
+    "KILL": 1660,
+    "cleanup_inside": 30,
+    "bootstrap_inside": 120,
+    "local_stage_inside": 30,
+    "automatic_resubmission": false,
+    "r6_actual_cost": null
+  },
+  "combined_consumed_max_seconds": 2371,
+  "combined_consumed_max_cpu_core_seconds": 18968,
+  "authority": "Existing human AGENTS CPU-test scope; execution-owner final admission and launch; no new grant/GPU/robot/VLA/SGD/fit authority",
+  "shared_runtime": {
+    "pth_path": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/shared_runtime.pth",
+    "pth_sha256": "a90c8566fa30a6f7d0573409a586c68c16e39146327a8e7b588ae482fc8eaade",
+    "literal_path": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages",
+    "exists": true,
+    "torch_exists": true,
+    "torch_dist_info": [
+      "torch-2.11.0+cu128.dist-info"
+    ],
+    "torch_init_sha256": "0387d8b811b289287479c8bfdf4e1dac3a71b246f938d82da1331cf2dc8bf001"
+  },
+  "shared_runtime_metadata_sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+  "path_insertion_after": [
+    "CPU import firewall",
+    "hash-bound actual zero-GPU allocation receipt"
+  ],
+  "isolation_flags": [
+    "-I",
+    "-B",
+    "-S"
+  ],
+  "pth_processing": false,
+  "sitecustomize_processing": false,
+  "generic_base_or_system_paths_added": false,
+  "installs_or_env_moves": false,
+  "expected_fixture_tests": 150,
+  "new_or_changed_tests": 0,
+  "all_fixtures_still_unexecuted": true,
+  "scientific_floor_constants_unchanged": [
+    960,
+    750,
+    660,
+    45
+  ],
+  "new_setup_max_before_tests_seconds": 620,
+  "measured_r5_setup_to_tests_seconds": 36.48876015841961,
+  "measured_bank": {
+    "files": 143628,
+    "bytes": 56812446592,
+    "conservative8x_read_estimate_bytes": 454499572736
+  },
+  "bulk_SHA_export_throughput_measured": false,
+  "finish_promised": false,
+  "byte_identical_from_r5": [
+    "owned_cpu_runtime.py",
+    "transfer_guard.py",
+    "visibility_probe.py",
+    "capture_complete_proof.js"
+  ],
+  "predecessor_r1_r4_bytes_unchanged": true,
+  "stage_functions_AST_unchanged": true,
+  "scientific_source_constants": {
+    "ANCESTRY_SHA": "5e65bc308c8d73ab21ff80452c39fec98b873171e49a1432312a8645bd07d861",
+    "READER_PIN": "c62be99615e797fbec108e1f1b5e232e4a591494",
+    "READER_PATH": "outputs/robotwin-trained-handoff-control-20261030-r1/control.py",
+    "READER_SHA": "67db52fa8f6fa4e8bb56bc6e5cea9f531b5fe41716845350f3372226c5de77a0",
+    "TIP_SHA": "8c429b7d7a66b1374ad95a1136b783717509eef0651f457d775c39b59d5f75b6",
+    "CHECKPOINT_SHA": "b09c13f54e4db8994c9a5d94cd6f18b6af3514d4d5ef4e63f1f91e482578b0e0"
+  },
+  "source_reader_sha256": "4b790f4ed20a7b980465cece4e07232c50dd89ab1b324f67d1c4a969594498ac",
+  "source_coverage": {
+    "rounds": 65,
+    "roots": 26,
+    "K4": 390,
+    "episodes": 1560,
+    "actions": 651638,
+    "final100_admitted": false,
+    "teacher_competence_measured": false
+  },
+  "static_checks": [
+    "all Python AST",
+    "embedded remote Python AST",
+    "all JSON parsing",
+    "unchanged helper byte/AST comparisons",
+    "scientific source hashes/constants",
+    "budget and predecessor receipt hashes/accounting",
+    "bash -n job.sh",
+    "bundled Node --check capture_complete_proof.js"
+  ],
+  "actual_tests_executed_in_preparation": 0,
+  "prepared_files": [
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/CUA-HANDOFF.md",
+      "sha256": "ad6ce53483e6da1c1e5018176bc52c2758bbd580dae43c8055faae825cd411eb",
+      "bytes": 3189
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/PLAN.md",
+      "sha256": "b181208202c5dc24bbb30cccc949d3be911a934318c807439133bd96881062a3",
+      "bytes": 5161
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/budget.json",
+      "sha256": "334ca72bff10f0cc40d5fa5190d213e463ec7d736c658a35ff571066fea30bef",
+      "bytes": 2988
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/capture_complete_proof.js",
+      "sha256": "e49900e9e11a2adfefa36e61050422d8eefa753d188f7b639195a17f8cd42af2",
+      "bytes": 4372
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/dispatch_bootstrap.py",
+      "sha256": "5f1a7bd4efb475fe0af7c30c6fe45b2b1bd2e2309665019f6f2b5d6736c856fa",
+      "bytes": 14668
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/gate_job.py",
+      "sha256": "07b318b4f90141c45d947c91be17f18826977489c1ea65c0ae25f1041502c3f6",
+      "bytes": 24021
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/job.sh",
+      "sha256": "6e374034c629093ffd6f0130d9a5358c8563a7511cae19893257d1190fa4e5f5",
+      "bytes": 1059
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/owned_cpu_runtime.py",
+      "sha256": "ccfcfbe11b83dbc4b7ceec273ad227611a27d11b5926758cf7c84278842df9de",
+      "bytes": 10417
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py",
+      "sha256": "1ecedcc41c1c3267bd22aae98e02d04965e0be3f68918903ec024d2e40fed216",
+      "bytes": 13000
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/predecessor-r1-accounting.json",
+      "sha256": "8e26ce12a16cc63a8636c345e74c9e453a153945050a447d6ae29e74eebf3260",
+      "bytes": 873
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/predecessor-r2-accounting.json",
+      "sha256": "2f60430cc856aa8615b6a1e98c197b88058fae96f64bc91a61f061da223f6087",
+      "bytes": 1165
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/predecessor-r3-accounting.json",
+      "sha256": "5aadbf67abb219bc44b5411454b2f2b103fa63f87ab583ab1830a0e7821ead50",
+      "bytes": 989
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/predecessor-r4-accounting.json",
+      "sha256": "77e90aeeee44352a36de9a6bcffab275e3005aa161bbb33ff113a3a1057b22c9",
+      "bytes": 1866
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/predecessor-r5-accounting.json",
+      "sha256": "9be36ce2ee0e0469d60723a83b481db43505ef8c7f35fbf7c032f3c62233060f",
+      "bytes": 4102
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/shared-runtime-path-metadata.json",
+      "sha256": "715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322",
+      "bytes": 529
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/stage_local_code.py",
+      "sha256": "1fb0747eee8f400422c833c01c364eb96ebf1a7dbf89ca97ab584baa6b86838c",
+      "bytes": 5448
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/transfer_guard.py",
+      "sha256": "779ca030625e55eb48391726def5d518dfb733516ec0ced0177d0b8a0d2f9e83",
+      "bytes": 9217
+    },
+    {
+      "path": "outputs/robotwin-sac65-cpu-compat-20261031-r6/visibility_probe.py",
+      "sha256": "e534c25b8b43a114bab61ae0f0d4c92f009ef3394bb7f0bfe2aa46de121fc613",
+      "bytes": 2766
+    }
+  ]
+}
