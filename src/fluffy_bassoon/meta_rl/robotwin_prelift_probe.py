@@ -78,7 +78,7 @@ Record unavailable instrumentation and preserve native behavior when instance
 methods cannot be shadowed. Original results/exceptions pass through unchanged.
     """
     record=dict(available=False,topp=[],downsample=[],unavailable=[])
-    restored=[];last_side=[None]
+    restored=[];position_sides=[]
     def count(value):
         try:return len(value)
         except (TypeError,AttributeError):return None
@@ -105,12 +105,15 @@ methods cannot be shadowed. Original results/exceptions pass through unchanged.
             def make_topp(original,side=side):
                 def wrapped(*args,**kwargs):
                     row=dict(side=side,input_points=count(args[0]) if args else None,status='called')
-                    record['topp'].append(row);last_side[0]=side
+                    record['topp'].append(row)
                     try:result=original(*args,**kwargs)
                     except BaseException as error:
                         row.update(status='raised',exception=type(error).__name__);raise
                     row['status']='returned'
-                    try:row.update(raw_position_steps=count(result[1]),duration=scalar(result[-1]))
+                    try:
+                        position=result[1]
+                        position_sides.append((position,side))
+                        row.update(raw_position_steps=count(position),duration=scalar(result[-1]))
                     except (TypeError,IndexError,AttributeError):row['metadata_unavailable']=True
                     return result
                 return wrapped
@@ -118,7 +121,10 @@ methods cannot be shadowed. Original results/exceptions pass through unchanged.
         def make_downsample(original):
             def wrapped(*args,**kwargs):
                 result=original(*args,**kwargs)
-                row=dict(side=last_side[0],input_position_steps=count(args[0]) if args else None)
+                sides={side for position,side in position_sides if args and position is args[0]}
+                row=dict(side=next(iter(sides)) if len(sides)==1 else None,
+                    input_position_steps=count(args[0]) if args else None)
+                if len(sides)!=1:row['side_unavailable']='ambiguous_position_identity' if sides else 'unknown_position_identity'
                 try:row['output_position_steps']=count(result[0])
                 except (TypeError,IndexError,AttributeError):row['metadata_unavailable']=True
                 record['downsample'].append(row)

@@ -85,11 +85,41 @@ def test_optional_topp_capture_calls_each_original_once_returns_identity_and_res
             returned=task.downsample_trajectory(result[1],result[2])
             assert returned[0] is result[1]
     assert record['available'] and [r['output_position_steps'] for r in record['downsample']]==[8,8]
+    assert [r['side'] for r in record['downsample']]==['left','right']
     assert task.robot.left_mplib_planner.calls==task.robot.right_mplib_planner.calls==1 and task.samples==2
     assert task.robot.left_mplib_planner.TOPP.__func__ is original
     assert 'TOPP' not in task.robot.left_mplib_planner.__dict__ and 'downsample_trajectory' not in task.__dict__
     after=np.random.get_state()
     assert np.array_equal(before[1],after[1]) and before[2:]==after[2:]
+
+
+def test_grouped_planning_attributes_each_existing_position_object_without_recency_inference():
+    task=Task()
+    with observe_native_plans(task) as record:
+        left=task.robot.left_mplib_planner.TOPP(np.zeros((2,6)),1/250)
+        right=task.robot.right_mplib_planner.TOPP(np.zeros((2,6)),1/250)
+        assert left is task.robot.left_mplib_planner.result and right is task.robot.right_mplib_planner.result
+        assert task.downsample_trajectory(left[1],left[2])[0] is left[1]
+        assert task.downsample_trajectory(right[1],right[2])[0] is right[1]
+    assert [r['side'] for r in record['downsample']]==['left','right']
+    assert task.robot.left_mplib_planner.calls==task.robot.right_mplib_planner.calls==1 and task.samples==2
+    assert 'TOPP' not in task.robot.left_mplib_planner.__dict__ and 'downsample_trajectory' not in task.__dict__
+
+
+@pytest.mark.parametrize('identity',['unknown','ambiguous'])
+def test_downsample_unknown_or_ambiguous_identity_is_unavailable_without_new_native_calls(identity):
+    task=Task()
+    if identity=='ambiguous':task.robot.right_mplib_planner.result=task.robot.left_mplib_planner.result
+    with observe_native_plans(task) as record:
+        left=task.robot.left_mplib_planner.TOPP(np.zeros((2,6)),1/250)
+        right=task.robot.right_mplib_planner.TOPP(np.zeros((2,6)),1/250)
+        position=left[1].copy() if identity=='unknown' else left[1]
+        result=task.downsample_trajectory(position,left[2])
+        assert result[0] is position and right is task.robot.right_mplib_planner.result
+    assert record['downsample'][0]['side'] is None
+    assert record['downsample'][0]['side_unavailable']==identity+'_position_identity'
+    assert task.robot.left_mplib_planner.calls==task.robot.right_mplib_planner.calls==1 and task.samples==1
+    assert 'TOPP' not in task.robot.right_mplib_planner.__dict__ and 'downsample_trajectory' not in task.__dict__
 
 
 def test_topp_exception_is_preserved_without_retry():
