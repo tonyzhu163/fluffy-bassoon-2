@@ -1,0 +1,9 @@
+{
+  "format": "fixed100_qualified_launcher_derivative_v1",
+  "source_commit": "e764afdd04c9ea4dcbb7ac3e3e25d245c186dd42",
+  "source_path": "scripts/diagnostics/vla_source40_target_firstwave.sh",
+  "original_file_sha256": "3b31a55d16b620292f619a9e11e552ef4244ddb56b5cf460067705374a64f031",
+  "derived_file_sha256": "8470baf9d76684fd3bdb0c7f70c48457f9e85ffb014c6aea0bae7b3a9199a0f8",
+  "sole_behavior_change": "Remove already-qualified nine-file pytest block; keep cumulative clocks, grant/admission, actual GPU probe, full driver and cleanup unchanged",
+  "removed_block": "CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \\\n  PYTHONPATH=$TASK_ROOT/envs/pytest-overlay-20261029-r1:$TASK_WT/src \\\n  \"$TASK_PROBE\" -m pytest -q -p no:cacheprovider \\\n  tests/test_vla_source40_target_firstwave.py tests/test_vla_source40_target_firstwave_plan.py \\\n  tests/test_vla_common_runtime_evaluate.py tests/test_vla_source40_evaluate.py \\\n  tests/test_vla_source40_ppo_lineage.py tests/test_vla_source40_ppo_target.py \\\n  tests/test_vla_source40_frozen_validation.py tests/test_vla_source40_ppo_worker.py tests/test_gpu_probe.py \\\n  > \"$TASK_ATTEMPT/focused-tests.log\" 2>&1\n"
+}
