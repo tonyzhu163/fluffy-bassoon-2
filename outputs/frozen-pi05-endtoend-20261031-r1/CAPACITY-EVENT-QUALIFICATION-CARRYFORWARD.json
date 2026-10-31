@@ -1,0 +1,115 @@
+{
+  "format": "robotwin_event_api_qualification_carryforward_v1",
+  "old_pin": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+  "new_pin": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+  "files": [
+    {
+      "path": "scripts/diagnostics/robotwin_event_capacity.py",
+      "old_sha256": "6e513c9e9e6925289c60863b8fcfd8b0d1080247f78f83d6fdbdce74148a8209",
+      "new_sha256": "6e513c9e9e6925289c60863b8fcfd8b0d1080247f78f83d6fdbdce74148a8209",
+      "identical": true
+    },
+    {
+      "path": "scripts/diagnostics/robotwin_event_schedule_preflight.py",
+      "old_sha256": "c5aac51ddc6ae38d9b2583738517bac237057a23b418253a995e5f121aa2e1a4",
+      "new_sha256": "c5aac51ddc6ae38d9b2583738517bac237057a23b418253a995e5f121aa2e1a4",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_admission.py",
+      "old_sha256": "fc0f48dcef3be53fa9caf9074ec4390e4d1c1551a594e58ca061feb54c1628a8",
+      "new_sha256": "fc0f48dcef3be53fa9caf9074ec4390e4d1c1551a594e58ca061feb54c1628a8",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_capacity.py",
+      "old_sha256": "a375c878d057162332133ef44a389967590b15000a507cab0ad66a1065a632bb",
+      "new_sha256": "a375c878d057162332133ef44a389967590b15000a507cab0ad66a1065a632bb",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "old_sha256": "cb59710204f920c1ceb041164407d39909dab39ba4a20d3791bbebd6fa58bb5e",
+      "new_sha256": "b7fdd5de4adfdbecc62f76a3ed4a65125ca6e43571f6dd34d4a6598e2ca6fbc6",
+      "identical": false
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_schedule.py",
+      "old_sha256": "a6db739cb85d51ae3af1ac871f19c326c13a0ea002379e396c0c5e80ef1be59f",
+      "new_sha256": "a6db739cb85d51ae3af1ac871f19c326c13a0ea002379e396c0c5e80ef1be59f",
+      "identical": true
+    },
+    {
+      "path": "tests/test_robotwin_event_capacity.py",
+      "old_sha256": "0ca3bdf1e4b47182ff91ae01e2d8023e684984f14788d011227e9ad6a1339f94",
+      "new_sha256": "17a1ae7de477e1c0574d68faa196b152e7dcfb3b96694e9b9be6fb3ee8078ff3",
+      "identical": false
+    }
+  ],
+  "source_segments": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "name": "numpy_state",
+      "old_sha256": "047c8daceb673e96724a20c860f000652fdc31d59135219043a43d6ef4e6d06e",
+      "new_sha256": "047c8daceb673e96724a20c860f000652fdc31d59135219043a43d6ef4e6d06e",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "name": "EventReplayHead",
+      "old_sha256": "3cd6e8178e0f70fcd6a88c4807e52ba4ba7ca1c18b1d5edbf935b2335aa8a781",
+      "new_sha256": "3cd6e8178e0f70fcd6a88c4807e52ba4ba7ca1c18b1d5edbf935b2335aa8a781",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "name": "EventEpisodeControl",
+      "old_sha256": "41114f5dbf767ec7f21c1e415b3d7abcfc6f8ab0030339e61c86065650674511",
+      "new_sha256": "41114f5dbf767ec7f21c1e415b3d7abcfc6f8ab0030339e61c86065650674511",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "name": "cache_rollouts",
+      "old_sha256": "c0ab6c63cc6b13df0fde1145190b5c4be8720260eb1202e48348303bf1fee651",
+      "new_sha256": "c0ab6c63cc6b13df0fde1145190b5c4be8720260eb1202e48348303bf1fee651",
+      "identical": true
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py",
+      "name": "physical_audit",
+      "old_sha256": "4debbf140fdaae01f9b017119a78389052d91cd6f7a9e4065854dc678646c699",
+      "new_sha256": "023ac8b056a17ccd4a3d90e5ae27beeb5273711d88b3af3a488131557d517f8a",
+      "identical": false
+    },
+    {
+      "path": "tests/test_robotwin_event_capacity.py",
+      "name": "task_fixture",
+      "old_sha256": "a0d54656895db0a16bf5fe0d01b8678b4d0c0397db9f945034fd349b207a36de",
+      "new_sha256": "4a7620ac38e4c8199a304fd654ecdb02ec5e7d13d33ceb20808b158bd3cecdcc",
+      "identical": false
+    },
+    {
+      "path": "tests/test_robotwin_event_capacity.py",
+      "name": "test_physical_audit_reads_measured_qpos_nominal_and_drive_without_render_or_rng_change",
+      "old_sha256": "42dd38a1bd3e951cdb1c78fc630262cf3d8f767f4d69f0fe149306db2c9e41b5",
+      "new_sha256": "42dd38a1bd3e951cdb1c78fc630262cf3d8f767f4d69f0fe149306db2c9e41b5",
+      "identical": true
+    },
+    {
+      "path": "tests/test_robotwin_event_capacity.py",
+      "name": "test_control_uses_unchanged_full_h32_env_step_and_separate_source_cursor",
+      "old_sha256": "5974ca832043e5a287da797af779afeef333c4991414c5540ad43aab3e1a93e5",
+      "new_sha256": "5974ca832043e5a287da797af779afeef333c4991414c5540ad43aab3e1a93e5",
+      "identical": true
+    }
+  ],
+  "affected_test_nodeids": [
+    "tests/test_robotwin_event_capacity.py::test_physical_audit_reads_measured_qpos_nominal_and_drive_without_render_or_rng_change",
+    "tests/test_robotwin_event_capacity.py::test_control_uses_unchanged_full_h32_env_step_and_separate_source_cursor"
+  ],
+  "static_review": "optimization owner STATIC PASS be247; runtime pending",
+  "prior_cpu_attempt": "job-tr9monend30t immutable; retain actual result and cost",
+  "cpu_envelope": "same <=240 all-in; only affected tests may use actual residual, no fresh240/fullsuite repeat",
+  "tests_run_here": 0
+}
