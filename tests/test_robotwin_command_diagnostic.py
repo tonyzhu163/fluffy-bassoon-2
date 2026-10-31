@@ -193,7 +193,9 @@ def test_typed_failed_cache_keeps_known32_native16_and_requires_explicit_adapter
     decision=dict(full=target[None],base=np.zeros((1,32,14),np.float32),sampled_noise=np.zeros((32,32),np.float32),
         issued_motor_joint_targets=target[:16].copy())
     row=dict(episode_manifest_ref=dict(root=str(root),path='manifest.json',sha256='m'*64),
-        chunks=1,primitive_steps=16,success=False,spec={'id':'original04'})
+        chunks=1,primitive_steps=16,success=False,spec={'id':'original04'},
+        reset_info=dict(corpus_episode_id='e04',actual_seed=4,instruction=['instruction'],
+                        observation_sha256='a'*64,features_sha256='b'*64))
     entry=dict(record=row,id='phone-04',split='train',producer_commit=core.PRODUCERS['event'][0],
         original_source=source,producer_result={'original':'failed'},profile={'kind':'original_event_h32_v1'},
         plan_convention='original_event_h32_v1')
@@ -207,7 +209,8 @@ def test_typed_failed_cache_keeps_known32_native16_and_requires_explicit_adapter
             name=Path(ref['path']).name
             if name=='contract.json':return dict(source_commit=entry['producer_commit'],dataset_sha256=core.DEMOS_SHA,motor_sha256='motor',normalization_sha256='norm')
             if name=='manifest.json':return manifest
-            if name=='reset.json':return {'initial_observation':frame}
+            if name=='reset.json':return dict(episode_id='e04',initial_observation=frame,
+                reset_info={k:v for k,v in row['reset_info'].items() if k!='corpus_episode_id'})
             if name=='chunk.json':return chunk
             raise AssertionError(name)
         def arrays(self,root,ref):
