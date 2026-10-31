@@ -56,8 +56,9 @@ Its paid11 cache plus13 new04 records are preserved with complete whole-case
 RNG/cursor publication; the full12 consumer seal fails before fitting.
 Allocated predicate inspection confirms official state(1,32) versus a
 consumer(1,14) guard. The narrow correction and full90-row CPU seal pass.
-Action and KV command-imitation fits now have real optimizer progress on
-separate GPUs toward fixed5000 endpoints. No final capacity, physical benefit,
+Action and KV command-imitation fits stopped at their time guards before
+fixed5000 endpoints, retaining3,399/2,655 updates and full recoveries for
+explicit continuation. No final capacity, physical benefit,
 source RL or Transformer result is available yet.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 

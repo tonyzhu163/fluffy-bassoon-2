@@ -35,17 +35,17 @@ panels, so they alone do not explain the early failure. Replay coverage,
 critic fit and transient learning remain competing explanations; narrow
 pinned-source checks found no concrete scale/order/reward/entropy mismatch.
 
-The05:20 owner check verifies182,020 updates/967 training episodes,
-928 successes/39 failures. Stable full recovery, newest immutable180k
-checkpoint, raw/RPC bytes and all query identities pass; acting weights stay
-fixed and queries neither update nor enter replay. Losses remain finite.
-Whole-phase237,579 actions/12.43GB include screening, controls and learning;
-prior screen3,076 plus active12,974 GPU-seconds is not a final charge.
-[Owned proof](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0520-PROOF.json).
+The05:40 owner check (read05:42) verifies199,000 updates/1,073 training
+episodes,1,034 successes/39 failures. The200k threshold has not yet been
+reached in this snapshot; the last complete panel remains180,020 at20/20.
+Stable full recovery and newest raw/RPC hashes pass, with finite losses and
+no stop. Whole-phase246,582 actions/12.839GB include screening, controls and
+learning; screen3,076 plus active14,300.31 GPU-seconds is not a final charge.
+[Owned proof](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0540-PROOF.json).
 
 Baige job-w8deahieli8q/sourceb665 continues the fixed first whole burst≥500k,
 all20k panels, last-three gain criterion and final native. This child reserves
-25,200 seconds in the original57,600/1M/64GiB lineage. The next check is05:40.
+25,200 seconds in the original57,600/1M/64GiB lineage. The next check is06:00.
 No checkpoint/task/seed substitution, retuning or extra learner seed is used.
 The fixed endpoint and persistence test discriminate sustained improvement
 from a favorable interim checkpoint. This is promising ordinary RL evidence,
