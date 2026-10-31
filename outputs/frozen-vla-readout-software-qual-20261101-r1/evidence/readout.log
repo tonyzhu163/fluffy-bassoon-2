@@ -1,0 +1,36 @@
+........................................F................                [100%]
+=================================== FAILURES ===================================
+_ test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_common_loop_natural400_an0')
+
+    def test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger(tmp_path):
+        class Control:
+            native_horizon=32;active=False;elapsed_steps=0;resets=0
+            env=SimpleNamespace(corpus_writer=None)
+            def episode_limit_for_task(self,task):return 400
+            def set_recording_context(self,value):pass
+            def set_coefficients(self,arm,values):self.coefficients=np.array(values)
+            def reset(self,task,seed,**kw):
+                self.resets+=1;self.active=True;self.elapsed_steps=0
+                self.last_reset_info=dict(reset_policy_actions=0,actual_seed=seed,observation_sha256='o',features_sha256='f',instruction=kw['paired_instruction'])
+                return np.zeros(2062,np.float32)
+            def record_decision_metadata(self,value):pass
+            def step(self,values):
+                actual=min(32,400-self.elapsed_steps);self.elapsed_steps+=actual;self.active=self.elapsed_steps<400
+                return np.zeros(2062,np.float32),0.,False,not self.active,dict(primitive_steps=actual,success=False)
+            def snapshot(self):return dict(active=self.active,elapsed_steps=self.elapsed_steps)
+        specs=readout.cells(*paired_data());control=Control()
+        with readout.CampaignBudget(tmp_path/'ledger',campaign_id='synthetic',total_actions=1200,source_caps={},
+                phase_caps={'a1':1200},contract={'synthetic_test_only':True},run_id='synthetic',source_commit='a'*40) as budget:
+            for spec in specs[:3]:
+                spec=dict(spec,expected_reset=dict(actual_seed=spec['reset_seed'],observation_sha256='o',features_sha256='f'))
+                record=readout.run_complete_episode(control,spec,budget,run_id='synthetic')
+                assert record['complete'] and record['primitive_steps']==400 and record['chunks']==13
+>           assert budget.snapshot()['actual_actions']==1200 and budget.snapshot()['unresolved_decisions']==0
+E           assert (1200 == 1200 and {} == 0)
+
+tests/test_robotwin_command_diagnostic_readout.py:278: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_command_diagnostic_readout.py::test_common_loop_natural400_and_full_episode_admission_use_existing_canonical_ledger
+1 failed, 56 passed in 2.77s

@@ -1,0 +1,314 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70d643dfff50>
+kind = 'kv'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+>       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70d643de43d0>
+noise = array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+    ..., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]], dtype=float32)
+
+    def decode(self, noise):
+        torch = self.torch
+        tick = time.monotonic()
+        kv_adapter = getattr(self, "kv_adapter", None)
+        action_residual = getattr(self, "action_residual", None)
+        physical = getattr(self, "post_decode_residual", None)
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
+        if (kv_adapter is not None or action_residual is not None or physical is not None) and getattr(
+                self, "_residual_prepared", None) is not self._prepared:
+            raise RuntimeError("Residual public features are not bound to the current prepared observation")
+        self._last_residual_metadata = None
+        with torch.no_grad():
+            tensor = torch.as_tensor(noise, dtype=torch.float32, device=self.model.device)[None]
+            cache = self._kv_cache
+            if kv_adapter is not None:
+                if kv_adapter.training:
+                    raise ValueError("Use an eval-mode KV hook for simulator inference")
+                cache = kv_adapter(cache, self._prefix_mask, self._public_features)
+                self._last_residual_metadata = dict(configuration=kv_adapter.config(),
+                                                     public_features=self._public_features.detach().cpu())
+            targets = self.model._sample_actions_from_prefix_cache(
+                self._prepared, self._prefix_mask, cache, noise=tensor)
+            actions = self.model.decode_actions(targets, self._prepared.state)
+            base_decoded_actions = actions.detach().clone() if getattr(self, "post_command_transform", None) is not None else None
+            if action_residual is not None:
+                if action_residual.training:
+                    raise ValueError("Use an eval-mode action hook for simulator inference")
+                correction = action_residual(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(configuration=action_residual.config(),
+                    public_features=self._public_features.detach().cpu(),
+                    **{name: getattr(correction, name).detach().cpu() for name in
+                       ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
+            if physical is not None:
+                if physical.training:
+                    raise ValueError("Use an eval-mode post-decode physical hook")
+                correction = physical(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    post_decode_physical=dict(configuration=physical.config(),
+                        **{name: getattr(correction, name).detach().cpu() for name in
+                           ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")}))
+            if getattr(self, "record_agent_requested_actions", False):
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=actions.detach().cpu().clone())
+            transform = getattr(self, "post_command_transform", None)
+            if transform is not None:
+                requested = actions.detach().clone()
+                transformed, audit = transform(base_decoded_actions, requested.clone())
+                if (not isinstance(transformed, torch.Tensor) or transformed.shape != requested.shape
+                        or transformed.device != requested.device or transformed.dtype != requested.dtype
+                        or not torch.isfinite(transformed).all() or not isinstance(audit, dict)
+                        or not torch.equal(transformed[..., [6, 13]], requested[..., [6, 13]])):
+                    raise ValueError("Post-command condition must preserve finite ALOHA layout and exact grippers")
+                actions = transformed
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=requested.cpu(),
+                    audit_only_post_command_transform=dict(details=audit, actuator_commands=actions.detach().cpu()))
+        torch.cuda.synchronize()
+        self.motor_seconds += time.monotonic() - tick
+        self.motor_queries += 1
+        self._check_frozen()
+        result = actions[0].detach().float().cpu().numpy()
+>       if result.shape != (self.native_horizon, 14) or not np.isfinite(result).all():
+                            ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: '_RoboTwinBackend' object has no attribute 'native_horizon'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:735: AttributeError
+_ test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r1')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70d643dfc310>
+kind = 'action'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+>       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70d643cf1190>
+noise = array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+    ..., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]], dtype=float32)
+
+    def decode(self, noise):
+        torch = self.torch
+        tick = time.monotonic()
+        kv_adapter = getattr(self, "kv_adapter", None)
+        action_residual = getattr(self, "action_residual", None)
+        physical = getattr(self, "post_decode_residual", None)
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
+        if (kv_adapter is not None or action_residual is not None or physical is not None) and getattr(
+                self, "_residual_prepared", None) is not self._prepared:
+            raise RuntimeError("Residual public features are not bound to the current prepared observation")
+        self._last_residual_metadata = None
+        with torch.no_grad():
+            tensor = torch.as_tensor(noise, dtype=torch.float32, device=self.model.device)[None]
+            cache = self._kv_cache
+            if kv_adapter is not None:
+                if kv_adapter.training:
+                    raise ValueError("Use an eval-mode KV hook for simulator inference")
+                cache = kv_adapter(cache, self._prefix_mask, self._public_features)
+                self._last_residual_metadata = dict(configuration=kv_adapter.config(),
+                                                     public_features=self._public_features.detach().cpu())
+            targets = self.model._sample_actions_from_prefix_cache(
+                self._prepared, self._prefix_mask, cache, noise=tensor)
+            actions = self.model.decode_actions(targets, self._prepared.state)
+            base_decoded_actions = actions.detach().clone() if getattr(self, "post_command_transform", None) is not None else None
+            if action_residual is not None:
+                if action_residual.training:
+                    raise ValueError("Use an eval-mode action hook for simulator inference")
+                correction = action_residual(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(configuration=action_residual.config(),
+                    public_features=self._public_features.detach().cpu(),
+                    **{name: getattr(correction, name).detach().cpu() for name in
+                       ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
+            if physical is not None:
+                if physical.training:
+                    raise ValueError("Use an eval-mode post-decode physical hook")
+                correction = physical(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    post_decode_physical=dict(configuration=physical.config(),
+                        **{name: getattr(correction, name).detach().cpu() for name in
+                           ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")}))
+            if getattr(self, "record_agent_requested_actions", False):
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=actions.detach().cpu().clone())
+            transform = getattr(self, "post_command_transform", None)
+            if transform is not None:
+                requested = actions.detach().clone()
+                transformed, audit = transform(base_decoded_actions, requested.clone())
+                if (not isinstance(transformed, torch.Tensor) or transformed.shape != requested.shape
+                        or transformed.device != requested.device or transformed.dtype != requested.dtype
+                        or not torch.isfinite(transformed).all() or not isinstance(audit, dict)
+                        or not torch.equal(transformed[..., [6, 13]], requested[..., [6, 13]])):
+                    raise ValueError("Post-command condition must preserve finite ALOHA layout and exact grippers")
+                actions = transformed
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=requested.cpu(),
+                    audit_only_post_command_transform=dict(details=audit, actuator_commands=actions.detach().cpu()))
+        torch.cuda.synchronize()
+        self.motor_seconds += time.monotonic() - tick
+        self.motor_queries += 1
+        self._check_frozen()
+        result = actions[0].detach().float().cpu().numpy()
+>       if result.shape != (self.native_horizon, 14) or not np.isfinite(result).all():
+                            ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: '_RoboTwinBackend' object has no attribute 'native_horizon'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:735: AttributeError
+_ test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_recorded_request_and_publ0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70d6446138d0>
+
+    def test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration(tmp_path, interface, monkeypatch):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, "action")
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured)
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        def condition(base, requested):
+            final = requested.clone(); final[..., 0] += .01
+            return final, dict(condition_id="audit-only")
+        env.backend.post_command_transform = condition
+>       control.step(np.array([.4, 0., 0., 0.], np.float32))
+
+tests/test_robotwin_fitted_physical.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_fitted_physical.py:208: in step
+    result = super().step(proposed)
+             ^^^^^^^^^^^^^^^^^^^^^^
+src/fluffy_bassoon/rl/robotwin_steering.py:257: in step
+    outcome = self.env.step(mapped)
+              ^^^^^^^^^^^^^^^^^^^^^
+tests/test_robotwin_fitted_physical.py:109: in step
+    self.backend.decode(noise)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70d643cda810>
+noise = array([[ 1.89053386e-01, -5.22748470e-01, -4.13063556e-01, ...,
+        -1.50483143e+00,  8.41458917e-01,  1.28715664e...-03,  1.87645340e+00, -4.27662977e-04, ...,
+         5.02774775e-01,  8.47751200e-01, -1.04443693e+00]], dtype=float32)
+
+    def decode(self, noise):
+        torch = self.torch
+        tick = time.monotonic()
+        kv_adapter = getattr(self, "kv_adapter", None)
+        action_residual = getattr(self, "action_residual", None)
+        physical = getattr(self, "post_decode_residual", None)
+        if kv_adapter is not None and action_residual is not None:
+            raise ValueError("Select only one optional residual interface per backend")
+        if (kv_adapter is not None or action_residual is not None or physical is not None) and getattr(
+                self, "_residual_prepared", None) is not self._prepared:
+            raise RuntimeError("Residual public features are not bound to the current prepared observation")
+        self._last_residual_metadata = None
+        with torch.no_grad():
+            tensor = torch.as_tensor(noise, dtype=torch.float32, device=self.model.device)[None]
+            cache = self._kv_cache
+            if kv_adapter is not None:
+                if kv_adapter.training:
+                    raise ValueError("Use an eval-mode KV hook for simulator inference")
+                cache = kv_adapter(cache, self._prefix_mask, self._public_features)
+                self._last_residual_metadata = dict(configuration=kv_adapter.config(),
+                                                     public_features=self._public_features.detach().cpu())
+            targets = self.model._sample_actions_from_prefix_cache(
+                self._prepared, self._prefix_mask, cache, noise=tensor)
+            actions = self.model.decode_actions(targets, self._prepared.state)
+            base_decoded_actions = actions.detach().clone() if getattr(self, "post_command_transform", None) is not None else None
+            if action_residual is not None:
+                if action_residual.training:
+                    raise ValueError("Use an eval-mode action hook for simulator inference")
+                correction = action_residual(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(configuration=action_residual.config(),
+                    public_features=self._public_features.detach().cpu(),
+                    **{name: getattr(correction, name).detach().cpu() for name in
+                       ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
+            if physical is not None:
+                if physical.training:
+                    raise ValueError("Use an eval-mode post-decode physical hook")
+                correction = physical(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    post_decode_physical=dict(configuration=physical.config(),
+                        **{name: getattr(correction, name).detach().cpu() for name in
+                           ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")}))
+            if getattr(self, "record_agent_requested_actions", False):
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=actions.detach().cpu().clone())
+            transform = getattr(self, "post_command_transform", None)
+            if transform is not None:
+                requested = actions.detach().clone()
+                transformed, audit = transform(base_decoded_actions, requested.clone())
+                if (not isinstance(transformed, torch.Tensor) or transformed.shape != requested.shape
+                        or transformed.device != requested.device or transformed.dtype != requested.dtype
+                        or not torch.isfinite(transformed).all() or not isinstance(audit, dict)
+                        or not torch.equal(transformed[..., [6, 13]], requested[..., [6, 13]])):
+                    raise ValueError("Post-command condition must preserve finite ALOHA layout and exact grippers")
+                actions = transformed
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    public_agent_requested_actions=requested.cpu(),
+                    audit_only_post_command_transform=dict(details=audit, actuator_commands=actions.detach().cpu()))
+        torch.cuda.synchronize()
+        self.motor_seconds += time.monotonic() - tick
+        self.motor_queries += 1
+        self._check_frozen()
+        result = actions[0].detach().float().cpu().numpy()
+>       if result.shape != (self.native_horizon, 14) or not np.isfinite(result).all():
+                            ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: '_RoboTwinBackend' object has no attribute 'native_horizon'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:735: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]
+FAILED tests/test_robotwin_fitted_physical.py::test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]
+FAILED tests/test_robotwin_fitted_physical.py::test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration
+3 failed in 2.11s
