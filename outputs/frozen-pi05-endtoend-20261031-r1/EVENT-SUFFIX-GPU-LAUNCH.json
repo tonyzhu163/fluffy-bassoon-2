@@ -1,0 +1,123 @@
+{
+  "format": "frozen_pi05_event_fixed_suffix_launch_v1",
+  "cluster": "Baige",
+  "job_id": "job-4352gzlcnq9f",
+  "scheduler_state": "Running",
+  "scheduler_created": "2026-11-01 00:20:01 Asia/Shanghai",
+  "name": "mwj_1101_event_suffix_g1_r1_aefd556",
+  "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+  "runtime_output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1",
+  "source_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/frozen-pi05-event-suffix-20261101-r1",
+  "actual_probe_passed": true,
+  "probe_hostname": "job-4352gzlcnq9f-master-0",
+  "probe_pid": 408,
+  "gpu_uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+  "gpu_type": "NVIDIA RPBZZZ6",
+  "own_pid_allocation": [
+    "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+  ],
+  "resources": {
+    "gpu": 1,
+    "cpu": 16,
+    "memory_gib": 96,
+    "shared_memory_gib": 8
+  },
+  "maximum_scheduler_minutes": 29,
+  "automatic_retry": false,
+  "budget": {
+    "maximum_new_gpu_seconds": 1800,
+    "slice_seconds": 1740,
+    "scheduler_allowance_seconds": 60,
+    "prior_gpu_seconds": 2334,
+    "maximum_new_actions": 2800,
+    "prior_canonical_actions": 20171,
+    "phase_maximum_gpu_seconds": 28800,
+    "phase_maximum_actions": 300000,
+    "phase_maximum_output_bytes": 68719476736
+  },
+  "actual_allocation_ticket": {
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+    "hostname": "job-4352gzlcnq9f-master-0",
+    "gpu_count": 1,
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment",
+    "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+    "driver_deadline_unix": 1793465234.0,
+    "reserved_gpu_seconds": 1800,
+    "prior_phase_gpu_seconds": 2334,
+    "other_reserved_phase_gpu_seconds": 0,
+    "prior_a1_gpu_seconds": 2334,
+    "action_ledger": {
+      "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+      "contract": {
+        "candidate_tasks": [
+          "place_phone_stand",
+          "place_object_stand"
+        ],
+        "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "phase_id": "frozen-pi05-endtoend-20261031-r1",
+        "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+      },
+      "phase_caps": {
+        "a1": 30000,
+        "condition_cross": 15000,
+        "source": 120000,
+        "source_validation": 30000,
+        "student_evaluation": 105000
+      },
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+      "source_caps": {
+        "sac_calibration_minus_train0": 19200,
+        "sac_calibration_minus_train1": 19200,
+        "sac_calibration_minus_validation2": 19200,
+        "sac_calibration_plus_train0": 19200,
+        "sac_calibration_plus_train1": 19200,
+        "sac_calibration_plus_validation2": 19200
+      },
+      "total_actions": 300000
+    },
+    "grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
+    "cpu_summary_sha256": "7a580db316cec531f95287c1272c590a3bdd00ef68139a7f23fbe2677f649ff7",
+    "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+    "child_authority_sha256": "d9a6da2722bcb9a9d8327229a5301d29cdd7053f86baa7c236596e81033c8180",
+    "expected_prior_motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "mode": "original_a1_event_fixed_suffix_diagnostic_v1",
+    "run_id": "frozen-pi05-event-suffix-20261101-r1",
+    "capacity_action_bound": 2800,
+    "scheduler_start_unix": 1793463614.0
+  },
+  "commands": {
+    "path": "EVENT-SUFFIX-GPU-COMMAND.sh",
+    "sha256": "9591b2849b8413810ade07e99460aaf9f5ebf106dc5c88e0fae66c9d8c698c43"
+  },
+  "child_authority_sha256": "d9a6da2722bcb9a9d8327229a5301d29cdd7053f86baa7c236596e81033c8180",
+  "migration_sha256": "b508388c611ca3494d6b24ad0f8c864317f9f3600c69683573545a081bb6ed99",
+  "cpu_receipt_sha256": "6ce24a35043a517cfacac6f2e3620590cb034a1136b43c246ab15efa79ebf689",
+  "prelaunch_sha256": "eb816abc9d76a28265c3bf46b343d7af195312ea2bf86f7b3d155e253d7b8cb6",
+  "evidence": {
+    "event-suffix-initial-evidence/gpu-probe.log": {
+      "bytes": 2537,
+      "sha256": "d752d3c4b64e7a2a83864d54f0d3485d322575b78580735fe5896fce5880e7ec"
+    },
+    "event-suffix-initial-evidence/allocation.json": {
+      "bytes": 2530,
+      "sha256": "391334b6f708902bed04fc8b8974a004ec61f8f78d0c921ad8385fd946281931"
+    },
+    "event-suffix-initial-evidence/driver-process.json": {
+      "bytes": 144,
+      "sha256": "9f34b4eb50d12a9a8720137f24ad450b6361bad6e4831840e72f79af9f85227f"
+    },
+    "event-suffix-initial-evidence/gpu-probe.json": {
+      "bytes": 2857,
+      "sha256": "edfc3a6d4a6caabcb53b074047885c3bd807daaa052c23448736a0658c969e77"
+    },
+    "event-suffix-initial-evidence/invocation.json": {
+      "bytes": 3624,
+      "sha256": "66f818ff2349106b4768843ba88eae993b3554ad8ac2b0f8074e04f5bfbeb0b7"
+    }
+  },
+  "scope": "Original unrun05\u201311 once each; natural failures continue, integrity exceptions halt; no04retry/cache/fit or source/student admission",
+  "initial_progress": "GPU/CUDA/own-PID probe passed; driver PID568 created. First05 complete live qualification and episode not yet verified in this snapshot."
+}

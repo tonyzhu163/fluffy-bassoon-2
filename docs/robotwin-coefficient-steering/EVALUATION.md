@@ -1,49 +1,60 @@
 # Frozen Motus steering evaluation
 
-## Event-aligned successor stopped before fitting at teacher04
+## Event teacher04 gate failure and independent saved-data diagnoses
 
-Baige `job-2rkimbvypowd`, source `be247676`, is terminalFailed/exit1. The
-predeclared all12-teacher gate stopped at phone04's natural400-action timeout,
-without budget truncation. Fixed-H32 phone02 control also failed400; aligned
-02,00,01,03 each succeeded193. Teachers05..11 remain unrun, all original
-8TRAIN/4VAL demonstrations retained. No cache, KV/action fit, loss or optimizer
-update exists. Earlier partial successes did not qualify the full teacher bank.
-[Terminal result](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RESULT.md).
+The event-aligned capacity job `job-2rkimbvypowd` stopped before fitting.
+Expected target: all12 teachers succeed, then fit the reactive KV/action heads.
+Actual: aligned02/00/01/03 each succeed193 actions; aligned04 times out at its
+natural400 cutoff after consuming its140 source frames and final holds. The
+unchanged fixed-H32 teacher02 control also fails400. No cache, loss, optimizer
+step or learned-controller result exists. All demonstrations remain retained.
+[Closed result](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RESULT.md).
 
-The failed04 record reaches source_cursor140 and final-target holds by request
-accounting. This rules out an unconsumed reference suffix as the simple
-accounting explanation, without proving delivery of the dense physical path.
-Source frames, full H32 proposed plans, last16 submitted slots and actual masks
-remain distinct. Scheduling and global planner RNG history differ between02
-control and aligned replay, so the observed02 improvement is not a causal
-rescue claim. The native executor remained unchanged. The non-universal replay
-result still does not evaluate a learned reactive class or ICRL.
+The allocated CPU diagnosis (`job-nnjau49cnk40`,15/15 tests,77 inclusive
+CPU-worker-seconds) verifies all33 inspected chunks against their full submitted
+plans, masks and captured native noise. Both02 resets match their recorded actor
+poses and measured joints. Failed04 lifts the phone briefly after chunk4, then
+loses elevation after chunk5, before opening starts in chunk6. At chunks4/5 its
+measured fingers reach0 against the same closing drive for which successful02
+retains a nonzero finger gap. This is consistent with a missed or unstable grasp
+and loss during early transport. Contact forces, substep timing and source
+measured poses are unavailable, so friction, cadence and grasp causality remain
+unresolved. It does not support a diagnosis based solely on late release.
+[Physical report](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-DIAGNOSIS-CPU-RESULT.md).
 
-Real GPU/ownPID, zero/native parity and KV-gradient qualification passed early:
-721a before/after equal, parity error0, KV gradient0.00427614 and zero motor
-gradients. The failure branch emits no separate final full parameter hash;
-none is claimed. Full223589B recovery rehashes to0403db7c; it was not
-deserialized or restore-tested. The owner rehashed21 referenced JSONs and four
-failed04 binary endpoints; no typed arrays or full1331-event journal replay
-was performed in terminal verification. Producer canonical totals20171 actual
-and charged, zero pending/uncertain, match the1572 new closed-episode actions.
-[Receipt and limits](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RECEIPT.json).
+A separate support audit (`job-zyg23qydopt3`,13/13 tests,73 CPU-worker-seconds)
+finds that the unused action head's actual ±0.05rad arm corrections and zero
+gripper corrections cannot exactly reproduce the four captured successful
+TRAIN plans. Across896 submitted slots, the coordinatewise arm MSE floor is
+0.00277498rad² and raw-gripper floor0.04808329; combined14-coordinate floor is
+0.00924760. An explicitly hypothetical ±2rad arm interval removes the arm floor
+but leaves the gripper floor. The large active-left discrepancy differs from
+the much smaller inactive-right discrepancy. These are support bounds for
+specific plan-imitation targets, not physical task impossibility or a trained
+head's attainable loss. The expert replay bypasses this unused head, so the
+bound does not explain04's replay failure.
+[Support report](../../outputs/frozen-pi05-endtoend-20261031-r1/ACTION-SUPPORT-CPU-RESULT.md).
 
-This child costs298 all-in GPU-seconds; cumulative phase/A1 spend2334. The
-unused4866 seconds of its5164 reservation are released inside the original
-phase. A1 now has4866GPU-seconds/9829actions remaining; whole phase26466/
-279829. CPU978/1800 used,822 remain. The 24 original checks plus2 affected
-successor checks and all12 schedule preflights remain valid software evidence,
-not physical-teacher success. No runtime polling or blind retry is needed.
+Independent suffix job `job-4352gzlcnq9f` executes the original unrun05–11 once
+under the unchanged event protocol, retaining failures and admitting no fits.
+At00:24 Shanghai,05–08 are four verified successes of193 actions each;09–11 are
+not yet verified. The772-action closed prefix is not a complete in-flight cost
+snapshot. Expected coverage target is7/7, not teacher-bank admission:04 remains
+a known failure even if the suffix succeeds. Qualification on05 passes actual
+GPU/own-PID, exact native/zero parity, nonzero KV gradient0.0152458 and zero
+motor gradients;721a before/after signatures match. The next discriminating
+physical proposal uses equal-length prelift holds to separate added time from
+extra gripper closure, with a prospective protocol and no inherited fit gate.
 
-The new audit actually retains actor variants/world poses, named measured
-joint positions, nominal/drive gripper values and cached camera metadata. The
-next discriminating step is one bounded read-only CPU comparison of fixed02,
-aligned02 and failed04, using these saved quantities and exact source metadata.
-It must separate requests/drive targets from measured motion and unavailable
-source physics timestamps. This fits at most180 CPU-worker-seconds inside the
-822 residual; concrete code/inputs remain pending. No model, simulator, new
-robot actions, teacher filtering, fitting or GPU retry follows automatically.
+The closed event child used298 GPU-seconds/1572 actions, bringing settled
+GPU/action totals to2334/20171. The suffix holds1800 additional GPU-seconds and
+at most2800 actions inside the same declared caps. CPU spend is1203/1800,597
+remaining after physical/suffix/support qualification. These branches add no
+RL histories, source teacher, AD/DPT labels or memory result. The original
+grant/header, failed cases and complete recoveries remain intact. Parent review
+matches17 physical-report files and10 support-report files to saved remote
+hashes and verifies their JUnit metadata; no arrays, models or tests ran on the
+development host. [Review](../../outputs/frozen-pi05-endtoend-20261031-r1/PARALLEL-BRANCHES-PARENT-REVIEW.json).
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 

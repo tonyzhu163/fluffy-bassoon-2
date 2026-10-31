@@ -1,0 +1,112 @@
+{
+  "verified_unix": 1793463550.4324238,
+  "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+  "clean": true,
+  "reviewed_main": "940aef2e22b6e4c8829a2ef199ba5738e6d6148e",
+  "predecessor_refs": [
+    {
+      "name": "result",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+      "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f",
+      "bytes": 265425,
+      "matched": true
+    },
+    {
+      "name": "recovery",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+      "sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
+      "bytes": 223589,
+      "matched": true
+    },
+    {
+      "name": "terminal",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/event-suffix-r1/predecessor-terminal.json",
+      "sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef",
+      "bytes": 10553,
+      "matched": true
+    },
+    {
+      "name": "allocation_closeout",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/allocation-closeout.json",
+      "sha256": "6a2822cc524e2042cab646996d5879834a2723d81b832597cdb9cfb107dd469f",
+      "bytes": 594,
+      "matched": true
+    }
+  ],
+  "prior_gpu_charges": [
+    632,
+    1138,
+    266,
+    298
+  ],
+  "canonical_actions": {
+    "actual_actions": 20171,
+    "by_method": {
+      "a1/action": 4161,
+      "a1/capacity_native": 400,
+      "a1/capacity_teacher": 608,
+      "a1/event_aligned_teacher": 1172,
+      "a1/event_fixed_control": 400,
+      "a1/kv": 3643,
+      "a1/native": 5897,
+      "a1/noise": 3890
+    },
+    "by_phase": {
+      "a1": 20171
+    },
+    "charged_actions": 20171,
+    "decision_count": 663,
+    "header": {
+      "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+      "contract": {
+        "candidate_tasks": [
+          "place_phone_stand",
+          "place_object_stand"
+        ],
+        "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "phase_id": "frozen-pi05-endtoend-20261031-r1",
+        "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+      },
+      "phase_caps": {
+        "a1": 30000,
+        "condition_cross": 15000,
+        "source": 120000,
+        "source_validation": 30000,
+        "student_evaluation": 105000
+      },
+      "schema": "robotwin_campaign_actions_v1",
+      "source_caps": {
+        "sac_calibration_minus_train0": 19200,
+        "sac_calibration_minus_train1": 19200,
+        "sac_calibration_minus_validation2": 19200,
+        "sac_calibration_plus_train0": 19200,
+        "sac_calibration_plus_train1": 19200,
+        "sac_calibration_plus_validation2": 19200
+      },
+      "total_actions": 300000
+    },
+    "journal_events": 1331,
+    "journal_sha256": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "pending_actions": 0,
+    "receipts": {},
+    "runs": {
+      "frozen-pi05-endtoend-a1-20261031-r1": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "frozen-pi05-endtoend-a1-20261031-r2": "969fb44c503fac409373abc88ce5687b71195068",
+      "frozen-pi05-event-capacity-20261031-r1": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+      "frozen-pi05-reactive-capacity-20261031-r1": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f"
+    },
+    "uncertain_actions": 0,
+    "unresolved_decisions": {}
+  },
+  "canonical_header_sha256": "b5bc0ae2388a9835f780d7fbf4cdae649f5ea9a3f41c322f815a1bcd73eccce4",
+  "journal_tip_sha256": "37b30b6cd63fc64561d324328025e6246ae6956653eb8a185940a9a51a4ac3d4",
+  "free_bytes": 1104947445760,
+  "phase_storage_bytes": 627512229,
+  "concurrent_reserve_bytes": 137438953472,
+  "minimum_free_floor_bytes": 536870912000,
+  "write_probe_sha256": "2ab846b0622c3c2492d1b50fb95c8dad3b0c10342fe64a710d984e23cc17f4cb",
+  "models": false,
+  "torch_deserialization": false
+}

@@ -46,19 +46,27 @@ motor identity are verified; terminal restore and an independent full-journal
 replay were not performed. Target57 data remain excluded from source
 pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
-The targeted Motus/RoboTwin fixed4D screen still has no eligible rescue. A
-supervised capacity attempt failed before fitting at teacher02; CPU diagnosis
-confirmed exact requests while physical execution/scene compatibility remained
-unresolved. Its event-aligned native-H32 successor also stops before fitting:
-fixed02 control fails400, aligned02/00/01/03 succeed193each, then aligned04
-fails its natural400 cutoff. Teachers05..11 stay unrun, all twelve demos remain.
-No cache, optimizer update or learned capacity/ICRL result exists. Event-aligned
-replay is not uniformly sufficient; one02 comparison does not isolate causality.
-Actual physical-state logs now support a bounded three-case CPU diagnosis
-before another proposal. Child cost298GPU-s/1572actions; cumulative2334/
-20171. A1remaining4866GPU-s/9829actions, CPU822remain. Early live frozen/zero/
-gradient checks passed; failure emitted no separate final motor hash. [Evidence
-and limits](robotwin-coefficient-steering/EVALUATION.md).
+The targeted Motus/RoboTwin event replay stops at04 before fitting: four
+aligned successes,04 natural400 failure; every demo is retained. The completed
+physical audit localizes lost phone elevation before opening, consistent with
+unstable grasp/early transport, without contact-level causal proof. A separate
+saved-plan support audit finds that the unused ±0.05rad/zero-gripper head cannot
+exactly match the four successful targets; this cannot explain04 because its
+expert replay bypasses that head. Original05–11 diagnostic execution proceeds
+independently, with05–08 verified successful at00:24 and the rest pending.
+There is no fit, teacher-bank admission, learned-capacity or ICRL result.
+Settled GPU/actions2334/20171 plus1800GPU-s active hold; CPU1203/1800. [Evidence
+and competing explanations](robotwin-coefficient-steering/EVALUATION.md).
+
+The next LIBERO baseline follows the human's request for weak native success
+with the same pretrained pi0.5. Before new outcomes, a closed12-task native
+screen and separate weak-query confirmation are fixed:2–8 successes of20,
+ranked nearest4 then task ID. The task/query bank freezes before fresh SAC;
+another fresh native control must remain weak before SGD. The fixed500k curve
+and untrained tied/SAC controls distinguish learning from noise parameterization.
+Screening is being qualified; no new native rate or learning gain is reported.
+This development selection and its failed candidates stay disclosed, excluded
+from source40/meta-pretraining. [Authority and bounded phase](../outputs/libero90-pi05-headroom-online-20261101-r1/GRANT.json).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use

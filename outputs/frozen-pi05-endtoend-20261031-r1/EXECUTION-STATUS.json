@@ -1,21 +1,20 @@
 {
   "format": "frozen_pi05_evidence_audit_index_v2",
   "purpose": "Historical independent evidence audit; current live status is solely outputs/coordination.md. This file is not a second process monitor.",
-  "audited_at_utc": "2026-10-31T15:21:54.154901+00:00",
+  "audited_at_utc": "2026-10-31T15:47:37.540893+00:00",
   "phase_id": "frozen-pi05-endtoend-20261031-r1",
   "authoritative_live_status": "https://github.com/tonyzhu163/fluffy-bassoon-2/blob/main/outputs/coordination.md",
-  "latest_audited_runtime_snapshot_utc": "2026-10-31T15:17:54.371118+00:00",
+  "latest_audited_runtime_snapshot_utc": "2026-10-31T15:38:36.087254+00:00",
   "latest_audited_attempt": {
     "job_id": "job-2rkimbvypowd",
     "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
-    "scheduler_status_at_saved_check": "Running",
-    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
-    "next_owner_check_shanghai": "2026-10-31T23:38:00+08:00",
-    "stage_status": "Real motor qualification passed; fixed02control timeout and four aligned teacher successes verified. Full12/fit results pending.",
-    "complete_episodes": 5,
-    "new_closed_action_prefix": 1172,
-    "current_inflight_actions_independently_counted": false,
-    "scope": "Partial closed episode evidence, not a full ledger settlement, teacher-bank completion, causal rescue or learned residual result."
+    "scheduler_status": "Failed, exit1 (sealed sole-owner terminal receipt)",
+    "stage_status": "Teacher04 full-episode failure; all12 gate halted before cache/fit.",
+    "complete_episodes": 6,
+    "new_actual_actions": 1572,
+    "cumulative_closed_actions": 20171,
+    "pending_or_uncertain_actions": 0,
+    "scope": "Changed scheduling passes02 but does not qualify all12 teacher bank. No learned steering head or source/student eligibility established."
   },
   "predecessor": {
     "run_id": "frozen-pi05-endtoend-a1-20261031-r1",
@@ -63,14 +62,14 @@
     "fresh_cpu_worker_seconds": 1800
   },
   "latest_audited_resource_accounting": {
-    "settled_gpu_seconds": 2036,
-    "active_A1_gpu_reservation": 5164,
-    "remaining_original_A1_gpu_seconds": 5164,
-    "remaining_original_A1_actions": 11401,
-    "remaining_phase_gpu_seconds": 26764,
+    "settled_gpu_seconds": 2334,
+    "active_A1_gpu_reservation": 0,
+    "remaining_original_A1_gpu_seconds": 4866,
+    "remaining_original_A1_actions": 9829,
+    "remaining_phase_gpu_seconds": 26466,
     "cpu_worker_seconds_consumed": 978,
     "cpu_worker_seconds_remaining": 822,
-    "remaining_phase_actions": 281401
+    "remaining_phase_actions": 279829
   },
   "scientific_student_fit_profile": {
     "matched_models": 4,
@@ -172,7 +171,7 @@
     "path": "/Users/mowenjie/.codex/worktrees/steering-redesign/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/SELECTION-RULE.json",
     "sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5"
   },
-  "next_experiment_preparation": "Actual GPU job-2rkimbvypowd advancement verified at23:17:54Shanghai by sole owner; next read23:38. Four aligned successes/one fixed02timeout,1172closed new action prefix. All12 teacher gate and both fits still pending. Preserve canonical ledger and full recovery; no duplicate runtime observer.",
+  "next_experiment_preparation": "Current GPU job ended at teacher04failure before cache/fit. Parent and control owner preparing one bounded <=180CPU-worker-s readonly physical-state diagnosis from existing02fixed/aligned and04failed traces, inside822 CPU remainder. No live GPU reservation or new GPU retry.",
   "capacity_data_qualification_audit": {
     "job_id": "job-rh3ldkdapfv9",
     "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
@@ -784,5 +783,114 @@
     "all12_teachers_complete": false,
     "fit_result_available": false,
     "interpretation": "Four new aligned successes including02; one same-case legacy control still fails. Single repeats do not establish causal timing explanation or reliable generalization. No restricted4D/source/A2/student eligibility."
+  },
+  "event_successor_terminal_saved_result_audit": {
+    "check_ref": {
+      "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-CHECK-2338.json",
+      "sha256": "ccc2800ce7401a49db24961426433102f6a00c6490a35b437debb594fccaba96"
+    },
+    "job_id": "job-2rkimbvypowd",
+    "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "status": "blocked_failure",
+    "stage": "teacher_executability",
+    "failure": {
+      "message": "Fixed aligned teacher failed; preserve all demos and stop before fitting",
+      "type": "RuntimeError"
+    },
+    "episodes": [
+      {
+        "id": "event-control-fixed-phone-02",
+        "success": false,
+        "complete": true,
+        "primitives": 400,
+        "chunks": 13
+      },
+      {
+        "id": "event-teacher-phone-00",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-01",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-02",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-03",
+        "success": true,
+        "complete": true,
+        "primitives": 193,
+        "chunks": 7
+      },
+      {
+        "id": "event-teacher-phone-04",
+        "success": false,
+        "complete": true,
+        "primitives": 400,
+        "chunks": 13
+      }
+    ],
+    "new_actions": 1572,
+    "charged_gpu_seconds": 298,
+    "cumulative_GPU_seconds": 2334,
+    "cumulative_actions": 20171,
+    "canonical_journal_events": 1331,
+    "canonical_journal_sha256": "9c0b1dccb663b52f569c64098b8e2d47f70911226ad18d129fc7375032eb9df3",
+    "unresolved_decisions": 0,
+    "cache_or_fit_completed": false,
+    "fit_files": {},
+    "full_recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+      "sha256": "0403db7c2bd0c4e7566cfdbb5a6404409a0d45a0eb85df4c0972a2bbcd58a153",
+      "bytes": 223589,
+      "opaque_no_deserialization": true
+    },
+    "terminal_frozen_parameter_fingerprint_independently_measured": false,
+    "frozen_proof_limit": "Live initial zero/native/gradient qualification before/after721a passed; no optimizer fit ran. No new terminal in-memory motor fingerprint claimed.",
+    "scientific_scope": "One legacy02control failure, four aligned successes and one aligned04failure; no 05\u201311 executions, failed-case filtering, causal timing explanation or interface-class negative.",
+    "next_action": "One <=180CPU-worker-s readonly saved-physical-audit/command/source02+04 diagnosis via existing control owner and sole allocator within822 remaining. No GPU retry before observed diagnosis; no model/simulator/checkpoint/liveledger/render/actions.",
+    "sealed_terminal_refs": {
+      "EVENT-CAPACITY-TERMINAL-RECEIPT.json": {
+        "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RECEIPT.json",
+        "sha256": "a352462ced9ce556498b1871d76fdeacc0a6837e22fe54d36a01f203a5db1bef"
+      },
+      "EVENT-CAPACITY-TERMINAL-RAW-PROOF.json": {
+        "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-RAW-PROOF.json",
+        "sha256": "412c583583ab41dcbdbaf7e5e70f66bcbb1c3ccd1e06d9f816c0cf53ed92791e"
+      },
+      "EVENT-CAPACITY-TERMINAL-BINARY-PROOF.json": {
+        "path": "/Users/mowenjie/.codex/worktrees/vla-source40-integration-1m/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-TERMINAL-BINARY-PROOF.json",
+        "sha256": "38093275933e3cbdc3c3a69b63cbfff509361e66fc044e6824e133228592879d"
+      }
+    },
+    "terminal_frozen_signature_limit": "Early before/after live qualification is exactly721a and passed; failure branch did not emit a separate final full motor rehash. No head optimizer/cache was reached.",
+    "independent_proof_limits": {
+      "json_references_rehashed": 21,
+      "binary_endpoint_files_rehashed": 4,
+      "all_matched": true,
+      "canonical_totals": "Bound producer snapshot plus exact closed-episode sum; not a complete independent replay of the1331-event journal",
+      "typed_arrays_not_deserialized": true
+    },
+    "original_twelve_demos_retained": true,
+    "unrun_aligned_teacher_suffix": [
+      "phone-05",
+      "phone-06",
+      "phone-07",
+      "phone-08",
+      "phone-09",
+      "phone-10",
+      "phone-11"
+    ]
   }
 }
