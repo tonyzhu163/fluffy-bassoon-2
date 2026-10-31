@@ -330,7 +330,7 @@ def validate_runtime_blobs(declared,root,*,_api=None,_core_bank_sha=None,_extra_
         raise ValueError('This version carries exact061 bank and de667 wide; no silent adapter migration')
 
 
-def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,_operation='fit',_validate_resource=None):
+def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,_operation='fit',_validate_resource=None,_bind_contract=None):
     profile=PROFILE if _profile is None else _profile
     validator=validate_profile if _validate is None else _validate
     p=argparse.ArgumentParser(description=__doc__)
@@ -360,6 +360,7 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         _validate_resource(ticket,clock,operation=_operation,plan=actual_plan,other_fit_tickets=others)
     root=Path(subprocess.check_output(['git','rev-parse','--show-toplevel'],text=True).strip()).resolve()
     extra=() if _validate is None else (_validate,)
+    if _bind_contract is not None:extra+=(_bind_contract,)
     if _api is not None:
         from .robotwin_cache04_recovery import cache04,publish_cursor,committed_receipt,validate_lineage_head
         extra+= (cache04,publish_cursor,committed_receipt)
@@ -391,6 +392,11 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         if sum(f.stat().st_size for f in parent.rglob('*') if f.is_file())+(256<<20)>limit:
             raise RuntimeError('Predeclared fit output bound')
     guard();backend=None
+    contract=dict(profile=profile,source_commit=source,complete_cache_sha256=request['complete_cache_sha256'],
+        bank=request['bank'],cache_receipts=request['cache_receipts'],wide=request['wide_configuration'],
+        runtime_blob_sha256=request['runtime_blob_sha256'])
+    if _bind_contract is not None:
+        contract=_bind_contract(contract,request,ticket,source,root,deadline=audit.deadline)
     if _api is not None:
         # Admission is staged: start head A through this receipt BEFORE booking
         # head B. B can reference A's immutable ticket without a cyclic pair of
@@ -398,14 +404,13 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         _atomic_json(parent/(a.output.name+'-resource-admission.json'),dict(
             status='resource_ticket_admitted_before_model_load',operation=_operation,kind=a.kind,
             hostname=socket.gethostname(),resource_attempt=ticket['resource_attempt'],source_commit=source,
+            execution_source_commit=source,scientific_source_commit=contract['source_commit'],
+            execution_runtime_blob_sha256=request['runtime_blob_sha256'],migration=request.get('linked_fit_continuation'),
             ticket=dict(path=str(a.ticket),sha256=a.ticket_sha256),request_sha256=a.request_sha256,
             data_or_model_qualified=False))
     try:
         backend=_RoboTwinBackend(a.model_path,a.norm_stats,a.robotwin_root,a.rlinf_root,device='cuda',
             episode_limit=400,action_horizon=32,num_steps=5,output_dir=parent/(a.output.name+'-runtime'))
-        contract=dict(profile=profile,source_commit=source,complete_cache_sha256=request['complete_cache_sha256'],
-            bank=request['bank'],cache_receipts=request['cache_receipts'],wide=request['wide_configuration'],
-            runtime_blob_sha256=request['runtime_blob_sha256'])
         if _operation=='cache04':
             if _api is None or backend.env is not None or backend.frozen_fingerprint()!=bank_api.FROZEN:
                 raise ValueError('Actual lazy original frozen model required for diagnostic cache04')

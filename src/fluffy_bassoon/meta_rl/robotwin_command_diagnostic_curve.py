@@ -17,6 +17,9 @@ def validate_profile(profile):
 
 
 def validate_resource(ticket,clock,*,operation,plan,other_fit_tickets=()):
+    if plan.get('linked_fit_continuation') is not None:
+        from .robotwin_command_fit_linked import validate_resource as linked
+        return linked(ticket,clock,operation=operation,plan=plan,other_fit_tickets=other_fit_tickets)
     if operation not in ('cache04','fit'):raise ValueError('Only declared diagnostic operations')
     family='fixed12-command-diagnostic/'
     limit=plan['stage_gpu_limits'][operation]
@@ -73,8 +76,9 @@ def fit_curve(kind,backend,bank_value,cache_receipts,wide_configuration,output,*
 
 
 def main(argv=None,*,operation='fit'):
+    from .robotwin_command_fit_linked import bind_contract
     return curve.main(argv,_api=bank,_profile=PROFILE,_validate=validate_profile,
-        _core_bank_sha=CORE_BANK_SHA,_operation=operation,_validate_resource=validate_resource)
+        _core_bank_sha=CORE_BANK_SHA,_operation=operation,_validate_resource=validate_resource,_bind_contract=bind_contract)
 
 
 if __name__=='__main__':raise SystemExit(main())
