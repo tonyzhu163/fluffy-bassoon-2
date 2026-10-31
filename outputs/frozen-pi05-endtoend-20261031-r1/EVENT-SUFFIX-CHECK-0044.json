@@ -1,0 +1,909 @@
+{
+  "checked_unix": 1793465062.9915314,
+  "job_id": "job-4352gzlcnq9f",
+  "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+  "files": {
+    "allocation-closeout.json": {
+      "sha256": "cceec889d69ec88ebd951263035fb833c5ced3945e8a400c6bdf6299c43576a2",
+      "bytes": 594
+    },
+    "exit-code.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "allocation.json": {
+      "sha256": "391334b6f708902bed04fc8b8974a004ec61f8f78d0c921ad8385fd946281931",
+      "bytes": 2530
+    },
+    "experiment/result.json": {
+      "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6",
+      "bytes": 328009
+    },
+    "experiment/gpu-qualification.json": {
+      "sha256": "c2e365b6496bd2583f0f7fa1971941862309098fc43a73709f88d5ee61a70a39",
+      "bytes": 1031
+    }
+  },
+  "allocation-closeout.json": {
+    "exit_code": 0,
+    "error": null,
+    "attempt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+      "started_unix": 1793463614.0,
+      "slice_seconds": 1740,
+      "reserved_seconds": 1800,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793463871.4212303,
+      "exit_code": 0,
+      "charged_seconds": 318,
+      "slice_overrun": false
+    },
+    "charged_gpu_seconds": 318,
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160"
+  },
+  "exit-code.txt": "0\n",
+  "allocation.json": {
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+    "hostname": "job-4352gzlcnq9f-master-0",
+    "gpu_count": 1,
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment",
+    "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+    "driver_deadline_unix": 1793465234.0,
+    "reserved_gpu_seconds": 1800,
+    "prior_phase_gpu_seconds": 2334,
+    "other_reserved_phase_gpu_seconds": 0,
+    "prior_a1_gpu_seconds": 2334,
+    "action_ledger": {
+      "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+      "contract": {
+        "candidate_tasks": [
+          "place_phone_stand",
+          "place_object_stand"
+        ],
+        "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "phase_id": "frozen-pi05-endtoend-20261031-r1",
+        "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+      },
+      "phase_caps": {
+        "a1": 30000,
+        "condition_cross": 15000,
+        "source": 120000,
+        "source_validation": 30000,
+        "student_evaluation": 105000
+      },
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+      "source_caps": {
+        "sac_calibration_minus_train0": 19200,
+        "sac_calibration_minus_train1": 19200,
+        "sac_calibration_minus_validation2": 19200,
+        "sac_calibration_plus_train0": 19200,
+        "sac_calibration_plus_train1": 19200,
+        "sac_calibration_plus_validation2": 19200
+      },
+      "total_actions": 300000
+    },
+    "grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
+    "cpu_summary_sha256": "7a580db316cec531f95287c1272c590a3bdd00ef68139a7f23fbe2677f649ff7",
+    "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+    "child_authority_sha256": "d9a6da2722bcb9a9d8327229a5301d29cdd7053f86baa7c236596e81033c8180",
+    "expected_prior_motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "mode": "original_a1_event_fixed_suffix_diagnostic_v1",
+    "run_id": "frozen-pi05-event-suffix-20261101-r1",
+    "capacity_action_bound": 2800,
+    "scheduler_start_unix": 1793463614.0
+  },
+  "result": {
+    "status": "complete_diagnostic_coverage",
+    "stage": "complete",
+    "pending": null,
+    "failure": null,
+    "teacher_execution": [
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 120,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-05",
+        "source": {
+          "bytes": 6590425,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode5.hdf5",
+          "sha256": "3d76b3c4eb23de8327a1ccb5cd5eefcf94c5d4f31f61ffcf8d2fab98491b8ecd"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 127,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-06",
+        "source": {
+          "bytes": 8770192,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode6.hdf5",
+          "sha256": "10cd5b9a11475fd95aecb84698a0c7289f503de4841f3a20236416db84bd62fa"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 127,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-07",
+        "source": {
+          "bytes": 6688288,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode7.hdf5",
+          "sha256": "85424049a804084d1d2dd22fbe47b1b4c93db8453f7494fa656926afe43b4740"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 121,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-08",
+        "source": {
+          "bytes": 6631540,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode8.hdf5",
+          "sha256": "14d481715ff3abcd1910f8c7fa1e6114c514ec141a2cb228363f00778beb2a5d"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 121,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-09",
+        "source": {
+          "bytes": 5993224,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode9.hdf5",
+          "sha256": "b7c836ed9145cb304d4a0fd72f14941d4e100601dcb10c08a2636f9db7b47066"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 120,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-10",
+        "source": {
+          "bytes": 7953175,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode10.hdf5",
+          "sha256": "421a36499639a5c40a3ae23524ac19e46022c36a48c753bf03ca8ba38253b540"
+        },
+        "success": true
+      },
+      {
+        "actions": 193,
+        "cursor": {
+          "chunk_index": 7,
+          "closed": true,
+          "issued_slots": 32,
+          "native_valid_hold_slots": 0,
+          "native_valid_reference_slots": 1,
+          "physical_slots": 193,
+          "source_cursor": 124,
+          "terminal_unexecuted_slots": 31
+        },
+        "diagnostic_only": true,
+        "id": "phone-11",
+        "source": {
+          "bytes": 6985219,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1/whole-demos/episode11.hdf5",
+          "sha256": "2a17d9a28296c83f6c047ccea619b674a44f2b47df4195e8fed8ad7280298885"
+        },
+        "success": true
+      }
+    ],
+    "actions": {
+      "actual_actions": 21522,
+      "by_method": {
+        "a1/action": 4161,
+        "a1/capacity_native": 400,
+        "a1/capacity_teacher": 608,
+        "a1/event_aligned_teacher": 2523,
+        "a1/event_fixed_control": 400,
+        "a1/kv": 3643,
+        "a1/native": 5897,
+        "a1/noise": 3890
+      },
+      "by_phase": {
+        "a1": 21522
+      },
+      "charged_actions": 21522,
+      "decision_count": 712,
+      "header": {
+        "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+        "contract": {
+          "candidate_tasks": [
+            "place_phone_stand",
+            "place_object_stand"
+          ],
+          "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+          "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+          "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+          "phase_id": "frozen-pi05-endtoend-20261031-r1",
+          "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+        },
+        "phase_caps": {
+          "a1": 30000,
+          "condition_cross": 15000,
+          "source": 120000,
+          "source_validation": 30000,
+          "student_evaluation": 105000
+        },
+        "schema": "robotwin_campaign_actions_v1",
+        "source_caps": {
+          "sac_calibration_minus_train0": 19200,
+          "sac_calibration_minus_train1": 19200,
+          "sac_calibration_minus_validation2": 19200,
+          "sac_calibration_plus_train0": 19200,
+          "sac_calibration_plus_train1": 19200,
+          "sac_calibration_plus_validation2": 19200
+        },
+        "total_actions": 300000
+      },
+      "journal_events": 1430,
+      "journal_sha256": "ed0d9cc4160e4d3ad120a9ec51218982d6bd72a8f9ba2143b02e86264eaae779",
+      "pending_actions": 0,
+      "receipts": {},
+      "runs": {
+        "frozen-pi05-endtoend-a1-20261031-r1": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+        "frozen-pi05-endtoend-a1-20261031-r2": "969fb44c503fac409373abc88ce5687b71195068",
+        "frozen-pi05-event-capacity-20261031-r1": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+        "frozen-pi05-event-suffix-20261101-r1": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+        "frozen-pi05-reactive-capacity-20261031-r1": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f"
+      },
+      "uncertain_actions": 0,
+      "unresolved_decisions": {}
+    },
+    "frozen_motor_sha256": null,
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "actual_new_actions": 1351,
+    "all_twelve_teacher_gate_passed": false,
+    "fit_updates": 0,
+    "cache_created": false,
+    "source_student_admitted": false,
+    "outcome_comparison": {
+      "actual_successes": 7,
+      "attempted_cases": [
+        "phone-05",
+        "phone-06",
+        "phone-07",
+        "phone-08",
+        "phone-09",
+        "phone-10",
+        "phone-11"
+      ],
+      "causal_diagnosis": "not established; preserve physical/command audits",
+      "expected_outcomes": {
+        "interpretation": "Failure misses the bank target, not by itself statistical surprise or a causal diagnosis",
+        "prediction": "uncertain: fixed04 already failed; no universal-success prior",
+        "target": "7/7 original suffix teachers executable"
+      },
+      "failed_cases": [],
+      "target_successes": 7
+    },
+    "cleanup_error": null,
+    "storage_bytes": 651492297
+  },
+  "records": [
+    {
+      "spec": {
+        "arm": "action",
+        "case": 5,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 6,
+        "horizon": 400,
+        "id": "event-teacher-phone-05",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261206,
+        "paired_instruction": [
+          "Move the glass and metal smartphone onto the metal adjustable phone clamp."
+        ],
+        "reset_seed": 6,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-05",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-6699cf96f8654817b917ab3be9337073/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "82e95471e9f9492746f624e1095500659fd33c89ed254b6242d2c7f01cde89c8"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 6,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 9,
+        "horizon": 400,
+        "id": "event-teacher-phone-06",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261207,
+        "paired_instruction": [
+          "Take the flat phone to the phonestand for holding phones."
+        ],
+        "reset_seed": 9,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-06",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-e02cc409b9344ab98cab27ee27b2be03/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "083170cc57a3c6285cd493392bf94032cf5afc861dac8cfc9dfa01b88786e618"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 7,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 10,
+        "horizon": 400,
+        "id": "event-teacher-phone-07",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261208,
+        "paired_instruction": [
+          "Put the glass and metal smartphone atop the phonestand for holding phones."
+        ],
+        "reset_seed": 10,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-07",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-17842bdbefd949209a53e70a335c772f/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "42e0f188d4ec01e2c0e2801175fcc4017e2603b222b716ba0693bbebe9cf421c"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 8,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 11,
+        "horizon": 400,
+        "id": "event-teacher-phone-08",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261209,
+        "paired_instruction": [
+          "Lift the rectangular phone onto the compact phonestand."
+        ],
+        "reset_seed": 11,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-08",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-19a867b1e6944e6eb0b8d963973cd2ea/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "4606ecfd4584ca7f0368a6e5138f07b4e9a97a763521dc1bb2eba3da99608b59"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 9,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 14,
+        "horizon": 400,
+        "id": "event-teacher-phone-09",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261210,
+        "paired_instruction": [
+          "Put the phone with polished silver border atop the light brown phone holder."
+        ],
+        "reset_seed": 14,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-09",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-efa5f84136e34e4eb19d4544bdc11ba2/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "4d2b482c32545e3224033c0f3722c5bb996c27ffe20c37c9d2ca61ca534b9a7b"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 10,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 16,
+        "horizon": 400,
+        "id": "event-teacher-phone-10",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261211,
+        "paired_instruction": [
+          "Carry the glass-faced phone to the phone holder with cutout underneath."
+        ],
+        "reset_seed": 16,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-10",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-9637ed924e8c4e89b95ebb70e6466507/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "3e9b355299d41d0b13354a60b7fd3f8cd346d4e72f9a1ba29f6b039e8ca1f0e2"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 11,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 18,
+        "horizon": 400,
+        "id": "event-teacher-phone-11",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261212,
+        "paired_instruction": [
+          "Lift the silver phone with black screen onto the angled holder for phones."
+        ],
+        "reset_seed": 18,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-11",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-4a614086339348b29e8086c49f325b1c/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "0faa088855aee90f23655495011e5629948c0ae935ff2bd778b95cdf9ccf2b6a"
+      }
+    }
+  ],
+  "recovery": {
+    "bytes": 270181,
+    "sha256": "5c0829d3e5ca00427bc589449053c536855b165b5ffd686d6fe26c65985cb883",
+    "stable_stat": true,
+    "deserialized": false
+  },
+  "qualification": {
+    "actual_actions": 193,
+    "cache_shapes": [
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ]
+    ],
+    "complete_real_episode": "event-teacher-phone-05",
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "kv_gradient_norm": 0.015245823119725698,
+    "motor_gradients": 0,
+    "native_parity": {
+      "max_abs_error": 0.0,
+      "passed": true,
+      "tolerance": 2e-05
+    },
+    "qualification_episode": "event-teacher-phone-05",
+    "repeated_paired_prefix": {
+      "instruction": [
+        "Move the glass and metal smartphone onto the metal adjustable phone clamp."
+      ],
+      "kv_cache_exact": true,
+      "original_reset_identity": null,
+      "prefix_mask_exact": true,
+      "public_features_exact": true,
+      "saved_original_frame": null
+    },
+    "status": "passed",
+    "zero_action_exact": true,
+    "zero_fixed_kv_exact": true,
+    "zero_kv_exact": true
+  },
+  "shared_clock": {
+    "format": "source40_ppo_worker_time_v1",
+    "contract": {
+      "format": "frozen_pi05_shared_gpu_clock_v1",
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+      "maximum_gpu_seconds": 28800,
+      "maximum_actions": 300000,
+      "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+    },
+    "worker_seconds": 28800,
+    "attempts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793440180000000-0000",
+        "started_unix": 1793440180.0,
+        "slice_seconds": 7140,
+        "reserved_seconds": 7200,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793440751.62417,
+        "exit_code": 1,
+        "charged_seconds": 632,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793444055000000-0001",
+        "started_unix": 1793444055.0,
+        "slice_seconds": 6420,
+        "reserved_seconds": 6480,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793445132.1823423,
+        "exit_code": 0,
+        "charged_seconds": 1138,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793453091000000-0002",
+        "started_unix": 1793453091.0,
+        "slice_seconds": 5370,
+        "reserved_seconds": 5430,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793453296.575951,
+        "exit_code": 1,
+        "charged_seconds": 266,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793459658000000-0003",
+        "started_unix": 1793459658.0,
+        "slice_seconds": 5104,
+        "reserved_seconds": 5164,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793459895.2140234,
+        "exit_code": 1,
+        "charged_seconds": 298,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+        "started_unix": 1793463614.0,
+        "slice_seconds": 1740,
+        "reserved_seconds": 1800,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793463871.4212303,
+        "exit_code": 0,
+        "charged_seconds": 318,
+        "slice_overrun": false
+      }
+    ]
+  }
+}

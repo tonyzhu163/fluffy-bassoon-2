@@ -1,0 +1,155 @@
+{
+  "format": "pi05_headroom_screen_launch_verified_v1",
+  "job_id": "job-sdxpm3y64pd9",
+  "scheduler_state_at_submission": "Running",
+  "created": "2026-11-01 00:47:56 Asia/Shanghai",
+  "source_commit": "7a69db74bf11d142d89e91d2e40b3b60c2cac586",
+  "source_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/dsrl-pi05-headroom-20261101-s0-r1",
+  "runtime_output": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1",
+  "resources": {
+    "gpu": 1,
+    "type": "NVIDIA RPBZZZ6",
+    "CPU": 16,
+    "memory_GiB": 96,
+    "shared_memory_GiB": 8
+  },
+  "maximum_scheduler_minutes": 119,
+  "automatic_retry": false,
+  "slice_seconds": 7140,
+  "all_in_reserved_GPU_seconds": 7200,
+  "maximum_screen_GPU_seconds": 10800,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_job_GPU_seconds": 25200,
+  "maximum_total_actions": 1000000,
+  "maximum_output_bytes": 68719476736,
+  "grant_sha256": "2340d0165c6122c73b2a975b132c3d885c97202bc62bdba3a7d06c9dd390ed64",
+  "child_admission_sha256": "eb6e7af4bdde808fd110fe4aa9c1277573e081640c188182dcc969bd85223a93",
+  "command_sha256": "dd9ad5bc1231aecf1897b073e026f22f4964807a09218d54d104d3e0eb93f321",
+  "CPU_receipt_sha256": "ecbc2c831be42cb08dfae9d01316976c45086bfeec9c04a2742914ad75f28d72",
+  "actual_probe": {
+    "status": "passed",
+    "purpose": "training",
+    "timing_comparison_eligible": false,
+    "allocation_type": "baige_container",
+    "hostname": "job-sdxpm3y64pd9-master-0",
+    "probe_pid": 417,
+    "created_at_utc": "2026-10-31T16:48:25.207967+00:00",
+    "devices": [
+      {
+        "allocation_ordinal": 0,
+        "visibility_token": "0",
+        "cuda_uuid": "3bd05a83-1e0b-2486-2f87-f3070d6edda2",
+        "cuda_name": "NVIDIA RPBZZZ6",
+        "cuda_total_bytes": 101973950464,
+        "pci_bus_id": "0000:a1:00.0",
+        "uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+        "inventory": {
+          "index": 0,
+          "uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+          "name": "NVIDIA RPBZZZ6",
+          "memory_total_mib": 97887.0,
+          "memory_used_mib": 0.0,
+          "utilization_percent": 0.0,
+          "pci_bus_id": "00000000:A1:00.0"
+        },
+        "allocation_check": {
+          "elements": 1048576,
+          "result": 2097152.0,
+          "touched_gpu_uuids": [
+            "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+          ],
+          "own_pid_gpu_uuids": [
+            "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+          ]
+        }
+      }
+    ],
+    "idle_utilization_required": false,
+    "exclusive_training_admission": true,
+    "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+    "utilization_role": "telemetry_only",
+    "utilization_telemetry": {
+      "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7": 0.0
+    },
+    "maximum_initial_memory_mib": 256,
+    "gpu_identity_mapping": {
+      "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+      "assigned_nvml_uuids": [
+        "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+      ]
+    },
+    "compute_processes_before": [],
+    "compute_processes_after": [
+      {
+        "gpu_uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+        "pid": 417,
+        "process_name": "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/bin/python",
+        "memory_used_mib": "640"
+      }
+    ],
+    "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+  },
+  "motor_before": {
+    "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793465308126259075/motor-before.json": {
+      "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+      "leaves": 51,
+      "elements_by_dtype": {
+        "bfloat16": 3353433872
+      }
+    }
+  },
+  "first_real_episode": {
+    "success": false,
+    "primitive_steps": 400,
+    "settling_steps": 10,
+    "chunks": 40,
+    "raw_return": 0.0,
+    "initial_state": 0,
+    "scene_seed": 123,
+    "episode_random_seed": 19360856,
+    "initial_state_vector_sha256": "0e6867b26d97a59583bf7aa6f6604389590c00fa0a814fd39edc6c5f534d8964",
+    "initial_observation_sha256": "5b4d8a540fece86061774ff4ded97f4a0c8b34d80bf359a60c6cb1dd84fa08b4",
+    "completed": true,
+    "query_behavior": "native",
+    "target_optimizer_updates": 0,
+    "replay_rows_unchanged": true,
+    "weights_unchanged": true,
+    "optimizer_updates_during_query": 0,
+    "underlying_actor_optimizer_updates": 0,
+    "native_sampling_view_only": true,
+    "policy_signature": "native-only-no-controller-no-optimizer",
+    "case": {
+      "benchmark": "libero90",
+      "suite": "libero_90",
+      "task_id": 0,
+      "initial_state": 0,
+      "scene_seed": 123,
+      "noise_draw": 0,
+      "bank": "screen",
+      "case_id": "libero90:00/state-0/seed-123/draw-0/screen"
+    },
+    "data_role": "target-onlineDEV",
+    "native_only": true,
+    "source_assembly_admission": false,
+    "trace": "raw/screen-000-1793465410003049131.pkl.gz",
+    "trace_sha256": "a08db0da68c83fbab892dd48e04d0dd517c9a5cae51caf9847f41ef0d02d435c"
+  },
+  "first_screen_index": {
+    "phase": "screen",
+    "screen_cursor": 1,
+    "confirmation_index": 0,
+    "confirmation_cursor": 0,
+    "selected_task": null,
+    "selection_sha256": null,
+    "all_in_actions": 410,
+    "target_optimizer_updates": 0,
+    "output_bytes": 16871381,
+    "stop_reason": null
+  },
+  "native_policy_path": "Unchanged qualified native sampling, no steering controller or optimizer constructed; no alternate intervention implementation for new parity comparison",
+  "final_motor_hash": "Pending active run closeout",
+  "initial_progress_sha256": "5d5adb9c20218280277d8ac8fc481530282059dffc68eb29dc58d0f160e27980",
+  "next_owned_check": "2026-11-01 01:10 Asia/Shanghai",
+  "source40_meta_data_admission": false,
+  "other_phase_budgets_not_borrowed": true
+}

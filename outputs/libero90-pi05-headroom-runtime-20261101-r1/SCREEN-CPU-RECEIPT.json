@@ -1,0 +1,84 @@
+{
+  "format": "pi05_headroom_screen_cpu_terminal_receipt_v1",
+  "source_commit": "7a69db74bf11d142d89e91d2e40b3b60c2cac586",
+  "reviewed_main": "6b63cde08b825df59348000b338ea5e81fe3d1bb",
+  "relevant_runtime_helper_delta": "none",
+  "job_id": "job-jqlutza2e7o7",
+  "scheduler_state": "Succeeded",
+  "created": "2026-11-01 00:43:53 Asia/Shanghai",
+  "ended": "2026-11-01 00:44:40 Asia/Shanghai",
+  "UI_seconds": 30,
+  "exit_code": 0,
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "4",
+    "time": "16.967",
+    "timestamp": "2026-11-01T00:44:18.087253+08:00",
+    "hostname": "job-jqlutza2e7o7-master-0"
+  },
+  "actual_gpu_count": 0,
+  "CUDA_initialized_before_mask": false,
+  "actual_cpu_cores": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "inclusive_clock": {
+    "format": "pi05_headroom_cpu_clock_v1",
+    "phase_id": "libero90-pi05-headroom-online-20261101-r1",
+    "source_commit": "7a69db74bf11d142d89e91d2e40b3b60c2cac586",
+    "started_unix": 1793465046.0,
+    "deadline_unix": 1793465136.0,
+    "maximum_cpu_worker_seconds": 180,
+    "prior_phase_cpu_charge": 0,
+    "maximum_phase_cpu_worker_seconds": 600,
+    "interrupted_charge_cpu_worker_seconds": 180,
+    "status": "finished",
+    "attempts": 1,
+    "charged_gpu_seconds": 0,
+    "ended_unix": 1793465075.4736378,
+    "exit_code": 0,
+    "charged_cpu_worker_seconds": 90,
+    "remaining_cpu_worker_seconds": 90
+  },
+  "new_phase_CPU": {
+    "charged": 90,
+    "remaining": 510,
+    "maximum": 600
+  },
+  "old_phone_phase_CPU_unchanged": 1203,
+  "robot_actions": 0,
+  "model_forwards": 0,
+  "grant_sha256": "2340d0165c6122c73b2a975b132c3d885c97202bc62bdba3a7d06c9dd390ed64",
+  "evidence": {
+    "summary.json": {
+      "bytes": 669,
+      "sha256": "6415525d354a3a3c1e1470ae5bae8eccc67e771b38f73bee6092b369feb75c3d"
+    },
+    "cpu-worker-clock.json": {
+      "bytes": 588,
+      "sha256": "d7648ed5d33b043a3f742b3ee6f1a9e35d967b7843ea16615702b7f32580c677"
+    },
+    "allocation.json": {
+      "bytes": 955,
+      "sha256": "932c8d7d07381590bcae7fbfcf3379b5112f1055448534fd4936194a43f49382"
+    },
+    "zero-gpu-attestation.json": {
+      "bytes": 1050,
+      "sha256": "53d413822aea36d781494cb61fb65eafbafe7d58a483e83e5b8e6241db4c04f0"
+    },
+    "tests.log": {
+      "bytes": 99,
+      "sha256": "d42080a5fea1410ee2166054b29a339925a098c7f4f868c69d9d489b82ca0ad4"
+    },
+    "exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "headroom-screen.junit.xml": {
+      "bytes": 853,
+      "sha256": "fa39d376bb186bbecabbb511e6b8b969955f809d7d5d2232e4b0ec819a7b6fb8"
+    }
+  },
+  "qualifies": "Only immutable7a69 native screen; later trainer source/tests/migration remain separate"
+}
