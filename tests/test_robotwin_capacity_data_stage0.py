@@ -54,6 +54,24 @@ def test_unknown_success_is_preserved_instead_of_manufactured(tmp_path):
     assert stage.hdf5_inventory(path,lambda:None)['explicit_success'] is None
 
 
+def test_actual_plain_sidecar_schema_binds_seed_and_first_seen_without_pickle(tmp_path):
+    path=tmp_path/'demos.zip'
+    seeds=[0,1,2,3,4,6,9,10,11,14,16,18]
+    with zipfile.ZipFile(path,'w') as data:
+        data.writestr('clean/seed.txt','\n'.join(map(str,seeds)))
+        data.writestr('clean/scene_info.json',json.dumps({f'episode_{i}':dict(info={'{A}':'phone'}) for i in range(12)}))
+        data.writestr('clean/_traj_data/episode0.pkl',b'not deserialized')
+        for i in range(12):
+            data.writestr(f'clean/data/episode{i}.hdf5',b'fixture')
+            data.writestr(f'clean/instructions/episode{i}.json',json.dumps(dict(seen=[f'first seen {i}','second'],unseen=['unused'])))
+    with zipfile.ZipFile(path) as data:
+        metadata=stage.plain_metadata(data,stage.ordered_hdf5(data))
+        episode=stage.episode_sidecars(data,metadata,11)
+    assert episode['reset_seed']==18 and episode['selected_instruction']=='first seen 11'
+    assert episode['scene_metadata']['info']['{A}']=='phone'
+    assert episode['instruction_ref']['member']=='clean/instructions/episode11.json'
+
+
 def test_model_import_firewall_rejects_without_importing_model():
     with pytest.raises(ImportError,match='rejects'):
         stage.NoModels().find_spec('torch')
@@ -63,7 +81,7 @@ def test_model_import_firewall_rejects_without_importing_model():
 
 def test_gripper_statistics_use_last_actual_masked_commands_only(tmp_path):
     root=tmp_path/'corpus';chunks=root/'episodes/episode-x/chunks';chunks.mkdir(parents=True)
-    actions=np.zeros((3,14),np.float32);actions[0,[6,13]]=[999,999];actions[1,[6,13]]=[-.1,1.2];actions[2,[6,13]]=[.2,.8]
+    actions=np.zeros((3,14),np.float32);actions[0,[6,13]]=[999,np.inf];actions[1,[6,13]]=[-.1,1.2];actions[2,[6,13]]=[.2,.8]
     np.savez(chunks/'decision.npz',issued_motor_joint_targets=actions)
     np.savez(chunks/'native.npz',valid_action_mask=np.array([0,1,1],bool))
     def ref(name):
@@ -72,5 +90,7 @@ def test_gripper_statistics_use_last_actual_masked_commands_only(tmp_path):
     (chunks/'000001.json').write_text(json.dumps(dict(status='complete',decision_arrays=ref('decision.npz'),
         native_result=dict(arrays=ref('native.npz'),executed_primitive_steps=2))))
     value=stage.a1_grippers([root],lambda:None)
-    assert value['executed_actions']==2 and value['outside_0_1_counts']==[1,1]
-    assert value['maximum'][0]<1 and value['maximum'][1]<2
+    assert value['actual_valid']['slots']==2 and value['actual_valid']['outside_0_1_counts']==[1,1]
+    assert value['actual_valid']['maximum'][0]<1 and value['actual_valid']['maximum'][1]<2
+    assert value['total_issued']['slots']==3 and value['total_issued']['nonfinite_counts']==[0,1]
+    json.dumps(value,allow_nan=False)
