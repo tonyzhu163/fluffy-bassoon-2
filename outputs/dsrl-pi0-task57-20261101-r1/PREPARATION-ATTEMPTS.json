@@ -1,0 +1,28 @@
+{
+  "scientific_gpu_run_started": false,
+  "gpu_seconds": 0,
+  "simulator_actions": 0,
+  "attempts": [
+    {
+      "job_id": "job-vego8a5re113",
+      "name": "mwj_1101_dsrl_pi0_task57_prep_r1_ffa0afc",
+      "source_commit": "ffa0afcdbbf5d8ed1a931e2dd13793e8ffadd8b9",
+      "created_shanghai": "2026-11-01T00:40:54+08:00",
+      "ended_shanghai": "2026-11-01T00:41:37+08:00",
+      "resources": {"gpu_count": 0, "cpu_cores": 4, "memory_gib": 32},
+      "scheduler_running_seconds": 29,
+      "conservative_worker_seconds": 90,
+      "exit_code": 128,
+      "failure_log": "fatal: couldn't find remote ref refs/heads/codex/dsrl-pi0-task57-20261101",
+      "stage": "Git deployment; setup script did not run",
+      "diagnosis": "The Baige checkout origin does not expose the newly published branch. Recover with a Git bundle, retaining the failed job identity."
+    }
+  ],
+  "next_attempt": {
+    "identity": "dsrl-pi0-task57-20261101-prep-r2",
+    "deployment": "Git bundle based on recent main3b71a31; exact new source verification before worktree execution",
+    "maximum_scheduler_minutes": 27,
+    "inner_timeout_seconds": 1500,
+    "automatic_retry": false
+  }
+}

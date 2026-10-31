@@ -3,7 +3,8 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed repository commit}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_ID=dsrl-pi0-task57-20261101-prep-r1
+TASK_ID=${2:?fresh immutable CPU preparation identity}
+case "$TASK_ID" in dsrl-pi0-task57-20261101-prep-r[0-9]*) ;; *) exit 2;; esac
 TASK_OUT=$TASK_ROOT/outputs/$TASK_ID
 TASK_DEPS=$TASK_ROOT/deps/$TASK_ID
 TASK_ENV=$TASK_ROOT/envs/$TASK_ID
