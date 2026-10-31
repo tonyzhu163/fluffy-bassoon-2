@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "capacity_teacher02_replay_diagnosed_requests_exact; successor_proposal_pending; task57_separate_terminal",
+  "state": "event_aligned_successor_running; first4teachers_success; all12gate_andfits_pending",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -53,6 +53,21 @@
       "terminal_receipt_path": "CAPACITY-GPU-TERMINAL-RECEIPT.json",
       "terminal_receipt_sha256": "4cbbea69b2ca2eeca058a01f8cc4cdbb216148836380c2a7f21b2e6bc0621bbd",
       "released_seconds": 5164
+    },
+    {
+      "role": "event_aligned_reactive_capacity_successor",
+      "job_id": "job-2rkimbvypowd",
+      "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+      "reserved_seconds": 5164,
+      "charged_seconds": 0,
+      "settled": false,
+      "status": "Running",
+      "worker_slice_seconds": 5104,
+      "scheduler_allowance_seconds": 60,
+      "maximum_new_actions": 10000,
+      "maximum_complete_episodes": 25,
+      "launch_receipt_path": "EVENT-CAPACITY-GPU-LAUNCH.json",
+      "launch_receipt_sha256": "5ed3cf2d6a802b933aff63ca9e9c8d09bad3fcbdc8c4e9e4da69c541816bd3ee"
     }
   ],
   "cpu_attempts": [
@@ -183,15 +198,50 @@
       "failed_tests": 0,
       "receipt_path": "REPLAY-DIAGNOSIS-CPU-RECEIPT.json",
       "receipt_sha256": "a308c55453d4894aa72ce38d6e609d506068963b7140a9fc8e72f2707a561e7b"
+    },
+    {
+      "role": "event_capacity_qualification",
+      "job_id": "job-tr9monend30t",
+      "source_commit": "95577cde712f2e8d1e981e8f3d3ebffce6a774bf",
+      "maximum_worker_seconds": 240,
+      "reserved_seconds": 240,
+      "charged_seconds": 78,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "EVENT-CAPACITY-CPU-CHECK.json",
+      "receipt_sha256": "21181ccd01b7b7245800c6f3e7f62ce66db899b14bf222c18e61c1d057439ac3",
+      "same_240_envelope": true
+    },
+    {
+      "role": "event_audit_getter_narrow_qualification",
+      "job_id": "job-8evakq55y02s",
+      "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+      "maximum_worker_seconds": 162,
+      "reserved_seconds": 162,
+      "charged_seconds": 73,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "receipt_path": "EVENT-AUDIT-CPU-CHECK.json",
+      "receipt_sha256": "730e557d05c66f842683db501658526a432e6da49ce26ed2b91e3364d2a31b9a",
+      "same_240_envelope": true
     }
   ],
-  "physical_action_reservations": [],
+  "physical_action_reservations": [
+    {
+      "job_id": "job-2rkimbvypowd",
+      "maximum_new_actions": 10000,
+      "included_in_original_A1": true,
+      "includes_active_child_actions_until_terminal_settlement": true
+    }
+  ],
   "charged_gpu_seconds": 2036,
-  "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 827,
+  "reserved_gpu_seconds": 5164,
+  "charged_cpu_worker_seconds": 978,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 18599,
-  "reserved_actions": 0,
+  "reserved_actions": 10000,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -203,7 +253,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps.",
+  "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps. Active child reservation includes its new cost until terminal settlement; charged_actions here is settled historical cost, while active closed-prefix counts are separately labeled lower bounds.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -257,8 +307,8 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 973,
-  "unreserved_gpu_seconds": 26764,
+  "remaining_cpu_worker_seconds": 822,
+  "unreserved_gpu_seconds": 21600,
   "latest_action_snapshot": {
     "checked_shanghai": "2026-10-31T19:18:58+08:00",
     "actual": 18599,
@@ -327,7 +377,7 @@
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 973,
+  "unreserved_cpu_worker_seconds": 822,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,
@@ -342,5 +392,24 @@
     "state": "closed_after_complete_combined_evidence; unused271released_within_original_phase",
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
+  },
+  "unreserved_a1_gpu_seconds": 0,
+  "unreserved_a1_actions": 1401,
+  "active_child_known_closed_action_prefix": {
+    "job_id": "job-2rkimbvypowd",
+    "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
+    "new_actions": 1172,
+    "not_a_full_inflight_snapshot": true
+  },
+  "event_capacity": {
+    "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+    "CPU_qualified": true,
+    "all12_schedules_admitted": true,
+    "GPU_job": "job-2rkimbvypowd",
+    "first_live_qualification_passed": true,
+    "aligned_teachers_verified_success": 4,
+    "all12_success_qualified": false,
+    "fit_result_verified": false,
+    "next_check_shanghai": "2026-10-31T23:38:00+08:00"
   }
 }

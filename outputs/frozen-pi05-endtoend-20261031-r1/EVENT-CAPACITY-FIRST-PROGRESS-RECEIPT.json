@@ -1,0 +1,243 @@
+{
+  "format": "original_a1_event_capacity_first_progress_v1",
+  "job_id": "job-2rkimbvypowd",
+  "source_commit": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+  "checked_shanghai": "2026-10-31T23:17:54.371118+08:00",
+  "scheduler_state": "Running",
+  "qualification": {
+    "sha256": "8b6e0e740c247db2e86fef03ceb726f239f1b7b1faebc6eb2797215b941ca87c",
+    "bytes": 1034,
+    "value": {
+      "actual_actions": 400,
+      "cache_shapes": [
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ],
+        [
+          1,
+          968,
+          1,
+          256
+        ]
+      ],
+      "complete_real_episode": "event-control-fixed-phone-02",
+      "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "kv_gradient_norm": 0.004276137388038163,
+      "motor_gradients": 0,
+      "native_parity": {
+        "max_abs_error": 0.0,
+        "passed": true,
+        "tolerance": 2e-05
+      },
+      "qualification_episode": "event-control-fixed-phone-02",
+      "repeated_paired_prefix": {
+        "instruction": [
+          "Carry the compact phone to the curved phonestand with phone slot."
+        ],
+        "kv_cache_exact": true,
+        "original_reset_identity": null,
+        "prefix_mask_exact": true,
+        "public_features_exact": true,
+        "saved_original_frame": null
+      },
+      "status": "passed",
+      "zero_action_exact": true,
+      "zero_fixed_kv_exact": true,
+      "zero_kv_exact": true
+    }
+  },
+  "complete_episodes": 5,
+  "episodes": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/event-control-fixed-phone-02.json",
+      "sha256": "71d7fa2f34cc70d4e14f0cbf1b8fe095b77a531ba691ea29cbecca57466f5af3",
+      "id": "event-control-fixed-phone-02",
+      "stage": "event_fixed_control",
+      "success": false,
+      "complete": true,
+      "primitives": 400,
+      "chunks": 13,
+      "reset_identity": {
+        "actual_seed": 2,
+        "features_sha256": "f15fadac28efe5160d29d3d9e1e1eeba6f7cb35fedd044c0daedaa5fe1698cb4",
+        "observation_sha256": "4cd70c52339381edc5bca00fe2af60640c4832bf6f32d71b2066618c9a3d38ce"
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/event-teacher-phone-00.json",
+      "sha256": "d6982ff59208e8c2c7af5ead82c5a4666d2c01eb0ee7223033409f381638bbf6",
+      "id": "event-teacher-phone-00",
+      "stage": "event_aligned_teacher_execution",
+      "success": true,
+      "complete": true,
+      "primitives": 193,
+      "chunks": 7,
+      "reset_identity": {
+        "actual_seed": 0,
+        "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+        "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e"
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/event-teacher-phone-01.json",
+      "sha256": "2b0db0ccf142dc7e16bc8707d0391efcd53287ce36108537ca8b9ed32139c3dd",
+      "id": "event-teacher-phone-01",
+      "stage": "event_aligned_teacher_execution",
+      "success": true,
+      "complete": true,
+      "primitives": 193,
+      "chunks": 7,
+      "reset_identity": {
+        "actual_seed": 1,
+        "features_sha256": "fc5f0308d07edc3c90590e5c117ed95871ead80eea8030ce18c8ce01e9162800",
+        "observation_sha256": "9cd923adb53e736082e01ea10ed5a055e3b10264133c96a8853173886f9496af"
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/event-teacher-phone-02.json",
+      "sha256": "ed38d814693d9f2cc1ee99ac79cfce4e3d8647e593bb6a87333805bd4d2264a8",
+      "id": "event-teacher-phone-02",
+      "stage": "event_aligned_teacher_execution",
+      "success": true,
+      "complete": true,
+      "primitives": 193,
+      "chunks": 7,
+      "reset_identity": {
+        "actual_seed": 2,
+        "features_sha256": "f15fadac28efe5160d29d3d9e1e1eeba6f7cb35fedd044c0daedaa5fe1698cb4",
+        "observation_sha256": "4cd70c52339381edc5bca00fe2af60640c4832bf6f32d71b2066618c9a3d38ce"
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/event-teacher-phone-03.json",
+      "sha256": "16f056ec671a93a8aeab3eff3d9edb051fb0ad26a7c9ddae8c5bf305bd24ecad",
+      "id": "event-teacher-phone-03",
+      "stage": "event_aligned_teacher_execution",
+      "success": true,
+      "complete": true,
+      "primitives": 193,
+      "chunks": 7,
+      "reset_identity": {
+        "actual_seed": 3,
+        "features_sha256": "7e518a977561c413e4c51709f6d28a38d68d91261ad1ee0284211b983d110bc2",
+        "observation_sha256": "e99fc82053aeaebf0d6bd6a822e24e94a947c429ed1585f4d526d3d34b66a669"
+      }
+    }
+  ],
+  "closed_new_action_prefix": 1172,
+  "current_inflight_actions_not_independently_counted": true,
+  "full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/recovery.pt",
+    "sha256": "73b27ab6191f229a1c453b39fab51c029c665c4d57b7db575446eff20dddf996",
+    "bytes": 196261,
+    "opaque_no_load": true
+  },
+  "all12_teachers_complete": false,
+  "fit_result_available": false,
+  "maximum_gpu_seconds_this_child": 5164,
+  "prior_phase_gpu_seconds": 2036,
+  "maximum_new_actions": 10000,
+  "maximum_complete_episodes": 25,
+  "next_check_shanghai": "2026-10-31T23:38:00+08:00",
+  "scientific_limit": "Fixed control failed while the first aligned02/00/01/03 succeeded. One altered schedule and different planner RNG histories do not establish causal rescue or learned reactive performance. The all12 teacher gate must still complete before fitting."
+}

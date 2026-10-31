@@ -1,5 +1,38 @@
 # Frozen Motus steering evaluation
 
+## Event-aligned successor: live qualification and first four teachers
+
+Snapshot23:17:54 Shanghai: Baige `job-2rkimbvypowd` runs exact `be247676`,
+using the original A1 remainder, at most5164 all-in GPU-seconds/10000 new
+physical actions/25episodes. Native H32 executor and the complete8TRAIN/4VAL
+source bank remain unchanged. The new expert schedule splits at deterministic
+gripper-phase boundaries and adds explicit final-command holds. All12 CPU
+preflights fit7chunks/224 submitted slots. Actual qualification comprises the
+original24 tests plus2 affected getter checks on the successor:22 unchanged
+carried nodes+2 updated nodes=24 distinct cases,26 actual executions across
+pins. CPU151/240seconds; phase978/1800,822 remain. No fresh fullbe247 suite is
+claimed. [Exact CPU evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-CPU-RESULT.md).
+
+Real GPU/CUDA/ownPID and full frozen721a/zero/native parity/KV-gradient checks
+pass. KV gradient is0.00427614 with zero motor gradients. The fixed-H32 phone02
+control fails again at400 actions. The first aligned02,00,01,03 each succeed
+at193. Public seed/observation/features match for the repeated02 cases; global
+planner RNG histories are not paired. This comparison changes scheduling and
+does not establish causal rescue, learned capacity, adaptation or ICRL. Only
+these four aligned successes are verified; ALL12 must succeed before caching
+or fitting. Closed-prefix1172 new actions and an opaque full recovery are
+saved; in-flight cost is not independently counted in this snapshot.
+[First real progression](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-CAPACITY-FIRST-PROGRESS.md).
+
+If all12 pass, the fixed next stage imitates full expert submitted plans from
+actual canonical observations with100 updates per KV/action head, followed by
+the original4 opened DEV cases×3conditions. Native executed masks remain
+separate physical-cost evidence because later submitted waypoints can affect
+earlier planned motion. Control/old rollouts and future schedule/audit fields
+are excluded from learned inputs. No locked32 case, RL/source teacher or
+AD/DPT history is admitted by this capacity experiment. A short bounded-head
+negative would not reject the full reactive class. Next owned check23:38.
+
 ## Closed replay diagnosis: requests exact, physics unresolved
 
 The one corrected4bb inspection succeeded on Baige `job-a3luoqs9bwkn`:
