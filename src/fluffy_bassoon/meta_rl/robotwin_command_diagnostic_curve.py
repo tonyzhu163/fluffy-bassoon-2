@@ -4,7 +4,7 @@ from . import robotwin_reactive_curve as curve
 from . import robotwin_command_diagnostic_bank as bank
 
 FORMAT='robotwin_fixed12_command_diagnostic_curve_v1'
-CORE_BANK_SHA='91de73d421537fa01715da12a2aecfc19bdbf1a5edb47054d9274590c7792506'
+CORE_BANK_SHA='2d88bd08c3cbcebd694393bdf3f368862fb5af1ef4d4dedc0c23d7dc2889a81b'
 PROFILE=dict(deepcopy(curve.PROFILE),format=FORMAT,diagnostic_purpose=bank.PURPOSE,
     source_eligible=False,successful_teacher_bank_eligible=False,
     diagnostic_bank_format=bank.FORMAT,complete_cache_format=bank.COMPLETE_FORMAT,
