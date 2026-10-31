@@ -209,15 +209,7 @@ def validate_bank(bank, *, complete=False):
 
 def captured_plan(chunk, decision, native, *, targets, source, convention, profile_sha, cursor, condition=None):
     """Validate captured full H32 labels; never derive E labels by call ordinal."""
-    residual=chunk['decision_metadata']['frozen_pi05_residual']
-    full=decision[residual['actions']['numeric_array']]
-    base=decision[residual['base_actions']['numeric_array']]
-    noise=decision['sampled_noise'];issued=decision['issued_motor_joint_targets']
-    if (full.shape!=(1,32,14) or base.shape!=(1,32,14) or noise.shape!=(32,32)
-            or not 1<=len(issued)<=32 or issued.shape[1:]!=(14,)
-            or not np.array_equal(issued,full[0,:len(issued)])
-            or any(v.dtype.kind!='f' or not np.isfinite(v).all() for v in (full,base,noise,issued))):
-        raise ValueError('Keep captured full proposed/submitted H32/native Gaussian/base14 separately')
+    full,base,noise,issued=_captured_arrays(chunk,decision)
     if convention=='original_event_h32_v1':
         metadata=chunk['decision_metadata']['event_schedule']
         if (metadata['teacher_reference']['sha256']!=source['sha256']
@@ -262,6 +254,24 @@ def captured_plan(chunk, decision, native, *, targets, source, convention, profi
                 raise ValueError('Tail hold before complete original reference')
             target,indices,new=scheduled_request(targets,schedule,len(schedule['chunks']));kind='tail_hold'
     else:raise ValueError('Unaccepted source plan convention')
+    return _finish_plan(chunk,decision,native,target=target,indices=indices,new=new,kind=kind,cursor=cursor)
+
+
+def _captured_arrays(chunk,decision):
+    residual=chunk['decision_metadata']['frozen_pi05_residual']
+    full=decision[residual['actions']['numeric_array']]
+    base=decision[residual['base_actions']['numeric_array']]
+    noise=decision['sampled_noise'];issued=decision['issued_motor_joint_targets']
+    if (full.shape!=(1,32,14) or base.shape!=(1,32,14) or noise.shape!=(32,32)
+            or not 1<=len(issued)<=32 or issued.shape[1:]!=(14,)
+            or not np.array_equal(issued,full[0,:len(issued)])
+            or any(v.dtype.kind!='f' or not np.isfinite(v).all() for v in (full,base,noise,issued))):
+        raise ValueError('Keep captured full proposed/submitted H32/native Gaussian/base14 separately')
+    return full,base,noise,issued
+
+
+def _finish_plan(chunk,decision,native,*,target,indices,new,kind,cursor):
+    full,base,noise,issued=_captured_arrays(chunk,decision)
     if not np.array_equal(full[0],target.astype(full.dtype)):
         raise ValueError('Captured full proposal differs from actual source/probe plan')
     mask=native['valid_action_mask'].reshape(-1);actual=chunk['native_result']['executed_primitive_steps']
@@ -284,7 +294,7 @@ def _recheck_bank(bank,deadline):
     return rebuilt
 
 
-def _cache_episode(entry,episode,demos,backend,output,*,deadline,guard):
+def _cache_episode(entry,episode,demos,backend,output,*,deadline,guard,_parse_plan=None,_require_success=True):
     """Cache one successful episode through existing typed Audit/transforms."""
     audit=Audit(deadline);row=entry['record'];ref=row['episode_manifest_ref'];root=Path(ref['root'])
     contract_path=root/'contract.json'
@@ -312,7 +322,8 @@ def _cache_episode(entry,episode,demos,backend,output,*,deadline,guard):
                 or chunk['context']['trial_id']!=row['spec']['id'] or chunk['episode_id']!=manifest['episode_id']
                 or chunk['chunk_index']!=ordinal+1 or chunk['observation']!=previous
                 or closed!=(ordinal==len(manifest['chunks'])-1)
-                or (closed and chunk['native_result']['success'] is not True)):
+                or (closed and (chunk['native_result']['success'] is not row['success']
+                    or (_require_success and chunk['native_result']['success'] is not True)))):
             raise ValueError('Canonical observation/chunk/closed-success chain differs')
         decision=audit.arrays(root,chunk['decision_arrays']);native=audit.arrays(root,chunk['native_result']['arrays'])
         frame=chunk['observation'];arrays=audit.arrays(root,frame)
@@ -320,7 +331,8 @@ def _cache_episode(entry,episode,demos,backend,output,*,deadline,guard):
         if not np.array_equal(decision[native_noise_ref['numeric_array']],decision['sampled_noise']):
             raise ValueError('Captured native private Gaussian differs from actual submitted noise')
         decision['_canonical_current_state14']=arrays['states'].reshape(14)
-        plan=captured_plan(chunk,decision,native,targets=targets,source=source,
+        parser=captured_plan if _parse_plan is None else _parse_plan
+        plan=parser(chunk,decision,native,targets=targets,source=source,
             convention=entry['plan_convention'],profile_sha=entry['profile'].get('sha256'),cursor=cursor,
             condition=row['spec'].get('condition'))
         raw={key:arrays[key] for key in ('main_images','wrist_images','states')}
@@ -363,7 +375,7 @@ def _cache_episode(entry,episode,demos,backend,output,*,deadline,guard):
     return cached
 
 
-def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allow_partial=False):
+def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allow_partial=False,_api=None,_only_ids=None,_require_success=True):
     """Model-only lazy backend, never reset/step/extra qualification episodes.
 
     Existing resource owner binds actual CUDA/host/frozen motor/norm to the
@@ -373,7 +385,13 @@ def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allo
     if backend.model.device.type!='cuda' or not torch.cuda.is_available() or torch.cuda.device_count()!=1:
         raise ValueError('Actual one-GPU model-only allocation required')
     if backend.env is not None:raise ValueError('Use lazy model-only backend before any physical scene/reset')
-    bank=_recheck_bank(bank,deadline);available=validate_bank(bank,complete=not allow_partial)
+    recheck=_recheck_bank if _api is None else _api._recheck_bank
+    validate=validate_bank if _api is None else _api.validate_bank
+    bank=recheck(bank,deadline);available=validate(bank,complete=not allow_partial)
+    if _only_ids is not None:
+        if len(set(_only_ids))!=len(_only_ids) or not set(_only_ids)<=set(available):
+            raise ValueError('Explicit cache subset must belong to the validated complete bank')
+        available=[identity for identity in available if identity in _only_ids]
     audit=Audit(deadline);demos=audit.json(bank['demos']);interface=audit.json(bank['interface'])
     qualification=audit.json(model_qualification_ref);probe=audit.json(qualification['gpu_probe'])
     if len(probe['devices'])!=1:raise ValueError('One actual probed GPU required')
@@ -395,20 +413,24 @@ def cache_bank(bank,backend,output,*,deadline,guard,model_qualification_ref,allo
     output=Path(output);output.mkdir(parents=True,exist_ok=False);cached=[]
     for entry,episode in zip(bank['entries'],demos['episodes']):
         if entry['id'] not in available:continue
-        cached.extend(_cache_episode(entry,episode,demos,backend,output/entry['id'],deadline=deadline,guard=guard))
+        cached.extend(_cache_episode(entry,episode,demos,backend,output/entry['id'],deadline=deadline,guard=guard,
+            _parse_plan=None if _api is None else _api.captured_plan,_require_success=_require_success))
     if backend.env is not None or backend.frozen_fingerprint()!=frozen:
         raise ValueError('Model-only cache created physics or changed frozen parameters')
     backend._check_frozen()
     result=dict(format='robotwin_fixed12_cache_receipt_v1',bank=deepcopy(bank),records=cached,
         model_qualification=deepcopy(model_qualification_ref),complete=False,fit_eligible=False,
         cached_teacher_ids=available,meaning='Prospective partial/preparation cache; seal full12 separately, no normalizer/fit here')
+    if _api is not None:result.update(_api.cache_annotations(bank))
     _atomic_json(output/'partial-cache.json',result)
     return result
 
 
-def seal_full_cache(bank,cache_receipts,*,deadline):
+def seal_full_cache(bank,cache_receipts,*,deadline,_api=None):
     """Join sealed per-case caches only once the full fixed12 bank qualifies."""
-    bank=_recheck_bank(bank,deadline);validate_bank(bank,complete=True)
+    recheck=_recheck_bank if _api is None else _api._recheck_bank
+    validate=validate_bank if _api is None else _api.validate_bank
+    bank=recheck(bank,deadline);validate(bank,complete=True)
     expected={e['id']:e for e in bank['entries']};actual={};records=[];canonical_seen=set();manifests={}
     for receipt in cache_receipts:
         value=Audit(deadline).json(receipt)
@@ -465,6 +487,9 @@ def seal_full_cache(bank,cache_receipts,*,deadline):
         if (sorted(r['anchor'] for r in rows)!=list(range(entry['record']['chunks']))
                 or sum(r['native_actual_actions'] for r in rows)!=entry['record']['primitive_steps']):
             raise ValueError('Full12 cache is missing/duplicating chunks or changing native costs')
-    return dict(format='robotwin_fixed12_complete_cache_v1',bank=deepcopy(bank),cache_receipts=deepcopy(cache_receipts),
+    result=dict(format='robotwin_fixed12_complete_cache_v1' if _api is None else _api.COMPLETE_FORMAT,bank=deepcopy(bank),cache_receipts=deepcopy(cache_receipts),
         records=records,complete=True,fixed12_fit_eligible=True,
         resource_fit_admitted=False,meaning='Full12 data eligibility only; actual predeclared fit profile/resources still required')
+
+    if _api is not None:result.update(_api.seal_annotations(bank))
+    return result

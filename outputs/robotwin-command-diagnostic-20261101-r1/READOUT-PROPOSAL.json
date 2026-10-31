@@ -1,0 +1,152 @@
+{
+  "format": "robotwin_fixed12_command_diagnostic_readout_proposal_v1",
+  "admitted": false,
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "locked32_or_population_claim": false,
+  "task": "place_phone_stand",
+  "native_episode_limit": 400,
+  "action_horizon": 32,
+  "maximum_complete_episodes": 15,
+  "maximum_new_actions": 6000,
+  "case_order": [
+    4,
+    8,
+    9,
+    10,
+    11
+  ],
+  "condition_order": [
+    "native",
+    "wide-final5000",
+    "KV-final5000"
+  ],
+  "cells": [
+    {
+      "id": "diagnostic-case04-native",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "native",
+      "checkpoint_iteration": null
+    },
+    {
+      "id": "diagnostic-case04-wide-final5000",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case04-KV-final5000",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case08-native",
+      "case": 8,
+      "reset_seed": 8,
+      "private_motor_seed": 20261309,
+      "condition": "native",
+      "checkpoint_iteration": null
+    },
+    {
+      "id": "diagnostic-case08-wide-final5000",
+      "case": 8,
+      "reset_seed": 8,
+      "private_motor_seed": 20261309,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case08-KV-final5000",
+      "case": 8,
+      "reset_seed": 8,
+      "private_motor_seed": 20261309,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case09-native",
+      "case": 9,
+      "reset_seed": 9,
+      "private_motor_seed": 20261310,
+      "condition": "native",
+      "checkpoint_iteration": null
+    },
+    {
+      "id": "diagnostic-case09-wide-final5000",
+      "case": 9,
+      "reset_seed": 9,
+      "private_motor_seed": 20261310,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case09-KV-final5000",
+      "case": 9,
+      "reset_seed": 9,
+      "private_motor_seed": 20261310,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case10-native",
+      "case": 10,
+      "reset_seed": 10,
+      "private_motor_seed": 20261311,
+      "condition": "native",
+      "checkpoint_iteration": null
+    },
+    {
+      "id": "diagnostic-case10-wide-final5000",
+      "case": 10,
+      "reset_seed": 10,
+      "private_motor_seed": 20261311,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case10-KV-final5000",
+      "case": 10,
+      "reset_seed": 10,
+      "private_motor_seed": 20261311,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case11-native",
+      "case": 11,
+      "reset_seed": 11,
+      "private_motor_seed": 20261312,
+      "condition": "native",
+      "checkpoint_iteration": null
+    },
+    {
+      "id": "diagnostic-case11-wide-final5000",
+      "case": 11,
+      "reset_seed": 11,
+      "private_motor_seed": 20261312,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000
+    },
+    {
+      "id": "diagnostic-case11-KV-final5000",
+      "case": 11,
+      "reset_seed": 11,
+      "private_motor_seed": 20261312,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000
+    }
+  ],
+  "reset_rng": "Same saved per-case Python/NumPy/TorchCPU/CUDA fork before each fresh condition reset; private motor generator reset to the declared identical per-case seed. Qualification/head loading preserve the fork. Retain all poststates.",
+  "qualification": "Inside the FIRST native complete episode only; no extra actions/settles/opening or extra qualification episode.",
+  "selection": "Fixed5000 for both heads, no VAL checkpoint selection or favorable-case selection.",
+  "reuse_disclosure": "04 is a failed TRAIN diagnostic case;08..11 are the fixed source VAL cases. These are DEV/VAL reuse, not held-out population evidence.",
+  "outcomes": "All natural success/failure/early termination retained; no source/student admission from this diagnostic panel.",
+  "implementation_owner": "Existing owner and same endpoint/control factory; this JSON is a prospective schedule, not another readout driver."
+}
