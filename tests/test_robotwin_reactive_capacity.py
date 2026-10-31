@@ -1,5 +1,6 @@
 """Synthetic CPU qualification only; run on allocated Linux, never macOS."""
 from copy import deepcopy
+from io import BytesIO
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -11,7 +12,7 @@ import torch
 
 from fluffy_bassoon.meta_rl.robotwin_demo_capacity import (
     file_sha,prepare_demo_manifest,validate_demo_manifest,read_episode,
-    whole_episode_chunks,transformed_target,masked_mse,reactive_flow_loss,
+    raw_observation,whole_episode_chunks,transformed_target,masked_mse,reactive_flow_loss,
 )
 from fluffy_bassoon.meta_rl.robotwin_reactive_fit import (
     CapacityActionResidual,ReplayTeacherHead,fit_reactive_head,batch_from_cache,
@@ -72,6 +73,23 @@ def test_hdf5_reader_rejects_extra_or_truncated_timeline(tmp_path):
         f.create_dataset(schema['state'],data=np.zeros((row['qualified_action_count']-1,14)))
         for key in schema['images']:f.create_dataset(key,data=np.zeros(row['qualified_action_count']-1))
     with pytest.raises(ValueError,match='length'):read_episode(path,row,schema)
+
+
+def test_jpeg_views_retain_head_left_right_rgb_order_and_state(tmp_path):
+    from PIL import Image
+    result,_=manifest(tmp_path);row=result['episodes'][0];schema=result['schema'];path=tmp_path/'views.h5'
+    with h5py.File(path,'w') as f:
+        for index,key in enumerate(schema['images']):
+            rgb=np.zeros((4,4,3),np.uint8);rgb[...,index]=255
+            stream=BytesIO();Image.fromarray(rgb).save(stream,format='JPEG',quality=100)
+            f.create_dataset(key,data=np.asarray([stream.getvalue()],dtype=f'S{len(stream.getvalue())}'))
+    state=np.arange(14,dtype=np.float32)[None]
+    raw=raw_observation(path,row,schema,0,state)
+    assert raw['main_images'][0].mean((0,1)).argmax()==0
+    assert raw['wrist_images'][0,0].mean((0,1)).argmax()==1
+    assert raw['wrist_images'][0,1].mean((0,1)).argmax()==2
+    assert np.array_equal(raw['states'],state)
+    assert raw['task_descriptions']==[row['instruction']]
 
 
 class TransformModel:

@@ -226,7 +226,7 @@ def main(argv=None):
             state['stage']='offline_cache';persist()
             if control.active:raise ValueError('Never replace an active physical episode with offline cache inputs')
             records=cache_demos(env.backend,demos,paths,args.output/'cache',guard=io_guard,seed=CONFIG['seed'],
-                               action_bounds=heads['action'].bounds.detach().cpu().numpy())
+                               action_head=heads['action'])
             _atomic_json(args.output/'cache-manifest.json',dict(records=records,whole_demo_split=True))
             contract=dict(source_commit=source,scope_sha256=args.scope_sha256,motor_sha256=interface['motor_sha256'],
                 normalization_sha256=interface['normalization_sha256'],demo_manifest_sha256=args.demos_sha256,

@@ -12,6 +12,7 @@ import numpy as np
 import torch
 
 from fluffy_bassoon.rl.pi05_residual import ReactiveKVResidual, ReactiveALOHAActionResidual, DecodedActionResidual
+from fluffy_bassoon.rl.robotwin_corpus import _atomic_json
 from .checkpoint import rng_state
 from .warmstart import atomic_save
 from .robotwin_demo_capacity import file_sha, read_episode, raw_observation, whole_episode_chunks, transformed_target, masked_mse, reactive_flow_loss
@@ -71,7 +72,7 @@ def make_heads(backend,interface,config):
     return dict(kv=kv,action=action)
 
 
-def cache_demos(backend,manifest,paths,output,*,guard,seed,action_bounds):
+def cache_demos(backend,manifest,paths,output,*,guard,seed,action_head):
     """Frozen actual prefix + official targets; full trajectories stay retained."""
     output=Path(output);output.mkdir(exist_ok=False)
     model=backend.model
@@ -93,7 +94,15 @@ def cache_demos(backend,manifest,paths,output,*,guard,seed,action_bounds):
             # noise as the action head's declared deployment convention.
             noise=np.random.default_rng(np.random.SeedSequence([seed,episode['canonical_index'],index])).standard_normal((32,32)).astype(np.float32)
             proposal=backend.decode(noise)
-            error=np.abs(target-proposal);outside=np.maximum(error-action_bounds,0.)
+            lower=proposal-action_head.bounds.cpu().numpy()
+            upper=proposal+action_head.bounds.cpu().numpy()
+            lower[:,ARM_INDICES]=np.maximum(lower[:,ARM_INDICES],action_head.arm_lower.cpu().numpy())
+            upper[:,ARM_INDICES]=np.minimum(upper[:,ARM_INDICES],action_head.arm_upper.cpu().numpy())
+            if (np.any(lower>upper) or np.any(proposal[:,ARM_INDICES]<action_head.arm_lower.cpu().numpy())
+                    or np.any(proposal[:,ARM_INDICES]>action_head.arm_upper.cpu().numpy())):
+                raise ValueError('Native demo-input proposal violates actual ARM headroom; diagnose before fitting')
+            error=np.abs(target-proposal)
+            outside=np.abs(target-np.maximum(lower,np.minimum(upper,target)))
             support=dict(valid_actions=int(valid.sum()),outside_counts=(outside[valid]>0).sum(0).tolist(),
                 maximum_absolute_delta=error[valid].max(0).tolist(),
                 attainable_MSE_floor=float((outside[valid]**2).mean()))
@@ -147,9 +156,13 @@ def fit_reactive_head(kind,head,backend,records,output,*,guard,config,contract):
                interpretation='fixed small capacity fit; underfit/time-limited negatives cannot reject the full class')
     def persist():
         guard()
-        return atomic_save(output/'latest.pt',dict(state=cpu(state),policy=cpu(head.state_dict()),
+        digest=atomic_save(output/'latest.pt',dict(state=cpu(state),policy=cpu(head.state_dict()),
             optimizer=cpu(optimizer.state_dict()),sampler_numpy=deepcopy(rng.bit_generator.state),
             noise_torch=generator.get_state().cpu(),global_rng=rng_state()))
+        _atomic_json(output/'progress.json',dict(kind=kind,completed_optimizer_updates=state['iteration'],
+            complete=state.get('complete',False),latest_checkpoint=dict(path=str(output/'latest.pt'),sha256=digest),
+            selected=state['best'],last_metrics=state['metrics'][-1],elapsed_seconds=time.monotonic()-started),replace=True)
+        return digest
     def evaluate(indices):
         vrng=np.random.default_rng(config['seed']+3000)
         vgen=torch.Generator(device=backend.model.device).manual_seed(config['seed']+4000)

@@ -107,13 +107,14 @@ All saved outputs, caches and recoveries share the existing64GiB phase ceiling.
 
 Before GPU admission, run only the new prepared CPU test file on actual allocated
 0GPU Linux, ≤300worker-seconds within the existing1,383CPU-second remainder.
-23cases are prepared, NONE run on macOS. They exercise actual metadata bindings,
+24cases are prepared, NONE run on macOS. They exercise actual metadata bindings,
 whole-trajectory masks, transform roundtrip/retained prompt, differentiable KV
 flow, arm headroom/raw-gripper parity, finite optimizer/private-RNG recoveries,
 interrupted-update preservation, cached-byte tampering and residual admission.
 They use synthetic tensors, no VLA weights/simulator/robot/source ledger.
 
 ```bash
+export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
 python -m pytest -q tests/test_robotwin_reactive_capacity.py --junitxml=capacity.xml
 ```
 
