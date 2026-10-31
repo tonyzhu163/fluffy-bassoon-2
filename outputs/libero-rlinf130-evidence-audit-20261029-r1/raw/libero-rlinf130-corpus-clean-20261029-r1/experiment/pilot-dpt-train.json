@@ -1,0 +1,38 @@
+{
+  "format": "frozen_vla_history_dataset_v1",
+  "objective": "dpt",
+  "trials": 4,
+  "transitions": 230,
+  "observation_dim": 4104,
+  "noise_dim": 32,
+  "metadata": {
+    "feature_contract": {
+      "kind": "rlinf_pi05_libero130_final_prefix_visual_mean_language_mean_public_state_v1",
+      "model_config": "rlinf_pi05_libero130",
+      "checkpoint_receipt_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+      "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+      "rlinf_commit": "e1a82ebf0c1af69da6ab9b1519f5f3692fe33566",
+      "native_config_name": "pi05_libero",
+      "hidden_width": 2048,
+      "feature_dim": 4104,
+      "pooling": "separate masked visual/language means, materialized float32, then raw public state8"
+    },
+    "model_sha256": "4d9089c941793f170b625c2ed0ac7a3aa09b6f103e52dbbc82e67301529d6683",
+    "motor_sha256": "89b211e4e6fe0c1cfc3d2577e7accbcaac8c27c9538883d33f762119d37b3bbc",
+    "task_key": "libero_90:47",
+    "noise_contract": "32D clipped[-1,1] official DSRL coordinate repeated over native H10",
+    "frozen_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+    "global_task_split": "train",
+    "local_scene_split": "train",
+    "trial_ids": [
+      "train-state-0",
+      "train-state-1",
+      "train-state-2",
+      "train-state-3"
+    ],
+    "total_source_primitive_steps": 3371,
+    "actual_settling_steps": 250,
+    "scope": "local scenes of one original-LIBERO source training task; not semantic task OOD"
+  },
+  "sha256": "bbef6c3482219cb0fbc06b9a2b83cec431b9178232de2af279c6fb483268829a"
+}

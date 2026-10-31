@@ -1,0 +1,850 @@
+{
+  "model_revision": "6222623f635769bfc73c9472e29fab9b7fd8e027",
+  "runs": {
+    "libero-rlinf130-corpus-clean-20261029-r1": {
+      "source_commit": "d6a981037b424eb27a38c06ce5c6a240818954e5",
+      "episodes": 24,
+      "primitive_steps": 3371,
+      "settling_steps": 250,
+      "total_simulator_actions": 3621,
+      "worker_elapsed_seconds": 441.5932911699638,
+      "methods": {
+        "train": {
+          "successes": 16,
+          "episodes": 16,
+          "primitive_steps": 2243,
+          "source_optimizer_updates": 4600,
+          "success_by_attempt": {
+            "1": {
+              "successes": 4,
+              "episodes": 4
+            },
+            "2": {
+              "successes": 4,
+              "episodes": 4
+            },
+            "3": {
+              "successes": 4,
+              "episodes": 4
+            },
+            "4": {
+              "successes": 4,
+              "episodes": 4
+            }
+          }
+        },
+        "validation": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1128,
+          "source_optimizer_updates": 2320,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        }
+      },
+      "summary_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+      "episodes_sha256": "399e6d3dd07b94dccc0857ce8fa9000c34aecd267230a562e610e0c40e37e8a9",
+      "verified_expected_hashes": 46,
+      "focused_test_summary": "102 passed in 5.39s",
+      "task_key": "libero_90:47",
+      "trials": 6,
+      "paired_contexts_bitwise_equal": true,
+      "index_sha256": "1b243ad49f471da0d6c4f4a22c72239453ca5247ceb1625935b33476fcf5b474",
+      "pilot_datasets": {
+        "ad": {
+          "train": {
+            "path": "pilot-ad-train.npz",
+            "sha256": "bec6ba2a5fcbe6ae606c0e5f5ce3b7e298cf098f4568f027663466042f03137a"
+          },
+          "validation": {
+            "path": "pilot-ad-validation.npz",
+            "sha256": "f9837524e2ae3199d540b5303246932735029648567ff18ba3d084157c1a66d3"
+          }
+        },
+        "dpt": {
+          "train": {
+            "path": "pilot-dpt-train.npz",
+            "sha256": "bbef6c3482219cb0fbc06b9a2b83cec431b9178232de2af279c6fb483268829a"
+          },
+          "validation": {
+            "path": "pilot-dpt-validation.npz",
+            "sha256": "0118c6092bcc02db566d258a5fbf26db6f021d0de83a483afc2e79e6679bb4fc"
+          }
+        }
+      },
+      "source_steps_by_attempt": {
+        "1": 830,
+        "2": 865,
+        "3": 863,
+        "4": 813
+      },
+      "reset_variation": [
+        {
+          "trial_id": "train-state-0",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "train-state-1",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "train-state-2",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "train-state-3",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "validation-state-36",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "validation-state-37",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        }
+      ],
+      "final_candidate_expert_qualification": false,
+      "student_validation_scope": "local scenes of the same source training goal; not a held-out semantic-task bank"
+    },
+    "libero-rlinf130-corpus-plus-20261029-r1": {
+      "source_commit": "42fd5176f484aa6b884e52881a2a3021ff18e258",
+      "episodes": 24,
+      "primitive_steps": 3692,
+      "settling_steps": 260,
+      "total_simulator_actions": 3952,
+      "worker_elapsed_seconds": 603.5823281556368,
+      "methods": {
+        "train": {
+          "successes": 21,
+          "episodes": 24,
+          "primitive_steps": 3692,
+          "source_optimizer_updates": 7560,
+          "success_by_attempt": {
+            "1": {
+              "successes": 6,
+              "episodes": 6
+            },
+            "2": {
+              "successes": 4,
+              "episodes": 6
+            },
+            "3": {
+              "successes": 5,
+              "episodes": 6
+            },
+            "4": {
+              "successes": 6,
+              "episodes": 6
+            }
+          }
+        }
+      },
+      "summary_sha256": "850ca0cdc1d4f65c7997397f457548a68d4c66e3da2308cded372701bc0ad638",
+      "episodes_sha256": "f2a6fa30d104166006e59bd7e052df9ed3962c5e5800388cfff8e7af8778835d",
+      "verified_expected_hashes": 42,
+      "focused_test_summary": "107 passed in 4.71s",
+      "task_key": "libero_90:47",
+      "trials": 6,
+      "paired_contexts_bitwise_equal": true,
+      "index_sha256": "850ca0cdc1d4f65c7997397f457548a68d4c66e3da2308cded372701bc0ad638",
+      "pilot_datasets": null,
+      "source_steps_by_attempt": {
+        "1": 812,
+        "2": 1050,
+        "3": 963,
+        "4": 867
+      },
+      "reset_variation": [
+        {
+          "trial_id": "plus-source-2387-state-0",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "plus-source-2387-state-1",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "plus-source-2387-state-2",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "plus-source-1438-state-0",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "plus-source-1438-state-1",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        },
+        {
+          "trial_id": "plus-source-1438-state-2",
+          "nominal_state_hashes": 1,
+          "observed_initial_hashes": 1
+        }
+      ],
+      "final_candidate_expert_qualification": false,
+      "source_cases": {
+        "2387": {
+          "successes": 9,
+          "episodes": 12,
+          "trials": [
+            {
+              "trial_id": "plus-source-2387-state-0",
+              "success": [
+                true,
+                false,
+                true,
+                true
+              ],
+              "primitive_steps": [
+                148,
+                280,
+                158,
+                185
+              ]
+            },
+            {
+              "trial_id": "plus-source-2387-state-1",
+              "success": [
+                true,
+                true,
+                false,
+                true
+              ],
+              "primitive_steps": [
+                131,
+                126,
+                280,
+                128
+              ]
+            },
+            {
+              "trial_id": "plus-source-2387-state-2",
+              "success": [
+                true,
+                false,
+                true,
+                true
+              ],
+              "primitive_steps": [
+                148,
+                280,
+                123,
+                124
+              ]
+            }
+          ]
+        },
+        "1438": {
+          "successes": 12,
+          "episodes": 12,
+          "trials": [
+            {
+              "trial_id": "plus-source-1438-state-0",
+              "success": [
+                true,
+                true,
+                true,
+                true
+              ],
+              "primitive_steps": [
+                131,
+                118,
+                138,
+                130
+              ]
+            },
+            {
+              "trial_id": "plus-source-1438-state-1",
+              "success": [
+                true,
+                true,
+                true,
+                true
+              ],
+              "primitive_steps": [
+                131,
+                118,
+                137,
+                118
+              ]
+            },
+            {
+              "trial_id": "plus-source-1438-state-2",
+              "success": [
+                true,
+                true,
+                true,
+                true
+              ],
+              "primitive_steps": [
+                123,
+                128,
+                127,
+                182
+              ]
+            }
+          ]
+        }
+      },
+      "student_validation_scope": "no Plus validation exports; common clean validation shared across data arms"
+    },
+    "libero-rlinf130-plus-dev-20261029-r1": {
+      "source_commit": "b3d1df4a9b77c66650c011e1e70c17f8cdb6a8f1",
+      "episodes": 40,
+      "primitive_steps": 6373,
+      "settling_steps": 420,
+      "total_simulator_actions": 6793,
+      "worker_elapsed_seconds": 604.5083006406203,
+      "methods": {
+        "native": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1034,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "zero": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1000,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "tied_gaussian": {
+          "successes": 4,
+          "episodes": 8,
+          "primitive_steps": 1865,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 1,
+              "episodes": 2
+            }
+          }
+        },
+        "search": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1000,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "dsrl_online": {
+          "successes": 6,
+          "episodes": 8,
+          "primitive_steps": 1474,
+          "source_optimizer_updates": 2040,
+          "success_by_attempt": {
+            "1": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        }
+      },
+      "summary_sha256": "d74ab2cc7b8297a786ed37216ef7eeda77a4382dab552f3aad43e34c064e432c",
+      "episodes_sha256": "02b41aded64daa125fb380436b45077da12e5f34f80eb2cc5d53525dfd421910",
+      "verified_expected_hashes": 40,
+      "focused_test_summary": "97 passed in 15.92s",
+      "benchmark": "plus",
+      "development_cases": 2,
+      "nominal_scene_indices": [
+        0
+      ],
+      "method_count": 5,
+      "meta_controller_evaluated": false,
+      "official_final_score": false,
+      "case_metadata": [
+        {
+          "benchmark_kind": "plus",
+          "development": true,
+          "origin_base": {
+            "suite": "libero_object",
+            "task_id": 1,
+            "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+            "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+            "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94",
+            "train_task_key": "libero_90:47"
+          },
+          "suite": "libero_object",
+          "task_id": 667,
+          "instruction": "Pick the cream cheese and place it in the basket",
+          "libero_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+          "initial_states": 50,
+          "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+          "bddl_file": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_115_0_0_initstate_0.bddl",
+          "problem_folder": "libero_object",
+          "horizon": 280,
+          "settle_steps": 10,
+          "hostname": "job-yj1tlv2311s8-master-0",
+          "plus_case": {
+            "benchmark": "LIBERO-Plus",
+            "split": "development",
+            "runtime_index": 667,
+            "task_order_index": 0,
+            "classification_id": 668,
+            "category": "Camera Viewpoints",
+            "difficulty_level": 1,
+            "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_115_0_0_initstate_0",
+            "source_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+            "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+            "task_map_sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac",
+            "original_base": {
+              "suite": "libero_object",
+              "task_id": 1,
+              "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+              "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+              "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94"
+            },
+            "attachment_train_lineage": {
+              "task_key": "libero_90:47",
+              "family": "full-goal-family-b2a798f45b2c57e3",
+              "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d"
+            },
+            "scope": "Development perturbations of a training-goal family; not final external-test results"
+          },
+          "observation": "two RGB cameras and eight robot proprioception values only",
+          "protocol": "Development object horizon280/settle10 from pinned RLinf standalone OpenPI libero_eval.py; not an asserted full Plus leaderboard protocol",
+          "reset_protocol": "fresh environment per reset; seed before constructor and reset; actual initial observations hashed"
+        },
+        {
+          "benchmark_kind": "plus",
+          "development": true,
+          "origin_base": {
+            "suite": "libero_object",
+            "task_id": 1,
+            "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+            "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+            "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94",
+            "train_task_key": "libero_90:47"
+          },
+          "suite": "libero_object",
+          "task_id": 290,
+          "instruction": "Pick the cream cheese and place it in the basket",
+          "libero_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+          "initial_states": 50,
+          "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+          "bddl_file": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_2.bddl",
+          "problem_folder": "libero_object",
+          "horizon": 280,
+          "settle_steps": 10,
+          "hostname": "job-yj1tlv2311s8-master-0",
+          "plus_case": {
+            "benchmark": "LIBERO-Plus",
+            "split": "development",
+            "runtime_index": 290,
+            "task_order_index": 0,
+            "classification_id": 291,
+            "category": "Robot Initial States",
+            "difficulty_level": 2,
+            "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_2",
+            "source_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+            "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+            "task_map_sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac",
+            "original_base": {
+              "suite": "libero_object",
+              "task_id": 1,
+              "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+              "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+              "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94"
+            },
+            "attachment_train_lineage": {
+              "task_key": "libero_90:47",
+              "family": "full-goal-family-b2a798f45b2c57e3",
+              "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d"
+            },
+            "scope": "Development perturbations of a training-goal family; not final external-test results"
+          },
+          "observation": "two RGB cameras and eight robot proprioception values only",
+          "protocol": "Development object horizon280/settle10 from pinned RLinf standalone OpenPI libero_eval.py; not an asserted full Plus leaderboard protocol",
+          "reset_protocol": "fresh environment per reset; seed before constructor and reset; actual initial observations hashed"
+        }
+      ],
+      "source_config": {
+        "batch_size": 32,
+        "utd": 20,
+        "warmup_chunks": 32
+      }
+    },
+    "libero-rlinf130-pro-dev-20261029-r1": {
+      "source_commit": "b3d1df4a9b77c66650c011e1e70c17f8cdb6a8f1",
+      "episodes": 40,
+      "primitive_steps": 6940,
+      "settling_steps": 210,
+      "total_simulator_actions": 7150,
+      "worker_elapsed_seconds": 627.682720348239,
+      "methods": {
+        "native": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1159,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "zero": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1068,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "tied_gaussian": {
+          "successes": 4,
+          "episodes": 8,
+          "primitive_steps": 1817,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 0,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 1,
+              "episodes": 2
+            }
+          }
+        },
+        "search": {
+          "successes": 8,
+          "episodes": 8,
+          "primitive_steps": 1068,
+          "source_optimizer_updates": 0,
+          "success_by_attempt": {
+            "1": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 2,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        },
+        "dsrl_online": {
+          "successes": 4,
+          "episodes": 8,
+          "primitive_steps": 1828,
+          "source_optimizer_updates": 2560,
+          "success_by_attempt": {
+            "1": {
+              "successes": 0,
+              "episodes": 2
+            },
+            "2": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "3": {
+              "successes": 1,
+              "episodes": 2
+            },
+            "4": {
+              "successes": 2,
+              "episodes": 2
+            }
+          }
+        }
+      },
+      "summary_sha256": "2629a19302cc84315a05837ff03aa6138a6f40c61f953ea4aead00004fb306bf",
+      "episodes_sha256": "170f0d9bbd002024b120d95cc0d42f7e4fd6e11a697a2eb331e9eb145c67d2d6",
+      "verified_expected_hashes": 40,
+      "focused_test_summary": "97 passed in 11.78s",
+      "benchmark": "pro",
+      "development_cases": 2,
+      "nominal_scene_indices": [
+        0
+      ],
+      "method_count": 5,
+      "meta_controller_evaluated": false,
+      "official_final_score": false,
+      "case_metadata": [
+        {
+          "benchmark_kind": "pro",
+          "development": true,
+          "suite": "libero_object_swap",
+          "task_id": 1,
+          "case_id": "pro_object_swap_init0",
+          "dimension": "position",
+          "condition": "Official position swap of cream cheese and alphabet soup",
+          "pro_case": {
+            "case_id": "pro_object_swap_init0",
+            "family": "libero_object_swap",
+            "dimension": "position",
+            "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+            "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+            "condition": "Official position swap of cream cheese and alphabet soup",
+            "initial_state": 0
+          },
+          "origin_base": {
+            "suite": "libero_object",
+            "task_id": 1,
+            "train_task_key": "libero_90:47",
+            "split": "train",
+            "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+            "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+            "variant_base_family": "full-goal-family-b2a798f45b2c57e3",
+            "lineage": "Original base has identical full goal and typed bindings to TRAIN 90:47; appearance variant inherits this base lineage"
+          },
+          "instruction": "Pick the cream cheese and place it in the basket",
+          "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+          "libero_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+          "pro_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+          "dataset_repo": "zhouxueyang/LIBERO-Pro",
+          "dataset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+          "dataset_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+          "assets_receipt_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+          "bddl_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/bddl_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.bddl",
+          "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+          "init_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/init_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.pruned_init",
+          "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+          "initial_states": 50,
+          "development_initial_state_indices": [
+            0
+          ],
+          "problem_folder": "libero_object_swap",
+          "horizon": 280,
+          "settle_steps": 5,
+          "settling_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settling_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:benchmark_scripts/render_single_task.py:22,66; official rendering utility, development POC",
+          "horizon_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:README.md TASK_MAX_STEPS LIBERO_OBJECT_* = 280",
+          "reset": "Fresh environment per episode; RNG seeded before construction and reset; official state installed before settling",
+          "observation": "two RGB cameras and robot proprioception only"
+        },
+        {
+          "benchmark_kind": "pro",
+          "development": true,
+          "suite": "libero_object_object",
+          "task_id": 1,
+          "case_id": "pro_object_appearance_init0",
+          "dimension": "object",
+          "condition": "Official red cream cheese and red basket appearance variant",
+          "pro_case": {
+            "case_id": "pro_object_appearance_init0",
+            "family": "libero_object_object",
+            "dimension": "object",
+            "bddl_sha256": "2bdd42a7e444d5d02723901b7e11c2ee1a2964b5a4ba972b495d79fce7a0c4a5",
+            "init_sha256": "0c127f132eb2d4877b01daad923f00df8917c77f0a5a58cb6434cc5e62a553bd",
+            "condition": "Official red cream cheese and red basket appearance variant",
+            "initial_state": 0
+          },
+          "origin_base": {
+            "suite": "libero_object",
+            "task_id": 1,
+            "train_task_key": "libero_90:47",
+            "split": "train",
+            "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+            "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+            "variant_base_family": "full-goal-family-b2a798f45b2c57e3",
+            "lineage": "Original base has identical full goal and typed bindings to TRAIN 90:47; appearance variant inherits this base lineage"
+          },
+          "instruction": "Pick the cream cheese and place it in the basket",
+          "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+          "libero_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+          "pro_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+          "dataset_repo": "zhouxueyang/LIBERO-Pro",
+          "dataset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+          "dataset_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+          "assets_receipt_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+          "bddl_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/bddl_files/libero_object_object/pick_up_the_cream_cheese_and_place_it_in_the_basket.bddl",
+          "bddl_sha256": "2bdd42a7e444d5d02723901b7e11c2ee1a2964b5a4ba972b495d79fce7a0c4a5",
+          "init_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/init_files/libero_object_object/pick_up_the_cream_cheese_and_place_it_in_the_basket.pruned_init",
+          "init_sha256": "0c127f132eb2d4877b01daad923f00df8917c77f0a5a58cb6434cc5e62a553bd",
+          "initial_states": 50,
+          "development_initial_state_indices": [
+            0
+          ],
+          "problem_folder": "libero_object_object",
+          "horizon": 280,
+          "settle_steps": 5,
+          "settling_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "settling_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:benchmark_scripts/render_single_task.py:22,66; official rendering utility, development POC",
+          "horizon_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:README.md TASK_MAX_STEPS LIBERO_OBJECT_* = 280",
+          "reset": "Fresh environment per episode; RNG seeded before construction and reset; official state installed before settling",
+          "observation": "two RGB cameras and robot proprioception only"
+        }
+      ],
+      "source_config": {
+        "batch_size": 32,
+        "utd": 20,
+        "warmup_chunks": 32
+      }
+    }
+  },
+  "all_completed_cost": {
+    "episodes": 128,
+    "primitive_steps": 20376,
+    "settling_steps": 1140,
+    "total_simulator_actions": 21516,
+    "worker_elapsed_seconds": 2277.36664031446
+  },
+  "interpretation": "One goal-family smoke test; success ceilings give weak failure/recovery evidence. No frozen meta-controller performance or qualified final-actor expertise is established."
+}

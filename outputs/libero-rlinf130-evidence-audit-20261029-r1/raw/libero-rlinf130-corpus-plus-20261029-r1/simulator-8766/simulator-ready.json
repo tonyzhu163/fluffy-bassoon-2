@@ -1,0 +1,61 @@
+{
+  "benchmark_kind": "plus",
+  "development": false,
+  "source_training": true,
+  "role": "source_training",
+  "origin_base": {
+    "suite": "libero_object",
+    "task_id": 1,
+    "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+    "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+    "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94",
+    "train_task_key": "libero_90:47"
+  },
+  "suite": "libero_object",
+  "task_id": 1438,
+  "instruction": "Pick the cream cheese and place it in the basket",
+  "libero_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+  "initial_states": 50,
+  "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+  "bddl_file": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_0_noise_1.bddl",
+  "problem_folder": "libero_object",
+  "horizon": 280,
+  "settle_steps": 10,
+  "pid": 800,
+  "hostname": "job-yy0cur2zbojx-master-0",
+  "plus_case": {
+    "benchmark": "LIBERO-Plus",
+    "split": "source_training",
+    "role": "source_training",
+    "runtime_index": 1438,
+    "suite": "libero_object",
+    "case_id": "plus:libero_object:1438",
+    "task_order_index": 0,
+    "classification_id": 1439,
+    "category": "Sensor Noise",
+    "difficulty_level": 2,
+    "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_0_noise_1",
+    "source_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+    "resolved_bddl_name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+    "resolved_bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+    "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+    "task_map_sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac",
+    "original_base": {
+      "suite": "libero_object",
+      "task_id": 1,
+      "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2",
+      "init_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94"
+    },
+    "attachment_train_lineage": {
+      "task_key": "libero_90:47",
+      "family": "full-goal-family-b2a798f45b2c57e3",
+      "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d"
+    },
+    "scope": "Approved Plus source-training perturbations; excluded from validation/final tests"
+  },
+  "observation": "two RGB cameras and eight robot proprioception values only",
+  "protocol": "Declared object horizon280/settle10 from pinned RLinf standalone OpenPI libero_eval.py; not an asserted full Plus leaderboard protocol",
+  "fresh_environment_on_reset": true,
+  "reset_protocol": "fresh environment per reset; seed before constructor and reset; actual initial observations hashed"
+}

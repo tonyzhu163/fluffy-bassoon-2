@@ -1,0 +1,16 @@
+{
+  "format": "human_standing_gpu_authorization_v1",
+  "source_thread_id": "01a18762-9db6-74c2-940a-96524803e454",
+  "source_turn_id": "01a1900d-499d-74a3-b4d3-37cfa62a294f",
+  "human_instruction_verbatim": "stop asking for my approval for gpu hours <= 10",
+  "verification": "Root read the actual userMessage using read_thread; peer handoff alone was not used as proof",
+  "observed_at_shanghai": "2026-10-31 11:46 Shanghai",
+  "application": "Proceed without repeated GPU-hours approval for bounded work up to10GPUh within the agreed scientific task scope; retain concrete scope, resources and actual costs",
+  "limitations": [
+    "Do not split a larger phase to bypass the threshold",
+    "Do not expand scientific scope",
+    "Do not silently raise an already approved concrete phase ceiling"
+  ],
+  "libero_25_gpu_hour_source_phase": "still pending; will not be divided into sub10h launches to bypass approval",
+  "source_user_message_id": "01a1900f-9d20-7173-866f-c385b35878da"
+}

@@ -1,0 +1,391 @@
+{
+  "format": "libero_pinned_shifted_inventory_v1",
+  "prepared_at_shanghai": "2026-10-31 04:25",
+  "purpose": "Full-target inventory/cost preparation only; no semantic or outcome selection, no source pretraining, no GPU authority",
+  "source_pins": {
+    "plus": "4976dc30028e805ff8094b55501d532c48fec182",
+    "pro": "eafdb809426b13153aa1e4c42d6601844217dfec",
+    "pro_data": "c86fc3b8293185a6f373677018ff3e37f8391602"
+  },
+  "raw_file_hashes": {
+    "raw/pro/hf-info.json": {
+      "bytes": 83044,
+      "sha256": "fe631c2c6a573d06a0e52b6cd046190ea5cc32af9c90c8beb5250489053e35e0"
+    },
+    "raw/pro/evaluation_config.yaml": {
+      "bytes": 655,
+      "sha256": "b619e8c96fb7d228149e7efe65b603e0fe88cf9dbaa85219a28d3bdc101b452d"
+    },
+    "raw/pro/libero_suite_task_map.py": {
+      "bytes": 77821,
+      "sha256": "0feec8499da91e25a134273b6624ffa7adb9c6dc7da23f8cb5e3cd8998d1c80f"
+    },
+    "raw/pro/hf-tree.json": {
+      "bytes": 144295,
+      "sha256": "4a301d1d5a0d874d156c50714dd2268f742f9ceba2154cc8956154ac39717f2c"
+    },
+    "raw/pro/README.md": {
+      "bytes": 30752,
+      "sha256": "a69ba0aeb9daabf22e1f2aee17ad8c518ff247aac0ffe058fd9958ca78e7cd96"
+    },
+    "raw/pro/ood_environment.yaml": {
+      "bytes": 3294,
+      "sha256": "58b889a1bedeb8590068e16e972034e54753e3dd7ae7fc06f410a40e06a3dbb2"
+    },
+    "raw/pro/perturbation.py": {
+      "bytes": 26163,
+      "sha256": "afac2b294bf3d3db8f23abb3a0c393733958c6bab960b1b7f857c839c3bc01e7"
+    },
+    "raw/plus/task_classification.json": {
+      "bytes": 1994795,
+      "sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6"
+    },
+    "raw/plus/libero_suite_task_map.py": {
+      "bytes": 963396,
+      "sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac"
+    },
+    "raw/plus/README.md": {
+      "bytes": 8691,
+      "sha256": "9d06a91f7e7043c7b7cb633eebbe91dd793376a6662aa444033b5f7620f62ef5"
+    }
+  },
+  "plus": {
+    "suites": {
+      "libero_spatial": {
+        "variants": 2402,
+        "categories": {
+          "Background Textures": 258,
+          "Camera Viewpoints": 376,
+          "Language Instructions": 390,
+          "Light Conditions": 292,
+          "Objects Layout": 385,
+          "Robot Initial States": 350,
+          "Sensor Noise": 351
+        },
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      "libero_object": {
+        "variants": 2518,
+        "categories": {
+          "Background Textures": 248,
+          "Camera Viewpoints": 396,
+          "Language Instructions": 354,
+          "Light Conditions": 297,
+          "Objects Layout": 403,
+          "Robot Initial States": 398,
+          "Sensor Noise": 422
+        },
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      "libero_goal": {
+        "variants": 2591,
+        "categories": {
+          "Background Textures": 281,
+          "Camera Viewpoints": 408,
+          "Language Instructions": 410,
+          "Light Conditions": 279,
+          "Objects Layout": 425,
+          "Robot Initial States": 409,
+          "Sensor Noise": 379
+        },
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      "libero_10": {
+        "variants": 2519,
+        "categories": {
+          "Background Textures": 289,
+          "Camera Viewpoints": 419,
+          "Language Instructions": 383,
+          "Light Conditions": 274,
+          "Objects Layout": 312,
+          "Robot Initial States": 393,
+          "Sensor Noise": 449
+        },
+        "openpi_family_horizon": 520,
+        "settling": 10
+      }
+    },
+    "total_registered_variants": 10030,
+    "upstream_trials_per_variant": 1,
+    "our_declared_planning_profile": "OpenPI family horizons220/280/300/520 plus10settling; runtime implementation/official seed and init binding still required",
+    "single_method_k0": {
+      "episodes": 10030,
+      "maximum_actions": 3420960
+    },
+    "five_method_k0": {
+      "episodes": 50150,
+      "maximum_actions": 17104800
+    },
+    "five_k0_plus_four_paired_k1_groups": {
+      "episodes": 130390,
+      "maximum_actions": 44472480
+    },
+    "full_adapter_qualified": false
+  },
+  "pro": {
+    "core_registered_families": [
+      {
+        "suite": "libero_spatial",
+        "family": "libero_spatial_object",
+        "dimension": "object",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      {
+        "suite": "libero_spatial",
+        "family": "libero_spatial_swap",
+        "dimension": "swap",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      {
+        "suite": "libero_spatial",
+        "family": "libero_spatial_lan",
+        "dimension": "lan",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      {
+        "suite": "libero_spatial",
+        "family": "libero_spatial_task",
+        "dimension": "task",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      {
+        "suite": "libero_spatial",
+        "family": "libero_spatial_env",
+        "dimension": "env",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 0,
+        "missing_files": 20,
+        "requires_official_generation": true,
+        "openpi_family_horizon": 220,
+        "settling": 10
+      },
+      {
+        "suite": "libero_object",
+        "family": "libero_object_object",
+        "dimension": "object",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      {
+        "suite": "libero_object",
+        "family": "libero_object_swap",
+        "dimension": "swap",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      {
+        "suite": "libero_object",
+        "family": "libero_object_lan",
+        "dimension": "lan",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      {
+        "suite": "libero_object",
+        "family": "libero_object_task",
+        "dimension": "task",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      {
+        "suite": "libero_object",
+        "family": "libero_object_env",
+        "dimension": "env",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 0,
+        "missing_files": 20,
+        "requires_official_generation": true,
+        "openpi_family_horizon": 280,
+        "settling": 10
+      },
+      {
+        "suite": "libero_goal",
+        "family": "libero_goal_object",
+        "dimension": "object",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      {
+        "suite": "libero_goal",
+        "family": "libero_goal_swap",
+        "dimension": "swap",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      {
+        "suite": "libero_goal",
+        "family": "libero_goal_lan",
+        "dimension": "lan",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      {
+        "suite": "libero_goal",
+        "family": "libero_goal_task",
+        "dimension": "task",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      {
+        "suite": "libero_goal",
+        "family": "libero_goal_env",
+        "dimension": "env",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 0,
+        "missing_files": 20,
+        "requires_official_generation": true,
+        "openpi_family_horizon": 300,
+        "settling": 10
+      },
+      {
+        "suite": "libero_10",
+        "family": "libero_10_object",
+        "dimension": "object",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 520,
+        "settling": 10
+      },
+      {
+        "suite": "libero_10",
+        "family": "libero_10_swap",
+        "dimension": "swap",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 520,
+        "settling": 10
+      },
+      {
+        "suite": "libero_10",
+        "family": "libero_10_lan",
+        "dimension": "lan",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 520,
+        "settling": 10
+      },
+      {
+        "suite": "libero_10",
+        "family": "libero_10_task",
+        "dimension": "task",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 20,
+        "missing_files": 0,
+        "requires_official_generation": false,
+        "openpi_family_horizon": 520,
+        "settling": 10
+      },
+      {
+        "suite": "libero_10",
+        "family": "libero_10_env",
+        "dimension": "env",
+        "registered_tasks": 10,
+        "hf_expected_files": 20,
+        "hf_available_files": 0,
+        "missing_files": 20,
+        "requires_official_generation": true,
+        "openpi_family_horizon": 520,
+        "settling": 10
+      }
+    ],
+    "core_registered_tasks": 200,
+    "prepacked_paired_tasks": 160,
+    "environment_tasks_requiring_generation": 40,
+    "hf_complete_tree_files": 676,
+    "hf_complete_tree_bytes": 10269485,
+    "hf_tree_equals_info_siblings": true,
+    "initialization_repetition_count": "Not bound by this metadata-only inventory; actual init-bank deserialization/official evaluation setting remains required",
+    "one_repetition_single_method_action_bound": 68000,
+    "full_adapter_qualified": false
+  },
+  "execution": {
+    "gpu_seconds": 0,
+    "simulator_actions": 0,
+    "tests_run": false,
+    "model_computation": false,
+    "raw_pickle_deserialization": false,
+    "new_source_data": false,
+    "full_plus_or_pro_evaluation_completed": false,
+    "compute_authority": false
+  }
+}

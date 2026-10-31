@@ -1,0 +1,111 @@
+{
+  "source_contract": {
+    "format": "openpi_pi05_source40_ppo_stream_v1",
+    "source_commit": "0f35d17a3a604553fb56612fe4eb10ebca8313de",
+    "source_only": true,
+    "source_data_from_targets": false,
+    "suite": "libero_spatial",
+    "task_id": 0,
+    "partition": "train",
+    "motor": {
+      "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+      "checkpoint": "gs://openpi-assets/checkpoints/pi05_libero",
+      "receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+      "flow_steps": 10,
+      "predicted_horizon": 10,
+      "action_dim": 32,
+      "weights_frozen": true,
+      "jax_devices": [
+        "cuda:0"
+      ]
+    },
+    "feature_contract": {
+      "kind": "openpi_final_prefix_visual_mean_language_mean_public_state_v2",
+      "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+      "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+      "model_config": "pi05_libero",
+      "observation_dim": 4104,
+      "visual_dim": 2048,
+      "instruction_dim": 2048,
+      "public_state_dim": 8,
+      "pooling": "separate NumPy float32 mask-weighted means after native hidden materialization",
+      "normalization": "raw frozen hidden values; student fits normalization on training tasks only",
+      "trainable_feature_parameters": 0,
+      "kv_cache_retained": false,
+      "execution": "standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+      "hidden_materialization": "standalone module_jit output transferred to host before reduction",
+      "pooling_dtype": "float32"
+    },
+    "simulator": {
+      "suite": "libero_spatial",
+      "task_id": 0,
+      "instruction": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "initial_states": 50,
+      "bddl_sha256": "9b59eb1287802868ad9bc78d58e6d36d4ba31134e679cfdbdf4b0feb660c959b",
+      "bddl_file": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate.bddl",
+      "problem_folder": "libero_spatial",
+      "horizon": 400,
+      "settle_steps": 10,
+      "observation": "two RGB cameras and robot proprioception only",
+      "reset_protocol": "fresh environment per episode; seed before constructor and reset",
+      "fresh_environment_on_reset": true
+    },
+    "noise_contract": "32D squashed Gaussian coordinate repeated over native H10; executed coordinate unchanged",
+    "algorithm": "Fresh on-policy RL2/GTrXL PPO over a frozen VLA noise input",
+    "maximum_total_actions": 9500,
+    "seed": 1,
+    "prior_policy_sha256": null,
+    "memory_mode": "full",
+    "controller_scope": "one explicit task stream; not shared all40 meta-PPO orchestration",
+    "support_query_protocol": "Source collection episodes are distinct from deployment support-shot budgets"
+  },
+  "summary": {
+    "updates": 8,
+    "counters": {
+      "environment_steps": 2777,
+      "settling_steps": 320,
+      "rollout_forward_samples": 289,
+      "update_forward_samples": 1156,
+      "optimizer_steps": 32
+    },
+    "candidate_sha256": "8b7cf68cad997aaedb3751ad1717ff5531fef575b510f3ce1c1b35e51d02f20f",
+    "budget_guard": false,
+    "latest_metrics": {
+      "update": 8,
+      "seconds": 21.268830187618732,
+      "replay_error": 0.0,
+      "success_by_attempt": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "counters": {
+        "environment_steps": 2777,
+        "settling_steps": 320,
+        "rollout_forward_samples": 289,
+        "update_forward_samples": 1156,
+        "optimizer_steps": 32
+      },
+      "loss": 46.31396198272705,
+      "actor_loss": -0.015095653192007674,
+      "critic_loss": 92.70136451721191,
+      "exploration_entropy": 2.162464678287506,
+      "approximate_kl": 0.22995887883007526,
+      "clip_fraction": 0.6142857223749161,
+      "gradient_norm": 65.63922834396362,
+      "optimizer_steps": 4,
+      "forward_samples": 140,
+      "active_action_samples": 140
+    }
+  },
+  "physical_cost": {
+    "known_primitive_steps": 2777,
+    "unresolved_primitive_ceiling": 0,
+    "settling_step_charge": 330,
+    "known_settling_steps": 330,
+    "total_action_charge": 3107
+  },
+  "status": "source runtime data; no robot or meta-learning benefit established"
+}

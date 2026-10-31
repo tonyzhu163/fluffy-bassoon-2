@@ -1,0 +1,112 @@
+{
+  "format": "vlrla_native_ppo_bounded_pilot_authorization_v1",
+  "recorded_at_shanghai": "2026-10-31T13:03:26.922555+08:00",
+  "authority": {
+    "current_human_request": [
+      "can you focus on replicating vlrla's ppo result?",
+      "it should be an improvement over the original bench stats no?"
+    ],
+    "standing_human_instruction": "stop asking for my approval for gpu hours <= 10",
+    "standing_reference": "outputs/frozen-vla-standing-authorization-20261031-r1/AUTHORIZATION.json",
+    "source_thread_id": "01a18677-a163-78e3-a783-b557b3c621b2"
+  },
+  "scope": "Native action-expert PPO recipe qualification and matched before/after learning onset; full25-iteration numerical reproduction remains unproven",
+  "run_prefix": "vlrla-native-ppo-pilot-20261031-r1",
+  "task": "adjust_bottle",
+  "embodiment": "ALOHA-AgileX",
+  "initial_model": {
+    "repository": "RLinf/RLinf-Pi05-RoboTwin-SFT-adjust_bottle",
+    "revision": "fa8df6ed103db0f5549c122f3a17c00ba6426c98",
+    "path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-sft-adjust-bottle-fa8df6ed",
+    "norm_sha256": "bff5fcadaba626c28c1c2350d3baa7f1a04befc9f8b73f3e558a09c1b9c6ee52"
+  },
+  "rlinf_source": {
+    "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf",
+    "commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "entry": "examples/embodiment/train_embodied_agent.py",
+    "config": "robotwin_adjust_bottle_ppo_openpi_pi05"
+  },
+  "retained_dependency_runtime": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1",
+  "frozen_component": "vision-language backbone",
+  "trained_components": [
+    "native action expert and associated policy parameters",
+    "detached-input value head"
+  ],
+  "lora": false,
+  "recipe": {
+    "training_envs": 256,
+    "rollout_rounds": 4,
+    "horizon": 400,
+    "chunk_actions": 50,
+    "action_dimensions": 14,
+    "flow_steps": 5,
+    "sampler": "flow-SDE",
+    "noise_coefficient": 0.3,
+    "nominal_chunk_slots_per_iteration": 8192,
+    "optimization_epochs_per_iteration": 5,
+    "global_minibatch": 2048,
+    "microbatch": 32,
+    "optimizer_schedule": "constant; zero warmup",
+    "maximum_pilot_iterations": 2,
+    "evaluation_cases_before": 128,
+    "evaluation_cases_after": 128,
+    "before_after_cases": "same fixed reset IDs and recorded seed/initial-state descriptors"
+  },
+  "distributed_variants": [
+    {
+      "world_size": 8,
+      "gradient_accumulation": 8,
+      "maximum_scheduler_seconds": 2700
+    },
+    {
+      "world_size": 4,
+      "gradient_accumulation": 16,
+      "maximum_scheduler_seconds": 5400
+    }
+  ],
+  "hardware_deviation": "Four-GPU fallback is explicitly allowed after source-verified accumulation equivalence; global data/loss/optimizer schedule stays fixed. Rank grouping and floating point trajectories need not be bitwise identical.",
+  "ceilings": {
+    "aggregate_gpu_seconds": 21600,
+    "cpu_qualification_worker_seconds": 1800,
+    "cpu_qualification_cores": 8,
+    "cpu_qualification_ram_gib": 64,
+    "new_storage_gib": 64,
+    "allin_actual_simulator_actions": 1000000,
+    "gpu_pod_cpu_cores_preferred8gpu": 128,
+    "gpu_pod_ram_gib_preferred8gpu": 768,
+    "gpu_pod_cpu_cores_4gpu": 64,
+    "gpu_pod_ram_gib_4gpu": 512,
+    "gpu_pod_shm_gib": 64
+  },
+  "budget_includes": [
+    "startup",
+    "CPU/GPU qualification",
+    "before/after evaluation",
+    "training",
+    "failed attempts",
+    "cleanup"
+  ],
+  "count_allocations_once": true,
+  "nominal_two_training_iterations_plus_two_evals_actions": 921600,
+  "optional_released_reference": {
+    "repository": "RLinf/RLinf-Pi05-RoboTwin-PPO-adjust_bottle",
+    "revision": "1223d8b9c387eb22c51350900d842d0f3b86cf14",
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/pi05-robotwin-ppo-adjust-bottle-1223d8b9-20261031-r1",
+    "ready_sha256": "52ebf3a2f84cba5317fbc0bd9bed1e5c37c338309bb532acda1e2dd9c2235a39",
+    "files": 17,
+    "bytes": 8529290042,
+    "norm_matches_sft": true,
+    "maximum_cases": 128,
+    "condition": "Only within actual remaining time/action ceilings including resets/retries. It never gates primary training. Compare/report evaluation horizon explicitly; no automatic claim of published-number match."
+  },
+  "before_training_evaluation": "Explicit initial weight sync and evaluate call; installed runner.only_eval does not perform this baseline.",
+  "recovery": "Native FSDP model/Adam/LR state plus rank-local worker Python/NumPy/Torch CPU/CUDA RNG and seed cursors at whole iteration boundaries. Preserve and charge interrupted rollout prefixes; no unsupported mid-episode exact-resume claim.",
+  "data_isolation": "Pilot adjust_bottle is separate target-online/runtime qualification. Its trajectories and weights must not enter existing source6/SAC100/AD banks or rewrite prior held-out claims.",
+  "full25_run": "Requires measured extrapolation and explicit discussion if materially larger than10GPUh/current interaction ceiling; never split a larger run to bypass authorization.",
+  "execution_owner": "root/finish_assembly",
+  "implementation_owner": "root/finish_ppo",
+  "actual_jobs": [],
+  "runtime_admission": false,
+  "new_implementation_commit": null,
+  "other_budgets": "No borrowing unused closed LIBERO9074GPU-s, original32h1180GPU-s or RoboTwin AD3h. AD GPU fits/readout deferred by human priority;25h LIBERO source expansion remains pending."
+}

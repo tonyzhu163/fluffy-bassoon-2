@@ -1,0 +1,147 @@
+{
+  "format": "source40_unfunded_production_plan_terminal_metadata_receipt_v1",
+  "verified_utc": "2026-10-30T20:06:34Z",
+  "job_id": "job-pli2fx4wlppy",
+  "run_id": "libero40-source-production-plan-cpu-20261031-r1",
+  "source_commit": "e93c742eaf1782dc6a3c024e9347321442d5ff11",
+  "passed": true,
+  "checks": {
+    "terminal_exit0": true,
+    "exact_source": true,
+    "actual_zero_gpu": true,
+    "actual_cpu_memory": true,
+    "actual_python312": true,
+    "plan_file_hash": true,
+    "plan_content_hash": true,
+    "all40_admitted": true,
+    "exact38_unique_assignments": true,
+    "retained_only_bridges": true,
+    "fixed8_validation_import_only": true,
+    "source_costs": true,
+    "unfunded": true,
+    "no_source_ledger_mutation": true,
+    "no_tests_model_rollouts": true,
+    "cpu_clock_only": true
+  },
+  "production_plan_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
+  "production_plan_file_sha256": "bf868ac2b9854cf2a0a26201cddb2b4dc2c32f961b6879e18ab3254f2a5297ec",
+  "production_plan_content_sha256": "b17e3533794958430c39006810fafc4a88d8cea860c7a2bee5e384b4997c2098",
+  "artifacts": {
+    "index.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/index.json",
+      "sha256": "f2a56b5c7c32c28adb13cfb859c1e492ed98e1c1ccdd0c558591f8deee4de7e8"
+    },
+    "production.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
+      "sha256": "bf868ac2b9854cf2a0a26201cddb2b4dc2c32f961b6879e18ab3254f2a5297ec"
+    },
+    "assignments.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/assignments.json",
+      "sha256": "cfde79c048c0036011cf72e088901ee81f9c41d60a1e1d2155bf23f5ca5c597a"
+    },
+    "unfunded-macro-budget.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/unfunded-macro-budget.json",
+      "sha256": "5183e288236a510d9e0a538572fabadd86b4dba064c65a08d170f2cbbd782d7a"
+    },
+    "zero-gpu-attestation.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/zero-gpu-attestation.json",
+      "sha256": "fa43f403f20561d14b855bac6e637459cdf0038c1aac6a364d37c06209b71eaa"
+    },
+    "cpu-worker-clock.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/cpu-worker-clock.json",
+      "sha256": "3681a707be983582913b71d86ec7c111319733ec221070386953ee26645b1fa7"
+    }
+  },
+  "assignment_counts": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    4,
+    4
+  ],
+  "all_train_goals_admitted": 40,
+  "new_assignments": 38,
+  "retained_train_leaves": [
+    {
+      "slot": "libero_spatial:00/train",
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "actions": 20465,
+      "recovery_sha256": "895bf0ff083ef7839e820cd6fbf00d79b2d33d903ac8be784ec14893f487f45d"
+    },
+    {
+      "slot": "libero_object:00/train",
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train",
+      "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+      "actions": 20677,
+      "recovery_sha256": "1b5ab572cb46d1a143b6fc84ab4f6054994a256ac6a5ef82dcbf47a55d17adb8"
+    }
+  ],
+  "fixed_validation_imported": [
+    {
+      "slot": "libero_spatial:00/validation",
+      "actions": 10767
+    },
+    {
+      "slot": "libero_spatial:01/validation",
+      "actions": 10564
+    },
+    {
+      "slot": "libero_object:00/validation",
+      "actions": 10679
+    },
+    {
+      "slot": "libero_object:01/validation",
+      "actions": 10551
+    },
+    {
+      "slot": "libero_goal:00/validation",
+      "actions": 10485
+    },
+    {
+      "slot": "libero_goal:01/validation",
+      "actions": 10402
+    },
+    {
+      "slot": "libero_10:00/validation",
+      "actions": 10714
+    },
+    {
+      "slot": "libero_10:01/validation",
+      "actions": 11139
+    }
+  ],
+  "source_resource_actions": {
+    "inherited": 457851,
+    "maximum_cumulative": 998554
+  },
+  "resource_use": {
+    "charged_cpu_worker_seconds": 107,
+    "charged_gpu_seconds": 0,
+    "simulator_actions": 0,
+    "tests_run": false,
+    "models_constructed": false
+  },
+  "actual_allocation": {
+    "hostname": "job-pli2fx4wlppy-master-0",
+    "cpu_cores": 4.0,
+    "memory_bytes": 17179869184,
+    "gpu_count_before_mask": 0,
+    "cuda_initialized": false,
+    "device_nodes": [],
+    "python_abi": "cpython-312-x86_64-linux-gnu",
+    "torch_version": "2.7.1+cu128"
+  },
+  "source_ledger": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-preparation-20261031-r1/ledger.json",
+    "current_sha256": "bdb5b897a8f28e39324b5d0700f9d9fc3d1ff6f18be379f3dd40c82bde3e2a59",
+    "prior_cpu_snapshot_sha256": "bdb5b897a8f28e39324b5d0700f9d9fc3d1ff6f18be379f3dd40c82bde3e2a59",
+    "unchanged": true
+  },
+  "funding_status": "UNFUNDED_TEMPLATE",
+  "budget_authority": false,
+  "interpretation": "Metadata ready, not approval, funding or collection. Human25h/130GB decision remains pending; no sourceGPU launch authorized by this receipt."
+}

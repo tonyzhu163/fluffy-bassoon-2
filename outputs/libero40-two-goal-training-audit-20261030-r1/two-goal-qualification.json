@@ -1,0 +1,198 @@
+{
+  "format": "openpi_pi05_two_goal_subset_qualification_v1",
+  "qualification_subset": true,
+  "source_only": true,
+  "task_keys": [
+    "libero_spatial:00",
+    "libero_10:00"
+  ],
+  "evidence": {
+    "train": [
+      {
+        "task": "libero_spatial:00",
+        "history_id": "libero_spatial:00/train/seed-1",
+        "learner_seed": 3671202142,
+        "source_contract_sha256": "6ba622a91e24c4d31e5456b53f52bb4464e14e2103f2360cc61a6aa02a409e05",
+        "contract_file_sha256": "b02d9d45d414e8b0f32743449ff56810a15b87a71f03730cd649c7e5f0eb2bad",
+        "source_updates": 4920,
+        "warmup_behavior_chunks": 505,
+        "learned_behavior_chunks": 237,
+        "learned_behavior_episodes": 26,
+        "teacher_steps_first": 0,
+        "teacher_steps_last": 4760,
+        "full_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/source-recovery.pkl",
+        "full_recovery_sha256": "532b0279fe0c817a2fa246c541ef7de893cc1b202b8427f18150d02273ca118c",
+        "actor_checkpoint": "case-00019-source.pkl",
+        "actor_checkpoint_sha256": "63164bdba9e7da8cf8ede01e8ecb5888200e2d6ddba5e538cc88343cebf57f88",
+        "source_generation_cost_count_once": {
+          "actual_primitive_steps": 7082,
+          "actual_settling_steps": 810,
+          "source_updates": 4920,
+          "charged_total_actions": 7892,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "actual_initial_state_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "status": "Executed SAC source candidate; no expert, improvement or optimality claim"
+      },
+      {
+        "task": "libero_10:00",
+        "history_id": "libero_10:00/train/seed-1",
+        "learner_seed": 2017523364,
+        "source_contract_sha256": "2185b4a0290acfec5d5bfdec5ed7faa35d005d974ed2e4abcd5095a99825b88d",
+        "contract_file_sha256": "37d0170077447a01e8d38b888e3ab30020389322296e6a552777a5189a034862",
+        "source_updates": 6620,
+        "warmup_behavior_chunks": 507,
+        "learned_behavior_chunks": 302,
+        "learned_behavior_episodes": 11,
+        "teacher_steps_first": 0,
+        "teacher_steps_last": 6060,
+        "full_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-l00-train-r1/experiment/source-recovery.pkl",
+        "full_recovery_sha256": "84d04a866c8a4c6782af7b78305929588a92a0686ce8c4a5a4cf5df290066f87",
+        "actor_checkpoint": "case-00006-source.pkl",
+        "actor_checkpoint_sha256": "f66bf972af0b3f5c215b856b6e8203a20c7aa8088d3ad3f5d7434d1d1e2f5ea0",
+        "source_generation_cost_count_once": {
+          "actual_primitive_steps": 7985,
+          "actual_settling_steps": 290,
+          "source_updates": 6620,
+          "charged_total_actions": 8275,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "actual_initial_state_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "status": "Executed SAC source candidate; no expert, improvement or optimality claim"
+      }
+    ],
+    "validation": [
+      {
+        "task": "libero_spatial:00",
+        "history_id": "libero_spatial:00/validation/seed-0",
+        "learner_seed": 816983410,
+        "source_contract_sha256": "143dba23ae9a3d7336e19e5b694d0310079f0d4b4095a097d29104d5106406ab",
+        "contract_file_sha256": "60e7d30f74ba8b63aa1dde0e1b0ce37f5b843316e8cadc3e2f2189352d49fed8",
+        "source_updates": 2400,
+        "warmup_behavior_chunks": 505,
+        "learned_behavior_chunks": 112,
+        "learned_behavior_episodes": 14,
+        "teacher_steps_first": 0,
+        "teacher_steps_last": 2240,
+        "full_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/source-recovery.pkl",
+        "full_recovery_sha256": "b325dc33e73810bb628ac741df58ab78f4dd954069cfd6faf57693785bd958cd",
+        "actor_checkpoint": "case-00016-source.pkl",
+        "actor_checkpoint_sha256": "c188498866b7e2c5bee211813e5c9ae68d3cff5606f376675c1b76adeb6dee1f",
+        "source_generation_cost_count_once": {
+          "actual_primitive_steps": 5848,
+          "actual_settling_steps": 690,
+          "source_updates": 2400,
+          "charged_total_actions": 6538,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "actual_initial_state_ids": [
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        "status": "Executed SAC source candidate; no expert, improvement or optimality claim"
+      },
+      {
+        "task": "libero_10:00",
+        "history_id": "libero_10:00/validation/seed-1",
+        "learner_seed": 4128155846,
+        "source_contract_sha256": "18f33021fbde68eb9d50308e6f3b389ba71b12d3b485711ac9799924bb254640",
+        "contract_file_sha256": "27d887a636cabefbc9f720c8de4ae95f577b6e9457b32067b1ba1dd2db302737",
+        "source_updates": 11400,
+        "warmup_behavior_chunks": 507,
+        "learned_behavior_chunks": 540,
+        "learned_behavior_episodes": 20,
+        "teacher_steps_first": 0,
+        "teacher_steps_last": 10860,
+        "full_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-l00-validation-r2/experiment/source-recovery.pkl",
+        "full_recovery_sha256": "b45e129cc4926f37b7c648beab95b26001d342d7e95ee311ed9c327204c368e6",
+        "actor_checkpoint": "case-00008-source.pkl",
+        "actor_checkpoint_sha256": "df56e22506e93c97d1b57dd386df88c01684e7d9d207c04a0db2d716da6d67d2",
+        "source_generation_cost_count_once": {
+          "actual_primitive_steps": 10344,
+          "actual_settling_steps": 370,
+          "source_updates": 11400,
+          "charged_total_actions": 10714,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "actual_initial_state_ids": [
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48
+        ],
+        "status": "Executed SAC source candidate; no expert, improvement or optimality claim"
+      }
+    ]
+  },
+  "assembly_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-two-goal-scales-20261030-r1/assembly/assembly.json",
+  "assembly_file_sha256": "b28c1095790c027e6e6322334c6cb562e0fa18c7cbff2a9dcafec677b3f2b0a4",
+  "assembly_sha256": "9cd4491d26501f48c0d55b34ad4d8d984277270fc5931bf91ea335430876d5fc",
+  "collection_costs_count_once": {
+    "train": {
+      "actual_primitive_steps": 15067,
+      "actual_settling_steps": 1100,
+      "source_updates": 11540,
+      "charged_total_actions": 16167,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    },
+    "validation": {
+      "actual_primitive_steps": 16192,
+      "actual_settling_steps": 1060,
+      "source_updates": 13800,
+      "charged_total_actions": 17252,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    }
+  },
+  "additional_simulator_actions": 0,
+  "training": "Use the existing vla_source40_subset_training with all four original indices and this hash-pinned assembly",
+  "interpretation": "Two source goals, source-local disjoint validation; no full40 coverage, target data or robot-performance claim",
+  "content_sha256": "684f216384b7712ec50c9d2810b4726a5dffd2b7d159dab19bc7f87089d42261"
+}

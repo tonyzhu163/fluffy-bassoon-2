@@ -1,0 +1,61 @@
+{
+  "benchmark_kind": "pro",
+  "development": true,
+  "suite": "libero_object_swap",
+  "task_id": 1,
+  "case_id": "pro_object_swap_init0",
+  "dimension": "position",
+  "condition": "Official position swap of cream cheese and alphabet soup",
+  "pro_case": {
+    "case_id": "pro_object_swap_init0",
+    "family": "libero_object_swap",
+    "dimension": "position",
+    "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+    "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+    "condition": "Official position swap of cream cheese and alphabet soup",
+    "initial_state": 0
+  },
+  "origin_base": {
+    "suite": "libero_object",
+    "task_id": 1,
+    "train_task_key": "libero_90:47",
+    "split": "train",
+    "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+    "goal_binding_sha256": "0e9f8a4e7474f0b0de50e8ce9331758513c2bcde3d6ebabe71db6c8eb600441d",
+    "variant_base_family": "full-goal-family-b2a798f45b2c57e3",
+    "lineage": "Original base has identical full goal and typed bindings to TRAIN 90:47; appearance variant inherits this base lineage"
+  },
+  "instruction": "Pick the cream cheese and place it in the basket",
+  "semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+  "libero_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+  "pro_commit": "eafdb809426b13153aa1e4c42d6601844217dfec",
+  "dataset_repo": "zhouxueyang/LIBERO-Pro",
+  "dataset_revision": "c86fc3b8293185a6f373677018ff3e37f8391602",
+  "dataset_receipt_sha256": "98a5cae87d4939303f451c955b6dfc478f720ee0fd83fa611b5a771a1478fefe",
+  "assets_receipt_sha256": "90a08e2df84608921b0f072bce6d902e1657cafbc9b847c9947a2a841f7f3acb",
+  "bddl_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/bddl_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.bddl",
+  "bddl_sha256": "59984ec9fb4b381a614f50f271cacecca73b08d3969ddfff71202063de5aacfd",
+  "init_file": "/mowenjie/fluffy-bassoon-2/inputs/libero-pro-dev-c86fc3b8-20261029-r1/init_files/libero_object_swap/pick_up_the_cream_cheese_and_place_it_in_the_basket.pruned_init",
+  "init_sha256": "f9bb455a4fd1dac83a72d33673509a2f175f7fb63026b9fef78d66515771e022",
+  "initial_states": 50,
+  "development_initial_state_indices": [
+    0
+  ],
+  "problem_folder": "libero_object_swap",
+  "horizon": 280,
+  "settle_steps": 5,
+  "settling_action": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "settling_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:benchmark_scripts/render_single_task.py:22,66; official rendering utility, development POC",
+  "horizon_basis": "eafdb809426b13153aa1e4c42d6601844217dfec:README.md TASK_MAX_STEPS LIBERO_OBJECT_* = 280",
+  "reset": "Fresh environment per episode; RNG seeded before construction and reset; official state installed before settling",
+  "observation": "two RGB cameras and robot proprioception only",
+  "pid": 916
+}

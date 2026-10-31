@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+test "$(sha256sum /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/launch-worker.sh | cut -d' ' -f1)" = 8470baf9d76684fd3bdb0c7f70c48457f9e85ffb014c6aea0bae7b3a9199a0f8
+test "$(sha256sum /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/ledger.json | cut -d' ' -f1)" = c52b796be75fb0cf1f4c98cb452cbb352c3e1085136109067105797d2668543c
+test "$(sha256sum /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/GRANT.json | cut -d' ' -f1)" = 6c335938fcf0c7cb6e29f1b8921ce22b8f7e29df7d4b5625f290e4636a3cccdd
+test "$(sha256sum /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/AUTHORIZATION.json | cut -d' ' -f1)" = 7b3ba4b741b31da09e1c6cec3bda42398d200ec7dab0b94ddfc7e295cd6732ba
+exec bash /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/launch-worker.sh e764afdd04c9ea4dcbb7ac3e3e25d245c186dd42 libero40-fixed100-target-20261031-r1-w04 4 /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/plan.json /mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/index.json /mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/assembly.json /mowenjie/fluffy-bassoon-2/outputs/libero40-fixed100-target-plan-20261031-r1/ledger.json 2640

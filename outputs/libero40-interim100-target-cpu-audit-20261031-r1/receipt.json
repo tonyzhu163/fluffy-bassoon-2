@@ -1,0 +1,90 @@
+{
+  "format": "source40_interim100_target_CPU_qualification_receipt_v1",
+  "observed_at": "2026-10-31 Asia/Shanghai",
+  "job_id": "job-3hr7uxiid9qm",
+  "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1",
+  "source_commit": "e764afdd04c9ea4dcbb7ac3e3e25d245c186dd42",
+  "exit_code": 0,
+  "checks": {
+    "terminal_exit0": true,
+    "actual_job_identity": true,
+    "source_pin": true,
+    "zero_GPU_before_mask": true,
+    "requested_CPU_memory_actual": true,
+    "all48_tests_passed": true,
+    "actual_shared_matrix_test_not_skipped": true,
+    "JUnit_checksum": true,
+    "attestation_checksum": true,
+    "no_new_data_or_model_work": true,
+    "no_GPU_charge": true,
+    "bounded_CPU_clock": true
+  },
+  "artifacts": {
+    "index.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/index.json",
+      "sha256": "a55b7acad54058c0cd66cdbfbbaf96dd3acf37cf96dc2447f365986a0bb2730a"
+    },
+    "contract.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/contract.json",
+      "sha256": "5bf36f336e0f6663a693a8f2e23315a07c2184401b7c64fb0238ab14f79cc622"
+    },
+    "cpu-worker-clock.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/cpu-worker-clock.json",
+      "sha256": "64241e5d11fc5a0ffe8b191abb71552fa5e2e86150b543d919c9248b05fb6cfd"
+    },
+    "zero-gpu-attestation.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/zero-gpu-attestation.json",
+      "sha256": "dcde1cadd60c3d360537075cae844a11def0fc89eb5937719c2a0c67b8012202"
+    },
+    "junit.xml": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/junit.xml",
+      "sha256": "e4f1ae983b3bca5d07a17f4db035afdfc3945105d685ac876ac2ea9d76c76823"
+    },
+    "metadata-tests.log": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/metadata-tests.log",
+      "sha256": "3dee1c16f13afdbaf3c00967885fcf13c6777fee0dcbff37512fdef9d5b24d6f"
+    },
+    "metadata-tests-receipt.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-interim100-target-cpu-20261031-r1/metadata-tests-receipt.json",
+      "sha256": "52fdd55fd34a52f93d1b754e594e0707488044f951aa73410cb43b26204afe21"
+    }
+  },
+  "tests": {
+    "tests": 48,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "actual_shared100_matrix_test": {
+    "name": "test_actual_shared100_registry_metadata_when_available",
+    "passed": true,
+    "skipped": false,
+    "seconds": "0.161"
+  },
+  "runtime": {
+    "python_abi": "cpython-312-x86_64-linux-gnu",
+    "torch": "2.7.1+cu128",
+    "GPU_before_mask": 0,
+    "CPU_quota_cores": 4,
+    "memory_bytes": 17179869184,
+    "CUDA_initialized": false
+  },
+  "costs": {
+    "CPU_worker_seconds": 79,
+    "GPU_seconds": 0,
+    "simulator_actions": 0
+  },
+  "metadata_plan": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
+    "file_sha256": "bf868ac2b9854cf2a0a26201cddb2b4dc2c32f961b6879e18ab3254f2a5297ec"
+  },
+  "fixed_readout_inputs": {
+    "producer_source": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
+    "matrix_sha256": "dc9ebd1274170e021906c1f66623a98713405e227229bc022e03eb4c1c92a623",
+    "manifest_sha256": "6563d1fc76ba506cf9f44cb648c30455313a33602ab1154e30b37cc54bc54883",
+    "assembly_sha256": "89d28ad329b612ba52a4bcf108150a335de378a0e0b209e73b7bd5f47a347160",
+    "updates": 100,
+    "model_files_hash_checked": 8
+  },
+  "limits": "CPU metadata admission only; target522-episode/220k-action/4.5GPUh readout remains unfunded/unlaunched. No new model or robot-performance result."
+}

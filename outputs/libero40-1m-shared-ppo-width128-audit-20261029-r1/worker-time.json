@@ -1,0 +1,40 @@
+{
+  "format": "source40_ppo_worker_time_v1",
+  "contract": {
+    "source_commit": "3944ff79cc25b314dfffdbb7ce2fbf4d48d6fccf",
+    "run_id": "libero40-1m-shared-ppo-width128-qual-20261029-r1",
+    "maximum_total_actions": 4000,
+    "updates": 2,
+    "memory_mode": "full",
+    "slice_seconds": 2400,
+    "campaign_sha256": "640cab4248609b03e71ebbe6470f993884ab0c8ea002b8c127933892c76c2720",
+    "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+    "architecture": {
+      "width": 128,
+      "layers": 2,
+      "heads": 4,
+      "context_length": 300
+    },
+    "optimizer": {
+      "learning_rate": 0.0001,
+      "epochs": 2
+    },
+    "seed": 2,
+    "status": "Planning time ceiling only; the scheduler allocation must be separately authorized"
+  },
+  "worker_seconds": 86400,
+  "attempts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-shared-ppo-width128-qual-20261029-r1/attempts/1793288574769087-0000",
+      "started_unix": 1793288574.7690876,
+      "slice_seconds": 2400,
+      "reserved_seconds": 2460,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793288708.4144769,
+      "exit_code": 0,
+      "charged_seconds": 194,
+      "slice_overrun": false
+    }
+  ]
+}

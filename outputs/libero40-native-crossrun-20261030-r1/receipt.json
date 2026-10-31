@@ -1,0 +1,476 @@
+{
+  "format": "libero90_native_crossrun_saved_comparison_v1",
+  "firstwave_successes": 31,
+  "noise_run_successes": 29,
+  "queries_per_run": 90,
+  "all90_metadata_mismatch_ids": {
+    "case": [],
+    "episode_random_seed": [],
+    "nominal_state_sha256": [],
+    "initial_observation_sha256": [],
+    "initial_public_arrays_sha256": [],
+    "motor_parameters_sha256": []
+  },
+  "earlier_only": [
+    33,
+    44,
+    82
+  ],
+  "later_only": [
+    38
+  ],
+  "outcome_discordant_ids": [
+    33,
+    38,
+    44,
+    82
+  ],
+  "discordant_firstchunk_comparisons": [
+    {
+      "task_id": 33,
+      "firstwave": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:33/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 33,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": true,
+        "episode_random_seed": 1230703325,
+        "nominal_state_sha256": "f515a13640a4307207fc9fdcf9613a9a1e9d1b915aa4ab15c570b806d5ded711",
+        "initial_observation_sha256": "27d31a0be236f3e5fe595cd79c450b5921f9ff53b3caebc5ba0920b57948f1bd",
+        "initial_public_arrays_sha256": "ca88e35527eace4bbf8a8d75307375666aa3998324d35cdd5fbec47fba29d238",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w03-r1/experiment/group-025/index.json",
+        "result_sha256": "6d5de9b6a29aa268b306613e2aee6f5ee2cea4b3ccabb2f62ebd58f3a121aa3a",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w03-r1/experiment/group-025/traces/trial-000-native-support-0-query-000-1793351897258402858.pkl.gz",
+        "trace_sha256": "2ee46d647063336cf4bfd336b6bcabb7f44b00fc3c7f7cd52e1634969aaa538b"
+      },
+      "noise_run": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:33/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 33,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": false,
+        "episode_random_seed": 1230703325,
+        "nominal_state_sha256": "f515a13640a4307207fc9fdcf9613a9a1e9d1b915aa4ab15c570b806d5ded711",
+        "initial_observation_sha256": "27d31a0be236f3e5fe595cd79c450b5921f9ff53b3caebc5ba0920b57948f1bd",
+        "initial_public_arrays_sha256": "ca88e35527eace4bbf8a8d75307375666aa3998324d35cdd5fbec47fba29d238",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w01-r1/experiment/group-064/index.json",
+        "result_sha256": "b5a246a21cd112fbd52a6ec7e7916c39c7faa197dc1834533f0e7b7b6a5f4302",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w01-r1/experiment/group-064/traces/trial-000-native-support-0-query-000-1793370214118036507.pkl.gz",
+        "trace_sha256": "4245ac3b47115fd40d8eadc611f390dbf42fc839e285aa89de39e0e501ae4943"
+      },
+      "initial_arrays": {
+        "image": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "4a67c6dd48b3bd5a9cd05c4f1af725053aa61ea8ff969138d83ebdc77a1a8d7f",
+          "second_sha256": "4a67c6dd48b3bd5a9cd05c4f1af725053aa61ea8ff969138d83ebdc77a1a8d7f"
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "e8d9ae8ec545f5f15bfc3720920d65b422e60bd9dd56a3116abda3199892758a",
+          "second_sha256": "e8d9ae8ec545f5f15bfc3720920d65b422e60bd9dd56a3116abda3199892758a"
+        },
+        "state": {
+          "shape": [
+            8
+          ],
+          "dtype": "float32",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "e3bab42c17b190286b48d611d3e0c102f139f2187d5e0bc91c8aa9836cf8cb03",
+          "second_sha256": "e3bab42c17b190286b48d611d3e0c102f139f2187d5e0bc91c8aa9836cf8cb03"
+        }
+      },
+      "native_initial_noise": {
+        "shape": [
+          10,
+          32
+        ],
+        "dtype": "float32",
+        "bitwise_equal": true,
+        "unequal_values": 0,
+        "max_abs_delta": 0.0,
+        "mean_abs_delta": 0.0,
+        "first_sha256": "e88d03cb5cd784d5ea4075f57c64e9bac684decfc265bd72ba68b62140a77240",
+        "second_sha256": "e88d03cb5cd784d5ea4075f57c64e9bac684decfc265bd72ba68b62140a77240"
+      },
+      "first_decoded_actions": {
+        "shape": [
+          10,
+          7
+        ],
+        "dtype": "float32",
+        "bitwise_equal": false,
+        "unequal_values": 56,
+        "max_abs_delta": 0.0019527673721313477,
+        "mean_abs_delta": 0.0003365930269605347,
+        "first_sha256": "863b8c59df4abd02f4043a2e8c889a62522daae8401c982be6cd46dc1d05f81e",
+        "second_sha256": "506133d564645a429929b90a539469062fa2e2a78562b963670e38557439a7d9"
+      }
+    },
+    {
+      "task_id": 38,
+      "firstwave": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:38/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 38,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": false,
+        "episode_random_seed": 1984235423,
+        "nominal_state_sha256": "d987499246e79ec8e9a542b866411028883f1dc31a93bcda848fdced0a27b359",
+        "initial_observation_sha256": "195c3b0db59b946ec6acd27e639dbf830c07b8b625dcade802a6fb0c3bad6e02",
+        "initial_public_arrays_sha256": "f519d1dc5dc8913891c5c0484a1b602726d82561b7598d268b22766b876708f7",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w02-r1/experiment/group-034/index.json",
+        "result_sha256": "489c3505f5924ec7d3c862cb574f180495a73a9a54a4fc4ea0e4f975ddd8cbdb",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w02-r1/experiment/group-034/traces/trial-000-native-support-0-query-000-1793351952723469790.pkl.gz",
+        "trace_sha256": "c20f2f7881f51d36796587185c12a3f33f1cb807ea3de21105295e25468b4ce3"
+      },
+      "noise_run": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:38/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 38,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": true,
+        "episode_random_seed": 1984235423,
+        "nominal_state_sha256": "d987499246e79ec8e9a542b866411028883f1dc31a93bcda848fdced0a27b359",
+        "initial_observation_sha256": "195c3b0db59b946ec6acd27e639dbf830c07b8b625dcade802a6fb0c3bad6e02",
+        "initial_public_arrays_sha256": "f519d1dc5dc8913891c5c0484a1b602726d82561b7598d268b22766b876708f7",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-076/index.json",
+        "result_sha256": "decb2b7f9869629813e6bb3875dc7798d974b4f763fa75324f6134197df4e7e4",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-076/traces/trial-000-native-support-0-query-000-1793370223300087539.pkl.gz",
+        "trace_sha256": "a0530c49ea7c631ccc5a482425cb5704443baf34992c8f6eb9d93abf6fcad54e"
+      },
+      "initial_arrays": {
+        "image": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "8da9ce0b7786113f3dd2b14bafd0ea2ee2daabc7f26e7fcd88cd09ca00b977cb",
+          "second_sha256": "8da9ce0b7786113f3dd2b14bafd0ea2ee2daabc7f26e7fcd88cd09ca00b977cb"
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "6b9094fd9e372e79d4a83c1f437afeb56501c41abbd771c8d61e203d69e61ebb",
+          "second_sha256": "6b9094fd9e372e79d4a83c1f437afeb56501c41abbd771c8d61e203d69e61ebb"
+        },
+        "state": {
+          "shape": [
+            8
+          ],
+          "dtype": "float32",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "159d5e6543dd6ad5169665df1565c1915faa971fb8fa87c9fb3f5cf6e12f9297",
+          "second_sha256": "159d5e6543dd6ad5169665df1565c1915faa971fb8fa87c9fb3f5cf6e12f9297"
+        }
+      },
+      "native_initial_noise": {
+        "shape": [
+          10,
+          32
+        ],
+        "dtype": "float32",
+        "bitwise_equal": true,
+        "unequal_values": 0,
+        "max_abs_delta": 0.0,
+        "mean_abs_delta": 0.0,
+        "first_sha256": "b0653996d65e2fadfaad2b557e1595a70d21e8500d392d3382bbabd7dc3772e1",
+        "second_sha256": "b0653996d65e2fadfaad2b557e1595a70d21e8500d392d3382bbabd7dc3772e1"
+      },
+      "first_decoded_actions": {
+        "shape": [
+          10,
+          7
+        ],
+        "dtype": "float32",
+        "bitwise_equal": false,
+        "unequal_values": 49,
+        "max_abs_delta": 0.002929091453552246,
+        "mean_abs_delta": 0.0003022282238492023,
+        "first_sha256": "454e271df3c0909b6e303571acb607800b5e0bac4f9d9e0bbac4ece5437a572a",
+        "second_sha256": "9801dac8829df595ad306347609e69bd395f524a4e7e89a7228250c166081955"
+      }
+    },
+    {
+      "task_id": 44,
+      "firstwave": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:44/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 44,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": true,
+        "episode_random_seed": 1357975136,
+        "nominal_state_sha256": "ca024f4c811d16e1e2fe284b60f39b52aaa4ca057b5b68d856e2356f472d6f1d",
+        "initial_observation_sha256": "f7cb2bb47a78fd940b83f891877945777587375aa53a0901655b7206d716d15b",
+        "initial_public_arrays_sha256": "513047cd1314cdcb3b5580c49b23bdf436242e11a09e0386ed1b2be2b9a3f676",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w02-r1/experiment/group-039/index.json",
+        "result_sha256": "fcefbe4111d391362791e20962ebe033f709602f0e98d5fea50ed4fd76140f9b",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w02-r1/experiment/group-039/traces/trial-000-native-support-0-query-000-1793352014299327689.pkl.gz",
+        "trace_sha256": "6dd01176bfac9da09e5ee79af9a49cdbe66e2ce6b60e297982803c2f4f862816"
+      },
+      "noise_run": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:44/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 44,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": false,
+        "episode_random_seed": 1357975136,
+        "nominal_state_sha256": "ca024f4c811d16e1e2fe284b60f39b52aaa4ca057b5b68d856e2356f472d6f1d",
+        "initial_observation_sha256": "f7cb2bb47a78fd940b83f891877945777587375aa53a0901655b7206d716d15b",
+        "initial_public_arrays_sha256": "513047cd1314cdcb3b5580c49b23bdf436242e11a09e0386ed1b2be2b9a3f676",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-088/index.json",
+        "result_sha256": "0010d411a9d3329d2b2ab7dcf626d49c92dea7f2025034814be3a2fe1176d5bc",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-088/traces/trial-000-native-support-0-query-000-1793370366221779256.pkl.gz",
+        "trace_sha256": "fdbe307a666f8229d3e7a75213f5930129b38c5d7fd3de374971d6090e282b39"
+      },
+      "initial_arrays": {
+        "image": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "7bf888dd6c8e75d9d56214b355c696268f8fb7a22d8ae031139b233d846cf901",
+          "second_sha256": "7bf888dd6c8e75d9d56214b355c696268f8fb7a22d8ae031139b233d846cf901"
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "a8caf208b68ccfcec90d0aaf17edf2063c6f8f7b1b1d8ca1b283e006be678211",
+          "second_sha256": "a8caf208b68ccfcec90d0aaf17edf2063c6f8f7b1b1d8ca1b283e006be678211"
+        },
+        "state": {
+          "shape": [
+            8
+          ],
+          "dtype": "float32",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "d4e3e966a53368b9138899f5ecb0fbf9c8e7311acdfcdcb233c893f31abdbef4",
+          "second_sha256": "d4e3e966a53368b9138899f5ecb0fbf9c8e7311acdfcdcb233c893f31abdbef4"
+        }
+      },
+      "native_initial_noise": {
+        "shape": [
+          10,
+          32
+        ],
+        "dtype": "float32",
+        "bitwise_equal": true,
+        "unequal_values": 0,
+        "max_abs_delta": 0.0,
+        "mean_abs_delta": 0.0,
+        "first_sha256": "0c39bad8de49beae6cc77c7a81c3b2aa3169a978281458da808fda4eb81f75bf",
+        "second_sha256": "0c39bad8de49beae6cc77c7a81c3b2aa3169a978281458da808fda4eb81f75bf"
+      },
+      "first_decoded_actions": {
+        "shape": [
+          10,
+          7
+        ],
+        "dtype": "float32",
+        "bitwise_equal": false,
+        "unequal_values": 56,
+        "max_abs_delta": 0.0035393238067626953,
+        "mean_abs_delta": 0.0003691971397659342,
+        "first_sha256": "7962d4d9f78184ac61dc2bdfe812e29752f41a1a5dfb585b77be916072cf23c8",
+        "second_sha256": "f2c1ccb6e010e0beb061f2ae551f8f7b1ea3d90bbc67da127169d4ab2aa82a3d"
+      }
+    },
+    {
+      "task_id": 82,
+      "firstwave": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:82/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 82,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": true,
+        "episode_random_seed": 1697921410,
+        "nominal_state_sha256": "7f50254a696cda4a3a46a39e44565fb324526dec5deb3539557425b587d6210c",
+        "initial_observation_sha256": "b638ae0fa8a0b9067224dd1e535199775d7ce780ae2fd3868e2c5f574a6c3a35",
+        "initial_public_arrays_sha256": "6cf6d8164d0724b023e92212d74a9e2bd4359cc2b67043a2e638feeddcbb2619",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w04-r1/experiment/group-077/index.json",
+        "result_sha256": "641612877ca805cf9bb67ea271aa786216b5b51f635b7cf98093ea8eb9cd2cac",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-target-firstwave-20261030-w04-r1/experiment/group-077/traces/trial-000-native-support-0-query-000-1793352567971489118.pkl.gz",
+        "trace_sha256": "f23fb13676fea02ff519d25026ddb51aea435274d1520661c66c8d0f5704c573"
+      },
+      "noise_run": {
+        "case": {
+          "benchmark": "libero90",
+          "case_id": "libero90:82/state-0/seed-123",
+          "suite": "libero_90",
+          "task_id": 82,
+          "initial_state": 0,
+          "scene_seed": 123
+        },
+        "success": false,
+        "episode_random_seed": 1697921410,
+        "nominal_state_sha256": "7f50254a696cda4a3a46a39e44565fb324526dec5deb3539557425b587d6210c",
+        "initial_observation_sha256": "b638ae0fa8a0b9067224dd1e535199775d7ce780ae2fd3868e2c5f574a6c3a35",
+        "initial_public_arrays_sha256": "6cf6d8164d0724b023e92212d74a9e2bd4359cc2b67043a2e638feeddcbb2619",
+        "motor_parameters_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "result_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-164/index.json",
+        "result_sha256": "a513eb050d6dd998b8030e51b392764f860eb32ea952f0f137de7995b7407dac",
+        "trace": "/mowenjie/fluffy-bassoon-2/outputs/libero40-noise-controls-20261030-w00-r1/experiment/group-164/traces/trial-000-native-support-0-query-000-1793371209930207323.pkl.gz",
+        "trace_sha256": "d516f9d51a415bf9a8a222f0d346903bfaa67348e104e6260cc245efe162b17f"
+      },
+      "initial_arrays": {
+        "image": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "ed7c94878343405764d46a67364dda8152ae3876cb394a0b390a59a82bdfae02",
+          "second_sha256": "ed7c94878343405764d46a67364dda8152ae3876cb394a0b390a59a82bdfae02"
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "dtype": "uint8",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "d87aa2ff6e89f4bc45b37e33cc63f027bb89221943b2d14a913ebe4e957ee99e",
+          "second_sha256": "d87aa2ff6e89f4bc45b37e33cc63f027bb89221943b2d14a913ebe4e957ee99e"
+        },
+        "state": {
+          "shape": [
+            8
+          ],
+          "dtype": "float32",
+          "bitwise_equal": true,
+          "unequal_values": 0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "first_sha256": "1f6b0f25e71896e551b6c39e2d49c04206657ef8551d2679bf49fb48e1a32741",
+          "second_sha256": "1f6b0f25e71896e551b6c39e2d49c04206657ef8551d2679bf49fb48e1a32741"
+        }
+      },
+      "native_initial_noise": {
+        "shape": [
+          10,
+          32
+        ],
+        "dtype": "float32",
+        "bitwise_equal": true,
+        "unequal_values": 0,
+        "max_abs_delta": 0.0,
+        "mean_abs_delta": 0.0,
+        "first_sha256": "daa982caa26d0736489abd98513d93b0d7d9e5bb33f6c13f3f50e5a04c8049ef",
+        "second_sha256": "daa982caa26d0736489abd98513d93b0d7d9e5bb33f6c13f3f50e5a04c8049ef"
+      },
+      "first_decoded_actions": {
+        "shape": [
+          10,
+          7
+        ],
+        "dtype": "float32",
+        "bitwise_equal": false,
+        "unequal_values": 50,
+        "max_abs_delta": 0.002929091453552246,
+        "mean_abs_delta": 0.000348832847729292,
+        "first_sha256": "3ee797b4fec67ff8e5ea676d7b817327d8e9a4d3451473526d48a1d5713b7092",
+        "second_sha256": "f11702b6e8e030f17cacfd042e6438da19377d3b8c76d4b6259feaefd277e5a6"
+      }
+    }
+  ],
+  "method": "All90 native metadata checked; saved arrays inspected only for outcome-discordant cases; no models/rollouts/tests",
+  "pooling": "Keep runs separate; contemporary within-run native is primary"
+}

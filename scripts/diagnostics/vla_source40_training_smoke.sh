@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Technical integration only: existing source data, one allocated GPU <=30min.
+set -Eeuo pipefail
+TASK_SOURCE=${1:?exact reviewed integrated commit}
+TASK_RUN=${2:?fresh output identity}
+TASK_ROOT=/mowenjie/fluffy-bassoon-2
+TASK_OLD=/mowenjie/fluffy-bassoon
+TASK_WORKTREE=$TASK_ROOT/worktrees/$TASK_RUN
+TASK_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN
+TASK_MODEL=$TASK_OLD/envs/openpi-215abfb/bin/python
+TASK_PROBE=$TASK_OLD/envs/lerobot-v044-8fff0fde/bin/python
+TASK_DSRL=$TASK_ROOT/deps/dsrl-pi0-7f48937-20261029-r1/repo
+TASK_DSRL_OVERLAY=$TASK_ROOT/envs/dsrl-pi0-overlay-20261029-r1
+TASK_OPENPI=$TASK_OLD/third_party/openpi-215abfb
+TASK_CUDA=$TASK_ROOT/outputs/libero-pi05-student-cuda-20261029-r1/cu128-overlay
+TASK_TEST=$TASK_ROOT/envs/pytest-overlay-20261029-r1
+TASK_TRAIN=$TASK_ROOT/outputs/libero40-pi05-source-smoke-20261029-s00-train-r2/experiment
+TASK_VALIDATION=$TASK_ROOT/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment
+test ! -e "$TASK_OUTPUT"
+mkdir -p "$TASK_OUTPUT"
+cd "$TASK_WORKTREE"
+test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
+test -z "$(git status --porcelain)"
+exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
+task_cleanup() {
+  TASK_RC=$?
+  trap - EXIT
+  printf '%s\n' "$TASK_RC" > "$TASK_OUTPUT/exit-code.txt"
+  exit "$TASK_RC"
+}
+trap task_cleanup EXIT
+export FLUFFY_GPU_EXECUTION=baige CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
+export XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+export PYTHONPATH=$TASK_WORKTREE/src
+"$TASK_PROBE" 'scripts/[train]gpu_probe.py' --expected-count 1 --purpose training \
+  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
+export LYCO_BAIGE_GPU_MAP=$TASK_OUTPUT/gpu-probe.json
+CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=$TASK_TEST:$TASK_WORKTREE/src \
+  "$TASK_PROBE" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
+  > "$TASK_OUTPUT/focused-tests.log" 2>&1
+export PYTHONPATH=$TASK_DSRL_OVERLAY:$TASK_WORKTREE/src:$TASK_DSRL:$TASK_OPENPI/src:$TASK_OPENPI/packages/openpi-client/src
+"$TASK_MODEL" scripts/diagnostics/vla_source40_recovery_check.py \
+  --recovery "$TASK_TRAIN/source-recovery.pkl" --dsrl-root "$TASK_DSRL" \
+  --output "$TASK_OUTPUT/source-recovery-check.json"
+export PYTHONPATH=$TASK_CUDA:$TASK_WORKTREE/src
+"$TASK_MODEL" - <<'PY'
+import torch
+assert torch.cuda.is_available() and torch.cuda.device_count() == 1
+x = torch.ones(4, device='cuda')
+assert float((x * x).sum()) == 4
+print(dict(torch=torch.__version__, gpu=torch.cuda.get_device_name(0)), flush=True)
+PY
+"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_training assemble \
+  --train-index "$TASK_TRAIN/index.json" --validation-index "$TASK_VALIDATION/index.json" \
+  --output-dir "$TASK_OUTPUT/dataset" --allow-small-pilot
+"$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_source40_training train \
+  --assembly "$TASK_OUTPUT/dataset/assembly.json" --output-dir "$TASK_OUTPUT/students" \
+  --seeds 0 --updates 25 --source-commit "$TASK_SOURCE" --expected-hostname "$(hostname)" \
+  --max-elapsed-seconds 300 --batch-size 2 --width 32 --layers 1 --heads 4 \
+  --context-length 64 --max-window 32 --eval-every 25 --validation-batches 1 --allow-small-pilot

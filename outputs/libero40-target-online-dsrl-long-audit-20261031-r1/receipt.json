@@ -1,0 +1,338 @@
+{
+  "format": "libero40_long_dsrl_terminal_saved_audit_v1",
+  "verified_at_utc": "2026-10-30T17:31:43.549794+00:00",
+  "cases": [
+    {
+      "task": 0,
+      "run_id": "libero40-target-online-dsrl-long-20261030-r1-task00",
+      "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
+      "exit_code": 0,
+      "training_episodes": 240,
+      "training_chunks": 8154,
+      "optimizer_updates": 153480,
+      "training_successes": 72,
+      "case_total_actions": 87576,
+      "new_actions": 78546,
+      "costs": {
+        "training": {
+          "known_actions": 83607,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 81207,
+          "settling_steps": 2400,
+          "reset_attempts": 240
+        },
+        "query": {
+          "known_actions": 3949,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 3849,
+          "settling_steps": 100,
+          "reset_attempts": 10
+        },
+        "qualification": {
+          "known_actions": 20,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 0,
+          "settling_steps": 20,
+          "reset_attempts": 2
+        }
+      },
+      "charged_gpu_seconds": 5065,
+      "training_and_query_trace_hashes_verified": 250,
+      "query_results": [
+        {
+          "training_episode_budget": 0,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 0,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "2014d8e4eb2d69abbf8166016524cb516f963475be1ce1ae180fcca07a7cc7a7",
+          "full_recovery_sha256": "6f2cdabe48659d1d285f295f29bb30bb75b838a1c09f866f38060e5b033fc6e2"
+        },
+        {
+          "training_episode_budget": 1,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 410,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "26d9d9c12d3c0e427f9f6d5f4faaf6b671d12e1fae38f6a230adea5b63fcb686",
+          "full_recovery_sha256": "9e72be7160f18c36f080bf5fcb98927b0bf341badf3472a9a3b2b986237a79b7"
+        },
+        {
+          "training_episode_budget": 4,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 1640,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "2ebf5bddf4214bf959334d09a36b57364b3ba11ddbc51268c7cd05734bfc5791",
+          "full_recovery_sha256": "b4f4d36856ee0643b899161311fde1e8208cb6390f29e8d2b05b8fd2c0342f83"
+        },
+        {
+          "training_episode_budget": 8,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 3280,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "04cdbf3673aa39b20522a38127ed3f10293e6a918dd8589fe12896b0d255afdf",
+          "full_recovery_sha256": "23dfdfb6aa5b475b9d64639191adee503056b00697a131474fd99212773a4e66"
+        },
+        {
+          "training_episode_budget": 13,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 5330,
+          "target_optimizer_updates": 800,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "8560923f53931af66e257146859942122f37e50c5d1f6cba7efb1725ded51e8f",
+          "full_recovery_sha256": "394b7ef7cc139c07129e13a1fa25a77049c15a1d7c8db743a7214e5d800cb4e6"
+        },
+        {
+          "training_episode_budget": 16,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 6560,
+          "target_optimizer_updates": 3200,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "acd536c1755e3e2d2fb9f26af95a8734aa9eaaa00284b621d410cd2453adcef1",
+          "full_recovery_sha256": "95cb824bc2a526364be2e88d43a00e57afbce3619aa9ad8f9d73f2edeec49a71"
+        },
+        {
+          "training_episode_budget": 40,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 16400,
+          "target_optimizer_updates": 22400,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "c023692d702b92d89ad2547a1c44b579aceca890dca05b372b49658e90ccdb40",
+          "full_recovery_sha256": "0f9282560012bbf4bd4220b0fac791c164ba4b42c5deb177dcec9de9a714f101"
+        },
+        {
+          "training_episode_budget": 80,
+          "success": true,
+          "primitive_steps": 249,
+          "actual_training_actions": 32651,
+          "target_optimizer_updates": 54140,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "14cba02f88a7649611c9f9754bd58ccf1cb922d2345a7c85add12d7181cacf1d",
+          "full_recovery_sha256": "02e3e578eb8f6cb57e4c97e1617719dd22abf2c7029fe82f69bc5d03d4aea2bc"
+        },
+        {
+          "training_episode_budget": 160,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 58652,
+          "target_optimizer_updates": 104860,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "af7a81d5a177a7e85c96ad700ebc9d50a8e3dde4fc9cc87da14b9e9a4ce48ca1",
+          "full_recovery_sha256": "bbc0ff3d5fd8fa9aa5751cfac1cb70e6a6caadd1a465925a0efd9215d16f9ef0"
+        },
+        {
+          "training_episode_budget": 240,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 83607,
+          "target_optimizer_updates": 153480,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "a05f6e6d329afe02dc55d04df4e1853d6d6de3acf0d26c7e7c655f90a067c0cc",
+          "full_recovery_sha256": "82e8cce666d582fbc26e949c881748339bed64f3d190898f1ebe041499119e5b"
+        }
+      ],
+      "latest_recovery_sha256": "c079ec5ddcae71c106a345c170e9c42fc638d1de5bfaa41b289ac5670f2e8d8a",
+      "final_index_sha256": "9bf453ced2f5705772c11366001bca4d4937b67533b46c401b7c64fd3564d1ad",
+      "worker_time_sha256": "9ae04949ea22b50ebc8a733585ed2b3ddfea902c7e2df808825bcc7accdf0eec",
+      "final_240_query_archive_sha256": "82e8cce666d582fbc26e949c881748339bed64f3d190898f1ebe041499119e5b"
+    },
+    {
+      "task": 40,
+      "run_id": "libero40-target-online-dsrl-long-20261030-r1-task40",
+      "source_commit": "cee1ea0c138eefd0898f05292f52569cc85b4b00",
+      "exit_code": 0,
+      "training_episodes": 240,
+      "training_chunks": 9600,
+      "optimizer_updates": 182400,
+      "training_successes": 0,
+      "case_total_actions": 102520,
+      "new_actions": 93490,
+      "costs": {
+        "training": {
+          "known_actions": 98400,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 96000,
+          "settling_steps": 2400,
+          "reset_attempts": 240
+        },
+        "query": {
+          "known_actions": 4100,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 4000,
+          "settling_steps": 100,
+          "reset_attempts": 10
+        },
+        "qualification": {
+          "known_actions": 20,
+          "uncertain_actions_ceiling": 0,
+          "primitive_steps": 0,
+          "settling_steps": 20,
+          "reset_attempts": 2
+        }
+      },
+      "charged_gpu_seconds": 5406,
+      "training_and_query_trace_hashes_verified": 250,
+      "query_results": [
+        {
+          "training_episode_budget": 0,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 0,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "861581add4664bd75a86b17763a6a780948e2c8e980bb23e90d2059d8b3a66f7",
+          "full_recovery_sha256": "10be45f812235678ef20a01a0cd41a7bbbbb554f893582d98f2e02ee0117fc5c"
+        },
+        {
+          "training_episode_budget": 1,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 410,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "3aea65e2f214930215da4d46d5211a42fda64cc5cebb042482463cfc16b81848",
+          "full_recovery_sha256": "5787c45069dfb2153ebe507991f71d67c1eddfcd145c3f130768181bccb3e52d"
+        },
+        {
+          "training_episode_budget": 4,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 1640,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "7f53398759de40bdaf0d259d9cb5a317ec83c3d8d2152612197bce40550c1cb9",
+          "full_recovery_sha256": "41a48e7e738a4c9879144ed790b1430555a09787c73b72d43aad24f04cccf9de"
+        },
+        {
+          "training_episode_budget": 8,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 3280,
+          "target_optimizer_updates": 0,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "1b3db5ef364d887e470ffd5f76e4020a82e8678b18527d6b970b553c841a9e60",
+          "full_recovery_sha256": "f70dfd7f16877956d11b105240ee40658cf5751c64c853c7e585f1c8bf8b52c7"
+        },
+        {
+          "training_episode_budget": 13,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 5330,
+          "target_optimizer_updates": 800,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "c6391ff87445c0a4348a3fe15599dd2df9d92ad82cb18f3f308d205f7d93bdf6",
+          "full_recovery_sha256": "cd34800140726fe55dc8c74d5d1a29ac4e2bf095eca9b6640380ebb427a92090"
+        },
+        {
+          "training_episode_budget": 16,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 6560,
+          "target_optimizer_updates": 3200,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "9047df2d58ef6612fb2642eeeb5bbf0a97184d0fbc30caffe88a43124c519ebd",
+          "full_recovery_sha256": "971f8361333f45494abe78a653cf827b31389ee1dc62e09b3852d578d7bbdb40"
+        },
+        {
+          "training_episode_budget": 40,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 16400,
+          "target_optimizer_updates": 22400,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "62be5817788d9fdd9b3f710cf5aadc0d2196ea79dd9ae791b726762a76be5f23",
+          "full_recovery_sha256": "0efbbf91a89b92ba53849c5eebb8d3e1ca23b3179669327c20b2162f79a4c940"
+        },
+        {
+          "training_episode_budget": 80,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 32800,
+          "target_optimizer_updates": 54400,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "f869c19b5f3d18df6b95b5379f8bc41a3b62e5cbb21a48838993d006f6079da7",
+          "full_recovery_sha256": "f8ee0b3ad24d1b32b0c184bfd2f8d38af385b81a96caeb828c2d0e998718f1b6"
+        },
+        {
+          "training_episode_budget": 160,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 65600,
+          "target_optimizer_updates": 118400,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "a83279d80c7a6ee01d338be25f5ce762a095d71432d446cf8ba9bbf3bf9a7fea",
+          "full_recovery_sha256": "7cae88f5df16d00f5a97e9bdd9fdbd3e8aa7824529afa0bc744ac14fe5566ff0"
+        },
+        {
+          "training_episode_budget": 240,
+          "success": false,
+          "primitive_steps": 400,
+          "actual_training_actions": 98400,
+          "target_optimizer_updates": 182400,
+          "weights_unchanged": true,
+          "replay_rows_unchanged": true,
+          "query_data_added_to_replay": false,
+          "trace_sha256": "33c084653b69f6789acc0ac59b42de251afafdc9102383755f9f02177152833c",
+          "full_recovery_sha256": "f5c8ed77bc72d8a1f31f56141d9f9dc6f1a41a73afb5c5af3f5f9bd714ab9ca2"
+        }
+      ],
+      "latest_recovery_sha256": "dd1e2ef771b7b9f52eda5aff8eed8c26938a449ed908b89fc6cae51d38bede6f",
+      "final_index_sha256": "3ee7600d94be6fb9ce91f2b65673e3dd25d63a6e88efd02e0ec5bfaa9eed21bd",
+      "worker_time_sha256": "09d17cc26b2fd9870740bb313ee100d4f5b978a6668420e672c4bddd9fe85b8f",
+      "final_240_query_archive_sha256": "f5c8ed77bc72d8a1f31f56141d9f9dc6f1a41a73afb5c5af3f5f9bd714ab9ca2"
+    }
+  ],
+  "unique_parent_actions": 35558,
+  "new_actions": 172036,
+  "unique_onset_and_continuation_actions": 207594,
+  "parent_gpu_seconds": 1851,
+  "new_gpu_seconds": 10471,
+  "scope": "Read-only hashes/JSON; no model construction/forward/gradient/tests; two outcome-selected development cases, not full-suite or stable performance"
+}

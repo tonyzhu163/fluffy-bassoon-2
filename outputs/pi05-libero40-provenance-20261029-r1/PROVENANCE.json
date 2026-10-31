@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-10-29T19:02:08.880345",
+  "sources": {
+    "hf-model-api": {
+      "url": "https://huggingface.co/api/models/lerobot/pi05_libero_base",
+      "bytes": 1139,
+      "sha256": "e7a84f32e086e9162bab4f87349f96adeb8481bf27a6bc0715aabbddb830d139"
+    },
+    "libero-info": {
+      "url": "https://huggingface.co/datasets/physical-intelligence/libero/resolve/a4336d589d589045d1c56423ffdf3b88a0e19b1f/meta/info.json",
+      "bytes": 2131,
+      "sha256": "77c0da93c67960bac803a8ea25dabf380d752c26c1d91c54151121dd10e7d82f"
+    },
+    "libero-tasks": {
+      "url": "https://huggingface.co/datasets/physical-intelligence/libero/resolve/a4336d589d589045d1c56423ffdf3b88a0e19b1f/meta/tasks.jsonl",
+      "bytes": 3375,
+      "sha256": "e72ef3cf7ca7a3abe70b3e142a0d1acf2719d2a3f27598869092cc4f1762bb99"
+    },
+    "openpi-libero-readme": {
+      "url": "https://raw.githubusercontent.com/Physical-Intelligence/openpi/main/examples/libero/README.md",
+      "bytes": 2551,
+      "sha256": "a2caaf5459c4b01837b73aa93a6f69e8cdf10385b39c34eba36afa85f83fafe9"
+    },
+    "openpi-training-config": {
+      "url": "https://raw.githubusercontent.com/Physical-Intelligence/openpi/main/src/openpi/training/config.py",
+      "bytes": 44594,
+      "sha256": "c34231f888dba5dc981d808765b3d98775ab845b04313bf53fcecd567c520b0d"
+    }
+  },
+  "hf_model_id": "lerobot/pi05_libero_base",
+  "hf_revision": "5fcf06fc42b6717e22ab885fd381a096574b12c7",
+  "hf_gated": false,
+  "official_checkpoint": "gs://openpi-assets/checkpoints/pi05_libero",
+  "official_configuration": "pi05_libero",
+  "training_dataset": "physical-intelligence/libero",
+  "training_dataset_revision": "a4336d589d589045d1c56423ffdf3b88a0e19b1f",
+  "dataset_tasks": 40,
+  "dataset_episodes": 1693,
+  "provenance": "Official checkpoint README identifies pi05_libero config; config points to dataset whose metadata and task list contain 40 tasks. This audits release fine-tuning provenance, not every datum in foundation-model pretraining.",
+  "mirror_caveat": "LeRobot HF weights exist; no binary equivalence to OpenPI JAX weights asserted.",
+  "baige_existing_checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+  "baige_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170"
+}

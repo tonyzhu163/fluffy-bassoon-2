@@ -1,0 +1,95 @@
+{
+  "format": "libero_source25h_plus_interim_readout45h_proposal_v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "replaces_unanswered_source25h_question": true,
+  "requested_additional_gpu_hours": 29.5,
+  "requested_additional_gpu_seconds": 106200,
+  "requested_additional_pfs_bytes": 150000000000,
+  "original32h_unassigned_gpu_seconds": 1180,
+  "original_pool_unchanged": true,
+  "source": {
+    "gpu_seconds": 90000,
+    "planned_gpu_seconds": 88880,
+    "additional_pfs_bytes": 130000000000,
+    "execution_source": "e93c742eaf1782dc6a3c024e9347321442d5ff11",
+    "production_plan_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-production-plan-cpu-20261031-r1/production.json",
+    "production_plan_file_sha256": "bf868ac2b9854cf2a0a26201cddb2b4dc2c32f961b6879e18ab3254f2a5297ec",
+    "production_plan_content_sha256": "b17e3533794958430c39006810fafc4a88d8cea860c7a2bee5e384b4997c2098",
+    "admitted_goals": 40,
+    "launchable_streams": 38,
+    "retained_filled_streams": 2,
+    "fixed_validation_streams": 8,
+    "maximum_cumulative_resource_actions": 998554,
+    "offline_controllers": 4,
+    "offline_update_milestones": [
+      25,
+      100,
+      500
+    ],
+    "validation_label_preparation_reserve_gpu_seconds": 0,
+    "remaining_contingency_gpu_seconds": 1120,
+    "validation_label_rule": "Prefer same preselected TRAIN actor on heldout VAL observations in a fresh derived generation. Until verified, explicitly report legacy teacher_transfer NLL; never silently relabel existing archives. Collection is not gated.",
+    "validation_label_cpu_qualification": {
+      "status": "COMPLETED_EXIT0",
+      "job": "job-z9tjwlkovscv",
+      "source": "850dd96f6e8ff9b96076c7da4618f175dc473688",
+      "charged_cpu_worker_seconds": 348,
+      "charged_gpu_seconds": 0,
+      "focused_tests_passed": 49,
+      "derived_validation_goals": 8,
+      "derived_decisions": 8202,
+      "simulator_actions": 0,
+      "collection_gate": false
+    }
+  },
+  "readout": {
+    "gpu_seconds": 16200,
+    "additional_pfs_bytes": 20000000000,
+    "execution_source": "e764afdd04c9ea4dcbb7ac3e3e25d245c186dd42",
+    "profile": "interim100-libero90",
+    "matrix_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/index.json",
+    "matrix_sha256": "dc9ebd1274170e021906c1f66623a98713405e227229bc022e03eb4c1c92a623",
+    "qualified_cpu_tests": 48,
+    "test_skips": 0,
+    "source_optimizer_updates": 100,
+    "target_optimizer_updates": 0,
+    "libero90_cases": 90,
+    "k0_methods": [
+      "native",
+      "ad_full",
+      "ad_static",
+      "dpt_full",
+      "dpt_static"
+    ],
+    "k1_task_ids": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80
+    ],
+    "k1_methods": [
+      "ad_full",
+      "ad_episode_reset",
+      "dpt_full",
+      "dpt_episode_reset"
+    ],
+    "physical_episodes": 522,
+    "maximum_actions_including_settling_and_retries": 220000,
+    "workers": 6,
+    "worker_maximum_gpu_seconds": 2700,
+    "support_episode_costs_separate": true,
+    "source_pretraining_data": false
+  },
+  "unfunded_exclusions": [
+    "PPO/full and trained-reset scaling44h per learner",
+    "Full Plus and Pro robot evaluations",
+    "Full2/4/8-shot matrix",
+    "Additional new-method training"
+  ],
+  "interpretation": "Qualified execution phases, not positive robot/memory/sample-efficiency evidence; no authority until explicit human approval"
+}

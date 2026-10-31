@@ -1,0 +1,197 @@
+{
+  "format": "source40_sac_topup_qualification_saved_audit_v1",
+  "observed_at": "2026-10-31 Asia/Shanghai",
+  "job_id": "job-uhn04ymqc09y",
+  "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2",
+  "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+  "parent": {
+    "slot": "libero_spatial:00/train",
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1",
+    "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment",
+    "actions": 7892,
+    "source_updates": 4920,
+    "chunks": 742,
+    "next_case": 20,
+    "episodes": 80,
+    "remaining_candidate_cases": 492,
+    "contract_sha256": "b02d9d45d414e8b0f32743449ff56810a15b87a71f03730cd649c7e5f0eb2bad",
+    "index_sha256": "21836bacb78aa9c9d8b5fc7dab307c2c8e38ff7af535bc78b8d8dab767113fbd",
+    "recovery_sha256": "532b0279fe0c817a2fa246c541ef7de893cc1b202b8427f18150d02273ca118c",
+    "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+    "source_commit": "8ada0c0a59ea562716b251dc3cd7d71dc1ba3b18"
+  },
+  "exit_code": 0,
+  "qualified": true,
+  "checks": {
+    "latest_full_recovery_checksum": true,
+    "final_full_actor_checkpoint_checksum": true,
+    "candidate_latest_recovery_checksum": true,
+    "new_K4_cases_complete": true,
+    "new_raw_episode_checksums": true,
+    "new_actual_complete_episode_boundaries": true,
+    "new_actual_fixed_learned_stage": true,
+    "actual_UTD20_optimizer_advance": true,
+    "finite_new_update_metrics": true,
+    "final_update_count": true,
+    "new_action_cap": true,
+    "motor_unchanged": true,
+    "independent_post_update_full_restore": true,
+    "ad_export_checksum": true,
+    "ad_export_cumulative_cost": true,
+    "ad_export_final_actor_binding": true,
+    "ad_actual_export_row_count": true,
+    "ad_actual_finite_labels": true,
+    "ad_targets_are_executed_noise": true,
+    "dpt_export_checksum": true,
+    "dpt_export_cumulative_cost": true,
+    "dpt_export_final_actor_binding": true,
+    "dpt_actual_export_row_count": true,
+    "dpt_actual_finite_labels": true,
+    "actual_probe_passed": true,
+    "original_1000_seconds_ceiling": true
+  },
+  "index_sha256": "f0cdab587118ab967da43e358abae1da6643201813d3b3183f981301ad8b79c1",
+  "contract_sha256": "60dcec4586e3bef746d079e00f50cd392f2dbb1a3d62bfdcb6cf822d41c3a9d2",
+  "worker_time_sha256": "aeee0c610a8c5ca153ce055c0007e9316d9971315003e0af8d3d16f5e0572f54",
+  "candidate_sha256": "65f16ff70a212fd8f6c37c9a8942745bec418e46d8410c6be8ecfa67d0757fe8",
+  "full_latest_recovery_sha256": "18c6dd13f009636f487231c30022f64f6e357608cc33968be9d71b95e1ef848f",
+  "final_actor_checkpoint_sha256": "c75c10c17e616ab37d13e449612aa0d2327b9ffe7c81fc0a6cf64ed7647a048a",
+  "plan_sha256": "f9421db3f7ca5675db5eee781369de0f2bc7e37bd6a9adfa31dc957c9e2a1a0f",
+  "new": {
+    "episodes": 40,
+    "cases": 10,
+    "chunks": 323,
+    "optimizer_updates": 6460,
+    "successes": 40,
+    "actions": 3452,
+    "stages": {
+      "sac_online": 323
+    },
+    "actual_settled_state_hashes": 10
+  },
+  "cumulative": {
+    "episodes": 120,
+    "cases": 30,
+    "chunks": 1065,
+    "optimizer_updates": 11380,
+    "actions": 11344
+  },
+  "compute": {
+    "first_two_preserved_failures_seconds": 146,
+    "successful_attempt_seconds": 620,
+    "total_qualification_seconds": 766,
+    "original_qualification_ceiling_seconds": 1000,
+    "initial_failures": [
+      {
+        "job": "job-g8ghgrpu8334",
+        "cause": "Missing CUDA_VISIBLE_DEVICES before probe",
+        "seconds": 76,
+        "actions": 0
+      },
+      {
+        "job": "job-68ino91bxbua",
+        "cause": "Test fixture omitted required slot",
+        "seconds": 70,
+        "actions": 0
+      }
+    ]
+  },
+  "exports": {
+    "ad": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/experiment/prefix-through-case-00029/ad.npz",
+      "sha256": "81a3541faeb11569240002b53422ac06072f105504b23618b3a610781640b7d0",
+      "manifest_sha256": "73d9310bd7d47a6fe6b7271f9df8b9ff21816aea0313fc6af29750225855f711",
+      "transitions": 1065,
+      "cumulative_teacher_actions": 11344,
+      "teacher_updates": 11380
+    },
+    "dpt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/experiment/prefix-through-case-00029/dpt.npz",
+      "sha256": "6b9a8ec370934ff5641341caf8cd7bb381b26140ad0fdfb6e545f95f9443835a",
+      "manifest_sha256": "5c058c8502810cc0f3c9aa2284424f49477115f566022c6d1786220694e4617e",
+      "transitions": 1065,
+      "cumulative_teacher_actions": 11344,
+      "teacher_updates": 11380
+    }
+  },
+  "allocated_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/migration-fingerprint.json",
+      "sha256": "55e6d1b72d975b60be0f1b56348c9f1e2550dcfee4f6f81292e84a02eec6792f",
+      "content": {
+        "before": "43e4fef694a3a0eac32146ed7a8066bb257059b46de3fcfd57b8ee34f3d6edb6",
+        "after": "43e4fef694a3a0eac32146ed7a8066bb257059b46de3fcfd57b8ee34f3d6edb6",
+        "exact": true,
+        "numerical_state_changed": false,
+        "metadata_changes_only": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/motor-restore.json",
+      "sha256": "29930b1e69645631591bab848bbbd5011ca00360b63c3d023c3607538fabd0b7",
+      "content": {
+        "expected_sha256": "d7acfa41461546320a1a5a9c94632f423c46085171f544b7fe96003de408fcfc",
+        "actual_sha256": "d7acfa41461546320a1a5a9c94632f423c46085171f544b7fe96003de408fcfc",
+        "passed": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/parameters-after.json",
+      "sha256": "9d47b46820f7e96bfa397d35ba17a0ce14cb4a7bb294325be3ff9a2294935d6c",
+      "content": {
+        "before": {
+          "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+          "leaves": 51,
+          "elements_by_dtype": {
+            "bfloat16": 3353433872
+          }
+        },
+        "after": {
+          "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+          "leaves": 51,
+          "elements_by_dtype": {
+            "bfloat16": 3353433872
+          }
+        },
+        "unchanged": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/parameters-before.json",
+      "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+      "content": {
+        "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "leaves": 51,
+        "elements_by_dtype": {
+          "bfloat16": 3353433872
+        }
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/post-update-roundtrip/restored-learner.json",
+      "sha256": "fe8e7c4b73de8ef85a30b38b5f5a612d6e9f634528bb8c38f46952c18843ec7b",
+      "content": {
+        "expected_sha256": "ef4aa88f946809cc8926ddfb8da45bf28d75bcc82e0dfdcc04688ab8e77aa632",
+        "actual_sha256": "ef4aa88f946809cc8926ddfb8da45bf28d75bcc82e0dfdcc04688ab8e77aa632",
+        "passed": true,
+        "replay_rows": 1065,
+        "updates": 11380,
+        "optimizer_steps_during_restore": 0
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/attempts/1793384227191436746/restored-learner.json",
+      "sha256": "c813c58aa2f7a0bb54a1bb9d9565fac1e401f35c69b8696844649e2bd69590de",
+      "content": {
+        "expected_sha256": "7af56cae409ed1d958aa9e7c0ba85a1058ea9dc3ba77636609bcbb38455ac38d",
+        "actual_sha256": "7af56cae409ed1d958aa9e7c0ba85a1058ea9dc3ba77636609bcbb38455ac38d",
+        "passed": true,
+        "replay_rows": 742,
+        "updates": 4920,
+        "optimizer_steps_during_restore": 0
+      }
+    }
+  ],
+  "focused_tests": ".....................ss..................                                [100%]\n39 passed, 2 skipped in 1.22s",
+  "limitations": "Runtime/source-corpus migration qualification on one source goal. Near-ceiling40/40 new source successes do not establish improved teacher competence, adaptation, generalization or a memory benefit. No full24h top-up launched."
+}

@@ -1,0 +1,47 @@
+{
+  "format": "source40_ppo_production_cpu_fixture_failure_v1",
+  "job_id": "job-xeijw76abacg",
+  "run_id": "libero40-ppo-production-cpu-20261031-r1",
+  "source_commit": "6a24023e0f3ec6a44f952f9bffbf1df28c227c54",
+  "canonical_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-ppo-production-cpu-20261031-r1",
+  "terminal_exit_code": 1,
+  "test_summary": {"tests": 7, "passed": 6, "failures": 1, "errors": 0, "skipped": 0},
+  "actual_allocated_gpu_count": 0,
+  "actual_cpu_quota": 4,
+  "actual_memory_bytes": 17179869184,
+  "actual_worker_elapsed_seconds": 21.923978567123413,
+  "charged_cpu_worker_seconds": 82,
+  "startup_allowance_seconds": 60,
+  "charged_gpu_seconds": 0,
+  "cpu_time_overrun": false,
+  "failure": {
+    "test": "test_episode_delegates_to_qualified_generic_r3_warmstart_without_new_optimizer_logic",
+    "cause": "Fixture passed object() instead of the RL2Config dataclass required by training_contract/asdict",
+    "exception": "TypeError: asdict() should be called on dataclass instances",
+    "correction": "Supply the same tiny RL2Config shape as the other fixture; assert exact config delegation",
+    "core_logic_changed": false,
+    "allocated_rerun_required": true,
+    "mac_or_development_tests_run": false
+  },
+  "actual_shared_full_checkpoint_integration_passed": true,
+  "shared_checks": {
+    "every_non_contract_leaf": true,
+    "cursor14": true,
+    "adam478": true,
+    "pending_state": true,
+    "typed_motor_rng": true,
+    "optimizer_steps_zero": true,
+    "copied_physical_prefix": true,
+    "original_bytes_unchanged": true
+  },
+  "evidence_sha256": {
+    "cpu-worker-clock.json": "cf8e99185b0dfbd8bc2eb1b96492cb0edbeb91062ab30d7667a2ca0eec842828",
+    "failure.json": "88ced1667068b0f67815c6c5c56434503d86c2a6ab57092b77fcbd54adbb010f",
+    "junit.xml": "21dd9ed462da445dcbc26dc82126560ca316cdfd4c0edae930bb3ce8a27bfa17",
+    "tests.log": "e7683ffc8aa772f132abe1dd5f2b040d677e948cf3927448f09412eed4d8c8cd",
+    "shared-checkpoint-integration.json": "9974ce7e2246bd34aa01ccdd5a392952b113987ee45cf1c28e50dff5aa8b5f47"
+  },
+  "original_outputs_untouched": true,
+  "source_sac_collection_gate": false,
+  "production_launch_authorized": false
+}

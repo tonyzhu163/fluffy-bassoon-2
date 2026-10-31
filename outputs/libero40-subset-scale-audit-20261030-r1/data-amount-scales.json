@@ -1,0 +1,343 @@
+{
+  "format": "openpi_pi05_source40_whole_case_scales_v1",
+  "qualification_subset": true,
+  "source_only": true,
+  "source_task_keys": [
+    "libero_spatial:00"
+  ],
+  "validation_task_keys": [
+    "libero_spatial:00"
+  ],
+  "original_train_index": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment/index.json",
+    "sha256": "21836bacb78aa9c9d8b5fc7dab307c2c8e38ff7af535bc78b8d8dab767113fbd"
+  },
+  "original_validation_index": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-pi05-source-smoke-20261029-s00-validation-r1/experiment/index.json",
+    "sha256": "976f969cc724d49ecb932b77933f0b1513b8cb6500c15a9242f012e8336b5ba7"
+  },
+  "original_collection_costs_count_once": {
+    "train": {
+      "actual_primitive_steps": 7082,
+      "actual_settling_steps": 810,
+      "source_updates": 4920,
+      "charged_total_actions": 7892,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    },
+    "validation": {
+      "actual_primitive_steps": 5848,
+      "actual_settling_steps": 690,
+      "source_updates": 2400,
+      "charged_total_actions": 6538,
+      "uncertain_primitive_steps_ceiling": 0,
+      "uncertain_settling_steps_ceiling": 0
+    }
+  },
+  "additional_simulator_actions": 0,
+  "label_provenance": "DPT labels retain the final full-source actor; every scale retains its complete teacher/source cost",
+  "interpretation": "Training-array amount diagnostic, not a DPT source-interaction-efficiency curve",
+  "scales": [
+    {
+      "case_ids": [
+        "libero_spatial:00/train/case-00000",
+        "libero_spatial:00/train/case-00001",
+        "libero_spatial:00/train/case-00002",
+        "libero_spatial:00/train/case-00003",
+        "libero_spatial:00/train/case-00004",
+        "libero_spatial:00/train/case-00005",
+        "libero_spatial:00/train/case-00006",
+        "libero_spatial:00/train/case-00007"
+      ],
+      "cases": 8,
+      "episodes": 32,
+      "transitions": 318,
+      "nominal_state_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "nominal_state_hashes": [
+        "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed",
+        "63dbd6b627e35e377a62f3e791055bc9051a74cab6fef9eadce7892671160536",
+        "6c2936dc25a97728b811f9db579687d011cbd231d5472e985775a67ca9892cf8",
+        "784dba596f01025199c62c3e262748c68f1f3b6ff92df2fd36aab8b5263bc0ce",
+        "a5d4b6d871eb48c276a3fc8499e1429ec1c59df278466aa82de44a93260087a0",
+        "c12064bdc97da3ba4ca3675548ba9c76ed096ea772bbec9ca9422628c41b1588",
+        "c9c2f8022034e9a0705daab34a7f5bf9947ac939dfc5cf5a0ab493a377028a02",
+        "d297dd693cb3e13a607d16f211730e28c50b463f597f066ef2a424a8a036186c"
+      ],
+      "ad_status": "raw_only_fixed_teacher",
+      "teacher_steps_first": 0,
+      "teacher_steps_last": 0,
+      "dpt_status": "Final full-source actor labels; full source costs retained",
+      "datasets": {
+        "train_behavior_cloning": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-008/train-behavior_cloning.npz",
+          "sha256": "c308270255c99257905c9ff9f22b0a2ee0d4b609ac1d40a7554e4ec578e3a137"
+        },
+        "train_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-008/train-dpt.npz",
+          "sha256": "b0fe1ad8ccdeb475aa33fd57f6720ece8fe33115797c55ec292aa4f6b8501952"
+        },
+        "validation_ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-008/validation-ad.npz",
+          "sha256": "7b1511c5ba1e6488c9c9f829cef892ba0a85839183e36f4b5e5496b03b3a5fc3"
+        },
+        "validation_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-008/validation-dpt.npz",
+          "sha256": "efc0feac66471525a3d4551a07261e8d8164f300f2857afbf7e52c0773c7c9e0"
+        }
+      },
+      "validation_arrays_unchanged": true,
+      "original_collection_costs_count_once": {
+        "train": {
+          "actual_primitive_steps": 7082,
+          "actual_settling_steps": 810,
+          "source_updates": 4920,
+          "charged_total_actions": 7892,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "validation": {
+          "actual_primitive_steps": 5848,
+          "actual_settling_steps": 690,
+          "source_updates": 2400,
+          "charged_total_actions": 6538,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        }
+      },
+      "assembly": null,
+      "reason": "All selected teacher clocks are fixed; AD cannot be trained honestly on this prefix. BC and DPT remain available."
+    },
+    {
+      "case_ids": [
+        "libero_spatial:00/train/case-00000",
+        "libero_spatial:00/train/case-00001",
+        "libero_spatial:00/train/case-00002",
+        "libero_spatial:00/train/case-00003",
+        "libero_spatial:00/train/case-00004",
+        "libero_spatial:00/train/case-00005",
+        "libero_spatial:00/train/case-00006",
+        "libero_spatial:00/train/case-00007",
+        "libero_spatial:00/train/case-00008",
+        "libero_spatial:00/train/case-00009",
+        "libero_spatial:00/train/case-00010",
+        "libero_spatial:00/train/case-00011",
+        "libero_spatial:00/train/case-00012",
+        "libero_spatial:00/train/case-00013",
+        "libero_spatial:00/train/case-00014",
+        "libero_spatial:00/train/case-00015"
+      ],
+      "cases": 16,
+      "episodes": 64,
+      "transitions": 603,
+      "nominal_state_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "nominal_state_hashes": [
+        "2fd168faf38ffee7943a97f4f9589b8e4ed4acb89670c3004a6541dcc4925bc6",
+        "3f628d77bb395ff9ff2b248e18e5dea19d9b1103ed48b55df4eafa29188bd9f0",
+        "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed",
+        "504db0289ad1061538940e63d39bcfc82bf536dbf5f9083a1692a0e3a2852d79",
+        "51f7d2ae92042fec16a54dd5cd6823eac63f9c096a04bae00a5ec737d8db2cd8",
+        "63dbd6b627e35e377a62f3e791055bc9051a74cab6fef9eadce7892671160536",
+        "6c2936dc25a97728b811f9db579687d011cbd231d5472e985775a67ca9892cf8",
+        "6ccefe4bd69954c98ddc32f1acdcff81b5a66ed4304391089bbc027172b66d64",
+        "784dba596f01025199c62c3e262748c68f1f3b6ff92df2fd36aab8b5263bc0ce",
+        "a5d4b6d871eb48c276a3fc8499e1429ec1c59df278466aa82de44a93260087a0",
+        "a695298e9ef752b05e4d30c817ab1e2061a6136d65242dac7a2cce63f858b9fd",
+        "c12064bdc97da3ba4ca3675548ba9c76ed096ea772bbec9ca9422628c41b1588",
+        "c9c2f8022034e9a0705daab34a7f5bf9947ac939dfc5cf5a0ab493a377028a02",
+        "d297dd693cb3e13a607d16f211730e28c50b463f597f066ef2a424a8a036186c",
+        "f6ce6f7f25326bedc23933bb436b5f6eb4810cef61184635c75395e557e1808f",
+        "f9b377d4c4ca5e3bef55b3eff2599229c22f2d944cd5df22c9a8b68882d9dc11"
+      ],
+      "ad_status": "learning_history",
+      "teacher_steps_first": 0,
+      "teacher_steps_last": 2000,
+      "dpt_status": "Final full-source actor labels; full source costs retained",
+      "datasets": {
+        "train_ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-016/train-ad.npz",
+          "sha256": "35a5139120266702e1e01220b530d628b207f3c5baa0f86c1edcd9d2392d379c"
+        },
+        "train_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-016/train-dpt.npz",
+          "sha256": "cfe6fe40600cbb27b019310f44df9b1fefcfe8e4feaba44c4f2194ec0b93ae1a"
+        },
+        "validation_ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-016/validation-ad.npz",
+          "sha256": "7b1511c5ba1e6488c9c9f829cef892ba0a85839183e36f4b5e5496b03b3a5fc3"
+        },
+        "validation_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-016/validation-dpt.npz",
+          "sha256": "efc0feac66471525a3d4551a07261e8d8164f300f2857afbf7e52c0773c7c9e0"
+        }
+      },
+      "validation_arrays_unchanged": true,
+      "original_collection_costs_count_once": {
+        "train": {
+          "actual_primitive_steps": 7082,
+          "actual_settling_steps": 810,
+          "source_updates": 4920,
+          "charged_total_actions": 7892,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "validation": {
+          "actual_primitive_steps": 5848,
+          "actual_settling_steps": 690,
+          "source_updates": 2400,
+          "charged_total_actions": 6538,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        }
+      },
+      "assembly": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-016/assembly.json",
+        "sha256": "af1913b876cc1352e954d22f0d35bdbb00597c2161ee97a976c1de93ad672a2c",
+        "assembly_sha256": "e45bee048fe97410d7e9433b2c2ed1f73148ca31ba15889f6045b47d23998623"
+      }
+    },
+    {
+      "case_ids": [
+        "libero_spatial:00/train/case-00000",
+        "libero_spatial:00/train/case-00001",
+        "libero_spatial:00/train/case-00002",
+        "libero_spatial:00/train/case-00003",
+        "libero_spatial:00/train/case-00004",
+        "libero_spatial:00/train/case-00005",
+        "libero_spatial:00/train/case-00006",
+        "libero_spatial:00/train/case-00007",
+        "libero_spatial:00/train/case-00008",
+        "libero_spatial:00/train/case-00009",
+        "libero_spatial:00/train/case-00010",
+        "libero_spatial:00/train/case-00011",
+        "libero_spatial:00/train/case-00012",
+        "libero_spatial:00/train/case-00013",
+        "libero_spatial:00/train/case-00014",
+        "libero_spatial:00/train/case-00015",
+        "libero_spatial:00/train/case-00016",
+        "libero_spatial:00/train/case-00017",
+        "libero_spatial:00/train/case-00018",
+        "libero_spatial:00/train/case-00019"
+      ],
+      "cases": 20,
+      "episodes": 80,
+      "transitions": 742,
+      "nominal_state_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "nominal_state_hashes": [
+        "18f349fb4d8b52566befcd2a80723d533717d8dd5dada90ecd7721d512b65e32",
+        "1f130e9178c4924cf8d24e175c2f0573a5e089299ddf6984b71265abf65bd4e0",
+        "2fd168faf38ffee7943a97f4f9589b8e4ed4acb89670c3004a6541dcc4925bc6",
+        "3f628d77bb395ff9ff2b248e18e5dea19d9b1103ed48b55df4eafa29188bd9f0",
+        "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed",
+        "504db0289ad1061538940e63d39bcfc82bf536dbf5f9083a1692a0e3a2852d79",
+        "51f7d2ae92042fec16a54dd5cd6823eac63f9c096a04bae00a5ec737d8db2cd8",
+        "63dbd6b627e35e377a62f3e791055bc9051a74cab6fef9eadce7892671160536",
+        "6c2936dc25a97728b811f9db579687d011cbd231d5472e985775a67ca9892cf8",
+        "6ccefe4bd69954c98ddc32f1acdcff81b5a66ed4304391089bbc027172b66d64",
+        "784dba596f01025199c62c3e262748c68f1f3b6ff92df2fd36aab8b5263bc0ce",
+        "a5d4b6d871eb48c276a3fc8499e1429ec1c59df278466aa82de44a93260087a0",
+        "a695298e9ef752b05e4d30c817ab1e2061a6136d65242dac7a2cce63f858b9fd",
+        "c12064bdc97da3ba4ca3675548ba9c76ed096ea772bbec9ca9422628c41b1588",
+        "c9c2f8022034e9a0705daab34a7f5bf9947ac939dfc5cf5a0ab493a377028a02",
+        "cf9d2825f843308d0880ee0d5e3099a43ae2395e616351f6bae4c046dd50198a",
+        "d297dd693cb3e13a607d16f211730e28c50b463f597f066ef2a424a8a036186c",
+        "db2c9ab25c6b23526efa6be860e4bd8330fab9a84131628f2dea6fe4062f993d",
+        "f6ce6f7f25326bedc23933bb436b5f6eb4810cef61184635c75395e557e1808f",
+        "f9b377d4c4ca5e3bef55b3eff2599229c22f2d944cd5df22c9a8b68882d9dc11"
+      ],
+      "ad_status": "learning_history",
+      "teacher_steps_first": 0,
+      "teacher_steps_last": 4760,
+      "dpt_status": "Final full-source actor labels; full source costs retained",
+      "datasets": {
+        "train_ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-020/train-ad.npz",
+          "sha256": "945a61e68e71238edc03089b42a8ca487575bacdbf9cdab4bf7ea8dfff1cf27a"
+        },
+        "train_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-020/train-dpt.npz",
+          "sha256": "0efcca88fb51664a167b55a0837d4aeaae361723701eb97053e771320b607ce4"
+        },
+        "validation_ad": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-020/validation-ad.npz",
+          "sha256": "7b1511c5ba1e6488c9c9f829cef892ba0a85839183e36f4b5e5496b03b3a5fc3"
+        },
+        "validation_dpt": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-020/validation-dpt.npz",
+          "sha256": "efc0feac66471525a3d4551a07261e8d8164f300f2857afbf7e52c0773c7c9e0"
+        }
+      },
+      "validation_arrays_unchanged": true,
+      "original_collection_costs_count_once": {
+        "train": {
+          "actual_primitive_steps": 7082,
+          "actual_settling_steps": 810,
+          "source_updates": 4920,
+          "charged_total_actions": 7892,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        },
+        "validation": {
+          "actual_primitive_steps": 5848,
+          "actual_settling_steps": 690,
+          "source_updates": 2400,
+          "charged_total_actions": 6538,
+          "uncertain_primitive_steps_ceiling": 0,
+          "uncertain_settling_steps_ceiling": 0
+        }
+      },
+      "assembly": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-subset-scales-20261030-r2/data-amount-scales/cases-020/assembly.json",
+        "sha256": "1b56d40d2102af4dd87a33c94f20b781cb4525be3b1dfbaaf6d743b2b652bcfb",
+        "assembly_sha256": "be29cf4da3ead0d4dbc6b7fdfc88f7ca90cf31e480ae8cf15331a392434eb16f"
+      }
+    }
+  ],
+  "content_sha256": "d5b4f839f199f5a784ed2d342d49607e8a9ca2851a4b6f0f33fd4a304cdcf10b"
+}

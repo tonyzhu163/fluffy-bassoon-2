@@ -1,0 +1,12 @@
+Verified2026-10-31, Baige job `job-uhn04ymqc09y`, source `cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b`. Terminal exit0; bounded source-SAC migration qualification passed. No full24h top-up was launched.
+
+- Added40 complete source episodes /10 K4 cases /323 chunks, all `sac_online`, with6,460 actual post-warmup SAC updates. All40 succeeded. Every saved episode's update increment equals20×its actual chunk count, with finite scalar update metrics.
+- Inherited80 episodes /20 cases /742 chunks /4,920 updates became120 episodes /30 cases /1,065 chunks /11,380 updates. New actual settled-state hashes cover10 physical states. Older80 episodes retain their original absence of measured settled-state hashes.
+- New interaction cost3,452 actions, including settling; cumulative stream cost11,344. The5,000-new-action ceiling was respected and the final case is complete.
+- The successful allocation charged620 conservative GPU-seconds. Both preserved preflight failures charged76+70 seconds and executed zero simulator actions. Total qualification cost766/1,000 seconds, including setup and startup allowances.
+- Actual allocated probe passed; focused Linux tests:39 passed,2 JAX-environment skips. Migration numeric-state fingerprint, real learner/optimizer/replay/sampler/global RNG restore, motor RNG restore, unchanged frozen motor bytes and independent post-update full restore all passed.
+- Final full recovery SHA `18c6dd13f009636f487231c30022f64f6e357608cc33968be9d71b95e1ef848f`; final source actor checkpoint SHA `c75c10c17e616ab37d13e449612aa0d2327b9ffe7c81fc0a6cf64ed7647a048a`. Paired AD/DPT exports each contain1,065 actual rows, bind the final actor, and retain its11,344-action cumulative teacher cost.
+
+The saved-data audit passed26 checks, including all40 new raw episode hashes and actual learned-stage/update clocks, final recovery/checkpoint/export hashes, finite saved labels, and AD target equality with executed noise. `audit_saved.py` performs only saved-file/array inspection; it constructs no model and runs no rollout or test. Full evidence and exact artifact hashes are in `receipt.json`.
+
+This establishes that the source continuation, real learning, publication and full recovery pipeline works. Near-ceiling40/40 source successes do not establish improved teacher competence, adaptation, generalization or a memory benefit. The final actor remains an unvalidated source candidate.

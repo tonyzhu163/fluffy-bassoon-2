@@ -1,0 +1,236 @@
+{
+  "format": "libero40_source_scale_25h_proposal_v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "approval_request": "Approve ONLY25 additional GPU-hours and130GB ADDITIONAL PFS storage for source-SAC collection, fixed source-actor checks and all four AD/DPT25/100/500 fits.",
+  "prepared_from_source": "3b35ade21a847c6fb63e0865714439e0622decd0",
+  "source_only": true,
+  "source_data_from_targets": false,
+  "new_budget_authority": false,
+  "compute": {
+    "requested_additional_gpu_hours": 25,
+    "requested_additional_gpu_seconds": 90000,
+    "source_macro_workers": 8,
+    "worker_execution_seconds": 10500,
+    "worker_startup_allowance_seconds": 60,
+    "maximum_charge_per_worker": 10560,
+    "source_macro_total_seconds": 84480,
+    "fixed_source_actor_checks_seconds": 1400,
+    "all_four_offline_fits_seconds": 3000,
+    "planned_total_seconds": 88880,
+    "contingency_seconds": 1120,
+    "note": "Macro clocks include setup/idle/retries. Nested child clocks overlap and are not added. Earlier qualifications, bridges, CPU capture and interim100 fit are not recharged.",
+    "resources_per_gpu_worker": {
+      "gpus": 1,
+      "cpus": 16,
+      "ram_gib": 96,
+      "shared_memory_gib": 8
+    },
+    "availability": "Eight is a packing maximum, not a claim of eight currently available GPUs; dispatch approved workers as resources become available."
+  },
+  "storage": {
+    "additional_pfs_bytes": 130000000000,
+    "additional_pfs_gb_decimal": 130,
+    "collection_storage_ceiling_bytes": 120000000000,
+    "immutable_snapshots_fits_and_source_queries_bytes": 10000000000,
+    "observed_free_bytes": 1264536518656,
+    "observed_at": "2026-10-31 03:40 Asia/Shanghai",
+    "projected_free_after_full130GB_bytes": 1134536518656,
+    "shared_free_floor_bytes": 500000000000,
+    "note": "130GB is ADDITIONAL PFS STORAGE, not RAM or VRAM. Preserve old raw histories and full recoveries."
+  },
+  "current_source": {
+    "resource_action_charge": 457851,
+    "train": {
+      "streams": 40,
+      "decision_rows": 33729,
+      "episodes": 2332,
+      "k4_cases": 583,
+      "committed_primitives": 327547,
+      "allin_stream_actions": 351297
+    },
+    "validation": {
+      "streams": 8,
+      "decision_rows": 8202,
+      "episodes": 584,
+      "k4_cases": 146,
+      "committed_primitives": 79381,
+      "allin_stream_actions": 85301,
+      "disposition": "Fixed state-disjoint source validation, import-only; no new validation collection"
+    },
+    "historical_overhead_actions": 21253
+  },
+  "action_envelope": {
+    "existing_cap": 1000000,
+    "maximum_cumulative_source_resource_actions": 998554,
+    "cumulative_train_allin_ceiling": 872000,
+    "per_train_stream_allin_ceiling": 21800,
+    "maximum_remaining_train_allin_actions": 520703,
+    "maximum_new_source_check_actions": 20000,
+    "maximum_new_phase_resource_actions": 540703,
+    "unassigned_action_envelope": 1446,
+    "retained_unused_train_headroom": 2458,
+    "maximum_38_launchable_train_headroom": 518245,
+    "note": "These are resource actions including settling/retries/qualification; training primitive count is measured later. Complete K4 boundaries and retained leaves can leave quota unused."
+  },
+  "primitive_estimate": {
+    "observed_train_primitive_fraction": 0.9323933879310099,
+    "illustrative_new_primitives": 485500,
+    "illustrative_cumulative_train_primitives": 813047,
+    "interpretation": "About485500 new and813000 cumulative training primitives only if the current93.24% ratio persists. Estimate, not a gate or promise."
+  },
+  "admitted_source": {
+    "all_train_goals": 40,
+    "new_launchable_train_streams": 38,
+    "fixed_validation_streams": 8,
+    "retained_bridge_source": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b",
+    "retained_bridge_leaves": {
+      "libero_spatial:00/train": {
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train",
+        "allin_actions": 20465
+      },
+      "libero_object:00/train": {
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train",
+        "allin_actions": 20677
+      }
+    },
+    "preservation": "Quota-based retention, not semantic filtering. Never cold-relaunch filled parents; import their exact current canonical leaf/state/cost once."
+  },
+  "protocol": {
+    "motor": "Frozen official OpenPI215 pi05_libero40",
+    "motor_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "backbone_sft": false,
+    "source_sac": "40 independent per-task published-recipe SAC learners; persistent actor/critic/optimizer/replay/RNG per stream",
+    "warmup_query_chunks": 500,
+    "batch_size": 256,
+    "utd": 20,
+    "horizon": 400,
+    "execute_chunk": 10,
+    "case_bank": 512,
+    "case_bank_interpretation": "Candidate schedule, not requested/exhausted case count",
+    "episodes_per_case": 4,
+    "train_initial_state_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    "validation_initial_state_ids": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "physical_identity": "Record actual nominal and post-settle state hashes; a seed alone is not a new physical case",
+    "source_actor_checks": {
+      "goals": 8,
+      "initial_states": [
+        40,
+        41
+      ],
+      "methods": [
+        "native",
+        "mean",
+        "sample"
+      ],
+      "queries": 48,
+      "maximum_actions": 20000,
+      "optimizer_updates": 0,
+      "teacher_quality": "Measured candidate competence, no expert claim"
+    }
+  },
+  "training": {
+    "objectives": [
+      "ad",
+      "dpt"
+    ],
+    "modes": [
+      "full",
+      "static"
+    ],
+    "controllers": 4,
+    "scales": [
+      25,
+      100,
+      500
+    ],
+    "seed": 0,
+    "unique_optimizer_updates_per_controller": 500,
+    "not_additive_scales": 625,
+    "architecture": {
+      "width": 128,
+      "layers": 2,
+      "heads": 4,
+      "context_length": 300,
+      "max_window": 128
+    },
+    "batch_size": 8,
+    "learning_rate": 0.0003,
+    "cadence": "Current immutable all40 interim25/100 fit starts from original budget now; collection continues after approval; freeze fresh complete prefixes and fit25/100/500 on the final immutable source generation.",
+    "dataset_scope": "Same source40 chronology/frames/actions/noises/rewards/boundaries; AD actual noise and DPT current source-only actor labels; no target data.",
+    "interim100_original_pool": {
+      "maximum_gpu_seconds": 1800,
+      "run_id": "libero40-source-topup-interim100-20261031-r1",
+      "manifest": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/topup-inputs.json",
+      "manifest_sha256": "6563d1fc76ba506cf9f44cb648c30455313a33602ab1154e30b37cc54bc54883",
+      "disposition": "Original32h funding, excluded from new25h; launching, not claimed complete"
+    }
+  },
+  "runtime": {
+    "metadata_cpu": "Qualified allocated Python3.12/cpython312, Torch2.7.1+cu128; actual34 metadata tests passed, no GPU",
+    "motor": "Existing OpenPI215 Python3.11 runtime and DSRL overlay",
+    "student": "Qualified Python3.11 cu128 Torch overlay; never inject it into CPU3.12 runtime",
+    "admission": "Exact reviewed clean execution pins, actual allocated GPU probe, immutable manifests and complete checkpoints; existing qualified pipeline, no optional diagnostic prerequisites"
+  },
+  "canonical_ledger": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-preparation-20261031-r1/ledger.json",
+  "exclusions": [
+    "All LIBERO90/Plus/Pro target evaluations and reevaluations",
+    "PPO/full and trained-reset scaling to1M",
+    "RoboTwin compute or storage",
+    "New backbone SFT",
+    "Repeated optional diagnostics"
+  ],
+  "completion": "Report actual38 source quotas/retained2 leaves, source-actor query outcomes, four exact-update25/100/500 exports and full recoveries, costs and unused quotas. Time/action limits take precedence; partial work remains recoverable. No topline, adaptation or sample-efficiency claim without separate robot evaluation.",
+  "commands": "Exact prepare/worker/capture/fit/final-source-check commands are in PROPOSAL.md. They become executable only after human approval and root funding; no budget file is modified by this proposal."
+}

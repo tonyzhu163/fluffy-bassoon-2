@@ -1,0 +1,75 @@
+{
+  "format": "rlinf130_plus_source_cases_v3",
+  "role": "source_training",
+  "benchmark_kind": "plus",
+  "case_indices": [
+    2387,
+    1438
+  ],
+  "excluded_development_indices": [
+    290,
+    667
+  ],
+  "source_states": [
+    0,
+    1,
+    2
+  ],
+  "attempts": 4,
+  "maximum_primitive_steps": 6720,
+  "maximum_episodes": 24,
+  "maximum_gpu_minutes": 45,
+  "horizon": 280,
+  "settle_steps": 10,
+  "frozen_original_split_sha256": "4599ca659a48e94e35a22641f0bb90477d958aed0570d0df46a021ef4492fe08",
+  "canonical_train_task": "libero_90:47",
+  "base_suite": "libero_object",
+  "base_task_id": 1,
+  "base_semantic_task": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+  "base_goal_family": "full-goal-family-b2a798f45b2c57e3",
+  "plus_commit": "4976dc30028e805ff8094b55501d532c48fec182",
+  "classification_sha256": "faa87cce3e3ba434da01df7c77523a391b5f2912e4774330b0aa1be5f6a999e6",
+  "task_map_sha256": "41640d2f542169b400be7e94249e3b1f862e7500745dc318bab49b19576b31ac",
+  "cases": [
+    {
+      "runtime_index": 2387,
+      "classification_id": 2388,
+      "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_light_11",
+      "category": "Light Conditions",
+      "difficulty_level": 5,
+      "bddl_sha256": "59caa81c79b99659143b2880107ae8ed315d836ecf4efe3fb49602c8e9ad06b2"
+    },
+    {
+      "runtime_index": 1438,
+      "classification_id": 1439,
+      "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_view_0_0_100_0_0_initstate_0_noise_1",
+      "category": "Sensor Noise",
+      "difficulty_level": 2,
+      "resolved_bddl_sha256": "7019f37ee158d67a21338a6df0c441dd8f84979b946b5e20bb49463ef0508ea2"
+    }
+  ],
+  "base_initial_states_sha256": "5ea5483bca8abd80a8f1935e2c60570d60eaaf6a985c283d62805b46fb76aa94",
+  "selection": "Lowest classification ID for the base in each chosen category; no outcome-based selection.",
+  "static_feasibility_exclusion": {
+    "runtime_index": 1985,
+    "classification_id": 1986,
+    "name": "pick_up_the_cream_cheese_and_place_it_in_the_basket_add_14",
+    "reason": "Official init ndarray has one state vector (shape149), so source scenes0/1/2 are unavailable.",
+    "init_sha256": "8155430722ae0ab4bb812b39045d81576bb64d5144a4aca05fbbbf17f90c25c7"
+  },
+  "technical_source_schedule": {
+    "batch_size": 32,
+    "utd": 20,
+    "warmup_chunks": 0,
+    "fresh_common_sac_initialization_per_trial": true
+  },
+  "validation": "none from Plus; same clean validation in both clean-only and clean+Plus arms",
+  "pro_source_data": false,
+  "final_test_case_list_identical_across_arms": true,
+  "paired_targets": {
+    "ad": "actual executed noise",
+    "dpt": "final candidate actor query action; not an assumed expert"
+  },
+  "final_test_exclusion": "These source cases plus existing development cases/family excluded for BOTH arms; v1/v2 remain immutable.",
+  "metadata_sha256": "3a7fdb9b8182100fca3a328b0518f6403999056e31c27f275735b0f6bfb3f5be"
+}
