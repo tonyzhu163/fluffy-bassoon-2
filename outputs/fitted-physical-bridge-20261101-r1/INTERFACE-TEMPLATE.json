@@ -1,0 +1,45 @@
+{
+  "format": "fitted_physical_interface_template_v1",
+  "status": "not_launchable_reference_template",
+  "instructions": "Copy the reviewed physical interface to a NEW file, add this fitted_frontend descriptor, replace every placeholder from immutable actual artifacts, and hash that new interface. This template admits no endpoint or source data.",
+  "fitted_frontend": {
+    "format": "frozen_fitted_frontend_physical4d_v1",
+    "kind": "<action OR kv>",
+    "iteration": 5000,
+    "checkpoint": {"path": "<actual endpoint-005000.pt>", "sha256": "<actual FILE SHA256>"},
+    "fit_source_commit": "<actual producer commit40>",
+    "fit_contract_sha256": "<content_sha(endpoint.contract)>",
+    "fit_profile_format": "<endpoint.contract.profile.format>",
+    "fit_profile_sha256": "<content_sha(endpoint.contract.profile)>",
+    "fit_complete_cache_sha256": "<endpoint.contract.complete_cache_sha256>",
+    "fit_provenance": "<COMPLETE endpoint.contract object VERBATIM, including diagnostic purpose, source_eligible:false, all12 outcome evidence and command_geometry when present>",
+    "head_config_sha256": "<content_sha(endpoint.config)>",
+    "head_state_sha256": "<existing parameter_digest(endpoint.policy)>",
+    "motor_sha256": "<actual motor FILE SHA256>",
+    "normalization_sha256": "<actual normalization FILE SHA256>",
+    "joint_convention_sha256": "<reviewed source convention receipt SHA256>",
+    "base_interface_sha256": "<original source-bound base interface SHA256>",
+    "physical_basis_sha256": "<existing fixed4x14 physical basis digest>",
+    "wrapper_sha256": "<robotwin_fitted_physical.py FILE SHA256>",
+    "backend_sha256": "<robotwin_noise.py FILE SHA256>",
+    "fixed_control_sha256": "<robotwin_steering.py FILE SHA256>",
+    "frontend_implementation_sha256": "<robotwin_wide_action.py for action OR pi05_residual.py for kv>",
+    "residual_primitives_sha256": "<pi05_residual.py FILE SHA256>"
+  },
+  "control_qualification_binding": {
+    "format": "fitted_physical_control_qualification_binding_v1",
+    "control_interface": "<immutable reference to the NEW physical interface>",
+    "source_profile": "<immutable reference to raw SourceProfile JSON>",
+    "selection": "<immutable reference to actual new composed A1 selection>",
+    "driver_plan": "<immutable reference to actual predeclared new A1 plan>",
+    "driver_qualification": "<immutable reference to actual composed motor qualification>",
+    "a1_result": "<immutable reference to actual new A1 result>",
+    "completed_episode": "<immutable reference to its actual complete physical qualification episode>"
+  },
+  "scientific_sequence": [
+    "Actual fitted-baseline zero/raw-native/frozen/physical/order qualification and new composed A1",
+    "Fresh six-lineage source RL histories under the caller's linked canonical resource admission",
+    "Actual resulting-teacher A2, improvement and same-mapping TRAIN1 teacher qualification",
+    "Separate AD/DPT data admission and qualified student readout"
+  ]
+}

@@ -500,6 +500,7 @@ class _RoboTwinBackend:
         self.cfg = model_config(rlinf_root, model_path, norm_stats, action_horizon, num_steps)
         self.model = get_model(self.cfg).to(device).eval().requires_grad_(False)
         self.kv_adapter, self.action_residual = kv_adapter, action_residual
+        self.post_decode_residual = None
         self._public_features = self._last_residual_metadata = None
         if kv_adapter is not None or action_residual is not None:
             from .pi05_residual import ReactiveALOHAActionResidual, ReactiveKVResidual
@@ -540,6 +541,22 @@ class _RoboTwinBackend:
             self.contract["optional_residual"] = dict(configuration=hook.config(), live_qualified=False)
         if corpus_writer is not None:
             corpus_writer.register_runtime(self.contract)
+
+    def install_post_decode_residual(self, hook):
+        """Opt-in physical control after a fitted frontend, before calibration.
+
+        Install once, before observations/corpus registration. The caller owns
+        the separately qualified composed interface and frozen hook identity.
+        """
+        from .pi05_residual import ReactiveALOHAActionResidual
+        if (self.corpus_writer is not None or self._prepared is not None
+                or getattr(self, "_post_decode_installed", False)
+                or not isinstance(hook, ReactiveALOHAActionResidual)
+                or hook.training or hook.public_dim != FEATURE_DIM):
+            raise ValueError("Install one explicit eval physical hook before the first raw observation")
+        self.post_decode_residual = hook
+        self._post_decode_installed = True
+        self.contract = dict(self.contract, post_decode_residual=hook.config())
 
     def _encode(self, raw):
         from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
@@ -656,9 +673,10 @@ class _RoboTwinBackend:
         tick = time.monotonic()
         kv_adapter = getattr(self, "kv_adapter", None)
         action_residual = getattr(self, "action_residual", None)
+        physical = getattr(self, "post_decode_residual", None)
         if kv_adapter is not None and action_residual is not None:
             raise ValueError("Select only one optional residual interface per backend")
-        if (kv_adapter is not None or action_residual is not None) and getattr(
+        if (kv_adapter is not None or action_residual is not None or physical is not None) and getattr(
                 self, "_residual_prepared", None) is not self._prepared:
             raise RuntimeError("Residual public features are not bound to the current prepared observation")
         self._last_residual_metadata = None
@@ -684,6 +702,15 @@ class _RoboTwinBackend:
                     public_features=self._public_features.detach().cpu(),
                     **{name: getattr(correction, name).detach().cpu() for name in
                        ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")})
+            if physical is not None:
+                if physical.training:
+                    raise ValueError("Use an eval-mode post-decode physical hook")
+                correction = physical(actions, self._public_features)
+                actions = correction.actions
+                self._last_residual_metadata = dict(self._last_residual_metadata or {},
+                    post_decode_physical=dict(configuration=physical.config(),
+                        **{name: getattr(correction, name).detach().cpu() for name in
+                           ("base_actions", "requested_delta", "applied_delta", "clipped", "actions")}))
             if getattr(self, "record_agent_requested_actions", False):
                 self._last_residual_metadata = dict(self._last_residual_metadata or {},
                     public_agent_requested_actions=actions.detach().cpu().clone())
