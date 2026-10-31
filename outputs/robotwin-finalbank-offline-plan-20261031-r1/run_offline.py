@@ -100,10 +100,21 @@ def verify_final_indexes(b, projection, objectives=('ad','dpt')):
         if digest(ancestry_ref['path']) != ancestry_ref['sha256']:
             raise ValueError('Projection ancestry changed')
         ancestry = json.loads(Path(ancestry_ref['path']).read_text())
-        for entry in ancestry.get('ordered_ancestry', []):
+        for number,entry in enumerate(ancestry.get('ordered_ancestry', [])):
             refs = [entry['manifest'], entry['bound_corpus_contract'], entry['canonical_corpus_contract']]
-            if entry['execution_migration'] is not None:
-                refs.append(entry['execution_migration']['ref'])
+            migration=entry.get('execution_migration')
+            resume=entry['corpus_contract'].get('resume_trial_manifest_sha256')
+            if number==0:
+                if migration is not None or resume:
+                    raise ValueError('Projection ancestry omitted its original prefix')
+            else:
+                if migration is None or not resume:
+                    raise ValueError('Projection ancestry lost its predecessor')
+                wrapped=isinstance(migration,dict) and set(migration)=={'ref','value'}
+                ref=migration['ref'] if wrapped else migration
+                if not isinstance(ref,dict) or set(ref) not in ({'path','sha256'},{'path','sha256','bytes'}):
+                    raise ValueError('Unsupported projection execution migration reference')
+                refs.append(ref)
             for ref in refs:
                 allowed_provenance[str(Path(ref['path']).resolve())] = ref['sha256']
         for root in projection['roots']:

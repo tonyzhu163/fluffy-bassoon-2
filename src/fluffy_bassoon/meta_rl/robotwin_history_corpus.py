@@ -201,16 +201,23 @@ class CorpusReader:
                         raise ValueError('Projection top-level metadata differs from its original producer')
                 if scientific != base_producer or runtime != base_runtime:
                     raise ValueError('Projection producer scientific/runtime contracts differ')
-                migration = entry['execution_migration']
+                migration = entry.get('execution_migration')
                 if previous is None:
                     if migration is not None or producer.get('resume_trial_manifest_sha256'):
                         raise ValueError('Projection ancestry omitted its original prefix')
                 else:
                     if migration is None:
                         raise ValueError('Projection ancestry lost its predecessor')
-                    value = bound_json(migration['ref'])
-                    if (Path(migration['ref']['path']).resolve() != root_path.parent / 'execution-migration.json'
-                            or value != migration['value']
+                    # The final handoff pins the migration JSON directly; the
+                    # older reference also embeds a checked copy of its value.
+                    wrapped = isinstance(migration, dict) and set(migration) == {'ref', 'value'}
+                    migration_ref = migration['ref'] if wrapped else migration
+                    if (not isinstance(migration_ref, dict)
+                            or set(migration_ref) not in ({'path', 'sha256'}, {'path', 'sha256', 'bytes'})):
+                        raise ValueError('Unsupported projection execution migration reference')
+                    value = bound_json(migration_ref)
+                    if (Path(migration_ref['path']).resolve() != root_path.parent / 'execution-migration.json'
+                            or (wrapped and value != migration['value'])
                             or value['manifest_sha256'] != previous['manifest']['sha256']
                             or Path(value['manifest_path']).resolve() != Path(previous['manifest']['path']).resolve()
                             or value['manifest_sha256'] != producer.get('resume_trial_manifest_sha256')
