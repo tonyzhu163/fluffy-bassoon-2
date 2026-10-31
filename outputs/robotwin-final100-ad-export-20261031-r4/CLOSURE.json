@@ -1,0 +1,93 @@
+{
+  "status": "CPU_CLOSEOUT_COMPLETE_GPU_PHASE_DEFERRED",
+  "job": "job-vth2qv6r4lxu",
+  "source_pin": "e5675998dd130ff722c922f1cf681f0a96f44eff",
+  "auxiliary_pin": "7332c218a7063f6bb26c6a5297ee60731e018aa3",
+  "profile_sha256": "46137adea65e190ce3e3b56d0092ccc2858de6254e5338d2ac0fb69e57f9dd9d",
+  "payload_admission_sha256": "206d1d7986907c966bd762372e2c10521b5c3520c6a2c21d136ce49a06ccfe7c",
+  "terminal_sha256": "9d6557fe20a70b22f29716558aca35a2753c9436aa301ba0fe72e086b2ef3613",
+  "final_cleanup_sha256": "1b2345b7d66ae0430c97e3639a66f528888879c15022595f2c76ec6897414f7b",
+  "independent_artifact_audit_sha256": "945968fe7b64bf008907425a91c63bec14204a9a80ef003496a7c8bc24079ec4",
+  "scheduler_accounting_sha256": "c4fe9489f95210a23b58c864969a7e310bf5b6cf98349c764c06f52b506855a3",
+  "counts": {
+    "train": {
+      "decisions": 32425,
+      "episodes": 2400,
+      "complete_K4_trials": 600,
+      "committed_source_actions": 1003790,
+      "selected_actions": 1003790
+    },
+    "validation": {
+      "decisions": 328,
+      "episodes": 24,
+      "complete_K4_trials": 6,
+      "committed_source_actions": 1003790,
+      "selected_actions": 10180
+    }
+  },
+  "bindings": {
+    "projection_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/projection",
+    "exports_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports",
+    "source100_stage": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0061/experiment/stages/iteration-100/sac-recovery.pt",
+      "sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90"
+    },
+    "train_index": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/index.json",
+      "sha256": "97b330139891a5b7da7c20d6588320239aed5820559120be8c02d96df23c7ad4"
+    },
+    "validation_index": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/index.json",
+      "sha256": "b3da7d2ac1eecb65c12b71fb4ad8f4fe2965d0060267ecfe5643a6df5c9b50c8"
+    }
+  },
+  "datasets": {
+    "train": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/ad.npz",
+        "sha256": "ef7ac099896875296cbe02a7c205956ae2becf7bda88416d909549d93c907d7f",
+        "objective": "ad"
+      }
+    },
+    "validation": {
+      "behavior_cloning": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/behavior_cloning.npz",
+        "sha256": "73c20af23617da30ae9b8e48994a75267f41253dda567e426753512ac68e8dff",
+        "objective": "behavior_cloning"
+      }
+    }
+  },
+  "all_dataset_ZIP_CRC_pass": {
+    "train": 21,
+    "validation": 21
+  },
+  "storage": {
+    "logical_bytes": 1164758061,
+    "ceiling_bytes": 137438953472,
+    "retained_previous_output_reserve_bytes": 95563022336,
+    "aggregate_conservative_logical_bytes": 96727780397
+  },
+  "actual_CPU_worker_seconds_R4": 1290,
+  "actual_CPU_worker_seconds_phase": 2588,
+  "CPU_core_seconds_phase": 20704,
+  "approved_CPU_worker_seconds": 7200,
+  "new_GPU_seconds": 0,
+  "new_robot_actions": 0,
+  "SGD": 0,
+  "AD_GPU_fits_and_readout": "DEFERRED_FOR_ORDINARY_BASELINES_DSRL_FIRST_NATIVE_PPO_AFTERWARD",
+  "active_jobs_forms_bridges": 0,
+  "teacher_or_student_performance_claim": false,
+  "independent_metadata_audit_sha256": "17183356f0b8a53f18c9388c0339d0c2f78aaadde6b8c61b406900612d317c68",
+  "unused_CPU_worker_seconds_sealed": 4612,
+  "all_admitted_CPU_work_terminal_and_cost_settled": true,
+  "CPU_monitor_action": "DELETED_CONFIRMED",
+  "new_tests_run_R4": 0,
+  "final_report_sha256": "10aeb8e0372a4803a71730d4ce661ba1298b0327477606753073c7ca2801eaa2",
+  "CPU_monitor_deletion_sha256": "7bb03d52ad38a4e9712479882f51d24ee593cf6c004084685ae1fed431087cec",
+  "formal_owner_review_sha256": "c8448dd8682b7886ce7732a5a4563412efa045082a4a408db1ef4964c9035b86",
+  "latest_priority_override": {
+    "path": "outputs/robotwin-final100-ad-export-20261031-r4/latest-priority.json",
+    "sha256": "c76818bef116d6a1ea7b925d7ff14768fc6e511254656778da5508f19957db71",
+    "direct_user_message_id": "01a19077-651a-72d3-9bfd-3da0fc076ff2"
+  }
+}

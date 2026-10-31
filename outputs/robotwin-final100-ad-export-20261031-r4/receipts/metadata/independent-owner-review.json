@@ -1,0 +1,138 @@
+{
+  "status": "PASS_METADATA_ONLY_FINAL100_AD_BC_CLOSEOUT",
+  "date": "2026-10-31",
+  "timezone": "Asia/Shanghai",
+  "evidence": {
+    "actual_index_view": {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/receipts/metadata/actual-index-view.json",
+      "sha256": "291f8ac2243a43d69a212375d966541afbec772e2babdee4f8a50141ac7d58de"
+    },
+    "genesis_supplement": {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/receipts/metadata/genesis-input-supplement.json",
+      "sha256": "350a3a44ef3be4c6a374b8e47d0c4b97857abea486647a0c7481676810946aed"
+    },
+    "payload_admission": {
+      "path": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/receipts/final/payload-admission.json",
+      "sha256": "206d1d7986907c966bd762372e2c10521b5c3520c6a2c21d136ce49a06ccfe7c"
+    }
+  },
+  "index_bindings": {
+    "train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/index.json",
+      "sha256": "97b330139891a5b7da7c20d6588320239aed5820559120be8c02d96df23c7ad4"
+    },
+    "validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/index.json",
+      "sha256": "b3da7d2ac1eecb65c12b71fb4ad8f4fe2965d0060267ecfe5643a6df5c9b50c8"
+    }
+  },
+  "datasets": {
+    "train": {
+      "ad": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/train/ad.npz",
+        "sha256": "ef7ac099896875296cbe02a7c205956ae2becf7bda88416d909549d93c907d7f",
+        "objective": "ad"
+      }
+    },
+    "validation": {
+      "behavior_cloning": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r4/private/exports/validation/behavior_cloning.npz",
+        "sha256": "73c20af23617da30ae9b8e48994a75267f41253dda567e426753512ac68e8dff",
+        "objective": "behavior_cloning"
+      }
+    }
+  },
+  "counts": {
+    "train": {
+      "decisions": 32425,
+      "episodes": 2400,
+      "complete_K4_trials": 600,
+      "committed_source_actions": 1003790,
+      "selected_actions": 1003790
+    },
+    "validation": {
+      "decisions": 328,
+      "episodes": 24,
+      "complete_K4_trials": 6,
+      "committed_source_actions": 1003790,
+      "selected_actions": 10180
+    }
+  },
+  "checks": {
+    "schema_partition_objectives_complete": true,
+    "all606_K4_case_ids_recomputed": true,
+    "global_trial_cursors_1_to_600_and_1_to_6_complete": true,
+    "episode_indices_0_to_3_complete": true,
+    "decision_sums_32425_and_328_match": true,
+    "source100_shuffled_blocks_six_tasks_consistent": true,
+    "train_unique_actual_task_seed_cases": 2400,
+    "validation_unique_actual_task_seed_cases": 24,
+    "train_unique_K4_case_ids": 600,
+    "validation_unique_K4_case_ids": 6,
+    "cross_partition_actual_task_seed_overlap": 0,
+    "cross_partition_K4_case_id_overlap": 0,
+    "cross_partition_initial_observation_hash_overlap": 0,
+    "declared_closed_chain_ref_path_SHA_pairs_checked_per_partition": 190,
+    "runtime_metadata_refs_present_per_partition": 62,
+    "combined_selected_metadata_refs_per_partition": 254,
+    "original_input_map_sizes": {
+      "train": 201290,
+      "validation": 4302
+    },
+    "source_and_validation_contract_interface_equal": true,
+    "original_genesis_ref_in_actual_maps_confirmed": true,
+    "original_thin_view_omission": "filename filter only; actual indices unchanged",
+    "raw_manifest_selection_total_derived_from_metadata": 2686,
+    "teacher_method_and_recovery_unused": true,
+    "label_rule": "actual executed physical noise; no teacher loading or inference",
+    "zero_new_robot_VLA_SGD": true,
+    "fit_or_readout_admission": false
+  },
+  "lineage": {
+    "scientific": "db0184089fa88a5f96c153f9b80029bb91b77def",
+    "resumed_execution": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+    "original_prefix": "unresumed",
+    "source_stage_SHA256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90",
+    "final_coordinator_SHA256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+    "ancestry_SHA256": "0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e",
+    "tip_SHA256": "5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4",
+    "projection_SHA256": "fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf"
+  },
+  "allocated_checks_reused": {
+    "array_shape_dtype_causal_history_masks_durations_and_executed_noise_equality": true,
+    "all_members_CRC_pass": {
+      "train": 21,
+      "validation": 21
+    },
+    "source_final_actor_counter_binding": "existing e567 reader/allocated receipt; no tensor reread",
+    "full_index_and_NPZ_SHA": "execution owner independently rehashed actual files; no duplicate raw hashing here"
+  },
+  "closure": {
+    "all7_phases_exit0_clean": true,
+    "terminal_complete": true,
+    "final_sessions": [],
+    "final_survivors": [],
+    "forbidden_imports": [],
+    "CUDA_initialized": false,
+    "optimizer_steps_permitted": false
+  },
+  "cost_reported_by_execution_owner": {
+    "job": "job-vth2qv6r4lxu",
+    "scheduler_state": "Success",
+    "exit_code": 0,
+    "CPU_worker_seconds": 1290,
+    "aggregate_CPU_worker_seconds": 2588,
+    "unused_CPU_seconds_sealed": 4612,
+    "GPU_seconds": 0
+  },
+  "scope": {
+    "NPZ_or_array_payloads_read": false,
+    "checkpoints_or_models_read": false,
+    "new_tests_or_jobs": false,
+    "new_rawbank_hash_or_CRC": false,
+    "original_inputs_or_indices_mutated": false,
+    "source_code_changed": false,
+    "source_PPO_allocator_overlap": false,
+    "AD_GPU_fit_readout": "deferred; native PPO priority unchanged"
+  }
+}
