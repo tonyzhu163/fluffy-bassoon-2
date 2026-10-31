@@ -29,8 +29,17 @@ reset6/9. AD pays4014actions versus native1961for that same6/9query outcome.
 All522episodes passed the saved-trace audit. This supplies no reliable memory,
 high-performance or sample-efficiency benefit. Historical500versus100 changes
 both data and native wave, so it does not isolate scaling or overfitting.
-Current human priority is faithful native action-expert PPO replication before
-further offline-student sweeps; the proposed AD100/500contrast is held.
+Current human priority is ordinary DSRL first on the entirely frozen official
+pi0.5, followed by native action-expert PPO; further offline-student sweeps
+are held. A fresh task57 pi0.5-adapted PixelSAC curve is being implemented:
+500k optimizer updates, train states0..39 and matched query states40..49,
+within10GPUh/1M all-in actions/64GiB. No new robot score exists. Native PPO
+GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
+model cases are explicitly authorized after the pilot passes. Its sampling
+noise cannot directly label steering of the original frozen motor. AD can
+instead predict actual z from fixed-motor SAC learning histories; DPT can
+later label saved query observations with a competent final same-motor SAC
+teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
 full/static26/90; DPT full26/90/static27/90. On the fixed-nine K1 panel,
