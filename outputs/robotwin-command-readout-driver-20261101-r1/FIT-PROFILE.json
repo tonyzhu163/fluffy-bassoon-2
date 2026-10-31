@@ -1,0 +1,50 @@
+{
+  "format": "robotwin_fixed12_command_diagnostic_curve_v1",
+  "seed": 20261031,
+  "updates": 5000,
+  "global_batch": 2,
+  "learning_rate": 0.001,
+  "milestones": [
+    0,
+    100,
+    500,
+    2000,
+    5000
+  ],
+  "primary_endpoint": 5000,
+  "selection": "fixed_final_endpoint",
+  "optimizer": "AdamW",
+  "weight_decay": 0.0,
+  "gradient_clip": 1.0,
+  "execution_microbatch": 1,
+  "rank": 4,
+  "kv_scale": 0.1,
+  "kv_layers": [
+    -1
+  ],
+  "wide_contract_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+  "whole_split": {
+    "phone-00": "train",
+    "phone-01": "train",
+    "phone-02": "train",
+    "phone-03": "train",
+    "phone-04": "train",
+    "phone-05": "train",
+    "phone-06": "train",
+    "phone-07": "train",
+    "phone-08": "validation",
+    "phone-09": "validation",
+    "phone-10": "validation",
+    "phone-11": "validation"
+  },
+  "labels": "captured full submitted plans; native executed masks are physical costs only",
+  "maximum_new_robot_actions": 0,
+  "maximum_fit_output_bytes": 17179869184,
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "successful_teacher_bank_eligible": false,
+  "diagnostic_bank_format": "robotwin_fixed12_command_diagnostic_bank_v1",
+  "complete_cache_format": "robotwin_fixed12_complete_command_diagnostic_cache_v1",
+  "failed04_label_source": "original be247 event-teacher-phone-04; no later recipe substitution",
+  "maximum_cache04_output_bytes": 2147483648
+}

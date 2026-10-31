@@ -1,0 +1,298 @@
+{
+  "format": "robotwin_fixed12_command_diagnostic_readout_proposal_v2",
+  "admitted": false,
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "locked32_or_population_claim": false,
+  "task": "place_phone_stand",
+  "native_episode_limit": 400,
+  "action_horizon": 32,
+  "maximum_complete_episodes": 15,
+  "maximum_new_actions": 6000,
+  "case_order": [
+    4,
+    8,
+    9,
+    10,
+    11
+  ],
+  "condition_order": [
+    "native",
+    "wide-final5000",
+    "KV-final5000"
+  ],
+  "cells": [
+    {
+      "id": "diagnostic-case04-native",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "native",
+      "checkpoint_iteration": null,
+      "record_id": "phone-04",
+      "canonical_binding": "phone-04"
+    },
+    {
+      "id": "diagnostic-case04-wide-final5000",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-04",
+      "canonical_binding": "phone-04"
+    },
+    {
+      "id": "diagnostic-case04-KV-final5000",
+      "case": 4,
+      "reset_seed": 4,
+      "private_motor_seed": 20261305,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-04",
+      "canonical_binding": "phone-04"
+    },
+    {
+      "id": "diagnostic-case08-native",
+      "case": 8,
+      "reset_seed": 11,
+      "private_motor_seed": 20261309,
+      "condition": "native",
+      "checkpoint_iteration": null,
+      "record_id": "phone-08",
+      "canonical_binding": "phone-08"
+    },
+    {
+      "id": "diagnostic-case08-wide-final5000",
+      "case": 8,
+      "reset_seed": 11,
+      "private_motor_seed": 20261309,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-08",
+      "canonical_binding": "phone-08"
+    },
+    {
+      "id": "diagnostic-case08-KV-final5000",
+      "case": 8,
+      "reset_seed": 11,
+      "private_motor_seed": 20261309,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-08",
+      "canonical_binding": "phone-08"
+    },
+    {
+      "id": "diagnostic-case09-native",
+      "case": 9,
+      "reset_seed": 14,
+      "private_motor_seed": 20261310,
+      "condition": "native",
+      "checkpoint_iteration": null,
+      "record_id": "phone-09",
+      "canonical_binding": "phone-09"
+    },
+    {
+      "id": "diagnostic-case09-wide-final5000",
+      "case": 9,
+      "reset_seed": 14,
+      "private_motor_seed": 20261310,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-09",
+      "canonical_binding": "phone-09"
+    },
+    {
+      "id": "diagnostic-case09-KV-final5000",
+      "case": 9,
+      "reset_seed": 14,
+      "private_motor_seed": 20261310,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-09",
+      "canonical_binding": "phone-09"
+    },
+    {
+      "id": "diagnostic-case10-native",
+      "case": 10,
+      "reset_seed": 16,
+      "private_motor_seed": 20261311,
+      "condition": "native",
+      "checkpoint_iteration": null,
+      "record_id": "phone-10",
+      "canonical_binding": "phone-10"
+    },
+    {
+      "id": "diagnostic-case10-wide-final5000",
+      "case": 10,
+      "reset_seed": 16,
+      "private_motor_seed": 20261311,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-10",
+      "canonical_binding": "phone-10"
+    },
+    {
+      "id": "diagnostic-case10-KV-final5000",
+      "case": 10,
+      "reset_seed": 16,
+      "private_motor_seed": 20261311,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-10",
+      "canonical_binding": "phone-10"
+    },
+    {
+      "id": "diagnostic-case11-native",
+      "case": 11,
+      "reset_seed": 18,
+      "private_motor_seed": 20261312,
+      "condition": "native",
+      "checkpoint_iteration": null,
+      "record_id": "phone-11",
+      "canonical_binding": "phone-11"
+    },
+    {
+      "id": "diagnostic-case11-wide-final5000",
+      "case": 11,
+      "reset_seed": 18,
+      "private_motor_seed": 20261312,
+      "condition": "wide-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-11",
+      "canonical_binding": "phone-11"
+    },
+    {
+      "id": "diagnostic-case11-KV-final5000",
+      "case": 11,
+      "reset_seed": 18,
+      "private_motor_seed": 20261312,
+      "condition": "KV-final5000",
+      "checkpoint_iteration": 5000,
+      "record_id": "phone-11",
+      "canonical_binding": "phone-11"
+    }
+  ],
+  "reset_rng": "Same saved per-case Python/NumPy/TorchCPU/CUDA fork before each fresh condition reset; private motor generator reset to the declared identical per-case seed. Qualification/head loading preserve the fork. Retain all poststates.",
+  "qualification": "Inside the FIRST native complete episode only; no extra actions/settles/opening or extra qualification episode.",
+  "selection": "Fixed5000 for both heads, no VAL checkpoint selection or favorable-case selection.",
+  "reuse_disclosure": "04 is the original failed TRAIN record;08..11 are the canonical fixed sourceVAL records with reset seeds11/14/16/18. These are deliberate DEV/VAL exposure, not held-out population cases.",
+  "outcomes": "All natural success/failure/early termination retained; no source/student admission from this diagnostic panel.",
+  "implementation_owner": "Existing owner and same endpoint/control factory; this JSON is a prospective schedule, not another readout driver.",
+  "supersedes_proposal_sha256": "97c1c6866acaac1283d9c250bc44ad3a785aa5ec16c629fdea4342b8891e8771",
+  "pre_outcome_amendment": "Parent explicitly selected original record identities04/08/09/10/11; reset seeds corrected to canonical registry before any fitted/readout outcome. Earlier97c1 retained unchanged.",
+  "canonical_bindings": {
+    "phone-04": {
+      "demos_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+        "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+      },
+      "dataset_id": "phone-04",
+      "producer_result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-event-r1/experiment/result.json",
+        "sha256": "ba775b4fcbb3029120927ecd59461fabb1cccd7e95326f8d9f3a6f731ea77d3f"
+      },
+      "record_id": "event-teacher-phone-04",
+      "id_field": "spec.id",
+      "required_fields": [
+        "reset_info",
+        "reset_identity",
+        "episode_manifest_ref",
+        "spec.paired_instruction"
+      ],
+      "resolution": "Read exact named record fields from hash-bound original producer result; never infer physical seed/instruction from record ordinal."
+    },
+    "phone-08": {
+      "demos_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+        "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+      },
+      "dataset_id": "phone-08",
+      "producer_result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+        "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6"
+      },
+      "record_id": "event-teacher-phone-08",
+      "id_field": "spec.id",
+      "required_fields": [
+        "reset_info",
+        "reset_identity",
+        "episode_manifest_ref",
+        "spec.paired_instruction"
+      ],
+      "resolution": "Read exact named record fields from hash-bound original producer result; never infer physical seed/instruction from record ordinal."
+    },
+    "phone-09": {
+      "demos_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+        "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+      },
+      "dataset_id": "phone-09",
+      "producer_result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+        "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6"
+      },
+      "record_id": "event-teacher-phone-09",
+      "id_field": "spec.id",
+      "required_fields": [
+        "reset_info",
+        "reset_identity",
+        "episode_manifest_ref",
+        "spec.paired_instruction"
+      ],
+      "resolution": "Read exact named record fields from hash-bound original producer result; never infer physical seed/instruction from record ordinal."
+    },
+    "phone-10": {
+      "demos_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+        "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+      },
+      "dataset_id": "phone-10",
+      "producer_result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+        "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6"
+      },
+      "record_id": "event-teacher-phone-10",
+      "id_field": "spec.id",
+      "required_fields": [
+        "reset_info",
+        "reset_identity",
+        "episode_manifest_ref",
+        "spec.paired_instruction"
+      ],
+      "resolution": "Read exact named record fields from hash-bound original producer result; never infer physical seed/instruction from record ordinal."
+    },
+    "phone-11": {
+      "demos_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+        "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+      },
+      "dataset_id": "phone-11",
+      "producer_result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+        "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6"
+      },
+      "record_id": "event-teacher-phone-11",
+      "id_field": "spec.id",
+      "required_fields": [
+        "reset_info",
+        "reset_identity",
+        "episode_manifest_ref",
+        "spec.paired_instruction"
+      ],
+      "resolution": "Read exact named record fields from hash-bound original producer result; never infer physical seed/instruction from record ordinal."
+    }
+  },
+  "canonical_resolution_required_before_readout": true,
+  "seed_map_metadata_proof": {
+    "path": "/Users/mowenjie/.codex/worktrees/robotwin-prelift-five-hold/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/EVENT-SUFFIX-TERMINAL-RECEIPT.json",
+    "sha256": "932d8b4402db32b86871a73b7a80afe0cd15b69d34cc5daae4cb92229d936347",
+    "result": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+      "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6",
+      "bytes": 328009
+    },
+    "limits": "Saved scalar/spec audit only here. Actual source reset/instruction/manifest fields resolved from original result via DATA readout-bindings before physical admission."
+  },
+  "private_motor_seed_rule": "20261301 + canonical record ID integer; never add physical reset seed."
+}
