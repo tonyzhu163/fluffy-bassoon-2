@@ -385,6 +385,15 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         if sum(f.stat().st_size for f in parent.rglob('*') if f.is_file())+(256<<20)>limit:
             raise RuntimeError('Predeclared fit output bound')
     guard();backend=None
+    if _api is not None:
+        # Admission is staged: start head A through this receipt BEFORE booking
+        # head B. B can reference A's immutable ticket without a cyclic pair of
+        # ticket->plan->other-ticket hashes, while both fits still overlap.
+        _atomic_json(parent/(a.output.name+'-resource-admission.json'),dict(
+            status='resource_ticket_admitted_before_model_load',operation=_operation,kind=a.kind,
+            hostname=socket.gethostname(),resource_attempt=ticket['resource_attempt'],source_commit=source,
+            ticket=dict(path=str(a.ticket),sha256=a.ticket_sha256),request_sha256=a.request_sha256,
+            data_or_model_qualified=False))
     try:
         backend=_RoboTwinBackend(a.model_path,a.norm_stats,a.robotwin_root,a.rlinf_root,device='cuda',
             episode_limit=400,action_horizon=32,num_steps=5,output_dir=parent/(a.output.name+'-runtime'))
