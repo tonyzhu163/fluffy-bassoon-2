@@ -1,0 +1,17 @@
+{
+  "max_same_noise_delta": 0.0,
+  "settling_actions": 10,
+  "data_role": "target-online-baseline",
+  "motor": {
+    "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "checkpoint": "gs://openpi-assets/checkpoints/pi05_libero",
+    "receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "flow_steps": 10,
+    "predicted_horizon": 10,
+    "action_dim": 32,
+    "weights_frozen": true,
+    "jax_devices": [
+      "cuda:0"
+    ]
+  }
+}

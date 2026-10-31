@@ -21,3 +21,11 @@ performance or even completed robot/update qualification; advancing actual
 artifacts will be recorded separately.
 
 ![Submitted allocation](screenshots/gpu-r1-submitted.jpg)
+
+Actual post-warmup advancement is now verified in `first-advancement.json`.
+The entire motor before-hash matchesC565, same-noise delta is0, full
+recovery/raw trace bytes match their saved references, and SAC update metrics
+are finite. The initial native panel scored10/10 on the fixed10 states, so
+that small bank has no success headroom; training continues under the original
+contract without changing tasks or cases. The next owned runtime check is
+14:36Shanghai, including the first10k-update panel if reached.
