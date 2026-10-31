@@ -522,3 +522,25 @@ The metadata analysis did not rehash/load checkpoint tensors. It reconciles
 closed JSON/JSONL counts and preserves the later manifest's status at read
 time; it does not certify completed final evaluation.
 [Final source100 comparison and exact identities](../../../outputs/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
+
+## RoboTwin source K4 attempt-position readout
+
+The three source100 episode banks each reconcile600 complete(goal,round)
+K4 groups and2400 episodes. Saved ordinals and actual collector code establish
+attempt1–4; success/action/chunk totals match the source100 analyses.
+
+| Learner | Attempt1 | Attempt2 | Attempt3 | Attempt4 |
+| --- | ---: | ---: | ---: | ---: |
+| FULL PPO |103/600|106/600|97/600|110/600|
+| Trained episode reset |98/600|110/600|106/600|107/600|
+| SAC |72/600|70/600|64/600|71/600|
+
+FULL's attempt4minus1 is+1.17percentage points; RESET+1.50 andSAC−0.17.
+All100 and first/last25-round strata reveal no strong monotonic FULL-specific
+gain. Different scheduled scene seeds, stochastic actions and the explicit
+episode clock can affect ordinal rates. PPO weights remain fixed through the
+six-trial rollout batch; SAC also updates parameters online. These descriptive
+source marginals do not isolate causal memory, same-case recovery or a
+held-out support/query result. They do not support a hidden strong inner
+learning benefit behind the flat aggregate curves.
+[Counts, grouping semantics and bound inputs](../../../outputs/robotwin-k4-attempt-analysis-20261031-r1/ANALYSIS.md).

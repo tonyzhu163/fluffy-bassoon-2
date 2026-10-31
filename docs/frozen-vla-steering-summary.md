@@ -19,6 +19,10 @@ Current scientific readout,2026-10-31:
   1,003,790 source actions. Its quarter totals78/57/76/66 per600 show no
   sustained improvement. Weak source learning occurs in all three learners;
   a common cause is unisolated. Final source validation/targets remain pending.
+- Success by attempt1–4 also lacks a strong monotonic gain: FULL
+  103/106/97/110 per600, RESET98/110/106/107 andSAC72/70/64/71.
+  Later-attempt gains are not specific to FULL. These are source trials
+  with different scheduled scenes, not a causal memory or held-out query test.
 - No high-performance or sample-efficiency claim is established. Prioritize
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
@@ -152,6 +156,19 @@ the original fixed100 validation/targets already running, before choosing
 another training intervention. No extra collection budget follows from these
 observations alone.
 [Final source100 comparison](../outputs/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
+
+A separate attempt-position analysis checks whether the aggregate curves
+hide within-trial improvement. It reconciles600completeK4groups/2400episodes
+for each learner. FULL attempt4minus1 is+1.17percentage points, versus
+trainedRESET+1.50 andSAC−0.17; neither all100 nor first/last25 rounds shows
+a strong monotonic FULL-specific gain. All four scheduled scene seeds differ
+within each group; PPO weights stay fixed through the rollout batch, whereas
+SAC also updates online. Thus these marginals cannot isolate memory use,
+same-case recovery or support/query adaptation. They provide no evidence
+that a strong inner learning pattern was hidden by the outer averages.
+Saved learning histories and DPT labels should still not be called expert
+demonstrations merely because the exporter passes its integrity checks.
+[Attempt-position evidence](../outputs/robotwin-k4-attempt-analysis-20261031-r1/ANALYSIS.md).
 
 ## Literature guides targeted choices
 

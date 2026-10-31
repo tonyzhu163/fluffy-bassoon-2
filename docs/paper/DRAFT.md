@@ -64,7 +64,10 @@ robot-performance improvement is established. SAC source100 is now complete:
 277/2400 successes (11.54%),1,003,790 source actions and638,500 joint SAC
 updates over32,425 distinct decisions. Quarter success78/57/76/66 per600
 shows no sustained improvement. Weak source learning is not limited to
-recurrent PPO; the cause is unisolated. Final SAC validation/targets and
+recurrent PPO; the cause is unisolated. Source attempt1–4 success is also
+non-monotonic:FULL103/106/97/110 per600,RESET98/110/106/107,
+SAC72/70/64/71. These scene-varying source marginals do not establish
+feedback adaptation or a causal memory benefit. Final SAC validation/targets and
 larger student fits are not complete. Benchmark costs
 are separate from LIBERO. Future
 collection should overlap initial fitting/evaluation after a bounded smoke,
