@@ -4,9 +4,9 @@ set -Eeuo pipefail
 TASK_STARTED=$(date +%s)
 TASK_SOURCE=${1:?exact reviewed runner source}
 TASK_RUN=${2:?fresh scientific run identity}
-TASK_QUAL=${3:?allocated qualification output directory}
+TASK_QUAL=${3:?allocated full qualification output directory}
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_PREP=dsrl-pi0-task57-20261101-prep-r3
+TASK_PREP=dsrl-pi0-task57-20261101-prep-r4
 TASK_ENV=$TASK_ROOT/envs/$TASK_PREP
 TASK_REPO=$TASK_ROOT/deps/$TASK_PREP/repo
 TASK_OUT=$TASK_ROOT/outputs/$TASK_RUN
@@ -45,11 +45,11 @@ def checked_xml(path,count):
     suites=[root] if root.tag=='testsuite' else list(root.iter('testsuite'))
     assert sum(int(s.get('tests',0)) for s in suites)==count
     assert all(int(s.get(key,0))==0 for s in suites for key in ('failures','errors','skipped'))
+assert prep.resolve()==qual.resolve()
 assert (prep/'exit-code.txt').read_text().strip()=='0'
-checked_xml(prep/'qualification.xml',9)
-checked_xml(qual/'qualification.xml',1)
+checked_xml(qual/'qualification.xml',9)
 value=json.loads((qual/'qualification-summary.json').read_text())
-assert value['passed'] is True and value['exit_code']==0
+assert value['passed'] is True and value['exit_code']==0 and value['full_suite'] is True
 for name,digest in value['file_sha256'].items():
     assert hashlib.sha256((code/name).read_bytes()).hexdigest()==digest
 PY

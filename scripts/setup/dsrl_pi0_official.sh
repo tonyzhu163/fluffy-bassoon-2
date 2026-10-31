@@ -123,5 +123,14 @@ export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 "$TASK_PY" -m pytest -q -p no:cacheprovider \
   --junitxml="$TASK_OUT/qualification.xml" "$TASK_CODE/tests/test_dsrl_pi0_replication.py" \
   > "$TASK_OUT/qualification.log" 2>&1
+"$TASK_PY" - "$TASK_OUT" "$TASK_CODE" "$TASK_SOURCE" <<'PY'
+import hashlib,json,pathlib,sys
+out,code,source=pathlib.Path(sys.argv[1]),pathlib.Path(sys.argv[2]),sys.argv[3]
+paths=['src/fluffy_bassoon/meta_rl/dsrl_pi0_replication.py','tests/test_dsrl_pi0_replication.py']
+receipt=dict(source_commit=source,passed=True,exit_code=0,full_suite=True,
+    file_sha256={name:hashlib.sha256((code/name).read_bytes()).hexdigest() for name in paths})
+(out/'qualification-summary.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt),flush=True)
+PY
 git -C "$TASK_REPO" status --porcelain > "$TASK_OUT/upstream-status.txt"
 printf 'Preparation complete; no GPU/model/simulator run.\n'
