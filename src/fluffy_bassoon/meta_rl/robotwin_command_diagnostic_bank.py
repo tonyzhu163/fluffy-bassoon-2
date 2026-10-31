@@ -114,6 +114,14 @@ def validate_complete_cache(value):
 
 
 def seal_full_cache(bank,cache_receipts,*,deadline):
+    from .robotwin_cache04_recovery import committed_receipt
+    for ref in cache_receipts:
+        receipt=Audit(deadline).json(ref)
+        if any(row['context']['teacher_id']=='phone-04' for row in receipt['records']):
+            boundary=receipt.get('cache04_closed_case')
+            if boundary is None:raise ValueError('Cache04 requires its completed closed-case RNG recovery')
+            rebuilt=committed_receipt(boundary['cursor'],deadline=deadline)
+            if digest(rebuilt)!=digest(receipt):raise ValueError('Cache04 differs from its published closed boundary')
     value=core.seal_full_cache(bank,cache_receipts,deadline=deadline,_api=sys.modules[__name__])
     validate_complete_cache(value);return value
 
