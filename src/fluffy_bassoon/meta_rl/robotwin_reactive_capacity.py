@@ -224,7 +224,8 @@ def main(argv=None):
                 if current.last_reset_info['actual_seed']!=spec['expected_teacher_seed']:
                     raise ValueError('Demo seed retried/changed; do not claim original teacher replay')
                 reference=np.asarray(spec['teacher_initial_state'],dtype=np.float32)
-                actual=np.asarray(current.env.backend._raw_obs['states'])[0]
+                raw_state=current.env.backend._raw_obs['states']
+                actual=(raw_state.detach().cpu().numpy() if isinstance(raw_state,torch.Tensor) else np.asarray(raw_state))[0]
                 if not np.allclose(actual,reference,rtol=0,atol=1e-5):
                     raise ValueError('Teacher replay initial drive targets differ from the author data')
             if qualify:
