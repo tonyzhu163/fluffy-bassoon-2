@@ -1,0 +1,126 @@
+{
+  "format": "task57_initial_advancement_v1",
+  "checked_unix": 1793427429.5387344,
+  "checked_shanghai": "2026-10-31T14:17:09.538734+08:00",
+  "job_id": "job-iudscqfntb4e",
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+  "running": true,
+  "completed": false,
+  "index_snapshot_sha256": "55dd76cf138c94efbdb1dbb4941eb7aed73c8bca1e4fddb5a0f983cab99aae91",
+  "phase": "training",
+  "training": {
+    "episodes": 45,
+    "chunks": 707,
+    "primitive_steps": 6805,
+    "settling_steps": 450
+  },
+  "training_successes": 45,
+  "optimizer_updates": 4280,
+  "replay_rows": 707,
+  "last_update_metrics": {
+    "actor_loss": 0.23330718278884888,
+    "critic_loss": 0.08103368431329727,
+    "entropy": 21.541933059692383,
+    "mean_pi_avg": -0.0006642575608566403,
+    "mean_pi_max": 0.32277044653892517,
+    "mean_pi_min": -0.5996403098106384,
+    "mean_pi_norm": 0.536197304725647,
+    "next_actions_max": 0.9977449774742126,
+    "next_actions_mean": 0.0013944485690444708,
+    "next_actions_min": -0.9960665106773376,
+    "next_actions_sampled": 0.0013944485690444708,
+    "next_actions_std": 0.5862914323806763,
+    "next_log_probs": -21.63346290588379,
+    "next_q_pi": -6.873606204986572,
+    "q": -7.67110538482666,
+    "q_pi_in_actor": -7.589566707611084,
+    "std_pi_avg": 0.8674778342247009,
+    "std_pi_max": 0.9251809120178223,
+    "std_pi_min": 0.8087408542633057,
+    "std_pi_norm": 4.907523155212402,
+    "target_actor_entropy": 21.63346290588379,
+    "target_q": -7.662559509277344,
+    "temperature": 0.3414855897426605,
+    "temperature_loss": 12.820028305053711
+  },
+  "all_in_action_charge": 8816,
+  "physical_cost_snapshot": {
+    "training": {
+      "known_actions": 7255,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 6805,
+      "settling_steps": 450,
+      "reset_attempts": 45
+    },
+    "query": {
+      "known_actions": 1551,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 1451,
+      "settling_steps": 100,
+      "reset_attempts": 10
+    },
+    "qualification": {
+      "known_actions": 10,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 10,
+      "reset_attempts": 1
+    }
+  },
+  "output_bytes": 664116265,
+  "native_initial": {
+    "episodes": 10,
+    "successes": 10,
+    "primitives": 1451,
+    "settling_actions": 100,
+    "state_ids": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "all_query_replay_excluded": true
+  },
+  "latest_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/recovery-1.pkl",
+    "expected_sha256": "293bb2d18b79bc28d70cb99812be684cdc765fe3874dded590fc81bb672a2710",
+    "actual_sha256": "293bb2d18b79bc28d70cb99812be684cdc765fe3874dded590fc81bb672a2710",
+    "matched": true,
+    "size_bytes": 54558807
+  },
+  "immutable_initial_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/initial_native-000000-recovery.pkl",
+    "expected_sha256": "e1193b3a2b508ad311e4dca510a31e1a75b27c7cdd3d2491d17eca4efde24693",
+    "actual_sha256": "e1193b3a2b508ad311e4dca510a31e1a75b27c7cdd3d2491d17eca4efde24693",
+    "size_bytes": 36698595
+  },
+  "raw_trace_checks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/raw/initial_native-000000-state-40-1793426984011030748.pkl.gz",
+      "expected_sha256": "1ef2022aa5acaa1e64a5cb3eba33f2c122d4498d7f2701c95aa1a284e744ccc4",
+      "actual_sha256": "1ef2022aa5acaa1e64a5cb3eba33f2c122d4498d7f2701c95aa1a284e744ccc4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/raw/training-000044-1793427422460578397.pkl.gz",
+      "expected_sha256": "a9ee972ee08bf990c6d211cfc6223d9190d0bd46cc5a2a880995117bc9bd8d28",
+      "actual_sha256": "a9ee972ee08bf990c6d211cfc6223d9190d0bd46cc5a2a880995117bc9bd8d28"
+    }
+  ],
+  "worker_clock": {
+    "maximum_gpu_seconds": 36000,
+    "attempt_count": 1,
+    "started_unix": 1793426813.0,
+    "active_elapsed_seconds": 616.5387344360352,
+    "active_elapsed_is_final_charge": false,
+    "reserved_seconds": 36000
+  },
+  "scope_note": "Single-seed predeclared task57 baseline; initial10-case native bank is ceiling. No improvement or adaptation conclusion.",
+  "next_owned_check_shanghai": "2026-10-31T14:36:00+08:00"
+}
