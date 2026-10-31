@@ -1,0 +1,1111 @@
+{
+  "format": "frozen_pi05_factorial_terminal_receipt_v1",
+  "checked_unix": 1793472415.654205,
+  "job_id": "job-snrggr7e3xoo",
+  "source_commit": "8632e421412388e8bb9c933b2b10cf5940dc7156",
+  "status": "complete_diagnostic_factorial",
+  "exit_code": 0,
+  "records": [
+    {
+      "spec": {
+        "arm": "action",
+        "case": 4,
+        "case_key": "dose1-hold_current",
+        "case_profile_sha256": "2a75626bf4c2593842e8d2708e630bea925f94d612da2220143fefdc76631ade",
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "condition": "hold_current",
+        "expected_teacher_seed": 4,
+        "horizon": 400,
+        "id": "prelift04-dose1-hold_current",
+        "method": "prelift_dose1-hold_current",
+        "motor_seed": 20261205,
+        "paired_instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "probe_holds": 1,
+        "reset_seed": 4,
+        "stage": "prelift_dose_grip_diagnostic",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-04"
+      },
+      "success": false,
+      "complete": true,
+      "primitive_steps": 400,
+      "chunks": 13,
+      "reset_identity": {
+        "actual_seed": 4,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:62:00.0",
+        "actual_seed": 4,
+        "corpus_episode_id": "episode-d5a5adb9af824112be129807e822eced",
+        "episode_limit": 400,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the black phone to the green phone rack."
+          ],
+          "effective_observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+          "sampled_instruction": [
+            "Lift the compact phone with shiny texture onto the phonestand for holding phones."
+          ],
+          "sampled_observation_sha256": "a5cb773c64aeb3035ad8b5b79c4e8747a705ed8c2a1628304a5c1fe6642d8f2f",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+        "requested_seed": 4,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "prelude_signatures": [
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "2351b36f8c1af43b2d425f92323da8bb2b794ad62a4e014a3459eff7a6030497",
+          "issued_actions": "0642a944a757df8a816eff677fad2aae8b466f3270edc613b117829c6f3da8f6",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "observation": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+          "physical_after": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "physical_before": "6d7719877143d15e36e45b43167e39b9216568432d41999ea7147f17aeb5ff2c",
+          "private_motor_rng_after": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "private_motor_rng_before": "521444e716f36810f3a814f4db60270775469439df4628614079a6e0e589ec7d",
+          "sampled_noise": "31043b11e2c1618ad0ee06d95b0cbcfecf0398ca298bea0b5ce950276ac380ad",
+          "source_chunk": 0
+        },
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "1d4d956b3753756706b5f1a02cfea3254dd80e827cfbfbbb9b4295407666e083",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "physical_after": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "physical_before": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "private_motor_rng_after": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "private_motor_rng_before": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "sampled_noise": "defb5d5c68f70dc93b3f3367702aa8bd60e0b43e4a122da8fa3a20f5cc25e2b4",
+          "source_chunk": 1
+        },
+        {
+          "global_numpy_after": "954893315fb4ddb1daafb6884c0cbf019a8110e5b20374d80a0998047e44404c",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "b0f08019e7cfeb4489d16f8e6a6749739b24ecd49f5b320a94afb6d74a1eecc1",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "1ac33917a6858d18061d50ee1afa19620475beac76a735e30f5410285b2035fa",
+          "observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "physical_after": "81ba42a1c3c44240483f68a58e32b759baac0a01301b46464fabd0f715e359a9",
+          "physical_before": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "private_motor_rng_after": "0fffe4441fa20ac88968500305808b959f3ba45d8897c5c34359d02257802f2b",
+          "private_motor_rng_before": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "sampled_noise": "bede45855f446637f792db598e779c272c4a812b783a7290cfc865ba818aba7c",
+          "source_chunk": 2
+        }
+      ],
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/manifest.json",
+        "sha256": "959769b76af9e3b58c8cf8ff8817d636037085f1cb454116137566db8266366d",
+        "bytes": 1585
+      },
+      "manifest_summary": {
+        "completed_chunks": 13,
+        "executed_primitive_steps": 400,
+        "pending_decision": null
+      },
+      "chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000001.json",
+          "sha256": "84fe4bb0af71ac283801d80b2d1699620cbf7ccef381beeac08be5b14a929a2e",
+          "bytes": 24971
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000002.json",
+          "sha256": "0ae57113bcf6ce60cb286de80ecf04ba67b6f23be09350dd9195f52fc2109cfe",
+          "bytes": 25340
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000003.json",
+          "sha256": "a1be7c8c7530ac8175e6545cc7257719286b5f002d0318c5231fc70f3184306d",
+          "bytes": 25102
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000004.json",
+          "sha256": "b7debf9409e52e34907dcb6bf0960b8047b977a83aef36ae04e407d57601b9c3",
+          "bytes": 25836
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000005.json",
+          "sha256": "7096d1289e44082e3ee2cef3478756766f4e9a72f69838ddb01ed130687cb68b",
+          "bytes": 25573
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000006.json",
+          "sha256": "9685e9bb85cac28ca68db608884d57d27b0a92206c119a8ea3cb2050eff45e5d",
+          "bytes": 25261
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000007.json",
+          "sha256": "da0a5d932431ad62dcc3a03e8634b6371e9681308ed8ee6e51098d694e9961ae",
+          "bytes": 25482
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000008.json",
+          "sha256": "9bdeaa57a4951d2aba44266f72a637e0d28e2588038f391ae01bf57367a9d99a",
+          "bytes": 25328
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000009.json",
+          "sha256": "161440f94f30c25e2b688a8e1e433a6483a48e10228bbc4cd3bb19472862da71",
+          "bytes": 25538
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000010.json",
+          "sha256": "9ba92577c8b6946d920ff622d9c84b38bef84e04d0e27b8670212b9069e0fbec",
+          "bytes": 25310
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000011.json",
+          "sha256": "f80214ab77861b00aa5c8dbc99847292dc1583ca2e734d324da5aa2cf72b4b5a",
+          "bytes": 25541
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000012.json",
+          "sha256": "09966b5a930a16c46287d5a957354489aed22c9d989e2a2ee6e9db65b65e08bf",
+          "bytes": 25305
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-d5a5adb9af824112be129807e822eced/chunks/000013.json",
+          "sha256": "08711e70a2d3247f5da3e31e841ab9d9de098f284db29c6b38114bcc6d4065c0",
+          "bytes": 25549
+        }
+      ]
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 4,
+        "case_key": "dose1-close_endpoint",
+        "case_profile_sha256": "657abb0421cfdbe598c324f202eadaa6f93b94c064ea6cd1fbeedd1a822df15b",
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "condition": "close_endpoint",
+        "expected_reset": {
+          "actual_seed": 4,
+          "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+          "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+        },
+        "expected_teacher_seed": 4,
+        "horizon": 400,
+        "id": "prelift04-dose1-close_endpoint",
+        "method": "prelift_dose1-close_endpoint",
+        "motor_seed": 20261205,
+        "paired_instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "probe_holds": 1,
+        "reset_seed": 4,
+        "stage": "prelift_dose_grip_diagnostic",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-04"
+      },
+      "success": false,
+      "complete": true,
+      "primitive_steps": 400,
+      "chunks": 13,
+      "reset_identity": {
+        "actual_seed": 4,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:62:00.0",
+        "actual_seed": 4,
+        "corpus_episode_id": "episode-488b907b0aa04e94ab6dd1345f32d071",
+        "episode_limit": 400,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the black phone to the green phone rack."
+          ],
+          "effective_observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+          "sampled_instruction": [
+            "Lift the compact phone with shiny texture onto the phonestand for holding phones."
+          ],
+          "sampled_observation_sha256": "a5cb773c64aeb3035ad8b5b79c4e8747a705ed8c2a1628304a5c1fe6642d8f2f",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+        "requested_seed": 4,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "prelude_signatures": [
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "2351b36f8c1af43b2d425f92323da8bb2b794ad62a4e014a3459eff7a6030497",
+          "issued_actions": "0642a944a757df8a816eff677fad2aae8b466f3270edc613b117829c6f3da8f6",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "observation": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+          "physical_after": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "physical_before": "6d7719877143d15e36e45b43167e39b9216568432d41999ea7147f17aeb5ff2c",
+          "private_motor_rng_after": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "private_motor_rng_before": "521444e716f36810f3a814f4db60270775469439df4628614079a6e0e589ec7d",
+          "sampled_noise": "31043b11e2c1618ad0ee06d95b0cbcfecf0398ca298bea0b5ce950276ac380ad",
+          "source_chunk": 0
+        },
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "1d4d956b3753756706b5f1a02cfea3254dd80e827cfbfbbb9b4295407666e083",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "physical_after": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "physical_before": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "private_motor_rng_after": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "private_motor_rng_before": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "sampled_noise": "defb5d5c68f70dc93b3f3367702aa8bd60e0b43e4a122da8fa3a20f5cc25e2b4",
+          "source_chunk": 1
+        },
+        {
+          "global_numpy_after": "954893315fb4ddb1daafb6884c0cbf019a8110e5b20374d80a0998047e44404c",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "b0f08019e7cfeb4489d16f8e6a6749739b24ecd49f5b320a94afb6d74a1eecc1",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "1ac33917a6858d18061d50ee1afa19620475beac76a735e30f5410285b2035fa",
+          "observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "physical_after": "81ba42a1c3c44240483f68a58e32b759baac0a01301b46464fabd0f715e359a9",
+          "physical_before": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "private_motor_rng_after": "0fffe4441fa20ac88968500305808b959f3ba45d8897c5c34359d02257802f2b",
+          "private_motor_rng_before": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "sampled_noise": "bede45855f446637f792db598e779c272c4a812b783a7290cfc865ba818aba7c",
+          "source_chunk": 2
+        }
+      ],
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/manifest.json",
+        "sha256": "d9c135958c0aa3fc409a40ccd783011dc7ada062c9302815cd157ed19d4ca6a2",
+        "bytes": 1585
+      },
+      "manifest_summary": {
+        "completed_chunks": 13,
+        "executed_primitive_steps": 400,
+        "pending_decision": null
+      },
+      "chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000001.json",
+          "sha256": "7d26126aabea58257ccdde9ba3debadffa70f3b836c56174727f2918aaf92f44",
+          "bytes": 24987
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000002.json",
+          "sha256": "7feba537be516a6882a60bc369e165134bf70c0e60d5cdac4721402a59a3e4f9",
+          "bytes": 25356
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000003.json",
+          "sha256": "4a76f82356961964346db27b17c5b66dcde421d3565a67a005409dbee3b7d10b",
+          "bytes": 25118
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000004.json",
+          "sha256": "c26f284653b4ab069ac542d76a8db38173057bece5299bdbf96285e9771a77ae",
+          "bytes": 25852
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000005.json",
+          "sha256": "b163a3b6340b56509e9e994d2f2ed5041ae139d16b9b24b0c0e4cd6a29b78af1",
+          "bytes": 25583
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000006.json",
+          "sha256": "ace2a12419196bf49b25433cbf7a9b3c0b9f910f199e992da3581d6685980f93",
+          "bytes": 25282
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000007.json",
+          "sha256": "a229aef74e61e2df16134317358850b2e5844d82cbfcdb2cbaf95133c4fb8913",
+          "bytes": 25497
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000008.json",
+          "sha256": "0b0e17943f8a2f2927c39216925be16ed2aecca1481eb3f03886c9298f37aaf2",
+          "bytes": 25348
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000009.json",
+          "sha256": "e63be9c142b45bf6741b2a2bf49dfe88e2682de7fd7a07f0086061bc791b0d4f",
+          "bytes": 25551
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000010.json",
+          "sha256": "de85928e622a6a16b7c42c2e04f0554e3d1faddd0a85133e90baadf772066d3e",
+          "bytes": 25335
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000011.json",
+          "sha256": "e12e07964d26f37b2873ea2a378a31d69425f2ac6884b2f973bcbe81d01d9a80",
+          "bytes": 25554
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000012.json",
+          "sha256": "b641def88c1e4ac44ef343150b66073d3d10ce5be072c6bbcd11791470f2533d",
+          "bytes": 25321
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-488b907b0aa04e94ab6dd1345f32d071/chunks/000013.json",
+          "sha256": "0bf046770e6b78b14500046e0ec05fba640b03593a27447367ac5fde6cbfc1b9",
+          "bytes": 25556
+        }
+      ]
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 4,
+        "case_key": "dose5-hold_current",
+        "case_profile_sha256": "e5f18ffd9cf729bd470f9047c41d27d4b12a2e3d8b7c35afd8319e58e9baa1c2",
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "condition": "hold_current",
+        "expected_reset": {
+          "actual_seed": 4,
+          "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+          "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+        },
+        "expected_teacher_seed": 4,
+        "horizon": 400,
+        "id": "prelift04-dose5-hold_current",
+        "method": "prelift_dose5-hold_current",
+        "motor_seed": 20261205,
+        "paired_instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "probe_holds": 5,
+        "reset_seed": 4,
+        "stage": "prelift_dose_grip_diagnostic",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-04"
+      },
+      "success": false,
+      "complete": true,
+      "primitive_steps": 400,
+      "chunks": 13,
+      "reset_identity": {
+        "actual_seed": 4,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:62:00.0",
+        "actual_seed": 4,
+        "corpus_episode_id": "episode-4b3602b86b954e978c5acd35b0657ea4",
+        "episode_limit": 400,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the black phone to the green phone rack."
+          ],
+          "effective_observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+          "sampled_instruction": [
+            "Lift the compact phone with shiny texture onto the phonestand for holding phones."
+          ],
+          "sampled_observation_sha256": "a5cb773c64aeb3035ad8b5b79c4e8747a705ed8c2a1628304a5c1fe6642d8f2f",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+        "requested_seed": 4,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "prelude_signatures": [
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "2351b36f8c1af43b2d425f92323da8bb2b794ad62a4e014a3459eff7a6030497",
+          "issued_actions": "0642a944a757df8a816eff677fad2aae8b466f3270edc613b117829c6f3da8f6",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "observation": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+          "physical_after": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "physical_before": "6d7719877143d15e36e45b43167e39b9216568432d41999ea7147f17aeb5ff2c",
+          "private_motor_rng_after": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "private_motor_rng_before": "521444e716f36810f3a814f4db60270775469439df4628614079a6e0e589ec7d",
+          "sampled_noise": "31043b11e2c1618ad0ee06d95b0cbcfecf0398ca298bea0b5ce950276ac380ad",
+          "source_chunk": 0
+        },
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "1d4d956b3753756706b5f1a02cfea3254dd80e827cfbfbbb9b4295407666e083",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "physical_after": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "physical_before": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "private_motor_rng_after": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "private_motor_rng_before": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "sampled_noise": "defb5d5c68f70dc93b3f3367702aa8bd60e0b43e4a122da8fa3a20f5cc25e2b4",
+          "source_chunk": 1
+        },
+        {
+          "global_numpy_after": "954893315fb4ddb1daafb6884c0cbf019a8110e5b20374d80a0998047e44404c",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "b0f08019e7cfeb4489d16f8e6a6749739b24ecd49f5b320a94afb6d74a1eecc1",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "1ac33917a6858d18061d50ee1afa19620475beac76a735e30f5410285b2035fa",
+          "observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "physical_after": "81ba42a1c3c44240483f68a58e32b759baac0a01301b46464fabd0f715e359a9",
+          "physical_before": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "private_motor_rng_after": "0fffe4441fa20ac88968500305808b959f3ba45d8897c5c34359d02257802f2b",
+          "private_motor_rng_before": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "sampled_noise": "bede45855f446637f792db598e779c272c4a812b783a7290cfc865ba818aba7c",
+          "source_chunk": 2
+        }
+      ],
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/manifest.json",
+        "sha256": "dbeb920999235233bfc12030ab4fae2dfeff12b8612b70ca5947e066120258b6",
+        "bytes": 1585
+      },
+      "manifest_summary": {
+        "completed_chunks": 13,
+        "executed_primitive_steps": 400,
+        "pending_decision": null
+      },
+      "chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000001.json",
+          "sha256": "9e3d4fa9a7ef088258a6b09075be7b5ae9f9e471044c353cda01c87eba7ef3f3",
+          "bytes": 25371
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000002.json",
+          "sha256": "79bbf7c983173ea8dcc653a917e5c0f2cbdd17f4d78b0fec2e6513834fe50eed",
+          "bytes": 25739
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000003.json",
+          "sha256": "65c718c71e92781acb6dc886112afb474428393f468b761991006a06d11f5322",
+          "bytes": 25502
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000004.json",
+          "sha256": "15d8ea691d07e326c20379b20e3546b36f5565f517eead672a4944ea06179075",
+          "bytes": 26236
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000005.json",
+          "sha256": "b772dcde2923717de6c8b29a6d9dfa252ed4e69738a80caea20700330a2ec96a",
+          "bytes": 26236
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000006.json",
+          "sha256": "4f61b1bc5101aae6a12ff730916fc956fff87e5dd4d83fa60a2a0f6527d4fed0",
+          "bytes": 26223
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000007.json",
+          "sha256": "7be76f62877d6d3f78ad51b0ed5b04c9e5c560fee4aa4bb8df5146654e6627e4",
+          "bytes": 26216
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000008.json",
+          "sha256": "11abf1185df6768bc370918b7918e1d89019c3dc16d1821969bb526140cb83c4",
+          "bytes": 26224
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000009.json",
+          "sha256": "3372cb57739574f69f03c2219adc3cd193291c01816bc050333da6b48e7a9a77",
+          "bytes": 25949
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000010.json",
+          "sha256": "98b848c2afdf9561a17adcfdd8a6cb2530c5150d975380747bb89cd9b6ac2bf6",
+          "bytes": 25662
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000011.json",
+          "sha256": "cc769b8ea3d71454d3adc1323fd8e88fe71e3c3052160e33582b1ef3d03d3800",
+          "bytes": 25883
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000012.json",
+          "sha256": "e67eb9255fe3dacd21f5043d6bc0af4b569c3bf6c1d5e14c2a407c99d6511d33",
+          "bytes": 25744
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-4b3602b86b954e978c5acd35b0657ea4/chunks/000013.json",
+          "sha256": "3f7127e8471fb047ebc9b7c0796288e707b9ba42ad79ecd2191ef4784b3037a4",
+          "bytes": 25938
+        }
+      ]
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 4,
+        "case_key": "dose5-close_endpoint",
+        "case_profile_sha256": "34ff6f3054b7377f8d18447a1f4dcc8f2e2f3bb93bc1ba6cb655693ea628e9ad",
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "condition": "close_endpoint",
+        "expected_reset": {
+          "actual_seed": 4,
+          "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+          "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+        },
+        "expected_teacher_seed": 4,
+        "horizon": 400,
+        "id": "prelift04-dose5-close_endpoint",
+        "method": "prelift_dose5-close_endpoint",
+        "motor_seed": 20261205,
+        "paired_instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "probe_holds": 5,
+        "reset_seed": 4,
+        "stage": "prelift_dose_grip_diagnostic",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-04"
+      },
+      "success": false,
+      "complete": true,
+      "primitive_steps": 400,
+      "chunks": 13,
+      "reset_identity": {
+        "actual_seed": 4,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:62:00.0",
+        "actual_seed": 4,
+        "corpus_episode_id": "episode-1d7e891f81c241b5a9d492078a0b1add",
+        "episode_limit": 400,
+        "features_sha256": "d2ef756a30a95c09d42d1586d8ac7939af270b69255a591f60687f07b8ad8ef7",
+        "instruction": [
+          "Take the black phone to the green phone rack."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the black phone to the green phone rack."
+          ],
+          "effective_observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+          "sampled_instruction": [
+            "Lift the compact phone with shiny texture onto the phonestand for holding phones."
+          ],
+          "sampled_observation_sha256": "a5cb773c64aeb3035ad8b5b79c4e8747a705ed8c2a1628304a5c1fe6642d8f2f",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "6e0899b35ec681e70feaaf8dcd91ab730d8bc4c8071a512d3ea2baf80723a16d",
+        "requested_seed": 4,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "prelude_signatures": [
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "2351b36f8c1af43b2d425f92323da8bb2b794ad62a4e014a3459eff7a6030497",
+          "issued_actions": "0642a944a757df8a816eff677fad2aae8b466f3270edc613b117829c6f3da8f6",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "observation": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+          "physical_after": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "physical_before": "6d7719877143d15e36e45b43167e39b9216568432d41999ea7147f17aeb5ff2c",
+          "private_motor_rng_after": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "private_motor_rng_before": "521444e716f36810f3a814f4db60270775469439df4628614079a6e0e589ec7d",
+          "sampled_noise": "31043b11e2c1618ad0ee06d95b0cbcfecf0398ca298bea0b5ce950276ac380ad",
+          "source_chunk": 0
+        },
+        {
+          "global_numpy_after": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "1d4d956b3753756706b5f1a02cfea3254dd80e827cfbfbbb9b4295407666e083",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "observation": "420a6f4190e328568903dad7fc2725f12e73deaf9d86cbfb0060c337175ce33a",
+          "physical_after": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "physical_before": "60ddbd1b9e844bfadc3d4b7e55c85d7a7d5bfa27dee92647c52ef9aa29a9ba15",
+          "private_motor_rng_after": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "private_motor_rng_before": "6a80e6855bcd3cbd4afba6c3b2d43694b43c1403db9f0fa2a558a265fe63e7c8",
+          "sampled_noise": "defb5d5c68f70dc93b3f3367702aa8bd60e0b43e4a122da8fa3a20f5cc25e2b4",
+          "source_chunk": 1
+        },
+        {
+          "global_numpy_after": "954893315fb4ddb1daafb6884c0cbf019a8110e5b20374d80a0998047e44404c",
+          "global_numpy_before": "7f8b5a2de2240fa4ab81a04019319fb28dd5dbbcce79d4d8210bceeb07376ac0",
+          "issued_actions": "b0f08019e7cfeb4489d16f8e6a6749739b24ecd49f5b320a94afb6d74a1eecc1",
+          "native_mask": "f2d20d4f56cf1daaaf4ea28bef88e461f618e42974554e7c90f1deb6b21fdde7",
+          "next_observation": "1ac33917a6858d18061d50ee1afa19620475beac76a735e30f5410285b2035fa",
+          "observation": "5be6819c54d2ab9cb5e74101823f8164a91a2b7b00e3eb9278177da8a3793ee1",
+          "physical_after": "81ba42a1c3c44240483f68a58e32b759baac0a01301b46464fabd0f715e359a9",
+          "physical_before": "3faa755353838b1269d97995a8ee4cf9e6a940c3e6e43a444fbc3fb84065f30b",
+          "private_motor_rng_after": "0fffe4441fa20ac88968500305808b959f3ba45d8897c5c34359d02257802f2b",
+          "private_motor_rng_before": "d5a1188e9c0c0d244b70ea98d49aa1a34257808df74d452662356a2106eaf24b",
+          "sampled_noise": "bede45855f446637f792db598e779c272c4a812b783a7290cfc865ba818aba7c",
+          "source_chunk": 2
+        }
+      ],
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/manifest.json",
+        "sha256": "022f83abe7726d6116cd2146d53271e72512d490b60a8aa7c403f94c357693f8",
+        "bytes": 1585
+      },
+      "manifest_summary": {
+        "completed_chunks": 13,
+        "executed_primitive_steps": 400,
+        "pending_decision": null
+      },
+      "chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000001.json",
+          "sha256": "6cb2d422d4759c95f697918fda18ba057609ad02bcb4d91c89e373753ae4db9e",
+          "bytes": 25387
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000002.json",
+          "sha256": "d42c20d5d453307f43f75113ca037b2d9fcd73734c8939a5a5499ef1567a7029",
+          "bytes": 25756
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000003.json",
+          "sha256": "bfc484ea030c87561e0e2c1e8e60f445f5508c040be881b71c220e990520f221",
+          "bytes": 25518
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000004.json",
+          "sha256": "b1c63600b1f3e02a6f35a65cbe936b398c2ce88c8ad89690b987c3d237e6c44c",
+          "bytes": 26251
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000005.json",
+          "sha256": "001477d11612754375b6cfcbd201c190bd43978995d631a79d6e4d545e1a0bbd",
+          "bytes": 26246
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000006.json",
+          "sha256": "1b5b6cd2b589e8c305931f2d70418353654796fc069ef4fa7ae51d570ad7ca64",
+          "bytes": 26239
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000007.json",
+          "sha256": "a8316407c79bf56826de58d8c02185da9b86994a0f81264011c14926da4983a9",
+          "bytes": 26228
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000008.json",
+          "sha256": "7c4542976555681a4b8cc2cea5f7842576c148b6477c42af1546cb1c6b2ddadd",
+          "bytes": 26232
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000009.json",
+          "sha256": "866b965bcb6cbd2920211f5f5913c6645233eaf46227c50c614e0d4d23ce6af7",
+          "bytes": 25959
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000010.json",
+          "sha256": "0446b3802a792f2a347ceb9248e4535ba44d92a30dd499bb276b9f43564b66ea",
+          "bytes": 25678
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000011.json",
+          "sha256": "4fac04584a322301ba9a397ac50483e14bd06525badc18aabebb15e6ec36f8b4",
+          "bytes": 25900
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000012.json",
+          "sha256": "dc392033b528c02ece6faf3e33a350467eb7564148d6290ba96c2c8932a455ca",
+          "bytes": 25756
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/corpus/episodes/episode-1d7e891f81c241b5a9d492078a0b1add/chunks/000013.json",
+          "sha256": "4c1227ee726227aaa6cd17a6d52b1ff577124b39424b28f25b1980c495954de3",
+          "bytes": 25959
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "factorial_comparison": {
+      "actual_successes": {
+        "dose1-close_endpoint": false,
+        "dose1-hold_current": false,
+        "dose5-close_endpoint": false,
+        "dose5-hold_current": false
+      },
+      "all_four_preludes_exact": true,
+      "interpretation": "Matched prospective1vs5 repeated-native-hold recipes; extra TOPP micro-motion/RNG consumption precludes pure elapsed-time causality. OldE is historical only, no significance/class/fit/all12bank claim.",
+      "recipe_comparison_eligible": true,
+      "same_grip_cross_dose_probe_targets_exact": true,
+      "within_dose": {
+        "1": {
+          "actual_successes": {
+            "close_endpoint": false,
+            "hold_current": false
+          },
+          "closure_contrast_nondegenerate": true,
+          "contrast_threshold": 1e-05,
+          "interpretation": "One original case/one pair; equal/negligible grip commands or unequal preludes make closure interpretation inconclusive; no significance/class/fit/all12bank claim",
+          "mechanism_interpretation_eligible": true,
+          "nominal_grip_contrast_max_abs": 0.47236180305480957,
+          "prelude_three_chunks_exact": true,
+          "probe_other13_parameters_exact": true
+        },
+        "5": {
+          "actual_successes": {
+            "close_endpoint": false,
+            "hold_current": false
+          },
+          "closure_contrast_nondegenerate": true,
+          "contrast_threshold": 1e-05,
+          "interpretation": "One original case/one pair; equal/negligible grip commands or unequal preludes make closure interpretation inconclusive; no significance/class/fit/all12bank claim",
+          "mechanism_interpretation_eligible": true,
+          "nominal_grip_contrast_max_abs": 0.47236180305480957,
+          "prelude_three_chunks_exact": true,
+          "probe_other13_parameters_exact": true
+        }
+      }
+    }
+  },
+  "bank_candidate_04": null,
+  "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "qualification": {
+    "actual_actions": 400,
+    "cache_shapes": [
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ]
+    ],
+    "complete_real_episode": "prelift04-dose1-hold_current",
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "kv_gradient_norm": 0.003151320926272331,
+    "motor_gradients": 0,
+    "native_parity": {
+      "max_abs_error": 0.0,
+      "passed": true,
+      "tolerance": 2e-05
+    },
+    "qualification_episode": "prelift04-dose1-hold_current",
+    "repeated_paired_prefix": {
+      "instruction": [
+        "Take the black phone to the green phone rack."
+      ],
+      "kv_cache_exact": true,
+      "original_reset_identity": null,
+      "prefix_mask_exact": true,
+      "public_features_exact": true,
+      "saved_original_frame": null
+    },
+    "status": "passed",
+    "zero_action_exact": true,
+    "zero_fixed_kv_exact": true,
+    "zero_kv_exact": true
+  },
+  "actual_new_actions": 1600,
+  "independent_episode_action_sum": 1600,
+  "canonical_snapshot": {
+    "actual_actions": 23922,
+    "by_method": {
+      "a1/action": 4161,
+      "a1/capacity_native": 400,
+      "a1/capacity_teacher": 608,
+      "a1/event_aligned_teacher": 2523,
+      "a1/event_fixed_control": 400,
+      "a1/kv": 3643,
+      "a1/native": 5897,
+      "a1/noise": 3890,
+      "a1/prelift_close_endpoint": 400,
+      "a1/prelift_dose1-close_endpoint": 400,
+      "a1/prelift_dose1-hold_current": 400,
+      "a1/prelift_dose5-close_endpoint": 400,
+      "a1/prelift_dose5-hold_current": 400,
+      "a1/prelift_hold_current": 400
+    },
+    "by_phase": {
+      "a1": 23922
+    },
+    "charged_actions": 23922,
+    "decision_count": 790,
+    "header": {
+      "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+      "contract": {
+        "candidate_tasks": [
+          "place_phone_stand",
+          "place_object_stand"
+        ],
+        "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+        "phase_id": "frozen-pi05-endtoend-20261031-r1",
+        "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+      },
+      "phase_caps": {
+        "a1": 30000,
+        "condition_cross": 15000,
+        "source": 120000,
+        "source_validation": 30000,
+        "student_evaluation": 105000
+      },
+      "schema": "robotwin_campaign_actions_v1",
+      "source_caps": {
+        "sac_calibration_minus_train0": 19200,
+        "sac_calibration_minus_train1": 19200,
+        "sac_calibration_minus_validation2": 19200,
+        "sac_calibration_plus_train0": 19200,
+        "sac_calibration_plus_train1": 19200,
+        "sac_calibration_plus_validation2": 19200
+      },
+      "total_actions": 300000
+    },
+    "journal_events": 1588,
+    "journal_sha256": "87b12dda5299a0ddff26e548d0d6789c65bbf07d4a5608f8b79873e8469035f4",
+    "pending_actions": 0,
+    "receipts": {},
+    "runs": {
+      "frozen-pi05-endtoend-a1-20261031-r1": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "frozen-pi05-endtoend-a1-20261031-r2": "969fb44c503fac409373abc88ce5687b71195068",
+      "frozen-pi05-event-capacity-20261031-r1": "be247676c1217d9e046091c52cac2b7d0f2d3014",
+      "frozen-pi05-event-suffix-20261101-r1": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+      "frozen-pi05-prelift-factorial-20261101-r1": "8632e421412388e8bb9c933b2b10cf5940dc7156",
+      "frozen-pi05-prelift-pair-20261101-r2": "374ee8958f7cabcd54d4401057a604c6cc6ae51a",
+      "frozen-pi05-reactive-capacity-20261031-r1": "8fb991c8d5a3b9f86a81e2a4f2cf55b185cec81f"
+    },
+    "uncertain_actions": 0,
+    "unresolved_decisions": {}
+  },
+  "action_ledger": {
+    "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+    "contract": {
+      "candidate_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ],
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+    },
+    "phase_caps": {
+      "a1": 30000,
+      "condition_cross": 15000,
+      "source": 120000,
+      "source_validation": 30000,
+      "student_evaluation": 105000
+    },
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "total_actions": 300000
+  },
+  "pending": null,
+  "source_student_admitted": false,
+  "cache_created": false,
+  "fit_updates": 0,
+  "all_twelve_teacher_gate_passed": false,
+  "result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/result.json",
+    "sha256": "96242cb9ccaf9d7a9bb8efe6ef923cd4b5619151ccd7c099da54903a78939b95",
+    "bytes": 328725
+  },
+  "full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/recovery.pt",
+    "sha256": "673e18c226e36219df5e93837aae83c8a0ec29a9b7c6172a9fc88a9b48606b9e",
+    "bytes": 253477
+  },
+  "full_recovery_ZIP_CRC": null,
+  "full_recovery_payload_deserialized": false,
+  "post_branch_rng_refs": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/dose1-hold_current-post-rng.pt",
+      "sha256": "80fb7f383eb900b8bcc2e4eaab6dcaebd159ce80567bc0f00b8eae2b47bcff14"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/dose1-close_endpoint-post-rng.pt",
+      "sha256": "1b49d8ccf1fc5f97a8bb08eb6ca8f90bf3defaad908b06546dde42460f61ad0c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/dose5-hold_current-post-rng.pt",
+      "sha256": "edc0906f572222ca74bc2c2b88a0fcf6432c9df56a41d4ceb877b46160e534d7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/dose5-close_endpoint-post-rng.pt",
+      "sha256": "5aae455143e3746b572c30ec9032a61f5cfbda5db0666613d221323bdf542b36"
+    }
+  ],
+  "closed_control_recovery_count": 4,
+  "allocation_closeout": {
+    "exit_code": 0,
+    "error": null,
+    "attempt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793471964000000-0007",
+      "started_unix": 1793471964.0,
+      "slice_seconds": 840,
+      "reserved_seconds": 900,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793472213.723424,
+      "exit_code": 0,
+      "charged_seconds": 310,
+      "slice_overrun": false
+    },
+    "charged_gpu_seconds": 310,
+    "child_cumulative_gpu_seconds": 310,
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "source_commit": "8632e421412388e8bb9c933b2b10cf5940dc7156"
+  },
+  "allocation_closeout_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/allocation-closeout.json",
+    "sha256": "bb4c8313374b43e44b395f21f60a49d9dcbde85a38754e8c4539737716d2babf",
+    "bytes": 630
+  },
+  "settled_phase_GPU_seconds": 3452,
+  "active_reservations": [],
+  "actual_storage_bytes": 683866454,
+  "verification_limits": "All4episode manifests and52 referenced chunk JSON hashes checked; masks/physical scalars remain bound producer evidence, no arrays decoded, models/tests/actions/RNG replay or earlier event forest reconciliation. Current cache budget is independent and source/fit gates remain false."
+}

@@ -56,20 +56,45 @@ unit qualification, not VLA/physical qualification, target support or fitting.
 No actual cache/fit/source admission follows.
 [CPU receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/WIDE-ACTION-CPU-RECEIPT.json).
 
-Current old-phase CPU spend is1277/1800,523 remaining; new LIBERO CPU164/600
-is separate. The original grant/header, failed cases and full recoveries stay
-intact. The prospective physical test uses equal-length prelift holds to
-separate added time from extra gripper closure on04, with latest-B RNG ancestry
-and no automatic teacher-bank or fitting admission. Its declared ceilings are
-120 inclusive CPU-seconds and600 GPU-seconds/800 actions within the residual,
-conditional on concrete code qualification/admission. A separately declared
-partial cache may prepare known records but cannot rewrite the ended all12-
-before-cache contract or admit training without a qualified complete bank.
+The later matched prelift pair closes with both conditions failing400,
+800 actions. Requested grip contrast.321608 and identical preludes/other13
+parameters were verified; measured closure moved fingers about2.3mm more,
+but the phone still lost elevation before opening. Native C3 retiming exposes
+only9 of32 nominal grip slots, a mechanism hypothesis rather than proof.
+The failed pre-model launcher costs103 GPU-seconds and its qualified retry233,
+336 total inside the original600 ceiling; original failures stay retained.
+[Closed pair](../../outputs/frozen-pi05-endtoend-20261031-r1/PRELIFT-CLOSEOUT.md).
 
-Parent review matches17 physical-report files and10 support-report files to
-saved remote hashes and verifies JUnit metadata. The LIBERO baseline uses a
-separate motor, action ledger and CPU/GPU phase; none of these phone checks
-block it. [Review](../../outputs/frozen-pi05-endtoend-20261031-r1/PARALLEL-BRANCHES-PARENT-REVIEW.json).
+The prospective matched four-case follow-up is also terminal: one versus five
+repeated native holds, each with current versus close-endpoint grip, all
+**four fail400**. All preludes and same-grip targets across doses match;
+within-dose contrasts are nondegenerate (.472362). It costs310 GPU-seconds
+and1,600 actions, with frozen721a unchanged and all four post-branch recoveries
+saved. No candidate04 exists, so the fixed bank stays11/12 and fitting remains
+closed. These specific interventions did not rescue04; this does not reject
+all reactive policies or establish a unique contact/approach/transport cause.
+Repeated native holds also consume TOPP/RNG operations, so this is not a pure
+elapsed-time contrast. [Four-case receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/FACTORIAL-TERMINAL-RECEIPT.json).
+
+The targeted phase closes these jobs at3,452 GPU-seconds/23,922 actions with
+no active holds. Old-phase CPU is1,682/1,800,118 remaining.
+One composite qualification passes29 partial-wrapper and33 factorial cases plus
+real04 schedule preflight on zero-GPU2CPU/16GiB,88 inclusive CPU-worker-seconds.
+The original bank44, wide40, resource3 and parallel14 checks are retained, not
+repeated. The zero-action PARTIAL11 cache also closes successfully:11 cases/77 rows
+(49TRAIN/28VAL),1,377,989,403 bytes and154 GPU-seconds. The execution owner
+checks all77 payload hashes, immutable cursor/RNG-recovery bytes and unchanged
+721a motor. The canonical action tail stays unchanged. It is preparation, not
+a full12 seal, successful04 or fitting/source admission.
+[CPU proof](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL-FACTORIAL-CPU-RECEIPT.json),
+[cache closeout](../../outputs/frozen-pi05-endtoend-20261031-r1/PARTIAL11-TERMINAL-RECEIPT.json).
+
+The next prospective command-capacity diagnostic may retain all original12
+identities/8TRAIN4VAL including failed04, explicitly labeling its replay failed.
+It asks whether reactive heads can imitate known submitted command plans, not
+whether all teachers succeeded. This requires a new diagnostic profile/adapter
+and linked finite resource plan; the old success gate/seal remains unchanged.
+No further blind dwell retry or actual fit is admitted by these closeouts.
 
 ## Closed replay diagnosis: requests exact, physics unresolved
 

@@ -1,0 +1,9 @@
+The original prelift allocation job-0bqytnaeje1t failed before its GPU probe/model/physics because the shared resource helper rejected the540-second slice. Its scheduler failure and exact traceback are retained. An explicit pre-begin reconciliation charges103GPU-seconds to the original child600 ceiling; it creates no physics outcome or new action charge.
+
+Resource-only child6397 adds an explicit short-slice opt-in while preserving the legacy600-second default. Its three regression cases passed on actual0GPU/2CPU/16GiB,73inclusiveCPU-seconds. The repaired parent imports this helper; the scientific driver, PYTHONPATH, producer374, profile0072, context50fd, motor, and task remain unchanged. The retry reserves497 (=437+60), so failed103+remaining497 never exceeds600. Original historical B cost2652 stays bound separately from the actual current2755.
+
+Retry job-i5dem442uskn completed both whole04 episodes: hold_current0/1 (400actions), close_endpoint0/1 (400actions). The first three chunks match exactly and the left-gripper contrast is nondegenerate; the other13 probe parameters match. This one intervention pair did not rescue04. Candidate04 is null; full12/cache/fit/source admission remains false.
+
+All26 chunk JSON references and both episode manifests were rehashed. Full recovery SHA d3d17ab158454575e05f629294a0dd5f65c28eea57fa5ad03df6a77ea3c2a5f9 (157,861B) passed ZIP CRC without loading tensors. Motor after721a… is unchanged. Producer canonical totals22322actual=charged, pending0/uncertain0,1483events tip56cbb663… are bound, not independently replayed through the earlier event forest. Retry233 plus failed103 gives336GPU-seconds; old phase cumulative2988.
+
+Independent teacher-bank component061874 passed44/44 synthetic cases on0GPU,75CPU-seconds; this did not assemble/cache a real bank. Old phase CPU is1502/1800 used,298remaining. No further phone GPU is admitted by these results.

@@ -46,35 +46,29 @@ motor identity are verified; terminal restore and an independent full-journal
 replay were not performed. Target57 data remain excluded from source
 pretraining. [Terminal evidence](../outputs/dsrl-pi05-task57-20261031-r1/RESULT.md).
 
-The targeted Motus/RoboTwin event replay stops at04 before fitting: four
-aligned successes,04 natural400 failure; every demo is retained. The completed
-physical audit localizes lost phone elevation before opening, consistent with
-unstable grasp/early transport, without contact-level causal proof. A separate
-saved-plan support audit finds that the unused ±0.05rad/zero-gripper head cannot
-exactly match the four successful targets; this cannot explain04 because its
-expert replay bypasses that head. Original05–11 diagnostic execution is complete:7/7 succeed193actions each.
-The fixed bank remains11/12, with04 failed; no mixed-run bank is silently admitted.
-There is no fit, teacher-bank admission, learned-capacity or ICRL result.
-Settled targeted GPU/actions2652/21522, no active GPU job. The prospective
-wide-head40 synthetic checks pass (74CPU-s); targeted CPU1277/1800. [Evidence
-and competing explanations](robotwin-coefficient-steering/EVALUATION.md).
+The targeted Motus/RoboTwin fixed teacher bank remains11/12: original04
+fails, all05–11 succeed once, and no fit has run. The matched prelift pair
+fails both400 despite actual extra finger closure. Its one-versus-five-hold
+four-case follow-up also fails all four400, with matched preludes, nonzero
+closure contrast and unchanged frozen motor. This rules out rescue by these
+particular recipes, not the full reactive class or a unique failure mechanism.
+Known phone cost is3,452 GPU-seconds/23,922 actions; CPU1,682/1,800. The
+zero-action PARTIAL11 cache closes at77 rows (49TRAIN/28VAL),1.378GB; all
+payload hashes and frozen motor identity pass. No full-bank/fit/source admission. Failed04 is retained; no filtered bank.
+[Evidence and competing explanations](robotwin-coefficient-steering/EVALUATION.md).
 
-The next LIBERO baseline follows the human's request for weak native success
-with the same pretrained pi0.5. Before new outcomes, a closed12-task native
-screen and separate weak-query confirmation are fixed:2–8 successes of20,
-ranked nearest4 then task ID. The task/query bank freezes before fresh SAC;
-another fresh native control must remain weak before SGD. The fixed500k curve
-and untrained tied/SAC controls distinguish learning from noise parameterization.
-Native screening is running on Baige job-sdxpm3y64pd9. The01:10 owned check
-verifies151/240 completed episodes: task44 is5/20 (25%) and59 is3/20 (15%),
-with20 distinct physical-state hashes per completed task. Both meet the screen
-band; the full fixed ranking and separate query confirmation still precede
-selection. No SAC actor/SGD exists yet. The screen4 and continuation3 new CPU
-checks pass (164CPU-s total), and explicit child migration preserves original
-costs and source ancestry. Native0/20 and20/20 tasks are retained rather than
-substituted after learning starts. No robot learning gain is yet established.
-This development selection and its failed candidates stay disclosed, excluded
-from source40/meta-pretraining. [Authority and bounded phase](../outputs/libero90-pi05-headroom-online-20261101-r1/GRANT.json).
+The weak-native LIBERO baseline now trains on task44, turn on the stove.
+Screening/confirmation5/20 and fresh native6/20 establish headroom; tied noise
+13/20 and initialized SAC8/20 are retained untrained controls. The20k panel
+regresses1/20, then the40k panel reaches20/20 at40,140 actual updates,1,651
+primitives+200 settling. This is a promising interim gain over every control,
+not an endpoint selection. At02:40 the learner has53,120 updates/189episodes,
+151 successes/38 failures with finite losses/stable recovery. Training adds100
+successes/3 failures between checks. Low entropy/temperature and concentration
+persist, so they alone cannot explain the earlier failure. The fixed500k curve,
+last-three persistence and final-native control remain; all target histories
+stay excluded from source pretraining. Whole-lineage156,664 actions includes
+screening/controls/training. [Both results and next test](../outputs/libero90-pi05-headroom-online-20261101-r1/EARLY-REGRESSION.md).
 
 The compatible collection records actual steering noise under the same frozen
 motor: AD can predict that noise from ordered learning histories; DPT can use
