@@ -263,7 +263,7 @@ def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_si
                 criterion_pass=cross_outcome == "passed", path="synthetic-helper-result.json", sha256="c"*64,
                 recovery_ref=dict(path="synthetic-helper-owned-cursor", sha256="c"*64))) if cross_outcome else None)
         assert status == ("boundary_stop" if cross_outcome == "boundary_stop" else "initial_prefix_complete")
-        assert budget.snapshot()["unresolved_decisions"] == 0
+        assert not budget.snapshot()["unresolved_decisions"]
     assert received == ([12, 24, 24] if cross_outcome == "passed" else [12, 24])
     assert len(validation_modes) == 36 and all(validation_modes)
     final = source.json.loads((output/"source-state.json").read_text())
