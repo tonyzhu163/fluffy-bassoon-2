@@ -75,3 +75,13 @@ the paper's three-seed aggregate or its sample-efficiency confidence interval.
 Primary references: [released launcher](https://github.com/nakamotoo/dsrl_pi0/blob/7f48937d4553e95244cd81c79236a3256df80597/examples/scripts/run_libero.sh),
 [original control loop](https://github.com/nakamotoo/dsrl_pi0/blob/7f48937d4553e95244cd81c79236a3256df80597/examples/train_utils_sim.py),
 [paper](https://arxiv.org/html/2506.15799v2#S5.SS5).
+
+On Baige sm_120, the original JAX0.5 Triton GEMM compiler aborts at the
+first Pi0 inference with an unsupported bf16-to-f16 rounding conversion.
+Initialize the JAX backend with `--xla_gpu_enable_triton_gemm=false` and
+`--xla_gpu_triton_gemm_any=false`, before importing the upstream launcher.
+Keep bfloat16 weights, package pins, noise, losses and training chronology
+unchanged. Record the compiler departure and effective flags before backend
+initialization. Disable core dumps. Carry failed GPU time and unresolved
+physical episode reservations into each replacement allocation; the launcher
+requires both prior charges and subtracts them from the remaining phase caps.

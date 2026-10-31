@@ -1,0 +1,39 @@
+{
+  "failed_job": "job-0lcdo6w1cmo5",
+  "source_commit": "17d5924ba6f66a3754355d23732c6d6f755e892a",
+  "failure": "First Pi0 inference: bf16 to f16 unsupported conversion; LLVM unsupported rounding mode; exit134",
+  "gpu": "NVIDIA RPBZZZ6 / compute capability12.0",
+  "conservative_gpu_seconds": 240,
+  "cumulative_conservative_gpu_seconds": 660,
+  "remaining_gpu_seconds": 35340,
+  "conservative_pending_actions": 400,
+  "next_run": "dsrl-pi0-task57-20261101-s0-r4",
+  "next_compiler_flags": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+  "precision_unchanged": "original bfloat16 Pi0 parameters",
+  "package_versions_unchanged": true,
+  "scientific_recipe_unchanged": true,
+  "core_dumps_disabled_for_next_run": true,
+  "cpu_previous_reservations": 1770,
+  "cpu_settlement": [
+    {
+      "job": "job-94pl9kga3z8m",
+      "created": "2026-11-01T01:51:23+08:00",
+      "ended": "2026-11-01T01:52:31+08:00",
+      "all_in_lifetime_seconds": 68,
+      "conservative_charge_reduced_from": 150,
+      "conservative_charge": 120
+    },
+    {
+      "job": "job-49rpoz0mpx3s",
+      "created": "2026-11-01T01:59:08+08:00",
+      "ended": "2026-11-01T02:00:09+08:00",
+      "all_in_lifetime_seconds": 61,
+      "conservative_charge_reduced_from": 240,
+      "conservative_charge": 120
+    }
+  ],
+  "cpu_settled_prior_seconds": 1620,
+  "cpu_r11_maximum_seconds": 180,
+  "cpu_phase_ceiling_seconds": 1800,
+  "primary_reference": "https://github.com/jax-ml/jax/issues/19534"
+}
