@@ -1,0 +1,1 @@
+Primary SAC job-w8deahieli8q is Running. Snapshot235660updates/1303episodes/12277replay,1264successes39failures. No new completepanel since22004020/20. Latest stablefullrecovery/rawRPC hashes match; losses finite. Producer269603wholephaseactions/14493115745bytes;17796.62activeGPU-seconds plus3076prior. Same500000/finalnative/caps. Next07:00.

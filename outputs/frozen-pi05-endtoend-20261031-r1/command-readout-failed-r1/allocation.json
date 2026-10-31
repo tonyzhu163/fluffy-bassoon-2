@@ -1,0 +1,79 @@
+{
+  "format": "robotwin_command_diagnostic_physical_readout_v1",
+  "admitted": true,
+  "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+  "request_sha256": "859be45272f7f69dec0c9842d4f6d13089754fbc6cd4e64a7296eb00531e72cb",
+  "hostname": "job-ctc5ji8fr720-master-0",
+  "gpu_count": 1,
+  "maximum_robot_actions": 6000,
+  "run_id": "frozen-pi05-command-readout-20261101-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/experiment",
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793486941000000-0014",
+  "resource_plan_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r1/RESOURCE-PLAN-INPUT.json",
+    "sha256": "8de9111d8e887ea47651b9c0dcf9ade469898b23326237f8c8c441707fe12cdb"
+  },
+  "authority_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r1/COMMAND-DIAGNOSTIC-READOUT-CHILD-AUTHORITY.json",
+    "sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0"
+  },
+  "predecessor_terminal_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r1/FACTORIAL-TERMINAL-RECEIPT.json",
+    "sha256": "2da5b0bf18eb0c444b32e9cb6514970a5c5aeaa828b4552e5f3316999e7c5899"
+  },
+  "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+  "action_ledger": {
+    "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+    "contract": {
+      "candidate_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ],
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+    },
+    "phase_caps": {
+      "a1": 30000,
+      "condition_cross": 15000,
+      "source": 120000,
+      "source_validation": 30000,
+      "student_evaluation": 105000
+    },
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "total_actions": 300000
+  },
+  "driver_deadline_unix": 1793488321.0,
+  "cleanup_seconds": 60,
+  "minimum_episode_admission_seconds": 90,
+  "aggregate_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1",
+  "maximum_output_bytes": 8589934592,
+  "code_migration": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r1/CODE-MIGRATION.json",
+    "sha256": "e86f457d26d8ad000a69caa8744f6806d3a622ecd333a8bd136ea6e3fc9dd2df"
+  },
+  "required_CPU_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/command-readout-linked-resource-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "88cd3f6ecfdf1a419d5c79166efb2616f4fd742228fac097355349760df4a188"
+  },
+  "prior_actual_global_GPU_seconds": 6982
+}

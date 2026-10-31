@@ -69,8 +69,11 @@ and frozen721a checks. Actual54 readout-resource CPU cases and optional
 all90 analysis pass in85/180 worker-seconds. Clipping barely changes the
 wide head's worsened validation grip error; the fixed robot readout remains
 necessary. Its first dispatch fails in wrapped-callable provenance before
-model/env/episode construction,75 GPU-seconds/zero actions. A narrow repair
-keeps the same1,425 remaining seconds and all15 cases/6,000 actions. No
+model/env/episode construction,75 GPU-seconds/zero actions. The narrow547
+repair passes four allocated CPU cases; the retry now completes real episodes
+with unchanged motor, parity/KV-gradient and full recovery checks. It keeps
+the same1,425 remaining seconds and all15 cases/6,000 actions. The complete
+robot comparison is still pending. No
 validation checkpoint selection, source/student claim or extra approval gate.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 

@@ -66,7 +66,9 @@ MSE0.00915935 TRAIN/0.00989701 VAL. Required54 resource-gate checks and the
 optional cached wide report pass. Gripper clipping barely changes the wide
 head's validation regression. The first fixed15 readout dispatch fails in
 wrapped-callable provenance before any model/environment or episode,75GPU-s
-and zero actions; a narrow repair retains its1,425 remaining seconds. No physical benefit, source RL or Transformer
+and zero actions. Identity-scoped repair547 passes four CPU regressions;
+its retry has verified real episodes/parity/frozen motor/recovery within the
+same1,425 remaining seconds. No complete robot comparison is available yet. No physical benefit, source RL or Transformer
 result is available yet, and validation never selects an earlier endpoint.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
