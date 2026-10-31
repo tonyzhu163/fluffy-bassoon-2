@@ -38,7 +38,10 @@ PROFILE binds its file SHA and expected canonical head-contract SHA. The class
 can reconstruct only this exact version from configuration and refuses legacy
 or changed protected bound/headroom buffers on checkpoint load. Standard
 `state_dict`/Torch checkpoint APIs are reused; no new checkpoint framework or
-learner is introduced. The caller still verifies actual motor/norm/URDF file
+learner is introduced. Assignment-style checkpoint loading (`assign=True`) is
+explicitly refused before mutation; a lossy comparison cannot install distinct
+higher-precision protected buffers. Ordinary copying round trips and legacy
+`strict=False` bound rejection remain covered. The caller still verifies actual motor/norm/URDF file
 hashes and binds the configuration/contract/policy hashes before any runtime.
 The1.1 bound is represented in the inherited float32 bound buffer; declared
 physical units and requested-versus-applied clipping semantics stay explicit.

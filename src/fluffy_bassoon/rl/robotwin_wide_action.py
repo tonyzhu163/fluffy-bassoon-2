@@ -98,6 +98,10 @@ class WideActionResidual(ReactiveALOHAActionResidual):
         return head
 
     def load_state_dict(self, state_dict, strict=True, assign=False):
+        # Assignment can install a higher-precision saved buffer after a
+        # comparison rounded it to the current dtype. Copy-only loads keep
+        # this variant's protected storage/dtype/contract immutable.
+        if assign:raise ValueError('Wide-head protected buffers require assign=False')
         # Loading a legacy same-width policy must not silently overwrite this
         # variant's protected bounds/headroom buffers, even with strict=False.
         for name in ('bounds','arm_lower','arm_upper'):

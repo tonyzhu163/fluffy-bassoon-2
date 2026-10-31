@@ -136,3 +136,20 @@ def test_committed_prospective_config_constructs_exactly_with_its_declared_hash(
     assert config['declared_arm_delta_radians']==2. and config['declared_raw_gripper_delta']==1.1
     assert profile['native_interface_reference']['legacy_arm_delta']==.05
     assert not any(profile['gates'].values())
+
+
+@pytest.mark.parametrize('buffer',['bounds','arm_lower','arm_upper'])
+@pytest.mark.parametrize('strict',[False,True])
+def test_assign_true_cannot_install_changed_high_precision_protected_buffers(buffer,strict):
+    module=head();before=deepcopy(module.state_dict());configuration=module.config();sha=module.contract_sha256()
+    saved=deepcopy(before);saved[buffer]=saved[buffer].double();saved[buffer][0]+=1e-9
+    # This is the review's actual lossy-comparison trap, not merely a large
+    # mismatch already rejected by the original protected-buffer regression.
+    assert torch.equal(saved[buffer].float(),before[buffer])
+    assert not torch.equal(saved[buffer],before[buffer].double())
+    saved['hidden.bias']+=.125  # Rejection must happen before ANY parameter copy.
+    with pytest.raises(ValueError,match='assign=False'):
+        module.load_state_dict(saved,strict=strict,assign=True)
+    assert module.config()==configuration and module.contract_sha256()==sha
+    after=module.state_dict()
+    assert all(after[k].dtype==v.dtype and torch.equal(after[k],v) for k,v in before.items())
