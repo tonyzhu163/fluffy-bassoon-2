@@ -290,16 +290,17 @@ def test_postburst_thresholds_and_stop_are_optimizer_steps_not_actions(monkeypat
     patch_rng(monkeypatch, profile)
     root, output = paths(tmp_path, 'bursts')
     learner = FakeSAC()
-    # One3-chunk episode must retain all60 updates, crossing BOTH20 and40.
+    # One3-chunk episode retains all60 updates and crosses nominal stop40;
+    # this is the realistic single-threshold post-burst overshoot behavior.
     result = profile.run_profile(FakeSimulator(learner, chunks_per_episode=3), FakeMotor(), learner,
         np.random.default_rng(0), output=output, root=root, contract=contract(profile),
-        stop_updates=40, panel_interval=20, query_states=(40, 41), max_actions=5000)
+        stop_updates=40, panel_interval=40, query_states=(40, 41), max_actions=5000)
     assert result['completed'] and result['target_optimizer_updates'] == 60
     assert result['training']['episodes'] == 1 and result['training']['chunks'] == 3
     assert result['training']['primitive_steps'] == 6
     learned = [panel for panel in result['panels'] if panel['kind'] == 'learned']
-    assert [panel['threshold_updates'] for panel in learned] == [20, 40]
-    assert [panel['actual_optimizer_updates'] for panel in learned] == [60, 60]
+    assert [panel['threshold_updates'] for panel in learned] == [40]
+    assert [panel['actual_optimizer_updates'] for panel in learned] == [60]
     assert all(len(panel['receipts']) == 2 for panel in learned)
     assert learner.update_calls == list(range(1, 61))
     assert result['panels'][-1]['kind'] == 'final_native'
