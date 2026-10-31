@@ -100,6 +100,17 @@ The optional `after_source` callable in the orchestration API is reserved for
 the existing control owner's separately pinned24-case A2 helper; no duplicate
 cross-condition implementation or second CLI is added here. Initial source
 collection does not depend on an unfinished mean-teacher diagnostic.
+The owner ticket's `run_condition_cross=true` enables the small binding adapter:
+two trained TRAIN1 actors, one fixed blind alias selected by greatest final
+source-validation successes/2 with minusTRAIN1-first ties, original validation
+receipts, immutable full controller references plus pure acting hashes and
+sampled_gaussian mode. It calls the control owner's `run_condition_cross` with
+the common episode wrapper and all actual source/validation reset identities.
+Updates0 is not silently replaced with an untrained neural actor for A2.
+The helper owns the exact24-grid, paired RNG/reset checks and measured.25
+within-condition mismatch and.125 aggregate blind criteria. No mean-mode or
+additional episode is introduced. A partial A2 panel preserves its own cursor
+and blocks automatic source-entry resume; the execution owner reconciles it.
 
 ## Focused allocated CPU gate
 

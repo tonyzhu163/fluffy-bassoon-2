@@ -354,8 +354,16 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
                 teacher.active_episode = None
                 teacher._persist("unstarted_boundary_stop", immutable=True)
             raise
-        record = run_complete_episode(current, spec, ledger, **kwargs,
-            on_chunk=lambda _: guard(), before_step=lambda *_: guard())
+        extra_before, extra_chunk = kwargs.pop("before_step", None), kwargs.pop("on_chunk", None)
+        def before(*args):
+            guard()
+            if extra_before is not None:
+                extra_before(*args)
+        def chunk(row):
+            guard()
+            if extra_chunk is not None:
+                extra_chunk(row)
+        record = run_complete_episode(current, spec, ledger, **kwargs, on_chunk=chunk, before_step=before)
         guard.maximum_episode_seconds = max(guard.maximum_episode_seconds, 1.5*record["wall_seconds"])
         compact = {k: v for k, v in record.items() if k != "control_recovery"}
         _atomic_json(output/"episodes"/(spec["id"]+".json"), compact)
@@ -395,7 +403,8 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         _atomic_json(path, dict(record, source_profile=profile.contract(), role="actual_source_prefix_gate_pending"))
         publications[(record["lineage"]["method"], count)] = deepcopy(record)
 
-    status, error = "running", None
+    status, error, cross_result = "running", None, None
+    post_entered, post_completed = False, False
     try:
         result = collect_round_robin(teachers, control=control, budget=budget, run_id=run_id,
             episode_runner=episode, post_command_transform=distribution,
@@ -403,8 +412,10 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         status = result["status"]
         publish_balanced()
         if status == "initial_prefix_complete" and after_source is not None:
-            after_source(control=control, budget=budget, profile=profile, distribution=distribution,
-                         teachers=teachers, run_id=run_id, output=output, guard=guard)
+            post_entered = True
+            cross_result = after_source(control=control, budget=budget, profile=profile, distribution=distribution,
+                teachers=teachers, run_id=run_id, output=output, guard=guard, archive=archive, episode_runner=episode)
+            post_completed = True
     except BoundaryStop as exc:
         status, error = "boundary_stop", str(exc)
     except BaseException as exc:
@@ -419,7 +430,7 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
                     teacher._persist("orchestration_final_preserved", immutable=True))
             except BaseException:
                 references[key] = teacher.last_recovery
-        closed = (all(t.active_episode is None and t.pending is None and not t.updating
+        closed = (not control.active and all(t.active_episode is None and t.pending is None and not t.updating
                       for t in teachers.values()) and not budget.snapshot()["unresolved_decisions"])
         state = dict(format=FORMAT, status=status, error=error, source_commit=source_commit,
             profile=profile.contract(), teachers=references, closed_physical_boundary=closed,
@@ -427,6 +438,8 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
             actual_optimizer_cycles={k: t.learner.updates for k, t in teachers.items()},
             actual_optimizer_steps={k: t.learner.optimizer_steps for k, t in teachers.items()},
             immutable_prefixes=published, actions=budget.snapshot(),
+            post_source_entered=post_entered, post_source_completed=post_completed,
+            condition_cross_result=cross_result,
             maximum_episode_seconds=guard.maximum_episode_seconds,
             scientific_claim="collection only; AD improvement and DPT competence require separate measured gates")
         try:
@@ -434,6 +447,51 @@ def run_source_collection(*, control, budget, profile, distribution, output, gua
         finally:
             _atomic_json(output/"source-state.json", state)
     return status
+
+
+def run_source_condition_cross(*, control, budget, profile, distribution, teachers,
+                               run_id, output, guard, archive, episode_runner):
+    """Only bind actual source controllers/receipts to the owner's existing A2 helper."""
+    from .steering_condition_cross import run_condition_cross
+    from .steering_condition_collection import SOURCE_METHOD_KEYS
+
+    keys = SOURCE_METHOD_KEYS[2:4]
+    final, scores, resets, validation_refs = {}, {}, [], []
+    for key in keys:
+        teacher = teachers[key]
+        if teacher.learner.updates < 1 or teacher.last_recovery.get("retention") != "immutable":
+            path = Path(output)/"condition-cross-not-admitted.json"
+            _atomic_json(path, dict(status="not_admitted", reason="No completed trained source actor; do not substitute untrained NN behavior",
+                                   new_physical_actions=0, source_method=key))
+            return dict(path=str(path), sha256=sha(path), criterion_pass=False, status="not_admitted")
+        descriptor = archive.identify(teacher.learner, "sac")
+        final[key] = dict(teacher.last_recovery, policy_sha256=descriptor["policy_sha256"],
+            optimizer_updates=teacher.learner.updates, source_method=key, sampling_mode="sampled_gaussian")
+        ref = teacher.validation_receipts["24"]
+        panel = read_reference(ref)
+        if panel.get("complete") is not True or len(panel.get("results", [])) != 2:
+            raise ValueError("Blind selection needs both actual final source-validation outcomes")
+        scores[key] = sum(r["success"] for r in panel["results"])
+        validation_refs.append(ref)
+    for teacher in teachers.values():
+        resets.extend(r["reset_identity"] for r in teacher.completed_episodes)
+        for ref in teacher.validation_receipts.values():
+            resets.extend(r["reset_identity"] for r in read_reference(ref)["results"])
+    selected = max(keys, key=lambda key: scores[key])  # Fixed minusTRAIN1-first tie.
+    alias = "source_validation_selected_blind"
+    path = Path(output)/"condition-cross-blind-selection.json"
+    _atomic_json(path, dict(selected_method=alias, selected_source_method=selected,
+        selected_from="source_validation", cross_cases_opened=False, controller_ref=final[selected],
+        final_validation_successes=scores, source_validation_refs=validation_refs))
+    controllers = {key: teachers[key] for key in keys}
+    controllers[alias] = teachers[selected]
+    final[alias] = deepcopy(final[selected])
+    sink = BoundedTeacherRecovery(Path(output)/"condition-cross-recovery", guard=guard, control=control)
+    return run_condition_cross(control, budget, profile, distribution, controllers,
+        run_id=run_id, output=Path(output)/"condition-cross", guard=guard,
+        controller_refs=final, context_blind_method=alias,
+        blind_selection_ref=dict(path=str(path), sha256=sha(path)), source_reset_identities=resets,
+        checkpoint=sink, episode_runner=episode_runner)
 
 
 def parser():
@@ -481,6 +539,11 @@ def main(argv=None):
         raise ValueError("Bind the two actual student prefix profiles before source collection")
     control_qualification = allocation["control_qualification"]
     read_reference(control_qualification)
+    # Resolve integrated software before model loading, not halfway through a
+    # paid source allocation. These are the existing owners' components.
+    from .steering_history_prefix import build_prefix
+    if allocation.get("run_condition_cross", False):
+        from .steering_condition_cross import run_condition_cross
     probe = json.loads(args.gpu_probe.read_text())
     if (probe.get("status") != "passed" or probe.get("hostname") != socket.gethostname()
             or len(probe.get("devices", [])) != 1 or not torch.cuda.is_available() or torch.cuda.device_count() != 1):
@@ -501,6 +564,8 @@ def main(argv=None):
                 or prior.get("source_commit") != source or prior.get("closed_physical_boundary") is not True
                 or prior.get("profile") != profile.contract()):
             raise ValueError("Resume only exact closed source boundaries; failures require owner reconciliation")
+        if prior.get("post_source_entered") and not prior.get("post_source_completed"):
+            raise ValueError("Preserve the existing A2 cursor/recovery; no automatic restarted cross panel")
         captured = BoundedTeacherRecovery.load(prior["global_recovery"])
         if captured["collector"].get("teachers") != prior["teachers"]:
             raise ValueError("Captured global recovery does not bind this exact six-teacher boundary")
@@ -559,7 +624,8 @@ def main(argv=None):
             run_source_collection(control=control, budget=budget, profile=profile,
                 distribution=distribution, output=args.output, guard=guard, archive=archive,
                 run_id=args.run_id, prior=prior, source_commit=source, student_profiles=student_profiles,
-                control_qualification=control_qualification)
+                control_qualification=control_qualification, prefix_builder=build_prefix,
+                after_source=run_source_condition_cross if allocation.get("run_condition_cross", False) else None)
             if env.frozen_fingerprint() != qualification["frozen_after"]:
                 raise RuntimeError("Frozen motor changed during source collection")
     finally:

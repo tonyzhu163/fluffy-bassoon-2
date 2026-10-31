@@ -2,6 +2,7 @@
 from copy import deepcopy
 from dataclasses import replace
 import random
+import sys
 from types import SimpleNamespace
 
 import numpy as np
@@ -202,6 +203,9 @@ def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_si
         action = controller.act(obs)
         if phase == "source_validation":
             validation_modes.append(controller.decision_metadata()["source_warmup"])
+            if spec["milestone"]:
+                assert spec["paired_instruction"] == ["Original fixture instruction"]
+                assert spec["expected_reset"]["actual_seed"] == spec["reset_seed"]
         key = run_id+":"+spec["id"]
         reserve = budget.reserve(key, 1, phase=phase, method=spec["method"],
             task=spec["task"], episode=spec["id"], chunk=0, policy_version="test-only")
@@ -243,3 +247,34 @@ def test_actual_orchestration_publishes_balanced_train_and_val_with_immutable_si
     final = source.json.loads((output/"source-state.json").read_text())
     assert final["closed_physical_boundary"] and set(final["complete_episodes"].values()) == {24}
     assert set(final["actual_optimizer_cycles"].values()) == {0}  # Early successes cannot invent learning.
+
+
+def test_cross_adapter_selects_one_fixed_source_validation_blind_and_preserves_refs(monkeypatch, tmp_path):
+    from fluffy_bassoon.meta_rl.steering_condition_collection import SOURCE_METHOD_KEYS
+    p, teachers, received = profile(), {}, {}
+    identity = dict(actual_seed=1, observation_sha256="a"*64, features_sha256="b"*64)
+    for key in SOURCE_METHOD_KEYS:
+        path = tmp_path/(key+"-validation.json")
+        source._atomic_json(path, dict(complete=True, results=[
+            dict(success=True, reset_identity=identity), dict(success=False, reset_identity=identity)]))
+        teachers[key] = SimpleNamespace(learner=SimpleNamespace(updates=2),
+            last_recovery=dict(path=str(tmp_path/(key+".pt")), sha256="c"*64, retention="immutable"),
+            validation_receipts={"24": dict(path=str(path), sha256=source.sha(path))},
+            completed_episodes=[dict(reset_identity=identity)])
+    def helper(*args, **kwargs):
+        received.update(kwargs)
+        receipt = source.read_reference(kwargs["blind_selection_ref"])
+        assert receipt["selected_source_method"] == SOURCE_METHOD_KEYS[2]  # Fixed tie before cross.
+        alias = kwargs["context_blind_method"]
+        assert kwargs["controller_refs"][alias] == kwargs["controller_refs"][SOURCE_METHOD_KEYS[2]]
+        assert receipt["controller_ref"] == kwargs["controller_refs"][alias]
+        assert all(ref["sampling_mode"] == "sampled_gaussian" for ref in kwargs["controller_refs"].values())
+        assert receipt["cross_cases_opened"] is False
+        return dict(criterion_pass=False, status="synthetic-helper-no-physical-actions")
+    monkeypatch.setitem(sys.modules, "fluffy_bassoon.meta_rl.steering_condition_cross",
+                        SimpleNamespace(run_condition_cross=helper))
+    result = source.run_source_condition_cross(control=SimpleNamespace(snapshot=lambda: {}),
+        budget=None, profile=p, distribution=None, teachers=teachers, run_id="cpu-fixture",
+        output=tmp_path, guard=lambda: None,
+        archive=SimpleNamespace(identify=lambda *_: dict(policy_sha256="d"*64)), episode_runner=None)
+    assert result["criterion_pass"] is False and len(received["source_reset_identities"]) == 18
