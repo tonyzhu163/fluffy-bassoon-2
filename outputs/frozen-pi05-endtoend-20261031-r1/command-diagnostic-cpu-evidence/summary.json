@@ -1,0 +1,23 @@
+{
+  "format": "frozen_pi05_command_diagnostic_cpu_qualification_v1",
+  "source_commit": "06b1425607783082df071f4dc21414a096a6f5d8",
+  "bridge_source": "bbb200ef804dbef33ae5e7156a93803d8b2cef3c",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "passed": false,
+  "exit_code": 1,
+  "error": "Traceback (most recent call last):\n  File \"<stdin>\", line 32, in <module>\n  File \"/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', 'tests/test_robotwin_fitted_physical.py', '--junitxml=/mowenjie/fluffy-bassoon-2/outputs/robotwin-command-diagnostic-cpu-20261101-r1/bridge.junit.xml']' returned non-zero exit status 1.\n",
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+  "tests": [
+    "tests/test_robotwin_command_diagnostic.py",
+    "tests/test_robotwin_reactive_curve.py"
+  ],
+  "bridge_status": "started",
+  "no_actual_bank": true,
+  "no_vla_model": true,
+  "no_simulator": true,
+  "robot_actions": 0,
+  "optimizer_training": false,
+  "charged_cpu_worker_seconds": 93,
+  "maximum_cpu_worker_seconds": 110,
+  "charged_gpu_seconds": 0
+}

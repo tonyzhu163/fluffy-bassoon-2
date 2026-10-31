@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="8" time="2.603" timestamp="2026-11-01T03:38:27.424890+08:00" hostname="job-6n2x5ay22eok-master-0"><testcase classname="tests.test_robotwin_fitted_physical" name="test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[kv]" time="0.643"><failure message="AttributeError: 'TinyMotor' object has no attribute 'training'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x70c7d83e2850&gt;
+kind = 'kv'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+&gt;       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c7d81919d0&gt;
+
+    def _check_frozen(self):
+&gt;       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError</failure></testcase><testcase classname="tests.test_robotwin_fitted_physical" name="test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook[action]" time="0.013"><failure message="AttributeError: 'TinyMotor' object has no attribute 'training'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_zero_is_fitted_baseline_r1')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x70c7d9156a90&gt;
+kind = 'action'
+
+    @pytest.mark.parametrize("kind", ["kv", "action"])
+    def test_zero_is_fitted_baseline_raw_native_is_separate_and_nonzero_preserves_frozen_hook(tmp_path, interface, monkeypatch, kind):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, kind)
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured, interface_sha256="c"*64)
+        frontend = control.frontend
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        noise = np.zeros((32, 32), np.float32)
+        env.backend.post_decode_residual = None
+&gt;       fitted = env.backend.decode(noise)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_robotwin_fitted_physical.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c8ed5f2150&gt;
+
+    def _check_frozen(self):
+&gt;       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError</failure></testcase><testcase classname="tests.test_robotwin_fitted_physical" name="test_physical4d_uses_exact_basis_and_headroom_without_gripper_or_zero_bit_changes" time="0.016" /><testcase classname="tests.test_robotwin_fitted_physical" name="test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration" time="0.014"><failure message="AttributeError: 'TinyMotor' object has no attribute 'training'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_recorded_request_and_publ0')
+interface = {'schema': 'motus_coefficient_interface_v1', 'action_horizon': 32, 'flow_steps': 5, 'decoded_action_dim': 14, ...}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x70c7d81065d0&gt;
+
+    def test_recorded_request_and_public2076_are_after_frontend_physical_before_hidden_calibration(tmp_path, interface, monkeypatch):
+        monkeypatch.setattr(torch.cuda, "synchronize", lambda: None)
+        configured = fixture_interface(tmp_path, interface, "action")
+        env = Env(tmp_path)
+        control = hybrid.create_control(env, configured)
+        control.set_coefficients("action", np.zeros(4))
+        control.reset("place_phone_stand", 1, motor_seed=2)
+        def condition(base, requested):
+            final = requested.clone(); final[..., 0] += .01
+            return final, dict(condition_id="audit-only")
+        env.backend.post_command_transform = condition
+&gt;       control.step(np.array([.4, 0., 0., 0.], np.float32))
+
+tests/test_robotwin_fitted_physical.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/rl/robotwin_fitted_physical.py:208: in step
+    result = super().step(proposed)
+             ^^^^^^^^^^^^^^^^^^^^^^
+src/fluffy_bassoon/rl/robotwin_steering.py:257: in step
+    outcome = self.env.step(mapped)
+              ^^^^^^^^^^^^^^^^^^^^^
+tests/test_robotwin_fitted_physical.py:105: in step
+    self.backend.decode(noise)
+src/fluffy_bassoon/rl/robotwin_noise.py:733: in decode
+    self._check_frozen()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.rl.robotwin_noise._RoboTwinBackend object at 0x70c7d81d70d0&gt;
+
+    def _check_frozen(self):
+&gt;       if self.model.training or any(p.requires_grad for p in self.model.parameters()):
+           ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'TinyMotor' object has no attribute 'training'
+
+src/fluffy_bassoon/rl/robotwin_noise.py:599: AttributeError</failure></testcase><testcase classname="tests.test_robotwin_fitted_physical" name="test_source_and_readout_use_one_factory_and_identical_mapping_including_calibration" time="0.121" /><testcase classname="tests.test_robotwin_fitted_physical" name="test_changed_code_checkpoint_state_and_old_A1_cannot_be_admitted" time="0.051" /><testcase classname="tests.test_robotwin_fitted_physical" name="test_canonical_intent_records_public_physical_request_and_actual_conditioned_commands" time="0.090" /><testcase classname="tests.test_robotwin_fitted_physical" name="test_diagnostic_outcomes_remain_verbatim_and_missing_twelfth_identity_is_rejected" time="0.010" /></testsuite></testsuites>
