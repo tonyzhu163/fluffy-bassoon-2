@@ -1,137 +1,85 @@
-# LIBERO90 native-headroom screen for a pi0.5 DSRL replication
+# Native pi0.5 headroom screen followed by ordinary DSRL
 
-Drafted 2026-11-01 against main `940aef2`. **Plan only:** no implementation,
-allocation or robot interaction yet. Next steps after replication are in
-[NEXT-INTERFACES.md](NEXT-INTERFACES.md).
+Pre-outcome executable amendment, 2026-11-01, reviewed main
+`4e422587484312bfe34d623c5b498ab303a96be0`. This explicitly replaces the prior
+3b71 draft's native+tied384-episode screen, broad confirmation and separate
+outcome-blind10-query language. No fresh outcome was available when this
+amendment was fixed. Follow-on interface ideas remain separate in NEXT-INTERFACES.md.
 
-## Why
+The human request is to find a task with weak starting native pi0.5 success,
+then test whether ordinary online DSRL improves it. Entire original official
+OpenPI LIBERO40 pi0.5 remains frozen (ec064 receipt, c565 motor parameter hash),
+H10/execute10. No motor change, SFT, pi0 download or RLinf130 substitution.
 
-The published DSRL result is a gain from about 20% to 100% for a frozen motor
-on a task it solves only sometimes. Our task57 run cannot show that: frozen
-pi0.5 already scores 10/10 there, and the finished 500k-update curve stays at
-10/10 with 14% shorter episodes
-([result](../dsrl-pi05-task57-20261031-r1/RESULT.md)). Freezing the motor was
-never the obstacle. **Headroom** is: a task where native pi0.5 succeeds
-sometimes, so noise steering has successes to reach and amplify.
+Closed candidates are **0,29,33,38,44,53,59,64,70,77,79,82**. They were already
+listed in the pre-existing3b71 plan, using saved official40-motor fixed100 K0
+rows and older native cross-run variation. Source files and SHA256 values are
+bound in executable plan.json. Fixed100 native was28/90 on one physical case
+per task. Earlier native waves remain separate. Controller outcomes only
+motivated candidacy; they are not pooled as native episodes or success rates.
+There is no new semantic filtering or assertion of novel task goals.
 
-Saved evidence can't identify such a task. Each fixed100 LIBERO90 cell is one
-execution on one state (state0/seed123), so it can't separate 0% from 30%.
+Screen native ONLY:20 episodes per candidate, states0..19, fixed physical
+reset seed123;240 episodes total. Private motor/noise seed derives from the
+case ID and draw, never changes the physical reset seed. Native uses independent
+H10×32 Gaussian noise through the qualified explicit-noise path. The screen
+constructs no SAC actor, critic, replay records or optimizer.
 
-## Candidates, fixed from saved records before any new outcome
+Eligibility is2..8 successes/20 (10–40%). Rank by absolute distance from4,
+then lower task ID. Confirm up to the first3 ranked candidates on a SEPARATE
+fixed bank: states40..49×2 private noise draws =20 episodes,10 state IDs.
+**Confirmation must also score2..8/20**. Choose the first passing candidate;
+otherwise abort before SGD. Publish every candidate, denominator, failed
+confirmation and physical/noise exposure. Record actual initial-state hashes
+and their distinct counts rather than assuming seeds create new placements.
 
-Fixed100 K0 gives five same-case outcomes per task: native, AD full/static,
-DPT full/static
-([case results](../libero40-fixed100-target-plan-20261031-r1/case-results.csv)).
-These differ in steering, so a mixed row indicates that noise changes the
-outcome, the property DSRL needs. Rows with 0/5 or 5/5 are mostly
-excluded.
+Freeze chosen task, full query bank, case seeds and plan SHA in
+frozen-selection.json before ANY SGD. This is target-online development exposure;
+no screen/query/learning trajectory enters source40 meta pretraining. No task
+switch or favorable checkpoint choice is permitted after RL starts. Query
+states are exposed for headroom selection and are not described as outcome-blind.
 
-| Source of candidacy | LIBERO90 task IDs |
-| --- | --- |
-| Mixed fixed100 K0 outcome (1–4 of 5) | 29, 33, 53, 59, 64, 70, 77, 79, 82 |
-| Native flipped between two runs with matched inputs ([cross-run](../libero40-native-crossrun-20261030-r1/README.md)) | 38, 44 (33, 82 already listed) |
-| Ordinary DSRL reached training successes (72/240, [long audit](../libero40-target-online-dsrl-long-audit-20261031-r1/README.md)) | 0 |
+Learning uses the qualified authors' PixelSAC: fresh seed0 actor/replay/Adam,
+10 critics, batch256, UTD20, replay>500 query-record warmup, complete episode
+collection at fixed weights then updates, −1/query and0 on success, timeout
+bootstrap, .999^actual executed duration. Native motor stays frozen. Train
+states0..39; fixed query bank40..49×2 stays physically disjoint, checked against
+actual nominal state hashes. Initial matched controls are native full Gaussian,
+unbounded tiled32D Gaussian, and initialized bounded SAC with0 updates. All
+are frozen, with shared physical reset identity and separate saved private seeds.
 
-That gives **12 tasks**: 0, 29, 33, 38, 44, 53, 59, 64, 70, 77, 79, 82. Task57 is
-excluded (measured ceiling) and task40 too (0/240 under DSRL exploration).
-The list is closed; no task is added after Stage A outcomes.
+Endpoint500000 optimizer updates, after a complete burst (at most780 overshoot).
+Twenty-query learned panels run after the first complete burst crossing each
+20000-update threshold,25 panels total. Report actual update counts. Initial
+and final native panels use the same20-case bank. This reduced panel frequency
+is predeclared to fit the all-in action ceiling. The fixed endpoint is primary;
+all milestones are reported, never selected for a favorable outcome.
 
-All are LIBERO90 target-suite tasks. Every screen record has role
-`target-headroom-screen`, counts as development exposure, and never enters
-source40 pretraining
-([protocol](../libero40-meta90-20261029-r1/PROTOCOL.md#target-roles)).
-State0 (fixed100's target case) and states 40–49 (the DSRL query panel)
-are not used.
+All-in ceiling1M simulator actions includes screen, up to3 confirmations,
+qualification, settling, controls, training, evaluation, failures and retries.
+Loose worst-case plan:98400screen +24600confirm +24600initial controls +510780
+training/settling +205000learned panels +8200final native =871580, with128420
+reserved inside1M. Full chronological raw observations/noises/actions/rewards,
+physical intents, two-slot full optimizer/replay/RNG recovery and immutable
+milestone references are retained. Output ceiling64GiB; stop honestly before
+whole-episode time/action/storage reservations fail, without deleting evidence.
 
-## Stage A: native and tied-noise rates
+Each actual job reserves at most7h, strictly below the human-authorized8h per
+job; this is NOT an8h campaign cap. A finite16h cumulative phase accounting
+ceiling includes all execution slices/setup/retries; native screen has its own
+3h cumulative ceiling inside it. Subsequent jobs resume, rather than cold-start.
+Screen can launch as soon as its focused allocated-Linux qualification passes;
+trainer code follows through explicit source migration preserving the closed
+screen plan/selection hashes and accumulated costs.
 
-Motor, runtime and observation: identical to task57. The official OpenPI
-`pi05_libero` (receipt `ec064cce…d170`, parameter signature `c565dd3f…69e9`),
-H10/execute10, ten flow steps, 400-primitive horizon, one shared motor per worker.
+```
+bash scripts/diagnostics/vla_target_online_dsrl_headroom.sh SOURCE RUN screen 7140
+# If the same screen needs another slice:
+bash scripts/diagnostics/vla_target_online_dsrl_headroom.sh SOURCE RUN screen 7140 --resume
+```
 
-For each of the 12 tasks, on states 1–8:
-
-- 2 native episodes, independent full-horizon H10×32 Gaussian noise;
-- 2 tied-noise episodes, one 32D Gaussian draw tiled over the horizon, which
-  is DSRL's warmup exploration distribution.
-
-That is 16 native + 16 tied episodes per task and **384 episodes** in total.
-Seeds are derived from (task, state, arm, repeat) and written to `plan.json`
-before the first reset. Record actual initial-state and initial-observation
-hashes, success, primitive steps and settling actions per episode, plus a
-compressed raw trace.
-
-The tied arm is required: DSRL learns only from warmup successes, so a task
-whose native successes vanish under tied noise can't pass warmup even with
-native headroom.
-
-## Selection rule (fixed now)
-
-A task is **eligible** if native successes are 2–9 of 16 (12.5–56%) and
-tied-noise successes are at least 2 of 16.
-
-Among eligible tasks, select the one whose native rate is closest to 20%. Break
-ties by more tied-noise successes, then by the lower task ID. Record the next
-eligible task as a runner-up. Do not run the replication on the runner-up
-unless the primary fails for a recorded runtime reason.
-
-If no task is eligible, stop and report the full 12×2 rate table. Widening
-the bands, adding tasks, using other states or changing the motor is a new
-plan, never a silent fallback.
-
-Rates come from 16 correlated episodes (8 states × 2), so intervals are wide.
-Report descriptive Wilson intervals per arm. This selects a development task;
-it does not estimate population success rates. Runtime nondeterminism
-(4/90 cross-run native flips) is one reason to use repeated draws.
-
-## Stage B: replication run, separate admission
-
-Reuse the finished task57 profile unchanged except the task ID: fresh
-PixelSAC seed0, batch256, UTD20, warmup >500 chunks, training states 0–39
-in cycle, query states 40–49, ten-episode panels after each 10k updates,
-initial/final native panels, 500k-update stop. Query states 40–49 are not
-seen during selection, so the selected task's query panel stays
-outcome-blind.
-
-Success criterion, fixed before Stage B: the final learned panel beats the
-final native panel by ≥3/10 on the matched states and seeds, and the gain holds
-in the last three learned panels. Matching the paper needs three seeds. One
-seed is a pilot, and a second and third seed are a separate decision.
-
-The task57 driver binds task 57 explicitly. Stage B needs a reviewed
-parameterization of that guard, with the task57 contract and immutable run
-untouched.
-
-## Resources
-
-| Stage | GPU | Simulator actions (all-in ceiling) | Storage |
-| --- | --- | --- | --- |
-| A screen | ≤3 GPU-hours | ≤170,000 (384 × 410 = 157,440 worst case + qualification/retries) | ≤20 GiB |
-| B replication, one seed | ≤10 GPU-hours | ≤1,000,000 (task57 used 332,977) | ≤64 GiB |
-
-Basis: fixed100 cost 7,126 GPU-s for 522 episodes; task57 used 28,686 GPU-s.
-Each stage is within the standing ≤10 GPU-hour instruction, and each is its own
-grant with no borrowing. Stage A runs on its own sources, not the
-1M-action learner ledgers.
-
-## Implementation gaps before Stage A
-
-- `meta_rl.vla_noise_headroom` accepts only the old 78/10/10 train/validation
-  split and one task, so it can't take LIBERO90 target tasks. Add a narrow
-  multi-task screen profile that reuses the `OnlineSourceSimulator` reset
-  path, `frozen_query`'s native-noise path and the tied-Gaussian warmup
-  sampling of `run_episode` with updates disabled. Confirm these reuse points
-  at the reviewed pin before coding.
-- Focused CPU tests: seed derivation, arm schedule, closed task list,
-  role tagging, selection rule on synthetic outcomes, and the admission refusal
-  for state0/40–49 and unlisted tasks.
-- On the allocation: GPU probe with `--expected-count`, motor parameter
-  signature before/after, same-noise motor replay, and one real episode
-  before the full plan.
-
-## Outputs
-
-`plan.json` (seeds, states, arms; hashed before rollouts), per-episode
-`episodes.jsonl`, raw traces, `rates.csv` (task × arm successes/16 with
-Wilson intervals), `SELECTION.md` (the rule applied, selected task, runner-up
-or a stop), and a cost receipt.
+Only finish_assembly owns Baige deployment, CPU tests, probes, simulator, model
+execution and scheduler. The implementation author performs static checks only
+on macOS. Focused tests: tests/test_vla_target_online_dsrl_headroom.py; existing
+qualified task57 helpers remain unchanged. A first real native episode and whole
+motor before/after parameter hashes remain allocation evidence.
