@@ -73,6 +73,36 @@ def ordered_hdf5(bundle):
     return sorted(rows,key=lambda row:row[0])
 
 
+def plain_metadata(bundle,candidates):
+    """Bind actual seed/scene/instruction sidecars. Pickles are never opened."""
+    root=PurePosixPath(candidates[0][1].filename).parent.parent
+    seed_name=str(root/'seed.txt');scene_name=str(root/'scene_info.json')
+    seed_bytes=bundle.read(seed_name);scene_bytes=bundle.read(scene_name)
+    if len(seed_bytes)>65536 or len(scene_bytes)>2<<20: raise ValueError('Unbounded plain metadata sidecar')
+    seeds=[int(value) for value in seed_bytes.decode().split()]
+    scene=json.loads(scene_bytes)
+    if len(seeds)<len(candidates) or not isinstance(scene,dict): raise ValueError('Missing actual canonical seed/scene map')
+    return dict(root=str(root),seeds=seeds,scene=scene,refs=dict(
+        seeds=dict(member=seed_name,sha256=hashlib.sha256(seed_bytes).hexdigest()),
+        scenes=dict(member=scene_name,sha256=hashlib.sha256(scene_bytes).hexdigest())))
+
+
+def episode_sidecars(bundle,metadata,index):
+    name=str(PurePosixPath(metadata['root'])/'instructions'/f'episode{index}.json')
+    info=bundle.getinfo(name)
+    if info.file_size>256<<10: raise ValueError('Unbounded instruction metadata')
+    payload=bundle.read(info);instructions=json.loads(payload)
+    seen=instructions.get('seen')
+    if not isinstance(seen,list) or not seen or not isinstance(seen[0],str) or not seen[0].strip():
+        raise ValueError('Require an actual source instruction from the published seen list')
+    key=f'episode_{index}'
+    if key not in metadata['scene'] or index>=len(metadata['seeds']): raise ValueError('Episode has no actual reset/scene binding')
+    return dict(reset_seed=metadata['seeds'][index],scene_metadata=metadata['scene'][key],
+        selected_instruction=seen[0],instruction_selection='first published seen instruction, fixed before fitting',
+        instruction_ref=dict(member=name,sha256=hashlib.sha256(payload).hexdigest()),
+        seed_scene_refs=metadata['refs'])
+
+
 def hdf5_inventory(path,guard):
     import h5py
     import numpy as np
@@ -136,7 +166,7 @@ def author_sources(root,guard):
 def a1_grippers(roots,guard):
     """Immutable completed decision NPZs only; no images, motor or live ledger."""
     import numpy as np
-    values=[];refs=[]
+    values=[];issued=[];refs=[]
     for root in roots:
         root=Path(root).resolve()
         for path in sorted((root/'episodes').glob('*/chunks/*.json')):
@@ -150,20 +180,29 @@ def a1_grippers(roots,guard):
                     raise ValueError('A1 gripper audit array SHA/containment mismatch')
                 files.append(target)
             with np.load(files[0],allow_pickle=False) as data,np.load(files[1],allow_pickle=False) as feedback:
-                actions=data['issued_motor_joint_targets'];mask=feedback['valid_action_mask'].reshape(-1).astype(bool)
+                actions=data['issued_motor_joint_targets'];native_mask=feedback['valid_action_mask'].reshape(-1)
+                if not np.isin(native_mask,(0,1)).all(): raise ValueError('Nonbinary native execution mask')
+                mask=native_mask.astype(bool)
                 if actions.ndim!=2 or actions.shape[1]!=14 or len(mask)>len(actions):
                     raise ValueError('A1 actual command layout or native mask changed')
                 current=actions[:len(mask)][mask][:,[6,13]]
                 if len(current)!=row['native_result']['executed_primitive_steps']:
                     raise ValueError('A1 gripper executed duration differs from actual native mask')
                 values.append(current.copy())
+                issued.append(actions[:,[6,13]].copy())
             refs.append(dict(path=str(path),sha256=sha(path)))
     if not values: raise ValueError('Requested immutable A1 gripper audit had no complete chunks')
-    joined=np.concatenate(values)
+    def describe(parts):
+        joined=np.concatenate(parts)
+        finite=np.isfinite(joined)
+        columns=[joined[finite[:,i],i] for i in range(2)]
+        return dict(slots=len(joined),finite_counts=finite.sum(0).tolist(),nonfinite_counts=(~finite).sum(0).tolist(),
+            minimum=[float(x.min()) if len(x) else None for x in columns],
+            maximum=[float(x.max()) if len(x) else None for x in columns],
+            quantiles=[[float(np.quantile(x,q)) if len(x) else None for x in columns] for q in (.01,.5,.99)],
+            outside_0_1_counts=(((joined<0)|(joined>1))&finite).sum(0).tolist())
     return dict(semantics='pre-actuator decoded native absolute gripper commands; clipping occurs downstream',
-        executed_actions=len(joined),indices=[6,13],minimum=joined.min(0).tolist(),maximum=joined.max(0).tolist(),
-        quantiles=np.quantile(joined,[.01,.5,.99],axis=0).tolist(),
-        outside_0_1_counts=((joined<0)|(joined>1)).sum(0).tolist(),chunk_refs=refs)
+        indices=[6,13],total_issued=describe(issued),actual_valid=describe(values),chunk_refs=refs)
 
 
 def main(argv=None):
@@ -239,6 +278,8 @@ def main(argv=None):
         result['archive']=dict(path=str(archive),sha256=SHA,bytes=SIZE,url=URL)
         with zipfile.ZipFile(archive) as bundle:
             candidates=ordered_hdf5(bundle)
+            metadata=plain_metadata(bundle,candidates)
+            result['plain_metadata_refs']=metadata['refs']
             result['archive_hdf5_indices']=[index for index,_ in candidates]
             result['archive_members']=[dict(path=info.filename,bytes=info.file_size,crc32=info.CRC) for info in bundle.infolist()]
             data_root=output/'whole-demos';data_root.mkdir()
@@ -254,7 +295,7 @@ def main(argv=None):
                     for block in iter(lambda:source.read(1<<20),b''): guard();target.write(block)
                 inventory=hdf5_inventory(path,guard)
                 row=dict(canonical_index=index,member=info.filename,path=str(path),bytes=path.stat().st_size,
-                         sha256=sha(path),**inventory)
+                         sha256=sha(path),**inventory,**episode_sidecars(bundle,metadata,index))
                 result['episodes'].append(row)
                 if inventory['explicit_success'] is True: selected.append(row)
                 elif inventory['explicit_success'] is None: unknown.append(row)
@@ -262,12 +303,14 @@ def main(argv=None):
                 # Lack of success metadata is a real qualification question,
                 # not permission to decompress all50 or invent twelve successes.
                 if len(result['episodes'])>=12 and unknown: break
-            chosen=selected[:12] if len(selected)>=12 else []
+            chosen=selected[:12] if len(selected)>=12 else result['episodes'][:12]
             result['selection']=dict(status='explicit_success_metadata' if chosen else 'pending_author_success_and_alignment_review',
                 train=[r['canonical_index'] for r in chosen[:8]],validation=[r['canonical_index'] for r in chosen[8:12]],
                 ordered_candidate_indices=[r['canonical_index'] for r in result['episodes']],
                 unknown_success_indices=[r['canonical_index'] for r in unknown],whole_episode_split=True,
                 command_state_alignment_qualified=False)
+            if unknown:
+                result['selection']['status']='canonical_expert_candidates_split_pending_author_success_and_alignment_review'
         result.update(status='inventory_complete_alignment_review_required',storage_bytes=storage(),
                       elapsed_seconds=time.monotonic()-started,hdf5_import_only=True,model_readiness=False)
         if args.a1_corpus:

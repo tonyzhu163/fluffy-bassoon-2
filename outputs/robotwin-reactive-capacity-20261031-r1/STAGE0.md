@@ -37,8 +37,10 @@ whole HDF5 files with hashes, actual datasets/attributes/shapes/dtypes, numeric
 14D first/last/ranges, timestamp/seed/instruction metadata and pinned author
 writer/collector source excerpts. Exact explicit success metadata selects the
 first8train/next4validation whole successes. If the archive omits that flag,
-the first12candidate files remain available and success/temporal alignment
-stay PENDING author review rather than being invented. No HDF5 current-state
+the first12candidate files get a fixed8/4 candidate split and success/temporal
+alignment stay PENDING author review rather than being invented. Actual
+seed.txt and scene_info.json bind each episode; the first published seen
+instruction is fixed before fitting. No pickle member is read. No HDF5 current-state
 field is silently relabeled as a future action. The parent has independently
 identified `joint_action/vector` as drive-target state from pinned robot.py;
 the exact author temporal conversion and actual archive assets still need
@@ -47,7 +49,8 @@ transform/motor/teacher/student qualification.
 
 Optional gripper statistics read only SHA-bound complete A1 decision/native
 NPZs, select actual native valid-mask rows and summarize pre-actuator6/13
-ranges/quantiles/out-of-[0,1] counts. No corpus frame forest, VLA or live
+ranges/quantiles/out-of-[0,1] and nonfinite counts, separately for total issued
+slots and actual valid-mask slots; nonfinite statistics remain JSON-safe. No corpus frame forest, VLA or live
 CampaignBudget constructor is touched. Data extraction is bounded to512MiB
 per whole demo and8GiB inspected uncompressed data inside the original64GiB
 aggregate, with no truncation of an admitted episode.
