@@ -54,6 +54,89 @@ The [result bundle](../../../outputs/metaworld-ml10-matched-baige-20261028-r1/RE
 includes the full report, original plots, raw evaluation outcomes and curve CSV.
 The [completion audit](../../../outputs/metaworld-ml10-matched-baige-20261028-r1/checks/20261029-0835/completion-audit.json)
 records all 160 recomputed evaluation conditions, counters and checkpoint hashes.
+## CTM T1 PPO throughput qualification, 2026-10-28
+
+Baige `job-6zp4ujvgjbqw`, source
+`91c16961a02aa739c6cda6cb3c8627145d51aeef`, exit 0, passed 142 allocated
+CPU/CUDA/simulator tests. On one paired ML10 batch (CTM T1 width84/depth8,
+25,000 transitions, one PPO epoch/five optimizer steps), batching heads and
+skipping unused reset construction reduced full-trial PPO from 124.22 to
+96.38 seconds with matching losses and gradients. Including collection gives
+146.54 versus 118.71 seconds, a 1.23× improvement.
+
+Cached 100-step TBPTT took 3.98 seconds of PPO, or 25.96 seconds
+including collection (5.64× faster). It retains forward history and full-trial
+GAE but truncates recurrent gradients and changes minibatch membership; no
+learning-equivalence claim follows. Frozen replay, transition/optimizer counts
+and exact next-update recovery passed. No new job was launched for integration.
+One batch on an RPBZZZ6 is not a success curve or a hardware-normalized comparison
+with METTA. [Independent audit](../../../outputs/ctm-t1-throughput-audit-20261028-r1/RESULTS.md).
+The user-selected training default is now 100-step TBPTT; explicit
+`--replay-chunk-length 0` retains full-trial replay. This default change does
+not alter the immutable qualification source or its measured results.
+
+## Meta-World execution admission, 2026-10-28
+
+Baige `job-x2x4kdpfn011`, source
+`adf741d6e955a624e9f785b9d1572dabf9ff4ab1`, passed the one-GPU training
+probe at 19:20:45 Shanghai. CUDA allocation and PID/PCI identity agree with
+the scheduler's single NVIDIA RPBZZZ6 allocation. Inside that allocation,
+`test_metaworld_pilot.py`, `test_meta_rl_ppo.py` and
+`test_meta_rl_checkpoint.py` passed 71 tests with two CUDA-marker skips in
+33.22 seconds. New checks include real two-episode ML1 Push and ML10
+simulator trials, goal visibility, terminal reward preservation, and exact
+next-update checkpoint recovery for CTM, GRU and Transformer-XL.
+
+This qualifies interfaces and recovery, not trained adaptation or benchmark
+performance. The bounded six-cell single-seed pilot remains a separate learning
+experiment. The initial r1 allocation `job-ikplxyvyh7p9` stopped at the missing
+CUDA-selector check before any model work; its worktree and failed receipt are
+preserved. Protocol and limits: [method contract](../../../docs/metaworld-ctm.md).
+Receipts: `outputs/metaworld-ctm-pilot-baige-20261028-r2/qualification.log`
+and `gpu-probe.json`, mirrored from the same run directory under
+`/mowenjie/fluffy-bassoon-2/outputs/`.
+
+## Meta-World bounded learning pilot, 2026-10-28
+
+The same Baige job/source finished all six single-seed cells with launcher
+exit zero at 21:17:41 Shanghai. Measured allocation was 7,023 seconds,
+**1.951 GPU-hours**, including qualification, plotting and setup. Each cell
+had a 900-second soft cap plus complete-update/final-evaluation overruns;
+all stopped before the 20-update target with full recovery checkpoints.
+
+| Benchmark | Core | Updates | Training steps | GPU-hours incl. evaluation | Fresh train-family success | Held-out success |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| ML1 Push | GRU | 13 | 325,000 | .295 | 10% | 20% |
+| ML1 Push | CTM T4 | 2 | 50,000 | .379 | 0% | 0% |
+| ML1 Push | Transformer-XL | 8 | 200,000 | .327 | 0% | 0% |
+| ML10 | GRU | 16 | 400,000 | .281 | 10% | 0% |
+| ML10 | CTM T4 | 2 | 50,000 | .342 | 0% | 0% |
+| ML10 | Transformer-XL | 9 | 225,000 | .305 | 10% | 0% |
+
+CTM median full-trial PPO optimization took 375–400 seconds per update,
+versus GRU 20–21 and XL 65–67 seconds. CUDA peak allocation was respectively
+1.591, .109 and .872 GiB. Optimization dominates CTM runtime; its lower-level
+cause remains unprofiled. Two CTM updates cannot determine learnability.
+These exploratory runtimes use a training-admission probe, whose
+`timing_comparison_eligible` flag is false; they support cost planning,
+without a hardware-normalized or cross-paper speed claim.
+
+No useful aggregate memory benefit is established. ML1 memory-reset and
+reward-blind scores equal normal for all cores. ML10 fresh train-family
+normal/reset/blind scores are GRU 10/12/10%, XL 10/10/10% and CTM 0/0/0%;
+all held-out scores and episode-success curves are zero. This is one seed
+and ten paired five-episode evaluation trials per condition, with unequal
+achieved updates. It qualifies execution and accounting, not convergence,
+an architecture ranking, a METTA reproduction or VLA readiness. Profile
+whole-trial PPO before proposing longer learning runs; no follow-on run was
+launched.
+
+The terminal audit independently recomputed all 96 saved evaluation
+conditions from raw binary outcomes with equal family/episode weighting,
+verified all six checkpoint hashes, and reconciled finite metrics and
+training/evaluation/time counters. Raw evidence and both PNG/PDF charts:
+`outputs/metaworld-ctm-pilot-baige-20261028-r2/RESULTS.md` and
+`AUDIT-20261028-2145.json`, mirrored from the same Baige output directory.
 
 ## Native DPT warm-start completion, 2026-10-28
 
@@ -753,3 +836,73 @@ No 500-update AD fit/readout ran; that GPU phase remains deferred for the human'
 ordinary-baseline priority: DSRL/SAC first, native PPO afterward. Earlier student results retain their
 early-SAC5 data identity. The [CPU export report](../../../outputs/robotwin-final100-ad-export-20261031-r4/RESULTS.md)
 contains exact dataset identities, independent audits, storage and cost closure.
+## Direct native VLA context interface (2026-10-28)
+
+The separate native-context arm inserts the eleven public scalar feedback
+fields as native prefix tokens and trains rank-four prefix-attention LoRA,
+feedback projection/type embeddings and a training-only value head. Its
+base pi0.5 and action expert stay frozen. The learner sees the current native
+observation and scalar history, without historical images or privileged theta.
+See [the contract](../../../docs/native-vla-context-icrl.md).
+
+Real-model admission passed on Baige `job-8kkjhb65px67`, source
+`b5d97b0a7c0f6aed29660a96e2ab10cce9610915`, one allocated RPBZZZ6.
+The CUDA probe passed, seven policy tests passed in 2.10 seconds, and the
+renderer was bound to the allocated PCI `0000:62:00.0` device.
+
+| Check | Observed result |
+| --- | --- |
+| Empty-history native four-Euler action parity | Exact; maximum error 0 |
+| Twelve fixed-example flow fitting updates | Loss 0.306293 to 0.230301, 9.18 seconds |
+| Final public-feedback projection gradient norm | 0.0134457, no nonfinite parameter gradients |
+| Joint stochastic velocity likelihood replay | Exact; maximum error 0 |
+| Frozen original motor tensors | Unchanged SHA256 `4191deb5458127d2d1939807f2f604f5c224bc27488e9a23ae3b08d3462bb0f8` |
+| Peak allocated CUDA memory at gate | 10,703,170,560 bytes |
+| Trainable adapter/critic parameters | 950,273 |
+
+This proves that the native conditioning path is trainable and replayable on
+one real observation. It does not prove live adaptation. The fitting weights
+were restored to their initialization after the gate.
+
+The same job stopped before completing collection: native action preparation
+returns CPU commands and the collector initially failed to move the previous
+command back to the GPU feedback buffer. The earlier r2 attempt had stopped
+at a nonfinite backward norm from zero-initialized history tokens; a nonzero
+learned history type embedding enabled the successful r3 gate. Both failures
+and their output identities are retained. The collector device fix and its
+CPU/CUDA integration regression are separate from the admitted r3 source.
+
+Raw admission and failure receipts:
+[r3 artifacts](../../../outputs/native-vla-context-pilot-20261028-r3/evidence/),
+[r2 failure](../../../outputs/native-vla-context-pilot-20261028-r2/RESULTS.md).
+No held-out adaptation, reward-use or architecture-comparison result is yet
+established by this arm.
+
+The fixed collector passed both CPU and actual allocated-CUDA integration
+tests on Baige `job-lwpvhzys2vtc`, source `0d6dee3`. This bounded pilot
+**completed with exit 0 at 20:00:45 Shanghai**, 1,899.94 driver seconds.
+Five complete K4 histories and 20 supervised updates were saved; validation
+flow loss fell from 0.68696 to 0.51411. A paired +45-degree oracle gate
+scored 4/4 versus base 1/4. Original frozen weights passed the final check.
+
+| Held-out smoke condition | Success / attempts | Per-attempt successes across two K4 trials |
+| --- | --- | --- |
+| Normal history | 2/8 | 2, 0, 0, 0 |
+| History wiped between attempts | 5/8 | 2, 1, 1, 1 |
+| Reward blind | 2/8 | 2, 0, 0, 0 |
+
+There is no observed memory/reward benefit in this small panel. The normal
+and blind arrays match; wiping scores higher. There is no matched frozen-base
+or warm-start-only live control. These two held-out trials per condition
+cannot establish a statistical adaptation or architecture result.
+
+The one PPO step had **zero loss and zero gradient**: its K4 rollout contained
+only failures, and both rewards and old values were zero. Exact replay passed
+for all 64 chunks. Code-path completion does not establish RL learning; the
+shared Adam optimizer retains warm-start momentum, which can still move
+weights despite zero new gradient. The final checkpoint retains optimizer,
+sampler and all RNG state, 20 supervised updates and the PPO completion flag;
+all five stored history hashes and delayed public feedback fields were
+independently verified on allocated CPU resources. Total task rollout cost:
+4,160 steps. Monitor deleted; no follow-on launch. See
+[complete results and audit](../../../outputs/native-vla-context-pilot-20261028-r4/RESULTS.md).

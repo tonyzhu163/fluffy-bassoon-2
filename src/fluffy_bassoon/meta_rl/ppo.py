@@ -118,7 +118,7 @@ class RecurrentActorCritic(nn.Module):
         self.actor = nn.Linear(core.output_dim, action_dim)
         self.critic = nn.Linear(core.output_dim, 1)
 
-    def step(self, observation, state=None, *, reset=None, raw_action=None, deterministic=False, bounded_entropy=False):
+    def _features(self, observation, state, reset):
         if reset is not None:
             if reset.shape != observation.shape[:1] or reset.dtype != torch.bool or reset.device != observation.device:
                 raise ValueError("Reset mask must be boolean [batch] on the observation device")
@@ -129,9 +129,11 @@ class RecurrentActorCritic(nn.Module):
                                               initial[key], value) for key, value in state.items()}
                 else:
                     state = torch.where(reset[:, None], initial, state)
+        return self.core(observation, state)
+
+    def _action_and_value(self, features, raw_action=None, *, deterministic=False, bounded_entropy=False):
         if bounded_entropy and self.discrete:
             raise ValueError("Bounded entropy requires a continuous squashed Gaussian policy")
-        features, state = self.core(observation, state)
         parameters, value = self.actor(features), self.critic(features).squeeze(-1)
         if self.discrete:
             distribution = Categorical(logits=parameters)
@@ -151,23 +153,37 @@ class RecurrentActorCritic(nn.Module):
                 # Reparameterize a fresh current-policy sample, not the recorded behavior action.
                 sample = distribution.rsample()
                 entropy = entropy + (2 * (math.log(2) - sample - F.softplus(-2 * sample))).sum(-1)
-        return action, raw_action, log_prob, entropy, value, state
+        return action, raw_action, log_prob, entropy, value
 
-    def evaluate_sequence(self, observations, raw_actions, resets=None, *, bounded_entropy=False):
-        state, log_probs, entropies, values = None, [], [], []
+    def step(self, observation, state=None, *, reset=None, raw_action=None, deterministic=False, bounded_entropy=False):
+        features, state = self._features(observation, state, reset)
+        return (*self._action_and_value(features, raw_action, deterministic=deterministic,
+                                       bounded_entropy=bounded_entropy), state)
+
+    def evaluate_sequence(self, observations, raw_actions, resets=None, *, bounded_entropy=False,
+                          initial_state=None):
+        # Upstream CTM RL scans only recurrence; heads/distributions run on the
+        # whole time/batch tensor. Inspect constant reset masks once, avoiding
+        # fresh initial-state tensors at every non-reset decision.
+        if resets is not None and (resets.shape != observations.shape[:2] or resets.dtype != torch.bool
+                                   or resets.device != observations.device):
+            raise ValueError("Reset mask must be boolean [time, batch] on the observation device")
+        reset_steps = ([False] * observations.shape[0] if resets is None else
+                       resets.any(dim=1).tolist())
+        state, features = initial_state, []
         for step in range(observations.shape[0]):
-            _, _, log_prob, entropy, value, state = self.step(
-                observations[step], state, raw_action=raw_actions[step],
-                reset=None if resets is None else resets[step], bounded_entropy=bounded_entropy)
-            log_probs.append(log_prob)
-            entropies.append(entropy)
-            values.append(value)
-        return torch.stack(log_probs), torch.stack(entropies), torch.stack(values)
+            hidden, state = self._features(observations[step], state,
+                                           resets[step] if reset_steps[step] else None)
+            features.append(hidden)
+        _, _, log_probs, entropies, values = self._action_and_value(
+            torch.stack(features), raw_actions, bounded_entropy=bounded_entropy)
+        return log_probs, entropies, values
 
 
 @torch.no_grad()
 def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, deterministic=False, normalize_clock=True,
-                   reward_blind=False, reset_keys=None, clock_scale=None, record_states=False):
+                   reward_blind=False, reset_keys=None, clock_scale=None, record_states=False,
+                   replay_chunk_length=0):
     """`reset_keys` restricts attempt-boundary resets to those state entries (a component lesion).
 
     `clock_scale` overrides the declared clock maximum, so a longer evaluation trial can keep its
@@ -183,6 +199,11 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
                 or not set(reset_keys) <= initial.keys()):
             raise ValueError("Component resets need attempt resets and named entries of a dict core state")
     first = envs[0]
+    if (type(replay_chunk_length) is not int or replay_chunk_length < 0
+            or replay_chunk_length and (first.attempts * first.horizon) % replay_chunk_length):
+        raise ValueError("Replay chunk length must be zero or divide the complete trial length")
+    if replay_chunk_length and reset_keys is not None:
+        raise ValueError("Cached replay does not support component-only reset lesions")
     if any((env.attempts, env.horizon, env.observation_space, env.action_space) !=
            (first.attempts, first.horizon, first.observation_space, first.action_space) for env in envs):
         raise ValueError("Batched trials must share the same environment contract")
@@ -199,8 +220,12 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
         clock_scale = np.maximum(first.observation_space["clock"].high, 1) if normalize_clock else 1
     elif not normalize_clock:
         raise ValueError("A clock scale override requires clock normalization")
-    states = []
+    states, replay_states = [], []
     for step in range(first.attempts * first.horizon):
+        if replay_chunk_length and step % replay_chunk_length == 0:
+            incoming = policy.core.initial_state(len(envs)) if state is None else state
+            replay_states.append({key: value.detach().clone() for key, value in incoming.items()}
+                                 if isinstance(incoming, dict) else incoming.detach().clone())
         inputs = torch.as_tensor(np.stack([flatten(first.observation_space,
                                                    dict(obs, clock=obs["clock"] / clock_scale,
                                                         previous_reward=np.zeros_like(obs["previous_reward"])
@@ -244,7 +269,52 @@ def collect_trials(policy, envs, seeds, *, reset_each_attempt=False, determinist
     if record_states:
         # [attempts, batch, ...] per state entry, taken after each attempt's final decision.
         result["attempt_states"] = {key: torch.stack([s[key] for s in states]) for key in states[0]}
+    if replay_chunk_length:
+        result["replay_chunk_length"] = replay_chunk_length
+        result["replay_states"] = ({key: torch.stack([s[key] for s in replay_states])
+                                    for key in replay_states[0]} if isinstance(replay_states[0], dict)
+                                   else torch.stack(replay_states))
     return result
+
+
+def replay_windows(rollout, chunk_length=0):
+    """Batch chronological windows, initialized from detached behavior states.
+
+    This is truncated BPTT, not equivalent full-trial gradients. Environment
+    memory is carried during collection; GAE is still computed on full trials.
+    The returned multiplier preserves transitions and optimizer steps per batch.
+    """
+    time, batch = rollout["rewards"].shape
+    if (type(chunk_length) is not int or chunk_length < 0
+            or chunk_length and time % chunk_length):
+        raise ValueError("Replay chunk length must be zero or divide the complete trial length")
+    if not chunk_length:
+        return rollout, None, 1
+    if rollout.get("replay_chunk_length") != chunk_length or "replay_states" not in rollout:
+        raise ValueError("Cached replay requires states collected at the declared chunk length")
+    chunks = time // chunk_length
+
+    def window(value):
+        return (value.reshape(chunks, chunk_length, batch, *value.shape[2:]).transpose(1, 2)
+                .reshape(chunks * batch, chunk_length, *value.shape[2:]).transpose(0, 1))
+
+    data = {key: window(value) for key, value in rollout.items()
+            if key != "replay_states" and isinstance(value, torch.Tensor) and value.shape[:2] == (time, batch)}
+    # First windows use the current learned initial state, preserving its
+    # gradient. Later windows use the detached state from the behavior rollout.
+    data["resets"] = data["resets"].clone()
+    data["resets"][0, :batch] = True
+
+    def flatten_state(value):
+        if (not isinstance(value, torch.Tensor) or value.shape[:2] != (chunks, batch)
+                or value.device != rollout["observations"].device or value.requires_grad):
+            raise ValueError("Replay states must be detached [chunks, lanes, ...] on the rollout device")
+        return value.reshape(chunks * batch, *value.shape[2:])
+
+    states = rollout["replay_states"]
+    states = ({key: flatten_state(value) for key, value in states.items()}
+              if isinstance(states, dict) else flatten_state(states))
+    return data, states, chunks
 
 
 @torch.no_grad()
@@ -272,7 +342,8 @@ def generalized_advantages(rewards, values, ends, *, gamma=1., gae_lambda=1., bo
 
 def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, clip=.2,
                gamma=1., gae_lambda=1., entropy_coef=.01, value_coef=.5,
-               max_grad_norm=1., episode_returns=False, reward_offset=0., normalize_advantages=True, bounded_entropy=False):
+               max_grad_norm=1., episode_returns=False, reward_offset=0., normalize_advantages=True,
+               bounded_entropy=False, replay_chunk_length=0):
     if (type(epochs) is not int or epochs < 1 or type(minibatch_trials) is not int or minibatch_trials < 1
             or not 0 < clip < 1 or not math.isfinite(max_grad_norm) or max_grad_norm <= 0
             or not math.isfinite(entropy_coef) or entropy_coef < 0
@@ -291,23 +362,28 @@ def update_ppo(policy, optimizer, rollout, *, epochs=4, minibatch_trials=16, cli
         active = advantages[action_mask]
         advantages = (advantages - active.mean()) / (active.std(unbiased=False) + 1e-8)
     advantages = torch.where(action_mask, advantages, 0.)
-    batch = advantages.shape[1]
+    data, states, chunks = replay_windows(dict(rollout, advantages=advantages, returns=returns,
+                                              action_mask=action_mask), replay_chunk_length)
+    batch = data["advantages"].shape[1]
+    minibatch_size = minibatch_trials * chunks
     totals, count, optimizer_steps, active_samples = {}, 0, 0, 0
     # Deterministic recurrent transitions are required for behavior-policy likelihood replay.
     policy.eval()
     for _ in range(epochs):
         order = torch.randperm(batch, device=advantages.device)
-        for start in range(0, batch, minibatch_trials):
-            lanes = order[start:start + minibatch_trials]
+        for start in range(0, batch, minibatch_size):
+            lanes = order[start:start + minibatch_size]
+            initial_state = ({key: value[lanes] for key, value in states.items()}
+                             if isinstance(states, dict) else states[lanes] if states is not None else None)
             log_prob, entropy, value = policy.evaluate_sequence(
-                rollout["observations"][:, lanes], rollout["raw_actions"][:, lanes], rollout["resets"][:, lanes],
-                bounded_entropy=bounded_entropy)
-            mask = action_mask[:, lanes]
-            log_ratio = torch.where(mask, log_prob - rollout["log_probs"][:, lanes], 0.)
+                data["observations"][:, lanes], data["raw_actions"][:, lanes], data["resets"][:, lanes],
+                bounded_entropy=bounded_entropy, initial_state=initial_state)
+            mask = data["action_mask"][:, lanes]
+            log_ratio = torch.where(mask, log_prob - data["log_probs"][:, lanes], 0.)
             ratio = log_ratio.exp()
-            advantage = advantages[:, lanes]
+            advantage = data["advantages"][:, lanes]
             actor_loss = torch.maximum(-advantage * ratio, -advantage * ratio.clamp(1 - clip, 1 + clip)).mean()
-            old_value, target = rollout["values"][:, lanes], returns[:, lanes]
+            old_value, target = data["values"][:, lanes], data["returns"][:, lanes]
             clipped_value = old_value + (value - old_value).clamp(-clip, clip)
             critic_loss = .5 * torch.maximum((value - target).square(), (clipped_value - target).square()).mean()
             entropy = torch.where(mask, entropy, 0.)
