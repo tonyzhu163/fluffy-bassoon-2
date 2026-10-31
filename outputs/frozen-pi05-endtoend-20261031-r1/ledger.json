@@ -75,12 +75,29 @@
       "actual_gpu_count": 0,
       "receipt_path": "PAIRED-CPU-RECEIPT.json",
       "receipt_sha256": "7863d6b7aec40dfe8a2c42705c496cb4f13eb203033f6e709d1ad8e6e8bcad04"
+    },
+    {
+      "job_id": "job-rh3ldkdapfv9",
+      "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
+      "maximum_worker_seconds": 300,
+      "reserved_seconds": 300,
+      "charged_seconds": 86,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "scheduler_created_shanghai": "2026-10-31T19:50:00+08:00",
+      "requested_gpu_count": 0,
+      "actual_attestation_and_result_pending": false,
+      "role": "phone_capacity_data_stage0",
+      "actual_gpu_count": 0,
+      "released_seconds": 214,
+      "receipt_path": "PHONE-STAGE0-CPU-RECEIPT.json",
+      "receipt_sha256": "2d18d42ddb6f41d86897a8b564a78c06a7b322ef03db33cd92522e5756b4963e"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 1770,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 331,
+  "charged_cpu_worker_seconds": 417,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 17591,
   "reserved_actions": 0,
@@ -149,7 +166,7 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 1469,
+  "remaining_cpu_worker_seconds": 1383,
   "unreserved_gpu_seconds": 27030,
   "latest_action_snapshot": {
     "checked_shanghai": "2026-10-31T19:18:58+08:00",
@@ -179,13 +196,21 @@
     "task": "place_phone_stand",
     "whole_train_demos": 8,
     "whole_validation_demos": 4,
-    "state": "data_semantics_and_executable_admission_pending",
+    "state": "data_inventory_complete; temporal_alignment_and_capacity_GPU_admission_pending",
     "additional_budget": false,
     "cpu_qualification_sublimit_worker_seconds": 300,
     "cpu_qualification_included_in_remaining": true,
     "provisional_gpu_seconds": 5400,
     "provisional_actions": 10000,
     "not_yet_a_gpu_reservation": true,
-    "restricted_screen_does_not_test_full_reactive_capacity": true
-  }
+    "restricted_screen_does_not_test_full_reactive_capacity": true,
+    "actual_stage0_cpu_job": "job-rh3ldkdapfv9",
+    "actual_stage0_source": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
+    "actual_stage0_cpu_worker_seconds": 86,
+    "inventory_sha256": "e60cb3bd863bb6d8a014aadad652d64bb1834535f8e9cff6d53476fcd840102b",
+    "success_flags_known": false,
+    "temporal_alignment_qualified": false,
+    "capacity_gpu_admitted": false
+  },
+  "unreserved_cpu_worker_seconds": 1383
 }

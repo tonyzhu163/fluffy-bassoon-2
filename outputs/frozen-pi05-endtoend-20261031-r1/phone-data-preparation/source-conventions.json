@@ -1,0 +1,74 @@
+{
+  "format": "robotwin_phone_archive_static_conventions_v1",
+  "read_only": true,
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/_base_task.py",
+      "sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+      "evidence": [
+        {
+          "lines": "462-519",
+          "fact": "get_obs captures RGB and joint_action/vector; the latter concatenates left/right get_arm_jointState output."
+        },
+        {
+          "lines": "559-603",
+          "fact": "_take_picture calls get_obs and saves numbered frame pickle; merge_pkl_to_hdf5_video converts those frames."
+        },
+        {
+          "lines": "1475-1533",
+          "fact": "Expert move captures before its control sequence, at configured save_freq during execution, and after the sequence. Recorded frame cadence is not automatically the policy command cadence."
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/robot/robot.py",
+      "sha256": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8",
+      "evidence": [
+        {
+          "lines": "528-539",
+          "fact": "get_left/right_arm_jointState reads joint.get_drive_target()[0] and appends normalized gripper value."
+        },
+        {
+          "lines": "542-549",
+          "fact": "get_left_arm_real_jointState is a separate function that reads articulation qpos; get_obs does not use it for joint_action/vector."
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/pkl2hdf5.py",
+      "sha256": "e119b4093c25f881c535a041bf1895e182ba00564d6ca57f6d6fe4fb62b2666c",
+      "evidence": [
+        {
+          "lines": "57-108",
+          "fact": "Frames are appended in numeric filename order, RGB encoded into fixed-width byte strings, and other arrays written without an action temporal shift."
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/script/collect_data.py",
+      "sha256": "e51d8dca1afd843206187a72537dc467d1db07bd1c860055ad59e47b181c81ab",
+      "evidence": [
+        {
+          "lines": "178-233",
+          "fact": "Collection uses seed.txt[episode_idx] in setup_demo, loads _traj_data/episode paths, stores scene_info, merges HDF5 after play_once and asserts success."
+        }
+      ]
+    }
+  ],
+  "conclusions": {
+    "joint_action_vector_semantics": "contemporaneous commanded arm drive targets plus normalized gripper values, not measured physical joint qpos",
+    "temporal_shift": "none introduced by the archive writer; a training converter must state its future-target alignment explicitly",
+    "reset_metadata_available": [
+      "seed.txt",
+      "scene_info.json",
+      "_traj_data/episodeN.pkl",
+      "instructions/episodeN.json"
+    ],
+    "reset_executability_verified": false,
+    "reason": "No simulator replay has run; archive has no HDF5 root attributes or separately listed configuration/source-version file, and seeded reset compatibility must be verified against actual author configuration. Trajectory pickle was not loaded."
+  },
+  "model_or_simulator_imported": false,
+  "numeric_array_data_read": false,
+  "pickle_loaded": false
+}

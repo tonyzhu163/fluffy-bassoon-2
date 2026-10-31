@@ -3,6 +3,82 @@
 Verified robot evidence only. Method: [LIBERO interface](../frozen-vla-libero.md).
 Paper: [draft](../paper/DRAFT.md), [decisions](../paper/DECISIONS.md).
 
+## Task57 first query regression on a near-ceiling curve
+
+Baige `job-iudscqfntb4e` remains active on fixed source `d001556`. At the
+19:56 Shanghai check it has399880 SAC updates,1509/1511 training successes,
+265079 all-in actions and28.53GB outputs. The390080-update query panel scores
+9/10 at1518 primitives+100 settling, versus native10/10 at1451+100. State48
+times out at400 actions; native succeeds at152. Its actual query seed2295547926,
+nominal state and initial-observation hashes match. This is the first saved
+query-panel failure; earlier complete panels through380120 are all10/10.
+Latest recovery/milestone/raw-RPC hashes pass, query weights/replay stay fixed
+and losses are finite. No run, recipe, case or budget changed.
+[Saved receipt](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1956.md).
+
+This regression weakens the earlier descriptive completion-cost trend. One
+stochastic panel is insufficient to attribute a cause: actor sampling and
+learning instability remain plausible, while the prescribed final native
+rerun can check runtime drift. Preserve the fixed500k endpoint and full curve;
+no favorable checkpoint selection or extra control is launched.
+
+The first training timeout is zero-indexed episode576/state16,400 primitives,
+collected at151,260updates and followed by800updates. Earlier episode536
+succeeded143primitives; later616/656 succeeded133/134. Nominal state and
+initial-observation hashes match, but actor weights and RNG differ: this is
+one failure/later-success record, not causal recovery or ICRL evidence. The
+failure trace rehashed correctly. It does not turn the near-ceiling bank into
+a rich recovery corpus. [Bound failure metadata](../../outputs/dsrl-pi05-task57-20261031-r1/first-failure-1616.json).
+
+The first ten learned checkpoints and the first later query regression are
+below; every intervening panel remains in immutable dated receipts.
+
+| Actual optimizer updates | Query success | Query primitives | Settling actions |
+| ---: | ---: | ---: | ---: |
+| Native0 |10/10|1451|100|
+|10220|10/10|1407|100|
+|20240|10/10|1378|100|
+|30200|10/10|1355|100|
+|40160|10/10|1320|100|
+|50080|10/10|1343|100|
+|60000|10/10|1304|100|
+|70260|10/10|1279|100|
+|80100|10/10|1264|100|
+|90160|10/10|1309|100|
+|100220|10/10|1270|100|
+|390080|9/10|1518|100|
+
+All panels use the same10 physical cases, recorded query seeds and initial
+observation hashes. Queries change no weights/replay and perform no SGD.
+At100,220 updates the panel uses181 fewer primitives than native (12.5%);
+including settling,1,370 versus1,551actions (11.7% fewer). All10 cases are
+shorter at that checkpoint. This is a descriptive small-bank completion-cost
+signal, not a success-rate gain, independent-seed result, deployment adaptation
+or overall sample-efficiency gain after training/evaluation cost. The10 cases
+are reused across checkpoints; these panels are not independent replications.
+
+There is no observed binary-success headroom. The reward also penalizes each
+queried chunk, so successful histories can contain cost optimization. Two
+training timeouts now appear, but they do not establish a rich causal
+failure-recovery corpus. Noise parameterization
+and learning may both affect cost; no matched untrained tied-noise query panel
+was included. The prescribed final native rerun can test runtime stability,
+while later robustness claims would require a separate declared comparison.
+Keep the fixed500k schedule under its original caps; no case or recipe changes.
+
+Saved latest and immutable100k recovery hashes, newest raw traces and sampled
+RPC input/outcome hashes match. Independent full cost reconciliation reaches
+the earlier32,740-action prefix. The later journal walk was bounded/partial;
+producer counters report zero uncertain actions, but no complete independent
+new-tail reconciliation is claimed yet. Final motor after-hash and terminal
+reconciliation remain pending. [Latest saved check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1516.md),
+[earlier complete prefix](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1436.md).
+
+The motor is pi0.5, whereas the DSRL paper used pi0. This is an adapted
+single-seed baseline. Target57 records remain excluded from source40
+pretraining and count as development exposure. [Interpretation and proposed
+next comparison](../../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
+
 ## Fixed100 LIBERO90 screen complete
 
 All six workers succeeded:486groups/522episodes, including36actual supports.

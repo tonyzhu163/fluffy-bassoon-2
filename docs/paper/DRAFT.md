@@ -32,11 +32,12 @@ both data and native wave, so it does not isolate scaling or overfitting.
 Current human priority is ordinary DSRL first on the entirely frozen official
 pi0.5, followed by native action-expert PPO; further offline-student sweeps
 are held. The fresh task57 pi0.5-adapted PixelSAC curve is running toward500k optimizer
-updates, train states0..39 and matched query states40..49, within10GPUh/1M
-all-in actions/64GiB. Native and completed learned panels remain10/10. Query
-primitive cost is lower on this reused bank; one training timeout has occurred.
-Neither success improvement, rich failure-recovery data nor overall sample
-efficiency after training cost is established. Native PPO
+updates, within10GPUh/1M all-in actions/64GiB. Native query is10/10; learned
+panels through380120 remain10/10 with shorter observed episodes. At390080
+updates the panel drops to9/10,1518 query primitives versus native1451: paired
+state48 times out400 versus native success152. These repeated panels do not
+establish reliable success preservation, memory or total sample efficiency;
+final native stability control remains pending. Native PPO
 GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
 model cases are explicitly authorized after the pilot passes. Its sampling
 noise cannot directly label steering of the original frozen motor. AD can

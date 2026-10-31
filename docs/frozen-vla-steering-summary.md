@@ -34,14 +34,17 @@ Current scientific readout,2026-10-31:
 Current human priority remains **DSRL first; native PPO afterward**. The
 single-seed task57 PixelSAC curve updates only the noise controller while the
 entire official OpenPI LIBERO40 pi0.5 motor stays frozen. Native query success
-starts at10/10, and all completed learned panels remain at that ceiling.
-Lower query action cost is descriptive evidence on the same small reused bank,
-not greater success, memory, transfer or overall sample efficiency after
-training cost. One training timeout has since occurred amid overwhelmingly
-successful episodes; later successes change actor/RNG and do not isolate
-causal recovery. Continue the declared500k curve and final native stability
-control. Task57 records remain target-online data excluded from source
-pretraining. Current counters and cost receipts are in
+starts at10/10. Learned panels through380120 updates retain10/10, with lower
+observed episode costs, but the390080 panel falls to9/10: paired state48 times
+out at400 actions versus native success at152. Its1518 query primitives exceed
+native1451. This first query regression prevents interpreting the earlier
+shorter episodes as reliable competence preservation. Stochastic controller
+sampling and learned-policy instability remain competing explanations; final
+native stability control is still pending. Rare training timeouts and later
+successes with different actor/RNG do not isolate recovery. Preserve the fixed
+500k endpoint, without selecting a favorable checkpoint. No success, memory,
+transfer or total sample-efficiency gain is established. Target57 data remain
+excluded from source pretraining; current counters are in
 [coordination](../outputs/coordination.md).
 
 The targeted Motus/RoboTwin restricted four-coefficient screen is complete.
@@ -55,8 +58,11 @@ teacher is admitted. The17591 cumulative actions and1770 GPU-seconds include
 the failed initial run once. This restricted random-basis probe does not test
 full learned reactive KV/action capacity. The original same-phone capacity
 check is being prepared from8 whole TRAIN/4 VAL released demonstrations;
-data timing, camera/reset semantics, executable code and cost admission must
-be resolved before any capacity GPU run. No new budget is granted. See
+the bounded data job passed11 tests and inventoried all12 candidates, but
+success and temporal/replay compatibility remain unverified. Actual native
+gripper commands exceed normalized actuator bounds before canonical clipping;
+raw grippers must be preserved. Executable/transform/cost admission remains
+pending before any capacity GPU run. No new budget is granted. See
 [verified evidence and limits](robotwin-coefficient-steering/EVALUATION.md) and
 [new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).
 

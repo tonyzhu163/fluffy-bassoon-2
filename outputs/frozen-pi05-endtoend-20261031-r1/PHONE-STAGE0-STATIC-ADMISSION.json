@@ -1,0 +1,45 @@
+{
+  "format": "phone_stage0_static_admission_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "source_commit": "9e1953e6ee2ea4c91fdc494355fce2ab55c99c9d",
+  "script": {
+    "path": "scripts/diagnostics/robotwin_capacity_data_stage0.py",
+    "sha256": "08b619191096620ae42a84df54c39bb41f5c2aa5967d3e8d66f4ed41f22b1cd1"
+  },
+  "tests": {
+    "path": "tests/test_robotwin_capacity_data_stage0.py",
+    "sha256": "1629e0368d8f7e45f66364e8ef28e68def5c1202565a465b0b83245b17710f30",
+    "prepared_case_count": 11,
+    "actual_execution_pending": true
+  },
+  "execution_owner": "/root/finish_assembly",
+  "maximum_gpu_count": 0,
+  "maximum_aggregate_cpu_worker_seconds": 300,
+  "shared_phase_cpu_maximum": 1800,
+  "charged_cpu_worker_seconds_before_admission": 331,
+  "remaining_before_new_job": 1469,
+  "inner_data_clock_seconds": 240,
+  "same_outer_clock_covers_tests_and_inventory": true,
+  "archive_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "archive_sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065",
+  "data_output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/capacity-data-r1",
+  "checks_reviewed": [
+    "source commit/clean tracked tree and actual allocation ticket binding",
+    "standalone import firewall; no motor/simulator/library imports",
+    "pinned archive size/hash and ZIP path guards",
+    "whole episode0..7 TRAIN/8..11 VAL candidates with actual seed/scene/first seen instruction",
+    "unknown explicit success and command timing remain unknown",
+    "finite/nonfinite raw gripper statistics for total issued and actual valid slots",
+    "original64GiB aggregate includes cached archive duplicate and original external archive",
+    "failed partials retained; no automatic retry or timeout reset",
+    "ZIP sidecar length checked before decompression",
+    "insufficient known successes cannot manufacture a teacher split"
+  ],
+  "capacity_gpu_admitted": false,
+  "source_teacher_admitted": false,
+  "actual_cpu_ticket_job_and_result_pending": true,
+  "unexecuted_predecessors": [
+    "8fb56ffc94e8586feae74b40fb57cd9abf41fdf4",
+    "a59047c6a7cc51d47f6623ff149e5ccde4df475c"
+  ]
+}
