@@ -64,7 +64,8 @@ The weak-native LIBERO baseline now trains on task44, turn on the stove.
 Screening/confirmation5/20 and fresh native6/20 establish headroom; tied noise
 13/20 and initialized SAC8/20 are retained untrained controls. The20k panel
 regresses1/20, then the40k panel reaches20/20 at40,140 actual updates,1,651
-primitives+200 settling. This is a promising interim gain over every control,
+primitives+200 settling. The60k panel repeats20/20 (1,678+200 actions).
+This is a promising interim gain over every control,
 not an endpoint selection. At02:40 the learner has53,120 updates/189episodes,
 151 successes/38 failures with finite losses/stable recovery. Training adds100
 successes/3 failures between checks. Low entropy/temperature and concentration

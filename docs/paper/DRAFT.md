@@ -61,8 +61,10 @@ The weak-native pi0.5 pilot selects task44 at5/20 in native screening and
 separate confirmation. Fresh controls score native6/20, untrained tied
 Gaussian13/20 and initialized SAC8/20. The learned20,580-update panel scores
 1/20; the40,140 panel rebounds20/20 with1,651 query primitives+200 settling.
-This is interim ordinary RL improvement over every initial control on a
-reused development bank. Both panels remain; fixed500k, final native and
+The60k panel repeats20/20 (1,678+200 actions). This is interim ordinary RL
+improvement over every initial control on a
+reused development bank of ten physical states with two draws each. All
+panels remain; fixed500k, final native and
 last-three persistence are pending. No memory, new-task transfer or overall
 sample-efficiency claim follows. [Evidence](../../outputs/libero90-pi05-headroom-online-20261101-r1/EARLY-REGRESSION.md).
 
