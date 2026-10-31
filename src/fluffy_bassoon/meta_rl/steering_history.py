@@ -193,6 +193,9 @@ def evaluation_plan(profile, *, validated=False):
 def verify_control_qualification(ref, profile):
     """Map the actual A1 receipt fields; preserve references, never rerun episodes."""
     binding = read_json(ref)
+    if binding.get("format") == "fitted_physical_control_qualification_binding_v1":
+        from .robotwin_fitted_source import verify_control_qualification as verify_fitted
+        return verify_fitted(binding, profile)
     if binding.get("format") != "frozen_vla_4d_control_qualification_binding_v1":
         raise ValueError("Bind the original driver plan/interface/GPU receipt/completed episode references")
     interface = read_json(binding["control_interface"])
