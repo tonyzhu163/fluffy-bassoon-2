@@ -34,6 +34,13 @@ def base_env(env):
     return env
 
 
+def producing_iteration(worker):
+    # Official Actor.set_global_step writes `version`, not `global_step`.
+    # Prefer our explicit logical tag; use the actual native version as fallback.
+    return int(getattr(worker, '_pilot_producing_policy_iteration',
+        getattr(worker, 'version', getattr(worker, 'global_step', 0))))
+
+
 class SidecarMixin:
     pilot_role = None
 
@@ -42,6 +49,7 @@ class SidecarMixin:
         state = dict(format='rlinf_native_ppo_worker_v1', role=self.pilot_role,
             rank=self._rank, rng=snapshot_rng(), global_step=getattr(self, 'global_step', None),
             version=getattr(self, 'version', None), paired_eval_rng=getattr(self, '_pilot_rng', None))
+        state['producing_policy_iteration'] = producing_iteration(self)
         if self.pilot_role == 'env':
             if self._prefetched_train_bootstrap is not None:
                 raise RuntimeError('Cannot checkpoint an in-flight environment bootstrap')
@@ -78,6 +86,8 @@ class SidecarMixin:
             self.global_step = state['global_step']
         if state['version'] is not None:
             self.version = state['version']
+        self._pilot_producing_policy_iteration = state.get('producing_policy_iteration',
+            state['version'] if state['version'] is not None else 0)
         if state['paired_eval_rng'] is not None:
             self._pilot_rng = state['paired_eval_rng']
         if self.pilot_role == 'env':
@@ -114,13 +124,19 @@ class SidecarMixin:
 class PilotActor(SidecarMixin, EmbodiedFSDPActor):
     pilot_role = 'actor'
 
+    def set_global_step(self, global_step):
+        self._pilot_producing_policy_iteration = int(global_step)
+        return super().set_global_step(global_step)
+
     def compute_advantages_and_returns(self):
         metrics = super().compute_advantages_and_returns()
         # Official run_training subsequently shuffles/flattens and discards
         # final bootstrap rows. Capture the actual complete batch BEFORE it.
-        policy_iteration = int(getattr(self, 'global_step', 0))
+        policy_iteration = producing_iteration(self)
         path = Path(self.cfg.native_pilot.output) / 'training-rollouts' / (
             f'iteration-{policy_iteration+1:04d}-policy-{policy_iteration:04d}-rank-{self._rank:02d}.pt')
+        if path.exists() or path.with_suffix('.json').exists():
+            raise RuntimeError('Chronological rollout archive already exists; never overwrite a policy version')
         value = dict(format='rlinf_native_ppo_chronological_rollout_v1',
             collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
             worker_policy_version=getattr(self, 'version', None), rank=self._rank,
@@ -130,10 +146,12 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
             rollout_batch=cpu_tree(self.rollout_batch),
             evaluation_data=False, source6_pretraining_admission=False)
         receipt = save_tensor(path, value)
-        write(path.with_suffix('.json'), dict(receipt, completed=True,
+        from .rlinf_native_ppo_data import FORMAT, shape_tree
+        write(path.with_suffix('.json'), dict(receipt, completed=True, capture_format=FORMAT,
             collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
             rank=self._rank, optimizer_steps_before=self.optimizer_steps,
-            fields=sorted(self.rollout_batch), evaluation_data=False,
+            fields=sorted(self.rollout_batch), field_shapes=shape_tree(self.rollout_batch),
+            evaluation_data=False, resolved_config_path=str(Path(self.cfg.native_pilot.output)/'resolved-native-config.json'),
             retention='unshuffled/untrimmed original batch plus computed advantages/returns'))
         return metrics
 
@@ -175,18 +193,18 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
 
     def run_training(self):
         mask = self.rollout_batch.get('loss_mask')
-        metrics = dict(rank=self._rank, global_step=getattr(self, 'global_step', None),
+        metrics = dict(rank=self._rank, producing_policy_iteration=producing_iteration(self),
             gradient_accumulation=self.gradient_accumulation,
             local_valid_chunk_slots=None if mask is None else int(mask.sum().item()),
             local_total_mask_slots=None if mask is None else int(mask.numel()),
-            official_loss_weighting='FSDP mean of accumulated per32 masked-token means')
+            official_loss_weighting='Unmodified c605 effective loss reducer; masked_mean_ratio and rank-local GAE normalization, not a claimed global valid-token mean')
         write(Path(self.cfg.native_pilot.output) / 'loss-masks' /
-            f'step-{getattr(self, "global_step", 0)}-rank-{self._rank:02d}.json', metrics)
+            f'step-{producing_iteration(self)}-rank-{self._rank:02d}.json', metrics)
         result = super().run_training()
         after = self._pilot_frozen_signature()
         unchanged = self._pilot_frozen_before == after
         write(Path(self.cfg.native_pilot.output) / 'actor-invariants' /
-            f'rank-{self._rank:02d}-step-{getattr(self, "global_step", 0)}-after.json',
+            f'rank-{self._rank:02d}-step-{producing_iteration(self)}-after.json',
             dict(before=self._pilot_frozen_before, after=after, unchanged=unchanged))
         if not unchanged:
             raise RuntimeError('Frozen native VLM parameters changed during PPO')
@@ -196,12 +214,89 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
 class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
     pilot_role = 'rollout'
 
+    def init_worker(self):
+        result = super().init_worker()
+        import rlinf.models.embodiment.openpi.sampling.rl_sampler as sampler
+        from .rlinf_native_ppo_data import record_gaussian_parameters
+        original = sampler.sample_mean_var
+        self._pilot_sampling_steps = None
+        self._pilot_prediction_ordinal = 0
+        self._pilot_terminal_only = False
+        self._pilot_eval_iteration = 0
+        self._pilot_processed_state = None
+        original_train_prediction = self.hf_model._predict_train
+
+        def recorded_train_prediction(observation, *args, **kwargs):
+            # This is the actual normalized/padded Observation entering the
+            # author's sampler, not a second normalization or inference pass.
+            self._pilot_processed_state = cpu_tree(observation.state)
+            return original_train_prediction(observation, *args, **kwargs)
+        self.hf_model._predict_train = recorded_train_prediction
+
+        sampler.sample_mean_var = record_gaussian_parameters(original,
+            lambda: self._pilot_sampling_steps, cpu_tree)
+        return result
+
+    def set_global_step(self, global_step):
+        self._pilot_producing_policy_iteration = int(global_step)
+        return super().set_global_step(global_step)
+
+    def pilot_evaluation_iteration(self, iteration):
+        self._pilot_eval_iteration = int(iteration)
+        return dict(rank=self._rank, evaluation_policy_iteration=int(iteration))
+
+    def _publish_env_part(self, env_part, *args, **kwargs):
+        previous = self._pilot_terminal_only
+        self._pilot_terminal_only = bool(env_part.requires_inference)
+        try:
+            return super()._publish_env_part(env_part, *args, **kwargs)
+        finally:
+            self._pilot_terminal_only = previous
+
+    def _predict_rollout_actions(self, env_obs, mode='train', **kwargs):
+        before = snapshot_rng()
+        self._pilot_sampling_steps = []
+        self._pilot_processed_state = None
+        try:
+            actions, result = super()._predict_rollout_actions(env_obs, mode=mode, **kwargs)
+            after = snapshot_rng()
+            inputs = result.get('forward_inputs', {})
+            policy_iteration = (self._pilot_eval_iteration if mode == 'eval'
+                else producing_iteration(self))
+            record = dict(format='rlinf_native_ppo_actual_sampling_v1', mode=mode,
+                evaluation_data=mode == 'eval', terminal_value_only=self._pilot_terminal_only,
+                collection_iteration=policy_iteration+1 if mode == 'train' else None,
+                producing_policy_iteration=policy_iteration,
+                rank=self._rank, prediction_ordinal=self._pilot_prediction_ordinal,
+                public_observation_sha256=tensor_hash(env_obs),
+                actions_sha256=tensor_hash(actions), rng_before=before, rng_after=after,
+                actual_gaussian_parameters=self._pilot_sampling_steps,
+                forward_sampling_fields=cpu_tree({key: inputs[key] for key in
+                    ('chains', 'denoise_inds', 'action', 'model_action') if key in inputs}),
+                old_logprobs=cpu_tree(result.get('prev_logprobs')),
+                old_values=cpu_tree(result.get('prev_values')),
+                model_actions=cpu_tree(result.get('model_actions')),
+                processed_model_state=self._pilot_processed_state,
+                initial_gaussian_path='forward_sampling_fields.chains[:,0]',
+                noise_semantics='Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed',
+                frozen_sft_steering_target_compatible=False)
+            path = Path(self.cfg.native_pilot.output) / 'sampling' / f'rank-{self._rank:02d}' / (
+                f'{self._pilot_prediction_ordinal:05d}.pt.gz')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with gzip.open(path, 'xb', compresslevel=1) as handle:
+                torch.save(record, handle)
+            self._pilot_prediction_ordinal += 1
+            return actions, result
+        finally:
+            self._pilot_sampling_steps = None
+
 
 class PilotEnvironment(SidecarMixin, EnvWorker):
     pilot_role = 'env'
 
     def set_global_step(self, global_step):
         self._pilot_producing_policy_iteration = int(global_step)
+        self._pilot_next_source_round = 0
         return super().set_global_step(global_step)
 
     def init_worker(self):
@@ -227,6 +322,11 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 slot = owner._pilot_journal.begin(int(num) * 10, phase='constructor-allowance')
                 super().__init__(*args, **kwargs)
                 owner._pilot_journal.finish(slot, int(num) * 10)
+                env._pilot_episode_serial = torch.zeros(int(num), dtype=torch.long)
+                env._pilot_primitive_time = torch.zeros(int(num), dtype=torch.long)
+                env._pilot_current_observation = None
+                env._pilot_chunk_index = 0
+                env._pilot_round_index = None
 
             def reset(env, env_idx=None, env_seeds=None):
                 count = env.num_envs if env_idx is None else len(env_idx)
@@ -234,31 +334,62 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                     phase=owner._pilot_phase + '/reset-allowance')
                 result = super().reset(env_idx=env_idx, env_seeds=env_seeds)
                 owner._pilot_journal.finish(slot, int(count) * 10)
+                indices = list(range(env.num_envs)) if env_idx is None else list(env_idx)
+                env._pilot_episode_serial[indices] += 1
+                env._pilot_primitive_time[indices] = 0
+                env._pilot_current_observation = cpu_tree(result[0])
+                if env_idx is None:
+                    env._pilot_chunk_index = 0
+                    if not env.cfg.is_eval:
+                        env._pilot_round_index = getattr(owner, '_pilot_next_source_round', 0)
+                        owner._pilot_next_source_round = env._pilot_round_index + 1
+                reset = dict(task_key=env.task_name, evaluation_data=bool(env.cfg.is_eval),
+                    producing_policy_iteration=producing_iteration(owner),
+                    round_index=env._pilot_round_index, rank=owner._rank,
+                    reset_env_indices=indices, reset_state_ids=env.reset_state_ids.clone(),
+                    episode_serials=env._pilot_episode_serial.clone(),
+                    initial_observation=cpu_tree(result[0]),
+                    public_observation_sha256=tensor_hash(result[0]),
+                    reset_rng=snapshot_rng(), sampler_generator=env._generator.get_state(),
+                    sampler_cursor=env._current_seed_index)
                 if env.cfg.is_eval and env_idx is None:
                     phase = owner._pilot_phase
-                    reset = dict(reset_state_ids=env.reset_state_ids.clone(),
-                        initial_observation=cpu_tree(result[0]),
-                        public_observation_sha256=tensor_hash(result[0]))
                     owner._pilot_first_resets.setdefault(phase, []).append(reset)
-                    save_tensor(owner._pilot_root / 'initial-states' /
-                        f'{phase}-rank-{owner._rank:02d}-{owner._pilot_reset_ordinal:04d}.pt', reset)
-                    owner._pilot_reset_ordinal += 1
+                prefix = owner._pilot_phase if env.cfg.is_eval else 'source'
+                save_tensor(owner._pilot_root / 'initial-states' /
+                    f'{prefix}-rank-{owner._rank:02d}-{owner._pilot_reset_ordinal:04d}.pt', reset)
+                owner._pilot_reset_ordinal += 1
                 return result
 
             def chunk_step(env, actions):
                 owner._pilot_deadline()
                 requested = int(actions.shape[0] * actions.shape[1])
                 slot = owner._pilot_journal.begin(requested, phase=owner._pilot_phase)
+                current = env._pilot_current_observation
+                submitted_actions = cpu_tree(actions)
+                if current is None:
+                    raise RuntimeError('A motor chunk has no recorded initial/current public observation')
+                scene_ids = env.reset_state_ids.clone()
+                episode_ids = env._pilot_episode_serial.clone()
+                times = env._pilot_primitive_time.clone()
                 result = super().chunk_step(actions)
                 mask = result[-1][-1].get('valid_action_mask')
                 executed = int(mask.sum().item()) if mask is not None else requested
                 owner._pilot_journal.finish(slot, executed)
+                duration = (mask.detach().cpu().sum(dim=-1).long() if mask is not None else
+                    torch.full((env.num_envs,), int(actions.shape[1]), dtype=torch.long))
                 trace = dict(phase=owner._pilot_phase, journal_cursor=slot,
                     evaluation_data=bool(env.cfg.is_eval),
-                    producing_policy_iteration=getattr(owner, '_pilot_producing_policy_iteration', 0),
-                    collection_iteration=getattr(owner, '_pilot_producing_policy_iteration', 0)+1,
-                    reset_state_ids=env.reset_state_ids.clone(),
-                    proposed_motor_actions=cpu_tree(actions), outputs=cpu_tree(result),
+                    task_key=env.task_name, rank=owner._rank, pipeline_stage=0,
+                    local_env_indices=list(range(env.num_envs)),
+                    global_env_indices=list(range(owner._rank*env.num_envs, (owner._rank+1)*env.num_envs)),
+                    producing_policy_iteration=(owner._pilot_eval_iteration if env.cfg.is_eval else producing_iteration(owner)),
+                    collection_iteration=producing_iteration(owner)+1 if not env.cfg.is_eval else None,
+                    round_index=env._pilot_round_index, chunk_index=env._pilot_chunk_index,
+                    episode_serials=episode_ids, primitive_time_before=times,
+                    executed_or_conservative_duration=duration, reset_state_ids=scene_ids,
+                    current_observation=current,
+                    proposed_motor_actions=submitted_actions, outputs=cpu_tree(result),
                     measured_valid_mask=mask is not None,
                     executed_or_conservative=executed)
                 path = owner._pilot_root / 'traces' / f'rank-{owner._rank:02d}' / f'{owner._pilot_trace_ordinal:05d}.pt.gz'
@@ -266,6 +397,11 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 with gzip.open(path, 'xb', compresslevel=1) as handle:
                     torch.save(trace, handle)
                 owner._pilot_trace_ordinal += 1
+                env._pilot_chunk_index += 1
+                env._pilot_current_observation = cpu_tree(result[0][-1])
+                reset_during_chunk = env._pilot_episode_serial != episode_ids
+                env._pilot_primitive_time = torch.where(reset_during_chunk,
+                    torch.zeros_like(times), times + duration)
                 return result
 
         module.RoboTwinEnv = RecordedRoboTwin
@@ -275,9 +411,10 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
         if time.time() >= float(self.cfg.native_pilot.deadline_unix) - 90:
             raise TimeoutError('Native PPO phase deadline; keep last complete boundary and all charged prefixes')
 
-    def pilot_phase(self, phase):
+    def pilot_phase(self, phase, *, policy_iteration=None):
         self._pilot_deadline()
         self._pilot_phase = phase
+        self._pilot_eval_iteration = producing_iteration(self) if policy_iteration is None else int(policy_iteration)
         return dict(rank=self._rank, phase=phase, action_charge=self._pilot_journal.charged())
 
     def pilot_pair_receipt(self):
@@ -327,7 +464,12 @@ class PilotRunner(EmbodiedRunner):
         return result
 
     def run(self):
+        from omegaconf import OmegaConf
+        from .rlinf_native_ppo_data import collection_contract
         recipe = validate_recipe(self.cfg)
+        self._pilot_write('collection-contract.json', collection_contract())
+        if OmegaConf.is_config(self.cfg):
+            self._pilot_write('resolved-native-config.json', OmegaConf.to_container(self.cfg, resolve=True))
         self._pilot_write('resolved-pilot-contract.json', dict(recipe,
             mode=self.cfg.native_pilot.mode, role='target-online/native-action-expert PPO',
             source6_pretraining_admission=False, paper_numeric_reproduction=False,
@@ -340,6 +482,7 @@ class PilotRunner(EmbodiedRunner):
             self._pilot_write('operational-restore.json', dict(global_step=self.global_step, workers=receipts))
         if self.cfg.native_pilot.mode == 'evaluate_existing':
             self.update_rollout_weights()
+            self.rollout.pilot_evaluation_iteration(0).wait()
             self.env.pilot_phase('existing').wait()
             metrics = self.evaluate()
             self._pilot_write('existing-evaluation.json', dict(completed=True, metrics=metrics,
@@ -354,6 +497,7 @@ class PilotRunner(EmbodiedRunner):
             for group in (self.actor, self.rollout, self.env):
                 group.pilot_rng(restore=True).wait()
             self.env.pilot_phase('before').wait()
+            self.rollout.pilot_evaluation_iteration(0).wait()
             before = self.evaluate()
             self._pilot_write('before-evaluation.json', dict(completed=True, global_step=0, metrics=before))
             # Isolate collection RNG from the extra baseline evaluation. The
@@ -368,7 +512,8 @@ class PilotRunner(EmbodiedRunner):
         self.rollout.pilot_rng(restore=True).wait()
         self.env.pilot_rng(restore=True).wait()
         self.update_rollout_weights()
-        self.env.pilot_phase('after').wait()
+        self.env.pilot_phase('after', policy_iteration=self.global_step).wait()
+        self.rollout.pilot_evaluation_iteration(self.global_step).wait()
         after = self.evaluate()
         pairing = self.env.pilot_pair_receipt().wait()
         self._pilot_write('after-evaluation.json', dict(completed=True, global_step=2, metrics=after,

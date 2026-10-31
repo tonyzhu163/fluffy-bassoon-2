@@ -160,6 +160,7 @@ def restore_rng(state):
 
 
 def cpu_tree(value):
+    import numpy as np
     import torch
     if isinstance(value, torch.Tensor):
         return value.detach().cpu().clone()
@@ -167,6 +168,8 @@ def cpu_tree(value):
         return {key: cpu_tree(item) for key, item in value.items()}
     if isinstance(value, (tuple, list)):
         return type(value)(cpu_tree(item) for item in value)
+    if isinstance(value, np.ndarray):
+        return value.copy()
     return value
 
 
