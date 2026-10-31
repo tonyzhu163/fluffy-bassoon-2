@@ -10,7 +10,7 @@ snapshot on2026-10-31 contains480/480 successful training episodes,6,769
 replay chunks and125,520 optimizer updates, with87,903 all-in simulator actions
 and7.20GB outputs. Losses remain finite; full/newest-milestone/raw/RPC hashes
 match, with no new journal traversal. No training failure/recovery appeared.
-Newest complete panel:actual120,220 updates,10/10successes,1,239primitives
+At that snapshot:actual120,220 updates,10/10successes,1,239primitives
 plus100settles versus native1,451+100. The first ten checkpoints are below;
 full subsequent panels remain in the dated receipts. [Latest check](../../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md).
 

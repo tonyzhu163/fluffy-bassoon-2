@@ -43,7 +43,8 @@ primitives versus native1,451; this continues the small-bank completion-cost
 trend, without a success-rate, memory or overall sample-efficiency claim.
 No failure/recovery histories have emerged. Recovery, milestone and sampled
 raw/RPC hashes passed; no new journal traversal was performed. Continue the
-fixed curve under its caps; next owner check15:56. [Saved check](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md),
+fixed curve under its caps. Current operational status is in
+[coordination](../outputs/coordination.md). [Saved check](../outputs/dsrl-pi05-task57-20261031-r1/CHECK-1536.md),
 [interpretation](../outputs/dsrl-pi05-task57-20261031-r1/INTERPRETATION.md).
 See [plan](../outputs/dsrl-pi05-task57-20261031-r1/PLAN.md).
 
