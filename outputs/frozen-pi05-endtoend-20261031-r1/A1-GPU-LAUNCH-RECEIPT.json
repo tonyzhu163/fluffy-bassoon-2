@@ -1,0 +1,90 @@
+{
+  "format": "frozen_pi05_a1_launch_receipt_v1",
+  "phase_id": "frozen-pi05-endtoend-20261031-r1",
+  "job_id": "job-hm6fgvu3p4a6",
+  "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+  "reviewed_main": "2f0d84fd1cf72020579b0d5fd85672b0a9bdc5f0",
+  "grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4",
+  "cpu_summary_sha256": "dd280f102abcf73969d618f6c226af9e6294e3c20440a36bbc8e0deacb7760f2",
+  "scheduler_created_shanghai": "2026-10-31T17:49:34+08:00",
+  "scheduler_status": "Running",
+  "gpu_probe_passed": true,
+  "gpu_probe_created_utc": "2026-10-31T09:49:56.329434+00:00",
+  "actual_devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "90133544-ffe4-8747-43d9-870b389ac18f",
+      "cuda_name": "NVIDIA RPBZZZ6",
+      "cuda_total_bytes": 101973950464,
+      "pci_bus_id": "0000:61:00.0",
+      "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887.0,
+        "memory_used_mib": 0.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:61:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "touched_gpu_uuids": [
+          "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+        ],
+        "own_pid_gpu_uuids": [
+          "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+        ]
+      }
+    }
+  ],
+  "reservation_gpu_seconds": 7200,
+  "phase_gpu_ceiling": 28800,
+  "a1_action_ceiling": 30000,
+  "phase_action_ceiling": 300000,
+  "maximum_output_bytes": 68719476736,
+  "source_and_worktrees_clean_before_dispatch": true,
+  "automatic_retry": false,
+  "real_motor_parity_gradient_and_episode_passed": false,
+  "progress_scope": "CUDA count/identity/allocation check passed; motor loading underway; no physical qualification claim yet",
+  "submitted_command_sha256": "ea6dd0f5d750b75597d70de436949f23cb6a055c59e343a898480915b9242bfd",
+  "input_files_sha256": {
+    "allocation.json": "93191a0851a6560e7edb868168a17b53bcbbac0a8a9ed0186e4552d7e6b120ec",
+    "gpu-probe.json": "9b9b527f0c9dfd18142f09f3d182a9a144e3e354e8b90268c8d6f5dd950832e0",
+    "invocation.json": "403da917e911406db18aa1d80e8170a094136860d4ba8b8e6da85c24d85ac48c"
+  },
+  "canonical_header": {
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+    "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+    "total_actions": 300000,
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "phase_caps": {
+      "a1": 30000,
+      "source": 120000,
+      "source_validation": 30000,
+      "condition_cross": 15000,
+      "student_evaluation": 105000
+    },
+    "contract": {
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "candidate_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ]
+    }
+  },
+  "no_old_budget_borrowing": true
+}

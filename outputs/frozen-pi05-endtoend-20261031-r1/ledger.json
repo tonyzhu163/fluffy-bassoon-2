@@ -6,27 +6,59 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "allocated_CPU_PASS; GPU_dispatch_binding_ready; no_GPU_reservation_yet",
-  "gpu_attempts": [],
+  "state": "A1_GPU_live_gates_passed_screen_running; three_CPU_components_passed; no_teacher_or_student_training_yet",
+  "gpu_attempts": [
+    {
+      "job_id": "job-hm6fgvu3p4a6",
+      "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
+      "reserved_seconds": 7200,
+      "charged_seconds": null,
+      "settled": false,
+      "status": "Running",
+      "reservation_receipt_sha256": "e660ad5ccee3c8998ec350f769c0ff35ad76a157fb7c762b1000f7fa8c5c5650"
+    }
+  ],
   "cpu_attempts": [
     {
       "job_id": "job-876fmw17b3c6",
-      "run_id": "frozen-pi05-endtoend-a1-cpu-20261031-r1",
       "source_commit": "8248b1cefe8757b5e43f2a1b6b503e5b93831659",
       "maximum_worker_seconds": 1800,
       "reserved_seconds": 1800,
       "charged_seconds": 79,
       "settled": true,
       "actual_gpu_count": 0,
+      "receipt_path": "A1-CPU-RECEIPT.json",
       "receipt_sha256": "bc91ff5cc8e78488177cb589a60b934a05ac71efab1201b1b69a263aad58f165"
+    },
+    {
+      "job_id": "job-wopjg7o5vte4",
+      "source_commit": "aad29a877fd8805f0927b5bbe44c58fc34d3891c",
+      "maximum_worker_seconds": 600,
+      "reserved_seconds": 600,
+      "charged_seconds": 79,
+      "settled": true,
+      "actual_gpu_count": 0,
+      "receipt_path": "CONDITION-CPU-RECEIPT.json",
+      "receipt_sha256": "7444e61cfcf78bc5f66247c87dbb4b43432518a5548cf0965e42c33ee6eb4fd8"
+    },
+    {
+      "job_id": "job-2yxgfd3wd9sd",
+      "source_commit": "77119a5ecb3dea33bd943244b9fb43b7764b3d38",
+      "maximum_worker_seconds": 300,
+      "reserved_seconds": 300,
+      "charged_seconds": 86,
+      "settled": true,
+      "actual_gpu_count": 0,
+      "receipt_path": "STUDENT-CPU-RECEIPT.json",
+      "receipt_sha256": "0318154029d6a714d6d2f45eab74434817c390af04c6b1f6f351b35cfc8a7389"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 0,
-  "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 79,
+  "reserved_gpu_seconds": 7200,
+  "charged_cpu_worker_seconds": 244,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 0,
+  "charged_actions": 2022,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
@@ -40,7 +72,7 @@
     "actions": 270000
   },
   "accounting": "Use existing cumulative allocation-clock begin/finish helpers in admitted executable children; parent reserves before scheduling, retains failed/unfinished attempts, counts nested clocks once and never replenishes caps.",
-  "authoritative_live_path": null,
+  "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
     "implementation": "CampaignBudget",
@@ -52,8 +84,8 @@
       "condition_cross": 15000,
       "student_evaluation": 105000
     },
-    "live_path": null,
-    "header_bound": false,
+    "live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+    "header_bound": true,
     "one_shared_header_and_journal": true,
     "source_caps": {
       "sac_calibration_minus_train0": 19200,
@@ -82,7 +114,8 @@
         "place_phone_stand",
         "place_object_stand"
       ]
-    }
+    },
+    "actual_header_receipt_sha256": "fd346d6ee93ef37a0787dddd4e421af29010abd828508b154d3557d3660ef1e8"
   },
   "prospective_phase_action_caps": {
     "a1": 30000,
@@ -92,5 +125,16 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 1721
+  "remaining_cpu_worker_seconds": 1556,
+  "unreserved_gpu_seconds": 21600,
+  "latest_action_snapshot": {
+    "checked_utc": "2026-10-31T09:54:37.478190+00:00",
+    "actual": 1990,
+    "charged": 2022,
+    "pending": 32,
+    "uncertain": 0,
+    "interpretation": "charged includes pending primitive reservation; do not add it twice; snapshot is not terminal/full independent journal reconciliation"
+  },
+  "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
+  "immutable_initial_grant_figures_are_binding_time_snapshots": true
 }
