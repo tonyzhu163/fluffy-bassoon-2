@@ -41,6 +41,7 @@ def parser():
     p.add_argument("--context-length", type=int, default=300)
     p.add_argument("--max-window", type=int, default=128)
     p.add_argument("--full-trial-batches", action="store_true")
+    p.add_argument("--max-episodes-per-window", type=int)
     p.add_argument("--updates", type=int, default=1000)
     p.add_argument("--batch-size", type=int, default=8)
     p.add_argument("--learning-rate", type=float, default=3e-4)
@@ -53,6 +54,7 @@ def parser():
     p.add_argument("--source-commit", required=True)
     p.add_argument("--expected-hostname", required=True, help="Exact allocated Linux scheduler hostname")
     p.add_argument("--resume", type=Path)
+    p.add_argument("--checkpoint-selection", choices=("validation-nll", "final"), default="validation-nll")
     return p
 
 
@@ -71,12 +73,12 @@ def supervised_update(policy, optimizer, batch, *, mode):
 
 
 @torch.no_grad()
-def validate(policy, trials, *, mode, batch_size, batches, max_context):
+def validate(policy, trials, *, mode, batch_size, batches, max_context, max_episodes=None):
     policy.eval()
     # The identical held-out windows are compared at every update and baseline.
     sampler = np.random.default_rng(734_001)
     values = [float(policy.sequence_nll(*sample_batch(trials, policy, sampler,
-        batch_size=batch_size, max_context=max_context, mode=mode), mode=mode)) for _ in range(batches)]
+        batch_size=batch_size, max_context=max_context, mode=mode, max_episodes=max_episodes), mode=mode)) for _ in range(batches)]
     if not all(math.isfinite(value) for value in values):
         raise RuntimeError("Non-finite held-out imitation loss")
     return float(np.mean(values))
@@ -104,6 +106,8 @@ def main(argv=None):
     for key in ("updates", "batch_size", "eval_every", "validation_batches", "threads", "max_window"):
         if getattr(args, key) < 1:
             raise ValueError("Training/evaluation counts must be positive")
+    if args.max_episodes_per_window is not None and (args.max_episodes_per_window < 1 or args.full_trial_batches):
+        raise ValueError("Choose a positive complete-episode window cap or full-trial batches")
     if (not 0 <= args.seed < 2**32 or not math.isfinite(args.learning_rate) or args.learning_rate <= 0
             or not math.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0):
         raise ValueError("Invalid seed/optimization budget")
@@ -140,12 +144,16 @@ def main(argv=None):
     policy = HistoryNoisePolicy(config).to(args.device)
     policy.fit_observation_normalization(train)
     optimizer = torch.optim.AdamW(policy.parameters(), lr=args.learning_rate, weight_decay=0.)
-    max_context = None if args.full_trial_batches else args.max_window
+    max_context = None if args.full_trial_batches or args.max_episodes_per_window is not None else args.max_window
     contract = dict(source_commit=source, config=asdict(config), mode=args.mode,
         objective=train_manifest["objective"], train_sha256=args.train_sha256,
         validation_sha256=args.validation_sha256, train_metadata=train_manifest["metadata"],
         validation_metadata=validation_manifest["metadata"], seed=args.seed,
         batch_size=args.batch_size, max_context=max_context, learning_rate=args.learning_rate,
+        max_episodes_per_window=args.max_episodes_per_window,
+        schedule=dict(updates=args.updates, eval_every=args.eval_every,
+            validation_batches=args.validation_batches, max_elapsed_seconds=args.max_elapsed_seconds,
+            checkpoint_selection=args.checkpoint_selection),
         supervised_objective="Gaussian target-noise NLL; motor adapter applies its fixed noise map",
         status="candidate; imitation NLL does not establish robot performance")
     start_update, best, elapsed_before = 0, math.inf, 0.
@@ -166,19 +174,21 @@ def main(argv=None):
     started = time.monotonic()
     for update in range(start_update + 1, args.updates + 1):
         batch = sample_batch(train, policy, sampler, batch_size=args.batch_size,
-                             max_context=max_context, mode=args.mode)
+                             max_context=max_context, mode=args.mode, max_episodes=args.max_episodes_per_window)
         metrics = supervised_update(policy, optimizer, batch, mode=args.mode)
         elapsed = elapsed_before + time.monotonic() - started
         terminal = update == args.updates or elapsed >= args.max_elapsed_seconds
         if update == 1 or update % args.eval_every == 0 or terminal:
             heldout = validate(policy, validation, mode=args.mode, batch_size=args.batch_size,
-                batches=args.validation_batches, max_context=max_context)
+                batches=args.validation_batches, max_context=max_context, max_episodes=args.max_episodes_per_window)
             row = dict(update=update, elapsed_seconds=elapsed, validation_nll=heldout, **metrics)
             with (args.output_dir / "metrics.jsonl").open("a") as stream:
                 stream.write(json.dumps(row, allow_nan=False) + "\n")
             print(json.dumps(row, allow_nan=False), flush=True)
-            if heldout < best:
-                best = heldout
+            improved = heldout < best
+            best = min(best, heldout)
+            if ((args.checkpoint_selection == "validation-nll" and improved)
+                    or (args.checkpoint_selection == "final" and update == args.updates)):
                 export_policy(args.output_dir / "candidate.pt", policy,
                     manifest=dict(contract=contract, update=update, validation_nll=heldout,
                                   train_transitions=train_manifest["transitions"]))

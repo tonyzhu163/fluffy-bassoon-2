@@ -107,6 +107,7 @@ Method contracts and results by benchmark. Live status is in
 - [RoboTwin VLRLA preparation evaluation](robotwin-vlrla/EVALUATION.md)
 - [VLRLA: published experimental protocol](vlrla-protocol.md): Exact RoboTwin six/six task split, collection and optimization settings, bridge/simp training, simulation and real-robot evaluation, and reproduction gaps
 - [Native RoboTwin AD/DPT source-history exporter](robotwin-history-corpus.md)
+- [Small-prefix AD/DPT on a frozen 4D steering interface](steering-history-prefix.md)
 - [Native RoboTwin Transformer AD/DPT full/static policy](robotwin-history-policy.md)
 - [Fresh-process native K8 wrapper](robotwin-history-live.md)
 - [Native frozen-history live evaluation adapter](robotwin-history-evaluation.md)

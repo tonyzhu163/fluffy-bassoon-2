@@ -1,0 +1,117 @@
+{
+  "format": "frozen_vla_4d_history_profile_v1",
+  "source_task": null,
+  "wrong_task": null,
+  "interface": {
+    "arm": null,
+    "coefficient_dim": 4,
+    "native_horizon": 32,
+    "denoise_steps": 5,
+    "motor_sha256": null,
+    "mapping_sha256": null,
+    "observation_dim": 2076,
+    "coefficient_limit": 1.0,
+    "label_coordinates": "actual requested post-bound 4D coefficients before hidden actuator transform",
+    "feature_contract": {
+      "public_only": true,
+      "binding": null
+    },
+    "mapping_contract": null,
+    "native_observation_dim": 2062,
+    "control_interface_sha256": null,
+    "public_command_history": "previous last-valid pre-condition 14D request; zero every physical reset"
+  },
+  "conditions": [
+    "calibration_minus",
+    "calibration_plus"
+  ],
+  "max_support_episodes": 8,
+  "query_k": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "prefix_episodes": 12,
+  "teacher_lineage_ids": {
+    "calibration_minus": "sac_calibration_minus_train1",
+    "calibration_plus": "sac_calibration_plus_train1"
+  },
+  "teacher_gate": {
+    "paired_cases": 2,
+    "minimum_success_rate": 1.0,
+    "minimum_success_gain": 0.5
+  },
+  "episode_action_limit": null,
+  "locked_query_case_ids": [
+    "query-c0-scene0",
+    "query-c0-scene1",
+    "query-c1-scene0",
+    "query-c1-scene1"
+  ],
+  "fit": {
+    "seed": 0,
+    "updates": 100,
+    "width": 64,
+    "layers": 1,
+    "heads": 4,
+    "context_length": 256,
+    "batch_size": 4,
+    "eval_every": 25,
+    "validation_batches": 4,
+    "learning_rate": 0.0003,
+    "max_seconds_per_fit": 180
+  },
+  "shared_reservation": {
+    "owner": "Plan VLA in-context learning / finish_assembly",
+    "pilot_id": "frozen-pi05-endtoend-20261031-r1",
+    "pilot_gpu_seconds": 28800,
+    "pilot_actions": 300000,
+    "pilot_storage_bytes": 68719476736,
+    "fit_gpu_seconds": 720,
+    "evaluation_bucket": "student_evaluation",
+    "evaluation_actions": 105000
+  },
+  "binding_status": "PREPARED ONLY; null motor/mapping/task/horizon bindings deliberately fail admission",
+  "lineage_slots": [
+    {
+      "lineage_id": "sac_calibration_minus_train0",
+      "condition_id": "calibration_minus",
+      "partition": "train",
+      "seed": 731031
+    },
+    {
+      "lineage_id": "sac_calibration_plus_train0",
+      "condition_id": "calibration_plus",
+      "partition": "train",
+      "seed": 835760
+    },
+    {
+      "lineage_id": "sac_calibration_minus_train1",
+      "condition_id": "calibration_minus",
+      "partition": "train",
+      "seed": 940489
+    },
+    {
+      "lineage_id": "sac_calibration_plus_train1",
+      "condition_id": "calibration_plus",
+      "partition": "train",
+      "seed": 1045218
+    },
+    {
+      "lineage_id": "sac_calibration_minus_validation2",
+      "condition_id": "calibration_minus",
+      "partition": "validation",
+      "seed": 1149947
+    },
+    {
+      "lineage_id": "sac_calibration_plus_validation2",
+      "condition_id": "calibration_plus",
+      "partition": "validation",
+      "seed": 1254676
+    }
+  ],
+  "reset_policy_action_bound": null,
+  "scope_sha256": null,
+  "wrong_task_action_limit": null
+}
