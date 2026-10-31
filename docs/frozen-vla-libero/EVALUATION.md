@@ -31,7 +31,8 @@ GPU work. [Prospective task/case reconciliation](../../outputs/libero90-pi05-hea
 Task44 (`turn on the stove`) was selected at native5/20 in both screening and
 separate confirmation. Preferred77 screened4/20 but confirmed0/20 and was
 rejected beforeSGD. Fresh-process native readmission6/20 passed the frozen
-2–8 band. The entire official OpenPI40 pi0.5 remains frozen.
+2–8 band. The entire official OpenPI40 pi0.5 remains frozen. The query bank is ten
+physical states40–49, two private-noise draws each, reused at every checkpoint.
 
 | Fixed20-case query condition | Success | Actual updates |
 | --- | ---: | ---: |
@@ -40,6 +41,7 @@ rejected beforeSGD. Fresh-process native readmission6/20 passed the frozen
 | Initialized bounded SAC |8/20|0|
 | First learned panel |1/20|20,580|
 | Second learned panel |20/20|40,140|
+| Third learned panel |20/20|60,000|
 
 The second panel reverses the first panel's regression and exceeds every
 untrained control. It uses1,651 query primitives+200 settling. Initial
@@ -47,7 +49,8 @@ identities/private seeds match native, acting weights stay fixed, and queries
 neither update nor enter replay. The newest immutable milestone, stable full
 recovery and raw trace hashes pass in the sole execution owner's check. This
 is promising interim ordinary RL evidence, not a selected final checkpoint or
-a completed replication. Both learned panels stay in the curve. The untrained
+a completed replication. The60k panel repeats20/20 with1,678 primitives+200 settling. All learned
+panels stay in the curve; the fixed endpoint and persistence test remain pending. The untrained
 tied control's13/20 advantage also shows why a native-only gap cannot isolate
 learning. [Owned check](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0240.json).
 
@@ -65,7 +68,9 @@ panels, last-three gain criterion and final native. Current whole-phase charge
 is156,664 actions/7.44GB; screen settled3,076 GPU-seconds and active3,379.4
 seconds is not a terminal charge. This child reserves25,200 in the original
 57,600/1M/64GiB lineage. No task/checkpoint substitution or extra learner seed.
-Next owned check03:00Shanghai.
+The03:00 owned check verifies73,960 updates/304 training episodes
+(265 successes/39 failures),169,553 phase actions/8.13GB, finite losses and
+stable recovery/newest60k milestone/raw/RPC evidence. Next03:20Shanghai.
 
 All240 screens and40 confirmations remain retained. Selection and target
 trajectories are disclosed development exposure, excluded from source40/new
