@@ -498,7 +498,7 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 118,
-  "unreserved_gpu_seconds": 25348,
+  "unreserved_gpu_seconds": 24748,
   "latest_action_snapshot": {
     "actual_actions": 23922,
     "by_method": {
@@ -644,7 +644,7 @@
     "source_qualification_complete_by_combined_evidence": true,
     "capacity_qualification_cases": 32
   },
-  "unreserved_a1_gpu_seconds": 3748,
+  "unreserved_a1_gpu_seconds": 3148,
   "unreserved_a1_actions": 7678,
   "event_capacity": {
     "source": "be247676c1217d9e046091c52cac2b7d0f2d3014",
@@ -764,6 +764,16 @@
       "maximum_seconds": 110,
       "state": "conditional_source_successor_binding_pending",
       "receipt_path": "COMMAND-DIAGNOSTIC-CPU-RESERVATION.json",
+      "actual_allocation_created": false
+    }
+  ],
+  "gpu_reservations": [
+    {
+      "role": "command_diagnostic_original04_cache",
+      "source_commit": "06b1425607783082df071f4dc21414a096a6f5d8",
+      "maximum_seconds": 600,
+      "state": "conditional_actual_CPU_PASS_and_data_admission_pending",
+      "authority_path": "COMMAND-DIAGNOSTIC-CACHE04-CHILD-AUTHORITY.json",
       "actual_allocation_created": false
     }
   ]
