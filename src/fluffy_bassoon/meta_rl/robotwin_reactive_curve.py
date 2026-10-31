@@ -356,7 +356,8 @@ def main(argv=None,*,_api=None,_profile=None,_validate=None,_core_bank_sha=None,
         actual_plan=audit.json(ticket['resource_plan_receipt'])
         for ref in actual_plan['prior_cost_receipts']:audit.json(ref)
         audit.json(actual_plan['storage_admission'])
-        _validate_resource(ticket,clock,operation=_operation,plan=actual_plan)
+        others=[audit.json(ref) for ref in actual_plan.get('other_fit_ticket_receipts',[])]
+        _validate_resource(ticket,clock,operation=_operation,plan=actual_plan,other_fit_tickets=others)
     root=Path(subprocess.check_output(['git','rev-parse','--show-toplevel'],text=True).strip()).resolve()
     validate_runtime_blobs(request['runtime_blob_sha256'],root,_api=_api,_core_bank_sha=_core_bank_sha,
         _extra_runtime=() if _validate is None else (_validate,))

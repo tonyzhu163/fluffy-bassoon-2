@@ -149,7 +149,7 @@ def test_geometry_is_raw_command_floor_not_success_and_preserves_rng(tmp_path):
 @pytest.mark.parametrize('fault',['overcap','old_unlisted','no_storage','wrong_purpose'])
 def test_diagnostic_resource_stage_accounts_prior_attempts_no_reset(fault):
     row=dict(path='current',lineage='fixed12-command-diagnostic/cache04',lineage_seconds=600,reserved_seconds=400)
-    clock=dict(contract={'actual':'clock'},attempts=[row]);t=dict(resource_attempt='current',clock_root='root')
+    clock=dict(contract={'actual':'clock'},worker_seconds=1800,attempts=[row]);t=dict(resource_attempt='current',clock_root='root',kind='cache04')
     plan=dict(diagnostic_purpose=bank.PURPOSE,source_eligible=False,admitted=True,stage_gpu_limits={'cache04':600},
         clock_contract=clock['contract'],clock_root='root',prior_cost_receipts=[{'bound':'old'}],storage_admission={'actual':True})
     if fault=='overcap':clock['attempts'].insert(0,dict(path='old',lineage=row['lineage'],lineage_seconds=600,reserved_seconds=300,charged_seconds=300))
@@ -172,3 +172,142 @@ def test_explicit_diagnostic_curve_still_requires_complete12_cache_identity(miss
         out=old_curve.fit_records(cache,_api=bank)
         assert len(out)==12 and out[4]['native_actual_actions']==16 and out[4]['valid_actions']==32
         assert cache['fixed12_fit_eligible'] is False and cache['source_eligible'] is False
+
+
+@pytest.mark.parametrize('require_success',[True,False])
+def test_typed_failed_cache_keeps_known32_native16_and_requires_explicit_adapter(tmp_path,monkeypatch,require_success):
+    targets=source_targets();schedule=core.build_schedule(targets)
+    target,_,_=core.scheduled_request(targets,schedule,0)
+    source={'path':'/synthetic/whole04','sha256':'s'*64};root=tmp_path/'corpus'
+    frame={'path':'frame.npz','language':['instruction']};chunk_ref={'path':'chunk.json','sha256':'c'*64}
+    metadata=dict(event_schedule=dict(teacher_reference=source,source_cursor_before=0,physical_slots_before=0,chunk_index=0),
+        capacity_native_noise={'numeric_array':'sampled_noise'},
+        frozen_pi05_residual=dict(actions={'numeric_array':'full'},base_actions={'numeric_array':'base'}))
+    chunk=dict(status='complete',context={'trial_id':'original04'},episode_id='e04',chunk_index=1,
+        observation=frame,next_observation={'after':'terminal'},decision_metadata=metadata,
+        decision_arrays={'path':'decision.npz'},native_result=dict(success=False,executed_primitive_steps=16,arrays={'path':'native.npz'}),
+        learning_result=dict(terminated=False,truncated=True,budget_truncated=False))
+    manifest=dict(pending_decision=None,completed_chunks=1,chunks=[chunk_ref],executed_primitive_steps=16,episode_id='e04')
+    state=torch.zeros(1,14);arrays={'states':np.zeros((1,14),np.float32),'features':np.zeros(2062,np.float32),
+        'main_images':np.zeros((1,2,2,3),np.uint8),'wrist_images':np.zeros((1,2,2,3),np.uint8)}
+    decision=dict(full=target[None],base=np.zeros((1,32,14),np.float32),sampled_noise=np.zeros((32,32),np.float32),
+        issued_motor_joint_targets=target[:16].copy())
+    row=dict(episode_manifest_ref=dict(root=str(root),path='manifest.json',sha256='m'*64),
+        chunks=1,primitive_steps=16,success=False,spec={'id':'original04'})
+    entry=dict(record=row,id='phone-04',split='train',producer_commit=core.PRODUCERS['event'][0],
+        original_source=source,producer_result={'original':'failed'},profile={'kind':'original_event_h32_v1'},
+        plan_convention='original_event_h32_v1')
+    demos=dict(schema={},motor_sha256='motor',normalization_sha256='norm')
+    class TypedFixtureAudit:
+        def __init__(self,deadline):pass
+        def bound(self,*args):pass
+        def guard(self):pass
+        def nested(self,root,ref):return Path(root)/ref['path']
+        def json(self,ref):
+            name=Path(ref['path']).name
+            if name=='contract.json':return dict(source_commit=entry['producer_commit'],dataset_sha256=core.DEMOS_SHA,motor_sha256='motor',normalization_sha256='norm')
+            if name=='manifest.json':return manifest
+            if name=='reset.json':return {'initial_observation':frame}
+            if name=='chunk.json':return chunk
+            raise AssertionError(name)
+        def arrays(self,root,ref):
+            if ref['path']=='frame.npz':return deepcopy(arrays)
+            if ref['path']=='decision.npz':return deepcopy(decision)
+            return {'valid_action_mask':np.ones(16,dtype=np.uint8)}
+    backend=SimpleNamespace(model=SimpleNamespace(device=torch.device('cpu')),_prepared=SimpleNamespace(state=state),
+        _prefix_mask=torch.ones(1,1,dtype=torch.bool),_kv_cache=((torch.zeros(1,1,1,256),torch.zeros(1,1,1,256)),),
+        _encode=lambda raw:np.zeros(2062,np.float32),decode=lambda noise:np.zeros((32,14),np.float32))
+    monkeypatch.setattr(core,'Audit',TypedFixtureAudit);monkeypatch.setattr(core,'file_sha',lambda p:'x'*64)
+    monkeypatch.setattr(core,'read_episode',lambda *a:(None,targets))
+    monkeypatch.setattr(core,'transformed_target',lambda model,raw,target:(SimpleNamespace(state=state),
+        torch.from_numpy(np.pad(target,((0,0),(0,18))))[None],{'synthetic_roundtrip':True}))
+    kwargs=dict(deadline=1e20,guard=lambda:None,_require_success=require_success)
+    if require_success:
+        with pytest.raises(ValueError):core._cache_episode(entry,{'instruction':'instruction'},demos,backend,tmp_path/'cache',**kwargs)
+    else:
+        rows=core._cache_episode(entry,{'instruction':'instruction'},demos,backend,tmp_path/'cache',**kwargs)
+        assert len(rows)==1 and rows[0]['valid_actions']==16 and rows[0]['native_actual_actions']==16
+        saved=torch.load(rows[0]['path'],weights_only=False)
+        assert int(saved['submitted_plan_mask'].sum())==16 and int(saved['native_executed_mask'].sum())==16
+        assert torch.equal(saved['data']['teacher14'],torch.from_numpy(target)[None])
+        assert row['success'] is False
+
+
+def two_head_resource():
+    family='fixed12-command-diagnostic/'
+    rows=[dict(path=k,lineage=family+'fit-'+k,lineage_seconds=900,reserved_seconds=800,status='started') for k in ('action','kv')]
+    clock=dict(contract={'one':'original-clock'},worker_seconds=86400,attempts=rows)
+    plan=dict(diagnostic_purpose=bank.PURPOSE,source_eligible=False,admitted=True,
+        stage_gpu_limits={'fit':1800},fit_head_gpu_limits={'action':900,'kv':900},fit_topology='separate_one_gpu_physical_allocations',
+        clock_contract=clock['contract'],clock_root='root',prior_cost_receipts=[{'bound':'old'}],storage_admission={'actual':True})
+    return clock,plan
+
+
+def test_two_independent_heads_admit_concurrently_under_one_aggregate_stage():
+    clock,plan=two_head_resource();original=deepcopy(clock)
+    for kind in ('action','kv'):
+        curve.validate_resource(dict(kind=kind,resource_attempt=kind,clock_root='root',hostname='job-'+kind,gpu_count=1,operation='fit'),clock,operation='fit',plan=plan,
+            other_fit_tickets=[dict(kind=other,resource_attempt=other,hostname='job-'+other,gpu_count=1,operation='fit') for other in ('action','kv') if other!=kind])
+    assert clock==original
+
+
+@pytest.mark.parametrize('fault',['unknown_kind','head_overflow','stage_overflow','aggregate_overflow','stale_head','wrong_kind','unknown_lineage','same_head_open'])
+def test_parallel_fit_caps_refuse_omissions_borrowing_or_stale_reservations(fault):
+    clock,plan=two_head_resource();ticket=dict(kind='action',resource_attempt='action',clock_root='root',hostname='job-action',gpu_count=1,operation='fit')
+    if fault=='unknown_kind':ticket['kind']='other'
+    if fault=='head_overflow':clock['attempts'].append(dict(path='oldaction',lineage=clock['attempts'][0]['lineage'],lineage_seconds=900,reserved_seconds=150,charged_seconds=150,status='finished'))
+    if fault=='stage_overflow':plan['stage_gpu_limits']['fit']=1700
+    if fault=='aggregate_overflow':
+        for row in clock['attempts']:row['reserved_seconds']=1000
+    if fault=='stale_head':clock['attempts'][1]['lineage_seconds']=1200
+    if fault=='wrong_kind':ticket['resource_attempt']='kv'
+    if fault=='unknown_lineage':clock['attempts'].append(dict(path='old',lineage='fixed12-command-diagnostic/fits',reserved_seconds=1,status='finished'))
+    if fault=='same_head_open':clock['attempts'][0]['reserved_seconds']=200;clock['attempts'].append(dict(path='sibling',lineage=clock['attempts'][0]['lineage'],lineage_seconds=900,reserved_seconds=100,status='started'))
+    with pytest.raises(ValueError):curve.validate_resource(ticket,clock,operation='fit',plan=plan,
+        other_fit_tickets=[dict(kind=r['lineage'].rsplit('-',1)[-1],resource_attempt=r['path'],hostname='job-'+r['path'],gpu_count=1,operation='fit') for r in clock['attempts'] if r['path']!=ticket['resource_attempt']])
+
+
+def test_aggregate_plan_can_span_more_than_one_job_limit_without_changing_actual_job_guard():
+    clock,plan=two_head_resource();plan['stage_gpu_limits']['fit']=40000
+    plan['fit_head_gpu_limits']={'action':20000,'kv':20000}
+    for row in clock['attempts']:row['lineage_seconds']=20000
+    curve.validate_resource(dict(kind='action',resource_attempt='action',clock_root='root',hostname='job-a',gpu_count=1,operation='fit'),
+        clock,operation='fit',plan=plan,
+        other_fit_tickets=[dict(kind='kv',resource_attempt='kv',hostname='job-b',gpu_count=1,operation='fit')])
+
+
+@pytest.mark.parametrize('fault',['same_physical_host','missing_ticket','grouped_topology'])
+def test_two_physical_rows_cannot_double_book_one_allocation(fault):
+    clock,plan=two_head_resource()
+    ticket=dict(kind='action',resource_attempt='action',clock_root='root',hostname='job-a',gpu_count=1,operation='fit')
+    other=[dict(kind='kv',resource_attempt='kv',hostname='job-b',gpu_count=1,operation='fit')]
+    if fault=='same_physical_host':other[0]['hostname']='job-a'
+    if fault=='missing_ticket':other=[]
+    if fault=='grouped_topology':plan['fit_topology']='grouped'
+    with pytest.raises(ValueError):curve.validate_resource(ticket,clock,operation='fit',plan=plan,other_fit_tickets=other)
+
+
+@pytest.mark.parametrize('fault',[None,'seed_as_record_id','instruction'])
+def test_canonical_readout_v2_resolves_exact_source_records_not_ordinals(monkeypatch,fault):
+    value=diagnostic_bank();value['demos']={'path':'original-demos','sha256':core.DEMOS_SHA}
+    root=Path(__file__).resolve().parents[1]
+    proposal=json.loads((root/'outputs/robotwin-command-diagnostic-20261101-r1/READOUT-PROPOSAL-V2.json').read_text())
+    seeds={4:4,8:11,9:14,10:16,11:18}
+    for i,seed in seeds.items():
+        entry=value['entries'][i];row=entry['record'];instruction=['canonical-'+str(i)]
+        row['spec'].update(reset_seed=seed,paired_instruction=instruction)
+        row['reset_info']=dict(actual_seed=seed,observation_sha256=str(i)*3,features_sha256=str(i)*4,instruction=instruction)
+        row['reset_identity']={k:row['reset_info'][k] for k in ('actual_seed','observation_sha256','features_sha256')}
+        binding=proposal['canonical_bindings'][f'phone-{i:02d}']
+        binding.update(demos_ref=value['demos'],producer_result=entry['producer_result'],record_id=row['spec']['id'])
+    monkeypatch.setattr(bank,'_recheck_bank',lambda b,d:b)
+    if fault=='seed_as_record_id':proposal['cells'][3]['reset_seed']=8
+    if fault=='instruction':value['entries'][9]['record']['reset_info']['instruction']=['foreign']
+    if fault is not None:
+        with pytest.raises(ValueError):bank.readout_bindings(value,proposal,deadline=1e20)
+    else:
+        result=bank.readout_bindings(value,proposal,deadline=1e20)
+        assert result['admitted'] is False and result['source_eligible'] is False
+        assert [result['resolved'][f'phone-{i:02d}']['reset_seed'] for i in seeds]==list(seeds.values())
+        assert [cell['private_motor_seed'] for cell in result['proposal']['cells'][::3]]==[20261301+i for i in seeds]
+        assert result['resolved']['phone-04']['original_task_success'] is False
