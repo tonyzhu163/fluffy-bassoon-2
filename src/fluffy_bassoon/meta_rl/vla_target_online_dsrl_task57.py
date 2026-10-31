@@ -471,19 +471,21 @@ def main(argv=None):
             contract=contract, resume=args.resume, deadline=deadline, stop_after_updates=args.pause_after_updates,
             storage_root=args.output.parent)
     finally:
-        if server is not None:
-            server.close()
-        after = parameter_signature(motor.policy._model)
-        onset.write_json(attempt / 'motor-parameters-after.json', dict(before=before, after=after,
-            equal=before == after, expected_parameter_sha256=MOTOR_PARAMETER_SHA256))
-        if result is not None:
-            onset.write_json(args.output / 'index.json', dict(result, run_id=args.run_id,
-                source_commit=args.source_commit, motor=motor.metadata,
-                elapsed_seconds_this_driver=time.monotonic() - started,
-                motor_parameters_unchanged=before == after,
-                motor_parameters_before_sha256=before['sha256'], motor_parameters_after_sha256=after['sha256']))
-        if before != after:
-            raise RuntimeError('Entire pi0.5 motor parameters changed during ordinary DSRL')
+        try:
+            if server is not None:
+                server.close()
+        finally:
+            after = parameter_signature(motor.policy._model)
+            onset.write_json(attempt / 'motor-parameters-after.json', dict(before=before, after=after,
+                equal=before == after, expected_parameter_sha256=MOTOR_PARAMETER_SHA256))
+            if result is not None:
+                onset.write_json(args.output / 'index.json', dict(result, run_id=args.run_id,
+                    source_commit=args.source_commit, motor=motor.metadata,
+                    elapsed_seconds_this_driver=time.monotonic() - started,
+                    motor_parameters_unchanged=before == after,
+                    motor_parameters_before_sha256=before['sha256'], motor_parameters_after_sha256=after['sha256']))
+            if before != after:
+                raise RuntimeError('Entire pi0.5 motor parameters changed during ordinary DSRL')
 
 
 if __name__ == '__main__':
