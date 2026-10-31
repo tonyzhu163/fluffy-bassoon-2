@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Software profile of the qualified CPU gate; no corpus export/fit/robot work.
+# Closed software/final100 profiles of the existing CPU gate; no fit/robot work.
 set -euo pipefail
 TASK_CODE=${1:?exact auxiliary code worktree}
 TASK_PIN=${2:?exact auxiliary pin}
@@ -13,6 +13,7 @@ TASK_MODE=${8:-original}
 TASK_TERM=570
 if [[ "$TASK_MODE" == teacher-residual ]]; then TASK_TERM=450
 elif [[ "$TASK_MODE" == ad500-readout ]]; then TASK_TERM=270
+elif [[ "$TASK_MODE" == final100-ad ]]; then TASK_TERM=6790
 else [[ "$TASK_MODE" == original ]]; fi
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 trap 'TASK_RC=$?; if [[ -d "$TASK_OUT" ]]; then printf "%s\n" "$TASK_RC" > "$TASK_OUT/exit-code.txt"; fi' EXIT

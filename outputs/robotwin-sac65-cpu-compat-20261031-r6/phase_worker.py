@@ -6,8 +6,10 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
 import time
+import zipfile
 import xml.etree.ElementTree as ET
 
 SHARED_RUNTIME_METADATA_SHA='715a0ab60975cfa63a3d19ce4bcd5cd58c355db799aa1b6884f4027765c49322'
@@ -95,13 +97,127 @@ def verify_source65_index(index, ctx, projection_path):
         raise ValueError('Index is not linked to this closed source65 projection/checkpoint')
 
 
+def finalbank_phase(phase, ctx, code, receipts, allocation):
+    """Owner operational profile around the existing7401 APIs, never a converter."""
+    f=ctx['finalbank'];base=Path(ctx['finalbank_root']);private=base/'private'
+    projection=private/'projection';exports=private/'exports'
+    if (base!=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1')
+            or ctx['code_commit']!='7401cd50c038a4cb35149eceeb72128e9a368cc3'
+            or f['ancestry']['sha256']!='0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e'
+            or f['tip']['sha256']!='5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4'
+            or f['source_stage']['sha256']!='59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90'
+            or f['final_checkpoint']['sha256']!='f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8'):
+        raise ValueError('Not the prepared closed final62/source100 AD profile')
+    def read_ref(ref):
+        if Path(ref['path']).is_symlink() or sha(ref['path'])!=ref['sha256']:
+            raise ValueError('Finalbank input changed: '+ref['path'])
+        return json.loads(Path(ref['path']).read_text())
+    ancestry=read_ref(f['ancestry']);tip=read_ref(f['tip'])
+    if (ancestry['root_count']!=62 or ancestry['tip_manifest']!=f['tip']
+            or tip['checkpoint']!=f['final_checkpoint']
+            or tip['expected']['source_steps']!=1003790
+            or tip['expected']['completed_source_trials']!=600
+            or tip['expected']['completed_source_iterations']!=100):
+        raise ValueError('Wrong actual final validation-inclusive ancestry/tip')
+    tools=code/'outputs/robotwin-finalbank-offline-plan-20261031-r1'
+    if phase=='inventory':
+        count=total=0;device=base.stat().st_dev;roots=[]
+        free=shutil.disk_usage(base).free
+        if free<16<<30:raise ValueError('Need16GiB free and approved128GiB new logical storage')
+        probe=private/'write-probe'
+        with probe.open('xb') as stream:
+            stream.write(b'final100-ad');stream.flush();os.fsync(stream.fileno())
+        probe.unlink()
+        for name in ancestry['ordered_corpus_roots']:
+            root=Path(name)
+            if root.resolve()!=root or root.is_symlink():raise ValueError('Noncanonical final source root')
+            n=size=0
+            for folder in ('episodes','frames','policies'):
+                top=root/folder
+                if not top.is_dir() or top.is_symlink():raise ValueError('Missing/redirected corpus folder')
+                for path in top.rglob('*'):
+                    if time.monotonic()>=ctx['phase_deadline']:raise TimeoutError('Final inventory deadline')
+                    if path.is_symlink() or not path.resolve().is_relative_to(root):raise ValueError('Source path escape')
+                    if path.is_dir():continue
+                    st=path.stat()
+                    if not path.is_file() or st.st_dev!=device:raise ValueError('Same-filesystem hardlinks required')
+                    n+=1;size+=st.st_size;count+=1;total+=st.st_size
+                    if count>500000 or total>88<<30:raise ValueError('Final storage/I/O eligibility exceeded')
+            roots.append(dict(root=name,files=n,bytes=size))
+        value=dict(roots=roots,files=count,bytes=total,hardlink_only=True,copy_fallback=False,
+            filesystem_device=device,free_bytes=free,max_source_bytes=88<<30,
+            max_new_logical_bytes=128<<30,export_metadata_headroom_bytes=40<<30,
+            conservative_read_estimate_bytes=8*total+64*(1<<30),
+            read_estimate_ceiling_bytes=768<<30,read_estimate_is_not_syscall_measurement=True)
+        (base/'io-inventory.json').write_text(json.dumps(value,indent=2)+'\n')
+    elif phase=='projection':
+        admission=dict(assembly_cpu_gate_passed=True,closed_source100_authorized=True,method='sac',
+            lineage_commit='db0184089fa88a5f96c153f9b80029bb91b77def',ancestry=f['ancestry'])
+        path=private/'projection-admission.json';path.write_text(json.dumps(admission,indent=2)+'\n')
+        project=load('existing_final100_projector',tools/'project_corpus.py')
+        sys.argv=[str(tools/'project_corpus.py'),'--purpose','finalbank','--admission',str(path),
+            '--admission-sha256',sha(path),'--chain-reader',ctx['chain_reader'],
+            '--output',str(projection),'--expected-hostname',allocation['resource']['hostname']]
+        project.main()
+    elif phase in ('train','validation'):
+        from fluffy_bassoon.meta_rl.robotwin_history_corpus import main as export_main
+        args=['--corpus-root',str(projection),'--source-recovery',f['source_stage']['path'],
+            '--source-sha256',f['source_stage']['sha256'],'--source-method','sac',
+            '--objectives','ad' if phase=='train' else 'behavior_cloning','--partition',phase,
+            '--output',str(exports/phase),'--device','cpu','--threads','4',
+            '--source-commit',ctx['code_commit'],'--expected-hostname',allocation['resource']['hostname']]
+        if phase=='validation':args+=['--validation-iteration','100']
+        export_main(args)
+    elif phase=='admission':
+        runner=load('existing_final_index_guard',tools/'run_offline.py')
+        from fluffy_bassoon.meta_rl.robotwin_history import load_dataset,validate_partitions
+        bindings=dict(projection_root=str(projection),exports_root=str(exports),source100_stage=f['source_stage'])
+        for partition in ('train','validation'):
+            path=exports/partition/'index.json'
+            bindings[partition+'_index']=dict(path=str(path),sha256=sha(path))
+        projected=json.loads((projection/'projection.json').read_text())
+        runner.verify_final_indexes(bindings,projected,objectives=('ad',))
+        metadata={};crcs={}
+        for partition,objective,trials,episodes,actions in (
+                ('train','ad',600,2400,1003790),('validation','behavior_cloning',6,24,10180)):
+            ref=bindings[partition+'_index']
+            sequences,m=load_dataset(ref['path'],ref['sha256'],objective)
+            if (m['counts']['complete_K4_trials']!=trials or m['counts']['episodes']!=episodes
+                    or m['counts']['selected_actions']!=actions
+                    or sum(int(s['durations'].sum()) for s in sequences)!=actions):
+                raise ValueError('Final source/validation actual coverage differs')
+            with zipfile.ZipFile(m['datasets'][objective]['path']) as archive:
+                if archive.testzip() is not None:raise ValueError('Final dataset CRC failure')
+                crcs[partition]=len(archive.infolist())
+            metadata[partition]=m
+            del sequences
+        validate_partitions(metadata['train'],metadata['validation'])
+        value=dict(status='final100_AD_BC_CPU_payload_admitted',bindings=bindings,
+            projection_sha256=sha(projection/'projection.json'),counts={k:v['counts'] for k,v in metadata.items()},
+            datasets={k:v['datasets'] for k,v in metadata.items()},ZIP_members_CRC_pass=crcs,
+            source_actor_counter_binding='existing7401 CorpusReader, not a new teacher gate',
+            teacher_used=False,additional_robot_actions=0,VLA_queries=0,SGD=0,
+            model_payloads=None,fit_or_readout_admission=False)
+        (base/'payload-admission.json').write_text(json.dumps(value,indent=2)+'\n')
+    # Count linked payloads conservatively as new logical bytes, even though
+    # blobs share the immutable originals' inodes. Never remove partial output.
+    size=0
+    for path in base.rglob('*'):
+        if time.monotonic()>=ctx['phase_deadline']:raise TimeoutError('Final output accounting deadline')
+        if path.is_symlink():raise ValueError('Redirected final output')
+        if path.is_file():size+=path.stat().st_size
+        if size>128<<30:raise ValueError('Approved new logical storage ceiling exceeded')
+    (receipts/'storage.json').write_text(json.dumps(dict(logical_bytes=size,ceiling_bytes=128<<30))+'\n')
+
+
 def main():
     started = time.monotonic()
     guard = CPUImportGuard(); sys.meta_path.insert(0, guard)
     if any(forbidden(name) for name in sys.modules):
         raise RuntimeError('Forbidden module was loaded before the import firewall')
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--phase', choices=('tests', 'projection', 'export', 'audit', 'software-tests', 'source-admit'), required=True)
+    p.add_argument('--phase', choices=('tests', 'projection', 'export', 'audit', 'software-tests', 'source-admit',
+        'finalbank-inventory','finalbank-projection','finalbank-train','finalbank-validation','finalbank-admission'), required=True)
     p.add_argument('--context', type=Path, required=True); p.add_argument('--context-sha256', required=True)
     a = p.parse_args()
     if sha(a.context) != a.context_sha256:
@@ -122,7 +238,8 @@ def main():
     root = code / 'outputs/robotwin-finalbank-offline-plan-20261031-r1'
     error = None
     try:
-        if a.phase in ('tests', 'export', 'software-tests', 'source-admit'):
+        if a.phase in ('tests', 'export', 'software-tests', 'source-admit',
+                       'finalbank-train','finalbank-validation','finalbank-admission'):
             import torch
             if (Path(torch.__file__).resolve()!=Path(library_proof['torch_init']).resolve()
                     or sha(torch.__file__)!=library_proof['torch_init_sha256']):
@@ -136,7 +253,9 @@ def main():
             torch.cuda._lazy_init = no_cuda
             torch.optim.Adam.step = torch.optim.AdamW.step = no_step
             torch.set_num_threads(4)
-        if a.phase in ('tests','software-tests'):
+        if a.phase.startswith('finalbank-'):
+            finalbank_phase(a.phase.removeprefix('finalbank-'),ctx,code,out,allocation)
+        elif a.phase in ('tests','software-tests'):
             os.environ['FB2_CPU_COMPAT_READER'] = ctx['chain_reader']
             os.environ['FB2_CPU_OWNED_HELPERS'] = ctx['owned_helpers']
             import pytest

@@ -17,6 +17,8 @@ import sys
 import time
 
 HELPER_PIN = '0c16c2b794f8de5b78603206917e72195083c265'
+# Closed operational profiles; callers cannot supply arbitrary cap extensions.
+CLOCK_PROFILES = {'compatibility': (1700, 900), 'final100-ad-v1': (6720, 2800)}
 HELPERS = {
     'robotwin_trained_pair_runtime.py':'116b5251b43454a4c61fe0bd4faeb3d1cbf6d7a2dd08356241599cbd2f32827c',
     'robotwin_trained_pair_continuation.py':'173774c46c177548750c78e1e09aa5c8caf583d265be8ecb5517757077274c9b',
@@ -77,8 +79,12 @@ def guardian_main(helper_dir):
     if line is None:
         return
     config = json.loads(line)
+    clock_profile = config.get('clock_profile', 'compatibility')
+    if clock_profile not in CLOCK_PROFILES:
+        raise ValueError('Unknown closed CPU clock profile')
+    global_cap, phase_cap = CLOCK_PROFILES[clock_profile]
     if (config['parent_pid'] != parent or config['cleanup_reserve'] != 30
-            or not 0 < config['deadline'] - time.monotonic() <= 1700):
+            or not 0 < config['deadline'] - time.monotonic() <= global_cap):
         raise ValueError('Wrong CPU guardian owner/deadline contract')
     become_subreaper()
     signal.pthread_sigmask(signal.SIG_UNBLOCK, {signal.SIGTERM, signal.SIGINT})
@@ -127,7 +133,7 @@ def guardian_main(helper_dir):
                 if guardian.failed:
                     raise RuntimeError('Failed CPU guardian cannot launch more work')
                 timeout = request['timeout_seconds']
-                if not 0 < timeout <= 900:
+                if not 0 < timeout <= phase_cap:
                     raise ValueError('CPU phase timeout outside cap')
                 started = time.monotonic()
                 entry = guardian.launch(request['name'], request['command'], request['cwd'],
@@ -157,10 +163,13 @@ def guardian_main(helper_dir):
 
 
 class CPUPhaseRuntime:
-    def __init__(self, helper_dir, output, *, deadline):
+    def __init__(self, helper_dir, output, *, deadline, clock_profile='compatibility'):
         self.helper_dir, self.output = Path(helper_dir).resolve(), Path(output).resolve()
         verify_helpers(self.helper_dir)
-        if sys.platform != 'linux' or not 31 < deadline - time.monotonic() <= 1700:
+        if clock_profile not in CLOCK_PROFILES:
+            raise ValueError('Unknown closed CPU clock profile')
+        global_cap, phase_cap = CLOCK_PROFILES[clock_profile]
+        if sys.platform != 'linux' or not 31 < deadline - time.monotonic() <= global_cap:
             raise ValueError('Need allocated Linux and remaining shared deadline/cleanup reserve')
         self.output.mkdir(parents=True, exist_ok=False)
         self.deadline, self.closed = deadline, False
@@ -169,10 +178,12 @@ class CPUPhaseRuntime:
             '--guardian', '--helper-dir', str(self.helper_dir)], stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=self.stderr, text=True, start_new_session=True,
             close_fds=True, restore_signals=True)
-        config = dict(parent_pid=os.getpid(), output=str(self.output), deadline=deadline, cleanup_reserve=30)
+        config = dict(parent_pid=os.getpid(), output=str(self.output), deadline=deadline, cleanup_reserve=30,
+                      clock_profile=clock_profile)
         self.guardian.stdin.write(json.dumps(config)+'\n'); self.guardian.stdin.flush()
         write(self.output / 'owned-runtime.json', dict(config, guardian_pid=self.guardian.pid,
-              helper_pin=HELPER_PIN, helper_sha256=HELPERS, adapter_sha256=sha(__file__), subreaper=True))
+              helper_pin=HELPER_PIN, helper_sha256=HELPERS, adapter_sha256=sha(__file__), subreaper=True,
+              global_cap_seconds=global_cap, phase_cap_seconds=phase_cap))
         ready, _, _ = select.select([self.guardian.stdout], [], [], min(10, self.remaining()))
         if not ready or not json.loads(self.guardian.stdout.readline()).get('ready'):
             self.close(); raise RuntimeError('CPU guardian did not establish ownership')

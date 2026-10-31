@@ -1,4 +1,4 @@
-"""Bounded software mode of the existing CPU gate; ownership/proof code is reused."""
+"""Closed CPU profiles of the existing gate; ownership/proof code is reused."""
 import argparse
 import hashlib
 import importlib.util
@@ -12,6 +12,7 @@ import time
 
 BASE='outputs/robotwin-sac65-cpu-compat-20261031-r6'
 RUN='robotwin-ad-first-software-qual-20261031-r1'
+FINAL_RUN='robotwin-final100-ad-export-20261031-r1'
 
 def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path)
@@ -38,12 +39,44 @@ def main(started,gate):
     gate.require(hashlib.sha256(profile_raw).hexdigest()==a.software_profile_sha256,'Software profile changed')
     profile=json.loads(profile_raw)
     run=profile['run_id']
+    finalbank=run==FINAL_RUN
     clocks=(run,profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['external_TERM_seconds'],profile['external_KILL_seconds'])
     gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460),
-        ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280))
+        ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280),
+        (FINAL_RUN,6720,7020,6790,6800))
         and profile['bootstrap_wait_seconds']==120
         and profile['cleanup_reserve_seconds']==30 and profile['gpus']==0
         and profile['cpus']==8 and profile['memory_gib']==64,'Wrong software resources/clocks')
+    if finalbank:
+        gate.require(profile['kind']=='robotwin_final100_ad_cpu_v1'
+            and profile['ad']['pin']=='7401cd50c038a4cb35149eceeb72128e9a368cc3'
+            and profile['prior_software_actual_seconds']==170
+            and profile['old_sealed_credit_seconds']==0
+            and 170+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
+            and profile['unrequested_seconds']==10,'Wrong final100 conditional residual')
+        ref=profile['prior_cpu_closure']
+        gate.require(sha(a.code_root/ref['path'])==ref['sha256'],'Software closure changed')
+        closed=json.loads((a.code_root/ref['path']).read_text())
+        gate.require(closed['aggregate_software_actual_worker_seconds']==170
+            and closed['GPU_seconds']==0,'Charge actual software170 exactly once')
+        checked={}
+        for name,ref in profile['qualified_software'].items():
+            gate.require(sha(a.code_root/ref['path'])==ref['sha256'],'Qualified component receipt changed: '+name)
+            checked[name]=json.loads((a.code_root/ref['path']).read_text())
+        gate.require(checked['assembly']['status']=='passed_closed_SAC65_CPU_compatibility_only'
+            and checked['assembly']['failure'] is None and checked['ad']['passed'] is True
+            and checked['ad']['code_commit']==profile['ad']['pin']
+            and checked['ad']['counts']==dict(tests=108,failures=0,errors=0,skipped=0),
+            'Existing assembly/AD software qualification required, not another test run')
+        ref=profile['human_phase_authority']
+        gate.require(isinstance(ref,dict),'Human phase funding is PENDING; prepared profile cannot launch')
+        gate.require(sha(ref['path'])==ref['sha256'],'Human authority receipt changed')
+        authority=json.loads(Path(ref['path']).read_text())
+        gate.require(authority['schema']=='robotwin_ad_first_human_phase_authority_v1'
+            and authority['direct_human_authorization'] is True
+            and authority['CPU_worker_seconds']==7200
+            and authority['new_storage_bytes']==128<<30
+            and authority['human_message_reference'], 'Require verified direct human phase authority')
     if 'readout' in profile:
         prior=profile['prior_cpu_closure']
         gate.require(sha(a.code_root/prior['path'])==prior['sha256'],'Closed software cost receipt changed')
@@ -61,7 +94,7 @@ def main(started,gate):
     out.mkdir();(out/'private').mkdir();(out/'tmp').mkdir()
     sys.stdout=sys.stderr=(out/'parent.log').open('x',buffering=1)
     gate.write(out/'intent.json',dict(run_id=run,auxiliary_pin=a.code_commit,profile_sha256=a.software_profile_sha256,
-        hostname=hostname,profile=profile,physical_actions=0,SGD=0,full_corpus_projection=False,
+        hostname=hostname,profile=profile,physical_actions=0,SGD=0,full_corpus_projection=finalbank,
         CPU_accounting='Charge actual scheduler duration once against proposed7200s phase total; no sealed credit'))
     def interrupted(signum,frame):raise RuntimeError('Owned software gate signal '+str(signum))
     signal.signal(signal.SIGTERM,interrupted);signal.signal(signal.SIGINT,interrupted)
@@ -82,7 +115,8 @@ def main(started,gate):
             and r['observed_running_allocation'] is True,'Actual0GPU/8CPU/64GiB proof required')
         for key in ('proof','ax_proof'):gate.require(gate.sha(r[key]['path'])==r[key]['sha256'],'Actual UI proof changed')
         adapter=load('qualified_owned_cpu',code/BASE/'owned_cpu_runtime.py')
-        runtime=adapter.CPUPhaseRuntime(a.owned_helpers,out/'private/ownership',deadline=deadline)
+        runtime=adapter.CPUPhaseRuntime(a.owned_helpers,out/'private/ownership',deadline=deadline,
+            clock_profile='final100-ad-v1' if finalbank else 'compatibility')
         observed,vis=gate.pre_mask_visibility(runtime,code,out,os.environ)
         gate.write(out/'allocation-before-mask.json',dict(resource=r,resource_sha256=ref['sha256'],
             environment_before_mask=observed['environment_before_mask'],visibility_worker=vis,
@@ -114,6 +148,9 @@ def main(started,gate):
             local=json.loads((stage_out/'local-code.json').read_text())
             gate.require(local['completed'] and local['full_clean_git_status']
                 and local['original_head']==local['effective_head']==bound['pin'],'Wrong local source identity')
+            expected=profile['auxiliary_file_sha256'] if family=='auxiliary' and finalbank else bound.get('file_sha256')
+            if expected is not None:
+                gate.require(local['bootstrap_sha256']==expected,'Prepared file identities changed: '+family)
             roots[family]=Path(local['effective_code_root'])
         for family in (('auxiliary','readout') if 'readout' in profile else
                        ('auxiliary',) if 'ad_predecessor' in profile else ('auxiliary','ad')):stage_family(family)
@@ -152,7 +189,33 @@ def main(started,gate):
                     deselected_legacy_nodes=bound.get('deselected_nodes',[]))
             gate.write(out/(family+'-'+phase+'-result.json'),value)
             return passed,value
-        if 'readout' in profile:
+        if finalbank:
+            (out/'private/exports').mkdir()
+            for phase,cap in (('inventory',180),('projection',2800),('train',2400),('validation',600),('admission',400)):
+                target=out/('finalbank-'+phase);target.mkdir()
+                c=dict(code_root=str(roots['ad']),code_commit=profile['ad']['pin'],output=str(target),
+                    finalbank_root=str(out),finalbank=profile['finalbank'],
+                    phase_deadline=min(deadline-30,time.monotonic()+cap),
+                    allocation_receipt=str(out/'allocation-before-mask.json'),
+                    allocation_receipt_sha256=sha(out/'allocation-before-mask.json'),
+                    site_packages=profile['site_packages'],shared_runtime_metadata=dict(
+                        path=str(auxiliary/BASE/'shared-runtime-path-metadata.json'),
+                        sha256=profile['shared_runtime_metadata_sha256']),chain_reader=str(reader))
+                path=target/'context.json';gate.write(path,c)
+                name='finalbank-'+phase
+                result=run_phase(name,[sys.executable,'-I','-B','-S',str(auxiliary/BASE/'phase_worker.py'),
+                    '--phase',name,'--context',str(path),'--context-sha256',sha(path)],roots['ad'],
+                    target/'console.log',cap)
+                ip=target/(name+'-imports.json')
+                gate.require(ip.is_file(),'Missing finalbank isolation receipt')
+                imports=json.loads(ip.read_text())
+                gate.require(result['returncode']==0 and imports['error'] is None
+                    and not imports['denied_imports'] and not imports['forbidden_modules_loaded']
+                    and not imports['cuda_initialized'] and not imports['optimizer_steps_permitted'],
+                    'Finalbank phase failed; preserve output, no automatic retry: '+phase)
+                results[phase]=dict(returncode=0,imports_sha256=sha(ip),cleanup_clean=True)
+            status='complete'
+        elif 'readout' in profile:
             passed,results['readout']=worker('readout','software-tests')
             gate.require(passed,'New readout software tests failed; preserve receipts, no automatic retry')
             status='complete'
