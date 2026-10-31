@@ -4,6 +4,7 @@ Run on allocated Linux. Production checkpoint admission is a separate CPU
 call to admit_plan on the exact immutable plan, never a teacher outcome.
 """
 from copy import deepcopy
+from contextlib import contextmanager
 import json
 from pathlib import Path
 
@@ -236,12 +237,13 @@ def test_parent_rejects_rehashed_wrong_actor_rng_or_implicit_paid_reuse(tmp_path
         live.verify_unit(r,plan,('sac100-sample','handover_mic'),natives,source_admission=admission(plan))
 
 
-def test_source_child_requires_full_k4_allowance_before_agent_or_runtime(tmp_path):
+def test_source_child_requires_full_k4_allowance_before_agent_or_runtime(tmp_path,monkeypatch):
     plan=configuration();args=source_arguments(tmp_path,create=False);calls=[]
-    with live.ledger(args,plan,'prior-fake-cost') as budget:
-        budget.reserve('prior',30001,phase='teacher_qualification',method='native',task='handover_mic',
-            episode=0,chunk=0,policy_version='fake')
-        budget.resolve('prior',30001)
+    budget=SourceBudget(plan);budget.actual=30001  #2399 remains; whole K4 needs2400.
+    budget.snapshot=lambda:dict(pending_actions=0,uncertain_actions=0,actual_actions=budget.actual)
+    @contextmanager
+    def fake_ledger(*args):yield budget
+    monkeypatch.setattr(live,'ledger',fake_ledger)
     with pytest.raises(RuntimeError,match='complete K4 allowance'):
         live.run_child(args,plan,prepare=lambda *a:calls.append('runtime'),agent_loader=lambda *a,**k:calls.append('agent'))
     assert not calls
