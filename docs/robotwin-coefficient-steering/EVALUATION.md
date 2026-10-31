@@ -47,13 +47,23 @@ historical journal replay or checkpoint deserialize is claimed.
 [Terminal receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/EVENT-SUFFIX-TERMINAL-RECEIPT.json).
 
 The suffix costs318 inclusive GPU-seconds, releasing1482 of its1800 reservation.
-All targeted GPU attempts are closed at2652GPU-seconds/21522 actions; CPU spend
-is1203/1800,597 remaining before the separately authorized wide-head CPU test.
-The original grant/header, failed cases and complete recoveries remain intact.
-The next prospective physical test uses two equal-length prelift holds to
+All targeted GPU attempts are closed at2652GPU-seconds/21522 actions. The
+prospective wider action head (`de667c81`) separately passes40/40 synthetic
+head tests on allocated zero-GPU2CPU/16GiB hardware,74 CPU-worker-seconds.
+It declares2rad requested arm edits and1.1 raw gripper edits with source arm
+headroom; the old0.05/zero-gripper head and runtime stay unchanged. This is
+unit qualification, not VLA/physical qualification, target support or fitting.
+No actual cache/fit/source admission follows.
+[CPU receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/WIDE-ACTION-CPU-RECEIPT.json).
+
+Current old-phase CPU spend is1277/1800,523 remaining; new LIBERO CPU164/600
+is separate. The original grant/header, failed cases and full recoveries stay
+intact. The prospective physical test uses equal-length prelift holds to
 separate added time from extra gripper closure on04, with latest-B RNG ancestry
-and no automatic teacher-bank or fitting admission. A separately declared
-partial cache can prepare known records but cannot rewrite the ended all12-
+and no automatic teacher-bank or fitting admission. Its declared ceilings are
+120 inclusive CPU-seconds and600 GPU-seconds/800 actions within the residual,
+conditional on concrete code qualification/admission. A separately declared
+partial cache may prepare known records but cannot rewrite the ended all12-
 before-cache contract or admit training without a qualified complete bank.
 
 Parent review matches17 physical-report files and10 support-report files to

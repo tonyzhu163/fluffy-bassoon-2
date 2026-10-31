@@ -1,0 +1,19 @@
+{
+  "status": "narrow_source_fix_AST_only_runtime_unexecuted",
+  "superseded_candidate": "0d2f3dfbbd2f1a7bd296e9ba129f4be47aecb7bb",
+  "blocker": "Lossy saved.detach().to(current) comparison followed by assign=True could install distinct higher-precision protected values/dtype",
+  "correction": "Reject assign=True before inspection or mutation; preserve default copy load and protected-buffer refusal",
+  "tests": {
+    "new_cases": 10,
+    "prepared_total": 40,
+    "executed_here": 0,
+    "assertions": "higher-precision 1e-9 deltas lost by float32 comparison; rejection leaves all config/hash/dtypes/buffers/parameters unchanged under strictTrue and strictFalse",
+    "mixed_precision_cases": 4
+  },
+  "configuration_and_contract_hashes_unchanged": true,
+  "legacy_runtime_unchanged": true,
+  "launched_attempt_policy": "preserve any already launched attempt/source/output/results/actual charges immutably; owner settles, no new envelope requested",
+  "outstanding": "Independent narrow static recheck and allocated CPU qualification",
+  "second_blocker": "Casting source limits to low-precision command dtype could round outward before rejection/clipping",
+  "second_correction": "Reject command dtype/source-limit pairs without exact round-trip representation; clipped bounds therefore remain source-safe in output dtype"
+}

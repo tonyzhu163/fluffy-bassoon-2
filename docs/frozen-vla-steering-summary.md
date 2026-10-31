@@ -55,7 +55,8 @@ exactly match the four successful targets; this cannot explain04 because its
 expert replay bypasses that head. Original05–11 diagnostic execution is complete:7/7 succeed193actions each.
 The fixed bank remains11/12, with04 failed; no mixed-run bank is silently admitted.
 There is no fit, teacher-bank admission, learned-capacity or ICRL result.
-Settled targeted GPU/actions2652/21522, no GPU hold; CPU1203/1800. [Evidence
+Settled targeted GPU/actions2652/21522, no active GPU job. The prospective
+wide-head40 synthetic checks pass (74CPU-s); targeted CPU1277/1800. [Evidence
 and competing explanations](robotwin-coefficient-steering/EVALUATION.md).
 
 The next LIBERO baseline follows the human's request for weak native success

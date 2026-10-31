@@ -286,12 +286,26 @@
       "actual_gpu_count": 0,
       "receipt_path": "ACTION-SUPPORT-CPU-RECEIPT.json",
       "receipt_sha256": "43889716976bfb6b56987948c458f78e702afd2b1aac857d3e476ddc9cc751c3"
+    },
+    {
+      "role": "prospective_wide_action_head_unit_qualification",
+      "job_id": "job-e4wx0c0v15f8",
+      "source_commit": "de667c81b824f41a1eaa3e68ab532c606146a147",
+      "reserved_seconds": 180,
+      "charged_seconds": 74,
+      "released_seconds": 106,
+      "settled": true,
+      "scheduler_status": "Succeeded",
+      "actual_gpu_count": 0,
+      "passed_tests": 40,
+      "receipt_path": "WIDE-ACTION-CPU-RECEIPT.json",
+      "receipt_sha256": "a4f1a3e264d965a16b6d4f54eb2ba70bc38ab9ddcb74edc196717d48a0ce2840"
     }
   ],
   "physical_action_reservations": [],
   "charged_gpu_seconds": 2652,
   "reserved_gpu_seconds": 0,
-  "charged_cpu_worker_seconds": 1203,
+  "charged_cpu_worker_seconds": 1277,
   "reserved_cpu_worker_seconds": 0,
   "charged_actions": 21522,
   "reserved_actions": 0,
@@ -306,7 +320,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "All targeted GPU attempts settled once:2652GPU-s/21522actions; B318GPU-s/1351newactions. Producer pending/uncertain0. Owner checked49 new chunks/7 manifests and summed1351, not a full old-journal replay. Old CPU1203/1800 remains separate from new LIBERO164/600. Wide-head180CPU-s qualification is separately authorized/pending actual allocation receipt.",
+  "accounting": "All targeted GPU attempts settled once:2652GPU-s/21522actions; B318GPU-s/1351newactions. Producer pending/uncertain0. Owner checked49 new chunks/7 manifests and summed1351, not a full old-journal replay. Old CPU1277/1800 after the74-second wide-head gate remains separate from new LIBERO164/600. Wide-head synthetic tests40PASS; no VLA, trained checkpoint, simulator, actions or fitting admission.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -360,7 +374,7 @@
     "student_evaluation": 105000
   },
   "planned_caps_are_not_scheduler_reservations": true,
-  "remaining_cpu_worker_seconds": 597,
+  "remaining_cpu_worker_seconds": 523,
   "unreserved_gpu_seconds": 26148,
   "latest_action_snapshot": {
     "checked_shanghai": "2026-11-01T00:44:00+08:00",
@@ -431,7 +445,7 @@
     "diagnosis_job": "job-a3luoqs9bwkn",
     "diagnosis_report_sha256": "3c393bb2c2a69647db5fffb22d970e7a57fdbfb227310200248164abf2069e8d"
   },
-  "unreserved_cpu_worker_seconds": 597,
+  "unreserved_cpu_worker_seconds": 523,
   "source_composite_cpu_envelope": {
     "maximum_worker_seconds": 600,
     "charged_worker_seconds": 329,

@@ -1,0 +1,103 @@
+{
+  "format": "frozen_pi05_wide_action_cpu_terminal_receipt_v1",
+  "source_commit": "de667c81b824f41a1eaa3e68ab532c606146a147",
+  "reviewed_main": "8ce1d2db4490b9464cad7301651252ee0ed385e0",
+  "review": "Root reviewed generic+original12byte bindings; execution owner reviewed current directly relevant generic/source helper delta, empty",
+  "job_id": "job-e4wx0c0v15f8",
+  "scheduler_status": "Succeeded",
+  "created": "2026-11-01 01:00:28 Asia/Shanghai",
+  "ended": "2026-11-01 01:01:08 Asia/Shanghai",
+  "displayed_duration_seconds": 30,
+  "exit_code": 0,
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "40",
+    "time": "1.584",
+    "timestamp": "2026-11-01T01:00:45.922521+08:00",
+    "hostname": "job-e4wx0c0v15f8-master-0"
+  },
+  "actual_resources": {
+    "gpu_count_before_mask": 0,
+    "CUDA_initialized_before_mask": false,
+    "CPU": 2.0,
+    "memory_bytes": 17179869184
+  },
+  "inclusive_cpu_clock": {
+    "format": "frozen_pi05_endtoend_cpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "source_commit": "de667c81b824f41a1eaa3e68ab532c606146a147",
+    "started_unix": 1793466034.0,
+    "deadline_unix": 1793466124.0,
+    "maximum_cpu_worker_seconds": 180,
+    "prior_phase_cpu_charge": 1203,
+    "maximum_phase_cpu_worker_seconds": 1800,
+    "interrupted_charge_cpu_worker_seconds": 180,
+    "status": "finished",
+    "attempts": 1,
+    "charged_gpu_seconds": 0,
+    "ended_unix": 1793466047.8404844,
+    "exit_code": 0,
+    "charged_cpu_worker_seconds": 74,
+    "remaining_cpu_worker_seconds": 106
+  },
+  "old_phone_phase_CPU": {
+    "prior_charge": 1203,
+    "new_charge": 74,
+    "cumulative": 1277,
+    "remaining": 523,
+    "maximum": 1800
+  },
+  "E_headroom_CPU_unchanged": {
+    "cumulative": 164,
+    "remaining": 436,
+    "maximum": 600
+  },
+  "gpu_seconds": 0,
+  "robot_actions": 0,
+  "real_VLA_model_or_weights_loaded": false,
+  "synthetic_torch_head_tensors_only": true,
+  "simulator_or_real_checkpoint_payload_loaded": false,
+  "configuration_sha256": "e208fa1911ca39ee75537a84aa00a7fadf19e67bba508d55dbeb94d06429a433",
+  "head_contract_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+  "profile_unchanged": true,
+  "original_runtime_and_generic_head_unchanged": true,
+  "recorded_support_extension": false,
+  "fitting_admitted": false,
+  "source_bank_admitted": false,
+  "GPU_admitted": false,
+  "producer_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wide-action-cpu-20261101-r1",
+  "evidence": {
+    "summary.json": {
+      "bytes": 652,
+      "sha256": "d161d451647a01162f9108e96fdd6e4f288bd1dfa3594ea8b596b0fa4de85917"
+    },
+    "cpu-worker-clock.json": {
+      "bytes": 591,
+      "sha256": "48b9938b74b60f4d48acf0e90de84c6215bd631237303a5ec548b6d7d07d345c"
+    },
+    "allocation.json": {
+      "bytes": 977,
+      "sha256": "6261f3018eeac5e9c606b86b4dbaba7ba7f48d8983fce2767b5da27992d2ac1d"
+    },
+    "zero-gpu-attestation.json": {
+      "bytes": 1053,
+      "sha256": "072384f875fa8d1f5f417ee7baa57409e4ccb88b424b471179bc42fb02758d05"
+    },
+    "tests.log": {
+      "bytes": 99,
+      "sha256": "aac615b7b1813946c5081ef4b00874e556eea4853c098dd85bc4f8d33ea607be"
+    },
+    "wide-action.junit.xml": {
+      "bytes": 6678,
+      "sha256": "b7b911db9c8e3d2d51cfd8866de4b6755bd1fbb632589979c2d3ad9802970d92"
+    },
+    "exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    }
+  },
+  "limits": "Only40newsynthetic unit cases qualified; no old suite repeated, real parity, fitting, recorded-support extension or originalall12 bank gate inferred."
+}
