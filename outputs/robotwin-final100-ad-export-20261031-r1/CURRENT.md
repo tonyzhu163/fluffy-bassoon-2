@@ -46,20 +46,15 @@ only dual-encoding compatibility with all migration/predecessor/hash guards
 retained. Original0af/rawcontracts/full paid projection remain immutable.
 No full bank/index/model admission yet; no GPU fit or robot readout launched.
 
-### Diagnosed residual continuation, not submitted
+### R2 terminal failure and diagnosed R3 preparation
 
-Phase CPU actual170software+889bank=1059, approved residual6141. Proposed next
-ONE fresh6000scheduler/5700parent5770TERM5780KILL leaves141unrequested; do not
-reuse old seals, refund costs, renew7020 or blindly retry. Root owns a new r2
-outer profile with paid complete r1projection referenced readonly, fresh r2
-exports/receipts, required narrow regressions inside its allocated CPU wall.
-Source compatibility pin and static review are pending; no r2 form/allocation
-exists. Trainer7401 and readoutf759 remain fixed; compatibility runner may use
-the new reader/index-guard pin while emitting unchanged7401 training commands.
-Retain every failed receipt/status. Refresh latest terminal/cost/pin before
-future admission; never resubmit r1 or mutate its code/output.
+R2 job-jbvfhkq3gfhd Failed/exit1 at12:43:53 Shanghai. Actual Running12:41:22→Abnormal12:43:52=150CPU-worker-seconds/1200core/0GPU, parent120.265/pod152separate. Bootstrap expired with phases[]/results{}, zero tests/data/import/model/robot/SGD. Root failed to refresh the actual detail's stale instance table; no resourceproof/nonce was fabricated. Artifact dispatcher expired and exited1. All output/code/rawfailure receipts immutable.
 
-## Carry through on successful prerequisites
+Aggregate phaseCPU170+889+150=1209spent,5991remaining. ONE fresh R3 planned5820scheduler/5520parent/5590TERM5600KILL leaves171unrequested. Exact sourcee567 and146cases remain unexecuted; same paid R1 projection readonly, unchangedoriginal0af ancestry, actor/source/VAL/counts/case guards. Qualifiedcapturehelper and ownership remain unchanged. Correct CUA caller refreshes observed unique instance reload inside original55s/hard60 deadline before helper. New pin/profile/staticreview/deploy pending, no R3form/job/bridge yet.
+
+New direct human priority verified from sourcechat userMessages01a19042-6981-7f21-99da-f962c23f8276 and01a19042-963a-74a3-9768-9cfce909f761: faithful native-action VLRLA PPO replication. Finish this already admitted CPU-only export/admission closeout; DEFER all NEW AD GPU fits/readout. Their3h/60kactions remainunspent, no silentbudgetborrow. Source root's PPOowners solely prepare/launch that native pilot; this chat creates no duplicate PPOjob.
+
+## Deferred AD GPU plan after CPU closeout
 
 The same absolute parent clock covers bootstrap, inventory, projection, AD
 train export, iteration100 BC validation export, payload admission and cleanup.

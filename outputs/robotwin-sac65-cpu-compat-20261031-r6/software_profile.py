@@ -14,6 +14,7 @@ BASE='outputs/robotwin-sac65-cpu-compat-20261031-r6'
 RUN='robotwin-ad-first-software-qual-20261031-r1'
 FINAL_RUN='robotwin-final100-ad-export-20261031-r1'
 RESIDUAL_RUN='robotwin-final100-ad-export-20261031-r2'
+PROOF_RECOVERY_RUN='robotwin-final100-ad-export-20261031-r3'
 
 def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path)
@@ -40,12 +41,14 @@ def main(started,gate):
     gate.require(hashlib.sha256(profile_raw).hexdigest()==a.software_profile_sha256,'Software profile changed')
     profile=json.loads(profile_raw)
     run=profile['run_id']
-    residual=run==RESIDUAL_RUN
-    finalbank=run in (FINAL_RUN,RESIDUAL_RUN)
+    proof_recovery=run==PROOF_RECOVERY_RUN
+    residual=run in (RESIDUAL_RUN,PROOF_RECOVERY_RUN)
+    finalbank=run in (FINAL_RUN,RESIDUAL_RUN,PROOF_RECOVERY_RUN)
     clocks=(run,profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['external_TERM_seconds'],profile['external_KILL_seconds'])
     gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460),
         ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280),
-        (FINAL_RUN,6720,7020,6790,6800),(RESIDUAL_RUN,5700,6000,5770,5780))
+        (FINAL_RUN,6720,7020,6790,6800),(RESIDUAL_RUN,5700,6000,5770,5780),
+        (PROOF_RECOVERY_RUN,5520,5820,5590,5600))
         and profile['bootstrap_wait_seconds']==120
         and profile['cleanup_reserve_seconds']==30 and profile['gpus']==0
         and profile['cpus']==8 and profile['memory_gib']==64,'Wrong software resources/clocks')
@@ -56,8 +59,8 @@ def main(started,gate):
                  and isinstance(profile['ad']['pin'],str) and len(profile['ad']['pin'])==40)
             and profile['prior_software_actual_seconds']==170
             and profile['old_sealed_credit_seconds']==0
-            and 170+profile.get('prior_bank_actual_seconds',0)+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
-            and profile['unrequested_seconds']==(141 if residual else 10),'Wrong final100 conditional residual')
+            and 170+profile.get('prior_bank_actual_seconds',0)+profile.get('prior_bootstrap_actual_seconds',0)+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
+            and profile['unrequested_seconds']==(171 if proof_recovery else 141 if residual else 10),'Wrong final100 conditional residual')
         if residual:
             ref=profile['prior_bank_terminal_accounting']
             gate.require(sha(ref['path'])==ref['sha256'],'Prior bank terminal accounting changed')
@@ -66,6 +69,14 @@ def main(started,gate):
                 and previous['scheduler_running_seconds']==profile['prior_bank_actual_seconds']==889
                 and previous['GPUs']==0 and previous['remaining_approved_CPU_worker_seconds']==6141,
                 'Residual must charge actual889 once; never renew7020 or borrow seals')
+        if proof_recovery:
+            ref=profile['prior_bootstrap_terminal_accounting']
+            gate.require(sha(ref['path'])==ref['sha256'],'Prior bootstrap accounting changed')
+            previous=json.loads(Path(ref['path']).read_text())
+            gate.require(previous['job']=='job-jbvfhkq3gfhd' and previous['scheduler_state']=='Failed'
+                and previous['scheduler_running_seconds']==profile['prior_bootstrap_actual_seconds']==150
+                and previous['GPUs']==0 and previous['tests_run']==0 and previous['data_phases_run']==0
+                and previous['remaining_approved_CPU_worker_seconds']==5991,'Charge bootstrap150 once; no clock reset')
         ref=profile['prior_cpu_closure']
         gate.require(sha(a.code_root/ref['path'])==ref['sha256'],'Software closure changed')
         closed=json.loads((a.code_root/ref['path']).read_text())

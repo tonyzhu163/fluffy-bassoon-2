@@ -15,6 +15,7 @@ if [[ "$TASK_MODE" == teacher-residual ]]; then TASK_TERM=450
 elif [[ "$TASK_MODE" == ad500-readout ]]; then TASK_TERM=270
 elif [[ "$TASK_MODE" == final100-ad ]]; then TASK_TERM=6790
 elif [[ "$TASK_MODE" == final100-ad-residual ]]; then TASK_TERM=5770
+elif [[ "$TASK_MODE" == final100-ad-proof-recovery ]]; then TASK_TERM=5590
 else [[ "$TASK_MODE" == original ]]; fi
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 trap 'TASK_RC=$?; if [[ -d "$TASK_OUT" ]]; then printf "%s\n" "$TASK_RC" > "$TASK_OUT/exit-code.txt"; fi' EXIT
