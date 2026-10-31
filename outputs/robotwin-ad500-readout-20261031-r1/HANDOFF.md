@@ -5,6 +5,8 @@ pytest, fitting, simulator actions, resource admission or launch occurred here.
 The AD7401 export/fit candidate and teacher063d successor remain separate pins.
 Readout preparation is not another gate on the two AD fits.
 
+Explicit successor to frozen c7444c8ab517f3438e38d3c6441abe7e975ddd88: master confirmed the already proposed support bank32161030+997*i. Only that support constant/template/hash/documentation changes; the322 draft remains historical and unadmitted. No outcomes, artifact bindings, resources or active CPU gate change. Different seeds alone do not establish physical novelty; accepted reset/capture hashes and pairing remain required.
+
 ## Scope and topology
 
 Use existing robotwin_history_live/evaluate/controller, native runtime and
@@ -17,7 +19,7 @@ Support failures stay in the context and result. No query feedback crosses pairs
 The K1 reset uses the SAME full weights, clears cache/noise/reward/carry flag,
 and keeps query clock1 in both arms. It is not declared equal to K0 clock0.
 
-Query environment seeds:22261030 + i*997. Support seeds:32261030 + i*997.
+Query environment seeds:22261030 + i*997. Support seeds:32161030 + i*997.
 Query action seeds:70261030 + task_index*100000 + i*997.
 Support action seeds:80261030 + task_index*100000 + i*997, i=0..7.
 Requested banks and accepted support/query cases must remain disjoint. Native
@@ -32,7 +34,7 @@ No old sequential K8 or source-validation private RNG stream is relabeled K0.
 ## Artifacts and selection
 
 plan.prepared.json is immutable topology, not an executable bound plan.
-Its SHA256 is145e45d77c51e4885663bd6aa0745b35cb1a26b8896e26edcc9bee12a439c24c.
+Its SHA256 is7d40e92b8af73984b06ede475427109161fb37cec0e106a798ed0d4b1079fbb1.
 After the source-only fits, make a new owner-hashed copy changing ONLY:
 - models: actual absolute paths and SHA256 for ad-full/ad-static candidate-000500.pt;
 - fit_commit: exact clean source-only fitting commit;

@@ -1,14 +1,14 @@
 {
   "status": "STATIC_REVIEW_ONLY_NOT_CPU_QUALIFIED_NOT_RESOURCE_ADMITTED_NOT_LAUNCHED",
-  "parent_commit": "063d4fd6443ae0ffb9d40c271d067a72078e1fa3",
+  "parent_commit": "c7444c8ab517f3438e38d3c6441abe7e975ddd88",
   "file_sha256": {
-    "src/fluffy_bassoon/meta_rl/robotwin_history_live.py": "0950df238f98e7dc1cfed6b2061a017ffbdd0957d9dddbb26fee5ab8089a1f84",
-    "src/fluffy_bassoon/meta_rl/robotwin_history_evaluate.py": "63cc6ec83f5ae8df5202913538a456fd0c12ae0014921051827cc6e42c3c80a3",
+    "src/fluffy_bassoon/meta_rl/robotwin_history_live.py": "3f71f0cd1816c83034bdf4d8cdce892ee479bcce3a667408279bd825529903b5",
+    "src/fluffy_bassoon/meta_rl/robotwin_history_evaluate.py": "7ee9b7d05339f984f758d8af74309e0c44d87ddee5ffa05ab41564dbec43a746",
     "src/fluffy_bassoon/meta_rl/robotwin_history.py": "a6ac660a675768387fc657e76db52951e2e38dd605da3828b3690c2552c538d1",
     "tests/test_robotwin_ad500_readout.py": "8b03ce9ce031e07fe4eef35e3c80fd30a66c882e9b5a202d3bb80e090eb219cc",
     "docs/robotwin-history-evaluation.md": "251645de4d5dfa4a134808cf5562ea37ac036dc8e95b6e6eb9368c796f385153",
-    "outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json": "145e45d77c51e4885663bd6aa0745b35cb1a26b8896e26edcc9bee12a439c24c",
-    "outputs/robotwin-ad500-readout-20261031-r1/HANDOFF.md": "27d41904ce3fb07533d67f2aa21607efd37f6e1aef0d11b7d26c18879a607f77",
+    "outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json": "7d40e92b8af73984b06ede475427109161fb37cec0e106a798ed0d4b1079fbb1",
+    "outputs/robotwin-ad500-readout-20261031-r1/HANDOFF.md": "32f264f7bf651eef143a4c165b2bedb9030f2d473d69c122eb9e5995ffd90602",
     "outputs/robotwin-ad500-readout-20261031-r1/COMMANDS.txt": "cb6cea57414d94c14dcab4f8d8d57ff06d4fd8fda491bef9cbb3e8198059990e"
   },
   "static_AST_unchanged": [
@@ -52,5 +52,14 @@
     "fit commit",
     "final100 AD/BC index hashes"
   ],
-  "note": "Readout preparation does not join or block the frozen AD108-first/teacher57 gate or ADtwofit admission. Runtime qualification and resource accounting stay with execution owner."
+  "note": "Readout preparation does not join or block the frozen AD108-first/teacher57 gate or ADtwofit admission. Runtime qualification and resource accounting stay with execution owner.",
+  "AST_comparison_base": "063d4fd6443ae0ffb9d40c271d067a72078e1fa3",
+  "seed_reconciliation": {
+    "previous_support_base": 32261030,
+    "canonical_support_base": 32161030,
+    "query_base": 22261030,
+    "confirmed_by": "master coordinator: existing pending human-phase PLAN/PROPOSAL",
+    "outcomes_exist": false,
+    "resources_or_active_gate_changed": false
+  }
 }

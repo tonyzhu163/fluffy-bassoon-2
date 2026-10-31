@@ -60,7 +60,7 @@ def trial_profile(plan):
 
 
 def support_case_bank():
-    return {task:[32_261_030+i*997 for i in range(8)] for task in TASKS}
+    return {task:[32_161_030+i*997 for i in range(8)] for task in TASKS}
 
 
 def action_seed_bank(*, support=False):
