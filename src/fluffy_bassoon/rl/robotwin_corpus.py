@@ -37,9 +37,31 @@ def _sha256(path):
     return digest.hexdigest()
 
 
+def _fsync_directory(path):
+    descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _ensure_directory(path):
+    path = Path(path)
+    missing = []
+    current = path
+    while not current.exists():
+        missing.append(current)
+        current = current.parent
+    path.mkdir(parents=True, exist_ok=True)
+    # A durable file entry also needs its newly created directory hierarchy
+    # reachable after a crash (e.g. a fresh episode/chunks directory).
+    for directory in reversed(missing):
+        _fsync_directory(directory.parent)
+
+
 def _atomic_json(path, value, *, replace=False):
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    _ensure_directory(path.parent)
     temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".partial")
     try:
         with temporary.open("xb") as stream:
@@ -50,6 +72,7 @@ def _atomic_json(path, value, *, replace=False):
             os.replace(temporary, path)
         else:
             os.link(temporary, path)  # Atomic creation; never replace a record.
+        _fsync_directory(path.parent)
     finally:
         temporary.unlink(missing_ok=True)
 
@@ -97,15 +120,17 @@ def _metadata(value, arrays, prefix="metadata"):
 class RobotwinCorpusWriter:
     """Append-only episode and chunk records with explicit crash ambiguity.
 
-    A writer belongs to one serial simulator/run output. Reopening preserves
-    existing records and reports unresolved intents; it never replays them.
+    The root handle and optional lane handles share one run output. Each handle
+    owns its serial episode/context/intent state; all file operations remain on
+    the parent calling thread. Reopening preserves existing records and reports
+    unresolved intents; it never replays or adopts them into another lane.
     Campaign-wide action accounting is owned by the independent budget ledger.
     ``contract`` should identify source code and exact frozen motor receipts.
     """
 
     def __init__(self, root, contract):
         self.root = Path(root).resolve()
-        self.root.mkdir(parents=True, exist_ok=True)
+        _ensure_directory(self.root)
         self.contract = {**deepcopy(contract), "schema": SCHEMA}
         _json_bytes(self.contract)
         contract_path = self.root / "contract.json"
@@ -121,8 +146,40 @@ class RobotwinCorpusWriter:
         self.pending = None
         self._episode_manifest = None
         self._frame_refs = {}
+        self._root_writer = self
+        self._lane_writers = {}
         self._stats = self._inspect_existing()
         _atomic_json(self.root / "recovery-inspection.json", self._stats, replace=True)
+
+    def for_lane(self, lane):
+        """Return a stable lane-local handle without changing the corpus schema.
+
+        Frames, contract and aggregate counters are shared. Context, chronology,
+        current episode and pending decisions are independent, including from
+        the root handle used for serial evaluation. Creation does not reopen
+        the corpus or overwrite its original recovery-inspection receipt.
+        Statistics use corpus-wide counters with this handle's local active
+        episode/pending fields; explicit inspection reconciles disk contents.
+        """
+        if type(lane) is not int or lane < 0:
+            raise ValueError("Corpus lane must be a nonnegative integer")
+        root = self._root_writer
+        if lane not in root._lane_writers:
+            child = object.__new__(type(root))
+            child.root = root.root
+            child.contract = deepcopy(root.contract)
+            child.context = deepcopy(root.context)
+            child.episode_id = None
+            child.chunk_index = 0
+            child.previous_frame = None
+            child.pending = None
+            child._episode_manifest = None
+            child._frame_refs = root._frame_refs
+            child._stats = root._stats
+            child._root_writer = root
+            child._lane_writers = root._lane_writers
+            root._lane_writers[lane] = child
+        return root._lane_writers[lane]
 
     def _inspect_existing(self):
         stats = dict(schema=SCHEMA, completed_chunks=0, native_completed_chunks=0,
@@ -173,7 +230,7 @@ class RobotwinCorpusWriter:
 
     def _save_arrays(self, relative, arrays, *, recover_existing=False):
         path = self.root / relative
-        path.parent.mkdir(parents=True, exist_ok=True)
+        _ensure_directory(path.parent)
         if path.exists() and recover_existing:
             # A crash may leave a fully written content-addressed blob before
             # its metadata sidecar. Verify every array before adopting it.
@@ -190,6 +247,7 @@ class RobotwinCorpusWriter:
                 stream.flush()
                 os.fsync(stream.fileno())
             os.link(temporary, path)
+            _fsync_directory(path.parent)
         finally:
             temporary.unlink(missing_ok=True)
         return self._array_ref(relative, arrays)
@@ -276,6 +334,7 @@ class RobotwinCorpusWriter:
         self._episode_manifest["pending_decision"] = str(path.relative_to(path.parent.parent))
         self._write_episode_manifest()
         self._stats["decision_array_bytes"] += ref["bytes"]
+        self._stats["unresolved_decisions"].append(str(path.relative_to(self.root)))
         self._write_stats()
         return str(path.relative_to(self.root))
 
@@ -313,6 +372,7 @@ class RobotwinCorpusWriter:
                           duration_seconds=float(duration_seconds), info=encoded_info,
                           arrays=native_arrays))
         _atomic_json(self.pending["path"], record, replace=True)
+        self._stats["native_completed_chunks"] += 1
         self.previous_frame = next_frame
         self._write_stats()
         return str(self.pending["path"].relative_to(self.root))
@@ -328,8 +388,10 @@ class RobotwinCorpusWriter:
                       episode_primitive_steps=int(episode_primitive_steps)))
         _atomic_json(self.pending["path"], record, replace=True)
         self._stats["completed_chunks"] += 1
+        self._stats["native_completed_chunks"] -= 1
         self._stats["executed_primitive_steps"] += record["native_result"]["executed_primitive_steps"]
         path = str(self.pending["path"].relative_to(self.root))
+        self._stats["unresolved_decisions"].remove(path)
         self._episode_manifest["chunks"].append(dict(
             path=str(self.pending["path"].relative_to(self.pending["path"].parent.parent)),
             sha256=_sha256(self.pending["path"])))
@@ -342,13 +404,26 @@ class RobotwinCorpusWriter:
         return path
 
     def _write_stats(self):
-        _atomic_json(self.root / "statistics.json", self.statistics(), replace=True)
+        # Lane callbacks execute serially on the parent, so shared counters can
+        # be persisted without rescanning an ever-growing corpus per chunk.
+        root = self._root_writer
+        _atomic_json(self.root / "statistics.json", root._statistics_snapshot(), replace=True)
 
     def _write_episode_manifest(self):
         _atomic_json(self.root / "episodes" / self.episode_id / "manifest.json",
                      self._episode_manifest, replace=True)
 
     def statistics(self):
+        # Explicit inspection (e.g. after a parallel group or during recovery)
+        # independently reconciles all on-disk records, including unresolved
+        # intents from another/reopened handle. Keep the shared dict identity.
+        root = self._root_writer
+        actual = root._inspect_existing()
+        root._stats.clear()
+        root._stats.update(actual)
+        return self._statistics_snapshot()
+
+    def _statistics_snapshot(self):
         return deepcopy(dict(self._stats, active_episode_id=self.episode_id,
                              pending_decision=(str(self.pending["path"].relative_to(self.root))
                                                if self.pending is not None else None)))

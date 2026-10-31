@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "source_commit": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+  "cluster": "Baige",
+  "job_id": "job-230io8i5cmpd",
+  "scheduler_gpu_seconds": 453,
+  "driver_seconds": 412.8239636113867,
+  "peak_gib": 65.5517578125,
+  "peak_gb": 70.385664,
+  "device_total_gib": 95.5927734375,
+  "sampled_mean_utilization_percent": 24.620947630922693,
+  "sampled_peak_utilization_percent": 100.0,
+  "gpu_memory_final_bytes": 0,
+  "arms": {
+    "ppo": {
+      "actions": 10510,
+      "trials": 6,
+      "source_episodes": 24,
+      "updates": 1,
+      "optimizer_steps": 5,
+      "pending_rollouts": 0,
+      "uncertain_actions": 0,
+      "corpus_chunks": 339,
+      "collection_seconds": 235.05809526797384,
+      "collection_actions_per_second": 44.71235074043402,
+      "all_replay_errors_zero": true,
+      "approximate_kl": 0.0015547023058640921,
+      "motor_unchanged": true
+    },
+    "ppo_reset": {
+      "actions": 10800,
+      "trials": 6,
+      "source_episodes": 24,
+      "updates": 1,
+      "optimizer_steps": 5,
+      "pending_rollouts": 0,
+      "uncertain_actions": 0,
+      "corpus_chunks": 348,
+      "collection_seconds": 235.6490494851023,
+      "collection_actions_per_second": 45.83086595765273,
+      "all_replay_errors_zero": true,
+      "approximate_kl": 0.0014245541958973326,
+      "motor_unchanged": true
+    }
+  },
+  "artifacts": {
+    "ppo/summary.json": {
+      "bytes": 30874,
+      "sha256": "b1ecb21f2399bf3e67b9443755275d565f90836f2e6c24a610f6246d538b7488"
+    },
+    "ppo/progress.jsonl": {
+      "bytes": 46064,
+      "sha256": "8b903664f9a8a27568abd3f9083c93bbe2cb705ce181b786cb33625b7044a4f0"
+    },
+    "ppo/coordinator-recovery.pt": {
+      "bytes": 16495064,
+      "sha256": "c4e4d7199b62f77e1bd428f6157c4d67006aa87f41ea74b3d18dc432ee632694"
+    },
+    "ppo/frozen-motor.json": {
+      "bytes": 183,
+      "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+    },
+    "ppo/corpus/statistics.json": {
+      "bytes": 332,
+      "sha256": "da248062fd3cbc7174e5d295b5be5ee077b6a302a926893430c012979487694a"
+    },
+    "ppo_reset/summary.json": {
+      "bytes": 30980,
+      "sha256": "f9e695c96f156017502ac10b49049e27b560d950d16aa098578f45afee764350"
+    },
+    "ppo_reset/progress.jsonl": {
+      "bytes": 48891,
+      "sha256": "ac7140f07bb6fea2ef1ecae8359135fef5e9e87af51e4ab374ebf3ad6454a73e"
+    },
+    "ppo_reset/coordinator-recovery.pt": {
+      "bytes": 16495128,
+      "sha256": "ea22da6335cb46ade45a76416ef089ea757e5f552452eec9980df6a85f733f2f"
+    },
+    "ppo_reset/frozen-motor.json": {
+      "bytes": 183,
+      "sha256": "764fd57aefc602e056e1ca0fc43f886fd437da1ba7f5025407a123b9866cfcbb"
+    },
+    "ppo_reset/corpus/statistics.json": {
+      "bytes": 332,
+      "sha256": "b26b426100ee914d9633a914e71398ea3cded47be87a471e53d471c971cf6059"
+    }
+  },
+  "total_actions": 21310,
+  "driver_actions_per_second": 51.62006539925633,
+  "allocation_actions_per_second": 47.041942604856516
+}

@@ -1,0 +1,136 @@
+{
+  "status": "proposal_only_waiting_for_owner_confirmed_immutable_handoffs",
+  "not_a_reservation_or_launch_authorization": true,
+  "work_performed": "Read-only systems evidence review and cost preparation; no active-run reads treated as latest state",
+  "existing_runtime_provenance": {
+    "scalar_continuation_source_prefix": "e825821",
+    "scalar_supervisor_source_prefix": "c715e7b",
+    "scalar_adapter_baseline": "db0184089fa88a5f96c153f9b80029bb91b77def",
+    "qualified_fresh_packed_executable": "0a116e745cdbd004b3ab4b7cca3f8fed40bd9604",
+    "qualified_fresh_packed_job": "job-230io8i5cmpd",
+    "latest_main_before_launch": null
+  },
+  "immutable_cost_evidence": {
+    "path": "outputs/robotwin-packed-ppo-20261030-r1/TERMINAL-AUDIT.json",
+    "terminal_audit_sha256": "ebba97e7478ba5f090401e8a6e0b5e9c4d9aa74cb82d8906251dcc4dabd4fe7f",
+    "scheduler_gpu_seconds": 453,
+    "driver_seconds": 412.8239636113867,
+    "actual_source_actions": 21310,
+    "declared_source_action_bound": 21600,
+    "controllers": "Fresh qualification controllers; no trained-controller speed measurement or training credit",
+    "peak_gib": 65.5517578125,
+    "limitations": [
+      "Per-group collection timings omit replay/checkpoint acknowledgement and optimizer work; use whole-allocation timing for this estimate",
+      "Short four-episode-per-worker test does not qualify long process lifetimes",
+      "Existing OIDN rendering errors remain documented"
+    ]
+  },
+  "proposed_first_production_unit": {
+    "allocation_gpus": 1,
+    "packed_arms": ["ppo", "ppo_reset"],
+    "simulators_per_arm": 6,
+    "complete_trials_per_arm": 6,
+    "episodes_per_trial": 4,
+    "maximum_new_source_actions_per_arm": 10800,
+    "maximum_new_source_actions_combined": 21600,
+    "source_update_increment_per_arm": 1,
+    "count_toward_existing_source_updates_target": 100,
+    "eligibility": "Only an arm below100 completed updates may collect its next round; never exceed100 or repeat a completed round",
+    "fresh_test_controllers": false,
+    "source_contract_changes": "Execution and explicitly bound migration provenance only; no optimizer, batch, task, horizon, loss or scientific schedule changes"
+  },
+  "cost_scenarios": {
+    "no_due_evaluation": {
+      "condition": "No incomplete due stage at input; this is a source-only one-round slice",
+      "planning_scheduler_gpu_seconds_for_both_arms": 600,
+      "planning_gpu_hours_for_both_arms": 0.16666666666666666,
+      "maximum_new_actions": 21600,
+      "status": "Conservative planning estimate including loading and update; not measured trained throughput",
+      "newly_reached_milestone": "The lifetime-six guard must exit before evaluate_stage and preserve the due stage/cursors intact for the next fresh process; this slice does not spend future evaluation capacity"
+    },
+    "due_evaluation": {
+      "milestones": [10, 25, 50, 100],
+      "condition": "A stage is already due but incomplete at input; execute its original required evaluation, or reject source-only eligibility safely",
+      "must_finish_due_units_in_original_order": true,
+      "may_skip_input_due_stage_to_obtain_benchmark_timing": false,
+      "full_stage_maximum_actions": {
+        "ppo": {"source_validation": 10800, "target": 19200, "native": 1600, "total": 31600},
+        "ppo_reset": {"source_validation": 10800, "target": 6400, "native": 0, "total": 17200},
+        "combined": 48800
+      },
+      "maximum_new_source_plus_full_stages": 70400,
+      "maximum_by_arm": {"ppo": 42400, "ppo_reset": 28000},
+      "proposed_scheduler_gpu_ceiling_seconds": 2700,
+      "proposed_gpu_hours_ceiling": 0.75,
+      "budget_condition": "Only after owner verifies actual completed-unit cursors and original per-phase, total and compute residuals; subtract completed units using their exact receipts. A stage newly reached after this source round is deferred intact by the process-lifetime boundary, rather than charged to the source-only slice"
+    }
+  },
+  "owner_handoff_manifest_required_for_each_arm": {
+    "immutable_owner_receipt_path_and_sha256": null,
+    "owner_confirmed_latest_and_terminal_writer_release": null,
+    "source_output_run_and_allocation_identity": null,
+    "coordinator_checkpoint_absolute_path_bytes_sha256": null,
+    "checkpoint_contract_and_actual_learner_config": null,
+    "weights_optimizer_scheduler_sampler_rng_state_present": null,
+    "completed_iterations_trials_updates_optimizer_steps_source_task_steps": null,
+    "pending_rollouts_empty_and_no_selected_or_inflight_prefix": null,
+    "task_schedule_rng_pending_tasks_and_trial_cursor": null,
+    "python_numpy_torch_cpu_cuda_rng_and_learner_sampler_state": null,
+    "completed_evaluation_units_history_stages_and_next_cursor": null,
+    "due_units_at_input_and_after_one_more_round": null,
+    "raw_corpus_all_ancestor_roots_indexes_hashes_retained_action_counts": null,
+    "policy_archive_checkpoint_and_weight_hashes": null,
+    "frozen_motor_norm_assets_capture_source_receipts": null,
+    "canonical_ledger_root_header_sha256_event_count_head_sha256_snapshot_sha256": null,
+    "ledger_actual_pending_uncertain_unresolved_and_source_phase_residuals": null,
+    "compute_ledger_immutable_snapshot_sha256_original_hold_residual_and_owner_binding": null,
+    "mutually_rechecked_checkpoint_and_ledger_head_unchanged_at_launch": null
+  },
+  "state_integrity_checks": [
+    "Do not assume the formerly observed 38/39 updates or expected 40/41 boundaries remain latest",
+    "Actual trained reset learner config must retain reset_each_episode=true; the common summary contract.ppo field alone is insufficient",
+    "At a fully applied PPO boundary: completed trials equal six times completed source iterations, learner updates equal iterations, and pending rollouts are empty",
+    "Under the unchanged five-epoch/minibatch16/global-six recipe, an ordinary accepted round adds five SGD optimizer steps; verify actual saved counters and any rejected-update history",
+    "Restore the coordinator-authoritative global RNG only after all learners, private samplers, optimizer and task schedules are restored",
+    "Keep all old raw corpora/checkpoints immutable; link exact ancestry and retained prefixes from the new output manifest",
+    "An execution migration requires an explicit owner-bound scientific-contract equivalence receipt; ordinary strict --resume is not an implicit contract migration",
+    "Preserve the original canonical campaign header/caps/indexes/journal and require zero pending/uncertain/unresolved decisions before handoff",
+    "No active worker may continue consuming the old ledger after the mutually verified handoff"
+  ],
+  "bounded_rollover_proposal": {
+    "status": "Owner to freeze after the one-round trained result; no new resource reservation",
+    "initial_slice_complete_rounds": 1,
+    "subsequent_example_maximum_complete_rounds_per_process_lifetime": 10,
+    "source_episodes_per_simulator_at_example_bound": 40,
+    "boundary": "Complete source update or original complete evaluation-unit boundary; durable coordinator acknowledged, no partial/inflight/uncertain work. Preserve any next due stage and completed-unit cursors exactly across fresh processes",
+    "new_slice": "Fresh process/output identity with exact checkpoint and corpus ancestry; trained weights/optimizer/samplers/RNG/cursors remain continuous",
+    "admission": "Original residual source/phase/total actions and compute only; reserve complete native units plus checkpoint/shutdown time before RPC",
+    "retry": "No automatic retries, cap expansion, discarded trained prefix or fresh controller initialization"
+  },
+  "excluded_capacity": {
+    "old_robotwin_12000_action_qualification_hold": "Unchanged and unavailable",
+    "new_robotwin_packed_21600_action_2700_second_hold": "Settled at21310actions/453seconds; unused290actions/2247seconds sealed and unavailable",
+    "old_libero_1800_second_hold": "Owner releases1339seconds exclusively to required DSRL baseline inside32h; retains411actual+50margin=461seconds; unavailable for Robo consolidation",
+    "new_source_target_or_resource_expansion": false
+  },
+  "historical_owner_attested_evidence_only": {
+    "method": "ppo",
+    "manifest": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/continuation-manifest.json",
+    "manifest_sha256": "7a976d2ea989b0071e31f51a61a28b3d3fc7692be90a14e8653e17d8d814fd5c",
+    "source_actions": 384343,
+    "completed_trials": 240,
+    "updates": 40,
+    "optimizer_steps": 200,
+    "pending": 0,
+    "owner_status": "Slice0002 was already RUNNING when this historical receipt was supplied",
+    "not_current_handoff_or_ledger_ownership_or_residual_budget_proof": true,
+    "independent_latest_state_claim": false
+  },
+  "launch_readiness": {
+    "ready": false,
+    "reason": "Owner-confirmed immutable trained handoffs and mutually checked residual physical/compute ledgers are not yet supplied",
+    "gpu_jobs_launched_by_this_audit": 0,
+    "live_campaign_budget_objects_opened": 0,
+    "active_outputs_or_worktrees_modified": false
+  }
+}

@@ -18,6 +18,7 @@ from dataclasses import asdict
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import random
 import re
@@ -30,6 +31,10 @@ import torch
 
 from fluffy_bassoon.meta_rl.vla_noise_ppo import PPOConfig, RecurrentNoisePPO, observation_hash, capture_rng, restore_rng
 from fluffy_bassoon.meta_rl.vla_noise_sac import SACConfig, NoiseSAC
+from fluffy_bassoon.meta_rl.collection_admission import (
+    admit_collected_group, assert_resume_allowed, quarantine_collection_failure,
+    campaign_checkpoint_fence, assert_campaign_checkpoint_fence,
+)
 
 
 SOURCE_TASKS = ("handover_mic", "pick_diverse_bottles", "place_a2b_left",
@@ -44,6 +49,75 @@ class WallBudgetReached(RuntimeError):
 
 class CampaignBudgetReached(RuntimeError):
     pass
+
+
+class CollectorTimeAdmission:
+    """Reviewed first-group bound, then measured complete-group wall times."""
+    def __init__(self, initial_seconds, checkpoint_reserve):
+        if (not math.isfinite(initial_seconds) or initial_seconds <= 0
+                or not math.isfinite(checkpoint_reserve) or checkpoint_reserve < 0):
+            raise ValueError("Parallel collection needs a finite reviewed group-time bound")
+        self.initial_seconds=float(initial_seconds)
+        self.checkpoint_reserve=float(checkpoint_reserve)
+        self.maximum_observed=0.
+
+    def require(self, remaining_seconds):
+        required=max(self.initial_seconds,1.25*self.maximum_observed)+self.checkpoint_reserve
+        if not math.isfinite(remaining_seconds) or remaining_seconds <= required:
+            raise WallBudgetReached(f"Complete parallel group plus checkpoint reserve requires {required:.3f}s")
+
+    def observe(self, seconds):
+        if not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("Invalid measured complete-group wall time")
+        self.maximum_observed=max(self.maximum_observed,float(seconds))
+
+    def state_dict(self):
+        return dict(initial_seconds=self.initial_seconds,checkpoint_reserve=self.checkpoint_reserve,
+                    maximum_observed=self.maximum_observed)
+
+    def load_state_dict(self, state):
+        if (state["initial_seconds"]!=self.initial_seconds
+                or state["checkpoint_reserve"]!=self.checkpoint_reserve
+                or not math.isfinite(state["maximum_observed"]) or state["maximum_observed"]<0):
+            raise ValueError("Parallel collection timing recovery changed")
+        self.maximum_observed=float(state["maximum_observed"])
+
+
+def restore_unstarted_source_group(state, plan):
+    """Only for groups with zero simulator RPCs; never refund physical work."""
+    state["schedule"].load_state_dict(deepcopy(plan["schedule_before"]))
+    state["learner"].sampler.bit_generator.state=deepcopy(plan["sampler_before"])
+    restore_rng(plan["rng_before"])
+
+
+def plan_parallel_source_group(state, *, lanes, episodes, episode_limit_for_task,
+                               remaining_actions, admit_time):
+    """Plan within one six-trial round, rolling back every prelaunch stream."""
+    if lanes not in (2,3,6) or episodes!=4 or len(state["pending"])%lanes:
+        raise ValueError("Parallel groups require aligned two/three/six-lane K4 execution")
+    if len(state["pending"])+lanes>6:
+        raise ValueError("Parallel group would cross the fixed six-trial PPO update")
+    plan=dict(schedule_before=deepcopy(state["schedule"].state_dict()),
+        sampler_before=deepcopy(state["learner"].sampler.bit_generator.state),
+        rng_before=deepcopy(capture_rng()))
+    try:
+        plans=[]
+        for _ in range(lanes):
+            task,seeds=state["schedule"].sample(episodes)
+            limit=episode_limit_for_task(task)
+            if type(limit) is not int or limit<1:
+                raise ValueError("Native source task horizon must be a positive integer")
+            plans.append(dict(task=task,seeds=seeds,episode_limit=limit,
+                              schedule_trial=state["schedule"].trials))
+        required=sum(len(item["seeds"])*item["episode_limit"] for item in plans)
+        if remaining_actions<required:
+            raise CampaignBudgetReached("Insufficient reservation for complete parallel K4 trials; no RPC dispatched")
+        admit_time()
+        plan.update(plans=plans,required_actions=required)
+        return plan
+    except BaseException:
+        restore_unstarted_source_group(state,plan)
+        raise
 
 
 class PPOUpdateRejected(RuntimeError):
@@ -237,6 +311,17 @@ def append_json(path,value):
         stream.write(json.dumps(value,allow_nan=False)+"\n")
 
 
+def durable_torch_replace(payload, path):
+    """The native group fence cannot clear before file and directory fsync."""
+    temporary=path.with_suffix(".tmp")
+    torch.save(payload,temporary)
+    with temporary.open("rb") as stream: os.fsync(stream.fileno())
+    temporary.replace(path)
+    descriptor=os.open(path.parent,os.O_RDONLY)
+    try: os.fsync(descriptor)
+    finally: os.close(descriptor)
+
+
 class BalancedSchedule:
     """Uniform task blocks; actual task interactions are reported separately."""
     def __init__(self,tasks,seed):
@@ -296,6 +381,8 @@ def parse_args(argv=None):
     p.add_argument("--record-corpus",action="store_true")
     p.add_argument("--final-observation-only",action="store_true")
     p.add_argument("--capture-qualification",type=Path)
+    p.add_argument("--collector-lanes",type=int,default=1)
+    p.add_argument("--collector-group-seconds",type=float)
     p.add_argument("--ppo-epochs",type=int,default=5)
     p.add_argument("--ppo-minibatch-trials",type=int,default=16)
     p.add_argument("--learning-rate",type=float,default=3e-4)
@@ -311,6 +398,8 @@ def parse_args(argv=None):
     p.add_argument("--resume-trial-manifest",type=Path)
     p.add_argument("--resume-trial-manifest-sha256")
     p.add_argument("--lineage-source-commit")
+    p.add_argument("--lineage-parent-manifest",type=Path)
+    p.add_argument("--lineage-parent-manifest-sha256")
     p.add_argument("--max-source-trials-per-process",type=int,default=0)
     p.add_argument("--recycle-at-round-boundary",action="store_true")
     args=p.parse_args(argv)
@@ -326,6 +415,9 @@ def parse_args(argv=None):
         p.error("Episode-boundary migration requires resume, bound manifest/SHA, explicit lineage and a whole-trial campaign")
     if args.max_source_trials_per_process<0:
         p.error("Process trial lifetime must be nonnegative")
+    if (args.lineage_parent_manifest or args.lineage_parent_manifest_sha256) and not (
+            args.lineage_source_commit and args.collector_lanes>1):
+        p.error("Original parent binding is only used for trained parallel migration")
     if args.recycle_at_round_boundary and len(args.methods)!=1:
         p.error("Round-boundary process recycling requires one independently supervised source arm")
     if args.ppo_max_update_kl is not None and (
@@ -344,6 +436,29 @@ def parse_args(argv=None):
     if not set(args.eval_tasks)<=set(SOURCE_TASKS+HELDOUT_TASKS):
         p.error("Unknown evaluation task")
     if len(set(args.methods))!=len(args.methods): p.error("Duplicate method")
+    if args.collector_lanes not in (1,2,3,6):
+        p.error("collector-lanes must be one, two, three or six")
+    if args.collector_lanes>1:
+        if (not args.source_iterations or args.ppo_trials_per_update!=6
+                or args.train_episodes!=4 or args.ppo_update_steps or args.native_horizon!=32
+                or not args.benchmark_episode_limits or not args.campaign_root or not args.record_corpus
+                or args.ppo_max_update_kl is None or not set(args.methods)&{"ppo","ppo_reset"}
+                or len(args.source_tasks)!=6 or set(args.source_tasks)!=set(SOURCE_TASKS)):
+            p.error("Parallel PPO requires the native six-task, six-complete-K4 fixed-round campaign with corpus and KL guard")
+        if (args.collector_group_seconds is None or not math.isfinite(args.collector_group_seconds)
+                or args.collector_group_seconds<=0):
+            p.error("Parallel PPO needs an explicit reviewed --collector-group-seconds bound")
+        if args.max_source_trials_per_process and args.max_source_trials_per_process%args.collector_lanes:
+            p.error("Parallel process trial lifetime must fit complete lane groups")
+        if args.lineage_source_commit and (args.collector_lanes!=6 or len(args.methods)!=1
+                or args.methods[0] not in ("ppo","ppo_reset")
+                or args.max_source_trials_per_process!=6 or not args.recycle_at_round_boundary):
+            p.error("Trained parallel migration requires one N6 update per process and round-boundary recycling")
+        if args.lineage_source_commit and (not args.lineage_parent_manifest
+                or not re.fullmatch(r"[0-9a-f]{64}",args.lineage_parent_manifest_sha256 or "")):
+            p.error("Trained parallel migration requires the hash-bound original parent manifest")
+    elif args.collector_group_seconds is not None:
+        p.error("collector-group-seconds requires parallel collection")
     if args.campaign_root and not args.record_corpus:
         p.error("Campaign collection requires --record-corpus")
     if args.campaign_root and args.source_steps*len(args.methods)>args.campaign_max_actions:
@@ -382,31 +497,59 @@ def parse_args(argv=None):
             p.error("Stage target adaptation uses the declared K8 trials")
     elif args.stage_source_validation_only and not args.source_iterations:
         p.error("Stage validation mode requires action milestones or fixed source iterations")
+    if args.resume:
+        try: assert_resume_allowed(args.resume)
+        except RuntimeError as error: p.error(str(error))
     return args
 
 
 def main(argv=None):
     args=parse_args(argv)
+    if args.collector_lanes>1:
+        for name in ("model_path","norm_stats","robotwin_root","rlinf_root","output",
+                     "campaign_root","campaign_prior_receipts","capture_qualification","resume",
+                     "resume_trial_manifest","lineage_parent_manifest"):
+            value=getattr(args,name)
+            if value is not None:setattr(args,name,value.resolve())
+    resume_joint=None;resume_path=None;trial_continuation=None;trained_parallel_admission=None
+    lineage_commit=args.lineage_source_commit or args.source_commit
+    execution_run_id=args.output.name
+    if args.resume is not None:
+        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
+        resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
+        assert_resume_allowed(args.resume,checkpoint=resume_joint)
+        parallel=(resume_joint.get("execution_metadata",{}).get("parallel_source_collection")
+                  or resume_joint.get("contract",{}).get("parallel_source_collection"))
+        if parallel or resume_joint.get("campaign_journal_fence"):
+            if (not parallel or args.collector_lanes!=parallel["lanes"]
+                    or args.collector_group_seconds!=parallel["group_seconds_bound"]
+                    or args.campaign_root is None):
+                raise RuntimeError("Parallel recovery requires the same explicit collector and canonical campaign configuration before GPU setup")
+            assert_campaign_checkpoint_fence(args.campaign_root,resume_joint)
+    if args.resume_trial_manifest:
+        from fluffy_bassoon.meta_rl.robotwin_trial_resume import load_trial_continuation
+        trial_continuation=load_trial_continuation(args.resume_trial_manifest,args.resume_trial_manifest_sha256,
+            checkpoint_path=resume_path,checkpoint=resume_joint,execution_commit=args.source_commit,
+            lineage_commit=lineage_commit)
+        output_identity=hashlib.sha256(str(args.output.resolve()).encode()).hexdigest()[:16]
+        execution_run_id=f"{args.output.parent.name}:{args.output.name}:{output_identity}"
+        if args.collector_lanes>1:
+            from fluffy_bassoon.meta_rl.robotwin_trained_parallel import (
+                validate_trained_parallel_boundary,validate_trained_parallel_arguments,validate_lineage_parent)
+            validate_trained_parallel_arguments(args,resume_joint)
+            parent_binding=validate_lineage_parent(args.lineage_parent_manifest,args.lineage_parent_manifest_sha256,
+                checkpoint=resume_joint,campaign_root=args.campaign_root,native_episodes=args.native_episodes)
+            trained_parallel_admission=validate_trained_parallel_boundary(trial_continuation,resume_joint,
+                manifest_path=args.resume_trial_manifest,campaign_root=args.campaign_root)
+            trained_parallel_admission["original_parent_manifest"]=parent_binding
+    elif args.collector_lanes>1 and args.resume and not parallel:
+        raise ValueError("Trained parallel collection requires a hash-bound complete-update manifest")
     if sys.platform!="linux" or not torch.cuda.is_available():
         raise RuntimeError("Run only inside a qualified allocated Linux CUDA job")
     if (args.output/"contract.json").exists():
         raise FileExistsError("Use a fresh output identity, including for resumed allocations")
     args.output.mkdir(parents=True,exist_ok=True)
     started=time.monotonic()
-    resume_joint=None;resume_path=None;trial_continuation=None
-    lineage_commit=args.lineage_source_commit or args.source_commit
-    execution_run_id=args.output.name
-    if args.resume_trial_manifest:
-        from fluffy_bassoon.meta_rl.robotwin_trial_resume import load_trial_continuation
-        resume_path=(args.resume/"coordinator-recovery.pt" if args.resume.is_dir() else args.resume)
-        resume_joint=torch.load(resume_path,map_location="cpu",weights_only=False)
-        trial_continuation=load_trial_continuation(args.resume_trial_manifest,args.resume_trial_manifest_sha256,
-            checkpoint_path=resume_path,checkpoint=resume_joint,execution_commit=args.source_commit,
-            lineage_commit=lineage_commit)
-        # Legacy child paths all ended in /experiment. A fresh execution must
-        # never reuse experiment:action:0 or misattribute its Git revision.
-        output_identity=hashlib.sha256(str(args.output.resolve()).encode()).hexdigest()[:16]
-        execution_run_id=f"{args.output.parent.name}:{args.output.name}:{output_identity}"
     random.seed(args.seed); np.random.seed(args.seed); torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
     capture_qualification=None
@@ -467,6 +610,15 @@ def main(argv=None):
         episode_limit=args.episode_limit,action_limit=args.action_limit))
     contract["ppo_trials_per_update"] = args.ppo_trials_per_update
     contract["ppo_update_primitive_threshold"] = args.ppo_update_steps
+    parallel_execution=None
+    if args.collector_lanes>1:
+        parallel_execution=dict(lanes=args.collector_lanes,
+            controller_microbatch=1,motor_microbatch=1,
+            group_seconds_bound=args.collector_group_seconds,
+            native_task_horizons=True,raw_corpus=True,
+            scope="source PPO only; scalar SAC and evaluations unchanged")
+        if not trial_continuation:
+            contract["parallel_source_collection"]=parallel_execution
     if task_episode_limits is not None:
         contract["task_episode_limits"]=task_episode_limits
     if args.source_iterations:
@@ -513,6 +665,11 @@ def main(argv=None):
         if resume_joint["contract"]!=contract:raise ValueError("Migration scientific/source contract changed")
         migration=dict(trial_continuation.receipt,execution_run_id=execution_run_id,
             scope="execution/recovery migration only; scientific and learner contract unchanged")
+        if parallel_execution:
+            migration.update(parallel_source_collection=parallel_execution,
+                trained_parallel_admission=trained_parallel_admission,
+                max_source_trials_per_process=args.max_source_trials_per_process,
+                recycle_at_round_boundary=args.recycle_at_round_boundary)
         write_json(args.output/"execution-migration.json",migration)
     budget=None
     if args.campaign_root:
@@ -529,8 +686,20 @@ def main(argv=None):
         if args.campaign_prior_receipts:
             for receipt in json.loads(args.campaign_prior_receipts.read_text()):
                 budget.import_receipt(**receipt)
+        if args.collector_lanes>1 and resume_joint is not None:
+            fence_checkpoint=(dict(campaign_journal_fence=trained_parallel_admission["campaign_journal_fence"])
+                              if trained_parallel_admission else resume_joint)
+            assert_campaign_checkpoint_fence(args.campaign_root,fence_checkpoint,live_budget=budget)
         env=CampaignEnv(env,budget,run_id=execution_run_id)
     policy_archive=BehaviorPolicyArchive(args.output/"corpus"/"policies") if args.record_corpus else None
+    vector_env=None
+    collector_time=(CollectorTimeAdmission(args.collector_group_seconds,args.boundary_reserve_seconds)
+                    if args.collector_lanes>1 else None)
+    if args.collector_lanes>1:
+        from fluffy_bassoon.rl.robotwin_production_vector import ProductionRobotwinVectorEnv
+        vector_env=ProductionRobotwinVectorEnv(env.env if isinstance(env,CampaignEnv) else env,
+            budget,run_id=execution_run_id,lanes=args.collector_lanes,
+            corpus_writer=corpus_writer,output_dir=args.output)
     def set_context(method,phase,trial_id,learner=None,**metadata):
         behavior=(policy_archive.identify(learner,"sac" if isinstance(learner,NoiseSAC) else method)
                   if policy_archive is not None and learner is not None else
@@ -588,9 +757,19 @@ def main(argv=None):
                      schedule=schedule.state_dict(),source_steps=steps,task_steps=task_steps,
                      pending_rollouts=pending or [],boundary="complete trial or declared budget cut",
                      resume_stage="source",elapsed_seconds=time.monotonic()-started)
+        rejected=source_states.get(method,{}).get("rejected_group")
+        if rejected: payload.update(rejected_group=rejected,resume_blocked=True)
+        if vector_env is not None:
+            payload["campaign_journal_fence"]=campaign_checkpoint_fence(budget)
+            payload["parallel_vector_root"]=str(vector_env.root.resolve())
+            group=vector_env.group_recovery_metadata()
+            if group and group.get("status") not in ("checkpointed","cancelled_before_dispatch"):
+                payload["parallel_collection_group"]=group
         if iteration_state is not None: payload.update(iteration_state)
-        torch.save(payload,temporary)
-        temporary.replace(path)
+        if vector_env is not None:durable_torch_replace(payload,path)
+        else:
+            torch.save(payload,temporary)
+            temporary.replace(path)
     def native(phase,*,unit_prefix="",stage=None,tasks=None,stage_iteration=None):
         rng=np.random.default_rng(args.seed+907)
         for task in args.eval_tasks if tasks is None else tasks:
@@ -681,6 +860,8 @@ def main(argv=None):
             completed_units.update(resume_joint.get("completed_units",[]))
             history[:]=resume_joint.get("history",[])
             stage_reports.update(resume_joint.get("stages",{}))
+        if collector_time is not None and "collector_time_admission" in resume_joint:
+            collector_time.load_state_dict(resume_joint["collector_time_admission"])
     def initialize_sources():
         nonlocal next_method_index,last_joint_steps
         for method in args.methods:
@@ -693,6 +874,9 @@ def main(argv=None):
                 saved=resume_joint["states"][method]
                 learner.load_state_dict(saved["learner"])
                 schedule.load_state_dict(saved["schedule"])
+                if trained_parallel_admission:
+                    from fluffy_bassoon.meta_rl.robotwin_trained_parallel import assert_loaded_trained_identity
+                    assert_loaded_trained_identity(learner,schedule,saved)
                 state.update(steps=int(saved["source_steps"]),task_steps=saved["task_steps"],
                              pending=saved.get("pending_rollouts",[]),
                              last_checkpoint_steps=int(saved["source_steps"]))
@@ -720,6 +904,10 @@ def main(argv=None):
             # Per-learner loading may restore older global RNG snapshots; the
             # coordinator is the final authority after every learner is loaded.
             restore_rng(resume_joint["rng"])
+            if trained_parallel_admission:
+                from fluffy_bassoon.meta_rl.robotwin_trial_resume import artifact_digest
+                if artifact_digest(capture_rng())!=artifact_digest(resume_joint["rng"]):
+                    raise ValueError("Trained parallel coordinator RNG restoration differs")
             log("resume_accepted",checkpoint=str(args.resume),source_steps=accepted_resume_steps,
                 next_method_index=next_method_index,
                 note="Only checkpoint counters are resumed; later uncheckpointed predecessor logs are excluded")
@@ -732,6 +920,8 @@ def main(argv=None):
             states[method]=dict(learner=state["learner"].state_dict(),
                 schedule=state["schedule"].state_dict(),source_steps=state["steps"],
                 task_steps=state["task_steps"],pending_rollouts=state["pending"])
+            if state.get("rejected_group"):
+                states[method]["rejected_group"]=state["rejected_group"]
             if args.source_iterations:
                 states[method].update(completed_source_trials=state["completed_trials"],
                                       completed_source_iterations=state["iterations"])
@@ -739,16 +929,30 @@ def main(argv=None):
                 states[method]["selected_trial_recovery"]=state["selected_resume"].receipt
         path=args.output/"coordinator-recovery.pt"
         temporary=path.with_suffix(".tmp")
-        payload=dict(contract=contract,states=states,
+        recovery=dict(contract=contract,states=states,
                         rng=capture_rng() if checkpoint_rng_override is None else deepcopy(checkpoint_rng_override),
                         next_method_index=next_method_index,boundary="completed source trial/update",
                         completed_units=sorted(completed_units),history=history,
                         stages=stage_reports,
                         resume_stage="source_or_completed_evaluation_unit",
                         elapsed_seconds=time.monotonic()-started)
-        torch.save(payload,temporary)
-        temporary.replace(path); last_joint_steps=total
-        return payload
+        if trial_continuation:
+            recovery["execution_metadata"]=migration
+        if collector_time is not None:
+            recovery["collector_time_admission"]=collector_time.state_dict()
+        if vector_env is not None:
+            recovery["campaign_journal_fence"]=campaign_checkpoint_fence(budget)
+            recovery["parallel_vector_root"]=str(vector_env.root.resolve())
+            group=vector_env.group_recovery_metadata()
+            if group and group.get("status") not in ("checkpointed","cancelled_before_dispatch"):
+                recovery["parallel_collection_group"]=group
+        if any(s.get("rejected_group") for s in source_states.values()): recovery["resume_blocked"]=True
+        if vector_env is not None:durable_torch_replace(recovery,path)
+        else:
+            torch.save(recovery,temporary)
+            temporary.replace(path)
+        last_joint_steps=total
+        return recovery
     def save_state(method,force=False):
         state=source_states[method]
         if force or state["steps"]-state["last_checkpoint_steps"]>=args.checkpoint_steps:
@@ -766,6 +970,7 @@ def main(argv=None):
                                    updates=learner.updates,optimizer_steps=learner.optimizer_steps,
                                    pending_trials=len(state["pending"]),
                                    pending_primitive_steps=sum(r["primitive_steps"] for _,r in state["pending"]))
+            if state.get("rejected_group"): summaries[method]["rejected_group"]=state["rejected_group"]
             if trial_continuation:summaries[method]["recovered_prior_prefix_actions"]=state["recovered_prefix_credit"]
             if method=="sac": summaries[method]["contract"]=learner.contract()
             if args.source_iterations:
@@ -840,6 +1045,87 @@ def main(argv=None):
         if trials==args.ppo_trials_per_update:
             state["iterations"]+=1
             record_iteration_complete(method)
+    def parallel_source_round(method):
+        nonlocal completed_process_trials
+        from fluffy_bassoon.meta_rl.vla_noise_batched_collection import (
+            CollectionNotStarted,collect_trials_batched,
+        )
+        from fluffy_bassoon.rl.robotwin_production_vector import ProductionAdmissionError
+        state=source_states[method]; learner=state["learner"]
+        remaining=min(args.source_steps-state["steps"],budget.remaining(phase="source",method=method))
+        plan=plan_parallel_source_group(state,lanes=args.collector_lanes,
+            episodes=args.train_episodes,episode_limit_for_task=vector_env.episode_limit_for_task,
+            remaining_actions=remaining,
+            admit_time=lambda: collector_time.require(args.wall_seconds-(time.monotonic()-started)))
+        plans=plan["plans"]
+        lane_iteration=[dict(source_iteration=state["iterations"]+1,
+            trial_in_iteration=state["completed_trials"]%6+lane+1) for lane in range(len(plans))]
+        admitted=False; collected=None
+        trial_start=time.monotonic()
+        try:
+            behavior=policy_archive.identify(learner,method)
+            for lane,item in enumerate(plans):
+                context=dict(phase="source",method=method,
+                    trial_id=f"source:{method}:{item['schedule_trial']}",**behavior,
+                    stage_source_actions=None,stage_source_iteration=None,**lane_iteration[lane])
+                if trial_continuation:
+                    context.update(execution_source_commit=args.source_commit,lineage_source_commit=lineage_commit,
+                        execution_run_id=execution_run_id,resume_trial_manifest_sha256=trial_continuation.manifest_sha256)
+                vector_env.set_lane_context(lane,context)
+            vector_env.admit_group([item["task"] for item in plans],[item["seeds"] for item in plans])
+            admitted=True
+            log("source_execution_group_start",method=method,source_steps=state["steps"],
+                lanes=len(plans),plans=plans,required_actions=plan["required_actions"],
+                source_iteration=state["iterations"]+1,optimizer_steps=learner.optimizer_steps)
+            collected=collect_trials_batched(learner,vector_env,
+                [item["task"] for item in plans],[item["seeds"] for item in plans],
+                primitive_budget=remaining,controller_microbatch=1,
+                should_stop=lambda: time.monotonic()-started>=args.wall_seconds-args.boundary_reserve_seconds,
+                decision_callback=vector_env.record_decision_metadata,
+                episode_callback=lambda lane,row: record_episode(method,"source",collector_lane=lane,
+                    **lane_iteration[lane])(row))
+            group_receipt=vector_env.finish_group()
+        except CollectionNotStarted as error:
+            try: vector_env.cancel_group(str(error))
+            finally: restore_unstarted_source_group(state,plan)
+            raise WallBudgetReached(str(error)) from error
+        except ProductionAdmissionError as error:
+            proof=vector_env.group_recovery_metadata()
+            if vector_env.can_restore_unstarted_group():
+                restore_unstarted_source_group(state,plan)
+            else:
+                quarantine_collection_failure(state,output_dir=args.output,method=method,error=error,
+                    capture_rng=capture_rng,save_payload=torch.save,collected=collected,
+                    details=dict(plan=plan,vector=proof,
+                                 vector_resume_blocker=getattr(vector_env,"resume_blocker_metadata",None),
+                                 campaign_budget=budget.snapshot()))
+            raise
+        except BaseException as error:
+            if not admitted:
+                restore_unstarted_source_group(state,plan)
+            else:
+                quarantine_collection_failure(state,output_dir=args.output,method=method,error=error,
+                    capture_rng=capture_rng,save_payload=torch.save,collected=collected,
+                    details=dict(plan=plan,vector=vector_env.group_recovery_metadata(),
+                                 vector_resume_blocker=getattr(vector_env,"resume_blocker_metadata",None),
+                                 campaign_budget=budget.snapshot()))
+            raise
+        elapsed=time.monotonic()-trial_start
+        collector_time.observe(elapsed)
+        # Every physical lane is charged before replay. A rejected lane blocks
+        # the whole group and future ordinary resume, retaining prior pending.
+        errors=admit_collected_group(state,collected,output_dir=args.output,method=method,
+            capture_rng=capture_rng,save_payload=torch.save)
+        state["completed_trials"]+=len(collected)
+        completed_process_trials+=len(collected)
+        save_state(method,force=True)
+        save_joint(force=True)
+        vector_env.acknowledge_checkpoint(args.output/"coordinator-recovery.pt")
+        log("source_execution_group_complete",method=method,source_steps=state["steps"],
+            lanes=len(collected),trial_seconds=elapsed,replay_errors=errors,
+            completed_source_trials=state["completed_trials"],group_receipt=group_receipt)
+        maybe_ppo_update(method)
+        refresh_summaries()
     def source_round(method):
         nonlocal completed_process_trials
         state=source_states[method]; learner=state["learner"]
@@ -856,6 +1142,9 @@ def main(argv=None):
             if state["iterations"]>=args.source_iterations: return
         elif state["steps"]>=args.source_steps: return
         guard()
+        if method!="sac" and vector_env is not None:
+            parallel_source_round(method)
+            return
         allowance=None if args.source_iterations else args.source_steps-state["steps"]
         if active_milestone is not None and not args.source_iterations:
             allowance=min(allowance,active_milestone-state["steps"])
@@ -1030,6 +1319,8 @@ def main(argv=None):
         elif any(state["iterations"]!=source_iteration for state in source_states.values()):
             raise RuntimeError("Every source arm must complete the declared iteration before evaluation")
         guard()
+        if vector_env is not None and getattr(vector_env,"_pool",None) is not None:
+            raise WallBudgetReached("Scalar stage evaluation requires a fresh process without native vector workers")
         stage_rng=capture_rng()
         directory=args.output/"stages"/(str(milestone) if source_iteration is None else f"iteration-{source_iteration}")
         directory.mkdir(parents=True,exist_ok=True)
@@ -1188,6 +1479,7 @@ def main(argv=None):
             summary["source_validation"]=[row for row in history if row.get("phase")=="source_validation"]
             summary["native"]=[row for row in history if row.get("method")=="native"]
         if corpus_writer is not None: summary["corpus"]=corpus_writer.statistics()
+        if collector_time is not None: summary["collector_time_admission"]=collector_time.state_dict()
         if policy_archive is not None:
             summary["behavior_policy_archive"]=dict(bytes_written=policy_archive.bytes_written,
                 io_seconds=policy_archive.seconds,acting_versions=len(policy_archive.index))
@@ -1212,6 +1504,7 @@ def main(argv=None):
                 execution_commit=args.source_commit,lineage_commit=lineage_commit)
         write_json(args.output/"summary.json",summary)
         try:
+            if vector_env is not None: vector_env.close()
             if hasattr(env,"close"): env.close()
         finally:
             if budget is not None: budget.close()
