@@ -60,7 +60,7 @@ def plan(source):
         screen_episodes_per_candidate=20, screen_distinct_state_ids_per_candidate=20,
         selection=dict(eligible_successes_inclusive=[2, 8], preferred_successes=4,
             ranking='abs(successes-4), then ascending task ID', maximum_confirmation_candidates=3,
-            confirmation_successes_inclusive=[1, 19], no_eligible_or_confirmed='abort before any SGD'),
+            confirmation_successes_inclusive=[2, 8], no_eligible_or_confirmed='abort before any SGD'),
         confirmation_cases={str(task): query_bank(task) for task in CANDIDATES},
         confirmation_distinct_states=10, confirmation_noise_draws_per_state=2,
         training_states=list(range(40)), learner_seed=0, entire_motor_frozen=True,
@@ -198,7 +198,7 @@ def run_screen(motor, server_factory, *, root, contract, deadline, resume=False)
                 distinct_state_ids=10, noise_draws_per_state=2,
                 distinct_initial_state_hashes=len({row['initial_state_vector_sha256'] for row in value['active_confirmation']}),
                 receipts=value['active_confirmation']))
-            if 1 <= successes <= 19:
+            if 2 <= successes <= 8:
                 value['selected_task'], value['phase'] = task, 'selected'
                 selection = dict(format=FORMAT, plan_sha256=onset.sha256(plan_path), task_id=task,
                     selected_before_any_sgd=True, optimizer_updates=0, data_role=DATA_ROLE,
