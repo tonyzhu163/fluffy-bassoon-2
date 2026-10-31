@@ -18,11 +18,15 @@ Current scientific readout,2026-10-31:
 - Source SAC also finished100 rounds:277/2400 successes (11.54%) after
   1,003,790 source actions. Its quarter totals78/57/76/66 per600 show no
   sustained improvement. Weak source learning occurs in all three learners;
-  a common cause is unisolated. Final source validation/targets remain pending.
+  a common cause is unisolated. Final source validation is2/24.
 - Success by attempt1–4 also lacks a strong monotonic gain: FULL
   103/106/97/110 per600, RESET98/110/106/107 andSAC72/70/64/71.
   Later-attempt gains are not specific to FULL. These are source trials
   with different scheduled scenes, not a causal memory or held-out query test.
+- SAC's final two-goal panel is complete: frozen6/8 bottle +2/8 stapler,
+  total8/16; source-initialized online SAC5/8 +0/8, total5/16. Both use the
+  same actual target cases as FULL/RESET. Online learning changes parameters
+  inside episodes, so episode indices are not separate support/query budgets.
 - No high-performance or sample-efficiency claim is established. Prioritize
   effective source learning and matched robot controls over more compatibility
   work or simply repeating a larger PPO collection with the same recipe.
@@ -151,10 +155,9 @@ possible. Some SAC goals improve while others decline; overall flatness is
 not proof that every goal behaves identically. The sampled diagnostics are
 finite but include an early soft-value transient. Smaller later critic error
 does not establish better robot success; alpha is an entropy coefficient,
-not action std. No causal recipe remedy is established. The next readout is
-the original fixed100 validation/targets already running, before choosing
-another training intervention. No extra collection budget follows from these
-observations alone.
+not action std. No causal recipe remedy is established. The original fixed100
+validation/targets are now complete, as recorded below. No extra collection
+budget follows from these observations alone.
 [Final source100 comparison](../outputs/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
 
 A separate attempt-position analysis checks whether the aggregate curves
@@ -169,6 +172,47 @@ that a strong inner learning pattern was hidden by the outer averages.
 Saved learning histories and DPT labels should still not be called expert
 demonstrations merely because the exporter passes its integrity checks.
 [Attempt-position evidence](../outputs/robotwin-k4-attempt-analysis-20261031-r1/ANALYSIS.md).
+
+Final SAC evaluation exits0 with sourceVAL2/24. The frozen reactive policy
+scores8/16 on the same cases as FULL8/16 and trainedRESET8/16. The online
+source-initialized version scores5/16 and performs3320 extra target SAC
+cycles over5120actions in these final16episodes. It uses fresh target replay
+from its first row, without a second warmup; this is a declared fine-tuning
+control, not the published task-from-scratch DSRL schedule. Its lower observed
+score is descriptive, not a statistically established harm from online RL.
+All224 evaluation episodes across10/25/50/100 are complete; the source actor
+stays fixed for frozen queries. Canonical all-phase SAC cost is1,088,029
+actions, with pending/uncertain0. Its continuation allocation is32,230GPU-s,
+counted once and separately from earlier source prefixes. Neither source
+success nor these small target panels establish the intended high performance
+or sample-efficiency benefit. The existing next phase is the source100
+AD/DPT fitting/readout proposal; it remains unfunded and its source100 bank
+bindings/teacher-label conditions must stay explicit.
+[Independent SAC endpoint](../outputs/robotwin-sac100-independent-20261031-r1/RESULT.md),
+[scheduler receipt](../outputs/robotwin-sac100-scheduler-20261031-r1/receipt.json).
+
+The historical native6/16 reference also matches the SAC cases through the
+verified native→FULL/RESET→SAC case chain and the motor/capture contract.
+FrozenSAC has3wins/1loss against it; online has0wins/1loss. Distinct
+executors, execution dates and stochastic draws remain explicit. These are
+descriptive gains on16 development scenes, not a robust benchmark result.
+Also, the frozen target total rises3→4→3→8 across source10/25/50/100:
+flat source averages do not mean every target result stays flat. The late
+reactive steering result warrants retaining a strong non-memory control;
+it does not establish in-context adaptation.
+[Historical native/SAC reconciliation](../outputs/robotwin-sac-native16-reconciliation-20261031-r1/RESULT.md).
+
+Next execution correction: **AD does not need an expert mean teacher.** Its
+labels are actual executed noise; AD's validation uses behavior cloning on
+held-out source episodes. Static review finds that the existing offline plan
+globally gates all exports/fits on mean-teacher qualification and hardcodes
+paired AD+DPT work; the exporter also computes teacher labels for AD-only.
+The native trainer already supports AD full/static. Request the existing
+implementation owner to make that route objective-aware, leaving DPT's label
+review conditional on requesting DPT. Keep source/behavior/checkpoint hashes,
+case separation and resource funding checks. This removes optional teacher
+work from the first AD fit; it neither proves improving histories nor grants
+new compute. Final source100 materialization and training funding remain.
 
 ## Literature guides targeted choices
 

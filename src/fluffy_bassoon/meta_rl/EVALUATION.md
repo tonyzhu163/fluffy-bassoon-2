@@ -487,16 +487,16 @@ it is only the continuation from prior checkpoints, not all100-round
 training cost. Earlier allocations remain separate.
 [Scheduler receipt](../../../outputs/robotwin-ppo100-pair-scheduler-20261031-r1/receipt.json).
 
-## RoboTwin SAC100: source complete, final evaluation pending
+## RoboTwin SAC100: completed source and evaluation
 
 Audited closed slice0060 records100 source rounds/600 completeK4 trials/
 2400 episodes/1003790 source actions/32425 decisions. Success is277/2400
 (11.54%); quarter totals78/57/76/66 per600 show no sustained improvement.
 Per-goal successes per400 are54 handover,14 bottles,54 a2b,100 object stand,
 43 phone stand and12 scan. Some goals improve while others decline; this is
-not a claim that every source goal has the same curve. SourceVAL10/25/50
-is1/24,1/24,3/24. Stage100 metadata says evaluating; sourceVAL100, final
-targets and whole-campaign exit are still pending.
+not a claim that every source goal has the same curve. SourceVAL10/25/50/100
+is1/24,1/24,3/24,2/24. The later final evaluation and whole campaign exit0;
+the earlier source100 manifest snapshot retains its at-read evaluating status.
 
 There are638500 joint SAC cycles, exactly20×(32425−500warmup): one actor,
 one combined twin-critic and one temperature step each,1915500 combined
@@ -518,10 +518,75 @@ one seed does not establish a broad algorithm ranking or causal remedy.
 
 The fixed stage100 SAC recovery's declared SHA is
 `59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90`.
-The metadata analysis did not rehash/load checkpoint tensors. It reconciles
-closed JSON/JSONL counts and preserves the later manifest's status at read
-time; it does not certify completed final evaluation.
+The source metadata analysis did not rehash/load checkpoint tensors. It
+reconciles closed JSON/JSONL counts and preserves manifest status at read
+time. A subsequent independent endpoint check below verifies final completion.
 [Final source100 comparison and exact identities](../../../outputs/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
+
+| Source iteration | Frozen bottle/stapler | Source-initialized online bottle/stapler |
+| ---: | --- | --- |
+| 10 |3/8,0/8|1/8,1/8|
+| 25 |4/8,0/8|3/8,0/8|
+| 50 |3/8,0/8|5/8,1/8|
+| 100 |6/8,2/8|5/8,0/8|
+
+All fixed checkpoints are reported without target-based selection. Final
+frozenSAC8/16 matches FULL/RESET8/16 on identical actual cases. This small
+one-seed/two-goal panel does not establish algorithm equivalence or robust
+gains. Online5/16 is descriptive. Each online task independently restores
+the source learner, excludes source replay and starts updates from the first
+new target row, without a second warmup. Updates occur inside episode1;
+indices1/2/4/8 are sequential episode indices, not separate frozen queries
+after a declared support budget. Final online cost is1920/3200 actions and
+1240/2080 SAC cycles for bottle/stapler, respectively. Frozen costs1693/2707
+actions and zero target SGD.
+
+All40 requested evaluation groups/224episodes are complete, with no budget
+truncations. All10 supplied hashes match among26 rehashed files; source
+snapshots, final target recoveries and acting archive agree. The final
+coordinator SHA is`f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8`;
+ZIP CRC passes210members without tensor/pickle loading. Frozen/sourceVAL
+acting digest and optimizer clock remain constant; source RNG-restored
+metadata is true at all4 stages. All16 actual target scenes match FULL/RESET
+raw-input/feature/seed descriptors. The16 source-stage native probe rows use
+a separate bank; they are not the historical matched native16 reference.
+
+Canonical SAC resource cost is1088029actions: source1003790, sourceVAL41032,
+frozen targets21360 and online targets21847; pending/uncertain0. Evaluation
+phase costs independently sum from saved episode metadata. Canonical totals
+bind the owner's closed snapshot, not a new event-forest replay. Scheduler
+job-gv77bzhyeroo succeeded at08:04:24Shanghai, displayed8h57m10s=32230GPU-s
+on one GPU. Count this continuation allocation once; prior source-prefix
+allocations remain separate. Supervisor elapsed32209.95s is not substituted
+for scheduler cost.
+[Independent SAC endpoint and limits](../../../outputs/robotwin-sac100-independent-20261031-r1/RESULT.md),
+[scheduler proof](../../../outputs/robotwin-sac100-scheduler-20261031-r1/receipt.json).
+
+A follow-up verifies the separate historical native16→FULL/RESET→SAC
+pairing chain for every target case, including bottleE5's actual seed fallback.
+Nine native result/proof/receipt input hashes match; motor/capture/norm/version/
+action-mask/feature contracts agree. Native6/16 versus frozenSAC8/16 has
+3wins/1loss; online5/16 has0wins/1loss. Execution dates, executors2fd/570/e825
+and stochastic draws differ. This is a historical matched-initial-case
+reference, separate from the unpaired source-stage probes. Original native
+5051actions stay counted once; no new native rollout is inferred.
+[Native/SAC case-chain proof](../../../outputs/robotwin-sac-native16-reconciliation-20261031-r1/RESULT.md).
+
+| Final condition on these16 cases | Bottle /8 | Stapler /8 | Total /16 |
+| --- | ---: | ---: | ---: |
+| Historical native Gaussian |6|0|6|
+| FULL PPO |7|1|8|
+| Same FULL weights, cache reset |6|1|7|
+| Same FULL weights, reward blind |8|1|9|
+| Trained episode-reset PPO |8|0|8|
+| Frozen source SAC |6|2|8|
+| Source-initialized online SAC |5|0|5|
+
+The observed frozenSAC target progression3/4/3/8 per16 differs from the flat
+aggregate source curve. It supports recording a late descriptive steering
+gain, while the small panel and one training seed prevent broad ranking,
+equivalence, causal memory or sample-efficiency claims. Retain the reactive
+SAC and trained-reset controls when evaluating any new history policy.
 
 ## RoboTwin source K4 attempt-position readout
 

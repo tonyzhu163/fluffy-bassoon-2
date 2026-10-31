@@ -67,11 +67,21 @@ shows no sustained improvement. Weak source learning is not limited to
 recurrent PPO; the cause is unisolated. Source attempt1–4 success is also
 non-monotonic:FULL103/106/97/110 per600,RESET98/110/106/107,
 SAC72/70/64/71. These scene-varying source marginals do not establish
-feedback adaptation or a causal memory benefit. Final SAC validation/targets and
-larger student fits are not complete. Benchmark costs
+feedback adaptation or a causal memory benefit. Final SAC sourceVAL is2/24;
+its frozen target policy scores6/8 bottle +2/8 stapler=8/16 on the same
+actual cases as FULL/RESET8/16. Source-initialized online SAC scores5/16,
+with3320 additional target SACcycles/5120actions and updates inside episodes;
+these indices are not separate support/query budgets. Larger student fits
+are not complete. Benchmark costs
 are separate from LIBERO. Future
 collection should overlap initial fitting/evaluation after a bounded smoke,
 rather than wait for the whole corpus. PPO still requires fresh policy rollouts.
+
+The same historical matched native bank scores6/16; frozenSAC has3casewins/
+1loss against it, with distinct executors/dates/noise draws. Its target totals
+at source10/25/50/100 are3/4/3/8 per16, so the weak source averages do not
+exclude late target improvement. This remains a small development comparison,
+without reliable robotic-memory or sample-efficiency evidence.
 
 ## Abstract scaffold
 
