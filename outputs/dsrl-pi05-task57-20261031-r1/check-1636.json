@@ -1,0 +1,477 @@
+{
+  "format": "task57_due_light_saved_metadata_v1",
+  "checked_shanghai": "2026-10-31T16:40:32.986525+08:00",
+  "read_completed_unix": 1793436035.1160858,
+  "job_id": "job-iudscqfntb4e",
+  "source_commit": "d001556780c78893cb7ad0310ec46e5d817e5698",
+  "grant_sha256": "48acb746fb1a2c087671228c5ca440f871546a43b8f70f1589863ada46a7a9ec",
+  "index_snapshot_sha256": "7467192c95b4ad46668014a853f57f3ec178ccdd537cd75eea8856d4421c6db5",
+  "phase": "training",
+  "completed": false,
+  "exit_code": null,
+  "training": {
+    "episodes": 770,
+    "chunks": 10680,
+    "primitive_steps": 101701,
+    "settling_steps": 7700
+  },
+  "training_successes": 769,
+  "failed_training": [
+    {
+      "episode": 576,
+      "state": 16,
+      "updates": 152060,
+      "primitives": 400
+    }
+  ],
+  "optimizer_updates": 203740,
+  "replay_rows": 10680,
+  "latest_metrics": {
+    "actor_loss": 4.8565826416015625,
+    "critic_loss": 0.003139681415632367,
+    "entropy": -18.788185119628906,
+    "mean_pi_avg": 0.07370647042989731,
+    "mean_pi_max": 3.182222604751587,
+    "mean_pi_min": -3.046961545944214,
+    "mean_pi_norm": 5.608487606048584,
+    "next_actions_max": 0.9986357092857361,
+    "next_actions_mean": 0.04244479909539223,
+    "next_actions_min": -0.9995453357696533,
+    "next_actions_sampled": 0.04244479909539223,
+    "next_actions_std": 0.6627718210220337,
+    "next_log_probs": 19.34979248046875,
+    "next_q_pi": -4.079318523406982,
+    "q": -4.979622840881348,
+    "q_pi_in_actor": -4.820336818695068,
+    "std_pi_avg": 0.44967517256736755,
+    "std_pi_max": 1.3871440887451172,
+    "std_pi_min": 0.030415428802371025,
+    "std_pi_norm": 2.6066203117370605,
+    "target_actor_entropy": -19.34979248046875,
+    "target_q": -4.97667121887207,
+    "temperature": 0.0019291676580905914,
+    "temperature_loss": -0.005378876347094774
+  },
+  "metrics_finite": true,
+  "latest_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/recovery-0.pkl",
+    "expected_sha256": "003946de924e4e6906cc5be5e286921f457f9ba3706f4849a81153462988985b",
+    "actual_sha256": "003946de924e4e6906cc5be5e286921f457f9ba3706f4849a81153462988985b",
+    "matched": true,
+    "bytes": 306818735
+  },
+  "rotating_slot_retries": 0,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "threshold_updates": 0,
+      "actual_updates": 0,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1451,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-010000",
+      "threshold_updates": 10000,
+      "actual_updates": 10220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1407,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-020000",
+      "threshold_updates": 20000,
+      "actual_updates": 20240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1378,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-030000",
+      "threshold_updates": 30000,
+      "actual_updates": 30200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1355,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-040000",
+      "threshold_updates": 40000,
+      "actual_updates": 40160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1320,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-050000",
+      "threshold_updates": 50000,
+      "actual_updates": 50080,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1343,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-060000",
+      "threshold_updates": 60000,
+      "actual_updates": 60000,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1304,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-070000",
+      "threshold_updates": 70000,
+      "actual_updates": 70260,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1279,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-080000",
+      "threshold_updates": 80000,
+      "actual_updates": 80100,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1264,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-090000",
+      "threshold_updates": 90000,
+      "actual_updates": 90160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-100000",
+      "threshold_updates": 100000,
+      "actual_updates": 100220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1270,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-110000",
+      "threshold_updates": 110000,
+      "actual_updates": 110200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1309,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-120000",
+      "threshold_updates": 120000,
+      "actual_updates": 120220,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1239,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-130000",
+      "threshold_updates": 130000,
+      "actual_updates": 130060,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1273,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-140000",
+      "threshold_updates": 140000,
+      "actual_updates": 140020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1257,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-150000",
+      "threshold_updates": 150000,
+      "actual_updates": 150200,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1258,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-160000",
+      "threshold_updates": 160000,
+      "actual_updates": 160240,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1261,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-170000",
+      "threshold_updates": 170000,
+      "actual_updates": 170160,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1245,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-180000",
+      "threshold_updates": 180000,
+      "actual_updates": 180120,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1286,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-190000",
+      "threshold_updates": 190000,
+      "actual_updates": 190020,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1290,
+      "settling_actions": 100
+    },
+    {
+      "name": "learned-200000",
+      "threshold_updates": 200000,
+      "actual_updates": 200320,
+      "episodes": 10,
+      "successes": 10,
+      "primitives": 1261,
+      "settling_actions": 100
+    }
+  ],
+  "newest_complete_panel_pairs": [
+    {
+      "state": 40,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 134,
+      "settling_steps": 10,
+      "primitive_delta": -10,
+      "episode_random_seed": 2102987167,
+      "initial_state_vector_sha256": "0eb4a8d9a1bdde3ac8202221833398a6e0667100f15a577b022d31f7ae10abfd",
+      "initial_observation_sha256": "fd5d50587c5cfb7a87c57d0921e7574da868be47f2bc253a8d49b30fbcd8d586",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 41,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 113,
+      "settling_steps": 10,
+      "primitive_delta": -21,
+      "episode_random_seed": 932631343,
+      "initial_state_vector_sha256": "5af380d65e03e0e5e76d8b84a6e0c4e9f1a225d6230cae7eaf9d3dbf75e80176",
+      "initial_observation_sha256": "25503140d17c3f24eee1661d3cdf8cf9179071383f6a647beb0587a1b6968926",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 42,
+      "success": true,
+      "native_primitives": 153,
+      "primitives": 132,
+      "settling_steps": 10,
+      "primitive_delta": -21,
+      "episode_random_seed": 4062358908,
+      "initial_state_vector_sha256": "79026b66c7be8f2a116d46e2431703d81041f96bed84f3b2d6dd4698320633eb",
+      "initial_observation_sha256": "b54147e5c53f8beaadd86b9cd5aaeab51753599fbde852b54068c56636d2c7f3",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 43,
+      "success": true,
+      "native_primitives": 141,
+      "primitives": 123,
+      "settling_steps": 10,
+      "primitive_delta": -18,
+      "episode_random_seed": 1387848887,
+      "initial_state_vector_sha256": "837ab7a00f495f131d206b4467c0e79b6a4ebf5ffbf730e37e411124d7bdfb40",
+      "initial_observation_sha256": "5e66c51afe7c9884b063fe70e0c1ec9afb579f280a2f245a5170a7ad76ed7f60",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 44,
+      "success": true,
+      "native_primitives": 163,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -30,
+      "episode_random_seed": 2877548848,
+      "initial_state_vector_sha256": "af66a55f574627d2e2ae77f913a9b8b8d3fbe3385692c9a4f48422614f0029fd",
+      "initial_observation_sha256": "0f72e92c913776eb297576aa02cd9baa03184c585188f6b970d90ef3856f1760",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 45,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 116,
+      "settling_steps": 10,
+      "primitive_delta": -27,
+      "episode_random_seed": 384253523,
+      "initial_state_vector_sha256": "e142b3da1d0f3fee94f4a8e012fcebb253c79343943a0a1d1acb6d5ebb8b0478",
+      "initial_observation_sha256": "db39c4c67433467ba16d21e729a59264b39dfbf0a482e90d9b0346d9571a371f",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 46,
+      "success": true,
+      "native_primitives": 134,
+      "primitives": 122,
+      "settling_steps": 10,
+      "primitive_delta": -12,
+      "episode_random_seed": 4088019402,
+      "initial_state_vector_sha256": "2784da4aab953ff2de1f827df9b2ad9cdcebfb4f41464260175ac70baa764378",
+      "initial_observation_sha256": "1a237a710154485b1ff14c159cdd833460772defdb861f00af9fa9c14197e41a",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 47,
+      "success": true,
+      "native_primitives": 144,
+      "primitives": 124,
+      "settling_steps": 10,
+      "primitive_delta": -20,
+      "episode_random_seed": 2734817570,
+      "initial_state_vector_sha256": "a12c4e1491885d9247adae903f70c67bc4297dc167d0e23fe78c8e9ffc526540",
+      "initial_observation_sha256": "5e152de7e254e9238941d0a9d401ef31f079c38b8bbd7b04dd5b95e1d9f4a1ac",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 48,
+      "success": true,
+      "native_primitives": 152,
+      "primitives": 131,
+      "settling_steps": 10,
+      "primitive_delta": -21,
+      "episode_random_seed": 2295547926,
+      "initial_state_vector_sha256": "3b66e58ecc01ce3b4ecf07672e5c02f2e569246471ef1e49f8eb08218cbab128",
+      "initial_observation_sha256": "ad585c0f65f927ed5d33a3cfd70f851675ab883160658cae489775d4c6af3b10",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    },
+    {
+      "state": 49,
+      "success": true,
+      "native_primitives": 143,
+      "primitives": 133,
+      "settling_steps": 10,
+      "primitive_delta": -10,
+      "episode_random_seed": 2972083184,
+      "initial_state_vector_sha256": "3fa764eb79349d72033bad586fa1d5be36dc57e6908d0dd49196b68d308f6d76",
+      "initial_observation_sha256": "cf66230bf684aa2748b7077f1a47a394ad6879baae39ee989d0e7ed64203181b",
+      "seed_equal": true,
+      "nominal_state_equal": true,
+      "actual_initial_observation_equal": true
+    }
+  ],
+  "newest_panel_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/milestones/learned-200000-recovery.pkl",
+    "expected_sha256": "7a6370375d572e0794b8ed761c739a0e9ef39848d91a5fe5cd8b8333dd6aec69",
+    "actual_sha256": "7a6370375d572e0794b8ed761c739a0e9ef39848d91a5fe5cd8b8333dd6aec69",
+    "matched": true,
+    "bytes": 302492203
+  },
+  "newest_panel_query_weights_replay_unchanged": true,
+  "active_panel": null,
+  "newest_raw": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/raw/training-000769-1793436019075684240.pkl.gz",
+    "expected_sha256": "60c67fc7236a2ce13fad1900fd2454720cdfc761b8f87b3691704e0436b3a0fa",
+    "actual_sha256": "60c67fc7236a2ce13fad1900fd2454720cdfc761b8f87b3691704e0436b3a0fa",
+    "matched": true,
+    "bytes": 2771986
+  },
+  "newest_rpc": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793436016090906448.json",
+    "episode_id": "training-000769",
+    "kind": "step",
+    "role": "training",
+    "returned": true,
+    "actual_steps": 3,
+    "maximum_steps": 10,
+    "outcome_status": "complete",
+    "checks": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793436016090906448-input.pkl.gz",
+        "expected_sha256": "77058bbf556dfc34a681fa4bf086c50a73a8f40495b68026eef14e996883da24",
+        "actual_sha256": "77058bbf556dfc34a681fa4bf086c50a73a8f40495b68026eef14e996883da24",
+        "matched": true,
+        "bytes": 196878
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-task57-20261031-s0-r1/experiment/case-57/physical-journal/1793436016090906448.pkl.gz",
+        "expected_sha256": "2334d594460e1671edac236d98f9ba456d79ecb4952a915388702856e6e325c0",
+        "actual_sha256": "2334d594460e1671edac236d98f9ba456d79ecb4952a915388702856e6e325c0",
+        "matched": true,
+        "bytes": 196124
+      }
+    ]
+  },
+  "rpc_metadata_rows_read": 15,
+  "producer_costs": {
+    "training": {
+      "known_actions": 109401,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 101701,
+      "settling_steps": 7700,
+      "reset_attempts": 770
+    },
+    "query": {
+      "known_actions": 29459,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 27359,
+      "settling_steps": 2100,
+      "reset_attempts": 210
+    },
+    "qualification": {
+      "known_actions": 10,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 10,
+      "reset_attempts": 1
+    }
+  },
+  "all_in_action_charge": 138870,
+  "producer_counter_sum_matches": true,
+  "independent_journal_replay": false,
+  "previous_partial_tail_not_reused_as_verified_prefix": true,
+  "storage_snapshot_bytes": 12453556744,
+  "maximum_storage_bytes": 68719476736,
+  "worker": {
+    "attempts": 1,
+    "maximum_gpu_seconds": 36000,
+    "reserved_seconds": 36000,
+    "active_elapsed_seconds": 9219.98652458191,
+    "final_charge": false
+  },
+  "next_check_shanghai": "2026-10-31T16:56:00+08:00"
+}
