@@ -1,0 +1,46 @@
+{
+  "format": "linked_readout_software_CPU_qualification_grant_v1",
+  "phase_id": "frozen-vla-readout-software-qual-20261101-r1",
+  "purpose": "Qualify actual thin15episode diagnosticreadout code beforeanyphysicalreadout; no newscience/learner/environment",
+  "authority": "AGENTS.md CPUtests/staticchecks neednoask; withinexistinguserauthorizedfrozenVLA experiment",
+  "maximum_aggregate_CPU_worker_seconds": 120,
+  "GPU_count": 0,
+  "CPU_count": 2,
+  "memory_bytes": 17179869184,
+  "maximum_new_robot_actions": 0,
+  "maximum_output_bytes": 536870912,
+  "required_source_commit": "f3d0d52ba040a4bcdf3aee3ffd0c39644006f500",
+  "required_suite": "tests/test_robotwin_command_diagnostic_readout.py",
+  "required_prepared_cases": 57,
+  "optional": "ONLY3failedbridgefixture cases IF exact newfixture-onlypin/staticPASS readybeforejob andfitsSAME120; neverwaitforbridge orrerun5oldpasses",
+  "old_evidence_preserved": {
+    "original_CPU_phase": {
+      "cap": 1800,
+      "charged": 1775,
+      "unused": 25
+    },
+    "first_linked_CPU_phase": {
+      "cap": 120,
+      "charged": 98,
+      "unused": 22,
+      "job_id": "job-xnwsxmjbbjcs",
+      "wrapper_exit1": true,
+      "mandatory_d442_recovery33PASS": true,
+      "optional_bridge3FAIL_native_horizon_fixture": true,
+      "readout57_status": "NOTRUN"
+    }
+  },
+  "no_old_unused_credit_borrowed_or_cap_reset": true,
+  "no_repeat": [
+    "84passed diagnostic/curve",
+    "33passed recovery",
+    "5oldbridgepasses",
+    "allhistoricalqualifiedsuites"
+  ],
+  "execution": "Oneactual0GPU2CPU16GiB exclusiveLinuxallocation; isolatedcomponentWTS/PYTHONPATH, original120deadline, allstartup/retries/tests/failures/cleanupchargedonce. Captureallcomponentreturncodes, continueindependentrequestedcomponentsifdeadlineallows, reportaggregatewrapperstatushonestly.",
+  "priority": "Cache04GPUsubmission/firstadvancement andscheduledprimarySACcheck takepriority; readoutCPU mayoverlapactualcache/fits andmustnotblockthem.",
+  "resource_owner": "/root/finish_assembly",
+  "new_GPU_or_physical_readout_authority": false,
+  "actual_allocation_created": false,
+  "launch": "Exactf3hasboundedSTATICPASS; afteractualresourceproof launchwithoutanotherroot/humanACK. No model/array/test executiononMac."
+}
