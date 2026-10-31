@@ -331,3 +331,41 @@ def test_actual_initial_actor_measured_and_drive_identity_is_required():
     assert readout.initial_physical_identity(identity)==identity
     identity['grippers']['item']['available']=False
     with pytest.raises(ValueError):readout.initial_physical_identity(identity)
+
+
+def test_fresh_output_and_recoveries_ancestry_is_durable_before_any_reset(tmp_path,monkeypatch):
+    from fluffy_bassoon.rl import robotwin_corpus as corpus
+    original=corpus._fsync_directory;seen=[]
+    def fsync(path):seen.append(Path(path));original(path)
+    monkeypatch.setattr(corpus,'_fsync_directory',fsync);monkeypatch.setattr(readout,'_fsync_directory',fsync)
+    output=tmp_path/'new-parent'/'runtime';readout.prepare_output(output)
+    assert (output/'recoveries').is_dir()
+    assert seen.index(tmp_path)<seen.index(output.parent)<seen.index(output)
+    with pytest.raises(FileExistsError):readout.prepare_output(output)
+
+
+@pytest.mark.parametrize('interrupt',[False,True])
+def test_checkpoint_child_directory_is_durable_before_publishing_physical_cursor(tmp_path,monkeypatch,interrupt):
+    output=tmp_path/'runtime';readout.prepare_output(output)
+    state=dict(next_cell=1,closed_recovery_ref={'path':'previous-safe.pt','sha256':'a'*64})
+    previous=deepcopy(state);readout._atomic_json(output/'result.json',state)
+    events=[];save,json_write,fsync=readout.atomic_save,readout._atomic_json,readout._fsync_directory
+    def checkpoint(path,payload):
+        value=save(path,payload);assert Path(path).is_file();events.append('checkpoint_renamed');return value
+    def directory(path):
+        assert Path(path)==output/'recoveries' and events==['checkpoint_renamed']
+        if interrupt:raise OSError('synthetic directory-sync interruption')
+        fsync(path);events.append('child_directory_durable')
+    def publish(path,value,**kw):
+        assert events==['checkpoint_renamed','child_directory_durable']
+        ref=value['closed_recovery_ref'];assert readout.file_sha(ref['path'])==ref['sha256']
+        events.append('cursor_published');return json_write(path,value,**kw)
+    monkeypatch.setattr(readout,'atomic_save',checkpoint);monkeypatch.setattr(readout,'_fsync_directory',directory)
+    monkeypatch.setattr(readout,'_atomic_json',publish)
+    if interrupt:
+        with pytest.raises(OSError):readout.publish_recovery(output,state,dict(state=deepcopy(state)),boundary=True)
+        assert state==previous and json.loads((output/'result.json').read_text())==previous
+        assert events==['checkpoint_renamed']  # Unpublished orphan is safe; old cursor stays authoritative.
+    else:
+        readout.publish_recovery(output,state,dict(state=deepcopy(state)),boundary=True)
+        assert events==['checkpoint_renamed','child_directory_durable','cursor_published']

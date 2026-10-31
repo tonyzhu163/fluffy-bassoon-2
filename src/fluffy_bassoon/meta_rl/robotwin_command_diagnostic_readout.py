@@ -16,7 +16,7 @@ import torch
 
 from fluffy_bassoon.baige_gpu import verify_selected_cuda,selected_device
 from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
-from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter,_atomic_json
+from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter,_atomic_json,_ensure_directory,_fsync_directory
 from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv,load_benchmark_episode_limits,_RoboTwinBackend
 from fluffy_bassoon.rl.robotwin_fitted_physical import load_frontend,state_sha,content_sha,DIAGNOSTIC
 from fluffy_bassoon.rl.robotwin_wide_action import WideActionResidual
@@ -225,6 +225,21 @@ def validate_closed_head(head,ticket,run_id):
         raise ValueError('Actual closed current canonical root/header/head required before fresh registration')
 
 
+def prepare_output(output):
+    """Reuse the corpus directory durability helpers before any physical reset."""
+    output=Path(output);_ensure_directory(output.parent)
+    output.mkdir(exist_ok=False);_fsync_directory(output.parent)
+    (output/'recoveries').mkdir();_fsync_directory(output)
+
+
+def publish_recovery(output,state,payload,*,boundary):
+    """Existing checkpoint/JSON APIs, with child-directory fsync before the ref."""
+    output=Path(output);ref=output/'recoveries'/f'cell-{state["next_cell"]:02d}-{uuid.uuid4().hex}.pt'
+    sha=atomic_save(ref,payload);_fsync_directory(ref.parent)
+    if boundary:state['closed_recovery_ref']=dict(path=str(ref),sha256=sha)
+    _atomic_json(output/'result.json',state,replace=True)
+
+
 def main(argv=None):
     if sys.platform!='linux':raise RuntimeError('Readout computation requires the actual allocated Linux job')
     p=argparse.ArgumentParser(description=__doc__)
@@ -287,14 +302,12 @@ def main(argv=None):
         raise ValueError('Initial readout fork requires exact current closed physical recovery')
     if set(saved['global_rng'])!={'python','numpy','torch','cuda'} or saved['global_rng']['cuda'] is None:raise ValueError('All four existing global RNG domains required')
     state.setdefault('previous_control',deepcopy(saved.get('last_closed_control') or saved['control']))
-    a.output.mkdir(parents=True,exist_ok=False);(a.output/'recoveries').mkdir();env=None;control=None
+    prepare_output(a.output);env=None;control=None
     def persist(boundary=False):
         state['control_active']=False if control is None else control.active
-        ref=a.output/'recoveries'/f'cell-{state["next_cell"]:02d}-{uuid.uuid4().hex}.pt'
         last=state['closed_controls'][-1] if state['closed_controls'] else state['previous_control']
-        sha=atomic_save(ref,dict(state=deepcopy(state),global_rng=rng_state(),case_rngs=deepcopy(forks),control=None if control is None else control.snapshot(),last_closed_control=deepcopy(last),optimizer=None))
-        if boundary:state['closed_recovery_ref']=dict(path=str(ref),sha256=sha)
-        _atomic_json(a.output/'result.json',state,replace=True)
+        publish_recovery(a.output,state,dict(state=deepcopy(state),global_rng=rng_state(),case_rngs=deepcopy(forks),
+            control=None if control is None else control.snapshot(),last_closed_control=deepcopy(last),optimizer=None),boundary=boundary)
     def guard():
         if time.time()+ticket['cleanup_seconds']>=ticket['driver_deadline_unix']:raise TimeoutError('Actual owner deadline; preserve partial/no automatic replay')
         if sum(f.stat().st_size for f in Path(ticket['aggregate_output_root']).rglob('*') if f.is_file())>ticket['maximum_output_bytes']:raise RuntimeError('Actual aggregate output cap')
