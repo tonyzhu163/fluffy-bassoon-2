@@ -231,10 +231,22 @@ exits1 before any model/environment/ledger construction or episode. An
 approved contextmanager-wrapped callable resolves through inspect.getfile
 to Python contextlib.py, failing the repository provenance check. It charges
 75 GPU-seconds and zero actions, leaving1,425 in the same1,500 lineage. Global
-closed cost is7,057 and physical actions remain23,922. The existing code owner
-is preparing a narrow safe-unwrapping successor with the same containment/
-hash checks and focused allocated CPU regression. No blind retry, changed
-scientific gate, favorable prefix selection or additional approval is needed.
+closed cost is7,057 and physical actions remain23,922. Identity-scoped successor547 unwraps only observe_native_plans before the
+same containment/hash checks. Four focused regressions pass on allocated
+Linux,74/120 CPU-worker-seconds; its remaining46 are sealed. The earlier54
+cases carry unchanged.
+
+Retry job-mmkuln33iof5 is Running on source547, with1,425 inclusive seconds
+reserved in that same1,500 lineage. Exact zero/native parity, real KV gradient
+0.002138, motor gradient0 and unchanged721a qualification pass. Two actual
+episodes complete; the full closed recovery/post-RNG/raw sample hashes match.
+The producer counts25,042 actions, including the active third episode, with
+zero pending/uncertain physical intents at that observation. These are startup
+and execution checks, not a final method score. The renderer emits repeated
+OIDN invalid-handle warnings without a fatal traceback; they are retained,
+with no unreviewed rendering change. The next scheduled check is07:20.
+No source eligibility or scientific gate changes follow.
+[Qualified retry and byte review](../../outputs/frozen-pi05-endtoend-20261031-r1/PROVENANCE547-R2-PARENT-REVIEW.json).
 [Failure and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/CPU54-KV5000-READOUT-FAILURE-PARENT-REVIEW.json).
 No physical outcome, source teacher, chronological RL corpus or AD/DPT
 eligibility follows from these offline fits.

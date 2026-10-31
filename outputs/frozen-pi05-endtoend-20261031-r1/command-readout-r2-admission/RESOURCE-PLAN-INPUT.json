@@ -1,0 +1,99 @@
+{
+  "template_only": false,
+  "admitted": true,
+  "source_eligible": false,
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "stage_gpu_limits": {
+    "readout": 1500
+  },
+  "readout_proposal_sha256": "4fcfbb4a4a5d941713c517e1589e55f12104578cb188a66293e234704ef21c55",
+  "maximum_readout_controller_actions": 6000,
+  "prior_cost_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-fit-linked-r1/closed-parent-clock-5189.json",
+      "sha256": "5c9a738bd66bb93dbda31bb0d8d1de52f2587fc6b2a43b24d23c0f0bdc6b38f8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-linked-allocation-r1/allocation-closeout.json",
+      "sha256": "b9c965b25a40f4af51d216c43ee41dd4ce84234e6b80af0f823d6dcc1b0bd33b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-linked-allocation-r1/allocation-closeout.json",
+      "sha256": "1b5eea86c977a2320b9a8858091d4e743ec0e1b7c61170b3e97ddcb4e04a710e"
+    }
+  ],
+  "storage_admission": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r1/STORAGE.json",
+    "sha256": "b02bf34cd92136cd32342aea41057b88b7959c865fbb9e5ec4b084022c05063a"
+  },
+  "closed_linked_fit_receipts": {
+    "format": "robotwin_command_readout_closed_linked_v1",
+    "authority": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-fit-linked-r1/LINKED-AUTHORITY.json",
+      "sha256": "2ca8a32f0dd57b274e957b39f421c04e83675f2676c52f002bf11c3ba905d751"
+    },
+    "heads": {
+      "action": {
+        "request": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-linked-allocation-r1/request.json",
+          "sha256": "451ceba30674db97e32dc5bf286f59842a3ac7c1da5cc35f94589340520a0927"
+        },
+        "ticket": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-linked-allocation-r1/allocation.json",
+          "sha256": "f98dc6a5debf00961d1b2f195b3fa58e18446e606ab723df3b88165d8e6a3b3c"
+        },
+        "plan": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-linked-allocation-r1/resource-plan.json",
+          "sha256": "75b9216cdc2bbf4d1435b2c82b269d5c5d51f98a298befccf05a78da5acc417a"
+        },
+        "closeout": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-action-linked-allocation-r1/allocation-closeout.json",
+          "sha256": "b9c965b25a40f4af51d216c43ee41dd4ce84234e6b80af0f823d6dcc1b0bd33b"
+        },
+        "migration": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/linked-v1-checkpoint-start.json",
+          "sha256": "4d3c71bea10d2562d745b394718e7c8a21ffe2f8a5d001f3ffed0165e18a645e"
+        },
+        "resource_admission": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1-resource-admission.json",
+          "sha256": "968d5a9b4dba47382821bd586c1327f916f63eab241f2ff5fa96a0a6418dda5f"
+        }
+      },
+      "kv": {
+        "request": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-linked-allocation-r1/request.json",
+          "sha256": "7dffc18ce333f9b124664d08aa566bdbacf1c2790db826ed303a25b7a12ac0f6"
+        },
+        "ticket": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-linked-allocation-r1/allocation.json",
+          "sha256": "a3a381819374b2b847dc7ccdf2614f3a63b2b835b9bf065f0e9239854bcf36a8"
+        },
+        "plan": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-linked-allocation-r1/resource-plan.json",
+          "sha256": "6179c5a97b4a3d52789c43579caef5ec0c844caab7c57b60cf2b05507020eb8d"
+        },
+        "closeout": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-fit-kv-linked-allocation-r1/allocation-closeout.json",
+          "sha256": "1b5eea86c977a2320b9a8858091d4e743ec0e1b7c61170b3e97ddcb4e04a710e"
+        },
+        "migration": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/linked-v1-checkpoint-start.json",
+          "sha256": "745389c05d7893ea3c0a348ae431f50421c4a8b179d87596550d84b8fabf3ff8"
+        },
+        "resource_admission": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1-resource-admission.json",
+          "sha256": "1bc92a725b1b8fd8d0831e69d6d6aa77ebafdb9d5556141ab457c6bca4f820d2"
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "both5000_complete_readout_failed_provenance_before_model_episode_repair_pending",
+  "state": "both5000_complete_readout547_R2_running_first2_verified",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -515,8 +515,8 @@
   "reserved_gpu_seconds": 1425,
   "charged_cpu_worker_seconds": 1775,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 23922,
-  "reserved_actions": 6000,
+  "charged_actions": 25042,
+  "reserved_actions": 4880,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
     "gpu_seconds": 7200,
@@ -528,7 +528,7 @@
     "gpu_seconds": 21600,
     "actions": 270000
   },
-  "accounting": "OriginalA1closed5264=old5189+readoutfailure75;linkedaction727+KV1066=1793separatelyclosed;global7057. Readout1425heldsame1500lineage/globalunreserved20318. OriginalA17200/global28800/header unchanged;physical23922actions/readout6000reservation unchanged. NewCPU54+optionalreport85/180closed,95unusedsealed;allolderCPUbalancesuntouched.",
+  "accounting": "ClosedGPU7057 retains failed94975 and all old/linked rows. ActiveR2 reserves1425 same readoutlineage1500; global28800/originalA17200/header unchanged. Produceractions25042 includes active third episode;readoutwhole6000 remains with4880 unconsumed,old23922 origin fixed,78A1actions unrequested. NewCPU4passed74/120,46unusedsealed;allolderCPUbalancesuntouched.",
   "authoritative_live_path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/worker-time.json",
   "execution_owner": "/root/finish_assembly",
   "canonical_action_ledger": {
@@ -659,7 +659,7 @@
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
   "remaining_a1_gpu_seconds": 1936,
-  "remaining_a1_actions": 6078,
+  "remaining_a1_actions": 4958,
   "retry_launched": true,
   "source_teacher_admitted": false,
   "selection_evaluable": true,
@@ -667,7 +667,7 @@
   "remaining_a1_after_settled_before_active_hold": 4866,
   "repair_live_prefix_regression_passed": true,
   "remaining_phase_gpu_seconds": 21743,
-  "remaining_phase_actions": 276078,
+  "remaining_phase_actions": 274958,
   "selected_arm": null,
   "eligible_arms": [],
   "capacity_preparation": {
@@ -891,14 +891,16 @@
     {
       "role": "fixed15_command_diagnostic_native_action5000_KV5000_readout",
       "maximum_seconds": 1500,
-      "state": "first_attempt_failed_before_model_or_episode_75_same1425_remaining",
+      "state": "R2_active_same1425_after_closed75",
       "actual_allocation_created": true,
-      "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
+      "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
       "authority_path": "COMMAND-DIAGNOSTIC-READOUT-CHILD-AUTHORITY.json",
       "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
       "maximum_actions": 6000,
       "actual_seconds": 75,
-      "reserved_active_seconds": 1425
+      "reserved_active_seconds": 1425,
+      "job_id": "job-mmkuln33iof5",
+      "current_attempt_final_seconds": null
     },
     {
       "role": "linked_same5000_command_fit_continuations",
@@ -992,24 +994,31 @@
     "actual_complete_heads": 2
   },
   "command_diagnostic_readout": {
-    "state": "failed_before_model_environment_episode_provenance_successor_pending",
+    "state": "R2_running_real2of15_no_final_method_score",
     "GPU_ceiling": 1500,
     "action_ceiling": 6000,
     "episode_ceiling": 15,
     "authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0",
-    "actual_job": "job-ctc5ji8fr720",
+    "actual_job": "job-mmkuln33iof5",
     "no_source_student_eligibility": true,
     "code_owner": "01a18762-9db6-74c2-940a-96524803e454",
     "new_resource_CPU_grant": "outputs/command-readout-linked-resource-cpu-20261101-r1/GRANT.json",
-    "source_commit": "949c88fef18090ecb82378027f836bc932f88063",
-    "actual_CPU_job": "job-4jq7u25x1sv6",
-    "actual_exit_code": 1,
-    "actual_GPU_seconds": 75,
+    "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
+    "actual_CPU_job": "job-m2fjc44f7rja",
+    "actual_exit_code": null,
+    "actual_GPU_seconds": null,
     "remaining_same_lineage_GPU_seconds": 1425,
-    "actual_episodes": 0,
-    "actual_new_actions": 0,
-    "required_CPU_PASS": 54,
-    "required_CPU_charge": 85
+    "actual_episodes": 2,
+    "actual_new_actions": 1120,
+    "required_CPU_PASS": 4,
+    "required_CPU_charge": 74,
+    "prior_failed_GPU_seconds": 75,
+    "current_GPU_reservation": 1425,
+    "actual_new_actions_closed_prefix": 800,
+    "producer_current_new_actions": 1120,
+    "next_check_shanghai": "2026-11-01 07:20",
+    "closed_readout_GPU_seconds": 75,
+    "current_action_counter_not_terminal": true
   },
   "original_A1_closed_GPU_seconds": 5264,
   "linked_continuation_extension": {
@@ -1052,5 +1061,16 @@
     "actual_CPU_packet_verified": true,
     "actual_CPU_charge": 77
   },
-  "remaining_unassigned_future_global_GPU_envelope": 18000
+  "remaining_unassigned_future_global_GPU_envelope": 18000,
+  "latest_readout_active_snapshot": {
+    "producer_actual_actions": 25042,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "closed_episodes": 2,
+    "closed_prefix_new_actions": 800,
+    "active_third_episode_actions_included": true,
+    "source_receipt": "COMMAND-READOUT-R2-FIRST-PROGRESS.json",
+    "full_journal_replay": false,
+    "not_final_GPU_charge": true
+  }
 }
