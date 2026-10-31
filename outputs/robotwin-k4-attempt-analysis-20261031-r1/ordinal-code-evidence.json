@@ -1,0 +1,132 @@
+{
+  "format": "robotwin_k4_ordinal_code_evidence_v1",
+  "operation": "Static source text only; no import/execution",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/src/fluffy_bassoon/meta_rl/vla_noise_batched_collection.py",
+      "sha256": "2c805fb954e40ec4f1d8fe1ab077aaf8d3afb2c6a3a5d69f948df502930a64fe",
+      "ordinal_spans": [
+        {
+          "pattern": "episode =",
+          "start_line": 74,
+          "lines": [
+            "    previous_noise = np.zeros((size, learner.action_dim), np.float32)",
+            "    previous_reward = np.zeros(size, np.float32)",
+            "    episode = np.zeros(size, np.int64)",
+            "    primitive = np.zeros(size, np.int64)",
+            "    chunks = np.zeros(size, np.int64)",
+            "    reward_sum = np.zeros(size, np.float64)"
+          ]
+        },
+        {
+          "pattern": "episode=int(episode[lane])+1",
+          "start_line": 189,
+          "lines": [
+            "            if not done:",
+            "                continue",
+            "            row = dict(task=tasks[lane], episode=int(episode[lane])+1,",
+            "                seed=seeds[lane][episode[lane]], success=bool(success[lane]),",
+            "                return_=float(reward_sum[lane]), primitive_steps=int(primitive[lane]),",
+            "                chunks=int(chunks[lane]), initial_observation_sha256=initial_hash[lane],"
+          ]
+        },
+        {
+          "pattern": "episode[lane] += 1",
+          "start_line": 202,
+          "lines": [
+            "                active[lane] = False",
+            "            else:",
+            "                episode[lane] += 1",
+            "                primitive[lane] = chunks[lane] = 0",
+            "                reward_sum[lane] = 0.",
+            "                success[lane] = False"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/src/fluffy_bassoon/meta_rl/vla_noise_ppo.py",
+      "sha256": "e6f81f9da73b31cd86fb13a9fdeb0daf39aa68481324751b9531f3bc6823d365",
+      "ordinal_spans": [
+        {
+          "pattern": "for episode, seed in enumerate",
+          "start_line": 161,
+          "lines": [
+            "        budget_cut = False",
+            "        bootstrap = None",
+            "        for episode, seed in enumerate(episode_seeds[start_episode:],start=start_episode):",
+            "            if c.reset_each_episode:",
+            "                previous_noise = np.zeros(self.action_dim,np.float32)",
+            "                previous_reward = 0."
+          ]
+        },
+        {
+          "pattern": "row = dict(task=task_name, episode=episode+1",
+          "start_line": 265,
+          "lines": [
+            "                    bootstrap=next_value.detach().cpu()",
+            "                    done=True",
+            "            row = dict(task=task_name, episode=episode+1, seed=int(seed), success=success,",
+            "                       return_=reward_sum, primitive_steps=primitive, chunks=chunks,",
+            "                       initial_observation_sha256=initial_hash,",
+            "                       episode_limit=episode_limit,"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-continuation-sac-20261030-r1/scripts/diagnostics/robotwin_noise_compare.py",
+      "sha256": "7e3322d4e9283b31e3b9a777990514bc0ad2ec36920477f3351030a1e085b9f3",
+      "ordinal_spans": [
+        {
+          "pattern": "seeds=self.rng.integers",
+          "start_line": 248,
+          "lines": [
+            "            self.pending=self.rng.permutation(self.tasks).tolist()",
+            "        task=self.pending.pop()",
+            "        seeds=self.rng.integers(0,2**31-1,size=episodes).tolist()",
+            "        self.trials+=1",
+            "        return task,seeds",
+            ""
+          ]
+        },
+        {
+          "pattern": "for episode,seed in enumerate",
+          "start_line": 622,
+          "lines": [
+            "                  source_iteration=None,stage_iteration=None,start_episode=0):",
+            "        total=0; rows=[]; external_cut=False",
+            "        for episode,seed in enumerate(seeds[start_episode:],start=start_episode):",
+            "            observation=np.asarray(env.reset(task,int(seed)),np.float32)",
+            "            initial_hash=observation_hash(observation); done=False; steps=chunks=0; success=False; reward_sum=0.",
+            "            while not done:"
+          ]
+        },
+        {
+          "pattern": "row=dict(task=task,episode=episode+1",
+          "start_line": 659,
+          "lines": [
+            "                        log(\"sac_updates\",method=method,phase=phase,source_primitive_steps=learner.primitive_steps,**metrics)",
+            "                observation=np.asarray(following,np.float32); done=bool(end or trunc or budget_end)",
+            "            row=dict(task=task,episode=episode+1,seed=int(seed),success=success,return_=reward_sum,",
+            "                     primitive_steps=steps,chunks=chunks,initial_observation_sha256=initial_hash,",
+            "                     budget_truncated=external_cut)",
+            "            if stage is not None: row[\"stage_source_actions\"]=stage"
+          ]
+        },
+        {
+          "pattern": "metrics=learner.update(gradient_steps=args.sac_utd)",
+          "start_line": 654,
+          "lines": [
+            "                if source or online:",
+            "                    learner.observe(observation,action,float(reward),following,bool(end),bool(trunc),primitive_steps=count)",
+            "                    metrics=learner.update(gradient_steps=args.sac_utd)",
+            "                    if metrics and learner.environment_steps%25==0:",
+            "                        append_json(updates_path,dict(method=method,phase=phase,**metrics))",
+            "                        log(\"sac_updates\",method=method,phase=phase,source_primitive_steps=learner.primitive_steps,**metrics)"
+          ]
+        }
+      ]
+    }
+  ]
+}
