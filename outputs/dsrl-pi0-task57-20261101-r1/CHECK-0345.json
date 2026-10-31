@@ -1,0 +1,196 @@
+{
+  "cluster": "Baige",
+  "job_id": "job-psgxs9n5b08w",
+  "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+  "checked_shanghai": "2026-11-01T03:48:39.696335+08:00",
+  "status": "Running",
+  "panels": [
+    {
+      "optimizer_updates": 0,
+      "replay_query_rows": 520,
+      "training_primitive_actions": 10400,
+      "successes": 4,
+      "episodes": 10,
+      "panel_actions": 3520
+    },
+    {
+      "optimizer_updates": 10000,
+      "replay_query_rows": 1005,
+      "training_primitive_actions": 20074,
+      "successes": 0,
+      "episodes": 10,
+      "panel_actions": 4000
+    },
+    {
+      "optimizer_updates": 20000,
+      "replay_query_rows": 1504,
+      "training_primitive_actions": 30048,
+      "successes": 2,
+      "episodes": 10,
+      "panel_actions": 3604
+    },
+    {
+      "optimizer_updates": 30000,
+      "replay_query_rows": 2003,
+      "training_primitive_actions": 39833,
+      "successes": 8,
+      "episodes": 10,
+      "panel_actions": 2421
+    },
+    {
+      "optimizer_updates": 40000,
+      "replay_query_rows": 2507,
+      "training_primitive_actions": 49664,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1980
+    },
+    {
+      "optimizer_updates": 50000,
+      "replay_query_rows": 3011,
+      "training_primitive_actions": 59490,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 2308
+    },
+    {
+      "optimizer_updates": 60000,
+      "replay_query_rows": 3504,
+      "training_primitive_actions": 68990,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1821
+    },
+    {
+      "optimizer_updates": 70000,
+      "replay_query_rows": 4009,
+      "training_primitive_actions": 78704,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1751
+    },
+    {
+      "optimizer_updates": 80000,
+      "replay_query_rows": 4500,
+      "training_primitive_actions": 88202,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1756
+    },
+    {
+      "optimizer_updates": 90000,
+      "replay_query_rows": 5005,
+      "training_primitive_actions": 97961,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1909
+    },
+    {
+      "optimizer_updates": 100000,
+      "replay_query_rows": 5507,
+      "training_primitive_actions": 107628,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1656
+    },
+    {
+      "optimizer_updates": 110000,
+      "replay_query_rows": 6001,
+      "training_primitive_actions": 117111,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1750
+    },
+    {
+      "optimizer_updates": 120000,
+      "replay_query_rows": 6503,
+      "training_primitive_actions": 126791,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1602
+    },
+    {
+      "optimizer_updates": 130000,
+      "replay_query_rows": 7005,
+      "training_primitive_actions": 136528,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1464
+    },
+    {
+      "optimizer_updates": 140000,
+      "replay_query_rows": 7500,
+      "training_primitive_actions": 146174,
+      "successes": 10,
+      "episodes": 10,
+      "panel_actions": 1456
+    }
+  ],
+  "progress": {
+    "updates": 143840,
+    "episodes": 714,
+    "training_primitives": 149893,
+    "last_checkpoint_updates": 141320,
+    "replay_rows": 7692,
+    "physical_actions": 182891,
+    "time_unix": 1793476118.1972706,
+    "motor_frozen": true
+  },
+  "full_recovery": {
+    "updates": 141320,
+    "episodes": 699,
+    "training_primitives": 147451,
+    "last_checkpoint_updates": 141320
+  },
+  "recovery_sha256": "fc0b7a63e36af2282b6bbc4cf59cacdf49057eddf623d6f475d13624c3baffc6",
+  "recovery_hash_matches": true,
+  "verified_policy_updates": [
+    0,
+    10000,
+    20000,
+    30000,
+    40000,
+    50000,
+    60000,
+    70000,
+    80000,
+    90000,
+    100000,
+    110000,
+    120000,
+    130000,
+    140000
+  ],
+  "output_bytes": 2554570422,
+  "physical_cost": {
+    "known_actions": 182891,
+    "uncertain_actions": 400,
+    "episodes": 864,
+    "pending": {
+      "episode": "000864-training-143840",
+      "role": "training",
+      "maximum_actions": 400
+    }
+  },
+  "conservative_phase_actions": 183691,
+  "snapshot_note": "Progress and physical ledger are read separately during live collection/update boundaries",
+  "current_gpu_contexts": [
+    {
+      "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "type": "C+G"
+    }
+  ],
+  "prior_gpu_seconds": 660,
+  "prior_actions": 400,
+  "final_motor_hash_pending": true,
+  "decision": "DONT_NOTIFY",
+  "reason": "Healthy advancement and unchanged 10/10 learned performance in eleven consecutive panels",
+  "next_action": "Continue immutable run and audit again in 20 minutes",
+  "gpu_time_at_audit": {
+    "method": "Conservative live upper bound from console job creation to direct audit, one allocated GPU, plus prior failed-allocation charge",
+    "job_created_shanghai": "2026-11-01T02:12:01+08:00",
+    "cumulative_upper_bound_seconds": 6459,
+    "final_worker_lifetime_pending": true,
+    "ceiling_seconds": 36000
+  }
+}
