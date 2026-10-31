@@ -6,7 +6,7 @@
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
   "maximum_cpu_worker_seconds": 1800,
-  "state": "A1_R2_running_after_actual_prefix_repair; partial_search_no_selection; task57_separate_running",
+  "state": "A1_restricted_screen_complete_no_eligible_arm; capacity_data_preparation_only; task57_separate_running",
   "gpu_attempts": [
     {
       "job_id": "job-hm6fgvu3p4a6",
@@ -22,11 +22,13 @@
       "job_id": "job-zp47pliu429f",
       "source_commit": "969fb44c503fac409373abc88ce5687b71195068",
       "reserved_seconds": 6480,
-      "charged_seconds": null,
-      "settled": false,
-      "status": "Running",
+      "charged_seconds": 1138,
+      "settled": true,
+      "status": "Succeeded",
       "child_authority_path": "A1-R2-CHILD-AUTHORITY.json",
-      "child_authority_sha256": "ad3fd32f1fa48dec68398ae327391c1926275285e13d68b271cdf8e609f1a937"
+      "child_authority_sha256": "ad3fd32f1fa48dec68398ae327391c1926275285e13d68b271cdf8e609f1a937",
+      "terminal_receipt_path": "A1-R2-TERMINAL-RECEIPT.json",
+      "terminal_receipt_sha256": "8d288288e77df7f6356d929579bbeb34ada4d6e09e7cebb9aa97e1c9d58860d4"
     }
   ],
   "cpu_attempts": [
@@ -76,11 +78,11 @@
     }
   ],
   "physical_action_reservations": [],
-  "charged_gpu_seconds": 632,
-  "reserved_gpu_seconds": 6480,
+  "charged_gpu_seconds": 1770,
+  "reserved_gpu_seconds": 0,
   "charged_cpu_worker_seconds": 331,
   "reserved_cpu_worker_seconds": 0,
-  "charged_actions": 6955,
+  "charged_actions": 17591,
   "reserved_actions": 0,
   "uncertain_actions_ceiling": 0,
   "initial_stage_envelope": {
@@ -117,7 +119,7 @@
       "sac_calibration_minus_validation2": 19200,
       "sac_calibration_plus_validation2": 19200
     },
-    "source_keys_status": "six exact keys/19200each bound; header remains uncreated pending executable/control-limit and motor/source receipts",
+    "source_keys_status": "six exact keys/19200each bound in the existing canonical header; no source admission after completed restricted screen",
     "source_caps_expected_keys": [
       "sac_calibration_minus_train0",
       "sac_calibration_plus_train0",
@@ -148,25 +150,42 @@
   },
   "planned_caps_are_not_scheduler_reservations": true,
   "remaining_cpu_worker_seconds": 1469,
-  "unreserved_gpu_seconds": 21688,
+  "unreserved_gpu_seconds": 27030,
   "latest_action_snapshot": {
-    "checked_shanghai": "2026-10-31T18:57:58+08:00",
-    "actual": 6955,
-    "charged": 6955,
+    "checked_shanghai": "2026-10-31T19:18:58+08:00",
+    "actual": 17591,
+    "charged": 17591,
     "pending": 0,
     "uncertain": 0,
-    "new_R2_actions": 1600,
+    "new_R2_actions": 12236,
     "original_R1_actions_reused_once": 5355,
-    "terminal": false
+    "terminal": true
   },
   "selection_rule_sha256": "87c8af53bcea7ee09ea55f11380b4a310d94e6ff2fc01e6f7b648b39299086b5",
   "immutable_initial_grant_figures_are_binding_time_snapshots": true,
-  "remaining_a1_gpu_seconds": 88,
-  "remaining_a1_actions": 23045,
+  "remaining_a1_gpu_seconds": 5430,
+  "remaining_a1_actions": 12409,
   "retry_launched": true,
   "source_teacher_admitted": false,
-  "selection_evaluable": false,
+  "selection_evaluable": true,
   "preserve_initial_grant_and_header": true,
-  "remaining_a1_after_settled_before_active_hold": 6568,
-  "repair_live_prefix_regression_passed": true
+  "remaining_a1_after_settled_before_active_hold": 5430,
+  "repair_live_prefix_regression_passed": true,
+  "remaining_phase_gpu_seconds": 27030,
+  "remaining_phase_actions": 282409,
+  "selected_arm": null,
+  "eligible_arms": [],
+  "capacity_preparation": {
+    "task": "place_phone_stand",
+    "whole_train_demos": 8,
+    "whole_validation_demos": 4,
+    "state": "data_semantics_and_executable_admission_pending",
+    "additional_budget": false,
+    "cpu_qualification_sublimit_worker_seconds": 300,
+    "cpu_qualification_included_in_remaining": true,
+    "provisional_gpu_seconds": 5400,
+    "provisional_actions": 10000,
+    "not_yet_a_gpu_reservation": true,
+    "restricted_screen_does_not_test_full_reactive_capacity": true
+  }
 }

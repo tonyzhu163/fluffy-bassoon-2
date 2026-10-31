@@ -44,20 +44,20 @@ control. Task57 records remain target-online data excluded from source
 pretraining. Current counters and cost receipts are in
 [coordination](../outputs/coordination.md).
 
-The new targeted Motus/RoboTwin phase now has actual live interface evidence:
-zero learned-KV/fixed-KV/joint edits preserve native decoding exactly, a real
-KV-adapter gradient is nonzero with zero motor gradients, and the full motor
-fingerprint remains unchanged. The first complete native phone episode
-succeeds; the first five development episodes include four timeouts. The
-first screen run subsequently stopped before its first steering action: all16
-native episodes completed (phone1/8, object3/8), but a repeated physical case
-received a different instruction. Images/state match exactly; strict pairing
-is preserved. The explicitly migrated repair now reproduces saved original
-features/prefix caches exactly and has completed four steering trials, all
-timeouts; the full search is ongoing. No new learned controller, source-data
-improvement or AD/DPT/memory result follows. Renderer warnings
-are retained but do not explain the matched-pixel instruction difference. See
-[verified scope and limits](robotwin-coefficient-steering/EVALUATION.md) and
+The targeted Motus/RoboTwin restricted four-coefficient screen is complete.
+After an instruction-pairing defect, an explicitly migrated repair reproduced
+saved original features/prefix caches exactly. Zero edits preserve native
+outputs, real KV gradients are nonzero, and the motor remains frozen. The
+completed51-episode conditional grid has no eligible rescue under the rule
+fixed before search outcomes: on the only case with search successes, noise
+and KV each confirm1/2, action0/2, against matched native1/2. No source
+teacher is admitted. The17591 cumulative actions and1770 GPU-seconds include
+the failed initial run once. This restricted random-basis probe does not test
+full learned reactive KV/action capacity. The original same-phone capacity
+check is being prepared from8 whole TRAIN/4 VAL released demonstrations;
+data timing, camera/reset semantics, executable code and cost admission must
+be resolved before any capacity GPU run. No new budget is granted. See
+[verified evidence and limits](robotwin-coefficient-steering/EVALUATION.md) and
 [new phase](../outputs/frozen-pi05-endtoend-20261031-r1/SCOPE.json).
 
 The compatible collection records actual steering noise under the same frozen

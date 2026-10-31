@@ -1,21 +1,49 @@
 # Frozen-Motus coefficient steering evaluation
 
-## Current repair R2, 18:57 Shanghai
+## Completed restricted screen, 19:18 Shanghai
 
-Successor `job-zp47pliu429f`, exact source `969fb44c`, passed108 allocated CPU
-checks and the actual-artifact migration dry-run, with the old journal unchanged.
-On the GPU, re-encoding saved original images/state with the original prompt
-reproduces the original public features, prefix mask and all18 KV caches exactly.
-Strict prepared-input equality holds; zero edits/native decoding remain exact,
-the real KV gradient is0.00363427, motor gradients are0 and fingerprint721a
-is unchanged at qualification. The16 native episodes were reused, not rerun.
+Successor `job-zp47pliu429f`, exact source `969fb44c`, is terminal Succeeded,
+exit0. The complete conditional grid contains51 episodes:16 preserved native,
+27 search and8 confirmation. No episode, pending action or uncertain charge
+is missing. All51 manifest hashes/counts and paired reset identities match;
+the final recovery is stable and the terminal full-motor guard passes.
 
-The first four new steering episodes (three noise, one KV) all time out at400
-actions. This is an incomplete search: no ranking, reachability conclusion,
-teacher admission or learned-performance claim is available yet. Its1600 new
-actions bring the canonical count to6955, with no pending/uncertain charge at
-that snapshot. The old632 settled GPU-seconds and the new6480 reservation
-share the original phase/A1 limits. See [repair evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-INITIAL-RESULT.md).
+| Phone development case | Noise search | KV search | Action search | Confirmation noise/KV/action | Matched native |
+| --- | --- | --- | --- | --- | --- |
+|1|0/3|0/3|0/3|Not triggered|Not triggered|
+|2|0/3|0/3|0/3|Not triggered|Not triggered|
+|3|1/3|2/3|1/3|1/2,1/2,0/2|1/2|
+
+No arm meets the predeclared requirement of2/2 intervention successes against
+0/2 native on at least one case. No teacher or source collection is admitted.
+The search maximum is selected on the development outcomes; it cannot replace
+the independent confirmation result. This is a restricted fixed4D random-basis
+probe, not a test of the complete learned reactive KV/action policy classes.
+
+R2 costs1138 conservative GPU-seconds/12236 new controller actions. With R1
+counted once, cumulative cost is1770 GPU-seconds/17591 actions, leaving5430
+GPU-seconds/12409 actions inside A1 and27030 GPU-seconds/282409 actions in
+the whole phase. CPU remains331/1800 worker-seconds. No budget is replenished.
+Original raw/native records and both recoveries remain immutable. See
+[terminal evidence](../../outputs/frozen-pi05-endtoend-20261031-r1/A1-R2-TERMINAL-RESULT.md)
+and [fixed rule](../../outputs/frozen-pi05-endtoend-20261031-r1/SELECTION-RULE.json).
+
+The next discriminating test is the original same-phone supervised capacity
+check:8 whole TRAIN/4 VAL released demos, full learned reactive KV/action
+controllers, with the32 locked cases unopened. Archive timing, camera and
+reset semantics plus actual executable/cost admission remain pending. The
+provisional5400 GPU-seconds/10000 actions fit the remaining A1 caps but are
+not a launch reservation. No capacity model or result exists yet.
+
+## Repair qualification (historical)
+
+The repair passed108 allocated CPU checks plus an actual-artifact migration
+dry-run, without changing the old journal. Re-encoding saved original RGB/state
+with its actual original prompt reproduces public features, prefix mask and
+all18 caches exactly. Native/zero decoding is exact; real KV gradient norm is
+0.00363427, motor gradients0, and the721a motor fingerprint remains unchanged.
+The16 native episodes were reused. The first four steering timeouts were an
+interim observation; the completed grid above supersedes that status.
 
 ## Initial interface qualification and stopped R1
 
@@ -51,7 +79,7 @@ constant throughout their175 raw chunks. Static official-source inspection
 shows constructor-cached episode descriptors participate in instruction
 generation before the current setup; this is not safely described as only
 global RNG jitter. The repair preserves each case's actual original prompt. All32 locked confirmation cases remain closed.
-There is no search/confirmation result and no admissible source teacher.
+At that stopped R1 stage there was no search/confirmation result or admissible source teacher.
 This is an execution defect, not a negative result for any steering family.
 
 The initial qualification motor hashes match. The exception occurs before
@@ -69,16 +97,14 @@ Evidence: [initial receipt](../../outputs/frozen-pi05-endtoend-20261031-r1/A1-IN
 [bound grant](../../outputs/frozen-pi05-endtoend-20261031-r1/GRANT.json).
 Current costs and next checks belong in [coordination](../../outputs/coordination.md).
 
-## Rendering observation and next discriminating check
+## Rendering observation and resolved pairing check
 
 Repeated SAPIEN OIDN invalid-handle messages are preserved. Nonblank-RGB
 checks passed and no rendering exception was observed. They do not explain
 the paired-input mismatch: both saved reset NPZs were independently rehashed,
 and all image/state NPY bytes match exactly. The confirmed recorded input
-change is the instruction; a saved-original-prompt re-encode and repeated
-identical-input prefix check on an allocation will separate that change from
-any numerical jitter. No guard is weakened and no fresh steering action is
-admitted until the repaired prepared reset matches the original case.
+change is the instruction; the repaired saved-original-prompt re-encode subsequently reproduced the
+original prefix exactly, as described above. The guard was preserved.
 
 The live checks establish a usable gradient path and zero-edit compatibility.
 They do not establish that bounded edits improve success, that a source

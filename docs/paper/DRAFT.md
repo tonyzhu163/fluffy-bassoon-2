@@ -31,30 +31,29 @@ high-performance or sample-efficiency benefit. Historical500versus100 changes
 both data and native wave, so it does not isolate scaling or overfitting.
 Current human priority is ordinary DSRL first on the entirely frozen official
 pi0.5, followed by native action-expert PPO; further offline-student sweeps
-are held. A fresh task57 pi0.5-adapted PixelSAC curve is being implemented:
-500k optimizer updates, train states0..39 and matched query states40..49,
-within10GPUh/1M all-in actions/64GiB. At15:19:38 training is389/389 successful with101,020 updates and72,601 all-in
-actions. Native and learned panels through100,220 updates all score10/10; the
-latest query uses1,270 primitives versus native1,451 (12.5% fewer). This is a
-descriptive cost signal on10 reused cases, without success-rate, memory or
-overall sample-efficiency evidence. No failure-recovery histories have emerged. Native PPO
+are held. The fresh task57 pi0.5-adapted PixelSAC curve is running toward500k optimizer
+updates, train states0..39 and matched query states40..49, within10GPUh/1M
+all-in actions/64GiB. Native and completed learned panels remain10/10. Query
+primitive cost is lower on this reused bank; one training timeout has occurred.
+Neither success improvement, rich failure-recovery data nor overall sample
+efficiency after training cost is established. Native PPO
 GPU dispatch is held; its later25 TOTAL iterations plus the same128 starting-
 model cases are explicitly authorized after the pilot passes. Its sampling
 noise cannot directly label steering of the original frozen motor. AD can
 instead predict actual z from fixed-motor SAC learning histories; DPT can
 later label saved query observations with a competent final same-motor SAC
 teacher. [Compatible-data contract](../../outputs/dsrl-pi05-task57-20261031-r1/DATA-CONTRACT.md).
-New targeted Motus/RoboTwin interface qualification (2026-10-31): allocated
-CPU71/71 passed; actual native/zero-edit decoding is exact, the KV adapter
-receives a nonzero frozen-suffix gradient, and the motor hash stays fixed.
-A real native phone episode completed successfully. The first source-development
-run then stopped on an instruction-pairing defect before any steering action,
-preserving16 native episodes. An explicitly migrated repair reproduces the
-original prefix exactly and has begun actual steering comparisons. No new
-learned steering, RL-history improvement or Transformer adaptation result is
-established. This supports runtime
-compatibility, not the central robotic-performance claim.
-[Qualification and limitations](../robotwin-coefficient-steering/EVALUATION.md).
+New targeted Motus/RoboTwin result (2026-10-31): native/zero-edit decoding is
+exact, a real KV-adapter gradient reaches the frozen suffix, and the motor
+hash remains fixed. An instruction-pairing defect was repaired with explicit
+migration, preserving16 native episodes. The completed51-episode restricted
+four-coefficient grid yields no qualifying rescue: noise/KV/action confirm
+1/2,1/2,0/2 on the successful-search case, against matched native1/2. No source
+teacher is admitted. This is a restricted random-basis test, without a result
+for full learned reactive capacity or Transformer adaptation. Same-phone
+8TRAIN/4VAL demo capacity preparation stays within remaining original caps;
+no capacity training has started.
+[Evaluation and limits](../robotwin-coefficient-steering/EVALUATION.md).
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
