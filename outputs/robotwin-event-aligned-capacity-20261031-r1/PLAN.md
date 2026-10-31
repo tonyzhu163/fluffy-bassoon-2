@@ -28,7 +28,7 @@ Source-reference cursor, native physical-slot counter, submitted slots, declared
 
 The objective is **expert submitted-plan imitation**. gen_sparse plans over the full submitted chunk before physics. The native valid mask is an execution/cost boundary and does not establish that later waypoint parameters cannot affect earlier motion. In particular, a terminal-prefix index is not a physical trajectory trace.
 
-Only the twelve new successful aligned rollouts enter the8/4 bank. Exclude both the new fixed02 control and all old rollouts. Use the actual current raw RGB, measured public state representation, language and frozen public features from each canonical chunk, never cached HDF5 images. No future gripper events, schedule, cursor, hidden poses or audit fields enter policy inputs.
+Only the twelve new successful aligned rollouts enter the8/4 bank. Exclude both the new fixed02 control and all old rollouts. Use the actual current raw RGB, native public drive-target14 state, language and frozen public features from each canonical chunk, never cached HDF5 images. Measured articulation qpos is a separate audit and does not replace public state. No future gripper events, schedule, cursor, hidden poses or audit fields enter policy inputs.
 
 Retain the full known proposed H32 expert target, submitted-plan mask, and native executed mask separately. Loss covers all known SUBMITTED plan parameters, including terminal-unexecuted ones. The unsubmitted tail at natural400-step horizon is excluded; no executed tail is invented. Preserve every original file and full original reference as provenance even when successful physics ends early.
 

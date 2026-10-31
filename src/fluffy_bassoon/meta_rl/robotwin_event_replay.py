@@ -51,11 +51,11 @@ scene-equality prerequisite. None of this enters public inputs/reset identity.
     for side in ('left','right'):
         def articulation(side=side):
             entity=getattr(robot,side+'_entity');joints=entity.get_active_joints()
-            return dict(qpos=entity.get_qpos(),joint_names=[j.name for j in joints],
-                        drive_targets=[float(j.drive_target) for j in joints])
+            return dict(qpos=entity.get_qpos(),joint_names=[j.get_name() for j in joints],
+                        drive_targets=[float(j.get_drive_target()[0]) for j in joints])
         articulations[side]=read(articulation)
         grippers[side]=read(lambda side=side:dict(nominal=getattr(robot,side+'_gripper_val'),
-            named_drive_targets=[dict(name=j[0].name,target=float(j[0].drive_target))
+            named_drive_targets=[dict(name=j[0].get_name(),target=float(j[0].get_drive_target()[0]))
                                 for j in getattr(robot,side+'_gripper') if j is not None]))
     # Calibration is copied only if the last existing native observation
     # already contains it. No camera getter or additional observation call.

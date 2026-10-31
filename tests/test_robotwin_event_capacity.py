@@ -154,14 +154,17 @@ def test_failed_closed_recovery_retains_private_and_global_rng_and_zero_fits():
 
 
 def task_fixture():
+    class Joint:
+        def __init__(self,name,target):self.name,self.target=name,target
+        def get_name(self):return self.name
+        def get_drive_target(self):return np.array([self.target])
     class Entity:
         def get_qpos(self):return np.array([.1,.02])
-        def get_active_joints(self):return [SimpleNamespace(name='arm',drive_target=.2),SimpleNamespace(name='grip',drive_target=.03)]
+        def get_active_joints(self):return [Joint('arm',.2),Joint('grip',.03)]
     class Actor:
         def get_pose(self):return SimpleNamespace(p=np.array([1.,2.,3.]),q=np.array([1.,0.,0.,0.]))
     robot=SimpleNamespace(left_entity=Entity(),right_entity=Entity(),left_gripper_val=.8,right_gripper_val=.9,
-        left_gripper=[(SimpleNamespace(name='left_finger',drive_target=.04),1,0)],
-        right_gripper=[(SimpleNamespace(name='right_finger',drive_target=.05),1,0)])
+        left_gripper=[(Joint('left_finger',.04),1,0)],right_gripper=[(Joint('right_finger',.05),1,0)])
     return SimpleNamespace(robot=robot,phone=Actor(),stand=Actor(),phone_id=0,stand_id=2,
         get_info=lambda:{'{A}':'phone0'},now_obs={'observation':{'head_camera':{'intrinsic_cv':np.eye(3),'rgb':'not accessed'}}},
         get_obs=lambda:pytest.fail('Extra observation forbidden'),scene=SimpleNamespace(step=lambda:pytest.fail('Extra physics forbidden')))
