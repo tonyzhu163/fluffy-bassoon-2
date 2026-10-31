@@ -67,9 +67,16 @@ optional cached wide report pass. Gripper clipping barely changes the wide
 head's validation regression. The first fixed15 readout dispatch fails in
 wrapped-callable provenance before any model/environment or episode,75GPU-s
 and zero actions. Identity-scoped repair547 passes four CPU regressions;
-its retry has verified real episodes/parity/frozen motor/recovery within the
-same1,425 remaining seconds. No complete robot comparison is available yet. No physical benefit, source RL or Transformer
-result is available yet, and validation never selects an earlier endpoint.
+its retry completes the fixed15 natural400-action episodes: native0/5,
+wide5,000 0/5 and KV5,000 0/5. Frozen motor/checkpoints, paired initial
+physical/public states and noise,195 chunk/decision-byte refs and full
+recovery are verified. Readout costs716 GPU-seconds including failed75,
+with6,000 new actions. No physical benefit is observed on this small reused
+bank. Saved first-chunk metadata confirms both learned branches after reset and
+nonidentical issued command bytes under matched inputs/noise in all five
+cases. Magnitudes/physical causes remain unresolved; no representational-limit,
+source RL or Transformer claim follows, and
+validation never selects an earlier endpoint.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and

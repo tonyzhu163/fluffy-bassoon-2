@@ -2,6 +2,13 @@
 
 ## Event teacher04 gate failure and independent saved-data diagnoses
 
+The completed fixed5,000 command-head readout observes no physical benefit:
+starting native, wide action residual and KV head each score0/5 on the same
+five predeclared cases. All15 episodes reach their natural400-action horizon;
+none is cut short by budget. These five reused DEV/VAL cases are not a full
+benchmark or an AD/DPT experiment. No phone source teacher is admitted.
+[Compact terminal result](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-READOUT-R2-SUMMARY.json).
+
 The event-aligned capacity job `job-2rkimbvypowd` stopped before fitting.
 Expected target: all12 teachers succeed, then fit the reactive KV/action heads.
 Actual: aligned02/00/01/03 each succeed193 actions; aligned04 times out at its
@@ -236,17 +243,55 @@ same containment/hash checks. Four focused regressions pass on allocated
 Linux,74/120 CPU-worker-seconds; its remaining46 are sealed. The earlier54
 cases carry unchanged.
 
-Retry job-mmkuln33iof5 is Running on source547, with1,425 inclusive seconds
-reserved in that same1,500 lineage. Exact zero/native parity, real KV gradient
-0.002138, motor gradient0 and unchanged721a qualification pass. Two actual
-episodes complete; the full closed recovery/post-RNG/raw sample hashes match.
-The producer counts25,042 actions, including the active third episode, with
-zero pending/uncertain physical intents at that observation. These are startup
-and execution checks, not a final method score. The renderer emits repeated
-OIDN invalid-handle warnings without a fatal traceback; they are retained,
-with no unreviewed rendering change. The next scheduled check is07:20.
-No source eligibility or scientific gate changes follow.
-[Qualified retry and byte review](../../outputs/frozen-pi05-endtoend-20261031-r1/PROVENANCE547-R2-PARENT-REVIEW.json).
+Retry job-mmkuln33iof5/source547 succeeds, exit0, at07:19:42. Its fixed
+15-cell comparison completes without budget truncation or extra qualification
+episodes. The frozen motor ends at721a; exact final5,000 head hashes, matched
+public/physical resets and all13 native-noise draws per case agree. The owner
+verifies all15 manifests,195 new chunk JSON/small decision-NPZ byte hashes,
+15 post-RNG/reset-audit refs and full618,815-byte recovery SHA/ZIP CRC. The
+root checks copied metadata/bytes, not tensor restore or every RGB frame.
+Issued-target shapes and executed counts agree; this is not an independent
+inspection of every mask value.
+
+| Fixed five-case condition | Success | Controller actions |
+| --- | ---: | ---: |
+| Starting native motor |0/5|2000|
+| Wide residual,5,000 |0/5|2000|
+| KV head,5,000 |0/5|2000|
+
+The641-GPU-second retry plus failed75 costs716/1,500 for readout; global
+closed cost is7,698/28,800 and canonical actions29,922, leaving78 in old A1.
+No phone GPU allocation remains active. The unused784 readout seconds are
+closed, not permission for another search. Full recovery is aa44ce2d; no
+new optimizer/source actions or actual terminal deserialize/restore occurred.
+The initial metadata reader's two false checks are preserved and corrected:
+chunk optimizer_updates encodes acting version0/native or5,000/head, not
+new SGD; unresolved_decisions is an empty dict, not integer0.
+
+The expected learned-head physical improvement was not observed. Wide
+validation error, single captured base/noise per observation, limited
+reactive capacity/optimization and source-to-live observation/execution
+shift are competing explanations. None is established as the cause. OIDN
+invalid-handle warnings remain in logs without a fatal driver exception;
+rendering fidelity of every frame is unverified. The saved15 first-chunk JSON audit now verifies both learned branches
+were invoked after reset in5/5 episodes each. Under matched initial images,
+public features and noise, wide and KV issued command hashes differ from
+native in every case; wide base/corrected tensors also differ in bytes at
+the same shape/dtype. This rules out merely identical issued bytes with
+different method labels, not negligible numerical or clipped/physical effect.
+The KV metadata logs branch/config, not an edited-cache norm. The wide head
+already reads the current base14 proposal; single-captured-base coverage is
+a data limitation, not absence of that input. No arrays/models/episodes or
+new allocation were used for this audit.
+[Post-reset audit](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-READOUT-R2-POSTRESET-HOOK-AUDIT.json).
+
+No checkpoint or case is substituted, and this bounded5,000-step diagnostic
+does not reject the full steering class or test meta-learning. The missing
+composed-A1 producer entry may be prepared as code only, with a late-bound
+head and explicitly unfunded finite template; no useful head is nominated
+and no A1/source collection/AD/DPT compute follows automatically. The useful
+ordinary LIBERO baseline remains the running experiment.
+[Terminal parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/READOUT547-TERMINAL-PARENT-REVIEW.json).
 [Failure and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/CPU54-KV5000-READOUT-FAILURE-PARENT-REVIEW.json).
 No physical outcome, source teacher, chronological RL corpus or AD/DPT
 eligibility follows from these offline fits.

@@ -1,0 +1,87 @@
+{
+  "format": "robotwin_command_diagnostic_physical_readout_v1",
+  "admitted": true,
+  "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
+  "request_sha256": "8ab606e416d40a38c79adfe3b6331fec497159c6ff74f9d7e9f6043bc70188a4",
+  "hostname": "job-mmkuln33iof5-master-0",
+  "gpu_count": 1,
+  "maximum_robot_actions": 6000,
+  "run_id": "frozen-pi05-command-readout-20261101-r2",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r2/experiment",
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock",
+  "clock_contract": {
+    "format": "frozen_pi05_shared_gpu_clock_v1",
+    "phase_id": "frozen-pi05-endtoend-20261031-r1",
+    "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447",
+    "maximum_gpu_seconds": 28800,
+    "maximum_actions": 300000,
+    "motor_file_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb"
+  },
+  "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793488189000000-0015",
+  "resource_plan_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r2/RESOURCE-PLAN-INPUT.json",
+    "sha256": "8de9111d8e887ea47651b9c0dcf9ade469898b23326237f8c8c441707fe12cdb"
+  },
+  "authority_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r2/COMMAND-DIAGNOSTIC-READOUT-CHILD-AUTHORITY.json",
+    "sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0"
+  },
+  "predecessor_terminal_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r2/FACTORIAL-TERMINAL-RECEIPT.json",
+    "sha256": "2da5b0bf18eb0c444b32e9cb6514970a5c5aeaa828b4552e5f3316999e7c5899"
+  },
+  "phase_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1",
+  "action_ledger": {
+    "campaign_id": "frozen-pi05-endtoend-20261031-r1",
+    "contract": {
+      "candidate_tasks": [
+        "place_phone_stand",
+        "place_object_stand"
+      ],
+      "motor_parameter_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+      "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+      "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+      "phase_id": "frozen-pi05-endtoend-20261031-r1",
+      "scope_sha256": "32ecd37ecde9b4b019387d0df2042c923cc79579ce969722f4bfe51038779447"
+    },
+    "phase_caps": {
+      "a1": 30000,
+      "condition_cross": 15000,
+      "source": 120000,
+      "source_validation": 30000,
+      "student_evaluation": 105000
+    },
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/action-budget",
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "total_actions": 300000
+  },
+  "driver_deadline_unix": 1793489494.0,
+  "cleanup_seconds": 60,
+  "minimum_episode_admission_seconds": 90,
+  "aggregate_output_root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r2",
+  "maximum_output_bytes": 8589934592,
+  "code_migration": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/command-readout-r2/CODE-MIGRATION.json",
+    "sha256": "06ff8ff1069ed332bb6a94d44d67f20a93f3164b3dd5ff658920b0a4bb32ec89"
+  },
+  "required_CPU_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/command-readout-provenance-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "10b944b9012c7da24d7125b6366370b533d00c2e7bb9072f1b1ac7519367f864"
+  },
+  "carried_resource_CPU_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/command-readout-linked-resource-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "88cd3f6ecfdf1a419d5c79166efb2616f4fd742228fac097355349760df4a188"
+  },
+  "prior_failed_readout_closeout": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/allocation-closeout.json",
+    "sha256": "4e42a56419a056fe8e925515f82bfd1b2fdf6627b04db7c44bad5cbb8c040189"
+  },
+  "prior_actual_global_GPU_seconds": 7057
+}

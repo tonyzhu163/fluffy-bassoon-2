@@ -1,0 +1,71 @@
+{
+  "format": "robotwin_command_diagnostic_physical_readout_v1",
+  "template_only": false,
+  "admitted": true,
+  "logical_panel_id": "command-diagnostic15-record04-val08-11-final5000-v2",
+  "diagnostic_purpose": "fixed12_original_plan_command_capacity_diagnostic_only",
+  "source_eligible": false,
+  "maximum_controller_actions": 6000,
+  "proposal": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-command-readout-linked-20261101-r1/outputs/robotwin-command-readout-driver-20261101-r1/READOUT-PROPOSAL-V2.json",
+    "sha256": "4fcfbb4a4a5d941713c517e1589e55f12104578cb188a66293e234704ef21c55"
+  },
+  "canonical_bindings": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/command-diagnostic-readout-r1/canonical-bindings.json",
+    "sha256": "e8c49c56d55853f14d0e2fb3a753c6395a1e3267a1097f4ae3b7c2836423a2a9"
+  },
+  "demos": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/capacity-r1/demos.json",
+    "sha256": "a80c5ed4776ced9d02e2c1c2ab44059f542d47eb8087eed561b12ab6fe700ad4"
+  },
+  "interface": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/A1-INTERFACE.json",
+    "sha256": "c7a6dbf1bee96f5984f9a708c732fd81d4f21c0bbccbb5b2dca4922d6c728ceb"
+  },
+  "joint_conventions": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/admission/JOINT-CONVENTIONS.json",
+    "sha256": "8a0ff1e70fd776cf8cdb9e254966422e1dee8227584c388a262e62068ebf9bc4"
+  },
+  "fit_results": {
+    "action": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/result.json",
+      "sha256": "965a483cdd3173c893000f18966449e681ffbe18594d4a2d46f48ac0804a7265"
+    },
+    "kv": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/result.json",
+      "sha256": "f364efd1cdaf17141258b9fd536f420c3444484c31bc52f2fc599e8f4c5e9fdd"
+    }
+  },
+  "current_head": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/result.json",
+    "sha256": "96242cb9ccaf9d7a9bb8efe6ef923cd4b5619151ccd7c099da54903a78939b95",
+    "bytes": 328725
+  },
+  "origin_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/prelift-factorial-r1/experiment/recovery.pt",
+    "sha256": "673e18c226e36219df5e93837aae83c8a0ec29a9b7c6172a9fc88a9b48606b9e",
+    "bytes": 253477
+  },
+  "resume": null,
+  "runtime_blob_sha256": {
+    "src/fluffy_bassoon/meta_rl/robotwin_command_diagnostic_readout.py": "e1de0edcca15967b4458cfb30019ae239b759e124bb460d791bbd730314542af",
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+    "src/fluffy_bassoon/rl/robotwin_wide_action.py": "8594349bc1e417db8b6539a0bdaada26a7be5928c54482faa647e2d92055cab4",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+    "src/fluffy_bassoon/meta_rl/robotwin_steering_screen.py": "7963f833ab4fe6f92ae87ecb4e5f1b600ad1fe86ee037eeed80ef90619230fa5",
+    "src/fluffy_bassoon/meta_rl/robotwin_event_replay.py": "b7fdd5de4adfdbecc62f76a3ed4a65125ca6e43571f6dd34d4a6598e2ca6fbc6",
+    "src/fluffy_bassoon/meta_rl/robotwin_reactive_capacity.py": "a501b515947f2e76a1c93fb8025fa6c405d68692248356161afa985d2de9672c",
+    "src/fluffy_bassoon/meta_rl/robotwin_replay_diagnosis.py": "b3c3e2ee8213d52eca5d3a3b97a34bfba418502ad210973a23e12493ba8c4359",
+    "src/fluffy_bassoon/baige_gpu.py": "520de3626757d950cdff3fe895424638630f1e6867f7ad1c5010daaa4ce845f3",
+    "src/fluffy_bassoon/meta_rl/checkpoint.py": "46b37cdf68035276ff44a6185e2d120a91e76c3693e74a1f3286068cb18f02c1",
+    "src/fluffy_bassoon/meta_rl/warmstart.py": "f3964e741f95436d684f81a4157b2abf33546815a7d07e8fcf1a2133cccad27e",
+    "src/fluffy_bassoon/rl/robotwin_campaign_budget.py": "d1ca7b9e5b4c3963d8bd8fc833794da1b5cbdf6427eb76dd1b9186d769494924",
+    "src/fluffy_bassoon/rl/robotwin_corpus.py": "3120f2ddc4972c718fb88e5cc9452f5acd15195d2f62b5cef3ee1a75fdd643c8",
+    "src/fluffy_bassoon/rl/pi05_residual.py": "dd647356594a9086cb006fbfedbce5715cde8f99a9d5f03d9c30a884744999ff",
+    "src/fluffy_bassoon/rl/robotwin_steering.py": "3a284fb4b16a27d7c0d748befa81d806f4782ff1efca5579c8b5dcacaef5e412",
+    "src/fluffy_bassoon/meta_rl/robotwin_demo_capacity.py": "fabdd092f888bb801cb434673441a461b0f320c73cced46e782d5192c17aa836",
+    "src/fluffy_bassoon/meta_rl/robotwin_prelift_probe.py": "a413a068d197abe991180a50f083133df01e53d3c2443705a0d72c0f5d24ee85",
+    "src/fluffy_bassoon/meta_rl/robotwin_command_readout_resources.py": "9f6452cca1ea0c60ebe538cef994385383b4d70e59f8a6e765d65a5be4052ca6"
+  }
+}

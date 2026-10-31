@@ -1,0 +1,1354 @@
+{
+  "format": "fixed15_postreset_hook_saved_JSON_audit_v1",
+  "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
+  "job_id": "job-mmkuln33iof5",
+  "packet_manifest": {
+    "path": "outputs/frozen-pi05-endtoend-20261031-r1/command-readout-r2-first-chunks/MANIFEST.json",
+    "sha256": "ea4189bc8ad9b9dbe01248b3496458047a87a6129e052459934cf7f8c83be2bf"
+  },
+  "checks": {
+    "all15_first_JSON_hashes_match": true,
+    "native_reserved_absent_5of5": true,
+    "wide_reserved_branch_kind_5of5": true,
+    "wide_base_corrected_same_shape_different_bytes_5of5": true,
+    "KV_reserved_branch_kind_5of5": true,
+    "all_paired_first_raw_public_noise_match": true,
+    "all_wide_and_KV_issued_bytes_differ_from_native": true
+  },
+  "all_checks_pass": true,
+  "rows": [
+    {
+      "cell": "diagnostic-case04-native",
+      "condition": "native",
+      "record_id": "phone-04",
+      "first_chunk_JSON_sha256": "e371cc668f275c6afc00f6c437e0851aa1867af6d2f07a61fe4b56fb4ab6deb2",
+      "method": "command_readout_native",
+      "capacity_head": "native",
+      "capacity_checkpoint": null,
+      "backend_reserved_metadata_present": false,
+      "backend_configuration_sha256": null,
+      "backend_configuration_kind": null,
+      "reserved_array_reference_names_and_SHAs": {},
+      "first_observation_file_sha256": "9b183e26210f741b0d1c1d84266a08babdaa561bab59ede62ea0678af5a2c1fa",
+      "first_observation_content_sha256": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+      "first_observation_array_SHAs": {
+        "features": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "main_images": "338724ab4cb5c7d6777f9e822ab768a27a00e20a894926fd4b876bd141644e4e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "31d2ea6a54d4a33e84c2751f3fc578221fb82f168cc5f7f6817e00c6b6b1cdce"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "8a878f26849fd3c550a87b469d8dd7a76132f83648bbc04cb10f2b35c9386a6e",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "74e49e4acdca035dc9bd5c21eb91e98adb649ab751a4cb4fa33cfe9224fa85f4",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32
+    },
+    {
+      "cell": "diagnostic-case04-wide-final5000",
+      "condition": "wide-final5000",
+      "record_id": "phone-04",
+      "first_chunk_JSON_sha256": "680ce044a0923a5e1398ac11b2572c40d897c223e6511f09ac9635b44f9602e1",
+      "method": "command_readout_action",
+      "capacity_head": "action",
+      "capacity_checkpoint": {
+        "head_state_sha256": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+      "backend_configuration_kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/actions": {
+          "dtype": "float32",
+          "sha256": "6029b5fddc5ec71950194b0026ba64e70694b664e1640096743ff241c339fdbc",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/applied_delta": {
+          "dtype": "float32",
+          "sha256": "bfdeb91495ab450ea1c67fb6be8b78db7e070c57956e21b70cad3e9d69334d1a",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/base_actions": {
+          "dtype": "float32",
+          "sha256": "a4c41ad0e8fa722213b7c2cfbeb55312be2937d309358ef167883ac9aee29351",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/clipped": {
+          "dtype": "bool",
+          "sha256": "d6851bc0acdd95ef798f21ced39d9f4b91201deebb2a6403961b82910b396118",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "860d824d42efe5f3f89953b7b1f861a0010fbc31fcfedef8dd5fb3e21be064d8",
+          "shape": [
+            1,
+            2062
+          ]
+        },
+        "metadata/frozen_pi05_residual/requested_delta": {
+          "dtype": "float32",
+          "sha256": "91f7cee2181b09e37958308b26ab0f739e2eed6fda9d20f29011d70924438b96",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        }
+      },
+      "first_observation_file_sha256": "9b183e26210f741b0d1c1d84266a08babdaa561bab59ede62ea0678af5a2c1fa",
+      "first_observation_content_sha256": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+      "first_observation_array_SHAs": {
+        "features": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "main_images": "338724ab4cb5c7d6777f9e822ab768a27a00e20a894926fd4b876bd141644e4e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "31d2ea6a54d4a33e84c2751f3fc578221fb82f168cc5f7f6817e00c6b6b1cdce"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "8a878f26849fd3c550a87b469d8dd7a76132f83648bbc04cb10f2b35c9386a6e",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "2bc35c25789dbfb453dea7b691ca0dd11cb573f03f126c93d9159b56d67cad13",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "actions": "metadata/frozen_pi05_residual/actions",
+        "applied_delta": "metadata/frozen_pi05_residual/applied_delta",
+        "base_actions": "metadata/frozen_pi05_residual/base_actions",
+        "clipped": "metadata/frozen_pi05_residual/clipped",
+        "public_features": "metadata/frozen_pi05_residual/public_features",
+        "requested_delta": "metadata/frozen_pi05_residual/requested_delta"
+      },
+      "wide_base_and_corrected_same_dtype_shape": true,
+      "wide_base_and_corrected_bytehash_differ": true,
+      "issued_vs_corrected_hash_directly_comparable": false,
+      "issued_linkage": "Pinned backend returns actions[0] then slices[:action_count]; begin_decision and native chunk_step receive that same command array. Recorded residual has[1,32,14] vs issued[32,14], so their shape-inclusive digests cannot directly prove batch-axis removal equality without NPZ inspection."
+    },
+    {
+      "cell": "diagnostic-case04-KV-final5000",
+      "condition": "KV-final5000",
+      "record_id": "phone-04",
+      "first_chunk_JSON_sha256": "7d9407ef62519efdcc9d3306381d95320c8041b000d192840d260b861a7a0a1a",
+      "method": "command_readout_kv",
+      "capacity_head": "kv",
+      "capacity_checkpoint": {
+        "head_state_sha256": "666aebf3df54e3426adb7f319f4756ad7e409f9676e98c92f23a3dc3e75b49db",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/endpoint-005000.pt",
+        "sha256": "80229eba04dcaeb49f1940ee8df56c82d6cdf0d74c274f57be652a6957d6e144"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2",
+      "backend_configuration_kind": "reactive_native_kv_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "860d824d42efe5f3f89953b7b1f861a0010fbc31fcfedef8dd5fb3e21be064d8",
+          "shape": [
+            1,
+            2062
+          ]
+        }
+      },
+      "first_observation_file_sha256": "9b183e26210f741b0d1c1d84266a08babdaa561bab59ede62ea0678af5a2c1fa",
+      "first_observation_content_sha256": "dd2ae4ec0199688c71c1df49ec4a8e78a3616fcab0cb07c364e8a575ee446ba6",
+      "first_observation_array_SHAs": {
+        "features": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "main_images": "338724ab4cb5c7d6777f9e822ab768a27a00e20a894926fd4b876bd141644e4e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "31d2ea6a54d4a33e84c2751f3fc578221fb82f168cc5f7f6817e00c6b6b1cdce"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "c522b7a4857828e1faa9023720c05b16dbda205f1b49d3a1a1d67c48f1c66fb3",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "8a878f26849fd3c550a87b469d8dd7a76132f83648bbc04cb10f2b35c9386a6e",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "a2acf5cc08aee97d53ef8bf9ead33336607ff96a885be3eaf42dff8b6dd27f39",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "public_features": "metadata/frozen_pi05_residual/public_features"
+      }
+    },
+    {
+      "cell": "diagnostic-case08-native",
+      "condition": "native",
+      "record_id": "phone-08",
+      "first_chunk_JSON_sha256": "be8e7564775a3591c617606d344e952cdf223f2cb5b33e7465b8a994489a201e",
+      "method": "command_readout_native",
+      "capacity_head": "native",
+      "capacity_checkpoint": null,
+      "backend_reserved_metadata_present": false,
+      "backend_configuration_sha256": null,
+      "backend_configuration_kind": null,
+      "reserved_array_reference_names_and_SHAs": {},
+      "first_observation_file_sha256": "7a1222af173656149b6d1dfccdc7bb1fb1e8d9bbf19ca35959e77ce98f53f8eb",
+      "first_observation_content_sha256": "622799b02d4909458413cc9f9c189a2d8300ceed9f72dd5acd72087faedffcec",
+      "first_observation_array_SHAs": {
+        "features": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "main_images": "994b9b6680813b587532bf03d1df4b37fe4d824e78c20464dde2ee9961380e88",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "f1c490287d047abad5f3339c245316b45184cb8c769a9c9cc2e3c43e5f924642"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "240e0ece4dc206ccc6350e73c721c0a9f630efa549bbf9e61063bb96655c0dcb",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "cbeb06f9d7d35bf4925c130f3b48dc2fe00553dbc114aefe67155ce0651e68e1",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32
+    },
+    {
+      "cell": "diagnostic-case08-wide-final5000",
+      "condition": "wide-final5000",
+      "record_id": "phone-08",
+      "first_chunk_JSON_sha256": "fff365ee46668c870184d3504f28fc9f3614e25b84f854059b22a05bdcaa1daa",
+      "method": "command_readout_action",
+      "capacity_head": "action",
+      "capacity_checkpoint": {
+        "head_state_sha256": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+      "backend_configuration_kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/actions": {
+          "dtype": "float32",
+          "sha256": "e341bea25bd698d79b41f012cc836bc8910897186cbd3426c49a98e033895c1e",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/applied_delta": {
+          "dtype": "float32",
+          "sha256": "b0da861c39150cb5b50dcc0e0d1bce9da72510cc290f28d0a9ffd31425ba65a7",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/base_actions": {
+          "dtype": "float32",
+          "sha256": "f3ac48c1ab99bcfe85173f233d2e25fe7ff65c6bab8636eca8f5ef530fa9a3fd",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/clipped": {
+          "dtype": "bool",
+          "sha256": "d6851bc0acdd95ef798f21ced39d9f4b91201deebb2a6403961b82910b396118",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "f9629ac56e23ac445d0dee86e99451cc491cf070815b7581b14b7a73cfa54b84",
+          "shape": [
+            1,
+            2062
+          ]
+        },
+        "metadata/frozen_pi05_residual/requested_delta": {
+          "dtype": "float32",
+          "sha256": "895475c3857a21c302c82170ecdd7b7544493771fcc212b248b8a58ed4a55996",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        }
+      },
+      "first_observation_file_sha256": "7a1222af173656149b6d1dfccdc7bb1fb1e8d9bbf19ca35959e77ce98f53f8eb",
+      "first_observation_content_sha256": "622799b02d4909458413cc9f9c189a2d8300ceed9f72dd5acd72087faedffcec",
+      "first_observation_array_SHAs": {
+        "features": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "main_images": "994b9b6680813b587532bf03d1df4b37fe4d824e78c20464dde2ee9961380e88",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "f1c490287d047abad5f3339c245316b45184cb8c769a9c9cc2e3c43e5f924642"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "240e0ece4dc206ccc6350e73c721c0a9f630efa549bbf9e61063bb96655c0dcb",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "df694a5b0b61f9178c665006ff1933161478d18eb2ace549ad4141ffddcefcd3",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "actions": "metadata/frozen_pi05_residual/actions",
+        "applied_delta": "metadata/frozen_pi05_residual/applied_delta",
+        "base_actions": "metadata/frozen_pi05_residual/base_actions",
+        "clipped": "metadata/frozen_pi05_residual/clipped",
+        "public_features": "metadata/frozen_pi05_residual/public_features",
+        "requested_delta": "metadata/frozen_pi05_residual/requested_delta"
+      },
+      "wide_base_and_corrected_same_dtype_shape": true,
+      "wide_base_and_corrected_bytehash_differ": true,
+      "issued_vs_corrected_hash_directly_comparable": false,
+      "issued_linkage": "Pinned backend returns actions[0] then slices[:action_count]; begin_decision and native chunk_step receive that same command array. Recorded residual has[1,32,14] vs issued[32,14], so their shape-inclusive digests cannot directly prove batch-axis removal equality without NPZ inspection."
+    },
+    {
+      "cell": "diagnostic-case08-KV-final5000",
+      "condition": "KV-final5000",
+      "record_id": "phone-08",
+      "first_chunk_JSON_sha256": "d4bccecbfdee5d5b1ad76dceb64b7126a852d10ed183b41d72b6688321983942",
+      "method": "command_readout_kv",
+      "capacity_head": "kv",
+      "capacity_checkpoint": {
+        "head_state_sha256": "666aebf3df54e3426adb7f319f4756ad7e409f9676e98c92f23a3dc3e75b49db",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/endpoint-005000.pt",
+        "sha256": "80229eba04dcaeb49f1940ee8df56c82d6cdf0d74c274f57be652a6957d6e144"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2",
+      "backend_configuration_kind": "reactive_native_kv_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "f9629ac56e23ac445d0dee86e99451cc491cf070815b7581b14b7a73cfa54b84",
+          "shape": [
+            1,
+            2062
+          ]
+        }
+      },
+      "first_observation_file_sha256": "7a1222af173656149b6d1dfccdc7bb1fb1e8d9bbf19ca35959e77ce98f53f8eb",
+      "first_observation_content_sha256": "622799b02d4909458413cc9f9c189a2d8300ceed9f72dd5acd72087faedffcec",
+      "first_observation_array_SHAs": {
+        "features": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "main_images": "994b9b6680813b587532bf03d1df4b37fe4d824e78c20464dde2ee9961380e88",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "f1c490287d047abad5f3339c245316b45184cb8c769a9c9cc2e3c43e5f924642"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "4d0fa6840241a4ec3cd97a0e9e9d39854d2514788d9e1ade031551b2af0011ae",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "240e0ece4dc206ccc6350e73c721c0a9f630efa549bbf9e61063bb96655c0dcb",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "f16c96ff92d4c85c708207fe97c8c309a81ca3a66e5faeea77a8d40488e677e5",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "public_features": "metadata/frozen_pi05_residual/public_features"
+      }
+    },
+    {
+      "cell": "diagnostic-case09-native",
+      "condition": "native",
+      "record_id": "phone-09",
+      "first_chunk_JSON_sha256": "c3331c2ed9414ef585d93d89204977e36ff8b2591b6a8a4f6e80f932f78d688b",
+      "method": "command_readout_native",
+      "capacity_head": "native",
+      "capacity_checkpoint": null,
+      "backend_reserved_metadata_present": false,
+      "backend_configuration_sha256": null,
+      "backend_configuration_kind": null,
+      "reserved_array_reference_names_and_SHAs": {},
+      "first_observation_file_sha256": "37c83186b3ab1a182a31533d5566fcfb5b371fe986b035786ac1f0f6e69f201f",
+      "first_observation_content_sha256": "ef2625f8baf3011297d1d74acee3530f623f2696eee381693c191c73e1c8b120",
+      "first_observation_array_SHAs": {
+        "features": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "main_images": "8b5233dfbfd166cd89840a21827acfbacf3b997a3c0daa0c8cc9654bcdf20c0b",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "45652409c08a5c0c6c4c3a0e8ec92e59e6ca2c00a38adee049f78a161aea852f"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "2d005000192c19875730761300b7764a405a469b8910a0de540bcee3aabf1bb1",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "78d82c49bcc2f7078ebd2557bbae72ceae34765468e350c6252454ce8f7a4037",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32
+    },
+    {
+      "cell": "diagnostic-case09-wide-final5000",
+      "condition": "wide-final5000",
+      "record_id": "phone-09",
+      "first_chunk_JSON_sha256": "165748b5a9619538f8836868febb7826556a9bf4c51a571da4c7f9c9a09d1620",
+      "method": "command_readout_action",
+      "capacity_head": "action",
+      "capacity_checkpoint": {
+        "head_state_sha256": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+      "backend_configuration_kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/actions": {
+          "dtype": "float32",
+          "sha256": "932988bfb4080bd9848761a25ae5e6ea9a231bc1f9b51055f3b5f8ca5b011b83",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/applied_delta": {
+          "dtype": "float32",
+          "sha256": "e197231a4ee317b6e842c8ab5adb9b618005f0bb3a4be9632e4b5b5324db5960",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/base_actions": {
+          "dtype": "float32",
+          "sha256": "05012551464469c021ec41d204dbcea79d2441e836e6cceaab5bdfda32eff0cc",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/clipped": {
+          "dtype": "bool",
+          "sha256": "d6851bc0acdd95ef798f21ced39d9f4b91201deebb2a6403961b82910b396118",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "525e53c2e4c63867613e7851d525020a83c731df61864d579db189ec98d94642",
+          "shape": [
+            1,
+            2062
+          ]
+        },
+        "metadata/frozen_pi05_residual/requested_delta": {
+          "dtype": "float32",
+          "sha256": "9dec3ffb4392a7921123fd273f600e2257325376f07388b4086e4fd4552f5cd4",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        }
+      },
+      "first_observation_file_sha256": "37c83186b3ab1a182a31533d5566fcfb5b371fe986b035786ac1f0f6e69f201f",
+      "first_observation_content_sha256": "ef2625f8baf3011297d1d74acee3530f623f2696eee381693c191c73e1c8b120",
+      "first_observation_array_SHAs": {
+        "features": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "main_images": "8b5233dfbfd166cd89840a21827acfbacf3b997a3c0daa0c8cc9654bcdf20c0b",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "45652409c08a5c0c6c4c3a0e8ec92e59e6ca2c00a38adee049f78a161aea852f"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "2d005000192c19875730761300b7764a405a469b8910a0de540bcee3aabf1bb1",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "a41b5000c39925f53970603f1a1a164127bd48463f40235f19bf67d0a02442c8",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "actions": "metadata/frozen_pi05_residual/actions",
+        "applied_delta": "metadata/frozen_pi05_residual/applied_delta",
+        "base_actions": "metadata/frozen_pi05_residual/base_actions",
+        "clipped": "metadata/frozen_pi05_residual/clipped",
+        "public_features": "metadata/frozen_pi05_residual/public_features",
+        "requested_delta": "metadata/frozen_pi05_residual/requested_delta"
+      },
+      "wide_base_and_corrected_same_dtype_shape": true,
+      "wide_base_and_corrected_bytehash_differ": true,
+      "issued_vs_corrected_hash_directly_comparable": false,
+      "issued_linkage": "Pinned backend returns actions[0] then slices[:action_count]; begin_decision and native chunk_step receive that same command array. Recorded residual has[1,32,14] vs issued[32,14], so their shape-inclusive digests cannot directly prove batch-axis removal equality without NPZ inspection."
+    },
+    {
+      "cell": "diagnostic-case09-KV-final5000",
+      "condition": "KV-final5000",
+      "record_id": "phone-09",
+      "first_chunk_JSON_sha256": "4e7790aeefd5cacc5b57164ff6c00d8cdbc47776cc02c35b0e6b1678be44b49d",
+      "method": "command_readout_kv",
+      "capacity_head": "kv",
+      "capacity_checkpoint": {
+        "head_state_sha256": "666aebf3df54e3426adb7f319f4756ad7e409f9676e98c92f23a3dc3e75b49db",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/endpoint-005000.pt",
+        "sha256": "80229eba04dcaeb49f1940ee8df56c82d6cdf0d74c274f57be652a6957d6e144"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2",
+      "backend_configuration_kind": "reactive_native_kv_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "525e53c2e4c63867613e7851d525020a83c731df61864d579db189ec98d94642",
+          "shape": [
+            1,
+            2062
+          ]
+        }
+      },
+      "first_observation_file_sha256": "37c83186b3ab1a182a31533d5566fcfb5b371fe986b035786ac1f0f6e69f201f",
+      "first_observation_content_sha256": "ef2625f8baf3011297d1d74acee3530f623f2696eee381693c191c73e1c8b120",
+      "first_observation_array_SHAs": {
+        "features": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "main_images": "8b5233dfbfd166cd89840a21827acfbacf3b997a3c0daa0c8cc9654bcdf20c0b",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "45652409c08a5c0c6c4c3a0e8ec92e59e6ca2c00a38adee049f78a161aea852f"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "627fb4d2a80f0a9fffe8bdc9ef7dcf743906e51d04d96ea4538c2365d2afa9b2",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "2d005000192c19875730761300b7764a405a469b8910a0de540bcee3aabf1bb1",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "6934a8f0469592221210df1fa9d08e23b6a20f4679b184296cbcc0ea0887621d",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "public_features": "metadata/frozen_pi05_residual/public_features"
+      }
+    },
+    {
+      "cell": "diagnostic-case10-native",
+      "condition": "native",
+      "record_id": "phone-10",
+      "first_chunk_JSON_sha256": "837e9b4010b2909e790a6b8f8852dd6988054992fd7835655ba26b7a9aa528b4",
+      "method": "command_readout_native",
+      "capacity_head": "native",
+      "capacity_checkpoint": null,
+      "backend_reserved_metadata_present": false,
+      "backend_configuration_sha256": null,
+      "backend_configuration_kind": null,
+      "reserved_array_reference_names_and_SHAs": {},
+      "first_observation_file_sha256": "324e6e73e30eb8690bf9bb90c1e4c860c9fc0eda17aeae20b541739457854495",
+      "first_observation_content_sha256": "d9e4c102ad197f7325933219a157d57414b8ec4afa2636b40c30d5d4483723d6",
+      "first_observation_array_SHAs": {
+        "features": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "main_images": "b739a78980685fa9743c8c3a90d30e8fadb748b66fee60fbe240d05a548cf599",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "b039c3d2118cd6d4d5176e1181c5e8939cac5578794d0bab8cf2a4000f70c9bf"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "b1405ec61a9e2f94654adab8310e78d9feda11bcf12f41f3b2eb547cd0e12b7a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "f034f6224ddac2612b99f9e990806d8a97acf8de39c59efe1ce7942c1aa830f4",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32
+    },
+    {
+      "cell": "diagnostic-case10-wide-final5000",
+      "condition": "wide-final5000",
+      "record_id": "phone-10",
+      "first_chunk_JSON_sha256": "7648005290aa61075bf52041e8374010829bfd1bd7b77f6582d23778a26a7270",
+      "method": "command_readout_action",
+      "capacity_head": "action",
+      "capacity_checkpoint": {
+        "head_state_sha256": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+      "backend_configuration_kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/actions": {
+          "dtype": "float32",
+          "sha256": "eeabdf861fc477d69b7ff87ec8e89f08524c2f8856b752f44c4e3ef6af9770d4",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/applied_delta": {
+          "dtype": "float32",
+          "sha256": "cb4e2e14e87163178f81bf5ef634f6c89a310a98400876cf0b0519c89bbc7ab3",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/base_actions": {
+          "dtype": "float32",
+          "sha256": "0ced03d785c426af6b3049019d18629711290fe64b68448fce3527ae24b88d75",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/clipped": {
+          "dtype": "bool",
+          "sha256": "d6851bc0acdd95ef798f21ced39d9f4b91201deebb2a6403961b82910b396118",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "ebf7852535e9dcda4088a2819e5ddaeec147b741a71fa5707a70780ea636b3ab",
+          "shape": [
+            1,
+            2062
+          ]
+        },
+        "metadata/frozen_pi05_residual/requested_delta": {
+          "dtype": "float32",
+          "sha256": "16b1176c2c74a62a4c27eb814f891fbedc24d301162567c4200656f5a00fe119",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        }
+      },
+      "first_observation_file_sha256": "324e6e73e30eb8690bf9bb90c1e4c860c9fc0eda17aeae20b541739457854495",
+      "first_observation_content_sha256": "d9e4c102ad197f7325933219a157d57414b8ec4afa2636b40c30d5d4483723d6",
+      "first_observation_array_SHAs": {
+        "features": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "main_images": "b739a78980685fa9743c8c3a90d30e8fadb748b66fee60fbe240d05a548cf599",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "b039c3d2118cd6d4d5176e1181c5e8939cac5578794d0bab8cf2a4000f70c9bf"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "b1405ec61a9e2f94654adab8310e78d9feda11bcf12f41f3b2eb547cd0e12b7a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "ba45feedc4d49466084901f0b0b1a60605441f2ad77a538d4ec8e2684a5322ea",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "actions": "metadata/frozen_pi05_residual/actions",
+        "applied_delta": "metadata/frozen_pi05_residual/applied_delta",
+        "base_actions": "metadata/frozen_pi05_residual/base_actions",
+        "clipped": "metadata/frozen_pi05_residual/clipped",
+        "public_features": "metadata/frozen_pi05_residual/public_features",
+        "requested_delta": "metadata/frozen_pi05_residual/requested_delta"
+      },
+      "wide_base_and_corrected_same_dtype_shape": true,
+      "wide_base_and_corrected_bytehash_differ": true,
+      "issued_vs_corrected_hash_directly_comparable": false,
+      "issued_linkage": "Pinned backend returns actions[0] then slices[:action_count]; begin_decision and native chunk_step receive that same command array. Recorded residual has[1,32,14] vs issued[32,14], so their shape-inclusive digests cannot directly prove batch-axis removal equality without NPZ inspection."
+    },
+    {
+      "cell": "diagnostic-case10-KV-final5000",
+      "condition": "KV-final5000",
+      "record_id": "phone-10",
+      "first_chunk_JSON_sha256": "05b212d99614f5f170f21d8cb008ad62f28ed4d84b86e380cf59cc82a0c8e752",
+      "method": "command_readout_kv",
+      "capacity_head": "kv",
+      "capacity_checkpoint": {
+        "head_state_sha256": "666aebf3df54e3426adb7f319f4756ad7e409f9676e98c92f23a3dc3e75b49db",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/endpoint-005000.pt",
+        "sha256": "80229eba04dcaeb49f1940ee8df56c82d6cdf0d74c274f57be652a6957d6e144"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2",
+      "backend_configuration_kind": "reactive_native_kv_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "ebf7852535e9dcda4088a2819e5ddaeec147b741a71fa5707a70780ea636b3ab",
+          "shape": [
+            1,
+            2062
+          ]
+        }
+      },
+      "first_observation_file_sha256": "324e6e73e30eb8690bf9bb90c1e4c860c9fc0eda17aeae20b541739457854495",
+      "first_observation_content_sha256": "d9e4c102ad197f7325933219a157d57414b8ec4afa2636b40c30d5d4483723d6",
+      "first_observation_array_SHAs": {
+        "features": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "main_images": "b739a78980685fa9743c8c3a90d30e8fadb748b66fee60fbe240d05a548cf599",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "b039c3d2118cd6d4d5176e1181c5e8939cac5578794d0bab8cf2a4000f70c9bf"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "ac933a564f6904e0a1b323558a3a5b5eb9ec949894b1447dc1c2c493d80a4af6",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "b1405ec61a9e2f94654adab8310e78d9feda11bcf12f41f3b2eb547cd0e12b7a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "cba24989b19a043f7c9aef4a8b79e1f60b02ba87cac92946add10d1d3a73c7e7",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "public_features": "metadata/frozen_pi05_residual/public_features"
+      }
+    },
+    {
+      "cell": "diagnostic-case11-native",
+      "condition": "native",
+      "record_id": "phone-11",
+      "first_chunk_JSON_sha256": "b8faf31f1803394e9897760103b6aaa6466b5bd4b173f37ff005fe39f1745ef7",
+      "method": "command_readout_native",
+      "capacity_head": "native",
+      "capacity_checkpoint": null,
+      "backend_reserved_metadata_present": false,
+      "backend_configuration_sha256": null,
+      "backend_configuration_kind": null,
+      "reserved_array_reference_names_and_SHAs": {},
+      "first_observation_file_sha256": "8cfd18e6a064950f1542bf9246ddfa39595f171175c637b63ff509338cc25711",
+      "first_observation_content_sha256": "c3e594d512d3aa05d4bae5156fb471022742581836725bf62e2780d64df4acfc",
+      "first_observation_array_SHAs": {
+        "features": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "main_images": "8603a6f23598b0f6768af9d705c4751e97bcbae97008439aae91f71a2cad301e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "7c1749384612abe944278be3b093dac250ace0c94051364ade23f40df204a3c5"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "89c5c5f221fc7bc24c17521b4a821b79d98ff51e3e341daa2c68f56cd8939d2a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "358cc6f68e8e825379afae69fdaa546eff0514cd467e4ee0ebcc6d1c5c13508f",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32
+    },
+    {
+      "cell": "diagnostic-case11-wide-final5000",
+      "condition": "wide-final5000",
+      "record_id": "phone-11",
+      "first_chunk_JSON_sha256": "5104b935de4fc5ffff11c30179f3c8d975d2db70bde821e9cce668c192c85551",
+      "method": "command_readout_action",
+      "capacity_head": "action",
+      "capacity_checkpoint": {
+        "head_state_sha256": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-linked-r1/endpoint-005000.pt",
+        "sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde",
+      "backend_configuration_kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/actions": {
+          "dtype": "float32",
+          "sha256": "2721f8d4f522f1402c628b0275e03de7b4a846e70571dc013b41ca726bf882aa",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/applied_delta": {
+          "dtype": "float32",
+          "sha256": "8d27b39de325e59536b0a8ac5f9384a2ac0277ef79156d60bae42c20b29def88",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/base_actions": {
+          "dtype": "float32",
+          "sha256": "bc0bc4426902fbf5741ceb2d3c6bd285421a2998be01213ab97422f37ad0767e",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/clipped": {
+          "dtype": "bool",
+          "sha256": "d6851bc0acdd95ef798f21ced39d9f4b91201deebb2a6403961b82910b396118",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        },
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "2039142f2827beac920da10a3f98dce2b20d8cb6207097b83ae34dc570873a48",
+          "shape": [
+            1,
+            2062
+          ]
+        },
+        "metadata/frozen_pi05_residual/requested_delta": {
+          "dtype": "float32",
+          "sha256": "f030a23015423ee9baa9c90b6146deb3fa878e7993a41502b6800c254ec3bc46",
+          "shape": [
+            1,
+            32,
+            14
+          ]
+        }
+      },
+      "first_observation_file_sha256": "8cfd18e6a064950f1542bf9246ddfa39595f171175c637b63ff509338cc25711",
+      "first_observation_content_sha256": "c3e594d512d3aa05d4bae5156fb471022742581836725bf62e2780d64df4acfc",
+      "first_observation_array_SHAs": {
+        "features": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "main_images": "8603a6f23598b0f6768af9d705c4751e97bcbae97008439aae91f71a2cad301e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "7c1749384612abe944278be3b093dac250ace0c94051364ade23f40df204a3c5"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "89c5c5f221fc7bc24c17521b4a821b79d98ff51e3e341daa2c68f56cd8939d2a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "851df7664fbb7eb45ba616f313dddd03a2a2efc45a105aa47ad46a4dc8feb83d",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "actions": "metadata/frozen_pi05_residual/actions",
+        "applied_delta": "metadata/frozen_pi05_residual/applied_delta",
+        "base_actions": "metadata/frozen_pi05_residual/base_actions",
+        "clipped": "metadata/frozen_pi05_residual/clipped",
+        "public_features": "metadata/frozen_pi05_residual/public_features",
+        "requested_delta": "metadata/frozen_pi05_residual/requested_delta"
+      },
+      "wide_base_and_corrected_same_dtype_shape": true,
+      "wide_base_and_corrected_bytehash_differ": true,
+      "issued_vs_corrected_hash_directly_comparable": false,
+      "issued_linkage": "Pinned backend returns actions[0] then slices[:action_count]; begin_decision and native chunk_step receive that same command array. Recorded residual has[1,32,14] vs issued[32,14], so their shape-inclusive digests cannot directly prove batch-axis removal equality without NPZ inspection."
+    },
+    {
+      "cell": "diagnostic-case11-KV-final5000",
+      "condition": "KV-final5000",
+      "record_id": "phone-11",
+      "first_chunk_JSON_sha256": "2a09c684e811011631988ae5991292e53153e4bf51df050040f277b5e8b1ece1",
+      "method": "command_readout_kv",
+      "capacity_head": "kv",
+      "capacity_checkpoint": {
+        "head_state_sha256": "666aebf3df54e3426adb7f319f4756ad7e409f9676e98c92f23a3dc3e75b49db",
+        "iteration": 5000,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-linked-r1/endpoint-005000.pt",
+        "sha256": "80229eba04dcaeb49f1940ee8df56c82d6cdf0d74c274f57be652a6957d6e144"
+      },
+      "backend_reserved_metadata_present": true,
+      "backend_configuration_sha256": "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2",
+      "backend_configuration_kind": "reactive_native_kv_residual_v1",
+      "reserved_array_reference_names_and_SHAs": {
+        "metadata/frozen_pi05_residual/public_features": {
+          "dtype": "float32",
+          "sha256": "2039142f2827beac920da10a3f98dce2b20d8cb6207097b83ae34dc570873a48",
+          "shape": [
+            1,
+            2062
+          ]
+        }
+      },
+      "first_observation_file_sha256": "8cfd18e6a064950f1542bf9246ddfa39595f171175c637b63ff509338cc25711",
+      "first_observation_content_sha256": "c3e594d512d3aa05d4bae5156fb471022742581836725bf62e2780d64df4acfc",
+      "first_observation_array_SHAs": {
+        "features": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "main_images": "8603a6f23598b0f6768af9d705c4751e97bcbae97008439aae91f71a2cad301e",
+        "states": "eb6bcc1abde6beab55810f519d2a955b3a44905641bdad03ed609a666f33dab5",
+        "wrist_images": "7c1749384612abe944278be3b093dac250ace0c94051364ade23f40df204a3c5"
+      },
+      "public_feature": {
+        "dtype": "float32",
+        "sha256": "8cc2ab0ecbac2af8ad836e957296a70ffbf03454b6e5f2a5191227953d81737f",
+        "shape": [
+          2062
+        ]
+      },
+      "native_noise": {
+        "dtype": "float32",
+        "sha256": "89c5c5f221fc7bc24c17521b4a821b79d98ff51e3e341daa2c68f56cd8939d2a",
+        "shape": [
+          32,
+          32
+        ]
+      },
+      "issued_targets": {
+        "dtype": "float32",
+        "sha256": "7d9f6b7c308c597eb62af2e4727b0e2e22dc4d214ad4628894c0bf069ac713fc",
+        "shape": [
+          32,
+          14
+        ]
+      },
+      "issued_steps": 32,
+      "reserved_numeric_reference_bindings": {
+        "public_features": "metadata/frozen_pi05_residual/public_features"
+      }
+    }
+  ],
+  "paired": [
+    {
+      "record_id": "phone-04",
+      "same_first_observation_file": true,
+      "same_first_observation_arrays": true,
+      "same_native_noise": true,
+      "wide_issued_same_dtype_shape_as_native": true,
+      "wide_issued_bytehash_differs_from_native": true,
+      "KV_issued_same_dtype_shape_as_native": true,
+      "KV_issued_bytehash_differs_from_native": true
+    },
+    {
+      "record_id": "phone-08",
+      "same_first_observation_file": true,
+      "same_first_observation_arrays": true,
+      "same_native_noise": true,
+      "wide_issued_same_dtype_shape_as_native": true,
+      "wide_issued_bytehash_differs_from_native": true,
+      "KV_issued_same_dtype_shape_as_native": true,
+      "KV_issued_bytehash_differs_from_native": true
+    },
+    {
+      "record_id": "phone-09",
+      "same_first_observation_file": true,
+      "same_first_observation_arrays": true,
+      "same_native_noise": true,
+      "wide_issued_same_dtype_shape_as_native": true,
+      "wide_issued_bytehash_differs_from_native": true,
+      "KV_issued_same_dtype_shape_as_native": true,
+      "KV_issued_bytehash_differs_from_native": true
+    },
+    {
+      "record_id": "phone-10",
+      "same_first_observation_file": true,
+      "same_first_observation_arrays": true,
+      "same_native_noise": true,
+      "wide_issued_same_dtype_shape_as_native": true,
+      "wide_issued_bytehash_differs_from_native": true,
+      "KV_issued_same_dtype_shape_as_native": true,
+      "KV_issued_bytehash_differs_from_native": true
+    },
+    {
+      "record_id": "phone-11",
+      "same_first_observation_file": true,
+      "same_first_observation_arrays": true,
+      "same_native_noise": true,
+      "wide_issued_same_dtype_shape_as_native": true,
+      "wide_issued_bytehash_differs_from_native": true,
+      "KV_issued_same_dtype_shape_as_native": true,
+      "KV_issued_bytehash_differs_from_native": true
+    }
+  ],
+  "configurations_by_content_SHA256": {
+    "0fa57d4fa9e380353e304cc66d4f842c8ff0c6b08e0df4820e2c998b64ddfdde": {
+      "arm_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "arm_joint_bound": 2.0,
+      "arm_limit_enforcement": "clip corrections to actual12-arm URDF headroom; reject out-of-range native arms",
+      "arm_lower": [
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0
+      ],
+      "arm_upper": [
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ],
+      "base_interface_role": "unchanged motor/norm/source limits only; wide bounds declared by this new variant",
+      "bounds": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.100000023841858,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.100000023841858
+      ],
+      "command_lower": null,
+      "command_upper": null,
+      "declared_arm_delta_radians": 2.0,
+      "declared_raw_gripper_delta": 1.1,
+      "gripper_bound": 1.100000023841858,
+      "gripper_indices": [
+        6,
+        13
+      ],
+      "gripper_limit_enforcement": "no policy clamp; unchanged native actuator clip after residual",
+      "inputs": "current public2062 + detached native base14 + normalized H32 slot",
+      "joint_lower": [
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        0.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        -10.0,
+        0.0
+      ],
+      "joint_upper": [
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        1.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        1.0
+      ],
+      "kind": "robotwin_wide_decoded_aloha_residual_v1",
+      "public_dim": 2062,
+      "qualification": "prospective; no physical success, full-bank admission or fit implied",
+      "reads_base_proposal": true,
+      "source_bindings": {
+        "base_interface_sha256": "c7a6dbf1bee96f5984f9a708c732fd81d4f21c0bbccbb5b2dca4922d6c728ceb",
+        "joint_convention_sha256": "8a0ff1e70fd776cf8cdb9e254966422e1dee8227584c388a262e62068ebf9bc4",
+        "motor_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+        "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb"
+      },
+      "units": "decoded ALOHA joint/absolute-gripper command units",
+      "version": 1,
+      "width": 64,
+      "zero_identity": "all finite raw14 bits including signed zero and native gripper overshoot; gradient retained"
+    },
+    "aede179bb07c2a0dfeecab1a274efee6360f8d9aaa6ef9c726c384b2a4ad15b2": {
+      "head_dim": 256,
+      "kind": "reactive_native_kv_residual_v1",
+      "kv_heads": 1,
+      "layers": [
+        -1
+      ],
+      "layout": "B,P,KVH,HD_post_RoPE",
+      "public_dim": 2062,
+      "rank": 4,
+      "scale": 0.1
+    }
+  },
+  "pinned_source_proofs": [
+    {
+      "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
+      "path": "src/fluffy_bassoon/rl/robotwin_noise.py",
+      "sha256": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+      "line_references": [
+        671,
+        704,
+        735,
+        758
+      ],
+      "meaning": "Backend reserved metadata is produced only in invoked KV/action hook branches; controller-supplied reserved field is rejected. decode actions[0]\u2192slice\u2192same writer/native step command."
+    },
+    {
+      "source_commit": "5470090165f89a114afe544758ab89d5d956fe76",
+      "path": "src/fluffy_bassoon/meta_rl/robotwin_reactive_fit.py",
+      "sha256": "e910770f0eceb314a410f01bbffd553fa3659e7acda8f36810373009dd6831f8",
+      "line_references": [
+        284,
+        310
+      ],
+      "meaning": "set_coefficients installs mode hooks; reset seeds/re-encodes without clearing them; same private native-noise sampler."
+    }
+  ],
+  "conclusion": "Both learned hook branches were invoked after reset in the first chunk of each of their5episodes, with corresponding recorded configuration and fixed5000checkpoint. Actual issued command byte hashes differ from matchednative in all5cases for eachhead; wide base/corrected command tensors also differ in bytes at equal dtype/shape.",
+  "limits": [
+    "SavedJSON/descriptors only; no NPZ/RGB/arrayvalue/Tensor/model/test/simulator/runtimepoll or new allocation.",
+    "Hash inequality establishes nonidentical bytes, not numerical magnitude/norm, task-relevant effect or a physical cause of failure.",
+    "Wide residual actions carry a batch axis absent from issuedtargets; exact cross-shape equality relies on the pinned source linkage, not independent value reconstruction.",
+    "KV reserved config confirms branch invocation, but no appliedKV-delta tensor or norm is saved in this reserved metadata.",
+    "Scope is first chunk after each reset; this does not add an independent hook-presence audit of all195chunks."
+  ]
+}
