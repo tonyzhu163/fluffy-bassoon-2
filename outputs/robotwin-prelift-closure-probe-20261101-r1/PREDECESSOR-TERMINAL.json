@@ -1,0 +1,584 @@
+{
+  "format": "frozen_pi05_event_suffix_terminal_receipt_v1",
+  "job_id": "job-4352gzlcnq9f",
+  "source_commit": "aefd5563b128cb7ea8e017d4664e1df0ba22a160",
+  "run_id": "frozen-pi05-event-suffix-20261101-r1",
+  "scheduler_status": "Succeeded",
+  "scheduler_created": "2026-11-01 00:20:01 Asia/Shanghai",
+  "scheduler_ended": "2026-11-01 00:24:47 Asia/Shanghai",
+  "scheduler_display_seconds": 271,
+  "exit_code": 0,
+  "status": "complete_diagnostic_coverage",
+  "result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/result.json",
+    "sha256": "73bd6483cd5abf8093fc46d8eb5fb116b745d2010e1e922b9f7d658d4625cea6",
+    "bytes": 328009
+  },
+  "allocation_closeout": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/allocation-closeout.json",
+    "sha256": "cceec889d69ec88ebd951263035fb833c5ced3945e8a400c6bdf6299c43576a2",
+    "bytes": 594
+  },
+  "full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/recovery.pt",
+    "bytes": 270181,
+    "sha256": "5c0829d3e5ca00427bc589449053c536855b165b5ffd686d6fe26c65985cb883",
+    "stable_stat": true,
+    "deserialized": false
+  },
+  "qualification": {
+    "actual_actions": 193,
+    "cache_shapes": [
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ],
+      [
+        1,
+        968,
+        1,
+        256
+      ]
+    ],
+    "complete_real_episode": "event-teacher-phone-05",
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "kv_gradient_norm": 0.015245823119725698,
+    "motor_gradients": 0,
+    "native_parity": {
+      "max_abs_error": 0.0,
+      "passed": true,
+      "tolerance": 2e-05
+    },
+    "qualification_episode": "event-teacher-phone-05",
+    "repeated_paired_prefix": {
+      "instruction": [
+        "Move the glass and metal smartphone onto the metal adjustable phone clamp."
+      ],
+      "kv_cache_exact": true,
+      "original_reset_identity": null,
+      "prefix_mask_exact": true,
+      "public_features_exact": true,
+      "saved_original_frame": null
+    },
+    "status": "passed",
+    "zero_action_exact": true,
+    "zero_fixed_kv_exact": true,
+    "zero_kv_exact": true
+  },
+  "final_frozen_motor_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "records": [
+    {
+      "spec": {
+        "arm": "action",
+        "case": 5,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 6,
+        "horizon": 400,
+        "id": "event-teacher-phone-05",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261206,
+        "paired_instruction": [
+          "Move the glass and metal smartphone onto the metal adjustable phone clamp."
+        ],
+        "reset_seed": 6,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-05",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-6699cf96f8654817b917ab3be9337073/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "82e95471e9f9492746f624e1095500659fd33c89ed254b6242d2c7f01cde89c8"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 6,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 9,
+        "horizon": 400,
+        "id": "event-teacher-phone-06",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261207,
+        "paired_instruction": [
+          "Take the flat phone to the phonestand for holding phones."
+        ],
+        "reset_seed": 9,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-06",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-e02cc409b9344ab98cab27ee27b2be03/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "083170cc57a3c6285cd493392bf94032cf5afc861dac8cfc9dfa01b88786e618"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 7,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 10,
+        "horizon": 400,
+        "id": "event-teacher-phone-07",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261208,
+        "paired_instruction": [
+          "Put the glass and metal smartphone atop the phonestand for holding phones."
+        ],
+        "reset_seed": 10,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-07",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-17842bdbefd949209a53e70a335c772f/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "42e0f188d4ec01e2c0e2801175fcc4017e2603b222b716ba0693bbebe9cf421c"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 8,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 11,
+        "horizon": 400,
+        "id": "event-teacher-phone-08",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261209,
+        "paired_instruction": [
+          "Lift the rectangular phone onto the compact phonestand."
+        ],
+        "reset_seed": 11,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-08",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-19a867b1e6944e6eb0b8d963973cd2ea/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "4606ecfd4584ca7f0368a6e5138f07b4e9a97a763521dc1bb2eba3da99608b59"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 9,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 14,
+        "horizon": 400,
+        "id": "event-teacher-phone-09",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261210,
+        "paired_instruction": [
+          "Put the phone with polished silver border atop the light brown phone holder."
+        ],
+        "reset_seed": 14,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-09",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-efa5f84136e34e4eb19d4544bdc11ba2/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "4d2b482c32545e3224033c0f3722c5bb996c27ffe20c37c9d2ca61ca534b9a7b"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 10,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 16,
+        "horizon": 400,
+        "id": "event-teacher-phone-10",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261211,
+        "paired_instruction": [
+          "Carry the glass-faced phone to the phone holder with cutout underneath."
+        ],
+        "reset_seed": 16,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-10",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-9637ed924e8c4e89b95ebb70e6466507/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "3e9b355299d41d0b13354a60b7fd3f8cd346d4e72f9a1ba29f6b039e8ca1f0e2"
+      }
+    },
+    {
+      "spec": {
+        "arm": "action",
+        "case": 11,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_teacher_seed": 18,
+        "horizon": 400,
+        "id": "event-teacher-phone-11",
+        "method": "event_aligned_teacher",
+        "motor_seed": 20261212,
+        "paired_instruction": [
+          "Lift the silver phone with black screen onto the angled holder for phones."
+        ],
+        "reset_seed": 18,
+        "stage": "event_aligned_teacher_execution",
+        "task": "place_phone_stand",
+        "teacher_id": "phone-11",
+        "teacher_initial_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "complete": true,
+      "success": true,
+      "primitive_steps": 193,
+      "chunks": 7,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-4a614086339348b29e8086c49f325b1c/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/event-suffix-r1/experiment/corpus",
+        "sha256": "0faa088855aee90f23655495011e5629948c0ae935ff2bd778b95cdf9ccf2b6a"
+      }
+    }
+  ],
+  "original_suffix": [
+    "phone-05",
+    "phone-06",
+    "phone-07",
+    "phone-08",
+    "phone-09",
+    "phone-10",
+    "phone-11"
+  ],
+  "attempted": 7,
+  "successes": 7,
+  "actual_new_actions": 1351,
+  "prior_canonical_actions": 20171,
+  "canonical_actual_actions": 21522,
+  "canonical_charged_actions": 21522,
+  "canonical_journal_events": 1430,
+  "canonical_journal_tip": "ed0d9cc4160e4d3ad120a9ec51218982d6bd72a8f9ba2143b02e86264eaae779",
+  "pending_actions": 0,
+  "uncertain_actions": 0,
+  "unresolved_decisions": {},
+  "charged_gpu_seconds": 318,
+  "prior_gpu_seconds": 2334,
+  "cumulative_a1_gpu_seconds": 2652,
+  "remaining_original_a1_gpu_seconds": 4548,
+  "remaining_original_a1_actions": 8478,
+  "remaining_original_phase_gpu_seconds": 26148,
+  "remaining_original_phase_actions": 278478,
+  "resource_attempt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/gpu-clock/attempts/1793463614000000-0004",
+    "started_unix": 1793463614.0,
+    "slice_seconds": 1740,
+    "reserved_seconds": 1800,
+    "status": "finished",
+    "scheduler_allowance_seconds": 60,
+    "ended_unix": 1793463871.4212303,
+    "exit_code": 0,
+    "charged_seconds": 318,
+    "slice_overrun": false
+  },
+  "fit_updates": 0,
+  "cache_created": false,
+  "source_student_admitted": false,
+  "all_twelve_teacher_gate_passed": false,
+  "original_teacher_bank_summary": {
+    "complete": 12,
+    "successes": 11,
+    "failures": [
+      "phone-04"
+    ],
+    "unchanged_train_validation_split": "8TRAIN/4VAL",
+    "diagnostic_not_bank_admission": true
+  },
+  "retained_fields": "Source atomic recovery contains exact state, empty fit dictionaries, closed control/private motor RNG and global Python/NumPy/Torch/CUDA RNG; checkpoint bytes hashed only here, not deserialized.",
+  "raw_audit": {
+    "metadata_byte_checks": true,
+    "episode_manifests": 7,
+    "complete_chunk_metadata": 49,
+    "independent_new_action_sum": 1351,
+    "raw_binary_endpoint_samples": 2,
+    "arrays_deserialized": false,
+    "full_canonical_journal_replayed": false,
+    "proof_path": "EVENT-SUFFIX-TERMINAL-RAW-PROOF.json",
+    "proof_sha256": "6f73b2a41ab9fc066dfd1ba40f9de0992a43609c829e4480e75301300f4b1279"
+  },
+  "limits": [
+    "Canonical old-prefix costs and whole journal tip are bound producer snapshots; only the seven new episodes/49 chunks were independently summed and byte-checked.",
+    "No numerical native-mask replay, image inspection or full-recovery deserialization was performed in this terminal metadata audit.",
+    "All12 teacher gate stays false because original04 failed; no bank filtering, fitting or automatic retry.",
+    "Whole final motor hash equals the actual qualification/prior motor; renderer OIDN messages occurred without Python/integrity failure."
+  ],
+  "parent_grant_sha256": "b088a6d8d75120971f62b83d3276b65901859f06c5a493ce941a5e28c86fced4"
+}
