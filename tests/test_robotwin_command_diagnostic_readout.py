@@ -282,15 +282,17 @@ def test_common_loop_natural400_and_full_episode_admission_use_existing_canonica
 
 
 def ticket_data(tmp_path):
-    root=str(tmp_path);attempt=root+'/attempt-current';contract=dict(original_clock=True)
+    from fluffy_bassoon.meta_rl import robotwin_command_readout_resources as resources
+    root=resources.CLOCK_ROOT;attempt=root+'/attempt-current';contract=deepcopy(resources.CLOCK)
     row=dict(path=attempt,lineage='fixed12-command-diagnostic/readout',lineage_seconds=1800,
         started_unix=100.,slice_seconds=1140,reserved_seconds=1200,status='started')
-    clock=dict(contract=contract,worker_seconds=10000,attempts=[dict(path='old-fit',lineage='fixed12-command-diagnostic/fit-action',
-        reserved_seconds=2000,charged_seconds=800,status='finished'),row])
+    clock=dict(contract=contract,worker_seconds=28800,attempts=[dict(path=root+'/old-fit',lineage='fixed12-command-diagnostic/fit-action',
+        lineage_seconds=900,reserved_seconds=900,charged_seconds=782,status='finished'),row])
     plan=dict(admitted=True,source_eligible=False,diagnostic_purpose=readout.DIAGNOSTIC,clock_root=root,clock_contract=contract,
         stage_gpu_limits=dict(readout=1800),readout_proposal_sha256=readout.PROPOSAL_SHA,
         maximum_readout_controller_actions=6000,prior_cost_receipts=[dict(path='old-cost',sha256='a'*64)],storage_admission={'path':'storage','sha256':'b'*64})
     ticket=dict(format=readout.FORMAT,admitted=True,source_commit='c'*40,request_sha256='d'*64,hostname=socket.gethostname(),
+        phase_output_root=str(Path(root).parent),
         gpu_count=1,maximum_robot_actions=6000,output=str(tmp_path/'output'),clock_contract=contract,clock_root=root,
         aggregate_output_root=str(tmp_path),maximum_output_bytes=1<<30,
         resource_attempt=attempt,driver_deadline_unix=1180.,cleanup_seconds=60,minimum_episode_admission_seconds=120)

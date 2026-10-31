@@ -17,6 +17,8 @@ export OMP_NUM_THREADS=1
 export PYTHONPATH="$READOUT_SOURCE/src${PYTHONPATH:+:$PYTHONPATH}"
 set +e
 "$READOUT_PYTHON" -m pytest -q tests/test_robotwin_command_readout_resources.py \
+  tests/test_robotwin_command_diagnostic_readout.py::test_actual_measured_clock_can_exceed_900_estimate_without_new_allocator \
+  tests/test_robotwin_command_diagnostic_readout.py::test_actual_readout_admission_rejects_old_or_overlapping_or_reset_scope \
   --junitxml="$READOUT_CPU_OUTPUT/junit.xml" >"$READOUT_CPU_OUTPUT/pytest.log" 2>&1
 code=$?
 set -e

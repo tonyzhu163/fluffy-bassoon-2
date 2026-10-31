@@ -43,9 +43,9 @@
     "canonical_contract_sha256": "5f8ada37185fb7d5add69f9eb17cb032fc63bbc90f562fea825d161ca2a9d7dd"
   },
   "cpu": {
-    "selector": "tests/test_robotwin_command_readout_resources.py",
-    "functions": 4,
-    "prepared_cases": 43,
+    "selector": "tests/test_robotwin_command_readout_resources.py plus two named affected legacy resource selectors",
+    "functions": 6,
+    "prepared_cases": 54,
     "executed_here": 0,
     "owner_fresh_CPU_worker_seconds": 180,
     "old_unused_capacity_untouched": [
@@ -56,7 +56,13 @@
       25
     ],
     "old57_rerun": false,
-    "carried_evidence": "actual56 prior plus actual1 corrected-selector PASS"
+    "carried_evidence": "actual56 prior plus actual1 corrected-selector PASS",
+    "new_prepared_cases": 43,
+    "affected_legacy_cases": 11,
+    "affected_legacy_selectors": [
+      "tests/test_robotwin_command_diagnostic_readout.py::test_actual_measured_clock_can_exceed_900_estimate_without_new_allocator",
+      "tests/test_robotwin_command_diagnostic_readout.py::test_actual_readout_admission_rejects_old_or_overlapping_or_reset_scope"
+    ]
   },
   "qualification_owner": "/root/finish_assembly",
   "fit_continuation_hold": false,
@@ -72,5 +78,10 @@
   ],
   "actual_tests_models_or_arrays_on_Mac": 0,
   "resource_process_controls": 0,
-  "coordination": "No live runtime owner row changed here; parent publishes only its own row"
+  "coordination": "No live runtime owner row changed here; parent publishes only its own row",
+  "static_review_carry": {
+    "production_resource_pin": "fed1dfa64d07956c47baa41ae33e95f0662ac066",
+    "production_static_pass": true,
+    "successor_changes": "Only legacy resource fixture, focused CPU selectors and small metadata; no production gate change"
+  }
 }
