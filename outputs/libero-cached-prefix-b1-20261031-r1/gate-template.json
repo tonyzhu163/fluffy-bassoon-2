@@ -1,0 +1,37 @@
+{
+  "schema": "libero_cached_scalar_gate_funding_v1",
+  "state": "unfunded",
+  "funded_by": null,
+  "run_id": "OWNER_UNIQUE_LIBERO_CACHED_SCALAR_RUN_ID",
+  "source_commit": "OWNER_FULL_CLEAN_REVIEWED_40_HEX_PIN",
+  "max_gpu_seconds": 600,
+  "robot_actions": 0,
+  "sgd_updates": 0,
+  "original_compute_budget_hours": 32,
+  "budget_expanded": false,
+  "input_index": {"path": null, "sha256": null},
+  "original_32h_ledger_authority": {"path": null, "sha256": null},
+  "canonical_reservation": {"path": null, "sha256": null},
+  "coverage": {
+    "population_records": 795,
+    "goal_count": 14,
+    "actual_records_tested": 42,
+    "selection": "first, middle and last per goal by complete zero-based rank; round robin declared goals",
+    "unbounded_noise_probes": 14,
+    "probe_noise": "fixed float32 linspace(-4,4,32) repeated over H10; qualification probe, not recorded SAC/training noise",
+    "repeated_feature_and_consumption_checks": 14,
+    "stale_content_and_instruction_checks": 28,
+    "full_scope_required_for_adoption": true
+  },
+  "runtime_bounds": {
+    "cpu_fake_gate_seconds": 60,
+    "cpu_fake_cases_required": 43,
+    "inner_seconds": 540,
+    "outer_term_seconds": 570,
+    "outer_kill_after_seconds": 20,
+    "actual_scheduler_ceiling_seconds": 600,
+    "startup_and_teardown_included": true,
+    "scheduler_actual_requires_owner_terminal_receipt": true
+  },
+  "policy": "Template only: creates no canonical hold/allocation, opens no simulator and authorizes no execution. ROOT must fund a new hash-bound record inside the original32GPU-hour authority. Never reuse a sealed hold or automatically retry a partial/failed gate."
+}
