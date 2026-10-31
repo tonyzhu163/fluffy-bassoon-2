@@ -214,6 +214,17 @@ case separation and resource funding checks. This removes optional teacher
 work from the first AD fit; it neither proves improving histories nor grants
 new compute. Final source100 materialization and training funding remain.
 
+The native student evaluator already contains the real robot loop, action
+accounting, raw capture, fixed-parameter checks and a reset lesion that clears
+cache plus previous noise/reward. Its old orchestration still pins SAC5/
+candidate100, all four models and K8, and labels four support/four query
+episodes. The source100 AD500 profile and allocated entrypoint are required
+before claiming the first new fit-to-robot comparison is executable. Reuse
+those existing components; prepare proper one-support-plus-separate-query
+cases and independent paired query randomness alongside the AD fit path.
+This initial development readout does not replace the larger0/1/2/4/8 or
+full-suite protocol. No new controller or benchmark adapter is required.
+
 ## Literature guides targeted choices
 
 - [VLRLA's simulation history teacher](https://arxiv.org/html/2610.19517v1)
