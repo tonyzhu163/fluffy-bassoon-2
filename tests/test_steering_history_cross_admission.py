@@ -153,7 +153,7 @@ def test_failed_raw24_cannot_be_admitted_by_success_flags(raw_cross):
 
 @pytest.mark.parametrize("mutation,expected", [
     ("sampling", "actor/update/RNG"), ("actor", "actor/update/RNG"),
-    ("duplicate", "duplicated"), ("teacher", "different actual acting"),
+    ("duplicate", "duplicated"), ("teacher", "canonical collector full recovery"),
     ("calibration", "original source full-recovery"),
 ])
 def test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher(raw_cross, tmp_path, mutation, expected):
