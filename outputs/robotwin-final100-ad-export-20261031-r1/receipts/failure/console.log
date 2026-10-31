@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-2gjmctfv/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py", line 350, in <module>
+    main()
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-2gjmctfv/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py", line 257, in main
+    finalbank_phase(a.phase.removeprefix('finalbank-'),ctx,code,out,allocation)
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-2gjmctfv/repo/outputs/robotwin-sac65-cpu-compat-20261031-r6/phase_worker.py", line 170, in finalbank_phase
+    export_main(args)
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-aiiz5ybr/repo/src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py", line 715, in main
+    result = export_corpus(args.corpus_root, args.output, source_path=args.source_recovery,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-aiiz5ybr/repo/src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py", line 615, in export_corpus
+    reader, trials, excluded = read_source(corpus_root, source, allow_legacy_cut=allow_legacy_cut,
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-aiiz5ybr/repo/src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py", line 356, in read_source
+    reader = CorpusReader(corpus_root, source)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/robotwin-sac65-cpu-compat-20261031-r6-aiiz5ybr/repo/src/fluffy_bassoon/meta_rl/robotwin_history_corpus.py", line 204, in __init__
+    migration = entry['execution_migration']
+                ~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'execution_migration'

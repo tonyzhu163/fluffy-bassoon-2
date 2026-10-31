@@ -7,9 +7,11 @@ phase remains10800aggregateGPU-s/7200CPU-worker-s/128GiB/60000targetactions,
 zero new source collection. Prior170software CPU seconds count once;
 closed old unused allowances are unavailable.
 
-## Live allocation
+## First allocation — terminal Failed
 
-Baige **job-twcl47ph8lnz**, Running from **2026-10-31 11:55:25 Shanghai**.
+Baige **job-twcl47ph8lnz**, terminal **Failed/exit1 at12:10:16 Shanghai**.
+Running11:55:25→Abnormal12:10:14:889actualCPU-worker-seconds/7112core-seconds/0GPU.
+Parent865.659s and pod895s are separate. All owned cleanup passed, no survivors.
 0GPU,8CPU,64GiB,shm2,117minutes7020scheduler seconds, auto-fault-tolerance OFF.
 Hostname `job-twcl47ph8lnz-master-0`. Submitted once; no other final100 writer.
 
@@ -34,10 +36,28 @@ First advancement: both exact local Git staging phases and c62 extraction
 passed0/clean. Allocated inventory passed74.137s/clean on62closed roots:
 218947 summed files,87674977118bytes, same-PFS hardlinks, no copy fallback,
 1165773242368free bytes. Within88GiB/500k eligibility and128GiB logical ceiling.
-FullSHA byte projection is the next active phase; it is not complete merely
-because inventory passed. Refresh actual phases/terminal/exit/import/owned
-cleanup receipts before reporting current state. No full bank/index/model
-admission yet, no GPU fit or robot readout launched.
+FullSHA byte projection PASSED750.227s/clean. AD export then failed21.892s
+at7401 CorpusReader line204 KeyError execution_migration, before output arrays.
+No forbidden imports/CUDA/SGD/robot/VLA/fits; final owned cleanup clean.
+The first final0af ancestry entry omits optional migration; subsequent61 entries
+use direct path/SHA refs rather than older ref/value wrappers. This is a
+metadata encoding incompatibility, not absent raw data. Sole exporter is fixing
+only dual-encoding compatibility with all migration/predecessor/hash guards
+retained. Original0af/rawcontracts/full paid projection remain immutable.
+No full bank/index/model admission yet; no GPU fit or robot readout launched.
+
+### Diagnosed residual continuation, not submitted
+
+Phase CPU actual170software+889bank=1059, approved residual6141. Proposed next
+ONE fresh6000scheduler/5700parent5770TERM5780KILL leaves141unrequested; do not
+reuse old seals, refund costs, renew7020 or blindly retry. Root owns a new r2
+outer profile with paid complete r1projection referenced readonly, fresh r2
+exports/receipts, required narrow regressions inside its allocated CPU wall.
+Source compatibility pin and static review are pending; no r2 form/allocation
+exists. Trainer7401 and readoutf759 remain fixed; compatibility runner may use
+the new reader/index-guard pin while emitting unchanged7401 training commands.
+Retain every failed receipt/status. Refresh latest terminal/cost/pin before
+future admission; never resubmit r1 or mutate its code/output.
 
 ## Carry through on successful prerequisites
 

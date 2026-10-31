@@ -100,9 +100,13 @@ def verify_source65_index(index, ctx, projection_path):
 def finalbank_phase(phase, ctx, code, receipts, allocation):
     """Owner operational profile around the existing7401 APIs, never a converter."""
     f=ctx['finalbank'];base=Path(ctx['finalbank_root']);private=base/'private'
-    projection=private/'projection';exports=private/'exports'
-    if (base!=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1')
-            or ctx['code_commit']!='7401cd50c038a4cb35149eceeb72128e9a368cc3'
+    residual=base.name=='robotwin-final100-ad-export-20261031-r2'
+    projection=Path(f['reused_projection']['path']).parent if residual else private/'projection'
+    exports=private/'exports'
+    if (base not in (Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1'),
+                     Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r2'))
+            or (ctx['code_commit']!=ctx['compatibility_source_pin'] if residual else
+                ctx['code_commit']!='7401cd50c038a4cb35149eceeb72128e9a368cc3')
             or f['ancestry']['sha256']!='0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e'
             or f['tip']['sha256']!='5b978a88c423ccdc7e1921f309ec047d0fc6cfe034d07e1f9e5523e6cc2f25d4'
             or f['source_stage']['sha256']!='59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90'
@@ -120,7 +124,37 @@ def finalbank_phase(phase, ctx, code, receipts, allocation):
             or tip['expected']['completed_source_iterations']!=100):
         raise ValueError('Wrong actual final validation-inclusive ancestry/tip')
     tools=code/'outputs/robotwin-finalbank-offline-plan-20261031-r1'
-    if phase=='inventory':
+    if phase=='reuse':
+        if (not residual or projection!=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-final100-ad-export-20261031-r1/private/projection')
+                or f['reused_projection']['sha256']!='fd0a3302d0ff72107e1f690ef5349825cf927da12d10da6ac457959dcf72b4cf'
+                or (projection/'ASSEMBLY-INCOMPLETE').exists()):
+            raise ValueError('Only the complete paid r1 projection may be reused readonly')
+        projected=read_ref(f['reused_projection']);terminal=read_ref(f['producer_terminal']);cleanup=read_ref(f['producer_cleanup'])
+        retained=read_ref(f['producer_storage'])
+        phase_proof=[x for x in terminal['phases'] if x['name']=='finalbank-projection']
+        if (terminal['run_id']!='robotwin-final100-ad-export-20261031-r1' or terminal['status']!='incomplete'
+                or terminal['cleanup_error'] is not None or len(phase_proof)!=1
+                or phase_proof[0]['returncode']!=0 or not phase_proof[0]['cleanup']['clean']
+                or not cleanup['clean'] or cleanup['survivors'] or not cleanup['adopted']['clean']
+                or retained['logical_bytes']>89<<30
+                or projected['status']!='byte_projection_only_not_export_admission'
+                or projected['purpose']!='finalbank' or projected['source_rounds']!=100
+                or projected['ancestry']!=f['ancestry'] or projected['tip_manifest']!=f['tip']
+                or projected['source_checkpoint']!=f['final_checkpoint']
+                or projected['unique_files']!=218673 or projected['unique_file_bytes']!=87636354374):
+            raise ValueError('Paid projection or producer closure differs')
+        if sha(ctx['chain_reader'])!='67db52fa8f6fa4e8bb56bc6e5cea9f531b5fe41716845350f3372226c5de77a0':
+            raise ValueError('Qualified ancestry reader changed')
+        chain=load('unchanged_c62_projection_reuse',ctx['chain_reader'])
+        roots=[str(Path(x).resolve()) for x in chain.corpus_chain(f['tip'])]
+        if roots!=ancestry['ordered_corpus_roots'] or roots!=[x['root'] for x in projected['roots']]:
+            raise ValueError('Reused projection ordered lineage changed')
+        (base/'projection-reuse.json').write_text(json.dumps(dict(status='readonly_complete_projection_reuse',
+            projection=f['reused_projection'],producer_terminal=f['producer_terminal'],producer_cleanup=f['producer_cleanup'],
+            roots=62,unique_files=218673,unique_file_bytes=87636354374,retained_logical_storage_reserve_bytes=89<<30,
+            raw_rehash_repeated=False,original_producer_fullSHA_phase_pass=True,
+            source_case_and_array_admission='Still required in unchanged export/load validators'),indent=2)+'\n')
+    elif phase=='inventory':
         count=total=0;device=base.stat().st_dev;roots=[]
         free=shutil.disk_usage(base).free
         if free<16<<30:raise ValueError('Need16GiB free and approved128GiB new logical storage')
@@ -206,8 +240,10 @@ def finalbank_phase(phase, ctx, code, receipts, allocation):
         if time.monotonic()>=ctx['phase_deadline']:raise TimeoutError('Final output accounting deadline')
         if path.is_symlink():raise ValueError('Redirected final output')
         if path.is_file():size+=path.stat().st_size
-        if size>128<<30:raise ValueError('Approved new logical storage ceiling exceeded')
-    (receipts/'storage.json').write_text(json.dumps(dict(logical_bytes=size,ceiling_bytes=128<<30))+'\n')
+        if size+(89<<30 if residual else 0)>128<<30:raise ValueError('Approved aggregate logical storage ceiling exceeded')
+    (receipts/'storage.json').write_text(json.dumps(dict(logical_bytes=size,ceiling_bytes=128<<30,
+        retained_previous_output_reserve_bytes=89<<30 if residual else 0,
+        aggregate_conservative_logical_bytes=size+(89<<30 if residual else 0)))+'\n')
 
 
 def main():
@@ -217,7 +253,7 @@ def main():
         raise RuntimeError('Forbidden module was loaded before the import firewall')
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--phase', choices=('tests', 'projection', 'export', 'audit', 'software-tests', 'source-admit',
-        'finalbank-inventory','finalbank-projection','finalbank-train','finalbank-validation','finalbank-admission'), required=True)
+        'finalbank-inventory','finalbank-projection','finalbank-reuse','finalbank-train','finalbank-validation','finalbank-admission'), required=True)
     p.add_argument('--context', type=Path, required=True); p.add_argument('--context-sha256', required=True)
     a = p.parse_args()
     if sha(a.context) != a.context_sha256:

@@ -13,6 +13,7 @@ import time
 BASE='outputs/robotwin-sac65-cpu-compat-20261031-r6'
 RUN='robotwin-ad-first-software-qual-20261031-r1'
 FINAL_RUN='robotwin-final100-ad-export-20261031-r1'
+RESIDUAL_RUN='robotwin-final100-ad-export-20261031-r2'
 
 def load(name,path):
     spec=importlib.util.spec_from_file_location(name,path)
@@ -39,21 +40,32 @@ def main(started,gate):
     gate.require(hashlib.sha256(profile_raw).hexdigest()==a.software_profile_sha256,'Software profile changed')
     profile=json.loads(profile_raw)
     run=profile['run_id']
-    finalbank=run==FINAL_RUN
+    residual=run==RESIDUAL_RUN
+    finalbank=run in (FINAL_RUN,RESIDUAL_RUN)
     clocks=(run,profile['global_work_seconds'],profile['scheduler_cap_seconds'],profile['external_TERM_seconds'],profile['external_KILL_seconds'])
     gate.require(clocks in ((RUN,500,600,570,580),('robotwin-ad-first-software-qual-20261031-r2',380,480,450,460),
         ('robotwin-ad500-software-qual-20261031-r1',250,300,270,280),
-        (FINAL_RUN,6720,7020,6790,6800))
+        (FINAL_RUN,6720,7020,6790,6800),(RESIDUAL_RUN,5700,6000,5770,5780))
         and profile['bootstrap_wait_seconds']==120
         and profile['cleanup_reserve_seconds']==30 and profile['gpus']==0
         and profile['cpus']==8 and profile['memory_gib']==64,'Wrong software resources/clocks')
     if finalbank:
         gate.require(profile['kind']=='robotwin_final100_ad_cpu_v1'
-            and profile['ad']['pin']=='7401cd50c038a4cb35149eceeb72128e9a368cc3'
+            and (profile['ad']['pin']=='7401cd50c038a4cb35149eceeb72128e9a368cc3' if not residual else
+                 profile['ad']['pin']==profile['compatibility_source_pin']
+                 and isinstance(profile['ad']['pin'],str) and len(profile['ad']['pin'])==40)
             and profile['prior_software_actual_seconds']==170
             and profile['old_sealed_credit_seconds']==0
-            and 170+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
-            and profile['unrequested_seconds']==10,'Wrong final100 conditional residual')
+            and 170+profile.get('prior_bank_actual_seconds',0)+profile['scheduler_cap_seconds']+profile['unrequested_seconds']==7200
+            and profile['unrequested_seconds']==(141 if residual else 10),'Wrong final100 conditional residual')
+        if residual:
+            ref=profile['prior_bank_terminal_accounting']
+            gate.require(sha(ref['path'])==ref['sha256'],'Prior bank terminal accounting changed')
+            previous=json.loads(Path(ref['path']).read_text())
+            gate.require(previous['job']=='job-twcl47ph8lnz' and previous['scheduler_state']=='Failed'
+                and previous['scheduler_running_seconds']==profile['prior_bank_actual_seconds']==889
+                and previous['GPUs']==0 and previous['remaining_approved_CPU_worker_seconds']==6141,
+                'Residual must charge actual889 once; never renew7020 or borrow seals')
         ref=profile['prior_cpu_closure']
         gate.require(sha(a.code_root/ref['path'])==ref['sha256'],'Software closure changed')
         closed=json.loads((a.code_root/ref['path']).read_text())
@@ -65,7 +77,7 @@ def main(started,gate):
             checked[name]=json.loads((a.code_root/ref['path']).read_text())
         gate.require(checked['assembly']['status']=='passed_closed_SAC65_CPU_compatibility_only'
             and checked['assembly']['failure'] is None and checked['ad']['passed'] is True
-            and checked['ad']['code_commit']==profile['ad']['pin']
+            and checked['ad']['code_commit']=='7401cd50c038a4cb35149eceeb72128e9a368cc3'
             and checked['ad']['counts']==dict(tests=108,failures=0,errors=0,skipped=0),
             'Existing assembly/AD software qualification required, not another test run')
         ref=profile['human_phase_authority']
@@ -191,10 +203,16 @@ def main(started,gate):
             return passed,value
         if finalbank:
             (out/'private/exports').mkdir()
-            for phase,cap in (('inventory',180),('projection',2800),('train',2400),('validation',600),('admission',400)):
+            if residual:
+                passed,results['schema_regressions']=worker('ad','software-tests')
+                gate.require(passed,'Necessary dual-encoding regressions failed; preserve output')
+            stages=(('reuse',180),('train',2400),('validation',600),('admission',400)) if residual else (
+                ('inventory',180),('projection',2800),('train',2400),('validation',600),('admission',400))
+            for phase,cap in stages:
                 target=out/('finalbank-'+phase);target.mkdir()
                 c=dict(code_root=str(roots['ad']),code_commit=profile['ad']['pin'],output=str(target),
                     finalbank_root=str(out),finalbank=profile['finalbank'],
+                    compatibility_source_pin=profile['ad']['pin'],
                     phase_deadline=min(deadline-30,time.monotonic()+cap),
                     allocation_receipt=str(out/'allocation-before-mask.json'),
                     allocation_receipt_sha256=sha(out/'allocation-before-mask.json'),
