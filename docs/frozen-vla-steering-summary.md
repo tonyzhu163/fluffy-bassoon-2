@@ -88,6 +88,26 @@ that on-policy collection. The initial LIBERO batch has now been trained and
 tested. Its negative transfer result and sparse recovery histories justify a
 targeted recipe diagnosis before repeating the same collection at larger scale.
 
+## RoboTwin source100 export is ready; GPU fitting stays deferred
+
+Owner closeout154fdb970de397480db94f59760cd76149864ac8 records CPU R4
+job-vth2qv6r4lxu asSucceeded/exit0, with admitted AD training arrays for
+32,425 decisions /2,400 episodes /600 K4 histories from the existing1,003,790
+source actions. Separate BC validation has328 decisions /24 episodes /6K4,
+10,180 selected historical actions. Saved independent index/NPZ hashes,
+42ZIP CRCs and606-case identity/disjointness/ancestry metadata passed. Root
+read the committed closure and its exact bindings; this receipt is not a new
+array-restoration or runtime audit by this chat.
+
+Total CPU phase2,588 worker-seconds;4,612 unused seconds sealed. New GPU,
+physical interaction and SGD are all zero; conservative storage96.728GB is
+within128GiB. The owner deleted the completed CPU monitor. AD GPU fitting and
+readout remain deferred with the separate10,800GPU-second/60k-action grant
+unspent. This is dataset readiness, not evidence of a good teacher, a trained
+student, native PPO replication or robot-performance improvement. The later
+human DSRL-first priority supersedes the closure's older native-PPO wording.
+[Immutable owner closure](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/154fdb970de397480db94f59760cd76149864ac8/outputs/robotwin-final100-ad-export-20261031-r4/CLOSURE.json).
+
 ## LIBERO: first transfer result is below native
 
 - Source: frozen official OpenPI pi0.5 trained on LIBERO40; steering source
