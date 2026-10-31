@@ -162,15 +162,37 @@ endpoint or a favorable validation choice. A conditional1,500-second readout res
 residual:15 fixed native/action5000/KV5000 episodes,6,000 controller actions,
 with qualification embedded in the first native episode. It may launch only
 after both actual5000 endpoints and runtime/resource admission; no early
-checkpoint substitution or additional episode is admitted. The actual two fit allocations now run on distinct
-physical GPUs: actionjob-8bsqknljwduh has1,409 complete updates with0/100/500
-milestones, and KVjob-ojt0dkom0woh has499 with0/100. Latest full recovery byte
-hashes match; source pre-SGD all90 parity/frozen gates precede the observed
-updates. No final model signature or physical robot result is claimed yet.
-Endpoint0→100 wall intervals are10.615s/29.198s, including milestone evaluation
-and checkpointing, so they are not pure optimizer-throughput benchmarks.
-Both retain the fixed5000 endpoint and independent900-second ceilings.
-[Actual advancement](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-FIT-0520-PARENT-REVIEW.json).
+checkpoint substitution or additional episode is admitted. At05:20 the independent fits had real optimizer progress on distinct
+physical GPUs: action1,409/KV499 with full recovery hashes matching. Both
+subsequently stop at the existing inclusive time guard, Failed/exit1. Action
+retains3,399 complete updates; KV2,655. All0/100/500/2000 milestones and full
+recoveries survive; neither5000 endpoint exists, so final-only robot readout
+stays held. Each attempt charges782/900 GPU-seconds, leaving118. Closed
+original phase cost is now5,189 GPU-seconds/23,922 actions. No independent
+terminal full-motor hash was published on this guard failure; per-update
+frozen checks remain recorded.
+[Terminal proof](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-FIT-TERMINAL-PARENT-REVIEW.json).
+
+The initial allocations were too short. Saved action intervals500→2000 and
+2000→3399 are228.4s/333.7s; KV500→2000 and2000→2655 are332.2s/180.1s.
+These include recovery/evaluation work. The guard repeatedly stats a growing
+immutable recovery tree, a plausible I/O contributor without profiling proof;
+filesystem latency and milestone work remain alternatives. No resource or
+learner optimization is introduced by this diagnosis, and incomplete prefixes
+are not negative capacity results.
+
+Continuation must restore the same optimizer/samplers/global and private RNG,
+then finish the fixed5000 schedule. Existing400 resource admission cannot
+represent a larger continuation while preserving the old900 rows: it compares
+historical lineage caps to one current head cap, and118 cannot admit setup.
+A narrow operational successor is being prepared to validate old and new
+credits separately while preserving every old row and exact scientific400
+contract. An explicit linked3,600-second credit (two1,800 children) and a new
+200-second focused CPU gate are funded under the per-job standing authority.
+They use the same original global28,800 clock/cap; original A1 charges and
+its1,500-second readout hold stay separately inside7,200. No old cap or ledger
+is reset. The next test is qualified exact-state continuation to5000, followed
+by the unchanged15-case readout, not selection of a favorable prefix.
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved

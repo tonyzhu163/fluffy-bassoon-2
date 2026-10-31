@@ -1,0 +1,87 @@
+{
+  "format": "command_diagnostic_head_fits_terminal_receipt_v1",
+  "checked_unix": 1793482211.85622,
+  "source_commit": "400eed69ead8b8672686c62f33ed5531f6f60558",
+  "heads": {
+    "action": {
+      "job_id": "job-8bsqknljwduh",
+      "scheduler_status": "Failed",
+      "scheduler_created": "2026-11-01 05:15:48",
+      "scheduler_ended": "2026-11-01 05:28:33",
+      "displayed_scheduler_seconds": 749,
+      "exit_code": 1,
+      "guard_error": "TimeoutError: Original inclusive fit clock",
+      "latest_published_complete_update": 3399,
+      "complete": false,
+      "milestones_retained": [
+        "0",
+        "100",
+        "2000",
+        "500"
+      ],
+      "full_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/action/command-diagnostic-fit-action-r1/recoveries/update-003399-feb42d0312ed4c0e952fc6488e46ad0a.pt",
+        "sha256": "efa5e2a42ab2c55dc8abd442e205c9253964e4d1bf3247be4e9cd901ccf1470f",
+        "bytes": 1776993,
+        "mtime": 1793482078.9008005
+      },
+      "full_recovery_SHA_matches": true,
+      "full_recovery_ZIP_CRC": null,
+      "checkpoint_payload_deserialized": false,
+      "charged_GPU_seconds": 782,
+      "original_head_maximum_GPU_seconds": 900,
+      "remaining_original_head_GPU_seconds": 118,
+      "actual_robot_actions": 0,
+      "actual_fixed5000_endpoint_available": false
+    },
+    "kv": {
+      "job_id": "job-ojt0dkom0woh",
+      "scheduler_status": "Failed",
+      "scheduler_created": "2026-11-01 05:16:57",
+      "scheduler_ended": "2026-11-01 05:29:46",
+      "displayed_scheduler_seconds": 750,
+      "exit_code": 1,
+      "guard_error": "TimeoutError: Original inclusive fit clock",
+      "latest_published_complete_update": 2655,
+      "complete": false,
+      "milestones_retained": [
+        "0",
+        "100",
+        "2000",
+        "500"
+      ],
+      "full_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-endtoend-20261031-r1/reactive-curve-v1/kv/command-diagnostic-fit-kv-r1/recoveries/update-002655-14e6d3b1e6924e24b1d58c796d48b3a9.pt",
+        "sha256": "f839ee47ddad56399675a872ad7f9fe00c3b42d5e78b0c21bed340dfd12ab367",
+        "bytes": 316138,
+        "mtime": 1793482152.844074
+      },
+      "full_recovery_SHA_matches": true,
+      "full_recovery_ZIP_CRC": null,
+      "checkpoint_payload_deserialized": false,
+      "charged_GPU_seconds": 782,
+      "original_head_maximum_GPU_seconds": 900,
+      "remaining_original_head_GPU_seconds": 118,
+      "actual_robot_actions": 0,
+      "actual_fixed5000_endpoint_available": false
+    }
+  },
+  "prior_closed_GPU_seconds": 3625,
+  "new_fit_GPU_seconds": 1564,
+  "total_closed_phase_GPU_seconds": 5189,
+  "active_fit_attempts": 0,
+  "readout_launched": false,
+  "readout_pending_reason": "Both final5000 endpoints are absent; no favorable earlier fallback",
+  "fixed5000_scientific_schedule_unchanged": true,
+  "full_recovery_fields_bound_to_source": [
+    "policy",
+    "optimizer",
+    "sampler_numpy",
+    "noise_torch",
+    "global_rng",
+    "state.contract/config/records/milestones"
+  ],
+  "frozen_motor_limit": "Actual published update path enforces source _check_frozen and no motor gradients. Terminal guard exception occurs before final fit result/parameter afterhash publication; no independently recomputed terminal model hash is claimed.",
+  "limits": "Metadata, exact endpoint/full-recovery byte hashes and ZIPCRC only; no Tensor deserialization/models/tests/simulator or old canonical event forest replay.",
+  "readout_authority_sha256": "4c2e2d331b26076a143a6d1b5eb2fddece637830013ae1229f816ad118729ef0"
+}

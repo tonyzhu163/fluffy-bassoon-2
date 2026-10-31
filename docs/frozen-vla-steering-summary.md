@@ -57,12 +57,13 @@ passes12 cases; the corrected readout1 and bridge3 also pass without repeating
 carried suites. The allocated sealer validates all90 rows; copied metadata and
 JUnit hashes pass parent review. Paid tensors and failed04 remain unchanged.
 
-Two fixed5000 command fits now run on distinct GPUs, with1,409 action/499 KV
-updates and full recoveries. Each has900 inclusive GPU-seconds reserved inside
-the original A1 residual. There is no new robot interaction or tested robot
-benefit yet, and no source/student admission. Closed phone cost is3,625
-GPU-seconds/23,922 actions; active fit reservations are separate from actual
-terminal charges. [Evidence and next discriminator](robotwin-coefficient-steering/EVALUATION.md).
+Both initial command fits hit their time guards before5000: action3,399/KV2,655.
+Full recoveries and0/100/500/2000 milestones survive; robot evaluation remains
+held. Their1,564 GPU-seconds bring closed phone cost to5,189 with23,922 actions
+unchanged. A narrow resource-admission migration and explicit linked continuation
+are being prepared to finish the same optimizer/RNG schedule. No capacity,
+physical benefit or source/student claim follows from incomplete prefixes.
+[Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
