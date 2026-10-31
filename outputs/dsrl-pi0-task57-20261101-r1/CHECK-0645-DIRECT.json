@@ -1,0 +1,2090 @@
+{
+  "gpu_context_observations": [
+    {
+      "time_unix": 1793486764.4531527,
+      "contexts": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    }
+  ],
+  "hostname": "job-psgxs9n5b08w-master-0",
+  "checked_unix": 1793486764.5100117,
+  "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+  "contract": {
+    "format": "original_pi0_task57_replication_v1",
+    "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+    "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+    "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+    "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+    "seed": 0,
+    "task_id": 57,
+    "motor": "pi0_libero",
+    "native_horizon": 50,
+    "query_frequency": 20,
+    "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+    "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+    "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+    "data_role": "target-online-baseline",
+    "target_only": true,
+    "source_assembly_admission": false,
+    "max_actions": 1000000,
+    "max_gpu_seconds": 36000,
+    "max_bytes": 68719476736,
+    "prior_actions": 400,
+    "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+    "departures": [
+      "local scalar/media handling",
+      "explicit equivalent prefetch recovery",
+      "complete-boundary recovery and resource stopping",
+      "project-local compilation cache"
+    ],
+    "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+  },
+  "progress": {
+    "updates": 425320,
+    "episodes": 2471,
+    "training_primitives": 422753,
+    "last_checkpoint_updates": 423700,
+    "replay_rows": 21766,
+    "physical_actions": 498801,
+    "time_unix": 1793486761.3592944,
+    "motor_frozen": true
+  },
+  "recovery": {
+    "path": "recovery-0.pkl",
+    "sha256": "01aef944a64cbc9ed6697f5311f1674d656939e729936ee04817ec6e13b81cbf",
+    "bytes": 583231176,
+    "progress": {
+      "updates": 423700,
+      "episodes": 2460,
+      "training_primitives": 421193,
+      "last_checkpoint_updates": 423700
+    },
+    "contract": {
+      "format": "original_pi0_task57_replication_v1",
+      "source_commit": "00eca3fae5cb8052cee445f87359e26aa18e1a17",
+      "dsrl_commit": "7f48937d4553e95244cd81c79236a3256df80597",
+      "openpi_commit": "a6d2400d2534ce32e7bdf8747709b97aaef8ec04",
+      "libero_commit": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+      "seed": 0,
+      "task_id": 57,
+      "motor": "pi0_libero",
+      "native_horizon": 50,
+      "query_frequency": 20,
+      "checkpoint_receipt_sha256": "a837a36b7d01829ea3b67dd109ec58a93bec92ac412e371cd65fcaff8e297779",
+      "checkpoint_source_url": "gs://openpi-assets/checkpoints/pi0_libero",
+      "legacy_s3_byte_equivalence": "not independently established: legacy S3 bucket returns NoSuchBucket",
+      "data_role": "target-online-baseline",
+      "target_only": true,
+      "source_assembly_admission": false,
+      "max_actions": 1000000,
+      "max_gpu_seconds": 36000,
+      "max_bytes": 68719476736,
+      "prior_actions": 400,
+      "xla_flags_at_backend_initialization": "--xla_gpu_enable_triton_gemm=false --xla_gpu_triton_gemm_any=false",
+      "departures": [
+        "local scalar/media handling",
+        "explicit equivalent prefetch recovery",
+        "complete-boundary recovery and resource stopping",
+        "project-local compilation cache"
+      ],
+      "recipe": "unmodified upstream collection/relabel/update/evaluation, exact within-burst10k evaluations"
+    },
+    "boundary": "complete collection episode and complete optimizer burst",
+    "payload_sha256_matches": true
+  },
+  "evaluation_checkpoints": [
+    {
+      "path": "000000.pkl",
+      "sha256": "6bd5d6c4b5134c6baf5725f769f0046a474b7db3d6ee9b22a6c3e49d2117432b",
+      "bytes": 36696863,
+      "updates": 0,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "010000.pkl",
+      "sha256": "fa93c24efc881f6ff42e06ba384383471e3167d439ccfa1bfb0ab1d24461022a",
+      "bytes": 36696913,
+      "updates": 10000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "020000.pkl",
+      "sha256": "8807564065dc6d435203e866cd7b883941bbdd02658b7c016819c3bf1d05c5a3",
+      "bytes": 36696914,
+      "updates": 20000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "030000.pkl",
+      "sha256": "cc782357fa6da25352559a32d69515e41f4aa11c779b73473dbe0027e5852b80",
+      "bytes": 36696914,
+      "updates": 30000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "040000.pkl",
+      "sha256": "d14816175fd93c96347f20a3b1c6739165bf05751e6b1cb14ed5c2ada18e618b",
+      "bytes": 36696914,
+      "updates": 40000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "050000.pkl",
+      "sha256": "ebb2fa6ea77a8b83bd8da756f640d7cb564b88bda739f5fdd7edee8e3920170a",
+      "bytes": 36696914,
+      "updates": 50000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "060000.pkl",
+      "sha256": "3a70ddb38e0d9bfb03274be09c39e142d0ef16e83e998d852db84abd5d58e3f1",
+      "bytes": 36696916,
+      "updates": 60000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "070000.pkl",
+      "sha256": "9e5b3a1603b8f2302c3dec84a4c439f837f9d7fc4afb477e203c8609807bc4df",
+      "bytes": 36696918,
+      "updates": 70000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "080000.pkl",
+      "sha256": "1e1c32a2d74d66c8a85dafab3ea1e787dbb16eeccfaefc419ef976f58eb07f6a",
+      "bytes": 36696921,
+      "updates": 80000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "090000.pkl",
+      "sha256": "fe9387d4f148110ab15d6ae98efc8d7590339a4d341a726f4fe2c10f833aceda",
+      "bytes": 36696921,
+      "updates": 90000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "100000.pkl",
+      "sha256": "e88a5b26df58acf983369174e2b8baf9dab0106c9f05e431834a2a6534f8a23b",
+      "bytes": 36696921,
+      "updates": 100000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "110000.pkl",
+      "sha256": "53248fa8090883a9bdabec573f42de2261a9440bfe4dcf3dfd87b06057303366",
+      "bytes": 36696920,
+      "updates": 110000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "120000.pkl",
+      "sha256": "171878a916caf3193d208c3a28a37c9c0a2865d7edf4efd27dfd9b39b5d968f2",
+      "bytes": 36696920,
+      "updates": 120000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "130000.pkl",
+      "sha256": "df47f9e064236247e42c9ae3c75321c6282bb7b44b6dbec48a77574ad2dd7cfd",
+      "bytes": 36696921,
+      "updates": 130000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "140000.pkl",
+      "sha256": "e4fa7e364d98793f02da5a88e41a45969f1a17b4c789a448c5dcb27d7c5cc4dd",
+      "bytes": 36696920,
+      "updates": 140000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "150000.pkl",
+      "sha256": "8dde69c0dbbc5ea0a0712deb481235024a98920cebdfbda9eeef6fcac4da1a62",
+      "bytes": 36696920,
+      "updates": 150000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "160000.pkl",
+      "sha256": "8312c1fce240c2212379596285561c1fe3c3d03d8299690dc31ba9daa9586ded",
+      "bytes": 36696921,
+      "updates": 160000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "170000.pkl",
+      "sha256": "81c13c1df01b44dbc8340d70bdd5ab53edffc116071aa43b97db6a1bd7676284",
+      "bytes": 36696921,
+      "updates": 170000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "180000.pkl",
+      "sha256": "9ed5524c027545a3e9eca9ba2732ebdd56ce4920dbfc6e7382d523d4141a06a8",
+      "bytes": 36696921,
+      "updates": 180000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "190000.pkl",
+      "sha256": "09cbbec0b00e99608a8b20aa5db4a07a1e12928e16a4dad10de5fcb2c5f126b5",
+      "bytes": 36696921,
+      "updates": 190000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "200000.pkl",
+      "sha256": "68670eaea8d0620ef3cac00c8e03a760105423271b8de1816be1d4293b6ebd86",
+      "bytes": 36696920,
+      "updates": 200000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "210000.pkl",
+      "sha256": "4103776c83f6b3ad2b3d996f21a8c9c75ef59e0ae5f154d1d2775a904a261a31",
+      "bytes": 36696921,
+      "updates": 210000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "220000.pkl",
+      "sha256": "71d4072f6bda3a5fd1bcb63043b970377a58f7a907ae2d50cd98920fcf802083",
+      "bytes": 36696921,
+      "updates": 220000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "230000.pkl",
+      "sha256": "3db56bbae11231f87e562245d97aa1801923ee072dff5ff0e19715aeaf9f5bde",
+      "bytes": 36696921,
+      "updates": 230000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "240000.pkl",
+      "sha256": "9cd15bd5dd4fb7bb27d646dd127de4518fb8885f762753239275cefafb9ee2e9",
+      "bytes": 36696920,
+      "updates": 240000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "250000.pkl",
+      "sha256": "a94e69d850cdb1e32890bd83af04c26b4cd0f7046432078e57ba62f9a7a7f690",
+      "bytes": 36696921,
+      "updates": 250000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "260000.pkl",
+      "sha256": "5e623054c82d4b9b88f9386910959db5c2181b2482eab87b8c836a19e5acd06b",
+      "bytes": 36696921,
+      "updates": 260000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "270000.pkl",
+      "sha256": "65c47b796b19ee2c7913e87367840840e0fa15a37aecb6a92a9022e4aba139cb",
+      "bytes": 36696920,
+      "updates": 270000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "280000.pkl",
+      "sha256": "0f88224cd780c1583a2a88af6542687a9096829cc76cb4c1fb149209eb7d1f53",
+      "bytes": 36696921,
+      "updates": 280000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "290000.pkl",
+      "sha256": "18b01bc23dbf6a075a932127e3528feff609af744e7d68a90b98c5bdab43a546",
+      "bytes": 36696921,
+      "updates": 290000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "300000.pkl",
+      "sha256": "71b4f78d596e768931fe7bbd21c57a6650402b7005b9369d85f00e8efc888ccf",
+      "bytes": 36696921,
+      "updates": 300000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "310000.pkl",
+      "sha256": "514a22ddad78af950f191cd595e80fe18a3e6baa9b52511faca9f537f0609136",
+      "bytes": 36696921,
+      "updates": 310000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "320000.pkl",
+      "sha256": "4b3dbb6afd8079e32fa5cb7e4103764bc4974dd03ad2faf512df47f17468a368",
+      "bytes": 36696920,
+      "updates": 320000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "330000.pkl",
+      "sha256": "df301bdc850e21f73dc48b20a5af34c8b8634c2bbb882a76e69a9fad4f0358ff",
+      "bytes": 36696921,
+      "updates": 330000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "340000.pkl",
+      "sha256": "163a8cb4bae9e54db337ef08f06cddd90fb4d85f4b4c89d17f64650d2e01c20f",
+      "bytes": 36696921,
+      "updates": 340000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "350000.pkl",
+      "sha256": "aa343745952f60733f592ca0997f2bd30201d556d356981ef18cb56a2307ce27",
+      "bytes": 36696921,
+      "updates": 350000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "360000.pkl",
+      "sha256": "c010c18423bb1081c170c2f157bafbabc8525dd42e17e2c25bcf95035e50907d",
+      "bytes": 36696921,
+      "updates": 360000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "370000.pkl",
+      "sha256": "5f03ec5982bc1c14f64f446435bdb8cd9da28e894cf0a4787896b24f9c43f690",
+      "bytes": 36696921,
+      "updates": 370000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "380000.pkl",
+      "sha256": "0644cc303ec9b601ca57b16cb46b8b2ed9454209eff2cd9f939f4801382ec063",
+      "bytes": 36696920,
+      "updates": 380000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "390000.pkl",
+      "sha256": "4d4b598aad282559a53b31fbaa88936579e1ef248fff7d9508c88ad9cc42b805",
+      "bytes": 36696920,
+      "updates": 390000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "400000.pkl",
+      "sha256": "112452d8e76e428854e751e90008fe3db4195d3a773c39a6ce8b3dc2a823f83f",
+      "bytes": 36696921,
+      "updates": 400000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "410000.pkl",
+      "sha256": "eb9629f7ee6a6d6f8565ba14cabd5116ab344a08a248a5f8949fdf3f4b2d7a34",
+      "bytes": 36696921,
+      "updates": 410000,
+      "payload_sha256_matches": true
+    },
+    {
+      "path": "420000.pkl",
+      "sha256": "7cf44f3f7c11cb3ad85aa840693f9813c3b75a7b85e118903c9fc8fddf191b52",
+      "bytes": 36696920,
+      "updates": 420000,
+      "payload_sha256_matches": true
+    }
+  ],
+  "physical_cost": {
+    "known_actions": 498801,
+    "uncertain_actions": 400,
+    "episodes": 2901,
+    "pending": {
+      "episode": "002901-training-425320",
+      "role": "training",
+      "maximum_actions": 400
+    }
+  },
+  "bindings": {
+    "motor-binding.json": {
+      "pid": 423,
+      "kind": "compute",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "renderer-binding.json": {
+      "pid": 423,
+      "kind": "graphics",
+      "verified": true,
+      "expected_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "processes": [
+        {
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "type": "C+G"
+        }
+      ]
+    },
+    "qualification.json": {
+      "same_noise_max_delta": 0.0,
+      "model": "pi0_libero",
+      "horizon": 50,
+      "execute_steps": 20,
+      "extra_physical_actions": 0,
+      "original_rng_restored": true
+    },
+    "motor-before.json": {
+      "sha256": "2b563cd3ae77e837c1c5034316aaaa6c808174ca74444733b9909d17cfbfc903",
+      "leaves": 50,
+      "elements_by_dtype": {
+        "bfloat16": 3238048528
+      }
+    }
+  },
+  "current_pid_gpu_contexts": [
+    {
+      "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+      "type": "C+G"
+    }
+  ],
+  "output_bytes": 7089851334,
+  "metrics": [
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/avg_return": 0.4
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/success_rate": 0.4
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/avg_episode_len": 352.0
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 0,
+      "values": {
+        "evaluation/Reward >= 1": 0.4
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "num_online_samples": 1005,
+        "num_online_trajs": 51,
+        "env_steps": 20074
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/avg_return": 0.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/success_rate": 0.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/avg_episode_len": 400.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 10000,
+      "values": {
+        "evaluation/Reward >= 1": 0.0
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "num_online_samples": 1504,
+        "num_online_trajs": 77,
+        "env_steps": 30048
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/avg_return": 0.2
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/success_rate": 0.2
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/avg_episode_len": 360.4
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 20000,
+      "values": {
+        "evaluation/Reward >= 1": 0.2
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "num_online_samples": 2003,
+        "num_online_trajs": 117,
+        "env_steps": 39833
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/avg_return": 0.8
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/success_rate": 0.8
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/avg_episode_len": 242.1
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 30000,
+      "values": {
+        "evaluation/Reward >= 1": 0.8
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "num_online_samples": 2507,
+        "num_online_trajs": 162,
+        "env_steps": 49664
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/avg_episode_len": 198.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 40000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "num_online_samples": 3011,
+        "num_online_trajs": 208,
+        "env_steps": 59490
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/avg_episode_len": 230.8
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 50000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "num_online_samples": 3504,
+        "num_online_trajs": 255,
+        "env_steps": 68990
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "evaluation/avg_episode_len": 182.1
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 60000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "num_online_samples": 4009,
+        "num_online_trajs": 307,
+        "env_steps": 78704
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "evaluation/avg_episode_len": 175.1
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 70000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "num_online_samples": 4500,
+        "num_online_trajs": 358,
+        "env_steps": 88202
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "evaluation/avg_episode_len": 175.6
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 80000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "num_online_samples": 5005,
+        "num_online_trajs": 416,
+        "env_steps": 97961
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "evaluation/avg_episode_len": 190.9
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 90000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "num_online_samples": 5507,
+        "num_online_trajs": 475,
+        "env_steps": 107628
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "evaluation/avg_episode_len": 165.6
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 100000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "num_online_samples": 6001,
+        "num_online_trajs": 531,
+        "env_steps": 117111
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "evaluation/avg_episode_len": 175.0
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 110000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "num_online_samples": 6503,
+        "num_online_trajs": 587,
+        "env_steps": 126791
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "evaluation/avg_episode_len": 160.2
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 120000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "num_online_samples": 7005,
+        "num_online_trajs": 640,
+        "env_steps": 136528
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "evaluation/avg_episode_len": 146.4
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 130000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "num_online_samples": 7500,
+        "num_online_trajs": 692,
+        "env_steps": 146174
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "evaluation/avg_episode_len": 145.6
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 140000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "num_online_samples": 8008,
+        "num_online_trajs": 752,
+        "env_steps": 155981
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "evaluation/avg_episode_len": 162.2
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 150000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "num_online_samples": 8503,
+        "num_online_trajs": 811,
+        "env_steps": 165565
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "evaluation/avg_episode_len": 160.6
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 160000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "num_online_samples": 9005,
+        "num_online_trajs": 872,
+        "env_steps": 175372
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "evaluation/avg_episode_len": 153.3
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 170000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "num_online_samples": 9505,
+        "num_online_trajs": 934,
+        "env_steps": 185059
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "evaluation/avg_episode_len": 162.9
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 180000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "num_online_samples": 10002,
+        "num_online_trajs": 995,
+        "env_steps": 194715
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "evaluation/avg_episode_len": 176.4
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 190000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "num_online_samples": 10501,
+        "num_online_trajs": 1054,
+        "env_steps": 204372
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "evaluation/avg_return": 0.9
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "evaluation/success_rate": 0.9
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "evaluation/avg_episode_len": 182.9
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 200000,
+      "values": {
+        "evaluation/Reward >= 1": 0.9
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "num_online_samples": 11011,
+        "num_online_trajs": 1111,
+        "env_steps": 214269
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "evaluation/avg_episode_len": 142.3
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 210000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "num_online_samples": 11504,
+        "num_online_trajs": 1176,
+        "env_steps": 223837
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "evaluation/avg_episode_len": 158.8
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 220000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "num_online_samples": 12000,
+        "num_online_trajs": 1238,
+        "env_steps": 233512
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "evaluation/avg_episode_len": 157.6
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 230000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "num_online_samples": 12506,
+        "num_online_trajs": 1301,
+        "env_steps": 243221
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "evaluation/avg_episode_len": 164.4
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 240000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "num_online_samples": 13000,
+        "num_online_trajs": 1358,
+        "env_steps": 252847
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "evaluation/avg_episode_len": 141.1
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 250000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "num_online_samples": 13503,
+        "num_online_trajs": 1422,
+        "env_steps": 262642
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "evaluation/avg_episode_len": 157.4
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 260000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "num_online_samples": 14006,
+        "num_online_trajs": 1489,
+        "env_steps": 272445
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "evaluation/avg_episode_len": 150.0
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 270000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "num_online_samples": 14505,
+        "num_online_trajs": 1552,
+        "env_steps": 282136
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "evaluation/avg_episode_len": 163.4
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 280000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "num_online_samples": 15003,
+        "num_online_trajs": 1614,
+        "env_steps": 291754
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "evaluation/avg_episode_len": 145.2
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 290000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "num_online_samples": 15504,
+        "num_online_trajs": 1678,
+        "env_steps": 301398
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "evaluation/avg_episode_len": 137.2
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 300000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "num_online_samples": 16006,
+        "num_online_trajs": 1742,
+        "env_steps": 311130
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "evaluation/avg_episode_len": 143.0
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 310000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "num_online_samples": 16505,
+        "num_online_trajs": 1806,
+        "env_steps": 320769
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "evaluation/avg_episode_len": 151.3
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 320000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "num_online_samples": 17001,
+        "num_online_trajs": 1869,
+        "env_steps": 330408
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "evaluation/avg_episode_len": 150.8
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 330000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "num_online_samples": 17502,
+        "num_online_trajs": 1934,
+        "env_steps": 340090
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "evaluation/avg_episode_len": 146.0
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 340000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "num_online_samples": 18002,
+        "num_online_trajs": 2000,
+        "env_steps": 349704
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "evaluation/avg_episode_len": 138.7
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 350000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "num_online_samples": 18501,
+        "num_online_trajs": 2064,
+        "env_steps": 359418
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "evaluation/avg_episode_len": 152.8
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 360000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "num_online_samples": 19004,
+        "num_online_trajs": 2125,
+        "env_steps": 369176
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "evaluation/avg_return": 0.9
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "evaluation/success_rate": 0.9
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "evaluation/avg_episode_len": 171.3
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 370000,
+      "values": {
+        "evaluation/Reward >= 1": 0.9
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "num_online_samples": 19505,
+        "num_online_trajs": 2187,
+        "env_steps": 378945
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "evaluation/avg_episode_len": 145.0
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 380000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "num_online_samples": 20000,
+        "num_online_trajs": 2251,
+        "env_steps": 388531
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "evaluation/avg_episode_len": 139.6
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 390000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "num_online_samples": 20504,
+        "num_online_trajs": 2311,
+        "env_steps": 398242
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "evaluation/avg_episode_len": 150.3
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 400000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "num_online_samples": 21005,
+        "num_online_trajs": 2374,
+        "env_steps": 407998
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "evaluation/avg_episode_len": 148.9
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 410000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "num_online_samples": 21502,
+        "num_online_trajs": 2436,
+        "env_steps": 417648
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "evaluation/avg_return": 1.0
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "evaluation/success_rate": 1.0
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "evaluation/avg_episode_len": 151.6
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "evaluation/Reward >= 0": 1.0
+      }
+    },
+    {
+      "updates": 420000,
+      "values": {
+        "evaluation/Reward >= 1": 1.0
+      }
+    }
+  ],
+  "motor_after_present": false,
+  "worker_time_present": false
+}
