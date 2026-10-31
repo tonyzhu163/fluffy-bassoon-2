@@ -1,7 +1,7 @@
 {
   "format": "frozen_pi05_endtoend_phase_ledger_v1",
   "phase_id": "frozen-pi05-endtoend-20261031-r1",
-  "grant_sha256": "e99a537eeca2b0422ca4366654dbafbca552376e9c8af0a583493d5351b4a1bd",
+  "grant_sha256": "aa3d70d65762552e71f573ae7c68b853714bfeb680bcb370a42276d1669adc94",
   "maximum_gpu_seconds": 28800,
   "maximum_total_actions": 300000,
   "maximum_output_bytes": 68719476736,
@@ -43,8 +43,15 @@
     "live_path": null,
     "header_bound": false,
     "one_shared_header_and_journal": true,
-    "source_caps": null,
-    "source_keys_status": "exact methodkeys bound; numeric horizon/reset-bound caps pending, header uncreated",
+    "source_caps": {
+      "sac_calibration_minus_train0": 19200,
+      "sac_calibration_plus_train0": 19200,
+      "sac_calibration_minus_train1": 19200,
+      "sac_calibration_plus_train1": 19200,
+      "sac_calibration_minus_validation2": 19200,
+      "sac_calibration_plus_validation2": 19200
+    },
+    "source_keys_status": "six exact keys/19200each bound; header remains uncreated pending executable/control-limit and motor/source receipts",
     "source_caps_expected_keys": [
       "sac_calibration_minus_train0",
       "sac_calibration_plus_train0",
