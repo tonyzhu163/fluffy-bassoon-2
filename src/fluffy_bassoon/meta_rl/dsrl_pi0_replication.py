@@ -42,6 +42,12 @@ def file_hash(path):
     return digest.hexdigest()
 
 
+def frozen_motor_model(policy):
+    # The pinned module_jit uses functools.wraps on the bound model method.
+    # This older Policy has no _model attribute (unlike current OpenPI).
+    return policy._sample_actions.__wrapped__.__self__
+
+
 class Prefetch:
     """The upstream two-batch iterator, with its suspended-yield state explicit."""
     def __init__(self, sample, device_put=lambda value: value):
@@ -257,7 +263,8 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
         attest_process_gpu(output/'renderer-binding.json', graphics=True))
     iterator = Prefetch(lambda: replay_buffer.sample(variant.batch_size), jax.device_put)
     progress = dict(updates=0, episodes=0, training_primitives=0, last_checkpoint_updates=0)
-    before = parameter_signature(agent_dp._model)
+    motor_model = frozen_motor_model(agent_dp)
+    before = parameter_signature(motor_model)
     atomic_json(output/'motor-before.json', before)
     original_infer = agent_dp.infer
     first = True
@@ -341,7 +348,7 @@ def training_loop(variant, agent, env, eval_env, online_replay_buffer, replay_bu
             replay_rows=len(replay_buffer), one_training_seed=True))
     finally:
         agent_dp.infer = original_infer
-        after = parameter_signature(agent_dp._model)
+        after = parameter_signature(motor_model)
         atomic_json(output/'motor-after.json', dict(before=before, after=after, equal=before == after))
         env.close()
         if before != after:
