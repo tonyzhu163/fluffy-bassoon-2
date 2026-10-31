@@ -15,6 +15,7 @@ from fluffy_bassoon.meta_rl.steering_history_cross_admission import verify_condi
 from fluffy_bassoon.meta_rl.steering_condition_collection import _state_digest
 from fluffy_bassoon.meta_rl.robotwin_history_corpus import parameter_digest
 from fluffy_bassoon.rl.robotwin_corpus import RobotwinCorpusWriter
+from fluffy_bassoon.rl.steering_actuator_condition import CalibrationDistribution, CalibrationSpec
 from test_steering_history import source, profile, ref, json_ref, raw_observation
 
 
@@ -23,9 +24,16 @@ def raw_cross(source, tmp_path):
     p, prefix = deepcopy(source)
     p["prefix_episodes"] = 24
     prefix["source_publications"] = {}
-    calibration=dict(conditions=[dict(condition_id=c,sign=sign,
-        mapping_sha256=p["interface"]["mapping_sha256"],motor_sha256=p["interface"]["motor_sha256"])
-        for c,sign in zip(p["conditions"],(-1,1))])
+    names=dict(left="calibration_minus",right="calibration_plus")
+    p["conditions"]=[names[c] for c in p["conditions"]]
+    p["teacher_lineage_ids"]={names[c]:key for c,key in p["teacher_lineage_ids"].items()}
+    for slot in prefix["lineages"]:
+        slot["condition_id"]=names[slot["condition_id"]]
+    prefix["teacher_qualifications"]={names[c]:r for c,r in prefix["teacher_qualifications"].items()}
+    calibration=CalibrationDistribution([CalibrationSpec(sign=sign,bias_radians=(.01,)+(0.,)*13,
+        command_lower=(-3.,)*14,command_upper=(3.,)*14,range_receipt_sha256="d"*64,
+        mapping_sha256=p["interface"]["mapping_sha256"],motor_sha256=p["interface"]["motor_sha256"],
+        reference_basis_sha256="e"*64,reference_arm_bound=.02) for sign in (-1,1)]).contract()
     for slot in prefix["lineages"]:
         state=torch.load(slot["final_recovery"]["path"],weights_only=False)
         full=dict(format="source_coefficient_full_recovery_v1",python_rng=random.getstate(),
@@ -141,8 +149,16 @@ def raw_cross(source, tmp_path):
 def test_original_raw24_not_pass_flags_admits_both_objectives(raw_cross, objective):
     p, prefix, _, _ = raw_cross(forged_flags=False)
     verified = verify_condition_cross(p, prefix, objective=objective)
-    assert verified["matched_mismatch_gaps"] == dict(left=1., right=1.)
+    assert verified["matched_mismatch_gaps"] == {c:1. for c in p["conditions"]}
     assert verified["pooled_blind_gap"] == .5 and verified["actual_actions"] == 24
+    # Actual CalibrationDistribution -> torch full recovery retains tuples;
+    # the original A2 JSON plan has lists. The physical contract is identical.
+    original=torch.load(prefix["lineages"][0]["final_recovery"]["path"],weights_only=False)
+    source_contract=original["control"]["mapping"]["condition_audit_contract"]
+    plan_contract=sh.read_json(prefix["condition_cross"]["plan"])["condition_contract"]
+    assert isinstance(source_contract["conditions"][0]["bias_radians"],tuple)
+    assert isinstance(plan_contract["conditions"][0]["bias_radians"],list)
+    assert source_contract!=plan_contract and sh.content_hash(source_contract)==sh.content_hash(plan_contract)
 
 
 def test_failed_raw24_cannot_be_admitted_by_success_flags(raw_cross):
@@ -160,20 +176,21 @@ def test_cross_binds_actual_actor_sampling_cells_and_dpt_teacher(raw_cross, tmp_
     p, prefix, plan, result = raw_cross()
     if mutation == "sampling":
         # A raw sampled trace cannot be re-described as deterministic mean.
-        method = p["teacher_lineage_ids"]["left"]
+        method = p["teacher_lineage_ids"][p["conditions"][0]]
         plan["controller_refs"][method]["sampling_mode"] = "deterministic_mean"
     elif mutation == "actor":
-        method = p["teacher_lineage_ids"]["left"]
+        method = p["teacher_lineage_ids"][p["conditions"][0]]
         plan["controller_refs"][method]["optimizer_updates"] += 1
     elif mutation == "duplicate":
         result["records"][-1] = deepcopy(result["records"][0])
     elif mutation == "calibration":
         plan["condition_contract"]["conditions"][0]["bias_radians"]=[999.]*14
     else:
-        q = sh.read_json(prefix["teacher_qualifications"]["left"])
-        other = next(x for x in prefix["lineages"] if x["lineage_id"] == p["teacher_lineage_ids"]["right"])
+        condition=p["conditions"][0]
+        q = sh.read_json(prefix["teacher_qualifications"][condition])
+        other = next(x for x in prefix["lineages"] if x["lineage_id"] == p["teacher_lineage_ids"][p["conditions"][1]])
         q["teacher_recovery"] = other["final_recovery"]
-        prefix["teacher_qualifications"]["left"] = json_ref(tmp_path / "wrong-teacher.json", q)
+        prefix["teacher_qualifications"][condition] = json_ref(tmp_path / "wrong-teacher.json", q)
     prefix["condition_cross"]["plan"] = json_ref(tmp_path / "plan.json", plan)
     result["plan_sha256"] = sh.content_hash(plan)
     prefix["condition_cross"]["result"] = json_ref(tmp_path / "result.json", result)

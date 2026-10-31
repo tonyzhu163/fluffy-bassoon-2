@@ -49,7 +49,7 @@ def verify_condition_cross(profile,prefix,*,objective):
     for slot in prefix["lineages"]:
         original=checked_load(reference(slot["final_recovery"]),slot["final_recovery"]["sha256"],weights_only=False)
         if (original.get("format")!="source_coefficient_full_recovery_v1"
-                or original.get("control",{}).get("mapping",{}).get("condition_audit_contract")!=calibration):
+                or content_hash(original.get("control",{}).get("mapping",{}).get("condition_audit_contract"))!=content_hash(calibration)):
             raise ValueError("A2 hidden calibration differs from the original source full-recovery contract")
     identities={}
     for method in primary:
@@ -152,7 +152,7 @@ def verify_condition_cross(profile,prefix,*,objective):
                     or meta.get("steering_condition_id")!=spec["condition_id"]
                     or meta.get("steering_mapping_sha256")!=interface["mapping_sha256"]
                     or meta.get("steering_interface_sha256")!=interface["control_interface_sha256"]
-                    or meta.get("coefficient_steering",{}).get("audit_only",{}).get("mapping",{}).get("condition_audit_contract")!=calibration
+                    or content_hash(meta.get("coefficient_steering",{}).get("audit_only",{}).get("mapping",{}).get("condition_audit_contract"))!=content_hash(calibration)
                     or meta.get("optimizer_updates")!=identities[spec["method"]][1]):
                 raise ValueError("A2 raw records used another actor, counter or sampling convention")
             native=chunk["native_result"];outcome=chunk["learning_result"]
