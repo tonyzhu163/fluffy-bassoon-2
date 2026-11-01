@@ -1,0 +1,85 @@
+{
+  "format": "headroom_1050_light_receipt_v1",
+  "job_id": "job-2qn8dpw3yvlb",
+  "scheduler_state": "Running",
+  "scheduler_UI_elapsed_seconds": 5001,
+  "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "reader_ref": {
+    "git_commit": "bdca3a0a6cc93d0271ebcbaddacff9a90c2f292f",
+    "git_blob": "34ae4b75a1f900de0d1792cb6c9a1f79fc334739",
+    "sha256": "95ea2c6fe877c7a0712ee42d044f9965e49ee75d4e9d894554a1a601ba8474f1"
+  },
+  "data_ref": {
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1050.json",
+    "sha256": "c54cd7991d08bd38c42447b0cf127e183d5a73f09e4408aa9cd5fde2ed4f39b9"
+  },
+  "index_snapshot": {
+    "updates": 343700,
+    "training": {
+      "episodes": 1987,
+      "chunks": 17679,
+      "primitive_steps": 167855,
+      "settling_steps": 19870
+    },
+    "replay_rows": 17679,
+    "successes": 1948,
+    "failures": 39,
+    "actions": 337527,
+    "output_bytes": 20461943291
+  },
+  "stable_current_full": {
+    "pointer": {
+      "path": "recovery-1.pkl",
+      "sha256": "c2da57f1121fe19b9dbb79da75a1930ba368910d37d4c8dd88aa6bfed10e97a0",
+      "updates": 343700,
+      "replay_rows": 17679,
+      "signature": "c3883ef5aeffbc0b431353ce0e3769cbb5a8c91cd53076d8f69b982e01d7eb56"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-1.pkl",
+      "sha256": "c2da57f1121fe19b9dbb79da75a1930ba368910d37d4c8dd88aa6bfed10e97a0",
+      "bytes": 484581451
+    },
+    "stable": true,
+    "cursor_next_threshold": 360000,
+    "cursor_phase": "training"
+  },
+  "new_completed_panels": [
+    {
+      "name": "learned-340000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 340060,
+      "threshold_updates": 340000,
+      "primitive_steps": 1495,
+      "settling_steps": 200,
+      "policy_signature": "09ffe20ff4fbe7ffeaeec1f86bf4dd84f1e28b18f5a02625ef1af59792bdbd94",
+      "optimizer_update_overshoot": 60,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-340000-recovery.pkl",
+        "sha256": "11021e9fb820dc4f2d406c4019e153f9dab065d5883d5c9b7cb4ce574ec671b7",
+        "bytes": 479961429
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "panel_count": 20,
+  "actual_cursor_next_threshold": 360000,
+  "actual_cursor_phase": "training",
+  "finite_latest_losses": true,
+  "new_raw_trace_matches": true,
+  "one_RPC_sample_hashes_match": true,
+  "observed_conservative_GPU_seconds": 33273,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_all_in_actions": 1000000,
+  "maximum_output_bytes": 68719476736,
+  "next_owned_check": "2026-11-01 11:10 Asia/Shanghai",
+  "verification_limits": "New340k immutable milestone/currentstablefull/newest raw/RPC bytes and producer cumulative counters only. No oldmilestone/forest/closedjob/CPU/inventory scans, no model/array/checkpoint deserialization or newlaunch. Finalafterhash pending while active."
+}
