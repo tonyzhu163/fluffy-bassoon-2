@@ -80,6 +80,7 @@ def run_learning(sim, motor, learner, sampler, *, output, root, contract, resume
             or stop_updates % panel_interval or any(c['task_id'] != task_id or c['initial_state'] not in range(40, 50) for c in query_cases)):
         raise ValueError('Require complete predeclared task57 panel schedule')
     science_resume = resume and state_path.exists()
+    restore_proof = None
     if science_resume:
         if json.loads(contract_path.read_text()) != contract:
             raise ValueError('Task57 immutable scientific contract changed')
@@ -88,12 +89,11 @@ def run_learning(sim, motor, learner, sampler, *, output, root, contract, resume
         checkpoint = output / model['path']
         if onset.sha256(checkpoint) != model['sha256']:
             raise ValueError('Task57 full recovery checksum differs')
-        saved = learner.restore(checkpoint, sampler, contract)
-        onset._restore_motor(motor, saved['motor_rng'])
-        if (saved['training'] != progress['training'] or learner.updates != model['updates']
-                or len(learner.replay) != model['replay_rows']
-                or onset._signature(learner) != model['signature']):
-            raise ValueError('Atomic task57 cursor/model/training recovery differs')
+        from .vla_headroom_restore_guard import restore_checked
+        _, restore_proof = restore_checked(learner, sampler, motor, checkpoint, progress, contract)
+        # A separate receipt records the new execution's exact restore proof;
+        # neither the original cursor nor checkpoint is normalized or relabeled.
+        onset.write_json(output / ('restore-proof-' + str(time.time_ns()) + '.json'), restore_proof)
     else:
         if state_path.exists() or (contract_path.exists() and not resume):
             raise ValueError('Fresh task57 actor requires a new immutable output identity')
@@ -177,7 +177,9 @@ def run_learning(sim, motor, learner, sampler, *, output, root, contract, resume
                     progress['next_threshold'] if current_phase == 'learned_panel' else stop_updates)
                 start_panel('learned' if current_phase == 'learned_panel' else current_phase, threshold)
             panel = progress['active_panel']
-            if learner.updates != panel['actual_optimizer_updates'] or onset._signature(learner) != panel['policy_signature']:
+            from .vla_headroom_restore_guard import panel_signature_matches
+            if (learner.updates != panel['actual_optimizer_updates'] or not panel_signature_matches(
+                    onset._signature(learner), panel['policy_signature'], restore_proof)):
                 raise RuntimeError('Task57 query panel actor lineage changed')
             while panel['query_cursor'] < len(query_cases):
                 reason = admitted()
@@ -320,7 +322,7 @@ def run_selected(motor, server_factory, args, contract, deadline):
     producer_plan = json.loads((root / 'plan.json').read_text())
     if producer_plan != contract:
         admission = json.loads((root.parent / 'screen-to-learning-source.json').read_text())
-        if (admission['screen_source'] != args.screen_source or admission['learning_source'] != args.source_commit
+        if (admission['screen_source'] != args.screen_source or admission['learning_source'] != getattr(args, 'scientific_source', args.source_commit)
                 or admission['original_screen_plan_sha256'] != onset.sha256(root / 'plan.json')
                 or admission['frozen_selection_sha256'] != args.selection_sha256
                 or {k: v for k, v in producer_plan.items() if k != 'source_commit'} !=
