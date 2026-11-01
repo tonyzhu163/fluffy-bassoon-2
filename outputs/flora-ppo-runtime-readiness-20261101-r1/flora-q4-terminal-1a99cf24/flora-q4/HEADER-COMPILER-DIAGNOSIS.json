@@ -1,0 +1,127 @@
+{
+  "status": "CONFIRMED_SELECTED_NVCC13_2_RUNTIME_HEADERS13_0_INCOMPATIBLE",
+  "method": "read_only_installed_source_metadata_no_imports_compilation_or_GPU",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda_runtime_api.h",
+      "bytes": 607504,
+      "sha256": "3f91d3f84f1aafb17cccc475803f9c489b6474f2a3bf0fbc75a5380821c966e0",
+      "excerpt": [
+        {
+          "line": 139,
+          "text": "#define CUDART_VERSION  13000"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda.h",
+      "bytes": 1146681,
+      "sha256": "64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4",
+      "excerpt": [
+        {
+          "line": 263,
+          "text": "#define CUDA_VERSION 13000"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h",
+      "bytes": 2542,
+      "sha256": "360b64b238e41e35c2091fd2a2ecf5655b0526f4f8fc2033303bf60c7d5a15a7",
+      "excerpt": [
+        {
+          "line": 35,
+          "text": ""
+        },
+        {
+          "line": 36,
+          "text": "// Check compatibility of the CUDA compiler and CUDA toolkit headers"
+        },
+        {
+          "line": 37,
+          "text": "// Some users might want to use a newer version of the CTK than the compiler ships. Enable that on their own peril"
+        },
+        {
+          "line": 38,
+          "text": "#ifndef CCCL_DISABLE_CTK_COMPATIBILITY_CHECK"
+        },
+        {
+          "line": 39,
+          "text": "#  if _CCCL_CUDA_COMPILATION()"
+        },
+        {
+          "line": 40,
+          "text": "#    if !_CCCL_CUDACC_EQUAL((CUDART_VERSION / 1000), (CUDART_VERSION % 1000) / 10)"
+        },
+        {
+          "line": 41,
+          "text": "#      error \"CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths\""
+        },
+        {
+          "line": 42,
+          "text": "#    endif // !_CCCL_CUDACC_EQUAL((CUDART_VERSION / 1000), (CUDART_VERSION % 1000) / 10)"
+        },
+        {
+          "line": 43,
+          "text": "#  endif // _CCCL_CUDA_COMPILATION()"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia_cuda_nvcc-13.2.86.dist-info/METADATA",
+      "bytes": 1859,
+      "sha256": "b1d33db15edf2abea2777795193ddf50450a301446b02882f76ace41461e7e07",
+      "excerpt": [
+        {
+          "line": 1,
+          "text": "Metadata-Version: 2.4"
+        },
+        {
+          "line": 2,
+          "text": "Name: nvidia-cuda-nvcc"
+        },
+        {
+          "line": 3,
+          "text": "Version: 13.2.86"
+        },
+        {
+          "line": 4,
+          "text": "Summary: CUDA nvcc"
+        },
+        {
+          "line": 5,
+          "text": "Home-page: https://developer.nvidia.com/cuda-zone"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia_cuda_runtime-13.0.96.dist-info/METADATA",
+      "bytes": 1693,
+      "sha256": "30699e3ca76f6f41f5252e7a0fce2c2d303c465b86c1b022e03a2799bd15098b",
+      "excerpt": [
+        {
+          "line": 1,
+          "text": "Metadata-Version: 2.4"
+        },
+        {
+          "line": 2,
+          "text": "Name: nvidia-cuda-runtime"
+        },
+        {
+          "line": 3,
+          "text": "Version: 13.0.96"
+        },
+        {
+          "line": 4,
+          "text": "Summary: CUDA Runtime native Libraries"
+        },
+        {
+          "line": 5,
+          "text": "Home-page: https://developer.nvidia.com/cuda-zone"
+        }
+      ]
+    }
+  ],
+  "repair_not_executed": true,
+  "compatibility_guard_not_bypassed": true
+}

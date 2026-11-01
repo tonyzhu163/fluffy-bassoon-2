@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "ADMITTED_CONDITIONAL_ON_IMMUTABLE_COHERENT_13_0_TOOLKIT_OVERLAY",
+  "execution_owner": "/root/finish_assembly",
+  "reviewed_terminal_pin": "1a99cf24",
+  "review": "FLORA-Q4-TERMINAL-PARENT-REVIEW.json",
+  "authority": "Existing necessary scorer qualification for the human-authorized simulator-versus-Flora comparison, now preparing RoboCasa365. Original3600-second Flora clock, no new grant or extra robot episode.",
+  "same_clock": {
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q1-20261101-r1/clock",
+    "original_ceiling_seconds": 3600,
+    "closed_attempt_gpu_seconds": [
+      446,
+      301,
+      62,
+      277
+    ],
+    "closed_total_gpu_seconds": 1086,
+    "remaining_before_attempt": 2514,
+    "maximum_new_inclusive_gpu_seconds": 2400,
+    "unrequested_seconds": 114,
+    "preserve": "Original contract/header/origin and all four finished rows stay exact. Existing begin/finish with one new immutable attempt identity, no sibling clock or replenishment."
+  },
+  "resource": {
+    "gpus": 1,
+    "gpu_type": "RPBZZZ6",
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "scheduler_minutes": 39,
+    "retry": false,
+    "inner_seconds": 2220,
+    "term_seconds": 2280,
+    "kill_seconds": 2310,
+    "outer_seconds": 2340,
+    "startup_allowance_seconds": 60,
+    "new_output_gib": 16,
+    "new_robot_actions": 0,
+    "optimizer_updates": 0
+  },
+  "repair": "Create a fresh job-local official NVIDIA CUDA13.0 compiler/runtime/header overlay matching Torchcu130 and the observed original CUDART13000 headers. Pin exact package versions, wheel URLs/bytes/SHA and installed source/header/compiler hashes before using the overlay. CUDA13.0 is >=12.9 for actualSM12. Do not install over the retained Flora environment/system CUDA, change model/scorer/seed/source, force an architecture or disable the CCCL compatibility guard.",
+  "ninja": {
+    "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/bin/ninja",
+    "sha256": "08639e194fffa7f08b259fc4abfa4803aff66b64de52549cee42ec527d55cea6",
+    "bytes": 370448,
+    "package_version": "1.13.2",
+    "observed_cli_version": "1.13.2.git.kitware.jobserver-pipe-1"
+  },
+  "required_before_model": [
+    "Actual allocation GPUcount/CUDA/ownPID/SM and capacity/quota/write/output admission, preserved original clock rows and finite remaining deadline.",
+    "Resolve approved Ninja executable SHA and successful literal version metadata, actual C++ compiler, explicit overlay CUDA_HOME/CUDA_PATH/CUDACXX/PATH/lib paths before first imports. No old bare-version false guard.",
+    "Bind the ACTUAL selected compiler plus runtime/driver headers from effective include search, verify major/minor equality using the same unmodified CCCL rule. Run one tiny targeted actual nvcc compile/preprocess against those selected headers and vendored CCCL guard inside this GPU allocation BEFORE loading55GB model. This new affected compiler qualification is not a bookkeeping test suite. Never define CCCL_DISABLE_CTK_COMPATIBILITY_CHECK or fake architecture.",
+    "Require nonempty real-SM FlashInfer targets and unchanged official archived-fixture scorer/model/video/seed. Preserve raw official output/expected_score/probabilities or exact failure evidence. No extra robot episode, score remapping, renderer or PPO."
+  ],
+  "launch": "After exact immutable official13.0 overlay package binding and actual resource admission, sole finish_assembly submits ONE39min/retryOFF/2400inclusiveGPU-s successor within original2514remaining, no extra ACK. Firstrealadvance promptly then20min; settle/release terminal. NativeCPU setup and queued policy conversion remain independent and keep their own due checks/deadlines. No automatic further retry, old-budget transfer or original3600 reset.",
+  "coherent_toolkit": {
+    "compiler": "Exact official NVIDIA13.0.x release, executable identity and version recorded; no floating latest13.2",
+    "runtime_headers": "Actualselected cuda_runtime_api.h CUDART_VERSION13000 and cuda.h CUDA_VERSION13000 (original runtime package13.0.96) must match actual compiler major/minor13.0. Patch versions need not have identical strings.",
+    "scope": "Only isolated resource/toolkit overlay. Keep shared Flora/model/policy environments immutable. All required wheel staging/install/compilation/import/modelwarmup/inference/failure/cleanup count in SAME2400inclusiveGPUseconds; no extra CPU grant or off-clock compute.",
+    "immutable_before_submission": "Sole owner resolves exact available official package metadata/wheel hashes/paths and pins literal overlay/profile/deployment through Git. This completes this resource-only admission without another root/human ACK. No submit from a guessed unpinned package."
+  }
+}

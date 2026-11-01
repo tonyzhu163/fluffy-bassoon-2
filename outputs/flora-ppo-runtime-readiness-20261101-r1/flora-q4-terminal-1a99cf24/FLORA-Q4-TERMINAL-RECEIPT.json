@@ -1,0 +1,98 @@
+{
+  "format": "flora_archived_fixture_terminal_v4",
+  "checked_at_local": "2026-11-01 17:48 Asia/Shanghai",
+  "cluster": "Baige",
+  "job_id": "job-o77mgq2hdeo6",
+  "name": "mwj_1101_flora_official_inference_g1_q4_cli",
+  "scheduler": {
+    "status": "Failed",
+    "created_at": "2026-11-01 17:27:06",
+    "ended_at": "2026-11-01 17:31:30",
+    "displayed_runtime_seconds": 251,
+    "allocation_released": true
+  },
+  "exit_code": 1,
+  "science_source": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "resource_source": "9dba714907aebbd38afbbf142afc695d17f53e3e",
+  "reviewed_main": "232f35eb56d1321190fafb9ad4f55df62aed04c8",
+  "actual_gpus": 1,
+  "prior_charged_seconds": [
+    446,
+    301,
+    62
+  ],
+  "new_charged_seconds": 277,
+  "cumulative_flora_gpu_seconds": 1086,
+  "original_flora_ceiling": 3600,
+  "remaining_same_clock_seconds": 2514,
+  "physical_actions": 0,
+  "optimizer_steps": 0,
+  "new_episodes": 0,
+  "score_produced": false,
+  "label_produced": false,
+  "model": "nvidia/Flora-Rewarder@031299e46e452fc0cedb4e0975eb9fa95fc37783",
+  "official_code": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "unchanged_archived_video_sha256": "08987c0d39e064415694a552789bb5e9b8a7223870a9d5f4336825ea6471b4a6",
+  "progress": "Actual GPU/toolchain/Ninja/C++ gates passed; all11 model shards loaded; failed during sampling JIT warmup before terminal inference",
+  "failure": "nvcc13.2.86 paired with selectedCUDART13000/CUDA13000 headers(runtime13.0.96); FlashInferCCCL exact-major/minor guard raises compiler/toolkit incompatibility",
+  "not_runtime_health_proof": "Torchcu130,SM12,nvcc>=12.9 metadata alone did not establish compiler/header compatibility",
+  "refs": {
+    "HEADER-COMPILER-DIAGNOSIS.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/HEADER-COMPILER-DIAGNOSIS.json",
+      "bytes": 4038,
+      "sha256": "fba597960617dd78c46b60f048a4fb023337955b3a79c28763d2e0025d83ef10"
+    },
+    "build-tools-admission.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/build-tools-admission.json",
+      "bytes": 1057,
+      "sha256": "2c0b94c5cdf74e1ef3addc8ab66e4e70321c019ac9322e30e81414979e5a1e30"
+    },
+    "console.log": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/console.log",
+      "bytes": 127283,
+      "sha256": "ec94ed6377f5bd01c68745dcd8536d7f1bb765d5f87f9561947b7430f03fae81"
+    },
+    "exit-code.txt": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "gpu-probe.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/gpu-probe.json",
+      "bytes": 2883,
+      "sha256": "833a26462de3d3e787ab26f55d3b753dc237f74f4eed52192b0db71c43af5793"
+    },
+    "profile.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/profile.json",
+      "bytes": 2332,
+      "sha256": "fbd7f2b583bf29441ebc386f60c048400aaa04456b2932732bb29b0ece1f6e4c"
+    },
+    "runtime-attestation.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/runtime-attestation.json",
+      "bytes": 974,
+      "sha256": "bf3452f2b9131fda16a55b3b91a62359281fcf949478b6e44e991ccdf18615aa"
+    },
+    "toolchain-admission.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/toolchain-admission.json",
+      "bytes": 1346,
+      "sha256": "e2a8501f8edad3a1e2881872dea7b35365e62835eaea321dbca586ce4ae2fd5b"
+    },
+    "worker-time.json": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4/worker-time.json",
+      "bytes": 2127,
+      "sha256": "fa5dea87f0a2c6e90e82d24541ede523d26707c6a02b678106725011d1094b44"
+    }
+  },
+  "scheduler_dom": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/FLORA-Q4-TERMINAL.txt",
+    "bytes": 8591,
+    "sha256": "b5e78e9d8dfb91c7d0b35cbfa21b8c4f7e02898b0e392ff98035f27a21120756"
+  },
+  "scheduler_image": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/FLORA-Q4-TERMINAL.jpg",
+    "bytes": 120696,
+    "sha256": "22f15d396b65b80d1bd7eb48b99406a30b636bc64f1eaf4c87bf346998a09bf4"
+  },
+  "next_action": "No automatic retry; preserve failed output/clock. Need coherent isolated toolkit resource-only successor before another allocation.",
+  "next_poll": null
+}

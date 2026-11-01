@@ -4,12 +4,12 @@
   "owner": "/root",
   "execution_owner": "/root/finish_assembly",
   "projection_only": true,
-  "status": "all_comparison_jobs_terminal_R3_version_literal_guard_failed",
-  "snapshot_unix": 1793524270.894956,
-  "gpu_seconds_actual": 2353,
+  "status": "FloraR4_terminal_failed_RoboCasa_env_setup_active",
+  "snapshot_unix": 1793526598.21939,
+  "gpu_seconds_actual": 2630,
   "gpu_seconds_reserved": 0,
   "cpu_worker_seconds_actual": 287,
-  "cpu_worker_seconds_reserved": 0,
+  "cpu_worker_seconds_reserved": 1800,
   "actions": {
     "S": 0,
     "F": 0,
@@ -103,17 +103,36 @@
       "status": "Failed_before_Torch_or_model",
       "gpu_seconds_actual": 62,
       "actions": 0
+    },
+    {
+      "job_id": "job-o77mgq2hdeo6",
+      "kind": "Flora_Ninja_literal_R4",
+      "status": "Failed_compiler_header_minor_mismatch",
+      "gpu_seconds_actual": 277,
+      "actions": 0
+    },
+    {
+      "job_id": "job-38u7acb9ebdf",
+      "kind": "RoboCasa365_fresh_native_setup_cpu_q1",
+      "status": "Running_first_advancement",
+      "gpus": 0,
+      "cpus": 16,
+      "ram_gib": 64,
+      "cpu_worker_seconds_reserved": 1800,
+      "cpu_worker_seconds_actual": null,
+      "actions": 0,
+      "separate_fresh_setup_scope": true
     }
   ],
-  "note": "Projection of same authoritative clocks/receipts for root-owned canonical ledger; no second resource clock or budget. All failed charges retained once. Unused loading3127 and obsolete conversion3509 are not transferred to Flora/scientific work.",
+  "note": "Projection only of original authoritative clocks/receipts. GPU2630=2353prior+277R4. CPU287closed plus freshsetup1800reserved; no terminal CPU charge claimed. All priorfailed/unusedsealed balances preserved, no budget transfer.",
   "terminal_receipt": {
-    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/READY40-LOADING-SMOKE-FINAL-RECEIPT.json",
-    "sha256": "3a62da06272d7daf69dce459a5675187791e74dd1c3b8bf10142ec1fe2cef0a4",
-    "bytes": 5577
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/FLORA-Q4-TERMINAL-RECEIPT.json",
+    "bytes": 5239,
+    "sha256": "00e9c559db16922729ac1a1099de3d912803f44f12a30da868bde70a3a72a1d0"
   },
   "projection_evidence": {
-    "commit": "76a0e5dc7a07797d2202f2aa452ec0cc8e28cd02",
-    "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q3-terminal-76a0e5dc/CANONICAL-LEDGER-PROJECTION-AFTER-FLORA-R3.json",
-    "sha256": "c1252a072444e3b935b5742468bc8726b6765e4f8a3ad858a439c7a337221f42"
+    "commit": "1a99cf24",
+    "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q4-terminal-1a99cf24/CANONICAL-LEDGER-PROJECTION-AFTER-FLORA-R4.json",
+    "sha256": "c1da472829ffcc3c5e9bdc55fb9e25c240b2f1097d7cc6c26a6c62602f77179e"
   }
 }
