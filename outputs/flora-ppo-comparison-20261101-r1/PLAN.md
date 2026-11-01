@@ -17,7 +17,27 @@ training reward in arm F.
 
 ## Setup
 
-- **Policy:** [`RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT@6222623f`](../../docs/frozen-vla-rlinf-libero.md).
+- **Policy:** the official OpenPI `gs://openpi-assets/checkpoints/pi05_libero`
+  release, already fine-tuned on LIBERO40. Use the same immutable starting
+  weights and normalization for both arms; do not train another LIBERO40 stage.
+  The staged source receipt is
+  `ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170`
+  and its JAX parameter signature is
+  `c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9`.
+  [Release provenance](../pi05-libero40-provenance-20261029-r1/PROVENANCE.json).
+- **Human correction (2026-11-01):** use OpenPI40 to test adaptation outside
+  the release's LIBERO fine-tuning task set. The earlier RLinf130 choice includes
+  task44 and would answer a seen-task fine-tuning question. It is not an allowed
+  fallback for this comparison. LIBERO40 already includes the operation "turn
+  on the stove"; task44 is a different benchmark task/scene instance, not proof
+  of a novel skill or absence from foundation pretraining. Task44 has also been
+  selected through prior development screening.
+- **RLinf loading prerequisite:** convert/load this exact source through the
+  official path, bind its normalization, tokenizer, camera/state/action mapping,
+  and verify fixed-input/fixed-noise action parity before the first update.
+  Record actual native step0 success under the comparison's sampler and
+  full-horizon final-state criterion. Historical OpenPI40 native6/20 is a
+  reference from another evaluation protocol, not this new baseline.
 - **Recipe:** RLinf's pi0.5 LIBERO PPO config, restricted to task 44, with
   the published PPO hyperparameters. To get more updates within a small
   budget, reduce the env count to 32 envs × 4 rollout epochs. That is about
