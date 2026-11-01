@@ -16,5 +16,13 @@
     "execution": "Bind the next finite action/iteration/evaluation/resource profile to the actual endpoints and uncertainty before dispatch; no fresh restart, sealed-budget borrowing, or unlimited campaign.",
     "current_trial_action_caps": "Unchanged until the conditional continuation is concretely bound."
   },
-  "inflight_migration": "Preserve the existing one-GPU job's complete evaluations and checkpoint. Never terminate it in an uncheckpointed partial rollout. New benchmark profiles use eight real workers; no claim of eightfold speedup before measurement."
+  "inflight_migration": "Preserve the existing one-GPU job's complete evaluations and checkpoint. Never terminate it in an uncheckpointed partial rollout. New benchmark profiles use eight real workers; no claim of eightfold speedup before measurement.",
+  "immediate_eight_gpu_supersession": {
+    "instructions": [
+      "no just start the 8 gpu ppo right now, it should be through the same batch pipeline",
+      "does rlinf not support distributed rl?",
+      "just fix it and run it"
+    ],
+    "decision": "Start eight-worker residual PPO now from the complete saved initial policy/critic/Adam/RNG checkpoint. The legacy partial first rollout is archived, excluded from SGD and conservatively charged; migration is dictated by resource steering, not outcomes. No wait for that legacy partial batch."
+  }
 }
