@@ -30,9 +30,9 @@ runs per the [retention policy](README.md#artifact-retention).
   configs, small additions) directly to `main`. Use detached worktrees for
   commit-pinned runs.
 - Create a feature branch only for a major feature change. Merge it into
-  `main` as soon as it is verified, and rebase onto `main` before starting
-  new work; long-lived parallel branches diverge into conflicting copies of
-  the same commits. Push `outputs/coordination.md` edits straight to `main`,
+  `main` as soon as its tests pass, then delete the branch locally and on
+  `origin`. Rebase onto `main` before starting new work; long-lived parallel
+  branches diverge into conflicting copies of the same commits. Push `outputs/coordination.md` edits straight to `main`,
   changing only your own row, never only on a feature branch.
 - For new runs, review and use the latest code on `main` before launch,
   recording its exact commit and relevant validation. Keep active runs

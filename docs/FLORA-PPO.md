@@ -58,9 +58,14 @@ before the next:
 3. **Collect histories** with Flora reward only, from learners that improve.
 4. **Steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
-   ([PAPER.md](PAPER.md)). The sample-efficiency claim is
-   query success per robot episode against ordinary Flora-reward DSRL at
-   equal interactions, with reset and reward-blind controls.
+   ([PAPER.md](PAPER.md)). The steering interface is a bounded action residual
+   (alternatives in [PAPER.md](PAPER.md)); the ordinary RL
+   baseline and the history-generating learner use the same interface as the
+   meta-learner ([review](literature/vla-steering-review.md)). The
+   sample-efficiency claim is query success per robot episode against that
+   ordinary Flora-reward learner at equal interactions, with reset and
+   reward-blind controls. Full-weight PPO is a reward check, not that
+   baseline.
 
 ## First test: LIBERO90 task 44, simulator reward vs Flora reward
 

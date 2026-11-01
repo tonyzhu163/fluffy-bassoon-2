@@ -9,7 +9,7 @@ Five core documents, read in this order, plus two reference folders:
 | [FLORA-PPO.md](FLORA-PPO.md) | The current first step: PPO with a learned video reward (Flora-Rewarder) on LIBERO, then RoboCasa |
 | [METHODS.md](METHODS.md) | Shared motors, steering interface, DSRL recipe, LIBERO protocol, code layout and tests |
 | this README | Map and conventions |
-| [literature/](literature/) | Reviews of published work: [in-context RL literature review](literature/in-context-rl-review.md), [VLRLA protocol](literature/vlrla-protocol.md), [DSRL recipe audit](literature/dsrl-recipe-audit.md), [pretraining scale](literature/pretraining-scale.md), [scale references](literature/scale-references.md) |
+| [literature/](literature/) | Reviews of published work: [in-context RL literature review](literature/in-context-rl-review.md), [VLRLA protocol](literature/vlrla-protocol.md), [DSRL recipe audit](literature/dsrl-recipe-audit.md), [frozen-VLA steering scoping review](literature/vla-steering-review.md), [pretraining scale](literature/pretraining-scale.md), [scale references](literature/scale-references.md) |
 | [robotwin/](robotwin/) | RoboTwin (Motus / VLRLA-style) method docs and evaluations: [setup](robotwin/vlrla.md), [setup evaluation](robotwin/vlrla/EVALUATION.md), [steering evaluation](robotwin/coefficient-steering/EVALUATION.md). Its run folders are in `outputs/archive/` |
 
 Live jobs and owners are in [`outputs/coordination.md`](../outputs/coordination.md).
