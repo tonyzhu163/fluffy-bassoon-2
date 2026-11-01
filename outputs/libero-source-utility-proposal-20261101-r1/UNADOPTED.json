@@ -1,0 +1,237 @@
+{
+  "format": "libero_source_utility_options_proposal_v1",
+  "status": "UNADOPTED_PROPOSAL_ONLY",
+  "adopted": false,
+  "execution_authorized": false,
+  "data_or_source_admission": false,
+  "new_tests": false,
+  "new_models": false,
+  "new_robot_actions": 0,
+  "source_scope_constraint": "ALL40 source tasks; exact future bindings remain null",
+  "retain": [
+    "all tasks",
+    "all warmup",
+    "all failures",
+    "stationary/flat/regressing lineages",
+    "legacy raw/teacher/replay/optimizer/RNG/datasets/recoveries"
+  ],
+  "excluded_source_data": [
+    "target44",
+    "native headroom screen",
+    "task57 DEV",
+    "LIBERO90",
+    "LIBERO-Plus",
+    "LIBERO-Pro"
+  ],
+  "options": [
+    {
+      "id": "A",
+      "question": "Paired initial/initialized/final teacher competence and same-mode improvement",
+      "selected": false,
+      "bindings": {
+        "tasks": null,
+        "conditions": null,
+        "reset_case_banks": null,
+        "lineages": null,
+        "splits": null,
+        "objectives": null,
+        "support_budgets": null,
+        "fit_seeds": null,
+        "fit_endpoints": null,
+        "thresholds": null,
+        "evaluation_modes": null,
+        "runtime": null,
+        "execution_source": null,
+        "action_ceiling": null,
+        "GPU_ceiling": null,
+        "CPU_ceiling": null,
+        "storage_ceiling": null,
+        "grants": null
+      }
+    },
+    {
+      "id": "B",
+      "question": "Actual learning-history content versus stationary retries",
+      "selected": false,
+      "bindings": {
+        "tasks": null,
+        "conditions": null,
+        "reset_case_banks": null,
+        "lineages": null,
+        "splits": null,
+        "objectives": null,
+        "support_budgets": null,
+        "fit_seeds": null,
+        "fit_endpoints": null,
+        "thresholds": null,
+        "evaluation_modes": null,
+        "runtime": null,
+        "execution_source": null,
+        "action_ceiling": null,
+        "GPU_ceiling": null,
+        "CPU_ceiling": null,
+        "storage_ceiling": null,
+        "grants": null
+      }
+    },
+    {
+      "id": "C",
+      "question": "Frozen full versus same-weight reset/static/reward-lesion/first-query/equal-cost utility",
+      "selected": false,
+      "bindings": {
+        "tasks": null,
+        "conditions": null,
+        "reset_case_banks": null,
+        "lineages": null,
+        "splits": null,
+        "objectives": null,
+        "support_budgets": null,
+        "fit_seeds": null,
+        "fit_endpoints": null,
+        "thresholds": null,
+        "evaluation_modes": null,
+        "runtime": null,
+        "execution_source": null,
+        "action_ceiling": null,
+        "GPU_ceiling": null,
+        "CPU_ceiling": null,
+        "storage_ceiling": null,
+        "grants": null
+      }
+    }
+  ],
+  "future_bindings": {
+    "tasks": null,
+    "conditions": null,
+    "reset_case_banks": null,
+    "lineages": null,
+    "splits": null,
+    "objectives": null,
+    "support_budgets": null,
+    "fit_seeds": null,
+    "fit_endpoints": null,
+    "thresholds": null,
+    "evaluation_modes": null,
+    "runtime": null,
+    "execution_source": null,
+    "action_ceiling": null,
+    "GPU_ceiling": null,
+    "CPU_ceiling": null,
+    "storage_ceiling": null,
+    "grants": null
+  },
+  "all40_filtering_allowed": false,
+  "positive_binary_gain_required_per_task": false,
+  "DPT_ceiling_teacher_valid_if_separately_competent": true,
+  "identification_equals_reward_ICRL": false,
+  "verified_cohorts": {
+    "all40_train": {
+      "episodes": 2108,
+      "K4": 527,
+      "failures": 94,
+      "SSSS": 454,
+      "warmup_chunks": 20436,
+      "total_chunks": 31351
+    },
+    "restricted_source2": {
+      "warmup_train_chunks": 1012,
+      "total_train_chunks": 1551,
+      "pre_SGD_training_recoveries": 2,
+      "post_update_training_successes": 37,
+      "post_update_training_failures": 0,
+      "final_actor_subsequent_physical_rollout_in_histories": false
+    },
+    "current_fit_bank": {
+      "episodes": 2332,
+      "K4": 583,
+      "added_episodes": 224,
+      "added_all_success": true
+    },
+    "cohort_overlap": "Not resolved or summed; percentages refer to distinct aggregate denominators"
+  },
+  "software_qualification": {
+    "synthetic_cases": 49,
+    "CPU_worker_seconds": 143,
+    "demonstrates_data_utility": false,
+    "real_source_or_teacher_execution": false
+  },
+  "V2_transition": {
+    "retrofit_legacy_e93_admitted": false,
+    "silent_cold_restart": false,
+    "old_data_role_upgrade": false,
+    "prospective_migration_adopted": false
+  },
+  "existing25h_proposal": {
+    "status": "UNFUNDED",
+    "replaced": false,
+    "split_or_spent": false,
+    "legacy_stream_continuations": 38,
+    "retained_quota_filled_CF49_roots": 2,
+    "validation_fixed8_import_only": true,
+    "existing_resource_charge_actions": 457851,
+    "count_existing_charge_once": true,
+    "legacy_VAL_DPT_labels": "independently trained VAL actor",
+    "commands_produce_V2_evidence": false,
+    "commands_establish_same_TRAIN_VAL_teacher": false
+  },
+  "primary_runtime_or_monitor_changed": false,
+  "source_refs": [
+    {
+      "role": "all40_train_feedback",
+      "path": "outputs/libero40-train-corpus-statistics-20261030-r1/README.md",
+      "sha256": "adb9c008fbcea9e9691780159c96375639d21fd13ab6d1cd813fede49776f5f3"
+    },
+    {
+      "role": "restricted_source1_source2",
+      "path": "outputs/libero-source-bank-quality-20261030-r1/REPORT.md",
+      "sha256": "fced159e28ef1710b15a2a0477ead036dfea08cf23c266508f3c208696ff52b0"
+    },
+    {
+      "role": "current_vs_historical_robot_readouts",
+      "path": "outputs/libero40-fixed100-analysis-20261031-r1/ANALYSIS.md",
+      "sha256": "6af59f08869698a787aa138dd62127c8aae68f1910a7266902d5b7f608ccf09d"
+    },
+    {
+      "role": "bridge_actual_new184",
+      "path": "outputs/libero40-sac-source-bridge-audit-20261031-r1/README.md",
+      "sha256": "caf37ab1490e3d457fbcac426fb6efeda140151020885264d29d6848d7354422"
+    },
+    {
+      "role": "current_cumulative_bank",
+      "path": "outputs/libero40-sac-source-bridge-audit-20261031-r1/canonical-counts.json",
+      "sha256": "519d2ab541e372c16046c4eb0c7dbdd17e827a2d0de893a6047e0e2d94d83227"
+    },
+    {
+      "role": "software49_actual143cpu",
+      "path": "outputs/libero-source-lineage-software-qual-20261101-r1/RESULT.md",
+      "sha256": "e6f8e06e15a79d701a62034c6c916a5373077affdf929455db714fff601ec278"
+    },
+    {
+      "role": "fresh_v2_metadata_only",
+      "path": "outputs/source40-compact-producer-preparation-20261101-r1/HANDOFF.md",
+      "sha256": "60b1baba0074c8bcfc66a0013714de70e98449640cf5a745e26af34c1b8991a6"
+    },
+    {
+      "role": "separate_unfunded25h",
+      "path": "outputs/libero40-source-scale-25h-20261031-r1/PROPOSAL.md",
+      "sha256": "5172381e0b103a3922aff1182656d84c20dfa1d68541a304b8e2dc53b6e7baec"
+    }
+  ],
+  "legacy_boundary_choices": [
+    {
+      "id": "new_original_lineages_and_derived_generation",
+      "adopted": false,
+      "bindings": null
+    },
+    {
+      "id": "separately_reviewed_honest_prospective_suffix",
+      "adopted": false,
+      "implemented_by_current_V2_flag": false,
+      "legacy_prefix_upgraded": false,
+      "bindings": null
+    }
+  ],
+  "old_task_caps_refilled": false,
+  "old_filled_roots_cold_relaunched": false,
+  "same_TRAIN_VAL_teacher_binding": null
+}
