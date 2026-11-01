@@ -1,0 +1,95 @@
+{
+  "status": "SOURCE_PREPARED_STATIC_ONLY_NOT_EXECUTION_ADMISSION",
+  "format": "libero40_existing_train_teacher_assessment_v1",
+  "adoption": "outputs/libero40-teacher-assessment-20261101-r1",
+  "assets": {
+    "AUTHORITY.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/AUTHORITY.json",
+      "sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c"
+    },
+    "GRANT.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/GRANT.json",
+      "sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436"
+    },
+    "PROTOCOL.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/PROTOCOL.json",
+      "sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2"
+    },
+    "ASSET-BINDING.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/ASSET-BINDING.json",
+      "sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0"
+    },
+    "METADATA-INVENTORY.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/METADATA-INVENTORY.json",
+      "sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6"
+    },
+    "ACTOR-TABLE.json": {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/ACTOR-TABLE.json",
+      "sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894"
+    }
+  },
+  "actor_selection": "All40 current canonical terminal TRAIN leaves; prospective metadata/table binding, no outcome selection",
+  "ordinal": "Interleaved suite order spatial/object/goal/libero_10 for task0, then task1, through task9",
+  "state_ids": [
+    40,
+    41
+  ],
+  "scene_seed": 123,
+  "assessment_seed": "20261101 + 1000*source_ordinal + physical_state_id",
+  "role_order": [
+    "raw_native_full_H_Gaussian",
+    "exact_source_tied_Gaussian_warmup",
+    "preselected_final_TRAIN_SAC_mean",
+    "preselected_final_TRAIN_SAC_sample"
+  ],
+  "omitted_roles": [
+    "original_initialized_SAC_mean_if_retained",
+    "original_initialized_SAC_sample_if_retained"
+  ],
+  "omitted_initial_slots": 160,
+  "initial_absence_scope": "No index-referenced original pre-SGD/earliest raw-only actor in40 current and3 bound ancestor indices; not a global filesystem absence claim; do not regenerate",
+  "planned_episodes": 320,
+  "schedule_all_in_actions_bound": 131200,
+  "grant_episode_ceiling_unchanged": 480,
+  "grant_action_ceiling_unchanged": 196800,
+  "omitted_capacity_repurposable": false,
+  "horizon": 400,
+  "settles": 10,
+  "flow_steps": 10,
+  "native_noise_shape": [
+    10,
+    32
+  ],
+  "source_warmup_noise": "Unbounded standard Gaussian32 repeated across H10",
+  "source_actor_input": "Original sac_observation pixel64 uint8/state8 float32, original actor architecture/API; no student feature normalization",
+  "source_actor_action": "Original deterministic eval_actions or stochastic sample_actions; rollout clip[-1,1] and repeat H10; no rescaling",
+  "source_public_feature_pairing": "Frozen OpenPI prefix4104, exact post-settle raw images/proprioception/state-vector/simulator-state hashes and instruction before steering",
+  "runtime": {
+    "OpenPI": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "DSRL": "7f48937d4553e95244cd81c79236a3256df80597",
+    "LIBERO": "87edbd1b823e464bc66557d213cc45e9f88aa543",
+    "motor_receipt": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "motor_parameters": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9"
+  },
+  "recovery": "Complete-episode cursor plus full global/motor/actor-private/local-noise RNG evidence and exact case forks; active/uncertain episode is preserved and refused, never replayed automatically. Actual source full learning state/replay/RNG archived unchanged; exact state fingerprint before/after each role.",
+  "original_actor_payload_bytes": 2323746672,
+  "original_payload_new_output_copies": 0,
+  "original_TRAIN_cumulative_action_provenance": 351297,
+  "prior_cost_policy": "Current cumulative leaves already include ancestor costs; link once, never add ancestors or recharge source data. No per-actor GPU sum invented from old caps.",
+  "assessment_optimizer_updates": 0,
+  "source_pretraining_admitted": false,
+  "new_source_generation": false,
+  "new_student_fit": false,
+  "qualification": "First planned native episode: actual one-GPU/model/actor/input proof, same-noise2 calls and feature qualification after the same reset; no extra physical episode, all time/I-O included. All40 published full checkpoints SHA/full payload bound before any new outcomes.",
+  "CPU_selectors": [
+    "tests/test_vla_source40_teacher_assessment_profile.py",
+    "tests/test_vla_source40_teacher_assessment_runtime.py"
+  ],
+  "CPU_scope": "Fresh180worker-s/0GPU2CPU16GiB, only these new synthetic tests, no real checkpoint/JAX/VLA/simulator, no legacy suite rerun",
+  "GPU_scope": "Single10740worker-s+60startup/179scheduler-min, aggregate10800,1GPU16CPU96GiBshm8/retryOFF; existing owner sole launcher, beginning clock before probes/imports",
+  "fit_gate": false,
+  "teacher_or_source_automatic_admission": false,
+  "actual_execution_commit": null,
+  "allocated_job": null,
+  "qualification_result": null
+}
