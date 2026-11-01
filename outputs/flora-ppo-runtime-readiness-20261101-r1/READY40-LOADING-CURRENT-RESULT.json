@@ -1,0 +1,79 @@
+{
+  "format": "ready40_loading_smoke_current_result_v1",
+  "checked_unix": 1793515517.303823,
+  "scientific_source": "a3b6111ac79e19ec12c99a3df6dcae8d201f4b53",
+  "reviewed_main": "582924d62bddeb61f1dd60991d5f12d7e2f4286e",
+  "relevant_main_source_diff_empty": true,
+  "cpu": {
+    "job": "job-dtz06yz20uw3",
+    "passed": 67,
+    "total": 67,
+    "inclusive_worker_seconds": 97,
+    "actual_gpus": 0
+  },
+  "initializer": {
+    "artifact": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/READY40-INITIALIZER-ARTIFACT.json",
+      "sha256": "b2302b85484d89d4ed70f2ba4368ca52c587354bbaad80c4bb7982321a94f94e",
+      "bytes": 1782
+    },
+    "actual_gpu_loading": {
+      "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/loading-q1/loading-qualification.json",
+      "sha256": "a5131c58f3595c4184d5ce888349a8069fd132718b95fa25b65bcb2f30e52675",
+      "bytes": 3411
+    },
+    "backbone_missing_keys": [],
+    "unexpected_keys": [],
+    "expected_fresh_value_head_keys": 8,
+    "observed_value_head_seed": 42,
+    "actual_value_head_sha256": "01fdac81d820851643161e8880f410ad5241ca290a975433ac9497af2eae3dc4"
+  },
+  "attempts": [
+    {
+      "job": "job-vtv5x8m5xeve",
+      "status": "Failed",
+      "exit_code": 1,
+      "inclusive_gpu_seconds": 136,
+      "reason": "Ray AF_UNIX temporary path >107bytes",
+      "simulator_actions": 0
+    },
+    {
+      "job": "job-c8escb672jzl",
+      "status": "Failed",
+      "exit_code": 1,
+      "inclusive_gpu_seconds": 88,
+      "scheduler_runtime_seconds": 51,
+      "reason": "Official c605 validate_fsdp_cfg requires OpenPI lowprecision mixed_precision_rules; absent in a3 config",
+      "simulator_actions": 0
+    }
+  ],
+  "same_loading_ticket_gpu_seconds": 3600,
+  "charged_loading_gpu_seconds": 224,
+  "remaining_loading_gpu_seconds": 3376,
+  "obsolete_converter_gpu_seconds": 91,
+  "obsolete_converter_unused_closed": 3509,
+  "simulator_actions": 0,
+  "episodes": 0,
+  "ppo_updates": 0,
+  "runtime_root_clock": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/loading-q2/worker-time.json",
+    "sha256": "c2bb86480ca18aa628494a8945fb9456993754ba8778ddc356c628511c5390a0",
+    "bytes": 1382
+  },
+  "last_failure": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/loading-q2/console.log",
+    "sha256": "23c24a18f8807ec4e420de23e95942e1c941d965af2d09182954c133b2fe1eff",
+    "bytes": 9718
+  },
+  "gpu_probe": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/loading-q2/gpu-probe.json",
+    "sha256": "0975ff6309a4c6d22954a7aa9cd9d2a544e6c6b3fcb96b8a2e02e518b549e348",
+    "bytes": 2881
+  },
+  "scheduler_proof": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/READY40-GPU-R2-TERMINAL.txt",
+    "sha256": "54f99b4a084053926372e2734715d153713eaa2f82281ab3d22b8cc836da25c7",
+    "bytes": 8600
+  },
+  "next_action": "Single sourcewriter corrects official precision rules and focused validator regression; no blind retry. Preserve successful load/67 unchanged cases, qualify affected source under true remaining CPU/GPU caps."
+}

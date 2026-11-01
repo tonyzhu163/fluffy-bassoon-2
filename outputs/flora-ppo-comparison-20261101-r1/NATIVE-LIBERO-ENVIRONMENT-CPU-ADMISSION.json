@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "ticket_id": "native_libero_environment_import_q1",
+  "status": "admitted_diagnosed_environment_qualification_no_new_ACK",
+  "source_commit": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "reason": "Actual GPUQ3 passed source/FSDP validation but could not import LIBERO before any simulator reset; retained RoboTwin model environment lacked LIBERO/robosuite/bddl.",
+  "environment": {
+    "route": "Exact c605 install_libero_env() route, public rlinf-libero0.1.3 and official assets, fresh isolated Python3.11 environment.",
+    "required": "Freeze distribution/wheel/source/config/asset paths and hashes before admission; keep old environment and inputs unchanged. Retain same-ABI policy packages only, record actual Torch/Transformers/OpenPI/c605 origins. No DSRL Python3.10 simulator injection or shared-env mutation."
+  },
+  "resource": {
+    "gpus": 0,
+    "cpus": 8,
+    "ram_gib": 32,
+    "scheduler_minutes": 2,
+    "retry": false,
+    "total_inclusive_CPU_worker_seconds": 180,
+    "inner_seconds": 60,
+    "term_seconds": 100,
+    "kill_seconds": 110,
+    "outer_seconds": 120,
+    "startup_allowance_seconds": 60,
+    "output_mib": 128
+  },
+  "original_CPU_phase": {
+    "ceiling": 360,
+    "already_charged": 176,
+    "remaining_before_child": 184,
+    "child_max": 180,
+    "unrequested": 4,
+    "prior_charges": [
+      97,
+      79
+    ],
+    "policy": "Original clocks/headers and both charges remain immutable. Explicit environment-child migration under same360; no newCPUgrant, clockreset or borrowedclosedbalances."
+  },
+  "scope": [
+    "Actual native-process import origins/versions for LIBERO,robosuite,bddl and c605 LIBERO adapter; benchmark registration and required task44 assets/config paths.",
+    "Existing qualified source/config import checks only; no old67/five-case rerun.",
+    "No policy/VLA/scorer model, real simulator constructor/reset/action, SGD, feature encoding or productioncheckpoint load.",
+    "Capture underlying exceptions; genuinelyGPU-only backend behavior is reported as unavailable onCPU, not a fabricated import pass. GPU-specific runtime still must pass inside the next actual GPU allocation."
+  ],
+  "next_gpu": {
+    "loading_clock_limit": 3600,
+    "loading_charged": 319,
+    "loading_remaining": 3281,
+    "obsolete_converter_charge_separate": 91,
+    "maximum_additional_episodes": 1,
+    "maximum_common_actions": 415,
+    "instruction": "After actual scoped environment admission, uniquely identified GPU successor on unchanged qualified dd773 and isolated environment. No extra standalone load if policy model dependencies/code truly unchanged; otherwise do not claim old loading carry. Preserve allfailedattempts and actualpre-RPC intents."
+  },
+  "execution_owner": "/root/finish_assembly"
+}
