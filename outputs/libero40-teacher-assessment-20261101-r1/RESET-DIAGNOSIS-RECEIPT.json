@@ -1,0 +1,149 @@
+{
+  "format": "assessment_reset_two_record_independent_execution_receipt_v1",
+  "job_id": "job-jdmmhqjjisxg",
+  "source_commit": "aab7513d96e88d90ce43ab15689547fdac82e095",
+  "reviewed_latest_main": "173579d81df3d4090837954a1df79c90f9cd49ad",
+  "actual_CPU_cores": 2.0,
+  "actual_memory_bytes": 17179869184,
+  "actual_GPU_count": 0,
+  "Torch": "2.11.0+cu128",
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+  "passed_tests": 4,
+  "failed_tests": 0,
+  "analysis_exit_code": 0,
+  "charged_CPU_worker_seconds": 74,
+  "prior_CPU_worker_seconds": 80,
+  "original_cumulative_CPU_worker_seconds": 154,
+  "original_CPU_cap": 180,
+  "unused_CPU_worker_seconds": 26,
+  "original_clock_untouched": true,
+  "GPU_seconds": 0,
+  "new_actions": 0,
+  "classification": "actual_saved_array_difference",
+  "main_RGB_exact": true,
+  "public_state8_exact": true,
+  "saved_simulator_state92_exact": true,
+  "wrist_mismatching_channels": 2,
+  "wrist_maximum_absolute_delta": 1.0,
+  "wrist_scalar_differences": [
+    {
+      "index": [
+        128,
+        54,
+        0
+      ],
+      "reference": 64,
+      "failed": 65
+    },
+    {
+      "index": [
+        128,
+        54,
+        1
+      ],
+      "reference": 60,
+      "failed": 61
+    }
+  ],
+  "nominal_state_hash_equal": true,
+  "input_before_after_proof": {
+    "reference": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz",
+      "declared_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "before_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "bytes": 178636,
+      "mtime_ns": 1793504044369427000,
+      "after_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "unchanged": true
+    },
+    "failed": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+      "declared_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "before_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "bytes": 163736,
+      "mtime_ns": 1793504049899166000,
+      "after_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "unchanged": true
+    }
+  },
+  "failed_features_unavailable": "UNAVAILABLE",
+  "failed_instruction_unavailable": "UNAVAILABLE",
+  "reference_scene_seed_unavailable": "UNAVAILABLE",
+  "full_guard_reconstructable": false,
+  "limits": [
+    "FAILED computed4104 features were not saved; no feature equality or causal attribution can be inferred.",
+    "Missing instruction/scene seed/nominal vector remains UNAVAILABLE; no values inferred from filenames or other episodes.",
+    "No native160 raw record, source/actor/checkpoint/model, replay, simulator or VLA recomputation read.",
+    "No tolerance relaxation, prescribed repair, failed-role replay or recovery/admission decision."
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/allocation.json",
+      "sha256": "9f5805cd307d7635489476b05fbf5278a0f12253e4cb915113bbbc47940ec0e8",
+      "bytes": 1899
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/analysis-command.json",
+      "sha256": "a623e25f343be71bb36238b0d24fc22cac783a23e62381a36258a5ade78cb2f6",
+      "bytes": 1200
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/analysis.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/cpu-worker-clock.json",
+      "sha256": "0678e81d3dda276ea208167f5e416c6cbfddbf08359dcfe78a38778b4325c8c0",
+      "bytes": 1139
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/junit.xml",
+      "sha256": "bfb0c5b19b48abf8b0da1e3ab21c17573da95999307ff70134228203680373a9",
+      "bytes": 976
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/pytest.log",
+      "sha256": "c7d632bffaa4f337154c907b48817f17a83cba4df9ee55fa4ce667a956bdcfa4",
+      "bytes": 230
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/reset-diagnosis.json",
+      "sha256": "33095b3dac804e1b4caf5d3c49aa1cbe155e2d91147c3f8baf0ee9fb9a8154ff",
+      "bytes": 6597
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/summary.json",
+      "sha256": "7d33f7c9d58df5d5dd01b2d10c0dc0b0be6d77f3da4f7829cba8804f0817073e",
+      "bytes": 705
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-r1/zero-gpu-attestation.json",
+      "sha256": "4500f3febdda1c6ca9aa443cb7884e1ba7b7b9b09b73d4a2779efb5c10fc19ed",
+      "bytes": 987
+    }
+  ],
+  "command": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/RESET-DIAGNOSIS-CPU-COMMAND.sh",
+    "sha256": "92558b3d16d9402a665cbfc040188563c701b722d6a7551df085fb5bc0f3d1c9",
+    "bytes": 7000
+  },
+  "GPU_retry_admitted": false,
+  "production_guard_changed": false,
+  "failed_role_replayed": false,
+  "next_primary_check": "2026-11-01 12:10 Asia/Shanghai",
+  "scheduler_status": "Succeeded",
+  "scheduler_created": "2026-11-01 11:52:50 Asia/Shanghai",
+  "scheduler_ended": "2026-11-01 11:53:33 Asia/Shanghai",
+  "scheduler_reported_duration_seconds": 30,
+  "scheduler_proof": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/reset-diagnosis-cpu-terminal.jpg",
+    "sha256": "569502123481d3b0b4abd83505f5a8499646d7a58feacbefdfbefea4ff39525e",
+    "bytes": 71628
+  }
+}

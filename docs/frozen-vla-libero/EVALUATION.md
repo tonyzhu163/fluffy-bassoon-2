@@ -57,9 +57,10 @@ physical states40–49 with two private-noise draws each.
 | Sixteenth learned panel |20/20|320,040|
 | Seventeenth learned panel |20/20|340,060|
 | Eighteenth learned panel |20/20|360,080|
+| Nineteenth learned panel |20/20|380,000|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest360,080 panel uses1,481 query primitives+200
+development bank. The latest380,000 panel uses1,482 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -153,12 +154,29 @@ failed reset adds10 settling actions:26,096 total over162 physical resets,
 with1,340 GPU-seconds and unchanged whole-motor C565 before/after. The first
 20 complete goals give native40/40, mean40/40, sampled40/40 and tied37/40;
 the extra native1/1 is separate. This is partial ceiling evidence, not full40
-competence or SGD improvement. The exact failed comparison term is unknown;
-saved raw/state/instruction drift and derived-feature/instrumentation drift
-remain competing explanations. Failed computed features were not saved. A
-bounded CPU-only comparison of the two saved records precedes any repair;
-strict pairing, active161 and all unrun rows remain intact. No retry is
-admitted. [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
+competence or SGD improvement. The allocated saved-record diagnosis passes four tests and costs74 CPU-worker
+seconds,154/180 total. Main RGB, public state8 and simulator state92 are byte
+identical; only two wrist uint8 channels differ by one level. The failed
+4104D feature and instruction were not saved, so the complete original guard
+cannot be reconstructed and no rendering cause is established. The existing
+source40 contract already allows one camera LSB while requiring exact physics
+and proprioception. A narrow opt-in successor is being prepared under that
+contract: preserve failed161 as a null-score aborted reset, never replay it,
+and continue only158 unstarted roles. Its final closure would contain319
+scored episodes plus one abort; no all320-valid claim or source/student
+admission follows. Original files/clock/costs remain intact. Exact code,
+focused allocated qualification and conservative storage/resource admission
+are still required; no GPU retry is admitted. [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
+
+A separate controlled-depth study is adopted for preparation on the current
+583-K4/33,729-TRAIN-row bank: four fixed seed0 full/static AD/DPT models
+continue100 to500 total updates only after exact model/Adam/sampler/RNG and
+normalizer compatibility is verified. The old527-K4 fixed500 results are not
+this control. Same-TRAIN validation relabeling changes no TRAIN bytes; its
+corrected metric is separate and cannot select a checkpoint. The bounded
+7,200-GPU-second fit envelope grants no robot readout, source collection or
+new55.25h generation campaign. Offline fitting alone establishes no robotic
+or memory benefit. [Scope](../../outputs/libero40-fixed-bank500-controlled-fit-20261101-r1/AUTHORITY.json).
 
 ## Task57 fixed500k DSRL curve complete
 
