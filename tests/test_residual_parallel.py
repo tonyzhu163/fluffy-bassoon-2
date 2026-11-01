@@ -159,7 +159,8 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
     monkeypatch.setattr(module.subprocess,'Popen',child)
     cases=[dict(task='OpenDrawer',slot=i) for i in range(50)]
     profile=dict(rollout_devices=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0) for i in range(8)],
-        attempt='core',episode_id_namespace='PPO-task-',deadline_unix=time.time()+60,closure_seconds=1)
+        attempt='core',source_commit='a'*40,episode_id_namespace='PPO-task-',
+        deadline_unix=time.time()+60,closure_seconds=1)
     if distributed:
         from fluffy_bassoon.meta_rl import rlinf_flora_ppo
         original_write=rlinf_flora_ppo.write_new
