@@ -59,9 +59,13 @@ def initializer_manifest(receipt,model_directory):
     return list(files.values())
 
 
-def baseline_validation(rows):
+def baseline_validation(rows,protocol=None):
     """Paired scorer validation only; never fit a training-reward threshold."""
-    if len(rows)!=64 or len({r['id'] for r in rows})!=64:raise ValueError('Exactly64 unique fresh baseline episodes required')
+    count=8 if protocol is not None else 64
+    if protocol is not None:
+        from .rlinf_robocasa_ppo import validate_protocol
+        validate_protocol(protocol)
+    if len(rows)!=count or len({r['id'] for r in rows})!=count:raise ValueError('Exact unique fresh baseline episode bank required')
     scores=[];truth=[]
     for row in rows:
         score=row['expected_score'];label=row['simulator_final_success']
@@ -69,40 +73,48 @@ def baseline_validation(rows):
             raise ValueError('Finite official expected-score and separate binary calibration truth required')
         scores.append(score);truth.append(label)
     positives=[s for s,y in zip(scores,truth) if y];negatives=[s for s,y in zip(scores,truth) if not y]
-    rate=len(positives)/64
+    rate=len(positives)/count
     auc=None if not positives or not negatives else sum(float(p>n)+.5*float(p==n) for p in positives for n in negatives)/(len(positives)*len(negatives))
-    return dict(format=FORMAT,baseline_sha256=digest(rows),score_field='expected_score',
-        training_reward_rule='(expected_score-1)/4; no threshold or fitted transform',count=64,
+    result=dict(format=FORMAT,baseline_sha256=digest(rows),score_field='expected_score',
+        training_reward_rule='(expected_score-1)/4; no threshold or fitted transform',count=count,
         initial_success_rate=rate,AUROC=auc,go=bool(.05<=rate<=.70 and auc is not None and auc>=.7),
         calibration_only=True,policy_optimizer_updates=0)
+    if protocol is not None:result['protocol']=deepcopy(protocol)
+    return result
 
 
-def validate_video(episode):
+def validate_video(episode,protocol=None):
+    horizon=400;camera=['agentview']
+    if protocol is not None:
+        from .rlinf_robocasa_ppo import validate_protocol
+        validate_protocol(protocol)
+        horizon=protocol['horizon'];camera=['robot0_agentview_left']
     fields={'id','task','camera_order','info_on_video','extra_info_on_video','raw_rgb_only',
         'success_termination_disabled','horizon','completed','video','frame_clock','rank','round','local_env'}
-    if (set(episode)!=fields or episode['task']!=TASK
-            or episode.get('camera_order')!=['agentview'] or episode.get('info_on_video') is not False
+    if (set(episode)!=fields or (episode['task']!=TASK if protocol is None else
+            not isinstance(episode['task'],str) or not episode['task'].strip())
+            or episode.get('camera_order')!=camera or episode.get('info_on_video') is not False
             or episode.get('extra_info_on_video')!=[] or episode.get('raw_rgb_only') is not True
             or episode.get('success_termination_disabled') is not True
-            or episode.get('horizon')!=400 or episode.get('completed') is not True):
+            or episode.get('horizon')!=horizon or episode.get('completed') is not True):
         raise ValueError('Only completed full-horizon clean agentview episodes are scoreable')
     video=episode['video'];clock=episode['frame_clock']
     if (set(video)!={'path','sha256'} or set(clock)!={'frame_count','native_fps','encoded_fps','resampled',
             'physical_steps','initial_frame_included','timestamp_sha256'}
-            or type(clock['frame_count']) is not int or clock['frame_count']!=401
+            or type(clock['frame_count']) is not int or clock['frame_count']!=horizon+1
             or not math.isfinite(clock['native_fps']) or clock['native_fps']<=0
             or clock['encoded_fps']!=clock['native_fps'] or clock.get('resampled') is not False
-            or clock['physical_steps']!=400 or clock.get('initial_frame_included') is not True
+            or clock['physical_steps']!=horizon or clock.get('initial_frame_included') is not True
             or not isinstance(clock.get('timestamp_sha256'),str) or len(clock['timestamp_sha256'])!=64
             or len(video['sha256'])!=64 or not Path(video['path']).is_absolute()):
         raise ValueError('Actual synchronized native frameclock/video identity required; no default30FPS')
     return dict(id=episode['id'],task=episode['task'],videos=[video['path']])
 
 
-def flora_jobs(episodes):
+def flora_jobs(episodes,protocol=None):
     if not episodes or len({e['id'] for e in episodes})!=len(episodes):raise ValueError('Unique fresh episode IDs required')
     # No labels, rewards, success, episode length annotations or score enter the prompt.
-    return [validate_video(e) for e in episodes]
+    return [validate_video(e,protocol) for e in episodes]
 
 
 def terminal_command(python,model_directory,jobs,output,*,seed=0):
@@ -112,18 +124,19 @@ def terminal_command(python,model_directory,jobs,output,*,seed=0):
         '--gpu-memory-utilization','0.78']
 
 
-def checked_labels(episodes,outputs,validation,receipt):
+def checked_labels(episodes,outputs,validation,receipt,protocol=None):
     if (validation.get('go') is not True or validation.get('score_field')!='expected_score'
             or receipt.get('code_commit')!=FLORA_CODE or receipt.get('model_revision')!=FLORA_MODEL
-            or receipt.get('completed') is not True or receipt.get('jobs_sha256')!=digest(flora_jobs(episodes))
+            or receipt.get('completed') is not True or receipt.get('jobs_sha256')!=digest(flora_jobs(episodes,protocol))
             or receipt.get('video_refs_sha256')!=digest([e['video'] for e in episodes])):
         raise ValueError('Successful frozen baseline validation and pinned completed Flora batch required')
-    return parse_outputs(episodes,outputs)
+    if protocol is not None and validation.get('protocol')!=protocol:raise ValueError('Flora gate belongs to another native task/horizon')
+    return parse_outputs(episodes,outputs,protocol)
 
 
-def parse_outputs(episodes,outputs):
+def parse_outputs(episodes,outputs,protocol=None):
     """Official terminal output validation, also usable before the baseline gate."""
-    flora_jobs(episodes)
+    flora_jobs(episodes,protocol)
     expected={e['id']:e for e in episodes}
     if len(expected)!=len(episodes) or len(outputs)!=len(episodes) or len({r['id'] for r in outputs})!=len(outputs):
         raise ValueError('All fresh batch labels required; no missing, duplicate or dropped episode')
@@ -140,11 +153,11 @@ def parse_outputs(episodes,outputs):
     return labels
 
 
-def relabel_full_horizon(raw_rewards,valid_mask,episode_ids,labels):
+def relabel_full_horizon(raw_rewards,valid_mask,episode_ids,labels,*,horizon=400):
     """One terminal scalar per column BEFORE standard chunk-level GAE."""
     import numpy as np
     raw=np.asarray(raw_rewards);mask=np.asarray(valid_mask)
-    if (raw.ndim!=3 or not np.issubdtype(raw.dtype,np.floating) or raw.shape[0]*raw.shape[2]!=400 or mask.shape!=raw.shape or mask.dtype!=np.bool_
+    if (type(horizon) is not int or horizon<=0 or raw.ndim!=3 or not np.issubdtype(raw.dtype,np.floating) or raw.shape[0]*raw.shape[2]!=horizon or mask.shape!=raw.shape or mask.dtype!=np.bool_
             or not mask.all() or len(episode_ids)!=raw.shape[1] or len(set(episode_ids))!=len(episode_ids)
             or set(labels)!=set(episode_ids) or any(type(v) not in (float,int) or not math.isfinite(v) or not 0<=v<=1 for v in labels.values())
             or not np.isfinite(raw).all()):raise ValueError('Complete matched full400-step batch/mask/normalized labels required')
@@ -153,17 +166,22 @@ def relabel_full_horizon(raw_rewards,valid_mask,episode_ids,labels):
     return result
 
 
-def freeze_batch(path,*,arm,iteration,episodes,rollout_ref,recovery_refs,rank_pending_receipts,profile_sha256,policy_sha256):
-    if arm not in ('S','F') or type(iteration) is not int or iteration<1 or len(episodes)!=128:
+def freeze_batch(path,*,arm,iteration,episodes,rollout_ref,recovery_refs,rank_pending_receipts,profile_sha256,policy_sha256,protocol=None):
+    count=64 if protocol is not None else 128
+    if protocol is not None:
+        from .rlinf_robocasa_ppo import validate_protocol
+        validate_protocol(protocol,training=True)
+    if arm not in ('S','F') or type(iteration) is not int or iteration<1 or len(episodes)!=count:
         raise ValueError('Matched32env×4rounds completed on-policy batch required')
-    jobs=flora_jobs(episodes)
+    jobs=flora_jobs(episodes,protocol)
     if (not recovery_refs or any(not r.get('complete') or not r.get('optimizer_sampler_RNG') for r in recovery_refs)
             or rollout_ref.get('producer_iteration')!=iteration-1):raise ValueError('Full pending-batch recovery and producing policy version required')
     value=dict(format=FORMAT,arm=arm,iteration=iteration,producer_iteration=iteration-1,episodes=deepcopy(episodes),
         jobs_sha256=digest(jobs),rollout=rollout_ref,recovery=recovery_refs,profile_sha256=profile_sha256,
         policy_sha256=policy_sha256,status='WAITING_LABELS',optimizer_updates_for_batch=0)
     keys=[(e['rank'],e['round'],e['local_env']) for e in episodes]
-    if len(set(keys))!=128:raise ValueError('Native rank/round/env layout must identify every fresh episode')
+    if protocol is not None:value['protocol']=deepcopy(protocol)
+    if len(set(keys))!=count:raise ValueError('Native rank/round/env layout must identify every fresh episode')
     value['episode_ids_by_rank']={str(rank):[e['id'] for e in sorted(episodes,key=lambda x:(x['round'],x['local_env'])) if e['rank']==rank]
         for rank in sorted({e['rank'] for e in episodes})}
     if (set(rank_pending_receipts)!=set(value['episode_ids_by_rank'])
@@ -197,4 +215,5 @@ def ready_rewards(batch,ready,raw_rewards,valid_mask,episode_ids):
     if batch['arm']=='F':
         import numpy as np
         if np.any(np.asarray(raw_rewards)!=0):raise ValueError('Strip native rewards in environment transport before Flora actor receives the batch')
-    return relabel_full_horizon(raw_rewards,valid_mask,episode_ids,{key:ready['labels'][key] for key in episode_ids})
+    return relabel_full_horizon(raw_rewards,valid_mask,episode_ids,{key:ready['labels'][key] for key in episode_ids},
+        horizon=batch.get('protocol',{}).get('horizon',400))

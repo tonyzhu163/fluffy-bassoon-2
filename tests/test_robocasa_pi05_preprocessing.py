@@ -89,7 +89,7 @@ def test_action_mean_std_output_keeps_native_eef_gripper_base_order(native_pipel
     transforms, _, cfg, stats = native_pipeline
     predicted = np.linspace(-0.7, 0.9, 50 * 32, dtype=np.float32).reshape(50, 32)
     case = transforms.Unnormalize(stats, use_quantiles=cfg.use_quantile_norm)(
-        {"actions": predicted.copy()}
+        {"actions": predicted.copy(), "state": np.zeros(32, np.float32)}
     )
     for transform in cfg.data_transforms.outputs:
         case = transform(case)

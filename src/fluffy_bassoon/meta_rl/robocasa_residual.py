@@ -5,15 +5,12 @@ pass supplies the features. The environment is RLinf's native365 wrapper;
 only accounting, raw video and terminal-truth isolation are added here.
 """
 from copy import deepcopy
-from dataclasses import asdict
-import json
 from pathlib import Path
-import random
 
 import numpy as np
 import torch
 
-from .residual_ppo import config_record, stack_records
+from .residual_ppo import config_record
 from .rlinf_native_ppo import cpu_tree, restore_rng, sha, snapshot_rng
 from .warmstart import atomic_save
 
@@ -168,7 +165,8 @@ class RoboCasaResidualEnvironment:
         self.active = False
         episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=["robot0_agentview_left"],
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
-            info_on_video=False, extra_info_on_video=[], video=dict(path=str(self.video), sha256=sha(self.video)),
+                info_on_video=False, extra_info_on_video=[], rank=0, round=self.cursor - 1, local_env=0,
+                video=dict(path=str(self.video), sha256=sha(self.video)),
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
         from .rlinf_flora_ppo import digest, write_new
