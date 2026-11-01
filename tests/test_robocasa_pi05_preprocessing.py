@@ -8,7 +8,7 @@ import pytest
 
 
 @pytest.fixture
-def native_pipeline(monkeypatch):
+def native_pipeline(monkeypatch, tmp_path):
     from openpi import transforms
     from openpi.models.pi0_config import Pi0Config
     from openpi.shared.normalize import NormStats
@@ -34,7 +34,7 @@ def native_pipeline(monkeypatch):
         use_quantile_norm=False,
         pad_before_normalization=True,
     )
-    cfg = factory.create(None, Pi0Config(pi05=True, action_horizon=50))
+    cfg = factory.create(tmp_path, Pi0Config(pi05=True, action_horizon=50))
     return transforms, factory, cfg, stats
 
 

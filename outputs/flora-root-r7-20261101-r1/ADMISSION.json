@@ -1,0 +1,22 @@
+{
+  "status": "ADMITTED",
+  "owner": "/root",
+  "same_original_clock": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q1-20261101-r1/clock",
+  "original_seconds": 3600,
+  "closed_seconds": 1510,
+  "maximum_inclusive_new_seconds": 2040,
+  "unrequested_seconds": 50,
+  "resource": {
+    "gpus": 1,
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "minutes": 33,
+    "retry": false
+  },
+  "diagnosis": "R6 actual sampling module link failed -lcudart; original pip overlay has lib/libcudart.so.13, no lib64 or unversioned linker name.",
+  "change": "Fresh output overlay lib64->lib and lib/libcudart.so->libcudart.so.13; LIBRARY_PATH points at same lib. Exact library bytes and all five official wheel identities unchanged. Build/load actual sampling extension before model.",
+  "physical_actions": 0,
+  "new_storage_gib": 16,
+  "automatic_retry": false
+}

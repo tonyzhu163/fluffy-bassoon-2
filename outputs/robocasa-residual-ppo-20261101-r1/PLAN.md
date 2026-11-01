@@ -1,5 +1,21 @@
 # Plan: bounded action-residual PPO on RoboCasa365 (code changes first)
 
+**Human update, 2026-11-01:** root now owns the RoboCasa binding and execution
+directly. The supplied decoder and residual cores are merged together. The
+first comparison is **simulator-reward residual PPO versus Flora-reward
+residual PPO**, with the same frozen Human30075000 motor and residual recipe.
+Full native action-expert PPO is deferred. This supersedes waiting for a
+separate full-weight owner below. Final policy/critic/Adam, exact config,
+global/private RNG and environment/motor sampler checkpoints are retained for
+both arms, including an early stop; fixed ID/OOD tests use those final policies.
+The binding checkpoints the entire completed pending batch before labels and
+updates. Its frozen input vector is normalized public proprio16, first/mean
+decoded action12 each, and masked mean features from the same native prefix
+pass with fixed RMS scaling. There is no rollout-fitted normalization change.
+New binding CPU tests and native loading remain unqualified until the allocated
+job finishes. Native headroom/zero-residual equivalence/Flora discrimination
+still precede actual learning; no RoboCasa episode or learner update has run.
+
 2026-11-01. Code changes 1, 2 and 4 are on `main` (merge `1b60857` of
 `c8f8a7a`: `src/fluffy_bassoon/rl/action_residual.py`,
 `src/fluffy_bassoon/meta_rl/residual_ppo.py`, `tests/test_residual_ppo.py`).
