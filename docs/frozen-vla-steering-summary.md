@@ -93,7 +93,7 @@ seconds. No search, useful teacher, source collection or student is admitted.
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through320,040
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through340,060
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three

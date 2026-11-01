@@ -89,7 +89,7 @@ no compatible source teacher or meta-learning result follows.
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through320,040 scores20/20. All panels are retained. This is interim
+from40,140 through340,060 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency

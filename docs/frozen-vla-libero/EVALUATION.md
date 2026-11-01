@@ -32,9 +32,10 @@ physical states40–49 with two private-noise draws each.
 | Fourteenth learned panel |20/20|280,000|
 | Fifteenth learned panel |20/20|300,140|
 | Sixteenth learned panel |20/20|320,040|
+| Seventeenth learned panel |20/20|340,060|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest320,040 panel uses1,488 query primitives+200
+development bank. The latest340,060 panel uses1,495 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
