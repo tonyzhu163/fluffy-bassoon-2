@@ -1,0 +1,60 @@
+{
+  "status": "ROOT_DIRECT_RESOURCE_ONLY_PINNED_SOURCE_PREPARATION",
+  "execution_owner": "/root",
+  "science_source": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "reviewed_main": "748b55d1",
+  "run_id": "flora-ppo-official-inference-q6-20261101-r1",
+  "resource_input": "/mowenjie/fluffy-bassoon-2/inputs/flora-ppo-curand-r6-20261101-r1",
+  "files": [
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/COMPARISON-GRANT-FOR-FLORA-Q1.json",
+      "bytes": 2633,
+      "sha256": "a8f287a3875ff68ab940197f04618010648d4c5a4e378ef94de2ae6ddb2d2655"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/EXPECTED-CLOSED-FLORA-CLOCK-R5.json",
+      "bytes": 2560,
+      "sha256": "ea2737bc14f94f5c7c68377d0c44fe42ad3a4eefe26bc731b3e28c999225174e"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/FLORA-CURAND-R6-ADMISSION.json",
+      "bytes": 5541,
+      "sha256": "bfbf7e2a6668fa906d00a19ef6b5992313e6d8a355fad69aed72435bcd576c72"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/FLORA-Q1-ADMISSION.json",
+      "bytes": 1298,
+      "sha256": "2676e9fe3c3c740d37ff78a4372c7e52e0acdc24afa98f19dd3057d6a687a3bc"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/FLORA-Q6-COMMAND.sh",
+      "bytes": 3642,
+      "sha256": "a251750c8c5abfb063f3a64556d737a489dcb7082b85a520f6fb22e0fd1c9682"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/FLORA-Q6-WHEEL-BINDING.json",
+      "bytes": 4106,
+      "sha256": "f619f1ee3f937bfa79ffe06292489b8dc72c6c9717c2e97974a068ed35147f6c"
+    },
+    {
+      "path": "outputs/flora-root-r6-20261101-r1/FLORA-Q6-WORKLOAD.py",
+      "bytes": 12416,
+      "sha256": "afdf9a92e2bf3835edc4a5d935b9f4278500aa0998048fa1eded2914fa371ec5"
+    }
+  ],
+  "prior_closed_seconds": 1372,
+  "new_max_inclusive_seconds": 2100,
+  "outer_seconds": 2040,
+  "startup_allowance": 60,
+  "resource": {
+    "gpus": 1,
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "minutes": 34,
+    "retry": false
+  },
+  "actual_sampling_api_source": "Read installed sampling.py:23/67/68; imports .jit.sampling.gen_sampling_module and calls build_and_load. No sampling call/guard override or model source change.",
+  "static_only": "Python3.11 AST and bash syntax review only on Mac; no tests/compilation/models executed.",
+  "relevant_latest_main_review": "Incoming changes only docs/other coordination rows: meta-learner standard causal Transformer and benchmark order. Fixed archivedLIBERO Flora fixture remains softwarequalification; current RoboCasa/setup policy jobs preserved, no old LIBERO run resumed. No affected scorer/resource code."
+}
