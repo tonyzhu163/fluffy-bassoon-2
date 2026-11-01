@@ -1,0 +1,222 @@
+{
+  "format": "libero_assessment_two_record_reset_diagnosis_v1",
+  "public": {
+    "image": {
+      "reference_dtype": "uint8",
+      "failed_dtype": "uint8",
+      "reference_shape": [
+        256,
+        256,
+        3
+      ],
+      "failed_shape": [
+        256,
+        256,
+        3
+      ],
+      "shape_equal": true,
+      "dtype_equal": true,
+      "reference_finite": true,
+      "failed_finite": true,
+      "value_equal": true,
+      "byte_equal": true,
+      "mismatching_elements": 0,
+      "byte_mismatching_elements": 0,
+      "maximum_absolute_delta": 0.0,
+      "first_differences": [],
+      "exact": true
+    },
+    "wrist": {
+      "reference_dtype": "uint8",
+      "failed_dtype": "uint8",
+      "reference_shape": [
+        256,
+        256,
+        3
+      ],
+      "failed_shape": [
+        256,
+        256,
+        3
+      ],
+      "shape_equal": true,
+      "dtype_equal": true,
+      "reference_finite": true,
+      "failed_finite": true,
+      "value_equal": false,
+      "byte_equal": false,
+      "mismatching_elements": 2,
+      "byte_mismatching_elements": 2,
+      "maximum_absolute_delta": 1.0,
+      "first_differences": [
+        {
+          "index": [
+            128,
+            54,
+            0
+          ],
+          "reference": 64,
+          "failed": 65
+        },
+        {
+          "index": [
+            128,
+            54,
+            1
+          ],
+          "reference": 60,
+          "failed": 61
+        }
+      ],
+      "exact": false
+    },
+    "state": {
+      "reference_dtype": "float32",
+      "failed_dtype": "float32",
+      "reference_shape": [
+        8
+      ],
+      "failed_shape": [
+        8
+      ],
+      "shape_equal": true,
+      "dtype_equal": true,
+      "reference_finite": true,
+      "failed_finite": true,
+      "value_equal": true,
+      "byte_equal": true,
+      "mismatching_elements": 0,
+      "byte_mismatching_elements": 0,
+      "maximum_absolute_delta": 0.0,
+      "first_differences": [],
+      "exact": true
+    }
+  },
+  "initial_hash_terms": {
+    "initial_observation_sha256": {
+      "status": "AVAILABLE",
+      "reference": "1448a663f0322720afb4a98edfd107ac784b6276ae304616a3e8dff0770508bd",
+      "failed": "283dcfbd0833c783c236ba122fb94061b39922c4620e18a59da4488cca4295af",
+      "equal": false
+    },
+    "initial_state_vector_sha256": {
+      "status": "AVAILABLE",
+      "reference": "fce301f2427b1a80b3fa2e9024076abe5552eb66a87bb1dd097adfd36f2b7383",
+      "failed": "fce301f2427b1a80b3fa2e9024076abe5552eb66a87bb1dd097adfd36f2b7383",
+      "equal": true
+    },
+    "initial_simulator_state_sha256": {
+      "status": "AVAILABLE",
+      "reference": "236ac14d3764e15b8faa3dae37cdb938f9333402846ae888e27a8651c73af8b1",
+      "failed": "236ac14d3764e15b8faa3dae37cdb938f9333402846ae888e27a8651c73af8b1",
+      "equal": true
+    }
+  },
+  "preserved_vectors": {
+    "initial_state_vector": {
+      "status": "UNAVAILABLE",
+      "reference_present": false,
+      "failed_present": false
+    },
+    "initial_simulator_state": {
+      "status": "AVAILABLE",
+      "reference_dtype": "float64",
+      "failed_dtype": "float64",
+      "reference_shape": [
+        92
+      ],
+      "failed_shape": [
+        92
+      ],
+      "shape_equal": true,
+      "dtype_equal": true,
+      "reference_finite": true,
+      "failed_finite": true,
+      "value_equal": true,
+      "byte_equal": true,
+      "mismatching_elements": 0,
+      "byte_mismatching_elements": 0,
+      "maximum_absolute_delta": 0.0,
+      "first_differences": [],
+      "exact": true
+    }
+  },
+  "reset_request": {
+    "initial_state": {
+      "status": "AVAILABLE",
+      "reference": 40,
+      "failed": 40,
+      "equal": true
+    },
+    "returned_initial_state": {
+      "status": "AVAILABLE",
+      "reference": 40,
+      "failed": 40,
+      "equal": true
+    },
+    "scene_seed": {
+      "status": "UNAVAILABLE",
+      "reference": null,
+      "failed": 123,
+      "equal": null
+    }
+  },
+  "instruction": {
+    "status": "UNAVAILABLE",
+    "reference": "pick up the black bowl on the ramekin and place it on the plate",
+    "failed": null,
+    "equal": null
+  },
+  "recorded_hash_integrity": {
+    "reference": {
+      "computed_public_sha256": "1448a663f0322720afb4a98edfd107ac784b6276ae304616a3e8dff0770508bd",
+      "recorded_public_hash_matches": true,
+      "recorded_simulator_hash_matches": true
+    },
+    "failed": {
+      "computed_public_sha256": "283dcfbd0833c783c236ba122fb94061b39922c4620e18a59da4488cca4295af",
+      "recorded_public_hash_matches": true,
+      "recorded_simulator_hash_matches": true
+    }
+  },
+  "saved_same_public_value_term": false,
+  "pair_equal": false,
+  "pair_equal_scope": "Available saved reset evidence only; not a reconstruction or PASS of the full production guard",
+  "classification": "actual_saved_array_difference",
+  "features": {
+    "reference_present": true,
+    "reference_shape": [
+      4104
+    ],
+    "reference_dtype": "float32",
+    "failed_status": "UNAVAILABLE",
+    "compared": false
+  },
+  "full_guard_reconstructable": false,
+  "limits": [
+    "FAILED computed4104 features were not saved; no feature equality or causal attribution can be inferred.",
+    "Missing instruction/scene seed/nominal vector remains UNAVAILABLE; no values inferred from filenames or other episodes.",
+    "No native160 raw record, source/actor/checkpoint/model, replay, simulator or VLA recomputation read.",
+    "No tolerance relaxation, prescribed repair, failed-role replay or recovery/admission decision."
+  ],
+  "read_only_proof": {
+    "reference": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz",
+      "declared_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "before_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "bytes": 178636,
+      "mtime_ns": 1793504044369427000,
+      "after_sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+      "unchanged": true
+    },
+    "failed": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+      "declared_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "before_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "bytes": 163736,
+      "mtime_ns": 1793504049899166000,
+      "after_sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+      "unchanged": true
+    }
+  }
+}
