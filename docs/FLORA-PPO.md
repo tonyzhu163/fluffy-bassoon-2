@@ -23,10 +23,14 @@ Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLA
 
 ## Benchmarks, in order
 
-1. **LIBERO** starts from RLinf's published 40-task few-shot pi0.5 SFT checkpoint.
-   Always keep reporting true simulator success.
-2. **RoboCasa** (NVIDIA's GR00T benchmark) next: closer in appearance to the
-   rewarder's likely training data and far from saturated.
+1. **LIBERO** is a test bed only, not a reported benchmark: pi0.5 leaves too
+   little headroom. Use it to get the loop working, starting from RLinf's
+   published 40-task few-shot pi0.5 SFT checkpoint, and to measure Flora
+   against simulator success.
+2. **RoboCasa365** is the reported benchmark, starting with atomic tasks from
+   its 50-task evaluation subset; composite tasks come later. It is
+   NVIDIA's GR00T benchmark, closer in appearance to the rewarder's likely
+   training data and far from saturated. Always report true simulator success.
 
 ## First test: LIBERO90 task 44, simulator reward vs Flora reward
 

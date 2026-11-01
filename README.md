@@ -3,8 +3,8 @@
 Can a history-conditioned steering policy adapt a frozen vision-language-action
 model to held-out robotic tasks with high sample efficiency and strong final
 performance? The paper stays about in-context RL. **The current first step is
-PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)) on
-LIBERO, then RoboCasa.
+PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)),
+tested on LIBERO and reported on RoboCasa365.
 
 **Start here:** [docs/README.md](docs/README.md) indexes the five documents:
 [paper plan](docs/PAPER.md), [findings to date](docs/FINDINGS.md),
