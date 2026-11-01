@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="10" time="18.599" timestamp="2026-11-01T19:21:31.764613+08:00" hostname="job-cyd30ai02wtr-master-0"><testcase classname="tests.test_robocasa_pi05_preprocessing" name="test_state_matches_published_relative_eef_base_gripper_order" time="15.522" /><testcase classname="tests.test_robocasa_pi05_preprocessing" name="test_padding_is_normalized_before_discrete_state_tokenization" time="0.003" /><testcase classname="tests.test_robocasa_pi05_preprocessing" name="test_three_camera_slots_preserve_reference_order" time="0.002" /><testcase classname="tests.test_robocasa_pi05_preprocessing" name="test_action_mean_std_output_keeps_native_eef_gripper_base_order" time="0.002"><failure message="ValueError: Selector key state not found in tree">native_pipeline = (&lt;module 'openpi.transforms' from '/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11...      2.3741937, 2.4064517, 2.4387097, 2.4709678, 2.5032258, 2.5354838,
+       2.5677419, 2.6      ], dtype=float32))})
+
+    def test_action_mean_std_output_keeps_native_eef_gripper_base_order(native_pipeline):
+        transforms, _, cfg, stats = native_pipeline
+        predicted = np.linspace(-0.7, 0.9, 50 * 32, dtype=np.float32).reshape(50, 32)
+&gt;       case = transforms.Unnormalize(stats, use_quantiles=cfg.use_quantile_norm)(
+            {"actions": predicted.copy()}
+        )
+
+/mowenjie/fluffy-bassoon-2/worktrees/robocasa-residual-root-86276f57-20261101-r1/tests/test_robocasa_pi05_preprocessing.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/openpi/transforms.py:163: in __call__
+    return apply_tree(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tree = {'actions': array([[-0.7       , -0.69899935, -0.69799876, ..., -0.6709819 ,
+        -0.66998124, -0.6689806 ],
+      ...89806 ,  0.8699812 ,  0.8709819 , ...,  0.89799875,
+         0.8989994 ,  0.9       ]], shape=(50, 32), dtype=float32)}
+selector = {'state': NormStats(mean=array([-0.4       , -0.36774194, -0.33548388, -0.30322582, -0.27096775,
+       -0.23870967, -...       2.3741937, 2.4064517, 2.4387097, 2.4709678, 2.5032258, 2.5354838,
+       2.5677419, 2.6      ], dtype=float32))}
+fn = &lt;bound method Unnormalize._unnormalize of Unnormalize(norm_stats={'state': NormStats(mean=array([-0.4       , -0.36774...4517, 2.4387097, 2.4709678, 2.5032258, 2.5354838,
+       2.5677419, 2.6      ], dtype=float32))}, use_quantiles=False)&gt;
+strict = True
+
+    def apply_tree(
+        tree: at.PyTree[T], selector: at.PyTree[S], fn: Callable[[T, S], T], *, strict: bool = False
+    ) -&gt; at.PyTree[T]:
+        tree = flatten_dict(tree)
+        selector = flatten_dict(selector)
+    
+        def transform(k: str, v: T) -&gt; T:
+            if k in selector:
+                return fn(v, selector[k])
+            return v
+    
+        if strict:
+            for k in selector:
+                if k not in tree:
+&gt;                   raise ValueError(f"Selector key {k} not found in tree")
+E                   ValueError: Selector key state not found in tree
+
+/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/openpi/transforms.py:418: ValueError</failure></testcase><testcase classname="tests.test_robocasa_residual" name="test_native_draw_replay_features_and_zero_residual_identity" time="0.044" /><testcase classname="tests.test_robocasa_residual" name="test_motor_restores_hook_on_native_prediction_failure" time="0.003" /><testcase classname="tests.test_robocasa_residual" name="test_full_native_horizon_and_video_are_truth_isolated" time="0.027" /><testcase classname="tests.test_robocasa_residual" name="test_success_mask_or_short_episode_cannot_be_scored" time="0.002" /><testcase classname="tests.test_robocasa_residual" name="test_pending_batch_has_no_labels_and_install_is_atomic" time="0.038" /><testcase classname="tests.test_robocasa_residual" name="test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint" time="0.055" /></testsuite></testsuites>

@@ -70,6 +70,17 @@ def test_motor_restores_hook_on_native_prediction_failure():
     assert m.model.build_prefix_cache == original
 
 
+def test_zero_residual_native_qualification_executes_one_episode_not_two(tmp_path):
+    m = motor()
+    policy = ResidualActorCritic(ResidualPPOConfig(42, 6, width=8))
+    env = environment(tmp_path)
+    rows, episodes = collect_pending(policy, bound(), m, env, episodes=1,
+        generator=torch.Generator().manual_seed(1), deterministic=True, verify_zero=True)
+    assert len(episodes) == 1 and len(rows) == 15
+    assert all(row["zero_residual_verified"] for row in rows)
+    assert env.native.steps == 750 and m.model.calls == 30
+
+
 class Journal:
     def begin(self, maximum, phase):
         return maximum

@@ -90,7 +90,7 @@ class RoboCasaResidualEnvironment:
     counted_native_factory. writer_factory is imageio.get_writer in production.
     Simulator labels go ONLY to monitoring_root. Returned info is truth free.
     """
-    def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory):
+    def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None):
         if horizon not in (750, 900, 1200) or horizon % 50 or not cases:
             raise ValueError("Bind native full episode horizon and a finite case bank")
         self.factory, self.cases, self.horizon = factory, deepcopy(cases), horizon
@@ -98,6 +98,7 @@ class RoboCasaResidualEnvironment:
         self.output.mkdir(parents=True, exist_ok=True)
         self.monitoring_root.mkdir(parents=True, exist_ok=True)
         self.journal, self.writer_factory = journal, writer_factory
+        self.observer = observer
         self.cursor, self.active = 0, False
         self.native = None
 
@@ -105,7 +106,8 @@ class RoboCasaResidualEnvironment:
         if self.active or self.cursor >= len(self.cases):
             raise ValueError("Never abandon/recollect an episode or extend the fixed bank")
         if self.native is not None:
-            self.native.close()
+            native, self.native = self.native, None
+            native.close()
         case = self.cases[self.cursor]
         self.key = f"episode-{self.cursor:06d}"
         self.case = case
@@ -156,6 +158,8 @@ class RoboCasaResidualEnvironment:
             self.timestamps.append(counts["control_time"])
             self._frame(observation)
         self.journal.finish(intent, 50)
+        if self.observer is not None:
+            self.observer()
         if self.steps != self.horizon:
             return public_observation(observation), False, {}
         if counts["controls"] - counts["reset_controls"] != self.horizon or not np.allclose(
@@ -193,7 +197,8 @@ class RoboCasaResidualEnvironment:
         if self.active:
             self.writer.close()  # Incomplete evidence is retained, never scored.
         if self.native is not None:
-            self.native.close()
+            native, self.native = self.native, None
+            native.close()
 
 
 def native_environment_factory(cfg):
@@ -224,11 +229,11 @@ def native_environment_factory(cfg):
     return factory
 
 
-def collect_pending(policy, bound, motor, environment, *, episodes, generator, deterministic=False):
+def collect_pending(policy, bound, motor, environment, *, episodes, generator, deterministic=False, verify_zero=False):
     """Complete batch FIRST. No simulator or Flora reward is read here."""
     reference = next(policy.parameters())
     records, finished = [], []
-    for _ in range(episodes):
+    for episode_index in range(episodes):
         observation, done, first = environment.reset(), False, True
         while not done:
             chunk, features, seed = motor.infer(observation)
@@ -236,11 +241,16 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
             control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, generator=generator)
             control = control[0].cpu().numpy()
             executed = bound.apply(np.asarray(chunk), control)
+            verified = verify_zero and episode_index == 0
+            if verified:
+                reference, _, _ = motor.infer(observation, noise_seed=seed)
+                if np.any(control != 0) or not np.array_equal(executed, reference):
+                    raise ValueError("Zero-residual native sampler replay differs before physical execution")
             observation, done, info = environment.step_chunk(executed)
             records.append(dict(features=np.array(features, dtype=np.float32, copy=True), noise_seed=seed,
                 base_chunk=np.array(chunk, copy=True), executed_chunk=np.array(executed, copy=True),
                 control=control.astype(np.float32), log_prob=float(log_prob[0]), value=float(value[0]),
-                reward=0., done=bool(done), episode_start=first))
+                reward=0., done=bool(done), episode_start=first, zero_residual_verified=verified))
             first = False
             if done:
                 finished.append(info)
