@@ -1,0 +1,609 @@
+{
+  "format": "all40_teacher_assessment_first_progress_read_v1",
+  "checked_unix": 1793502988.353145,
+  "job_id": "job-bmolej07bhsg",
+  "source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "clock": {
+    "format": "source40_ppo_worker_time_v1",
+    "contract": {
+      "format": "libero40_existing_train_teacher_assessment_v1",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "run_id": "libero40-teacher-assessment-20261101-r1",
+      "maximum_worker_seconds": 10800,
+      "grant_sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436",
+      "authority_sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c",
+      "protocol_sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2",
+      "asset_binding_sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0",
+      "actor_table_sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894",
+      "inventory_sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6",
+      "roles": [
+        "raw_native_full_H_Gaussian",
+        "exact_source_tied_Gaussian_warmup",
+        "preselected_final_TRAIN_SAC_mean",
+        "preselected_final_TRAIN_SAC_sample"
+      ],
+      "omitted_roles": [
+        "original_initialized_SAC_mean_if_retained",
+        "original_initialized_SAC_sample_if_retained"
+      ],
+      "states": [
+        40,
+        41
+      ],
+      "scene_seed": 123,
+      "planned_episodes": 320,
+      "schedule_action_bound": 131200,
+      "original_grant_actions": 196800,
+      "new_output_bytes": 34359738368,
+      "optimizer_updates": 0,
+      "source_pretraining_admitted": false
+    },
+    "worker_seconds": 10800,
+    "attempts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000",
+        "started_unix": 1793502780.0,
+        "slice_seconds": 10740,
+        "reserved_seconds": 10800,
+        "status": "started",
+        "scheduler_allowance_seconds": 60
+      }
+    ]
+  },
+  "probe_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000/gpu-probe.json",
+    "sha256": "cd36fe0623b3dde74988e2f13ca105cf840e095a1d53c76b8d5b6c65d1c91455",
+    "bytes": 2867
+  },
+  "ticket_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000/ticket.json",
+    "sha256": "ccef81ddfe47679d6476657163c0e0bc0572a67f16ed657346ef07d4892bb570",
+    "bytes": 6188
+  },
+  "status": "startup_or_active",
+  "limits": "Only current JSON, original binding/provenance and first episode JSON/recovery bytes; no payload/checkpoint deserialization, arrays, journal scan or model/test/physics calls.",
+  "actor_binding_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/loaded-actor-bindings.json",
+    "sha256": "e7f860f6fc7390afd3193630c3c3a15639b2e0f19251513157b8666cba75031c",
+    "bytes": 48190
+  },
+  "actor_binding_count": 40,
+  "actor_task_keys": [
+    "libero_spatial:00",
+    "libero_object:00",
+    "libero_goal:00",
+    "libero_10:00",
+    "libero_spatial:01",
+    "libero_object:01",
+    "libero_goal:01",
+    "libero_10:01",
+    "libero_spatial:02",
+    "libero_object:02",
+    "libero_goal:02",
+    "libero_10:02",
+    "libero_spatial:03",
+    "libero_object:03",
+    "libero_goal:03",
+    "libero_10:03",
+    "libero_spatial:04",
+    "libero_object:04",
+    "libero_goal:04",
+    "libero_10:04",
+    "libero_spatial:05",
+    "libero_object:05",
+    "libero_goal:05",
+    "libero_10:05",
+    "libero_spatial:06",
+    "libero_object:06",
+    "libero_goal:06",
+    "libero_10:06",
+    "libero_spatial:07",
+    "libero_object:07",
+    "libero_goal:07",
+    "libero_10:07",
+    "libero_spatial:08",
+    "libero_object:08",
+    "libero_goal:08",
+    "libero_10:08",
+    "libero_spatial:09",
+    "libero_object:09",
+    "libero_goal:09",
+    "libero_10:09"
+  ],
+  "all40_source_motor_rng_present": true,
+  "actor_updates": {
+    "libero_spatial:00": 28620,
+    "libero_object:00": 29940,
+    "libero_goal:00": 5620,
+    "libero_10:00": 6620,
+    "libero_spatial:01": 5340,
+    "libero_object:01": 5900,
+    "libero_goal:01": 5300,
+    "libero_10:01": 7120,
+    "libero_spatial:02": 5660,
+    "libero_object:02": 5280,
+    "libero_goal:02": 5100,
+    "libero_10:02": 5940,
+    "libero_spatial:03": 5040,
+    "libero_object:03": 5500,
+    "libero_goal:03": 6220,
+    "libero_10:03": 6500,
+    "libero_spatial:04": 6700,
+    "libero_object:04": 5720,
+    "libero_goal:04": 5520,
+    "libero_10:04": 6120,
+    "libero_spatial:05": 6300,
+    "libero_object:05": 5240,
+    "libero_goal:05": 5720,
+    "libero_10:05": 6520,
+    "libero_spatial:06": 5700,
+    "libero_object:06": 5800,
+    "libero_goal:06": 5580,
+    "libero_10:06": 7040,
+    "libero_spatial:07": 5620,
+    "libero_object:07": 5480,
+    "libero_goal:07": 5320,
+    "libero_10:07": 6160,
+    "libero_spatial:08": 5300,
+    "libero_object:08": 5760,
+    "libero_goal:08": 5180,
+    "libero_10:08": 6400,
+    "libero_spatial:09": 6080,
+    "libero_object:09": 5360,
+    "libero_goal:09": 5940,
+    "libero_10:09": 6880
+  },
+  "no_initial_actor_slots_repurposed": true,
+  "source_provenance": {
+    "metadata_cumulative_TRAIN_actions": 351297,
+    "source_cost_groups": [
+      {
+        "history_id": "libero_spatial:00/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train",
+        "cumulative_actions": 20465,
+        "ancestors_not_added": [
+          {
+            "slot": "libero_spatial:00/train",
+            "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2",
+            "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-migration-20261031-r2/experiment",
+            "actions": 11344,
+            "source_updates": 11380,
+            "chunks": 1065,
+            "next_case": 30,
+            "episodes": 120,
+            "remaining_candidate_cases": 482,
+            "contract_sha256": "60dcec4586e3bef746d079e00f50cd392f2dbb1a3d62bfdcb6cf822d41c3a9d2",
+            "index_sha256": "f0cdab587118ab967da43e358abae1da6643201813d3b3183f981301ad8b79c1",
+            "recovery_sha256": "18c6dd13f009636f487231c30022f64f6e357608cc33968be9d71b95e1ef848f",
+            "schedule_sha256": "5631e17c681bd0f058ebec311a503e31147e7d3dfcc86f056e31b0ab5cdbc838",
+            "source_commit": "cf49bfac65a98cc7c4cef7fb35df4a6a18e20c0b"
+          },
+          {
+            "slot": "libero_spatial:00/train",
+            "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1",
+            "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-s00-train-r1/experiment",
+            "actions": 7892,
+            "source_updates": 4920,
+            "chunks": 742,
+            "next_case": 20,
+            "episodes": 80,
+            "remaining_candidate_cases": 492,
+            "contract_sha256": "b02d9d45d414e8b0f32743449ff56810a15b87a71f03730cd649c7e5f0eb2bad",
+            "index_sha256": "21836bacb78aa9c9d8b5fc7dab307c2c8e38ff7af535bc78b8d8dab767113fbd",
+            "recovery_sha256": "532b0279fe0c817a2fa246c541ef7de893cc1b202b8427f18150d02273ca118c",
+            "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+            "source_commit": "8ada0c0a59ea562716b251dc3cd7d71dc1ba3b18"
+          }
+        ]
+      },
+      {
+        "history_id": "libero_object:00/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-o00-train",
+        "cumulative_actions": 20677,
+        "ancestors_not_added": [
+          {
+            "slot": "libero_object:00/train",
+            "root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train",
+            "experiment": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o00-train/experiment",
+            "actions": 8230,
+            "source_updates": 6080,
+            "chunks": 794,
+            "next_case": 12,
+            "episodes": 48,
+            "remaining_candidate_cases": 500,
+            "contract_sha256": "dc985bcf0967bb0e4a5e4e51c43167686724a0092a538d0b7b68ef5f6f5046da",
+            "index_sha256": "794d38e4b58479b98ff086e854dfa258c6246b0d89ee7ec8b9a3532e3320d275",
+            "recovery_sha256": "1bfee70a7737d67bf65ee137d372d6a22b34aed25c8796adce441b8d57b8fe71",
+            "schedule_sha256": "a2873aafbe7d047a301a8b4f6cb51e5a72b79b0af55c40607d691c0148acaeb5",
+            "source_commit": "531e0f838a0063abfa28c4b3940cd24dfaf6edbf"
+          }
+        ]
+      },
+      {
+        "history_id": "libero_goal:00/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g00-train",
+        "cumulative_actions": 8036,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:00/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261029-l00-train-r1",
+        "cumulative_actions": 8275,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:01/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s01-train",
+        "cumulative_actions": 7950,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:01/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o01-train",
+        "cumulative_actions": 8272,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:01/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g01-train",
+        "cumulative_actions": 8138,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:01/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l01-train",
+        "cumulative_actions": 8494,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:02/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s02-train",
+        "cumulative_actions": 8212,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:02/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o02-train",
+        "cumulative_actions": 7998,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:02/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g02-train",
+        "cumulative_actions": 7874,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:02/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l02-train",
+        "cumulative_actions": 7946,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:03/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s03-train",
+        "cumulative_actions": 7867,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:03/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o03-train",
+        "cumulative_actions": 7951,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:03/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g03-train",
+        "cumulative_actions": 7982,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:03/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l03-train",
+        "cumulative_actions": 8403,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:04/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s04-train",
+        "cumulative_actions": 8582,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:04/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o04-train",
+        "cumulative_actions": 8093,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:04/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g04-train",
+        "cumulative_actions": 8213,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:04/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l04-train",
+        "cumulative_actions": 8195,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:05/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s05-train",
+        "cumulative_actions": 8460,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:05/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o05-train",
+        "cumulative_actions": 7934,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:05/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g05-train",
+        "cumulative_actions": 8089,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:05/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l05-train",
+        "cumulative_actions": 8393,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:06/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s06-train",
+        "cumulative_actions": 8225,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:06/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o06-train",
+        "cumulative_actions": 8125,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:06/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g06-train",
+        "cumulative_actions": 8130,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:06/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l06-train",
+        "cumulative_actions": 8696,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:07/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s07-train",
+        "cumulative_actions": 8134,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:07/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o07-train",
+        "cumulative_actions": 8054,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:07/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g07-train",
+        "cumulative_actions": 8152,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:07/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l07-train",
+        "cumulative_actions": 8082,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:08/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s08-train",
+        "cumulative_actions": 7976,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:08/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o08-train",
+        "cumulative_actions": 8037,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:08/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g08-train",
+        "cumulative_actions": 8045,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:08/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l08-train",
+        "cumulative_actions": 8056,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_spatial:09/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s09-train",
+        "cumulative_actions": 8327,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_object:09/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-o09-train",
+        "cumulative_actions": 8019,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_goal:09/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-g09-train",
+        "cumulative_actions": 8185,
+        "ancestors_not_added": []
+      },
+      {
+        "history_id": "libero_10:09/train/seed-1",
+        "current_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-l09-train",
+        "cumulative_actions": 8555,
+        "ancestors_not_added": []
+      }
+    ],
+    "canonical_ledger_ref": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-preparation-20261031-r1/ledger.json",
+      "sha256": "bdb5b897a8f28e39324b5d0700f9d9fc3d1ff6f18be379f3dd40c82bde3e2a59",
+      "bytes": 12348,
+      "is_symlink": false,
+      "resolved_path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-topup-preparation-20261031-r1/ledger.json"
+    },
+    "prior_costs_charged_again": false,
+    "prior_GPU_cost": "Not summed or inferred from historical caps",
+    "scope": "Bound metadata, not a fresh raw-journal replay"
+  },
+  "source_provenance_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/source-provenance.json",
+    "sha256": "270533392674eaaacbee9fc5288d5b0719500808084ba14ddd48aae94182c34a",
+    "bytes": 12741
+  },
+  "progress": {
+    "cursor": 8,
+    "planned_episodes": 320,
+    "costs": {
+      "all_in_actions": 672,
+      "physical_episodes": 8,
+      "uncertain_actions": 0
+    },
+    "recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+      "sha256": "a3fa13cfdb0971f87540308a3d7ebb9f2aea30def63a7126b07deb239ec6b0f4"
+    }
+  },
+  "full_recovery_actual": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+    "sha256": "a3fa13cfdb0971f87540308a3d7ebb9f2aea30def63a7126b07deb239ec6b0f4",
+    "bytes": 26612
+  },
+  "full_recovery_matches": true,
+  "first_qualification": {
+    "passed": true,
+    "same_noise_delta": 0.0,
+    "same_noise_VLA_calls": 2,
+    "feature": {
+      "passed": true,
+      "maximum_delta": 0.0,
+      "final_prefix_shape": [
+        1,
+        968,
+        2048
+      ],
+      "public_feature_shape": [
+        4104
+      ],
+      "feature_contract": {
+        "kind": "openpi_final_prefix_visual_mean_language_mean_public_state_v2",
+        "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+        "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+        "model_config": "pi05_libero",
+        "observation_dim": 4104,
+        "visual_dim": 2048,
+        "instruction_dim": 2048,
+        "public_state_dim": 8,
+        "pooling": "separate NumPy float32 mask-weighted means after native hidden materialization",
+        "normalization": "raw frozen hidden values; student fits normalization on training tasks only",
+        "trainable_feature_parameters": 0,
+        "kv_cache_retained": false,
+        "execution": "standalone native prefix hidden materialized on host before pooling; native prefix recomputed for motor; both costs recorded",
+        "hidden_materialization": "standalone module_jit output transferred to host before reduction",
+        "pooling_dtype": "float32"
+      }
+    },
+    "extra_physical_episodes": 0,
+    "extra_physical_actions": 0
+  },
+  "first_qualification_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-000/qualification.json",
+    "sha256": "e1f03a8d4540b842f35ec3e44cbba6dd1e3c91f6a4634dbb751b6213425fe4c4",
+    "bytes": 1312
+  },
+  "first_receipt": {
+    "episode_id": "libero_spatial:00/state-40/raw_native_full_H_Gaussian",
+    "role": "query",
+    "role_episode_ordinal": 0,
+    "initial_state": 40,
+    "scene_seed": 123,
+    "episode_random_seed": 20261141,
+    "initial_observation_sha256": "91f479e2df795ace85483cd7135902e5692e016c572de2c87ed78b09b7a390af",
+    "initial_state_vector_sha256": "bc6923b7fe71c729548dee2786142701ea693c2393518b193fe72736fe21e3ad",
+    "success": true,
+    "primitive_steps": 78,
+    "settling_steps": 10,
+    "chunks": 8,
+    "raw_return": 1.0,
+    "elapsed_seconds": 37.57430228590965,
+    "completed": true,
+    "spec": {
+      "source_ordinal": 0,
+      "task_key": "libero_spatial:00",
+      "state": 40,
+      "scene_seed": 123,
+      "role": "raw_native_full_H_Gaussian",
+      "seed": 20261141,
+      "status": "PLANNED"
+    },
+    "source_actor": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-sac-source-bridge-20261031-r1-s00-train/experiment/case-00054-source.pkl",
+      "published_sha256": "b95e004854ae641910d82a71f5fabeb6846e77d9472513f8dfa364dd9d11729c",
+      "bytes": 85675031,
+      "payload_not_rehashed_or_loaded": true
+    },
+    "source_updates": 28620,
+    "frozen_learning_state": {
+      "full": "cba612b6f7c22d21b0f8f7ad3b83adaac87c84f560e8e8343ea4daca53b43f3e",
+      "updates": 28620,
+      "replay_rows": 1927,
+      "replay": "1928c48accbb3158151f8a7bcb6ef2fdefba4dcc438c96743e5f754c467f9d88"
+    },
+    "source_assembly_admitted": false,
+    "optimizer_updates": 0,
+    "trace": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-000/trace.pkl.gz",
+      "sha256": "b2927080dd6a0c8fd098466413020dac905b20349ec328b09ce2b9ffa62386ee"
+    },
+    "RNG": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-000/rng-context.pkl.gz",
+      "sha256": "5b001d55b71136babdcbe3ab9a2a64141a9fd166311474a9415ade3e7020a575"
+    }
+  },
+  "first_receipt_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-000/receipt.json",
+    "sha256": "d20e7213e6c37c3e0b840fcacd5f0b0a7d05ebe4e0a99f22ee561c16a095ab10",
+    "bytes": 1865
+  },
+  "summary": {
+    "by_role": {
+      "raw_native_full_H_Gaussian": {
+        "planned": 80,
+        "complete": 2,
+        "successes": 2
+      },
+      "exact_source_tied_Gaussian_warmup": {
+        "planned": 80,
+        "complete": 2,
+        "successes": 2
+      },
+      "preselected_final_TRAIN_SAC_mean": {
+        "planned": 80,
+        "complete": 2,
+        "successes": 2
+      },
+      "preselected_final_TRAIN_SAC_sample": {
+        "planned": 80,
+        "complete": 2,
+        "successes": 2
+      }
+    },
+    "omitted_initial_slots": 160,
+    "all40_retained": true,
+    "source_pretraining_admitted": false,
+    "interpretation": "Two fixed cases per goal; descriptive assessment, no competence certificate or measured initial-to-final curve"
+  }
+}
