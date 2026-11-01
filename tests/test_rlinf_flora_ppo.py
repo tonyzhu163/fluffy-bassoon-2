@@ -10,7 +10,8 @@ import pytest
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import (
     FLORA_CODE,FLORA_MODEL,TASK,baseline_validation,checked_labels,commit_labels,
     digest,flora_jobs,freeze_batch,parse_outputs,ready_rewards,relabel_full_horizon,
-    sha,terminal_command,
+    sha,terminal_command,initializer_manifest,INITIALIZER_REPO,INITIALIZER_REVISION,
+    INITIALIZER_WEIGHT_SHA,INITIALIZER_WEIGHT_BYTES,NORM_SHA,
 )
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_config import evaluation_schedule,validate_config
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_env import strip_training_truth
@@ -24,6 +25,34 @@ def episode(i=0):
         frame_clock=dict(frame_count=401,native_fps=20.,encoded_fps=20.,resampled=False,
             physical_steps=400,initial_frame_included=True,timestamp_sha256='b'*64),
         rank=0,round=i//32,local_env=i%32)
+
+
+def published_manifest(tmp_path):
+    return dict(completed=True,repository_id=INITIALIZER_REPO,revision=INITIALIZER_REVISION,
+        model_directory=str(tmp_path),normalization_sha256=NORM_SHA,model_action_dim=32,action_horizon=10,
+        files=[dict(path=str(tmp_path/'model.safetensors'),sha256=INITIALIZER_WEIGHT_SHA,bytes=INITIALIZER_WEIGHT_BYTES),
+            dict(path=str(tmp_path/'physical-intelligence/libero/norm_stats.json'),sha256=NORM_SHA,bytes=4507)])
+
+
+def test_initializer_accepts_published40_torch_manifest(tmp_path):
+    receipt=published_manifest(tmp_path)
+    assert initializer_manifest(receipt,tmp_path)==receipt['files']
+    assert INITIALIZER_WEIGHT_BYTES==7473091464 and INITIALIZER_REVISION.startswith('45ccfcc4')
+    assert 'source_parameter_signature' not in receipt # No fabricated C565/JAX equivalence.
+
+
+@pytest.mark.parametrize('kind',['repository','revision','old_norm','weight_sha','weight_size','horizon','old_JAX_receipt','escaped_file'])
+def test_initializer_refuses_other_release_or_old_c565_abi(tmp_path,kind):
+    receipt=published_manifest(tmp_path)
+    if kind=='repository':receipt['repository_id']='RLinf/RLinf-Pi05-LIBERO130'
+    elif kind=='revision':receipt['revision']='main'
+    elif kind=='old_norm':receipt['normalization_sha256']='b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84'
+    elif kind=='weight_sha':receipt['files'][0]['sha256']='c565'+'0'*60
+    elif kind=='weight_size':receipt['files'][0]['bytes']+=1
+    elif kind=='horizon':receipt['action_horizon']=32
+    elif kind=='old_JAX_receipt':receipt.pop('repository_id');receipt['source_parameter_signature']='c565'
+    else:receipt['files'][0]['path']=str(tmp_path.parent/'outside.safetensors')
+    with pytest.raises(ValueError):initializer_manifest(receipt,tmp_path)
 
 
 def output(i=0,score=3):
@@ -274,7 +303,7 @@ def test_compose_actual_official_config(monkeypatch,tmp_path,world):
     assert Path(os.environ['EMBODIED_PATH']).is_dir(),'Allocated CPU gate must stage actual c605 config checkout'
     phase='train';schedule=evaluation_schedule(world,'DEV')
     for key,value in dict(ARM='S',PHASE=phase,WORLD=world,PLACEMENT=f'0-{world-1}',EVAL_SLOTS=len(schedule),
-        ONLY_EVAL='false',MODEL='/converted/OpenPI40',NORM='/converted/norm_stats.json',OUTPUT=str(tmp_path),
+        ONLY_EVAL='false',MODEL='/published/RLinf40',NORM='/published/RLinf40/physical-intelligence/libero/norm_stats.json',OUTPUT=str(tmp_path),
         EXCHANGE=str(tmp_path/'exchange'),MONITORING=str(tmp_path/'monitor'),ACCOUNTING=str(tmp_path/'actions'),
         PROFILE=str(tmp_path/'profile.json'),PROFILE_SHA='a'*64,ATTEMPT='cpu').items():monkeypatch.setenv('FLORA_PPO_'+key,str(value))
     code=Path(__file__).resolve().parents[1]

@@ -1,7 +1,5 @@
 """Task44 recipe and finite placement schedules; imports no model or simulator."""
-from .rlinf_flora_ppo import INITIALIZER_PARAMS, INITIALIZER_RECEIPT, RLINF
-
-NORM_SHA='b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84'
+from .rlinf_flora_ppo import INITIALIZER_REPO, INITIALIZER_REVISION, INITIALIZER_WEIGHT_SHA, NORM_SHA, RLINF
 
 
 def evaluation_schedule(world, phase):
@@ -44,8 +42,9 @@ def validate_config(cfg):
         'actor.model.openpi.num_images_in_input':2,'actor.model.openpi.noise_method':'flow_sde',
         'actor.model.openpi.noise_level':.5,'reward.use_reward_model':False,
         'env.train.total_num_envs':32,'env.train.rollout_epoch':4,
-        'flora_ppo.rlinf_commit':RLINF,'flora_ppo.initializer_receipt':INITIALIZER_RECEIPT,
-        'flora_ppo.initializer_params':INITIALIZER_PARAMS,'flora_ppo.normalization_sha256':NORM_SHA,
+        'flora_ppo.rlinf_commit':RLINF,'flora_ppo.initializer_repository':INITIALIZER_REPO,
+        'flora_ppo.initializer_revision':INITIALIZER_REVISION,'flora_ppo.initializer_weight_sha256':INITIALIZER_WEIGHT_SHA,
+        'flora_ppo.normalization_sha256':NORM_SHA,
     }
     for mode in ('train','eval'):
         for field,value in dict(env_type='libero',task_suite_name='libero_90',task_id_filter=[44],

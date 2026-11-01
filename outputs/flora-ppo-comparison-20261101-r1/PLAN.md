@@ -1,6 +1,6 @@
 # Quick test: RLinf PPO on LIBERO90 task 44, simulator reward vs Flora reward
 
-Draft, 2026-11-01; initializer correction published on main `2a1eebae`.
+Draft, 2026-11-01; published LIBERO40 PyTorch initializer selected prospectively after human steering.
 The human authorizes launch when ready, readable logs and early stopping, and
 normalized partial credit for Flora. **No comparison job has launched.** The
 separate frozen-pi0.5 DSRL allocation is stopped and released; its recovery and
@@ -21,27 +21,35 @@ accuracy from the value of partial credit.
 
 ## Setup
 
-- **Policy:** the official OpenPI `gs://openpi-assets/checkpoints/pi05_libero`
-  release, already fine-tuned on LIBERO40. Use the same immutable starting
-  weights and normalization for both arms; do not train another LIBERO40 stage.
-  The staged source receipt is
-  `ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170`
-  and its JAX parameter signature is
-  `c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9`.
-  [Release provenance](../pi05-libero40-provenance-20261029-r1/PROVENANCE.json).
-- **Human correction (2026-11-01):** use OpenPI40 to test adaptation outside
-  the release's LIBERO fine-tuning task set. The earlier RLinf130 choice includes
-  task44 and would answer a seen-task fine-tuning question. It is not an allowed
-  fallback for this comparison. LIBERO40 already includes the operation "turn
-  on the stove"; task44 is a different benchmark task/scene instance, not proof
-  of a novel skill or absence from foundation pretraining. Task44 has also been
+- **Policy:** the published 40-task few-shot PyTorch SFT release
+  [`RLinf/RLinf-Pi05-LIBERO-SFT`](https://huggingface.co/RLinf/RLinf-Pi05-LIBERO-SFT/tree/45ccfcc4e28634f1576ebf78cab0fbe2fd82432d),
+  revision `45ccfcc4e28634f1576ebf78cab0fbe2fd82432d`, for **both** arms.
+  The [πRL paper §5.2.1](https://arxiv.org/html/2510.25889v1#S5.SS2.SSS1)
+  describes one trajectory per task across four ten-task suites and links the
+  old `RLinf-Pi05-SFT` alias, which resolves to this release. No additional SFT
+  is performed. `model.safetensors` is 7,473,091,464 bytes, SHA256
+  `4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7`.
+  Its bundled `physical-intelligence/libero/norm_stats.json` is 4,507 bytes,
+  SHA256 `dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1`.
+- **Human initializer steering (2026-11-01):** “wait cant we just find a
+  libero40 weights?” selects this ready PyTorch40 release prospectively,
+  superseding the earlier exact-C565 OpenPI JAX conversion. This few-shot model
+  is **not** asserted to equal the earlier C565 full-data weights or their
+  normalization. The failed pre-wrapper conversion attempt and its cost remain
+  recorded; it produced no model result and is not retried. RLinf130 is not a
+  fallback. Task44 is outside these four SFT suites, while stove operation is
+  already represented there: this is a different benchmark task/scene instance,
+  not proof of a novel skill or absence from foundation pretraining. Task44 was
   selected through prior development screening.
-- **RLinf loading prerequisite:** convert/load this exact source through the
-  official path, bind its normalization, tokenizer, camera/state/action mapping,
-  and verify fixed-input/fixed-noise action parity before the first update.
-  Record actual native step0 success under the comparison's sampler and
-  full-horizon final-state criterion. Historical OpenPI40 native6/20 is a
-  reference from another evaluation protocol, not this new baseline.
+- **RLinf loading prerequisite:** use the existing official c605
+  `load_base_safetensors` path, including its in-memory legacy PyTorch key
+  mapping; no separate conversion or weight rewrite. Bind the published weight,
+  bundled normalization and tokenizer/camera/state/action ABI (H10, padded32,
+  physical7, two RGB inputs and proprio8). Require actual strict backbone load
+  with no missing backbone or unexpected keys, and a common newly initialized
+  value-head seed42. The former JAX parity gate does not apply to this different
+  published model. Record its own step0 and fresh64 full-horizon final-state
+  baseline; historical C565 results do not supply it.
 - **Recipe:** RLinf's pi0.5 LIBERO PPO config, restricted to task 44, with
   the published PPO hyperparameters. To get more updates within a small
   budget, reduce the env count to 32 envs × 4 rollout epochs. That is about
@@ -89,7 +97,7 @@ The normalized grade is not a calibrated probability of task success.
    - arm S, with a stub rewarder returning simulator labels, reproduces the
      plain config
    - arm F's trainer cannot read the simulator label
-   Finish these focused checks and exact-source loading/parity qualification
+   Finish these focused checks and exact-release strict loading qualification
    before admitting training; run tests and model computation on allocated Linux.
 4. **Run.** One seed each for S and F, from the same commit, seed and
    training states, for up to 10 iterations, subject to the stop and budget rules.

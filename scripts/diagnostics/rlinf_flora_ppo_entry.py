@@ -9,7 +9,7 @@ import platform
 import subprocess
 import sys
 
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import RLINF,INITIALIZER_PARAMS,INITIALIZER_RECEIPT,sha
+from fluffy_bassoon.meta_rl.rlinf_flora_ppo import RLINF,initializer_manifest,sha
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_config import NORM_SHA,evaluation_schedule
 
 
@@ -28,23 +28,17 @@ def main():
     if head(code)!=profile['source_commit']:raise ValueError('Source deployment pin differs from admission')
     upstream=Path(os.environ['EMBODIED_PATH']).resolve().parents[1]
     if head(upstream)!=RLINF:raise ValueError('Use exact c605 official RLinf checkout')
-    if sha(args.norm)!=NORM_SHA:raise ValueError('Use byte-identical official OpenPI40 normalization')
+    if sha(args.norm)!=NORM_SHA:raise ValueError('Use byte-identical bundled RLinf40 normalization')
     model=Path(args.model)
-    if (model/'full_weights.pt').exists():raise ValueError('Do not shadow converted source with RLinf full_weights.pt')
-    loading_ref=profile['initializer_loading_receipt']
+    if (model/'full_weights.pt').exists():raise ValueError('Do not shadow published source with RLinf full_weights.pt')
+    loading_ref=profile['initializer_artifact_receipt']
     if sha(loading_ref['path'])!=loading_ref['sha256']:raise ValueError('Initializer receipt changed')
     loading=json.loads(Path(loading_ref['path']).read_text())
-    if (loading.get('completed') is not True or Path(loading['model_directory']).resolve()!=model.resolve()
-            or loading.get('source_parameter_signature')!=INITIALIZER_PARAMS
-            or loading.get('source_receipt_sha256')!=INITIALIZER_RECEIPT
-            or loading.get('normalization_sha256')!=NORM_SHA or loading.get('model_action_dim')!=32
-            or loading.get('action_horizon')!=10 or not loading.get('files')):
-        raise ValueError('Exact converted official OpenPI40/H10/padded32 manifest required')
     declared=set()
-    for row in loading['files']:
+    for row in initializer_manifest(loading,model):
         artifact=Path(row['path']).resolve()
         if not artifact.is_relative_to(model.resolve()) or sha(artifact)!=row['sha256']:
-            raise ValueError('Converted checkpoint artifact identity differs')
+            raise ValueError('Published checkpoint artifact identity differs')
         declared.add(artifact)
     weights=set(model.resolve().glob('*.safetensors'))
     if not weights or not weights<=declared:raise ValueError('Every loaded safetensors shard must be receipt-bound')

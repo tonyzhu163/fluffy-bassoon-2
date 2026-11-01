@@ -9,7 +9,7 @@ import time
 
 from rlinf.runners.embodied_runner import EmbodiedRunner
 
-from .rlinf_flora_ppo import digest,freeze_batch,commit_labels,flora_jobs,sha,write_new
+from .rlinf_flora_ppo import digest,freeze_batch,commit_labels,flora_jobs,sha,write_new,INITIALIZER_REPO,INITIALIZER_REVISION,INITIALIZER_WEIGHT_SHA,NORM_SHA
 from .rlinf_flora_ppo_runtime import read_ref,validate_pending_checkpoint
 from .rlinf_flora_ppo_monitor import ProgressLog,stopping_decision,whole_iteration_admission
 from .rlinf_flora_ppo_config import validate_config
@@ -34,14 +34,20 @@ class MatchedRunner(EmbodiedRunner):
                 or p['allocated_gpu_count']<self.contract['world']
                 or not 0<p['scheduler_wall_seconds']<8*3600 or p['deadline_unix']<=time.time()
                 or not p.get('allocation_id') or not p.get('actual_gpu_probe')
-                or not p.get('initializer_loading_receipt') or p.get('source_commit') is None):
+                or not p.get('initializer_artifact_receipt') or p.get('source_commit') is None):
             raise ValueError('Concrete fresh allocation/probe/initializer/finite-clock profile required')
-        for key in ('actual_gpu_probe','initializer_loading_receipt'):read_ref(p[key])
+        for key in ('actual_gpu_probe','initializer_artifact_receipt'):read_ref(p[key])
         if p['phase']=='train':
-            for key in ('cpu_qualification','loading_parity','baseline_validation'):
+            for key in ('cpu_qualification','loading_qualification','baseline_validation'):
                 ref=read_ref(p[key])
                 if ref.get('completed',ref.get('go')) is not True:raise ValueError(f'Unqualified {key}')
             if not read_ref(p['baseline_validation'])['go']:raise ValueError('Fresh64 baseline did not pass gates')
+            loaded=read_ref(p['loading_qualification'])
+            if (loaded.get('repository_id')!=INITIALIZER_REPO or loaded.get('revision')!=INITIALIZER_REVISION
+                    or loaded.get('model_sha256')!=INITIALIZER_WEIGHT_SHA or loaded.get('normalization_sha256')!=NORM_SHA
+                    or loaded.get('backbone_missing_keys')!=[] or loaded.get('unexpected_keys')!=[]
+                    or loaded.get('value_head_seed')!=42):
+                raise ValueError('Actual strict published-release backbone load and common value-head seed required')
             if not 0<p['estimated_iteration_seconds'] or p['closure_reserve_seconds']<180:
                 raise ValueError('Finite whole-iteration reservation and closure time required')
 

@@ -2,8 +2,9 @@
 
 Prepared source, **not executed or qualified**. The source author ran AST and
 Git whitespace checks only on macOS. `finish_assembly` remains the sole
-allocation, qualification and launch owner. Its independent official OpenPI40
-conversion may proceed without waiting for this CPU gate.
+allocation, qualification and launch owner. Human steering now selects the
+published RLinf40 few-shot PyTorch release directly. Q1 conversion retry is held;
+its failed pre-wrapper cost remains in the owner ledger.
 
 ## First executable qualification
 
@@ -28,16 +29,16 @@ allocation/clock and may adjust ordinary CPU execution as needed.
 
 ## Runnable native episode path
 
-After actual converted-model receipt, normalization and allocation/probe are
+After actual published-model artifact receipt, normalization and allocation/probe are
 bound, smoke uses **one** rollout/env GPU and one fresh full-H400 episode, no
 actor/optimizer initialization. Baseline uses 64 episodes from nominal states
 0..39. Supply a fresh output and attempt for each; preserve the same canonical
-phase ledger and immutable converted model.
+phase ledger and immutable published model.
 
 ```sh
 "$PPO_PYTHON" -B "$SOURCE_WORKTREE/scripts/diagnostics/rlinf_flora_ppo_entry.py" \
   --phase smoke --arm S --world 1 --profile "$ACTUAL_PROFILE" \
-  --model "$CONVERTED_OPENPI40" --norm "$CONVERTED_NORM" \
+  --model "$PUBLISHED_RLINF40" --norm "$BUNDLED_NORM" \
   --output "$FRESH_OUTPUT" --exchange "$PHASE_EXCHANGE" \
   --monitoring "$ISOLATED_MONITORING" --accounting "$COMMON_ACTION_ROOT" \
   --attempt "$FRESH_ATTEMPT"
@@ -45,17 +46,41 @@ phase ledger and immutable converted model.
 
 For baseline replace `--phase smoke` with `--phase baseline`; 1/2/4/8 layouts
 are composed, actual capacity is unmeasured. The entry verifies source/RLinf Git
-pins and **every declared converted safetensors shard**, exact official40 source
-receipt/signature, H10/padded32 and byte-identical normalization. It refuses a
-stray `full_weights.pt`. Fixed-input/fixed-noise 10-step source loading parity
-remains the owner's independent prerequisite before training; it is separate
-from the published PPO 3-denoise/execute5 sampler used by the episode entry.
+pins and actual published safetensors bytes against release
+`RLinf/RLinf-Pi05-LIBERO-SFT@45ccfcc4e28634f1576ebf78cab0fbe2fd82432d`:
+weight SHA `4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7`,
+7,473,091,464 bytes; bundled norm SHA
+`dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1`, 4,507 bytes.
+It refuses stray `full_weights.pt` and never asserts C565/JAX identity. Official
+c605 loads the published legacy PyTorch keys in memory. Keep model H10/padded32,
+physical7 and the published PPO 3-denoise/execute5 sampler; no offline converter.
 
-The immutable loading receipt must contain `completed:true`, absolute
-`model_directory`, `source_receipt_sha256`, `source_parameter_signature`,
-`normalization_sha256`, `model_action_dim:32`, `action_horizon:10`, and `files`
-with absolute `path`/`sha256` for the actual converted artifacts. No converted
-weight SHA or parity result is invented in this handoff.
+`initializer_artifact_receipt` replaces the historical conversion receipt.
+It binds `completed:true`, `repository_id`, `revision`, absolute
+`model_directory`, `normalization_sha256`, `model_action_dim:32`,
+`action_horizon:10`, and `files` with absolute `path`/`sha256`/`bytes` for the
+published weights and bundled norm. The template contains no fake receipt.
+
+Training's actual `loading_qualification` replaces the old `loading_parity`.
+It binds `completed:true`, the same repository/revision, `model_sha256`,
+`normalization_sha256`, `backbone_missing_keys:[]`, `unexpected_keys:[]`, and
+`value_head_seed:42`. This is an actual native strict-load result, not JAX
+parity. The fresh64 headroom/AUROC gate remains. No source loading or baseline
+result is claimed here.
+
+The affected CPU selector is:
+
+```sh
+"$PPO_PYTHON" -B -m pytest -q "$SOURCE_WORKTREE/tests/test_rlinf_flora_ppo.py" \
+  -k 'initializer or compose_actual_official_config' \
+  --junitxml="$FRESH_CPU_OUTPUT/initializer-junit.xml"
+```
+
+It has 13 prepared cases (nine initializer ABI cases plus four real compositions).
+The full selector now has 67 prepared cases. The old a894 pin and any actual
+qualification job remain immutable; the owner first settles that job, then
+reuses unchanged evidence and qualifies only affected new source when possible.
+No passed evidence is inferred from a submitted form or unverified job.
 
 ## Separate Flora process
 
@@ -120,7 +145,7 @@ attempt identity.
 
 `runtime-profile.template.json` is deliberately unadmitted. Fill its actual
 allocation ID/GPU probe/start/deadline/cost path and loading receipt. Training
-also binds successful CPU qualification, loading parity and fresh64 validation
+also binds successful CPU qualification, actual loading qualification and fresh64 validation
 references, common action attribution and a finite per-iteration reservation.
 All refs use absolute `path` and `sha256`.
 
@@ -132,7 +157,7 @@ scheduler allocation, not an aggregate-per-arm limit; a dedicated Flora
 allocation may be separate. Every job remains under8 hours. The former10h
 aggregate gate is removed only for these approved jobs and necessary work.
 
-Remaining actual qualifications: CPU selector, converted source loading/parity,
+Remaining actual qualifications: CPU selector, published source strict loading,
 native clock/case/video runtime, fresh64 gate, GPU capacity and actual advancing
 PPO updates. A real failure in these checks needs diagnosis and a new identity;
 this source handoff is not evidence they passed.

@@ -12,8 +12,11 @@ from pathlib import Path
 RLINF='c605b9d55ed93a180119b099e6f836abff293b08'
 FLORA_CODE='129a2ada74c526ee4692f3d1b111bea6ca19d5b7'
 FLORA_MODEL='031299e46e452fc0cedb4e0975eb9fa95fc37783'
-INITIALIZER_RECEIPT='ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170'
-INITIALIZER_PARAMS='c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9'
+INITIALIZER_REPO='RLinf/RLinf-Pi05-LIBERO-SFT'
+INITIALIZER_REVISION='45ccfcc4e28634f1576ebf78cab0fbe2fd82432d'
+INITIALIZER_WEIGHT_SHA='4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7'
+INITIALIZER_WEIGHT_BYTES=7473091464
+NORM_SHA='dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1'
 FORMAT='rlinf_libero44_flora_terminal_ppo_v1'
 TASK='turn on the stove'
 
@@ -32,6 +35,28 @@ def sha(path):
 def write_new(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     with path.open('x') as stream:json.dump(value,stream,indent=2,allow_nan=False);stream.write('\n')
+
+
+def initializer_manifest(receipt,model_directory):
+    """Published40-task Torch release, prospectively distinct from old C565."""
+    root=Path(model_directory).resolve()
+    if (receipt.get('completed') is not True or receipt.get('repository_id')!=INITIALIZER_REPO
+            or receipt.get('revision')!=INITIALIZER_REVISION
+            or Path(receipt['model_directory']).resolve()!=root
+            or receipt.get('normalization_sha256')!=NORM_SHA
+            or receipt.get('model_action_dim')!=32 or receipt.get('action_horizon')!=10):
+        raise ValueError('Exact published RLinf40 PyTorch/H10/padded32 release receipt required')
+    files={}
+    for row in receipt['files']:
+        path=Path(row['path']).resolve()
+        if not path.is_relative_to(root) or str(path) in files:raise ValueError('Invalid/duplicate initializer artifact path')
+        files[str(path)]=row
+    expected={str(root/'model.safetensors'):(INITIALIZER_WEIGHT_SHA,INITIALIZER_WEIGHT_BYTES),
+        str(root/'physical-intelligence/libero/norm_stats.json'):(NORM_SHA,4507)}
+    for path,(checksum,size) in expected.items():
+        if path not in files or files[path].get('sha256')!=checksum or files[path].get('bytes')!=size:
+            raise ValueError('Published weight/bundled normalization identity differs')
+    return list(files.values())
 
 
 def baseline_validation(rows):
