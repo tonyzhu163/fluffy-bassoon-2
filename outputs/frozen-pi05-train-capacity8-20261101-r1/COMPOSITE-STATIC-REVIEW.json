@@ -1,0 +1,33 @@
+{
+  "status": "STATIC_PASS_ALLOCATED_CPU_PENDING",
+  "source_commit": "86f4a962c8f7fc83cfcfa39b466dafcde9f2b25b",
+  "base_latest_main": "84d2fd8c75a2be70da379d0045cc9c56ed3f6533",
+  "exact_root_checked_blobs": {
+    "src/fluffy_bassoon/meta_rl/robotwin_train_capacity8.py": "e5e1930e9ea455d159af7d893a436d5accd691077a962fb4fc1e9c771d2ee8ea",
+    "tests/test_robotwin_train_capacity8.py": "3bd536dde3b129d82afa431962431c0b4c0c69e79439139e881287f3992d4c3c",
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41"
+  },
+  "reviewed_package_sha256": "717d08f5aa04c3f0e2b6d9a46b9ee88eaf66cfab49cc662a988e0c719439680c",
+  "second_reviewer": "/root/finish_ppo",
+  "second_reviewer_scope": "Nine package hashes and AST; critical protocol/cost/closed-prefix resume/typed recovery inspected. Composite dependency binding independently checked by root. No allocated tests performed by reviewer.",
+  "findings": "No material blocker. Final package explicitly repairs earlier draft origin-status and cumulative-clock/closed-prefix resume issues. No generalization/source/student eligibility inferred.",
+  "dependencies": "Missing fitted factory plus opt-in post-decode backend hook copied exactly from qualified547; native path without hook unchanged; unrelated old CLI not added.",
+  "allocated_test_plan": {
+    "count": 11,
+    "only_file": "tests/test_robotwin_train_capacity8.py",
+    "maximum_CPU_worker_seconds": 180,
+    "GPU": 0,
+    "CPU": 2,
+    "RAM_GiB": 16
+  },
+  "GPU_scope": {
+    "maximum_seconds": 1200,
+    "maximum_actions": 3200,
+    "episodes": 8,
+    "models": "Canonical TRAIN00..03 raw native vs fixed wide5000 zero4; no search/SGD/extra episode"
+  },
+  "resource_owner_handoff_sent": true,
+  "actual_allocation": null,
+  "review_mode": "Mac byte/source/AST/static scalar metadata only; no tests/imports/numerical arrays/models/simulator"
+}

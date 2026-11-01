@@ -1,0 +1,38 @@
+{
+  "status": "STATIC_COMPOSITE_CREATED_NOT_CPU_QUALIFIED",
+  "source_commit": "86f4a962c8f7fc83cfcfa39b466dafcde9f2b25b",
+  "branch": "codex/robotwin-train-capacity8-composite-r1",
+  "base": "84d2fd8c75a2be70da379d0045cc9c56ed3f6533",
+  "entry_sha256": "e5e1930e9ea455d159af7d893a436d5accd691077a962fb4fc1e9c771d2ee8ea",
+  "test_sha256": "3bd536dde3b129d82afa431962431c0b4c0c69e79439139e881287f3992d4c3c",
+  "payload_paths": [
+    "outputs/frozen-pi05-train-capacity8-20261101-r1/COMPOSITE-SOURCE.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/AUTHORITY.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/BINDINGS.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/GRANT.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/HANDOFF.md",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/PROTOCOL.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/REQUEST-TEMPLATE.json",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/STATIC-MANIFEST.json",
+    "src/fluffy_bassoon/meta_rl/robotwin_train_capacity8.py",
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py",
+    "src/fluffy_bassoon/rl/robotwin_noise.py",
+    "tests/test_robotwin_train_capacity8.py"
+  ],
+  "dependencies": {
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": {
+      "main_missing": true,
+      "from_source": "5470090165f89a114afe544758ab89d5d956fe76",
+      "sha256": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+      "role": "reviewed opt-in factory/backend physical-hook support, no wholesale old checkout"
+    },
+    "src/fluffy_bassoon/rl/robotwin_noise.py": {
+      "main_missing": false,
+      "from_source": "5470090165f89a114afe544758ab89d5d956fe76",
+      "sha256": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+      "role": "reviewed opt-in factory/backend physical-hook support, no wholesale old checkout"
+    }
+  },
+  "CPU_cases": 11,
+  "actual_allocation": null
+}

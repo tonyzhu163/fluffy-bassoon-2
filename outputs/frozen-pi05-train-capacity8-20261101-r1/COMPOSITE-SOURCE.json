@@ -1,0 +1,37 @@
+{
+  "format": "train_capacity8_latest_main_composite_v1",
+  "actual_latest_main": "84d2fd8c75a2be70da379d0045cc9c56ed3f6533",
+  "child_source_base": "5470090165f89a114afe544758ab89d5d956fe76",
+  "new_only_patch_SHA": "717d08f5aa04c3f0e2b6d9a46b9ee88eaf66cfab49cc662a988e0c719439680c",
+  "new_file_hashes": {
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/AUTHORITY.json": "cf36a7d955065fb03c2a8eab381f74e768c6ff784684b9dc8ad89b5bb7287b37",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/BINDINGS.json": "09345e557a45682f4e1ffff7368a07a7e69f5d0ba3b0b9c04f89e62f417af867",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/GRANT.json": "8248afafbc5e6f8a268dcddd17513c589b641291f161696f9054b223ae7343f8",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/HANDOFF.md": "abcf3e2f6f04ccfe93af48c963bb7bf231e97918208b29f7310b1789c1e57246",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/PROTOCOL.json": "c2fd3076f0e3a54b8df054b761a0dd61531023ae48b739c19cab1d3464f56807",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/REQUEST-TEMPLATE.json": "116618b8be47241a4fddbb6d95bc512e9cb7e0c0c785a4e8fd1dc4bf3993d4cd",
+    "outputs/robotwin-train-capacity8-driver-20261101-r1/STATIC-MANIFEST.json": "bf7ce9e3d7c790209561aa3d75cf701fca9649f1101d202a916bf61e20aef84a",
+    "src/fluffy_bassoon/meta_rl/robotwin_train_capacity8.py": "e5e1930e9ea455d159af7d893a436d5accd691077a962fb4fc1e9c771d2ee8ea",
+    "tests/test_robotwin_train_capacity8.py": "3bd536dde3b129d82afa431962431c0b4c0c69e79439139e881287f3992d4c3c"
+  },
+  "needed_dependency_migrations": {
+    "src/fluffy_bassoon/rl/robotwin_fitted_physical.py": {
+      "main_missing": true,
+      "from_source": "5470090165f89a114afe544758ab89d5d956fe76",
+      "sha256": "7d9206feff92b0dddedd4f2d3e266586b87029625e40b164af9e387a45ce22e9",
+      "role": "reviewed opt-in factory/backend physical-hook support, no wholesale old checkout"
+    },
+    "src/fluffy_bassoon/rl/robotwin_noise.py": {
+      "main_missing": false,
+      "from_source": "5470090165f89a114afe544758ab89d5d956fe76",
+      "sha256": "f25307f8eb62ac3b7f52351fc92e7dd64d184a6052748e6f3cc148a5ab2acb41",
+      "role": "reviewed opt-in factory/backend physical-hook support, no wholesale old checkout"
+    }
+  },
+  "other_main_paths_preserved": true,
+  "unneeded_fitted_source_CLI_added": false,
+  "actual_focused_CPU_cases_prepared": 11,
+  "tests_run_here": 0,
+  "source_imports_models_arrays_or_simulator_run_here": false,
+  "scope": "Only8 raw/fixedwidezero TRAIN controls,1200GPU-s/180CPU-s/3200actions/4GiB; rest23/source/student unadmitted. Exact execution pin recorded separately after tree commit."
+}
