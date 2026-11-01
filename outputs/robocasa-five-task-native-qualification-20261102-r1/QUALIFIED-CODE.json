@@ -1,0 +1,29 @@
+{
+  "status": "QUALIFIED_AFFECTED_CORE_BEHAVIOUR",
+  "source_commit": "7ab6fd2609810da903cfd49be242e7098f24b504",
+  "previous_candidate": "a4e48b594bf532836747edfa762d14911e7cf3a2",
+  "CPU_worker_wall_seconds": 103,
+  "original_CPU_wall_cap": 180,
+  "unused_sealed": 77,
+  "actual_boundary": "aibox-rffe453e3884-5f96c78b88-rtvhb; cgroup13CPU/112GiB; actual allocated Linux; GPU masked in test child; no real motor/model/simulator",
+  "results": [
+    "Six new numerical/core cases passed at a4e48b59:50 unpadded RNG/nextAdam, retained8+42 seed continuation, actual50-worker merge/recovery,3native full-horizon/camera clocks.",
+    "Namespace/dispatch extension: non-distributed merge passed; distributed fixture failed only because synthetic source_commit was omitted. Original failure/log retained.",
+    "Only that failed distributed case rerun after fixture correction7ab6fd26:1passed. No broad suite rerun or GPU qualification from these CPU cases."
+  ],
+  "receipt_files": [
+    {
+      "path": "outputs/robocasa-five-task-qualification-core-20261102-r1/READY.json",
+      "sha256": "f3686b2827b7b3d21eb4385ca7a18a3186f4927868fcb4183af44d47423d0cb9"
+    },
+    {
+      "path": "outputs/robocasa-five-task-qualification-core-20261102-r1/ROUTING-READY.json",
+      "sha256": "9281d72d60f1105769d3ee18a83aa2628406f3575d4a9a4ff45508f16fa25214"
+    },
+    {
+      "path": "outputs/robocasa-five-task-qualification-core-20261102-r1/ROUTING-R2-READY.json",
+      "sha256": "71175e905a9f7349a4c28b44cdeaa092dfce523712cf685996914bf9aa6b9d73"
+    }
+  ],
+  "native_qualification": "First planned case on each new task validates real native renderer, full masks/physical clocks and zero-residual native sampler. No extra smoke/actions."
+}

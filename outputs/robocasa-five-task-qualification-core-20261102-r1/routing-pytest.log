@@ -1,0 +1,106 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+__ test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[True] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-70/test_uneven_worker_results_mer1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f541e9a5490>
+distributed = True
+
+    @pytest.mark.parametrize('distributed',[False,True])
+    def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch,distributed):
+        import time
+        from fluffy_bassoon.meta_rl.warmstart import atomic_save
+        from fluffy_bassoon.meta_rl import robocasa_residual_parallel as module
+        policy,_=learner();bound=ResidualBound(12,tuple(range(6)),(.25,)*6)
+        def child(command, **kwargs):
+            request=torch.load(command[-1],weights_only=False)
+            first=request['cases'][0]['slot']; count=len(request['cases'])
+            rows,completed=collect_pending(policy,bound,Motor(),Environment(first,chunks=15),episodes=count,
+                generator=None,planned_motor_seeds=request['seeds'],planned_action_noise=request['noise'])
+            assert request['episode_id_prefix'].startswith('PPO-task-')
+            atomic_save(module.Path(request['output'])/'result.pt',dict(cases=request['cases'],records=rows,
+                episodes=completed,environment=dict(cursor=count),global_rng=dict(rank=request['rank']),
+                motor_rng=dict(rank=request['rank'])))
+            return SimpleNamespace(returncode=0,poll=lambda:0,wait=lambda **kw:0)
+        monkeypatch.setattr(module.subprocess,'Popen',child)
+        cases=[dict(task='OpenDrawer',slot=i) for i in range(50)]
+        profile=dict(rollout_devices=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0) for i in range(8)],
+            attempt='core',episode_id_namespace='PPO-task-',deadline_unix=time.time()+60,closure_seconds=1)
+        if distributed:
+            from fluffy_bassoon.meta_rl import rlinf_flora_ppo
+            original_write=rlinf_flora_ppo.write_new
+            def queued(path,value):
+                assert path.name.startswith('core-')
+                original_write(path,value)
+                child([value['request']])
+            monkeypatch.setattr(rlinf_flora_ppo,'write_new',queued)
+            profile['distributed_rollout_root']=str(tmp_path/'dispatch')
+        env=ParallelResidualEnvironment(cases,horizon=750,output=tmp_path/'bank',monitoring_root=tmp_path/'monitor',
+            profile=profile,code=tmp_path,report=lambda *a,**k:None)
+>       rows,episodes=env.collect(policy,bound,Motor(),episodes=50,generator=None,deterministic=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_residual_parallel.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fluffy_bassoon.meta_rl.robocasa_residual_parallel.ParallelResidualEnvironment object at 0x7f52f30adcd0>
+policy = ResidualActorCritic(
+  (actor): Sequential(
+    (0): Linear(in_features=2, out_features=8, bias=True)
+    (1): Tanh()
+..._features=8, out_features=8, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+bound = ResidualBound(action_dim=12, indices=(0, 1, 2, 3, 4, 5), scale=(0.25, 0.25, 0.25, 0.25, 0.25, 0.25))
+motor = <test_residual_parallel.Motor object at 0x7f52f2cadf90>, episodes = 50
+generator = None, deterministic = True, verify_zero = False
+
+    def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False, verify_zero=False):
+        devices = self.profile["rollout_devices"]
+        world = len(devices)
+        if world != 8 or self.cursor + episodes > len(self.cases):
+            raise ValueError("Eight allocated workers and an exact complete episode bank required")
+        partitions = episode_partitions(episodes, world)
+        bank = self.output / f"parallel-{self.cursor:06d}"
+        bank.mkdir(parents=True, exist_ok=False)  # Never recollect an attempted bank.
+        seeds, noise = draw_schedule(motor, policy, generator, episodes * self.horizon // 50,
+                                     deterministic=deterministic)
+        children, streams, requests = [], [], []
+        self.active = True
+        distributed = self.profile.get("distributed_rollout_root")
+        try:
+            for rank, device in enumerate(devices):
+                first, stop = partitions[rank]
+                first_chunk, stop_chunk = first * (self.horizon // 50), stop * (self.horizon // 50)
+                directory = bank / f"rank-{rank:02d}"
+                directory.mkdir()
+                request = dict(profile=self.profile, config=asdict(policy.config),
+                    policy=cpu_tree(policy.state_dict()), bound=asdict(bound), horizon=self.horizon,
+                    cases=self.cases[self.cursor + first:self.cursor + stop],
+                    seeds=seeds[first_chunk:stop_chunk],
+                    noise=None if noise is None else noise[first_chunk:stop_chunk],
+                    deterministic=deterministic, verify_zero=verify_zero and rank == 0,
+                    rank=rank, world=world, output=str(directory), monitoring_root=str(self.monitoring_root),
+                    episode_id_prefix=(self.profile.get('episode_id_namespace','')
+                        + f"case-{self.cursor + first:06d}-rank-{rank:02d}-"),
+                    attempt=f"{self.profile['attempt']}-{self.output.parent.name}-{self.cursor:06d}")
+                request_path = directory / "request.pt"
+                atomic_save(request_path, request)
+                requests.append(request)
+                if distributed:
+                    from .rlinf_flora_ppo import write_new
+                    queue = Path(distributed) / f"rank-{rank:02d}"
+                    queue.mkdir(parents=True, exist_ok=True)
+                    write_new(queue / (self.profile['attempt'] + '-' + self.output.parent.name
+                                       + f"-{self.cursor:06d}.json"),
+                        dict(request=str(request_path), sha256=sha(request_path), output=str(directory),
+>                            source_commit=self.profile["source_commit"]))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                            KeyError: 'source_commit'
+
+src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py:123: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_residual_parallel.py::test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[True]
+1 failed, 1 passed in 6.57s
