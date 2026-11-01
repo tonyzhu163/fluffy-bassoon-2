@@ -48,9 +48,9 @@ The full selector contains68 cases; do not rerun the unchanged63 for this fix.
 The earlier actual67/JUnit record is in `QUALIFICATION-CARRY.json`. The source
 author performed only static and saved-artifact checks on macOS. The actual
 allocated CPU run cost79 inclusive worker-seconds (31 scheduler-seconds separate),
-bringing the existing phase to176/360 with184 remaining. Sole `finish_assembly` binds the residual CPU allocation inside
-the existing360-worker-second phase (97 already charged,263 remaining), then
-the diagnosed GPU successor within the same loading ticket. Preserve R2's
+bringing the existing phase to176/360 with184 remaining. Sole `finish_assembly`
+owns any later residual CPU allocation and the diagnosed GPU successor within
+the same loading ticket. Preserve R2's
 88 GPU-seconds and prior costs; no source-created resource grant or retry.
 
 Strict direct GPU loading of the unchanged published weights/model body is
