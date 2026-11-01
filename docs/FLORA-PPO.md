@@ -23,7 +23,7 @@ Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLA
 
 ## Benchmarks, in order
 
-1. **LIBERO** reuses the existing OpenPI40 pi0.5 setup ([METHODS.md](METHODS.md)).
+1. **LIBERO** starts from RLinf's published 40-task few-shot pi0.5 SFT checkpoint.
    Always keep reporting true simulator success.
 2. **RoboCasa** (NVIDIA's GR00T benchmark) next: closer in appearance to the
    rewarder's likely training data and far from saturated.
@@ -34,11 +34,15 @@ A single-seed pilot to decide whether the idea is worth pursuing; the
 [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md) is authoritative.
 All other jobs are paused for it.
 
-- **Policy:** the official OpenPI pi0.5 LIBERO40 release (`ec064…` receipt,
-  `c565…` parameter signature; [METHODS.md](METHODS.md#motors)), loaded through
-  RLinf with fixed-input/fixed-noise parity checked before the first update.
-  RLinf130 is not allowed here: it was fine-tuned on task 44, so it would answer
-  a seen-task question.
+- **Policy:** the published PyTorch
+  [`RLinf/RLinf-Pi05-LIBERO-SFT@45ccfcc4`](https://huggingface.co/RLinf/RLinf-Pi05-LIBERO-SFT/tree/45ccfcc4e28634f1576ebf78cab0fbe2fd82432d),
+  trained with 40 demonstrations across the four ten-task LIBERO suites
+  ([paper, section 5.2.1](https://arxiv.org/html/2510.25889v1#S5.SS2.SSS1)).
+  Both arms use the same weights and bundled normalization through RLinf's
+  native loader, with strict backbone loading and a fresh shared baseline.
+  No additional SFT or JAX conversion is required. This is a different
+  initializer from historical OpenPI40 `c565…`; its success rate is measured
+  anew. RLinf130 is excluded because its SFT includes task 44.
 - **Recipe:** RLinf's published pi0.5 LIBERO PPO config restricted to task 44
   (`KITCHEN_SCENE9_turn_on_the_stove`), 32 envs × 4 rollout epochs at H400
   (~53k actions per iteration). Training disables success termination so
@@ -62,11 +66,13 @@ All other jobs are paused for it.
   ceiling at three evaluations ≥ 48/50; hard action, time and wall-clock limits.
   Decisions use simulator success only. Stop at a closed boundary with full
   recovery.
-- **Budget:** ~74k all-in actions per iteration, under 1M per arm. GPU-hours
+- **Budget:** ~76k all-in actions per iteration with 4/8 workers, including
+  six unscored evaluation padding episodes, under 1M per arm. GPU-hours
   are uncapped for these two arms by human authorization, but each scheduler
   job may request at most 8 GPUs and must run under 8 hours. Logs are plain
   text heartbeats, with no dashboard.
 
-Task 44 has a known simulator-reward positive control: ordinary DSRL took
-OpenPI40 native pi0.5 from about 5/20 to 20/20 there
-([FINDINGS.md](FINDINGS.md#libero)).
+Task 44 has a historical simulator-reward control: ordinary DSRL took the
+separate OpenPI40 native pi0.5 initializer from about 5/20 to 20/20 there
+([FINDINGS.md](FINDINGS.md#libero)). This is not the starting baseline or a PPO
+result for the ready PyTorch checkpoint used in this comparison.
