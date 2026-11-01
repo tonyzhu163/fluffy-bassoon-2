@@ -315,6 +315,7 @@ def _compose_official_config(monkeypatch,tmp_path,world):
 def test_compose_actual_official_config(monkeypatch,tmp_path,world):
     from rlinf.config import validate_fsdp_cfg
     cfg=_compose_official_config(monkeypatch,tmp_path,world)
+    schedule=evaluation_schedule(world,'DEV')
     result=validate_config(cfg)
     # Compose alone missed the actual entrypoint's OpenPI precision guard.
     validate_fsdp_cfg(cfg.actor)
