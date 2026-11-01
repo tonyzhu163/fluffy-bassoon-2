@@ -1,0 +1,136 @@
+{
+  "format": "all40_prior_storage_conditional_bound_receipt_v1",
+  "status": "metadata_complete_pending_raw_schema_confirmation",
+  "metadata": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/PRIOR-STORAGE-BOUND-METADATA.json",
+    "sha256": "47b3dfd4417f9a2e4feeb316399f47150980dd6835fad8943c73706876e5cfbc",
+    "bytes": 164580
+  },
+  "reader": {
+    "git_commit": "b343c0e1",
+    "git_blob": "a8ee3d7ece5460c601b83f775ff9cb19b41136f6",
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/PRIOR-STORAGE-BOUND-READER.py",
+    "sha256": "82e850c66d7625795742dc4f0cd943c0bea34e0225d90e519536a63cb08d9598",
+    "bytes": 6921
+  },
+  "counter_refs": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/progress.json",
+      "sha256": "6487c10f1bc7b8fb48fc57a9115fee7306ff45157cd599ad7f0873d01076f908"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+      "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+    }
+  ],
+  "source_code_basis": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "e207850a72b6781b7b53b157d0d556782320f03e",
+      "sha256": "fc5274d39990d569cd201a5e45f94b15dafc6e3fb23b50d8cca2147bc13b3ef6",
+      "bytes": 31594,
+      "relevant_lines": "246-343: one trace/RNG/receipt percomplete role; qualification firstonly; no actor/replay payload outputcopy"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_memory_replication.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "f01ed22113d7b0d257cf2919ee7bc5b96f488f36",
+      "sha256": "9a6f798ec54cd7ffafb0a541d9d370fb878fe30fed634a55f09bc8ee29984be6",
+      "bytes": 21128,
+      "relevant_lines": "95-138: gzipprotocol5; exactly1inference+1outcome perchunk and1reset perphysicalreset"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_evaluate.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "c2cd854a2f9cf6dbc5ada55afd100e6a9ddbe73a",
+      "sha256": "84a935139b477dd97012f37881e313fa5386d1f194ea084fbce88d1766db735d",
+      "bytes": 34273,
+      "relevant_lines": "150-196: fixed6key atomicCostLedger JSON perRPC;254-340: H10/7D finitecommands, onlyfinalchunkcanbefewerthan10"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_libero.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "9ff9e835d303fecfc9bd852e87aba147e9bcc32d",
+      "sha256": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711",
+      "bytes": 66177,
+      "relevant_lines": "34-38: atomically replacedJSON;161-215: two256x256cameras/resetstate;216-233:10actionoutcome;300-310:motorbindingmetadata"
+    }
+  ],
+  "structural_derivation": {
+    "closed_roles": 161,
+    "closed_all_in_actions": 26086,
+    "settles_per_closed_role": 10,
+    "closed_primitive_actions": 24476,
+    "maximum_chunks_formula": "floor((24476+9*161)/10)",
+    "maximum_chunks": 2592,
+    "physical_resets_including_failed": 162,
+    "raw_file_count_formula": "2*2592+162",
+    "raw_file_count_upper": 5346,
+    "raw_file_byte_upper": 1048576,
+    "raw_RPC_upper_bytes": 5605687296,
+    "journal_records_upper": 2754,
+    "journal_record_byte_upper": 4096,
+    "journal_upper_bytes": 11280384,
+    "journal_schema": "6 fixed keys,queryrole,knownASCIIepisodeID<256chars,max/actualsteps<=10; one atomic JSON perRPC; no retained temp at completedwrite boundary"
+  },
+  "direct_stat_class_summary": {
+    "phase root metadata": {
+      "files": 5,
+      "bytes": 89
+    },
+    "original CPU qualification": {
+      "files": 7,
+      "bytes": 13610
+    },
+    "two-record CPU diagnosis": {
+      "files": 10,
+      "bytes": 13735
+    },
+    "GPU clock metadata": {
+      "files": 2,
+      "bytes": 1915
+    },
+    "closed GPU attempt metadata": {
+      "files": 6,
+      "bytes": 25709
+    },
+    "41 original case references": {
+      "files": 41,
+      "bytes": 7901307
+    },
+    "assessment top metadata and rolling recovery": {
+      "files": 8,
+      "bytes": 177152
+    },
+    "21 simulator server metadata/logs": {
+      "files": 63,
+      "bytes": 44443
+    },
+    "closed episode trace/RNG/receipt or first qualification": {
+      "files": 484,
+      "bytes": 471756282
+    }
+  },
+  "measured_non_RPC_bytes": 479934242,
+  "conditional_prior_output_upper_bytes": 6096901922,
+  "original_output_cap_bytes": 34359738368,
+  "conditional_new_child_residual_bytes": 28262836446,
+  "actual_stat_calls": 626,
+  "metadata_elapsed_seconds": 13.746479255147278,
+  "unknown_fileclasses": [],
+  "missing_files": [],
+  "actor_payload_copies": 0,
+  "unmeasured_raw_RPC_and_journals": "Structurallybounded,not enumeratedorread. Original2.3GB actorinputs outsideoutput excluded; owncapturedreference/trace bytes measured. No shader/envcache or actorcopy class observed in shallowknown-output inventory.",
+  "actual_output_size_unknown": true,
+  "raw_schema_confirmation_pending": true,
+  "ready_for_storage_admission": false,
+  "no_GPU_or_CPU_allocation": true,
+  "no_raw_or_journal_walk": true,
+  "no_payload_deserialization": true,
+  "notes": [
+    "This is a conservative logical-file-byte upperbound, never an exactdu/allocatedblock claim.",
+    "Do not bind this conditional number as admitted until sourceowner1MiB rawschema confirmation is attached.",
+    "Source/R2execution/mapping/cumulativeGPU/action admission remains separate."
+  ]
+}

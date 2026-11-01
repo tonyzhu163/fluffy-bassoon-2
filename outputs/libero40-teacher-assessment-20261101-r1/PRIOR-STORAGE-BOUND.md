@@ -1,0 +1,5 @@
+The bounded known-path metadata pass measured479,934,242bytes across626 regularfiles in13.75seconds. No unknown or missing shallow fileclasses were found. It did not enumerate rawRPC or physical-journal contents, recursivelywalk the output tree, deserialize payloads, or allocate resources.
+
+From161closedroles/26,086all-in actions, closed primitives are24,476. NativeH10 with onlyfinalchunks shortened gives atmost2,592chunks. The structuralrawRPC bound is(2×2,592+162resets)×1MiB=5,605,687,296bytes. FixedCostLedger JSONs add atmost2,754×4KiB=11,280,384bytes. Added to measuredtrace/RNG/receipts/references/metadata, the CONDITIONALpriorupperbound is6,096,901,922bytes, leaving28,262,836,446bytes inside the original32GiB output cap.
+
+The1MiB rawschema bound still needs the sourceowner confirmation before admission. Actualrecursive outputsize remains unknown; no invented8GiB or exactdu claim. Original2.3GB actors remain external inputs, notnewcopies. All source/code/counter and measuredpath references are SHA-bound in the receipt. No GPUretry or R2 admission follows from this preparation.
