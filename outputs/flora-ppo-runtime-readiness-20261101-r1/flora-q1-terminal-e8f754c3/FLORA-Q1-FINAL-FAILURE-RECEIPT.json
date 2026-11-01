@@ -1,0 +1,92 @@
+{
+  "format": "flora_archived_native_fixture_terminal_v1",
+  "checked_unix": 1793520898.658518,
+  "job_id": "job-8ccnyqvoj5fa",
+  "scheduler_status": "Failed",
+  "scheduler_end_shanghai": "2026-11-01 15:54:19",
+  "scheduler_reported_seconds": 410,
+  "wrapper_exit_code": 1,
+  "scientific_source": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "resource_wrapper_source": "2816e43fcc342fc04b397e4b492b323f78fc8a85",
+  "Flora_code": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "Flora_model": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+  "actual_cuda_probe": "passed on one RPBZZZ6 with own PID and physical UUID",
+  "runtime": {
+    "python": "3.12.15",
+    "torch": "2.11.0+cu130",
+    "torch_cuda": "13.0",
+    "vllm": "0.24.0",
+    "transformers": "5.8.1"
+  },
+  "weight_loading": {
+    "shards_loaded": 11,
+    "shards_total": 11,
+    "reported_memory_gib": 51.1,
+    "load_seconds": 71.489526
+  },
+  "compile_seconds": 53.49,
+  "final_stage": "EngineCore initialization warmup, FlashInfer dummy sampler JIT",
+  "failure": {
+    "early_log": "Failed to get device capability: SM 12.x requires CUDA >= 12.9",
+    "terminal_exception": "RuntimeError: FlashInfer requires GPUs with sm75 or higher",
+    "location": "flashinfer/compilation_context.py::_normalize_cuda_arch skips unsupported toolkit architectures; flashinfer/jit/core.py::check_cuda_arch finds no eligible targets",
+    "interpretation": "JIT CUDA toolkit/SM12 capability detection mismatch is supported by logs/source; this is not evidence the RPB GPU is actually below SM75. Exact selected nvcc path/version was not captured inside the ended allocation.",
+    "out_of_memory_reported": false
+  },
+  "score_completed": false,
+  "expected_score": null,
+  "labels_written": 0,
+  "new_simulator_actions": 0,
+  "optimizer_steps": 0,
+  "archived_video_sha256": "08987c0d39e064415694a552789bb5e9b8a7223870a9d5f4336825ea6471b4a6",
+  "clock": {
+    "inclusive_gpu_seconds": 446,
+    "original_ticket_seconds": 3600,
+    "remaining_same_ticket_seconds": 3154,
+    "overrun": false
+  },
+  "next_action": "No repeat polling of terminal job or blind retry; preserve same-ticket remainder while root reconciles the new direction. Any future repair needs explicit immutable runtime/source admission.",
+  "next_live_check": null,
+  "proofs": [
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/console.log",
+      "bytes": 86807,
+      "sha256": "d48f39ff108c3b65803cbe66fe4d53157b089b6cac8f460853ac49f9c6eaf091"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/flashinfer-compilation-context-source.py",
+      "bytes": 3909,
+      "sha256": "e55c7f58a83810590e18686954527cc62735a6e91c3fa67286a5e7f00afc9be5"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/gpu-probe.json",
+      "bytes": 2883,
+      "sha256": "874806babfcf9e3f8f7b91a89ac727e1ac2d2066621a1d22e86fe5c709d49e25"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/profile.json",
+      "bytes": 1473,
+      "sha256": "d02d785d8c63748b39eec33629385d6aac4b9e84bea8919aac0f6eac47fedfd7"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/runtime-attestation.json",
+      "bytes": 974,
+      "sha256": "b8aa12d02b75968a6d93f055f9811f6d2a2780d31d4f5c597df770fe308256df"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/terminal.jobs.jsonl",
+      "bytes": 216,
+      "sha256": "ccfacbfd4025f205295fee8f4c56bbf4e9549e83b2793060c242f6849d33606e"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q1/worker-time.json",
+      "bytes": 829,
+      "sha256": "5d8a90c552fce8ac399bc2a8e69057f8aac6406aaef188d5fb95b2bc0f1ab0b5"
+    }
+  ]
+}

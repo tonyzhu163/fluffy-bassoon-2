@@ -1,7 +1,6 @@
 # Task44 baseline ceiling stops the proposed Flora PPO comparison
 
-2026-11-01, baseline terminal at15:51:03 Shanghai. Flora fixture qualification
-is still running at the latest owned snapshot; PPO has not launched.
+2026-11-01, baseline terminal at15:51:03 Shanghai. Flora fixture qualification later failed before scoring; PPO has not launched.
 
 The matched comparison was intended to measure learning from simulator terminal
 success versus Flora graded terminal feedback. Its predeclared admission rule
@@ -46,3 +45,24 @@ with RoboTwin or RoboCasa as conditional alternatives. The separately charged
 uses the same45cc checkpoint, fixed screening/confirmation rules and no PPO. It
 does not change task44 results, refill its spent preparation budget, or select
 a new task from Flora scores. No new task or benchmark has been selected yet.
+
+## Flora fixture and revised direction
+
+Flora job `job-8ccnyqvoj5fa` ended Failed at15:54:19 Shanghai. It loaded all11
+weight shards (reported51.1GiB) and compiled before FlashInfer warmup rejected
+the detected SM12/toolkit combination. Torch CUDA13 and allocation probing had
+passed. The selected JIT nvcc path/version was not captured, so the precise
+compiler selection remains unresolved; this is not a demonstrated weight or
+out-of-memory failure. No label, physical action or optimizer update was produced.
+Its446 GPU-seconds bring closed comparison cost to1990 GPU-seconds, with287
+CPU-worker-seconds and26975 common actions. All allocations are terminal. The
+same3600-second Flora ticket retains3154 seconds, with no automatic retry.
+[Saved failure review](FLORA-Q1-TERMINAL-PARENT-REVIEW.json).
+
+The human then prioritized restoring RoboTwin and its six VLRLA source tasks,
+starting with `scan_object`, for a measured clean/random condition contrast.
+The unlaunched LIBERO search is held with zero charge. Existing RoboTwin code
+and archived results are present; native PPO/common-policy, video-clock and
+finite runtime bindings remain to be prepared. The cached Motus policy saw both
+clean and randomized demonstrations, so this is not an unseen-domain claim.
+[Restoration scope](../robotwin-flora-six-task-restore-20261101-r1/AUTHORITY.json).

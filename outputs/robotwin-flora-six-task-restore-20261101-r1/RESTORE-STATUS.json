@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "REPOSITORY_CODE_AND_RESULTS_PRESENT_RUNTIME_REBINDING_PENDING",
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "first_candidate": "scan_object",
+  "paper_reference_only": {
+    "url": "https://arxiv.org/html/2610.19517v1",
+    "table": 1,
+    "evaluation_instances": 128,
+    "scan_object_native_success_percent": 19.5,
+    "stamp_seal_native_success_percent": 28.1,
+    "limit": "These are the paper's randomized-instance outcomes, not measurements of our checkpoint, clean/random gap, or proof our PPO will improve."
+  },
+  "existing_repository_files": [
+    "configs/robotwin_vlrla.json",
+    "scripts/setup/robotwin_vlrla.sh",
+    "src/fluffy_bassoon/rl/robotwin_noise.py",
+    "src/fluffy_bassoon/rl/robotwin_assets.py",
+    "src/fluffy_bassoon/meta_rl/rlinf_native_ppo_runtime.py",
+    "docs/robotwin/vlrla.md",
+    "docs/robotwin/coefficient-steering/EVALUATION.md",
+    "outputs/archive/robotwin-noise-matched-20261029-r4/experiment/contract.json",
+    "outputs/archive/robotwin-noise-matched-20261029-r4/experiment/frozen-motor.json"
+  ],
+  "recorded_runtime_paths_not_freshly_remotely_checked": {
+    "environment": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1",
+    "robotwin": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "model": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "model_repository": "motus-robotics/pi0.5_robotwin2",
+    "model_revision": "effc6e1a99bd4d0edf9447e8ba313def67649cfe",
+    "parameter_fingerprint": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "normalization_relative": "assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "normalization_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb"
+  },
+  "runtime_conventions": "Existing Motus H32/5flow/14physical commands/3RGB cameras, ALOHA adapt_to_pi and delta arms/absolute grippers; distinct from LIBERO45cc H10/7physical. Preserve the native conventions until an explicit qualified PPO sampler/profile is bound.",
+  "clean_and_random": "robotwin_noise.py already supports demo_clean and demo_randomized. The old final_observation_only optimization is clean-only and must stay disabled for randomized lights; no guard removal. Capture genuine native simulator/control video timestamps, not assumed LIBERO20Hz per waypoint.",
+  "pending": [
+    "Exact retained sources/assets/checkpoint/dependencies and current allocated-runtime admission.",
+    "Minimal nativePPO common-policy loading/value-head/normalization/action-transform compatibility; old task-specific adjust_bottle configuration is not a common six-task initializer.",
+    "Concrete small paired clean/random native baseline, actual task horizons/cost units and full recoveries, with no extra qualification episode.",
+    "Supported native video timing for Flora and the separate diagnosed FlashInfer/toolkit binding fix.",
+    "Finite resource/action/output tickets before allocation; no restored or recycled historical budget."
+  ],
+  "execution_performed_by_this_restoration": "Static file/source/metadata review only. No test, tensor/model load, simulator, SSH, scheduler query, GPU allocation, physics or SGD.",
+  "prior_scan_evidence": {
+    "path": "outputs/archive/robotwin-native-continuation-sac-20261030-r1/checks/final-case-records-20261031-0810.json",
+    "reported": "stage100 scan_object validation0/4,2000actions,64chunks",
+    "method": "trained feature-SAC steering of frozen Motus under demo_clean",
+    "limit": "Not native SFT, not a matched clean/random domain contrast, and not a new PPO baseline."
+  }
+}
