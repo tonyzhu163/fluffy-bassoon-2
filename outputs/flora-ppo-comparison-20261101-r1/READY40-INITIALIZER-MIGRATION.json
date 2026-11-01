@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "prospective_initializer_switch_authorized_before_any_PPO_update",
+  "human_steering": {
+    "chat": "01a18677-a163-78e3-a783-b557b3c621b2",
+    "quote": "wait cant we just find a libero40 weights?",
+    "interpretation": "Use a suitable published40-task PyTorch SFT checkpoint common tobotharms; exactidentitytoearlierOpenPIJAXC565isnotrequired."
+  },
+  "selected_release": {
+    "repository": "RLinf/RLinf-Pi05-LIBERO-SFT",
+    "revision": "45ccfcc4e28634f1576ebf78cab0fbe2fd82432d",
+    "weights": {
+      "path": "model.safetensors",
+      "bytes": 7473091464,
+      "file_sha256": "4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7"
+    },
+    "normalization": {
+      "path": "physical-intelligence/libero/norm_stats.json",
+      "bytes": 4507,
+      "file_sha256": "dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1"
+    },
+    "gated": false
+  },
+  "evidence": {
+    "paper": "https://arxiv.org/html/2510.25889v1#S5.SS2.SSS1",
+    "paper_statement": "Section5.2.1 statesfour10-taskLIBEROsuites and40trajectoriesforunifiedpi0.5few-shotSFT; footnote6linksRLinf/RLinf-Pi05-SFT.",
+    "alias": "https://huggingface.co/RLinf/RLinf-Pi05-SFT",
+    "alias_result": "ActualHTTP/APIredirect toRLinf/RLinf-Pi05-LIBERO-SFT verified beforeselection.",
+    "model_metadata": "https://huggingface.co/api/models/RLinf/RLinf-Pi05-LIBERO-SFT",
+    "weight_file_identity": "HFpublishedLFS SHA256/size; actualstagedbytesstillmustverifybeforeload.",
+    "norm_identity": "Pinned4507BbytesfetchedandSHA256hashedonMac; arraysnotparsed/evaluated.",
+    "official_loader": "https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/rlinf/models/embodiment/openpi/checkpoint.py",
+    "loader_statement": "load_base_safetensors invokes _convert_official_openpi_keys/old_to_new_state_dict in memory and rejects missingbackbone/unexpectedkeys. No standaloneJAXconversionrequiredforpublishedPyTorchlayout."
+  },
+  "disclosure": {
+    "fine_tuning": "Few-shot40-taskSFT, one demonstration per task perpaper. Not the earlier full-dataOpenPI40 checkpoint and no C565 equivalence claim.",
+    "target": "Task44 outside these four fine-tuning suites; developmentselected, no foundation-pretrainingabsence/novelskillclaim.",
+    "selection": "Frozen release chosenforreadinessand40-taskscopebeforeanynewPPO/baseline outcomes."
+  },
+  "changes": {
+    "superseded_prospectively": "ExactC565/OpenPIJAXsource requirement and standaloneJAXconversion/loadingparitytoC565 gate.",
+    "required_now": [
+      "SameactualpinnedPyTorchrelease+bundlednormforbotharms.",
+      "Strictactualbackboneloadandmapping/shape/actionH10/normalization/state/camera checks insideallocatedLinux.",
+      "Sameinitialvaluehead/seedandpublishedPPOrecipe; freshnative64baseline/headroom/AUROC unchanged."
+    ],
+    "unchanged": "Task44/twoarms/rewardrules/logging/stopping/casebanks/actioncaps/max8GPUsperjob/standingjob<8h/noaggregate10hcap; no additionalSFT orscientificarms."
+  },
+  "q1_conversion": {
+    "job": "job-jas5xy463q0r",
+    "status": "failed_before_wrapper_exit127_no_model_or_probe",
+    "owner_reported_conservative_gpu_seconds": 91,
+    "remaining_conversion_ticket_seconds": 3509,
+    "continuation": "OBSOLETE_HELD_DO_NOT_RETRY",
+    "cause": "PFSsource/ mountedat/mowenjie instead of correct/mowenjie→/mowenjie; cdfailedbeforewrapper.",
+    "cost_rule": "Retainfailedattempt/cost. Unusedconversionticketcapacityclosed, nottransferred toloadticket."
+  },
+  "cpu_qualification": "a89458-caseCPUgate may qualify unchangedruntimehelpers only. Preserveexactactualpin/results; newinitializermigrationneedsaffectedchecks/carryproof, no inventednew-releasequalification or repeatpassedunchangedsuites.",
+  "implementation_owner": "01a18be4-a6ab-79a2-af3d-13f76308e253",
+  "execution_owner": "/root/finish_assembly",
+  "no_additional_ACK": "Singlewriter prepares narrowpinnedready-releaseprofile; soleownerperformsobjectivequalificationandlaunchwithoutnewhumanconfirmation."
+}
