@@ -1,0 +1,60 @@
+{
+  "status": "PREPARED_UNBOUND_NO_ALLOCATION",
+  "owner": "/root/flora_throughput",
+  "reason": "Human now requests synchronized left/wrist/right with unchanged short official prompt. Archived one-view measurements do not qualify this profile.",
+  "source_basis": "75d96d73",
+  "runtime_script": "scripts/diagnostics/flora_batch_benchmark.py",
+  "engine_change": false,
+  "prompt_change": false,
+  "model_change": false,
+  "resources_proposal": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "cpus_per_node": 32,
+    "ram_gib_per_node": 256,
+    "shm_gib_per_node": 16,
+    "scheduler_minutes": 49,
+    "inclusive_seconds_per_node": 3000,
+    "maximum_gpu_seconds": 24000,
+    "output_gib": 128,
+    "retry": false,
+    "new_robot_actions": 0
+  },
+  "batch_sizes": [
+    1,
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    24
+  ],
+  "requests_per_configuration": 64,
+  "camera_order": [
+    "robot0_agentview_left",
+    "robot0_eye_in_hand",
+    "robot0_agentview_right"
+  ],
+  "fixture_binding": {
+    "episode_count": "Exact1..8 already-planned recorded complete native cases, no extra robot episode for throughput",
+    "task": "Root binds its prospective native task before outcomes",
+    "identity": "Exact episodes JSON path/SHA plus all three synchronized native video path/SHAs per episode; first planned cases may supply the fixture",
+    "no_one_view_reuse": true
+  },
+  "unbound_required": [
+    "Exact published root source pin and executable hashes, including current three-view protocol/helpers.",
+    "Actual new synchronized native fixture episodes, clocks and per-view hashes; root owns case/resource protocol.",
+    "Actual affected CPU qualification XML and exact source/test hashes; carry passed tests without repeating old suites.",
+    "Fresh PFS output identity, capacity/quota/write evidence and root finite resource admission before any submission."
+  ],
+  "measurement": {
+    "cold": "Constructor, loading and JIT interval recorded separately",
+    "steady": "All64 replay requests after constructor, includes media preprocessing and any first-shape JIT",
+    "memory": "Selected physical UUID NVML samples each second across cold and inference",
+    "failures": "Retain every configuration failure/OOM; no automatic fallback",
+    "agreement": "Retain official raw outputs/probabilities/expected scores for the exact new fixtures. Root owns per-task agreement protocol/isolated truth; throughput does not select tasks or calibrate prompts."
+  },
+  "production_hold": "Do not carry one-view batch8/.78 colocation fit or speed into three-view F admission. New observed peak and actual startup readiness must pass the same policy-plus-reserve rule.",
+  "geometry_gate": "See STATIC-GEOMETRY.json. The new allocated workload runs flora_request_geometry.py once before any engine, preserving all64 frames and the official short prompt. All eight engines require its exact successful input-token receipt."
+}

@@ -1,0 +1,60 @@
+{
+  "status": "STATIC_SOURCE_BOUND_NOT_ACTUAL_PROCESSOR_EXECUTION",
+  "official_code": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+  "read_method": "Exact source/config text and byte hashes through metadata SSH only; no imports, arrays, video decode or processor computation on devhost.",
+  "source_refs": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo/rewarder/batch_utils/core.py",
+      "bytes": 35045,
+      "sha256": "cf08fc1a9ecfcb748479c8fd0b996bd6fc60b28a123cc71ea3df37080d3dace8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo/rewarder/batch_utils/engine.py",
+      "bytes": 6459,
+      "sha256": "fe2d87a52d0578722d8c3ebd010f1d39dcf2735b70e96b47cfbd9ca643d7b4bf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1/processor_config.json",
+      "bytes": 1191,
+      "sha256": "5845168a99bc9130ff4dbc0f2d91eb8fca782a844b36c8d6e54e5311dd1e33fd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py",
+      "bytes": 11141,
+      "sha256": "1ca916fbb1531bf3c2ef4bf862ecb790f88c084ba99f27e324ff491a5b7abc67"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/transformers/models/qwen3_vl/processing_qwen3_vl.py",
+      "bytes": 13699,
+      "sha256": "b51f77d783b4a88d503bf9198828d46f71e3ead3833da2631748188b159253ba"
+    }
+  ],
+  "official_tiling": {
+    "three_views": "Side by side, in supplied order. Only four views use a2x2 grid.",
+    "source": "core.py:230..246",
+    "aligned_cell_pixels": 32,
+    "target_pixels_per_view": 100000,
+    "max_visual_tokens": 14336
+  },
+  "official_processor": {
+    "sampled_frames": 64,
+    "patch_size": 16,
+    "temporal_patch_size": 2,
+    "merge_size": 2,
+    "video_pixel_budget": 29360128,
+    "do_sample_frames": false,
+    "visual_token_formula": "(64/2)*(H/16)*(W/16)/(2**2) =32*(H/32)*(W/32), exactly the official planner _tokens() bound.",
+    "context_cap": 16384,
+    "completion_reserve": 12,
+    "conservative_nonvisual_budget_after_visual_cap": 2036
+  },
+  "runtime_gate": {
+    "before": "All eight cold engine constructions, after actual eight-GPU resource binding.",
+    "mode": "One CPU-only child, GPU visibility masked locally, at most180seconds within the same benchmark clock.",
+    "evidence": "Actual native source dimensions, official collage rectangles/dimensions,64 sampled native frames, processor video_grid_thw, visual/input/timestamp-prompt/completion token counts for every unique fixture.",
+    "accept": "Actual input tokens plus official12-token completion reserve <=16384 and actual visual count equals processor grid count <=14336.",
+    "failure": "Save the actual facts and exit all nodes before model loading. Do not truncate frames, retile, alter prompt, increase context automatically or retry. Root may review a concrete resource-only context proposal if needed."
+  },
+  "actual_new_native_geometry": "Pending the new recorded synchronized fixtures; no three-view speed, VRAM or agreement claim yet."
+}
