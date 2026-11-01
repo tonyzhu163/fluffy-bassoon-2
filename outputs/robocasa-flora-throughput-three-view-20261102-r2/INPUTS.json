@@ -1,0 +1,209 @@
+{
+  "official_code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+  "official_code": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo",
+  "model": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1",
+  "model_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1-receipt/READY.json",
+    "sha256": "05c31de8122ecd1f467033d671767e1c59db40de9f4a3a43b409446aa38d76bf"
+  },
+  "fixture": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-view-native-first8-20261102-r1/native8/episodes.json",
+    "sha256": "f92756b2d4fdfe618349187be40e6d4b98e8e8780a10023ef932ec837b4eb479",
+    "task": "OpenDrawer",
+    "episode_count": 8,
+    "camera_order": [
+      "robot0_agentview_left",
+      "robot0_eye_in_hand",
+      "robot0_agentview_right"
+    ]
+  },
+  "qualified_file_sha256": {
+    "tests/test_flora_terminal_shards.py": "56128b0469962f1753e4a2a9c47e893692c48482a6bae8260268641883498dcf",
+    "src/fluffy_bassoon/meta_rl/flora_terminal_shards.py": "bb3efc7e311410a627e95a750f3ffb7cb2fe5e157b10019f55cc9c3f83011f21",
+    "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo.py": "7578b3abf59de08935de199f1e7c14130280ab47a85ec79f48a7a7b26135d6e2",
+    "scripts/diagnostics/robocasa_residual_score.py": "94c08fad353f7c16547c435c60c3d5846a15ae3c89ff4235f076935aafb16619"
+  },
+  "required_scorer_tests": [
+    "test_eight_terminal_shards_preserve_all64_graded_rewards_and_chronology",
+    "test_missing_duplicate_misrouted_or_malformed_shard_cannot_release_partial_rewards"
+  ],
+  "batch_sizes": [
+    1,
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    24
+  ],
+  "requests_per_configuration": 64,
+  "new_robot_actions": 0,
+  "toolkit": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q7-20261101-r1/toolkit-site/nvidia/cu13",
+  "qualification_json_parameter": "TASK_CORE_QUALIFICATION binds the actual passed changed3view shard cases. Exact current TerminalWorker memory/prompt case is additionally carried by saved source bytes and its original XML; no test repeats.",
+  "qualification_json_default": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-colocated-port-20261102-r1/qualification-three-view/READY.json",
+  "qualification_receipt_sha256": "2949d046c7df196379a8cafe66e68b3c42ecfa69908fe23cc4332c2659ed1e6a",
+  "qualified_source_commit": "ab16f61c83b53fb44241034a6a9dcb5ea746fca8",
+  "qualified_xml_sha256": "1160158c27d09d8a7ebfc03e8e9a5015ecf55f0b5852d1f35d788162a4343aa3",
+  "required_scorer_test_classnames": {
+    "test_eight_terminal_shards_preserve_all64_graded_rewards_and_chronology": "test_flora_terminal_shards",
+    "test_missing_duplicate_misrouted_or_malformed_shard_cannot_release_partial_rewards": "test_flora_terminal_shards"
+  },
+  "carried_worker_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-colocated-port-20261102-r1/qualification/READY.json",
+    "sha256": "de6c078186e079f018adfe1be5690a3f4dd11ccbe505df3672baa11ad063e0b5",
+    "source_commit": "5230b0e164402f28c219f8573a3c4a99ac4ed669",
+    "xml": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-colocated-port-20261102-r1/qualification/affected-core.xml",
+      "sha256": "eb10964cc83d6fc51183928c77ff07d6f7341b9f5c600c11dd4f0d8e0c9cce26"
+    },
+    "required_case": "test_explicit_engine_memory_budget_keeps_official_prompt_and_graded_output",
+    "exact_current_files": {
+      "src/fluffy_bassoon/meta_rl/flora_terminal_worker.py": "44bfb6f044ab3e4ec27e14a49b42f84b993033110bccb783f55fec7528b5296d",
+      "tests/test_flora_terminal_worker.py": "eb7ff44f4ad22dad9a42613d7eaf86ea471e92b5166b8f3efacc6d8e3d7c3989"
+    },
+    "tests_rerun": 0
+  },
+  "original_clocks": [
+    {
+      "node_rank": 0,
+      "worker_time": {
+        "bytes": 1010,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-00/clock/worker-time.json",
+        "sha256": "05ae8433fef3d977605f107545c05ce324305f2d6148fafc6756cffa552d0449"
+      },
+      "closed_charge_without_gpu_field": {
+        "charged_seconds": 106,
+        "ended_unix": 1793560064.8013337,
+        "exit_code": 1,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-00/clock/attempts/1793560019000000-0000",
+        "reserved_seconds": 3000,
+        "scheduler_allowance_seconds": 60,
+        "slice_overrun": false,
+        "slice_seconds": 2940,
+        "started_unix": 1793560019.0,
+        "status": "finished"
+      },
+      "worker_contract": {
+        "actions": 0,
+        "global_gpu_count": 8,
+        "global_maximum_gpu_seconds": 24000,
+        "gpu_count": 2,
+        "maximum_gpu_seconds": 6000,
+        "node_count": 4,
+        "node_rank": 0,
+        "run_id": "robocasa-flora-throughput-three-view-20261102-r1-Flora-batch-node0",
+        "source_commit": "6c6c8b76b529ff238a566bdb2489ff2af30c7497",
+        "ticket_sha256": "da87ad91837b408460d4ba68e129358041ad59de3b3c15f24269bc96b4779d9a",
+        "wall_ceiling_seconds": 3000
+      }
+    },
+    {
+      "node_rank": 1,
+      "worker_time": {
+        "bytes": 1008,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-01/clock/worker-time.json",
+        "sha256": "1d4ca47376237fd9ffa7dd423c630150de2bf0cbca9e2d5ba23ccc9b3d913964"
+      },
+      "closed_charge_without_gpu_field": {
+        "charged_seconds": 101,
+        "ended_unix": 1793560063.71167,
+        "exit_code": 1,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-01/clock/attempts/1793560023000000-0000",
+        "reserved_seconds": 3000,
+        "scheduler_allowance_seconds": 60,
+        "slice_overrun": false,
+        "slice_seconds": 2940,
+        "started_unix": 1793560023.0,
+        "status": "finished"
+      },
+      "worker_contract": {
+        "actions": 0,
+        "global_gpu_count": 8,
+        "global_maximum_gpu_seconds": 24000,
+        "gpu_count": 2,
+        "maximum_gpu_seconds": 6000,
+        "node_count": 4,
+        "node_rank": 1,
+        "run_id": "robocasa-flora-throughput-three-view-20261102-r1-Flora-batch-node1",
+        "source_commit": "6c6c8b76b529ff238a566bdb2489ff2af30c7497",
+        "ticket_sha256": "da87ad91837b408460d4ba68e129358041ad59de3b3c15f24269bc96b4779d9a",
+        "wall_ceiling_seconds": 3000
+      }
+    },
+    {
+      "node_rank": 2,
+      "worker_time": {
+        "bytes": 1010,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-02/clock/worker-time.json",
+        "sha256": "4f36dbf1e660657b05179877b67e49e2c27bd9c94acf4ab762fdf9f66045577d"
+      },
+      "closed_charge_without_gpu_field": {
+        "charged_seconds": 101,
+        "ended_unix": 1793560064.0266345,
+        "exit_code": 1,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-02/clock/attempts/1793560024000000-0000",
+        "reserved_seconds": 3000,
+        "scheduler_allowance_seconds": 60,
+        "slice_overrun": false,
+        "slice_seconds": 2940,
+        "started_unix": 1793560024.0,
+        "status": "finished"
+      },
+      "worker_contract": {
+        "actions": 0,
+        "global_gpu_count": 8,
+        "global_maximum_gpu_seconds": 24000,
+        "gpu_count": 2,
+        "maximum_gpu_seconds": 6000,
+        "node_count": 4,
+        "node_rank": 2,
+        "run_id": "robocasa-flora-throughput-three-view-20261102-r1-Flora-batch-node2",
+        "source_commit": "6c6c8b76b529ff238a566bdb2489ff2af30c7497",
+        "ticket_sha256": "da87ad91837b408460d4ba68e129358041ad59de3b3c15f24269bc96b4779d9a",
+        "wall_ceiling_seconds": 3000
+      }
+    },
+    {
+      "node_rank": 3,
+      "worker_time": {
+        "bytes": 1010,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-03/clock/worker-time.json",
+        "sha256": "0aea00013d003447b7c2ec124ae48a08e1ec673c7fb2df2b22493c4985881147"
+      },
+      "closed_charge_without_gpu_field": {
+        "charged_seconds": 101,
+        "ended_unix": 1793560064.0494251,
+        "exit_code": 1,
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/node-03/clock/attempts/1793560024000000-0000",
+        "reserved_seconds": 3000,
+        "scheduler_allowance_seconds": 60,
+        "slice_overrun": false,
+        "slice_seconds": 2940,
+        "started_unix": 1793560024.0,
+        "status": "finished"
+      },
+      "worker_contract": {
+        "actions": 0,
+        "global_gpu_count": 8,
+        "global_maximum_gpu_seconds": 24000,
+        "gpu_count": 2,
+        "maximum_gpu_seconds": 6000,
+        "node_count": 4,
+        "node_rank": 3,
+        "run_id": "robocasa-flora-throughput-three-view-20261102-r1-Flora-batch-node3",
+        "source_commit": "6c6c8b76b529ff238a566bdb2489ff2af30c7497",
+        "ticket_sha256": "da87ad91837b408460d4ba68e129358041ad59de3b3c15f24269bc96b4779d9a",
+        "wall_ceiling_seconds": 3000
+      }
+    }
+  ],
+  "adapter_admission": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-three-view-20261102-r1/ADAPTER-R2-ADMISSION.json",
+    "sha256": "095230d01ee36df0e3be1dbb0acfa8059e57b730abb4b6558a6a52203f64683f"
+  },
+  "same_original_ticket_gpu_seconds": 24000,
+  "already_closed_gpu_seconds": 818,
+  "new_attempt_gpu_seconds_maximum": 23040
+}
