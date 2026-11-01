@@ -1,0 +1,5 @@
+Source 87fa769 passed all 49 focused synthetic cases: 32 lineage-adapter and 17 compact-evidence producer cases, with no failures or skips. Actual allocated Linux attested zero GPUs, 2 CPU cores, 16 GiB, Python 3.11, Torch 2.11 and a CPU-only JAX backend. No real teacher, VLA, checkpoint payload, simulator, SGD, feature encoding, original-data assembly, collection or fit ran.
+
+Job-im551i5bi57y succeeded, charging 68 inclusive CPU-worker seconds. The preserved first job-ydbyl28r9cno charged 75 seconds and collected zero tests because the owner command accidentally named a nonexistent selector. Only that parent command was corrected; source and runtime bytes were unchanged. The same 180-second phase totals 143, leaving 37 unused closed seconds. No previous CPU balance was borrowed.
+
+This is software qualification only. Actual source, teacher, motor, feature, lineage, objective, threshold, runtime and grant bindings remain UNBOUND. It neither upgrades old source data nor funds the pending 25-hour collection proposal. The active d236 SAC worktree and scientific contract were unchanged.

@@ -1,0 +1,253 @@
+{
+  "TRAIN_normalization_ref": null,
+  "TRAIN_teacher_qualification_template": {
+    "actor_parameter_sha256": null,
+    "actor_state_sha256": null,
+    "checkpoint_sha256": null,
+    "condition_id": null,
+    "evidence": null,
+    "lineage_id": null,
+    "paired_cases": null,
+    "sampling_mode": "deterministic_mean",
+    "source_data_from_targets": false,
+    "source_only": true,
+    "task_key": null
+  },
+  "ad_improvement_gate_template": {
+    "lineage_ids": null,
+    "minimum_success_gain": null,
+    "paired_cases": null
+  },
+  "ad_improvement_receipt_template": {
+    "evidence": null,
+    "lineage_ids": null,
+    "paired_cases": null,
+    "source_data_from_targets": false,
+    "source_only": true
+  },
+  "adapter": {
+    "CPU_qualification": null,
+    "inspected_final_static": {
+      "CPU_qualification": null,
+      "bytes": 47117,
+      "executed_test_cases": 0,
+      "implementation_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7",
+      "inspected_local_path": "/Users/mowenjie/.codex/worktrees/source-lineage-adapter/fluffy-bassoon-2/src/fluffy_bassoon/meta_rl/vla_source40_lineage_adapter.py",
+      "parent_commit": "a5f7e54cf50bf8d266177858f6da136c1edffee3",
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_lineage_adapter.py",
+      "prepared_test_cases": 49,
+      "references": [
+        {
+          "bytes": 47117,
+          "path": "src/fluffy_bassoon/meta_rl/vla_source40_lineage_adapter.py",
+          "sha256": "6242269739f2f525776ae44eab1c0659afdbb19bd0aa7889f51def1f063ffc87",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        },
+        {
+          "bytes": 16072,
+          "path": "src/fluffy_bassoon/meta_rl/vla_source40_compact_evidence.py",
+          "sha256": "4cc6ea14669878ae18afc4ea9f05af594d435505bcc158d293a77ed1106babb1",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        },
+        {
+          "bytes": 38194,
+          "path": "src/fluffy_bassoon/meta_rl/vla_source40_corpus.py",
+          "sha256": "20cac2637eb0fb6265abd3d264b3d0585c43e358d84a057bd98108de4fa5e9fd",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        },
+        {
+          "bytes": 7151,
+          "path": "outputs/source40-compact-producer-preparation-20261101-r1/HANDOFF.md",
+          "sha256": "60b1baba0074c8bcfc66a0013714de70e98449640cf5a745e26af34c1b8991a6",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        },
+        {
+          "bytes": 3147,
+          "path": "outputs/source40-compact-producer-preparation-20261101-r1/STATIC.json",
+          "sha256": "8068871e087236e7c5088d16805b70db80d8a9546c1a48a1f33c1fabf4b49ff6",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        },
+        {
+          "bytes": 1652,
+          "path": "outputs/source40-compact-producer-preparation-20261101-r1/RECIPE.txt",
+          "sha256": "10a2125040252ea59780b39ac241b1fcac2b55b4acfa2f440f1eedc5830a93e9",
+          "source_commit": "d88e882a3e94a418e117827a30976bb4680ff7e7"
+        }
+      ],
+      "runtime_compatibility": null,
+      "sha256": "6242269739f2f525776ae44eab1c0659afdbb19bd0aa7889f51def1f063ffc87",
+      "status": "INSPECTED_FINAL_V2_STATIC_ONLY_NOT_QUALIFIED"
+    },
+    "qualified_implementation_ref": null,
+    "qualified_schema": null,
+    "runtime_compatibility": null
+  },
+  "allocation": null,
+  "binding_row_template": {
+    "chronology": null,
+    "index": null,
+    "lineage_id": null,
+    "motor_after": null,
+    "motor_before": null,
+    "teacher_qualification": null
+  },
+  "chronology_episode_template": {
+    "actor_after_parameter_sha256": null,
+    "actor_state_after_sha256": null,
+    "after_recovery": null,
+    "before_recovery": null,
+    "behavior_identity": {
+      "actor_not_used": null,
+      "actor_parameter_sha256": null,
+      "actor_state_scope": null,
+      "actor_state_sha256": null,
+      "kind": null,
+      "sampler_configuration": null,
+      "source_contract_sha256": null
+    },
+    "clocks": null,
+    "format": "source40_compact_history_evidence_v2",
+    "lineage_id": null,
+    "ordinal": null,
+    "raw_trace": null,
+    "reset_ref": null,
+    "rng_after": null,
+    "rng_before": null,
+    "rng_pre_sgd": null,
+    "source_contract_sha256": null,
+    "source_data_from_targets": false,
+    "source_only": true,
+    "update_metrics": null
+  },
+  "chronology_template": {
+    "completed": null,
+    "episodes": null,
+    "format": "source40_compact_history_evidence_v2",
+    "lineage_id": null,
+    "source_contract_sha256": null,
+    "source_data_from_targets": false,
+    "source_only": true
+  },
+  "compact_episode_clock_template": {
+    "after_updates": null,
+    "before_updates": null,
+    "chunks": null,
+    "pre_sgd_updates": null,
+    "primitive_steps": null,
+    "replay_after": null,
+    "replay_before": null
+  },
+  "declaration": {
+    "ad_improvement_gate": null,
+    "feature_contract": null,
+    "format": "source40_independent_lineage_declaration_v2",
+    "lineages": null,
+    "locked_query_cases": null,
+    "motor": {
+      "checkpoint_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+      "execute_steps": 10,
+      "flow_steps": 10,
+      "model_config": "pi05_libero",
+      "native_horizon": 10,
+      "noise_dim": 32,
+      "parameter_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9"
+    },
+    "noise_contract": "32D tied across native H10; warmup unbounded N(0,I), then SAC clipped[-1,1]; no rescaling",
+    "source_data_from_targets": false,
+    "source_only": true,
+    "source_training_task_keys": null,
+    "source_validation_task_keys": null,
+    "teacher_gate": null
+  },
+  "eligibility": {
+    "AD": false,
+    "DPT": false,
+    "source": false
+  },
+  "execution": {
+    "ad_improvement_ref": null,
+    "bindings": null,
+    "callable": "assemble(declaration_ref, bindings, output, *, objective, dsrl_root, expected_hostname, source_commit, ad_improvement_ref=None)",
+    "declaration_ref": null,
+    "dsrl_root": null,
+    "expected_hostname": null,
+    "objective": null,
+    "output": null,
+    "source_commit": null
+  },
+  "execution_authority": null,
+  "format": "libero_lineage_source_adapter_request_template_v2",
+  "grant": null,
+  "lineage_row_template": {
+    "cases": null,
+    "condition_id": null,
+    "label_teacher_lineage_id": null,
+    "learner_seed": null,
+    "lineage_id": null,
+    "partition": null,
+    "task_key": null
+  },
+  "notes": [
+    "These key shapes match the final inspected V2 implementation, not an admitted declaration or qualified runtime.",
+    "ALL40 TRAIN/full40-or-originalfixed8 VAL and every failed/warmup/flat lineage remain; all selections and thresholds are null.",
+    "Exact feature_contract must match original shared source contract; do not synthesize it from dimensions.",
+    "lineage_id equals originalhistory_id; cases are the entire original list. condition_id is audit-only and equals the original value (ordinary unconditioned=null).",
+    "AD may leave label_teacher_lineage_id/teacher_qualification null, requires its separate scoped empirical improvement REF, and never instantiates a DPT teacher.",
+    "DPT uses selected exact qualifiedTRAIN deterministic actor for TRAIN+VAL; competence alone may allow a ceiling teacher with zero gain and does not admit AD.",
+    "Original raw payload must already bind V2 full actor/params behavior identity, original opt-in source-contract hash, actor_state_after SHA, before/pre-SGD/after RNG refs, reset_ref, clocks/update metrics and per-choice evidence. Missing historical identity is ineligible, never retrofitted.",
+    "Full per-episode snapshots are not mandatory; optional refs must be actual retained archives, not rolling overwrittenlatest aliases.",
+    "Every actual REF, task/condition/reset/lineage/gate choice, objective/runtime/host/modelroot/output/resource/grant stays UNBOUND.",
+    "Declaration/assembly V2 and source40_compact_history_evidence_v2 are explicit. Seven-array NPZ/history trainer stay v1; V1 params-only evidence cannot be converted or treated as equivalent.",
+    "chronology binding must equal the original completed index.compact_history_evidence reference, under an originally opted-in V2 contract. Legacy-to-opt-in or opt-in-to-legacy resume switches are rejected.",
+    "Prospective warmup uses actor_not_used=true and null full-state/params actor SHAs with real sampler/config/RNG and contract identity; SAC requires actual full TrainState and separate params hashes. No case/stage is selected here."
+  ],
+  "paired_AD_assessment_row_template": {
+    "baseline_success": null,
+    "case_id": null,
+    "initial_state": null,
+    "lineage_id": null,
+    "scene_seed": null,
+    "task_key": null,
+    "teacher_success": null
+  },
+  "paired_teacher_qualification_row_template": {
+    "baseline_success": null,
+    "case_id": null,
+    "initial_state": null,
+    "scene_seed": null,
+    "task_key": null,
+    "teacher_success": null
+  },
+  "per_choice_evidence_template": {
+    "source_behavior_identity": null,
+    "source_choice_rng_before_sha256": null
+  },
+  "producer": {
+    "CPU_qualification": null,
+    "compact_history_evidence_ref": null,
+    "completed_original_index_ref": null,
+    "execution_invocation": null,
+    "flag": "--compact-history-evidence",
+    "legacy_default": false,
+    "original_contract_protocol": {
+      "actor_state_scope": "vla_libero.structure_digest(Flax to_state_dict(full actor TrainState)); all serialized actor variables/state, not params only",
+      "checkpoint_cadence": "unchanged latest complete recovery and original declared case milestones/final teacher; no per-episode full snapshots",
+      "format": "source40_compact_history_evidence_v2",
+      "policy_configuration": "original source contract/code/recipe; canonical public PIL64/proprio8 preprocessing; full actor encoder/normalization state",
+      "rng_scope": "original sampler/agent/global NumPy/Python/native motor states; no RNG draws for metadata"
+    },
+    "original_opt_in_source_contract_ref": null,
+    "runtime_parity_qualification": null,
+    "selected_for_execution": null,
+    "source_commit": null
+  },
+  "profile_ref": null,
+  "resource_plan": null,
+  "status": "UNBOUND",
+  "task_case_state_overlap_receipts": null,
+  "teacher_gate_template": {
+    "minimum_success_rate": null,
+    "paired_cases": null
+  },
+  "whole_lineage_split_receipt": null
+}
