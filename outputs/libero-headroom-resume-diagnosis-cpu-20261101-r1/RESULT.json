@@ -1,0 +1,107 @@
+{
+  "format": "headroom_resume_independent_CPU_receipt_v1",
+  "inspector_source": "00e131a39eca9ef24e5529ec36b665baf9ff3bad",
+  "qualified_original_learner": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "attempts": [
+    {
+      "job_id": "job-n8tpusov53xo",
+      "exit_code": 1,
+      "CPU_seconds": 76,
+      "diagnosis_ran": false,
+      "reason": "Guardian Torch2.11 assertion on actualLeRobotTorch2.7.1; resource0GPU8CPU64 passed"
+    },
+    {
+      "job_id": "job-5zuyjva8qi9h",
+      "exit_code": 0,
+      "CPU_seconds": 83,
+      "focused_tests": 4,
+      "focused_failures": 0,
+      "inspection_return_code": 0,
+      "scheduler_status": "Succeeded",
+      "created_Shanghai": "2026-11-01 09:04:18",
+      "ended_Shanghai": "2026-11-01 09:05:00",
+      "UI_seconds": 30
+    }
+  ],
+  "CPU_total": 159,
+  "CPU_cap": 300,
+  "CPU_remaining": 141,
+  "GPU_seconds": 0,
+  "new_actions": 0,
+  "new_SGD": 0,
+  "resources": {
+    "actual_GPU_count": 0,
+    "actual_CPU_cores": 8.0,
+    "actual_memory_bytes": 68719476736,
+    "CUDA_initialized": false
+  },
+  "original_four_predicates": {
+    "training_equal": true,
+    "updates_equal": true,
+    "replay_rows_equal": true,
+    "raw_restored_signature_equal": false
+  },
+  "legacy_saved_byte_signature_matches_cursor": true,
+  "canonical_full_state_exact": true,
+  "canonical_full_state_SHA": "f0f15efd2a0d1d26753519c5808b13846681a682b2be36f72ecab9232067183b",
+  "canonical_components": {
+    "actor": {
+      "exact_equal": true,
+      "expected_sha256": "9834bf3c2ec319965348460dceb9c0b48b1208a75b18ba32aa7ee6f6106d2278",
+      "actual_sha256": "9834bf3c2ec319965348460dceb9c0b48b1208a75b18ba32aa7ee6f6106d2278",
+      "differences": 0
+    },
+    "critic": {
+      "exact_equal": true,
+      "expected_sha256": "7bc9f376a6c421f28c9487fe6bd5db08897dfeda24641ff45df314392ecbe924",
+      "actual_sha256": "7bc9f376a6c421f28c9487fe6bd5db08897dfeda24641ff45df314392ecbe924",
+      "differences": 0
+    },
+    "target_critic_params": {
+      "exact_equal": true,
+      "expected_sha256": "6904dd7b09b5a1ab1ce4aecb5b91cafb25556e345ec2079d4a5a23e7a117d13b",
+      "actual_sha256": "6904dd7b09b5a1ab1ce4aecb5b91cafb25556e345ec2079d4a5a23e7a117d13b",
+      "differences": 0
+    },
+    "temp": {
+      "exact_equal": true,
+      "expected_sha256": "432e4ee79a17f7574c95605d3b3e64a082320a0e22279398ee6ae57704e265f3",
+      "actual_sha256": "432e4ee79a17f7574c95605d3b3e64a082320a0e22279398ee6ae57704e265f3",
+      "differences": 0
+    }
+  },
+  "exact_leaf_differences": 0,
+  "mapping_order_changes": 27,
+  "replay": {
+    "rows": 15579,
+    "expected_SHA": "23f61b539ef01315db5820fbd26479bc4ec4e503fc39955f5248cbaa0966e7c6",
+    "actual_SHA": "23f61b539ef01315db5820fbd26479bc4ec4e503fc39955f5248cbaa0966e7c6",
+    "exact": true
+  },
+  "RNG": {
+    "agent_exact": true,
+    "sampler_exact": true,
+    "numpy_global_exact": true,
+    "python_global_exact": true,
+    "motor_key_roundtrip_exact": true
+  },
+  "all_inputs_unchanged": true,
+  "classification": "identical_saved_state_raw_representation_differs",
+  "interpretation": "RawFlaxMsgPack signature changes on restore despite identical canonical full optimizer/model state, replay, counters and sampled RNG restoration. Originallegacy byte signature remains valid for saved agent bytes. No production guard changed; explicit narrow validation/source migration must be qualified before GPU continuation.",
+  "primary_GPU_remaining_unchanged": 29383,
+  "artifact_hashes": {
+    "cpu-r1/summary.json": "3ffab304809aadd4ebb53c900b41f240d19d677a19fbfaf3fc060936a2f74b59",
+    "cpu-r1/cpu-worker-clock.json": "1abe9f0614b0debf62e9f04d3d16ab5635b0cd308ba860ca6f9fc918339951eb",
+    "cpu-r1/zero-gpu-attestation.json": "7047e02391a5fbc36df799e1eaa26f54dc164923d61326cc5202169654af47b0",
+    "cpu-r1/exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "cpu-r2/pytest.log": "a00d95dfbc084b6eb22229f4a5b545b4452162a59797c0faa121535a79212580",
+    "cpu-r2/summary.json": "9e68e08a4fb3a713adc1d57c79cbad7722a2a08e9686aa6a6e7f932b849be218",
+    "cpu-r2/cpu-worker-clock.json": "505687abf1a96405ec772754ee2df92b56a3258b18bad6227c44c9412675b6b8",
+    "cpu-r2/allocation.json": "a9e965f77b3f7dbdccb60a79e5657d072c0c8150e8560fc9751bd7f1736a7f75",
+    "cpu-r2/zero-gpu-attestation.json": "1659d8e73e197a8b6fc60bb75f05f20e59b314b2fda3abe0c04f446b012a7c59",
+    "cpu-r2/inspection.log": "b89d4572547690bbad60fc51a9cd491f134811dc28adacf36be8f87e4af45f7e",
+    "cpu-r2/exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "cpu-r2/junit.xml": "29ba7467e8b3141a45d90011c117206111d73aa6ee2b49f9e139984b7882ac69",
+    "cpu-r2/diagnosis.json": "6ab15a737f828fc5fcd244d9fdca6ff396cef8a4f71fd5e7b638f3757e1dad7e"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "format": "headroom_restore_repair_CPU_terminal_v1",
+  "job_id": "job-lj9m289x9g4y",
+  "created_Shanghai": "2026-11-01 09:24:42",
+  "source_commit": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "passed": true,
+  "exit_code": 0,
+  "JUnit": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "21",
+    "time": "5.424",
+    "timestamp": "2026-11-01T09:25:04.329547+08:00",
+    "hostname": "job-lj9m289x9g4y-master-0"
+  },
+  "component_return_codes": {
+    "tests": 0,
+    "production_guard_dryrun": 0
+  },
+  "CPU_seconds": 93,
+  "CPU_cap": 180,
+  "CPU_unused_closed": 87,
+  "GPU_seconds": 0,
+  "new_actions": 0,
+  "new_SGD": 0,
+  "actual_resources": {
+    "GPU": 0,
+    "CPU": 8.0,
+    "memory_bytes": 68719476736,
+    "CUDA_initialized": false,
+    "Torch": "2.11.0+cu128",
+    "python_runtime": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python"
+  },
+  "real_guard_proof": {
+    "passed": true,
+    "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+    "proof": {
+      "format": "headroom_exact_restore_identity_v1",
+      "checkpoint_sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "legacy_signature": "bb930704458554e0fdc99b153133188b491f18c6ed1d7aeb1914bd848008be5e",
+      "restored_raw_signature": "7cfd255dd5410344e7684045a4f46fe56389c4325b207033da2353a4c5e7c8fc",
+      "canonical_signature": "f0f15efd2a0d1d26753519c5808b13846681a682b2be36f72ecab9232067183b",
+      "exact_leaf_differences": 0,
+      "non_network_checks": {
+        "replay": true,
+        "agent_rng": true,
+        "sampler": true,
+        "numpy_rng": true,
+        "python_rng": true,
+        "motor_rng": true
+      },
+      "optimizer_updates_during_restore": 0
+    },
+    "input_SHA_before": {
+      "checkpoint": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "cursor": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3",
+      "contract": "96d90d35de2ed50dc4a103f7ddec8781031c2cede74402825f43a72d0b6114e9"
+    },
+    "input_SHA_after": {
+      "checkpoint": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "cursor": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3",
+      "contract": "96d90d35de2ed50dc4a103f7ddec8781031c2cede74402825f43a72d0b6114e9"
+    },
+    "updates": 301700,
+    "replay_rows": 15579,
+    "training_episodes": 1720,
+    "new_SGD": 0,
+    "new_robot_actions": 0,
+    "VLA_constructed": false,
+    "simulator_constructed": false
+  },
+  "all_old_unused_CPU_balances_untouched": true,
+  "artifact_hashes": {
+    "pytest.log": "c667854190e83f5945cf572b92fb0774b5ca4d75add1db1c5b72bc18b3d87727",
+    "summary.json": "eed0a515bc96d6ad19b4f874db6162a3e720c23cca870d61376cd30fe3b5fd7c",
+    "cpu-worker-clock.json": "2fffad2ea382ff9a2f1e23b1dd626be7d13ec71d3dbf151ef3aa525d59d9b89c",
+    "guard-dryrun.log": "056f86984131a9f6be8a0f2134ba5a5d8ef6fa7a74c42e6feaae310748945d6f",
+    "real-guard.json": "d9667b94f8d603063e711a8479d7506dc0c97e0dbd5611877f3bddafde94fe84",
+    "allocation.json": "06be9ef97020c848973c346a0332cced45eabcdf9882581aa0dbd6d446ffa0ac",
+    "zero-gpu-attestation.json": "9d889a20c8ddcbe630cbaaae374b21e82a6ea3182f3badbdde6f55bd37f1aab8",
+    "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "junit.xml": "87bb74c1e56ab158d26d525682f4f8e345768a801da0a6f294fc8dbdb03b673e"
+  }
+}

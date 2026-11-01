@@ -263,11 +263,18 @@ def admit_learning_code(root, original, proposed, source, screen_source):
 
 
 def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resume=False,
-                    stage='screen', screen_source=None):
+                    stage='screen', screen_source=None, execution_migration=None, execution_migration_sha256=None):
     if not re.fullmatch('[A-Za-z0-9-]+', run) or type(slice_seconds) is not int or not 600 <= slice_seconds <= MAX_JOB_SECONDS - 60:
         raise ValueError('Require immutable run and a job slice strictly below8h')
-    contract = dict(plan(source), run_id=run)
     root = Path(root)
+    scientific_source = source
+    if execution_migration is not None or execution_migration_sha256 is not None:
+        if not resume or stage != 'learn' or execution_migration is None or execution_migration_sha256 is None:
+            raise ValueError('Execution migration is an explicit learning continuation only')
+        from .vla_headroom_execution_migration import validate_migration
+        scientific_source = validate_migration(root, source, execution_migration, execution_migration_sha256,
+            stage='begin', screen_source=screen_source)
+    contract = dict(plan(scientific_source), run_id=run)
     ledger = root / 'worker-time.json'
     if ledger.exists():
         data = json.loads(ledger.read_text())
@@ -276,7 +283,7 @@ def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resu
         if data['contract'] != contract:
             if stage != 'learn':
                 raise ValueError('Screen source is immutable')
-            admit_learning_code(root, data['contract'], contract, source, screen_source)
+            admit_learning_code(root, data['contract'], contract, scientific_source, screen_source)
             contract = data['contract']
         prior = sum(row.get('charged_seconds', row['reserved_seconds']) for row in data['attempts'])
     else:
@@ -300,7 +307,11 @@ def prepare_attempt(root, source, run, *, slice_seconds, started_unix=None, resu
     start = time.time() if started_unix is None else float(started_unix)
     attempt = begin(root, contract, slice_seconds=actual, worker_seconds=MAX_SECONDS,
         resume=resume, now=start)
-    onset.write_json(attempt / 'phase-stage.json', dict(stage=stage))
+    stage_receipt = dict(stage=stage)
+    if execution_migration is not None:
+        stage_receipt.update(execution_source=source, scientific_source=scientific_source,
+            execution_migration_sha256=execution_migration_sha256)
+    onset.write_json(attempt / 'phase-stage.json', stage_receipt)
     return dict(attempt=str(attempt), stop_unix=math.floor(start + actual), slice_seconds=actual)
 
 
@@ -314,6 +325,8 @@ def main(argv=None):
     clock.add_argument('--started-unix', type=float, required=True)
     clock.add_argument('--stage', choices=('screen', 'learn'), required=True)
     clock.add_argument('--screen-source')
+    clock.add_argument('--execution-migration', type=Path)
+    clock.add_argument('--execution-migration-sha256')
     clock.add_argument('--resume', action='store_true')
     close = sub.add_parser('finish')
     close.add_argument('--root', type=Path, required=True); close.add_argument('--attempt', type=Path, required=True)
@@ -326,13 +339,16 @@ def main(argv=None):
         run.add_argument('--' + name, required=True)
     run.add_argument('--selection-sha256')
     run.add_argument('--screen-source')
+    run.add_argument('--execution-migration', type=Path)
+    run.add_argument('--execution-migration-sha256')
     run.add_argument('--stop-unix', type=float, required=True)
     run.add_argument('--port', type=int, default=8797)
     run.add_argument('--resume', action='store_true')
     args = ap.parse_args(argv)
     if args.operation == 'begin':
         value = prepare_attempt(args.root, args.source, args.run, slice_seconds=args.slice_seconds,
-            started_unix=args.started_unix, resume=args.resume, stage=args.stage, screen_source=args.screen_source)
+            started_unix=args.started_unix, resume=args.resume, stage=args.stage, screen_source=args.screen_source,
+            execution_migration=args.execution_migration, execution_migration_sha256=args.execution_migration_sha256)
         print(f'{value["attempt"]}\t{value["stop_unix"]}\t{value["slice_seconds"]}')
         return
     if args.operation == 'finish':
@@ -345,6 +361,13 @@ def main(argv=None):
     if (subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip() != args.source_commit
             or subprocess.check_output(['git', 'status', '--porcelain'], cwd=repo, text=True).strip()):
         raise ValueError('Require exact clean reviewed headroom source')
+    args.scientific_source = args.source_commit
+    if args.execution_migration is not None or args.execution_migration_sha256 is not None:
+        if not args.resume or args.stage != 'learn' or args.execution_migration is None or args.execution_migration_sha256 is None:
+            raise ValueError('Execution migration is an explicit learning continuation only')
+        from .vla_headroom_execution_migration import validate_migration
+        args.scientific_source = validate_migration(args.output.parent, args.source_commit,
+            args.execution_migration, args.execution_migration_sha256, stage='run', screen_source=args.screen_source)
     if onset.sha256(args.checkpoint / 'READY.json') != qualified.PI05_RECEIPT:
         raise ValueError('Require existing official OpenPI40 pi0.5 release')
     remaining = args.stop_unix - time.time()
@@ -373,7 +396,7 @@ def main(argv=None):
             return onset.TargetServer(task_id=task, python=args.simulator_python,
                 pythonpath=args.simulator_pythonpath, output=attempt / f'server-{task:02d}-{time.time_ns()}',
                 port=args.port + task, libero_root=args.libero_root)
-        contract = plan(args.source_commit)
+        contract = plan(args.scientific_source)
         if args.stage == 'screen':
             result = run_screen(motor, server_factory, root=args.output, contract=contract,
                 deadline=deadline, resume=args.resume)

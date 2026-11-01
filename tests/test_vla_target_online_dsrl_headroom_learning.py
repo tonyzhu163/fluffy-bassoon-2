@@ -8,6 +8,17 @@ from test_vla_target_online_dsrl_task57_recovery import FakeSAC, FakeMotor, Fake
 
 def test_fresh_native_readmission_aborts_before_any_sgd_and_cannot_resume_past_it(monkeypatch, tmp_path):
     patch_rng(monkeypatch, phase)
+    # This existing episode-flow fixture has a deliberately non-Flax fake SAC.
+    # The production exact-Flax restore is covered in test_vla_headroom_restore_guard.
+    from fluffy_bassoon.meta_rl import vla_headroom_restore_guard
+    def restore_fake(learner, sampler, motor, checkpoint, progress, contract):
+        saved = learner.restore(checkpoint, sampler, contract)
+        phase.onset._restore_motor(motor, saved['motor_rng'])
+        assert saved['training'] == progress['training'] and learner.updates == progress['model']['updates']
+        assert len(learner.replay) == progress['model']['replay_rows']
+        assert phase.onset._signature(learner) == progress['model']['signature']
+        return saved, None
+    monkeypatch.setattr(vla_headroom_restore_guard, 'restore_checked', restore_fake)
     # Qualified fake succeeds on even states:10/20, outside weak2..8/20 band.
     learner, motor = FakeSAC(), FakeMotor()
     sim = FakeSimulator(learner)

@@ -76,18 +76,39 @@ The same-source continuation passes the allocation probe but stops at the
 atomic cursor/model/training consistency guard before any new episode or
 update. The full301,700 recovery remains byte-identical. This failed attempt's
 189 GPU-seconds remain charged, for28,217/57,600 total and29,383 remaining.
-The guard does not log which of four predicates failed. Static inspection
-identifies raw Flax serialization order as one competing explanation; actual
-state, counter or cursor mismatch is not yet excluded. Existing fake-learner
-fixtures do not establish real Flax serialization invariance.
+Allocated CPU diagnosis isolates the rejection to the raw reserialized hash:
+training, update and replay predicates pass. Stored agent bytes match the
+original cursor signature; all canonical actor/critic/target/temperature/Adam
+leaves, replay content and sampler/global/private RNG state restore exactly.
+There are zero leaf differences and27 mapping-order changes. Original inputs
+remain byte-identical. The failure is a representation-sensitive guard for
+this checkpoint, not evidence of corrupted learner state.
 
-A fresh bounded300-CPU-worker-second, zero-GPU inspector is admitted to report
-the four predicates and exact canonical actor/critics/targets/temperature/Adam,
-replay/counter/sampler/global-private RNG state, preserving original bytes.
-There is no blind GPU retry, cold restart, guard removal or new learner.
-A repair must follow the actual diagnosis and preserve the stored raw-byte
-signature binding plus exact restored-state checks.
-[Failure interpretation and discriminating check](../../outputs/libero-headroom-resume-diagnosis-cpu-20261101-r1/INTERPRETATION.md).
+Four focused tests and the actual CPU restore inspection pass. Its first
+attempt fails on a parent Python/Torch runtime mismatch before tests/model
+construction, costing76 CPU-worker seconds; the corrected runtime costs83,
+total159/300. That failed status and all charges are retained. No VLA,
+simulator, SGD or robot action is used. The minimal repair must preserve the
+legacy stored-byte signature binding and require exact restored-state checks;
+a separate180-CPU-worker-second focused qualification and real checkpoint
+production-guard dryrun precede any GPU retry. The same learner, original
+scientific contract, query cursor and remaining phase limits stay fixed.
+[Actual diagnosis and audit limits](../../outputs/libero-headroom-resume-diagnosis-cpu-20261101-r1/PARENT-REVIEW.json).
+
+The guarded repair then passes21 focused CPU cases and the actual original
+431MB checkpoint production-guard dryrun in93 CPU-worker seconds. It retains
+the legacy stored-byte binding and exact full restored-state checks. The
+explicit migration keeps b665 scientific contracts, selected cases and
+cumulative budgets while executing d236 in a fresh immutable worktree.
+R3 resumes on Baige job-2qn8dpw3yvlb: the actual GPU proof matches the original
+canonical state and all replay/RNG domains before any updates. Three complete
+new episodes add480 updates and24 replay rows, reaching302,180/1,723 episodes/
+15,603 rows. New full checkpoint74c2e391...afc18c, finite losses and raw/RPC
+hashes pass; eighteen old panels and next320k are retained without initial
+control replay. Whole-phase actions are311,949. The original28,217 closed
+GPU-seconds plus active R3 elapsed time are not a final charge. No learner,
+recipe, task, seed or endpoint is replaced.
+[R3 restoration and actual advancement](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/R3-PARENT-REVIEW.json).
 
 The fixed first whole burst≥500k, all20k panels, final native and final-three
 persistence test remain unchanged and incomplete. No checkpoint/task/seed

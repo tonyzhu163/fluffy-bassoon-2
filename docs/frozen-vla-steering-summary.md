@@ -102,10 +102,14 @@ isolated from learning. No memory, transfer, population or overall
 sample-efficiency claim follows.
 [Current verified curve](frozen-vla-libero/EVALUATION.md).
 The first slice closes at301,700 updates with a stable full recovery. Its
-continuation rejects an atomic consistency guard before any new episode or
-update; the checkpoint remains intact. A bounded allocated-CPU exact-state
-inspection precedes any repair, with no cold restart or guard relaxation.
-The fixed500k endpoint and final native remain pending.
+continuation rejects a raw serialization hash before any new episode/update.
+Allocated CPU diagnosis confirms exact model/Adam/replay/counters/RNG state,
+with27 dictionary-order changes and zero canonical leaf differences. Four
+tests and actual inspection pass,159 CPU-worker seconds including a retained
+76-second runtime-binding failure. The guarded repair passes21 cases and the real-checkpoint CPU dryrun in93
+worker-seconds. The same learner resumes with exact GPU state/RNG proof and
+three new episodes/480 updates to302,180, retaining all prior panels/cases.
+The fixed500k endpoint and final native remain incomplete.
 
 
 The compatible collection records actual steering noise under the same frozen

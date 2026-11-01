@@ -1,0 +1,561 @@
+{
+  "format": "pi05_headroom_due_light_check_v1",
+  "checked_unix": 1793496602.8571856,
+  "job_id": "job-2qn8dpw3yvlb",
+  "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "task_id": 44,
+  "phase": "training",
+  "completed": false,
+  "index_sha256": "0947e6db0dacc53b1d3156aa1a1e58b11d00effb5f2cedb2bed70a13466e1f6b",
+  "updates": 301700,
+  "replay_rows": 15579,
+  "training": {
+    "episodes": 1720,
+    "chunks": 15579,
+    "primitive_steps": 148075,
+    "settling_steps": 17200
+  },
+  "train_successes": 1681,
+  "train_failures": 39,
+  "last_training_receipt": {
+    "initial_state": 39,
+    "scene_seed": 123,
+    "instruction": "turn on the stove",
+    "task_id": 44,
+    "suite": "libero_90",
+    "semantic_task": "KITCHEN_SCENE9_turn_on_the_stove",
+    "success": true,
+    "chunks": 7,
+    "primitive_steps": 70,
+    "raw_return": 1.0,
+    "initial_observation_sha256": "764ac89148df9e541b62653279cf0524d4ba24a15a05b82a323b22fe67d0a41f",
+    "initial_state_vector_sha256": "dc7c51c9c42c83c6ff533677dbac931e4ce21f937b7f4c68b2897d6c83aeac94",
+    "initial_simulator_state_sha256": "804ac37d9e9ce304eaadbfbe8df4f9899443933aeb27fb93a36fb964df3a21d4",
+    "initial_public_observation_hashes": {
+      "image": "bd7f363a580d16b4a8be0ebc7376ff7ee93d159a6f99fa13f5b05516b4bd7827",
+      "wrist": "4596828010d8ecf7e69657ca2d2c1f6ca4a906072384f347fe28430ec84658e4",
+      "state": "d66395797f3d818bed2b354ce43f85081438e6704a920ce4141c64c5340371f3"
+    },
+    "initial_simulator_state": [
+      0.5000000000000003,
+      0.03651742168843355,
+      -0.15803402580188086,
+      0.02726038631469866,
+      -2.4214232607696937,
+      0.008998625469645036,
+      2.208270278418961,
+      0.8397916427399096,
+      0.03872923448991965,
+      -0.03872902817435638,
+      -0.14132086478972586,
+      0.09710175630885762,
+      0.8994107258211033,
+      0.7071067800833553,
+      -6.84974941926011e-05,
+      4.831869731861096e-05,
+      0.7071067773211803,
+      0.05645805275857799,
+      -0.008517334654712841,
+      0.8991707330326614,
+      0.7071065468067493,
+      -7.827453979201965e-05,
+      8.430146743925796e-05,
+      0.7071070062086748,
+      0.0,
+      -0.039395792193412854,
+      0.020462058115454672,
+      0.036351387975886836,
+      0.036324510890204456,
+      0.01125781920714525,
+      -0.04425973160405129,
+      0.012793387292912583,
+      0.0031814166664606695,
+      -0.003195768159961453,
+      4.249368292567406e-10,
+      -2.401430794978316e-09,
+      6.194583112743611e-06,
+      -1.8182066761719025e-07,
+      1.0609742901775622e-06,
+      7.225038237719158e-11,
+      -4.1985571757431694e-11,
+      -1.3103093059609774e-09,
+      6.028874603443408e-06,
+      5.043512062127864e-08,
+      1.5955142570795471e-06,
+      2.3271867257999027e-12,
+      0.0
+    ],
+    "data_role": "target-onlineDEV",
+    "completed": true,
+    "training_episode": 1719,
+    "target_optimizer_updates_before": 301560,
+    "target_optimizer_updates": 301700,
+    "replay_rows": 15579,
+    "update_metrics": {
+      "actor_loss": 2.9955215454101562,
+      "critic_loss": 0.002260826528072357,
+      "entropy": -16.003009796142578,
+      "mean_pi_avg": -0.00863761268556118,
+      "mean_pi_max": 3.279655933380127,
+      "mean_pi_min": -3.3165934085845947,
+      "mean_pi_norm": 5.588992118835449,
+      "next_actions_max": 0.9989811778068542,
+      "next_actions_mean": -0.0011531352065503597,
+      "next_actions_min": -0.9994710087776184,
+      "next_actions_sampled": -0.0011531352065503597,
+      "next_actions_std": 0.6473999619483948,
+      "next_log_probs": 12.11223030090332,
+      "next_q_pi": -2.2939453125,
+      "q": -3.1247785091400146,
+      "q_pi_in_actor": -2.955735683441162,
+      "std_pi_avg": 0.4406287372112274,
+      "std_pi_max": 0.8950516581535339,
+      "std_pi_min": 0.05057802051305771,
+      "std_pi_norm": 2.558581829071045,
+      "target_actor_entropy": -12.11223030090332,
+      "target_q": -3.1268506050109863,
+      "temperature": 0.002486138604581356,
+      "temperature_loss": -7.482770342903677e-06
+    },
+    "actor_fixed_within_episode": true,
+    "behavior": "target_sac",
+    "policy_signature": "3a3d6fa8591875cc159f44af7a220bc7a4443f09a3496ad392bff7269580b9e6",
+    "trace": "raw/training-001719-1793493498231634533.pkl.gz",
+    "trace_sha256": "46581496de6901b44afbe13ec955666dc914b48b57cb8f3d661a6360d9d80ed6"
+  },
+  "last_losses_finite": true,
+  "newest_raw_trace": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/raw/training-001719-1793493498231634533.pkl.gz",
+    "sha256": "46581496de6901b44afbe13ec955666dc914b48b57cb8f3d661a6360d9d80ed6",
+    "bytes": 1094881
+  },
+  "newest_raw_trace_matches": true,
+  "full_recovery": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "updates": 301700,
+      "replay_rows": 15579,
+      "signature": "bb930704458554e0fdc99b153133188b491f18c6ed1d7aeb1914bd848008be5e"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "bytes": 431209817
+    },
+    "stable": true
+  },
+  "stable_recovery_read_limit": 2,
+  "panels": [
+    {
+      "name": "initial_native-000000",
+      "kind": "initial_native",
+      "queries": 20,
+      "successes": 6,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 6447,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_tied-000000",
+      "kind": "initial_tied",
+      "queries": 20,
+      "successes": 13,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 4490,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "initial_sac-000000",
+      "kind": "initial_sac",
+      "queries": 20,
+      "successes": 8,
+      "actual_updates": 0,
+      "threshold_updates": 0,
+      "primitive_steps": 5898,
+      "settling_steps": 200,
+      "policy_signature": "1f0458c6d425f979e5286188611c2783bdf4915df6e251a54971f5dd16023889"
+    },
+    {
+      "name": "learned-020000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 1,
+      "actual_updates": 20580,
+      "threshold_updates": 20000,
+      "primitive_steps": 7683,
+      "settling_steps": 200,
+      "policy_signature": "bb52982822065b6dcd9347e5c6daa94a5b9d0a4a7e616afd89ac543b521f478e"
+    },
+    {
+      "name": "learned-040000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 40140,
+      "threshold_updates": 40000,
+      "primitive_steps": 1651,
+      "settling_steps": 200,
+      "policy_signature": "2ea85c0b6f2bc04c289b8326f4dee419d9dbd4ec0d5edc65e5af14f69b48a631"
+    },
+    {
+      "name": "learned-060000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 60000,
+      "threshold_updates": 60000,
+      "primitive_steps": 1678,
+      "settling_steps": 200,
+      "policy_signature": "b6ec9603d4a00bfb485ca500c855956fe7acb3723c7086e8cffcd327be9e8b77"
+    },
+    {
+      "name": "learned-080000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 80140,
+      "threshold_updates": 80000,
+      "primitive_steps": 1582,
+      "settling_steps": 200,
+      "policy_signature": "df1f1a0e49b1b576beb3bed10431b736e4f03e584915f513fdc80e85376f6653"
+    },
+    {
+      "name": "learned-100000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 100020,
+      "threshold_updates": 100000,
+      "primitive_steps": 1519,
+      "settling_steps": 200,
+      "policy_signature": "9550ae45e5aa5a0bde7e49bf3c201fdfce4c309bda80bf2f2455effb9bae83b1"
+    },
+    {
+      "name": "learned-120000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 120000,
+      "threshold_updates": 120000,
+      "primitive_steps": 1532,
+      "settling_steps": 200,
+      "policy_signature": "a3757d793a48d9da810c324fbdd54fe1c0a9a681ff08ccb27c1d507ada938234"
+    },
+    {
+      "name": "learned-140000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 140080,
+      "threshold_updates": 140000,
+      "primitive_steps": 1511,
+      "settling_steps": 200,
+      "policy_signature": "7682be1285f201d386b5b1b2f5408892609d470c6dd4757f110f70feb133cdf1"
+    },
+    {
+      "name": "learned-160000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 160080,
+      "threshold_updates": 160000,
+      "primitive_steps": 1508,
+      "settling_steps": 200,
+      "policy_signature": "11cddfb229d384de079d10ce30535231e4bd80c93a63ccdef1b19800285bbbf5"
+    },
+    {
+      "name": "learned-180000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 180020,
+      "threshold_updates": 180000,
+      "primitive_steps": 1513,
+      "settling_steps": 200,
+      "policy_signature": "45ae58ce2531763c3a9ad7c2fc1bfce8b61b338a262a42902dd01af850a71b5f"
+    },
+    {
+      "name": "learned-200000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 200080,
+      "threshold_updates": 200000,
+      "primitive_steps": 1529,
+      "settling_steps": 200,
+      "policy_signature": "e062e0c01c53b5a8086ad2d4f47c827356f410bb1076fe9f5cce6d69771ef471"
+    },
+    {
+      "name": "learned-220000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 220040,
+      "threshold_updates": 220000,
+      "primitive_steps": 1510,
+      "settling_steps": 200,
+      "policy_signature": "56d594d2bf6d7866ef1d2b6d8273349c78bb1b8de07ef64d6e8904cf4251ace4"
+    },
+    {
+      "name": "learned-240000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 240080,
+      "threshold_updates": 240000,
+      "primitive_steps": 1508,
+      "settling_steps": 200,
+      "policy_signature": "b7ced346b2cb3642cea08e4b450a3f48c87b2c1b42cb13fd997434e2ae909287"
+    },
+    {
+      "name": "learned-260000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 260040,
+      "threshold_updates": 260000,
+      "primitive_steps": 1493,
+      "settling_steps": 200,
+      "policy_signature": "29ded41ce04bd052f64c0fbfef45e8f193f875f97827007154202f9a7f00325b"
+    },
+    {
+      "name": "learned-280000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 280000,
+      "threshold_updates": 280000,
+      "primitive_steps": 1490,
+      "settling_steps": 200,
+      "policy_signature": "e3eab4b9e777faa115cf0490e9e8621e216216b56889f9e771bc86751a81d97a"
+    },
+    {
+      "name": "learned-300000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 300140,
+      "threshold_updates": 300000,
+      "primitive_steps": 1498,
+      "settling_steps": 200,
+      "policy_signature": "30b8b78dd242912f8b22bade6b9354884b35c6788db99869f33934843edcae27",
+      "optimizer_update_overshoot": 140,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-300000-recovery.pkl",
+        "sha256": "979f993d6dd14fc7f9b2df08a58358a02024b463b09f91cd2df9c0840d557a84",
+        "bytes": 429232612
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "active_panel": null,
+  "whole_phase_action_charge": 311694,
+  "learning_case_action_charge": 214915,
+  "costs": {
+    "training": {
+      "known_actions": 165275,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 148075,
+      "settling_steps": 17200,
+      "reset_attempts": 1720
+    },
+    "query": {
+      "known_actions": 49640,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 46040,
+      "settling_steps": 3600,
+      "reset_attempts": 360
+    },
+    "qualification": {
+      "known_actions": 0,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 0,
+      "reset_attempts": 0
+    }
+  },
+  "maximum_total_actions": 1000000,
+  "storage": {
+    "actual_output_bytes": 17927387507,
+    "full_slot_logical_bytes": 862242022,
+    "maximum_full_checkpoint_bytes": 431209817,
+    "maximum_complete_trace_bytes": 5871030,
+    "next_episode_reservation_bytes": 4294967296,
+    "hardlinks_counted_once": true
+  },
+  "output_bytes": 17927387507,
+  "maximum_output_bytes": 68719476736,
+  "free_PFS_bytes": 1031282884608,
+  "attempt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793496429000000-0003",
+    "started_unix": 1793496429.0,
+    "slice_seconds": 25140,
+    "reserved_seconds": 25200,
+    "status": "started",
+    "scheduler_allowance_seconds": 60
+  },
+  "settled_prior_GPU_seconds": 28217,
+  "active_elapsed_seconds": 173.8571856021881,
+  "observed_conservative_elapsed_GPU_seconds": 28451,
+  "phase_interrupted_reservation_GPU_seconds": 53417,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_job_GPU_seconds": 25200,
+  "motor_before": {
+    "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "leaves": 51,
+    "elements_by_dtype": {
+      "bfloat16": 3353433872
+    }
+  },
+  "motor_before_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793496440573378167/motor-before.json",
+    "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c",
+    "bytes": 156
+  },
+  "final_motor_after_pending": true,
+  "stop_reason": "complete_episode_time_reservation",
+  "next_owned_check": "2026-11-01 09:50 Asia/Shanghai",
+  "verification_limits": "Current counters, stable latest full recovery, newly completed learned panels and newest closed raw trace bytes only. Old control/milestone hashes not repeated; no journal forest, tensor deserialization, saved-array analysis, model/test/simulator execution, or job control.",
+  "newest_RPC_sample": {
+    "record": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793496595261455473.json",
+      "sha256": "01279fd47271a97917fe50d3a75842a3018f08bdae4655c16de33e20f27b65ce",
+      "bytes": 448
+    },
+    "metadata": {
+      "kind": "step",
+      "role": "training",
+      "episode_id": "training-001720",
+      "maximum_steps": 10,
+      "actual_steps": 3,
+      "returned": true,
+      "input_path": "1793496595261455473-input.pkl.gz",
+      "input_sha256": "3b23c19a999bd7e73e30561cfe5325dae24897a693fa9402e5f40d0aebeb1a99",
+      "outcome_status": "complete",
+      "outcome_path": "1793496595261455473.pkl.gz",
+      "outcome_sha256": "6f00b90414c40f76bf86015565ad595af0a8f9015ed49e00799c59b747e0c876"
+    },
+    "referenced_bytes": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793496595261455473-input.pkl.gz",
+        "sha256": "3b23c19a999bd7e73e30561cfe5325dae24897a693fa9402e5f40d0aebeb1a99",
+        "bytes": 121978
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/physical-journal/1793496595261455473.pkl.gz",
+        "sha256": "6f00b90414c40f76bf86015565ad595af0a8f9015ed49e00799c59b747e0c876",
+        "bytes": 121314
+      }
+    ],
+    "referenced_byte_hashes_match": true
+  },
+  "RPC_verification_scope": "One name listing and at most3 latest JSON metadata records; raw referenced bytes may be rehashed separately, no journal history replay.",
+  "production_restore_proof": {
+    "reference": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/restore-proof-1793496546714046250.json",
+      "sha256": "98bd48a2ac7947bece2acf104c7b282d89704e5e8228c61eb3d08cf5edd8c114",
+      "bytes": 659
+    },
+    "proof": {
+      "format": "headroom_exact_restore_identity_v1",
+      "checkpoint_sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+      "legacy_signature": "bb930704458554e0fdc99b153133188b491f18c6ed1d7aeb1914bd848008be5e",
+      "restored_raw_signature": "7cfd255dd5410344e7684045a4f46fe56389c4325b207033da2353a4c5e7c8fc",
+      "canonical_signature": "f0f15efd2a0d1d26753519c5808b13846681a682b2be36f72ecab9232067183b",
+      "exact_leaf_differences": 0,
+      "non_network_checks": {
+        "replay": true,
+        "agent_rng": true,
+        "sampler": true,
+        "numpy_rng": true,
+        "python_rng": true,
+        "motor_rng": true
+      },
+      "optimizer_updates_during_restore": 0
+    }
+  },
+  "actual_GPU_probe": {
+    "reference": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793496429000000-0003/gpu-probe.json",
+      "sha256": "9566168448f539f03e319aafd8e50f1a57b229e7c99516abc82669dffcce37e2",
+      "bytes": 2867
+    },
+    "proof": {
+      "status": "passed",
+      "purpose": "training",
+      "timing_comparison_eligible": false,
+      "allocation_type": "baige_container",
+      "hostname": "job-2qn8dpw3yvlb-master-0",
+      "probe_pid": 415,
+      "created_at_utc": "2026-11-01T01:27:18.103797+00:00",
+      "devices": [
+        {
+          "allocation_ordinal": 0,
+          "visibility_token": "0",
+          "cuda_uuid": "90133544-ffe4-8747-43d9-870b389ac18f",
+          "cuda_name": "NVIDIA RPBZZZ6",
+          "cuda_total_bytes": 101973950464,
+          "pci_bus_id": "0000:61:00.0",
+          "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "inventory": {
+            "index": 0,
+            "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+            "name": "NVIDIA RPBZZZ6",
+            "memory_total_mib": 97887.0,
+            "memory_used_mib": 0.0,
+            "utilization_percent": 0.0,
+            "pci_bus_id": "00000000:61:00.0"
+          },
+          "allocation_check": {
+            "elements": 1048576,
+            "result": 2097152.0,
+            "touched_gpu_uuids": [
+              "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+            ],
+            "own_pid_gpu_uuids": [
+              "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+            ]
+          }
+        }
+      ],
+      "idle_utilization_required": false,
+      "exclusive_training_admission": true,
+      "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+      "utilization_role": "telemetry_only",
+      "utilization_telemetry": {
+        "GPU-5321a03d-b105-c290-1e56-96906faa6675": 0.0
+      },
+      "maximum_initial_memory_mib": 256,
+      "gpu_identity_mapping": {
+        "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+        "assigned_nvml_uuids": [
+          "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+        ]
+      },
+      "compute_processes_before": [],
+      "compute_processes_after": [
+        {
+          "gpu_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+          "pid": 415,
+          "process_name": "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/bin/python",
+          "memory_used_mib": "640"
+        }
+      ],
+      "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+    }
+  },
+  "execution_migration_SHA": "dd228544a601a4745686d49a6db6da7cb337f6cca2e3efd66dc7c2eaa987954c",
+  "advancing_beyond_restored_prefix": false,
+  "no_initial_controls_replayed": true
+}

@@ -1,0 +1,53 @@
+{
+  "format": "headroom_R3_recovery_preparation_v1",
+  "status": "PREPARED_NOT_GPU_ADMITTED_OR_RESERVED",
+  "checked_unix": 1793495318.1787815,
+  "old_scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "prospective_source": null,
+  "prospective_code_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/dsrl-pi05-headroom-recovery-r3-20261101-r1",
+  "same_runtime_output": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1",
+  "same_clock_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/worker-time.json",
+    "sha256": "cffca46eabb91accd0609598c18fa118f35ee4562ddebd19caa515ca493b6d9f"
+  },
+  "closed_GPU_seconds": 28217,
+  "phase_GPU_cap": 57600,
+  "remaining_GPU_seconds": 29383,
+  "maximum_child_GPU_seconds": 25200,
+  "proposed_slice_seconds": 25140,
+  "proposed_resources": {
+    "GPU": 1,
+    "CPU": 16,
+    "memory_GiB": 96,
+    "SHM_GiB": 8,
+    "scheduler_minutes": 419,
+    "automatic_retry": false
+  },
+  "checkpoint_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/resume-r2-admission/PREDECESSOR-301700-FULL.pkl",
+    "sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+    "bytes": 431209817
+  },
+  "cursor_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/state.json",
+    "sha256": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3"
+  },
+  "updates": 301700,
+  "replay_rows": 15579,
+  "train_episodes": 1720,
+  "free_bytes": 1031425490944,
+  "storage_reserve_bytes": 68719476736,
+  "concurrent_reserve_bytes": 137438953472,
+  "free_floor_bytes": 500000000000,
+  "capacity_pass": true,
+  "required_before_GPU": [
+    "Exact reviewed production validation/source-migration repair",
+    "Fresh scoped180CPU qualification+realguarddryrun",
+    "Exact source/migration/clock/action/storage admission",
+    "Actual GPU probe; restored301700/15579/1720/18panels before advancement"
+  ],
+  "no_new_learner_or_initial_controls": true,
+  "reviewed_latest_main": "f16820e3b34e268cd22c3bbb0aaee9cc7eedf890",
+  "reviewed_delta_from_8e9": "No changes on six affected headroom/onset/OfficialSAC/corpus/launcher paths; metadata/prose only",
+  "next_threshold": 320000
+}
