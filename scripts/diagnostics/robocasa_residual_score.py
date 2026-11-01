@@ -68,7 +68,10 @@ def main():
     if (head != FLORA_CODE or model_receipt["model_revision"] != FLORA_MODEL
             or not model_receipt["completed"] or Path(model_receipt["model_directory"]).resolve() != model.resolve()):
         raise ValueError("Same qualified official Flora code, weights and local receipt required")
-    proto = protocol(profile["task"])
+    baseline_count = profile.get('baseline_count', 8)
+    if baseline_count != 8 and profile['mode'] != 'baseline':
+        raise ValueError('The fifty-case extension is baseline measurement only, not a training migration')
+    proto = protocol(profile["task"], baseline_count=baseline_count)
     output = Path(profile["output"])
     output.mkdir(parents=True, exist_ok=False)
     world, rank = profile.get('annotation_world', 1), profile.get('annotation_rank', 0)
@@ -152,11 +155,11 @@ def main():
 def serve(profile, args, worker, output, proto, progress):
     if profile["mode"] in ("baseline", "integrated"):
         if not args.episodes or not args.baseline_monitor:
-            raise ValueError("Freeze the native8 bank before paired calibration")
+            raise ValueError("Freeze the native episode bank before paired calibration")
         episodes = json.loads(Path(args.episodes).read_text())
-        if len(episodes) != 8 or sha(args.episodes) != profile["frozen_native_episodes_sha256"]:
-            raise ValueError("Exactly the first native-passing8 bank, no task selection by Flora")
-        progress.emit(phase="native8_Flora_calibration", episodes_complete=8)
+        if len(episodes) != proto['baseline_count'] or sha(args.episodes) != profile["frozen_native_episodes_sha256"]:
+            raise ValueError("Exactly the prospectively frozen native bank, no task selection by Flora")
+        progress.emit(phase="native_Flora_calibration", episodes_complete=len(episodes))
         rows, _, receipt = score(worker, episodes, output / "terminal.jsonl", profile["model_receipt"], proto)
         truth = {r["id"]: r["simulator_final_success"] for path in sorted(Path(args.baseline_monitor).glob("*.json"))
                  for r in [json.loads(path.read_text())]}
@@ -166,7 +169,7 @@ def serve(profile, args, worker, output, proto, progress):
             simulator_final_success=truth[row["id"]]) for row in rows], proto)
         write_new(output / "baseline-validation.json", dict(result, completed=True, scorer_receipt=receipt))
         progress.emit(phase="calibration_passed" if result["go"] else "calibration_failed_comparison_stopped",
-                      labels_complete=8, AUROC=result["AUROC"])
+                      labels_complete=len(episodes), AUROC=result["AUROC"])
         if profile["mode"] == "baseline" or not result["go"]:
             return
         # Calibration truth is used only above. Neither the training requests

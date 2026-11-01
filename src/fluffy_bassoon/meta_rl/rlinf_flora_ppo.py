@@ -71,10 +71,11 @@ def initializer_manifest(receipt,model_directory):
 
 def baseline_validation(rows,protocol=None):
     """Paired scorer validation only; never fit a training-reward threshold."""
-    count=8 if protocol is not None else 64
+    count=64
     if protocol is not None:
         from .rlinf_robocasa_ppo import validate_protocol
         validate_protocol(protocol)
+        count=protocol['baseline_count']
     if len(rows)!=count or len({r['id'] for r in rows})!=count:raise ValueError('Exact unique fresh baseline episode bank required')
     scores=[];truth=[]
     for row in rows:
