@@ -32,6 +32,22 @@ There are two comparisons, each at 10M training transitions per run:
 Both use seed 1000. The CTM checkpoint is shared across the comparisons;
 these are not two independent CTM runs. Neither establishes a CTM advantage.
 
+## Learned-reward benchmarks
+
+For RL with NVIDIA's
+[Flora-Rewarder](https://research.nvidia.com/labs/gear/flora) (27B video
+reward model; episode scores 1–5 and per-step normal/suboptimal/failed labels;
+non-commercial license), use **LIBERO first, then RoboCasa**:
+
+1. **LIBERO** reuses the existing pi0.5 setup. Score existing rollouts against
+   simulator success before training on Flora rewards, and keep reporting true
+   success rate.
+2. **RoboCasa** is NVIDIA's GR00T benchmark, closer in appearance to the
+   rewarder's likely training data and far from saturated.
+
+The rewarder is too slow for dense per-step rewards, and its reported
+failed-step recall is only 53%. Its training simulators are not published.
+
 ## Layout
 
 | Path | Contents |

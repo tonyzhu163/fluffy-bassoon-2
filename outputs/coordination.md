@@ -1,17 +1,17 @@
 # CTM in-context RL: coordination
 
-Live coordination for `fluffy-bassoon-2`, updated **2026-10-31 Asia/Shanghai**.
+Live coordination for `fluffy-bassoon-2`, updated **2026-11-01 Asia/Shanghai**.
 Keep current decisions and jobs here, method contracts in `docs/`, verified
 results in `EVALUATION.md`, and dated plans and evidence in
 `outputs/<run-id>/`. Follow [AGENTS.md](../AGENTS.md) and the
 [retention policy](../README.md#artifact-retention).
 
-Earlier state, including the fallback ideas, run order, DSRL how-to, CMM
-calibration table and completed 2026-10-28/29 jobs, is in the
-[2026-10-31 snapshot](archive/coordination/coordination-20261031.md). The
+The [2026-11-01 snapshot](archive/coordination/coordination-20261101.md) holds
+the full table before this trim, including terminal rows and jobs unconfirmed
+since 2026-10-28. Older state is in the
+[2026-10-31 snapshot](archive/coordination/coordination-20261031.md), the
 [cutover placeholder](archive/coordination/coordination-pre-cutover-20261028.md)
-and [source-repository records](https://github.com/tonyzhu163/fluffy-bassoon/blob/lycoreco_rl/outputs/coordination.md)
-are older.
+and the [source-repository records](https://github.com/tonyzhu163/fluffy-bassoon/blob/lycoreco_rl/outputs/coordination.md).
 
 ## Question and decision
 
@@ -75,40 +75,38 @@ update.
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
-| Original Pi0 DSRL task57 replication | Owner chat `01a192ca-ebbb-7970-827d-fdf784722bc9`; Baige `job-psgxs9n5b08w`, source `00eca3fa`, seed0; CPU receipt `job-8gadv5dju8jx` | **Complete, terminal receipts verified 2026-11-01 07:42 Shanghai:** 500,080 updates; final learned 10/10 at 25,504 replay rows/495,165 training actions versus native 4/10. First 10/10 at 40k/2507 rows; early 0/10,2/10 and later 200k/370k 9/10 panels retained. Final motor before/after SHA256 equal; full recovery500,080 and all51 evaluation payloads hash-verified; clean pinned sources and model/renderer binding verified. Physical ledger reconciles all510 panel episodes. Cumulative cost20,081/36,000 GPU-s,583,578/1M phase actions (retains400 prior unresolved),1800/1800 conservative CPU worker-s; outputs below64GiB. EVALUATION.md and FINAL-* receipts complete. Single seed supports steering gain; paper three-seed aggregate/sample-efficiency superiority unverified, legacy S3 equality unverified. Monitor removed after verified terminal outcome. No further pilot work remains; additional seeds require new authorization. |
-| Native VLRLA-recipe PPO pilot | Run `vlrla-native-ppo-pilot-20261031-r1`; owner `frozen-vla-poc` | **2026-10-31 14:06 Shanghai:** queued behind the task57 DSRL run; native CPU qualification closed, GPU held. Specified at 6 GPU-hours / 1M actions. |
 | LIBERO task44 DSRL on frozen pi0.5 | R3 `job-2qn8dpw3yvlb` Running; sole `finish_assembly` | **12:30:**394240updates/2308TRAIN/20206replay,2269success39failure.22completepanels,last38000020/20,next400k;stablefull/newrawRPC/finitelosses pass. 367898phaseactions/22856910460B;activeGPUelapsed notfinalcharge. Next12:50. [Proof](libero90-pi05-headroom-runtime-20261101-r1/CHECK-1230-PARENT-REVIEW.json). |
 | Frozen pi0.5 interface/data redesign | AssessmentR2 `job-bc2ooyztqsfh` Running on9d29; sole `finish_assembly` | Actualprobe/resource/migration pass;cursor168=161oldvalid+6newvalid+1nullabort.26722combinedactions/626new/0uncertain;firstnew162success96+10steps,0SGD. Original1340GPU-s+9420reservation inside10800;32GiBshared,oldCPU154/180 andfresh77/120 separateclosed. Failed161 neverreplayed;finalC565pendingactive. NextPRIMARY12:50,assessment12:59. Current-bank500preparation separate7200,notyetlaunched. [Proof](libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json). |
 | LIBERO90 pi0.5 headroom screen for DSRL replication | Owned Stage A terminal Succeeded/exit0, `4ec35eb9`; owner chat `01a192cf` | **Nov1 09:54 saved-reference review:** own384 audit/task59 native3/16 vs untrained tied9/16 unchanged (3,890GPU-s/134,629actions). Separate task44 recovery repair qualified; executiond236/scienceb665 resumes preserved learner to302180 with3newEP/480updates. Fixed500k/finalnative/motor pending; no duplicate learner or interface GPU launch. [Reconciliation and gate](libero90-pi05-headroom-screen-20261101-r1/REFERENCE-RECONCILIATION.md). |
-| RoboTwin final100 AD export (R4) | Baige `job-vth2qv6r4lxu`, CPU only | **2026-10-31 13:38 Shanghai: complete, exit 0.** AD train and BC validation exports pass independent audits; no new GPU, robot actions or SGD. AD GPU fit stays deferred for the DSRL/SAC-first priority. [Final report](robotwin-final100-ad-export-20261031-r4/RESULTS.md); [source campaign](robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
-| Meta-World released pi0.5 noise screen | Baige `job-orgyjb0z9h6d`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17 Shanghai: paused at user request.** Reach screens fail headroom; goals 1 and 3 never reached. Remain paused. [Pause record](metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). |
+| Flora-Rewarder PPO quick test, LIBERO90 task 44 | Run `flora-ppo-comparison-20261101-r1`; owner tonyzhu163 Claude Code session; planning only | **2026-11-01:** Single-seed RLinf PPO on task 44 from the RLinf-130 SFT, comparing a simulator-success reward (S) with a Flora outcome-label reward (F); training runs full horizon so episode length cannot leak success. Nothing implemented or launched. Next: Flora smoke test and a 64-episode SFT baseline (start rate, Flora agreement) as a go/no-go; kept separate from the running task-44 DSRL job. [Plan](flora-ppo-comparison-20261101-r1/PLAN.md). |
 
 ### Needs owner refresh
 
-Last recorded 2026-10-28 19:23 Shanghai; state since then unknown. Owners:
-confirm terminal state and move each to completed work.
+- Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
+  queued behind the task57 DSRL run, which has since finished. Owner
+  `frozen-vla-poc`: confirm whether it is still queued.
+  [Plan](vlrla-native-ppo-pilot-20261031-r1/PLAN.md).
+- Three jobs last recorded on 2026-10-28 (RoboTwin GRPO gate
+  `job-vh9lp7fvgf9n`, MetaWorld pilot r2 `job-x2x4kdpfn011`, thu2 CMM
+  48983/48984) are listed in the
+  [snapshot](archive/coordination/coordination-20261101.md#needs-owner-refresh).
+  Re-add a row only if the job is still live.
 
-- RoboTwin GRPO learning gate, Baige `job-vh9lp7fvgf9n`: initializing, one
-  GPU / 20-minute cap.
-- MetaWorld bounded pilot r2, Baige `job-x2x4kdpfn011`: first evaluation
-  saved, one GPU / 180-minute cap.
-- CMM decay diagnostics thu2 48983/48984: last recorded queued. The packed
-  diagnostic 49178 below covers the same comparison; confirm these were
-  cancelled.
+## Paused
+
+- **Meta-World released pi0.5 noise screen**, Baige `job-orgyjb0z9h6d`: paused
+  at user request 2026-10-29; reach screens fail headroom.
+  [Pause record](metaworld-pi05-noise-baige-20261029-r2/PAUSED.md).
 
 ## Recently completed work
 
-Details for each are in the [snapshot](archive/coordination/coordination-20261031.md).
-
-- **CMM calibration**, thu2 48876: complete, failed (4.55% vs paper 30.63%);
-  optimization instability. Packed decay diagnostic thu2 49178: no clear
-  speedup. CMM structure tests stay gated on calibration.
-- **DSRL Stage 0 smoke**, Baige `job-gjkse1sb5gyj`: repeat determinism failed
-  (4/32 identical trajectories); S0b/S0c not run.
-- **Native-context pilot r3**, Baige `job-8kkjhb65px67`: failed feedback
-  validation, exit 1; preserved.
-- **Native pi0.5 CTM/XL PPO, support/probe gate, privileged tracker**:
-  complete and audited 2026-10-28; no ICRL or architecture claim.
-- **Cached CTM/XL/GTrXL, CMM cached screen, DPT warm starts**: complete; one
-  cached seed, no CTM advantage.
-- **Baige environment cleanup**: complete 2026-10-29.
+- **Original Pi0 DSRL task57 replication**, Baige `job-psgxs9n5b08w`:
+  complete and verified 2026-11-01. Final learned 10/10 vs native 4/10, one
+  seed; the paper's three-seed claims are unverified. Full receipts in the
+  [snapshot](archive/coordination/coordination-20261101.md#ongoing-work).
+- **RoboTwin final100 AD export (R4)**, Baige `job-vth2qv6r4lxu`: complete,
+  exit 0, 2026-10-31; AD GPU fit deferred.
+  [Final report](robotwin-final100-ad-export-20261031-r4/RESULTS.md).
+- Work completed on 2026-10-28/29 (CMM calibration, DSRL Stage 0 smoke,
+  native-context pilot r3, CTM/XL PPO gates, cached screens, Baige cleanup) is
+  summarized in the [2026-11-01 snapshot](archive/coordination/coordination-20261101.md#recently-completed-work).
