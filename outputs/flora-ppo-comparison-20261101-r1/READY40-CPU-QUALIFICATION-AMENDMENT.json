@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "prospective_ready40_CPU_amendment_no_additional_ACK",
+  "source_commit": "a3b6111ac79e19ec12c99a3df6dcae8d201f4b53",
+  "canonical_plan_main": "ec47d0f3",
+  "authority": "READY40-INITIALIZER-MIGRATION.json",
+  "original_ticket": "PPO-FOCUSED-CPU-QUALIFICATION-TICKET.json",
+  "unchanged_phase_cap_worker_seconds": 360,
+  "no_new_CPU_grant": true,
+  "resource": {
+    "gpus": 0,
+    "cpus": 8,
+    "ram_gib": 32,
+    "retry": false
+  },
+  "dispatch": {
+    "if_old_a894_never_allocated": {
+      "selector": "tests/test_rlinf_flora_ppo.py",
+      "source_prepared_cases": 67,
+      "total_inclusive_worker_seconds": 300,
+      "scheduler_minutes": 4,
+      "outer_seconds": 240,
+      "startup_allowance_seconds": 60,
+      "note": "One full NEW-source gate replaces the unexecuted58-case dispatch. No duplicateold58run."
+    },
+    "if_old_a894_actually_allocated": {
+      "first": "Keep oldjob/sourceimmutable; settle actualstatus,exactJUnit,workerclock andcanonicalpendingholds before newsubmit.",
+      "selector": "tests/test_rlinf_flora_ppo.py -k 'initializer or compose_actual_official_config'",
+      "source_prepared_affected_cases": 13,
+      "proposed_max_total_worker_seconds": 180,
+      "actual_limit": "min(180,true remaining360 afterall prioractuals/holds)",
+      "carry": "Only actuallypassedunchangedcomponentcases with exactsource/carryproof. Never callall67executedif only13new plus54carried."
+    }
+  },
+  "qualification_scope": "Realc605configcomposition/officialGAE/syntheticmetadata/arrays onallocatedCPU only. No realactor/VLA/model/scorer/simulatorconstructors, productioncheckpoint,SGD orrobotactions.",
+  "evidence_status": "All67cases are SOURCE-PREPARED ONLY at thisadmission; no pass/run claimed. Sourcewriterreports9newinitializerABIcasesand4affectedconfigcases; other54 unchanged.",
+  "costs": "Allstartup/attestation/imports/failures/tests/cleanup underSAME360phase. No transferredoldunusedbudgets or clockreset betweenpins.",
+  "execution_owner": "/root/finish_assembly"
+}
