@@ -98,9 +98,11 @@ def validate_video(episode,protocol=None):
     if protocol is not None:
         from .rlinf_robocasa_ppo import validate_protocol
         validate_protocol(protocol)
-        horizon=protocol['horizon'];camera=['robot0_agentview_left']
+        horizon=protocol['horizon'];camera=protocol['camera_order']
+    multi=len(camera)>1
     fields={'id','task','camera_order','info_on_video','extra_info_on_video','raw_rgb_only',
-        'success_termination_disabled','horizon','completed','video','frame_clock','rank','round','local_env'}
+        'success_termination_disabled','horizon','completed','frame_clock','rank','round','local_env',
+        'videos' if multi else 'video'}
     if (set(episode)!=fields or (episode['task']!=TASK if protocol is None else
             not isinstance(episode['task'],str) or not episode['task'].strip())
             or episode.get('camera_order')!=camera or episode.get('info_on_video') is not False
@@ -108,17 +110,32 @@ def validate_video(episode,protocol=None):
             or episode.get('success_termination_disabled') is not True
             or episode.get('horizon')!=horizon or episode.get('completed') is not True):
         raise ValueError('Only completed full-horizon clean agentview episodes are scoreable')
-    video=episode['video'];clock=episode['frame_clock']
-    if (set(video)!={'path','sha256'} or set(clock)!={'frame_count','native_fps','encoded_fps','resampled',
+    refs=episode_video_refs(episode);clock=episode['frame_clock']
+    if (not isinstance(refs,list) or len(refs)!=len(camera) or any(not isinstance(ref,dict) or
+            set(ref)!=({'camera','path','sha256'} if multi else {'path','sha256'}) or
+            not isinstance(ref.get('sha256'),str) or len(ref['sha256'])!=64 or
+            not isinstance(ref.get('path'),str) or not Path(ref['path']).is_absolute()
+            for ref in refs) or len({ref['path'] for ref in refs})!=len(refs)
+            or multi and [ref['camera'] for ref in refs]!=camera
+            or set(clock)!={'frame_count','native_fps','encoded_fps','resampled',
             'physical_steps','initial_frame_included','timestamp_sha256'}
             or type(clock['frame_count']) is not int or clock['frame_count']!=horizon+1
             or not math.isfinite(clock['native_fps']) or clock['native_fps']<=0
             or clock['encoded_fps']!=clock['native_fps'] or clock.get('resampled') is not False
             or clock['physical_steps']!=horizon or clock.get('initial_frame_included') is not True
             or not isinstance(clock.get('timestamp_sha256'),str) or len(clock['timestamp_sha256'])!=64
-            or len(video['sha256'])!=64 or not Path(video['path']).is_absolute()):
+            ):
         raise ValueError('Actual synchronized native frameclock/video identity required; no default30FPS')
-    return dict(id=episode['id'],task=episode['task'],videos=[video['path']])
+    return dict(id=episode['id'],task=episode['task'],videos=[ref['path'] for ref in refs])
+
+
+def episode_video_refs(episode):
+    return episode['videos'] if 'videos' in episode else [episode['video']]
+
+
+def video_refs_digest(episodes):
+    # Preserve the archived one-view identity while binding every new view.
+    return digest([e['videos'] if 'videos' in e else e['video'] for e in episodes])
 
 
 def flora_jobs(episodes,protocol=None):
@@ -138,7 +155,7 @@ def checked_labels(episodes,outputs,validation,receipt,protocol=None):
     if (validation.get('go') is not True or validation.get('score_field')!='expected_score'
             or receipt.get('code_commit')!=FLORA_CODE or receipt.get('model_revision')!=FLORA_MODEL
             or receipt.get('completed') is not True or receipt.get('jobs_sha256')!=digest(flora_jobs(episodes,protocol))
-            or receipt.get('video_refs_sha256')!=digest([e['video'] for e in episodes])):
+            or receipt.get('video_refs_sha256')!=video_refs_digest(episodes)):
         raise ValueError('Successful frozen baseline validation and pinned completed Flora batch required')
     if protocol is not None and validation.get('protocol')!=protocol:raise ValueError('Flora gate belongs to another native task/horizon')
     return parse_outputs(episodes,outputs,protocol)

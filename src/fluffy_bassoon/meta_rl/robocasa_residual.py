@@ -126,10 +126,8 @@ class RoboCasaResidualEnvironment:
             raise ValueError("Actual native frame clock missing")
         self.timestamps = [counts["control_time"]]
         self.steps, self.active = 0, True
-        self.video = self.output / (self.key + ".mp4")
-        if self.video.exists():
-            raise ValueError("Never overwrite native episode evidence")
-        self.writer = self.writer_factory(str(self.video), fps=self.fps, codec="libx264", quality=8, macro_block_size=None)
+        from .robocasa_video import EpisodeVideos
+        self.writer = EpisodeVideos(self.output, self.key, fps=self.fps, writer_factory=self.writer_factory)
         self._frame(observation)
         self.cursor += 1
         return public_observation(observation)
@@ -141,10 +139,8 @@ class RoboCasaResidualEnvironment:
         return deepcopy(rows[0])
 
     def _frame(self, observation):
-        image = np.asarray(observation["main_images"])[0]
-        if image.ndim != 3 or image.shape[-1] != 3 or image.dtype != np.uint8:
-            raise ValueError("Require native upright unannotated RGB")
-        self.writer.append_data(np.ascontiguousarray(image))
+        from .robocasa_video import observation_frames
+        self.writer.append(observation_frames(observation))
 
     def step_chunk(self, chunk):
         chunk = np.asarray(chunk)
@@ -169,10 +165,11 @@ class RoboCasaResidualEnvironment:
             raise ValueError("Observed physical/frame clock differs from native full horizon")
         self.writer.close()
         self.active = False
-        episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=["robot0_agentview_left"],
+        from .robocasa_video import REWARD_CAMERAS
+        episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=list(REWARD_CAMERAS),
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
                 info_on_video=False, extra_info_on_video=[], rank=self.rank, round=self.cursor - 1, local_env=0,
-                video=dict(path=str(self.video), sha256=sha(self.video)),
+                videos=self.writer.refs(),
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
         from .rlinf_flora_ppo import digest, write_new
@@ -182,7 +179,7 @@ class RoboCasaResidualEnvironment:
         write_new(self.monitoring_root / (self.key + ".json"), dict(id=self.key, case=self.case,
             simulator_final_success=truth, native_counts=counts,
             native_ep_meta=deepcopy(self.native.current_info_list[0].get("ep_meta")),
-            video_sha256=episode["video"]["sha256"]))
+            video_refs_sha256=digest(episode["videos"])))
         return public_observation(observation), True, episode
 
     def state_dict(self):

@@ -15,7 +15,8 @@ import time
 
 from fluffy_bassoon.meta_rl.flora_terminal_worker import TerminalWorker
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import (
-    FLORA_CODE, FLORA_MODEL, baseline_validation, digest, flora_jobs, parse_outputs, sha, write_new,
+    FLORA_CODE, FLORA_MODEL, baseline_validation, digest, episode_video_refs, flora_jobs, parse_outputs,
+    sha, video_refs_digest, write_new,
 )
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
@@ -26,15 +27,16 @@ from fluffy_bassoon.meta_rl.flora_terminal_shards import gather_terminal_outputs
 def score(worker, episodes, output, model_receipt, proto):
     jobs = flora_jobs(episodes, proto)
     for episode in episodes:
-        if sha(episode["video"]["path"]) != episode["video"]["sha256"]:
-            raise ValueError("Video bytes changed")
+        for ref in episode_video_refs(episode):
+            if sha(ref["path"]) != ref["sha256"]:
+                raise ValueError("Video bytes changed")
     with output.with_suffix(".jobs.jsonl").open("x") as stream:
         for row in jobs:
             stream.write(json.dumps(row) + "\n")
     rows = worker.score_jobs(jobs, output)
     labels = parse_outputs(episodes, rows, proto)
     receipt = dict(code_commit=FLORA_CODE, model_revision=FLORA_MODEL, model_receipt=model_receipt,
-        completed=True, jobs_sha256=digest(jobs), video_refs_sha256=digest([e["video"] for e in episodes]),
+        completed=True, jobs_sha256=digest(jobs), video_refs_sha256=video_refs_digest(episodes),
         output=dict(path=str(output), sha256=sha(output)), training_reward_rule="(expected_score-1)/4",
         engine_process_pid=os.getpid(), model_load_count=worker.model_load_count,
         completed_batches=worker.completed_batches, engine="official persistent terminal_reward helpers",

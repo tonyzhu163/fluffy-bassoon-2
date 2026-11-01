@@ -4,6 +4,7 @@ Only scalar configuration/case routing lives here. Model, PPO and simulator
 implementations remain the pinned native ones; this module imports none of them.
 """
 from copy import deepcopy
+from .robocasa_video import REWARD_CAMERAS
 
 RLINF='d80cf00e95e545f579e33432e7d7f14e86bb39d7'
 ROBOCASA='3443cdf3dd20f9ae8ed41adba442059b506891d0'
@@ -22,14 +23,17 @@ BANK_SEEDS={'headroom':110100,'train':210100,'DEV':310100,'ID':410100,'OOD':5101
 ACTION_SEEDS={'headroom':610100,'train':710100,'DEV':810100,'ID':910100,'OOD':1010100}
 
 
-def protocol(task):
+def protocol(task, *, camera_order=None):
     if task not in TASKS:raise ValueError('Only the two predeclared candidates and fixed OOD task are supported')
+    cameras=list(REWARD_CAMERAS) if camera_order is None else list(camera_order)
+    if cameras not in (list(REWARD_CAMERAS), ['robot0_agentview_left']):
+        raise ValueError('Only current three-view or archived left-only reward contracts are supported')
     return dict(benchmark='robocasa365',task=task,horizon=TASKS[task][0],
-        camera_order=['robot0_agentview_left'],train_episodes=64,baseline_count=8)
+        camera_order=cameras,train_episodes=64,baseline_count=8)
 
 
 def validate_protocol(value,training=False):
-    if not isinstance(value,dict) or value!=protocol(value.get('task')):
+    if not isinstance(value,dict) or value!=protocol(value.get('task'),camera_order=value.get('camera_order')):
         raise ValueError('Exact native task/horizon/video protocol required')
     if training and value['task']=='CloseFridge':raise ValueError('OOD cannot enter PPO/calibration')
     return value

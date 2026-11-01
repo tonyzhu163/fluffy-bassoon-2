@@ -134,15 +134,14 @@ def robocasa_class(original,worker):
             self._flora_steps=0;self._flora_chunk=0;self._flora_task=task
             self._flora_meta=[];self._flora_current=self._public(result[0])
             import imageio.v2 as imageio
+            from .robocasa_video import EpisodeVideos, raw_frames
             for local,(raw,case,counter) in enumerate(zip(self.current_raw_obs,self._flora_cases,counts)):
                 key=f'{phase}-i{worker._flora_iteration:04d}-r{worker._rank:02d}-e{self._flora_round:02d}-{local:02d}'
-                path=root/f'{key}.mp4'
-                if path.exists():raise ValueError('No native case overwrite/recollection')
                 fps=counter['clock']['control_freq']
-                writer=imageio.get_writer(str(path),fps=fps,codec='libx264',quality=8,macro_block_size=None)
-                writer.append_data(np.ascontiguousarray(raw['robot0_agentview_left_image'][::-1]))
+                writer=EpisodeVideos(root,key,fps=fps,writer_factory=imageio.get_writer)
                 self._flora_writers.append(writer)
-                meta=dict(id=key,video=path,case=case,clock=counter['clock'],timestamps=[counter['control_time']],
+                writer.append(raw_frames(raw))
+                meta=dict(id=key,recorder=writer,case=case,clock=counter['clock'],timestamps=[counter['control_time']],
                     initial_raw_sha256=tensor_hash(raw),initial_public_sha256=tensor_hash(self._flora_current),
                     constructor_reset_controls=counter['reset_controls'],reset_physics_ticks=counter['physics_ticks'])
                 self._flora_meta.append(meta)
@@ -164,8 +163,9 @@ def robocasa_class(original,worker):
             self._flora_steps+=1
             if torch.any(terms):raise ValueError('Success-driven termination is forbidden in both arms')
             counts=self._counts()
+            from .robocasa_video import REWARD_CAMERAS, raw_frames
             for writer,raw,meta,counter in zip(self._flora_writers,self.current_raw_obs,self._flora_meta,counts):
-                writer.append_data(np.ascontiguousarray(raw['robot0_agentview_left_image'][::-1]))
+                writer.append(raw_frames(raw))
                 meta['timestamps'].append(counter['control_time'])
             public=self._public(obs)
             if self._flora_steps==horizon:
@@ -180,9 +180,9 @@ def robocasa_class(original,worker):
                             for a,b in zip(timestamps,timestamps[1:]))
                             or counter['controls']-counter['reset_controls']!=horizon):
                         raise ValueError('Observed native frame/control clock differs from full physical horizon')
-                    row=dict(id=meta['id'],task=self.task_descriptions[local],camera_order=['robot0_agentview_left'],
+                    row=dict(id=meta['id'],task=self.task_descriptions[local],camera_order=list(REWARD_CAMERAS),
                         info_on_video=False,extra_info_on_video=[],raw_rgb_only=True,success_termination_disabled=True,
-                        horizon=horizon,completed=True,video=dict(path=str(meta['video']),sha256=sha(meta['video'])),
+                        horizon=horizon,completed=True,videos=meta['recorder'].refs(),
                         frame_clock=dict(frame_count=horizon+1,native_fps=fps,encoded_fps=fps,resampled=False,
                             physical_steps=horizon,initial_frame_included=True,timestamp_sha256=digest(timestamps)),
                         rank=worker._rank,round=self._flora_round,local_env=local)
@@ -191,7 +191,7 @@ def robocasa_class(original,worker):
                         initial_raw_observation_sha256=meta['initial_raw_sha256'],
                         initial_observation_sha256=meta['initial_public_sha256'],
                         native_ep_meta=deepcopy(self.current_info_list[local].get('ep_meta')),
-                        physical_actions=counter['controls'],native_counts=counter,video_sha256=row['video']['sha256']))
+                        physical_actions=counter['controls'],native_counts=counter,video_refs_sha256=digest(row['videos'])))
                 write_new(worker._flora_root()/f'env-rank-{worker._rank:02d}'/f'round-{self._flora_round:02d}.json',rows)
                 side=Path(worker.cfg.flora_ppo.monitoring_root)/worker.cfg.flora_ppo.arm/worker._flora_phase/f'iteration-{worker._flora_iteration:04d}'
                 write_new(side/f'rank-{worker._rank:02d}-round-{self._flora_round:02d}.json',monitor)

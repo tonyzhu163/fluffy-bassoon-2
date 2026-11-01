@@ -21,6 +21,16 @@ Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLA
   simulators are not published, so measure its agreement with the simulator
   before trusting it on a task.
 
+For RoboCasa, new reward recordings contain synchronized left, wrist and right
+RGB videos, in that collage order. Use the same official terminal-success
+prompt and 1–5 score across tasks, supplying only the native task instruction;
+there are no task-specific rubrics. The policy already consumes these three
+views. Save each view from reset through the final physical step, verify all
+video hashes, and bind the camera order in the reward protocol. Archived
+left-only results retain their original protocol and cannot qualify a new
+three-view run. Camera changes require a new scoring/calibration identity,
+with simulator success kept outside the reward prompt.
+
 ## Benchmarks, in order
 
 1. **LIBERO** is a test bed only, not a reported benchmark: pi0.5 leaves too

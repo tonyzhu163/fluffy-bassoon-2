@@ -91,10 +91,11 @@ class Journal:
 
 class Writer:
     def __init__(self, path, **kwargs):
-        self.path, self.count = path, 0
+        self.path, self.count, self.values = path, 0, []
 
     def append_data(self, frame):
         self.count += 1
+        self.values.append(int(frame[0, 0, 0]))
 
     def close(self):
         from pathlib import Path
@@ -112,7 +113,10 @@ class Native:
         self.env = SimpleNamespace(get_env_attr=lambda key: [deepcopy(self.count)])
 
     def observation(self):
-        return dict(main_images=np.zeros((1, 4, 5, 3), np.uint8), states=np.zeros((1, 25), np.float32),
+        return dict(main_images=np.full((1, 4, 5, 3), 11, np.uint8),
+                    wrist_images=np.full((1, 4, 5, 3), 22, np.uint8),
+                    extra_view_images=np.full((1, 1, 4, 5, 3), 33, np.uint8),
+                    states=np.zeros((1, 25), np.float32),
                     task_descriptions=self.task_descriptions, success=True, task_metadata="private")
 
     def reset(self):
@@ -147,6 +151,12 @@ def test_full_native_horizon_and_video_are_truth_isolated(tmp_path):
             assert info == {}
     assert "simulator_final_success" not in info and "success" not in info
     assert info["frame_clock"]["frame_count"] == 751 and env.writer.count == 751
+    assert [writer.count for writer in env.writer.writers] == [751, 751, 751]
+    assert [set(writer.values) for writer in env.writer.writers] == [{11}, {22}, {33}]
+    assert [ref['camera'] for ref in info['videos']] == info['camera_order']
+    from fluffy_bassoon.meta_rl.rlinf_flora_ppo import flora_jobs
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
+    assert flora_jobs([info], protocol('OpenDrawer'))[0]['videos'] == [ref['path'] for ref in info['videos']]
     import json
     assert json.loads((tmp_path / "monitor/episode-000000.json").read_text())["simulator_final_success"] is True
     with pytest.raises(ValueError):
