@@ -1,0 +1,61 @@
+{
+  "format": "primary_headroom_first_slice_and_failed_resume_v1",
+  "runtime": "dsrl-pi05-headroom-20261101-s0-r1",
+  "source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "first_slice": {
+    "job": "job-w8deahieli8q",
+    "scheduler_status": "Succeeded",
+    "exit_code": 0,
+    "charged_GPU_seconds": 24952,
+    "complete": false,
+    "stop_reason": "complete_episode_time_reservation",
+    "updates": 301700,
+    "train_episodes": 1720,
+    "replay_rows": 15579,
+    "successes": 1681,
+    "failures": 39
+  },
+  "failed_resume": {
+    "job": "job-xzwbn89xzd4m",
+    "scheduler_status": "Failed",
+    "created_Shanghai": "2026-11-01 08:44:17",
+    "ended_Shanghai": "2026-11-01 08:47:00",
+    "UI_seconds": 150,
+    "exit_code": 1,
+    "charged_GPU_seconds": 189,
+    "new_episodes": 0,
+    "new_SGD": 0,
+    "new_actions": 0,
+    "failure": "Atomic task57 cursor/model/training recovery differs",
+    "false_predicate": "not yet isolated; four predicates are being diagnosed on allocatedCPU"
+  },
+  "phase": {
+    "screen_GPU_seconds": 3076,
+    "total_closed_GPU_seconds": 28217,
+    "maximum_GPU_seconds": 57600,
+    "remaining_GPU_seconds": 29383,
+    "whole_phase_producer_actions": 311694,
+    "maximum_actions": 1000000,
+    "maximum_bytes": 68719476736
+  },
+  "checkpoint": {
+    "sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+    "bytes": 431209817,
+    "immutable_copy": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/resume-r2-admission/PREDECESSOR-301700-FULL.pkl",
+    "copy_timing": "After R2 submission; exact preserved SHA verified before any new checkpoint writes. R2 failed before episode/SGD."
+  },
+  "motor": {
+    "final_parameter_SHA": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "before_after_equal": true
+  },
+  "verification_limits": "Producer cumulative physical actions; not a full new event forest reconciliation. No checkpoint payload deserialized on Mac/dev. No original guard relaxed or blind retry.",
+  "artifact_hashes": {
+    "resume-r2-artifacts/worker-time.json": "cffca46eabb91accd0609598c18fa118f35ee4562ddebd19caa515ca493b6d9f",
+    "resume-r2-artifacts/console.log": "50d270937553b1f0b2f21f4fa025d46f8f1a7b6999f56adae49b59c1168e6917",
+    "resume-r2-artifacts/RESOURCE-ADMISSION.json": "799eb2a76dd370f43cc0a4aa648966a91b5047cbdcecfe7c5e4515139244d9b1",
+    "resume-r2-artifacts/PREDECESSOR-RECOVERY-PRESERVED.json": "5a1a932fd0a33da06024bc66ed13c4ac9ee5f91486563379f6119ee560c7a04c",
+    "resume-r2-artifacts/attempt.json": "f9ce923d2bc1b68e372d649cc79b6e4e120d054258f8cc37a0e93f4025ea1867",
+    "resume-r2-artifacts/gpu-probe.json": "e4d40e17c180c828443a02c3bdfc12fc68927a943838674b07f12d689f2e33f1",
+    "resume-r2-artifacts/exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  }
+}
