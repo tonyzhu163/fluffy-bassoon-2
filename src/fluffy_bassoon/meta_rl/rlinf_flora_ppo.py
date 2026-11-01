@@ -7,7 +7,9 @@ from copy import deepcopy
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+import uuid
 
 RLINF='c605b9d55ed93a180119b099e6f836abff293b08'
 FLORA_CODE='129a2ada74c526ee4692f3d1b111bea6ca19d5b7'
@@ -34,7 +36,15 @@ def sha(path):
 
 def write_new(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    with path.open('x') as stream:json.dump(value,stream,indent=2,allow_nan=False);stream.write('\n')
+    # Request/ready/gate files are process boundaries. Publish complete JSON
+    # atomically and exclusively, so a reader never observes half a batch.
+    temporary=path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
+    try:
+        with temporary.open('x') as stream:
+            json.dump(value,stream,indent=2,allow_nan=False);stream.write('\n')
+            stream.flush();os.fsync(stream.fileno())
+        os.link(temporary,path)
+    finally:temporary.unlink(missing_ok=True)
 
 
 def initializer_manifest(receipt,model_directory):

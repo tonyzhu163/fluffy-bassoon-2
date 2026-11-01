@@ -2,7 +2,7 @@
 """Allocated-Linux RoboCasa binding: frozen native pi0.5, matched residual PPO.
 
 Run a prospectively bound headroom bank, a training arm or fixed evaluation.
-Flora runs in its separate allocation. A missing label leaves pending.pt intact
+Flora runs in a separate process in the same allocation. A missing label leaves pending.pt intact
 with no GAE/update, rather than collecting a replacement on-policy batch.
 """
 import argparse
@@ -207,7 +207,24 @@ def main():
             save_checkpoint(output / "boundary-000.pt", policy=policy, optimizer=optimizer, bound=bound, motor=motor,
                 environment=train_env, generators=generators, contract=contract, iteration=0, stage="boundary")
         history = []
+        iteration_times = []
+        stop_reason = "fixed10"
+        final_actions = 8 * (TASKS[task][0] + 128) + 8 * (900 + 128)
         while iteration < 10:
+            # The first iteration is retained training, never a disposable
+            # benchmark. Subsequent admission uses its actual full-batch time.
+            estimate = (max(iteration_times) * 1.25 if iteration_times
+                        else profile["first_iteration_wall_ceiling_seconds"])
+            if iteration + 1 in (2, 4, 6, 8, 10):
+                estimate += profile["dev_evaluation_wall_ceiling_seconds"]
+            if (pending is None and (journal.charged() + 64 * (TASKS[task][0] + 128)
+                    + (8 * (TASKS[task][0] + 128) if iteration + 1 in (2, 4, 6, 8, 10) else 0)
+                    + final_actions > action_limit or time.time() + estimate
+                    + profile["final_evaluation_wall_reserve_seconds"] + profile["closure_seconds"]
+                    >= profile["deadline_unix"])):
+                stop_reason = "finite_complete_iteration_capacity"
+                break
+            iteration_start = time.monotonic()
             if pending is None:
                 reserve(64, TASKS[task][0])
                 records, episodes = collect_pending(policy, bound, motor, train_env, episodes=64, generator=generators["action"])
@@ -262,10 +279,15 @@ def main():
                         break
                     time.sleep(1)
                 if not stop_path.exists() or json.loads(stop_path.read_text())["stop"]:
+                    stop_reason = (json.loads(stop_path.read_text())["reason"] if stop_path.exists()
+                                   else "peer_or_finite_clock_boundary")
+                    iteration_times.append(time.monotonic() - iteration_start)
                     break
+            iteration_times.append(time.monotonic() - iteration_start)
         save_checkpoint(output / "final.pt", policy=policy, optimizer=optimizer, bound=bound, motor=motor,
             environment=train_env, generators=generators, contract=contract, iteration=iteration, stage="boundary", final=True)
-        write_new(output / "FINAL.json", dict(completed=True, iteration=iteration, checkpoint=str(output / "final.pt"),
+        write_new(output / "FINAL.json", dict(completed=True, iteration=iteration, stop_reason=stop_reason,
+            measured_iteration_seconds=iteration_times, checkpoint=str(output / "final.pt"),
             sha256=sha(output / "final.pt"), contract=contract, includes=["policy", "critic", "Adam", "global/private RNG", "motor sampler", "case cursor"]))
         if history:
             save_dataset(output / "history.npz", [history_trial(history)], objective="ad" if len(history) > 1 else "behavior_cloning",
