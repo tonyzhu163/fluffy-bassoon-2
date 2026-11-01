@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "admitted_residual_CPU_qualification_no_new_ACK",
+  "ticket_id": "ready40-fsdp-precision-cpu-q1",
+  "source_commit": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "source_branch": "codex/libero44-flora-ppo-fsdp-precision-20261101",
+  "basis": "Diagnosed official c605 validate_fsdp_cfg failure before any simulator action; narrow published-model precision compatibility fix.",
+  "scope": {
+    "selectors": "tests/test_rlinf_flora_ppo.py -k 'compose_actual_official_config or real_fsdp_validator'",
+    "prepared_cases": 5,
+    "full_suite_distinct_cases": 68,
+    "unchanged_previous_cases_to_carry": 63,
+    "prior_actual_suite": "a3 source67/67 PASS; do not rerun unchanged67 wholesale.",
+    "protected": "No weights/model body/PPO loss/critic architecture/Adam/global batch/action-noise recipe/case change. Native explicit dtype casts preserved; FP32 and root cast_forward_inputs/cast_root_forward_inputs false, amp_autocast disabled."
+  },
+  "resource": {
+    "gpus": 0,
+    "cpus": 8,
+    "ram_gib": 32,
+    "scheduler_minutes": 3,
+    "retry": false,
+    "total_inclusive_CPU_worker_seconds": 240,
+    "inner_seconds": 120,
+    "term_seconds": 160,
+    "kill_seconds": 170,
+    "outer_seconds": 180,
+    "startup_allowance_seconds": 60,
+    "outputs_mib": 128
+  },
+  "original_phase": {
+    "maximum_CPU_worker_seconds": 360,
+    "already_charged": 97,
+    "remaining_before_child": 263,
+    "child_max": 240,
+    "unrequested": 23,
+    "prior_worker_clock_sha256": "beb84d35ea29c0d6b80ab4beb5d64baea611f22eb9caf1e9b48ac8f8613c92b8",
+    "prior_owner_evidence": "19bf173df3db30f060fbfade257f471f72699a89",
+    "migration": "Original a3 clock/header and its97 charge remain immutable. Bind a diagnosed child contract/pin and predecessor clock SHA; phase sum old97+all new actual/reserved<=360. No new phase cap, sealed old budget transfer or clock reset."
+  },
+  "execution": "Sole finish_assembly deploys final dd773 only, binds actual c605 import origins and finite source-pinned worker clock. Exactly5 affected tests, actual0GPU attestation/JUnit/independent exit. No realmodel/VLA/scorer/simulator/productioncheckpoint/SGD/actions.",
+  "after_actual_pass": "Explicit source/config migration from a3 to dd773; carry actual strict model-load receipt only for unchanged model body/assets. Same loading clock224/3600 charged,3376 remaining; source-pinned short-TMP GPU successor only after actual affected CPU pass. No extra episode beyond the existing one smoke/415 common actions.",
+  "execution_owner": "/root/finish_assembly"
+}
