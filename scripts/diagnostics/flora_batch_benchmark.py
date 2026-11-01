@@ -2,6 +2,7 @@
 """Finite throughput replay of frozen videos, with unchanged official scoring."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import threading
@@ -22,6 +23,21 @@ def main():
         raise RuntimeError("One allocated 96GB card per official TP1 replica")
     selected_uuid = verify_selected_cuda(torch)
     output = Path(profile["output"])
+    # Validate the real distributed scheduler identity first. Each independent
+    # TP1 engine must then start without a four-node model rendezvous. This is
+    # a child-process environment; the parent scheduler binding stays intact.
+    distributed_keys = ("RANK", "WORLD_SIZE", "LOCAL_RANK", "LOCAL_WORLD_SIZE",
+                        "MASTER_ADDR", "MASTER_PORT", "NPROC_PER_NODE")
+    visibility = {key: os.environ.get(key) for key in ("NVIDIA_VISIBLE_DEVICES", "CUDA_VISIBLE_DEVICES")}
+    scheduler_environment = {key: os.environ[key] for key in distributed_keys if key in os.environ}
+    write_new(output / "scheduler-node-environment.json", dict(
+        verified_gpu_uuid=selected_uuid, scheduler_node_environment=scheduler_environment,
+        preserved_visibility=visibility, independent_tensor_parallel_size=1))
+    for key in distributed_keys:
+        os.environ.pop(key, None)
+    if any(key in os.environ for key in distributed_keys) or any(
+            os.environ.get(key) != value for key, value in visibility.items()):
+        raise RuntimeError("TP1 isolation must preserve the verified GPU visibility")
     if (len(profile["jobs"]) != 64 or len({row["id"] for row in profile["jobs"]}) != 64
             or profile["batch_size"] not in (1, 2, 4, 6, 8, 12, 16, 24)):
         raise ValueError("The fixed throughput replay requires64 unique requests and a declared batch size")
@@ -66,7 +82,9 @@ def main():
     thread = threading.Thread(target=heartbeat, daemon=True)
     thread.start()
     result = dict(completed=False, batch_size=profile["batch_size"], tensor_parallel_size=1,
-                  new_robot_actions=0, purpose="Throughput only; no calibration or checkpoint selection")
+                  new_robot_actions=0, purpose="Throughput only; no calibration or checkpoint selection",
+                  scheduler_environment_receipt=str(output / "scheduler-node-environment.json"),
+                  independent_tp1_environment=True, removed_distributed_variables=list(distributed_keys))
     try:
         worker = TerminalWorker(profile["model"], batch_size=profile["batch_size"])
         ready = time.monotonic()
