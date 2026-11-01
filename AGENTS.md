@@ -20,13 +20,14 @@ live status in the single `outputs/coordination.md` (archived per the
 - On macOS, run `proxy_on` (or `proxy_on_clash` if that proxy is down) in
   the same shell before Git operations. Use interactive zsh (`zsh -ic`) when
   needed to load the shell functions.
-- Keep the main clone on `main`. Use detached worktrees for changes and
+- Keep the main clone on `main` and commit routine changes (fixes, docs,
+  configs, small additions) directly to `main`. Use detached worktrees for
   commit-pinned runs.
-- Merge verified feature branches into `main` promptly, and rebase onto
-  `main` before starting new work; long-lived parallel branches diverge into
-  conflicting copies of the same commits. Push `outputs/coordination.md`
-  edits straight to `main`, changing only your own row, never only on a
-  feature branch.
+- Create a feature branch only for a major feature change. Merge it into
+  `main` as soon as it is verified, and rebase onto `main` before starting
+  new work; long-lived parallel branches diverge into conflicting copies of
+  the same commits. Push `outputs/coordination.md` edits straight to `main`,
+  changing only your own row, never only on a feature branch.
 - For new runs, review and use the latest code on `main` before launch,
   recording its exact commit and relevant validation. Keep active runs
   immutable and record any later migration explicitly.
