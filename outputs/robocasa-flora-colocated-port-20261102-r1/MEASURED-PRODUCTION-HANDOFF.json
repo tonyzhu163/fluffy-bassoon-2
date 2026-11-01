@@ -1,0 +1,103 @@
+{
+  "benchmark": {
+    "all_eight_successful": true,
+    "all_four_node_clocks_finished_exit0": true,
+    "job_id": "job-rphgi1kp4d7d",
+    "max_original_gpu_seconds": 24000,
+    "robot_actions": 0,
+    "scalar_packet": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-20261102-r2/TERMINAL-SCALAR-PACKET.json",
+      "sha256": "12a0336f71ffab285503ba44ca45606344814aee260a042caa46c1b08e42fa01"
+    },
+    "scheduler_terminal_capture_pending": true,
+    "score_requests_per_configuration": 64,
+    "source_commit": "3a602f8dea8e303ba552af3c5b4f85145a365245",
+    "total_charged_gpu_seconds": 6036
+  },
+  "colocation": {
+    "explicit_workspace_operational_reserve_mib": 8192,
+    "layout": "Four nodes with two GPUs each; one separate-environment TP1 scorer and one native rollout policy per physical GPU. Root moves its unused controller motor to CPU.",
+    "limitation": "Memory observations are sampled each second and do not guarantee a lifetime workspace bound. Actual colocation has not run; reject insufficient startup headroom before rollouts. No automatic utilization reduction or fallback.",
+    "measured_isolated_scorer_peak_mib": 77593,
+    "minimum_free_mib_after_engine_warmup": 17536,
+    "nvml_card_total_mib": 97887,
+    "observed_policy_physical_footprint_mib": 9344,
+    "persistent_scorers": 8,
+    "physical_gpus_total": 8,
+    "policy_workers": 8,
+    "remaining_margin_beyond_reserve_mib": 2758,
+    "rule": "All eight postwarmup free-memory readings must be at least17536MiB. Root verifies source, model, profile and physical GPU identities before policy loading or physical dispatch, after saving its initial full checkpoint and controller CPU offload receipt.",
+    "source_candidate": "5230b0e164402f28c219f8573a3c4a99ac4ed669",
+    "sum_mib": 95129
+  },
+  "core_qualification": {
+    "actual_job": "job-rphgi1kp4d7d",
+    "actual_node": "job-rphgi1kp4d7d-master-0",
+    "completed": true,
+    "cpu_only": true,
+    "errors": 0,
+    "failures": 0,
+    "inclusive_subprocess_seconds": 12.217910289764404,
+    "old_tests_rerun": 0,
+    "pytest_seconds": 0.09,
+    "skipped": 0,
+    "source_commit": "5230b0e164402f28c219f8573a3c4a99ac4ed669",
+    "tests": 3,
+    "xml": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-colocated-port-20261102-r1/qualification/affected-core.xml",
+      "sha256": "eb10964cc83d6fc51183928c77ff07d6f7341b9f5c600c11dd4f0d8e0c9cce26"
+    }
+  },
+  "new_robot_actions": 0,
+  "owner": "/root/flora_throughput",
+  "performance_limits": [
+    "Cold engine construction took587\u2013594seconds across eight replicas, including concurrent GPFS loading and JIT. Keep engines persistent between training iterations.",
+    "Batch8 postconstructor replay of64 requests took75.3517seconds. Repeated videos may benefit from prefix/media caching, and first-shape JIT remains included. This does not establish fresh64-episode PPO latency or an eightfold speedup.",
+    "Do not select batch12/16/24 for a production group of eight or pad it with new requests.",
+    "Root can bind the exact published production pin, actual capacity, profiles and clock, then launch without another human ACK. This artifact does not transfer browser or scheduler ownership."
+  ],
+  "resources_proposal": {
+    "cpus_per_node": 32,
+    "gpus_per_node": 2,
+    "inclusive_wall_seconds_per_node": 14400,
+    "maximum_total_gpu_seconds": 115200,
+    "nodes": 4,
+    "ram_gib_per_node": 256,
+    "retry": false,
+    "scheduler_minutes": 239,
+    "scope": "ONE matched F job including all eight persistent annotation engines. Root binds finite action, output, recovery and deadline profiles before dispatch; this file does not create an allocation grant.",
+    "shm_gib_per_node": 16
+  },
+  "scientific_change": false,
+  "selected_resource_parameters": {
+    "batch_size": 8,
+    "gpu_memory_utilization": 0.78,
+    "measured_result": {
+      "batch_size": 8,
+      "cold_engine_seconds": 593.2421281398274,
+      "nvml_errors": 0,
+      "nvml_peak_used_mib": 77593.0,
+      "nvml_samples": 646,
+      "nvml_total_mib": 97887.0,
+      "result_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-throughput-20261102-r2/node-02/batch-08/result.json",
+        "sha256": "a63ac9157862e3437cf2d685a9da34fd75c25a9eb7ea6723fae32812d4e2ea90"
+      },
+      "scores": 64,
+      "steady_replay64_seconds": 75.35168458614498,
+      "videos_per_second": 0.8493506197175021
+    },
+    "reason": "Fastest measured configuration that can fill each fixed production group of eight episodes. Batches12\u201324 offer little replay benefit and cannot fill a group of eight.",
+    "selection_uses": "Timing and memory only; no score, prompt, task, calibration or checkpoint selection.",
+    "tensor_parallel_size": 1
+  },
+  "startup": [
+    "Create the residual learner, private RNG and initial complete checkpoint before writing the controller offload receipt. Policy workers must not load models during scorer memory profiling.",
+    "Verify the allocated Baige GPU identity before clearing only the scorer child RANK/WORLD_SIZE/LOCAL_RANK/LOCAL_WORLD_SIZE/MASTER_ADDR/MASTER_PORT/NPROC_PER_NODE variables. Preserve NVIDIA/CUDA visibility.",
+    "Use the same qualified CUDA13.0 toolkit and cuRAND with isolated Py3.12/cu130; preserve the native Py3.11/cu128 environment.",
+    "Warm eight persistent scorers once. Each robocasa_flora_tp1_engine_ready_v1 receipt binds batch8, utilization.78, profile SHA, source, model, physical UUID and actual postwarmup free memory.",
+    "Only all eight verified readiness receipts release policy loading and the first complete64-episode on-policy rollout.",
+    "Each rank processes original episodes[rank*8:(rank+1)*8]. All64 official raw outputs, probabilities and expected scores bind the original pending checkpoint SHA and jobs SHA before ready.json/GAE. Scorers receive no simulator truth."
+  ],
+  "status": "MEASURED_RESOURCE_CANDIDATE_FOR_ROOT_PRODUCTION_ADMISSION"
+}
