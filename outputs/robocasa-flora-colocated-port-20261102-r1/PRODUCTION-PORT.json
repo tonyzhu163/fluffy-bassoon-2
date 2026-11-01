@@ -1,0 +1,127 @@
+{
+  "status": "PROPOSED_NOT_RESOURCE_ADMITTED_UNTIL_ACTUAL_SCORER_MEASUREMENTS",
+  "owner": "/root/flora_throughput",
+  "scope": "Flora annotation side only; root owns PPO driver and node launcher. No production allocation or real production computation is admitted by this file.",
+  "resources_proposal": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "cpus_per_node": 32,
+    "ram_gib_per_node": 256,
+    "shm_gib_per_node": 16,
+    "aggregate_gpus": 8,
+    "scheduler_minutes": 239,
+    "inclusive_wall_seconds_per_node": 14400,
+    "maximum_total_gpu_seconds": 115200,
+    "retry": false
+  },
+  "action_budget": "Original per-arm limit unchanged, all common/qualification/evaluation/reset/failure costs retained; this annotation port creates no robot episode.",
+  "layout": {
+    "policy_workers": 8,
+    "persistent_TP1_scorers": 8,
+    "placement": "One native policy and one separate-environment TP1 scorer share each physical96GBcard. Controller-only duplicate motor must be onCPU.",
+    "global_completed_episode_batch": 64,
+    "fixed_contiguous_episodes_per_annotation_rank": 8
+  },
+  "startup": [
+    "Root controller performs unchanged model loading and writes complete initial policy/critic/Adam/global-private RNG checkpoint; requests parallel_controller_cpu_offload=true.",
+    "Each scorer validates actual distributed node/CUDA/physicalGPU/source/model receipt, records scheduler env, then clears only its own model-rendezvous variables.",
+    "Each scorer waits for F/controller-motor-offload.json completed:true/device:cpu/predictions:allocated rollout workers only before engine construction.",
+    "Eight engines warm independently. Each samples actual NVMLfree after warmup, rejects below declared headroom, then writes an immutable per-rank engine-ready receipt.",
+    "Root pre-dispatch barrier binds all8ready receipts, exact per-rank profile hashes and8distinct realGPUUUIDs before any policy-worker model dispatch/physical rollouts.",
+    "Same global64completeon-policy episodes and fullpending checkpoint precede label requests; no partial update/recollection/fallback."
+  ],
+  "memory": {
+    "policy_observation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/policy-memory-20261102-0143/SUMMARY.json",
+      "sha256": "3efbd51157ae3668a6141bb72e493ee137de3918f190f6d71dac13fdf311f770",
+      "samples": 60,
+      "card_total_mib": 97887,
+      "single_worker_observed_used_peak_mib": 8708,
+      "single_worker_min_free_mib": 88543,
+      "observed_physical_footprint_mib": 9344,
+      "controller_plus_worker_observed_used_peak_mib": 16477,
+      "limitation": "Observed60s footprint, not lifetime allocator peak/guaranteed workspace bound."
+    },
+    "explicit_workspace_operational_reserve_mib": 8192,
+    "minimum_free_mib_after_engine_warmup": 17536,
+    "maximum_acceptable_isolated_scorer_observed_peak_mib": 80351,
+    "rule": "Measured scorer NVMLpeak +9344observed policy physical footprint +8192explicitreserve <=actual cardtotal. Also require actual postwarmup free>=17536before policy dispatch. Neither observed peak is a lifetime bound.",
+    "engine_memory_utilization_default": 0.78,
+    "lower_utilization": "A fixed lower value is a resource-only parameter, never an automatic fallback. It requires its own measured/admitted startup/profile evidence before use; the prepared core case proves only unchanged official prompt/score routing, not real VRAM fit.",
+    "scorer_evidence_pending": "Current throughput job-rphgi1kp4d7d has no allocated output yet at01:42check; no scorer memory or speed has been invented."
+  },
+  "worker_profile_fields": {
+    "mode": "train",
+    "task": "OpenDrawer",
+    "annotation_rank": "integer0..7",
+    "annotation_world": 8,
+    "source_commit": "Exact reviewed production Git commit",
+    "expected_gpu_uuid": "RealNVMLUUID from actual node probe for this rank",
+    "actual_gpu_probe": "Immutable path+sha256 ref to this actual node2GPUprobe",
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/annotation/engines/rank-XX (fresh, scorer creates)",
+    "F_output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/F",
+    "engine_ready_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/annotation/engine-ready/rank-XX.json",
+    "batch_size": "Fixed measured successful value in[1,2,4,6,8]; no silent clamp from larger benchmark batches",
+    "gpu_memory_utilization": "Fixed measured fraction, default.78 only if memoryrule passes",
+    "minimum_free_mib_after_engine_warmup": 17536,
+    "baseline_validation": "Original immutable completed8-case AUROC.6667/go:false ref",
+    "calibration_exception": "Exact explicit human below-gate permission ref",
+    "model": "Same pinned031299e4Flora directory",
+    "model_receipt": "Exact READY ref05c31de...",
+    "official_code": "Pinned129a2ada checkout",
+    "maximum_batches": 10,
+    "deadline_unix": "Same finite shared job deadline",
+    "closure_seconds": 180,
+    "shutdown_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/annotation/shutdown.json"
+  },
+  "engine_ready_receipt": {
+    "format": "robocasa_flora_tp1_engine_ready_v1",
+    "completed": true,
+    "annotation_rank": "0..7",
+    "annotation_world": 8,
+    "source_commit": "profile.source_commit",
+    "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+    "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+    "model_receipt": "Exact ref",
+    "profile_sha256": "digest(profile), includes rank/source/device/resources/batch/memory/prompt binding",
+    "gpu_probe": "Exact ref",
+    "gpu_uuid": "verified real physical UUID",
+    "engine_process_pid": "ActualPID",
+    "tensor_parallel_size": 1,
+    "batch_size": "Actual fixed value",
+    "gpu_memory_utilization": "Actual fixed value",
+    "controller_offload": "Path+sha256of actual F/controller-motor-offload.json",
+    "engine_warmup_seconds": "Measured constructor interval",
+    "memory": {
+      "used_mib": "Actual postwarmup NVML",
+      "free_mib": "Actual postwarmup NVML, >=declaredrequired",
+      "total_mib": "Actual card",
+      "minimum_free_required_mib": 17536,
+      "scope": "postwarmup snapshot, not lifetime peak"
+    }
+  },
+  "label_boundary": {
+    "request": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/F/labels-N/request.json",
+    "pending_checkpoint": "Original exact fullpendingref, read only as bytes for SHA check",
+    "grouping": "global episodes[rank*8:(rank+1)*8], no task/score-based partition",
+    "shard_receipts": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/F/labels-N/shards/rank-XX.json",
+    "aggregate_outputs": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/F/labels-N/flora-terminal-outputs.json",
+    "all64_ready": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-flora-colocated-20261102-r1/F/labels-N/ready.json",
+    "bindings": [
+      "pending_checkpoint_sha256",
+      "jobs_sha256",
+      "officialcode/model",
+      "exactrequestSHA",
+      "all8rank identities and outputSHA",
+      "all64unique IDs, unchanged official probabilities/expectedscore/rawoutput"
+    ],
+    "training_reward": "Existing parse_outputs yields(expected_score-1)/4; native truth never read by production service"
+  },
+  "new_core_tests_only": [
+    "tests/test_flora_terminal_shards.py::test_eight_terminal_shards_preserve_all64_graded_rewards_and_chronology",
+    "tests/test_flora_terminal_shards.py::test_missing_duplicate_misrouted_or_malformed_shard_cannot_release_partial_rewards",
+    "tests/test_flora_terminal_worker.py::test_explicit_engine_memory_budget_keeps_official_prompt_and_graded_output"
+  ],
+  "tests_execution": "Prepared, not executed on Mac. Run only these genuinely new cases once on allocated Linux; do not repeat earlier9.",
+  "pipeline_change": "No learner/collector/optimizer/sampler source changed by this port. Existing label-ready schema is retained; only its producer is sharded."
+}

@@ -7,7 +7,7 @@ import pytest
 from fluffy_bassoon.meta_rl.flora_terminal_worker import TerminalWorker
 
 
-def backend(batch_size=1):
+def backend(batch_size=1, gpu_memory_utilization=.78):
     state = NS(loads=0, processors=0, released=0, requests=[], fail=False, positions=[], batch_lengths=[])
 
     class Collage:
@@ -37,7 +37,7 @@ def backend(batch_size=1):
 
     def load_llm(path, args, **kwargs):
         assert path == "/pinned/model" and vars(args) == dict(tensor_parallel_size=1,
-            gpu_memory_utilization=.78, max_num_seqs=batch_size, seed=0)
+            gpu_memory_utilization=gpu_memory_utilization, max_num_seqs=batch_size, seed=0)
         assert kwargs == dict(max_model_len=16384,
             mm_processor_kwargs=dict(do_sample_frames=False, size="official-size"), max_logprobs=20)
         state.loads += 1
@@ -114,3 +114,16 @@ def test_failed_batched_generation_releases_every_prepared_video(tmp_path):
     with pytest.raises(RuntimeError, match="inference failed"):
         worker.score_jobs(jobs, tmp_path / "partial-24.jsonl")
     assert state.released == 24 and worker.completed_batches == 0
+
+
+def test_explicit_engine_memory_budget_keeps_official_prompt_and_graded_output(tmp_path):
+    api_default, default = backend(batch_size=4)
+    api_lower, lower = backend(batch_size=4, gpu_memory_utilization=.65)
+    a = TerminalWorker('/pinned/model', batch_size=4, _backend=api_default)
+    b = TerminalWorker('/pinned/model', batch_size=4, gpu_memory_utilization=.65, _backend=api_lower)
+    jobs = [dict(id=str(index), task='open drawer', videos=['/native/video.mp4']) for index in range(8)]
+    first = a.score_jobs(jobs, tmp_path / 'default.jsonl')
+    second = b.score_jobs(jobs, tmp_path / 'lower.jsonl')
+    assert a.gpu_memory_utilization == .78 and b.gpu_memory_utilization == .65
+    assert first == second and default.requests == lower.requests
+    assert all(row['expected_score'] == 2.75 and row['progress'] == .4375 for row in second)

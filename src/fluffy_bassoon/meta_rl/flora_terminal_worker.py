@@ -19,13 +19,17 @@ def _official():
 
 class TerminalWorker:
     """Load once; use the exact terminal_reward CLI recipe for every video."""
-    def __init__(self, model, *, batch_size=1, _backend=None):
+    def __init__(self, model, *, batch_size=1, gpu_memory_utilization=.78, _backend=None):
         if type(batch_size) is not int or not 1 <= batch_size <= 32:
             raise ValueError("Finite official inference batch size 1..32 required")
+        if (isinstance(gpu_memory_utilization, bool) or not isinstance(gpu_memory_utilization, (int, float))
+                or not 0 < gpu_memory_utilization <= 1):
+            raise ValueError("Explicit finite engine memory utilization required")
         self.batch_size = batch_size
+        self.gpu_memory_utilization = float(gpu_memory_utilization)
         api = _official() if _backend is None else _backend
         self.api = api
-        args = Namespace(tensor_parallel_size=1, gpu_memory_utilization=.78,
+        args = Namespace(tensor_parallel_size=1, gpu_memory_utilization=self.gpu_memory_utilization,
                          max_num_seqs=batch_size, seed=0)
         path = api.engine.resolve_model(str(model), None, weights=True)
         self.processor = api.engine.load_processor(path)
