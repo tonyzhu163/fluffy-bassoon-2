@@ -89,8 +89,8 @@
   "files": [
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/F-WORKLOAD.py",
-      "bytes": 17422,
-      "sha256": "a6a6440d2ee49191f97e0eea6d545f511facfd6a9ee766a85c3dea4b57161481"
+      "bytes": 18265,
+      "sha256": "ded9b302eaa50f19e4c77e82bc6efb77d17ef82e245163e173e81315354065fd"
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/F-COMMAND.sh",
@@ -115,5 +115,11 @@
   "capacity_and_runtime_evidence": "Inside actual futureallocation: currentcapacity/writeprobe/cgroup/GPUownPID/source; fivecalibrationrefs andcompletecommonmetadata; sampledNVMLevery10s andowned112GiBnamespacecheckevery60s. No offclockcompute/test/newmodel qualificationepisode.",
   "environment_isolation": "NativePy3.11/cu128 andRLinf8a123 use existingassets/native env. OnlyseparatePy3.12 scorerchildsets qualifiedCUDA13 toolkit/env/cache. RealBaige RANK/WORLD_SIZE validated byscorer before clearing its ownmodel-rendezvous vars. Parent/node-service env remainsunchanged.",
   "deadline_exact": "Freshbegin21540slice+60startup=21600inclusive/node; commandinner outer21480remaining+30kill leavesclockclosure. Workloadearliestnode deadline=start+21540-300; controller/scorers additionally preserve300s closeguard. Ownprocessgroups areterminated/closed withinremainingreserve; actualchargesarenottruncated.",
-  "same_shape_as_root_native_templates": true
+  "same_shape_as_root_native_templates": true,
+  "root_shutdown_refinement": {
+    "original_agent_source_sha256": "a6a6440d2ee49191f97e0eea6d545f511facfd6a9ee766a85c3dea4b57161481",
+    "issue": "After sixth serve_shard, ranks1..7 may exit0 before rank0 releases globalready. Globalready count is not a correct liveness condition for each individual worker.",
+    "correction": "On first normal exit, require that worker six completed source-matched shard files, or an actual controller FINAL for legitimate earlystop. Memoize verified exits. Global80-label/pending/source barrier stays unchanged. Already exited owned process groups are treated as closed during TERM/KILL cleanup; other exceptions still propagate.",
+    "qualification": "Static protocol/source/AST review only, no new tests or execution. No actual runtime failure occurred and no old active/ended run was changed."
+  }
 }

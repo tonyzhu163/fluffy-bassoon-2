@@ -181,6 +181,7 @@ def main():
         controller=subprocess.Popen([sys.executable,'-B',str(code/'scripts/diagnostics/robocasa_residual_ppo.py'),
             '--profile',str(p)],env=environment,start_new_session=True)
     last_memory,last_size=0.,0.
+    completed_scorers=set()
     while True:
         if rank!=0 and (dispatch/'shutdown.json').exists():
             assert json.loads((dispatch/'shutdown.json').read_text())['completed'] is True
@@ -191,8 +192,18 @@ def main():
             if child.poll() not in (None,0):
                 fail(job/'errors'/f'scorer-{r:02d}.json',f'Scorer exit{child.returncode}')
                 raise RuntimeError('Official scorer failed; no partial labels or fallback')
-            if child.poll()==0 and not (run/'policy/FINAL.json').exists() and len(list((run/'policy').glob('labels-*/ready.json')))<6:
-                raise RuntimeError('Scorer ended before its complete labels or controller final boundary')
+            if child.poll()==0 and r not in completed_scorers:
+                # Non-coordinator scorers finish after publishing their own
+                # sixth shard. Rank0 may still be assembling the global ready;
+                # that independent barrier must not turn a normal exit into a
+                # false failure. Verify this worker's own completed contribution.
+                own=[json.loads(path.read_text()) for path in
+                     (run/'policy').glob(f'labels-*/shards/rank-{r:02d}.json')]
+                count=sum(row.get('completed') is True and row.get('annotation_rank')==r
+                          and row.get('source_commit')==binding['source_commit'] for row in own)
+                if not (run/'policy/FINAL.json').exists() and count!=6:
+                    raise RuntimeError('Scorer ended before its own six complete shards or controller final boundary')
+                completed_scorers.add(r)
         now=time.time()
         if now>=deadline:raise TimeoutError('Finite F closure; no new bank or process extension')
         if now-last_memory>=10:
@@ -237,9 +248,13 @@ except BaseException as error:
     raise
 finally:
     for child in ([controller] if controller else [])+services:
-        if child.poll() is None:os.killpg(child.pid,signal.SIGTERM)
+        if child.poll() is None:
+            try:os.killpg(child.pid,signal.SIGTERM)
+            except ProcessLookupError:pass
     for child in ([controller] if controller else [])+services:
         try:child.wait(timeout=30)
         except subprocess.TimeoutExpired:
-            os.killpg(child.pid,signal.SIGKILL);child.wait()
+            try:os.killpg(child.pid,signal.SIGKILL)
+            except ProcessLookupError:pass
+            child.wait()
     for log in streams:log.close()
