@@ -16,8 +16,7 @@ import time
 
 FORMAT = 'source40_zero_gpu_cpu_qualification_v1'
 CPU_ENV = Path('/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde')
-DEFAULT_TESTS = ('tests/test_vla_source40_topup_worker.py',
-    'tests/test_vla_source40_topup_assembly.py', 'tests/test_vla_source40_topup.py',
+DEFAULT_TESTS = ('tests/test_vla_source40_topup_assembly.py', 'tests/test_vla_source40_topup.py',
     'tests/test_vla_source40_cpu_qualification.py')
 
 

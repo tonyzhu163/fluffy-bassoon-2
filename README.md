@@ -31,6 +31,13 @@ uv sync
 uv run pytest
 ```
 
+CPU qualification means running software checks in an allocated Linux CPU
+step: numerical correctness, causal data flow, checkpoint recovery and driver
+control flow, often with small synthetic inputs. It does not establish GPU
+runtime readiness or robot performance. Keep reusable behavior tests in
+`tests/`; keep one-off experiment grids, launch receipts and run-specific
+bookkeeping in `outputs/<run-id>/`.
+
 Run tests on allocated Linux resources, not macOS. `tests/test_meta_rl_cuda.py`
 runs inside a GPU step. Robot runtimes are separate environments; see
 [docs/METHODS.md](docs/METHODS.md#environments-and-tests).
