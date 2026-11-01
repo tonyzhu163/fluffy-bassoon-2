@@ -52,6 +52,10 @@ def main():
     if profile["mode"] not in ("baseline", "train", "integrated") or not 0 < profile["scheduler_seconds"] < 8 * 3600:
         raise ValueError("Exact finite calibration or F-only service required")
     read_ref(profile["actual_gpu_probe"])
+    if os.environ.get("LYCO_BAIGE_GPU_MAP"):
+        import torch
+        from fluffy_bassoon.baige_gpu import verify_selected_cuda
+        verify_selected_cuda(torch)
     model_receipt = read_ref(profile["model_receipt"])
     model, code = Path(profile["model"]), Path(profile["official_code"])
     head = subprocess.check_output(["git", "-C", str(code), "rev-parse", "HEAD"], text=True).strip()

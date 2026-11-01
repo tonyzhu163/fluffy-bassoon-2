@@ -52,6 +52,9 @@ def main():
     if profile["task"] == "CloseFridge":
         raise ValueError("The fixed OOD task cannot be selected for calibration or training")
     read_ref(profile["actual_gpu_probe"])
+    if os.environ.get("LYCO_BAIGE_GPU_MAP"):
+        from fluffy_bassoon.baige_gpu import verify_selected_cuda
+        verify_selected_cuda(torch)
     qualified = read_ref(profile["loading_qualification"])
     if (not qualified["completed"] or not qualified["converted_norm_identical"]
             or len(qualified["actual_loader"]) != 1 or qualified["has_value_head"]

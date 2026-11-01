@@ -94,11 +94,21 @@ def main():
         if arm == "F":
             # Validate the newly added engine-reuse core on allocated Linux,
             # without loading another model or rerunning earlier suites.
-            subprocess.run([profile["policy_python"], "-B", "-m", "pytest", "-q",
-                str(source / "tests/test_flora_terminal_worker.py"),
-                "--junitxml=" + str(exchange / "persistent-worker-core.xml")],
-                env={**os.environ, **profile["policy_env"]}, check=True,
-                timeout=min(120, max(1, deadline - time.time())))
+            carried = profile.get("persistent_core_qualification")
+            if carried:
+                import xml.etree.ElementTree as ET
+                if sha(carried["path"]) != carried["sha256"]:
+                    raise ValueError("Carried engine core qualification changed")
+                suite = ET.parse(carried["path"]).getroot().find("testsuite")
+                if suite is None or any(int(suite.attrib[key]) != expected
+                        for key, expected in dict(tests=2, errors=0, failures=0, skipped=0).items()):
+                    raise ValueError("Exactly the already-passed two affected core cases required")
+            else:
+                subprocess.run([profile["policy_python"], "-B", "-m", "pytest", "-q",
+                    str(source / "tests/test_flora_terminal_worker.py"),
+                    "--junitxml=" + str(exchange / "persistent-worker-core.xml")],
+                    env={**os.environ, **profile["policy_env"]}, check=True,
+                    timeout=min(120, max(1, deadline - time.time())))
             worker_profile = dict(profile["scorer"], mode="integrated")
             # These arguments belong only to calibration. The F policy profile
             # and training label requests contain no calibration truth path.
