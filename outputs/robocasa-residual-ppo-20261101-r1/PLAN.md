@@ -12,9 +12,21 @@ The binding checkpoints the entire completed pending batch before labels and
 updates. Its frozen input vector is normalized public proprio16, first/mean
 decoded action12 each, and masked mean features from the same native prefix
 pass with fixed RMS scaling. There is no rollout-fitted normalization change.
-New binding CPU tests and native loading remain unqualified until the allocated
-job finishes. Native headroom/zero-residual equivalence/Flora discrimination
-still precede actual learning; no RoboCasa episode or learner update has run.
+The relevant16 RoboCasa core/numerical cases passed on allocated Linux. Native
+OpenDrawer headroom completed3/8, including first-episode zero-residual chunk
+replay. The task is frozen before Flora task scores. The new persistent official
+Flora worker and same-allocation pipeline are written; its two new reuse/cleanup
+core cases run once at allocated F startup. Calibration of exactly the frozen8
+precedes either SGD arm and the same loaded engine labels later F batches.
+There is no separate scoring job per batch. The S arm uses one GPU, the F arm
+one policy GPU plus one scorer GPU in separate Python processes/environments.
+Both have finite465-minute resource profiles; max10iterations is a ceiling and
+actual complete-iteration capacity may censor earlier. Final checkpoints and
+fixed disjoint ID/OOD evaluation are required. No scientific PPO optimizer
+update has occurred.
+
+The remainder below records the original supplied plan; owner-wait and
+unlaunched statements are historical.
 
 2026-11-01. Code changes 1, 2 and 4 are on `main` (merge `1b60857` of
 `c8f8a7a`: `src/fluffy_bassoon/rl/action_residual.py`,
