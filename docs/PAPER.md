@@ -102,11 +102,19 @@ is semantically unseen.
   config `pi05_libero`, native horizon ten. Already staged checkpoint receipt
   `ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170`;
   qualification on the actual allocation remains required. Execute up to ten
-  actions, stopping on simulator success/time limit; count actual primitives.
-  No new VLA SFT is required for this design.
-- Sparse chunk feedback: zero on achieved goal, otherwise −1; physical
-  episode ends on success or time limit. Source critic timeout bootstrapping
-  and student episode-boundary feedback are distinct.
+  actions per chunk; count actual primitives. No new VLA SFT is required for
+  this design.
+- **Oracle-free feedback.** The learner's only reward is one Flora-Rewarder
+  terminal label per episode, \((\text{expected score}-1)/4\), applied
+  identically to source learning, meta-training and target deployment (see
+  [the oracle-free reward decision](#oracle-free-reward)). Episodes run to a
+  fixed horizon; simulator success never terminates an episode or reaches the
+  learner. Within an episode \(r_i=0\); the terminal label arrives at the
+  episode boundary. Source critic timeout bootstrapping and student
+  episode-boundary feedback are distinct.
+- Earlier runs used simulator chunk feedback (zero on achieved goal, otherwise
+  −1, with success termination). Their histories and controllers are
+  historical evidence only, not this contract.
 - Meta-training updates \(\psi\); deployment freezes \(\bar\theta\),
   \(\phi\), normalization and \(\psi\). Only history/state changes.
 - See [history contract](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/frozen-vla-history.md),
@@ -368,6 +376,27 @@ is semantically unseen.
   DPT-style final-query labels. Historical executed actions and feedback stay
   actual. Source improvement and final-actor expertise require independent
   evaluation; update counts alone prove neither.
+- <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
+  claim is sample-efficient RL on real robots, which have no success checker.
+  A learner that reads simulator success anywhere cannot demonstrate that, so
+  Flora-Rewarder is the sole reward the learner sees: source histories, AD/DPT
+  inputs, direct meta-RL returns and target support feedback. Keep one rewarder
+  contract fixed across all of them: model revision, score mapping, camera
+  view, frame clock and terminal-only timing. A source/deployment mismatch
+  would teach one reward distribution and test on another.
+  - The simulator only measures ground truth: evaluation success, detecting
+    reward exploitation (Flora score rising while success stays flat), and a
+    per-task Flora agreement check (AUROC against truth) before a task enters
+    source or target sets. Agreement results are not learner inputs.
+  - A simulator-reward arm remains the positive control and upper bound, not
+    the method; it separates method failure from reward failure.
+  - Teacher selection or labels that use simulator success are privileged
+    oracle supervision and must be declared as such.
+  - Robot interactions (episodes, actions) are the primary efficiency measure;
+    Flora GPU cost is reported separately as compute.
+  - Limits: LIBERO renders are not real cameras (RoboCasa is the closer
+    appearance test), and simulator resets remain free. Until a real-robot run
+    the claim is a simulated proxy for oracle-free deployment.
 - Fixed-teacher CND, direct RL²/PPO and supervised warm-start plus RL remain
   separate candidate conditions, with their own source cost and contracts.
 - Primary one-shot: **one complete support episode → a separate query
