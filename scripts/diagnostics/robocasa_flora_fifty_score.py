@@ -21,13 +21,22 @@ from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS, protocol
 from robocasa_residual_score import score
 
 
+def require_time(profile):
+    if time.time() >= profile['deadline_unix']-profile['closure_seconds']:
+        raise TimeoutError('Finite calibration deadline; no partial per-task quality result')
+
+
 def wait_for(paths, profile, progress):
-    while not all(path.exists() for path in paths):
+    last_emit = 0.
+    while True:
+        require_time(profile)
         if any((Path(profile['exchange'])/'errors'/f'rank-{r:02d}.json').exists() for r in range(8)):
             raise RuntimeError('A peer scorer failed; preserve partial outputs without retry')
-        if time.time() >= profile['deadline_unix']-profile['closure_seconds']:
-            raise TimeoutError('Finite calibration deadline; no partial per-task quality result')
-        progress.emit(phase='waiting_for_frozen_native_bank_or_complete_labels')
+        if all(path.exists() for path in paths):
+            return
+        if time.monotonic()-last_emit >= 25:
+            progress.emit(phase='waiting_for_frozen_native_bank_or_complete_labels')
+            last_emit = time.monotonic()
         time.sleep(1)
 
 
@@ -65,6 +74,7 @@ def main():
     for key in keys:os.environ.pop(key,None)
     progress = ProgressLog(output/'progress','F',contract_sha256=digest(p)).start()
     try:
+        require_time(p)
         progress.emit(phase='baseline_only_official_engine_loading', measurement_only=True)
         cold = time.monotonic()
         worker = TerminalWorker(p['model'],batch_size=8,gpu_memory_utilization=.78)
@@ -102,6 +112,7 @@ def main():
             target = output/(task+'.jsonl')
             progress.emit(phase='baseline_only_official_terminal_inference',task=task,
                           episodes_complete=len(subset))
+            require_time(p)
             began = time.monotonic()
             rows, _, receipt = score(worker,subset,target,p['model_receipt'],proto)
             array = target.with_suffix('.json')
