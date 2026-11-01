@@ -43,6 +43,18 @@ def episode_partitions(episodes, world=8):
     return result
 
 
+def native_chunk_offsets(cases, horizon=None):
+    """Bind every complete episode to its registered native horizon."""
+    from .rlinf_robocasa_ppo import TASKS
+    offsets = [0]
+    for case in cases:
+        native = TASKS[case['task']][0]
+        if horizon is not None and native != horizon:
+            raise ValueError('A uniform bank cannot shorten another native task')
+        offsets.append(offsets[-1] + native // 50)
+    return offsets
+
+
 class ParallelActionJournal:
     """Read the actual per-worker escrows, including unresolved intents."""
     def __init__(self, root, world):
@@ -63,7 +75,8 @@ class ParallelActionJournal:
 class ParallelResidualEnvironment:
     """Boundary-compatible case cursor delegating to native complete episodes."""
     def __init__(self, cases, *, horizon, output, monitoring_root, profile, code, report):
-        self.cases, self.horizon = deepcopy(cases), int(horizon)
+        self.cases, self.horizon = deepcopy(cases), None if horizon is None else int(horizon)
+        native_chunk_offsets(self.cases, self.horizon)
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)
         self.profile, self.code, self.report = profile, Path(code), report
         self.cursor, self.active, self.batch = 0, False, 0
@@ -89,7 +102,8 @@ class ParallelResidualEnvironment:
         partitions = episode_partitions(episodes, world)
         bank = self.output / f"parallel-{self.cursor:06d}"
         bank.mkdir(parents=True, exist_ok=False)  # Never recollect an attempted bank.
-        seeds, noise = draw_schedule(motor, policy, generator, episodes * self.horizon // 50,
+        offsets = native_chunk_offsets(self.cases[self.cursor:self.cursor + episodes], self.horizon)
+        seeds, noise = draw_schedule(motor, policy, generator, offsets[-1],
                                      deterministic=deterministic)
         children, streams, requests = [], [], []
         self.active = True
@@ -97,7 +111,7 @@ class ParallelResidualEnvironment:
         try:
             for rank, device in enumerate(devices):
                 first, stop = partitions[rank]
-                first_chunk, stop_chunk = first * (self.horizon // 50), stop * (self.horizon // 50)
+                first_chunk, stop_chunk = offsets[first], offsets[stop]
                 directory = bank / f"rank-{rank:02d}"
                 directory.mkdir()
                 request = dict(profile=self.profile, config=asdict(policy.config),

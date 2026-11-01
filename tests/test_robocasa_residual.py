@@ -194,6 +194,27 @@ def test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks(tmp
             output=tmp_path/'wrong',monitoring_root=tmp_path/'bad-monitor',journal=Journal(),writer_factory=Writer)
 
 
+def test_mixed_task_native_horizons_recover_only_at_full_episode_boundary(tmp_path):
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+    cases=[dict(task='CoffeeSetupMug',native_seed=1),dict(task='OpenDrawer',native_seed=2)]
+    factory=lambda case:Native(horizon=TASKS[case['task']][0])
+    env=RoboCasaResidualEnvironment(factory,cases,horizon=None,output=tmp_path/'first',
+        monitoring_root=tmp_path/'monitor',journal=Journal(),writer_factory=Writer)
+    env.reset()
+    for _ in range(12):_,done,episode=env.step_chunk(np.zeros((50,12),np.float32))
+    assert done and episode['horizon']==600 and episode['frame_clock']['frame_count']==601
+    state=env.state_dict();assert state['horizon'] is None and state['cursor']==1
+    env.close()
+    recovered=RoboCasaResidualEnvironment(factory,cases,horizon=None,output=tmp_path/'recovered',
+        monitoring_root=tmp_path/'monitor',journal=Journal(),writer_factory=Writer)
+    recovered.load_state_dict(state);recovered.reset()
+    with pytest.raises(ValueError,match='boundaries'):recovered.state_dict()
+    for _ in range(15):_,done,episode=recovered.step_chunk(np.zeros((50,12),np.float32))
+    assert done and episode['horizon']==750 and episode['frame_clock']['frame_count']==751
+    assert recovered.state_dict()['cursor']==2
+    recovered.close()
+
+
 class TinyEnvironment:
     def __init__(self):
         self.cursor = 0

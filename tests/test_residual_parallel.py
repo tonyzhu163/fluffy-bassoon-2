@@ -9,7 +9,7 @@ import torch
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records, update
 from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending, install_terminal_labels
 from fluffy_bassoon.meta_rl.robocasa_residual_parallel import (
-    ParallelResidualEnvironment, draw_schedule, episode_partitions,
+    ParallelResidualEnvironment, draw_schedule, episode_partitions, native_chunk_offsets,
 )
 from fluffy_bassoon.rl.action_residual import ResidualBound
 
@@ -24,13 +24,15 @@ class Motor:
 
 
 class Environment:
-    def __init__(self, first=0, chunks=2):
+    def __init__(self, first=0, chunks=2, lengths=None):
         self.cursor = first
         self.chunks = chunks
+        self.lengths = lengths
 
     def reset(self):
         self.steps = 0
         self.cursor += 1
+        if self.lengths is not None:self.chunks=self.lengths[self.cursor-1]
         return None
 
     def step_chunk(self, chunk):
@@ -181,3 +183,37 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
         profile=profile,code=tmp_path,report=lambda *a,**k:None)
     restored.load_state_dict(state)
     assert restored.state_dict()==state
+
+
+def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS
+    cases=[dict(task=task) for _ in range(16) for task in PPO_TASKS]
+    offsets=native_chunk_offsets(cases)
+    lengths=[b-a for a,b in zip(offsets,offsets[1:])]
+    assert offsets[-1]==1152
+    assert [offsets[b]-offsets[a] for a,b in episode_partitions(80)]==[144]*8
+    policy,optimizer=learner();bound=ResidualBound(12,tuple(range(6)),(.25,)*6)
+    motor,generator=Motor(),torch.Generator().manual_seed(42)
+    serial,episodes=collect_pending(policy,bound,motor,Environment(lengths=lengths),episodes=80,generator=generator)
+    scheduled,scheduled_generator=Motor(),torch.Generator().manual_seed(42)
+    seeds,noise=draw_schedule(scheduled,policy,scheduled_generator,offsets[-1],deterministic=False)
+    actual,completed=[],[]
+    for first,stop in episode_partitions(80):
+        rows,finished=collect_pending(policy,bound,Motor(),Environment(first,lengths=lengths),episodes=stop-first,
+            generator=None,planned_motor_seeds=seeds[offsets[first]:offsets[stop]],
+            planned_action_noise=noise[offsets[first]:offsets[stop]])
+        actual.extend(rows);completed.extend(finished)
+    assert completed==episodes and len(serial)==len(actual)==1152
+    for left,right in zip(serial,actual):
+        for key in left:
+            if isinstance(left[key],np.ndarray):np.testing.assert_array_equal(left[key],right[key])
+            else:assert left[key]==right[key]
+    assert motor.seed_rng.integers(2**63-1)==scheduled.seed_rng.integers(2**63-1)
+    torch.testing.assert_close(generator.get_state(),scheduled_generator.get_state(),rtol=0,atol=0)
+    second,opt2=learner();labels={e['id']:i%2 for i,e in enumerate(episodes)}
+    for model,opt,rows in ((policy,optimizer,serial),(second,opt2,actual)):
+        update(model,opt,stack_records(install_terminal_labels(rows,episodes,labels,arm='S')),
+            generator=torch.Generator().manual_seed(43))
+    for key,value in policy.state_dict().items():torch.testing.assert_close(value,second.state_dict()[key],rtol=0,atol=0)
+    for left,right in zip(optimizer.state_dict()['state'].values(),opt2.state_dict()['state'].values()):
+        for key in left:torch.testing.assert_close(left[key],right[key],rtol=0,atol=0)

@@ -93,10 +93,12 @@ class RoboCasaResidualEnvironment:
     def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
                  episode_id_prefix="", rank=0):
         from .rlinf_robocasa_ppo import TASKS
-        if (horizon not in {row[0] for row in TASKS.values()} or horizon % 50 or not cases
-                or any(case['task'] not in TASKS or TASKS[case['task']][0]!=horizon for case in cases)):
+        if (not cases or any(case['task'] not in TASKS for case in cases)
+                or horizon is not None and (horizon not in {row[0] for row in TASKS.values()}
+                    or horizon % 50 or any(TASKS[case['task']][0]!=horizon for case in cases))):
             raise ValueError("Bind native full episode horizon and a finite case bank")
         self.factory, self.cases, self.horizon = factory, deepcopy(cases), horizon
+        self.bound_horizon = horizon  # None means each case's exact registered native horizon.
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)
         self.output.mkdir(parents=True, exist_ok=True)
         self.monitoring_root.mkdir(parents=True, exist_ok=True)
@@ -113,6 +115,8 @@ class RoboCasaResidualEnvironment:
             native, self.native = self.native, None
             native.close()
         case = self.cases[self.cursor]
+        from .rlinf_robocasa_ppo import TASKS
+        self.horizon = TASKS[case['task']][0]
         self.key = f"{self.episode_id_prefix}episode-{self.cursor:06d}"
         self.case = case
         intent = self.journal.begin(128, phase="native_constructor_reset")
@@ -187,10 +191,10 @@ class RoboCasaResidualEnvironment:
     def state_dict(self):
         if self.active:
             raise ValueError("Only complete episode boundaries are resumable")
-        return dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.horizon)
+        return dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.bound_horizon)
 
     def load_state_dict(self, state):
-        if self.active or state["cases"] != self.cases or state["horizon"] != self.horizon:
+        if self.active or state["cases"] != self.cases or state["horizon"] != self.bound_horizon:
             raise ValueError("Cannot change native case layout at recovery")
         self.cursor = state["cursor"]
 
