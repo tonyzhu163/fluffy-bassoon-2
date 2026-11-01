@@ -119,9 +119,13 @@ are retained. Saved-record CPU diagnosis isolates two one-LSB wrist-channel
 differences with byte-identical main image, proprioception and simulator
 state. Failed derived features/instruction remain unavailable. The existing
 source40 camera-precision contract supports a narrow successor for the158
-unstarted roles; failed161 stays an unreplayed null-score abort. Exact
-code/qualification/storage admission remains pending. No teacher-failure
-claim or source/student admission follows. The
+unstarted roles; failed161 stays an unreplayed null-score abort. The exact9d29 successor passes30 focused CPU cases and the actual tiny
+progress migration, preserving161closedrefs and all non-disposition state.
+Conservative storage accounting is bound; the admitted R2 completes six
+new scheduled roles, for167valid episodes and one separate abort. Its first
+new mean-actor role succeeds96+10steps, with0SGD; oldinputbytes remain fixed.
+The full comparison/finalmotor are pending. No teacher-failure claim or
+source/student admission follows. The
 old25h collection/fit expansion remains unfunded. A separate current-bank
 100→500 four-model controlled-fit preparation preserves the exact TRAIN
 data, numerical recipe and recoverable100 state. Its bounded offline fit

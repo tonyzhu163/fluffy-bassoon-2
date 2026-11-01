@@ -1,0 +1,135 @@
+{
+  "format": "libero40_existing_train_teacher_assessment_v1",
+  "run_id": "libero40-teacher-assessment-20261101-r1",
+  "admitted": true,
+  "source_commit": "9d29a805cae2c129ffc088af4eed81b3a38d2769",
+  "hostname": "job-bc2ooyztqsfh-master-0",
+  "job_id": "job-bc2ooyztqsfh",
+  "clock_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock",
+  "clock_contract": {
+    "format": "libero40_existing_train_teacher_assessment_v1",
+    "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+    "run_id": "libero40-teacher-assessment-20261101-r1",
+    "maximum_worker_seconds": 10800,
+    "grant_sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436",
+    "authority_sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c",
+    "protocol_sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2",
+    "asset_binding_sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0",
+    "actor_table_sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894",
+    "inventory_sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6",
+    "roles": [
+      "raw_native_full_H_Gaussian",
+      "exact_source_tied_Gaussian_warmup",
+      "preselected_final_TRAIN_SAC_mean",
+      "preselected_final_TRAIN_SAC_sample"
+    ],
+    "omitted_roles": [
+      "original_initialized_SAC_mean_if_retained",
+      "original_initialized_SAC_sample_if_retained"
+    ],
+    "states": [
+      40,
+      41
+    ],
+    "scene_seed": 123,
+    "planned_episodes": 320,
+    "schedule_action_bound": 131200,
+    "original_grant_actions": 196800,
+    "new_output_bytes": 34359738368,
+    "optimizer_updates": 0,
+    "source_pretraining_admitted": false
+  },
+  "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793507779000000-0001",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data",
+  "driver_deadline_unix": 1793517019,
+  "gpu_uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+  "gpu_probe": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/admission/gpu-probe.json",
+    "sha256": "ae19773f4587c52279d00d33dc00619e82e083dba969b702a49876dd8b9226ec"
+  },
+  "allocation": {
+    "GPU": 1,
+    "CPU": 16,
+    "memory_GiB": 96,
+    "shared_memory_GiB": 8,
+    "automatic_retry": false,
+    "exclusive": true
+  },
+  "refs": {
+    "grant": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/GRANT.json",
+      "sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436"
+    },
+    "authority": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/AUTHORITY.json",
+      "sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c"
+    },
+    "protocol": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/PROTOCOL.json",
+      "sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2"
+    },
+    "asset_binding": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/ASSET-BINDING.json",
+      "sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0"
+    },
+    "actor_table": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/ACTOR-TABLE.json",
+      "sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894"
+    },
+    "inventory": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/METADATA-INVENTORY.json",
+      "sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6"
+    }
+  },
+  "runtime_files": {
+    "vla_source40_teacher_assessment.py": "c11802b266748ff33aace866c63cd53b32a448eeb479ebec9bae0fcc3e095c74",
+    "vla_source40_evaluate.py": "84a935139b477dd97012f37881e313fa5386d1f194ea084fbce88d1766db735d",
+    "vla_libero.py": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711",
+    "vla_source40_sac_diagnostic.py": "8c177939e09f1584438ed79e7047c11072f77f52fbe08910f4b3f482bb8b199b",
+    "vla_source40_subset_evaluate.py": "3bdddc15a8542bb322ff7765a275551afa1d05f75205c4d4c1470b1b886ef7cf",
+    "vla_source40_memory_replication.py": "9a6f798ec54cd7ffafb0a541d9d370fb878fe30fed634a55f09bc8ee29984be6",
+    "vla_source40_corpus.py": "20cac2637eb0fb6265abd3d264b3d0585c43e358d84a057bd98108de4fa5e9fd",
+    "vla_source40_multitask_ppo.py": "ea547a1f9c28683d0686dac1c819892af9cdc61b0f96da68c2a1122fc532a1ab",
+    "vla_source40_schedule.py": "32bb03b2851c1daebb8193527b104d0726bfe0e46f34b56c39fe1bbe2ef73ffc",
+    "vla_history.py": "393ff30d50baa9900a44ee0a31033ea3d434497de10f7c9506bd8a9a190554aa",
+    "vla_features.py": "b80d2e7101f84e7a184d40b66da4605319d72aefdc26162156da5729a91c8c22",
+    "vla_motor_replay.py": "89ae5ea290490ad7b73bc080e659fc32a2fd41c7dc8fda10917c0aa2cd7dfc94",
+    "vla_source40_ppo_worker.py": "16fda0b8ae5fa95826ef3f20ba423333564c4474d1050da498cc7e3d0cba26e1",
+    "vla_reset_identity.py": "0264b11193aacc6c3fcc840008a6e4787ac22e621e0d53c168573b8b67227205",
+    "vla_source40_teacher_repair.py": "f92d0af78d5a72213c0458e62240091146df0a9f4f923ea90e229bdb3dd72747"
+  },
+  "actual_resources": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/admission/actual-resources.json",
+    "sha256": "84409420c96e09cf84bdc6befe4def150fe99448434836a72c3bab291441c634"
+  },
+  "CPU_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-repair-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "0b1feaaf11aa66d95a1f1433478b42b4eecea11ac72db91e38c4f678e32e8181"
+  },
+  "storage": {
+    "free_bytes": 1024806879232,
+    "minimum_free_with_reserves": 740518168576,
+    "output_cap_bytes": 34359738368
+  },
+  "reviewed_latest_main": "a7107b5a9d9ba23803669b2367ec56f01da32516",
+  "carried_qualification_no_extra_episode": true,
+  "repair_profile": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-repair-code-20261101-r1/PROFILE.json",
+    "sha256": "222e98b6dd8762944d504b9af033cbda52b7b1d1e3625b8c0b12fda3ceb508a0"
+  },
+  "repair_decision": {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-repair-20261101-r1/outputs/libero40-teacher-assessment-20261101-r1/REPAIR-DECISION-R2.json",
+    "sha256": "73c28c6f0a47a7fff01de3554e5359628d45f544340d0153eb335ed293f3ae1e"
+  },
+  "repair_CPU_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-repair-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "0b1feaaf11aa66d95a1f1433478b42b4eecea11ac72db91e38c4f678e32e8181"
+  },
+  "prior_storage_proof": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/admission/PRIOR-STORAGE-PROOF.json",
+    "sha256": "27c933991329afb98f69b7914e17d81a2e0b77d5f934c46a1a4781a1c8310dc4"
+  },
+  "original_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "remaining_unstarted_roles": 158,
+  "aborted161_never_replayed": true
+}

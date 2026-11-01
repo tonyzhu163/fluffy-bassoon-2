@@ -1,0 +1,141 @@
+{
+  "status": "ACTUAL_R2_GPU_ADMISSION_MIGRATION_AND_SIX_NEW_ROLES_REVIEWED",
+  "owner_commit": "c507c9913d35928242bd8f9dfe8a6103893a83fb",
+  "job": "job-bc2ooyztqsfh",
+  "execution_source": "9d29a805cae2c129ffc088af4eed81b3a38d2769",
+  "legacy_clock_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "scheduler_created": "2026-11-01 12:36:04 Asia/Shanghai",
+  "cursor": 168,
+  "valid_completed": 167,
+  "old_prefix_valid": 161,
+  "new_valid": 6,
+  "separately_aborted": 1,
+  "all_in_actions": 26722,
+  "new_actions": 626,
+  "uncertain": 0,
+  "first_new_role": {
+    "ordinal": 162,
+    "task_key": "libero_spatial:05",
+    "state": 40,
+    "episode_seed": 20281141,
+    "success": true,
+    "primitive_steps": 96,
+    "settling_steps": 10,
+    "source_updates": 6300,
+    "source_replay_rows": 809,
+    "new_optimizer_updates": 0,
+    "reset_identity": "source40_exact_physics_camera_lsb_v1"
+  },
+  "CPU_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-repair-cpu-20261101-r1/cpu-r1/summary.json",
+    "sha256": "0b1feaaf11aa66d95a1f1433478b42b4eecea11ac72db91e38c4f678e32e8181"
+  },
+  "actual_gpu_resources": {
+    "hostname": "job-bc2ooyztqsfh-master-0",
+    "CPU": 16.0,
+    "memory_bytes": 103079215104,
+    "shared_memory_bytes": 8589934592,
+    "raw_cgroup": {
+      "/proc/self/cgroup": "0::/",
+      "/sys/fs/cgroup/cpu.max": "1600000 100000",
+      "/sys/fs/cgroup/memory.max": "103079215104",
+      "/sys/fs/cgroup/cpuset.cpus.effective": "0-179"
+    },
+    "scheduler_visibility": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "NVIDIA_VISIBLE_DEVICES": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"
+    },
+    "no_added_GPU_namespace": true
+  },
+  "migration": {
+    "format": "source40_teacher_assessment_reset_guard_repair_v1",
+    "original_progress": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+      "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+      "bytes": 62745
+    },
+    "original_contract": "e8ddb9e2e9c4ccf584333c5455596fc31cc74d5d554a926859d44b7dafa06795",
+    "numerical_digest": "a8146ee9c853c6dda7b40a785c9d549eeaf183889f660803637fa720405d3162",
+    "original_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+    "closed_prefix_preserved": 161,
+    "failed_ordinal_never_replayed": 161,
+    "failed_reset_proof": {
+      "failed_reset": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+        "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+      },
+      "raw": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+        "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+      },
+      "physical_actions": 10,
+      "steering_chunks": 0
+    },
+    "new_recovery_sha256": "ee752ce57e9cc59f47ac119d77b1f67b1deb0adc47f7e01c4f4c78fbefdd5c07",
+    "metadata_changes": [
+      "contract",
+      "cursor161_to162",
+      "active161_toNone",
+      "costs_add_returned_reset10",
+      "aborted",
+      "migration"
+    ]
+  },
+  "aborted161": {
+    "ordinal": 161,
+    "spec": {
+      "source_ordinal": 20,
+      "task_key": "libero_spatial:05",
+      "state": 40,
+      "scene_seed": 123,
+      "role": "exact_source_tied_Gaussian_warmup",
+      "seed": 20281141,
+      "status": "PLANNED"
+    },
+    "status": "ABORTED_RESET_GUARD",
+    "completed": false,
+    "success": null,
+    "performance_score": null,
+    "primitive_steps": 0,
+    "settling_steps": 10,
+    "all_in_actions": 10,
+    "original_progress": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+      "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+      "bytes": 62745
+    },
+    "failed_raw": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+      "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+    },
+    "failed_journal": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+      "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+    }
+  },
+  "costs": {
+    "old_settled": 1340,
+    "active_reserved": 9420,
+    "phase_cap": 10800,
+    "unrequested": 40,
+    "active_elapsed_NOT_final_charge": true
+  },
+  "storage_prior_upper_with_growth": 1404329249,
+  "child_residual": 32955409119,
+  "reader": {
+    "git_commit": "eabaa597",
+    "git_blob": "627bfc8cbb53ec3cde1b1acdc6ab0be5707dc180",
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/R2-FIRST-PROGRESS-READER.py",
+    "sha256": "a8e630f55864e7293ce97a34eb877346283eb0b0621bea658d1e80899e5b78e1",
+    "bytes": 2684
+  },
+  "current_rolling_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/assessment-recovery.pkl",
+    "sha256": "1c82c9409abcde8218388b2f47879713e3de29282dfbe3c66053bbd181892f09",
+    "bytes": 65539
+  },
+  "next_primary": "2026-11-01 12:50 Asia/Shanghai",
+  "next_assessment": "2026-11-01 12:59 Asia/Shanghai",
+  "limits": "Root reviewed copied scalarJSON/text and local byte hashes only. No rawpickle/PT/NPZ/array/model read, new remotequery, oldforest or fulljournalproof. GPU/CPU rawpickle digests are within-process comparisons, not cross-runtime signatures. Actual first-trace/RNG/twoaudit payloads were rehashed by owner; their values were not decoded on dev. Finalmotor-after remains pending active. No source/student admission.",
+  "warning_retained": "OpenPI environment Torch warns sm_120 support; preservedconsole. The qualifiedJAXmotor completed actualsteering. ProbePython ownCUDAkernel passed."
+}

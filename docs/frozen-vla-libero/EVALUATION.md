@@ -141,9 +141,22 @@ and proprioception. A narrow opt-in successor is being prepared under that
 contract: preserve failed161 as a null-score aborted reset, never replay it,
 and continue only158 unstarted roles. Its final closure would contain319
 scored episodes plus one abort; no all320-valid claim or source/student
-admission follows. Original files/clock/costs remain intact. Exact code,
-focused allocated qualification and conservative storage/resource admission
-are still required; no GPU retry is admitted. [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
+admission follows. Original files/clock/costs remain intact. The exact latest-main repair
+composite9d29 passes30 focused allocated CPU cases and the actual62,745-byte
+progress migration dryrun in77/120 worker-seconds. All161 closed refs and
+every non-disposition state digest remain unchanged; old CPU balances stay
+sealed. A targeted metadata proof bounds prior output at1,404,329,249 bytes
+including clock-growth allowance; new output shares the original32GiB cap.
+The admitted R2 allocation then completes six new scheduled roles, bringing
+the cursor to168:167 valid episodes plus the separately aborted reset. The
+first new actor-mean role succeeds in96 primitives plus10 settling actions;
+combined actions are26,722, including626 new. Actual GPU/probe/resource and
+frozen-source guards pass, with0 new SGD. Original c96 input bytes remain
+unchanged. Numerical migration hashes prove within-process preservation,
+not cross-runtime pickle-byte equality. The same clock retains1,340 settled
+seconds and9,420 active reserved seconds under10,800; final motor-after and
+all40 outcomes remain pending. No teacher/source/student admission follows.
+[R2 advancement](../../outputs/libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json). [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
 
 A separate controlled-depth study is adopted for preparation on the current
 583-K4/33,729-TRAIN-row bank: four fixed seed0 full/static AD/DPT models
