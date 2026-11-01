@@ -1,0 +1,29 @@
+{
+  "completed": true,
+  "qualification_scope": "Actual allocated CPU camera15/15 plus only2 genuinely changed three-view shard cases2/2; earlier3new one-view shard/memory cases preserved. No old suite repetition. Actual3view GPU recording and inference remain to qualify on first planned cases.",
+  "native_camera_qualification": {
+    "completed": true,
+    "exit_code": 0,
+    "commit": "bd1bce601127626e92da0f748b9b57687ccf0e28",
+    "seconds": 23.815755128860474,
+    "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+    "tests": [
+      "tests/test_robocasa_video.py",
+      "tests/test_robocasa_residual.py",
+      "tests/test_robocasa_residual_rewards.py",
+      "tests/test_flora_terminal_worker.py"
+    ],
+    "execution": "CPU-only in existing allocated Baige aibox, CUDA masked; no native simulator/model inference",
+    "new_simulator_actions": 0,
+    "new_model_inference": 0
+  },
+  "three_view_shards": {
+    "path": "outputs/robocasa-flora-colocated-port-20261102-r1/qualification-three-view/READY.json",
+    "sha256": "2949d046c7df196379a8cafe66e68b3c42ecfa69908fe23cc4332c2659ed1e6a"
+  },
+  "native_files": {
+    "src/fluffy_bassoon/meta_rl/robocasa_residual.py": "5baf7fc98f3881ef11bb81656cd3b44cfa74b3a35889888de8f35cc07a872e75",
+    "src/fluffy_bassoon/meta_rl/robocasa_video.py": "1f7366a89afd73456199763e4506c430c3fa179012d6f13786c1d2832761a4cd",
+    "src/fluffy_bassoon/meta_rl/rlinf_robocasa_ppo.py": "9089812da82cdb8f82dec6c0e4a0165d7cd7cc443918aa77804bf67028b45142"
+  }
+}
