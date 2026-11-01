@@ -267,7 +267,11 @@ def main(argv=None, *, continuation=None):
     ap.add_argument("--max-total-actions", type=int)
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--compact-history-evidence", action="store_true",
+                    help="Opt-in original compact actor/RNG history metadata; fresh or exact same-contract resume only")
     args = ap.parse_args(argv)
+    if args.compact_history_evidence and continuation is not None:
+        raise ValueError("Compact history evidence cannot retrofit a legacy source migration")
     schedule = load_schedule(args.schedule)
     tasks = [row for row in schedule["tasks"] if row["task_key"] == args.task_key]
     if len(tasks) != 1:
@@ -348,6 +352,10 @@ def main(argv=None, *, continuation=None):
             contract.update(maximum_total_actions=total_action_budget, requested_case_count=None,
                 available_seeded_case_count=len(cases),
                 case_bank_role="Candidate seeds, actual complete cases are determined by the physical-action ceiling")
+        evidence = None
+        if args.compact_history_evidence:
+            from .vla_source40_compact_evidence import CompactHistoryEvidence, PROTOCOL
+            contract['compact_history_evidence'] = dict(PROTOCOL)
         if continuation is not None:
             # Explicit migration is owned by the source-only top-up entry point.
             # The ordinary collector's immutable CLI/resume contract is unchanged.
@@ -368,6 +376,10 @@ def main(argv=None, *, continuation=None):
             motor.policy._rng = restore_motor_rng(progress.pop("motor_rng"))
             if continuation is not None:
                 continuation.verify_motor_restore(motor)
+        if args.compact_history_evidence:
+            evidence = CompactHistoryEvidence(args.output, contract)
+            if args.resume:
+                evidence.resume(progress['episode_receipts'], learner, sampler, motor)
         physical_cost = physical_costs(journal)["primitive_step_budget_charge"]
         settling_cost = sum(json.loads(path.read_text())["settling_steps"] for path in journal.glob("reset-*.json"))
         inflight, reset_receipt = None, None
@@ -389,6 +401,8 @@ def main(argv=None, *, continuation=None):
                 settling_steps=int(sim.metadata["settle_steps"])))
             if continuation is not None:
                 continuation.require_physical_state(result)
+            if evidence is not None:
+                evidence.reset(reset_receipt, result)
         def before_step(actions):
             nonlocal physical_cost, inflight
             if physical_cost + len(actions) > args.max_primitive_steps:
@@ -425,7 +439,7 @@ def main(argv=None, *, continuation=None):
                 replay_rows=len(learner.replay), latest_recovery_sha256=sha256(recovery)))
             costs = physical_costs(journal)
             resets = [json.loads(p.read_text()) for p in journal.glob("reset-*.json")]
-            write_json(args.output / "index.json", dict(progress,
+            index = dict(progress,
                 format="openpi_pi05_libero40_source_history_index_v1", completed=False,
                 source_only=True, task_key=args.task_key, partition=args.partition,
                 collection_mode=contract["collection_mode"],
@@ -443,7 +457,10 @@ def main(argv=None, *, continuation=None):
                 settling_step_budget_charge=settling_cost,
                 uncertain_settling_steps_ceiling=sum(p["settling_steps"] for p in resets if not p["returned"]),
                 source_updates=learner.updates,
-                latest_recovery_sha256=sha256(recovery), collection_cost_count_once=True))
+                latest_recovery_sha256=sha256(recovery), collection_cost_count_once=True)
+            if evidence is not None:
+                index['compact_history_evidence'] = evidence.publish(progress['episode_receipts'])
+            write_json(args.output / "index.json", index)
         if not args.resume or continuation is not None:
             save_boundary()
         wrapped = OnlineSourceSimulator(sim, learner, sampler, sac_observation,
@@ -459,7 +476,12 @@ def main(argv=None, *, continuation=None):
             case = cases[progress["case_index"]]
             stage = f"case_{progress['case_index']}"
             while progress["episode_in_case"] < case["episodes"]:
-                rows, summary = run_episode(wrapped, motor, wrapped.choose,
+                choose = wrapped.choose
+                if evidence is not None:
+                    evidence.begin(learner, sampler, motor, case=case,
+                        episode_in_case=progress['episode_in_case'], ordinal=len(progress['episode_receipts']))
+                    choose = evidence.choose(wrapped)
+                rows, summary = run_episode(wrapped, motor, choose,
                     initial_state=case["initial_state"], scene_seed=case["scene_seed"],
                     chunk=10, bounded=False, record_features=True)
                 if (not rows or not rows[-1]["done"] or len(rows) != len(wrapped.provenance)
@@ -467,7 +489,10 @@ def main(argv=None, *, continuation=None):
                     raise RuntimeError("Require complete real episodes and every shared prefix feature")
                 if continuation is not None:
                     continuation.validate_episode(summary, wrapped.provenance)
+                if evidence is not None:
+                    evidence.before_sgd(learner, sampler, motor, rows, summary)
                 update_metrics = wrapped.finish_episode()
+                compact_payload = evidence.after_sgd(learner, sampler, motor, update_metrics) if evidence is not None else {}
                 for row, provenance in zip(rows, wrapped.provenance):
                     row.update(provenance, case_id=case["case_id"], source_partition=args.partition,
                                source_episode_in_case=progress["episode_in_case"],
@@ -483,16 +508,23 @@ def main(argv=None, *, continuation=None):
                     raise RuntimeError("Exceeded the declared complete-case interaction ceiling")
                 ordinal = len(progress["episode_receipts"])
                 trace = args.output / "raw" / f"episode-{ordinal:06d}.pkl.gz"
+                if evidence is not None:
+                    trace = evidence.trace_path(ordinal)
                 if trace.exists():
                     trace.rename(trace.with_name(trace.name + f"-uncommitted-{time.time_ns()}"))
+                episode_payload = dict(rows=rows, summary=summary, case=case,
+                    source_contract_sha256=content_hash(contract))
+                episode_payload.update(compact_payload)
                 with gzip.open(trace, "wb", compresslevel=1) as stream:
-                    pickle.dump(dict(rows=rows, summary=summary, case=case,
-                        source_contract_sha256=content_hash(contract)), stream, protocol=5)
-                progress["episode_receipts"].append(dict(summary, case_id=case["case_id"],
+                    pickle.dump(episode_payload, stream, protocol=5)
+                receipt = dict(summary, case_id=case["case_id"],
                     episode_in_case=progress["episode_in_case"], trace=str(trace.relative_to(args.output)),
                     trace_sha256=sha256(trace), source_updates=learner.updates,
                     source_update_metrics=update_metrics,
-                    source_stages=dict(__import__("collections").Counter(row["source_stage"] for row in rows))))
+                    source_stages=dict(__import__("collections").Counter(row["source_stage"] for row in rows)))
+                if evidence is not None:
+                    receipt['compact_episode_ref'] = evidence.commit(trace, receipt, compact_payload)
+                progress['episode_receipts'].append(receipt)
                 progress["episode_in_case"] += 1
                 save_boundary()
                 print(json.dumps(dict(case_id=case["case_id"], episode_in_case=progress["episode_in_case"],
@@ -533,6 +565,8 @@ def main(argv=None, *, continuation=None):
         final["smoke_qualified"] = final["collection_qualified"] if contract["collection_mode"] == "chunk_target" else None
         if continuation is not None:
             final = continuation.finish(final, learner, sampler, motor)
+        if evidence is not None:
+            final['compact_history_evidence'] = evidence.publish(progress['episode_receipts'], completed=True)
         write_json(args.output / "index.json", final)
         return 0 if final["collection_qualified"] else 3
     except Exception as error:
