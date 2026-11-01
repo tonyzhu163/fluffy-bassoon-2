@@ -1,9 +1,13 @@
 # Plan: bounded action-residual PPO on RoboCasa365 (code changes first)
 
-Draft, 2026-11-01. Code changes 1, 2 and 4 written on branch
-`residual-ppo` (`src/fluffy_bassoon/rl/action_residual.py`,
-`src/fluffy_bassoon/meta_rl/residual_ppo.py`, `tests/test_residual_ppo.py`);
-Linux CPU tests pending. Change 3, the RoboCasa365 binding, waits for the
+2026-11-01. Code changes 1, 2 and 4 are on `main` (merge `1b60857` of
+`c8f8a7a`: `src/fluffy_bassoon/rl/action_residual.py`,
+`src/fluffy_bassoon/meta_rl/residual_ppo.py`, `tests/test_residual_ppo.py`).
+Linux CPU tests passed on thu2, Slurm job 49948 (CPU only, no GRES):
+`test_residual_ppo.py`, `test_causal_decoder.py` and `test_vla_history.py`,
+19 passed in each of `envs/lycoreco-de5277f-r1` and
+`envs/rlinf-pi05-maniskill-e1a82eb-r1`. Logs on thu2 under
+`/cluster/nvme5/zhujiayang/fluffy-bassoon-2/outputs/residual-ppo-cpu-tests-20261101-r1/`. Change 3, the RoboCasa365 binding, waits for the
 full-weight owner's qualified RoboCasa runner. No job launched. Implements the
 steering decision in [PAPER.md](../../docs/PAPER.md) (bounded action
 residual) as the matched baseline and history source. The full-weight PPO
