@@ -49,12 +49,16 @@ across attempts.
 
 ## LIBERO
 
-**Flora versus simulator PPO, setup only (2026-11-01).** The published few-shot
-PyTorch LIBERO40 SFT checkpoint loaded through RLinf and completed the planned
-task44 native smoke successfully: one full400-step episode plus15 settling
-actions, with no training updates. This establishes execution, not a success
-rate or PPO improvement. The fresh64 baseline and Flora scoring remain pending.
-[Saved qualification evidence](../outputs/flora-ppo-comparison-20261101-r1/READY40-SMOKE-PARENT-REVIEW.json).
+**Flora versus simulator PPO stopped before training (2026-11-01).** The
+published few-shot PyTorch LIBERO40 SFT checkpoint succeeded on all64 baseline
+episodes on task44, covering40 nominal TRAIN placements with24 second draws.
+Each episode ran400 steps plus15 settling actions, with no training updates.
+This exceeds the predeclared70% native-success limit, so neither PPO arm is
+admitted. AUROC is undefined because the bank has no simulator failures. The
+already-running Flora smoke-video qualification remains separate; no comparative
+learning result exists. Historical C565 headroom does not establish headroom
+for this different initializer.
+[Result and limits](../outputs/flora-ppo-comparison-20261101-r1/RESULT.md).
 
 **Frozen-motor DSRL.**
 

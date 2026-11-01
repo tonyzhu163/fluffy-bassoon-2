@@ -4,16 +4,16 @@
   "owner": "/root",
   "execution_owner": "/root/finish_assembly",
   "projection_only": true,
-  "status": "ready40_native_smoke_complete_no_active_allocations",
-  "snapshot_unix": 1793518735.37569,
-  "gpu_seconds_actual": 564,
-  "gpu_seconds_reserved": 0,
+  "status": "native64_closed_headroom_gate_failed_Flora_fixture_still_running",
+  "snapshot_unix": 1793519617.930869,
+  "gpu_seconds_actual": 1544,
+  "gpu_seconds_reserved": 3600,
   "cpu_worker_seconds_actual": 287,
   "cpu_worker_seconds_reserved": 0,
   "actions": {
     "S": 0,
     "F": 0,
-    "common": 415,
+    "common": 26975,
     "pending": 0,
     "uncertain": 0
   },
@@ -73,6 +73,22 @@
       "status": "Succeeded",
       "gpu_seconds_actual": 154,
       "actions": 415
+    },
+    {
+      "job_id": "job-xcadsqli2spo",
+      "kind": "native_baseline64",
+      "status": "Succeeded",
+      "gpu_seconds_actual": 980,
+      "wall_seconds_inclusive": 245,
+      "gpus": 4,
+      "actions": 26560
+    },
+    {
+      "job_id": "job-8ccnyqvoj5fa",
+      "kind": "Flora_archived_fixture",
+      "status": "Running_at_last_owned_read",
+      "gpu_seconds_reserved": 3600,
+      "actions": 0
     }
   ],
   "note": "Projection of same authoritative clocks/receipts for root-owned canonical ledger; no second resource clock or budget. All failed charges retained once. Unused loading3127 and obsolete conversion3509 are not transferred to Flora/scientific work.",
@@ -82,8 +98,8 @@
     "bytes": 5577
   },
   "projection_evidence": {
-    "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/CANONICAL-LEDGER-PROJECTION-AFTER-SMOKE.json",
-    "sha256": "6f06b3d4aee6057bd6d1f4ec682f53c0ede522c15dc97a192324177d6ed31a94",
-    "commit": "24fd6f838fd485d78abefda29d2e10099fba39bc"
+    "commit": "c9f2e8c677e1cef3add0146129a2483b22f629e2",
+    "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/baseline64-terminal-c9f2e8c6/CANONICAL-LEDGER-PROJECTION-AFTER-BASELINE64.json",
+    "sha256": "586204edeb15b20ccc666b4db7ec8a659b608f64ef038dce734100d265f9faf3"
   }
 }
