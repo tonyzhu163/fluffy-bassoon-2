@@ -285,24 +285,44 @@ a data limitation, not absence of that input. No arrays/models/episodes or
 new allocation were used for this audit.
 [Post-reset audit](../../outputs/frozen-pi05-endtoend-20261031-r1/COMMAND-READOUT-R2-POSTRESET-HOOK-AUDIT.json).
 
-No checkpoint or case is substituted, and this bounded5,000-step diagnostic
-does not reject the full steering class or test meta-learning. The missing
-composed-A1 producer remains a narrow code task. A separate bounded follow-up
-now funds only eight raw/wide-zero controls on canonical successful TRAIN
-records00–03, with the same fixed wide5,000 model selected prospectively
-from its stronger TRAIN fit. This asks whether failure also occurs on
-fitted training scenes; it is not a useful-teacher nomination. Actual
-scene/noise bindings and focused allocated qualification precede launch.
-Fresh caps are1,200 inclusive GPU-seconds/3,200 actions/4GiB and180 CPU-worker
-seconds; original headers,78 old A1 actions and784 closed readout seconds
-are untouched. Additional search/confirmation and source/AD/DPT remain
-unfunded. No policy is retrained or data case removed.
-[Bounded TRAIN probe](../../outputs/frozen-pi05-train-capacity8-20261101-r1/PROTOCOL.json). The useful
-ordinary LIBERO baseline remains the running experiment.
-[Terminal parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/READOUT547-TERMINAL-PARENT-REVIEW.json).
-[Failure and parent review](../../outputs/frozen-pi05-endtoend-20261031-r1/CPU54-KV5000-READOUT-FAILURE-PARENT-REVIEW.json).
-No physical outcome, source teacher, chronological RL corpus or AD/DPT
-eligibility follows from these offline fits.
+No checkpoint or case is substituted, and the fixed5,000-step diagnostics
+do not reject the full steering class or test meta-learning. The follow-up
+on canonical successful expert TRAIN records00–03 is also complete: raw
+native0/4 versus the same prospectively fixed wide5,000 frontend with zero4D
+coefficients0/4. All eight natural episodes reach400 actions, exactly3,200
+new actions. This shows rollout failure also on fitted training reset cases;
+it does not isolate optimization, representation, coverage or physics.
+The existing allocated-CPU cache analysis for these exact four records shows
+lower overall14D MSE but higher arm12 MSE in every case; improvements are in
+grippers, including after actuator clipping. The zero per-slot interval floors
+do not establish network or robot capacity. Thus improved aggregate TRAIN loss
+is not evidence of better arm tracking or a causal explanation of rollout failure.
+[Existing scalar interpretation](../../outputs/frozen-pi05-train-capacity8-20261101-r1/TRAIN-ARM-GRIP-SCALAR-INTERPRETATION.json).
+
+The shared factory's actual first charged episode qualifies raw/native and
+fitted/zero4 equality, unchanged motor/frontend, zero gradients, reset history,
+public-request ordering and cache integrity. No extra qualification episode,
+nonzero4D physical search, SGD or case filtering occurs. Decode-only nonzero
+basis effects are interface integrity evidence, not rescue. Raw reserved
+request metadata can be present with all hooks off, so its presence is not a
+head-activation test. Final motor721a remains unchanged. The fresh phase costs
+427 GPU-seconds and79 CPU-worker seconds; its1,200/180 caps and3,200-action
+ledger remain separate from the original phase. Prior7,698 GPU-seconds and
+29,922 actions stay counted once; linked descriptive totals are8,125 GPU-seconds
+and33,122 actions. No unused old grant is borrowed.
+
+The predeclared next test—whether failure also occurs on known successful
+expert training scenes—is therefore negative for this fixed wide endpoint.
+Imperfect plan imitation or optimization, narrow captured-noise/state coverage
+and recorded-to-live scene/execution differences remain competing explanations.
+No new cause is established and no further search or changed recipe is
+admitted here. The remaining15 search/confirmation episodes and source/AD/DPT
+are unfunded. A useful compatible teacher is still required before collection;
+no source/student eligibility follows from these fits or controls.
+[TRAIN probe terminal review](../../outputs/frozen-pi05-train-capacity8-20261101-r1/TERMINAL-PARENT-REVIEW.json).
+[Original fixed15 terminal review](../../outputs/frozen-pi05-endtoend-20261031-r1/READOUT547-TERMINAL-PARENT-REVIEW.json).
+The ordinary LIBERO baseline remains incomplete while its checkpoint
+continuation is diagnosed and repaired.
 
 
 ## Closed replay diagnosis: requests exact, physics unresolved

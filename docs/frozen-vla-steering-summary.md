@@ -77,13 +77,23 @@ uses641 new GPU-seconds; readout totals716 including the failed75, and phase
 cost is7,698 GPU-seconds/29,922 actions. No physical improvement is observed.
 Saved first-chunk metadata confirms both learned hooks after reset and
 nonidentical issued bytes in all five cases; it does not measure numerical
-or physical effect magnitude. No source teacher/student or new physics is admitted. This is not a negative AD/DPT
+or physical effect magnitude. These outcomes admit no source teacher/student. This is not a negative AD/DPT
 or full-class capacity test. No validation checkpoint selection is used.
 [Evidence and next test](robotwin-coefficient-steering/EVALUATION.md).
 
+The fresh eight-control probe on four known successful expert TRAIN scenes
+also finishes with raw native0/4 and fixed wide5,000/zero4D0/4, all400 actions.
+Actual shared-factory parity, frozen motor/frontend, zero gradients and reset
+history/order checks pass. The result extends failure to fitted TRAIN resets;
+it does not isolate coverage, optimization, representation or live-execution
+mismatch. Existing cached scalars show overall TRAIN plan MSE improves while
+arm MSE worsens on all four selected records; gains are in grippers. The separate phase costs427 GPU-seconds/3,200 actions and79 CPU-worker
+seconds. No search, useful teacher, source collection or student is admitted.
+[Terminal evidence](../outputs/frozen-pi05-train-capacity8-20261101-r1/TERMINAL-PARENT-REVIEW.json).
+
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through220,040
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through300,140
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three
@@ -91,6 +101,11 @@ persistence remain pending; no favorable checkpoint is selected. Queries stay
 isolated from learning. No memory, transfer, population or overall
 sample-efficiency claim follows.
 [Current verified curve](frozen-vla-libero/EVALUATION.md).
+The first slice closes at301,700 updates with a stable full recovery. Its
+continuation rejects an atomic consistency guard before any new episode or
+update; the checkpoint remains intact. A bounded allocated-CPU exact-state
+inspection precedes any repair, with no cold restart or guard relaxation.
+The fixed500k endpoint and final native remain pending.
 
 
 The compatible collection records actual steering noise under the same frozen
