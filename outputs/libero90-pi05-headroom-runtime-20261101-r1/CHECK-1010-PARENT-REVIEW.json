@@ -1,0 +1,90 @@
+{
+  "status": "SAVED_LIGHT_METADATA_REVIEWED",
+  "owner_commit": "44897f6522fad497f58570f5ada0ac8ef081f935",
+  "job_id": "job-2qn8dpw3yvlb",
+  "source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "science": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "index_snapshot": {
+    "updates": 323820,
+    "replay_rows": 16685,
+    "training": {
+      "episodes": 1861,
+      "chunks": 16685,
+      "primitive_steps": 158528,
+      "settling_steps": 18610
+    },
+    "successes": 1822,
+    "failures": 39,
+    "actions": 325245,
+    "output_bytes": 19433122506
+  },
+  "separate_rolling_snapshot": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "ffdceeaf84e94c81965c0c152fc28bbd6d677c8449f845916338d0f25087c5c6",
+      "updates": 323980,
+      "replay_rows": 16693,
+      "signature": "aa7c99ea15d7facfbad99157bd2a8c82452435fc28d75dc8510ca4a631f498a7"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "ffdceeaf84e94c81965c0c152fc28bbd6d677c8449f845916338d0f25087c5c6",
+      "bytes": 459551459
+    },
+    "stable": true
+  },
+  "new_panels": [
+    {
+      "name": "learned-320000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 320040,
+      "threshold_updates": 320000,
+      "primitive_steps": 1488,
+      "settling_steps": 200,
+      "policy_signature": "685971d6812ea6fcbda0eb5172b107fba6fd75a94df01205361badb121883e78",
+      "optimizer_update_overshoot": 40,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-320000-recovery.pkl",
+        "sha256": "a866953112f81a6e8049ef30d731daa547222099ea69bc1def1de1b3fa4c437d",
+        "bytes": 454550491
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "reader_ref": {
+    "git_commit": "f084a3cf0239a13d1b13bf2662cdfe7d9cc835d4",
+    "git_blob": "e80638ea0d572dae0dcebc64418193acf98a5d10",
+    "sha256": "378808636e034807e246e6743e8a7fc93537d32b5978b94ff9c24eeae5d723df"
+  },
+  "data_ref": {
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1010.json",
+    "sha256": "edcdca3c9be5e23329d46e2db97059a3e8fe1bf8cf3d02ecc57212d6cf76b618"
+  },
+  "copied": {
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1010-RECEIPT.json": {
+      "sha256": "b81ac87ef90c4ee6cb1ceb5c1498ece6a20fb5252b796490a525427e51a0f930",
+      "bytes": 3995
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1010.json": {
+      "sha256": "edcdca3c9be5e23329d46e2db97059a3e8fe1bf8cf3d02ecc57212d6cf76b618",
+      "bytes": 16710
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1010.md": {
+      "sha256": "4860460bf00e02e07410e11705e3d902690d689c75a63b7c8e191c3139b4d06a",
+      "bytes": 1306
+    },
+    "outputs/libero90-pi05-headroom-runtime-20261101-r1/check-1010-scheduler.jpg": {
+      "sha256": "f1e697ca410cf80b2535efd1e7d43043eb86b486d9d36140119c61e34275cf43",
+      "bytes": 74824
+    }
+  },
+  "next_check": "2026-11-01 10:30 Asia/Shanghai",
+  "scope": "Mac saved scalar metadata and Git-byte hashes only. No tensor/model/test/simulator or independent scheduler query. Observed GPU elapsed is not a terminal charge; final motor-after hash remains pending."
+}
