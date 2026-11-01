@@ -86,7 +86,7 @@ def archive_scale(recovery, output, *, updates, assembly_sha256, exposure):
     output.mkdir(parents=True, exist_ok=True)
     recovery_path = output / 'recovery.pt'
     recovery_sha = immutable_copy(recovery, recovery_path)
-    policy = HistoryNoisePolicy(HistoryConfig(**saved['contract']['config']))
+    policy = HistoryNoisePolicy(HistoryConfig.from_saved(saved['contract']['config']))
     policy.load_state_dict(saved['policy'], strict=True)
     manifest = dict(contract=saved['contract'], update=updates, selection='fixed requested final update',
         assembly_sha256=assembly_sha256, full_recovery_sha256=recovery_sha,

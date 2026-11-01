@@ -516,7 +516,7 @@ def train_matrix(args):
         saved = torch.load(recovery, map_location="cpu", weights_only=False)
         if saved.get("format") != RESUME_FORMAT or saved.get("update") != args.updates:
             raise RuntimeError("Controller stopped before fixed update budget; preserved recovery, no final candidate promoted")
-        model = HistoryNoisePolicy(HistoryConfig(**saved["contract"]["config"]))
+        model = HistoryNoisePolicy(HistoryConfig.from_saved(saved["contract"]["config"]))
         model.load_state_dict(saved["policy"], strict=True)
         final_manifest = dict(contract=saved["contract"], update=saved["update"],
             selection="fixed requested final update", assembly_sha256=assembly["assembly_sha256"],
