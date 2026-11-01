@@ -1,0 +1,20 @@
+{
+  "owner": "/root",
+  "direct_human_instructions": [
+    "wait why is the baseline ppo not running on 8 gpus?",
+    "you should prioritize spped of results",
+    "use 8 on all benchmark experiments",
+    "if its inconclusive what the results are after this trial baseline ppo vs flora ppo, then scale up"
+  ],
+  "aggregate_requested_gpu_limit": 24,
+  "requested_gpus_per_benchmark_job": 8,
+  "per_job_hours_strictly_less_than": 8,
+  "current_trial": "Simulator-reward versus Flora-reward residual PPO from identical frozen Human30075000; original AUROC0.6667 and explicit below-gate human permission preserved.",
+  "conditional_scale_up": {
+    "trigger": "The matched trial does not resolve the performance comparison after both arms and held-out evaluation finish.",
+    "action": "Continue from complete saved checkpoints and expand matched held-out evaluation, keeping initializer, task, reward prompt/map, residual bound and optimizer recipe fixed.",
+    "execution": "Bind the next finite action/iteration/evaluation/resource profile to the actual endpoints and uncertainty before dispatch; no fresh restart, sealed-budget borrowing, or unlimited campaign.",
+    "current_trial_action_caps": "Unchanged until the conditional continuation is concretely bound."
+  },
+  "inflight_migration": "Preserve the existing one-GPU job's complete evaluations and checkpoint. Never terminate it in an uncheckpointed partial rollout. New benchmark profiles use eight real workers; no claim of eightfold speedup before measurement."
+}
