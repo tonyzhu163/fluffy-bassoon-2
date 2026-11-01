@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "created_utc": "2026-11-01T05:47:11Z",
+  "owner": "/root",
+  "execution_owner": "/root/finish_assembly",
+  "canonical_plan_main": "1af045e63a1f4085f6006101518a82d5b2df4a4e",
+  "canonical_plan_path": "outputs/flora-ppo-comparison-20261101-r1/PLAN.md",
+  "status": "authorized_scoped_comparison",
+  "human_source_chat": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+  "verified_messages": [
+    {
+      "id": "01a19591-ef9b-7273-81f0-9fb52afff4f6",
+      "turn": "01a19590-c123-7d41-b57b-269b228f370e",
+      "quote": "lets launch these jobs when ready"
+    },
+    {
+      "id": "01a19590-c145-7943-835a-0d286b8f3135",
+      "quote": "the job needs to have good visibility and we can stop the job as soon as the performacne convergences"
+    },
+    {
+      "id": "01a19591-c3b5-7e41-937f-0a7f042b1ab8",
+      "quote": "just outputting well formatted logs would be easier"
+    },
+    {
+      "id": "01a1959f-f986-7b42-91c8-0ce83c7d29cd",
+      "turn": "01a1959f-f94f-71b0-95fb-df659044d995",
+      "quote": "no these two jobs i authorize however many, you can only ask up to 8 gpus per job"
+    }
+  ],
+  "scope": "Matched standard RLinf PPO from official OpenPI40 SFT on LIBERO90 task44; S final-state simulator0/1 versus F terminal(expected_score-1)/4, including necessary conversion/scorer qualification, baseline and evaluation.",
+  "resource_override": {
+    "superseded_aggregate_gpu_hours": 10,
+    "replacement_aggregate_gpu_hours": null,
+    "max_gpus_per_scheduler_job": 8,
+    "individual_job_wall_seconds_strictly_less_than": 28800,
+    "all_gpu_time_logged": true
+  },
+  "science": "Current canonical PLAN graded reward, common config, fullH400, training success termination disabled, simulator DEV-only stopping. No extra arms/goal changes.",
+  "old_work": "All previous SAC, assessment, fixed-bank fits, native PPO and phone work remains paused/terminal; no old budget transfers.",
+  "launch_authority": "Sole finish_assembly launches concrete reviewed/qualified components promptly when exact source/assets/resources are ready, without repeated human/root ACK."
+}

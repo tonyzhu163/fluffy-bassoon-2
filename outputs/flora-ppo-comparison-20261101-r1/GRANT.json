@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "created_utc": "2026-11-01T05:47:11Z",
+  "owner": "/root",
+  "execution_owner": "/root/finish_assembly",
+  "canonical_plan_main": "1af045e63a1f4085f6006101518a82d5b2df4a4e",
+  "canonical_plan_path": "outputs/flora-ppo-comparison-20261101-r1/PLAN.md",
+  "status": "fresh_phase_no_allocations_yet",
+  "aggregate_gpu_seconds_ceiling": null,
+  "aggregate_policy": "The human removed the former36000-second ceiling for these two arms and necessary qualification/scoring; no replacement total supplied. Every allocation must have a finite ticket,<=8GPUs,wall<8h; include startup,idle,failures,closure.",
+  "physical_actions": {
+    "S": 1000000,
+    "F": 1000000,
+    "common_baseline_smoke": 26975,
+    "max_combined": 2026975,
+    "charge": "all train/eval/padding/settling/failures/unresolved intents; common once",
+    "settling": 15,
+    "train_episodes_per_iteration": 128,
+    "scored_eval_episodes": 50,
+    "padding": "If4/8-world execution uses56evalslots, charge6unscored episodes too; proposedlayout maximum12completeiterations. Exactprofile frozen beforeoutcomes, no extra scoredcases.",
+    "reservation": "Reserve whole next rollout/update/evaluation/closure before start."
+  },
+  "new_cpu_tests": {
+    "aggregate_worker_seconds": 360,
+    "gpus": 0,
+    "cpus": 2,
+    "ram_gib": 16,
+    "scope": "Only genuinely new focused integration/reward-isolation/logging/stopping/accounting/recovery tests after exactsource/selectors. No realVLA/model/simulator construction.",
+    "include": "ALL startup,attestation,failures,retries,cleanup under one cumulativeclock"
+  },
+  "storage": {
+    "new_total_gib": 256,
+    "policy": "New assets/envs/outputs finiteceiling; bind actualsizes, supportedoutputbound,capacity/quota/writeprobe. Existingimmutableassets stayinplace; old protectedrecoveries remain.",
+    "quota_currently_verified": false
+  },
+  "initial_tickets": [
+    {
+      "id": "openpi40-official-conversion-q1",
+      "gpus": 1,
+      "total_inclusive_gpu_seconds": 3600,
+      "actions": 0,
+      "status": "admitted_subject_to_exact_profile_and_actual_probe"
+    },
+    {
+      "id": "flora-official-inference-q1",
+      "gpus": 1,
+      "total_inclusive_gpu_seconds": 3600,
+      "actions": 0,
+      "status": "conditional_exact_assets_and_fixed_archived_or_official_fixture_profile",
+      "note": "Fixture inference is not newtask44smoke/baseline. No extra physicalepisode."
+    }
+  ],
+  "future_tickets": "Concrete usefulactor/scorer layout/time/capacity finiteperjob ticket; no new scientificapproval or inventedaggregateceiling."
+}
