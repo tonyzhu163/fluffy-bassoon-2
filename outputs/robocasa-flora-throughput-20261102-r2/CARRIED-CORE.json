@@ -1,0 +1,23 @@
+{
+  "completed": true,
+  "tests_in_original_actual_suite": 9,
+  "tests_rerun": 0,
+  "qualified_source": "330bf8da3dafbc531ffb564050ec0969df53e2de",
+  "qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/qualification/READY.json",
+    "sha256": "6bd9cbe891d96f0768ff9e786f85dadd0294ae745393614c8fa0823796fe9ef5"
+  },
+  "xml_sha256": "2d370457a7c4f99a705b7d49a11efe1fdbeb96388d4cd586a9ee42d797b6aa77",
+  "scorer_tests_carried": [
+    "test_engine_stays_loaded_across_batches_and_uses_official_grade",
+    "test_failed_generation_releases_video_and_does_not_complete_batch",
+    "test_batched_generation_preserves_job_order_official_scores_and_tail",
+    "test_failed_batched_generation_releases_every_prepared_video"
+  ],
+  "unchanged_executable_sha256": {
+    "src/fluffy_bassoon/meta_rl/flora_terminal_worker.py": "851daa268eb9a9a325011b3c1f3cb39da95b7f7ee651413358f8bec5ba6b19e7",
+    "tests/test_flora_terminal_worker.py": "40137b1a564f0de41bbb873134283b1afc7ba4c2b026fa5515578af8783de007",
+    "src/fluffy_bassoon/baige_gpu.py": "6a59727447a13a9fb3424beaf92f0b61df9741c93d2a21f4798160af8a0be071"
+  },
+  "review": "Saved JSON/XML and byte hashes only on Mac; actual tests were already run once on allocated Linux by root."
+}

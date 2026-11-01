@@ -1,0 +1,43 @@
+{
+  "official_code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+  "official_code": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo",
+  "model": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1",
+  "model_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1-receipt/READY.json",
+    "sha256": "05c31de8122ecd1f467033d671767e1c59db40de9f4a3a43b409446aa38d76bf"
+  },
+  "fixture": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-native-residual-headroom-q4-20261101-r1/OpenDrawer/episodes.json",
+    "sha256": "f912ddb229bd836f53ca37b78815bae3c8fb1b457a6dbd39db318277ee6a2999"
+  },
+  "qualified_file_sha256": {
+    "src/fluffy_bassoon/meta_rl/flora_terminal_worker.py": "851daa268eb9a9a325011b3c1f3cb39da95b7f7ee651413358f8bec5ba6b19e7",
+    "tests/test_flora_terminal_worker.py": "40137b1a564f0de41bbb873134283b1afc7ba4c2b026fa5515578af8783de007",
+    "src/fluffy_bassoon/baige_gpu.py": "6a59727447a13a9fb3424beaf92f0b61df9741c93d2a21f4798160af8a0be071"
+  },
+  "required_scorer_tests": [
+    "test_engine_stays_loaded_across_batches_and_uses_official_grade",
+    "test_failed_generation_releases_video_and_does_not_complete_batch",
+    "test_batched_generation_preserves_job_order_official_scores_and_tail",
+    "test_failed_batched_generation_releases_every_prepared_video"
+  ],
+  "batch_sizes": [
+    1,
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    24
+  ],
+  "requests_per_configuration": 64,
+  "new_robot_actions": 0,
+  "toolkit": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q7-20261101-r1/toolkit-site/nvidia/cu13",
+  "qualification_json_parameter": "TASK_CORE_QUALIFICATION binds this actual passed result, or an explicitly migrated byte-identical successful result.",
+  "qualification_json_default": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/qualification/READY.json",
+  "qualification_receipt_sha256": "6bd9cbe891d96f0768ff9e786f85dadd0294ae745393614c8fa0823796fe9ef5",
+  "qualified_source_commit": "330bf8da3dafbc531ffb564050ec0969df53e2de",
+  "qualified_xml_sha256": "2d370457a7c4f99a705b7d49a11efe1fdbeb96388d4cd586a9ee42d797b6aa77"
+}
