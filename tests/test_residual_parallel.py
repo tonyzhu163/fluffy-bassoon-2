@@ -3,6 +3,7 @@ from copy import deepcopy
 from types import SimpleNamespace
 
 import numpy as np
+import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records, update
@@ -139,7 +140,8 @@ def test_retained_eight_then_forty_two_keep_exact_fifty_motor_draw_stream():
     assert serial.seed_rng.integers(2**63-1)==continued.seed_rng.integers(2**63-1)
 
 
-def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch):
+@pytest.mark.parametrize('distributed',[False,True])
+def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch,distributed):
     import time
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
     from fluffy_bassoon.meta_rl import robocasa_residual_parallel as module
@@ -149,6 +151,7 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
         first=request['cases'][0]['slot']; count=len(request['cases'])
         rows,completed=collect_pending(policy,bound,Motor(),Environment(first,chunks=15),episodes=count,
             generator=None,planned_motor_seeds=request['seeds'],planned_action_noise=request['noise'])
+        assert request['episode_id_prefix'].startswith('PPO-task-')
         atomic_save(module.Path(request['output'])/'result.pt',dict(cases=request['cases'],records=rows,
             episodes=completed,environment=dict(cursor=count),global_rng=dict(rank=request['rank']),
             motor_rng=dict(rank=request['rank'])))
@@ -156,7 +159,16 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
     monkeypatch.setattr(module.subprocess,'Popen',child)
     cases=[dict(task='OpenDrawer',slot=i) for i in range(50)]
     profile=dict(rollout_devices=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0) for i in range(8)],
-        attempt='core',deadline_unix=time.time()+60,closure_seconds=1)
+        attempt='core',episode_id_namespace='PPO-task-',deadline_unix=time.time()+60,closure_seconds=1)
+    if distributed:
+        from fluffy_bassoon.meta_rl import rlinf_flora_ppo
+        original_write=rlinf_flora_ppo.write_new
+        def queued(path,value):
+            assert path.name.startswith('core-')
+            original_write(path,value)
+            child([value['request']])
+        monkeypatch.setattr(rlinf_flora_ppo,'write_new',queued)
+        profile['distributed_rollout_root']=str(tmp_path/'dispatch')
     env=ParallelResidualEnvironment(cases,horizon=750,output=tmp_path/'bank',monitoring_root=tmp_path/'monitor',
         profile=profile,code=tmp_path,report=lambda *a,**k:None)
     rows,episodes=env.collect(policy,bound,Motor(),episodes=50,generator=None,deterministic=True)

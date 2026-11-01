@@ -107,7 +107,8 @@ class ParallelResidualEnvironment:
                     noise=None if noise is None else noise[first_chunk:stop_chunk],
                     deterministic=deterministic, verify_zero=verify_zero and rank == 0,
                     rank=rank, world=world, output=str(directory), monitoring_root=str(self.monitoring_root),
-                    episode_id_prefix=f"case-{self.cursor + first:06d}-rank-{rank:02d}-",
+                    episode_id_prefix=(self.profile.get('episode_id_namespace','')
+                        + f"case-{self.cursor + first:06d}-rank-{rank:02d}-"),
                     attempt=f"{self.profile['attempt']}-{self.output.parent.name}-{self.cursor:06d}")
                 request_path = directory / "request.pt"
                 atomic_save(request_path, request)
@@ -116,7 +117,8 @@ class ParallelResidualEnvironment:
                     from .rlinf_flora_ppo import write_new
                     queue = Path(distributed) / f"rank-{rank:02d}"
                     queue.mkdir(parents=True, exist_ok=True)
-                    write_new(queue / (self.output.parent.name + f"-{self.cursor:06d}.json"),
+                    write_new(queue / (self.profile['attempt'] + '-' + self.output.parent.name
+                                       + f"-{self.cursor:06d}.json"),
                         dict(request=str(request_path), sha256=sha(request_path), output=str(directory),
                              source_commit=self.profile["source_commit"]))
                     continue
