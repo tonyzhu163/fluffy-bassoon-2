@@ -1,8 +1,8 @@
 {
   "status": "STATIC_PREPARED_NOT_ALLOCATED_CPU_OR_GPU_QUALIFIED",
   "rlinf_base_commit": "d80cf00e95e545f579e33432e7d7f14e86bb39d7",
-  "base_file_sha256": "61a7065df783a8d8b331065f9adbb8ac858420c65bea7d9c01b4627f8312097f",
-  "patched_file_sha256": "a14bdb5054dff56d0165b076837eb8405f00b203362a348dd779da0d7ef825e7",
+  "base_file_sha256": "103188756962ab677b82fc5900b6186f8d92d8afd10b897a89a2f40c41fc1719",
+  "patched_file_sha256": "227e540995c1e368bb5bb1ec3cf32dec7b1d70fa41bfa351bd1a444b6d44408e",
   "patch_sha256": "983c6a9eb9b8515f2bcb2ad8e8f1560b87a346de09628b1c6b73ca2a5886998f",
   "delta": "Add opt-in mean/std selection and state/action padding before normalization in the existing RoboCasa dataconfig; default None/False preserve old configs. No new policy, learner or simulator.",
   "selected_initializer": "PUBLIC ORIGINAL pi05_pretrain_human300 step75000 at robocasa/robocasa365_checkpoints c484448aba1a9b60a04c9b0ca117241518ea69f3; not gated Aaron100k or generic LeRobot",
@@ -20,13 +20,20 @@
   "tests_passed": null,
   "execution_boundary": "Apply against exact base in a fresh Git checkout and record deployment commit. Do not alter any admitted setup/runtime source in place.",
   "additional_controller_delta": {
-    "base_file_sha256": "7018fc8b08f056735b28845f19e5c2788edd096df5e2fe1ecefff3f163228230",
-    "patched_file_sha256": "c6e83354e3979b48cf926fa0a5c3ae405354ea47d97f7aff0884972280635f1d",
+    "base_file_sha256": "7c2905b13d3a592277f11c3c18a85f9d74568be3157adc5217c93adf1ff17264",
+    "patched_file_sha256": "239ee187299c0155c1a29257caf2e55963e14335fa64f0a19d707482ba98b2c3",
     "scope": "Honor explicit gripper/base-mode0.5-to+-1 score mapping in existing raw365 action dispatch. Copy input array so stored PPO actions/logp are not mutated. No new wrapper or action permutation.",
     "reference": "robocasa3443 wrappers/gym_wrapper.py::PandaOmronKeyConverter.unmap_action",
     "new_test": "test_native_score_controls_match_pandaomron_key_converter"
   },
   "prepared_numerical_cases": 5,
   "static_patch_application_and_AST": "PASS; no runtime module import or test",
-  "patch_encoding": "Blank context lines encoded as no-op deletion/addition, preserving target bytes and normal git apply compatibility without trailing whitespace."
+  "patch_encoding": "Blank context lines encoded as no-op deletion/addition, preserving target bytes and normal git apply compatibility without trailing whitespace.",
+  "retained_cached_lf_hashes": {
+    "base": "61a7065df783a8d8b331065f9adbb8ac858420c65bea7d9c01b4627f8312097f",
+    "patched": "a14bdb5054dff56d0165b076837eb8405f00b203362a348dd779da0d7ef825e7",
+    "environment_base": "7018fc8b08f056735b28845f19e5c2788edd096df5e2fe1ecefff3f163228230",
+    "environment_patched": "c6e83354e3979b48cf926fa0a5c3ae405354ea47d97f7aff0884972280635f1d"
+  },
+  "canonical_byte_note": "Actual Git source bytes; extra LF observations retained separately. No code/scientific change or allocated requalification occurred."
 }

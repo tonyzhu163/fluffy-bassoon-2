@@ -5,8 +5,8 @@
   "robocasa_declared_version": "1.0.1",
   "robosuite_commit": "5ce6643f3092639d08f7b0f90ed1c6a84f50552c",
   "openpi_dependency_commit": "c5dc4b9296a1a4739bf52828f28a579f12dce763",
-  "setup_base_sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468",
-  "setup_patched_sha256": "8bb73c35acbd938adb8aca97faa0194ab2dbffcd8cc71d7dcf43bb41f340ed1c",
+  "setup_base_sha256": "52b64ab221d076cd4a4edac8a7a7cd8e8147c1a3bf503a2cb8b6e89df4140fba",
+  "setup_patched_sha256": "bec40bba15f10e6c114497886121097440d722c60e2c2f7a4ab4d5a31c26001a",
   "patch_sha256": "367e3def88bbd089c2c94a99bde077c7db52b410bdd7497ab96ad4ccf6e78adc",
   "delta": "Only pin the two floating Git dependency URLs used by the existing official RoboCasa365 installer; pre-set ROBOCASA_PATH to a fresh detached3443 clone to prevent main fetch/pull. No model/simulator/learner implementation changed.",
   "compatibility_status": "Native1.0.1 import/registry candidate, not a claim to duplicate1.0.0 leaderboard runtime; selected Aaron custom adapter/version remains to be bound.",
@@ -30,28 +30,35 @@
   "static_source_files": [
     {
       "file": "native__rlinf__install.sh",
-      "bytes": 172234,
-      "sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468"
+      "bytes": 172233,
+      "sha256": "52b64ab221d076cd4a4edac8a7a7cd8e8147c1a3bf503a2cb8b6e89df4140fba"
     },
     {
       "file": "native__robocasa__setup.py",
-      "bytes": 1381,
-      "sha256": "cfe1126cbb569939e4dd0afd7ef74bf2cf1e41f63be32bc5b9e56e03a89929ab"
+      "bytes": 1380,
+      "sha256": "4e2228fc2895565c8939f4899492d0b4a007880221b25847409dc9c67fc31328"
     },
     {
       "file": "native__robocasa__dataset_registry.py",
-      "bytes": 94641,
-      "sha256": "14d1abbe55e38d847a9da1bb67136f184172e8ec713472320f7a721cf83adafa"
+      "bytes": 94640,
+      "sha256": "23e8e31bb56bae80de86c34eafadfe32dd1e1eba6608376152ba9fdda5532a4b"
     },
     {
       "file": "native__robocasa__dataset_registry_utils.py",
-      "bytes": 7797,
-      "sha256": "9214e1871e2fcafdb723d1543858b617e861334752ebff60c07fe5c950a8c081"
+      "bytes": 7796,
+      "sha256": "9ea74602711ab9c499314bc3d94c4b61db6fe85bebf616cce573b9d39ba02e3b"
     },
     {
       "file": "native__rlinf__openpi.txt",
-      "bytes": 323,
-      "sha256": "5ffeb37235138415eca8a898aa8af5d71264f95b7b9181b239ac897f2adda155"
+      "bytes": 322,
+      "sha256": "cf56e25ee5820304d64d10ad6007a9732b5bdab72a84c4b79a2648e081e5450b"
     }
-  ]
+  ],
+  "retained_cached_lf_observation": {
+    "base_sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468",
+    "patched_sha256": "8bb73c35acbd938adb8aca97faa0194ab2dbffcd8cc71d7dcf43bb41f340ed1c",
+    "explanation": "Text-copy helper appended exactly one trailing LF to GitHub tool content. Preserve these old observations; canonical deployment identities below use actual Git bytes."
+  },
+  "setup_base_bytes": 172233,
+  "setup_patched_bytes": 172308
 }
