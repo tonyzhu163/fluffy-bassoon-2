@@ -1,0 +1,312 @@
+{
+  "format": "TRAIN8_initial_actual_advancement_v1",
+  "checked_unix": 1793493395.613386,
+  "job_id": "job-3m9241gyyv9p",
+  "source_commit": "86f4a962c8f7fc83cfcfa39b466dafcde9f2b25b",
+  "result_snapshot_sha256": "bf0a07ded59ab55af3cbe23a1442b45667acf2db04f0e6e1762be038278e58d4",
+  "status": "running",
+  "next_cell": 2,
+  "pending": {
+    "actual_acting_checkpoint_iteration": 0,
+    "arm": "native",
+    "case": 1,
+    "coefficients": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "expected_reset": {
+      "actual_seed": 1,
+      "features_sha256": "fc5f0308d07edc3c90590e5c117ed95871ead80eea8030ce18c8ce01e9162800",
+      "observation_sha256": "9cd923adb53e736082e01ea10ed5a055e3b10264133c96a8853173886f9496af"
+    },
+    "horizon": 400,
+    "id": "train-capacity8-phone-01-raw_native",
+    "method": "train_capacity8_raw_native",
+    "motor_seed": 20261302,
+    "new_optimizer_updates": 0,
+    "paired_instruction": [
+      "Move the phone with buttons and screen onto the green phone rack."
+    ],
+    "policy_version": "raw-native",
+    "record_id": "phone-01",
+    "reset_seed": 1,
+    "role": "raw_native",
+    "stage": "successful_TRAIN_capacity_diagnostic",
+    "task": "place_phone_stand"
+  },
+  "failure": null,
+  "qualification": {
+    "actual_actions": 400,
+    "cache_exact": true,
+    "complete_real_episode": "train-capacity8-phone-00-raw_native",
+    "evidence": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/qualification-probes.pt",
+      "sha256": "3531d98bb62766b7587602ec2a9cd8a72c6e883bb5650a760c2acc99132059f5"
+    },
+    "extra_episodes": 0,
+    "extra_robot_actions": 0,
+    "fitted_baseline_zero_exact": true,
+    "format": "fitted_physical_motor_qualification_v1",
+    "frontend_checkpoint_sha256": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200",
+    "frontend_gradients": 0,
+    "frozen_after": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_before": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+    "frozen_frontend_after": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+    "frozen_frontend_before": "1c92c8d41b16e1e006ccde23bf165d16168105e3caa8208d3addadb3fe4ac4fc",
+    "initial_physics_unchanged": true,
+    "interface_sha256": "5ea98002d5ca03de0a452d403cac73f07326747c79ba3c58fe1cc46c3a14be78",
+    "mapping_sha256": "88f63e5edad83a37bc43b26917923e2f34921b0c6aaaa4e11398927fb950a1c0",
+    "motor_gradients": 0,
+    "native_parity": {
+      "max_abs_error": 0.0,
+      "passed": true,
+      "tolerance": 2e-05
+    },
+    "physical_delta_bound_passed": true,
+    "physical_nonzero_effect": true,
+    "public2076_reset_history_zero": true,
+    "public_request_before_calibration": true,
+    "qualification_episode": "train-capacity8-phone-00-raw_native",
+    "raw_native_control_exact": true,
+    "reset_previous_agent_command_zero": true,
+    "roundoff_tolerance": 1e-06,
+    "scope": "decode-only basis-unit integrity probe; no nonzero4D physics/search/selection",
+    "status": "passed"
+  },
+  "records": [
+    {
+      "chunks": 13,
+      "complete": true,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-6c56cedf0cec4c6488b6d8db85c44bab/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/corpus",
+        "sha256": "ce88f7c2b5e50debb593ed8d5de8624f39f0e6f53966cc4d9c1afa52aca410c4"
+      },
+      "primitive_steps": 400,
+      "reset_identity": {
+        "actual_seed": 0,
+        "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+        "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:61:00.0",
+        "actual_seed": 0,
+        "corpus_episode_id": "episode-6c56cedf0cec4c6488b6d8db85c44bab",
+        "episode_limit": 400,
+        "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+        "instruction": [
+          "Take the metallic phone with glass screen front to the small plastic phonestand."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the metallic phone with glass screen front to the small plastic phonestand."
+          ],
+          "effective_observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e",
+          "sampled_instruction": [
+            "Carry the rectangular glossy black phone to the light brown phone holder."
+          ],
+          "sampled_observation_sha256": "89aff2bdf390220420dbb3b7d638ae82c3a299eeb29b71989694f77600ddc6c1",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e",
+        "requested_seed": 0,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "spec": {
+        "actual_acting_checkpoint_iteration": 0,
+        "arm": "native",
+        "case": 0,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_reset": {
+          "actual_seed": 0,
+          "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+          "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e"
+        },
+        "horizon": 400,
+        "id": "train-capacity8-phone-00-raw_native",
+        "method": "train_capacity8_raw_native",
+        "motor_seed": 20261301,
+        "new_optimizer_updates": 0,
+        "paired_instruction": [
+          "Take the metallic phone with glass screen front to the small plastic phonestand."
+        ],
+        "policy_version": "raw-native",
+        "record_id": "phone-00",
+        "reset_seed": 0,
+        "role": "raw_native",
+        "stage": "successful_TRAIN_capacity_diagnostic",
+        "task": "place_phone_stand"
+      },
+      "success": false,
+      "wall_seconds": 26.273039683699608
+    },
+    {
+      "chunks": 13,
+      "complete": true,
+      "episode_manifest_ref": {
+        "path": "episodes/episode-1c410a680f2c4faeb93c761ab79ffdfe/manifest.json",
+        "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/corpus",
+        "sha256": "a0e9c3512e92c0b8769727c910f063900b9d66a7e7901d54efa15cb94a096b59"
+      },
+      "primitive_steps": 400,
+      "reset_identity": {
+        "actual_seed": 0,
+        "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+        "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e"
+      },
+      "reset_info": {
+        "actual_render_pci": "0000:61:00.0",
+        "actual_seed": 0,
+        "corpus_episode_id": "episode-1c410a680f2c4faeb93c761ab79ffdfe",
+        "episode_limit": 400,
+        "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+        "instruction": [
+          "Take the metallic phone with glass screen front to the small plastic phonestand."
+        ],
+        "instruction_binding": {
+          "bound_instruction": [
+            "Take the metallic phone with glass screen front to the small plastic phonestand."
+          ],
+          "effective_observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e",
+          "sampled_instruction": [
+            "Carry the rectangular glossy black phone to the light brown phone holder."
+          ],
+          "sampled_observation_sha256": "89aff2bdf390220420dbb3b7d638ae82c3a299eeb29b71989694f77600ddc6c1",
+          "schema": "robotwin_paired_instruction_v1"
+        },
+        "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e",
+        "requested_seed": 0,
+        "reset_internal_physics_steps": "not separately instrumented",
+        "reset_policy_actions": 0,
+        "task": "place_phone_stand"
+      },
+      "spec": {
+        "actual_acting_checkpoint_iteration": 5000,
+        "arm": "action",
+        "case": 0,
+        "coefficients": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "expected_reset": {
+          "actual_seed": 0,
+          "features_sha256": "9dfe180fab34dc7f37c3c0f7a022cff273ba255a6015675334ea9a767bc98891",
+          "observation_sha256": "39da08554fb8c3408f27f5407d234a6bdbb24181cae33df8a2750071ba8b137e"
+        },
+        "horizon": 400,
+        "id": "train-capacity8-phone-00-frozen_fitted_frontend_zero4",
+        "method": "train_capacity8_frozen_fitted_frontend_zero4",
+        "motor_seed": 20261301,
+        "new_optimizer_updates": 0,
+        "paired_instruction": [
+          "Take the metallic phone with glass screen front to the small plastic phonestand."
+        ],
+        "policy_version": "19ed635cbff5427a184c1969fa6955551f8f5f33a260c1747507617a93deb200",
+        "record_id": "phone-00",
+        "reset_seed": 0,
+        "role": "frozen_fitted_frontend_zero4",
+        "stage": "successful_TRAIN_capacity_diagnostic",
+        "task": "place_phone_stand"
+      },
+      "success": false,
+      "wall_seconds": 25.785947693511844
+    }
+  ],
+  "actions": {
+    "actual_actions": 1056,
+    "by_method": {
+      "train_capacity8/train_capacity8_frozen_fitted_frontend_zero4": 400,
+      "train_capacity8/train_capacity8_raw_native": 656
+    },
+    "by_phase": {
+      "train_capacity8": 1056
+    },
+    "charged_actions": 1056,
+    "decision_count": 34,
+    "header": {
+      "campaign_id": "frozen-pi05-train-capacity8-20261101-r1",
+      "contract": {
+        "authority_sha256": "cf36a7d955065fb03c2a8eab381f74e768c6ff784684b9dc8ad89b5bb7287b37",
+        "grant_sha256": "8248afafbc5e6f8a268dcddd17513c589b641291f161696f9054b223ae7343f8",
+        "origin_recovery_sha256": "aa44ce2d60c0352265c1138b078cba8106a86a69f875f7577e691a9705cee1c4",
+        "phase_id": "frozen-pi05-train-capacity8-20261101-r1",
+        "prior_closed_actions": 29922,
+        "protocol_sha256": "c2fd3076f0e3a54b8df054b761a0dd61531023ae48b739c19cab1d3464f56807",
+        "source_eligible": false
+      },
+      "phase_caps": {
+        "train_capacity8": 3200
+      },
+      "schema": "robotwin_campaign_actions_v1",
+      "source_caps": {},
+      "total_actions": 3200
+    },
+    "journal_events": 70,
+    "journal_sha256": "52d4afbf69420a86ff1995a2d9a6f59b52ebfa805b1adebf2b5bf32ef8bf49cb",
+    "pending_actions": 0,
+    "receipts": {},
+    "runs": {
+      "frozen-pi05-train-capacity8-20261101-r1-gpu-r1": "86f4a962c8f7fc83cfcfa39b466dafcde9f2b25b"
+    },
+    "uncertain_actions": 0,
+    "unresolved_decisions": {}
+  },
+  "closed_full_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/recoveries/cell-02-836ab8a2f7564e3491a83f8e1e4224b0.pt",
+    "sha256": "0dad3997da427a1ae8ea8108c760e52bfa22235bd6a762a744c1966f5c5620dc",
+    "bytes": 193549
+  },
+  "closed_recovery_hash_matches": true,
+  "one_closed_chunk_JSON_sample": {
+    "expected": {
+      "path": "episodes/episode-6c56cedf0cec4c6488b6d8db85c44bab/chunks/000001.json",
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/corpus",
+      "sha256": "7de3990a37674c713cf0f10544e07d5854b9f110a0742113ddfb16a462a8101f"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/corpus/episodes/episode-6c56cedf0cec4c6488b6d8db85c44bab/chunks/000001.json",
+      "sha256": "7de3990a37674c713cf0f10544e07d5854b9f110a0742113ddfb16a462a8101f",
+      "bytes": 39737
+    }
+  },
+  "actual_GPU_probe": {
+    "file": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/gpu-r1/gpu-probe.json",
+      "sha256": "d6d63ade80e8c297628cae8b24fd9599009515d1690997350429ea1da5720422",
+      "bytes": 2874
+    },
+    "status": "passed",
+    "hostname": "job-3m9241gyyv9p-master-0",
+    "CUDA_uuid": "90133544-ffe4-8747-43d9-870b389ac18f",
+    "NVML_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+    "own_PID": 270
+  },
+  "ticket": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/gpu-r1/allocation.json",
+    "sha256": "d999d42e5e5057ca1380da28be43f32938cebbcd547868613be807ebe444f4b8",
+    "bytes": 3705
+  },
+  "new_optimizer_updates": 0,
+  "source_eligible": false,
+  "source_student_admitted": false,
+  "prior_closed_actions": 29922,
+  "maximum_phase_GPU_seconds": 1200,
+  "maximum_actions": 3200,
+  "maximum_episodes": 8,
+  "maximum_output_bytes": 4294967296,
+  "final_motor_after_pending": true,
+  "renderer_note": "Nonfatal repeated OIDN invalid-handle messages retained. Actual raw/native exact, fitted/zero4 parity, current2076history/ordering/frozen/real-episode gates are authoritative; no raw-metadata-absence inference.",
+  "next_owned_check": "2026-11-01 08:40 Asia/Shanghai coalesced with primary",
+  "scope": "Current metadata plus one closed recovery/rawchunk hash only; no NPZ/array/Tensor/model/test or eventforest replay."
+}
