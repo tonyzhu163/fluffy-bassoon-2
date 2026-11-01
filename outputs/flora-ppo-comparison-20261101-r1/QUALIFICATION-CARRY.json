@@ -1,0 +1,141 @@
+{
+  "schema": "flora_ppo_runtime_cpu_carry_v1",
+  "status": "CPU_QUALIFIED_ONLY",
+  "checked_utc": "2026-11-01T06:40:13.213470+00:00",
+  "tested_source_commit": "a3b6111ac79e19ec12c99a3df6dcae8d201f4b53",
+  "owner_evidence_commit": "19bf173df3db30f060fbfade257f471f72699a89",
+  "publication": "Runtime/config/tests and three reused native modules byte-identical to tested source; only documents/status/carry changed.",
+  "files": [
+    {
+      "path": "configs/native_ppo/libero44_flora.yaml",
+      "sha256": "b795fe3057ec42f5482648d1090c5f0c00dd6564088be8baad755387868e6ff4",
+      "bytes": 4783
+    },
+    {
+      "path": "scripts/diagnostics/rlinf_flora_ppo_entry.py",
+      "sha256": "f61f97898273bf5a926d0ff26d74a022e5e2997134792e5c72051ef7bd3188f4",
+      "bytes": 4074
+    },
+    {
+      "path": "scripts/diagnostics/rlinf_flora_ppo_score.py",
+      "sha256": "8d638f09a96a8ce24e949dbf187f6c8e989eb31a31cc5a4bca44335be1b61232",
+      "bytes": 5778
+    },
+    {
+      "path": "tests/test_rlinf_flora_ppo.py",
+      "sha256": "9e664a4650a24d244133d1e8856c4ba89412942347d0fda914f6b6b93390e9c9",
+      "bytes": 17832
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo.py",
+      "sha256": "4e4b1c76b5e0e2cbcbc2be2d323feb3a3472c2229f15f55371859523f1f65292",
+      "bytes": 12722
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_config.py",
+      "sha256": "f1497077d8e93e21e4679475dabf3daaf8d7f64c5adcff4acd27476b7b6ebe16",
+      "bytes": 5223
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_env.py",
+      "sha256": "ae4e3d21b79b7d08cc2c2983511765513f2b447c2db98ba0a97f014999f23f8c",
+      "bytes": 12727
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_monitor.py",
+      "sha256": "f85d2a92326a5947691c928567be5c9ff5cc18c5e0f7450db16938e052760a71",
+      "bytes": 6149
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_runner.py",
+      "sha256": "69270806bf97e8f24653dd1e32876add457fd882571cfb0ac2ca79c12eafe22f",
+      "bytes": 15781
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_runtime.py",
+      "sha256": "d8bb2839ad7d231b52f6aac8821b8f349590ec24417abf28d2b69631d947a8bd",
+      "bytes": 9589
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py",
+      "sha256": "d862c9c8c473ad0e92ead0d037121ad51f32900bc3bfb42a0358834ad88fa1b6",
+      "bytes": 21884
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_native_ppo_runtime.py",
+      "sha256": "e9ddf480d7d171d6f025729df9e8aefc65d5edec23e244f00f7db58ce89cd37f",
+      "bytes": 29846
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_native_ppo_data.py",
+      "sha256": "e8913c5bb550fe0d8dd84ee52072f9589eb3979f91246c9ebd40a59a7cac89b2",
+      "bytes": 8723
+    }
+  ],
+  "evidence": {
+    "PPO-READY40-CPU-QUALIFICATION.json": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/PPO-READY40-CPU-QUALIFICATION.json",
+      "sha256": "0086af3956acac123765d7e45eeec5cda5878c3eed5bf78473369f20a6a8039a",
+      "bytes": 842
+    },
+    "READY40-CPU-ASSET-RECEIPT.json": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/READY40-CPU-ASSET-RECEIPT.json",
+      "sha256": "6f6c8633495a1f76c0301a38e9d1fd0ae44f41dc5e476f4b2045406d248fc94f",
+      "bytes": 4187
+    },
+    "cpu-ready40-q1/junit.xml": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/cpu-ready40-q1/junit.xml",
+      "sha256": "d095826be3931bb8cd48980befcaf14dce3fc8d1ae785519f19ee9778d805cff",
+      "bytes": 8597
+    },
+    "cpu-ready40-q1/summary.json": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/cpu-ready40-q1/summary.json",
+      "sha256": "77b449be038dbb5edb6660359652f35d984dca7aadbafaf6ef223c03ab269c4a",
+      "bytes": 744
+    },
+    "cpu-ready40-q1/worker-time.json": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/cpu-ready40-q1/worker-time.json",
+      "sha256": "beb84d35ea29c0d6b80ab4beb5d64baea611f22eb9caf1e9b48ac8f8613c92b8",
+      "bytes": 851
+    },
+    "cpu-ready40-q1/zero-gpu-attestation.json": {
+      "commit": "19bf173df3db30f060fbfade257f471f72699a89",
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/cpu-ready40-q1/zero-gpu-attestation.json",
+      "sha256": "85416900513c96c7a86fc4d298ac077943a320e15e54cc96988519b16d5517e9",
+      "bytes": 947
+    }
+  },
+  "tests": {
+    "total": 67,
+    "unique": 67,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "allocation": {
+    "cluster": "Baige",
+    "job_id": "job-dtz06yz20uw3",
+    "actual_gpu_count": 0,
+    "cpus": 8,
+    "ram_gib": 32,
+    "inclusive_cpu_worker_seconds": 97,
+    "scheduler_seconds_separate": 50
+  },
+  "charges": "97 inclusive CPU-worker-seconds once in existing360 phase; no new allocation from publication.",
+  "physical_actions": 0,
+  "optimizer_updates": 0,
+  "verification_scope": "Saved Git receipt/JUnit hash and case tally plus source-byte carry; no tests, models, simulators or scheduler query on macOS.",
+  "not_qualified": [
+    "GPU model loading",
+    "native simulator/video smoke",
+    "fresh64 baseline/AUROC gate",
+    "GPU capacity",
+    "PPO training"
+  ],
+  "active_run": "job-vtv5x8m5xeve keeps existing a3 source checkout immutable; this publication does not migrate it."
+}
