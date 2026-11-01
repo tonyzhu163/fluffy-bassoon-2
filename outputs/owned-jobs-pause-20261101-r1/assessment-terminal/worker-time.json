@@ -1,0 +1,63 @@
+{
+  "format": "source40_ppo_worker_time_v1",
+  "contract": {
+    "format": "libero40_existing_train_teacher_assessment_v1",
+    "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+    "run_id": "libero40-teacher-assessment-20261101-r1",
+    "maximum_worker_seconds": 10800,
+    "grant_sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436",
+    "authority_sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c",
+    "protocol_sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2",
+    "asset_binding_sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0",
+    "actor_table_sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894",
+    "inventory_sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6",
+    "roles": [
+      "raw_native_full_H_Gaussian",
+      "exact_source_tied_Gaussian_warmup",
+      "preselected_final_TRAIN_SAC_mean",
+      "preselected_final_TRAIN_SAC_sample"
+    ],
+    "omitted_roles": [
+      "original_initialized_SAC_mean_if_retained",
+      "original_initialized_SAC_sample_if_retained"
+    ],
+    "states": [
+      40,
+      41
+    ],
+    "scene_seed": 123,
+    "planned_episodes": 320,
+    "schedule_action_bound": 131200,
+    "original_grant_actions": 196800,
+    "new_output_bytes": 34359738368,
+    "optimizer_updates": 0,
+    "source_pretraining_admitted": false
+  },
+  "worker_seconds": 10800,
+  "attempts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000",
+      "started_unix": 1793502780.0,
+      "slice_seconds": 10740,
+      "reserved_seconds": 10800,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793504059.1853201,
+      "exit_code": 1,
+      "charged_seconds": 1340,
+      "slice_overrun": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793507779000000-0001",
+      "started_unix": 1793507779.0,
+      "slice_seconds": 9360,
+      "reserved_seconds": 9420,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793509021.589983,
+      "exit_code": 0,
+      "charged_seconds": 1303,
+      "slice_overrun": false
+    }
+  ]
+}
