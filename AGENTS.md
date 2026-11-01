@@ -18,6 +18,11 @@ runs per the [retention policy](README.md#artifact-retention).
 - Prefer simple solutions and use `uv` for Python environments. Run model
   computation and tests on allocated Linux resources; use macOS for editing
   and static checks.
+- Keep only tests that protect core behaviour (learners, models, motors,
+  environments, checkpoints, GPU probing) or numerical qualification (values
+  matching a reference). Do not add tests for one run's plans, admission,
+  receipts, provenance, launch scripts or campaign bookkeeping; check those
+  in the run itself and record the evidence in `outputs/<run-id>/`.
 - On macOS, run `proxy_on` (or `proxy_on_clash` if that proxy is down) in
   the same shell before Git operations. Use interactive zsh (`zsh -ic`) when
   needed to load the shell functions.
