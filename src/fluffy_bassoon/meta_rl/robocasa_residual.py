@@ -92,7 +92,9 @@ class RoboCasaResidualEnvironment:
     """
     def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
                  episode_id_prefix="", rank=0):
-        if horizon not in (750, 900, 1200) or horizon % 50 or not cases:
+        from .rlinf_robocasa_ppo import TASKS
+        if (horizon not in {row[0] for row in TASKS.values()} or horizon % 50 or not cases
+                or any(case['task'] not in TASKS or TASKS[case['task']][0]!=horizon for case in cases)):
             raise ValueError("Bind native full episode horizon and a finite case bank")
         self.factory, self.cases, self.horizon = factory, deepcopy(cases), horizon
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)

@@ -32,7 +32,7 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal, restore_rng, snapshot_rng
 from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import (
-    TASKS, arm_stopping, case_bank, protocol, require_calibration_permission, rollout_migration_contract,
+    TASKS, OOD_TASKS, arm_stopping, case_bank, protocol, require_calibration_permission, rollout_migration_contract,
 )
 from fluffy_bassoon.meta_rl.vla_history import save_dataset
 from fluffy_bassoon.rl.action_residual import ResidualBound, action_std_from_norm_stats
@@ -117,7 +117,7 @@ def main():
             or not 0 < profile["scheduler_seconds"] < 8 * 3600 or profile["closure_seconds"] < 180
             or time.time() >= profile["deadline_unix"] - profile["closure_seconds"]):
         raise ValueError("Exact source/native task/arm and finite resource profile required")
-    if profile["task"] == "CloseFridge":
+    if profile["task"] in OOD_TASKS:
         raise ValueError("The fixed OOD task cannot be selected for calibration or training")
     read_ref(profile["actual_gpu_probe"])
     if os.environ.get("LYCO_BAIGE_GPU_MAP"):
@@ -234,32 +234,44 @@ def main():
 
     def panel(phase, iteration):
         target = "CloseFridge" if "OOD" in phase else task
-        reserve(8, TASKS[target][0])
+        offset = profile.get("headroom_offset", 0) if phase == "baseline" else 0
+        count = profile.get("headroom_count", 8) if phase == "baseline" else 8
+        cases = case_bank(target, phase, count=count, offset=offset)
+        reserve(count, TASKS[target][0])
         name = f"{phase}-{iteration:03d}"
-        env = environment(case_bank(target, phase), name)
+        env = environment(cases, name)
         global_rng, motor_rng = snapshot_rng(), motor.state_dict()
         motor.seed_rng = np.random.default_rng(profile["evaluation_motor_seeds"][phase])
+        # Continue the frozen serial native draw stream after retained cases.
+        # One scalar draw per original H50 chunk, with no extra physical episode.
+        for _ in range(offset * (TASKS[target][0] // 50)):
+            motor.seed_rng.integers(0, 2**63 - 1)
         try:
-            records, episodes = collect_pending(policy, bound, motor, env, episodes=8,
-                deterministic=True, generator=generators["action"], verify_zero=profile["mode"] == "headroom")
+            records, episodes = collect_pending(policy, bound, motor, env, episodes=count,
+                deterministic=True, generator=generators["action"],
+                verify_zero=profile["mode"] == "headroom" and offset == 0)
         finally:
             motor.load_state_dict(motor_rng)
             restore_rng(global_rng)
             env.close()
         labels = truth(episodes, name)
-        result = dict(phase=phase, iteration=iteration, episodes=8, successes=sum(labels.values()),
+        result = dict(phase=phase, iteration=iteration, episodes=count, successes=sum(labels.values()),
             physical_actions=journal.charged(), policy_checkpoint=str(output / "final.pt") if phase in ("ID", "OOD") else None)
         write_new(output / name / "evaluation.json", result)
         return records, episodes, result
 
     try:
         if profile["mode"] == "headroom":
-            if profile["headroom_cases"] != case_bank(task, "baseline"):
+            count, offset = profile.get("headroom_count", 8), profile.get("headroom_offset", 0)
+            if count + offset not in (8, 50) or profile["headroom_cases"] != case_bank(
+                    task, "baseline", count=count, offset=offset):
                 raise ValueError("Native constructor cases must be frozen before outcomes")
             records, episodes, result = panel("baseline", 0)
-            write_new(output / "headroom.json", dict(result, native_headroom=1 <= result["successes"] <= 5,
+            write_new(output / "headroom.json", dict(result,
+                native_headroom=.05 <= result["successes"] / count <= .70 if offset == 0 else None,
+                retained_prefix_count=offset,
                 zero_residual_verified_chunks=sum(row["zero_residual_verified"] for row in records),
-                qualification="first planned episode replays every native chunk seed before executing it once; zero residual; exploratory8, not population success"))
+                qualification="Full native episodes, zero residual; retained prefix keeps exact serial draw stream. Partial suffix alone cannot qualify the full cohort."))
             write_new(output / "episodes.json", episodes)
             return
         if profile["mode"] == "common_before":

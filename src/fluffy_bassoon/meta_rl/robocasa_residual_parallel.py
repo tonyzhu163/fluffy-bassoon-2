@@ -30,6 +30,19 @@ def draw_schedule(motor, policy, generator, count, *, deterministic):
     return seeds, noise
 
 
+def episode_partitions(episodes, world=8):
+    """Contiguous complete episodes, with no padding or discarded samples."""
+    if type(episodes) is not int or world != 8 or episodes < world:
+        raise ValueError("At least one complete episode on each of eight workers required")
+    base, extra = divmod(episodes, world)
+    cursor, result = 0, []
+    for rank in range(world):
+        stop = cursor + base + (rank < extra)
+        result.append((cursor, stop))
+        cursor = stop
+    return result
+
+
 class ParallelActionJournal:
     """Read the actual per-worker escrows, including unresolved intents."""
     def __init__(self, root, world):
@@ -71,12 +84,11 @@ class ParallelResidualEnvironment:
     def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False, verify_zero=False):
         devices = self.profile["rollout_devices"]
         world = len(devices)
-        if world != 8 or episodes % world or self.cursor + episodes > len(self.cases):
+        if world != 8 or self.cursor + episodes > len(self.cases):
             raise ValueError("Eight allocated workers and an exact complete episode bank required")
+        partitions = episode_partitions(episodes, world)
         bank = self.output / f"parallel-{self.cursor:06d}"
         bank.mkdir(parents=True, exist_ok=False)  # Never recollect an attempted bank.
-        per_rank = episodes // world
-        chunks = per_rank * (self.horizon // 50)
         seeds, noise = draw_schedule(motor, policy, generator, episodes * self.horizon // 50,
                                      deterministic=deterministic)
         children, streams, requests = [], [], []
@@ -84,16 +96,18 @@ class ParallelResidualEnvironment:
         distributed = self.profile.get("distributed_rollout_root")
         try:
             for rank, device in enumerate(devices):
+                first, stop = partitions[rank]
+                first_chunk, stop_chunk = first * (self.horizon // 50), stop * (self.horizon // 50)
                 directory = bank / f"rank-{rank:02d}"
                 directory.mkdir()
                 request = dict(profile=self.profile, config=asdict(policy.config),
                     policy=cpu_tree(policy.state_dict()), bound=asdict(bound), horizon=self.horizon,
-                    cases=self.cases[self.cursor + rank * per_rank:self.cursor + (rank + 1) * per_rank],
-                    seeds=seeds[rank * chunks:(rank + 1) * chunks],
-                    noise=None if noise is None else noise[rank * chunks:(rank + 1) * chunks],
+                    cases=self.cases[self.cursor + first:self.cursor + stop],
+                    seeds=seeds[first_chunk:stop_chunk],
+                    noise=None if noise is None else noise[first_chunk:stop_chunk],
                     deterministic=deterministic, verify_zero=verify_zero and rank == 0,
                     rank=rank, world=world, output=str(directory), monitoring_root=str(self.monitoring_root),
-                    episode_id_prefix=f"case-{self.cursor + rank * per_rank:06d}-rank-{rank:02d}-",
+                    episode_id_prefix=f"case-{self.cursor + first:06d}-rank-{rank:02d}-",
                     attempt=f"{self.profile['attempt']}-{self.output.parent.name}-{self.cursor:06d}")
                 request_path = directory / "request.pt"
                 atomic_save(request_path, request)
@@ -136,8 +150,9 @@ class ParallelResidualEnvironment:
             records, finished, recovery = [], [], []
             for rank, request in enumerate(requests):
                 result = torch.load(bank / f"rank-{rank:02d}/result.pt", map_location="cpu", weights_only=False)
-                if (result["cases"] != request["cases"] or len(result["records"]) != chunks
-                        or len(result["episodes"]) != per_rank or result["environment"]["cursor"] != per_rank
+                if (result["cases"] != request["cases"] or len(result["records"]) != len(request["seeds"])
+                        or len(result["episodes"]) != len(request["cases"])
+                        or result["environment"]["cursor"] != len(request["cases"])
                         or [row["noise_seed"] for row in result["records"]] != request["seeds"]
                         or any(row["reward"] != 0 for row in result["records"])):
                     raise ValueError("Exact complete unlabeled worker bank required")

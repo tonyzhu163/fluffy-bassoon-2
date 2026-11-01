@@ -107,8 +107,9 @@ class Native:
     task_descriptions = ["open the drawer"]
     current_info_list = [dict(ep_meta={})]
 
-    def __init__(self, early=False):
+    def __init__(self, early=False, horizon=750):
         self.early = early
+        self.horizon = horizon
         self.count = dict(controls=3, reset_controls=3, physics_ticks=30, control_time=0., clock=dict(control_freq=20.))
         self.env = SimpleNamespace(get_env_attr=lambda key: [deepcopy(self.count)])
 
@@ -129,7 +130,7 @@ class Native:
         self.count["controls"] += 1
         self.count["physics_ticks"] += 10
         self.count["control_time"] += .05
-        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == 750]), dict(episode=dict(success_at_end=np.array([True])))
+        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == self.horizon]), dict(episode=dict(success_at_end=np.array([True])))
 
     def close(self):
         pass
@@ -173,6 +174,24 @@ def test_success_mask_or_short_episode_cannot_be_scored(tmp_path):
         env.state_dict()
     assert not list((tmp_path / "monitor").glob("*.json"))
     env.close()
+
+
+@pytest.mark.parametrize('task,horizon', [('TurnOnMicrowave',450),('CoffeeSetupMug',600),('OpenCabinet',1050)])
+def test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks(tmp_path,task,horizon):
+    cases=[dict(native_seed=1,task=task)]
+    env=RoboCasaResidualEnvironment(lambda case:Native(horizon=horizon),cases,horizon=horizon,
+        output=tmp_path/'videos',monitoring_root=tmp_path/'monitor',journal=Journal(),writer_factory=Writer)
+    env.reset()
+    for index in range(horizon//50):
+        _,done,episode=env.step_chunk(np.zeros((50,12),np.float32))
+        assert done == (index==horizon//50-1)
+    assert episode['horizon']==horizon and episode['frame_clock']['frame_count']==horizon+1
+    assert [writer.count for writer in env.writer.writers]==[horizon+1]*3
+    assert env.state_dict()['cursor']==1
+    env.close()
+    with pytest.raises(ValueError,match='native full episode horizon'):
+        RoboCasaResidualEnvironment(lambda case:Native(),cases,horizon=750,
+            output=tmp_path/'wrong',monitoring_root=tmp_path/'bad-monitor',journal=Journal(),writer_factory=Writer)
 
 
 class TinyEnvironment:

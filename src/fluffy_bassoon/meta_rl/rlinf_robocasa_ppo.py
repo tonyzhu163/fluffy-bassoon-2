@@ -14,7 +14,18 @@ REVISION='c484448aba1a9b60a04c9b0ca117241518ea69f3'
 PREFIX='pi05_pretrain_human300/multitask_learning/75000'
 TASKS={'OpenDrawer':(750,'atomic_seen','atomic',320),
        'ScrubCuttingBoard':(1200,'composite_seen','composite',512),
-       'CloseFridge':(900,'atomic_seen','atomic',None)}
+       'CloseFridge':(900,'atomic_seen','atomic',None),
+       'PickPlaceCounterToCabinet':(750,'atomic_seen','atomic',None),
+       'PickPlaceDrawerToCounter':(750,'atomic_seen','atomic',None),
+       'TurnOffStove':(750,'atomic_seen','atomic',None),
+       'CoffeeSetupMug':(600,'atomic_seen','atomic',None),
+       'OpenCabinet':(1050,'atomic_seen','atomic',None),
+       'TurnOnMicrowave':(450,'atomic_seen','atomic',None),
+       'TurnOnSinkFaucet':(600,'atomic_seen','atomic',None),
+       'OpenStandMixerHead':(450,'atomic_seen','atomic',None)}
+PPO_TASKS=('OpenDrawer','PickPlaceCounterToCabinet','PickPlaceDrawerToCounter',
+           'TurnOffStove','CoffeeSetupMug')
+OOD_TASKS=('CloseFridge','OpenCabinet','TurnOnMicrowave','TurnOnSinkFaucet','OpenStandMixerHead')
 DEV_STEPS=(2,4,6,8,10)
 # Prospective seed banks. Native cases are constructor(seed) -> FIRST reset,
 # not a LIBERO state index or a seed applied to an already-running simulator.
@@ -23,19 +34,21 @@ BANK_SEEDS={'headroom':110100,'train':210100,'DEV':310100,'ID':410100,'OOD':5101
 ACTION_SEEDS={'headroom':610100,'train':710100,'DEV':810100,'ID':910100,'OOD':1010100}
 
 
-def protocol(task, *, camera_order=None):
-    if task not in TASKS:raise ValueError('Only the two predeclared candidates and fixed OOD task are supported')
+def protocol(task, *, camera_order=None, baseline_count=8):
+    if task not in TASKS:raise ValueError('Only prospectively bound native tasks are supported')
+    if baseline_count not in (8,50):raise ValueError('Bind the original pilot8 or new per-task50 contract')
     cameras=list(REWARD_CAMERAS) if camera_order is None else list(camera_order)
     if cameras not in (list(REWARD_CAMERAS), ['robot0_agentview_left']):
         raise ValueError('Only current three-view or archived left-only reward contracts are supported')
     return dict(benchmark='robocasa365',task=task,horizon=TASKS[task][0],
-        camera_order=cameras,train_episodes=64,baseline_count=8)
+        camera_order=cameras,train_episodes=64,baseline_count=baseline_count)
 
 
 def validate_protocol(value,training=False):
-    if not isinstance(value,dict) or value!=protocol(value.get('task'),camera_order=value.get('camera_order')):
+    if not isinstance(value,dict) or value!=protocol(value.get('task'),camera_order=value.get('camera_order'),
+                                                  baseline_count=value.get('baseline_count')):
         raise ValueError('Exact native task/horizon/video protocol required')
-    if training and value['task']=='CloseFridge':raise ValueError('OOD cannot enter PPO/calibration')
+    if training and value['task'] in OOD_TASKS:raise ValueError('OOD cannot enter PPO/calibration')
     return value
 
 
@@ -45,7 +58,7 @@ def require_calibration_permission(calibration, expected_protocol, *, calibratio
     import math
     validate_protocol(expected_protocol, training=True)
     if (calibration.get('completed') is not True or calibration.get('protocol')!=expected_protocol
-            or calibration.get('count')!=8 or not .05<=calibration.get('initial_success_rate',-1)<=.70
+            or calibration.get('count')!=expected_protocol['baseline_count'] or not .05<=calibration.get('initial_success_rate',-1)<=.70
             or calibration.get('AUROC') is None or not math.isfinite(calibration['AUROC'])):
         raise ValueError('Same completed native headroom/both-class calibration required')
     if calibration.get('go') is True:return 'original_calibration_gate_passed'
@@ -58,7 +71,7 @@ def require_calibration_permission(calibration, expected_protocol, *, calibratio
     return 'human_authorized_below_original_AUROC_gate'
 
 
-def case_bank(task,phase,*,iteration=0,round_index=0):
+def case_bank(task,phase,*,iteration=0,round_index=0,count=None,offset=0):
     """Fixed identities, disjoint by purpose; DEV is never final ID or OOD."""
     validate_protocol(protocol(task))
     if phase in ('baseline','smoke'):bank='headroom'
@@ -67,13 +80,19 @@ def case_bank(task,phase,*,iteration=0,round_index=0):
     elif phase in ('before_OOD','OOD'):bank='OOD'
     elif phase=='train':bank='train'
     else:raise ValueError('Unknown native episode bank')
-    if (bank=='OOD')!=(task=='CloseFridge'):raise ValueError('Fixed OOD task is evaluation only')
+    if (bank=='OOD')!=(task in OOD_TASKS):raise ValueError('Fixed OOD tasks are evaluation only')
     if bank=='train':
+        if count is not None or offset:raise ValueError('Training bank size/offset is fixed by its prospective round')
         if not 1<=iteration<=10 or not 0<=round_index<4:raise ValueError('Ten bounded four-round PPO batches')
         offset=((iteration-1)*4+round_index)*16;count=16
-    else:offset=0;count=8
-    return [dict(bank=bank,task=task,split='target',native_seed=BANK_SEEDS[bank]+offset+i,
-        reset_ordinal=0,slot=i,counted=True,
+    else:
+        count=8 if count is None else count
+        if type(count) is not int or type(offset) is not int or count<1 or offset<0 or count+offset>50:
+            raise ValueError('Fixed held-out/qualification banks contain at most50 native cases')
+    task_offset=(PPO_TASKS.index(task) if task in PPO_TASKS else OOD_TASKS.index(task)
+                 if task in OOD_TASKS else 0)*10000
+    return [dict(bank=bank,task=task,split='target',native_seed=BANK_SEEDS[bank]+task_offset+offset+i,
+        reset_ordinal=0,slot=offset+i if bank!='train' else i,counted=True,
         # Layout/style/objects come from the UNMODIFIED native target split
         # and are saved from actual ep_meta alongside initial RGB/state hashes.
         layout_source='native_target_constructor_seed_first_reset') for i in range(count)]
