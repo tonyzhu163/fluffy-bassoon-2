@@ -58,7 +58,8 @@ before the next:
 3. **Collect histories** with Flora reward only, from learners that improve.
 4. **Steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
-   ([PAPER.md](PAPER.md)). The steering interface is open; the ordinary RL
+   ([PAPER.md](PAPER.md)). The steering interface is a bounded action residual
+   (alternatives in [PAPER.md](PAPER.md)); the ordinary RL
    baseline and the history-generating learner use the same interface as the
    meta-learner ([review](literature/vla-steering-review.md)). The
    sample-efficiency claim is query success per robot episode against that
