@@ -1,0 +1,397 @@
+{
+  "format": "all40_assessment_R2_first_progress_v1",
+  "checked_unix": 1793507971.8251092,
+  "job_id": "job-bc2ooyztqsfh",
+  "execution_source": "9d29a805cae2c129ffc088af4eed81b3a38d2769",
+  "original_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "clock": {
+    "format": "source40_ppo_worker_time_v1",
+    "contract": {
+      "format": "libero40_existing_train_teacher_assessment_v1",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "run_id": "libero40-teacher-assessment-20261101-r1",
+      "maximum_worker_seconds": 10800,
+      "grant_sha256": "5e2384e028a023fbac2f497b1664ddfb1bd2ed4a5376e964aff6c45fea1d3436",
+      "authority_sha256": "27ed35a2a1546355da2fbee0773493902f378d673b94c191232445304d1a4e0c",
+      "protocol_sha256": "900eab7abdd4b9287c10148b756eb7b3ef53864d1a9fcaeae97e2273050f1fc2",
+      "asset_binding_sha256": "3c32f791a555c3d30639ecd62f576351c8282f5e4921a451cc098b8ef5ec36f0",
+      "actor_table_sha256": "49ebaaf9227d7ca6315ee8f4eff7c5aebfff880551b584b7618d3dd7fe6e4894",
+      "inventory_sha256": "6fc0c22a70b5f30d7dd59738dbfae1ced8fb81c6a6e28de36d0b0fb158a3a4a6",
+      "roles": [
+        "raw_native_full_H_Gaussian",
+        "exact_source_tied_Gaussian_warmup",
+        "preselected_final_TRAIN_SAC_mean",
+        "preselected_final_TRAIN_SAC_sample"
+      ],
+      "omitted_roles": [
+        "original_initialized_SAC_mean_if_retained",
+        "original_initialized_SAC_sample_if_retained"
+      ],
+      "states": [
+        40,
+        41
+      ],
+      "scene_seed": 123,
+      "planned_episodes": 320,
+      "schedule_action_bound": 131200,
+      "original_grant_actions": 196800,
+      "new_output_bytes": 34359738368,
+      "optimizer_updates": 0,
+      "source_pretraining_admitted": false
+    },
+    "worker_seconds": 10800,
+    "attempts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000",
+        "started_unix": 1793502780.0,
+        "slice_seconds": 10740,
+        "reserved_seconds": 10800,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793504059.1853201,
+        "exit_code": 1,
+        "charged_seconds": 1340,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793507779000000-0001",
+        "started_unix": 1793507779.0,
+        "slice_seconds": 9360,
+        "reserved_seconds": 9420,
+        "status": "started",
+        "scheduler_allowance_seconds": 60
+      }
+    ]
+  },
+  "probe": {
+    "status": "passed",
+    "purpose": "training",
+    "timing_comparison_eligible": false,
+    "allocation_type": "baige_container",
+    "hostname": "job-bc2ooyztqsfh-master-0",
+    "probe_pid": 433,
+    "created_at_utc": "2026-11-01T04:36:31.573336+00:00",
+    "devices": [
+      {
+        "allocation_ordinal": 0,
+        "visibility_token": "0",
+        "cuda_uuid": "ede2ba61-fcab-b878-9c2a-ad2fdc80fbac",
+        "cuda_name": "NVIDIA RPBZZZ6",
+        "cuda_total_bytes": 101973950464,
+        "pci_bus_id": "0000:62:00.0",
+        "uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+        "inventory": {
+          "index": 0,
+          "uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+          "name": "NVIDIA RPBZZZ6",
+          "memory_total_mib": 97887.0,
+          "memory_used_mib": 0.0,
+          "utilization_percent": 0.0,
+          "pci_bus_id": "00000000:62:00.0"
+        },
+        "allocation_check": {
+          "elements": 1048576,
+          "result": 2097152.0,
+          "touched_gpu_uuids": [
+            "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"
+          ],
+          "own_pid_gpu_uuids": [
+            "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"
+          ]
+        }
+      }
+    ],
+    "idle_utilization_required": false,
+    "exclusive_training_admission": true,
+    "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+    "utilization_role": "telemetry_only",
+    "utilization_telemetry": {
+      "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc": 0.0
+    },
+    "maximum_initial_memory_mib": 256,
+    "gpu_identity_mapping": {
+      "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+      "assigned_nvml_uuids": [
+        "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"
+      ]
+    },
+    "compute_processes_before": [],
+    "compute_processes_after": [
+      {
+        "gpu_uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+        "pid": 433,
+        "process_name": "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/bin/python",
+        "memory_used_mib": "640"
+      }
+    ],
+    "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+  },
+  "probe_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/admission/gpu-probe.json",
+    "sha256": "ae19773f4587c52279d00d33dc00619e82e083dba969b702a49876dd8b9226ec",
+    "bytes": 2867
+  },
+  "ticket_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/admission/ticket.json",
+    "sha256": "e089d6f7380487ab03cff82f99eb20397f49143c4cc915a6ec8105c7f9a2a11f",
+    "bytes": 7565
+  },
+  "old_recovery_actual": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+    "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+    "bytes": 62745
+  },
+  "old_recovery_expected": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+  "remaining_planned_roles": 158,
+  "failed_ordinal_replayed": false,
+  "all40_bulk_payload_rehash_repeated": false,
+  "limits": "Only current JSON plus firstnew162 receipt/trace/RNG/tworeset-evidence bytehashes. No pickle/tensor/array/model deserialize, oldjournal/input forest or job control.",
+  "migration-receipt.json": {
+    "format": "source40_teacher_assessment_reset_guard_repair_v1",
+    "original_progress": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+      "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+      "bytes": 62745
+    },
+    "original_contract": "e8ddb9e2e9c4ccf584333c5455596fc31cc74d5d554a926859d44b7dafa06795",
+    "numerical_digest": "a8146ee9c853c6dda7b40a785c9d549eeaf183889f660803637fa720405d3162",
+    "original_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+    "closed_prefix_preserved": 161,
+    "failed_ordinal_never_replayed": 161,
+    "failed_reset_proof": {
+      "failed_reset": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+        "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+      },
+      "raw": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+        "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+      },
+      "physical_actions": 10,
+      "steering_chunks": 0
+    },
+    "new_recovery_sha256": "ee752ce57e9cc59f47ac119d77b1f67b1deb0adc47f7e01c4f4c78fbefdd5c07",
+    "metadata_changes": [
+      "contract",
+      "cursor161_to162",
+      "active161_toNone",
+      "costs_add_returned_reset10",
+      "aborted",
+      "migration"
+    ]
+  },
+  "migration-receipt.json_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/migration-receipt.json",
+    "sha256": "cdd391a813c46f6539356bacc286c20f9ce0c0513ccfde8f3138b483cb1ccf56",
+    "bytes": 1494
+  },
+  "ABORTED-161-RESET-GUARD.json": {
+    "ordinal": 161,
+    "spec": {
+      "source_ordinal": 20,
+      "task_key": "libero_spatial:05",
+      "state": 40,
+      "scene_seed": 123,
+      "role": "exact_source_tied_Gaussian_warmup",
+      "seed": 20281141,
+      "status": "PLANNED"
+    },
+    "status": "ABORTED_RESET_GUARD",
+    "completed": false,
+    "success": null,
+    "performance_score": null,
+    "primitive_steps": 0,
+    "settling_steps": 10,
+    "all_in_actions": 10,
+    "original_progress": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+      "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+      "bytes": 62745
+    },
+    "failed_raw": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+      "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+    },
+    "failed_journal": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+      "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+    }
+  },
+  "ABORTED-161-RESET-GUARD.json_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/ABORTED-161-RESET-GUARD.json",
+    "sha256": "1b66a2e1fc87642ca082ee2c3c59f769b42ccc0b8fdd2a66fd983a80820f7161",
+    "bytes": 1178
+  },
+  "progress.json": {
+    "cursor": 168,
+    "planned_episodes": 320,
+    "costs": {
+      "all_in_actions": 26722,
+      "physical_episodes": 168,
+      "uncertain_actions": 0
+    },
+    "recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/assessment-recovery.pkl",
+      "sha256": "1c82c9409abcde8218388b2f47879713e3de29282dfbe3c66053bbd181892f09"
+    }
+  },
+  "progress.json_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/progress.json",
+    "sha256": "6db8b849bafc06f5fc0e837df0d87b1c2170dcbb8e9c76da5e70d577e85839e1",
+    "bytes": 372
+  },
+  "results-summary.json": {
+    "by_role": {
+      "raw_native_full_H_Gaussian": {
+        "planned": 80,
+        "complete": 42,
+        "aborted": 0,
+        "successes": 42
+      },
+      "exact_source_tied_Gaussian_warmup": {
+        "planned": 80,
+        "complete": 41,
+        "aborted": 1,
+        "successes": 38
+      },
+      "preselected_final_TRAIN_SAC_mean": {
+        "planned": 80,
+        "complete": 42,
+        "aborted": 0,
+        "successes": 42
+      },
+      "preselected_final_TRAIN_SAC_sample": {
+        "planned": 80,
+        "complete": 42,
+        "aborted": 0,
+        "successes": 42
+      }
+    },
+    "omitted_initial_slots": 160,
+    "all40_retained": true,
+    "source_pretraining_admitted": false,
+    "interpretation": "Two fixed cases per goal; descriptive assessment, no competence certificate or measured initial-to-final curve"
+  },
+  "results-summary.json_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/results-summary.json",
+    "sha256": "2940c29ad444447a1ac865bd9661e7218a242a32f08457fa44db60358f439838",
+    "bytes": 787
+  },
+  "motor-binding.json": {
+    "pid": 624,
+    "kind": "compute",
+    "verified": true,
+    "expected_uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+    "processes": [
+      {
+        "uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+        "type": "C"
+      }
+    ]
+  },
+  "motor-binding.json_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/motor-binding.json",
+    "sha256": "bbeea57b5b421d32d97cc680c7883629c3492a165db3f1c35da02e0f4bf14263",
+    "bytes": 231
+  },
+  "first_receipt": {
+    "episode_id": "libero_spatial:05/state-40/preselected_final_TRAIN_SAC_mean",
+    "role": "query",
+    "role_episode_ordinal": 0,
+    "initial_state": 40,
+    "scene_seed": 123,
+    "episode_random_seed": 20281141,
+    "initial_observation_sha256": "283dcfbd0833c783c236ba122fb94061b39922c4620e18a59da4488cca4295af",
+    "initial_state_vector_sha256": "fce301f2427b1a80b3fa2e9024076abe5552eb66a87bb1dd097adfd36f2b7383",
+    "success": true,
+    "primitive_steps": 96,
+    "settling_steps": 10,
+    "chunks": 10,
+    "raw_return": 1.0,
+    "elapsed_seconds": 33.66694045998156,
+    "completed": true,
+    "spec": {
+      "source_ordinal": 20,
+      "task_key": "libero_spatial:05",
+      "state": 40,
+      "scene_seed": 123,
+      "role": "preselected_final_TRAIN_SAC_mean",
+      "seed": 20281141,
+      "status": "PLANNED"
+    },
+    "source_actor": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-1m-sac-20261030-bulk-r1-s05-train/experiment/case-00016-source.pkl",
+      "published_sha256": "b47d92a844097c60410d09b67f874f9188a28c982c2e0bd0954ca523cd0c0883",
+      "bytes": 57230955,
+      "payload_not_rehashed_or_loaded": true
+    },
+    "source_updates": 6300,
+    "frozen_learning_state": {
+      "full": "8ef0b40b2f22cd5172191c7af1ecf1b40fdaf02c7aea4b2470ef8e41ab0a43c8",
+      "updates": 6300,
+      "replay_rows": 809,
+      "replay": "a667d59e4226b0c671389f359b5f69c7a824fad8d42208e323e7ede2727cda2f"
+    },
+    "source_assembly_admitted": false,
+    "optimizer_updates": 0,
+    "trace": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/trace.pkl.gz",
+      "sha256": "9f932e2317f52e7d52d4a94b7db03ca4ac93abef04db946e104bea156d14e883"
+    },
+    "RNG": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/rng-context.pkl.gz",
+      "sha256": "f97e9390540fa57738692a77729c9bc77ee44f867a2cf4808179af2df5509e15"
+    },
+    "reset_identity": "source40_exact_physics_camera_lsb_v1",
+    "input_feature_audit": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/reset-input-features.pkl.gz",
+      "sha256": "b3f0f17292497963a889959fd0a6578c5c6e78732f9de7192eeea657b36042ef"
+    },
+    "reset_comparison_audit": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/reset-identity-audit.pkl.gz",
+      "sha256": "40934eb2fb610cd59f0b35e699156245af4cf376dbf97ff67fb0024d0e5c1e2f"
+    }
+  },
+  "first_receipt_ref": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/receipt.json",
+    "sha256": "07253a7989a1fb1f48703c69c25d780f6aa42d712666e53806d91cc94491c9fd",
+    "bytes": 2429
+  },
+  "first_receipt_payloads": [
+    {
+      "field": "trace",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/trace.pkl.gz",
+      "sha256": "9f932e2317f52e7d52d4a94b7db03ca4ac93abef04db946e104bea156d14e883",
+      "bytes": 1840848,
+      "matches": true
+    },
+    {
+      "field": "RNG",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/rng-context.pkl.gz",
+      "sha256": "f97e9390540fa57738692a77729c9bc77ee44f867a2cf4808179af2df5509e15",
+      "bytes": 12663,
+      "matches": true
+    },
+    {
+      "field": "input_feature_audit",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/reset-input-features.pkl.gz",
+      "sha256": "b3f0f17292497963a889959fd0a6578c5c6e78732f9de7192eeea657b36042ef",
+      "bytes": 178669,
+      "matches": true
+    },
+    {
+      "field": "reset_comparison_audit",
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/episode-162/reset-identity-audit.pkl.gz",
+      "sha256": "40934eb2fb610cd59f0b35e699156245af4cf376dbf97ff67fb0024d0e5c1e2f",
+      "bytes": 180135,
+      "matches": true
+    }
+  ],
+  "current_recovery_actual": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/assessment-recovery.pkl",
+    "sha256": "1c82c9409abcde8218388b2f47879713e3de29282dfbe3c66053bbd181892f09",
+    "bytes": 65539
+  },
+  "current_recovery_matches_last_closed_progress": true,
+  "console_tail": "bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target=\"__cudnn$convForward\", metadata={op_name=\"jit(conv_general_dilated)/jit(main)/conv_general_dilated\" source_file=\"/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py\" source_line=658}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kNone\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false} is taking a while...\n2026-11-01 12:37:51.172093: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng3{k11=2} for conv %cudnn-conv.1 = (f32[1,29,29,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3}, dim_labels=b01f_o01i->b01f, custom_call_target=\"__cudnn$convForward\", metadata={op_name=\"jit(conv_general_dilated)/jit(main)/conv_general_dilated\" source_file=\"/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py\" source_line=658}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kNone\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false} is taking a while...\n2026-11-01 12:37:51.592206: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 1.420186733s\nTrying algorithm eng3{k11=2} for conv %cudnn-conv.1 = (f32[1,29,29,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3}, dim_labels=b01f_o01i->b01f, custom_call_target=\"__cudnn$convForward\", metadata={op_name=\"jit(conv_general_dilated)/jit(main)/conv_general_dilated\" source_file=\"/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py\" source_line=658}, backend_config={\"operation_queue_id\":\"0\",\"wait_on_operation_queues\":[],\"cudnn_conv_backend_config\":{\"conv_result_scale\":1,\"activation_mode\":\"kNone\",\"side_input_scale\":0,\"leakyrelu_alpha\":0},\"force_earliest_schedule\":false} is taking a while...\nPixelMultiplexer(\n    # attributes\n    encoder = Encoder(\n        # attributes\n        features = (32, 32, 32, 32)\n        strides = (2, 1, 1, 1)\n        padding = 'VALID'\n    )\n    network = StateActionEnsemble(\n        # attributes\n        hidden_dims = (128, 128, 128)\n        activations = relu\n        num_qs = 10\n        use_action_sep = False\n    )\n    latent_dim = 50\n    use_bottleneck = True\n)\ntarget_entropy: -16.0\nmean\n/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/torch/cuda/__init__.py:287: UserWarning: \nNVIDIA RPBZZZ6 with CUDA capability sm_120 is not compatible with the current PyTorch installation.\nThe current PyTorch install supports CUDA capabilities sm_50 sm_60 sm_70 sm_75 sm_80 sm_86 sm_90.\nIf you want to use the NVIDIA RPBZZZ6 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n\n  warnings.warn(\n"
+}
