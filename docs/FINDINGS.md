@@ -47,6 +47,19 @@ and an episode-reset-trained controller 39/64, so the gain is not from learning
 across attempts.
 [Evaluation](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/robomimic-can-dsrl/EVALUATION.md).
 
+## RoboCasa365
+
+The original Human30075000 pi0.5, through the frozen-motor residual binding,
+completed the predeclared OpenDrawer headroom bank with **3/8 terminal
+successes**. All eight episodes ran the full native750-step horizon. The first
+episode replayed all15 chunk seeds to check exact zero-residual action identity
+before executing each chunk once. OpenDrawer is frozen; the named fallback was
+not run. This is an exploratory eight-case development bank, not a population
+success estimate. Flora agreement on these videos and both PPO learning arms
+remain unmeasured; the successful archived-video Flora check establishes only
+software/model execution.
+[Saved native terminal result](../outputs/robocasa-native-residual-headroom-q4-20261101-r1/terminal/summary.json).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The
