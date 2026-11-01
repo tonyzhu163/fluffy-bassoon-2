@@ -252,7 +252,9 @@ def _save_recovery(path, value):
 
 
 def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, episode_id,
-                    ledger, reset_motor_rng, qualify=None, deadline=float("inf")):
+                    ledger, reset_motor_rng, qualify=None, deadline=float("inf"), episode_seed=None):
+    if episode_seed is not None and (type(episode_seed) is not int or not 0 <= episode_seed < 2**32):
+        raise ValueError('Explicit assessment episode seed must be uint32')
     started = time.monotonic()
     if started >= deadline:
         raise RuntimeError("Target evaluation elapsed-time ceiling reached")
@@ -263,7 +265,7 @@ def rollout_episode(sim, motor, controller, *, case, method, role, ordinal, epis
         raise ValueError("Real reset must expose the actual initial-observation identity")
     if not isinstance(initial.get('initial_state_vector_sha256'), str) or not initial['initial_state_vector_sha256']:
         raise ValueError('Real reset must expose the actual nominal physical-state identity')
-    seed = _seed(case, role, ordinal)
+    seed = _seed(case, role, ordinal) if episode_seed is None else episode_seed
     reset_motor_rng(seed)
     if controller is not None:
         _episode_rng(controller, seed)

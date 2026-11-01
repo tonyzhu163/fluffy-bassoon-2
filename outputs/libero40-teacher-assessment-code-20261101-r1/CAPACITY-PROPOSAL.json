@@ -1,0 +1,28 @@
+{
+  "status": "CONCRETE_PLANNING_ESTIMATE_NOT_ALLOCATION_OR_MEASURED_GUARANTEE",
+  "maximum_GPU_seconds": 10800,
+  "components_seconds": {
+    "episodes320_x16s": 5120,
+    "startup_actual40_actor_SHA_loads_and_motor": 900,
+    "40_simulator_switches": 600,
+    "embedded_qualification": 60,
+    "raw_capture_IO": 480,
+    "audit_and_teardown": 240,
+    "contingency": 3400
+  },
+  "basis": "Prior fixed100 assessment actual6846schedulerGPU-s/522episodes =13.115s per episode inclusive;16s proposal is a planning estimate, not guaranteed throughput for40 H400 source tasks or a speedup measurement.",
+  "consequence": "Actual owner capacity/admission and first native episode must fit within original clock; preserve partial whole-episode results if ceilings prevent completion, no extra draws/early horizon cuts/search/source regeneration.",
+  "output_bound_bytes": 34359738368,
+  "output_estimate": {
+    "decisions_max": 12800,
+    "raw_and_trace_bytes_per_decision_estimate": 1572864,
+    "raw_and_trace_bytes": 20132659200,
+    "metadata_RNG_bytes": 1073741824,
+    "temporary_headroom_bytes": 536870912,
+    "remaining_margin_bytes": 12616466432
+  },
+  "old_actor_input_bytes": 2323746672,
+  "old_actor_inputs_copied_to_output": false,
+  "ram": "96GiB allocation, one frozen motor and one restored original SAC learner at a time; no retained40-model device stack",
+  "resource_authority": "Existing adopted10800GPU/180CPU/32GiB assessment grant; separate from primary task44, phone, task57, oldsource25h/32h and all sealed ledgers"
+}
