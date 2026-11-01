@@ -95,7 +95,8 @@ def main():
             return
         last_report[0] = now
         progress.emit(phase=phase, physical_actions=journal.charged(),
-            this_open_job_elapsed_gpu_seconds=(now - profile["allocated_start_unix"]) * (len(parallel) if parallel else 1),
+            this_open_job_elapsed_gpu_seconds=sum(max(0., now - started) for started in
+                profile.get("gpu_allocation_starts_unix", [profile["allocated_start_unix"]] * (len(parallel) if parallel else 1))),
             remaining_wall_seconds=profile["deadline_unix"] - now, **fields)
 
     report("frozen_motor_loading")

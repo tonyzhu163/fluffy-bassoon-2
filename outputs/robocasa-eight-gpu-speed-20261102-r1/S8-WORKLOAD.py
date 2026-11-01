@@ -17,31 +17,43 @@ run = root / 'outputs/robocasa-eight-gpu-speed-20261102-r1'
 old = root / 'outputs/robocasa-residual-approved-20261101-r1'
 start = int(os.environ['TASK_STARTED'])
 deadline = start + 14040
-assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == 8
+distributed = os.environ.get('TASK_NODE_COUNT') == '4'
+local_gpus = 2 if distributed else 8
+assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == local_gpus
 if not os.environ.get('CUDA_VISIBLE_DEVICES'):
-    os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, range(8)))
+    os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(map(str, range(local_gpus)))
 cpu = Path('/sys/fs/cgroup/cpu.max').read_text().split()
-assert int(cpu[0]) / int(cpu[1]) == 128
-assert int(Path('/sys/fs/cgroup/memory.max').read_text()) == 512 << 30
+assert int(cpu[0]) / int(cpu[1]) == (32 if distributed else 128)
+assert int(Path('/sys/fs/cgroup/memory.max').read_text()) == (128 if distributed else 512) << 30
 assert subprocess.check_output(['git', '-C', str(code), 'rev-parse', 'HEAD'], text=True).strip() == os.environ['TASK_CODE_PIN']
 assert not subprocess.check_output(['git', '-C', str(code), 'status', '--porcelain'], text=True).strip()
 space = os.statvfs(out)
 assert space.f_bavail * space.f_frsize >= 128 << 30
-write_new(out / 'resource.json', dict(hostname=socket.gethostname(), gpu_count=8, cpus=128,
-    memory_gib=512, free_bytes=space.f_bavail * space.f_frsize, quota='UNVERIFIED', deadline_unix=deadline))
-subprocess.run([sys.executable, '-B', str(code / 'scripts/[train]gpu_probe.py'), '--expected-count', '8',
-    '--purpose', 'training', '--baige-container', '--baige-exclusive-training',
-    '--output', str(out / 'gpu-probe.json')], check=True, timeout=120)
+if not (out / 'resource.json').exists():
+    write_new(out / 'resource.json', dict(hostname=socket.gethostname(), gpu_count=8, cpus=128,
+        memory_gib=512, free_bytes=space.f_bavail * space.f_frsize, quota='UNVERIFIED', deadline_unix=deadline))
+if not (out / 'gpu-probe.json').exists():
+    subprocess.run([sys.executable, '-B', str(code / 'scripts/[train]gpu_probe.py'), '--expected-count', str(local_gpus),
+        '--purpose', 'training', '--baige-container', '--baige-exclusive-training',
+        '--output', str(out / 'gpu-probe.json')], check=True, timeout=120)
 # No policy loading or physics until the two new numerical and four affected
 # scorer core cases pass. The benchmark may carry this exact result later.
-subprocess.run([sys.executable, '-B', '-m', 'pytest', '-q', str(code / 'tests/test_residual_parallel.py'),
-    str(code / 'tests/test_flora_terminal_worker.py'), '--junitxml=' + str(out / 'affected-core.xml')],
-    check=True, timeout=120)
-suite = ET.parse(out / 'affected-core.xml').getroot().find('testsuite')
-assert suite is not None and int(suite.attrib['tests']) == 6
+carried = run / 'qualification/READY.json'
+if carried.exists():
+    carried_value = json.loads(carried.read_text())
+    assert carried_value['completed'] and all(sha(code / name) == value for name, value in carried_value['files'].items())
+    assert sha(carried_value['xml']['path']) == carried_value['xml']['sha256']
+    xml_path = Path(carried_value['xml']['path'])
+else:
+    xml_path = out / 'affected-core.xml'
+    subprocess.run([sys.executable, '-B', '-m', 'pytest', '-q', str(code / 'tests/test_residual_parallel.py'),
+        str(code / 'tests/test_flora_terminal_worker.py'), str(code / 'tests/test_baige_distributed.py'),
+        '--junitxml=' + str(xml_path)], check=True, timeout=120)
+suite = ET.parse(xml_path).getroot().find('testsuite')
+assert suite is not None and int(suite.attrib['tests']) == 9
 assert all(int(suite.attrib[key]) == 0 for key in ('failures', 'errors', 'skipped'))
-write_new(out / 'core-qualification.json', dict(completed=True, tests=6, failures=0, errors=0, skipped=0,
-    xml=dict(path=str(out / 'affected-core.xml'), sha256=sha(out / 'affected-core.xml')),
+write_new(out / 'core-qualification.json', dict(completed=True, tests=9, failures=0, errors=0, skipped=0,
+    xml=dict(path=str(xml_path), sha256=sha(xml_path)),
     source_commit=os.environ['TASK_CODE_PIN']))
 paused = json.loads((old / 'S-PAUSED-FOR-EIGHT-GPU.json').read_text())
 assert paused['job'] == 'job-wjwi6vuhvwmq' and paused['optimizer_updates'] == 0
@@ -57,6 +69,11 @@ assert saved['contract']['source_commit'] == 'd365878e38162c0ff750150b4fa014b646
 assert not list((old / 'S').glob('update-*.json'))
 probe = out / 'gpu-probe.json'
 devices = json.loads(probe.read_text())['devices']
+if distributed:
+    manifests = [json.loads((run / 'S8-distributed-job' / f'node-{rank:02d}/manifest.json').read_text()) for rank in range(4)]
+    devices = [dict(device, node_rank=rank, probe_path=manifest['probe_path'])
+               for rank, manifest in enumerate(manifests) for device in manifest['devices']]
+    assert len(devices) == len({device['uuid'] for device in devices}) == 8
 migration = dict(kind='eight_gpu_rollout_only', checkpoint_sha256=sha(checkpoint),
     original_contract=saved['contract'], from_source_commit=saved['contract']['source_commit'],
     to_source_commit=os.environ['TASK_CODE_PIN'], prior_partial_training_actions_charged=prior_charge,
@@ -78,6 +95,9 @@ profile.update(source_commit=os.environ['TASK_CODE_PIN'], output=str(run / 'S8')
     rollout_migration=dict(path=str(out / 'migration.json'), sha256=sha(out / 'migration.json')),
     first_iteration_wall_ceiling_seconds=3600, dev_evaluation_wall_ceiling_seconds=600,
     final_evaluation_wall_reserve_seconds=1200)
+if distributed:
+    profile.update(distributed_rollout_root=str(run / 'S8-distributed-job/dispatch'),
+        gpu_allocation_starts_unix=[manifest['allocated_start_unix'] for manifest in manifests for _ in range(2)])
 write_new(out / 'training-profile.json', profile)
 environment = dict(os.environ, **pipeline['policy_env'])
 environment.update(PYTHONPATH=str(code / 'src') + ':' + os.environ['TASK_RLINF'],

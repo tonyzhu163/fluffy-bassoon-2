@@ -12,10 +12,19 @@ import socket
 
 
 def validate_container(environ, hostname):
-    if (not re.fullmatch(r'job-[a-z0-9]+-master-0', hostname)
+    host = re.fullmatch(r'(job-[a-z0-9]+)-(master|worker)-(\d+)', hostname)
+    if (not host
             or not environ.get('KUBERNETES_SERVICE_HOST')
             or any(environ.get(k) for k in ('SLURM_JOB_ID', 'SLURM_STEP_ID'))):
         raise ValueError('Baige mapping requires a scheduled Baige master container')
+    if host[2] == 'master' and host[3] != '0':
+        raise ValueError('A Baige job has exactly one master-0')
+    if host[2] == 'worker':
+        rank = int(host[3]) + 1
+        if (environ.get('RANK') != str(rank) or not environ.get('WORLD_SIZE', '').isdigit()
+                or int(environ['WORLD_SIZE']) <= rank
+                or environ.get('MASTER_ADDR') != host[1] + '-master-0'):
+            raise ValueError('Distributed worker must match scheduler node rank and master identity')
     assigned = environ.get('NVIDIA_VISIBLE_DEVICES', '').split(',')
     if not assigned or len(set(assigned)) != len(assigned) or any(
             not re.fullmatch(r'GPU-[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}', x)

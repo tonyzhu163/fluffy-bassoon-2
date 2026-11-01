@@ -81,6 +81,7 @@ class ParallelResidualEnvironment:
                                      deterministic=deterministic)
         children, streams, requests = [], [], []
         self.active = True
+        distributed = self.profile.get("distributed_rollout_root")
         try:
             for rank, device in enumerate(devices):
                 directory = bank / f"rank-{rank:02d}"
@@ -97,6 +98,14 @@ class ParallelResidualEnvironment:
                 request_path = directory / "request.pt"
                 atomic_save(request_path, request)
                 requests.append(request)
+                if distributed:
+                    from .rlinf_flora_ppo import write_new
+                    queue = Path(distributed) / f"rank-{rank:02d}"
+                    queue.mkdir(parents=True, exist_ok=True)
+                    write_new(queue / (self.output.parent.name + f"-{self.cursor:06d}.json"),
+                        dict(request=str(request_path), sha256=sha(request_path), output=str(directory),
+                             source_commit=self.profile["source_commit"]))
+                    continue
                 env = dict(os.environ, CUDA_VISIBLE_DEVICES=device["visibility_token"],
                     LYCO_BAIGE_ISOLATED_UUID=device["uuid"],
                     MUJOCO_EGL_DEVICE_ID=str(device["allocation_ordinal"]),
@@ -107,13 +116,20 @@ class ParallelResidualEnvironment:
                     str(self.code / "scripts/diagnostics/robocasa_residual_rollout.py"),
                     "--request", str(request_path)], env=env, stdout=stream, stderr=subprocess.STDOUT,
                     start_new_session=True))
-            while any(child.poll() is None for child in children):
+            def complete():
+                if distributed:
+                    return all((bank / f"rank-{rank:02d}/result.pt").exists() for rank in range(world))
+                return all(child.poll() is not None for child in children)
+
+            while not complete():
                 if any(child.poll() not in (None, 0) for child in children):
                     raise RuntimeError("Native rollout worker failed; preserve every request/result, no recollection")
+                if any((bank / f"rank-{rank:02d}/error.json").exists() for rank in range(world)):
+                    raise RuntimeError("Distributed native worker failed; preserve every request and partial result")
                 if time.time() >= self.profile["deadline_unix"] - self.profile["closure_seconds"]:
                     raise TimeoutError("Parallel pending bank retained before finite closure")
                 self.report("parallel_native_rollout", workers=world,
-                            complete_workers=sum(child.poll() == 0 for child in children))
+                            complete_workers=sum((bank / f"rank-{rank:02d}/result.pt").exists() for rank in range(world)))
                 time.sleep(1)
             if any(child.returncode != 0 for child in children):
                 raise RuntimeError("Parallel bank incomplete; no labels or optimizer update")
