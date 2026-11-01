@@ -20,12 +20,15 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo import (
 )
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol, require_calibration_permission
-from fluffy_bassoon.meta_rl.flora_terminal_shards import gather_terminal_outputs, shard_episode_bank
+from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS, protocol, require_calibration_permission
+from fluffy_bassoon.meta_rl.flora_terminal_shards import (
+    gather_terminal_outputs, shard_episode_bank, gather_joint_terminal_outputs, joint_episode_shard,
+)
 
 
-def score(worker, episodes, output, model_receipt, proto):
-    jobs = flora_jobs(episodes, proto)
+def score(worker, episodes, output, model_receipt, proto=None, *, episode_protocols=None):
+    jobs = (flora_jobs(episodes, proto) if episode_protocols is None else
+            flora_jobs(episodes, episode_protocols=episode_protocols))
     for episode in episodes:
         for ref in episode_video_refs(episode):
             if sha(ref["path"]) != ref["sha256"]:
@@ -34,15 +37,35 @@ def score(worker, episodes, output, model_receipt, proto):
         for row in jobs:
             stream.write(json.dumps(row) + "\n")
     rows = worker.score_jobs(jobs, output)
-    labels = parse_outputs(episodes, rows, proto)
+    labels = (parse_outputs(episodes, rows, proto) if episode_protocols is None else
+              parse_outputs(episodes, rows, episode_protocols=episode_protocols))
     receipt = dict(code_commit=FLORA_CODE, model_revision=FLORA_MODEL, model_receipt=model_receipt,
         completed=True, jobs_sha256=digest(jobs), video_refs_sha256=video_refs_digest(episodes),
         output=dict(path=str(output), sha256=sha(output)), training_reward_rule="(expected_score-1)/4",
         engine_process_pid=os.getpid(), model_load_count=worker.model_load_count,
         completed_batches=worker.completed_batches, engine="official persistent terminal_reward helpers",
         batch_size=worker.batch_size, gpu_memory_utilization=worker.gpu_memory_utilization)
+    if episode_protocols is not None:receipt['episode_protocols_sha256']=digest(episode_protocols)
     write_new(output.with_suffix(".receipt.json"), receipt)
     return rows, labels, receipt
+
+
+def joint_calibrations(profile):
+    """Five immutable task gates; the scorer cannot create an exception."""
+    gates,exceptions=profile.get('baseline_validations'),profile.get('calibration_exceptions',{})
+    if (profile.get('task')!='joint_five' or profile.get('tasks')!=list(PPO_TASKS)
+            or profile['mode']!='train' or profile.get('annotation_world')!=8
+            or profile.get('batch_size')!=8 or profile.get('gpu_memory_utilization')!=.78
+            or profile.get('minimum_free_mib_after_engine_warmup',0)<17536
+            or not isinstance(gates,dict) or set(gates)!=set(PPO_TASKS)
+            or not isinstance(exceptions,dict) or not set(exceptions)<=set(PPO_TASKS)):
+        raise ValueError('Explicit joint train-only profile and all five task calibration bindings required')
+    for task in PPO_TASKS:
+        require_calibration_permission(read_ref(gates[task]),protocol(task,baseline_count=50),
+            calibration_sha256=gates[task]['sha256'],
+            authorization=read_ref(exceptions[task]) if task in exceptions else None)
+    return dict(task='joint_five',tasks=list(PPO_TASKS),baseline_validations=gates,
+                calibration_exceptions=exceptions)
 
 
 def main():
@@ -69,9 +92,10 @@ def main():
             or not model_receipt["completed"] or Path(model_receipt["model_directory"]).resolve() != model.resolve()):
         raise ValueError("Same qualified official Flora code, weights and local receipt required")
     baseline_count = profile.get('baseline_count', 8)
-    if baseline_count != 8 and profile['mode'] != 'baseline':
+    joint=profile.get('task')=='joint_five'
+    if baseline_count != 8 and profile['mode'] != 'baseline' and not joint:
         raise ValueError('The fifty-case extension is baseline measurement only, not a training migration')
-    proto = protocol(profile["task"], baseline_count=baseline_count)
+    proto = None if joint else protocol(profile["task"], baseline_count=baseline_count)
     output = Path(profile["output"])
     output.mkdir(parents=True, exist_ok=False)
     world, rank = profile.get('annotation_world', 1), profile.get('annotation_rank', 0)
@@ -103,11 +127,13 @@ def main():
     progress = ProgressLog(output / "progress", "F", contract_sha256=digest(profile)).start()
     try:
         offload_ref = None
+        joint_bindings = joint_calibrations(profile) if joint else None
         if world == 8:
-            gate = read_ref(profile['baseline_validation'])
-            require_calibration_permission(gate, proto,
-                calibration_sha256=profile['baseline_validation']['sha256'],
-                authorization=read_ref(profile['calibration_exception']) if profile.get('calibration_exception') else None)
+            if not joint:
+                gate = read_ref(profile['baseline_validation'])
+                require_calibration_permission(gate, proto,
+                    calibration_sha256=profile['baseline_validation']['sha256'],
+                    authorization=read_ref(profile['calibration_exception']) if profile.get('calibration_exception') else None)
             offload_path = Path(profile['F_output']) / 'controller-motor-offload.json'
             while not offload_path.exists():
                 if time.time() >= profile['deadline_unix'] - profile['closure_seconds']:
@@ -135,7 +161,7 @@ def main():
             if (not all(math.isfinite(value) for value in (used, free, total))
                     or free < required):
                 raise RuntimeError('Measured scorer warmup leaves insufficient declared policy/workspace headroom')
-            write_new(profile['engine_ready_path'], dict(format='robocasa_flora_tp1_engine_ready_v1',
+            ready = dict(format='robocasa_flora_joint_tp1_engine_ready_v1' if joint else 'robocasa_flora_tp1_engine_ready_v1',
                 completed=True, annotation_rank=rank, annotation_world=8,
                 source_commit=profile['source_commit'], code_commit=FLORA_CODE, model_revision=FLORA_MODEL,
                 model_receipt=profile['model_receipt'], profile_sha256=digest(profile),
@@ -144,7 +170,9 @@ def main():
                 gpu_memory_utilization=worker.gpu_memory_utilization,
                 controller_offload=offload_ref, engine_warmup_seconds=time.monotonic() - engine_start,
                 memory=dict(used_mib=used, free_mib=free, total_mib=total,
-                    minimum_free_required_mib=required, scope='postwarmup snapshot, not lifetime peak')))
+                    minimum_free_required_mib=required, scope='postwarmup snapshot, not lifetime peak'))
+            if joint:ready.update(joint_bindings)
+            write_new(profile['engine_ready_path'],ready)
         progress.emit(phase="official_persistent_engine_ready", model_load_count=1,
                       engine_process_pid=os.getpid())
         serve(profile, args, worker, output, proto, progress)
@@ -177,12 +205,15 @@ def serve(profile, args, worker, output, proto, progress):
         del truth, episodes, rows, result
     elif args.baseline_monitor or args.episodes:
         raise ValueError("F training scorer cannot receive simulator truth or another case bank")
-    gate = (json.loads((output / "baseline-validation.json").read_text())
-            if profile["mode"] == "integrated" else read_ref(profile["baseline_validation"]))
-    gate_ref = profile.get('baseline_validation')
-    require_calibration_permission(gate, proto,
-        calibration_sha256=gate_ref['sha256'] if gate_ref else sha(output / 'baseline-validation.json'),
-        authorization=read_ref(profile['calibration_exception']) if profile.get('calibration_exception') else None)
+    joint=profile.get('task')=='joint_five'
+    if joint:joint_calibrations(profile)
+    else:
+        gate = (json.loads((output / "baseline-validation.json").read_text())
+                if profile["mode"] == "integrated" else read_ref(profile["baseline_validation"]))
+        gate_ref = profile.get('baseline_validation')
+        require_calibration_permission(gate, proto,
+            calibration_sha256=gate_ref['sha256'] if gate_ref else sha(output / 'baseline-validation.json'),
+            authorization=read_ref(profile['calibration_exception']) if profile.get('calibration_exception') else None)
     maximum = profile["maximum_batches"]
     if type(maximum) is not int or not 1 <= maximum <= 10:
         raise ValueError("At most ten admitted F batches")
@@ -199,9 +230,16 @@ def serve(profile, args, worker, output, proto, progress):
             pending = request["pending_checkpoint"]
             # The complete producing-policy/critic/Adam/RNG+rollout checkpoint
             # was saved before the request. No simulator labels are read here.
-            if sha(pending["path"]) != pending["sha256"] or request["protocol"] != proto:
+            if sha(pending["path"]) != pending["sha256"] or not joint and request["protocol"] != proto:
                 raise ValueError("Pending batch bytes or native task changed")
-            jobs = flora_jobs(request["episodes"], proto)
+            if joint:
+                protocols=request.get('episode_protocols')
+                joint_episode_shard(request['episodes'],0,protocols)
+                if (request.get('source_commit')!=profile['source_commit']
+                        or request.get('episode_protocols_sha256')!=digest(protocols)):
+                    raise ValueError('Joint producing source or per-case task binding changed')
+                jobs=flora_jobs(request['episodes'],episode_protocols=protocols)
+            else:jobs = flora_jobs(request["episodes"], proto)
             if request["jobs"] != jobs or request["jobs_sha256"] != digest(jobs):
                 raise ValueError("Fresh batch video identity mismatch")
             if profile.get('annotation_world') == 8:
@@ -228,36 +266,55 @@ def serve(profile, args, worker, output, proto, progress):
 
 
 def serve_shard(profile, worker, output, proto, progress, path, request):
-    """Eight persistent engines; same original all64 ready.json boundary."""
+    """Eight persistent engines; complete original64 or explicit joint80 boundary."""
     rank = profile['annotation_rank']
     episodes = request['episodes']
-    subset = shard_episode_bank(episodes, rank, 8, proto)
+    joint=profile.get('task')=='joint_five'
+    protocols=request.get('episode_protocols') if joint else None
+    if joint:
+        subset,subset_protocols=joint_episode_shard(episodes,rank,protocols)
+        if time.time()>=profile['deadline_unix']-profile['closure_seconds']:
+            raise TimeoutError('Joint pending batch preserved at the finite scorer boundary')
+        jobs=flora_jobs(episodes,episode_protocols=protocols)
+        if (request.get('source_commit')!=profile['source_commit']
+                or request.get('episode_protocols_sha256')!=digest(protocols)
+                or request['jobs']!=jobs or request['jobs_sha256']!=digest(jobs)):
+            raise ValueError('Joint annotation requires the exact producing source and native task map')
+    else:subset = shard_episode_bank(episodes, rank, 8, proto)
     request_sha, pending = sha(path), request['pending_checkpoint']
     directory = path.parent / 'shards'
     ready_path = directory / f'rank-{rank:02d}.json'
     if not ready_path.exists():
         target = output / (path.parent.name + '.jsonl')
-        progress.emit(phase='official_Flora_shard_inference', episodes_complete=8,
+        progress.emit(phase='official_Flora_shard_inference', episodes_complete=len(subset),
                       annotation_rank=rank, annotation_world=8)
-        rows, _, receipt = score(worker, subset, target, profile['model_receipt'], proto)
+        rows, _, receipt = (score(worker,subset,target,profile['model_receipt'],episode_protocols=subset_protocols)
+            if joint else score(worker, subset, target, profile['model_receipt'], proto))
         array = target.with_suffix('.json')
         write_new(array, rows)
-        write_new(ready_path, dict(completed=True, annotation_rank=rank, annotation_world=8,
+        shard=dict(completed=True, annotation_rank=rank, annotation_world=8,
             request_sha256=request_sha, pending_checkpoint_sha256=pending['sha256'],
             jobs_sha256=request['jobs_sha256'], code_commit=FLORA_CODE, model_revision=FLORA_MODEL,
             episode_ids=[row['id'] for row in subset], scorer_receipt=receipt,
-            outputs=dict(path=str(array), sha256=sha(array))))
+            outputs=dict(path=str(array), sha256=sha(array)))
+        if joint:shard.update(source_commit=profile['source_commit'],episode_protocols_sha256=digest(protocols))
+        write_new(ready_path,shard)
     if rank == 0:
         shard_paths = [directory / f'rank-{index:02d}.json' for index in range(8)]
+        last_emit=0.
         while not all(row.exists() for row in shard_paths):
             if time.time() >= profile['deadline_unix'] - profile['closure_seconds']:
-                raise TimeoutError('Whole pending batch remains saved; not all64 Flora labels completed')
-            progress.emit(phase='waiting_for_all_eight_Flora_shards')
+                raise TimeoutError('Whole pending batch remains saved; not all terminal labels completed')
+            if not joint or time.monotonic()-last_emit>=25:
+                progress.emit(phase='waiting_for_all_eight_Flora_shards');last_emit=time.monotonic()
             time.sleep(1)
         shards = {}
+        if joint and time.time()>=profile['deadline_unix']-profile['closure_seconds']:
+            raise TimeoutError('No joint labels are released after the finite scorer boundary')
         for index, shard_path in enumerate(shard_paths):
             value = json.loads(shard_path.read_text())
-            expected = shard_episode_bank(episodes, index, 8, proto)
+            if joint:expected,expected_protocols=joint_episode_shard(episodes,index,protocols)
+            else:expected = shard_episode_bank(episodes, index, 8, proto)
             if (value.get('completed') is not True or value['annotation_rank'] != index
                     or value['annotation_world'] != 8 or value['request_sha256'] != request_sha
                     or value['pending_checkpoint_sha256'] != pending['sha256']
@@ -266,21 +323,28 @@ def serve_shard(profile, worker, output, proto, progress, path, request):
                     or value['episode_ids'] != [row['id'] for row in expected]
                     or value['scorer_receipt']['model_receipt'] != profile['model_receipt']):
                 raise ValueError('Stale, partial or different-model Flora shard cannot release GAE')
+            if joint and (value.get('source_commit')!=profile['source_commit']
+                    or value.get('episode_protocols_sha256')!=digest(protocols)
+                    or value['scorer_receipt'].get('episode_protocols_sha256')!=digest(expected_protocols)):
+                raise ValueError('Joint terminal shard belongs to another source or task assignment')
             shards[index] = read_ref(value['outputs'])
         if sha(path) != request_sha or sha(pending['path']) != pending['sha256']:
             raise ValueError('Producing batch changed while annotation was pending')
-        rows, _ = gather_terminal_outputs(episodes, shards, proto)
+        rows, _ = (gather_joint_terminal_outputs(episodes,shards,protocols) if joint
+                   else gather_terminal_outputs(episodes, shards, proto))
         array = path.parent / 'flora-terminal-outputs.json'
         if array.exists():
             if json.loads(array.read_text()) != rows:
                 raise ValueError('An interrupted aggregate cannot be overwritten with different labels')
         else:
             write_new(array, rows)
-        write_new(path.parent / 'ready.json', dict(pending_checkpoint_sha256=pending['sha256'],
+        ready=dict(pending_checkpoint_sha256=pending['sha256'],
             jobs_sha256=request['jobs_sha256'], code_commit=FLORA_CODE, model_revision=FLORA_MODEL,
             outputs=dict(path=str(array), sha256=sha(array)),
-            shard_receipts=[dict(path=str(row), sha256=sha(row)) for row in shard_paths]))
-        progress.emit(phase='complete_batch_labels_ready', labels_complete=64,
+            shard_receipts=[dict(path=str(row), sha256=sha(row)) for row in shard_paths])
+        if joint:ready.update(source_commit=profile['source_commit'],episode_protocols_sha256=digest(protocols))
+        write_new(path.parent / 'ready.json',ready)
+        progress.emit(phase='complete_batch_labels_ready', labels_complete=len(episodes),
                       model_load_count=worker.model_load_count, completed_batches=worker.completed_batches)
 
 
