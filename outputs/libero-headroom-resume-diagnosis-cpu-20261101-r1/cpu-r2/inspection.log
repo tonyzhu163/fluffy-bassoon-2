@@ -1,0 +1,43 @@
+WARNING:absl:Tensorflow library not found, tensorflow.io.gfile operations will use native shim calls. GCS paths (i.e. 'gs://...') cannot be accessed.
+PixelMultiplexer(
+    # attributes
+    encoder = Encoder(
+        # attributes
+        features = (32, 32, 32, 32)
+        strides = (2, 1, 1, 1)
+        padding = 'VALID'
+    )
+    network = LearnedStdTanhNormalPolicy(
+        # attributes
+        hidden_dims = (128, 128, 128)
+        action_dim = 32
+        dropout_rate = 0.0
+        log_std_min = -20
+        log_std_max = 2
+        low = -1.0
+        high = 1.0
+    )
+    latent_dim = 50
+    use_bottleneck = True
+)
+PixelMultiplexer(
+    # attributes
+    encoder = Encoder(
+        # attributes
+        features = (32, 32, 32, 32)
+        strides = (2, 1, 1, 1)
+        padding = 'VALID'
+    )
+    network = StateActionEnsemble(
+        # attributes
+        hidden_dims = (128, 128, 128)
+        activations = relu
+        num_qs = 10
+        use_action_sep = False
+    )
+    latent_dim = 50
+    use_bottleneck = True
+)
+target_entropy: -16.0
+mean
+{"classification": "identical_saved_state_raw_representation_differs", "predicates": {"training_equal": true, "updates_equal": true, "replay_rows_equal": true, "raw_restored_signature_equal": false}, "canonical_equal": true, "replay_exact": true, "RNG": {"agent_exact": true, "sampler_exact": true, "numpy_global_exact": true, "python_global_exact": true, "motor_key_roundtrip_exact": true}}
