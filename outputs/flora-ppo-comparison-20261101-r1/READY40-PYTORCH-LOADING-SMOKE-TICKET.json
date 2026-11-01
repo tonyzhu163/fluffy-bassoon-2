@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "ticket_id": "ready40-pytorch-loading-smoke-q1",
+  "status": "conditional_on_concrete_ready40_source_pin_and_resource_admission",
+  "authority": "READY40-INITIALIZER-MIGRATION.json",
+  "scope": "Directload exactpublishedPyTorch40release withofficialc605loader andatmostONEalreadyplannednativefullH400smoke. NoJAXconverter,SGD,teachertraining ornewscientificcase.",
+  "resource": {
+    "gpus": 1,
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "scheduler_minutes": 59,
+    "retry": false,
+    "total_inclusive_gpu_seconds": 3600,
+    "inner_seconds": 3420,
+    "term_seconds": 3510,
+    "kill_seconds": 3530,
+    "outer_seconds": 3540,
+    "startup_allowance_seconds": 60,
+    "output_gib": 16
+  },
+  "interactions": {
+    "maximum_episodes": 1,
+    "maximum_actions_including_settling": 415,
+    "bucket": "existingcommonbaseline/smoke26975, chargedonce; not anewactiongrant",
+    "horizon": 400,
+    "settle": 15,
+    "success_termination": false,
+    "updates": 0
+  },
+  "pins": {
+    "repository": "RLinf/RLinf-Pi05-LIBERO-SFT",
+    "revision": "45ccfcc4e28634f1576ebf78cab0fbe2fd82432d",
+    "weights": {
+      "path": "model.safetensors",
+      "bytes": 7473091464,
+      "file_sha256": "4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7"
+    },
+    "normalization": {
+      "path": "physical-intelligence/libero/norm_stats.json",
+      "bytes": 4507,
+      "file_sha256": "dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1"
+    },
+    "gated": false
+  },
+  "preconditions": [
+    "Concrete sourcewriter commit basedonlatestmain, corresponding narrowtests/actualcarryproof; oldC565-only entry cannotloadnewrelease.",
+    "Actualstagedmodel/norm bytehashes matchpinnedrelease; actualimportedc605origin/mapping/shape andcompletebackbone load, onlyfreshalgorithmheadsexpected.",
+    "Correct PFSsource/mount provenbeforeform; actualallocatedGPUcount/CUDA/ownPIDprobe/capacity/writeprobe.",
+    "Freshimmutableattempt/output/profile andboundedclock, allpreviouscostsretained; no shared/activeWT mutation."
+  ],
+  "reporting": [
+    "Truthfulactualloadingmissing/unexpectedkeys, artifacthashnamespace andnormparitytoNEWrelease only.",
+    "Actualsampler3denoise/execute5/H10,publicobservations/nativevideo20Hz/fullH400/masks/415all-insteps ifepisodecompletes.",
+    "Preservefailure/partialactions; qualifybeforeclaimingpass, noextraepisodesfromomittedcapacity."
+  ],
+  "future_baseline": "Fresh64andFloraAUROC/headroom required beforePPO; separateconcretefiniteprofile may follow withinexistingcommonactionceiling. No substitutionofhistoricalnative6/20 oroldSACcounts.",
+  "execution_owner": "/root/finish_assembly",
+  "aggregate_policy": "Newcomponentunderhumanresourceoverride, <=8GPUs/job,<8h,no aggregateGPUhourceiling. Its3600seconds are anewboundedticket, notborrowed3509conversionunused."
+}
