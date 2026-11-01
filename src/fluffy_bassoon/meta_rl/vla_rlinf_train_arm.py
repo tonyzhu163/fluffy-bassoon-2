@@ -207,7 +207,7 @@ def train_supervised(args, assembled, registry):
             write_json(args.output / "registry.json", registry)
             if latest["update"] != 500:
                 raise RuntimeError("Student reached its time bound before 500 updates; recovery retained, arm incomplete")
-            policy = HistoryNoisePolicy(HistoryConfig(**latest["contract"]["config"]))
+            policy = HistoryNoisePolicy(HistoryConfig.from_saved(latest["contract"]["config"]))
             policy.load_state_dict(latest["policy"], strict=True)
             final = directory / "final-candidate.pt"
             export_policy(final, policy.eval().requires_grad_(False), manifest=dict(contract=latest["contract"],

@@ -2,7 +2,8 @@
 
 Each stored row is (observation before action, executed motor noise, reward
 AFTER action, done). Targets are separate labels, never history inputs. The
-GTrXL core is shared with recurrent PPO; weights stay frozen at deployment.
+default core is a plain causal decoder; GTrXL remains selectable for legacy
+checkpoints and backbone ablations. Weights stay frozen at deployment.
 """
 
 from dataclasses import asdict, dataclass
@@ -16,6 +17,7 @@ import torch
 from torch import nn
 from torch.distributions import Normal
 
+from .causal_decoder import CausalDecoderCore
 from .gtrxl import GatedTransformerXLCore
 from .warmstart import atomic_save, checked_load, validate_weights
 
@@ -23,6 +25,7 @@ from .warmstart import atomic_save, checked_load, validate_weights
 DATA_FORMAT = "frozen_vla_history_dataset_v1"
 MODEL_FORMAT = "frozen_vla_history_policy_v1"
 MODES = ("full", "episode", "static")
+BACKBONES = ("decoder", "gtrxl")
 OBJECTIVES = ("ad", "dpt", "behavior_cloning", "cnd")
 FIELDS = ("observations", "executed_noise", "target_noise", "rewards", "dones", "episode_starts", "teacher_steps")
 
@@ -150,13 +153,20 @@ class HistoryConfig:
     context_length: int = 300
     # Unbounded motor-noise coordinates; adapters own any fixed scaling/map.
     initial_std: float = .5
+    backbone: str = "decoder"
+
+    @classmethod
+    def from_saved(cls, config):
+        """Checkpoints written before the decoder default carry no backbone; they are GTrXL."""
+        return cls(**{"backbone": "gtrxl", **config})
 
     def __post_init__(self):
         if (any(type(value) is not int or value < 1 for value in
                 (self.observation_dim, self.noise_dim, self.width, self.layers, self.heads, self.context_length))
                 or self.width % self.heads or self.width % 2
-                or not math.isfinite(self.initial_std) or self.initial_std <= 0):
-            raise ValueError("Invalid history-controller dimensions or initial Gaussian standard deviation")
+                or not math.isfinite(self.initial_std) or self.initial_std <= 0
+                or self.backbone not in BACKBONES):
+            raise ValueError("Invalid history-controller dimensions, initial Gaussian standard deviation or backbone")
 
 
 class HistoryNoisePolicy(nn.Module):
@@ -165,7 +175,8 @@ class HistoryNoisePolicy(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.config = config
-        self.core = GatedTransformerXLCore(config.observation_dim + config.noise_dim + 3,
+        core = CausalDecoderCore if config.backbone == "decoder" else GatedTransformerXLCore
+        self.core = core(config.observation_dim + config.noise_dim + 3,
             width=config.width, layers=config.layers, heads=config.heads, memory_length=config.context_length)
         self.actor = nn.Linear(config.width, config.noise_dim)
         self.log_std = nn.Parameter(torch.full((config.noise_dim,), math.log(config.initial_std)))
@@ -336,7 +347,7 @@ def load_policy(path, *, expected_sha256, device="cpu"):
     saved = checked_load(path, expected_sha256)
     if saved.get("format") != MODEL_FORMAT or not saved.get("manifest"):
         raise ValueError("Require a history-controller checkpoint and its provenance")
-    policy = HistoryNoisePolicy(HistoryConfig(**saved["config"]))
+    policy = HistoryNoisePolicy(HistoryConfig.from_saved(saved["config"]))
     validate_weights(policy, saved["policy"])
     policy.load_state_dict(saved["policy"], strict=True)
     return policy.to(device).eval().requires_grad_(False), saved["manifest"]
