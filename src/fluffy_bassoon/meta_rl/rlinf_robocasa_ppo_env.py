@@ -44,18 +44,20 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
                 return _original(sim,*args,**kwargs)
             setattr(MjSim,name,counted_tick)
         env=factory()
-        clock=dict(control_freq=float(env.control_freq),control_timestep=float(env.control_timestep),
-            model_timestep=float(env.model_timestep),lite_physics=bool(env.lite_physics))
-        if (clock['control_freq']<=0 or clock['model_timestep']<=0
-                or abs(clock['control_timestep']*clock['control_freq']-1)>1e-9
-                or not 1<=int(clock['control_timestep']/clock['model_timestep'])<=128):
-            raise ValueError('Actual native control/physics clock outside predeclared finite limits')
-        counts['clock']=clock
         original_reset=env.reset
         def reset(*args,**kwargs):
             counts['phase']='reset'
             try:result=original_reset(*args,**kwargs)
             finally:counts['phase']='policy'
+            # RoboCasa defers time initialization until native reset. Read
+            # actual initialized fields, without supplying a guessed frequency.
+            clock=dict(control_freq=float(env.control_freq),control_timestep=float(env.control_timestep),
+                model_timestep=float(env.model_timestep),lite_physics=bool(env.lite_physics))
+            if (clock['control_freq']<=0 or clock['model_timestep']<=0
+                    or abs(clock['control_timestep']*clock['control_freq']-1)>1e-9
+                    or not 1<=int(clock['control_timestep']/clock['model_timestep'])<=128):
+                raise ValueError('Actual native control/physics clock outside predeclared finite limits')
+            counts['clock']=clock
             counts['control_time']=float(env.cur_time)
             return result
         env.reset=reset
