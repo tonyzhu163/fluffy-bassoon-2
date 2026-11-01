@@ -330,10 +330,10 @@ def test_compose_actual_official_config(monkeypatch,tmp_path,world):
 def test_real_fsdp_validator_rejects_missing_openpi_fp32_rules(monkeypatch,tmp_path):
     from rlinf.config import validate_fsdp_cfg
     cfg=_compose_official_config(monkeypatch,tmp_path,4)
-    broken=deepcopy(cfg.actor)
-    broken.fsdp_config.mixed_precision_rules={}
+    broken=deepcopy(cfg) # Keep the absolute actor.model precision interpolation rooted.
+    broken.actor.fsdp_config.mixed_precision_rules={}
     with pytest.raises(ValueError,match='require mixed_precision_rules'):
-        validate_fsdp_cfg(broken)
+        validate_fsdp_cfg(broken.actor)
     actor=validate_fsdp_cfg(cfg.actor)
     assert actor.fsdp_config.mixed_precision.param_dtype=='bf16'
     assert actor.fsdp_config.mixed_precision.reduce_dtype=='bf16'
