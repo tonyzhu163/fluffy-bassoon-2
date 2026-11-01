@@ -28,6 +28,8 @@ authority = read_ref(binding['human_action_authority'])
 assert authority['allow_joint_stage_actions'] is True and authority['maximum_stage_actions'] == 2_500_000
 assert authority['direct_human_instruction'] and authority['old_trial_spend_preserved'] is True
 assert binding['tasks'] == list(PPO_TASKS) and binding['maximum_iterations'] == 6
+assert binding['human_task_authority'] == binding['policy_profile']['calibration_exceptions'].get('PickPlaceCounterToCabinet')
+assert read_ref(binding['human_task_authority'])['direct_human_instruction']
 node_rank, start = int(os.environ['RANK']), int(os.environ['TASK_STARTED'])
 worker_seconds = 7200 if kind == 'common' else 21600
 slice_seconds = worker_seconds - 60
@@ -51,6 +53,12 @@ assert storage['completed'] is True and storage['write_probe_pass'] is True
 assert storage['old_recoveries_preserved'] is True and storage['stage_supported_upper_bytes'] <= 256 << 30
 free = os.statvfs(out).f_bavail * os.statvfs(out).f_frsize
 assert free >= storage['remaining_output_reservation_bytes'] >= output_gib << 30
+write_probe = out / 'write-probe'
+with write_probe.open('x') as stream:
+    stream.write('fresh native joint namespace\n')
+    stream.flush()
+    os.fsync(stream.fileno())
+write_probe.unlink()
 probe = out / 'gpu-probe.json'
 subprocess.run([sys.executable, '-B', str(code / 'scripts/[train]gpu_probe.py'), '--expected-count', '2',
     '--purpose', 'training', '--baige-container', '--baige-exclusive-training', '--output', str(probe)],
@@ -63,6 +71,19 @@ write_new(out / 'manifest.json', dict(node_rank=node_rank, hostname=socket.getho
     source_commit=binding['source_commit'], allocated_start_unix=start, probe_path=str(probe), devices=devices,
     cpus=32, ram_gib=ram_gib, free_bytes=free, quota=storage.get('quota', 'UNVERIFIED'),
     human_action_authority=binding['human_action_authority'], binding_sha256=os.environ['TASK_BINDINGS_SHA256']))
+manifests = [job / f'node-{rank:02d}/manifest.json' for rank in range(4)]
+while not all(path.exists() for path in manifests):
+    if any((job / f'node-{rank:02d}/error.json').exists() for rank in range(4)):
+        raise RuntimeError('An owned native node failed before its manifest')
+    if time.time() >= min(start + 300, deadline):
+        raise TimeoutError('All four actual allocated nodes must advance before policy construction')
+    time.sleep(1)
+manifests = [json.loads(path.read_text()) for path in manifests]
+assert [m['node_rank'] for m in manifests] == list(range(4))
+assert all(m['source_commit'] == binding['source_commit'] and m['binding_sha256'] == os.environ['TASK_BINDINGS_SHA256'] for m in manifests)
+global_devices = [dict(d, node_rank=rank, probe_path=m['probe_path']) for rank, m in enumerate(manifests) for d in m['devices']]
+assert len(global_devices) == len({d['uuid'] for d in global_devices}) == 8
+deadline = min(m['allocated_start_unix'] for m in manifests) + slice_seconds - closure
 profile = copy.deepcopy(binding['policy_profile'])
 assert profile['task'] == 'joint_five' and profile['tasks'] == list(PPO_TASKS)
 assert profile['maximum_iterations'] == 6 and set(profile['baseline_validations']) == set(PPO_TASKS)
@@ -77,17 +98,14 @@ write_new(out / 'node-profile.json', dict(node_rank=node_rank, devices=devices, 
     native_env=native_env, probe_path=str(probe), source_commit=binding['source_commit'], deadline_unix=deadline))
 service = subprocess.Popen([sys.executable, '-B', str(code / 'scripts/diagnostics/robocasa_residual_node.py'),
     '--profile', str(out / 'node-profile.json')], start_new_session=True)
+def halt(signum, frame):
+    raise SystemExit(128 + signum)
+
+
+signal.signal(signal.SIGTERM, halt)
+signal.signal(signal.SIGINT, halt)
 try:
     if node_rank == 0:
-        manifests = [job / f'node-{rank:02d}/manifest.json' for rank in range(4)]
-        while not all(path.exists() for path in manifests):
-            if time.time() >= min(start + 300, deadline):
-                raise TimeoutError('All four actual allocated nodes must advance before policy construction')
-            time.sleep(1)
-        manifests = [json.loads(path.read_text()) for path in manifests]
-        assert all(m['source_commit'] == binding['source_commit'] and m['binding_sha256'] == os.environ['TASK_BINDINGS_SHA256'] for m in manifests)
-        global_devices = [dict(d, node_rank=rank, probe_path=m['probe_path']) for rank, m in enumerate(manifests) for d in m['devices']]
-        assert len(global_devices) == len({d['uuid'] for d in global_devices}) == 8
         profile.update(mode='common_before' if kind == 'common' else 'train', arm='S',
             source_commit=binding['source_commit'], output=str(run / 'policy'), monitoring_root=str(run / 'monitoring'),
             accounting_root=str(run / 'actions'), attempt=os.environ['TASK_RUN'], episode_id_namespace='joint-',

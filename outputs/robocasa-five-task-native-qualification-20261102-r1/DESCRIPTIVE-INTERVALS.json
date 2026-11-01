@@ -1,0 +1,63 @@
+{
+  "source": "Existing saved native scalar counts only; no new episodes/tests/models or numerical arrays.",
+  "method": "Wilson score95%, z1.96. Episode-level descriptive intervals, not uncertainty over independently sampled tasks/scenes.",
+  "tasks": [
+    {
+      "task": "OpenDrawer",
+      "successes": 29,
+      "episodes": 50,
+      "rate": 0.58,
+      "Wilson95": [
+        0.4423319668777783,
+        0.7062520276543307
+      ],
+      "native_gate": true
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "successes": 37,
+      "episodes": 50,
+      "rate": 0.74,
+      "Wilson95": [
+        0.6044657801100008,
+        0.8412862034863262
+      ],
+      "native_gate": false
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "successes": 23,
+      "episodes": 50,
+      "rate": 0.46,
+      "Wilson95": [
+        0.3296943460178263,
+        0.5960136567161192
+      ],
+      "native_gate": true
+    },
+    {
+      "task": "TurnOffStove",
+      "successes": 7,
+      "episodes": 50,
+      "rate": 0.14,
+      "Wilson95": [
+        0.06950745262022862,
+        0.2618645719852809
+      ],
+      "native_gate": true
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "successes": 17,
+      "episodes": 50,
+      "rate": 0.34,
+      "Wilson95": [
+        0.2243676963506106,
+        0.47846431458517147
+      ],
+      "native_gate": true
+    }
+  ],
+  "gate": "Declared5%..70% point-success gate unchanged; intervals do not convert37/50 into a pass.",
+  "limitation": "50/task is an initial precision choice, not guaranteed power for small paired effects. Final paired discordant outcomes/exact McNemar reported per task after both arms; no p-value invented before paired final data."
+}

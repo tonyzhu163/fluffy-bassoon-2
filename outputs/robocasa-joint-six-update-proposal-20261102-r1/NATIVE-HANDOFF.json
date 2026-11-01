@@ -6,8 +6,8 @@
   "files": [
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/NATIVE-WORKLOAD.py",
-      "bytes": 9410,
-      "sha256": "fb79b6143fc0edc4ade14109832b690487f026d7296577ef299c815fe73c02f9"
+      "bytes": 10175,
+      "sha256": "f38068d2a12e4eaad960a0ecc8bd7bd8d2a92052631d12bdaad142fd5ceb8b1e"
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/NATIVE-COMMAND.sh",
@@ -16,11 +16,11 @@
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-TEMPLATE.json",
-      "bytes": 5191,
-      "sha256": "db576276cab30cefbc34dea3e09f12a8dd48152347f210ca2d8f2929832ba84a"
+      "bytes": 5223,
+      "sha256": "0915cddd9fc47d929fdad4ea556f4ea5bbbc613c6bc8602a5f5328b324fe8ebc"
     }
   ],
-  "review": "AST/static source review only. Reuses unchanged four-node two-GPU native service, actual probes, original begin/finish clocks, full common/S controller. No launcher/receipt tests or repeated numerical suites. Shell syntax checked with bash -n; no job/test executed. Template unresolved decision refs are null and status is NOT_ADMITTED, so the source refuses to execute it.",
+  "review": "AST/static source review only. Reuses unchanged four-node two-GPU native service, actual probes, original begin/finish clocks, full common/S controller. No launcher/receipt tests or repeated numerical suites. Shell syntax checked with bash -n; no job/test executed. Template unresolved decision refs are null and status is NOT_ADMITTED, so the source refuses to execute it. Parent source review aligns all four node services to earliest actual allocation deadline, explicitly probes fresh namespace writes, and catches TERM/INT so owned worker groups close in finally. No runtime/test claim. S/common also require the exact human_task_authority ref used by the actual Counter exception, matching F. All unresolved decision fields remain null.",
   "exact_inputs_required_before_dispatch": [
     "Hashed source-bound ADMITTED job binding including actual human stage-action decision and unchanged oldspends.",
     "Actual five50 calibrations and exactnative74% human exception if keeping currentset; no manufactured permission.",
