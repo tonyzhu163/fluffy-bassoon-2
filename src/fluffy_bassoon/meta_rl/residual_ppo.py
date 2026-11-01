@@ -89,11 +89,17 @@ class ResidualActorCritic(nn.Module):
         return Normal(mean, self.log_std.clamp(-5, 2).exp().expand_as(mean)), normalized
 
     @torch.no_grad()
-    def act(self, features, *, deterministic=False, generator=None):
+    def act(self, features, *, deterministic=False, generator=None, action_noise=None):
         distribution, normalized = self._distribution(features)
         mean, std = distribution.mean, distribution.stddev
-        control = mean if deterministic else mean + std * torch.randn(
-            mean.shape, device=mean.device, dtype=mean.dtype, generator=generator)
+        if action_noise is not None:
+            noise = torch.as_tensor(action_noise, device=mean.device, dtype=mean.dtype)
+            if deterministic or noise.shape != mean.shape or not torch.isfinite(noise).all():
+                raise ValueError("Explicit rollout noise must match one stochastic actor draw")
+        else:
+            noise = None if deterministic else torch.randn(
+                mean.shape, device=mean.device, dtype=mean.dtype, generator=generator)
+        control = mean if deterministic else mean + std * noise
         return control, distribution.log_prob(control).sum(-1), self.critic(normalized).squeeze(-1)
 
     def evaluate(self, features, control):

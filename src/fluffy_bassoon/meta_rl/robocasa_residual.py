@@ -90,7 +90,8 @@ class RoboCasaResidualEnvironment:
     counted_native_factory. writer_factory is imageio.get_writer in production.
     Simulator labels go ONLY to monitoring_root. Returned info is truth free.
     """
-    def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None):
+    def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
+                 episode_id_prefix="", rank=0):
         if horizon not in (750, 900, 1200) or horizon % 50 or not cases:
             raise ValueError("Bind native full episode horizon and a finite case bank")
         self.factory, self.cases, self.horizon = factory, deepcopy(cases), horizon
@@ -99,6 +100,7 @@ class RoboCasaResidualEnvironment:
         self.monitoring_root.mkdir(parents=True, exist_ok=True)
         self.journal, self.writer_factory = journal, writer_factory
         self.observer = observer
+        self.episode_id_prefix, self.rank = episode_id_prefix, int(rank)
         self.cursor, self.active = 0, False
         self.native = None
 
@@ -109,7 +111,7 @@ class RoboCasaResidualEnvironment:
             native, self.native = self.native, None
             native.close()
         case = self.cases[self.cursor]
-        self.key = f"episode-{self.cursor:06d}"
+        self.key = f"{self.episode_id_prefix}episode-{self.cursor:06d}"
         self.case = case
         intent = self.journal.begin(128, phase="native_constructor_reset")
         self.native = self.factory(case)
@@ -169,7 +171,7 @@ class RoboCasaResidualEnvironment:
         self.active = False
         episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=["robot0_agentview_left"],
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
-                info_on_video=False, extra_info_on_video=[], rank=0, round=self.cursor - 1, local_env=0,
+                info_on_video=False, extra_info_on_video=[], rank=self.rank, round=self.cursor - 1, local_env=0,
                 video=dict(path=str(self.video), sha256=sha(self.video)),
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
@@ -229,16 +231,28 @@ def native_environment_factory(cfg):
     return factory
 
 
-def collect_pending(policy, bound, motor, environment, *, episodes, generator, deterministic=False, verify_zero=False):
+def collect_pending(policy, bound, motor, environment, *, episodes, generator, deterministic=False, verify_zero=False,
+                    planned_motor_seeds=None, planned_action_noise=None):
     """Complete batch FIRST. No simulator or Flora reward is read here."""
+    if hasattr(environment, "collect"):
+        return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
+                                   deterministic=deterministic, verify_zero=verify_zero)
+    if planned_motor_seeds is None and planned_action_noise is not None:
+        raise ValueError("Explicit actor noise requires a complete motor seed plan")
     reference = next(policy.parameters())
     records, finished = [], []
     for episode_index in range(episodes):
         observation, done, first = environment.reset(), False, True
         while not done:
-            chunk, features, seed = motor.infer(observation)
+            planned = planned_motor_seeds is not None
+            index = len(records)
+            if planned and index >= len(planned_motor_seeds):
+                raise ValueError("Rollout exceeded the frozen full-episode draw schedule")
+            chunk, features, seed = (motor.infer(observation, noise_seed=int(planned_motor_seeds[index]))
+                                     if planned else motor.infer(observation))
             tensor = torch.as_tensor(features, device=reference.device, dtype=reference.dtype)
-            control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, generator=generator)
+            noise = {} if planned_action_noise is None else {"action_noise": planned_action_noise[index:index + 1]}
+            control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, generator=generator, **noise)
             control = control[0].cpu().numpy()
             executed = bound.apply(np.asarray(chunk), control)
             verified = verify_zero and episode_index == 0
@@ -256,6 +270,8 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
                 finished.append(info)
     if len(finished) != episodes:
         raise ValueError("Incomplete batch cannot enter reward labeling")
+    if planned_motor_seeds is not None and len(records) != len(planned_motor_seeds):
+        raise ValueError("Full episode draw schedule was not consumed exactly")
     return records, finished
 
 

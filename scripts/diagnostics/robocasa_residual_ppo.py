@@ -78,7 +78,14 @@ def main():
     output = Path(profile["output"])
     output.mkdir(parents=True, exist_ok=False)
     write_new(output / "profile.json", profile)
-    journal = ActionJournal(profile["accounting_root"], rank=0, world=1, attempt=profile["attempt"])
+    parallel = profile.get("rollout_devices")
+    if parallel:
+        from fluffy_bassoon.meta_rl.robocasa_residual_parallel import ParallelActionJournal, ParallelResidualEnvironment
+        if len(parallel) != 8 or len({row["uuid"] for row in parallel}) != 8:
+            raise ValueError("Eight distinct allocated GPUs required for parallel rollouts")
+        journal = ParallelActionJournal(profile["accounting_root"], len(parallel))
+    else:
+        journal = ActionJournal(profile["accounting_root"], rank=0, world=1, attempt=profile["attempt"])
     progress = ProgressLog(output / "progress", profile["arm"], contract_sha256=digest(profile)).start()
     last_report = [0.]
 
@@ -88,7 +95,7 @@ def main():
             return
         last_report[0] = now
         progress.emit(phase=phase, physical_actions=journal.charged(),
-            this_open_job_elapsed_gpu_seconds=now - profile["allocated_start_unix"],
+            this_open_job_elapsed_gpu_seconds=(now - profile["allocated_start_unix"]) * (len(parallel) if parallel else 1),
             remaining_wall_seconds=profile["deadline_unix"] - now, **fields)
 
     report("frozen_motor_loading")
@@ -126,10 +133,15 @@ def main():
     environments = []
 
     def environment(cases, name):
-        env = RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), cases,
-            horizon=TASKS[cases[0]["task"]][0], output=output / name / "videos",
-            monitoring_root=Path(profile["monitoring_root"]) / name, journal=journal,
-            writer_factory=imageio.get_writer, observer=lambda: report("native_" + name))
+        if parallel:
+            env = ParallelResidualEnvironment(cases, horizon=TASKS[cases[0]["task"]][0],
+                output=output / name / "videos", monitoring_root=Path(profile["monitoring_root"]) / name,
+                profile=profile, code=code, report=report)
+        else:
+            env = RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), cases,
+                horizon=TASKS[cases[0]["task"]][0], output=output / name / "videos",
+                monitoring_root=Path(profile["monitoring_root"]) / name, journal=journal,
+                writer_factory=imageio.get_writer, observer=lambda: report("native_" + name))
         environments.append(env)
         return env
 
@@ -201,8 +213,19 @@ def main():
         if profile.get("resume"):
             if sha(profile["resume"]) != profile["resume_sha256"]:
                 raise ValueError("Producing checkpoint bytes changed before recovery")
+            resume_contract = contract
+            if profile.get("rollout_migration"):
+                migration = read_ref(profile["rollout_migration"])
+                resume_contract = migration["original_contract"]
+                if (not parallel or migration["kind"] != "eight_gpu_rollout_only"
+                        or migration["checkpoint_sha256"] != profile["resume_sha256"]
+                        or migration["to_source_commit"] != profile["source_commit"]
+                        or resume_contract["source_commit"] != migration["from_source_commit"]
+                        or {key: value for key, value in resume_contract.items() if key != "source_commit"}
+                           != {key: value for key, value in contract.items() if key != "source_commit"}):
+                    raise ValueError("Only an explicit complete-state rollout execution migration is allowed")
             restored = restore_checkpoint(profile["resume"], policy=policy, optimizer=optimizer, bound=bound,
-                motor=motor, environment=train_env, generators=generators, contract=contract)
+                motor=motor, environment=train_env, generators=generators, contract=resume_contract)
             iteration = restored["iteration"]
             if restored["stage"] == "pending_labels":
                 started = Path(profile["resume"]).parent / f"UPDATE-STARTED-{iteration + 1:03d}.json"
@@ -217,6 +240,8 @@ def main():
         history = []
         dev_evaluations = ([read_ref(profile["initial_dev_evaluation"])]
                           if profile.get("independent_stopping") else [])
+        if profile.get("prior_dev_evaluations"):
+            dev_evaluations.extend(read_ref(reference) for reference in profile["prior_dev_evaluations"])
         iteration_times = []
         stop_reason = "fixed10"
         final_actions = 8 * (TASKS[task][0] + 128) + 8 * (900 + 128)
