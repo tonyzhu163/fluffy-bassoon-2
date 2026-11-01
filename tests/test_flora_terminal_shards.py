@@ -6,16 +6,18 @@ import pytest
 from fluffy_bassoon.meta_rl.flora_terminal_shards import gather_terminal_outputs, shard_episode_bank
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import parse_outputs
 from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
+from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
 
 
 def bank():
     episodes, outputs = [], []
     for index in range(64):
         key, lower = f'episode-{index:03d}', 1 + index % 4
-        episodes.append(dict(id=key, task='open the drawer', camera_order=['robot0_agentview_left'],
+        episodes.append(dict(id=key, task='open the drawer', camera_order=list(REWARD_CAMERAS),
             info_on_video=False, extra_info_on_video=[], raw_rgb_only=True,
             success_termination_disabled=True, horizon=750, completed=True,
-            video=dict(path=f'/qualified/{key}.mp4', sha256='a' * 64),
+            videos=[dict(camera=camera, path=f'/qualified/{key}-{camera}.mp4', sha256='a' * 64)
+                    for camera in REWARD_CAMERAS],
             frame_clock=dict(frame_count=751, native_fps=20., encoded_fps=20., resampled=False,
                 physical_steps=750, initial_frame_included=True, timestamp_sha256='b' * 64),
             rank=index // 8, round=index % 8, local_env=0))

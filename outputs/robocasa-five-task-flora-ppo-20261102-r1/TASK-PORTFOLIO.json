@@ -1,0 +1,139 @@
+{
+  "status": "PROSPECTIVE_TASK_SELECTION_BEFORE_NEW_NATIVE_OR_FLORA_OUTCOMES",
+  "human_instructions": [
+    "we should pick 5 PPO tasks and then 5 OOD tasks",
+    "this is why its important to be sure for each one before scaling up"
+  ],
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "scope": "Same original released RoboCasa initializer; not RoboTwin. These atomic_seen tasks have documented pretraining entries; OOD means held out from this PPO stage, not unseen to foundation/SFT."
+  },
+  "native_source": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+  "task_choice_basis": "Prospective diversity across opening, object placement, stove control and coffee manipulation; exact native target registry presence/horizons verified by static AST/source, no performance ranking from Flora. No claim that the chosen tasks have passed headroom.",
+  "PPO_tasks": [
+    {
+      "task": "OpenDrawer",
+      "horizon": 750,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "PPO_candidate",
+      "qualification_seed_start": 110100,
+      "heldout_ID_seed_start": 410100
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "horizon": 750,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "PPO_candidate",
+      "qualification_seed_start": 120100,
+      "heldout_ID_seed_start": 420100
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "horizon": 750,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "PPO_candidate",
+      "qualification_seed_start": 130100,
+      "heldout_ID_seed_start": 430100
+    },
+    {
+      "task": "TurnOffStove",
+      "horizon": 750,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "PPO_candidate",
+      "qualification_seed_start": 140100,
+      "heldout_ID_seed_start": 440100
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "horizon": 600,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "PPO_candidate",
+      "qualification_seed_start": 150100,
+      "heldout_ID_seed_start": 450100
+    }
+  ],
+  "OOD_tasks": [
+    {
+      "task": "CloseFridge",
+      "horizon": 900,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "held_out_from_PPO",
+      "heldout_OOD_seed_start": 510100
+    },
+    {
+      "task": "OpenCabinet",
+      "horizon": 1050,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "held_out_from_PPO",
+      "heldout_OOD_seed_start": 520100
+    },
+    {
+      "task": "TurnOnMicrowave",
+      "horizon": 450,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "held_out_from_PPO",
+      "heldout_OOD_seed_start": 530100
+    },
+    {
+      "task": "TurnOnSinkFaucet",
+      "horizon": 600,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "held_out_from_PPO",
+      "heldout_OOD_seed_start": 540100
+    },
+    {
+      "task": "OpenStandMixerHead",
+      "horizon": 450,
+      "split": "target",
+      "task_soup": "atomic_seen",
+      "role": "held_out_from_PPO",
+      "heldout_OOD_seed_start": 550100
+    }
+  ],
+  "policy_layout": "Recommended one joint policy per reward arm; asynchronous clarification pending. Native/scorer per-task qualification can proceed independently of that choice; no new SGD until concrete matched profile is bound.",
+  "camera_order": [
+    "robot0_agentview_left",
+    "robot0_eye_in_hand",
+    "robot0_agentview_right"
+  ],
+  "reward": "One unchanged short official terminal-success prompt plus native task instruction. F=(official expected_score-1)/4; no per-task rubrics or simulator truth input.",
+  "qualification": {
+    "episodes_per_PPO_task": 50,
+    "first_execution": "First planned eight OpenDrawer episodes qualify real three-view recording/scoring, counted within the50; no extra smoke.",
+    "native_headroom": "Retain original5%..70% native headroom rule; report counts/intervals per task.",
+    "Flora": "Fresh synchronized three-view videos and new calibration identities. Original one-view AUROC.6667 permission does not qualify this new camera contract. Report per-task AUROC and uncertainty; no pooled score hiding a weak task.",
+    "failure": "Retain all outcomes. No automatic task replacement, sampler tuning, prompt tuning or favorable-task selection from Flora scores."
+  },
+  "evaluation": {
+    "episodes_per_task_per_policy": 50,
+    "tasks_per_policy": 10,
+    "episodes_per_policy": 500,
+    "policies": [
+      "SFT_initializer",
+      "simulator_reward_PPO",
+      "Flora_reward_PPO"
+    ],
+    "total_scored_final_episodes": 1500,
+    "pairing": "Same frozen task/constructor/layout/native sampler seeds across all policies; TRAIN/DEV/qualification/final banks disjoint.",
+    "statistics": "Per-task Wilson95% rate intervals and paired discordant outcomes/exact McNemar comparison.50is initial precision, not guaranteed power for small effects; any extension gets a prospective finite stage/stopping rule before further outcomes.",
+    "OOD_isolation": "No OOD gradients, reward calibration, task selection, checkpoint selection or DEV stopping."
+  },
+  "resources": {
+    "aggregate_GPU_limit": 24,
+    "GPUs_per_benchmark_job": 8,
+    "maximum_job_hours_exclusive": 8,
+    "new_five_task_PPO_allocation": "NOT_ADMITTED: bind actual per-task gates, balanced full-episode batch, complete recovery, all-in action cost and finite resource clock first. Old trial action spend/caps remain immutable; no silent reset/borrowing."
+  },
+  "old_trial": "Single-task S terminal6updates/final saved, one-view benchmark terminal. Preserve as pilot evidence, not a five-task result."
+}
