@@ -85,6 +85,24 @@ retained. No task or score was adjusted after observing this failed gate.
 [Native result](../outputs/robocasa-native-residual-headroom-q4-20261101-r1/terminal/summary.json),
 [scorer gate and terminal audit](../outputs/robocasa-residual-integrated-20261101-r3/TERMINAL-REVIEW.json).
 
+
+The fresh three-view OpenDrawer preview used synchronized left, wrist and right
+recordings with the unchanged official scorer and short prompt. Its three native
+successes ranked above all five failures: **AUROC1.0 on eight cases**. This is
+an exploratory preview, not the new50-case gate or a paired camera ablation.
+Batch8 processed64replay requests in113.38seconds per GPU after about580–586seconds
+cold startup, with observed peak77,625MiB on a97,887MiB card and no OOM. Replays
+measure throughput and add no independent cases. [Three-view audit](../outputs/robocasa-flora-throughput-three-view-20261102-r2/PARENT-REVIEW.json).
+
+The prospectively chosen five-task qualification now has **29/50 native
+OpenDrawer successes (58%)**, within the declared5%–70% headroom range. Its first
+eight cases were retained and the remaining42 continued the exact native sampler
+stream; all50 ran the full750-step horizon with three synchronized views. The
+other four task cohorts remain in progress. This is initializer qualification,
+with no new joint-policy updates; three-view Flora discrimination on each full
+50-case bank is still pending. The human selected one joint policy per reward
+arm and five separate PPO-held-out OOD tasks. [OpenDrawer50 result](../outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/NATIVE-QUALIFICATION.json).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The
