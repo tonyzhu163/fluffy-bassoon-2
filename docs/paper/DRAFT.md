@@ -89,7 +89,7 @@ no compatible source teacher or meta-learning result follows.
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through380,000 scores20/20. All panels are retained. This is interim
+from40,140 through400,120 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
@@ -100,6 +100,16 @@ exact model/Adam/replay/RNG state with27 mapping-order changes and zero leaf
 differences. The guarded repair passes21 cases and actual checkpoint validation; the same
 learner resumes with three new episodes/480 updates, preserving contracts and
 budgets. The fixed endpoint remains incomplete.
+
+A subsequent human priority change pauses SAC at406,780 updates with a full
+closed recovery; the500k endpoint and final native control are uncompleted.
+The source assessment ends naturally at319 valid episodes plus one null reset
+abort: native78/80, tied70/79, mean78/80 and sample78/80. Neither an endpoint
+advantage nor an initial-to-final curve is established. Both allocations are
+released; prepared current-bank500 CPU/fits never launched. The new priority
+is a separately specified standard PPO simulator-reward/Flora-Rewarder
+comparison; old source/fit/native-PPO successors stay held.
+[Pause evidence](../../outputs/owned-jobs-pause-20261101-r1/PARENT-REVIEW.json).
 
 
 The next source decision adopts a separate all40 existing-TRAIN-actor
@@ -124,8 +134,9 @@ progress migration, preserving161closedrefs and all non-disposition state.
 Conservative storage accounting is bound; the admitted R2 completes six
 new scheduled roles, for167valid episodes and one separate abort. Its first
 new mean-actor role succeeds96+10steps, with0SGD; oldinputbytes remain fixed.
-The full comparison/finalmotor are pending. No teacher-failure claim or
-source/student admission follows. The
+At that first snapshot the full comparison/finalmotor were pending; final
+counts and the human pause are recorded above. No source/student admission
+follows. The
 old25h collection/fit expansion remains unfunded. A separate current-bank
 100→500 four-model controlled-fit preparation preserves the exact TRAIN
 data, numerical recipe and recoverable100 state. Its bounded offline fit

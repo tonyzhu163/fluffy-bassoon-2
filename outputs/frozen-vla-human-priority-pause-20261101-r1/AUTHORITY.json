@@ -1,0 +1,39 @@
+{
+  "format": "verified_direct_human_priority_pause_v1",
+  "status": "EFFECTIVE_SUPERSEDES_ALL_PRIOR_LAUNCH_INSTRUCTIONS",
+  "verified_read_at_UTC": "2026-11-01T04:55:27Z",
+  "source_thread_id": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+  "source_title": "Clarify VLRLA training style",
+  "turn_id": "01a19571-ff75-72f0-bf66-85b50c94797d",
+  "user_messages": [
+    {
+      "id": "01a19571-ff92-7dc1-970a-8a3d90106aae",
+      "text": "no i meant i think the best thing right now is lets do a rl inf standard ppo comparison on pi0.5 vs using flora to label and then do ppo\n"
+    },
+    {
+      "id": "01a19572-3598-7cb1-a201-a619b5f12660",
+      "text": "i think we should pause all the other jobs\n"
+    },
+    {
+      "id": "01a19572-4731-70a2-8898-8aa5ab6950ec",
+      "text": "use flora-rewarder\n"
+    },
+    {
+      "id": "01a19574-1c85-77a2-95cc-8cf95b096e57",
+      "text": "<send_user_message_question_reply>\n[{\"questionItemId\":\"[\\\"request_user_input_async\\\",\\\"call_b01968c171a9420cb8654b998dc4fec0\\\",0]\",\"question\":\"Which benchmark should we use for the first matched π0.5 PPO comparison? I recommend LIBERO task44, where we already measured a weak native baseline and have a working simulator/runtime.\",\"answer\":\"LIBERO task44 (Recommended)\"}]\n</send_user_message_question_reply>\n"
+    },
+    {
+      "id": "01a19574-40fb-7620-90e0-a29c8141f314",
+      "text": "whats the baseline for libero task 44?\n"
+    },
+    {
+      "id": "01a19574-87a9-78d3-be5b-3c607ad328cd",
+      "text": "so we both do train on libero 40 and then online updates or how dshould this work?\n"
+    }
+  ],
+  "new_priority": "Matched standard RLinf PPO pi0.5 on LIBERO task44: simulator reward versus frozen NVIDIA Flora-Rewarder labels, both PPO. Protocol/baseline/runtime/resource scope being prepared by optimization owner01a18adc; no automatic comparison launch or old-budget borrowing.",
+  "pause_scope": "ALL other project scientific CPU/GPU allocations and queued/retry/successor launches, including primary SAC, source assessment, CfitCPU/fits, nativePPO, source generation and phone. Preserve data/recoveries/immutable worktrees; no otherusers' jobs.",
+  "sole_execution_owner": "/root/finish_assembly",
+  "owner_replacement_task": "Verified human-role pause delivered directly through collaboration; no repeated human approval requested.",
+  "goal_completed": false
+}

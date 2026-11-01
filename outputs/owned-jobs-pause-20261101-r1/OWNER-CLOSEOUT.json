@@ -1,0 +1,37 @@
+{
+  "format": "owned_allocation_pause_closeout_v1",
+  "job_id": "job-2qn8dpw3yvlb",
+  "scheduler_status": "ManualTermination",
+  "scheduler_end": "2026-11-01 12:59:03 Asia/Shanghai",
+  "scheduler_end_unix_seconds": 1793509143,
+  "scheduler_timestamp_precision_seconds": 1,
+  "allocation_started_unix": 1793496429.0,
+  "scheduler_allowance_seconds": 60,
+  "exact_second_charge": 12774,
+  "conservative_charge_using_end_second_exclusive_upper": 12775,
+  "prior_settled_gpu_seconds": 28217,
+  "whole_phase_conservative_gpu_seconds": 40992,
+  "prior_reserved_current_attempt_seconds": 25200,
+  "released_reservation_vs_upper": 12425,
+  "unused_phase_seconds_vs_upper": 16608,
+  "actual_process_exit_code": null,
+  "per_attempt_exit_file_emitted": false,
+  "canonical_clock_row_preserved_status": "started",
+  "canonical_clock_not_rewritten": true,
+  "root_exit_code_file_stale_previous_attempt": true,
+  "allocation_released": true,
+  "no_resume_or_new_launch_authorized": true,
+  "reason": "Verified human pause; no installed cooperative signal/pause hook. Scheduler stop landed after full closed episode and checkpoint, before index publication/launcher finalization.",
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/final-closed-recovery.pkl",
+    "bytes": 564650442,
+    "sha256": "7d2d0532643d4ed7db0ef240b8edd3f33aeb8ebfafb1e37762571b7412cfba5d"
+  },
+  "cursor": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/final-state.json",
+    "bytes": 10867130,
+    "sha256": "248bb9805e0305bed83cbcb928ba5fdd8fa5527dab5579f14d3554660a2d3e44"
+  },
+  "actions": 376339,
+  "action_charge_basis": "Saved closed producer index376249 + exact state-index primitive/settling delta90; final9 RPC metadata complete and no next episode intent. Earlier full forest not independently replayed."
+}

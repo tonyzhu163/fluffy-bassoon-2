@@ -1,0 +1,570 @@
+{
+  "format": "owned_jobs_pause_terminal_v1",
+  "checked_unix": 1793509380.4295743,
+  "authority_message": "01a19572-3598-7cb1-a201-a619b5f12660",
+  "new_launches_blocked": true,
+  "new_fixed_bank_cpu_allocated": false,
+  "primary": {
+    "job_id": "job-2qn8dpw3yvlb",
+    "scheduler_status": "ManualTermination",
+    "scheduler_ended": "2026-11-01 12:59:03 Asia/Shanghai",
+    "scheduler_duration_seconds": 12703,
+    "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+    "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+    "stable_closed_recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/final-closed-recovery.pkl",
+      "bytes": 564650442,
+      "sha256": "7d2d0532643d4ed7db0ef240b8edd3f33aeb8ebfafb1e37762571b7412cfba5d"
+    },
+    "model": {
+      "path": "recovery-1.pkl",
+      "sha256": "7d2d0532643d4ed7db0ef240b8edd3f33aeb8ebfafb1e37762571b7412cfba5d",
+      "updates": 406780,
+      "replay_rows": 20833,
+      "signature": "7ea78e06ce62b18ba589594c0902067d68c89a4ffd8b4322b54385638e4005d6"
+    },
+    "full_checkpoint_matches": true,
+    "phase": "training",
+    "next_threshold": 420000,
+    "active_panel": null,
+    "training": {
+      "episodes": 2389,
+      "chunks": 20833,
+      "primitive_steps": 197606,
+      "settling_steps": 23890
+    },
+    "train_successes": 2350,
+    "train_failures": 39,
+    "state": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/final-state.json",
+      "bytes": 10867130,
+      "sha256": "248bb9805e0305bed83cbcb928ba5fdd8fa5527dab5579f14d3554660a2d3e44"
+    },
+    "index": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/final-index.json",
+      "bytes": 10864594,
+      "sha256": "1d23069661452d98bc285db196ad46bee71c89fc5c5bc64f074198c74af15640"
+    },
+    "last_losses_finite": true,
+    "last_closed_training_receipt": {
+      "initial_state": 28,
+      "scene_seed": 123,
+      "instruction": "turn on the stove",
+      "task_id": 44,
+      "suite": "libero_90",
+      "semantic_task": "KITCHEN_SCENE9_turn_on_the_stove",
+      "success": true,
+      "chunks": 8,
+      "primitive_steps": 80,
+      "raw_return": 1.0,
+      "initial_observation_sha256": "0fe02ad62b43a8362654017dc3f3ec6441ced6e26ac5fea2a0a8be49d5507f1b",
+      "initial_state_vector_sha256": "b3d3db65821077ad01a08e624026205d490c0153172b2d1119a0e04155f290b4",
+      "initial_simulator_state_sha256": "12f9587e1c9b0fa55c02731bf2f1baa774317003b537c088c7998f9d78de1cd9",
+      "initial_public_observation_hashes": {
+        "image": "bd7240269c77e6d39604ed82ffbfe1b9161dfa6d4b5d2af3adac772570da1977",
+        "wrist": "7121daf68fd55f7c6334beae5550b09ec8acc239d0b65e5c3467331bfbe603d7",
+        "state": "f2af6deed4a5f183f333f1563a00cfbe8abc39805dc92eec3601970027c478e9"
+      },
+      "initial_simulator_state": [
+        0.5000000000000003,
+        -0.011416992126152829,
+        -0.1479157704375863,
+        -0.014220347928113934,
+        -2.401061600625943,
+        -0.00525887144341018,
+        2.19853353614325,
+        0.7636684783740069,
+        0.038726704770223316,
+        -0.03873157220766752,
+        -0.1574374826536637,
+        0.07527491048998271,
+        0.8994107258211033,
+        0.7071067800833553,
+        -6.849749419260008e-05,
+        4.8318697318611023e-05,
+        0.7071067773211803,
+        0.039107995693213375,
+        -0.02357949634763739,
+        0.8991707330326614,
+        0.7071065468067493,
+        -7.827453979201881e-05,
+        8.430146743925697e-05,
+        0.7071070062086748,
+        0.0,
+        0.007208058279746486,
+        0.03791148889290042,
+        -0.007703097386788969,
+        0.06830405052789924,
+        0.0036802433267603897,
+        -0.08120393766577517,
+        -0.0040916852691804855,
+        0.0032135021227935913,
+        -0.0031634498605899106,
+        4.249368294611511e-10,
+        -2.4014307946081236e-09,
+        6.194583112740534e-06,
+        -1.8182066763602193e-07,
+        1.0609742901554473e-06,
+        7.225038224111219e-11,
+        -4.198557229368762e-11,
+        -1.3103093059999357e-09,
+        6.028874603443222e-06,
+        5.043512065645332e-08,
+        1.5955142570816167e-06,
+        2.32718880559206e-12,
+        0.0
+      ],
+      "data_role": "target-onlineDEV",
+      "completed": true,
+      "training_episode": 2388,
+      "target_optimizer_updates_before": 406620,
+      "target_optimizer_updates": 406780,
+      "replay_rows": 20833,
+      "update_metrics": {
+        "actor_loss": 3.1146764755249023,
+        "critic_loss": 0.0017209163634106517,
+        "entropy": -17.878128051757812,
+        "mean_pi_avg": -0.017544496804475784,
+        "mean_pi_max": 3.2989463806152344,
+        "mean_pi_min": -3.712660551071167,
+        "mean_pi_norm": 5.692465305328369,
+        "next_actions_max": 0.9997270703315735,
+        "next_actions_mean": -0.023882724344730377,
+        "next_actions_min": -0.9991280436515808,
+        "next_actions_sampled": -0.023882724344730377,
+        "next_actions_std": 0.6608511805534363,
+        "next_log_probs": 15.24846076965332,
+        "next_q_pi": -2.3175361156463623,
+        "q": -3.2129642963409424,
+        "q_pi_in_actor": -3.0756893157958984,
+        "std_pi_avg": 0.44942641258239746,
+        "std_pi_max": 0.9457585215568542,
+        "std_pi_min": 0.035621583461761475,
+        "std_pi_norm": 2.6069447994232178,
+        "target_actor_entropy": -15.24846076965332,
+        "target_q": -3.2038121223449707,
+        "temperature": 0.002180717419832945,
+        "temperature_loss": -0.004095666576176882
+      },
+      "actor_fixed_within_episode": true,
+      "behavior": "target_sac",
+      "policy_signature": "1e2a6ac1c29451d6c0c03a02fdcc48e84e2ff61cd989795b592a42e455fb7ed4",
+      "trace": "raw/training-002388-1793509130726263586.pkl.gz",
+      "trace_sha256": "89f9779e1325bf48d586d3b8091b0dda7898a091a5628a2d779e14028261f9ac"
+    },
+    "index_cursor_lagging_state": true,
+    "completed_panels": [
+      {
+        "kind": "initial_native",
+        "threshold": 0,
+        "actual_updates": 0,
+        "queries": 20,
+        "successes": 6
+      },
+      {
+        "kind": "initial_tied",
+        "threshold": 0,
+        "actual_updates": 0,
+        "queries": 20,
+        "successes": 13
+      },
+      {
+        "kind": "initial_sac",
+        "threshold": 0,
+        "actual_updates": 0,
+        "queries": 20,
+        "successes": 8
+      },
+      {
+        "kind": "learned",
+        "threshold": 20000,
+        "actual_updates": 20580,
+        "queries": 20,
+        "successes": 1
+      },
+      {
+        "kind": "learned",
+        "threshold": 40000,
+        "actual_updates": 40140,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 60000,
+        "actual_updates": 60000,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 80000,
+        "actual_updates": 80140,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 100000,
+        "actual_updates": 100020,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 120000,
+        "actual_updates": 120000,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 140000,
+        "actual_updates": 140080,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 160000,
+        "actual_updates": 160080,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 180000,
+        "actual_updates": 180020,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 200000,
+        "actual_updates": 200080,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 220000,
+        "actual_updates": 220040,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 240000,
+        "actual_updates": 240080,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 260000,
+        "actual_updates": 260040,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 280000,
+        "actual_updates": 280000,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 300000,
+        "actual_updates": 300140,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 320000,
+        "actual_updates": 320040,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 340000,
+        "actual_updates": 340060,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 360000,
+        "actual_updates": 360080,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 380000,
+        "actual_updates": 380000,
+        "queries": 20,
+        "successes": 20
+      },
+      {
+        "kind": "learned",
+        "threshold": 400000,
+        "actual_updates": 400120,
+        "queries": 20,
+        "successes": 20
+      }
+    ],
+    "closed_index_whole_phase_actions": 376249,
+    "closed_index_costs": {
+      "training": {
+        "known_actions": 221406,
+        "uncertain_actions_ceiling": 0,
+        "primitive_steps": 197526,
+        "settling_steps": 23880,
+        "reset_attempts": 2388
+      },
+      "query": {
+        "known_actions": 58064,
+        "uncertain_actions_ceiling": 0,
+        "primitive_steps": 53464,
+        "settling_steps": 4600,
+        "reset_attempts": 460
+      },
+      "qualification": {
+        "known_actions": 0,
+        "uncertain_actions_ceiling": 0,
+        "primitive_steps": 0,
+        "settling_steps": 0,
+        "reset_attempts": 0
+      }
+    },
+    "pending_episode_id": "training-002389",
+    "interrupted_suffix_records": [],
+    "interrupted_suffix_conservative_actions": 0,
+    "closed_state_action_delta_after_index": 90,
+    "closed_state_whole_phase_actions": 376339,
+    "conservative_total_including_suffix": 376339,
+    "index_output_bytes": 23781120185,
+    "clock_attempt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/attempts/1793496429000000-0003",
+      "started_unix": 1793496429.0,
+      "slice_seconds": 25140,
+      "reserved_seconds": 25200,
+      "status": "started",
+      "scheduler_allowance_seconds": 60
+    },
+    "producer_exit_file_emitted": false,
+    "root_exit_file_is_previous_attempt": true,
+    "root_exit_file_content": "1\n",
+    "canonical_clock_unsettled": true,
+    "owner_conservative_current_attempt_gpu_seconds": 12774,
+    "prior_settled_gpu_seconds": 28217,
+    "motor_evidence": {
+      "motor-before.json": {
+        "ref": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/runtime-attempts/1793496440573378167/motor-before.json",
+          "bytes": 156,
+          "sha256": "ae5241856f1531df34221f7f6d390560a3943fdb585da675af3164dc4e475b3c"
+        },
+        "data": {
+          "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+          "leaves": 51,
+          "elements_by_dtype": {
+            "bfloat16": 3353433872
+          }
+        }
+      }
+    },
+    "resume_limit": "Full closed learner/RNG checkpoint preserved. Interrupted physical suffix is immutable and charged, not a complete episode or exact mid-physics state; no automatic resume/replay authorized.",
+    "full_checkpoint_fields_source": "OfficialSAC.save: agent serialized actor/critic/target/temp including TrainState optimizer; agent_rng,replay,updates,sampler,NumPy/Python RNG,contract,boundary,training progress+motor_rng. Source schema proof; no checkpoint deserialization in this closure.",
+    "cost_verification_limit": "Closed index producer counters plus at most44 newest same-episode journal metadata; earlier forest not independently replayed. Storage is last producer index snapshot, not a new full-directory measurement."
+  },
+  "assessment": {
+    "job_id": "job-bc2ooyztqsfh",
+    "scheduler_status": "Succeeded",
+    "scheduler_ended": "2026-11-01 12:57:11 Asia/Shanghai",
+    "scheduler_duration_seconds": 1251,
+    "stopped_by_owner": false,
+    "exit_code": 0,
+    "execution_source": "9d29a805cae2c129ffc088af4eed81b3a38d2769",
+    "original_clock_source": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+    "completed": true,
+    "cursor": 320,
+    "valid_completed_episodes": 319,
+    "aborted": [
+      {
+        "ordinal": 161,
+        "spec": {
+          "source_ordinal": 20,
+          "task_key": "libero_spatial:05",
+          "state": 40,
+          "scene_seed": 123,
+          "role": "exact_source_tied_Gaussian_warmup",
+          "seed": 20281141,
+          "status": "PLANNED"
+        },
+        "status": "ABORTED_RESET_GUARD",
+        "completed": false,
+        "success": null,
+        "performance_score": null,
+        "primitive_steps": 0,
+        "settling_steps": 10,
+        "all_in_actions": 10,
+        "original_progress": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+          "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+          "bytes": 62745
+        },
+        "failed_raw": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+          "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+        },
+        "failed_journal": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+          "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+        }
+      }
+    ],
+    "all_planned_roles_valid": false,
+    "costs": {
+      "all_in_actions": 53081,
+      "physical_episodes": 320,
+      "uncertain_actions": 0
+    },
+    "recovery": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-assessment-recovery.pkl",
+      "bytes": 102424,
+      "sha256": "5b60163e1b86885d20a4709e58fd279926f6feedd0986c8aac50099c2edd8aed"
+    },
+    "recovery_matches": true,
+    "files": {
+      "index.json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-index.json",
+        "bytes": 123209,
+        "sha256": "d8fdce123f6ed4f37429ad2fb33e50407839d6440b776a1b1699262afc8969f1"
+      },
+      "progress.json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-progress.json",
+        "bytes": 372,
+        "sha256": "efb63e7cddb290125e42e27abd9785d103e350e491b1dc852492bca3794ecc14"
+      },
+      "results-summary.json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-results-summary.json",
+        "bytes": 787,
+        "sha256": "f0c9b4b9f8cb8d7b2264457aca77f93dd36dbaed0aa8209f9901b84c7180d11f"
+      },
+      "case-results.csv": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-case-results.csv",
+        "bytes": 56525,
+        "sha256": "9b3974edabf377f79a22c0ac67c6df6bef8bfdea5b05bcf75550f56ebca7c919"
+      },
+      "motor-final.json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-motor-final.json",
+        "bytes": 385,
+        "sha256": "9d47b46820f7e96bfa397d35ba17a0ce14cb4a7bb294325be3ff9a2294935d6c"
+      },
+      "assessment-recovery.pkl": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/final-assessment-recovery.pkl",
+        "bytes": 102424,
+        "sha256": "5b60163e1b86885d20a4709e58fd279926f6feedd0986c8aac50099c2edd8aed"
+      },
+      "worker-time.json": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/worker-time-after-completion.json",
+        "bytes": 2344,
+        "sha256": "3f8ec8073a41446c8461a5ce968aa4f21d04ae7478360c7e93853e9b379f069a"
+      },
+      "exit-code.txt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/exit-code.txt",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    "results_summary": {
+      "by_role": {
+        "raw_native_full_H_Gaussian": {
+          "planned": 80,
+          "complete": 80,
+          "aborted": 0,
+          "successes": 78
+        },
+        "exact_source_tied_Gaussian_warmup": {
+          "planned": 80,
+          "complete": 79,
+          "aborted": 1,
+          "successes": 70
+        },
+        "preselected_final_TRAIN_SAC_mean": {
+          "planned": 80,
+          "complete": 80,
+          "aborted": 0,
+          "successes": 78
+        },
+        "preselected_final_TRAIN_SAC_sample": {
+          "planned": 80,
+          "complete": 80,
+          "aborted": 0,
+          "successes": 78
+        }
+      },
+      "omitted_initial_slots": 160,
+      "all40_retained": true,
+      "source_pretraining_admitted": false,
+      "interpretation": "Two fixed cases per goal; descriptive assessment, no competence certificate or measured initial-to-final curve"
+    },
+    "all_csv_status_counts": {
+      "COMPLETE": 319,
+      "OMITTED_UNPROVEN_INITIAL_IN_BOUNDED_INDEX_SCOPE": 160,
+      "ABORTED_RESET_GUARD": 1
+    },
+    "csv_rows": 480,
+    "motor_final": {
+      "before": {
+        "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "leaves": 51,
+        "elements_by_dtype": {
+          "bfloat16": 3353433872
+        }
+      },
+      "after": {
+        "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+        "leaves": 51,
+        "elements_by_dtype": {
+          "bfloat16": 3353433872
+        }
+      },
+      "unchanged": true
+    },
+    "optimizer_updates": 0,
+    "source_pretraining_admitted": false,
+    "clock_attempts": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000",
+        "started_unix": 1793502780.0,
+        "slice_seconds": 10740,
+        "reserved_seconds": 10800,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793504059.1853201,
+        "exit_code": 1,
+        "charged_seconds": 1340,
+        "slice_overrun": false
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793507779000000-0001",
+        "started_unix": 1793507779.0,
+        "slice_seconds": 9360,
+        "reserved_seconds": 9420,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793509021.589983,
+        "exit_code": 0,
+        "charged_seconds": 1303,
+        "slice_overrun": false
+      }
+    ],
+    "total_settled_gpu_seconds": 2643,
+    "verification_limit": "Saved final index/CSV summaries, final motor guard, clock and recovery bytes. Individual319 receipt/RPC trees and payload tensors not rescanned/deserialized; qualification/bindings were verified on prior actual allocation receipts."
+  }
+}
