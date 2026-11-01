@@ -1,0 +1,116 @@
+> Snapshot of `outputs/coordination.md` taken 2026-11-01 at main `c729a98`, before stale and terminal rows were trimmed. Links are fixed for this location. The live file is [coordination.md](../../coordination.md).
+
+# CTM in-context RL: coordination
+
+Live coordination for `fluffy-bassoon-2`, updated **2026-10-31 Asia/Shanghai**.
+Keep current decisions and jobs here, method contracts in `docs/`, verified
+results in `EVALUATION.md`, and dated plans and evidence in
+`outputs/<run-id>/`. Follow [AGENTS.md](../../../AGENTS.md) and the
+[retention policy](../../../README.md#artifact-retention).
+
+Earlier state, including the fallback ideas, run order, DSRL how-to, CMM
+calibration table and completed 2026-10-28/29 jobs, is in the
+[2026-10-31 snapshot](coordination-20261031.md). The
+[cutover placeholder](coordination-pre-cutover-20261028.md)
+and [source-repository records](https://github.com/tonyzhu163/fluffy-bassoon/blob/lycoreco_rl/outputs/coordination.md)
+are older.
+
+## Question and decision
+
+Can a persistent CTM learn from interaction history with fixed deployment
+weights, and does its recurrence offer an advantage over conventional memory?
+Separate architecture performance from motor competence, steering headroom,
+informative history and optimization.
+
+- If XL adapts and CTM does not, retain the qualified pipeline and use the
+  stronger learner while revising the CTM claim.
+- If neither adapts, diagnose the interface, histories and training signal
+  before attributing failure to memory.
+- Judge adaptation with paired fresh probes, trained static/reset controls
+  and valid history interventions.
+
+Contracts: [support/probe](../../../docs/ctm-support-probe.md),
+[feature bridge](../../../docs/pi05-feature-bridge.md),
+[PPO replay](../../../docs/pi05-bridge-policy.md).
+Results: [meta-RL evaluation](../../../src/fluffy_bassoon/meta_rl/EVALUATION.md).
+
+### Redesign (2026-10-31)
+
+No robot comparison so far shows memory or adaptation. The governing plan is
+the [frozen pi0.5 steering screen](../../frozen-pi05-steering-screen-20261031-r1/PLAN.md):
+first show a controller can improve the frozen motor on cases it fails, then
+show experience changes a useful later decision. The
+[steering-headroom audit](../../steering-headroom-audit-20261031-r1/AUDIT.md) gives
+the paired fixed100 evidence. The earlier
+[headroom diagnosis](../../archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
+archived as superseded, with corrections listed at its top. A
+[criteria proposal](../../steering-interface-criteria-20261031-r1/PROPOSAL.md)
+informs the newly authorized [targeted scope](../../frozen-pi05-endtoend-20261031-r1/SCOPE.json),
+which adopts A1/A2/A3 with the [review safeguards](../../frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
+The proposal is not adopted verbatim: search is explicitly bounded, improvement
+must be measured rather than assumed, and the initial mechanism panel does not
+replace fresh32-case confirmation before broader claims.
+
+## Coordination rules in force
+
+From the [2026-10-31 review](coordination-20261031.md#coordination-review-2026-10-31):
+
+- Push coordination edits to `main`, rebased, editing only your own row.
+  Branch-only edits leave this file stale.
+- One or two readable sentences per row: job ID, last check, progress, next
+  action and a link. Put hashes, byte counts and budget ledgers in the
+  linked run record.
+- Budget: roughly **1M source actions per learner** (human, 2026-10-30;
+  confirmed 2026-10-31), superseding "1M per benchmark, shared". Charge each
+  learner's actions to its own ledger; do not borrow across learners or
+  benchmarks.
+- Baseline priority (human, 2026-10-31): same-motor DSRL/SAC first, native
+  VLRLA PPO afterward. `frozen-vla-poc` (`finish_assembly`/`finish_ppo`) is
+  the sole LIBERO launcher; RoboTwin AD GPU work stays deferred.
+- Active `codex/*` branches were merged into `main` on 2026-10-31; merge
+  further verified work promptly (see [AGENTS.md](../../../AGENTS.md)).
+
+## Ongoing work
+
+Rows are as last recorded by their owners; none was re-queried for this
+update.
+
+| Work | Cluster / job / source | Last check, progress and next action |
+| --- | --- | --- |
+| Original Pi0 DSRL task57 replication | Owner chat `01a192ca-ebbb-7970-827d-fdf784722bc9`; Baige `job-psgxs9n5b08w`, source `00eca3fa`, seed0; CPU receipt `job-8gadv5dju8jx` | **Complete, terminal receipts verified 2026-11-01 07:42 Shanghai:** 500,080 updates; final learned 10/10 at 25,504 replay rows/495,165 training actions versus native 4/10. First 10/10 at 40k/2507 rows; early 0/10,2/10 and later 200k/370k 9/10 panels retained. Final motor before/after SHA256 equal; full recovery500,080 and all51 evaluation payloads hash-verified; clean pinned sources and model/renderer binding verified. Physical ledger reconciles all510 panel episodes. Cumulative cost20,081/36,000 GPU-s,583,578/1M phase actions (retains400 prior unresolved),1800/1800 conservative CPU worker-s; outputs below64GiB. EVALUATION.md and FINAL-* receipts complete. Single seed supports steering gain; paper three-seed aggregate/sample-efficiency superiority unverified, legacy S3 equality unverified. Monitor removed after verified terminal outcome. No further pilot work remains; additional seeds require new authorization. |
+| Native VLRLA-recipe PPO pilot | Run `vlrla-native-ppo-pilot-20261031-r1`; owner `frozen-vla-poc` | **2026-10-31 14:06 Shanghai:** queued behind the task57 DSRL run; native CPU qualification closed, GPU held. Specified at 6 GPU-hours / 1M actions. |
+| LIBERO task44 DSRL on frozen pi0.5 | R3 `job-2qn8dpw3yvlb` Running; sole `finish_assembly` | **12:30:**394240updates/2308TRAIN/20206replay,2269success39failure.22completepanels,last38000020/20,next400k;stablefull/newrawRPC/finitelosses pass. 367898phaseactions/22856910460B;activeGPUelapsed notfinalcharge. Next12:50. [Proof](../../libero90-pi05-headroom-runtime-20261101-r1/CHECK-1230-PARENT-REVIEW.json). |
+| Frozen pi0.5 interface/data redesign | AssessmentR2 `job-bc2ooyztqsfh` Running on9d29; sole `finish_assembly` | Actualprobe/resource/migration pass;cursor168=161oldvalid+6newvalid+1nullabort.26722combinedactions/626new/0uncertain;firstnew162success96+10steps,0SGD. Original1340GPU-s+9420reservation inside10800;32GiBshared,oldCPU154/180 andfresh77/120 separateclosed. Failed161 neverreplayed;finalC565pendingactive. NextPRIMARY12:50,assessment12:59. Current-bank500preparation separate7200,notyetlaunched. [Proof](../../libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json). |
+| LIBERO90 pi0.5 headroom screen for DSRL replication | Owned Stage A terminal Succeeded/exit0, `4ec35eb9`; owner chat `01a192cf` | **Nov1 09:54 saved-reference review:** own384 audit/task59 native3/16 vs untrained tied9/16 unchanged (3,890GPU-s/134,629actions). Separate task44 recovery repair qualified; executiond236/scienceb665 resumes preserved learner to302180 with3newEP/480updates. Fixed500k/finalnative/motor pending; no duplicate learner or interface GPU launch. [Reconciliation and gate](../../libero90-pi05-headroom-screen-20261101-r1/REFERENCE-RECONCILIATION.md). |
+| RoboTwin final100 AD export (R4) | Baige `job-vth2qv6r4lxu`, CPU only | **2026-10-31 13:38 Shanghai: complete, exit 0.** AD train and BC validation exports pass independent audits; no new GPU, robot actions or SGD. AD GPU fit stays deferred for the DSRL/SAC-first priority. [Final report](../../robotwin-final100-ad-export-20261031-r4/RESULTS.md); [source campaign](../../robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
+| Meta-World released pi0.5 noise screen | Baige `job-orgyjb0z9h6d`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17 Shanghai: paused at user request.** Reach screens fail headroom; goals 1 and 3 never reached. Remain paused. [Pause record](../../metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). |
+
+### Needs owner refresh
+
+Last recorded 2026-10-28 19:23 Shanghai; state since then unknown. Owners:
+confirm terminal state and move each to completed work.
+
+- RoboTwin GRPO learning gate, Baige `job-vh9lp7fvgf9n`: initializing, one
+  GPU / 20-minute cap.
+- MetaWorld bounded pilot r2, Baige `job-x2x4kdpfn011`: first evaluation
+  saved, one GPU / 180-minute cap.
+- CMM decay diagnostics thu2 48983/48984: last recorded queued. The packed
+  diagnostic 49178 below covers the same comparison; confirm these were
+  cancelled.
+
+## Recently completed work
+
+Details for each are in the [snapshot](coordination-20261031.md).
+
+- **CMM calibration**, thu2 48876: complete, failed (4.55% vs paper 30.63%);
+  optimization instability. Packed decay diagnostic thu2 49178: no clear
+  speedup. CMM structure tests stay gated on calibration.
+- **DSRL Stage 0 smoke**, Baige `job-gjkse1sb5gyj`: repeat determinism failed
+  (4/32 identical trajectories); S0b/S0c not run.
+- **Native-context pilot r3**, Baige `job-8kkjhb65px67`: failed feedback
+  validation, exit 1; preserved.
+- **Native pi0.5 CTM/XL PPO, support/probe gate, privileged tracker**:
+  complete and audited 2026-10-28; no ICRL or architecture claim.
+- **Cached CTM/XL/GTrXL, CMM cached screen, DPT warm starts**: complete; one
+  cached seed, no CTM advantage.
+- **Baige environment cleanup**: complete 2026-10-29.
