@@ -219,4 +219,3 @@ def rollout_migration_contract(current, migration, *, checkpoint_sha256):
     result = deepcopy(current)
     result["source_commit"] = original["source_commit"]
     return result
-

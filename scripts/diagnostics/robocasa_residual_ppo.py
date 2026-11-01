@@ -94,9 +94,11 @@ def main():
         if now < last_report[0] + 20:
             return
         last_report[0] = now
+        elapsed_gpu_seconds = sum(max(0., now - started) for started in
+            profile.get("gpu_allocation_starts_unix", [profile["allocated_start_unix"]] * (len(parallel) if parallel else 1)))
         progress.emit(phase=phase, physical_actions=journal.charged(),
-            this_open_job_elapsed_gpu_seconds=sum(max(0., now - started) for started in
-                profile.get("gpu_allocation_starts_unix", [profile["allocated_start_unix"]] * (len(parallel) if parallel else 1))),
+            aggregate_gpu_seconds=elapsed_gpu_seconds,
+            this_open_job_elapsed_gpu_seconds=elapsed_gpu_seconds,
             remaining_wall_seconds=profile["deadline_unix"] - now, **fields)
 
     report("frozen_motor_loading")
@@ -293,6 +295,7 @@ def main():
                 producing_pending_sha256=checkpoint_sha, effective_iteration=iteration + 1))
             metrics = update(policy, optimizer, stack_records(labeled, device="cuda"), generator=generators["update"])
             progress.emit(phase="PPO_update_complete", iteration=iteration + 1, physical_actions=journal.charged(),
+                policy_updates=iteration + 1, episodes_complete=(iteration + 1) * 64, labels_complete=64,
                 ppo_diagnostics=metrics)
             iteration += 1
             history.append((iteration - 1, labeled))
@@ -301,6 +304,9 @@ def main():
                 environment=train_env, generators=generators, contract=contract, iteration=iteration, stage="boundary")
             write_new(output / f"update-{iteration:03d}.json", dict(iteration=iteration, metrics=metrics,
                 physical_actions=journal.charged(), checkpoint=dict(path=str(checkpoint), sha256=sha(checkpoint))))
+            progress.emit(phase="PPO_checkpoint_complete", iteration=iteration, policy_updates=iteration,
+                last_full_recovery=dict(path=str(checkpoint), sha256=sha(checkpoint)),
+                physical_actions=journal.charged(), ppo_diagnostics=metrics)
             if iteration in (2, 4, 6, 8, 10):
                 _, _, evaluation = panel("DEV", iteration)
                 if profile.get("independent_stopping"):
