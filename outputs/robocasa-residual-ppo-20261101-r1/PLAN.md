@@ -1,5 +1,16 @@
 # Plan: bounded action-residual PPO on RoboCasa365 (code changes first)
 
+**Terminal update, 2026-11-01:** the integrated scorer ran on the frozen
+OpenDrawer8 bank but AUROC10/15=0.6667 failed the0.70 gate. Both pipelines
+closed cleanly before any PPO update or common-before episode. No trained final
+checkpoint was produced; the original frozen initializer remains protected.
+The load-once worker's two focused core cases passed, and actual engine inference
+completed8 labels with one load. Training-batch/optimizer execution remains
+unqualified. All costs/results are in the
+[terminal review](../robocasa-residual-integrated-20261101-r3/TERMINAL-REVIEW.json).
+No fallback/task/score adjustment or new run follows this failed gate without a
+new human decision. All jobs are terminal and the monitor has been deleted.
+
 **Human update, 2026-11-01:** root now owns the RoboCasa binding and execution
 directly. The supplied decoder and residual cores are merged together. The
 first comparison is **simulator-reward residual PPO versus Flora-reward

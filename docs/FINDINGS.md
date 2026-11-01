@@ -49,16 +49,25 @@ across attempts.
 
 ## RoboCasa365
 
-The original Human30075000 pi0.5, through the frozen-motor residual binding,
-completed the predeclared OpenDrawer headroom bank with **3/8 terminal
-successes**. All eight episodes ran the full native750-step horizon. The first
-episode replayed all15 chunk seeds to check exact zero-residual action identity
-before executing each chunk once. OpenDrawer is frozen; the named fallback was
-not run. This is an exploratory eight-case development bank, not a population
-success estimate. Flora agreement on these videos and both PPO learning arms
-remain unmeasured; the successful archived-video Flora check establishes only
-software/model execution.
-[Saved native terminal result](../outputs/robocasa-native-residual-headroom-q4-20261101-r1/terminal/summary.json).
+The original Human30075000 pi0.5 completed the predeclared OpenDrawer headroom
+bank with **3/8 terminal successes**, full native750-step episodes. The first
+episode verified all15 chunk seeds against exact zero-residual action replay
+before executing each chunk once. The task was frozen and the fallback was
+not run. On exactly those eight native videos, official Flora expected scores
+ranked10of15 success/failure pairs correctly: **AUROC0.6667**, below the
+predeclared0.70 gate. Both integrated simulator- and Flora-reward residual PPO
+pipelines therefore stopped cleanly before optimizer updates or shared before
+panels. No comparative learning or final trained checkpoint exists.
+
+The persistent official scorer loaded once and completed all eight labels;
+two affected core numerical/reuse/cleanup cases passed on allocated Linux.
+This qualifies scorer execution, while training-batch/optimizer integration
+remains unexercised. The eight-case result is descriptive development evidence,
+not a population estimate or a conclusion that Flora is generally unsuitable.
+Original weights, complete native videos, raw probabilities and costs are
+retained. No task or score was adjusted after observing this failed gate.
+[Native result](../outputs/robocasa-native-residual-headroom-q4-20261101-r1/terminal/summary.json),
+[scorer gate and terminal audit](../outputs/robocasa-residual-integrated-20261101-r3/TERMINAL-REVIEW.json).
 
 ## LIBERO
 

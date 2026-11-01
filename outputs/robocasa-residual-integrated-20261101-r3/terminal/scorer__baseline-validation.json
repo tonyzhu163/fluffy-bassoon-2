@@ -1,0 +1,43 @@
+{
+  "format": "rlinf_libero44_flora_terminal_ppo_v1",
+  "baseline_sha256": "1f180b75a65722810d7a64930ad7c678b256ff059c0612bcccb04ef96b027791",
+  "score_field": "expected_score",
+  "training_reward_rule": "(expected_score-1)/4; no threshold or fitted transform",
+  "count": 8,
+  "initial_success_rate": 0.375,
+  "AUROC": 0.6666666666666666,
+  "go": false,
+  "calibration_only": true,
+  "policy_optimizer_updates": 0,
+  "protocol": {
+    "benchmark": "robocasa365",
+    "task": "OpenDrawer",
+    "horizon": 750,
+    "camera_order": [
+      "robot0_agentview_left"
+    ],
+    "train_episodes": 64,
+    "baseline_count": 8
+  },
+  "completed": true,
+  "scorer_receipt": {
+    "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+    "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+    "model_receipt": {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1-receipt/READY.json",
+      "sha256": "05c31de8122ecd1f467033d671767e1c59db40de9f4a3a43b409446aa38d76bf"
+    },
+    "completed": true,
+    "jobs_sha256": "b47fb61ce3f0f9992d58246d2388637daf5f508873b48b49e8aff4b9ae6f8a03",
+    "video_refs_sha256": "34ef39da63b54479a6f454d0e180f4deb96f5d53433d4f94050656a3985624b0",
+    "output": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-integrated-20261101-r3/scorer/terminal.jsonl",
+      "sha256": "7c48a342b2ae968f9c7a224682e3ea8ed66ea96c24151759e35d0dc0f3915ded"
+    },
+    "training_reward_rule": "(expected_score-1)/4",
+    "engine_process_pid": 425,
+    "model_load_count": 1,
+    "completed_batches": 1,
+    "engine": "official persistent terminal_reward helpers"
+  }
+}
