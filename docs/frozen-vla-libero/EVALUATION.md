@@ -31,9 +31,10 @@ physical states40–49 with two private-noise draws each.
 | Thirteenth learned panel |20/20|260,040|
 | Fourteenth learned panel |20/20|280,000|
 | Fifteenth learned panel |20/20|300,140|
+| Sixteenth learned panel |20/20|320,040|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest300,140 panel uses1,498 query primitives+200
+development bank. The latest320,040 panel uses1,488 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -101,6 +102,15 @@ NativeH10 differs from the paper's pi0H50: this is an adapted single-seed pilot.
 No population, memory, unseen-task transfer, full-suite or overall
 sample-efficiency claim follows. [Selection/launch](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/SCREEN-TERMINAL-RECEIPT.json).
 
+
+The next independent source assessment is now prospectively adopted: all40
+source goals at states40/41, final TRAIN mean/sample versus raw native/tied
+warmup, with actual original initialized actors only where retained. Exact
+actor/code/runtime bindings are pending. No new teacher training, collection
+for pretraining or student fit is admitted. Two cases per goal measure limited
+same-mode competence; a missing initial cannot establish learning. This is
+separate from the unfunded25h source expansion and preserves every old ledger.
+[Scope and inclusive ceilings](../../outputs/libero40-teacher-assessment-20261101-r1/PROTOCOL.json).
 
 ## Task57 fixed500k DSRL curve complete
 

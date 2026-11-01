@@ -89,7 +89,7 @@ no compatible source teacher or meta-learning result follows.
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through300,140 scores20/20. All panels are retained. This is interim
+from40,140 through320,040 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
@@ -101,6 +101,14 @@ differences. The guarded repair passes21 cases and actual checkpoint validation;
 learner resumes with three new episodes/480 updates, preserving contracts and
 budgets. The fixed endpoint remains incomplete.
 
+
+The next source decision adopts a separate all40 existing-TRAIN-actor
+assessment on fixed states40/41, with matched native/tied and mean/sample
+controls and genuine original initialized states only where retained. It
+creates no source-learning histories or student; missing initial comparisons
+stay missing. Binding/qualification are pending under explicit new inclusive
+10,800-GPU-second/196,800-action ceilings. No allocation is reserved, and the
+old25h collection/fit expansion remains unfunded.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
