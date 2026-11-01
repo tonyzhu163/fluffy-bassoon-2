@@ -27,10 +27,38 @@ Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLA
    little headroom. Use it to get the loop working, starting from RLinf's
    published 40-task few-shot pi0.5 SFT checkpoint, and to measure Flora
    against simulator success.
-2. **RoboCasa365** is the reported benchmark, starting with atomic tasks from
-   its 50-task evaluation subset; composite tasks come later. It is
-   NVIDIA's GR00T benchmark, closer in appearance to the rewarder's likely
-   training data and far from saturated. Always report true simulator success.
+   If a Flora plumbing check is needed there, LIBERO90 task 59 has headroom
+   on the frozen official OpenPI `pi05_libero` (C565) motor: native 3/16,
+   untrained tied noise 9/16
+   ([screen](../outputs/libero90-pi05-headroom-screen-20261101-r1/RESULTS.md)).
+2. **RoboCasa365** is the reported benchmark, using the RLinf-loadable
+   RoboCasa365 pi0.5 checkpoint, starting with atomic tasks from its 50-task
+   evaluation subset; composite tasks come later. It is NVIDIA's GR00T
+   benchmark, closer in appearance to the rewarder's likely training data and
+   far from saturated. Always report true simulator success.
+3. **RoboTwin** follows, for the comparison with VLRLA, the direct precedent
+   in [PAPER.md](PAPER.md). It needs its own Flora agreement check: two-arm
+   success is harder to judge from one camera.
+4. **Real robots** come after a simulated sample-efficiency gain, with Flora
+   labeling logged episodes offline and scoring live episodes online.
+
+## Gates on each benchmark
+
+Earlier LIBERO and RoboTwin runs failed because source learners never
+improved ([FINDINGS.md](FINDINGS.md#lessons-carried-forward)). Pass each gate
+before the next:
+
+1. **Flora agreement and headroom, per task.** Score native rollouts with
+   Flora and require AUROC ≥ 0.7 against simulator success. Keep tasks whose
+   native success is neither 0 nor ceiling, and screen untrained tied noise
+   as well as native sampling.
+2. **Positive control.** Ordinary PPO or DSRL must improve true success with
+   simulator reward and with Flora reward. If only the simulator arm
+   improves, the reward is the problem, not the method.
+3. **Collect histories** with Flora reward only, from learners that improve.
+4. **Steering interface and meta-learner.** The sample-efficiency claim is
+   query success per robot episode against ordinary Flora-reward DSRL at
+   equal interactions, with reset and reward-blind controls.
 
 ## First test: LIBERO90 task 44, simulator reward vs Flora reward
 
