@@ -72,6 +72,21 @@ production-guard dryrun precede any GPU retry. The same learner, original
 scientific contract, query cursor and remaining phase limits stay fixed.
 [Actual diagnosis and audit limits](../../outputs/libero-headroom-resume-diagnosis-cpu-20261101-r1/PARENT-REVIEW.json).
 
+The guarded repair then passes21 focused CPU cases and the actual original
+431MB checkpoint production-guard dryrun in93 CPU-worker seconds. It retains
+the legacy stored-byte binding and exact full restored-state checks. The
+explicit migration keeps b665 scientific contracts, selected cases and
+cumulative budgets while executing d236 in a fresh immutable worktree.
+R3 resumes on Baige job-2qn8dpw3yvlb: the actual GPU proof matches the original
+canonical state and all replay/RNG domains before any updates. Three complete
+new episodes add480 updates and24 replay rows, reaching302,180/1,723 episodes/
+15,603 rows. New full checkpoint74c2e391...afc18c, finite losses and raw/RPC
+hashes pass; eighteen old panels and next320k are retained without initial
+control replay. Whole-phase actions are311,949. The original28,217 closed
+GPU-seconds plus active R3 elapsed time are not a final charge. No learner,
+recipe, task, seed or endpoint is replaced.
+[R3 restoration and actual advancement](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/R3-PARENT-REVIEW.json).
+
 The fixed first whole burst≥500k, all20k panels, final native and final-three
 persistence test remain unchanged and incomplete. No checkpoint/task/seed
 substitution, retuning or control replay is admitted. The fixed endpoint

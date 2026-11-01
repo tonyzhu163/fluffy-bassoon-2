@@ -97,8 +97,9 @@ claim follows. [Evidence](../frozen-vla-libero/EVALUATION.md).
 The first slice closes at301,700 updates. A continuation rejects a raw
 serialization hash before new interaction; allocated CPU diagnosis confirms
 exact model/Adam/replay/RNG state with27 mapping-order changes and zero leaf
-differences. A minimal guarded repair and qualification precede retry; the
-fixed endpoint remains incomplete.
+differences. The guarded repair passes21 cases and actual checkpoint validation; the same
+learner resumes with three new episodes/480 updates, preserving contracts and
+budgets. The fixed endpoint remains incomplete.
 
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

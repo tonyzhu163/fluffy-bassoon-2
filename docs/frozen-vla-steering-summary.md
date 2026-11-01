@@ -106,8 +106,10 @@ continuation rejects a raw serialization hash before any new episode/update.
 Allocated CPU diagnosis confirms exact model/Adam/replay/counters/RNG state,
 with27 dictionary-order changes and zero canonical leaf differences. Four
 tests and actual inspection pass,159 CPU-worker seconds including a retained
-76-second runtime-binding failure. A minimal guarded repair and focused
-qualification precede retry; fixed500k/final native remain incomplete.
+76-second runtime-binding failure. The guarded repair passes21 cases and the real-checkpoint CPU dryrun in93
+worker-seconds. The same learner resumes with exact GPU state/RNG proof and
+three new episodes/480 updates to302,180, retaining all prior panels/cases.
+The fixed500k endpoint and final native remain incomplete.
 
 
 The compatible collection records actual steering noise under the same frozen
