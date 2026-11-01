@@ -411,11 +411,13 @@ is semantically unseen.
   layers, causal mask, ALiBi or RoPE so a sliding-window cache works). No
   segment recurrence or gating: not Transformer-XL or GTrXL. One backbone
   for every condition, including any direct meta-RL arm. Architecture is not
-  a tested axis: no CTM, CMM, GRU, GTrXL, Transformer-XL, hierarchical
-  (ECET) or MLP comparisons, and no architecture claim. Static and reset
-  controls use the same decoder. The current LIBERO history controller
-  (`vla_history.py`) still uses GTrXL and must be switched before new
-  meta-learner results. A strong static Transformer establishes policy transfer,
+  a tested axis in the main study and the main claim makes no architecture
+  claim. Static and reset controls use the same decoder. After a main result
+  exists, a backbone ablation (decoder vs GTrXL vs CTM) may run as a secondary
+  study with matched data, controls, parameters and update budget. The
+  history controller (`vla_history.py`, `HistoryConfig.backbone`) defaults to
+  `CausalDecoderCore`; `gtrxl` loads legacy checkpoints and serves the
+  ablation. A strong static Transformer establishes policy transfer,
   not implicit deployment-time ICRL.
 
 ### Source and target boundaries

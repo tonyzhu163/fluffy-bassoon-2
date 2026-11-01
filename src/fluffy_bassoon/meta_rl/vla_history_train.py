@@ -39,6 +39,7 @@ def parser():
     p.add_argument("--layers", type=int, default=2)
     p.add_argument("--heads", type=int, default=4)
     p.add_argument("--context-length", type=int, default=300)
+    p.add_argument("--backbone", choices=("decoder", "gtrxl"), default="decoder")
     p.add_argument("--max-window", type=int, default=128)
     p.add_argument("--full-trial-batches", action="store_true")
     p.add_argument("--max-episodes-per-window", type=int)
@@ -154,7 +155,8 @@ def main(argv=None):
     torch.manual_seed(args.seed)
     sampler = np.random.default_rng(args.seed)
     config = HistoryConfig(train_manifest["observation_dim"], train_manifest["noise_dim"],
-        width=args.width, layers=args.layers, heads=args.heads, context_length=args.context_length)
+        width=args.width, layers=args.layers, heads=args.heads, context_length=args.context_length,
+        backbone=args.backbone)
     policy = HistoryNoisePolicy(config).to(args.device)
     policy.fit_observation_normalization(train)
     optimizer = torch.optim.AdamW(policy.parameters(), lr=args.learning_rate, weight_decay=0.)
