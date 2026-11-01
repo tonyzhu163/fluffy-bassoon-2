@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "created_utc": "2026-11-01T05:47:11Z",
+  "owner": "/root",
+  "execution_owner": "/root/finish_assembly",
+  "canonical_plan_main": "1af045e63a1f4085f6006101518a82d5b2df4a4e",
+  "canonical_plan_path": "outputs/flora-ppo-comparison-20261101-r1/PLAN.md",
+  "ticket_id": "openpi40-official-conversion-q1",
+  "status": "admitted_subject_to_literal_profile_and_actual_probe",
+  "cpu_tests_required": false,
+  "scope": "Unchanged officialc605 conversion of exact existingOpenPI40 into freshimmutableoutput; independently runnable before PPOentrypoint. Completion does not qualify nativepolicyparity/baseline/PPO.",
+  "source": {
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "initializer_root": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+    "initializer_receipt_sha256": "ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170",
+    "jax_parameters": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+    "norm_sha256": "b3a44bb2810436fb62917decaea58bd4d9110255df527dea21e8fd40c960bd84"
+  },
+  "resource": {
+    "gpus": 1,
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "scheduler_minutes": 59,
+    "retry": false,
+    "inclusive_gpu_seconds": 3600,
+    "inner_deadline_seconds": 3420,
+    "term_seconds": 3510,
+    "kill_seconds": 3530,
+    "outer_seconds": 3540,
+    "startup_allowance_seconds": 60,
+    "outputs_gib": 64,
+    "actions": 0
+  },
+  "command_template": [
+    "<qualified-python>",
+    "-m",
+    "rlinf.utils.ckpt_convertor.openpi.convert",
+    "--mode",
+    "jax_to_openpi",
+    "--input-model",
+    "<OPENPI40>",
+    "--input-norm-stats",
+    "<OPENPI40>/assets/physical-intelligence/libero/norm_stats.json",
+    "--output-model",
+    "<FRESH-CONVERTED>",
+    "--output-norm-stats",
+    "<FRESH-CONVERTED>/physical-intelligence/libero/norm_stats.json",
+    "--action-dim",
+    "32",
+    "--action-horizon",
+    "10",
+    "--max-token-len",
+    "200"
+  ],
+  "prerequisites": [
+    "Currentmain/relevantdiff and exactupstreamcommit recorded.",
+    "Actual imported RLinf/OpenPI origins bound; oldeditablee1a82ebf mustnot silentlywin; no sharedenvmutation.",
+    "Actual allocatedGPUcount/CUDA/ownPIDprobe, capacity/quota status/writeprobe; freshisolatedoutput.",
+    "Literalcommand/source/environment/resourceidentity+finite cumulativeclock includingallstartup/failure/cleanup."
+  ],
+  "source_semantics": {
+    "pi05": true,
+    "action_horizon": 10,
+    "action_dim": 32,
+    "token_length": 200,
+    "discrete_state_input": false,
+    "extra_delta_transform": false
+  },
+  "artifacts": [
+    "probe/resource/importorigin/clockreceipt",
+    "convertedfilebytemanifest and verbatimnormequality",
+    "truthfulconverterexit/status/config",
+    "retainedfailure/partialartifactevidence"
+  ],
+  "constraints": [
+    "No130fallback/sourceoverwrite/oldjobpolls.",
+    "Freshconvertedhash is not originalC565signature.",
+    "No nativepolicyparity or PPOqualification claim fromconversionalone.",
+    "No further scientificACK once objectiveprerequisites pass."
+  ]
+}
