@@ -1,0 +1,106 @@
+{
+  "format": "headroom_1010_light_receipt_v1",
+  "job_id": "job-2qn8dpw3yvlb",
+  "scheduler_state": "Running",
+  "scheduler_observed_UI_seconds": 2712,
+  "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "reader_ref": {
+    "git_commit": "f084a3cf0239a13d1b13bf2662cdfe7d9cc835d4",
+    "git_blob": "e80638ea0d572dae0dcebc64418193acf98a5d10",
+    "sha256": "378808636e034807e246e6743e8a7fc93537d32b5978b94ff9c24eeae5d723df"
+  },
+  "data_ref": {
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1010.json",
+    "sha256": "edcdca3c9be5e23329d46e2db97059a3e8fe1bf8cf3d02ecc57212d6cf76b618"
+  },
+  "index_snapshot": {
+    "updates": 323820,
+    "replay_rows": 16685,
+    "training": {
+      "episodes": 1861,
+      "chunks": 16685,
+      "primitive_steps": 158528,
+      "settling_steps": 18610
+    },
+    "successes": 1822,
+    "failures": 39,
+    "actions": 325245,
+    "output_bytes": 19433122506
+  },
+  "rolling_full_snapshot": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "ffdceeaf84e94c81965c0c152fc28bbd6d677c8449f845916338d0f25087c5c6",
+      "updates": 323980,
+      "replay_rows": 16693,
+      "signature": "aa7c99ea15d7facfbad99157bd2a8c82452435fc28d75dc8510ca4a631f498a7"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "ffdceeaf84e94c81965c0c152fc28bbd6d677c8449f845916338d0f25087c5c6",
+      "bytes": 459551459
+    },
+    "stable": true
+  },
+  "snapshot_timing": "Index323820 and separately stable rolling-full323980 were read during continuing publication, not as one atomic index/checkpoint snapshot.",
+  "new_completed_panels": [
+    {
+      "name": "learned-320000",
+      "kind": "learned",
+      "queries": 20,
+      "successes": 20,
+      "actual_updates": 320040,
+      "threshold_updates": 320000,
+      "primitive_steps": 1488,
+      "settling_steps": 200,
+      "policy_signature": "685971d6812ea6fcbda0eb5172b107fba6fd75a94df01205361badb121883e78",
+      "optimizer_update_overshoot": 40,
+      "immutable_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/milestones/learned-320000-recovery.pkl",
+        "sha256": "a866953112f81a6e8049ef30d731daa547222099ea69bc1def1de1b3fa4c437d",
+        "bytes": 454550491
+      },
+      "immutable_checkpoint_matches": true,
+      "weights_unchanged": true,
+      "no_query_optimizer_updates": true,
+      "replay_isolated": true,
+      "policy_signature_fixed": true,
+      "matched_native_initials": true
+    }
+  ],
+  "next_threshold": 340000,
+  "finite_latest_losses": true,
+  "new_raw_trace_SHA_matches": true,
+  "one_RPC_sample_hashes_match": true,
+  "active_panel": null,
+  "producer_costs": {
+    "training": {
+      "known_actions": 177138,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 158528,
+      "settling_steps": 18610,
+      "reset_attempts": 1861
+    },
+    "query": {
+      "known_actions": 51328,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 47528,
+      "settling_steps": 3800,
+      "reset_attempts": 380
+    },
+    "qualification": {
+      "known_actions": 0,
+      "uncertain_actions_ceiling": 0,
+      "primitive_steps": 0,
+      "settling_steps": 0,
+      "reset_attempts": 0
+    }
+  },
+  "observed_conservative_GPU_seconds": 30985,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_all_in_actions": 1000000,
+  "maximum_output_bytes": 68719476736,
+  "next_owned_check": "2026-11-01 10:30 Asia/Shanghai",
+  "verification_limits": "Only newly complete320k immutable milestone, stable current rolling full, one newest raw/RPC sample and producer cumulative counters. No older milestone rehash, journal forest, tensors/arrays/model/tests/simulator or job controls. Motor parameters remain bound to saved before-signature; finalafterhash pending while active."
+}

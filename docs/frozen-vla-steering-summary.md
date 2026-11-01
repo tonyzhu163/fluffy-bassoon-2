@@ -93,7 +93,7 @@ seconds. No search, useful teacher, source collection or student is admitted.
 
 The weak-native LIBERO pilot selects task44 at native5/20 in screening and
 confirmation. Fresh native6/20, tiedGaussian13/20 and initializedSAC8/20 are
-retained controls. The20,580 panel falls to1/20; subsequent40,140 through300,140
+retained controls. The20,580 panel falls to1/20; subsequent40,140 through320,040
 panels each score20/20 on the same ten physical states with two draws each.
 This is promising ordinary RL evidence over all initial controls, with early
 failure retained. The fixed500k endpoint, final native and last-three
@@ -110,6 +110,9 @@ tests and actual inspection pass,159 CPU-worker seconds including a retained
 worker-seconds. The same learner resumes with exact GPU state/RNG proof and
 three new episodes/480 updates to302,180, retaining all prior panels/cases.
 The fixed500k endpoint and final native remain incomplete.
+
+
+Root adopts a separate ALL40 existing-TRAIN-teacher assessment before more source collection. Fixed source states40/41 compare raw native, exact tied warmup and final TRAIN actor in mean/sample modes; genuinely retained original initialized actors add matching comparisons, with absence kept explicit. Two cases per goal are descriptive, not a per-task teacher certificate or a measured learning curve when an initial is missing. The new inclusive ceilings are10,800 GPU-seconds,180 CPU-worker-seconds, 196,800 actions and32GiB. Exact actor inventory, executable and resource bindings are pending; no allocation is reserved or source/student training admitted. This independent assessment can overlap task44. The old25h collection/fit expansion remains unfunded, and legacy/V2 generation choices remain unadopted. [Adopted assessment](../outputs/libero40-teacher-assessment-20261101-r1/PROTOCOL.json).
 
 
 The compatible collection records actual steering noise under the same frozen
