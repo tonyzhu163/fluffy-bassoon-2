@@ -1,7 +1,14 @@
 {
   "schema_version": 1,
   "status": "SOURCE_AND_PROTOCOL_PREPARATION_ONLY",
-  "source_tasks": ["handover_mic", "pick_diverse_bottles", "place_a2b_left", "place_object_stand", "place_phone_stand", "scan_object"],
+  "source_tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
   "first_development_candidate": "scan_object",
   "stamp_seal": "Paper unseen task; not silently included in six-source SFT data.",
   "official_base_binding": null,
@@ -23,5 +30,11 @@
     "Confirm c605 native PPO can consume the resulting pi0.5 checkpoint, with exact state/action/camera/normalizer conventions and common fresh critic seed for both arms.",
     "Measure native clean/random baselines and Flora discrimination with this new SFT endpoint before PPO. Old Motus or LIBERO performance does not carry over.",
     "All tests, arrays, training, weights and simulator work stay on allocated Linux; Mac preparation is static and saved metadata only."
-  ]
+  ],
+  "official_loader_recovery": {
+    "status": "UNQUALIFIED_CORE_PATH_CORRECTION_REQUIRED",
+    "reported_pinned_behavior": "c605 official_sft_data_loader returns an OpenPI wrapper, but FSDPVlaSftWorker saves data.pt/rng.pt only when its loader is directly a StatefulDataLoader. Model/optimizer/scheduler saving alone does not prove official-loader continuation.",
+    "scope": "Single source writer may correct the existing worker/loader path and qualify exact next-batch/update plus sampler/global/private/worker RNG on allocated Linux. No new trainer/storage framework, no local model execution and no separate human ACK needed.",
+    "launch_limit": "Do not call the fixed20k fit resumable until the actual profile loader/worker behavior is qualified. Preserve all genuine first-capacity updates in the same fit."
+  }
 }
