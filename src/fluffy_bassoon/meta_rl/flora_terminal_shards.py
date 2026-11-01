@@ -31,3 +31,29 @@ def gather_terminal_outputs(episodes, shards, proto):
             by_id[row['id']] = row
     ordered = [by_id[episode['id']] for episode in episodes]
     return ordered, parse_outputs(episodes, ordered, proto)
+
+
+def baseline_episode_shard(episodes, rank, proto):
+    """Unequal7/7/6/6/6/6/6/6 partitions of a complete native50 bank."""
+    validate_protocol(proto, training=True)
+    if (proto['baseline_count'] != 50 or len(episodes) != 50
+            or type(rank) is not int or not 0 <= rank < 8):
+        raise ValueError('Exactly fifty native baseline cases and eight scorer ranks required')
+    flora_jobs(episodes, proto)
+    return episodes[rank::8]
+
+
+def gather_baseline_outputs(episodes, shards, proto):
+    """No fifty-case quality result from a partial or misrouted annotation bank."""
+    if set(shards) != set(range(8)):
+        raise ValueError('All eight baseline shards are required')
+    by_id = {}
+    for rank in range(8):
+        subset, rows = baseline_episode_shard(episodes, rank, proto), shards[rank]
+        parse_outputs(subset, rows, proto)
+        for row in rows:
+            if row['id'] in by_id:
+                raise ValueError('A native case cannot occur in two baseline shards')
+            by_id[row['id']] = row
+    ordered = [by_id[episode['id']] for episode in episodes]
+    return ordered, parse_outputs(episodes, ordered, proto)
