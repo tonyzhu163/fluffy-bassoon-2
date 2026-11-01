@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "prospectively_admitted_operational_fallback_no_extra_ACK",
+  "source_commit": "a3b6111ac79e19ec12c99a3df6dcae8d201f4b53",
+  "basis": "Humanapprovedready40comparison/max8GPUsperjob/standingjob<8h; CPUtestsallocatedLinux. AvoidaGPUtest-onlyjobormisrepresentingresources.",
+  "preferred": "Oneactual0GPU8CPU32GiBjobforfull67onnewpin ifCPU-onlyformworksandoldjobnevercreated.",
+  "fallback_trigger": "AfteronefreshCPU-onlyformattemptwithconcreteservicerejectionorunavailability andexactnamereconciliation, donotrepeatindefinitely.",
+  "fallback": "Usealready-admitted1GPU READY40loading/smoketicket,runallocatedGPUprobe then67syntheticCPUtests asFIRSTstage,beforeanymodelweightload/physics. OnlyactualPASS proceedsstrictnewreleasebackboneloadandtheONEplannedH400smoke.",
+  "resource_limits": {
+    "gpu_count": 1,
+    "max_inclusive_GPU_seconds": 3600,
+    "max_phase_CPU_test_worker_seconds": 360,
+    "ticket_test_stage_total_inclusive_worker_seconds": 300,
+    "full_job_wall_minutes": 59,
+    "max_physical_episodes": 1,
+    "max_physical_actions": 415,
+    "SGD_updates": 0
+  },
+  "accounting": "ActualoneGPUallocationreportedtruthfully,notcalled0GPU. AllGPUcount×allocatedwall inclteststage/idle/startup/failures/cleanupcountedonceintheexistingloadingticket; actualtestworkerwallalsoinexisting360CPUphase. No newaggregategrant,borrowedoldunusedseconds,extraepisodeornewscientificarm.",
+  "failure": "IfCPUtests fail,holdweightload/physics,preserveexactJUnitandlogs/costs,diagnosebeforeuniquepinnedrecovery; unchangedpassedtestsnotrerun.",
+  "evidence": "A GPU allocation running CPU synthetic code is not evidence of0GPUqualification oractualpolicyperformance. Separate test result fromactualGPUloading/smokereceipt.",
+  "execution_owner": "/root/finish_assembly"
+}
