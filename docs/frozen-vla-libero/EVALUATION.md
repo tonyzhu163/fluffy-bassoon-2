@@ -28,6 +28,17 @@ GPU work. [Prospective task/case reconciliation](../../outputs/libero90-pi05-hea
 
 ## Task44 ordinary SAC: early regression and repeated20/20 panels
 
+The human paused this run to prioritize a separate RLinf PPO/Flora comparison.
+The allocated job stopped on November1 at12:59:03 with a complete406,780-update
+learner/replay/RNG checkpoint,2,389 training episodes and376,339 all-in actions.
+The index lags one closed episode by90 actions; the final nine RPCs returned
+and no next intent was found in the bounded tail. The500k endpoint and final
+native panel remain incomplete. Whole-phase conservative GPU charge is40,992
+seconds; the killed shell left its canonical worker row unclosed, so the
+separate owner closeout preserves that fact and authorizes no automatic resume.
+No final whole-motor after-hash was emitted after scheduler termination.
+[Audited pause](../../outputs/owned-jobs-pause-20261101-r1/PARENT-REVIEW.json).
+
 Task44 (`turn on the stove`) was selected at native5/20 in screening and
 separate confirmation. Preferred77 screened4/20 but confirmed0/20 and was
 rejected beforeSGD. Fresh-process native readmission6/20 passed the frozen
@@ -58,9 +69,10 @@ physical states40–49 with two private-noise draws each.
 | Seventeenth learned panel |20/20|340,060|
 | Eighteenth learned panel |20/20|360,080|
 | Nineteenth learned panel |20/20|380,000|
+| Twentieth learned panel |20/20|400,120|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest380,000 panel uses1,482 query primitives+200
+development bank. The latest400,120 panel uses1,478 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -179,7 +191,19 @@ unchanged. Numerical migration hashes prove within-process preservation,
 not cross-runtime pickle-byte equality. The same clock retains1,340 settled
 seconds and9,420 active reserved seconds under10,800; final motor-after and
 all40 outcomes remain pending. No teacher/source/student admission follows.
-[R2 advancement](../../outputs/libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json). [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
+[R2 advancement](../../outputs/libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json).
+
+R2 finishes naturally before a stop action:319 valid episodes and the one
+unreplayed, null-score reset abort, with all40 goals and160 omitted initial
+slots retained. Native scores78/80, exact tied warmup70/79 plus the abort,
+final TRAIN SAC mean78/80 and sampled78/80. Aggregate ties do not establish
+identical failure cases or teacher superiority; two cases per goal and no
+original initial checkpoints cannot establish a learning curve. The study
+costs53,081 actions and2,643 GPU-seconds (1,340+1,303), with unchanged final
+whole-motor C565 and a SHA-bound final recovery. No source/student admission
+follows. The human pause blocks every successor and the prepared four-model
+current-bank500 study; its CPU/GPU allocations and compute charges are zero.
+[Terminal evidence](../../outputs/owned-jobs-pause-20261101-r1/PARENT-REVIEW.json). [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
 
 A separate controlled-depth study is adopted for preparation on the current
 583-K4/33,729-TRAIN-row bank: four fixed seed0 full/static AD/DPT models

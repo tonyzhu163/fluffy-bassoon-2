@@ -1,0 +1,59 @@
+{
+  "format": "owned_jobs_user_pause_preservation_v1",
+  "checked_unix": 1793509108.5267916,
+  "authority_message": "01a19572-3598-7cb1-a201-a619b5f12660",
+  "jobs": {
+    "job-2qn8dpw3yvlb": {
+      "snapshot_state": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/state-attempt-0.json",
+        "bytes": 10858667,
+        "sha256": "a3cf793f5e9a5b25162263023b2fff039dd948f87f9ef704f582056c1891954a"
+      },
+      "full_checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/primary/closed-recovery-attempt-0.pkl",
+        "bytes": 564244326,
+        "sha256": "aea41168f2cc37b9278ee86e01ecd5b3f973fc12f5d93bbae93077a09a31ef5a"
+      },
+      "model": {
+        "path": "recovery-1.pkl",
+        "sha256": "aea41168f2cc37b9278ee86e01ecd5b3f973fc12f5d93bbae93077a09a31ef5a",
+        "updates": 406460,
+        "replay_rows": 20817,
+        "signature": "a0951360d1d867127725f45fafbc8b2b1d4ab273cab314376482ebf154d2050b"
+      },
+      "training_episodes": 2387,
+      "phase": "training",
+      "next_threshold": 420000,
+      "active_panel": null,
+      "closed_checkpoint_verified": true
+    },
+    "job-bc2ooyztqsfh": {
+      "closed_progress": {
+        "cursor": 320,
+        "planned_episodes": 320,
+        "costs": {
+          "all_in_actions": 53081,
+          "physical_episodes": 320,
+          "uncertain_actions": 0
+        },
+        "recovery": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r2/data/assessment-recovery.pkl",
+          "sha256": "5b60163e1b86885d20a4709e58fd279926f6feedd0986c8aac50099c2edd8aed"
+        }
+      },
+      "progress_ref": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/progress.json",
+        "bytes": 372,
+        "sha256": "efb63e7cddb290125e42e27abd9785d103e350e491b1dc852492bca3794ecc14"
+      },
+      "current_full_recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/owned-jobs-pause-20261101-r1/assessment/assessment-recovery.pkl",
+        "bytes": 102424,
+        "sha256": "5b60163e1b86885d20a4709e58fd279926f6feedd0986c8aac50099c2edd8aed"
+      },
+      "matches_last_closed_progress": true,
+      "no_deserialization": true,
+      "resume_limit": "Current recovery may include active next role; ordinary driver refuses active cursor; preserve rather than manufacture closed state."
+    }
+  }
+}
