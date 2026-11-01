@@ -1,6 +1,10 @@
 # Plan: bounded action-residual PPO on RoboCasa365 (code changes first)
 
-Draft, 2026-11-01. No code written and no job launched. Implements the
+Draft, 2026-11-01. Code changes 1, 2 and 4 written on branch
+`residual-ppo` (`src/fluffy_bassoon/rl/action_residual.py`,
+`src/fluffy_bassoon/meta_rl/residual_ppo.py`, `tests/test_residual_ppo.py`);
+Linux CPU tests pending. Change 3, the RoboCasa365 binding, waits for the
+full-weight owner's qualified RoboCasa runner. No job launched. Implements the
 steering decision in [PAPER.md](../../docs/PAPER.md) (bounded action
 residual) as the matched baseline and history source. The full-weight PPO
 comparison stays with its own owner
