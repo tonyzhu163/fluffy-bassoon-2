@@ -45,7 +45,8 @@ MAX_BYTES=32<<30
 RUNTIME_FILES=('vla_source40_teacher_assessment.py','vla_source40_evaluate.py','vla_libero.py',
     'vla_source40_sac_diagnostic.py','vla_source40_subset_evaluate.py','vla_source40_memory_replication.py',
     'vla_source40_corpus.py','vla_source40_multitask_ppo.py','vla_source40_schedule.py',
-    'vla_history.py','vla_features.py','vla_motor_replay.py','vla_source40_ppo_worker.py')
+    'vla_history.py','vla_features.py','vla_motor_replay.py','vla_source40_ppo_worker.py',
+    'vla_reset_identity.py','vla_source40_teacher_repair.py')
 
 
 def read_ref(ref):
@@ -74,9 +75,12 @@ def clock_identity(root,clock):
         path=first['path'],started_unix=first['started_unix'],reserved_seconds=first['reserved_seconds']))
 
 
-def validate_admission(ticket,clock,probe,*,source,output,hostname,now):
+def validate_admission(ticket,clock,probe,*,source,output,hostname,now,repair=None):
     """Pure check of the execution owner's existing begin/finish clock and proof."""
-    expected=worker_contract(source,ticket['run_id'])
+    if repair is None:expected=worker_contract(source,ticket['run_id'])
+    else:
+        from .vla_source40_teacher_repair import repair_admission
+        expected=repair_admission(ticket,clock,source=source,output=output,profile=repair)
     rows=[r for r in clock['attempts'] if r['path']==ticket['resource_attempt']]
     charges=[r.get('charged_seconds',r['reserved_seconds']) for r in clock['attempts']]
     allocations=ticket['allocation']
@@ -202,6 +206,8 @@ class Actors:
         from .vla_libero import structure_digest
         if self.active==row['task_key']:return
         proof=self.binding['actors'][row['source_ordinal']];contract=read_ref(row['contract'])
+        if file_sha256(proof['checkpoint']['path'])!=proof['checkpoint']['sha256']:
+            raise ValueError('Original selected actor checkpoint bytes changed')
         self.learner.restore(proof['checkpoint']['path'],np.random.default_rng(0),contract)
         actual=structure_digest(serialization.to_state_dict(self.learner.agent._save_dict))
         if (actual!=proof['full_learning_state_sha256'] or self.learner.updates!=proof['updates']
@@ -233,13 +239,35 @@ def action_charge(output):
     return dict(all_in_actions=total,physical_episodes=episodes,uncertain_actions=uncertain)
 
 
-def check_pair(reference,initial,features,instruction):
+def check_pair(reference,initial,features,instruction,*,camera_max_lsb=0,audit_output=None):
+    if camera_max_lsb:
+        from .vla_reset_identity import comparison,RESET_IDENTITY
+        from .vla_source40_memory_replication import raw_record
+        if camera_max_lsb!=1 or audit_output is None:raise ValueError('Explicit source40 precision profile and saved audit required')
+        error=None;metrics=None
+        try:metrics=comparison(reference['initial'],initial,camera_max_lsb=1)
+        except (ValueError,KeyError,TypeError) as exc:error=str(exc)
+        feature=np.asarray(features);ref=np.asarray(reference['features'])
+        finite=feature.shape==(4104,) and bool(np.isfinite(feature).all())
+        delta=float(np.max(np.abs(feature.astype(np.float64)-ref.astype(np.float64)))) if finite and ref.shape==(4104,) and np.isfinite(ref).all() else None
+        allowed=error is None and metrics['allowed'] and instruction==reference['instruction'] and finite
+        raw_record(audit_output,dict(profile=RESET_IDENTITY,initial=initial,computed_features=feature,
+            instruction=instruction,reference_features=ref,comparison=metrics,comparison_error=error,
+            instruction_equal=instruction==reference['instruction'],finite_feature4104=finite,
+            feature_vectors_equal=np.array_equal(feature,ref),feature_maximum_absolute_delta=delta,
+            feature_equality_required=False,allowed=bool(allowed),pixels_modified=False))
+        if not allowed:raise ValueError('Source40 reset/feature ABI guard refused BEFORE steering; audit preserved')
+        return
     from .vla_source40_memory_replication import same_public
     keys=('initial_observation_sha256','initial_state_vector_sha256','initial_simulator_state_sha256')
     if (any(not isinstance(initial.get(k),str) or initial[k]!=reference['initial'][k] for k in keys)
             or instruction!=reference['instruction'] or not same_public(reference['initial']['observation'],initial['observation'])
             or not np.array_equal(reference['features'],features)):
         raise ValueError('Actual same-case reset/raw/public inputs differ BEFORE steering; preserve partial result')
+
+
+def recovery_contract(table,provenance):
+    return content_hash(dict(table=table,format=FORMAT,roles=ROLES,states=[40,41],provenance=provenance))
 
 
 def run_panel(table,motor,actors,output,*,server_factory,deadline,qualify,forks,provenance):
@@ -249,29 +277,38 @@ def run_panel(table,motor,actors,output,*,server_factory,deadline,qualify,forks,
     from .vla_source40_sac_diagnostic import QuerySimulator,SourceCase
     output=Path(output);output.mkdir(parents=True,exist_ok=True);schedule=panel(table)
     recovery=output/'assessment-recovery.pkl'
-    contract=content_hash(dict(table=table,format=FORMAT,roles=ROLES,states=[40,41],provenance=provenance))
+    contract=recovery_contract(table,provenance)
+    repair=provenance.get('repair')
+    prior={} if repair is None else repair['prior_costs']
+    def costs_now():return {k:v+prior.get(k,0) for k,v in action_charge(output).items()}
+    storage_prior=0 if repair is None else repair['prior_output_bytes_upper_bound']
     if recovery.exists():
         with recovery.open('rb') as stream:progress=pickle.load(stream)
         if progress['contract']!=contract or progress['active'] is not None:raise ValueError('Resume only exact closed episodes; no replay of an interrupted physical trial')
-        if action_charge(output)!=progress['costs']:raise ValueError('Saved closed cursor/action journal differs')
-        if (not 0<=progress['cursor']<=len(schedule) or len(progress['receipts'])!=progress['cursor']
+        if repair is None and progress.get('aborted'):raise ValueError('Aborted roles require the explicit repair migration')
+        if repair is not None:
+            from .vla_source40_teacher_repair import validate_disposition
+            validate_disposition(progress,table)
+        if costs_now()!=progress['costs']:raise ValueError('Saved closed cursor/action journal differs')
+        if (not 0<=progress['cursor']<=len(schedule) or len(progress['receipts'])+len(progress.get('aborted',[]))!=progress['cursor']
                 or any(file_sha256(r['path'])!=r['sha256'] for r in progress['receipts'])
                 or any(file_sha256(r['path'])!=r['sha256'] for r in progress['references'].values())):
             raise ValueError('Closed evaluation receipt/cursor changed')
         forks.restore_global(progress['global_rng']);motor.policy._rng=restore_motor_rng(progress['motor_rng'])
     else:
+        if repair is not None:raise ValueError('Repair requires its verified migrated recovery; no fresh controls')
         if any(output.glob('episode-*')) or any(output.glob('case-reference-*')):
             raise ValueError('Existing physical outputs without their recovery must remain preserved')
         progress=dict(contract=contract,cursor=0,active=None,receipts=[],references={},case_key=None,case_fork=None,
             global_rng=forks.capture_global(),motor_rng=save_motor_rng(motor.policy._rng),actor_rng=None,
             qualification_complete=False,costs=action_charge(output))
         _save_recovery(recovery,progress)
-    write_results(output,table,progress['receipts'])
+    write_results(output,table,progress['receipts'],aborted=progress.get('aborted',()))
     server=None;task_key=None;stop=None
     try:
         for ordinal in range(progress['cursor'],len(schedule)):
-            spec=schedule[ordinal];row=table['actors'][spec['source_ordinal']];costs=action_charge(output)
-            used=sum(p.stat().st_size for p in output.parent.rglob('*') if p.is_file())
+            spec=schedule[ordinal];row=table['actors'][spec['source_ordinal']];costs=costs_now()
+            used=storage_prior+sum(p.stat().st_size for p in output.parent.rglob('*') if p.is_file())
             if costs['uncertain_actions'] or costs['all_in_actions']+410>SCHEDULE_ACTIONS or costs['physical_episodes']>=320:
                 stop='whole_episode_action_admission';break
             if time.time()+120>=deadline:stop='whole_episode_time_admission';break
@@ -291,14 +328,21 @@ def run_panel(table,motor,actors,output,*,server_factory,deadline,qualify,forks,
             controller=actors.controller(spec['role']);before=actors.fingerprint();before_global=forks.capture_global()
             def on_reset(observation):
                 initial=captured_sim.initial_reset;feature=np.asarray(motor.feature_encoder(observation,server.metadata['instruction']))
-                if feature.shape!=(4104,) or not np.isfinite(feature).all():raise ValueError('Exact public4104 feature ABI required')
+                if repair is not None:
+                    raw_record(episode/'reset-input-features.pkl.gz',dict(initial=initial,computed_features=feature,
+                        instruction=server.metadata['instruction'],pixels_modified=False))
+                if repair is None and (feature.shape!=(4104,) or not np.isfinite(feature).all()):raise ValueError('Exact public4104 feature ABI required')
                 if case_key in progress['references']:
                     ref=progress['references'][case_key]
                     if file_sha256(ref['path'])!=ref['sha256']:raise ValueError('Initial case reference changed')
                     with gzip.open(ref['path'],'rb') as stream:reference=pickle.load(stream)
-                    check_pair(reference,initial,feature,server.metadata['instruction'])
+                    check_pair(reference,initial,feature,server.metadata['instruction'],
+                        camera_max_lsb=0 if repair is None else 1,audit_output=episode/'reset-identity-audit.pkl.gz')
                 else:
                     if spec['role']!=ROLES[0]:raise ValueError('No paired native reference may be manufactured by a later role')
+                    if repair is not None:
+                        check_pair(dict(initial=initial,features=feature,instruction=server.metadata['instruction']),
+                            initial,feature,server.metadata['instruction'],camera_max_lsb=1,audit_output=episode/'reset-identity-audit.pkl.gz')
                     path=output/f'case-reference-{spec["source_ordinal"]:02d}-{spec["state"]}.pkl.gz'
                     raw_record(path,dict(initial=initial,features=feature,instruction=server.metadata['instruction']))
                     progress['references'][case_key]=_leaf(path)
@@ -318,23 +362,28 @@ def run_panel(table,motor,actors,output,*,server_factory,deadline,qualify,forks,
                 global_after=forks.capture_global(),motor_after=save_motor_rng(motor.policy._rng),noise_sampler_after=noise_after,
                 actor_before=None if controller is None else controller.assessment_rng_before,
                 actor_after=None if controller is None else controller.snapshot(),source_learning_state=before))
+            reset_evidence={} if repair is None else dict(reset_identity='source40_exact_physics_camera_lsb_v1',
+                input_feature_audit=_leaf(episode/'reset-input-features.pkl.gz'),
+                reset_comparison_audit=_leaf(episode/'reset-identity-audit.pkl.gz'))
             write_json(episode/'receipt.json',dict(receipt,spec=spec,source_actor=row['checkpoint'],source_updates=row['recorded_updates'],
-                frozen_learning_state=before,source_assembly_admitted=False,optimizer_updates=0,trace=_leaf(episode/'trace.pkl.gz'),RNG=_leaf(episode/'rng-context.pkl.gz')))
+                frozen_learning_state=before,source_assembly_admitted=False,optimizer_updates=0,trace=_leaf(episode/'trace.pkl.gz'),RNG=_leaf(episode/'rng-context.pkl.gz'),**reset_evidence))
             progress['receipts'].append(_leaf(episode/'receipt.json'))
-            progress.update(cursor=ordinal+1,active=None,qualification_complete=True,costs=action_charge(output),
+            progress.update(cursor=ordinal+1,active=None,qualification_complete=True,costs=costs_now(),
                 global_rng=forks.capture_global(),motor_rng=save_motor_rng(motor.policy._rng),actor_rng=None if controller is None else controller.snapshot())
             _save_recovery(recovery,progress)
             write_json(output/'progress.json',dict(cursor=progress['cursor'],planned_episodes=320,costs=progress['costs'],recovery=_leaf(recovery)))
-            write_results(output,table,progress['receipts'])
+            write_results(output,table,progress['receipts'],aborted=progress.get('aborted',()))
     finally:
         if server is not None:server.close()
     result=dict(format=FORMAT,completed=progress['cursor']==320,cursor=progress['cursor'],receipts=progress['receipts'],
-        omitted=[r for r in panel(table,include_omitted=True) if r['status']!='PLANNED'],stop_reason=stop,costs=action_charge(output),
+        valid_completed_episodes=len(progress['receipts']),aborted=progress.get('aborted',[]),
+        all_planned_roles_valid=progress['cursor']==320 and not progress.get('aborted'),
+        omitted=[r for r in panel(table,include_omitted=True) if r['status']!='PLANNED'],stop_reason=stop,costs=costs_now(),
         recovery=_leaf(recovery),provenance=provenance,optimizer_updates=0,source_assessment_only=True,source_pretraining_admitted=False)
     write_json(output/'index.json',result);return result
 
 
-def write_results(output,table,receipts):
+def write_results(output,table,receipts,*,aborted=()):
     """All prespecified cells remain visible, including unrun and absent initials."""
     measured={}
     for ref in receipts:
@@ -343,19 +392,24 @@ def write_results(output,table,receipts):
             raise ValueError('Duplicate/incomplete/updated assessment result')
         measured[key]=r
     rows=[]
+    aborted_by_key={(r['spec']['task_key'],r['spec']['state'],r['spec']['role']):r for r in aborted}
     for spec in panel(table,include_omitted=True):
-        r=measured.get((spec['task_key'],spec['state'],spec['role']))
+        key=(spec['task_key'],spec['state'],spec['role']);r=measured.get(key)
         rows.append(dict(spec,status='COMPLETE' if r else spec['status'],
             success=None if r is None else r['success'],
             primitive_steps=None if r is None else r['primitive_steps'],
             settling_steps=None if r is None else r['settling_steps'],
             all_in_actions=None if r is None else r['primitive_steps']+r['settling_steps'],
             elapsed_seconds=None if r is None else r['elapsed_seconds']))
+        if key in aborted_by_key:
+            if r is not None:raise ValueError('An aborted role cannot be published as a scored receipt')
+            rows[-1].update(status='ABORTED_RESET_GUARD',success=None,primitive_steps=0,settling_steps=10,all_in_actions=10)
     path=Path(output)/'case-results.csv';temporary=path.with_suffix('.tmp')
     with temporary.open('w',newline='') as stream:
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
     temporary.replace(path)
     summary={role:dict(planned=80,complete=sum(r['role']==role and r['status']=='COMPLETE' for r in rows),
+        aborted=sum(r['role']==role and r['status']=='ABORTED_RESET_GUARD' for r in rows),
         successes=sum(r['role']==role and r['status']=='COMPLETE' and bool(r['success']) for r in rows)) for role in ROLES}
     write_json(Path(output)/'results-summary.json',dict(by_role=summary,omitted_initial_slots=160,
         all40_retained=True,source_pretraining_admitted=False,interpretation='Two fixed cases per goal; descriptive assessment, no competence certificate or measured initial-to-final curve'))
@@ -373,22 +427,53 @@ def main(argv=None):
             or file_sha256(a.gpu_probe)!=ticket['gpu_probe']['sha256']):
         raise ValueError('Actual own GPU proof file differs from admission')
     probe=json.loads(a.gpu_probe.read_text())
-    contract=validate_admission(ticket,clock,probe,source=source,output=a.output,hostname=socket.gethostname(),now=time.time())
+    repair_profile=None
+    if 'repair_profile' in ticket:repair_profile=read_ref(ticket['repair_profile'])
+    contract=validate_admission(ticket,clock,probe,source=source,output=a.output,hostname=socket.gethostname(),now=time.time(),repair=repair_profile)
     for ref in ticket['refs'].values():read_ref(ref)
     runtime={name:file_sha256(Path(__file__).parent/name) for name in RUNTIME_FILES}
     if runtime!=ticket['runtime_files']:raise ValueError('Actual imported runtime file hashes differ')
     table=read_ref(dict(path=str(a.actor_table),sha256=TABLE_SHA));metadata=read_ref(dict(path=str(a.metadata_inventory),sha256=INVENTORY_SHA))
     provenance=validate_assets(table,metadata);a.output.mkdir(parents=True,exist_ok=True);deadline=ticket['driver_deadline_unix']
-    if a.output.is_symlink() or not Path(ticket['clock_root']).resolve().is_relative_to(a.output.parent.resolve()):
+    if a.output.is_symlink() or (repair_profile is None and not Path(ticket['clock_root']).resolve().is_relative_to(a.output.parent.resolve())):
         raise ValueError('Independent assessment clock and outputs must share the declared phase directory')
+    repair_state=None
+    if repair_profile is not None:
+        from . import vla_source40_teacher_repair as repair_code
+        if ticket['repair_decision']['sha256']!=repair_code.DECISION_SHA:raise ValueError('Root repair decision differs')
+        read_ref(ticket['repair_decision'])
+        qualification=read_ref(ticket['repair_CPU_qualification'])
+        if qualification.get('passed') is not True or qualification.get('source_commit')!=source:
+            raise ValueError('Actual exact-source repair CPU qualification required')
+        storage=read_ref(ticket['prior_storage_proof'])
+        prior_bytes=storage['prior_output_bytes_upper_bound']
+        if (storage.get('original_phase')!=str(repair_code.ROOT) or storage.get('verified') is not True
+                or type(prior_bytes) is not int or not 0<prior_bytes<MAX_BYTES
+                or storage.get('frozen_old_outputs') is not True):
+            raise ValueError('Bounded actual prior-phase storage proof required; no assumed old size')
+        repair_state=dict(profile=repair_profile,profile_ref=ticket['repair_profile'],
+            execution_source=source,original_source=repair_code.SOURCE,prior_costs=repair_code.PRIOR_COSTS,
+            prior_output_bytes_upper_bound=prior_bytes,storage_proof=ticket['prior_storage_proof'],
+            camera_max_lsb=1)
     used=sum(path.stat().st_size for path in a.output.parent.rglob('*') if path.is_file())
-    if os.statvfs(a.output).f_bavail*os.statvfs(a.output).f_frsize<max(0,MAX_BYTES-used):
+    prior_bytes=0 if repair_state is None else repair_state['prior_output_bytes_upper_bound']
+    if prior_bytes+used>=MAX_BYTES or os.statvfs(a.output).f_bavail*os.statvfs(a.output).f_frsize<max(0,MAX_BYTES-prior_bytes-used):
         raise ValueError('Insufficient capacity for the bounded phase output')
-    binding=bind_payloads(table,metadata,deadline=deadline);binding_path=a.output/'loaded-actor-bindings.json'
+    binding=bind_payloads(table,metadata,deadline=deadline) if repair_state is None else read_ref(repair_code.BINDING)
+    binding_path=a.output/'loaded-actor-bindings.json'
     if binding_path.exists():
         if json.loads(binding_path.read_text())!=binding:raise ValueError('Frozen actor availability/identity changed on assessment resume')
     else:write_json(binding_path,binding)
     write_json(a.output/'source-provenance.json',provenance)
+    execution_provenance=dict(worker_contract=contract,original_clock=clock_identity(ticket['clock_root'],clock),
+        runtime_files=runtime,loaded_actors=_leaf(binding_path))
+    if repair_state is not None:
+        execution_provenance['repair']=repair_state
+        repo=Path(__file__).resolve().parents[3]
+        old_packet=repo/'outputs/libero40-teacher-assessment-repair-code-20261101-r1'
+        old_ticket=read_ref(dict(path=str(old_packet/'ORIGINAL-TICKET.json'),sha256='ccef81ddfe47679d6476657163c0e0bc0572a67f16ed657346ef07d4892bb570'))
+        old_clock=read_ref(dict(path=str(old_packet/'ORIGINAL-CLOSED-CLOCK.json'),sha256='7501d3a7695c5281cc05b795f36eafa8a73a90b1ec909902649a6f7ea8932310'))
+        repair_code.initialize_recovery(a.output,table=table,provenance=execution_provenance,original_ticket=old_ticket,closed_clock=old_clock)
     from .vla_libero import FrozenOpenPI
     from .vla_source40_corpus import restore_motor_rng,save_motor_rng
     from .vla_source40_memory_replication import global_rng,restore_global_rng
@@ -416,8 +501,7 @@ def main(argv=None):
     try:
         return run_panel(table,motor,actors,a.output,server_factory=lambda task,n:OwnedSimulator(task,python=a.simulator_python,
             pythonpath=a.simulator_pythonpath,output=a.output/f'server-{n}-{time.time_ns()}',port=a.port),deadline=deadline,qualify=qualify,forks=forks,
-            provenance=dict(worker_contract=contract,original_clock=clock_identity(ticket['clock_root'],clock),
-                runtime_files=runtime,loaded_actors=_leaf(binding_path)))
+            provenance=execution_provenance)
     finally:
         after=parameter_signature(motor.policy._model);write_json(a.output/'motor-final.json',dict(before=before,after=after,unchanged=before==after))
         if before!=after:raise RuntimeError('Frozen motor parameters changed')
