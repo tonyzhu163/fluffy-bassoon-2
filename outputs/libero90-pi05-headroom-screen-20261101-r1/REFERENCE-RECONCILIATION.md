@@ -39,6 +39,18 @@ must retain the full curve, final native, last-three >=6/20 native gain,
 learning beyond initial tied/initialized SAC, final motor equality and bounded
 cost settlement. No active retuning, new learner seed or extra reference panel.
 
+## Reference execution migration, still pending endpoint
+
+The first learning slice closed at301,700 updates. A same-source continuation
+rejected a raw reserialization signature before new actions; allocated-CPU
+diagnosis found mapping-order differences with equal canonical state. The
+qualified repair preserves the original saved-byte binding, replay and RNG.
+[Saved R3 review](../libero90-pi05-headroom-runtime-20261101-r1/R3-PARENT-REVIEW.json)
+verifies actual resumed advancement to302,180 with executiond2369fb and the
+unchanged scientificb665 contract. This chat checked copied hashes/scalars,
+not checkpoint tensors or live runtime. A future reference binding must retain
+this explicit migration; a resumed checkpoint is not a final positive control.
+
 ## Conditional first E1 binding
 
 Keep the prepared32D timing contrast, three fixed candidate seeds and three
