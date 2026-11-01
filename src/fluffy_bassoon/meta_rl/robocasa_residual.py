@@ -243,8 +243,8 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
             executed = bound.apply(np.asarray(chunk), control)
             verified = verify_zero and episode_index == 0
             if verified:
-                reference, _, _ = motor.infer(observation, noise_seed=seed)
-                if np.any(control != 0) or not np.array_equal(executed, reference):
+                base_reference, _, _ = motor.infer(observation, noise_seed=seed)
+                if np.any(control != 0) or not np.array_equal(executed, base_reference):
                     raise ValueError("Zero-residual native sampler replay differs before physical execution")
             observation, done, info = environment.step_chunk(executed)
             records.append(dict(features=np.array(features, dtype=np.float32, copy=True), noise_seed=seed,

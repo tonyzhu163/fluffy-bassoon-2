@@ -20,8 +20,8 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 
 
-def score(episodes,output,model,code,model_receipt):
-    jobs=flora_jobs(episodes)
+def score(episodes,output,model,code,model_receipt,protocol=None):
+    jobs=flora_jobs(episodes,protocol)
     for episode in episodes:
         if sha(episode['video']['path'])!=episode['video']['sha256']:raise ValueError('Video bytes changed')
     jobs_path=output.with_suffix('.jobs.jsonl')
@@ -38,7 +38,7 @@ def score(episodes,output,model,code,model_receipt):
         raise
     finally:log.close()
     outputs=[json.loads(line) for line in output.read_text().splitlines() if line.strip()]
-    labels=parse_outputs(episodes,outputs)
+    labels=parse_outputs(episodes,outputs,protocol)
     receipt=dict(code_commit=FLORA_CODE,model_revision=FLORA_MODEL,model_receipt=model_receipt,
         completed=True,jobs_sha256=digest(jobs),video_refs_sha256=digest([e['video'] for e in episodes]),
         output=dict(path=str(output),sha256=sha(output)),command=command,training_reward_rule='(expected_score-1)/4')

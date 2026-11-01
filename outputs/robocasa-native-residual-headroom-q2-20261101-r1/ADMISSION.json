@@ -1,0 +1,53 @@
+{
+  "status": "ADMITTED_NATIVE_HEADROOM_ONLY",
+  "owner": "/root",
+  "benchmark": "robocasa365",
+  "policy": "OriginalHuman30075000 frozen pi0.5",
+  "method": "zero residual baseline for subsequent matched simulator-reward versus Flora-reward residual PPO",
+  "resource": {
+    "gpus": 1,
+    "cpus": 32,
+    "ram_gib": 128,
+    "shm_gib": 16,
+    "minutes": 116,
+    "retry": false
+  },
+  "maximum_inclusive_gpu_seconds": 7020,
+  "maximum_all_in_control_commands": 17648,
+  "maximum_physics_ticks": 2258944,
+  "new_outputs_gib": 32,
+  "deadline": {
+    "outer_TERM": 6900,
+    "KILL": 6960,
+    "startup": 60,
+    "inner": 6660,
+    "closure": 180
+  },
+  "task_order": [
+    {
+      "task": "OpenDrawer",
+      "episodes": 8,
+      "horizon": 750,
+      "maximum_commands": 7024
+    },
+    {
+      "task": "ScrubCuttingBoard",
+      "episodes": 8,
+      "horizon": 1200,
+      "maximum_commands": 10624,
+      "only_if_first_native_headroom_fails": true
+    }
+  ],
+  "eligibility": "First task with1..5 native final-state successes/8 freezes before any Flora task scores; otherwise stop after named fallback.",
+  "qualification": "Rerun only the failed new zero-residual replay test. Native-video core test passed Q1 and is carried. First planned actual episode still embeds real motor/renderer/zero-residual qualification.",
+  "model_forward": "Frozen original native10-step/H50 sampler, three RGB; public features from same native prefix, no value head on motor.",
+  "physical_costs": "All constructor/reset controls, policy controls, failures and uncertain journal intents. Observed native control/simulation clocks, full horizon/no success termination. Max128reset commands/case and128physics ticks/control. No fake20Hz.",
+  "scientific_optimizer_updates": 0,
+  "old_unused_budgets_borrowed": false,
+  "all_previous_recoveries_preserved": true,
+  "original_maximum_inclusive_gpu_seconds": 7200,
+  "prior_closed_gpu_seconds": 88,
+  "remaining_unrequested_seconds": 92,
+  "same_original_clock": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-native-residual-headroom-20261101-r1/clock",
+  "diagnosis": "Q1 startup test caught reference parameter shadowed by NumPy replay chunk; rename replay result. No real model/physics/actions ran. Preserve original budget header/row."
+}
