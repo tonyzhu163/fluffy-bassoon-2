@@ -20,7 +20,8 @@ is semantically unseen.
 
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
-- Approach: causal history → bounded latent-noise coordinate → frozen π₀.₅;
+- Approach: causal history → bounded steering output (interface open; see
+  Agreed design) → frozen π₀.₅;
   pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
@@ -367,8 +368,31 @@ is semantically unseen.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- Steering: 32 bounded noise coordinates broadcast over the frozen motor
-  horizon. Keep independent native noise and tied-noise controls separate.
+- **Steering interface: open (2026-11-01).** The
+  [steering scoping review](literature/vla-steering-review.md) finds about ten
+  families; six give a continuous per-step output with π₀.₅ frozen: initial
+  noise, conditioning/KV/prompt residual, velocity residual, action residual,
+  direct action head and (as a scorer) sample-and-select. \(z_t\) below
+  denotes the chosen interface's output.
+  - Label rule: the meta-learner's output must be something its source
+    histories can label. Frozen-motor PPO/DSRL labels noise directly.
+    Full-weight PPO (RLinf πRL) labels conditioning, velocity and action
+    residuals and direct actions directly, and noise only through inversion
+    of its actions through the frozen flow decoder, which can leave the
+    bounded noise range.
+  - Matched baseline rule: the ordinary RL baseline and the
+    history-generating learner use the same interface as the meta-learner,
+    so the sample-efficiency comparison changes only the learner. Full-weight
+    PPO stays a reward check and reference, not the matched baseline.
+  - Recommendation (Claude, pending human decision): action residual first
+    (direct labels, small bounded output, Policy Decorator/ResiP-style
+    residual PPO as the matched baseline); conditioning residual as the
+    VLRLA-matched alternative, with a soft-prompt result on frozen π₀.₅ in
+    RoboCasa as support and the earlier RoboTwin KV-head 0/5 as a warning;
+    32 bounded noise coordinates (the existing DSRL interface) as the
+    built fallback.
+  - With noise steering, keep independent native noise and tied-noise
+    controls separate.
 - One frozen motor/tokenizer/normalization/feature receipt across all tasks.
   Requalify the OpenPI40 backend on the actual allocation. RLinf4104 features
   and learned controllers are incompatible receipts, not reusable coordinates.
