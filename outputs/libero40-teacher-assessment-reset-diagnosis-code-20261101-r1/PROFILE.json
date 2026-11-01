@@ -1,0 +1,97 @@
+{
+  "CLI": [
+    "python",
+    "scripts/diagnostics/libero_assessment_reset_pair_diagnosis.py",
+    "--reference-path",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz",
+    "--reference-sha256",
+    "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+    "--failed-path",
+    "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+    "--failed-sha256",
+    "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47",
+    "--deadline-unix",
+    "OWNER_BOUND_ABSOLUTE_DEADLINE",
+    "--output",
+    "/ABS/FRESH_CPU_OUTPUT/reset-diagnosis.json"
+  ],
+  "CLI_display": "python scripts/diagnostics/libero_assessment_reset_pair_diagnosis.py --reference-path /mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz --reference-sha256 50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94 --failed-path /mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz --failed-sha256 1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47 --deadline-unix OWNER_BOUND_ABSOLUTE_DEADLINE --output /ABS/FRESH_CPU_OUTPUT/reset-diagnosis.json",
+  "GPU_recovery_admitted": false,
+  "actual_execution": {
+    "CPU_quota": null,
+    "deadline_unix": null,
+    "hostname": null,
+    "job": null,
+    "output": null,
+    "qualified_tests": null,
+    "source_commit": null
+  },
+  "admission": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/RESET-DIAGNOSIS-CPU-ADMISSION.json",
+    "sha256": "64adb9b376411a33e376e189749a50dc4fe2abe6c7433fe936efc6cc41a63fd5"
+  },
+  "exact_input_record_count": 2,
+  "execution_owner": "/root/finish_assembly",
+  "focused_CPU_test_command": "python -m pytest -q tests/test_libero_assessment_reset_pair_diagnosis.py",
+  "format": "libero_assessment_two_record_reset_diagnosis_profile_v1",
+  "inputs": {
+    "failed": {
+      "bytes": 163736,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/raw-rpc/1793504049893719572-reset.pkl.gz",
+      "sha256": "1361cdf53df3ae1422990628c3513502bd86bc33dfda8f9be67a4509090a3e47"
+    },
+    "reference": {
+      "bytes": 178636,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz",
+      "sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94"
+    }
+  },
+  "limits": [
+    "Only these TWO gzip payloads; no native160 raw-reset read or input-forest scan",
+    "Failed computed4104 features were not preserved; they remain UNAVAILABLE, without VLA inference or cause invention",
+    "Unavailable instruction/scene seed/nominal vector is never inferred",
+    "pair_equal describes available saved evidence only, not a full production guard PASS",
+    "No actor/checkpoint/JAX/model/simulator/RPC/production/guard/phase/recovery/clock/omission changes"
+  ],
+  "models_or_arrays_executed_on_Mac": false,
+  "output": {
+    "JSON_only": true,
+    "fresh_output_required": true,
+    "inspector_max_JSON_bytes": 1048576
+  },
+  "resource_boundary": {
+    "CPU": 2,
+    "GPU": 0,
+    "accounting": "All startup/exact4tests/analysis/failures/cleanup share original remaining100 worker-seconds. Sole owner derives wall deadline from actual2-core quota/startup allowance; no renewed180 or borrowed balances.",
+    "already_charged": 80,
+    "automatic_retry": false,
+    "maximum_all_outputs_bytes": 67108864,
+    "maximum_remaining_CPU_worker_seconds": 100,
+    "memory_GiB": 16,
+    "original_CPU_worker_cap": 180
+  },
+  "schema": {
+    "failed": "{initial_state,scene_seed,reset_result}",
+    "public_keys": [
+      "image",
+      "wrist",
+      "state"
+    ],
+    "reference": "{initial,features,instruction}"
+  },
+  "scope": [
+    "Verify BOTH SHA identities before unpickling EITHER record and rehash both after comparison",
+    "Independent declared initial-observation/nominal-state/simulator-state hash terms",
+    "Exact public image/wrist/state dtype,shape,value,bytes; changed element count/max absolute delta/first five scalar differences",
+    "Original preserved simulator/nominal vectors when present; instruction/reset fields only if recorded",
+    "Report mismatches as findings with exit0 after successful read/compare; only SHA/schema/IO/deadline failures fail the inspector"
+  ],
+  "status": "CODE_STATIC_ONLY_EXECUTION_UNBOUND",
+  "tests": [
+    "matching available records with explicit missing failed-feature/instruction/seed limits",
+    "actual raw-array differences despite equal metadata hashes",
+    "metadata/hash-only difference while actual saved arrays are identical",
+    "SHA failure before any unpickle and read-only before/after hash proof"
+  ],
+  "tests_executed": false
+}
