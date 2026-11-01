@@ -49,6 +49,13 @@ across attempts.
 
 ## LIBERO
 
+**Flora versus simulator PPO, setup only (2026-11-01).** The published few-shot
+PyTorch LIBERO40 SFT checkpoint loaded through RLinf and completed the planned
+task44 native smoke successfully: one full400-step episode plus15 settling
+actions, with no training updates. This establishes execution, not a success
+rate or PPO improvement. The fresh64 baseline and Flora scoring remain pending.
+[Saved qualification evidence](../outputs/flora-ppo-comparison-20261101-r1/READY40-SMOKE-PARENT-REVIEW.json).
+
 **Frozen-motor DSRL.**
 
 - *Original Pi0, task 57* (Baige `job-psgxs9n5b08w`): native 4/10 → learned

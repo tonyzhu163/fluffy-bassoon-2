@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "owner": "/root",
+  "execution_owner": "/root/finish_assembly",
+  "projection_only": true,
+  "status": "ready40_native_smoke_complete_no_active_allocations",
+  "snapshot_unix": 1793518735.37569,
+  "gpu_seconds_actual": 564,
+  "gpu_seconds_reserved": 0,
+  "cpu_worker_seconds_actual": 287,
+  "cpu_worker_seconds_reserved": 0,
+  "actions": {
+    "S": 0,
+    "F": 0,
+    "common": 415,
+    "pending": 0,
+    "uncertain": 0
+  },
+  "attempts": [
+    {
+      "job_id": "job-jas5xy463q0r",
+      "kind": "obsolete_converter",
+      "status": "Failed",
+      "gpu_seconds_actual": 91,
+      "actions": 0
+    },
+    {
+      "job_id": "job-dtz06yz20uw3",
+      "kind": "CPU67",
+      "status": "Succeeded",
+      "cpu_worker_seconds_actual": 97,
+      "actions": 0
+    },
+    {
+      "job_id": "job-vtv5x8m5xeve",
+      "kind": "ready40_load_and_smoke_q1",
+      "status": "Failed_after_load_PASS",
+      "gpu_seconds_actual": 136,
+      "actions": 0
+    },
+    {
+      "job_id": "job-c8escb672jzl",
+      "kind": "smoke_q2",
+      "status": "Failed",
+      "gpu_seconds_actual": 88,
+      "actions": 0
+    },
+    {
+      "job_id": "job-dvd2pdqrtz6g",
+      "kind": "CPU_precision5",
+      "status": "Succeeded",
+      "cpu_worker_seconds_actual": 79,
+      "actions": 0
+    },
+    {
+      "job_id": "job-yhof6xf7fsr0",
+      "kind": "smoke_q3",
+      "status": "Failed",
+      "gpu_seconds_actual": 95,
+      "actions": 0
+    },
+    {
+      "job_id": "job-tvtwxpz30hth",
+      "kind": "CPU_native_import_and_optional_Flora",
+      "status": "Failed_optional_timeout_native_PASS",
+      "cpu_worker_seconds_actual": 111,
+      "actions": 0
+    },
+    {
+      "job_id": "job-bqq6vkmkeb8m",
+      "kind": "smoke_q4",
+      "status": "Succeeded",
+      "gpu_seconds_actual": 154,
+      "actions": 415
+    }
+  ],
+  "note": "Projection of same authoritative clocks/receipts for root-owned canonical ledger; no second resource clock or budget. All failed charges retained once. Unused loading3127 and obsolete conversion3509 are not transferred to Flora/scientific work.",
+  "terminal_receipt": {
+    "path": "/Users/mowenjie/.codex/worktrees/flora-ppo-runtime-readiness/fluffy-bassoon-2/outputs/flora-ppo-runtime-readiness-20261101-r1/READY40-LOADING-SMOKE-FINAL-RECEIPT.json",
+    "sha256": "3a62da06272d7daf69dce459a5675187791e74dd1c3b8bf10142ec1fe2cef0a4",
+    "bytes": 5577
+  }
+}
