@@ -97,8 +97,10 @@ measure throughput and add no independent cases. [Three-view audit](../outputs/r
 The prospectively chosen five-task qualification now has **29/50 native
 OpenDrawer successes (58%)**, within the declared5%–70% headroom range. Its first
 eight cases were retained and the remaining42 continued the exact native sampler
-stream; all50 ran the full750-step horizon with three synchronized views. The
-other four task cohorts remain in progress. This is initializer qualification,
+stream; all50 ran the full750-step horizon with three synchronized views. The other native cohorts finished at37/50 Counter-to-Cabinet,23/50
+Drawer-to-Counter,7/50 Turn-Off-Stove and17/50 CoffeeSetupMug. Counter-to-Cabinet
+exceeds the declared70% upper gate; its74% result remains a failed gate pending
+a human decision. The other four tasks pass. This is initializer qualification,
 with no new joint-policy updates; three-view Flora discrimination on each full
 50-case bank is still pending. The human selected one joint policy per reward
 arm and five separate PPO-held-out OOD tasks. [OpenDrawer50 result](../outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/NATIVE-QUALIFICATION.json).
