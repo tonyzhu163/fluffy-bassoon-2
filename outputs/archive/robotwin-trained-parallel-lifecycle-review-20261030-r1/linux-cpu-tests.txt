@@ -1,0 +1,21 @@
+........                                                                 [100%]
+=============================== warnings summary ===============================
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104
+  /mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104: PytestRemovedIn10Warning: The hookimpl pytest_addhooks uses old-style configuration options (marks or attributes).
+  Please use the pytest.hookimpl(tryfirst=True) decorator instead
+   to configure the hooks.
+   See https://docs.pytest.org/en/latest/deprecations.html#configuring-hook-specs-impls-using-markers
+    @pytest.mark.tryfirst
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_robotwin_process_lifetime.py::test_full_n6_update_lifetime_stops_before_due_evaluation_and_side_effects
+PASSED tests/test_robotwin_process_lifetime.py::test_completed_earlier_milestones_are_not_repeated_on_later_resume[10]
+PASSED tests/test_robotwin_process_lifetime.py::test_completed_earlier_milestones_are_not_repeated_on_later_resume[25]
+PASSED tests/test_robotwin_process_lifetime.py::test_fresh_process_evaluates_original_stage_before_lazy_pool_and_restores_rng[ppo-76-77]
+PASSED tests/test_robotwin_process_lifetime.py::test_fresh_process_evaluates_original_stage_before_lazy_pool_and_restores_rng[ppo_reset-40-41]
+PASSED tests/test_robotwin_process_lifetime.py::test_resumed_stage_skips_individually_completed_frozen_units
+PASSED tests/test_robotwin_process_lifetime.py::test_existing_pool_blocks_scalar_evaluation_before_files_or_rng_consumption
+PASSED tests/test_robotwin_process_lifetime.py::test_failed_frozen_evaluation_restores_source_rng_without_marking_stage_complete
+8 passed, 1 warning in 0.60s

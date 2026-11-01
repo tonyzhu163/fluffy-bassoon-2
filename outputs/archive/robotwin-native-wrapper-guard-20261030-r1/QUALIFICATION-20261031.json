@@ -1,0 +1,113 @@
+{
+  "schema": "robotwin_parent_guard_allocated_cpu_qualification_v1",
+  "captured_utc": "2026-10-30T16:59:12.851381+00:00",
+  "evidence_owner_commit": "80943996d033155e17e242b045f82904c255b89f",
+  "implementation_commit": "c166171b847ada9a20a9629a07d5a0100b517097",
+  "status": "allocated_linux_cpu_qualified",
+  "deployment": "not established by this CPU gate",
+  "guard_phase": {
+    "phase": "panel-guard",
+    "source_commit": "c166171b847ada9a20a9629a07d5a0100b517097",
+    "tests": 31,
+    "seconds": 1.975,
+    "passed": true
+  },
+  "joint_receipt": {
+    "completed": true,
+    "stages": [
+      {
+        "phase": "owner-control",
+        "source_commit": "c62be99615e797fbec108e1f1b5e232e4a591494",
+        "tests": 45,
+        "seconds": 6.806,
+        "passed": true
+      },
+      {
+        "phase": "panel-guard",
+        "source_commit": "c166171b847ada9a20a9629a07d5a0100b517097",
+        "tests": 31,
+        "seconds": 1.975,
+        "passed": true
+      },
+      {
+        "phase": "trained-pair",
+        "source_commit": "c353970a316837b13277ec65587e58e5cb25ce56",
+        "tests": 47,
+        "seconds": 19.402,
+        "passed": true
+      }
+    ],
+    "allocation": {
+      "hostname": "job-k1upj2ycy60q-master-0",
+      "allocated_gpus": 0,
+      "allocated_cpus": 4,
+      "memory_gib": 16,
+      "real_source_process_signals": 0,
+      "additional_robot_actions": 0,
+      "additional_vla_queries": 0,
+      "additional_production_sgd": 0
+    },
+    "qualification_only": true,
+    "live_source_control_performed": false,
+    "synthetic_fixture_sgd_present": true
+  },
+  "scheduler_receipt": {
+    "job": "job-k1upj2ycy60q",
+    "state": "Success",
+    "start_shanghai": "2026-10-31 00:43:03",
+    "end_shanghai": "2026-10-31 00:44:14",
+    "scheduler_seconds": 71,
+    "allocated_gpus": 0,
+    "actual_gpu_seconds": 0,
+    "source": "Baige authenticated detail UI"
+  },
+  "evidence": [
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/RESULTS.md",
+      "sha256": "9d97fdec86d9a0c0661bda79d7ff1f928617385c52f20e24274647ac1570ecfd",
+      "bytes": 1288
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/receipt.json",
+      "sha256": "985d526de472d15c2c71e88f434e2b5ec7f71df68f6049ea6be8861f7bd065db",
+      "bytes": 962
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/panel-guard.log",
+      "sha256": "dcc1d868b0ec9df4d2fcc5c8ca934cf26f563f7ab952147e15e2bb7247173919",
+      "bytes": 99
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/owner-control.log",
+      "sha256": "d7b7c103a7f08c6e83f20c0e4e5db03d87ccf283dc046563ddfd4502896141b0",
+      "bytes": 99
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/trained-pair.log",
+      "sha256": "b8041f5514b4a201e7343b778e4962b53fc351b3215ad3f01ea6f0838443ab56",
+      "bytes": 100
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/allocation-context.json",
+      "sha256": "62c59ab312ad22bf8248cb9c2021aa4401feeb5323c732c47650a19da6590ae7",
+      "bytes": 228
+    },
+    {
+      "path": "outputs/robotwin-execution-control-qual-20261031-r1/receipts/scheduler-terminal.json",
+      "sha256": "cba790699571a72bd168b82dae066163403be66ebbac160bc500bbda188e6fad",
+      "bytes": 260
+    }
+  ],
+  "limits": [
+    "Gate used owned temporary fake processes and tiny synthetic CPU optimizer fixtures; no production source control, robot action, VLA query or production SGD.",
+    "Only software/CPU qualification. No fresh GPU/native simulator admission or later deployment is inferred.",
+    "Completed panel remains source2fd2096906e52aabeaeb984f333fe1aaa6c4e196; it is not changed or repeated.",
+    "Child parent-death guard makes no claim of whole-container teardown."
+  ],
+  "evidence_byte_identical_to_owner_commit": true
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "icrl_inventory_robotwin_trained_N6_r1_v1",
+  "captured_utc": "2026-10-30T17:31:44.649676+00:00",
+  "owner_commit": "48461f4cae4a95f498efa4be50d8c941d1258961",
+  "evidence_byte_identical_to_owner_commit": true,
+  "evidence": [
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/RESULTS.md",
+      "sha256": "fdf1f18c26fb7430c6014de18072ff2b919309ed86ce76d2ef3ffefd75429235",
+      "bytes": 4325
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/receipts/independent-final-audit.json",
+      "sha256": "19a60094ca19c2424dd04fd6cb7ab738422d211efdab34db4291f3e33ac921f5",
+      "bytes": 14024
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/receipts/launcher-result.json",
+      "sha256": "0b53c1b29c05639b93cb88da78338d9fc7e95f6161d05ccf4f36727dd1215373",
+      "bytes": 2019
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/receipts/pair-result.json",
+      "sha256": "8d055bdd20c4bfe9f49e042eb3810f83a5c3261a5d6e27f67b41a6f5a3493a6a",
+      "bytes": 1459
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/receipts/scheduler-terminal.json",
+      "sha256": "288e0b7b9900340c14420c5ba199cf30e8cbd2343cec4b0e228e6dbdb7475f52",
+      "bytes": 317
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/receipts/audit.json",
+      "sha256": "3ee961a515fbfadc15041965502891a700f8b5f397fb81646fd585a6fbff4a89",
+      "bytes": 6424
+    },
+    {
+      "path": "outputs/robotwin-trained-pair-20261031-r1/compiled-plan.json",
+      "sha256": "37083ddc24273be8343e05a2393f25a2523544c6df841710b1f5aa380083d832",
+      "bytes": 10162
+    }
+  ],
+  "retained_independent_audit": {
+    "path": "ROBOTWIN-TRAINED-N6-R1-AUDIT-20261031.json",
+    "sha256": "19a60094ca19c2424dd04fd6cb7ab738422d211efdab34db4291f3e33ac921f5"
+  },
+  "runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "launcher_commit": "c353970a316837b13277ec65587e58e5cb25ce56",
+  "scientific_lineage": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "compiled_plan_sha256": "37083ddc24273be8343e05a2393f25a2523544c6df841710b1f5aa380083d832",
+  "scheduler_receipt": {
+    "job": "job-fcxa9mm1mh84",
+    "state": "Succeeded",
+    "pod_state": "Succeeded",
+    "start_shanghai": "2026-10-31 01:07:00",
+    "end_shanghai": "2026-10-31 01:14:30",
+    "actual_scheduler_gpu_seconds": 450,
+    "gpus": 1,
+    "source": "Baige authenticated refreshed detail UI",
+    "screenshot": "scheduler-terminal.png"
+  },
+  "parent_elapsed_seconds": 439.77592135220766,
+  "new_source_actions": 18879,
+  "new_complete_K4_trials": 12,
+  "new_complete_episodes": 48,
+  "new_ppo_updates": 2,
+  "new_optimizer_steps": 10,
+  "new_target_or_validation_actions": 0,
+  "actions_per_scheduler_gpu_second": 41.95333333333333,
+  "sampled_peak_used_bytes": 70387761152,
+  "sampled_peak_gib": 65.5537109375,
+  "memory_convention": "65.55GiB =70.39 decimalGB; no paired scalar speedup ratio",
+  "unused_operational_scheduler_seconds_sealed": 2250,
+  "verification": "Read-only captured JSON consistency and file hashes; source working files match owner commit. Native mask, checkpoint SHA/CRC and complete recovery inspection are attributed to owner independent/allocated audits, not repeated here. No tensor/model/simulator/control/test/ledger work.",
+  "owner_durable_source_bank_snapshot": {
+    "source": "dated owner handoff; not a fresh ledger or scheduler query",
+    "source_actions": 1575051,
+    "K4_trials": 972,
+    "episodes": 3888,
+    "components": {
+      "ppo": {
+        "actions": 508540,
+        "K4_trials": 318,
+        "rounds": 53
+      },
+      "ppo_reset": {
+        "actions": 525625,
+        "K4_trials": 330,
+        "rounds": 55
+      },
+      "sac": {
+        "actions": 540886,
+        "K4_trials": 324,
+        "rounds": 54
+      }
+    },
+    "source_only": "Target clone updates excluded."
+  },
+  "limits": [
+    "First genuine trained N6 continuation success: one full source round per existing PPO arm, not source100-round completion.",
+    "Scientific stage50 and early SAC5-bank student panel remain separate; no memory or algorithmic success advantage inferred.",
+    "Second N6 slice reported running by owner; no new optimizer update or completed result inferred until complete rounds/recovery audit.",
+    "Continuous supervisor preparation is not qualified or deployed by this receipt.",
+    "Future c166 panel guard retains separate CPU-qualified status; this c353/570 training run is not a deployment receipt for it.",
+    "Original100-round goal/caps remain binding; no additional pilot, scientific scope or borrowed reservations."
+  ],
+  "stage50_later_owner_commit": {
+    "commit": "48461f4cae4a95f498efa4be50d8c941d1258961",
+    "earlier_captured_hashes_unchanged": [
+      {
+        "path": "outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-audit.md",
+        "sha256": "9582e992420c1a67151f6aed242bf66e43fe2492b66d02535c4b4b1a0be76132",
+        "bytes": 3170
+      },
+      {
+        "path": "outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-audit.json",
+        "sha256": "1925193a7c94224bf9e93b4a6417ff9c99d404203b312a7ab40131f49b19d607",
+        "bytes": 158819
+      },
+      {
+        "path": "outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-input.json",
+        "sha256": "a40b594a43ccf5da470aa994e7fa8bc5b7c8c737a237c6ae506a5ef108328a64",
+        "bytes": 1263996
+      },
+      {
+        "path": "outputs/robotwin-native-continuation-20261030-r1/checks/20261031-stage50-identities.json",
+        "sha256": "ad0d4e9aac1b81003efaa14f5d25b03f832e275435c1bdc7539df1714b9d81d0",
+        "bytes": 4259
+      }
+    ]
+  }
+}

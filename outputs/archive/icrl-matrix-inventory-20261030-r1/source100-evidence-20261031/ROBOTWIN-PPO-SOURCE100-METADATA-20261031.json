@@ -1,0 +1,2714 @@
+{
+  "format": "robotwin_full100_metadata_diagnosis_v1",
+  "checked_utc": "2026-10-30T22:51:43.024649+00:00",
+  "operation": "JSON/JSONL only; no models/tensors/raw-bank scan",
+  "final_summary": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/summary.json",
+    "sha256": "4fe0a6aff5b8454a71e1e97cdb21c0fa1b94d14e9f61ae9e20ccf9731390d83a"
+  },
+  "final_source": {
+    "source_steps": 964875,
+    "task_steps": {
+      "handover_mic": 210950,
+      "pick_diverse_bottles": 148432,
+      "place_a2b_left": 144784,
+      "place_object_stand": 127492,
+      "place_phone_stand": 138162,
+      "scan_object": 195055
+    },
+    "allocation_source_steps": 0,
+    "updates": 100,
+    "optimizer_steps": 500,
+    "pending_trials": 0,
+    "pending_primitive_steps": 0,
+    "recovered_prior_prefix_actions": 0,
+    "completed_source_trials": 600,
+    "completed_source_iterations": 100,
+    "source_action_safety_cap": 1100000,
+    "source_physical_charge": 964875,
+    "retained_learning_actions": 964875,
+    "unretained_or_uncertain_source_charge": 0
+  },
+  "scientific_source": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "recipe": {
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "memory_length": 300,
+    "gate_bias": 2.0,
+    "action_limit": 1.5,
+    "learning_rate": 1e-06,
+    "epochs": 5,
+    "minibatch_trials": 16,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "dual_clip": 3.0,
+    "value_clip": 0.2,
+    "huber_delta": 10.0,
+    "value_weight": 1.0,
+    "max_grad_norm": 1.0,
+    "train_episodes": 4,
+    "episode_limit": 600,
+    "reset_each_episode": false
+  },
+  "runtime": {
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1",
+    "norm_stats_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1/assets/pi0.5_clean_randomize_joint_training/norm_stats.json",
+    "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "noise_shape": [
+      32,
+      32
+    ],
+    "native_horizon": 32,
+    "observation_dim": 2062,
+    "features": "masked mean frozen final VLM prefix (2048), normalized proprioception (14)",
+    "action_transform": "ALOHA adapt_to_pi + delta joints, absolute grippers, inverse AbsoluteActions",
+    "task_config_name": "demo_clean",
+    "assets": {
+      "status": "passed",
+      "check": "full_archived_object_families_static_file_sizes",
+      "robotwin_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+      "hf_revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+      "archive_sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27",
+      "manifest_sha256": "4f4584e0f84b788c6ef30d7f8fb905c22deb32586af07b68d20291431873e216",
+      "task_object_families": {
+        "handover_mic": [
+          "018_microphone"
+        ],
+        "pick_diverse_bottles": [
+          "001_bottle"
+        ],
+        "place_a2b_left": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_object_stand": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "074_displaystand",
+          "079_remotecontrol"
+        ],
+        "place_phone_stand": [
+          "077_phone",
+          "078_phonestand"
+        ],
+        "scan_object": [
+          "024_scanner",
+          "112_tea-box"
+        ],
+        "adjust_bottle": [
+          "001_bottle"
+        ],
+        "move_stapler_pad": [
+          "048_stapler"
+        ],
+        "place_a2b_right": [
+          "047_mouse",
+          "048_stapler",
+          "050_bell",
+          "057_toycar",
+          "073_rubikscube",
+          "075_bread",
+          "077_phone",
+          "081_playingcards",
+          "086_woodenblock",
+          "107_soap",
+          "112_tea-box",
+          "113_coffee-box"
+        ],
+        "place_dual_shoes": [
+          "007_shoe-box",
+          "041_shoe"
+        ],
+        "place_empty_cup": [
+          "019_coaster",
+          "021_cup"
+        ],
+        "stamp_seal": [
+          "100_seal"
+        ]
+      },
+      "object_family_count": 23,
+      "checked_file_count": 443,
+      "checked_file_bytes": 959793225
+    },
+    "reset_max_attempts": 32,
+    "simulator_execution": "one physical environment; scene setup/reset/step/close on calling thread",
+    "observation_capture": "final camera read per chunk; native full-observation action accounting",
+    "capture_image_equivalence": "unqualified; requires paired allocated-runtime check",
+    "appearance_randomization": false,
+    "step_accounting": "RoboTwin full-observation valid_action_mask, not issued length or dense run_steps",
+    "task_episode_limits": {
+      "adjust_bottle": 400,
+      "handover_mic": 600,
+      "move_stapler_pad": 400,
+      "pick_diverse_bottles": 400,
+      "place_a2b_left": 400,
+      "place_a2b_right": 400,
+      "place_dual_shoes": 600,
+      "place_empty_cup": 500,
+      "place_object_stand": 400,
+      "place_phone_stand": 400,
+      "scan_object": 500,
+      "stamp_seal": 400
+    },
+    "episode_limit_policy": "per-task control-action horizon; true termination takes precedence over timeout",
+    "episode_limits_source": {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/task_config/_eval_step_limit.yml",
+      "sha256": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551"
+    }
+  },
+  "per_goal_training": [
+    {
+      "task": "handover_mic",
+      "episodes": 400,
+      "successes": 76,
+      "actions": 210950,
+      "chunks": 6699,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 324,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 20
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 18
+      }
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "episodes": 400,
+      "successes": 40,
+      "actions": 148432,
+      "chunks": 4838,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 360,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 11
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 10
+      }
+    },
+    {
+      "task": "place_a2b_left",
+      "episodes": 400,
+      "successes": 70,
+      "actions": 144784,
+      "chunks": 4725,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 330,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 21
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 15
+      }
+    },
+    {
+      "task": "place_object_stand",
+      "episodes": 400,
+      "successes": 130,
+      "actions": 127492,
+      "chunks": 4179,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 270,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 37
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 36
+      }
+    },
+    {
+      "task": "place_phone_stand",
+      "episodes": 400,
+      "successes": 84,
+      "actions": 138162,
+      "chunks": 4521,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 316,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 23
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 18
+      }
+    },
+    {
+      "task": "scan_object",
+      "episodes": 400,
+      "successes": 16,
+      "actions": 195055,
+      "chunks": 6249,
+      "seed_count": 400,
+      "initial_hash_count": 400,
+      "horizon_failures": 384,
+      "first_quarter": {
+        "episodes": 100,
+        "successes": 4
+      },
+      "last_quarter": {
+        "episodes": 100,
+        "successes": 6
+      }
+    }
+  ],
+  "training_bins": [
+    {
+      "iterations": [
+        1,
+        25
+      ],
+      "episodes": 600,
+      "successes": 116,
+      "actions": 238595,
+      "chunks": 7715,
+      "metric_stats": {
+        "chunks": {
+          "count": 25,
+          "min": 279,
+          "median": 308,
+          "mean": 308.6,
+          "max": 332
+        },
+        "approximate_kl": {
+          "count": 25,
+          "min": 0.00013381562958257484,
+          "median": 0.00023046163351912247,
+          "mean": 0.00028882934136988293,
+          "max": 0.0015301300115906134
+        },
+        "clip_fraction": {
+          "count": 25,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0005647442439790674,
+          "max": 0.012844036697247707
+        },
+        "gradient_norm": {
+          "count": 25,
+          "min": 55.49620742797852,
+          "median": 67.97456512451171,
+          "mean": 66.7459253540039,
+          "max": 76.94277648925781
+        },
+        "loss": {
+          "count": 25,
+          "min": 0.0023223452270030977,
+          "median": 0.054397329688072205,
+          "mean": 0.05460280202329159,
+          "max": 0.0981240462511778
+        },
+        "actor_loss": {
+          "count": 25,
+          "min": -0.033795827673748134,
+          "median": -0.008351334929466247,
+          "mean": -0.009904030378907918,
+          "max": -0.006501718610525131
+        },
+        "critic_loss": {
+          "count": 25,
+          "min": 0.030459598591551184,
+          "median": 0.06300036581233144,
+          "mean": 0.06450683204457164,
+          "max": 0.11115687107667327
+        }
+      }
+    },
+    {
+      "iterations": [
+        26,
+        50
+      ],
+      "episodes": 600,
+      "successes": 104,
+      "actions": 241079,
+      "chunks": 7802,
+      "metric_stats": {
+        "chunks": {
+          "count": 25,
+          "min": 267,
+          "median": 310,
+          "mean": 312.08,
+          "max": 348
+        },
+        "approximate_kl": {
+          "count": 25,
+          "min": 0.00014196967149709727,
+          "median": 0.00020405394690377373,
+          "mean": 0.00020070947955459854,
+          "max": 0.00023694134721852312
+        },
+        "clip_fraction": {
+          "count": 25,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0,
+          "max": 0.0
+        },
+        "gradient_norm": {
+          "count": 25,
+          "min": 57.83500747680664,
+          "median": 66.28764190673829,
+          "mean": 66.01222314453125,
+          "max": 79.420654296875
+        },
+        "loss": {
+          "count": 25,
+          "min": 0.014925767295062542,
+          "median": 0.03826466724276543,
+          "mean": 0.051189060248434545,
+          "max": 0.12915506064891816
+        },
+        "actor_loss": {
+          "count": 25,
+          "min": -0.009785331413149833,
+          "median": -0.00817580446600914,
+          "mean": -0.008099208952626214,
+          "max": -0.006602881103754043
+        },
+        "critic_loss": {
+          "count": 25,
+          "min": 0.02281102859415114,
+          "median": 0.04637348433025181,
+          "mean": 0.05928826945647597,
+          "max": 0.13666799515485764
+        }
+      }
+    },
+    {
+      "iterations": [
+        51,
+        75
+      ],
+      "episodes": 600,
+      "successes": 93,
+      "actions": 243899,
+      "chunks": 7889,
+      "metric_stats": {
+        "chunks": {
+          "count": 25,
+          "min": 285,
+          "median": 315,
+          "mean": 315.56,
+          "max": 348
+        },
+        "approximate_kl": {
+          "count": 25,
+          "min": 0.00017000236009296618,
+          "median": 0.00020092776398253598,
+          "mean": 0.00020303017071571016,
+          "max": 0.00026572389262063164
+        },
+        "clip_fraction": {
+          "count": 25,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0,
+          "max": 0.0
+        },
+        "gradient_norm": {
+          "count": 25,
+          "min": 59.243873596191406,
+          "median": 64.97778778076172,
+          "mean": 66.02452508544921,
+          "max": 74.70304260253906
+        },
+        "loss": {
+          "count": 25,
+          "min": 0.013299503829330206,
+          "median": 0.04275580123066902,
+          "mean": 0.0460912051089108,
+          "max": 0.10985690709203481
+        },
+        "actor_loss": {
+          "count": 25,
+          "min": -0.009720495343208313,
+          "median": -0.007977011799812316,
+          "mean": -0.008121688598534092,
+          "max": -0.006901739165186882
+        },
+        "critic_loss": {
+          "count": 25,
+          "min": 0.02169757173396647,
+          "median": 0.05116959800943732,
+          "mean": 0.054212893061339855,
+          "max": 0.11773510975763202
+        }
+      }
+    },
+    {
+      "iterations": [
+        76,
+        100
+      ],
+      "episodes": 600,
+      "successes": 103,
+      "actions": 241302,
+      "chunks": 7805,
+      "metric_stats": {
+        "chunks": {
+          "count": 25,
+          "min": 278,
+          "median": 314,
+          "mean": 312.2,
+          "max": 348
+        },
+        "approximate_kl": {
+          "count": 25,
+          "min": 0.00016293941918065993,
+          "median": 0.00020904075417053016,
+          "mean": 0.00021011165581072755,
+          "max": 0.0002557871142408058
+        },
+        "clip_fraction": {
+          "count": 25,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0,
+          "max": 0.0
+        },
+        "gradient_norm": {
+          "count": 25,
+          "min": 58.90570602416992,
+          "median": 66.15267791748047,
+          "mean": 66.22216415405273,
+          "max": 74.19259033203124
+        },
+        "loss": {
+          "count": 25,
+          "min": 0.014994842931628227,
+          "median": 0.05219962392002344,
+          "mean": 0.053048163808882234,
+          "max": 0.14902675300836563
+        },
+        "actor_loss": {
+          "count": 25,
+          "min": -0.009907348453998566,
+          "median": -0.008331087231636048,
+          "mean": -0.008449251386162359,
+          "max": -0.007097363471984863
+        },
+        "critic_loss": {
+          "count": 25,
+          "min": 0.02297013606876135,
+          "median": 0.060317404102534056,
+          "mean": 0.06149741493724287,
+          "max": 0.1573858086951077
+        }
+      }
+    }
+  ],
+  "source_validation": {
+    "10": [
+      {
+        "task": "handover_mic",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2400,
+        "chunks": 76,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000000000,
+          3000000997,
+          3000001994,
+          3000002991
+        ],
+        "limits": [
+          600
+        ]
+      },
+      {
+        "task": "pick_diverse_bottles",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000010000,
+          3000010997,
+          3000011994,
+          3000012991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_a2b_left",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000020000,
+          3000020997,
+          3000021994,
+          3000022991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_object_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1352,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "seeds": [
+          3000030000,
+          3000030997,
+          3000031994,
+          3000032991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_phone_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000040000,
+          3000040997,
+          3000041994,
+          3000042991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "scan_object",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2000,
+        "chunks": 64,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000050000,
+          3000050997,
+          3000051994,
+          3000052991
+        ],
+        "limits": [
+          500
+        ]
+      }
+    ],
+    "25": [
+      {
+        "task": "handover_mic",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2400,
+        "chunks": 76,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000000000,
+          3000000997,
+          3000001994,
+          3000002991
+        ],
+        "limits": [
+          600
+        ]
+      },
+      {
+        "task": "pick_diverse_bottles",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000010000,
+          3000010997,
+          3000011994,
+          3000012991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_a2b_left",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1348,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000020000,
+          3000020997,
+          3000021994,
+          3000022991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_object_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1352,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "seeds": [
+          3000030000,
+          3000030997,
+          3000031994,
+          3000032991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_phone_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000040000,
+          3000040997,
+          3000041994,
+          3000042991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "scan_object",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2000,
+        "chunks": 64,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000050000,
+          3000050997,
+          3000051994,
+          3000052991
+        ],
+        "limits": [
+          500
+        ]
+      }
+    ],
+    "50": [
+      {
+        "task": "handover_mic",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2400,
+        "chunks": 76,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000000000,
+          3000000997,
+          3000001994,
+          3000002991
+        ],
+        "limits": [
+          600
+        ]
+      },
+      {
+        "task": "pick_diverse_bottles",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1309,
+        "chunks": 43,
+        "returns": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          3000010000,
+          3000010997,
+          3000011994,
+          3000012991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_a2b_left",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1367,
+        "chunks": 45,
+        "returns": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000020000,
+          3000020997,
+          3000021994,
+          3000022991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_object_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1346,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "seeds": [
+          3000030000,
+          3000030997,
+          3000031994,
+          3000032991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_phone_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1341,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          3000040000,
+          3000040997,
+          3000041994,
+          3000042991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "scan_object",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2000,
+        "chunks": 64,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000050000,
+          3000050997,
+          3000051994,
+          3000052991
+        ],
+        "limits": [
+          500
+        ]
+      }
+    ],
+    "100": [
+      {
+        "task": "handover_mic",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2400,
+        "chunks": 76,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000000000,
+          3000000997,
+          3000001994,
+          3000002991
+        ],
+        "limits": [
+          600
+        ]
+      },
+      {
+        "task": "pick_diverse_bottles",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1312,
+        "chunks": 43,
+        "returns": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          3000010000,
+          3000010997,
+          3000011994,
+          3000012991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_a2b_left",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000020000,
+          3000020997,
+          3000021994,
+          3000022991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_object_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 1,
+        "episodes": 4,
+        "actions": 1347,
+        "chunks": 44,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "seeds": [
+          3000030000,
+          3000030997,
+          3000031994,
+          3000032991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "place_phone_stand",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 1600,
+        "chunks": 52,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000040000,
+          3000040997,
+          3000041994,
+          3000042991
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "scan_object",
+        "method": "ppo",
+        "lesion": null,
+        "successes": 0,
+        "episodes": 4,
+        "actions": 2000,
+        "chunks": 64,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          3000050000,
+          3000050997,
+          3000051994,
+          3000052991
+        ],
+        "limits": [
+          500
+        ]
+      }
+    ]
+  },
+  "target": {
+    "10": [
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 6,
+        "episodes": 8,
+        "actions": 1804,
+        "chunks": 60,
+        "returns": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1603,
+        "chunks": 54,
+        "returns": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 6,
+        "episodes": 8,
+        "actions": 1903,
+        "chunks": 63,
+        "returns": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ],
+    "25": [
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1227,
+        "chunks": 42,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1234,
+        "chunks": 43,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1223,
+        "chunks": 42,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ],
+    "50": [
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1497,
+        "chunks": 50,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1560,
+        "chunks": 51,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1486,
+        "chunks": 51,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 0,
+        "episodes": 8,
+        "actions": 3200,
+        "chunks": 104,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ],
+    "100": [
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 7,
+        "episodes": 8,
+        "actions": 1596,
+        "chunks": 55,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 6,
+        "episodes": 8,
+        "actions": 1866,
+        "chunks": 63,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "adjust_bottle",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 8,
+        "episodes": 8,
+        "actions": 1557,
+        "chunks": 53,
+        "returns": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "normal",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2985,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "memory_reset",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2974,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      },
+      {
+        "task": "move_stapler_pad",
+        "method": "ppo",
+        "lesion": "reward_blind",
+        "successes": 1,
+        "episodes": 8,
+        "actions": 2985,
+        "chunks": 97,
+        "returns": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "seeds": [
+          22261030,
+          22262027,
+          22263024,
+          22264021,
+          22265018,
+          22266015,
+          22267012,
+          22268009
+        ],
+        "limits": [
+          400
+        ]
+      }
+    ]
+  },
+  "update_count": 100,
+  "update_iterations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "missing_updates": [],
+  "metric_stats": {
+    "chunks": {
+      "count": 100,
+      "min": 267,
+      "median": 310.0,
+      "mean": 312.11,
+      "max": 348
+    },
+    "approximate_kl": {
+      "count": 100,
+      "min": 0.00013381562958257484,
+      "median": 0.0002073575151889814,
+      "mean": 0.0002256701618627298,
+      "max": 0.0015301300115906134
+    },
+    "clip_fraction": {
+      "count": 100,
+      "min": 0.0,
+      "median": 0.0,
+      "mean": 0.00014118606099476684,
+      "max": 0.012844036697247707
+    },
+    "gradient_norm": {
+      "count": 100,
+      "min": 55.49620742797852,
+      "median": 66.22015991210938,
+      "mean": 66.25120943450928,
+      "max": 79.420654296875
+    },
+    "loss": {
+      "count": 100,
+      "min": 0.0023223452270030977,
+      "median": 0.05154814869165421,
+      "mean": 0.05123280779737979,
+      "max": 0.14902675300836563
+    },
+    "actor_loss": {
+      "count": 100,
+      "min": -0.033795827673748134,
+      "median": -0.008246454130858182,
+      "mean": -0.008643544829057647,
+      "max": -0.006501718610525131
+    },
+    "critic_loss": {
+      "count": 100,
+      "min": 0.02169757173396647,
+      "median": 0.05992656333837658,
+      "mean": 0.059876352374907585,
+      "max": 0.1573858086951077
+    }
+  },
+  "finite_metrics": true,
+  "total_update_chunks": 31211,
+  "total_optimizer_steps": 500,
+  "source_episode_count": 2400,
+  "source_episode_action_sum": 964875,
+  "source_episode_chunk_sum": 31211,
+  "episode_return_values": {
+    "0.0": 1984,
+    "1.0": 416
+  },
+  "duplicates": {},
+  "conflicts": [],
+  "metadata_files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo-20261030-r2/experiment/episodes.jsonl",
+      "sha256": "6c37564a6573c42945b7871025cc0a8fd0ba2bb195ba3168247acb54190a7634",
+      "bytes": 479099
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-wholetrial-ppo-20261030-r2/experiment/updates.jsonl",
+      "sha256": "b62045ebded5f30b6ea167229604bf1680a8450b5e48b4fc1ae2920965d0d08f",
+      "bytes": 11424
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/episodes.jsonl",
+      "sha256": "f08839eae89bca8af86b8fc550a9e3d2f4321951f9d1f0072cfcc20e02559832",
+      "bytes": 19579
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0001/experiment/updates.jsonl",
+      "sha256": "b64cd4966477e55237267719cddcdbfecd33188d393ad66861687670e49d97da",
+      "bytes": 600
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0002/experiment/episodes.jsonl",
+      "sha256": "452d114aaffff210d61a4f3de6599170765f1a216ea044b9ea09b02b5c21e905",
+      "bytes": 10673
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0002/experiment/updates.jsonl",
+      "sha256": "9420c6184cfdc649f46315db6a0641d6cdee24129dfdecfa3d6513066d1c4ef6",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0003/experiment/episodes.jsonl",
+      "sha256": "b366c8ef33e6bc9df816b8188bece38c8970202d42ac828535101c6a5f66b46f",
+      "bytes": 10672
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0003/experiment/updates.jsonl",
+      "sha256": "76a54fdaf3c658d56f8a579968a409d1ae42b3f00734ccee4407883d634042c6",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0004/experiment/episodes.jsonl",
+      "sha256": "111eb5c71c01bc4b473a66e015fc4ba8f440a4b1033409b2b44031c7826c9dab",
+      "bytes": 10659
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0004/experiment/updates.jsonl",
+      "sha256": "286781f32a9822b548c60af69c29deb34d6f99e81cacb578f2396867061b0e79",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0005/experiment/episodes.jsonl",
+      "sha256": "3117457f2de6bbc2e684b14bd89173a2a994114d600d683d28aadff864486288",
+      "bytes": 10662
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0005/experiment/updates.jsonl",
+      "sha256": "d26f08423e243842611370f42bb337ed4e4068e4b164ef3744ea500040e8c431",
+      "bytes": 298
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0006/experiment/episodes.jsonl",
+      "sha256": "a8592b1399599a5ca5720a6f718e6c22d70fa56d825e4c16b7ee9f209d541bf5",
+      "bytes": 10663
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0006/experiment/updates.jsonl",
+      "sha256": "ec7f8d59b5e6d12f63fae1574e53828046e1c83e535f7b1493379171383b7196",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0007/experiment/episodes.jsonl",
+      "sha256": "6bff95e7e50af173ff26a9011673adb924d8e72f3264d73b35f1702178c372b6",
+      "bytes": 10667
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0007/experiment/updates.jsonl",
+      "sha256": "0f55194d14dd08dba8acaea8e4e299fb3db3efcff7affb8266099d601a5a5bbb",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0008/experiment/episodes.jsonl",
+      "sha256": "12a6da5f25ebe51eab831141b676ba0f2bd48e8295ea57f30a22a840f049f583",
+      "bytes": 10675
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0008/experiment/updates.jsonl",
+      "sha256": "92fc454817138dff72a7fb136b7d7c377a1ffda531d42ca6008674cb8bf927e3",
+      "bytes": 298
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0009/experiment/episodes.jsonl",
+      "sha256": "94d00f536bbe5568f9f0213ad5f61ea12532147daef6a0e98374086559c7dd90",
+      "bytes": 10664
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0009/experiment/updates.jsonl",
+      "sha256": "99cdebe08871b29c559960b1fc255bf55b3519d4563390b4fd29bb928f2a66ba",
+      "bytes": 297
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0010/experiment/episodes.jsonl",
+      "sha256": "b88045ab8dff270845f88d78cacc5d917c87ddf5e39752581981b8115894ec72",
+      "bytes": 10670
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0010/experiment/updates.jsonl",
+      "sha256": "e5572085535d054dab24ecd0c00f9c859334dd80d9944cad2527e425f363ed99",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0011/experiment/episodes.jsonl",
+      "sha256": "fe964bb8ef5c034c142dcdff444a770a78b23fc53f2e5a4f0f8a7384e9539227",
+      "bytes": 10659
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0011/experiment/updates.jsonl",
+      "sha256": "1b2617289c40f80805ec7c05d9827cda12cc8553dd397adac23cd2bd35ff9e59",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/episodes.jsonl",
+      "sha256": "57459d2ef8e72ab3f60b3ea576031bf16f65d58f1b2637fbe830f6f6ae2d2a52",
+      "bytes": 46770
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0012/experiment/updates.jsonl",
+      "sha256": "e62ec84a57c1bb856c08248f1ea491b373f5745c9e001b48390ad97b356c329a",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/episodes.jsonl",
+      "sha256": "a1a9acdafc24af806f0d8a134f545aac16d0d9bc36f375a6d5918ed8691aaaff",
+      "bytes": 10666
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-ppo-20261030-r1/slices/0013/experiment/updates.jsonl",
+      "sha256": "2bc7260eac513b3b4ae0b97759b685f7ec1cd9d8b5c54d70c6e26fe115d55cc1",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/ppo/episodes.jsonl",
+      "sha256": "552169f0cbc1e89a672628f19dc368da6118b73a4143e3498f381813fdf02316",
+      "bytes": 11172
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r1/ppo/updates.jsonl",
+      "sha256": "fac9f1f7598e838b2f50eba4a9c179e05ecccae86cb1e4479fc39580f9b4cf05",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/episodes.jsonl",
+      "sha256": "2af2c8f4334df0d4e4f6e319b4b3659f68a3cf92491bf994cb1a582ac4e1a6ac",
+      "bytes": 11166
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r2/ppo/updates.jsonl",
+      "sha256": "2133d8f10ee7326d5d73ab74b7a3f0376a2cdb023f88967fab75842e97a0c38e",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r3/ppo/episodes.jsonl",
+      "sha256": "9f7b2928cf31939ec13138a0dc8ed8453c3531e40cadebbbd8c67aabd08b2f44",
+      "bytes": 11171
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r3/ppo/updates.jsonl",
+      "sha256": "32c14b7de8f80a73b4faf71ac24d71fa1808b0eaff3fbe8dfeeadff74f81c049",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo/episodes.jsonl",
+      "sha256": "a7fb866f95dbf1008ad20340ecc2e2cedd9f723bdc7e5e1cac74822a0ed25867",
+      "bytes": 11177
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r4/ppo/updates.jsonl",
+      "sha256": "e5951aca07f0a78bb82efc73b63611b26061743d70f84eae000f7a53d9e09c74",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r5/ppo/episodes.jsonl",
+      "sha256": "dfae8bb08c7aa0d7acaa803a296675ecbded00619237a5bacc251d35952d607e",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-20261031-r5/ppo/updates.jsonl",
+      "sha256": "6d0b297b8138e1f1272d2e53103a63003c3d5ba06a730f931631633329af7438",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/episodes.jsonl",
+      "sha256": "22169cc823d7cfef5b915a3e212d504c64d249ff695e394cb827973d46eca37c",
+      "bytes": 11178
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-pair-initial-20261031-r1/ppo/updates.jsonl",
+      "sha256": "011ed64764a0598a9cd74bd43af5a95633a67a805d151b346e264685d0aadccd",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-001/experiment/episodes.jsonl",
+      "sha256": "82515f9e7c1e74acc0a86fe8107afe9cdad0107a6fcba698647ae9088f74f437",
+      "bytes": 11173
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-001/experiment/updates.jsonl",
+      "sha256": "e36a5eaf5c8cee8cd8ef439823223bfffc2a0e13b71ce478e3537dfa1a79133f",
+      "bytes": 297
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-002/experiment/episodes.jsonl",
+      "sha256": "136ba8b8a91bc89ba8e13e6faaec386e8a619274a0674cf2199ec7d539f118d0",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-002/experiment/updates.jsonl",
+      "sha256": "00b681dc5c95eabd4855c570df51068ecab4e72302b4a3449f749f4f0144c35e",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-003/experiment/episodes.jsonl",
+      "sha256": "856aac9eff2ad945f737b24af3efd3a8e1d6097560aff0a0873290212c916a4f",
+      "bytes": 11174
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-003/experiment/updates.jsonl",
+      "sha256": "6e488bcfd6385214e2f376102538ae5defd43faca70609fd69a0035711a0bf35",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-004/experiment/episodes.jsonl",
+      "sha256": "6f35d592ea7f0c770ce3537678bc7dec0707d7bfcf797b1f416ea744b3e10dee",
+      "bytes": 11165
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-004/experiment/updates.jsonl",
+      "sha256": "ec5888485e16497b18f9cdfb0bd4c1097e7dc24ab8be233680e8418f5143c5fe",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-005/experiment/episodes.jsonl",
+      "sha256": "f56cf0f1b911d20e5f95a27cf28c65db240a060e2bde0bac216fef8d531ecdec",
+      "bytes": 11178
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-005/experiment/updates.jsonl",
+      "sha256": "7b5fa48d9b175913370df13d80cf60a2bb083e970ffc68fb601506ef538e33af",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-006/experiment/episodes.jsonl",
+      "sha256": "bd99580b4ad87e5203038025fd568e2e7ef8ce33b7973129e5cc791554c34246",
+      "bytes": 11175
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-006/experiment/updates.jsonl",
+      "sha256": "7064544b920a8901dc033abf8a62b340293ae9b3e91d3ffcdb4a43d8fca1289c",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-007/experiment/episodes.jsonl",
+      "sha256": "c4f32452d1bdeea71498220f27711b5b9b7c64e2c698398276440b6ecd32847c",
+      "bytes": 11181
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-007/experiment/updates.jsonl",
+      "sha256": "43ea3732e4fdfe6095d74a740f28493e1ab645506c7d3b561b779102a13f954d",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-008/experiment/episodes.jsonl",
+      "sha256": "3c806f08343d2bcac6d1cda928fd7618840e00c7e207d15beed9b0af7fcfd6a6",
+      "bytes": 11175
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-008/experiment/updates.jsonl",
+      "sha256": "c17d7267360307d6386e02cf8e2de6f3b0459e6eb1ed04429fe7de9c44779b93",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-009/experiment/episodes.jsonl",
+      "sha256": "3a8ff96a07468402d87c31d7439af4ab356dd96affe84785bd63bbfb682b5791",
+      "bytes": 11170
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-009/experiment/updates.jsonl",
+      "sha256": "8f79533d9ec18dd4b01f99fd895ee7ac2e1cd0390ce297f18ece94c5a16005a1",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-010/experiment/episodes.jsonl",
+      "sha256": "26ae3a94c1940d3671a2ad486fbc72cb136e6f25e42476464c035acf50bfb80a",
+      "bytes": 11166
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-010/experiment/updates.jsonl",
+      "sha256": "418ebedcb3cc224cb7ee015554cd6f25262502b088567fc71e95fd46ab4fab1e",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-011/experiment/episodes.jsonl",
+      "sha256": "ab779fcfd9e8674f6e2c52cac6eb74bd3b9c72739908b7fd8acdf4d0e7a63ac8",
+      "bytes": 11175
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-011/experiment/updates.jsonl",
+      "sha256": "59939efbd596668e5855b8fed0d73f970e8f3dffcee172ed5db2d95e9ef80f4c",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-012/experiment/episodes.jsonl",
+      "sha256": "1668f4bddb1b7b6b48360db2c756947564ce612b28ecb520804972a5abc9d644",
+      "bytes": 11177
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-012/experiment/updates.jsonl",
+      "sha256": "2c7383f50c58963738a09513d713cb3cf974bf05915dc552d826de47ce0d96c4",
+      "bytes": 302
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-013/experiment/episodes.jsonl",
+      "sha256": "5f6c810539dcba6b4608b18eb20c70ea9109da95297df9ce91a841337c2ccc34",
+      "bytes": 11186
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-013/experiment/updates.jsonl",
+      "sha256": "c93da6ba4032237c90fe0727a9730cd5d3a1475defa2949f158cdf59ef9182aa",
+      "bytes": 302
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-014/experiment/episodes.jsonl",
+      "sha256": "68b9a800aa2b3dc6128315b9209061ddcbafcb8b1950fda4dfb1a42c67fe31d5",
+      "bytes": 11174
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-014/experiment/updates.jsonl",
+      "sha256": "2f4eb4a50818261f44a42acef7c0fd130dcd683131f75ebe1acaa7d3f0938133",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-015/experiment/episodes.jsonl",
+      "sha256": "b42d6b5a152252d1dff56db80f07c81f11a0034d27d7a0fb8a244194f9d7471c",
+      "bytes": 11173
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-015/experiment/updates.jsonl",
+      "sha256": "0b7b7438b1e83b0f9637704b86057ee5c0791430caa74a28a74e4f9e922eba9b",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-016/experiment/episodes.jsonl",
+      "sha256": "3c62389383a8ee042e6c8a56caed41f665e721efa2b447a57e889a71c0bcf153",
+      "bytes": 11176
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-016/experiment/updates.jsonl",
+      "sha256": "a78dfbcad5d96583961587d62d7b768d03ef1eb914cad8c727577abbf0b13c84",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-017/experiment/episodes.jsonl",
+      "sha256": "8d71b1a80db4561c606980c7cf6e8674a9b5e96e00bb20c644c04a2a2acd43d7",
+      "bytes": 11170
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-017/experiment/updates.jsonl",
+      "sha256": "fad2d0b1440604ffc92a303be12828e7e3b04fbad9f1efd30b12c02f2771f8eb",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-018/experiment/episodes.jsonl",
+      "sha256": "f5910501ef2fc9b6f54326f23f70f46b8380072696d58ae6193d2456f44ae64a",
+      "bytes": 11172
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-018/experiment/updates.jsonl",
+      "sha256": "4ae1f15a7631c3cc42a795ae2ac48ae14d5bcc93f27c81e15b6d749a9cb1e274",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-019/experiment/episodes.jsonl",
+      "sha256": "eb9b5a7c67d8db7919659857ed4ae1f0634e432413cfb2ea494db6c649fd43d9",
+      "bytes": 11179
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-019/experiment/updates.jsonl",
+      "sha256": "21ba0ccb74eeeafb704eedbb8287966f9b35e4432cbc9225d9d28332982ae536",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-020/experiment/episodes.jsonl",
+      "sha256": "1dec8b9e19271ec2dc5d121ce51d12873e63bfbcdae68977f84e874b31c49886",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-020/experiment/updates.jsonl",
+      "sha256": "00f0a271b4035f45207cd203d8631b869466f7f96a31bc91bc0876556d63e68e",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-021/experiment/episodes.jsonl",
+      "sha256": "9c17ca7ad23fe3a37744c1ad70c3e6c0c320c67002e05c7a5a94a1ddd098e926",
+      "bytes": 11172
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-021/experiment/updates.jsonl",
+      "sha256": "e94d3c7b2b9ca6fc11d77d6946e68eac31545b96cefccaf59ad949295dab7546",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-022/experiment/episodes.jsonl",
+      "sha256": "e8332343ba88d0d6b3b5525307e28f2409ac27369f16acd87f0b390aba491ea0",
+      "bytes": 11166
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-022/experiment/updates.jsonl",
+      "sha256": "96f8d0553e05b5cc4ec616bcb3d72100e602bbe9936880bebadaf2672fa0713d",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-023/experiment/episodes.jsonl",
+      "sha256": "ddb757c37bd32b0fb3729ba8eaad87c1ddb4b973bb0a281148b8b103ecc1e4d1",
+      "bytes": 11178
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-023/experiment/updates.jsonl",
+      "sha256": "832eacf48608aad46b1521e217acf5d2164fb9ff65d7607c0b90a60e6104d22b",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-024/experiment/episodes.jsonl",
+      "sha256": "c364cc99ef5f1ca381b35a0d9b04a895d442a46719bc97a4b33f9c8fdcd9450c",
+      "bytes": 11165
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-024/experiment/updates.jsonl",
+      "sha256": "8883781a445c29398370218a160006a2da3977d72a4bef96aa2218fdbdb50680",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-025/experiment/episodes.jsonl",
+      "sha256": "fed29b4525a69a86d254e8c59488a17384259e7a51e9cbddde5e3de8fb7e92e9",
+      "bytes": 11178
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-025/experiment/updates.jsonl",
+      "sha256": "fbd748d6791d2c0da06a7b8cdef44f6fdab382e35abbb7503a57281084c9f286",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-026/experiment/episodes.jsonl",
+      "sha256": "4e55e79e5033a7f616e4bc2cc61e8061cdc102ed33d3b16fe8da386819c63a1b",
+      "bytes": 11171
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-026/experiment/updates.jsonl",
+      "sha256": "44fdcfb4b97fe2fb1669bd468537281d56d141f066ae45ca1c795c649803cb5b",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-027/experiment/episodes.jsonl",
+      "sha256": "372851690548cba31849a4751c32d911f3d8800bf4689ddb7e5ba30b980b7bfd",
+      "bytes": 11179
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-027/experiment/updates.jsonl",
+      "sha256": "7ec9080e3ab9e6ef4c0f7d0b3da24128ee6591c4fa64c92b615261ecb2b4d95c",
+      "bytes": 301
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-028/experiment/episodes.jsonl",
+      "sha256": "582fc1ce356c35f493a23464dc0cef1a27e13add088075589cb8adb56d217b41",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-028/experiment/updates.jsonl",
+      "sha256": "00faec5dc9e1d0fbcdc3bfe1962feeca330cbe89426824f4504b6a8c68413551",
+      "bytes": 303
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-029/experiment/episodes.jsonl",
+      "sha256": "601ae2258f3576c6fb5f93c099bfbd788c5a05c121ab0236b4d0317c14826f44",
+      "bytes": 11171
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-029/experiment/updates.jsonl",
+      "sha256": "346b88037d7c125487df2aba273bd590cdf2e48fc1dd3833c1037400f7721faa",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-030/experiment/episodes.jsonl",
+      "sha256": "353a561911ab07038218d418c95aa0e6dc0ae3c57c5e71a17f7b1d8beddafb98",
+      "bytes": 11181
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-030/experiment/updates.jsonl",
+      "sha256": "6bf5e8fbe4401aba3cb4571185a7f79960e646fc4c5feb976d270c497cb6a21b",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-031/experiment/episodes.jsonl",
+      "sha256": "12fbc2fa20bff2ba934e4bf9f8e4869c28f33d723eb017d0b6cac50ed0972453",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-031/experiment/updates.jsonl",
+      "sha256": "b89f0df7d1331a3bcb978837303ce86c47cc8f4692eb9b8c0124261aa44a702f",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-032/experiment/episodes.jsonl",
+      "sha256": "99c07a9208a7b461711cd06060abe55130dff237e0183df568f49b76a24b9402",
+      "bytes": 11171
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-032/experiment/updates.jsonl",
+      "sha256": "74788a607190c250301ad2ba0c60add18a401a1b6136b5d093c348c410fc6850",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-033/experiment/episodes.jsonl",
+      "sha256": "5607194d2103c2e4347c6976d385d0a784b96281dc6d02b784db4b7d7059e30b",
+      "bytes": 11174
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-033/experiment/updates.jsonl",
+      "sha256": "c71d1436fb4b0e1c785498b60569f98f42e6a4c75a7a0f6a0cdbc89906c727d8",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-034/experiment/episodes.jsonl",
+      "sha256": "a99ef26f030ebe6462217b6fd81c0f86d247eb17a58c6cf49b7762fca797d630",
+      "bytes": 11175
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-034/experiment/updates.jsonl",
+      "sha256": "e13316ddf426aaf98b291302e70feb33f9e69fd7147179ee786b770833efc105",
+      "bytes": 297
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-035/experiment/episodes.jsonl",
+      "sha256": "b489a2cfe93ac2fca81454273b0fbb64394c9086bbce0cf1d4bd75491c6cf976",
+      "bytes": 11176
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-035/experiment/updates.jsonl",
+      "sha256": "197f6587af9f2148ade56c1967c164e52b745e9a9ba8ebb4793f7094b86182de",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-036/experiment/episodes.jsonl",
+      "sha256": "49872ef71e98de090c757ecc154b5c57eb9aaa6b48d525662dfafa4f1fa36918",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-036/experiment/updates.jsonl",
+      "sha256": "3dcdde2e763f98c9ae9663a5a234e2ce8c0c0d885554fb9efdfa23f328b490e6",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-037/experiment/episodes.jsonl",
+      "sha256": "db5d61f4e837479a2b2dfe46988dd93697345914d26fd635e2aa15ee1ef224d6",
+      "bytes": 11164
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-037/experiment/updates.jsonl",
+      "sha256": "ae02c32abf39ac9f63ecddbdec136a4eb62247e982d7fe8bf50cd3b72ca6c2c9",
+      "bytes": 297
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-038/experiment/episodes.jsonl",
+      "sha256": "db9b9a7e681b89f760fd89db5533759c85e384749daaa7387e3359a154ea886f",
+      "bytes": 11174
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-038/experiment/updates.jsonl",
+      "sha256": "0f284bc9108b52c1e7a9966fdaa6c17724bc926773d00cd752548ccd904c38ca",
+      "bytes": 300
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-039/experiment/episodes.jsonl",
+      "sha256": "82edd8152b6556ba01afdfeb83939e24d5c4799c4de6308498a21eac6a001b0e",
+      "bytes": 11168
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-039/experiment/updates.jsonl",
+      "sha256": "0ac904cbbf086d6f04d66b386e312d8a22a9274d0865badc5dbc92a3a6d9abea",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-040/experiment/episodes.jsonl",
+      "sha256": "db5db4ede5a4a5cc44c86b0b54b180b834a34ec33b583153f1e9838324f2dc2c",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-040/experiment/updates.jsonl",
+      "sha256": "97873d800f392937b9550e31ef07f17f2b1edd9bedcb4a60fe7998eaf46d38d0",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-041/experiment/episodes.jsonl",
+      "sha256": "ebec146e0195e692d7f20ed729682f387ff0ed9fb513caedcb8839d966bb8fad",
+      "bytes": 11169
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-041/experiment/updates.jsonl",
+      "sha256": "96234dfc54260f025105dbad7a6bed44d97d8ca10d1b7d4890931fa7e38189cf",
+      "bytes": 299
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/episodes.jsonl",
+      "sha256": "c4b394dd7e8b529023fb3501b8013fdcbfe394b825b25b186192e281b1414d3e",
+      "bytes": 11193
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-042/experiment/updates.jsonl",
+      "sha256": "b428d9fbef47e5e4c786018c1feef3bdb46089232271ae94c789fe1ce7e3258a",
+      "bytes": 302
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo/slice-043/experiment/episodes.jsonl",
+      "sha256": "204f5e31fa288ed33d77ba823ee059eb767352066abdf473dece2f748dd62aa3",
+      "bytes": 36181
+    }
+  ],
+  "code_files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/src/fluffy_bassoon/meta_rl/vla_noise_ppo.py",
+      "sha256": "e6f81f9da73b31cd86fb13a9fdeb0daf39aa68481324751b9531f3bc6823d365"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/src/fluffy_bassoon/meta_rl/ppo.py",
+      "sha256": "6135153207b6a442ea8c3ac4831596281cb419066f1536614cf70a691cc99344"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/src/fluffy_bassoon/rl/robotwin_noise.py",
+      "sha256": "eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-continuation-code-20261031-r2/scripts/diagnostics/robotwin_noise_compare.py",
+      "sha256": "f7628c281cb5277741fa403e7a455fb6a09b15792c1c0756ce1e5fcdf1b3fad6"
+    }
+  ],
+  "limitations": [
+    "Repeated metadata identities are deduplicated for learning-history description; physical costs are taken from canonical final_source, never deduplicated here.",
+    "Seed count/initial feature hash count does not establish distinct full physical states.",
+    "Final validation has four fixed scenes per source goal and stochastic action draws; no native source comparator or task-averaged uncertainty from this panel."
+  ]
+}

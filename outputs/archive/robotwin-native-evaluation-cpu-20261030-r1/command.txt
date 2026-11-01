@@ -1,0 +1,5 @@
+bash -lc 'set -euo pipefail
+TASK_LAUNCH=/mowenjie/fluffy-bassoon-2/worktrees/robotwin-native-evaluation-cpu-launch-20261030-r1
+test "$(git -C "$TASK_LAUNCH" rev-parse HEAD)" = 7322aa16dd7d92710b33ecf95d9a7432f600aae5
+exec timeout --signal=TERM --kill-after=10s 260 bash "$TASK_LAUNCH/outputs/robotwin-native-evaluation-cpu-20261030-r1/job.sh"
+'

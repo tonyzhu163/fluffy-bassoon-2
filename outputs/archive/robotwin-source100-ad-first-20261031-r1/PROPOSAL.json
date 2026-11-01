@@ -1,0 +1,199 @@
+{
+  "format": "robotwin_source100_ad_first_phase_proposal_v1",
+  "recorded_at_utc": "2026-10-31T00:56:07.462013+00:00",
+  "authorization_status": "approved_by_direct_human_reply",
+  "reservation": {
+    "job_id": "job-twcl47ph8lnz",
+    "component": "final100_cpu_export",
+    "scheduler_cpu_worker_seconds": 7020
+  },
+  "admission": true,
+  "question_asked": true,
+  "benchmark": "RoboTwin",
+  "source_snapshot_sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90",
+  "source_final_coordinator_sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+  "ad_code_commit": "7401cd50c038a4cb35149eceeb72128e9a368cc3",
+  "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "regressions": "AD108PASS;sourcecompat57PASS/3legacydeselected;actualsourceactor/RNG/countersPASS;sampledreadout48PASS in distinct Success job. Original two wrappersremainFailed; no production-bank/fit/nativeGPU admission.",
+  "teacher_panel_required_for_ad": false,
+  "objectives": [
+    "ad"
+  ],
+  "fits": [
+    {
+      "mode": "full",
+      "seed": 0,
+      "updates": 500,
+      "milestones": [
+        25,
+        100,
+        500
+      ],
+      "primary": "candidate-000500.pt"
+    },
+    {
+      "mode": "static",
+      "seed": 0,
+      "updates": 500,
+      "milestones": [
+        25,
+        100,
+        500
+      ],
+      "primary": "candidate-000500.pt"
+    }
+  ],
+  "new_source_actions": 0,
+  "readout": {
+    "profile_status": "sampled source100AD500 software-qualified on allocated CPU; actual bank/model/nativeGPU payload prerequisites remain",
+    "tasks": [
+      "adjust_bottle",
+      "move_stapler_pad"
+    ],
+    "query_seeds": [
+      22261030,
+      22262027,
+      22263024,
+      22264021,
+      22265018,
+      22266015,
+      22267012,
+      22268009
+    ],
+    "support_seeds": [
+      32161030,
+      32162027,
+      32163024,
+      32164021,
+      32165018,
+      32166015,
+      32167012,
+      32168009
+    ],
+    "k0_conditions": [
+      "native",
+      "source_sac_frozen",
+      "ad_full",
+      "ad_static"
+    ],
+    "k1_conditions": [
+      "ad_full",
+      "ad_full_reset_cache_and_feedback"
+    ],
+    "planned_episodes": 128,
+    "planned_support_episodes": 32,
+    "planned_query_episodes": 96,
+    "maximum_target_actions": 60000,
+    "larger_protocol_replaced": false,
+    "student_inference": "sample_learned_gaussian_then_bound1.5",
+    "inference_mode_selected_before_new_robot_outcomes": true,
+    "additional_mean_condition": false,
+    "topology_status": "12 finite condition-task child units SERIAL inside ONEexclusive1GPU readout allocation; ownerproposes5400scheduler/5300parent, within7200readoutceiling"
+  },
+  "requested_ceilings": {
+    "cpu_worker_seconds": 7200,
+    "cpu_worker_cores": 8,
+    "cpu_worker_ram_gib": 64,
+    "gpu_seconds": 10800,
+    "fit_gpu_seconds": 2100,
+    "readout_gpu_seconds": 7200,
+    "setup_failure_contingency_gpu_seconds": 1500,
+    "gpu_peak_cores": 16,
+    "gpu_peak_ram_gib": 128,
+    "shared_memory_gib": 8,
+    "new_storage_gib": 128,
+    "software_qualification_cpu_seconds": 600,
+    "software_qualification_is_within_cpu_total": true,
+    "cpu_parent_deadline_seconds": 6900,
+    "gpu_parent_deadline_seconds": 10500,
+    "gpu_outer_margin_seconds": 300,
+    "gpu_outer_margin_is_within_contingency": true,
+    "cpu_worker_seconds_are_aggregate": true,
+    "software_terminal_actual_deducted_before_final_bank": true,
+    "final_bank_parent_deadline_rule": "min(6900, allocated_remaining_seconds-300), starts before own work",
+    "readout_logical_workers": 12,
+    "readout_gpu_seconds_are_aggregate": true,
+    "gpu_parent_deadline_scope": "10500 only for serial single-allocation variant; split uses per-allocation margins plus aggregate10800ledger",
+    "readout_logical_workers_are_scheduler_jobs": false,
+    "readout_owner_proposed_scheduler_seconds": 5400,
+    "readout_owner_proposed_parent_seconds": 5300
+  },
+  "exclusions": [
+    "DPT fits/teacher panel",
+    "new source collection",
+    "full0/2/4/8 support matrix",
+    "additional target tasks",
+    "borrowing LIBERO or sealed old campaign capacity"
+  ],
+  "other_pending_request": "LIBERO29.5GPUh/150GB is separate and unchanged",
+  "software_closure": {
+    "owner_commit": "c67b35c",
+    "jobs": [
+      {
+        "id": "job-2wg5ue74mpid",
+        "scheduler_status": "Failed",
+        "exit_code": 1,
+        "actual_worker_seconds": 69
+      },
+      {
+        "id": "job-d7v2vejcs5qk",
+        "scheduler_status": "Failed",
+        "exit_code": 1,
+        "actual_worker_seconds": 70
+      }
+    ],
+    "actual_worker_seconds": 139,
+    "actual_core_seconds": 1112,
+    "gpu_seconds": 0,
+    "unused_sealed_seconds": 461,
+    "envelope_closed": true,
+    "automatic_retry": false,
+    "wrapper_e2e_success": false,
+    "future_cpu_remaining_at_prior_139s_closure": 7061
+  },
+  "readout_code_commit": "f7594a03cb8f0f683d366193ed278b7435a4378c",
+  "readout_auxiliary_commit": "610782452c5e5814937b7aa0fd052a46491d36bc",
+  "readout_software_qualification": {
+    "job_id": "job-c99opabpzxez",
+    "scheduler_status": "Succeeded",
+    "exit_code": 0,
+    "passed_cases": 48,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "actual_worker_seconds": 31,
+    "actual_core_seconds": 248,
+    "gpu_seconds": 0,
+    "unused_fresh_envelope_seconds_sealed": 269,
+    "actual_model500_payload_admitted": false
+  },
+  "aggregate_software_actual_worker_seconds": 170,
+  "aggregate_software_actual_core_seconds": 1360,
+  "future_cpu_remaining_only_if_approved": 7030,
+  "final100_export_static_handoff": {
+    "owner_commit": "9309cbdb3b3c27306a79ae1a93f5904e9b54821a",
+    "path": "outputs/robotwin-final100-ad-export-20261031-r1/HANDOFF.json",
+    "sha256": "a5d05d242a36576829d2bd4762ca2c8d649bd4ab236d6d5dba9821be3baf01de",
+    "execution_auxiliary_pin": "53f5361abf1bbfcd8cb586b4de764dfe6869922f",
+    "profile_template_sha256": "1a10e71d2f2049be122168d7e846817f0e0341eedb9eb8bbb41ff3c2ddcb2f8e",
+    "status": "STATIC_REVIEW_ACCEPTED_NOT_ADMITTED",
+    "prepared_scheduler_cpu_seconds": 7020,
+    "prepared_parent_cpu_seconds": 6720,
+    "unrequested_cpu_seconds": 10,
+    "actual_job": null,
+    "human_phase_authority": null,
+    "changes_phase_ceilings": false
+  },
+  "last_execution_revalidation": {
+    "at": "2026-10-31 11:42 Shanghai",
+    "approval_received": true,
+    "owner_instruction_sent": true,
+    "actual_job_confirmed": false,
+    "libero_expansion_approved": false
+  },
+  "grant_receipt": "GRANT.json",
+  "grant_receipt_sha256": "723194fb8f0b89a56c85146a155e2076f2e48a8ca024e8672d4d9a7a4630f966",
+  "remaining_authorized_cpu_worker_seconds": 7030,
+  "admission_scope": "CPU export bootstrap only; bank/model/robot admission remains staged",
+  "actual_launch_receipt": "LAUNCH.json"
+}

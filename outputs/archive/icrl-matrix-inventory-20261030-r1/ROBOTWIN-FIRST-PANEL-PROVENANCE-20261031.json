@@ -1,0 +1,276 @@
+{
+  "schema": "icrl_inventory_robotwin_first_frozen_panel_v1",
+  "captured_utc": "2026-10-30T16:46:52.872289+00:00",
+  "owner_chat": "01a18762-9db6-74c2-940a-96524803e454",
+  "source_worktree": "/Users/mowenjie/.codex/worktrees/vlrla-protocol/fluffy-bassoon-2",
+  "source_worktree_HEAD_at_capture": "3ea7a97b33ca0ce9fccc8c649a63465363439931",
+  "capture_note": "Reports/audit files are captured owner artifacts, not asserted to be committed at owner HEAD. Content hashes pin this snapshot. No active source artifacts or code were modified.",
+  "evidence": [
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/RESULTS.md",
+      "sha256": "a110b462f681cd49643171783a64f9b7703402bac7ec7666ea3a2a3419acd2c8",
+      "bytes": 3589,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/independent-audit/SUMMARY.md",
+      "sha256": "603752bc3920fbd4be88e0d25d7149c77b71655b1717af7ec54e7128b79c5ea5",
+      "bytes": 6972,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/independent-audit/audit-compact.json",
+      "sha256": "e06292c637c48287afb9be0a0c8b26cbac21683390155a9aba7073118f8ff738",
+      "bytes": 24290,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/independent-audit/audit.json",
+      "sha256": "0845c894f86a4225320f7648f051f7369af369c04dda45d05adad3df58a9310c",
+      "bytes": 148055,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/independent-audit/episode1-controls.json",
+      "sha256": "91f7a100057cfd825c3c32ecf614284c556ffb6b1ff37f81fe67415b76200e4a",
+      "bytes": 101602,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/receipts/scheduler-terminal.json",
+      "sha256": "e643d5be77f96a7353ad1d5d588e9d9ad152fdc0c2505c61b17da236a901e0d0",
+      "bytes": 375,
+      "byte_identical_to_owner_HEAD": false
+    },
+    {
+      "path": "outputs/robotwin-native-evaluation-20261030-r1/reservation.json",
+      "sha256": "c5d208493d62bdd5b6fb6ccda62794546c0a7973e83ad592532cc809019b3b22",
+      "bytes": 2248,
+      "byte_identical_to_owner_HEAD": false
+    }
+  ],
+  "retained_compact_audit": {
+    "path": "ROBOTWIN-FIRST-PANEL-AUDIT-20261031.json",
+    "sha256": "e06292c637c48287afb9be0a0c8b26cbac21683390155a9aba7073118f8ff738",
+    "byte_identical_to_owner_source": true
+  },
+  "execution_source_commit": "2fd2096906e52aabeaeb984f333fe1aaa6c4e196",
+  "native_backend_sha256": "eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3",
+  "plan_file_sha256": "b911dd972cc30e6f6b02cacf831eafa84738bd66ebd032824bb5fc94d340287c",
+  "canonical_plan_sha256": "3e82a6df6001024cffaae92af26a2412fb11b260302504ec1ae4243d06b6b5f1",
+  "frozen_motor_sha256": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "scheduler_receipt": {
+    "job": "job-ekg1ivu6j8pg",
+    "state": "Success",
+    "gpus": 1,
+    "scheduler_running_seconds": 2951,
+    "container_duration_seconds": 2953,
+    "scheduler_start_shanghai": "2026-10-30 23:31:51",
+    "scheduler_end_shanghai": "2026-10-31 00:21:02",
+    "checked_shanghai": "2026-10-31 00:42",
+    "source": "Baige authenticated detail UI",
+    "screenshot": "scheduler-terminal.png"
+  },
+  "completion": {
+    "units": 18,
+    "episodes": 144,
+    "decisions": 1540,
+    "physical_actions": 47137,
+    "additional_sgd_updates": 0,
+    "pending_actions": 0,
+    "uncertain_actions": 0,
+    "wrapper_exit_code": 0,
+    "wrapper_elapsed_seconds": 2938.3850299576297,
+    "wrapper_gpu_seconds_lower_bound": 2938.385030238889,
+    "actual_scheduler_gpu_seconds": 2951
+  },
+  "closed_reservation": {
+    "action_cap": 57600,
+    "scheduler_gpu_seconds_cap": 5400,
+    "unused_actions_sealed": 10463,
+    "unused_gpu_seconds_sealed": 2449,
+    "source_caps": {}
+  },
+  "first_fit_source": {
+    "model_code": "1aeea4f9fcc307bb147def92374bb81a3e2cb50e",
+    "fit_job": "job-ielg6papl3hn",
+    "fit_seed": 0,
+    "updates_per_student": 100,
+    "sampled_positions_per_student": 39621,
+    "unique_decisions": 1539,
+    "episodes": 120,
+    "K4_trials": 30,
+    "source_actions": 47602,
+    "source_goals": 6,
+    "teacher_label": "1.5*tanh(SAC5 mean)",
+    "teacher_competence": "not independently qualified",
+    "train_index_sha256": "4e8d4e64eb1845a234f710342f168d3a4cdb86366d64dd6c7cef6c7c5895a4af"
+  },
+  "model_files": {
+    "ad-full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-ad-full/candidate-000100.pt",
+      "sha256": "02896a84a880c1ec79d1b8f2e574cd74ee5e456ec55c6280bfdc0c9906aba7b6",
+      "planned_sha256": "02896a84a880c1ec79d1b8f2e574cd74ee5e456ec55c6280bfdc0c9906aba7b6"
+    },
+    "ad-static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-ad-static/candidate-000100.pt",
+      "sha256": "bf7a0e00483948853402e1b3440f01779930ce93a9a20638608ed67ab696da4f",
+      "planned_sha256": "bf7a0e00483948853402e1b3440f01779930ce93a9a20638608ed67ab696da4f"
+    },
+    "dpt-full": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-dpt-full/candidate-000100.pt",
+      "sha256": "241b20579fc5ba76049ce0772770d1f57f0ba437ef5b8933cad5be365e30d05f",
+      "planned_sha256": "241b20579fc5ba76049ce0772770d1f57f0ba437ef5b8933cad5be365e30d05f"
+    },
+    "dpt-static": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-firstfit-20261030-r1/fit-dpt-static/candidate-000100.pt",
+      "sha256": "cba9ac8dabc59db0615142302e309ca4d74320eef81b17d0b33ba4eed6e5a9ed",
+      "planned_sha256": "cba9ac8dabc59db0615142302e309ca4d74320eef81b17d0b33ba4eed6e5a9ed"
+    },
+    "sac5-mean": {
+      "path": "/mowenjie/fluffy-bassoon-2/exports/robotwin-native-prefix-20261030-r1/sac-source-recovery.pt",
+      "sha256": "f2fb39571cc3d0e809dfdc454f7f6df7f48e585fc972fd4c2fb8c83d36e63a42",
+      "planned_sha256": "f2fb39571cc3d0e809dfdc454f7f6df7f48e585fc972fd4c2fb8c83d36e63a42"
+    }
+  },
+  "parameter_admissions": {
+    "ad-full": "b3043830d3242cf4d508ee567330a748b6f9ae74295066bf10e4750c0b12f889",
+    "ad-static": "07dc5214820af623244fc721610b629f883e97077d736cee03f7e9801827d253",
+    "dpt-full": "4de7c95d85f15d9638004373a720a698ca6d7e786d7d8b8d06e25297daf28b40",
+    "dpt-static": "59868e0a0d96ebdd8c8a41349184ece11429459d12634ab4058d1b1823c1e4f1",
+    "sac5-mean": "193bea50bac2daf5f6fd94bfe1c2d9cb9cd0bbfd8b91f6695369a9e8b7863a62"
+  },
+  "unit_receipt_and_result_hashes": [
+    {
+      "condition": "native",
+      "task": "adjust_bottle",
+      "receipt_sha256": "efca480e41aa34c8faf5a1a249d3e6bbde71fff8825bec83450037e9bcdaf7c6",
+      "result_sha256": "609d58890f5c9b9b8266f2d4b9aa1ca4a029ca30a4f6b23e106423b6e35d256a"
+    },
+    {
+      "condition": "native",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "be3d1aef895872ec8466cae2bce66feec9496361511b6778d7b723411dee4d4a",
+      "result_sha256": "0108b0cc9155511ec2e4685862d5342ec149ec9273949d3e1cffc94d3d2e5bfd"
+    },
+    {
+      "condition": "native-zero",
+      "task": "adjust_bottle",
+      "receipt_sha256": "39a5e2601b3f2113a0ebc752eba46c19a816a24733eeb243af0232fe1ef6e8bd",
+      "result_sha256": "3e843f9773de5309a3c28c5a8d2ff735a6f323f9e81a96808bf08064a97b638f"
+    },
+    {
+      "condition": "native-zero",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "5ce5945052a52acdece8f513c94c96b6e7db31f6204845baae143ce91cc7762e",
+      "result_sha256": "e983dc3a31544cf7ceba434d2ecb7591e4821e5763314cbad466ad71b080d718"
+    },
+    {
+      "condition": "sac5-mean",
+      "task": "adjust_bottle",
+      "receipt_sha256": "889342120f564586e93ccda671e23ae9eee3528eba44a30e8ba889a617ab8727",
+      "result_sha256": "e7754d0b67be65094784333fbed68c111d3ead14f1835112476c8664315f8a27"
+    },
+    {
+      "condition": "sac5-mean",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "f00c92912ace6784c40d186f9451fe03acf3297b8c380c2b3740e246aefad988",
+      "result_sha256": "b22bc919f47478cf8f5877ef396a6cf0c274adaaf99a4335328c0c21982cc168"
+    },
+    {
+      "condition": "ad-full",
+      "task": "adjust_bottle",
+      "receipt_sha256": "d3ab33c528ddc11a6f648079d37b30718e14322b5d8e54388cbd7038ceacd205",
+      "result_sha256": "8b16f1a6ca3bb4ea4604fde579d3a5b60000ff0f863bf5365fa26649e5675bac"
+    },
+    {
+      "condition": "ad-full",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "80178d1e2ff5ada2e6a0d7504f0cfbf5c713d7780afce4e3308eeb7f9ecf7839",
+      "result_sha256": "ba73c52937df970906e6cacf48efd5d5ea9e9571bda724855556ff259141adc9"
+    },
+    {
+      "condition": "ad-static",
+      "task": "adjust_bottle",
+      "receipt_sha256": "ac7aaceb7a2cd8a26563a02a3cfa9490cf2754fbc6b148da41827d3539df95fb",
+      "result_sha256": "ca573bc5dd5432759f11b57d42526da1f524af10a43fb910b579ae36a9df7a7f"
+    },
+    {
+      "condition": "ad-static",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "7b54f7964f8671be5d328ebe06c0264b36e481aa43843927c7c14e77481f8622",
+      "result_sha256": "15ce0597590b3fac8fe58f0cded4e15d64e9abca75fa4cbce6878e443b470126"
+    },
+    {
+      "condition": "dpt-full",
+      "task": "adjust_bottle",
+      "receipt_sha256": "79cadcc7507f90ca8e7ddc87bcb71d2dfea62b414fde201d953670b4b5d9e18a",
+      "result_sha256": "b2eb77c21a464ecbf207d7efa96e19bdf2cca256d809368d8e5e66902ec22df2"
+    },
+    {
+      "condition": "dpt-full",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "db87d2a6ffaff53240ad911fe8f1f0453f1dcd06a136c78914a8e50cec1b277f",
+      "result_sha256": "a68402279a7980a92f74da38f9c32ee908f94bd780092027f3d7e81599a004bf"
+    },
+    {
+      "condition": "dpt-static",
+      "task": "adjust_bottle",
+      "receipt_sha256": "035bca352b391d2471f19c6ef67886de1d470ea7081f034664edaa5ca74e72d2",
+      "result_sha256": "4cae67786dd785eb80d944f81f524834f7936c3a744f3cf56891a3033cfa8495"
+    },
+    {
+      "condition": "dpt-static",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "eb24b6ef95613e639841040742af26700e7624367badcb2fb94a5edaff438a1b",
+      "result_sha256": "ca1476217ca2db6ccd6f64d4ee2e8dd9b0fb6ac9e3570e61f7965a2a98587575"
+    },
+    {
+      "condition": "ad-full-reset",
+      "task": "adjust_bottle",
+      "receipt_sha256": "9cd7ba54f47a6d578524e7ddff5ff028afe75b07aade9bd9024371cc6584d7ea",
+      "result_sha256": "89600e8f0d435a741fee422907fb807ba9f4a0a09ae5f2b180fedbd661b18cd8"
+    },
+    {
+      "condition": "ad-full-reset",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "c604fcbc116d29fd8ea31567d986187e6f04a2b5a717433e756ce7da6849dcba",
+      "result_sha256": "c7bc9995526e8c024c1ddaac20fae371f743627d1b30eb55570f80b56b589c56"
+    },
+    {
+      "condition": "dpt-full-reset",
+      "task": "adjust_bottle",
+      "receipt_sha256": "23ff55f6533b77a049d1c8fef89e51bc35171aa6145d0cccbdac3daaadadbd56",
+      "result_sha256": "d3c5402935b68e532eb15d6516ba7a2dc8407105c67fc289a9f55203c068f462"
+    },
+    {
+      "condition": "dpt-full-reset",
+      "task": "move_stapler_pad",
+      "receipt_sha256": "9c85e13c4554257899735ae303ab0f8640c1e160324ba2f9945f59f4ebd2a6ab",
+      "result_sha256": "91903ff55b7d324714f91563a81dcd67892f64366c5d899df6f2f1ce62396e5b"
+    }
+  ],
+  "owner_audit": {
+    "status": "passed",
+    "checks": 22135,
+    "errors": [],
+    "journal_events": 3100,
+    "journal_sha256": "ad736ea9def32f117280fce97ac099d9d0abb8697504e378c8cce3745b5ac22d",
+    "journal_snapshot_equal": true,
+    "scope_limits": [
+      "No model constructors/forwards/tests/CUDA or ledger constructors were invoked by this audit.",
+      "No historical RGB frame or observation NPZ was rehashed. Pairing uses hash-bound reset metadata and native-bank equality.",
+      "Model parameter digests were matched to CPU admission and frozen-result contexts, not recomputed from model tensors.",
+      "Pinned run_trial checks steering parameter equality and recomputes the motor fingerprint before publishing each complete result; separate literal motor-after fields are not retained.",
+      "One development K8 trial per target/condition, fixed order and single fit endpoint; no ICRL or statistical generalization claim."
+    ]
+  },
+  "inventory_verification": "Standard-library consistency checks over captured owner JSON, source-file SHA256 capture and byte-identical compact-audit retention. No raw artifact-wide re-audit, models, CUDA, simulator, tests or scheduler query in this amendment.",
+  "limits": [
+    "One paired K8 trial per development task and condition; one fit seed; early100-update endpoint from SAC5 bank.",
+    "No early history advantage; reset stapler wins at E4/E6 are not evidence of cross-episode ICRL.",
+    "Full/static are independently trained; full/reset share weights and reset is an inference lesion. Independently trained supervised reset is absent.",
+    "Not final100-round PPO/SAC endpoints, all-six-target evaluation, multi-seed evidence or GRU/CTM qualification.",
+    "Future parent-death guard c166171b847ada9a20a9629a07d5a0100b517097 remains CPU-staged pending allocated Linux gate; this completed2fd panel does not qualify it."
+  ]
+}

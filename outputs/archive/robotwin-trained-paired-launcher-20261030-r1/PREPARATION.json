@@ -1,0 +1,62 @@
+{
+  "status": "prepared_awaiting_owner_allocated_linux_cpu_gate",
+  "launcher_commit": "c353970a316837b13277ec65587e58e5cb25ce56",
+  "scientific_runtime_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "scientific_lineage_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+  "original_parent_sha256": "1f80c08310dfa4543ec7a748ca6e2bf9aad589cd55978a402210abb0d83bdbc0",
+  "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "latest_main_is_ancestor": true,
+  "pushed_branch": "codex/robotwin-trained-pair-launcher",
+  "deployed_auxiliary_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/robotwin-trained-pair-launcher-20261031-r1",
+  "deployment_verified_exact_commit_and_clean": true,
+  "deployment_method": "incremental Git bundle requiring57016; verified before fetch and detached checkout",
+  "local_static_checks": ["Python bytecode compilation", "bash -n", "git diff --check"],
+  "allocated_tests_executed_by_this_preparation": false,
+  "new_test_files": [
+    "tests/test_robotwin_trained_pair_plan.py",
+    "tests/test_robotwin_trained_pair_preflight.py",
+    "tests/test_robotwin_trained_pair_runtime.py",
+    "tests/test_robotwin_trained_pair_audit.py"
+  ],
+  "source_owner_controls_test_allocation_handoff_and_launch": true,
+  "jobs_submitted_here": 0,
+  "source_processes_signalled_here": 0,
+  "live_source_ledgers_opened_here": 0,
+  "model_computation_on_macos_or_development_ssh": false,
+  "requested_first_trained_unit": {
+    "learners": ["ppo", "ppo_reset"],
+    "source_rounds_per_learner": 1,
+    "trials_per_round": 6,
+    "episodes_per_trial": 4,
+    "ppo_epochs": 5,
+    "learning_rate": 0.000001,
+    "maximum_new_source_actions": 21600,
+    "maximum_conditional_input_due_evaluation_actions": 48800,
+    "maximum_combined_actions": 70400,
+    "gpus": 1,
+    "cpus": 32,
+    "memory_gib": 192,
+    "shared_memory_gib": 16,
+    "scheduler_operational_ceiling_gpu_seconds": 2700,
+    "parent_runtime_seconds": 2520,
+    "child_driver_seconds": 2160,
+    "boundary_reserve_seconds": 180,
+    "external_preflight_seconds": 90,
+    "outer_timeout_seconds": 2650,
+    "outer_kill_after_seconds": 20,
+    "automatic_retries": 0
+  },
+  "compute_authority": {
+    "original_total_compute_ceiling_seconds": null,
+    "scope": "Human-authorized continuation to the original100source rounds per learner; owner must admit2700GPU-seconds for this exact operational slice and bind prior charges/physical residuals",
+    "new_overall_scientific_goal": false,
+    "libero_compute_borrowed": false,
+    "closed_qualification_capacity_reused": false
+  },
+  "limitations": [
+    "Prepared tests are not allocated Linux validation",
+    "No current terminal owner releases or fresh trained manifests were issued by this preparation",
+    "No trained throughput or production consolidation result is claimed",
+    "Native GIL/OIDN issues remain; uninterruptible kernel/filesystem failures require the independent allocation deadline"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "checked_at": "2026-10-29T23:17:49.531865+08:00",
+  "job": "job-lspkxidy3haj",
+  "source_commit": "8114dd23e872d673ade6ea391b973c05a0dc6eb1",
+  "exit_code": 0,
+  "cases": [
+    {
+      "case": 1,
+      "task": "place_phone_stand",
+      "all_three_complete_traces_identical": true,
+      "trace_sha256": "8c72ca43358c70837424ea43eb58cc2abd9a8f811e37d8a72962fa2c53e81161",
+      "chunks": 13,
+      "actions_per_episode": 400,
+      "three_episode_actions": 1200,
+      "reference_A_seconds": 29.22074604779482,
+      "reference_B_seconds": 29.25221124663949,
+      "candidate_seconds": 11.810062649659812,
+      "terminal": {
+        "terminated": false,
+        "truncated": true,
+        "success": false
+      }
+    },
+    {
+      "case": 2,
+      "task": "place_phone_stand",
+      "all_three_complete_traces_identical": true,
+      "trace_sha256": "2ea09fce8c8940f92a38405ae00a28a9a2439e4b98fdc3890ddcaa7cc3438317",
+      "chunks": 4,
+      "actions_per_episode": 117,
+      "three_episode_actions": 351,
+      "reference_A_seconds": 12.677687134593725,
+      "reference_B_seconds": 12.532763181254268,
+      "candidate_seconds": 7.370335618965328,
+      "terminal": {
+        "terminated": true,
+        "truncated": false,
+        "success": true
+      }
+    }
+  ],
+  "qualification_actions": 1551,
+  "counts_as_learning": false,
+  "speedup_on_two_paired_cases": 2.1785248586962176,
+  "timing_reference": "second complete reference repetition B",
+  "motor_unchanged_reported_by_allocation": true,
+  "scope": "Static independent comparisons of saved JSON traces; no model/simulator computation. Two tested cases only; not an all-task performance or learning claim.",
+  "files": {
+    "exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "qualification/qualification.json": {
+      "bytes": 75724,
+      "sha256": "d3c28726cf6a669a1850e56eecfecb4692153ad4648d1020cdc646cf95e4cf3e"
+    },
+    "qualification/case1-full_reference_A.json": {
+      "bytes": 13036,
+      "sha256": "b26ea738716e5e5b8d04aa0f3c4cbc5e972d919da71c1bb57e428bf71a5fdafd"
+    },
+    "qualification/case1-full_reference_B.json": {
+      "bytes": 13036,
+      "sha256": "61d9f1aa36f3834959279d21ef63db59b8275af35649401673e82d725585bebb"
+    },
+    "qualification/case1-final_only.json": {
+      "bytes": 13031,
+      "sha256": "984d2a37a5aee361ba2fbfbbb3b32eb105d2b486d838ee139efc0cf48d09dbfd"
+    },
+    "qualification/case2-full_reference_A.json": {
+      "bytes": 4707,
+      "sha256": "dd21f71ab3fd8641468625c52386c5efb11378b8dd520b5a721f9162a5edb521"
+    },
+    "qualification/case2-full_reference_B.json": {
+      "bytes": 4706,
+      "sha256": "0cdd0b027a398fd2ee8a171d756e510ec177a4578cda4bcfff57f11af8183ff9"
+    },
+    "qualification/case2-final_only.json": {
+      "bytes": 4699,
+      "sha256": "aebc9a18f49b78397f3ee6a4faa9ae8511caad8d938975e67f5176972b4f4c2b"
+    }
+  }
+}

@@ -75,7 +75,7 @@ controls on locked fresh cases.
 2. **4D noise coefficients**: the same parameterization as the RoboTwin pilot,
    so the two benchmarks become comparable.
 3. **KV-cache residual**: the strongest published frozen-motor interface
-   ([VLRLA protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/vlrla-protocol.md)), at the cost of new hooks.
+   ([VLRLA protocol](../../docs/literature/vlrla-protocol.md)), at the cost of new hooks.
 4. **Decoded-action residual**: highest reach but leaves the motor's
    manifold, so treat as an upper reference, not the target interface.
 

@@ -1,0 +1,29 @@
+{
+  "status": "cpu_review_candidate_only",
+  "executable_commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766",
+  "base_commit": "42abc1b",
+  "full_regression": {"commit": "b039f0405c72128716eb6a99a5dccc5ca91eb8cd", "passed": 199, "seconds": 77.77},
+  "final_targeted": {"commit": "57016ba08eed79043fd67bf8b085bd6d42e6d766", "passed": 45, "seconds": 30.12},
+  "environment": {"os": "Linux", "cuda_visible_devices": "", "model_compute_on_macos": false},
+  "historical_trained_metadata": {
+    "manifest_sha256": "7a976d2ea989b0071e31f51a61a28b3d3fc7692be90a14e8653e17d8d814fd5c",
+    "execution_source_commit": "e825821a7c2231952bcf1042162f3470bd8ecdea",
+    "lineage_source_commit": "db0184089fa88a5f96c153f9b80029bb91b77def",
+    "source_steps": 384343, "trials": 240, "updates": 40, "optimizer_steps": 200,
+    "adam_step_values": [200], "pending_trials": 0, "optimizer_learning_rate": 0.000001,
+    "reset_each_episode": false, "train_episodes": 4, "episode_limit": 600,
+    "artifact_binding_validation": "passed",
+    "live_handoff_eligible": false
+  },
+  "canonical_live_probe": {
+    "status": "filesystem_lock_probe_did_not_return",
+    "wchan": "cxiWaitEventWait",
+    "live_ledger_constructor_used": false,
+    "live_ledger_mutated": false,
+    "only_owned_read_only_audit_process_terminated": true,
+    "successful_live_owner_rejection_claimed": false
+  },
+  "gpu_jobs_launched": 0,
+  "active_source_jobs_stopped_or_modified": 0,
+  "qualification_launch_authorized_by_this_receipt": false
+}

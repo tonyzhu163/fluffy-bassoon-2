@@ -1,0 +1,609 @@
+{
+  "audit_kind": "read-only report/log/rollout inspection; no new tests or GPU computation",
+  "cluster": "Baige",
+  "job_id": "job-ynkqj1uxbvg5",
+  "source_commit": "1382e8dd9cfc40c66f93a49677e8e16cba16415e",
+  "exit_code": 0,
+  "report_status": "passed",
+  "whole_device": "0000:63:00.0",
+  "renderer_receipts": [
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-1.json",
+      "value": {
+        "pid": 1223,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-2.json",
+      "value": {
+        "pid": 1223,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-3.json",
+      "value": {
+        "pid": 1223,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-1.json",
+      "value": {
+        "pid": 1224,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-2.json",
+      "value": {
+        "pid": 1224,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-3.json",
+      "value": {
+        "pid": 1224,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/workers.json",
+      "value": [
+        {
+          "pid": 1223,
+          "lane": 0
+        },
+        {
+          "pid": 1224,
+          "lane": 1
+        }
+      ]
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-1.json",
+      "value": {
+        "pid": 2046,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-2.json",
+      "value": {
+        "pid": 2046,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-3.json",
+      "value": {
+        "pid": 2046,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-1.json",
+      "value": {
+        "pid": 2047,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-2.json",
+      "value": {
+        "pid": 2047,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-3.json",
+      "value": {
+        "pid": 2047,
+        "expected_cuda_pci": "0000:63:00.0",
+        "actual_render_pci": "0000:63:00.0",
+        "render_device": "NVIDIA RPBZZZ6",
+        "physics": "native CPU PhysX"
+      }
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/workers.json",
+      "value": [
+        {
+          "pid": 2046,
+          "lane": 0
+        },
+        {
+          "pid": 2047,
+          "lane": 1
+        }
+      ]
+    }
+  ],
+  "rollouts": [
+    {
+      "artifact": "ppo-reset-0-rollouts.pt",
+      "result": {
+        "task": "handover_mic",
+        "episodes": [
+          {
+            "task": "handover_mic",
+            "episode": 1,
+            "seed": 25001,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "0536ea645a624265b290ac9fcae22804a625dd1d5bf1463939bf74a51a68e67f",
+            "reset_memory": false,
+            "reward_blind": false,
+            "reset_episode_feedback": false,
+            "budget_truncated": false
+          },
+          {
+            "task": "handover_mic",
+            "episode": 2,
+            "seed": 25002,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "aa3909db7e32d241d923b1cb812dc85060827f9952dcdb723b7925ddcc6596c6",
+            "reset_memory": false,
+            "reward_blind": false,
+            "reset_episode_feedback": false,
+            "budget_truncated": false
+          }
+        ],
+        "primitive_steps": 800,
+        "chunks": 26,
+        "budget_truncated": false,
+        "requested_episodes": 2
+      },
+      "tensor_shapes": {
+        "observations": [
+          26,
+          1,
+          3090
+        ],
+        "raw_actions": [
+          26,
+          1,
+          1024
+        ],
+        "log_probs": [
+          26,
+          1
+        ],
+        "values": [
+          26,
+          1
+        ],
+        "rewards": [
+          26,
+          1
+        ],
+        "trial_ends": [
+          26,
+          1
+        ],
+        "attempt_ends": [
+          26,
+          1
+        ],
+        "resets": [
+          26,
+          1
+        ],
+        "action_mask": [
+          26,
+          1
+        ]
+      }
+    },
+    {
+      "artifact": "ppo-reset-0-rollouts.pt",
+      "result": {
+        "task": "place_phone_stand",
+        "episodes": [
+          {
+            "task": "place_phone_stand",
+            "episode": 1,
+            "seed": 26001,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "f7d4bdd49d4f46b29a099b204bb3c1a6a1a286b548794218fb417726018fbe1f",
+            "reset_memory": false,
+            "reward_blind": false,
+            "reset_episode_feedback": false,
+            "budget_truncated": false
+          },
+          {
+            "task": "place_phone_stand",
+            "episode": 2,
+            "seed": 26002,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "38136aeddc8ab20cd4b2e56f219352b73dcd3d3dba5cc39ae6b61a4032521805",
+            "reset_memory": false,
+            "reward_blind": false,
+            "reset_episode_feedback": false,
+            "budget_truncated": false
+          }
+        ],
+        "primitive_steps": 800,
+        "chunks": 26,
+        "budget_truncated": false,
+        "requested_episodes": 2
+      },
+      "tensor_shapes": {
+        "observations": [
+          26,
+          1,
+          3090
+        ],
+        "raw_actions": [
+          26,
+          1,
+          1024
+        ],
+        "log_probs": [
+          26,
+          1
+        ],
+        "values": [
+          26,
+          1
+        ],
+        "rewards": [
+          26,
+          1
+        ],
+        "trial_ends": [
+          26,
+          1
+        ],
+        "attempt_ends": [
+          26,
+          1
+        ],
+        "resets": [
+          26,
+          1
+        ],
+        "action_mask": [
+          26,
+          1
+        ]
+      }
+    },
+    {
+      "artifact": "ppo-reset-1-rollouts.pt",
+      "result": {
+        "task": "handover_mic",
+        "episodes": [
+          {
+            "task": "handover_mic",
+            "episode": 1,
+            "seed": 25001,
+            "success": true,
+            "return_": 1.0,
+            "primitive_steps": 220,
+            "chunks": 7,
+            "initial_observation_sha256": "0536ea645a624265b290ac9fcae22804a625dd1d5bf1463939bf74a51a68e67f",
+            "reset_memory": true,
+            "reward_blind": false,
+            "reset_episode_feedback": true,
+            "budget_truncated": false
+          },
+          {
+            "task": "handover_mic",
+            "episode": 2,
+            "seed": 25002,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "aa3909db7e32d241d923b1cb812dc85060827f9952dcdb723b7925ddcc6596c6",
+            "reset_memory": true,
+            "reward_blind": false,
+            "reset_episode_feedback": true,
+            "budget_truncated": false
+          }
+        ],
+        "primitive_steps": 620,
+        "chunks": 20,
+        "budget_truncated": false,
+        "requested_episodes": 2
+      },
+      "tensor_shapes": {
+        "observations": [
+          20,
+          1,
+          3090
+        ],
+        "raw_actions": [
+          20,
+          1,
+          1024
+        ],
+        "log_probs": [
+          20,
+          1
+        ],
+        "values": [
+          20,
+          1
+        ],
+        "rewards": [
+          20,
+          1
+        ],
+        "trial_ends": [
+          20,
+          1
+        ],
+        "attempt_ends": [
+          20,
+          1
+        ],
+        "resets": [
+          20,
+          1
+        ],
+        "action_mask": [
+          20,
+          1
+        ]
+      }
+    },
+    {
+      "artifact": "ppo-reset-1-rollouts.pt",
+      "result": {
+        "task": "place_phone_stand",
+        "episodes": [
+          {
+            "task": "place_phone_stand",
+            "episode": 1,
+            "seed": 26001,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "f7d4bdd49d4f46b29a099b204bb3c1a6a1a286b548794218fb417726018fbe1f",
+            "reset_memory": true,
+            "reward_blind": false,
+            "reset_episode_feedback": true,
+            "budget_truncated": false
+          },
+          {
+            "task": "place_phone_stand",
+            "episode": 2,
+            "seed": 26002,
+            "success": false,
+            "return_": 0.0,
+            "primitive_steps": 400,
+            "chunks": 13,
+            "initial_observation_sha256": "38136aeddc8ab20cd4b2e56f219352b73dcd3d3dba5cc39ae6b61a4032521805",
+            "reset_memory": true,
+            "reward_blind": false,
+            "reset_episode_feedback": true,
+            "budget_truncated": false
+          }
+        ],
+        "primitive_steps": 800,
+        "chunks": 26,
+        "budget_truncated": false,
+        "requested_episodes": 2
+      },
+      "tensor_shapes": {
+        "observations": [
+          26,
+          1,
+          3090
+        ],
+        "raw_actions": [
+          26,
+          1,
+          1024
+        ],
+        "log_probs": [
+          26,
+          1
+        ],
+        "values": [
+          26,
+          1
+        ],
+        "rewards": [
+          26,
+          1
+        ],
+        "trial_ends": [
+          26,
+          1
+        ],
+        "attempt_ends": [
+          26,
+          1
+        ],
+        "resets": [
+          26,
+          1
+        ],
+        "action_mask": [
+          26,
+          1
+        ]
+      }
+    }
+  ],
+  "diagnostics": {
+    "console_lines": 482,
+    "oidn_invalid_handle_count": 416,
+    "oidn_unsupported_cuda_count": 8,
+    "curobo_import_failures": 4,
+    "first_oidn": [
+      39,
+      "[2026-10-30 16:47:45.032] [svulkan2] [error] OIDN Error: unsupported device type: CUDA"
+    ],
+    "last_oidn": [
+      481,
+      "[2026-10-30 16:48:51.989] [svulkan2] [error] OIDN Error: invalid handle"
+    ],
+    "segmentation_fault_text_present": false,
+    "terminal_event": "{\"event\": \"ppo_batched_collection\", \"elapsed\": 134.63339528348297, \"reset_each_episode\": true, \"lanes\": 2, \"primitive_steps\": 1420, \"wall_seconds\": 43.43827490042895, \"replay_errors\": [{\"log_prob_max_error\": 0.0, \"value_max_error\": 0.0}, {\"log_prob_max_error\": 0.0, \"value_max_error\": 0.0}], \"phase_seconds\": {\"preprocess\": 0.15795697923749685, \"prefix\": 1.7947698971256614, \"action_expert\": 3.204959870316088, \"simulator\": 10.905987408012152, \"reset\": 25.262029830366373}, \"optimizer_steps\": 0, \"controller_microbatch\": 1, \"trial_lengths\": [20, 26]}"
+  },
+  "timing_comparison_eligible": false,
+  "derived": {
+    "executed_actions_sum": 3020,
+    "rollout_actions_sum": 3020,
+    "zero_replay_error_count": 4,
+    "episodes": 8,
+    "successes": 1,
+    "descriptive_actions_per_second": [
+      40.0968558981646,
+      32.69006430975871
+    ]
+  },
+  "source_artifacts": [
+    {
+      "path": "benchmark/report.json",
+      "sha256": "d88b055b4cf86a0cf313dc921fbc477ad893ecf21ca5523205110b8c730a6ef4",
+      "bytes": 3200
+    },
+    {
+      "path": "gpu-probe.json",
+      "sha256": "e6669f3bc62c9fe44e61c4762a20e1f930fa73c6b0f3acb738d36fdad64935d6",
+      "bytes": 2855
+    },
+    {
+      "path": "exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "console.log",
+      "sha256": "fea4c7e93ac2ab37e9c12d593d6cf54a6f1f6f1b232e42f491ba3474364f9f80",
+      "bytes": 39952
+    },
+    {
+      "path": "benchmark/ppo-reset-0-rollouts.pt",
+      "sha256": "60d516734885436028f3f50b3719adbcf188f69b306153a3d4b8ccab670509dd",
+      "bytes": 863141
+    },
+    {
+      "path": "benchmark/ppo-reset-1-rollouts.pt",
+      "sha256": "bffc8151d1d8abf2c2ca8c0d4dc1f6fb079dbba5773f2341b1b0e1eefef47deb",
+      "bytes": 764389
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-1.json",
+      "sha256": "365855a30003ca1527ef27d11961406f38cc88c6c96e3a46cea500d6156075b3",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-2.json",
+      "sha256": "365855a30003ca1527ef27d11961406f38cc88c6c96e3a46cea500d6156075b3",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-0/renderer-1223-3.json",
+      "sha256": "365855a30003ca1527ef27d11961406f38cc88c6c96e3a46cea500d6156075b3",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-1.json",
+      "sha256": "1b548b9d890a11add8f1e765cceafe8ec1c76db8567bf51689b6283e93f5262a",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-2.json",
+      "sha256": "1b548b9d890a11add8f1e765cceafe8ec1c76db8567bf51689b6283e93f5262a",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/lane-1/renderer-1224-3.json",
+      "sha256": "1b548b9d890a11add8f1e765cceafe8ec1c76db8567bf51689b6283e93f5262a",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0000/workers.json",
+      "sha256": "b948d2c3d5e3ab36760c5e4f64923585d2a9e20b9f0ab6c7f686ef9eabc1bb12",
+      "bytes": 83
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-1.json",
+      "sha256": "90f79e14c4dcf6eb7f6625903976c0983fa12f9125f244d83f82cc2d1be80f0f",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-2.json",
+      "sha256": "90f79e14c4dcf6eb7f6625903976c0983fa12f9125f244d83f82cc2d1be80f0f",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-0/renderer-2046-3.json",
+      "sha256": "90f79e14c4dcf6eb7f6625903976c0983fa12f9125f244d83f82cc2d1be80f0f",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-1.json",
+      "sha256": "73fee59067c8165b9f735fd83280153002c1ea077a7d67c46fb1f62a89dba596",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-2.json",
+      "sha256": "73fee59067c8165b9f735fd83280153002c1ea077a7d67c46fb1f62a89dba596",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/lane-1/renderer-2047-3.json",
+      "sha256": "73fee59067c8165b9f735fd83280153002c1ea077a7d67c46fb1f62a89dba596",
+      "bytes": 154
+    },
+    {
+      "path": "benchmark/runtime/pool-0001/workers.json",
+      "sha256": "fafddd99a0c8951ce9d0d59b3252bf2ff0910eeb07e3ad1c17bf19140b74e2bb",
+      "bytes": 83
+    }
+  ]
+}

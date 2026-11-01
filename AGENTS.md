@@ -8,7 +8,7 @@ commits stay there.
 
 Keep this file short and durable. Do not append experiment recipes, dated
 decisions, run histories, job IDs, availability snapshots, or session notes.
-Keep `docs/` to its five documents. Put per-run contracts, dated plans and raw
+Keep `docs/` to its five core documents plus `literature/` and `robotwin/`. Put per-run contracts, dated plans and raw
 evidence in `outputs/<run-id>/`, verified results in `docs/FINDINGS.md`, and
 live status in the single `outputs/coordination.md`. Delete or archive finished
 runs per the [retention policy](README.md#artifact-retention).

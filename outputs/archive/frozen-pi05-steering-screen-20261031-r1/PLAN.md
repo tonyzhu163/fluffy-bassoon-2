@@ -42,7 +42,7 @@ execution order, its immutable runs and its separate budgets.
   steering or feedback learning is impossible. Transition observations can
   themselves be informative; reward-specific claims need reward interventions.
 
-Sources: [VLRLA protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/vlrla-protocol.md),
+Sources: [VLRLA protocol](../../../docs/literature/vlrla-protocol.md),
 [existing feature bridge](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-feature-bridge.md),
 [instruction swap](../pi05-instruction-swap-thu2-20261029-r1/RESULTS.md),
 [DSRL task57 plan](../../dsrl-pi05-task57-20261031-r1/PLAN.md).

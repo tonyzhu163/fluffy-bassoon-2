@@ -91,7 +91,7 @@ update.
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
   queued behind the task57 DSRL run, which has since finished. Owner
   `frozen-vla-poc`: confirm whether it is still queued.
-  [Plan](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/vlrla-native-ppo-pilot-20261031-r1/PLAN.md).
+  [Plan](archive/vlrla-native-ppo-pilot-20261031-r1/PLAN.md).
 - Three jobs last recorded on 2026-10-28 (RoboTwin GRPO gate
   `job-vh9lp7fvgf9n`, MetaWorld pilot r2 `job-x2x4kdpfn011`, thu2 CMM
   48983/48984) are listed in the

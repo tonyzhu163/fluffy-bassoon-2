@@ -3,7 +3,7 @@
 **Update, 2026-10-30 17:19 Shanghai:** qualification is complete at corrected
 pin `9c27e027ffed1f66a5d56c79e142e7a55faba717`, CPU job `job-2j83ht020h15`.
 All 34 focused tests and the real SAC AD/DPT export passed. See
-[results](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-native-export-20261030-r2/RESULTS.md). The unsubmitted-form
+[results](../robotwin-native-export-20261030-r2/RESULTS.md). The unsubmitted-form
 notes below are historical and superseded: tab 89096665 now displays the failed
 r1 allocation, not a pending form. Do not resubmit that old command. The sole
 exporter owner continues native trainer/deployment work.

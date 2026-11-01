@@ -2,8 +2,9 @@
 
 Consolidated 2026-11-01. Only the Meta-World ML10 comparison and the DSRL runs
 are well-controlled enough to build on. The other threads are summarized here
-so they are not repeated; their run folders were deleted, and their links point
-to GitHub permalinks at the pre-cleanup commit. Single-seed results are
+so they are not repeated. Their run folders were deleted, except RoboTwin's
+(restored under `outputs/archive/`); other links point to GitHub permalinks at
+the pre-cleanup commit. Single-seed results are
 descriptive, and none establishes a CTM, memory or in-context-RL advantage.
 
 ## Headline
@@ -99,7 +100,7 @@ LIBERO40 source histories):
 - Steering-interface redesign: the physical teacher bank stays at 11/12, and
   fitted command/KV heads score 0/5 where native scores 0/5. No physical
   improvement; no teacher or student admitted.
-  [Evaluation](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/robotwin-coefficient-steering/EVALUATION.md).
+  [Evaluation](robotwin/coefficient-steering/EVALUATION.md).
 
 ## ManiSkill / native pi0.5 bridge
 

@@ -87,7 +87,7 @@ running. The exporter's native adapter at
 a real SAC saved-data export: 30 complete K4 trials, 120 episodes and 47,602
 source actions. Allocation-only runtime identity, acting tensor digests and
 frozen source/task counter checks are verified. See
-[results](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-native-export-20261030-r2/RESULTS.md). No independent
+[results](../robotwin-native-export-20261030-r2/RESULTS.md). No independent
 supervised static/reset student or bound-1.5 deployment adapter is qualified
 yet. LIBERO's 4,104-feature,
 tied-32D/H10, bound-1 exporter/student cannot be force-cast into this format.

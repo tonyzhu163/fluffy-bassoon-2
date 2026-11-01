@@ -4,7 +4,7 @@
 This replaces the earlier prepared525d669/3e-4PPO command. The common motor,
 all six source tasks, K4 training/K8 evaluation, two fixed target tasks,
 32k/64k/128k matched source-action milestones and1M shared benchmark cap remain
-as in the [original staged protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-staged-20261030-r1/PROTOCOL.md).
+as in the [original staged protocol](../robotwin-staged-20261030-r1/PROTOCOL.md).
 The maximum three-scale cost remains603,426actions including13,026prior;
 all new diagnostics used0robot actions and receive0fresh source-data credit.
 

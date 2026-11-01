@@ -1,0 +1,603 @@
+EEEEEEE......                                                            [100%]
+==================================== ERRORS ====================================
+___________ ERROR at setup of test_published_batch_and_h400_compose ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb625fe10>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_published_batch_and_h400_0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb5d82350>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+___ ERROR at setup of test_four_rank_preserves_sixtyfour_microbatch_weights ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb57b6f90>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_four_rank_preserves_sixty0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb59ea150>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+_ ERROR at setup of test_rejects_scientific_recipe_drift[actor.global_batch_size-1024] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb57b7450>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_rejects_scientific_recipe0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb6341710>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+_ ERROR at setup of test_rejects_scientific_recipe_drift[env.train.max_episode_steps-200] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb571cb50>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_rejects_scientific_recipe1')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb5cdfe50>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+_ ERROR at setup of test_rejects_scientific_recipe_drift[actor.model.openpi.train_expert_only-False] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb5ab4b50>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_rejects_scientific_recipe2')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb5b6d590>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+_ ERROR at setup of test_rejects_scientific_recipe_drift[actor.optim.lr_scheduler-cosine] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb59afc10>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_rejects_scientific_recipe3')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb5d81750>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+_ ERROR at setup of test_rejects_scientific_recipe_drift[runner.only_eval-True] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731fb55b8810>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_rejects_scientific_recipe4')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+        assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+        with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+>           return compose(config_name='adjust_bottle_published_batch_two')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/compose.py:38: in compose
+    cfg = gh.hydra.compose_config(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/hydra.py:594: in compose_config
+    cfg = self.config_loader.load_configuration(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:142: in load_configuration
+    return self._load_configuration_impl(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:244: in _load_configuration_impl
+    parsed_overrides, caching_repo = self._parse_overrides_and_create_caching_repo(
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:230: in _parse_overrides_and_create_caching_repo
+    self._process_config_searchpath(config_name, parsed_overrides, caching_repo)
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_loader_impl.py:159: in _process_config_searchpath
+    loaded = repo.load_config(config_path=config_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:348: in load_config
+    ret = self.delegate.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/config_repository.py:91: in load_config
+    ret = source.load_config(config_path=config_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/hydra/_internal/core_plugins/file_config_source.py:31: in load_config
+    cfg = OmegaConf.load(f)
+          ^^^^^^^^^^^^^^^^^
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/omegaconf.py:192: in load
+    obj = yaml.load(file_, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:51: in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:60: in construct_document
+    for dummy in generator:
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/yaml/constructor.py:413: in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <omegaconf._utils.get_yaml_loader.<locals>.OmegaConfLoader object at 0x731fb621f4d0>
+node = MappingNode(tag='tag:yaml.org,2002:map', value=[(ScalarNode(tag='tag:yaml.org,2002:str', value='rollout_epoch'), Scala...='tag:yaml.org,2002:str', value='crazy_random_light_rate'), ScalarNode(tag='tag:yaml.org,2002:int', value='0'))]))]))])
+deep = False
+
+    def construct_mapping(self, node: yaml.Node, deep: bool = False) -> Any:
+        keys = set()
+        for key_node, value_node in node.value:
+            if key_node.tag != yaml.resolver.BaseResolver.DEFAULT_SCALAR_TAG:
+                continue
+            if key_node.value in keys:
+>               raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key_node.value}",
+                    key_node.start_mark,
+                )
+E               yaml.constructor.ConstructorError: while constructing a mapping
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 105, column 5
+E               found duplicate key video_cfg
+E                 in "/mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/configs/native_ppo/adjust_bottle_published_batch_two.yaml", line 121, column 5
+
+../../../fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/omegaconf/_utils.py:144: ConstructorError
+=============================== warnings summary ===============================
+tests/test_rlinf_native_ppo.py::test_published_batch_and_h400_compose
+tests/test_rlinf_native_ppo.py::test_four_rank_preserves_sixtyfour_microbatch_weights
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.global_batch_size-1024]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[env.train.max_episode_steps-200]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.model.openpi.train_expert_only-False]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.optim.lr_scheduler-cosine]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[runner.only_eval-True]
+  /mowenjie/fluffy-bassoon-2/worktrees/vlrla-native-ppo-pilot-20261031-r1-cpu/tests/test_rlinf_native_ppo.py:24: Hydra14MigrationWarning: 
+  version_base="1.1" selects Hydra 1.1 compatibility behavior.
+  Hydra 1.4 will remove this compatibility behavior.
+  Before upgrading to Hydra 1.4, set version_base="1.3" and test your application.
+  See https://hydra.cc/docs/upgrades/1.3_to_1.4/prepare_for_1_4/ for preparation instructions.
+    with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+
+tests/test_rlinf_native_ppo.py::test_official_runtime_import_and_baseline_precedes_training
+tests/test_rlinf_native_ppo.py::test_official_runtime_import_and_baseline_precedes_training
+  /mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_rlinf_native_ppo.py: 14 warnings
+  /mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_rlinf_native_ppo.py::test_published_batch_and_h400_compose
+ERROR tests/test_rlinf_native_ppo.py::test_four_rank_preserves_sixtyfour_microbatch_weights
+ERROR tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.global_batch_size-1024]
+ERROR tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[env.train.max_episode_steps-200]
+ERROR tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.model.openpi.train_expert_only-False]
+ERROR tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.optim.lr_scheduler-cosine]
+ERROR tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[runner.only_eval-True]
+6 passed, 23 warnings, 7 errors in 15.31s

@@ -1,6 +1,6 @@
 # Documentation
 
-Five documents. Read them in this order:
+Five core documents, read in this order, plus two reference folders:
 
 | Doc | What it holds |
 | --- | --- |
@@ -9,6 +9,8 @@ Five documents. Read them in this order:
 | [FLORA-PPO.md](FLORA-PPO.md) | The current first step: PPO with a learned video reward (Flora-Rewarder) on LIBERO, then RoboCasa |
 | [METHODS.md](METHODS.md) | Shared motors, steering interface, DSRL recipe, LIBERO protocol, code layout and tests |
 | this README | Map and conventions |
+| [literature/](literature/) | Reviews of published work: [in-context RL literature review](literature/in-context-rl-review.md), [VLRLA protocol](literature/vlrla-protocol.md), [DSRL recipe audit](literature/dsrl-recipe-audit.md), [pretraining scale](literature/pretraining-scale.md), [scale references](literature/scale-references.md) |
+| [robotwin/](robotwin/) | RoboTwin (Motus / VLRLA-style) method docs and evaluations: [setup](robotwin/vlrla.md), [setup evaluation](robotwin/vlrla/EVALUATION.md), [steering evaluation](robotwin/coefficient-steering/EVALUATION.md). Its run folders are in `outputs/archive/` |
 
 Live jobs and owners are in [`outputs/coordination.md`](../outputs/coordination.md).
 Cluster, storage and GPU rules are in [AGENTS.md](../AGENTS.md).
@@ -27,7 +29,7 @@ Cluster, storage and GPU rules are in [AGENTS.md](../AGENTS.md).
 
 ## Conventions
 
-- Keep the doc count at five. Put a new method contract in the run's
+- Keep the core doc count at five; `literature/` and `robotwin/` are reference folders. Put a new method contract in the run's
   `PLAN.md`, and add a durable choice to PAPER.md or METHODS.md.
 - Add a result to FINDINGS.md only once it is verified and well controlled,
   with a link to its run evidence. Keep raw evidence and cost receipts in the

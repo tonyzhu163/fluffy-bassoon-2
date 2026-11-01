@@ -1,0 +1,143 @@
+{
+  "attempts": [
+    {
+      "actual_resources": {
+        "cpu_cores": 8.0,
+        "expected_labels": {
+          "cpu_cores": 4,
+          "gpu_count": 0,
+          "memory_bytes": 17179869184
+        },
+        "matches": {
+          "cpu": false,
+          "memory": false
+        },
+        "memory_bytes": 68719476736
+      },
+      "attempt": 1,
+      "charged_cpu_worker_seconds": 104,
+      "charged_gpu_seconds": 0,
+      "exit_code": 1,
+      "files_sha256": {
+        "cpu-qualification-summary.json": "38ed060301534479d56ddb64f109f501776238308833978ed6ed078512d0e51d",
+        "cpu-worker-clock.json": "2c6f3056aa7cc8e0b92b7f5a8f53fcb7a9bb0599cf5ab64f5121d6fca66fc111",
+        "exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "tests.log": "385c7e0e1b0a1a167e321da47ca7fa1699cd351b6bd470a20ad9be2a5e0b2083",
+        "zero-gpu-attestation.json": "1b1e7d5ba3812373a0c3a9cb401b4d5e709cfaf72a7693695326759cdca6254f"
+      },
+      "job_id": "job-lcq0ae26hcys",
+      "local_artifacts": "outputs/vlrla-native-ppo-pilot-20261031-r1/cpu-attempts/vlrla-native-ppo-pilot-20261031-r1-cpu",
+      "passed": false,
+      "remote_artifacts": "/mowenjie/fluffy-bassoon-2/outputs/vlrla-native-ppo-pilot-20261031-r1-cpu",
+      "run_id": "vlrla-native-ppo-pilot-20261031-r1-cpu",
+      "source_commit": "9d6f0c326feb2110f345f6ad43282afd96153bbf"
+    },
+    {
+      "actual_resources": {
+        "cpu_cores": 8.0,
+        "expected_labels": {
+          "cpu_cores": 8,
+          "gpu_count": 0,
+          "memory_bytes": 68719476736
+        },
+        "matches": {
+          "cpu": true,
+          "memory": true
+        },
+        "memory_bytes": 68719476736
+      },
+      "attempt": 2,
+      "charged_cpu_worker_seconds": 82,
+      "charged_gpu_seconds": 0,
+      "exit_code": 0,
+      "files_sha256": {
+        "cpu-qualification-summary.json": "f54702082ccb61eded8ed7bdbc9451630b11377249b6edd450a1cdde7a9843fd",
+        "cpu-worker-clock.json": "82d4b30a976bfcc5aafb0c3a05791ab237890609ecdb1c70276e8915769f35ec",
+        "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "tests.log": "60d4af3bf1bd82232e72230413a5001258e941d1e30308dce7c41cc2b9794125",
+        "zero-gpu-attestation.json": "18dc4006424c355f7480dc1c9fe3ae2be02bd73422a371df4cc0b4e8cd1ec308"
+      },
+      "job_id": "job-5hdnrgk4itgx",
+      "local_artifacts": "outputs/vlrla-native-ppo-pilot-20261031-r1/cpu-attempts/vlrla-native-ppo-pilot-20261031-r2-cpu",
+      "passed": true,
+      "remote_artifacts": "/mowenjie/fluffy-bassoon-2/outputs/vlrla-native-ppo-pilot-20261031-r2-cpu",
+      "run_id": "vlrla-native-ppo-pilot-20261031-r2-cpu",
+      "source_commit": "41c95b55dc0038b129488b07d437c366b7666015"
+    },
+    {
+      "actual_resources": {
+        "cpu_cores": 8.0,
+        "expected_labels": {
+          "cpu_cores": 8,
+          "gpu_count": 0,
+          "memory_bytes": 68719476736
+        },
+        "matches": {
+          "cpu": true,
+          "memory": true
+        },
+        "memory_bytes": 68719476736
+      },
+      "attempt": 3,
+      "charged_cpu_worker_seconds": 88,
+      "charged_gpu_seconds": 0,
+      "exit_code": 0,
+      "files_sha256": {
+        "cpu-qualification-summary.json": "e0b307ffafdb6c5ba280d1a21b67cb962abf8f54c10bc4079feced2a65e83b5c",
+        "cpu-worker-clock.json": "2800f7f06314e0efda4dc9550f23f4f263cbb310973423604312b0f0d12980d0",
+        "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "tests.log": "24e5692650e05702ff1b7856a119a0c6bc73aab436de2949e5198f453661230e",
+        "zero-gpu-attestation.json": "256cc5b411d45ee7249f001ffd3164adeff6381980c6a62e13ed150a852b00f9"
+      },
+      "job_id": "job-h50l912mn76m",
+      "local_artifacts": "outputs/vlrla-native-ppo-pilot-20261031-r1/cpu-attempts/vlrla-native-ppo-pilot-20261031-r3-cpu",
+      "passed": true,
+      "remote_artifacts": "/mowenjie/fluffy-bassoon-2/outputs/vlrla-native-ppo-pilot-20261031-r3-cpu",
+      "run_id": "vlrla-native-ppo-pilot-20261031-r3-cpu",
+      "source_commit": "53fa7b308ed680b35240f16b7680e0f61cb9e8a9"
+    }
+  ],
+  "checked_at_shanghai": "2026-10-31T13:54:05.001139+08:00",
+  "dispatch_status": "QUEUED: human prioritizes ordinary frozen-pi0.5 DSRL first; no native GPU dispatch or further native preparation.",
+  "first_complete_iteration_seconds": null,
+  "format": "vlrla_native_ppo_runtime_configuration_qualification_v1",
+  "full25_eta": null,
+  "known_data_contract_blocker_after_runtime_pass": "Earlier version/collision defect is corrected and its changed CPU regression passes at53fa; no native GPU/model/robot execution has been attempted. Root owns final paper/data-contract interpretation.",
+  "maximum_cpu_worker_seconds": 1800,
+  "native_ppo_gain_measured": false,
+  "optimizer_updates": 0,
+  "qualification_scope": {
+    "attempt1": "Six unchanged runtime-import/RNG/journal/boundary cases passed; seven config fixtures errored on duplicate eval.video_cfg. Original attempt preserved.",
+    "attempt2": "Seven actual Hydra composition/global-batch/drift cases and one pre-SGD capture regression passed; six unchanged cases deselected and explicitly reused from attempt1. Correct8CPU/64GiB labels match raw actual cgroup.",
+    "attempt3": "Exactly three changed regressions pass: authoritative two-iteration version/collision-safe pre-SGD capture; multirank chronological episode/data contract; official runtime import and baseline-before-training metadata. Twelve unrelated cases deselected.",
+    "gpu_inference_or_training_qualified": false,
+    "model_or_simulator_construction_on_cpu": false,
+    "selection_expression_attempt2": "compose or four_rank or rejects_scientific_recipe_drift or original_rollout",
+    "selection_expression_attempt3": "original_rollout or native_history_multirank_episode_contract or official_runtime_import_and_baseline_precedes_training",
+    "tests_on_mac_or_dev": false
+  },
+  "qualified_changed_data_source": "53fa7b308ed680b35240f16b7680e0f61cb9e8a9",
+  "runtime_configuration_qualified_source": "41c95b55dc0038b129488b07d437c366b7666015",
+  "runtime_python": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+  "scheduler_terminal": {
+    "attempt1": {
+      "ended_shanghai": "2026-10-31T13:19:55+08:00",
+      "status": "Failed",
+      "ui_seconds": 69
+    },
+    "attempt2": {
+      "ended_shanghai": "2026-10-31T13:29:07+08:00",
+      "status": "Succeeded",
+      "ui_seconds": 30
+    },
+    "attempt3": {
+      "ended_shanghai": "2026-10-31T13:52:46+08:00",
+      "status": "Succeeded",
+      "ui_seconds": 31
+    }
+  },
+  "scope": "Runtime/configuration check only; no new algorithm/data-contract claim, no training performance result.",
+  "simulator_actions": 0,
+  "total_cpu_worker_seconds": 274,
+  "total_gpu_seconds": 0
+}

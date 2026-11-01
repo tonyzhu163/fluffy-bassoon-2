@@ -2,7 +2,7 @@
 
 Recorded 2026-10-29, Asia/Shanghai. Paper version: arXiv:2610.19517v1.
 
-- [Published protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/vlrla-protocol.md): tasks, all three data
+- [Published protocol](../../../docs/literature/vlrla-protocol.md): tasks, all three data
   routes, model variants, reported optimization/evaluation settings and gaps.
 - [Our design](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/frozen-vla-icrl-design.md): three axes; initial
   GTrXL/PPO noise steering; balanced source tasks; K4 training / K8 evaluation,

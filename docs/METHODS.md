@@ -2,8 +2,9 @@
 
 The setup that current and future runs share. Per-run contracts go in the
 run's `outputs/<run-id>/PLAN.md`. Older method contracts (Meta-World, ManiSkill,
-RoboMimic, RoboTwin, LIBERO source40) were removed on 2026-11-01; find them in
-git history before that date.
+RoboMimic, LIBERO source40) were removed on 2026-11-01; find them in
+git history before that date. RoboTwin docs are in
+[robotwin/](robotwin/), and literature reviews in [literature/](literature/).
 
 ## Motors
 

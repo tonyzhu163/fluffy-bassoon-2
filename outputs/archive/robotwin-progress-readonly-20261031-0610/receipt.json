@@ -1,0 +1,57 @@
+{
+  "checked_utc": "2026-10-30T22:08:54.241455+00:00",
+  "paired_job": "job-fji2xx8oq53h",
+  "paired_exit": null,
+  "paired_failures": [],
+  "methods": {
+    "ppo": {
+      "rounds": 96,
+      "trials": 576,
+      "actions": 928637,
+      "optimizer_steps": 480,
+      "audit_status": "passed_owned_child",
+      "complete": false,
+      "frozen_unchanged": true,
+      "reference_sha256": "34f74be33bb89777e9e9268ed1008d160c0627ac6323b9023fc2ecd6618d7742"
+    },
+    "ppo_reset": {
+      "rounds": 99,
+      "trials": 594,
+      "actions": 953771,
+      "optimizer_steps": 495,
+      "audit_status": "passed_owned_child",
+      "complete": false,
+      "frozen_unchanged": true,
+      "reference_sha256": "60f075f63cb05ffcc9b785c5f75602dde13a6e9805e5b01330ef4767b0d1d986"
+    }
+  },
+  "sac": {
+    "job": "job-gv77bzhyeroo",
+    "summary_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-native-continuation-sac-20261030-r1/slices/0048/experiment/summary.json",
+    "summary_sha256": "58dd5259d7946540edf4be143bef84706a9387065f8785f080b889e2c156fa54",
+    "child_status": "wall_budget_stop",
+    "exit": null,
+    "values": {
+      "source_steps": 885076,
+      "completed_source_iterations": 88,
+      "completed_source_trials": 528,
+      "updates": 561760,
+      "optimizer_steps": 1685280,
+      "pending_trials": 0,
+      "unretained_or_uncertain_source_charge": 0
+    }
+  },
+  "combined_closed_source_actions": 2767484,
+  "format": "robotwin_readonly_collection_progress_v1",
+  "scheduler_observation": {
+    "checked_at_shanghai": "2026-10-31 06:10",
+    "jobs": {
+      "job-fji2xx8oq53h": "Running,1GPU/32CPU/192GiB",
+      "job-gv77bzhyeroo": "Running,1GPU/16CPU/128GiB"
+    },
+    "source": "Authenticated Baige scheduler DOM through CUA"
+  },
+  "scope": "Saved source records and scheduler status only. No allocation, ledger mutation, source control, model computation or tests. Closed counts exclude active trials/evaluation/historical banks and do not establish robot benefit or distinct physical-state counts.",
+  "source_round_target_per_learner": 100,
+  "final_comparison_complete": false
+}

@@ -819,7 +819,7 @@ The same job passed 43 cached scalar LIBERO adapter fake cases at exact source
 qualify the later recorded-input CLI, GPU compatibility or source adoption;
 the optional GPU comparison remains deferred. No robot actions were collected.
 
-[Qualification and independently checked receipts](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-trained-continuation-preparation-20261031-r1/CPU-QUALIFICATION.md).
+[Qualification and independently checked receipts](../archive/robotwin-trained-continuation-preparation-20261031-r1/CPU-QUALIFICATION.md).
 
 ## RoboTwin complete PPO source100 endpoints, 2026-10-31
 
@@ -922,7 +922,7 @@ charge1021785 comprises source963759, source validation39434 and target
 18592, with no pending or uncertain actions. These are action costs, not
 additional optimizer exposure.
 
-Evidence: [training/optimizer diagnosis](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
+Evidence: [training/optimizer diagnosis](../archive/robotwin-reset100-diagnosis-20261031-r1/ANALYSIS.md).
 Original endpoint:
 `/mowenjie/fluffy-bassoon-2/outputs/robotwin-trained-continuation-20261031-r1/ppo_reset/slice-041/experiment`.
 Summary SHA256:
@@ -959,8 +959,8 @@ The read-only metadata diagnosis verifies all100 updates/2400episodes and
 finite optimizer metrics; FULL approximate joint KL averages0.000226. The
 cause of weak source learning is unresolved; logs do not isolate sample
 budget, LR/clipping, task interference or the noise parameterization.
-[FULL training diagnosis](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-ppo100-diagnosis-20261031-r1/ANALYSIS.md),
-[RESET independent endpoint](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-reset100-independent-20261031-r1/RESULT.md).
+[FULL training diagnosis](../archive/robotwin-ppo100-diagnosis-20261031-r1/ANALYSIS.md),
+[RESET independent endpoint](../archive/robotwin-reset100-independent-20261031-r1/RESULT.md).
 
 Independent FULL byte checks match all11 references among32 saved metadata/
 checkpoint files. All64 evaluation groups/304episodes are complete; learned
@@ -981,7 +981,7 @@ not added as separate allocations. Summary SHA256
 `4fe0a6aff5b8454a71e1e97cdb21c0fa1b94d14e9f61ae9e20ccf9731390d83a`;
 final coordinator SHA256
 `c439486c327116c8da4fc077217416757bdc2f21ffa819f8ae802cc3f7810fa5`.
-[FULL independent verification](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-ppo100-independent-20261031-r1/RESULT.md).
+[FULL independent verification](../archive/robotwin-ppo100-independent-20261031-r1/RESULT.md).
 
 The owning chat's46856dc reconciliation verifies a distinct earlier native16
 panel against all48 FULL-condition and16 trainedRESET target records:
@@ -1000,7 +1000,7 @@ job-fji2xx8oq53h succeeded, ending06:43:32Shanghai with4h17m31s elapsed:
 15451GPU-seconds on one GPU. Count this allocation once for both arms;
 it is only the continuation from prior checkpoints, not all100-round
 training cost. Earlier allocations remain separate.
-[Scheduler receipt](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-ppo100-pair-scheduler-20261031-r1/receipt.json).
+[Scheduler receipt](../archive/robotwin-ppo100-pair-scheduler-20261031-r1/receipt.json).
 
 ## RoboTwin SAC100: completed source and evaluation
 
@@ -1036,7 +1036,7 @@ The fixed stage100 SAC recovery's declared SHA is
 The source metadata analysis did not rehash/load checkpoint tensors. It
 reconciles closed JSON/JSONL counts and preserves manifest status at read
 time. A subsequent independent endpoint check below verifies final completion.
-[Final source100 comparison and exact identities](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
+[Final source100 comparison and exact identities](../archive/robotwin-sac-source-diagnosis-20261031-r3/ANALYSIS.md).
 
 | Source iteration | Frozen bottle/stapler | Source-initialized online bottle/stapler |
 | ---: | --- | --- |
@@ -1074,8 +1074,8 @@ job-gv77bzhyeroo succeeded at08:04:24Shanghai, displayed8h57m10s=32230GPU-s
 on one GPU. Count this continuation allocation once; prior source-prefix
 allocations remain separate. Supervisor elapsed32209.95s is not substituted
 for scheduler cost.
-[Independent SAC endpoint and limits](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-sac100-independent-20261031-r1/RESULT.md),
-[scheduler proof](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-sac100-scheduler-20261031-r1/receipt.json).
+[Independent SAC endpoint and limits](../archive/robotwin-sac100-independent-20261031-r1/RESULT.md),
+[scheduler proof](../archive/robotwin-sac100-scheduler-20261031-r1/receipt.json).
 
 A follow-up verifies the separate historical native16→FULL/RESET→SAC
 pairing chain for every target case, including bottleE5's actual seed fallback.
@@ -1085,7 +1085,7 @@ action-mask/feature contracts agree. Native6/16 versus frozenSAC8/16 has
 and stochastic draws differ. This is a historical matched-initial-case
 reference, separate from the unpaired source-stage probes. Original native
 5051actions stay counted once; no new native rollout is inferred.
-[Native/SAC case-chain proof](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-sac-native16-reconciliation-20261031-r1/RESULT.md).
+[Native/SAC case-chain proof](../archive/robotwin-sac-native16-reconciliation-20261031-r1/RESULT.md).
 
 | Final condition on these16 cases | Bottle /8 | Stapler /8 | Total /16 |
 | --- | ---: | ---: | ---: |
@@ -1123,7 +1123,7 @@ six-trial rollout batch; SAC also updates parameters online. These descriptive
 source marginals do not isolate causal memory, same-case recovery or a
 held-out support/query result. They do not support a hidden strong inner
 learning benefit behind the flat aggregate curves.
-[Counts, grouping semantics and bound inputs](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/robotwin-k4-attempt-analysis-20261031-r1/ANALYSIS.md).
+[Counts, grouping semantics and bound inputs](../archive/robotwin-k4-attempt-analysis-20261031-r1/ANALYSIS.md).
 ## RoboTwin final SAC100 AD/BC CPU export, 2026-10-31
 
 The final saved SAC100 corpus has a qualified AD training export of 32,425

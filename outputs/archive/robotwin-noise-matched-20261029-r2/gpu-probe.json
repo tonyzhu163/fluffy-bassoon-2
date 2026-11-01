@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "timing_comparison_eligible": false,
+  "allocation_type": "baige_container",
+  "hostname": "job-jrjmcfwezo2d-master-0",
+  "probe_pid": 541,
+  "created_at_utc": "2026-10-29T12:20:56.157702+00:00",
+  "devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "8ce1a516-5366-6e5c-a509-ebb39b87c4f1",
+      "cuda_name": "NVIDIA RPBZZZ6",
+      "cuda_total_bytes": 101973950464,
+      "pci_bus_id": "0000:63:00.0",
+      "uuid": "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887.0,
+        "memory_used_mib": 0.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:63:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "touched_gpu_uuids": [
+          "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b"
+        ],
+        "own_pid_gpu_uuids": [
+          "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b"
+        ]
+      }
+    }
+  ],
+  "idle_utilization_required": true,
+  "exclusive_training_admission": false,
+  "admission_policy": "strict_idle_training",
+  "utilization_role": "idle_admission",
+  "utilization_telemetry": {
+    "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b": 0.0
+  },
+  "maximum_initial_memory_mib": 256,
+  "gpu_identity_mapping": {
+    "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+    "assigned_nvml_uuids": [
+      "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b"
+    ]
+  },
+  "compute_processes_before": [],
+  "compute_processes_after": [
+    {
+      "gpu_uuid": "GPU-3fd03a6d-90c1-5ccf-127b-d7f88857837b",
+      "pid": 541,
+      "process_name": "/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python",
+      "memory_used_mib": "640"
+    }
+  ],
+  "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+}

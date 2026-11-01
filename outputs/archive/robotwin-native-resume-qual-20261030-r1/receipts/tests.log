@@ -1,0 +1,18 @@
+........................................................................ [ 60%]
+........................................F
+=================================== FAILURES ===================================
+_ test_selected_trial_continuation_preserves_actor_state_clocks_and_original_seeds[sac] _
+tests/test_robotwin_trial_resume.py:134: in test_selected_trial_continuation_preserves_actor_state_clocks_and_original_seeds
+    with pytest.raises(RuntimeError,match="planner reset"):
+E   AssertionError: Regex pattern did not match.
+E     Expected regex: 'planner reset'
+E     Actual message: "CUDA error: CUDA driver version is insufficient for CUDA runtime version\nSearch for `cudaErrorInsufficientDriver' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nDevice-side assertions were explicitly omitted for this error check; the error probably arose while initializing the DSA handlers."
+----------------------------- Captured stdout call -----------------------------
+{"stage": "runtime_ready", "elapsed_seconds": 0.002102786675095558, "observation_dim": 2, "noise_shape": [1, 2]}
+{"stage": "motor_noise_parity", "elapsed_seconds": 0.0032572494819760323, "task": "handover_mic", "passed": true, "max_abs_error": 0.0}
+{"stage": "source_trial_start", "elapsed_seconds": 0.00856975931674242, "method": "sac", "task": "place_phone_stand", "seeds": [615661050, 638361497, 187722153, 1470810522], "source_steps": 0, "optimizer_steps": 0, "source_iteration": 1, "trial_in_iteration": 1}
+{"stage": "failed", "elapsed_seconds": 0.01632756646722555, "error_type": "AcceleratorError", "reason": "CUDA error: CUDA driver version is insufficient for CUDA runtime version\nSearch for `cudaErrorInsufficientDriver' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nDevice-side assertions were explicitly omitted for this error check; the error probably arose while initializing the DSA handlers."}
+=========================== short test summary info ============================
+FAILED tests/test_robotwin_trial_resume.py::test_selected_trial_continuation_preserves_actor_state_clocks_and_original_seeds[sac]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 112 passed in 31.07s

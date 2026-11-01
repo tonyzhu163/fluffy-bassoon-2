@@ -12,11 +12,12 @@ LIBERO, then RoboCasa.
 Agents and collaborators also read [AGENTS.md](AGENTS.md) (clusters, storage,
 GPU rules) and the live [coordination file](outputs/coordination.md).
 
-Other earlier work, including CTM pilots, ManiSkill, RoboMimic, RoboTwin and most
+Other earlier work, including CTM pilots, ManiSkill, RoboMimic and most
 of the LIBERO source40 pipeline,
-was removed on 2026-11-01 because it produced no usable evidence. Git history
-keeps it, and [`outputs/archive/`](outputs/archive/) holds the few dead-run
-folders that code still loads.
+was removed on 2026-11-01 because it produced no usable evidence; git history
+keeps it. Literature reviews are in [docs/literature/](docs/literature/).
+RoboTwin docs are in [docs/robotwin/](docs/robotwin/), and all RoboTwin runs,
+plus dead runs that code still loads, are in [`outputs/archive/`](outputs/archive/).
 
 The repository was split from `tonyzhu163/fluffy-bassoon` (branch
 `lycoreco_rl`) on 2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied
@@ -45,7 +46,7 @@ active lineage. Prune other checkpoint payloads after checking live
 dependencies. Keep all configurations, logs and evaluation records.
 
 `outputs/`, data, downloaded weights, run worktrees and caches are untracked.
-Keep the five documents in `docs/` ([index](docs/README.md)): per-run
+Keep the five core documents in `docs/` (plus `docs/literature/` and `docs/robotwin/`) ([index](docs/README.md)): per-run
 contracts in each run's `PLAN.md`, verified results in `docs/FINDINGS.md`, and
 raw evidence in `outputs/<run-id>/`. Never commit
 credentials or machine-local authentication configuration.

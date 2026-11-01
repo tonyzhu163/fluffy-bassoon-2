@@ -1,0 +1,72 @@
+{
+  "operation": "Read existing source/config/receipt bytes only; no model/test/runtime execution",
+  "rlinf_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf",
+  "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "files": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/examples/embodiment/train_embodied_agent.py",
+      "sha256": "4f63c8ddb25ac6f0e287d58360344455e307c09e5f1c925353cc857722c45e2d",
+      "bytes": 6562
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/examples/embodiment/run_embodiment.sh",
+      "sha256": "bcaa961ce97e26c72b2019f31956abdf6dbfd37869ef9c604cdc779fa6139bb5",
+      "bytes": 3026
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml",
+      "sha256": "333812d95fa10e7f1b60f7b6f17b74b42a578ff9a2cf8072b7a89061153d3c2b",
+      "bytes": 4598
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/examples/embodiment/config/model/pi0_5.yaml",
+      "sha256": "4c2fe0aa37d86ce42cc05a7edc11df0d49983948558cc5caf0e075969f644eed",
+      "bytes": 1098
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/__init__.py",
+      "sha256": "3d65069336b7fb3a056cbf8cd8f4f63404691414cbf8d2f959c1576b89054bc4",
+      "bytes": 15921
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/tasks/rl.py",
+      "sha256": "f779834b551e7b0823b62f273594575918b825016253d4c41c4d09e71d047dc2",
+      "bytes": 22495
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/models/embodiment/openpi/sampling/rl_sampler.py",
+      "sha256": "e8ec916c5bcebab3bc2ecd6d043c5e859372c71f622c88a74b5e067a99c88086",
+      "bytes": 6528
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/runners/embodied_runner.py",
+      "sha256": "94619101397255b04ec301d63d143570031d13f813e429a813df7a2e479dc0bd",
+      "bytes": 26182
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/seeds/train_seeds.json",
+      "sha256": "55b25866308d4e7da486282982ead4d5857b53fd977f659b216045f1950b45e2",
+      "bytes": 311987
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/seeds/eval_seeds.json",
+      "sha256": "194164f7380fd7cad2a8940ca93def01c2be865da265e4af1c463d73b2aa482f",
+      "bytes": 87016
+    }
+  ],
+  "prior_actual_direct_VLA_training_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-grpo-learning-gate-20261028-r2/execution/contract.json",
+    "sha256": "511e8b148422a9375ad04d59058777515b2e291fd90dbfad1f911d3c25d6fccd",
+    "checkpoint_revision": "fa8df6ed103db0f5549c122f3a17c00ba6426c98",
+    "model_path": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-sft-adjust-bottle-fa8df6ed",
+    "norm_stats": "/mowenjie/fluffy-bassoon-2/cache/robotwin/pi05-sft-adjust-bottle-fa8df6ed/physical-intelligence/robotwin/norm_stats.json",
+    "norm_stats_sha256": "bff5fcadaba626c28c1c2350d3baa7f1a04befc9f8b73f3e558a09c1b9c6ee52",
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "sapien": "3.0.1",
+      "mplib": "0.2.1",
+      "rlinf-openpi": "0.1.1"
+    }
+  }
+}

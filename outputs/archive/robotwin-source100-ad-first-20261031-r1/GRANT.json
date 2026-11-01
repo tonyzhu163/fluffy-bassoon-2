@@ -1,0 +1,92 @@
+{
+  "format": "robotwin_source100_ad_first_human_grant_v1",
+  "authorization_source": "Direct human answer in this chat; not automation or peer inference",
+  "source_thread_id": "01a18677-a163-78e3-a783-b557b3c621b2",
+  "observed_at_utc": "2026-10-31T03:42:42Z",
+  "observed_at_shanghai": "2026-10-31 11:42 Shanghai",
+  "question_item_id": [
+    "request_user_input_async",
+    "call_8221857b6e1c4771a3c1969616821d8d",
+    0
+  ],
+  "question": "May I fund the RoboTwin AD-first phase with up to 3 additional GPU-hours, 2 CPU-worker hours on 8 cores, 128GiB of new storage and 60,000 new target actions? It reuses the existing 1M-action source bank, trains AD full/static for 500 updates each, then tests zero-shot and one actual support episode plus a separate query on the 16 development cases. Each stage runs only after its allocated checks pass.",
+  "answer": "Approve RoboTwin AD-first phase (Recommended)",
+  "preapproval_proposal_sha256": "bb77e7c776172d6c3b57ed1cc354f4cbc7041038bb417ed3e8765e2f6d91c8bf",
+  "authorized_ceilings": {
+    "cpu_worker_seconds": 7200,
+    "cpu_worker_cores": 8,
+    "cpu_worker_ram_gib": 64,
+    "gpu_seconds": 10800,
+    "fit_gpu_seconds": 2100,
+    "readout_gpu_seconds": 7200,
+    "setup_failure_contingency_gpu_seconds": 1500,
+    "gpu_peak_cores": 16,
+    "gpu_peak_ram_gib": 128,
+    "shared_memory_gib": 8,
+    "new_storage_gib": 128,
+    "software_qualification_cpu_seconds": 600,
+    "software_qualification_is_within_cpu_total": true,
+    "cpu_parent_deadline_seconds": 6900,
+    "gpu_parent_deadline_seconds": 10500,
+    "gpu_outer_margin_seconds": 300,
+    "gpu_outer_margin_is_within_contingency": true,
+    "cpu_worker_seconds_are_aggregate": true,
+    "software_terminal_actual_deducted_before_final_bank": true,
+    "final_bank_parent_deadline_rule": "min(6900, allocated_remaining_seconds-300), starts before own work",
+    "readout_logical_workers": 12,
+    "readout_gpu_seconds_are_aggregate": true,
+    "gpu_parent_deadline_scope": "10500 only for serial single-allocation variant; split uses per-allocation margins plus aggregate10800ledger",
+    "readout_logical_workers_are_scheduler_jobs": false,
+    "readout_owner_proposed_scheduler_seconds": 5400,
+    "readout_owner_proposed_parent_seconds": 5300
+  },
+  "maximum_new_target_actions": 60000,
+  "maximum_new_source_actions": 0,
+  "already_charged_software_cpu_worker_seconds": 170,
+  "remaining_cpu_worker_seconds": 7030,
+  "prepared_cpu_scheduler_seconds": 7020,
+  "prepared_cpu_parent_seconds": 6720,
+  "unrequested_cpu_worker_seconds": 10,
+  "same_fixed_scientific_contract": true,
+  "fits": [
+    {
+      "mode": "full",
+      "seed": 0,
+      "updates": 500,
+      "milestones": [
+        25,
+        100,
+        500
+      ],
+      "primary": "candidate-000500.pt"
+    },
+    {
+      "mode": "static",
+      "seed": 0,
+      "updates": 500,
+      "milestones": [
+        25,
+        100,
+        500
+      ],
+      "primary": "candidate-000500.pt"
+    }
+  ],
+  "source_snapshot_sha256": "59588f07be18d4a1339af0c7536c62ef735a713f3c933d7e372fb3f4f4fa7e90",
+  "source_final_coordinator_sha256": "f551e3f28d14702556392e67dafdf62f094c824f9069511219f8dc5af4db9fd8",
+  "readout_code_commit": "f7594a03cb8f0f683d366193ed278b7435a4378c",
+  "execution_owner_thread_id": "01a18762-9db6-74c2-940a-96524803e454",
+  "resource_ledger_owner": "existing RoboTwin execution owner; this receipt is authorization, not a duplicate resource ledger",
+  "launch_instruction": "Proceed through prepared allocated CPU bank/export, two500-update AD fits, then fixed K0/K1 robot readout within the aggregate ceilings. No repeated human confirmation required.",
+  "libero_29_5_gpu_hour_request": "still pending; separate and unapproved",
+  "exclusions": [
+    "DPT fits/teacher panel",
+    "new source collection",
+    "full0/2/4/8 support matrix",
+    "additional target tasks",
+    "borrowing LIBERO or sealed old campaign capacity"
+  ],
+  "latest_main_reviewed": "acca706d5e75d1da099ff7ce6fddd727dace0fba",
+  "actual_job": null,
+  "runtime_admission": false
+}

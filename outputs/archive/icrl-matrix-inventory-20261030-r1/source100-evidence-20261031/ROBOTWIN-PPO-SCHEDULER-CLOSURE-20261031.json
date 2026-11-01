@@ -1,0 +1,43 @@
+{
+  "schema": "robotwin_paired_continuation_terminal_scheduler_accounting_v1",
+  "allocation_id": "job-fji2xx8oq53h",
+  "scheduler_state": "Success",
+  "pod_state": "Success",
+  "exit_code": 0,
+  "gpus": 1,
+  "cpus": 32,
+  "memory_gib": 192,
+  "shm_gib": 16,
+  "scheduler_running_start_shanghai": "2026-10-31 02:26:01",
+  "scheduler_success_shanghai": "2026-10-31 06:43:32",
+  "scheduler_running_seconds": 15451,
+  "actual_gpu_seconds": 15451,
+  "pod_reported_seconds": 15455,
+  "final_gpu_used_bytes": 0,
+  "automatic_failed_retries": 0,
+  "both_source100_and_all_declared_evaluations_complete": true,
+  "original_source_actions": {
+    "ppo": 964875,
+    "ppo_reset": 963759
+  },
+  "known_prior_terminal_gpu_seconds": 77333,
+  "known_terminal_gpu_seconds_now": 92784,
+  "excluded_from_known_total": [
+    "active SAC job-gv77bzhyeroo",
+    "reported but unverified historical630 optimization GPU-seconds"
+  ],
+  "proof": [
+    {
+      "path": "outputs/robotwin-trained-continuation-20261031-r1/receipts/final-scheduler.jpg",
+      "sha256": "fd0ba0a6dcdc58807e380164645852fd1a1aa9a7ee5e5edecee4d863c94fe1b8"
+    },
+    {
+      "path": "outputs/robotwin-trained-continuation-20261031-r1/receipts/final-scheduler.txt",
+      "sha256": "87ebff02d6dd5b9ab0d2cbf7b4490d5b0f1057529255934196d85f598bdbcd1d"
+    },
+    {
+      "path": "outputs/robotwin-trained-continuation-20261031-r1/receipts/continuation-result-final.json",
+      "sha256": "578893f1429ec67beefe3c8efa84ca3131704758443d49df3848c6c36a23fafd"
+    }
+  ]
+}
