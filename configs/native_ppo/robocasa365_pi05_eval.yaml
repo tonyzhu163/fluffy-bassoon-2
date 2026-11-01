@@ -1,0 +1,110 @@
+# Source-prepared, not runtime-qualified. Public original Human300 pi05 only.
+defaults:
+  - env/robocasa365@env.eval
+  - model/pi0_5@rollout.model
+  - override hydra/job_logging: stdout
+  - _self_
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:RLINF_PATH}/examples/embodiment/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: ${oc.env:ROBOCASA_NATIVE_OUTPUT}
+    project_name: robocasa365_pi05_native
+    experiment_name: public_human300_opendrawer_first_case
+    logger_backends: [tensorboard]
+  max_epochs: 1
+  max_steps: -1
+  val_check_interval: -1
+  save_interval: -1
+  resume_dir: null
+  ckpt_path: null
+
+env:
+  group_name: EnvGroup
+  eval:
+    rollout_epoch: 1
+    total_num_envs: 1
+    seed: 7
+    seed_strategy: openpi
+    split: target
+    task_soup: atomic_seen
+    task_filter: [OpenDrawer]
+    task_mode: atomic
+    task_sampling_strategy: ordered
+    auto_reset: false
+    ignore_terminations: false
+    use_fixed_reset_state_ids: true
+    episode_horizon_source: task_horizon
+    # Native OpenDrawer registry horizon at the proposed1.0.1 pin.
+    max_episode_steps: 750
+    max_steps_per_rollout_epoch: 750
+    group_size: 1
+    is_eval: true
+    action_space:
+      env_action_dim: 12
+      gripper_index: 6
+      base_mode_index: 11
+      binarize_gripper_control: true
+      binarize_base_mode_control: true
+    video_cfg:
+      save_video: true
+      info_on_video: false
+      extra_info_on_video: []
+      video_base_dir: ${runner.logger.log_path}/video/native
+    init_params:
+      camera_heights: 256
+      camera_widths: 256
+
+rollout:
+  group_name: RolloutGroup
+  generation_backend: huggingface
+  recompute_logprobs: false
+  enable_offload: false
+  pipeline_stage_num: 1
+  sampling_params:
+    do_sample: true
+    temperature_train: 1.0
+    temperature_eval: 0.6
+    top_k: 50
+    top_p: 1.0
+    repetition_penalty: 1.0
+    add_BOS: false
+    max_new_tokens: null
+  model:
+    model_path: ${oc.env:ROBOCASA_PI05_TORCH_MODEL}
+    pi05: true
+    precision: null
+    num_action_chunks: 50
+    action_dim: 12
+    num_steps: 10
+    add_value_head: false
+    openpi:
+      task: eval
+      config_name: pi05_robocasa365_pretrain_human300
+      action_horizon: 50
+      model_action_dim: 32
+      action_env_dim: 12
+      num_images_in_input: 3
+      discrete_state_input: true
+      max_token_len: 200
+      torch_compile: false
+    openpi_data:
+      norm_stats_path: ${oc.env:ROBOCASA_PI05_NATIVE_NORM}
+      state_space: 16d
+      image_space: 3views
+      action_space: 12d
+      extra_delta_transform: false
+      use_quantile_norm: false
+      pad_before_normalization: true

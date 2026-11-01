@@ -1,0 +1,31 @@
+{
+  "status": "STATIC_PREPARED_NOT_ALLOCATED_CPU_OR_GPU_QUALIFIED",
+  "rlinf_base_commit": "d80cf00e95e545f579e33432e7d7f14e86bb39d7",
+  "base_file_sha256": "61a7065df783a8d8b331065f9adbb8ac858420c65bea7d9c01b4627f8312097f",
+  "patched_file_sha256": "a14bdb5054dff56d0165b076837eb8405f00b203362a348dd779da0d7ef825e7",
+  "patch_sha256": "d25097362a9797a17befd577311299a8f745e9ad3f0db00383f19f5477d7006f",
+  "delta": "Add opt-in mean/std selection and state/action padding before normalization in the existing RoboCasa dataconfig; default None/False preserve old configs. No new policy, learner or simulator.",
+  "selected_initializer": "PUBLIC ORIGINAL pi05_pretrain_human300 step75000 at robocasa/robocasa365_checkpoints c484448aba1a9b60a04c9b0ca117241518ea69f3; not gated Aaron100k or generic LeRobot",
+  "reference_source": "robocasa-benchmark/openpi@5a6beda9ff99da30b4e1b59320f6a32971d7c397",
+  "opt_in": {
+    "config_name": "pi05_robocasa365_pretrain_human300",
+    "state_space": "16d",
+    "image_space": "3views",
+    "action_space": "12d",
+    "use_quantile_norm": false,
+    "pad_before_normalization": true,
+    "extra_delta_transform": false
+  },
+  "test_selector": "tests/test_robocasa_pi05_preprocessing.py",
+  "tests_passed": null,
+  "execution_boundary": "Apply against exact base in a fresh Git checkout and record deployment commit. Do not alter any admitted setup/runtime source in place.",
+  "additional_controller_delta": {
+    "base_file_sha256": "7018fc8b08f056735b28845f19e5c2788edd096df5e2fe1ecefff3f163228230",
+    "patched_file_sha256": "c6e83354e3979b48cf926fa0a5c3ae405354ea47d97f7aff0884972280635f1d",
+    "scope": "Honor explicit gripper/base-mode0.5-to+-1 score mapping in existing raw365 action dispatch. Copy input array so stored PPO actions/logp are not mutated. No new wrapper or action permutation.",
+    "reference": "robocasa3443 wrappers/gym_wrapper.py::PandaOmronKeyConverter.unmap_action",
+    "new_test": "test_native_score_controls_match_pandaomron_key_converter"
+  },
+  "prepared_numerical_cases": 5,
+  "static_patch_application_and_AST": "PASS; no runtime module import or test"
+}

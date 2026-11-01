@@ -1,0 +1,103 @@
+{
+  "status": "SOURCE_PROPOSAL_NOT_RESERVED_NOT_ADMITTED",
+  "execution_owner": "/root/finish_assembly",
+  "source_commit": null,
+  "actual_deployment_commit": null,
+  "current_setup_ticket_separate": "ROBOCASA365-SETUP-CPU-ADMISSION.json; no policy weights/constructors allowed there",
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "input_params_and_assets_bytes": 12440863506,
+    "file_manifest": "PUBLIC-PI05-PARAMS-MANIFEST.json",
+    "excluded": "train_state and all other model candidates",
+    "format": "original JAX/Orbax params, native public mean/std assets",
+    "converted_torch_hashes": null
+  },
+  "conversion_proposed": {
+    "gpus": 0,
+    "cpus": 8,
+    "ram_gib": 128,
+    "maximum_inclusive_worker_seconds": 3600,
+    "maximum_new_storage_gib": 64,
+    "new_sft_or_optimizer_steps": 0,
+    "physical_actions": 0,
+    "tests": "Five genuinely new preprocessing numeric tests and actual conversion/strict-load/reference transform checks only. No old suites."
+  },
+  "native_proposed": {
+    "gpus": 1,
+    "cpus": 32,
+    "ram_gib": 128,
+    "shared_memory_gib": 16,
+    "maximum_inclusive_wall_seconds": 7200,
+    "maximum_gpu_seconds": 7200,
+    "maximum_new_output_gib": 16,
+    "optimizer_updates": 0,
+    "tasks": "OpenDrawer first, at most one prospectively declared ScrubCuttingBoard fallback; no broad search",
+    "maximum_episodes_including_qualification": 16,
+    "OpenDrawer_maximum": {
+      "cases": 8,
+      "native_horizon": 750,
+      "control_actions": 6000
+    },
+    "fallback_maximum": {
+      "task": "ScrubCuttingBoard",
+      "cases": 8,
+      "native_horizon": 1200,
+      "control_actions": 9600
+    },
+    "maximum_control_actions": 15600,
+    "extra_smoke_episode": 0,
+    "native_first_case_is_qualification": true,
+    "case_seeds_and_observation_hashes": null,
+    "actual_clock_and_reset_internal_actions": null
+  },
+  "paired_pilot_proposal": {
+    "status": "PENDING_CORE_RUNTIME_PORT_AND_ACTUAL_QUALIFICATION_NOT_LAUNCHABLE",
+    "task_if_fallback_selected": "ScrubCuttingBoard",
+    "native_horizon": 1200,
+    "train_environments": 16,
+    "complete_rollout_rounds": 4,
+    "action_horizon_and_chunk": 50,
+    "global_optimization_batch": 512,
+    "PPO_epochs": 4,
+    "maximum_matched_iterations": 10,
+    "TRAIN_actions_per_arm_per_iteration": 76800,
+    "maximum_TRAIN_actions_per_arm": 768000,
+    "DEV_schedule_iterations": [
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "DEV_cases_each": 8,
+    "DEV_actions_per_arm": 48000,
+    "fresh_final_cases_each": 8,
+    "fresh_final_actions_per_arm": 9600,
+    "maximum_train_plus_eval_actions_each": 825600,
+    "common_native_and_qualification_actions_ceiling_counted_once": 15600,
+    "arm_all_in_upper": 1000000,
+    "remainder_not_new_authority": true,
+    "reward_S": "full-horizon terminal GT0/1 only",
+    "reward_F": "full-horizon terminal (expected_score-1)/4 only; GT outside optimizer path",
+    "stock_delta_success_reward_retained": false,
+    "same_model_norm_sampler_optimizer_and_eval": true,
+    "resource_proposal": {
+      "scheduler_jobs": 1,
+      "gpus_max": 4,
+      "arms": "S/F serial in same bounded allocation, with separate complete recovery identities",
+      "maximum_inclusive_wall_seconds": 21600,
+      "maximum_aggregate_gpu_seconds": 86400,
+      "maximum_new_output_gib": 256,
+      "scorer_capacity": "Must be bound separately by owner from actual repaired scorer profile; no old held/scorer balance assumed."
+    },
+    "early_stop": "Stop paired continuation at a planned DEV boundary if both reach8/8 (no headroom), or after iteration6 if neither improves even one fixedDEV case over its native baseline at2/4/6. This is a bounded pilot futility rule, not statistical proof; preserve all outcomes and complete pending recovery."
+  },
+  "not_done": [
+    "No model/tensor read or conversion here",
+    "No native rollout or scorer call here",
+    "No preprocessing tests run here",
+    "No RoboCasa matched PPO runtime qualification or launch here"
+  ]
+}
