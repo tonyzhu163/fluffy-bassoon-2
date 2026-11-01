@@ -56,7 +56,9 @@ before the next:
    simulator reward and with Flora reward. If only the simulator arm
    improves, the reward is the problem, not the method.
 3. **Collect histories** with Flora reward only, from learners that improve.
-4. **Steering interface and meta-learner.** The sample-efficiency claim is
+4. **Steering interface and meta-learner.** The meta-learner is a standard
+   causal Transformer (AD/DPT style); architecture is not a tested axis
+   ([PAPER.md](PAPER.md)). The sample-efficiency claim is
    query success per robot episode against ordinary Flora-reward DSRL at
    equal interactions, with reset and reward-blind controls.
 

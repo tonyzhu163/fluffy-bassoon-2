@@ -406,8 +406,12 @@ is semantically unseen.
   persists from support to query. New trial → empty context. Different cases
   make different trials. Case/split metadata is never a controller input.
   See [META-TASK.md](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/frozen-vla-libero/META-TASK.md).
-- Causal Transformer is the current controller choice. A strong static
-  Transformer establishes policy transfer, not implicit deployment-time ICRL.
+- **Meta-learner architecture is fixed (human, 2026-11-01):** a standard
+  causal (GPT-style) Transformer, as in Algorithm Distillation and DPT.
+  Architecture is not a tested axis: no CTM, CMM, GRU, Transformer-XL or MLP
+  comparisons, and no architecture claim. Static and reset controls use the
+  same Transformer. A strong static Transformer establishes policy transfer,
+  not implicit deployment-time ICRL.
 
 ### Source and target boundaries
 
