@@ -1,0 +1,77 @@
+{
+  "format": "rlinf_libero44_flora_terminal_ppo_v1",
+  "baseline_sha256": "c74d0359df9481af0f5537c85682459eb6e4c0d3b7679aef9b2060833b7fc59b",
+  "score_field": "expected_score",
+  "training_reward_rule": "(expected_score-1)/4; no threshold or fitted transform",
+  "count": 50,
+  "initial_success_rate": 0.74,
+  "AUROC": 0.9002079002079002,
+  "go": false,
+  "calibration_only": true,
+  "policy_optimizer_updates": 0,
+  "protocol": {
+    "benchmark": "robocasa365",
+    "task": "PickPlaceCounterToCabinet",
+    "horizon": 750,
+    "camera_order": [
+      "robot0_agentview_left",
+      "robot0_eye_in_hand",
+      "robot0_agentview_right"
+    ],
+    "train_episodes": 64,
+    "baseline_count": 50
+  },
+  "completed": true,
+  "measurement_only": true,
+  "training_authorization": false,
+  "native_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/PickPlaceCounterToCabinet/NATIVE-QUALIFICATION.json",
+    "sha256": "52cf0682123f4977221642e6eed2658837ec3ff7cc0543c5ee0f4a74585f3dee"
+  },
+  "native_episodes": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/PickPlaceCounterToCabinet/episodes.json",
+    "sha256": "f188671c019da199fc6c476b88f6e618ca2069661740ef01efbff121c097a3d1"
+  },
+  "native_monitor": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/PickPlaceCounterToCabinet/CASE-ROWS.json",
+    "sha256": "02e2a5e6d5e2897ffc54d7929f046c947044ec7be81f8be3037c8b21b6203245"
+  },
+  "official_outputs": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/official-outputs.json",
+    "sha256": "85e22da4655fafb69deba5f7f7a1efd3ec7c8ff1d5739c5ecdf9dc86d9c9d01b"
+  },
+  "shards": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-00.json",
+      "sha256": "a3abd7bc17bec293cc97238ca42772b1e9be3002991f96484f79f647ba33580e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-01.json",
+      "sha256": "14369e9e55dcdfe109ca9eb40ec93b4b762520a3df9ba8fb2719fae688f487f0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-02.json",
+      "sha256": "4f2d557a1f39126d6c9dabaca98d571df8607f10528cac3a7b383a2b31b9abef"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-03.json",
+      "sha256": "60f7b4ec46d306b7dc4ebc399c0762dfc459907fddc33c26f8d94b953c114ff5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-04.json",
+      "sha256": "ecb929b83170a22f972f4495028f55e8983d85b5919ef0455900f50941c0d243"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-05.json",
+      "sha256": "f0e6f6c8c6288e4434df7748d28706bf2b075c5c7dd76e69dc3a4e84cf3e710b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-06.json",
+      "sha256": "b582e1f85ee3fe830837c375c0ade9e545055fdf9cca92bfb67dabd65ea45b30"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/shards/rank-07.json",
+      "sha256": "260911abeaec21cc85ae0d830dd24c0f38467682201c432b67e72c770a664db5"
+    }
+  ]
+}

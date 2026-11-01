@@ -1,0 +1,77 @@
+{
+  "format": "rlinf_libero44_flora_terminal_ppo_v1",
+  "baseline_sha256": "09d83d9ec322972c83eeb55c9c3b17fe68bae2a4c6e39e20786715956873d63e",
+  "score_field": "expected_score",
+  "training_reward_rule": "(expected_score-1)/4; no threshold or fitted transform",
+  "count": 50,
+  "initial_success_rate": 0.58,
+  "AUROC": 0.9655172413793104,
+  "go": true,
+  "calibration_only": true,
+  "policy_optimizer_updates": 0,
+  "protocol": {
+    "benchmark": "robocasa365",
+    "task": "OpenDrawer",
+    "horizon": 750,
+    "camera_order": [
+      "robot0_agentview_left",
+      "robot0_eye_in_hand",
+      "robot0_agentview_right"
+    ],
+    "train_episodes": 64,
+    "baseline_count": 50
+  },
+  "completed": true,
+  "measurement_only": true,
+  "training_authorization": false,
+  "native_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/NATIVE-QUALIFICATION.json",
+    "sha256": "e68af62f4d3b127630f481bc6d1461f84bbc3889dc4fcee23c02a210c1d55d79"
+  },
+  "native_episodes": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/episodes.json",
+    "sha256": "6abcacd92dd8b9ea5361c401d80bbc5072bacc49d278e0f4f0b533a8f95ae67c"
+  },
+  "native_monitor": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/CASE-ROWS.json",
+    "sha256": "0f02b88686dd8daf86d349bf3f92a2762d734b81a5ac1b07877183a20cd9b12b"
+  },
+  "official_outputs": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/official-outputs.json",
+    "sha256": "9831ab0a5b807d2b9018c0d081b17da6ecefc27ce7424e8b5851736e72a6092a"
+  },
+  "shards": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-00.json",
+      "sha256": "caea0cbab18fc13145284096e8f70c948fe5c83aab11e8279c42d59a36e3e1b5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-01.json",
+      "sha256": "6ae3e4c9b12a3a963f731510cffb1e1153613be6ff8fd3a4a6219c3746c714bd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-02.json",
+      "sha256": "5bf10189647733d0977b6dd5d1e5a2ce4658167bdfa71be5f04a0ef475e0bf62"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-03.json",
+      "sha256": "89a886c60502b2dd4916765b9c0503ed84ecb372c9ab972df10c506bae568bcd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-04.json",
+      "sha256": "aefb94a0abc910cdd25579e202de65721a5136a00fff97ee30925db1fb8e3a39"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-05.json",
+      "sha256": "cf440bcb70b62f88ebe68a87b36780b2c7b4de521120061771d2fe123648ed44"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-06.json",
+      "sha256": "efcbec754a9a3dc24185acedf7ef353ec0efe19a2d37b2d0e33d57e58910926b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-07.json",
+      "sha256": "3a654c8eea2c8485b28cb444790e1ac3f23a64fa165c824d7ab0a8d1dcaf8e26"
+    }
+  ]
+}
