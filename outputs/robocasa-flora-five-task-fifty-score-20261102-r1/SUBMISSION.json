@@ -1,0 +1,34 @@
+{
+  "job_id": "job-i3kbpc2uk1l7",
+  "name": "mwj_1102_flora_five_task_native50_r1",
+  "submitted_once": true,
+  "scheduler_created_Shanghai": "2026-11-02 04:03:37",
+  "source_commit": "b5a900b2889de20d6381184f74303022553825f5",
+  "worktree": "/mowenjie/fluffy-bassoon-2/worktrees/flora-five-fifty-b5a900b2-20261102-r1",
+  "resource": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "cpus_per_node": 32,
+    "ram_gib_per_node": 256,
+    "shm_gib_per_node": 16,
+    "scheduler_minutes": 59,
+    "retry": false
+  },
+  "command": "TASK_STARTED=$(date +%s)\nexport TASK_STARTED TASK_ROLE=Flora-five-fifty TASK_CODE_PIN=b5a900b2889de20d6381184f74303022553825f5 TASK_META=/mowenjie/fluffy-bassoon-2/worktrees/flora-five-fifty-b5a900b2-20261102-r1\nexec timeout --signal=TERM --kill-after=60s 3540 bash \"$TASK_META/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/COMMAND.sh\"",
+  "submitted_command_viewed_and_exact": true,
+  "initial_scheduler_state": "Scheduled;4instances starting; actualresource/node0 begins, full8probe notyetestablished atfirstsavedread",
+  "scope": "Fixed5x50 diagnostic native bank annotation only; no learner/robotactions/trainingauthorization",
+  "last_observed_Shanghai": "2026-11-02 04:06:36",
+  "next_action": "One saved-receipt check at04:27; then20min from actualprogress/terminalclosure. No routineearlypoll or nativejobquery.",
+  "actual_allocation": "All4nodes/8distinctphysicalGPUs/source/cgroup/ownPID/provenance gates PASS; all8actualmodelshardloads advancing,2\u20134/11observed04:06:36; noerrors/labels/robotactions",
+  "first_advancement": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/FIRST-ADVANCEMENT.json",
+    "sha256": "56ca67f2e8119c72fba1de9d51f8d0a4e15128b9c2f4d35d3d4fb5eb4944b886"
+  },
+  "UI_lock_returned_to_root": true,
+  "initial_model_advancement": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/INITIAL-MODEL-ADVANCEMENT.json",
+    "sha256": "970ca9f5fc18db6c04bd143647960d5ea20b6c29f2b822eb23b066c0fef7e79d"
+  },
+  "next_check_Shanghai": "2026-11-02 04:27:00"
+}
