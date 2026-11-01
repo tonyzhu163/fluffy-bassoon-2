@@ -1,0 +1,27 @@
+--- a/rlinf/utils/ckpt_convertor/openpi/jax_to_openpi.py
++++ b/rlinf/utils/ckpt_convertor/openpi/jax_to_openpi.py
+@@ -43,6 +43,15 @@
+ _ACTION_WIDTH = 1024
+ 
+ 
++def _unwrap_nnx_values(tree):
++    """Preserve native tensor bytes while removing NNX variable value shells."""
++    if isinstance(tree, dict):
++        if set(tree) == {"value"} and isinstance(tree["value"], np.ndarray):
++            return tree["value"]
++        return {key: _unwrap_nnx_values(value) for key, value in tree.items()}
++    return tree
++
++
+ def _load_jax_params(checkpoint_dir: str | pathlib.Path) -> dict:
+     """Restore the JAX parameter pytree from ``{checkpoint_dir}/params`` as float32 numpy.
+ 
+@@ -75,7 +84,7 @@
+     # peel a single ``params`` wrapper when present.
+     if "PaliGemma" not in restored and isinstance(restored.get("params"), dict):
+         restored = restored["params"]
+-    return restored
++    return _unwrap_nnx_values(restored)
+ 
+ 
+ def convert_siglip(params: dict) -> dict:
