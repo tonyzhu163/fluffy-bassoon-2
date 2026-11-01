@@ -1,0 +1,62 @@
+{
+  "format": "flora_same_clock_R3_premodel_guard_terminal_v1",
+  "checked_unix": 1793524270.8933918,
+  "job_id": "job-yuy9p20jauj1",
+  "scheduler_status": "Failed",
+  "submitted_shanghai": "2026-11-01 17:06:31",
+  "scheduler_end_shanghai": "2026-11-01 17:07:13",
+  "scheduler_reported_seconds": 30,
+  "wrapper_exit": 1,
+  "allocated_gpus": 1,
+  "resource_wrapper_commit": "26d470f24ddba6beaf092f88ba837dde43734473",
+  "scientific_source": "dd77304841e32fb436e62bbc4dcb76f44d602546",
+  "failure": {
+    "stage": "pre-model executable metadata gate",
+    "exception": "AssertionError from exact full Ninja version-string equality",
+    "expected_version": "1.13.2",
+    "actual_version": "1.13.2.git.kitware.jobserver-pipe-1",
+    "actual_version_observation": "separate subsequent metadata-only --version on same exact hash-bound executable",
+    "binary_sha256": "08639e194fffa7f08b259fc4abfa4803aff66b64de52549cee42ec527d55cea6",
+    "binary_sha_guard_passed_before_assert": true,
+    "owner_error": "Owner used an unnecessarily strict unobserved bare version literal rather than first binding the real CLI string; exact approved binary was correct."
+  },
+  "CUDA_probe_ran": false,
+  "Torch_import_ran": false,
+  "models_loaded": false,
+  "labels_written": 0,
+  "new_simulator_actions": 0,
+  "optimizer_steps": 0,
+  "clock": {
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q1-20261101-r1/clock",
+    "original_seconds": 3600,
+    "prior_seconds": [
+      446,
+      301
+    ],
+    "this_attempt_seconds": 62,
+    "total_seconds": 809,
+    "remaining_seconds": 2791,
+    "both_prior_rows_identical": true
+  },
+  "next_live_check": null,
+  "no_automatic_further_retry": true,
+  "source_model_video_seed_unchanged": true,
+  "possible_narrow_correction": "Bind exact observed CLI string1.13.2.git.kitware.jobserver-pipe-1 AND unchanged binarySHA, record actual build metadata before any version assertion; requires a fresh explicitly admitted resource-only successor, no scientific change.",
+  "proofs": [
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q3/console.log",
+      "bytes": 774,
+      "sha256": "7bfe0782fd39ac8dbb51188233b27534bd6d402660936b5f798c2e5a05ceb7e2"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q3/exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "outputs/flora-ppo-runtime-readiness-20261101-r1/flora-q3/worker-time-final.json",
+      "bytes": 1694,
+      "sha256": "5166cc77b4bd2b2a4374c64f0a84cd1138ec3891ba2f5ef1769112856e25c246"
+    }
+  ]
+}

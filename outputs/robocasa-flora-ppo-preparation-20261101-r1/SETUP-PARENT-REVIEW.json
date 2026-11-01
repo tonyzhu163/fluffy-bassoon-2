@@ -1,0 +1,66 @@
+{
+  "status": "PINNED_SETUP_STATIC_REVIEW_PASS",
+  "handoff_commit": "ede8886e",
+  "source": {
+    "status": "STATIC_ONLY_NO_ALLOCATED_SETUP_YET",
+    "rlinf_commit": "d80cf00e95e545f579e33432e7d7f14e86bb39d7",
+    "robocasa_commit": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+    "robocasa_declared_version": "1.0.1",
+    "robosuite_commit": "5ce6643f3092639d08f7b0f90ed1c6a84f50552c",
+    "openpi_dependency_commit": "c5dc4b9296a1a4739bf52828f28a579f12dce763",
+    "setup_base_sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468",
+    "setup_patched_sha256": "8bb73c35acbd938adb8aca97faa0194ab2dbffcd8cc71d7dcf43bb41f340ed1c",
+    "patch_sha256": "367e3def88bbd089c2c94a99bde077c7db52b410bdd7497ab96ad4ccf6e78adc",
+    "delta": "Only pin the two floating Git dependency URLs used by the existing official RoboCasa365 installer; pre-set ROBOCASA_PATH to a fresh detached3443 clone to prevent main fetch/pull. No model/simulator/learner implementation changed.",
+    "compatibility_status": "Native1.0.1 import/registry candidate, not a claim to duplicate1.0.0 leaderboard runtime; selected Aaron custom adapter/version remains to be bound.",
+    "pip_resolution": "Fresh isolated environment only; record actual resolved lock/versions/origins before GPU use. No changes to existing envs or shared runtime.",
+    "literal_setup_flags": [
+      "embodied",
+      "--model",
+      "openpi",
+      "--env",
+      "robocasa365",
+      "--python",
+      "3.11.14",
+      "--no-flash-attn",
+      "--no-root",
+      "--install-rlinf"
+    ],
+    "model_download": false,
+    "tests_run_here": 0,
+    "environment_or_model_constructor_here": 0,
+    "physical_actions_here": 0,
+    "static_source_files": [
+      {
+        "file": "native__rlinf__install.sh",
+        "bytes": 172234,
+        "sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468"
+      },
+      {
+        "file": "native__robocasa__setup.py",
+        "bytes": 1381,
+        "sha256": "cfe1126cbb569939e4dd0afd7ef74bf2cf1e41f63be32bc5b9e56e03a89929ab"
+      },
+      {
+        "file": "native__robocasa__dataset_registry.py",
+        "bytes": 94641,
+        "sha256": "14d1abbe55e38d847a9da1bb67136f184172e8ec713472320f7a721cf83adafa"
+      },
+      {
+        "file": "native__robocasa__dataset_registry_utils.py",
+        "bytes": 7797,
+        "sha256": "9214e1871e2fcafdb723d1543858b617e861334752ebff60c07fe5c950a8c081"
+      },
+      {
+        "file": "native__rlinf__openpi.txt",
+        "bytes": 323,
+        "sha256": "5ffeb37235138415eca8a898aa8af5d71264f95b7b9181b239ac897f2adda155"
+      }
+    ]
+  },
+  "installer_actual_sha256": "36e6ac8dc7418b5937765e54d3c4407f6e4f7c7137782c11214e416fca26f468",
+  "patched_actual_sha256": "8bb73c35acbd938adb8aca97faa0194ab2dbffcd8cc71d7dcf43bb41f340ed1c",
+  "patch_actual_sha256": "367e3def88bbd089c2c94a99bde077c7db52b410bdd7497ab96ad4ccf6e78adc",
+  "scope": "Fresh isolated native imports/registry and exact published assets under original1800 worker-wall-second/64GiB admission; no constructors/model/physics/actions.91ZIP compressed sum and extracted bounds validated inside actual allocation.",
+  "qualification": "Static source/hash review only; no package installation or test/model/simulator execution on Mac."
+}

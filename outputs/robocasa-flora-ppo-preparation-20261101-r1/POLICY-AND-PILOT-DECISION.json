@@ -1,0 +1,31 @@
+{
+  "status": "PUBLIC_INITIALIZER_SELECTED_NATIVE_RUNTIME_NOT_YET_QUALIFIED",
+  "authority": "Direct user requests RoboCasa365/released pi0.5/RLinf and permits source alternative; human asks retain simulator PPO versus Flora PPO with a smaller default-based pilot.",
+  "selected_policy": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "format": "original JAX/Orbax",
+    "official_reference_source": "robocasa-benchmark/openpi@5a6beda9ff99da30b4e1b59320f6a32971d7c397",
+    "exposure": "Human300 original pretraining; not Aaron extra100k Composite-Seen SFT or a clean-only model",
+    "staging": "Only needed params/assets/checkpoint metadata; no optimizer/train_state download for fresh PPO initializer. Exact finite staging/loading/conversion profile remains to bind."
+  },
+  "access_evidence": "76a0e5dc7a07797d2202f2aa452ec0cc8e28cd02",
+  "adapter": "Verify original official three-view/native state16/action12 ordering, padstate32 BEFORE MEAN/STD normalization/tokenization. No generic LeRobot-order/quantile carry. Use existing official conversion/native loader only as actually needed, strict body load and affected numerical reference-transform qualification. No speculative weight-comparison project.",
+  "native_environment": "RLinf d80cf00e / RoboCasa3443cdf3 declared1.0.1 / Robosuite5ce6643f / installerOpenPIc5dc4b92. Original checkpoint evaluation1.0.0 differs and is disclosed; do not claim exact leaderboard reproduction.",
+  "pilot_proposal": {
+    "candidate": "ScrubCuttingBoard, prospectively proposed before outcomes; exact native headroom bank and at most one predeclared fallback still to bind",
+    "registry_horizon": 1200,
+    "action_chunk_horizon": 50,
+    "train_envs": 16,
+    "rollout_rounds": 4,
+    "ppo_epochs": 4,
+    "global_batch": 512,
+    "reason": "64 complete episodes*1200/50=1536 chunk samples, divisible by512. Prior target1024 was not divisible.",
+    "max_iterations": "MUST be reduced to actual full-episode train/eval/qualification/settling/padding/failure costs within1M actions/arm.12 rounds cost921600 TRAIN actions alone, not an admitted complete schedule.20 is not admitted at this horizon.",
+    "optimizer": "Preserve official default PPO optimizer/loss/LR/GAE and measured microbatch capacity; no new learner.",
+    "reward": "Both full native horizon/no-success termination; one S terminal0/1 versus one F terminal(expected_score-1)/4, with simulator truth isolated from F. This intentionally changes stock delta-success reward timing, equally for both arms.",
+    "before_training": "Actual selected policy load/transform/episode/recovery and native headroom plus Flora discrimination. Exact baseline/eval bank/stopping/accounting and finite resources must be concrete before launch. No new SFT or broad search."
+  },
+  "compute_here": "Only static source/saved scalar metadata and byte review on Mac; no tests/models/simulators."
+}
