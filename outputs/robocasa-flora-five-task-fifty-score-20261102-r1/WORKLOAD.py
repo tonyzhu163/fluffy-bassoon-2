@@ -78,7 +78,8 @@ def main():
     worker=inputs['carried_worker_qualification']
     carry({k:worker[k] for k in ('path','sha256')},worker['xml'],worker['exact_current_files'],[worker['required_case']])
     native=inputs['native_provenance']
-    deployment,bindings,submission=(read_ref(native[key]) for key in ('deployment','bindings','submission'))
+    deployment,bindings=(read_ref(native[key]) for key in ('deployment','bindings'))
+    submission=read_ref(dict(path=str(code/native['submission']['source_relative']),sha256=native['submission']['sha256']))
     assert deployment['source_commit']==submission['source_commit']==native['source_commit']
     assert submission['job_id']==native['job_id']=='job-0vf7klnif9ot'
     assert [v['task'] for v in bindings['tasks']]==list(PPO_TASKS)
