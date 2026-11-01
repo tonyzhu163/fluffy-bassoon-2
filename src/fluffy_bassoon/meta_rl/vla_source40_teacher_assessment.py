@@ -65,6 +65,15 @@ def worker_contract(source,run):
         new_output_bytes=MAX_BYTES,optimizer_updates=0,source_pretraining_admitted=False)
 
 
+def clock_identity(root,clock):
+    """Stable original identity; finishing an attempt must not change it."""
+    root=Path(root).resolve();first=clock['attempts'][0]
+    if any(not Path(r['path']).resolve().is_relative_to(root/'attempts') for r in clock['attempts']):
+        raise ValueError('Every resource attempt must belong to its original clock root')
+    return dict(root=str(root),contract=clock['contract'],origin=dict(
+        path=first['path'],started_unix=first['started_unix'],reserved_seconds=first['reserved_seconds']))
+
+
 def validate_admission(ticket,clock,probe,*,source,output,hostname,now):
     """Pure check of the execution owner's existing begin/finish clock and proof."""
     expected=worker_contract(source,ticket['run_id'])
@@ -407,7 +416,8 @@ def main(argv=None):
     try:
         return run_panel(table,motor,actors,a.output,server_factory=lambda task,n:OwnedSimulator(task,python=a.simulator_python,
             pythonpath=a.simulator_pythonpath,output=a.output/f'server-{n}-{time.time_ns()}',port=a.port),deadline=deadline,qualify=qualify,forks=forks,
-            provenance=dict(worker_contract=contract,runtime_files=runtime,loaded_actors=_leaf(binding_path)))
+            provenance=dict(worker_contract=contract,original_clock=clock_identity(ticket['clock_root'],clock),
+                runtime_files=runtime,loaded_actors=_leaf(binding_path)))
     finally:
         after=parameter_signature(motor.policy._model);write_json(a.output/'motor-final.json',dict(before=before,after=after,unchanged=before==after))
         if before!=after:raise RuntimeError('Frozen motor parameters changed')

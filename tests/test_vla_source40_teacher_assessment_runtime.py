@@ -115,15 +115,19 @@ def runtime(monkeypatch):
     return table
 
 
-def run_fake(tmp_path,table,*,sim=None,mutate=False):
+def run_fake(tmp_path,table,*,sim=None,mutate=False,clock_root=None):
     sim=sim or Simulator();motor=Motor();actors=Actors(sim,mutate=mutate);qualified=[]
+    root=clock_root or tmp_path/'original-clock'
+    identity=a.clock_identity(root,dict(contract='same-immutable-header',attempts=[dict(
+        path=str(root/'attempts/original-first-attempt'),started_unix=100.,reserved_seconds=10800)]))
     forks=SimpleNamespace(new_case=lambda seed:{'global':dict(seed=seed),'motor':seed},
         capture_global=lambda:dict(saved=True),restore_global=lambda value:None,
         seed_motor=lambda seed:setattr(motor.policy,'_rng',seed))
     def execute():
         return a.run_panel(table,motor,actors,tmp_path/'data',server_factory=lambda task,n:sim,
             deadline=float('inf'),qualify=lambda *args:qualified.append('same-first-episode'),forks=forks,
-            provenance=dict(source_commit='a'*40,immutable_assets='test-only'))
+            provenance=dict(source_commit='a'*40,immutable_assets='test-only',
+                original_clock=identity))
     return execute,sim,motor,actors,qualified
 
 
@@ -166,6 +170,13 @@ def test_unresolved_intent_is_charged_and_interrupted_episode_never_replayed(tmp
 def test_closed_resume_does_not_replay_controls_or_qualification(tmp_path,runtime):
     execute,sim,motor,actors,qualified=run_fake(tmp_path,runtime);first=execute();second=execute()
     assert first['receipts']==second['receipts'] and sim.resets==4 and len(qualified)==1
+
+
+def test_closed_resume_refuses_fresh_sibling_clock_before_server_or_reset(tmp_path,runtime):
+    first,*_=run_fake(tmp_path,runtime);first()
+    second,sim,*_=run_fake(tmp_path,runtime,clock_root=tmp_path/'fresh-sibling-clock')
+    with pytest.raises(ValueError,match='exact closed episodes'):second()
+    assert sim.resets==sim.steps==0
 
 
 @pytest.mark.parametrize('seed',[-1,2**32,True,1.5])
