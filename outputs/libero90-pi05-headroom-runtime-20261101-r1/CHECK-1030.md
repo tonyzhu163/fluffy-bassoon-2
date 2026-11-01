@@ -1,0 +1,5 @@
+At 10:30 Shanghai, primary job-2qn8dpw3yvlb remained running with 334,500 updates, 1,929 completed training episodes and 17,219 replay rows. It recorded 1,890 successes and 39 failures; latest losses were finite. Producer totals were 330,968 all-in actions and 19.692 GB of output.
+
+No new completed query panel followed the 320,040-update 20/20 panel. The actual current cursor remained in training with the next threshold 340k. A separately read stable rolling checkpoint had reached 334,660 updates, SHA 8bf41fcbcacd475705dea6b4d99c8dbb4f7c6bb6fbf089412d9e091155221c95. Nearby index and pointer counters are distinct snapshots during continuing publication.
+
+The newest raw trace and one RPC sample matched their stored byte hashes. Conservative observed GPU time 32,057s includes the active elapsed amount and is not a terminal charge. Original 57,600s / 1M-action / 64GiB caps, science b665 and execution d236 remain unchanged. No older milestone, journal forest, tensors, arrays, models or tests were rechecked. Next owned check: 10:50.
