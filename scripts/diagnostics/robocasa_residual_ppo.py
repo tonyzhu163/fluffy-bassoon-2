@@ -79,6 +79,8 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     write_new(output / "profile.json", profile)
     parallel = profile.get("rollout_devices")
+    if profile.get("parallel_controller_cpu_offload") and not parallel:
+        raise ValueError("Controller motor offload requires separate native rollout workers")
     if parallel:
         from fluffy_bassoon.meta_rl.robocasa_residual_parallel import ParallelActionJournal, ParallelResidualEnvironment
         if len(parallel) != 8 or len({row["uuid"] for row in parallel}) != 8:
@@ -119,6 +121,17 @@ def main():
     stats = json.loads(norm_path.read_text())
     stats = stats.get("norm_stats", stats)
     motor = FrozenRoboCasaMotor(model, stats, seed=profile["motor_seed"])
+    if profile.get("parallel_controller_cpu_offload"):
+        # The parallel controller uses only the motor's private seed generator;
+        # every prediction runs in an allocated rollout worker's own model.
+        model.to("cpu")
+        if any(t.is_cuda for t in model.parameters()) or any(t.is_cuda for t in model.buffers()):
+            raise ValueError("The unused controller motor must release all CUDA tensors")
+        torch.cuda.empty_cache()
+        write_new(output / "controller-motor-offload.json", dict(
+            completed=True, device="cpu", predictions="allocated rollout workers only",
+            cuda_allocated_bytes=torch.cuda.memory_allocated(),
+            cuda_reserved_bytes=torch.cuda.memory_reserved()))
     bound = ResidualBound.from_std(action_std_from_norm_stats(norm_path), indices=range(6), fraction=.25, action_dim=12)
     torch.manual_seed(42)
     config = ResidualPPOConfig(**profile["ppo"])

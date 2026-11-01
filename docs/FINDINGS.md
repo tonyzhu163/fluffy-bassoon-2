@@ -65,13 +65,15 @@ The unchanged initializer scored **4/8 on the fixed held-out ID panel** and
 7/8. These eight-case panels are descriptive and remain separate from TRAIN.
 A common 64-episode residual-PPO batch now collects through eight allocated
 GPU workers; the numerical checks preserve the serial draw stream and next
-Adam update. This execution qualification does not yet establish a learning
-gain or simulator-versus-Flora result. The original failed calibration remains
+Adam update. The baseline has completed three optimizer updates and saved
+full recovery checkpoints; its first fixed DEV evaluation was6/8, versus7/8
+before training. This small panel does not establish an improvement or a
+simulator-versus-Flora result. The original failed calibration remains
 unchanged. [Before panels and qualification](../outputs/robocasa-eight-gpu-speed-20261102-r1/RUNTIME-STATUS.json).
 
 The persistent official scorer loaded once and completed all eight labels;
 two affected core numerical/reuse/cleanup cases passed on allocated Linux.
-This qualifies scorer execution, while training-batch/optimizer integration
+This qualifies scorer execution, while Flora-reward training-batch/optimizer integration
 remains unexercised. The eight-case result is descriptive development evidence,
 not a population estimate or a conclusion that Flora is generally unsuitable.
 Original weights, complete native videos, raw probabilities and costs are
