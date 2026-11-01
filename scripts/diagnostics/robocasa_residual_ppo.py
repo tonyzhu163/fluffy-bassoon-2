@@ -31,7 +31,7 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal, restore_rng, snapshot_rng
 from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import (
-    TASKS, arm_stopping, case_bank, protocol, require_calibration_permission,
+    TASKS, arm_stopping, case_bank, protocol, require_calibration_permission, rollout_migration_contract,
 )
 from fluffy_bassoon.meta_rl.vla_history import save_dataset
 from fluffy_bassoon.rl.action_residual import ResidualBound, action_std_from_norm_stats
@@ -217,14 +217,10 @@ def main():
             resume_contract = contract
             if profile.get("rollout_migration"):
                 migration = read_ref(profile["rollout_migration"])
-                resume_contract = migration["original_contract"]
-                if (not parallel or migration["kind"] != "eight_gpu_rollout_only"
-                        or migration["checkpoint_sha256"] != profile["resume_sha256"]
-                        or migration["to_source_commit"] != profile["source_commit"]
-                        or resume_contract["source_commit"] != migration["from_source_commit"]
-                        or {key: value for key, value in resume_contract.items() if key != "source_commit"}
-                           != {key: value for key, value in contract.items() if key != "source_commit"}):
+                if not parallel:
                     raise ValueError("Only an explicit complete-state rollout execution migration is allowed")
+                resume_contract = rollout_migration_contract(contract, migration,
+                                                            checkpoint_sha256=profile["resume_sha256"])
             restored = restore_checkpoint(profile["resume"], policy=policy, optimizer=optimizer, bound=bound,
                 motor=motor, environment=train_env, generators=generators, contract=resume_contract)
             iteration = restored["iteration"]

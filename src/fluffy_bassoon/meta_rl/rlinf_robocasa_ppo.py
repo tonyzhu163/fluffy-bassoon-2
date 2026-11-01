@@ -199,3 +199,24 @@ def arm_stopping(rows):
     return dict(stop=bool(latest>=10 or ceiling or flat),
         reason='fixed10' if latest>=10 else ('DEV8of8' if ceiling else ('no_DEV_improvement_after6' if flat else 'continue')),
         interpretation='Independent-arm exploratory stopping; compare shared prefixes and report time censoring')
+def rollout_migration_contract(current, migration, *, checkpoint_sha256):
+    """Validate logical JSON equality, then retain typed checkpoint fields.
+
+    JSON turns bound tuples into lists. Reconstructing from the current typed
+    contract after exact logical comparison keeps strict Torch recovery intact.
+    Only the source pin may change; every scientific scalar must still match.
+    """
+    from copy import deepcopy
+    from .rlinf_flora_ppo import digest
+    original = migration["original_contract"]
+    if (migration["kind"] != "eight_gpu_rollout_only"
+            or migration["checkpoint_sha256"] != checkpoint_sha256
+            or migration["to_source_commit"] != current["source_commit"]
+            or original["source_commit"] != migration["from_source_commit"]
+            or digest({key: value for key, value in original.items() if key != "source_commit"})
+               != digest({key: value for key, value in current.items() if key != "source_commit"})):
+        raise ValueError("Only an explicit complete-state rollout execution migration is allowed")
+    result = deepcopy(current)
+    result["source_commit"] = original["source_commit"]
+    return result
+

@@ -16,7 +16,7 @@ root, code, out = map(Path, (os.environ['TASK_ROOT'], os.environ['TASK_META'], o
 run = root / 'outputs/robocasa-eight-gpu-speed-20261102-r1'
 old = root / 'outputs/robocasa-residual-approved-20261101-r1'
 start = int(os.environ['TASK_STARTED'])
-deadline = start + 14040
+deadline = start + int(os.environ.get('TASK_WORKLOAD_SECONDS', '14040'))
 distributed = os.environ.get('TASK_NODE_COUNT') == '4'
 local_gpus = 2 if distributed else 8
 assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == local_gpus
@@ -55,6 +55,7 @@ assert all(int(suite.attrib[key]) == 0 for key in ('failures', 'errors', 'skippe
 write_new(out / 'core-qualification.json', dict(completed=True, tests=9, failures=0, errors=0, skipped=0,
     xml=dict(path=str(xml_path), sha256=sha(xml_path)),
     source_commit=os.environ['TASK_CODE_PIN']))
+subprocess.run([sys.executable, '-B', '-m', 'pytest', '-q', str(code / 'tests/test_residual_checkpoint_migration.py'), '--junitxml='+str(out/'migration-core.xml')], check=True, timeout=120)
 paused = json.loads((old / 'S-PAUSED-FOR-EIGHT-GPU.json').read_text())
 assert paused['job'] == 'job-wjwi6vuhvwmq' and paused['optimizer_updates'] == 0
 assert paused['prior_training_actions_conservatively_charged'] == 13350
@@ -70,7 +71,7 @@ assert not list((old / 'S').glob('update-*.json'))
 probe = out / 'gpu-probe.json'
 devices = json.loads(probe.read_text())['devices']
 if distributed:
-    manifests = [json.loads((run / 'S8-distributed-job' / f'node-{rank:02d}/manifest.json').read_text()) for rank in range(4)]
+    manifests = [json.loads((run / os.environ.get('TASK_DISTRIBUTED_JOB','S8-distributed-job') / f'node-{rank:02d}/manifest.json').read_text()) for rank in range(4)]
     devices = [dict(device, node_rank=rank, probe_path=manifest['probe_path'])
                for rank, manifest in enumerate(manifests) for device in manifest['devices']]
     assert len(devices) == len({device['uuid'] for device in devices}) == 8
@@ -83,9 +84,9 @@ write_new(out / 'migration.json', migration)
 pipeline = json.loads((old / 'S-job/pipeline-profile.json').read_text())
 profile = copy.deepcopy(pipeline['training'])
 initial = old / 'common-before/initial_DEV-000/evaluation.json'
-profile.update(source_commit=os.environ['TASK_CODE_PIN'], output=str(run / 'S8'),
-    monitoring_root=str(run / 'monitoring/S8'), accounting_root=str(run / 'S8-actions'), attempt='S8-train-r1',
-    allocated_start_unix=start, deadline_unix=deadline, scheduler_seconds=14340,
+profile.update(source_commit=os.environ['TASK_CODE_PIN'], output=str(run / os.environ.get('TASK_TRAIN_NAME','S8')),
+    monitoring_root=str(run / 'monitoring' / os.environ.get('TASK_TRAIN_NAME','S8')), accounting_root=str(run / 'S8-actions'), attempt=os.environ.get('TASK_TRAIN_NAME','S8')+'-train',
+    allocated_start_unix=start, deadline_unix=deadline, scheduler_seconds=int(os.environ.get('TASK_SCHEDULER_SECONDS','14340')),
     maximum_all_in_actions=971600-prior_charge, rollout_devices=devices,
     actual_gpu_probe=dict(path=str(probe), sha256=sha(probe)),
     core_qualification=[dict(path=str(out / 'core-qualification.json'), sha256=sha(out / 'core-qualification.json'))],
@@ -96,7 +97,7 @@ profile.update(source_commit=os.environ['TASK_CODE_PIN'], output=str(run / 'S8')
     first_iteration_wall_ceiling_seconds=3600, dev_evaluation_wall_ceiling_seconds=600,
     final_evaluation_wall_reserve_seconds=1200)
 if distributed:
-    profile.update(distributed_rollout_root=str(run / 'S8-distributed-job/dispatch'),
+    profile.update(distributed_rollout_root=str(run / os.environ.get('TASK_DISTRIBUTED_JOB','S8-distributed-job') / 'dispatch'),
         gpu_allocation_starts_unix=[manifest['allocated_start_unix'] for manifest in manifests for _ in range(2)])
 write_new(out / 'training-profile.json', profile)
 environment = dict(os.environ, **pipeline['policy_env'])
