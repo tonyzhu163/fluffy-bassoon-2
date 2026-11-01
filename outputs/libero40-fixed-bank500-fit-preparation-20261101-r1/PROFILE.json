@@ -1,0 +1,286 @@
+{
+  "format": "source40_current_bank_fixed_depth_100_500_v1",
+  "initial_updates": 100,
+  "final_updates": 500,
+  "training_rows": 33729,
+  "validation_rows": 8202,
+  "seed": 0,
+  "config": {
+    "observation_dim": 4104,
+    "noise_dim": 32,
+    "width": 128,
+    "layers": 2,
+    "heads": 4,
+    "context_length": 300,
+    "initial_std": 0.5
+  },
+  "optimization": {
+    "batch_size": 8,
+    "learning_rate": 0.0003,
+    "max_context": 128,
+    "weight_decay": 0.0,
+    "gradient_clip_norm": 1.0,
+    "threads": 4,
+    "execution_batch_size": null
+  },
+  "schedule": {
+    "updates": 500,
+    "eval_every": 25,
+    "validation_batches": 4,
+    "max_elapsed_seconds": 1740.0,
+    "checkpoint_selection": "final"
+  },
+  "models": {
+    "ad_full": {
+      "objective": "ad",
+      "mode": "full",
+      "old_contract": {
+        "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
+        "config": {
+          "observation_dim": 4104,
+          "noise_dim": 32,
+          "width": 128,
+          "layers": 2,
+          "heads": 4,
+          "context_length": 300,
+          "initial_std": 0.5
+        },
+        "mode": "full",
+        "objective": "ad",
+        "train_sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+        "validation_sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+        "seed": 0,
+        "batch_size": 8,
+        "max_context": 128,
+        "learning_rate": 0.0003
+      },
+      "endpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/ad-full-seed-0/final.pt",
+        "sha256": "0d628afac31e89b7171ec6b00c54825e56cc59f75f678a8ab7eedc5e669610bf"
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/ad-full-seed-0/recovery.pt",
+        "sha256": "3b2ef57ee927bfc130fb6b59241d84dd12405fb7f94d70f1b5e72590f64bad3d"
+      },
+      "historical_100_elapsed_seconds": 91.484384637326,
+      "normalizer": {
+        "artifact_sha256": "3b2ef57ee927bfc130fb6b59241d84dd12405fb7f94d70f1b5e72590f64bad3d",
+        "keys": [
+          "policy.observation_mean",
+          "policy.observation_std"
+        ],
+        "actual_leaf_content_sha256": null,
+        "actual_inspection_pending": true
+      }
+    },
+    "ad_static": {
+      "objective": "ad",
+      "mode": "static",
+      "old_contract": {
+        "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
+        "config": {
+          "observation_dim": 4104,
+          "noise_dim": 32,
+          "width": 128,
+          "layers": 2,
+          "heads": 4,
+          "context_length": 300,
+          "initial_std": 0.5
+        },
+        "mode": "static",
+        "objective": "ad",
+        "train_sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+        "validation_sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+        "seed": 0,
+        "batch_size": 8,
+        "max_context": 128,
+        "learning_rate": 0.0003
+      },
+      "endpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/ad-static-seed-0/final.pt",
+        "sha256": "12c4e464146f5c10dfc91cf87d6c7cecf194ffb002f29e22255c05dbc155d411"
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/ad-static-seed-0/recovery.pt",
+        "sha256": "4043ce62361fe691f6ec66f6a6ca327229868bee0de3d1aaa0b6aa639d1c45fd"
+      },
+      "historical_100_elapsed_seconds": 92.27559118904173,
+      "normalizer": {
+        "artifact_sha256": "4043ce62361fe691f6ec66f6a6ca327229868bee0de3d1aaa0b6aa639d1c45fd",
+        "keys": [
+          "policy.observation_mean",
+          "policy.observation_std"
+        ],
+        "actual_leaf_content_sha256": null,
+        "actual_inspection_pending": true
+      }
+    },
+    "dpt_full": {
+      "objective": "dpt",
+      "mode": "full",
+      "old_contract": {
+        "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
+        "config": {
+          "observation_dim": 4104,
+          "noise_dim": 32,
+          "width": 128,
+          "layers": 2,
+          "heads": 4,
+          "context_length": 300,
+          "initial_std": 0.5
+        },
+        "mode": "full",
+        "objective": "dpt",
+        "train_sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+        "validation_sha256": "6a33b77ee2cb6be939d013d4c2af7bd943502dec4ede11a96c41a06fa77091b3",
+        "seed": 0,
+        "batch_size": 8,
+        "max_context": 128,
+        "learning_rate": 0.0003
+      },
+      "endpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/dpt-full-seed-0/final.pt",
+        "sha256": "0a40eddcebd05f3aae69fcfb85989d2c591728706c6c3f9dc72b10d45843959e"
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/dpt-full-seed-0/recovery.pt",
+        "sha256": "9280c946e036bb48f1a2e44bc11a6e44f3aefcef88ee0dd6ef986c8b40f39594"
+      },
+      "historical_100_elapsed_seconds": 91.08855365496129,
+      "normalizer": {
+        "artifact_sha256": "9280c946e036bb48f1a2e44bc11a6e44f3aefcef88ee0dd6ef986c8b40f39594",
+        "keys": [
+          "policy.observation_mean",
+          "policy.observation_std"
+        ],
+        "actual_leaf_content_sha256": null,
+        "actual_inspection_pending": true
+      }
+    },
+    "dpt_static": {
+      "objective": "dpt",
+      "mode": "static",
+      "old_contract": {
+        "source_commit": "2bc15da3028ab6a3cbaed4b813f3f761a680f1d9",
+        "config": {
+          "observation_dim": 4104,
+          "noise_dim": 32,
+          "width": 128,
+          "layers": 2,
+          "heads": 4,
+          "context_length": 300,
+          "initial_std": 0.5
+        },
+        "mode": "static",
+        "objective": "dpt",
+        "train_sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+        "validation_sha256": "6a33b77ee2cb6be939d013d4c2af7bd943502dec4ede11a96c41a06fa77091b3",
+        "seed": 0,
+        "batch_size": 8,
+        "max_context": 128,
+        "learning_rate": 0.0003
+      },
+      "endpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/dpt-static-seed-0/final.pt",
+        "sha256": "b233d727c19579391c76f94b5844cff838d4a5eb7b9b5beaafab080e694982b4"
+      },
+      "recovery": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-topup-interim100-20261031-r1/experiment/scales/update-000100/dpt-static-seed-0/recovery.pt",
+        "sha256": "fe758c047e713c6e25c891407521e7ce9d37c90a7fc9f44d937e65686ce74b64"
+      },
+      "historical_100_elapsed_seconds": 93.04056777339429,
+      "normalizer": {
+        "artifact_sha256": "fe758c047e713c6e25c891407521e7ce9d37c90a7fc9f44d937e65686ce74b64",
+        "keys": [
+          "policy.observation_mean",
+          "policy.observation_std"
+        ],
+        "actual_leaf_content_sha256": null,
+        "actual_inspection_pending": true
+      }
+    }
+  },
+  "data": {
+    "ad": {
+      "train": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/train-ad.npz",
+        "sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2"
+      },
+      "derived_train": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-ad.npz",
+        "sha256": "c17975bf0e6bfd8e9ac8a1aa534391b09ff52ffa1ceac957d8f2d8df632e50c2",
+        "sidecar_sha256": "bc206f20b70200c26cb7ad9ca59b4a9b1bc8eccd7d48259d657feeabbb8825bf"
+      },
+      "legacy_validation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/validation-ad.npz",
+        "sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337"
+      },
+      "corrected_validation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-ad.npz",
+        "sha256": "ead6c083357d81d5a8aab91e7ac107f5006f0d78094f606b7c969c17015eb337",
+        "sidecar_sha256": "51f231b88e5b6cfa9f0feb4e0ba698314ea25966cd293e69ea842167013ef2c5"
+      }
+    },
+    "dpt": {
+      "train": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/train-dpt.npz",
+        "sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773"
+      },
+      "derived_train": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/train-dpt.npz",
+        "sha256": "bd7161bb9ff61e4d1ba9772f243c2ebfa9ddb46b493869c6c37295bd7846f773",
+        "sidecar_sha256": "ca2c6b873e051954cf2383e3dfcb672399eab3c2d67bdd2d2a4850e45c8bef6a"
+      },
+      "legacy_validation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/validation-dpt.npz",
+        "sha256": "6a33b77ee2cb6be939d013d4c2af7bd943502dec4ede11a96c41a06fa77091b3"
+      },
+      "corrected_validation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/validation-dpt.npz",
+        "sha256": "32eda28573610d1a2bd9fcdb0f332b8075ef6a2676ff03f949bcccd6541a0243",
+        "sidecar_sha256": "1d387d74ea292206fdc6939b155497ee8a7c5920fd86cad678e33e04d7c3725b"
+      }
+    }
+  },
+  "derived_assembly": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-dpt-same-train-teacher-cpu-20261031-r1/assembly/assembly.json",
+    "sha256": "1d7a93c8c0ec64a92687003058dac372bf6c19ab7c871aa1e9d218e624b4c29e"
+  },
+  "derived_assembly_content_sha256": "05cb614a21805e2dee390fadc36a278f05704169f1c8c764942fc107f0a4bf0b",
+  "original_assembly": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-source-pipeline-cpu-20261031-r2/assembly/assembly.json",
+    "sha256": "89d28ad329b612ba52a4bcf108150a335de378a0e0b209e73b7bd5f47a347160"
+  },
+  "original_assembly_content_sha256": "6a2dc1af43b290f35cda98ef6dc8bb07115bcbaeacef4aed8d977f758f83dd0a",
+  "original_audit": {
+    "repo_path": "outputs/libero40-source-topup-interim100-20261031-r1-audit/audit.json",
+    "sha256": "7e2a2d184c961aef5916d7b22a827fc4453336639119578fea670d9bf01f9273"
+  },
+  "derived_audit": {
+    "repo_path": "outputs/libero40-dpt-same-train-teacher-audit-20261031-r1/independent-receipt.json",
+    "sha256": "dc8f536ac77ba45824ccc3e77093fbcbd620e68792057a0d154302c1b78d2cab"
+  },
+  "runtime": {
+    "python": "3.11.17 (main, Oct 14 2026, 01:05:33) [Clang 23.1.3 ]",
+    "executable": "/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python",
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "device": "NVIDIA RPBZZZ6",
+    "cuda_test_sum": 1240.0
+  },
+  "root_authority_files": {
+    "AUTHORITY.json": "48fda24c6e97b2b64665386fd99a7a414800f91b210d4097fb2d80e8ad53e8e4",
+    "GRANT.json": "19493237e4ffc7344f56d1e530f43432fa38870ee65a5475a32388600a911aca"
+  },
+  "maximum_cumulative_GPU_seconds": 7200,
+  "per_model_cumulative_GPU_seconds": 1800,
+  "slice_seconds": 1740,
+  "scheduler_allowance_seconds": 60,
+  "maximum_new_outputs_bytes": 17179869184,
+  "additional_robot_actions": 0,
+  "old_source_actions_provenance": 457851,
+  "actual_state_inspection": null,
+  "execution_admitted": false,
+  "readout_granted": false,
+  "expanded_source_or_25h_funding": false
+}
