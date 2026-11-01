@@ -57,17 +57,31 @@ def require_calibration_permission(calibration, expected_protocol, *, calibratio
     """Keep a failed measurement immutable when a human permits continuation."""
     import math
     validate_protocol(expected_protocol, training=True)
+    rate=calibration.get('initial_success_rate',-1)
+    auc=calibration.get('AUROC')
     if (calibration.get('completed') is not True or calibration.get('protocol')!=expected_protocol
-            or calibration.get('count')!=expected_protocol['baseline_count'] or not .05<=calibration.get('initial_success_rate',-1)<=.70
-            or calibration.get('AUROC') is None or not math.isfinite(calibration['AUROC'])):
+            or calibration.get('count')!=expected_protocol['baseline_count']
+            or isinstance(rate,bool) or not isinstance(rate,(int,float)) or not math.isfinite(rate) or not 0<rate<1
+            or isinstance(auc,bool) or not isinstance(auc,(int,float)) or not math.isfinite(auc) or not 0<=auc<=1):
         raise ValueError('Same completed native headroom/both-class calibration required')
-    if calibration.get('go') is True:return 'original_calibration_gate_passed'
-    if (not isinstance(authorization,dict) or authorization.get('allow_training_below_auc_gate') is not True
+    native_pass=.05<=rate<=.70
+    auc_pass=auc>=.7
+    if calibration.get('go') is not bool(native_pass and auc_pass):
+        raise ValueError('Keep the original measured calibration gate unchanged')
+    if native_pass and auc_pass:return 'original_calibration_gate_passed'
+    if (not isinstance(authorization,dict)
             or authorization.get('calibration_sha256')!=calibration_sha256
             or authorization.get('protocol')!=expected_protocol
-            or authorization.get('measured_AUROC')!=calibration['AUROC']
+            or authorization.get('measured_AUROC')!=auc
             or not authorization.get('direct_human_instruction')):
         raise ValueError('Failed calibration requires an explicit human decision bound to these measured bytes')
+    if not auc_pass and authorization.get('allow_training_below_auc_gate') is not True:
+        raise ValueError('An AUROC exception requires its own explicit human decision')
+    if not native_pass:
+        if (authorization.get('allow_training_outside_native_headroom_gate') is not True
+                or authorization.get('measured_initial_success_rate')!=rate):
+            raise ValueError('A native headroom exception requires its own measured-rate human decision')
+        return 'human_authorized_native_headroom_exception' if auc_pass else 'human_authorized_native_and_AUROC_exceptions'
     return 'human_authorized_below_original_AUROC_gate'
 
 
@@ -100,6 +114,57 @@ def case_bank(task,phase,*,iteration=0,round_index=0,count=None,offset=0):
 
 def evaluation_task(training_task,phase):
     return 'CloseFridge' if phase in ('before_OOD','OOD') else training_task
+
+
+def joint_case_bank(phase,*,iteration=0):
+    """Interleave complete episodes so each ten-episode rank sees all five tasks."""
+    tasks=OOD_TASKS if phase in ('before_OOD','OOD') else PPO_TASKS
+    if phase=='train':
+        banks=[case_bank(task,phase,iteration=iteration,round_index=0) for task in tasks]
+    else:
+        count=8 if phase in ('initial_DEV','DEV') else 50
+        if phase not in ('initial_DEV','DEV','before_ID','ID','before_OOD','OOD'):
+            raise ValueError('Joint calibration is measured in the separate fixed per-task banks')
+        banks=[case_bank(task,phase,count=count) for task in tasks]
+    return [bank[slot] for slot in range(len(banks[0])) for bank in banks]
+
+
+def joint_episode_protocols(episodes,cases):
+    """Bind all80 native episode identities/horizons to their producing cases."""
+    from collections import Counter
+    if (len(episodes)!=80 or len(cases)!=80 or len({e['id'] for e in episodes})!=80
+            or Counter(c['task'] for c in cases)!=Counter({task:16 for task in PPO_TASKS})):
+        raise ValueError('One balanced eighty-episode on-policy bank required')
+    result={}
+    for index,(episode,case) in enumerate(zip(episodes,cases)):
+        if (episode['rank']!=index//10 or episode['round']!=index%10 or episode['local_env']!=0
+                or episode['horizon']!=TASKS[case['task']][0]):
+            raise ValueError('Producing native rank/case/full-horizon order differs')
+        result[episode['id']]=protocol(case['task'],baseline_count=50)
+    return result
+
+
+def joint_arm_stopping(rows):
+    """DEV-only per-task heuristic; final ID/OOD never enter the decision."""
+    if not rows or len(rows)>1+len(DEV_STEPS) or rows[0].get('phase')!='initial_DEV':
+        raise ValueError('Fixed initial per-task DEV evidence required')
+    for index,row in enumerate(rows):
+        panels=row.get('per_task',[])
+        if (row.get('phase')!=('initial_DEV' if index==0 else 'DEV')
+                or row.get('iteration')!=(0,*DEV_STEPS)[index]
+                or row.get('episodes')!=40 or [p.get('task') for p in panels]!=list(PPO_TASKS)
+                or any(p.get('episodes')!=8 or type(p.get('successes')) is not int
+                       or not 0<=p['successes']<=8 for p in panels)
+                or row.get('successes')!=sum(p['successes'] for p in panels)):
+            raise ValueError('Only ordered complete fixed DEV panels for all five tasks may stop PPO')
+    latest=rows[-1]['iteration']
+    ceiling=all(p['successes']==8 for p in rows[-1]['per_task'])
+    flat=latest>=6 and all(max(row['per_task'][i]['successes'] for row in rows[1:])
+                          <=rows[0]['per_task'][i]['successes'] for i in range(5))
+    return dict(stop=bool(latest>=10 or ceiling or flat),
+        reason='fixed10' if latest>=10 else 'all_tasks_DEV8of8' if ceiling else
+               'no_task_DEV_improvement_after6' if flat else 'continue',
+        interpretation='Independent-arm descriptive per-task resource heuristic, not statistical convergence')
 
 
 def private_action_seed(phase,rank):

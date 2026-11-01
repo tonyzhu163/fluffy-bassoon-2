@@ -139,10 +139,16 @@ def video_refs_digest(episodes):
     return digest([e['videos'] if 'videos' in e else e['video'] for e in episodes])
 
 
-def flora_jobs(episodes,protocol=None):
+def flora_jobs(episodes,protocol=None,*,episode_protocols=None):
     if not episodes or len({e['id'] for e in episodes})!=len(episodes):raise ValueError('Unique fresh episode IDs required')
+    if episode_protocols is not None:
+        if (protocol is not None or not isinstance(episode_protocols,dict)
+                or set(episode_protocols)!={e['id'] for e in episodes}):
+            raise ValueError('One exact native protocol per episode, without a uniform override, required')
+        from .rlinf_robocasa_ppo import validate_protocol
+        for value in episode_protocols.values():validate_protocol(value)
     # No labels, rewards, success, episode length annotations or score enter the prompt.
-    return [validate_video(e,protocol) for e in episodes]
+    return [validate_video(e,protocol if episode_protocols is None else episode_protocols[e['id']]) for e in episodes]
 
 
 def terminal_command(python,model_directory,jobs,output,*,seed=0):
@@ -162,9 +168,9 @@ def checked_labels(episodes,outputs,validation,receipt,protocol=None):
     return parse_outputs(episodes,outputs,protocol)
 
 
-def parse_outputs(episodes,outputs,protocol=None):
+def parse_outputs(episodes,outputs,protocol=None,*,episode_protocols=None):
     """Official terminal output validation, also usable before the baseline gate."""
-    flora_jobs(episodes,protocol)
+    flora_jobs(episodes,protocol,episode_protocols=episode_protocols)
     expected={e['id']:e for e in episodes}
     if len(expected)!=len(episodes) or len(outputs)!=len(episodes) or len({r['id'] for r in outputs})!=len(outputs):
         raise ValueError('All fresh batch labels required; no missing, duplicate or dropped episode')
