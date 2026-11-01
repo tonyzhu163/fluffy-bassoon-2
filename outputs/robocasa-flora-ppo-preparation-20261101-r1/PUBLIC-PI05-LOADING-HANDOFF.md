@@ -109,12 +109,36 @@ barrier, S receives terminal ground truth0/1; F receives only
 existing isolated Flora scorer/pre-GAE/recovery path after its real365 port;
 the LIBERO44 hardcoded schedules/H400/20Hz are not already qualified for365.
 
-The proposed fallback task ScrubCuttingBoard has nativeH1200. At16 environments
-and4 complete rollout rounds it yields1,536H50 chunk samples; the protocol owner
-accepted global512, giving3 minibatches per PPO epoch. Keep4 PPO epochs and
-the default LRs/Adam/loss. Max20 is only an initial iteration upper bound:
-native baseline, qualification, failures and all complete evaluation cases must
-fit the1M all-in cap per arm. A fixed smaller schedule must be bound before SGD;
-do not advertise12 rounds plus a baseline64 as fitting that cap. No old task44
-baseline64 gate, automatic new SFT, target-checkpoint selection, partial source
-batch or wider task search carries into this pilot.
+The global batch depends on the prospectively selected task. At16 environments,
+4 complete rollout rounds and H50, OpenDrawer's native horizon750 gives960
+chunks: use matched **global320**,3 minibatches per PPO pass. ScrubCuttingBoard's
+horizon1200 gives1,536 chunks: use matched **global512**,also3 minibatches per
+pass. Keep4 PPO epochs and the default LRs/Adam/loss. At4 actor ranks, example
+microbatch16 gives accumulation5 for OpenDrawer or8 for Scrub; actual capacity
+may change only the execution microbatch while retaining the selected global
+batch and complete episodes. Global512 is not an OpenDrawer configuration.
+
+The bounded proposal uses at most10 matched updates, fixed8-case DEV panels
+after2/4/6/8/10, a separate final8, and an initial sameDEV baseline. Before any
+outcomes, freeze DEV seeds; the final8 must never be used for stopping. Reserve
+8 additional initialDEV cases per arm unless exact common-native case/model/
+norm/sampler/private-RNG/termination-protocol reuse is proved. Charge a reused
+physical case only once. Including that additional reserve, maximum TRAIN plus
+scheduled evaluation is522,000 actions per arm on OpenDrawer or835,200 on Scrub.
+The common native/qualification ceiling15,600 is counted once. Actual resets,
+settling, qualification and failed/uncertain actions remain charged inside the
+1M per-arm guard; the arithmetic remainder is not new spending authority.
+
+Publish success numerators/denominators for these exploratory panels and the
+stated futility rule in the profile. A one-case increase does not establish
+convergence or significance. The final8 stays out of that rule. No old task44
+baseline64 gate, new SFT, target-checkpoint selection, partial source batch or
+wider task search carries into this pilot.
+
+The resource proposal permits **two matched arm jobs**, each proposed at4 GPUs
+and at most6 hours, within the human's ceiling of8 GPUs per scheduler job.
+Run them concurrently when hardware and scorer capacity permit, with separate
+complete recoveries and exact scientific settings. Serial execution is optional;
+there is no serial-only readiness gate or inferred aggregate GPU-hour cap. The
+owner binds actual resources and the independent scorer's finite capacity before
+dispatch. These remain proposals, not allocations or passed qualification.

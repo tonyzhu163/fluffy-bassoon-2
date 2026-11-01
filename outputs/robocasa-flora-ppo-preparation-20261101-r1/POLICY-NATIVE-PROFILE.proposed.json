@@ -54,16 +54,11 @@
   },
   "paired_pilot_proposal": {
     "status": "PENDING_CORE_RUNTIME_PORT_AND_ACTUAL_QUALIFICATION_NOT_LAUNCHABLE",
-    "task_if_fallback_selected": "ScrubCuttingBoard",
-    "native_horizon": 1200,
     "train_environments": 16,
     "complete_rollout_rounds": 4,
     "action_horizon_and_chunk": 50,
-    "global_optimization_batch": 512,
     "PPO_epochs": 4,
     "maximum_matched_iterations": 10,
-    "TRAIN_actions_per_arm_per_iteration": 76800,
-    "maximum_TRAIN_actions_per_arm": 768000,
     "DEV_schedule_iterations": [
       2,
       4,
@@ -72,10 +67,7 @@
       10
     ],
     "DEV_cases_each": 8,
-    "DEV_actions_per_arm": 48000,
     "fresh_final_cases_each": 8,
-    "fresh_final_actions_per_arm": 9600,
-    "maximum_train_plus_eval_actions_each": 825600,
     "common_native_and_qualification_actions_ceiling_counted_once": 15600,
     "arm_all_in_upper": 1000000,
     "remainder_not_new_authority": true,
@@ -84,15 +76,84 @@
     "stock_delta_success_reward_retained": false,
     "same_model_norm_sampler_optimizer_and_eval": true,
     "resource_proposal": {
-      "scheduler_jobs": 1,
-      "gpus_max": 4,
-      "arms": "S/F serial in same bounded allocation, with separate complete recovery identities",
-      "maximum_inclusive_wall_seconds": 21600,
-      "maximum_aggregate_gpu_seconds": 86400,
-      "maximum_new_output_gib": 256,
-      "scorer_capacity": "Must be bound separately by owner from actual repaired scorer profile; no old held/scorer balance assumed."
+      "scheduler_jobs": 2,
+      "proposed_gpus_per_job": 4,
+      "authorized_gpu_ceiling_per_job": 8,
+      "arms": "Separate S and F jobs, concurrently when hardware/scorer capacity permits; separate complete recoveries. Serial scheduling is optional, not a scientific or readiness gate.",
+      "maximum_inclusive_wall_seconds_per_job": 21600,
+      "maximum_gpu_seconds_per_proposed_job": 86400,
+      "maximum_aggregate_gpu_seconds_for_both_proposed_jobs": 172800,
+      "maximum_new_output_gib_per_job": 128,
+      "maximum_new_output_gib_both_jobs": 256,
+      "resource_boundary": "Concrete proposal only, not a reservation; standing <=8 GPUs/job does not mean default8 or additional authority beyond the chosen matched phase. No aggregate GPU-hour cap is inferred.",
+      "scorer_capacity": "Owner binds actual independent repaired scorer capacity/clock; every allocation/wait/failure is charged once, no old balance assumed."
     },
-    "early_stop": "Stop paired continuation at a planned DEV boundary if both reach8/8 (no headroom), or after iteration6 if neither improves even one fixedDEV case over its native baseline at2/4/6. This is a bounded pilot futility rule, not statistical proof; preserve all outcomes and complete pending recovery."
+    "early_stop": "At a planned fixedDEV boundary, stop both arms if both reach8/8 (exploratory ceiling stop); after iteration6, stop paired continuation if neither gains even one fixedDEV case over its own initial sameDEV baseline at2/4/6. Final8 never participates. This is the stated bounded-pilot futility rule, not statistical evidence of convergence/significance; preserve all outcomes and complete pending recovery.",
+    "selected_task_before_SGD": null,
+    "task_profiles": {
+      "OpenDrawer": {
+        "native_horizon": 750,
+        "rollout_chunk_samples_per_iteration": 960,
+        "global_optimization_batch": 320,
+        "minibatches_per_PPO_pass": 3,
+        "example_execution_layouts": {
+          "2_ranks": {
+            "microbatch": 32,
+            "accumulation": 5
+          },
+          "4_ranks": {
+            "microbatch": 16,
+            "accumulation": 5
+          },
+          "8_ranks": {
+            "microbatch": 8,
+            "accumulation": 5
+          }
+        },
+        "TRAIN_actions_per_arm_per_iteration": 48000,
+        "maximum_TRAIN_actions_per_arm": 480000,
+        "scheduled_DEV_actions_per_arm": 30000,
+        "fresh_final_actions_per_arm": 6000,
+        "initial_same_DEV_extra_reserve_per_arm_if_not_exactly_reused": 6000,
+        "maximum_train_plus_all_eval_actions_per_arm_including_initial_reserve": 522000
+      },
+      "ScrubCuttingBoard": {
+        "native_horizon": 1200,
+        "rollout_chunk_samples_per_iteration": 1536,
+        "global_optimization_batch": 512,
+        "minibatches_per_PPO_pass": 3,
+        "example_execution_layouts": {
+          "2_ranks": {
+            "microbatch": 32,
+            "accumulation": 8
+          },
+          "4_ranks": {
+            "microbatch": 16,
+            "accumulation": 8
+          },
+          "8_ranks": {
+            "microbatch": 8,
+            "accumulation": 8
+          }
+        },
+        "TRAIN_actions_per_arm_per_iteration": 76800,
+        "maximum_TRAIN_actions_per_arm": 768000,
+        "scheduled_DEV_actions_per_arm": 48000,
+        "fresh_final_actions_per_arm": 9600,
+        "initial_same_DEV_extra_reserve_per_arm_if_not_exactly_reused": 9600,
+        "maximum_train_plus_all_eval_actions_per_arm_including_initial_reserve": 835200
+      }
+    },
+    "initial_same_DEV_baseline": {
+      "cases": 8,
+      "reserve_extra_per_arm_until_reuse_is_proven": true,
+      "reuse_requires": "Same actual cases, initializer, normalization, sampler/private action RNG, termination/label timing and input identities. Common native data is not automatically the sameDEV baseline.",
+      "accounting": "A proven reused physical case is charged once; reserve is a ceiling, not duplicated consumption."
+    },
+    "DEV_seed_bank": null,
+    "freeze_DEV_seeds_before_any_outcomes": true,
+    "fresh_final_unused_for_stopping": true,
+    "reporting": "Exploratory8-case panels: publish success numerators/denominators and the predeclared stop rule; no significance or convergence claim from a one-case increase."
   },
   "not_done": [
     "No model/tensor read or conversion here",
