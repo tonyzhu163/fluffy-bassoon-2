@@ -1,0 +1,34 @@
+{
+  "status": "STATIC_SOURCE_AND_MANIFEST_REVIEW_PASS_NOT_RUNTIME_QUALIFIED",
+  "source_commit": "47e5ae6c",
+  "patch_sha256": "983c6a9eb9b8515f2bcb2ad8e8f1560b87a346de09628b1c6b73ca2a5886998f",
+  "reviewed_targets": [
+    {
+      "file": "rlinf/models/embodiment/openpi/dataconfig/robocasa_dataconfig.py",
+      "base_sha256": "103188756962ab677b82fc5900b6186f8d92d8afd10b897a89a2f40c41fc1719",
+      "patched_sha256": "227e540995c1e368bb5bb1ec3cf32dec7b1d70fa41bfa351bd1a444b6d44408e"
+    },
+    {
+      "file": "rlinf/envs/sim/robocasa365/robocasa365_env.py",
+      "base_sha256": "7c2905b13d3a592277f11c3c18a85f9d74568be3157adc5217c93adf1ff17264",
+      "patched_sha256": "239ee187299c0155c1a29257caf2e55963e14335fa64f0a19d707482ba98b2c3"
+    }
+  ],
+  "selector": "tests/test_robocasa_pi05_preprocessing.py",
+  "selector_sha256": "f44fb23d91289f92333dc4b4323e8a82b64cc8b27e0ff638d6694c21c21bd1b7",
+  "prepared_cases": [
+    "test_state_matches_published_relative_eef_base_gripper_order",
+    "test_padding_is_normalized_before_discrete_state_tokenization",
+    "test_three_camera_slots_preserve_reference_order",
+    "test_action_mean_std_output_keeps_native_eef_gripper_base_order",
+    "test_native_score_controls_match_pandaomron_key_converter"
+  ],
+  "source_qualification": "Actual d80 canonical base bytes and exact patched hashes matched; Python3.11 AST only. Five numerical tests not executed. No runtime imports/models/arrays/simulator on Mac.",
+  "checkpoint_inventory": {
+    "files": 19,
+    "bytes": 12440863506,
+    "published_LFS_sha256_files": 9,
+    "scope": "Only params/assets; no train_state. Actual payload hashes and native normalizer shapes await allocated Linux."
+  },
+  "runtime_limits": "Native config source still uses success termination; headroom/PPO phases require a prospectively frozen full-horizon/no-success-termination profile. The paired PPO365 runtime port and action/case clocks are not qualified by these files."
+}
