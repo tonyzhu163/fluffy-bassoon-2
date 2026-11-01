@@ -1,0 +1,322 @@
+- generic "取消收藏": 
+- generic "取消收藏": 
+- generic "取消收藏": 
+- generic "取消收藏": 
+- generic "取消收藏": 
+- generic "取消收藏": 
+- link:
+  - /url: https://cloud.baidu.com/?from=console
+- link "控制台":
+  - /url: https://console.bce.baidu.com
+  - generic: 控制台
+- text: 华北 - 北京
+- textbox "请输入产品、文档关键词"
+- generic "工单":
+  - generic: 工单
+- generic: 支持
+- generic "文档":
+  - generic: 文档
+- link "生态":
+  - /url: https://cloud.baidu.com/partner/plan.html
+  - generic: 生态
+- generic "备案":
+  - link "备案":
+    - /url: https://cloud.baidu.com/beian/index.html
+    - generic: 备案
+- link "购物车":
+  - /url: https://console.bce.baidu.com/home/cart.html#/detail
+  - img: 
+- text:   
+- generic "移动端管理":
+- link "Switch to English":
+  - /url: javascript:void(0);
+- generic "mowenjie": M
+- generic: 百度百舸 · AI计算平台
+- menu:
+  - menuitem "概览":
+    - generic: 概览
+  - menuitem "快速开始":
+    - generic: 快速开始
+  - menuitem "AI数据处理" [expanded]:
+    - generic: AI数据处理
+  - menu:
+    - menuitem "算子广场":
+      - generic: 算子广场
+  - menuitem "AI计算资源" [expanded]:
+    - generic: AI计算资源
+  - menu:
+    - menuitem "全托管资源池":
+      - generic: 全托管资源池
+    - menuitem "预留实例券":
+      - generic: 预留实例券
+  - menuitem "大规模训练与推理" [expanded]:
+    - generic: 大规模训练与推理
+  - menu:
+    - menuitem "开发机":
+      - generic: 开发机
+    - menuitem "分布式训练":
+      - generic: 分布式训练
+    - menuitem "在线服务部署":
+      - generic: 在线服务部署
+    - menuitem "工作流":
+      - generic: 工作流
+    - menuitem "模型评测":
+      - generic: 模型评测
+  - menuitem "AI资产管理" [expanded]:
+    - generic: AI资产管理
+  - menu:
+    - menuitem "数据集":
+      - generic: 数据集
+    - menuitem "湖管理" [expanded]:
+      - generic: 湖管理
+    - menu:
+      - menuitem "元数据":
+        - generic: 元数据
+      - menuitem "权限管理":
+        - generic: 权限管理
+    - menuitem "模型":
+      - generic: 模型
+    - menuitem "镜像":
+      - generic: 镜像
+    - menuitem "数据商城":
+      - generic: 数据商城
+  - menuitem "平台管理" [expanded]:
+    - generic: 平台管理
+  - menu:
+    - menuitem "报表&监控":
+      - generic: 报表&监控
+- generic: 复制任务
+- main:
+  - generic: 基本信息
+  - generic: 任务名称
+  - generic: "*"
+  - textbox "请输入任务名称": mwj_1101_flora_coherent_cuda13_g1_q5
+  - generic: 36 / 256
+  - paragraph: 支持大小写字母、数字、中划线-、下划线_和小数点.，长度不超过256个字符
+  - generic: 可见范围
+  - generic: "*"
+  - generic: 队列内可见
+  - generic: 仅创建人可见
+  - paragraph: 管理员和队列成员可见
+  - generic: 创建方式
+  - generic: 自定义创建
+  - generic: 基于开源模型训练模版创建
+  - generic: 环境信息
+  - generic: 镜像地址
+  - generic: "*"
+  - generic: 百舸预置镜像
+  - generic: 镜像地址
+  - textbox "请输入镜像地址": ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301
+  - button "从CCR仓库选择":
+    - generic: 从CCR仓库选择
+  - paragraph:
+    - text: 若需更新私有镜像仓库授权，请
+    - button "重新输入账号密码":
+      - generic: 重新输入账号密码
+  - generic: 执行命令
+  - generic: "*"
+  - generic: 执行命令
+  - link "如何配置Pytorch多机多卡训练":
+    - /url: https://cloud.baidu.com/doc/AIHC/s/mm346i20k#%E5%A4%9A%E6%9C%BA%E4%BB%BB%E5%8A%A1%E5%90%AF%E5%8A%A8%E7%A4%BA%E4%BE%8B
+  - button:
+  - button:
+  - code:
+    - generic: "1"
+    - generic: "2"
+    - generic: "3"
+    - generic: TASK_STARTED=$(date +%s)
+    - generic: export TASK_STARTED
+    - generic: exec timeout --signal=TERM --kill-after=30s 2280 bash /mowenjie/fluffy-bassoon-2/inputs/flora-ppo-coherent-
+    - generic: cuda13-r5-20261101-r1/FLORA-Q5-COMMAND.sh
+    - textbox "编辑器内容;按 Alt+F1 可打开辅助功能选项。": TASK_STARTED=$(date +%s) export TASK_STARTED exec timeout --signal=TERM --kill-after=30s 2280 bash /mowenjie/fluffy-bassoon-2/inputs/flora-ppo-coherent-cuda13-r5-20261101-r1/FLORA-Q5-COMMAND.sh
+  - generic: 环境变量
+  - button "添加环境变量":
+    - img: 
+    - generic: 添加环境变量
+  - generic: 端口
+  - button "添加端口":
+    - img: 
+    - generic: 添加端口
+  - paragraph:
+    - text: 开启Metrics类型的端口后，平台会将该路径下的指标数据采集到资源池关联的 Cprom监控实例。请注意：此类数据指标属于付费指标，计费规则请参考：
+    - link "Cprom 计费概述":
+      - /url: https://cloud.baidu.com/doc/CProm/s/Gl0gcsh46
+  - generic: 资源配置
+  - generic: 队列
+  - generic: "*"
+  - textbox "请选择队列": 算法Z组/aihcq-rh0wwk9muei4
+  - generic: 遍历
+  - generic: 优先级
+  - generic: "*"
+  - generic: 高
+  - generic: 中
+  - generic: 低
+  - paragraph: 当前优先级会触发低利用率自动停止规则，请确认代码中包含 checkpoint 机制，确保任务可以顺利续跑。
+  - generic: 训练框架
+  - generic: "*"
+  - generic: PyTorch
+  - generic: Ray
+  - generic: MPI
+  - generic: TensorFlow
+  - generic: 资源配额
+  - generic: "*"
+  - table:
+    - rowgroup:
+      - row "类型 实例数量 GPU类型 * 卡数 * CPU（核） * 内存（GiB） 操作":
+        - columnheader "类型"
+        - columnheader "实例数量"
+        - columnheader "GPU类型 * 卡数"
+        - columnheader "* CPU（核）"
+        - columnheader "* 内存（GiB）"
+        - columnheader "操作"
+    - rowgroup:
+      - row "Worker Increase Value Decrease Value 1 NVIDIA RPBZZZ6 * Increase Value Decrease Value 1 Increase Value Decrease Value 16 Increase Value Decrease Value 96 资源模板":
+        - cell "Worker":
+          - generic: Worker
+        - cell "Increase Value Decrease Value 1":
+          - button "Increase Value":
+            - img "up":
+          - button "Decrease Value" [disabled]:
+            - img "down":
+          - spinbutton: "1"
+        - cell "NVIDIA RPBZZZ6 * Increase Value Decrease Value 1":
+          - combobox
+          - generic: NVIDIA RPBZZZ6
+          - paragraph
+          - generic: "*"
+          - button "Increase Value":
+            - img "up":
+          - button "Decrease Value":
+            - img "down":
+          - spinbutton: "1"
+        - cell "Increase Value Decrease Value 16":
+          - button "Increase Value":
+            - img "up":
+          - button "Decrease Value":
+            - img "down":
+          - spinbutton "请输入": "16.0"
+        - cell "Increase Value Decrease Value 96":
+          - button "Increase Value":
+            - img "up":
+          - button "Decrease Value":
+            - img "down":
+          - spinbutton "请输入": "96.0"
+        - cell "资源模板":
+          - button "资源模板":
+            - generic: 资源模板
+  - generic: 共享内存
+  - generic: "*"
+  - button "Increase Value":
+    - img "up":
+  - button "Decrease Value":
+    - img "down":
+  - spinbutton "请输入共享内存": "8"
+  - generic: GiB
+  - generic: 数据集挂载
+  - button "添加自定义数据集挂载":
+    - img: 
+    - generic: 添加自定义数据集挂载
+  - button "添加公共数据集挂载":
+    - img: 
+    - generic: 添加公共数据集挂载
+  - generic: 存储挂载
+  - table:
+    - rowgroup:
+      - row "存储类型 存储配置 权限 操作":
+        - columnheader "存储类型":
+          - generic: 存储类型
+        - columnheader "存储配置":
+          - generic: 存储配置
+        - columnheader "权限":
+          - generic: 权限
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "并行文件存储 PFS pfs-xPQ6Bb /mowenjie /mowenjie 只读 删除":
+        - cell "并行文件存储 PFS":
+          - combobox
+          - generic "并行文件存储 PFS"
+        - cell "pfs-xPQ6Bb /mowenjie /mowenjie":
+          - combobox
+          - generic "pfs-xPQ6Bb"
+          - textbox "请输入源路径": /mowenjie
+          - textbox "请输入挂载路径": /mowenjie
+        - cell "只读":
+          - checkbox "只读"
+          - generic: 只读
+        - cell "删除"
+  - button "添加存储挂载":
+    - img: 
+    - generic: 添加存储挂载
+  - generic: 使用闲时资源
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - button "高级配置":
+    - generic: 高级配置
+  - generic: 最大运行时长 | 指定节点调度 | 定时提交 | 任务退出后自动删除
+  - generic: 最大运行时长
+  - spinbutton: "39"
+  - combobox
+  - generic "分钟"
+  - paragraph: 超过该时长任务将被系统自动停止，填写0表示任务无运行时长限制
+  - generic: 指定节点调度
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - generic: 定时提交
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - paragraph: 可选择在指定时间提交训练任务
+  - generic: 任务退出后自动删除
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - paragraph: 开启后，仅针对于成功/失败状态的任务生效，您可以自定义配置保留时长
+  - generic: 容错与诊断
+  - generic: 自动容错
+  - switch "开 关" [active]:
+    - generic: 开
+    - generic: 关
+  - generic: 任务hang检测
+  - switch
+  - generic: 监控信息
+  - generic: Tensorboard
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - generic: 任务告警
+  - switch "开 关":
+    - generic: 开
+    - generic: 关
+  - generic: 队列资源概览
+  - text: 队列详情
+  - generic: NVIDIA RPBZZZ6
+  - generic: 3 排队任务
+  - generic: 队列空闲/最大可用量
+  - generic: GPU
+  - generic: （卡）
+  - generic: 11/416
+  - generic: CPU
+  - generic: （核）
+  - generic: 1347/9100
+  - generic: 内存
+  - generic: （GiB）
+  - generic: 16240/93596
+  - generic: 空闲卡数的可用节点分布
+  - button "确定":
+    - generic: 确定
+  - button "取消":
+    - generic: 取消
+- list:
+  - generic: 
+  - generic: 
+  - text: 
+  - generic: 
+  - text:  
+- text: 
+- alert
+- alert
+- complementary
+- complementary
