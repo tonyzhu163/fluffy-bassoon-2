@@ -33,9 +33,10 @@ physical states40–49 with two private-noise draws each.
 | Fifteenth learned panel |20/20|300,140|
 | Sixteenth learned panel |20/20|320,040|
 | Seventeenth learned panel |20/20|340,060|
+| Eighteenth learned panel |20/20|360,080|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest340,060 panel uses1,495 query primitives+200
+development bank. The latest360,080 panel uses1,481 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -113,11 +114,28 @@ comparisons are omitted, leaving320 episodes/max131,200 actions. This panel
 can assess competence but cannot isolate initialized-to-final SGD gains.
 States40/41 had no actual TRAIN episodes in the examined indices, but the
 fixed8 VAL/prior competence histories exposed them; they are not globally
-unseen. Payload load, executable and runtime bindings remain pending. No new teacher training, collection
+unseen. The clock-bound executable passes59 focused CPU cases in80worker-seconds.
+Its single GPU allocation binds all40 actual payloads/full states before
+outcomes; first8 episodes use672 all-in actions. Embedded native/feature
+qualification gives zero repeat delta and frozen-state guards pass. The full
+comparison and final motor-after remain pending. No new teacher training, collection
 for pretraining or student fit is admitted. Two cases per goal measure limited
 same-mode competence; a missing initial cannot establish learning. This is
 separate from the unfunded25h source expansion and preserves every old ledger.
 [Scope and inclusive ceilings](../../outputs/libero40-teacher-assessment-20261101-r1/PROTOCOL.json).
+
+The first assessment allocation then stops at161/320 closed roles when
+Spatial05/state40/tied fails the paired-reset guard before steering. The
+failed reset adds10 settling actions:26,096 total over162 physical resets,
+with1,340 GPU-seconds and unchanged whole-motor C565 before/after. The first
+20 complete goals give native40/40, mean40/40, sampled40/40 and tied37/40;
+the extra native1/1 is separate. This is partial ceiling evidence, not full40
+competence or SGD improvement. The exact failed comparison term is unknown;
+saved raw/state/instruction drift and derived-feature/instrumentation drift
+remain competing explanations. Failed computed features were not saved. A
+bounded CPU-only comparison of the two saved records precedes any repair;
+strict pairing, active161 and all unrun rows remain intact. No retry is
+admitted. [Terminal evidence](../../outputs/libero40-teacher-assessment-20261101-r1/TERMINAL-R1-PARENT-REVIEW.json).
 
 ## Task57 fixed500k DSRL curve complete
 

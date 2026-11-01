@@ -1,0 +1,87 @@
+{"status": "passed", "purpose": "training", "timing_comparison_eligible": false, "allocation_type": "baige_container", "hostname": "job-bmolej07bhsg-master-0", "probe_pid": 419, "created_at_utc": "2026-11-01T03:13:13.383966+00:00", "devices": [{"allocation_ordinal": 0, "visibility_token": "0", "cuda_uuid": "ede2ba61-fcab-b878-9c2a-ad2fdc80fbac", "cuda_name": "NVIDIA RPBZZZ6", "cuda_total_bytes": 101973950464, "pci_bus_id": "0000:62:00.0", "uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc", "inventory": {"index": 0, "uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc", "name": "NVIDIA RPBZZZ6", "memory_total_mib": 97887.0, "memory_used_mib": 0.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:62:00.0"}, "allocation_check": {"elements": 1048576, "result": 2097152.0, "touched_gpu_uuids": ["GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"], "own_pid_gpu_uuids": ["GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"]}}], "idle_utilization_required": false, "exclusive_training_admission": true, "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory", "utilization_role": "telemetry_only", "utilization_telemetry": {"GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc": 0.0}, "maximum_initial_memory_mib": 256, "gpu_identity_mapping": {"method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation", "assigned_nvml_uuids": ["GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"]}, "compute_processes_before": [], "compute_processes_after": [{"gpu_uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc", "pid": 419, "process_name": "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/bin/python", "memory_used_mib": "640"}], "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"}
+WARNING:absl:Tensorflow library not found, tensorflow.io.gfile operations will use native shim calls. GCS paths (i.e. 'gs://...') cannot be accessed.
+PixelMultiplexer(
+    # attributes
+    encoder = Encoder(
+        # attributes
+        features = (32, 32, 32, 32)
+        strides = (2, 1, 1, 1)
+        padding = 'VALID'
+    )
+    network = LearnedStdTanhNormalPolicy(
+        # attributes
+        hidden_dims = (128, 128, 128)
+        action_dim = 32
+        dropout_rate = 0.0
+        log_std_min = -20
+        log_std_max = 2
+        low = -1.0
+        high = 1.0
+    )
+    latent_dim = 50
+    use_bottleneck = True
+)
+2026-11-01 11:14:04.124324: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng28{k2=4,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:08.509347: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 5.385120351s
+Trying algorithm eng28{k2=4,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:09.772222: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng1{k2=4,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:23.198475: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 14.426324224s
+Trying algorithm eng1{k2=4,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:24.199613: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng2{k2=3,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:25.541174: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 2.341632421s
+Trying algorithm eng2{k2=3,k3=0} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:26.544141: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng0{} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:31.963398: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 6.419314736s
+Trying algorithm eng0{} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:32.963583: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng4{} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:40.051733: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 8.088219636s
+Trying algorithm eng4{} for conv %cudnn-conv.1 = (f32[1,31,31,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3 stride=2x2}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:41.590429: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng3{k11=2} for conv %cudnn-conv.1 = (f32[1,29,29,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+2026-11-01 11:14:41.999436: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 1.409072549s
+Trying algorithm eng3{k11=2} for conv %cudnn-conv.1 = (f32[1,29,29,32]{3,2,1,0}, u8[0]{0}) custom-call(%bitcast.20, %bitcast.27), window={size=3x3}, dim_labels=b01f_o01i->b01f, custom_call_target="__cudnn$convForward", metadata={op_name="jit(conv_general_dilated)/jit(main)/conv_general_dilated" source_file="/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/flax/linen/linear.py" source_line=658}, backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"conv_result_scale":1,"activation_mode":"kNone","side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false} is taking a while...
+PixelMultiplexer(
+    # attributes
+    encoder = Encoder(
+        # attributes
+        features = (32, 32, 32, 32)
+        strides = (2, 1, 1, 1)
+        padding = 'VALID'
+    )
+    network = StateActionEnsemble(
+        # attributes
+        hidden_dims = (128, 128, 128)
+        activations = relu
+        num_qs = 10
+        use_action_sep = False
+    )
+    latent_dim = 50
+    use_bottleneck = True
+)
+target_entropy: -16.0
+mean
+/mowenjie/fluffy-bassoon/envs/openpi-215abfb/lib/python3.11/site-packages/torch/cuda/__init__.py:287: UserWarning: 
+NVIDIA RPBZZZ6 with CUDA capability sm_120 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_50 sm_60 sm_70 sm_75 sm_80 sm_86 sm_90.
+If you want to use the NVIDIA RPBZZZ6 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  warnings.warn(
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py", line 426, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py", line 417, in main
+    return run_panel(table,motor,actors,a.output,server_factory=lambda task,n:OwnedSimulator(task,python=a.simulator_python,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py", line 312, in run_panel
+    rows,receipt,noise_after=rollout_episode(captured_sim,captured_motor,controller,case=case,method=method,
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_evaluate.py", line 273, in rollout_episode
+    qualify(initial["observation"])
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py", line 299, in on_reset
+    check_pair(reference,initial,feature,server.metadata['instruction'])
+  File "/mowenjie/fluffy-bassoon-2/worktrees/libero40-teacher-assessment-20261101-r1/src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py", line 242, in check_pair
+    raise ValueError('Actual same-case reset/raw/public inputs differ BEFORE steering; preserve partial result')
+ValueError: Actual same-case reset/raw/public inputs differ BEFORE steering; preserve partial result
+{"path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000", "started_unix": 1793502780.0, "slice_seconds": 10740, "reserved_seconds": 10800, "status": "finished", "scheduler_allowance_seconds": 60, "ended_unix": 1793504059.1853201, "exit_code": 1, "charged_seconds": 1340, "slice_overrun": false}

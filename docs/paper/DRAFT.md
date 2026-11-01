@@ -89,7 +89,7 @@ no compatible source teacher or meta-learning result follows.
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through340,060 scores20/20. All panels are retained. This is interim
+from40,140 through360,080 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
@@ -110,8 +110,13 @@ stay missing. All40 final references are metadata-bound; no genuine original ini
 checkpoint is proven in the bounded retained-index search. Initialized roles
 are omitted:320 episodes/max131,200 new actions under the unchanged inclusive
 10,800-GPU-second phase ceiling. It assesses final competence without
-isolating SGD improvement. Payload/executable qualification remains pending.
-No allocation is reserved, and the
+isolating SGD improvement. The exact clock-bound executable passes59 CPU cases in80worker-seconds,
+then begins one bounded GPU assessment. All40 actual payloads/state bind
+before outcomes; first8 episodes close with672actions and zero native/feature
+repeat delta. It then stops at161/320 completed roles on a reset-pair guard before
+steering; finalC565 remains unchanged. The26,096 actions and1,340GPU-seconds
+are retained. Exact predicate diagnosis is pending, not a teacher failure
+claim or source/student admission. The
 old25h collection/fit expansion remains unfunded.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
