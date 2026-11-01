@@ -1,16 +1,36 @@
 # Learning to Steer: In-Context Reinforcement Learning for Frozen VLAs
 
-Can a history-conditioned steering policy adapt a frozen vision-language-action
-model to held-out robotic tasks with high sample efficiency and strong final
-performance? The paper stays about in-context RL. **The current first step is
+Our central hypothesis is that **meta-training in simulation enables
+substantially faster learning from sparse real-robot experience**. We study
+history-conditioned steering policies around frozen vision-language-action
+models. The paper stays about in-context RL. **The current first step is
 PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)),
-tested on LIBERO and reported on RoboCasa365.
+tested on LIBERO and reported on RoboCasa365. Transfer of the learned
+adaptation procedure to real tasks is the fundamental question.
 
 **Start here:** [docs/README.md](docs/README.md) indexes the five documents:
 [paper plan](docs/PAPER.md), [findings to date](docs/FINDINGS.md),
 [Flora PPO](docs/FLORA-PPO.md) and [shared methods and code](docs/METHODS.md).
 Agents and collaborators also read [AGENTS.md](AGENTS.md) (clusters, storage,
 GPU rules) and the live [coordination file](outputs/coordination.md).
+
+Simulation can support large PPO batches and many training updates. Real-robot
+experience is scarce, so meta-training should optimize improvement over the
+first few attempts on a new task. At deployment, adaptation may use retained
+experience in context, Flora-rewarded PPO updates, or both.
+
+The primary metric is real-task success versus the number of real attempts,
+with physical actions also reported and real-data budgets matched. Compare:
+
+- An ordinary pretrained policy adapted with Flora-rewarded PPO.
+- A meta-learned module adapting through context with its weights frozen.
+- A meta-learned module adapting through context and Flora-rewarded PPO.
+
+Context-reset controls use the same weights to isolate the contribution of
+retained experience. Measure task success independently of Flora's training
+score. Frozen-weight improvement tests in-context transfer; improvement with
+additional PPO tests the combined adaptation procedure. Simulator learning
+alone does not establish either result on a real robot.
 
 Other earlier work, including CTM pilots, ManiSkill, RoboMimic and most
 of the LIBERO source40 pipeline,
