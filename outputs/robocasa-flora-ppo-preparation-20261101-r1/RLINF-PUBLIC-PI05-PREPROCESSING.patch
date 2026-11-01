@@ -8,13 +8,15 @@
 +    # None/False preserve existing checkpoints and legacy recipes.
 +    use_quantile_norm: bool | None = None
 +    pad_before_normalization: bool = False
- 
+-
++
      @override
      def create(
 @@ -86,13 +90,23 @@
              outputs=[robocasa_policy.RobocasaOutputs(action_space=self.action_space)],
          )
- 
+-
++
 +        if self.pad_before_normalization:
 +            data_transforms = dataclasses.replace(
 +                data_transforms,
@@ -25,7 +27,8 @@
          # Model transforms include things like tokenizing the prompt and action targets
          # You do not need to change anything here for your own dataset.
          model_transforms = ModelTransformFactory()(model_config)
- 
+-
++
          # We return all data transforms for training and inference. No need to change anything here.
 +        base = self.create_base_config(assets_dirs, model_config)
 +        if self.use_quantile_norm is not None:
@@ -62,16 +65,20 @@
 +        index = int(action_space_cfg.get("base_mode_index", 11))
 +        mapped[..., index] = np.where(mapped[..., index] < 0.5, -1.0, 1.0)
 +    return mapped
- 
- 
+-
++
+-
++
  class Robocasa365Env(gym.Env):
 @@ -615,9 +635,10 @@
          if isinstance(actions, torch.Tensor):
              actions = actions.detach().cpu().numpy()
- 
+-
++
 +        physical_actions = map_released_control_scores(actions, self.action_space_cfg)
          self._elapsed_steps += 1
- 
+-
++
 -        raw_obs, rewards, dones, info_lists = self.env.step(actions)
 +        raw_obs, rewards, dones, info_lists = self.env.step(physical_actions)
          del rewards, dones
