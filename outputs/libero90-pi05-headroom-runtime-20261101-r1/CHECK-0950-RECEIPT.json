@@ -1,0 +1,60 @@
+{
+  "format": "headroom_0950_light_receipt_v1",
+  "job_id": "job-2qn8dpw3yvlb",
+  "scheduler_state": "Running",
+  "scheduler_observed_UI_duration_seconds": 1403,
+  "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "data_ref": {
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0950.json",
+    "sha256": "9dd2ac67307c837ac62f87691aac8b88b40f64df3882a18b8e53a10df9682526"
+  },
+  "reader_ref": {
+    "git_commit": "62f39e826bb8365e142c8d0b263f40513d78fc3e",
+    "git_blob": "798dc86d65f11ca3849bf1fdc8c53a59bd6aadfd",
+    "sha256": "5d506d67395de568e9b9cbc7e43f8946cfead56e33f3b94df08b75b2927cb35b"
+  },
+  "index_snapshot": {
+    "updates": 313220,
+    "episodes": 1794,
+    "replay_rows": 16155,
+    "successes": 1755,
+    "failures": 39,
+    "actions": 317902,
+    "output_bytes": 18653841894
+  },
+  "rolling_checkpoint_snapshot": {
+    "pointer": {
+      "path": "recovery-1.pkl",
+      "sha256": "a09a2be2b219a71a75854e22103501eae94e2eccf7452f51bac58fff4bf6730c",
+      "updates": 313380,
+      "replay_rows": 16163,
+      "signature": "3623e180dbaaeaea5d70df5423048d7b98a0aed27de94d8abf23e448b3604e95"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-1.pkl",
+      "sha256": "a09a2be2b219a71a75854e22103501eae94e2eccf7452f51bac58fff4bf6730c",
+      "bytes": 446097505
+    },
+    "stable": true
+  },
+  "snapshot_timing": "Index313220 and later stable rolling checkpoint313380 were read separately during continuing publication; not a single atomic index/checkpoint snapshot.",
+  "new_completed_query_panels_since_300k": [],
+  "last_complete_query_panel": {
+    "threshold": 300000,
+    "actual_updates": 300140,
+    "successes": 20,
+    "queries": 20
+  },
+  "next_query_threshold": 320000,
+  "finite_latest_losses": true,
+  "newest_raw_trace_SHA_matches": true,
+  "one_RPC_sample_hashes_match": true,
+  "active_panel": null,
+  "observed_conservative_GPU_seconds": 29672,
+  "phase_GPU_ceiling": 57600,
+  "all_in_action_ceiling": 1000000,
+  "storage_ceiling_bytes": 68719476736,
+  "next_check": "2026-11-01 10:10 Asia/Shanghai",
+  "verification_limits": "One current index, separately stable rolling full hash, newest trace/RPC bytes and producer counters. The carried reader also rehashed old300k checkpoint once; no new query panel completed and no event-forest reconciliation or tensor/model/array work ran."
+}
