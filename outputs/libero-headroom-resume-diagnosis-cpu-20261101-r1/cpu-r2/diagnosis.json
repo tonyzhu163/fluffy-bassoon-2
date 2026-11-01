@@ -1,0 +1,407 @@
+{
+  "format": "libero_headroom_resume_guard_CPU_diagnosis_v1",
+  "source_commit": "00e131a39eca9ef24e5529ec36b665baf9ff3bad",
+  "qualified_learner_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/resume-r2-admission/PREDECESSOR-301700-FULL.pkl",
+    "sha256": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150"
+  },
+  "cursor": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-headroom-resume-diagnosis-cpu-20261101-r1/inputs/CURSOR-301700.json",
+    "sha256": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3"
+  },
+  "original_guard_predicates": {
+    "training_equal": true,
+    "updates_equal": true,
+    "replay_rows_equal": true,
+    "raw_restored_signature_equal": false
+  },
+  "original_guard_would_pass": false,
+  "legacy_cursor_signature": "bb930704458554e0fdc99b153133188b491f18c6ed1d7aeb1914bd848008be5e",
+  "saved_agent_bytes_SHA": "bb930704458554e0fdc99b153133188b491f18c6ed1d7aeb1914bd848008be5e",
+  "legacy_saved_signature_matches": true,
+  "restored_raw_serialization_SHA": "7cfd255dd5410344e7684045a4f46fe56389c4325b207033da2353a4c5e7c8fc",
+  "canonical_expected_SHA": "f0f15efd2a0d1d26753519c5808b13846681a682b2be36f72ecab9232067183b",
+  "canonical_actual_SHA": "f0f15efd2a0d1d26753519c5808b13846681a682b2be36f72ecab9232067183b",
+  "canonical_full_state_exact": true,
+  "canonical_components": {
+    "actor": {
+      "exact_equal": true,
+      "expected_sha256": "9834bf3c2ec319965348460dceb9c0b48b1208a75b18ba32aa7ee6f6106d2278",
+      "actual_sha256": "9834bf3c2ec319965348460dceb9c0b48b1208a75b18ba32aa7ee6f6106d2278",
+      "differences": 0
+    },
+    "critic": {
+      "exact_equal": true,
+      "expected_sha256": "7bc9f376a6c421f28c9487fe6bd5db08897dfeda24641ff45df314392ecbe924",
+      "actual_sha256": "7bc9f376a6c421f28c9487fe6bd5db08897dfeda24641ff45df314392ecbe924",
+      "differences": 0
+    },
+    "target_critic_params": {
+      "exact_equal": true,
+      "expected_sha256": "6904dd7b09b5a1ab1ce4aecb5b91cafb25556e345ec2079d4a5a23e7a117d13b",
+      "actual_sha256": "6904dd7b09b5a1ab1ce4aecb5b91cafb25556e345ec2079d4a5a23e7a117d13b",
+      "differences": 0
+    },
+    "temp": {
+      "exact_equal": true,
+      "expected_sha256": "432e4ee79a17f7574c95605d3b3e64a082320a0e22279398ee6ae57704e265f3",
+      "actual_sha256": "432e4ee79a17f7574c95605d3b3e64a082320a0e22279398ee6ae57704e265f3",
+      "differences": 0
+    }
+  },
+  "exact_differences": [],
+  "exact_difference_count": 0,
+  "mapping_order_changes": [
+    {
+      "path": "state/actor/params",
+      "expected_keys": [
+        "Dense_0",
+        "LayerNorm_0",
+        "encoder",
+        "network"
+      ],
+      "actual_keys": [
+        "encoder",
+        "Dense_0",
+        "LayerNorm_0",
+        "network"
+      ]
+    },
+    {
+      "path": "state/actor/params/Dense_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/LayerNorm_0",
+      "expected_keys": [
+        "bias",
+        "scale"
+      ],
+      "actual_keys": [
+        "scale",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/encoder/Conv_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/encoder/Conv_1",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/encoder/Conv_2",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/encoder/Conv_3",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/network",
+      "expected_keys": [
+        "Dense_0",
+        "Dense_1",
+        "MLP_0"
+      ],
+      "actual_keys": [
+        "MLP_0",
+        "Dense_0",
+        "Dense_1"
+      ]
+    },
+    {
+      "path": "state/actor/params/network/Dense_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/network/Dense_1",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/network/MLP_0/Dense_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/network/MLP_0/Dense_1",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/actor/params/network/MLP_0/Dense_2",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params",
+      "expected_keys": [
+        "Dense_0",
+        "LayerNorm_0",
+        "encoder",
+        "network"
+      ],
+      "actual_keys": [
+        "encoder",
+        "Dense_0",
+        "LayerNorm_0",
+        "network"
+      ]
+    },
+    {
+      "path": "state/critic/params/Dense_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params/LayerNorm_0",
+      "expected_keys": [
+        "bias",
+        "scale"
+      ],
+      "actual_keys": [
+        "scale",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params/encoder/Conv_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params/encoder/Conv_1",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params/encoder/Conv_2",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/critic/params/encoder/Conv_3",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params",
+      "expected_keys": [
+        "Dense_0",
+        "LayerNorm_0",
+        "encoder",
+        "network"
+      ],
+      "actual_keys": [
+        "encoder",
+        "Dense_0",
+        "LayerNorm_0",
+        "network"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/Dense_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/LayerNorm_0",
+      "expected_keys": [
+        "bias",
+        "scale"
+      ],
+      "actual_keys": [
+        "scale",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/encoder/Conv_0",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/encoder/Conv_1",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/encoder/Conv_2",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    },
+    {
+      "path": "state/target_critic_params/encoder/Conv_3",
+      "expected_keys": [
+        "bias",
+        "kernel"
+      ],
+      "actual_keys": [
+        "kernel",
+        "bias"
+      ]
+    }
+  ],
+  "RNG": {
+    "agent_exact": true,
+    "sampler_exact": true,
+    "numpy_global_exact": true,
+    "python_global_exact": true,
+    "motor_key_roundtrip_exact": true
+  },
+  "replay": {
+    "rows": 15579,
+    "expected_SHA": "23f61b539ef01315db5820fbd26479bc4ec4e503fc39955f5248cbaa0966e7c6",
+    "actual_SHA": "23f61b539ef01315db5820fbd26479bc4ec4e503fc39955f5248cbaa0966e7c6",
+    "exact": true
+  },
+  "updates": 301700,
+  "training_episodes": 1720,
+  "input_SHA_before": {
+    "checkpoint": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+    "cursor": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3",
+    "contract": "96d90d35de2ed50dc4a103f7ddec8781031c2cede74402825f43a72d0b6114e9",
+    "vla_libero": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711",
+    "motor_rng_helper": "4ba242a0c20068f72fa232d5aa0ba34160ede310c19c5a1bfd7525440884c430"
+  },
+  "input_SHA_after": {
+    "checkpoint": "4413afdfb69baff3761dba6a630092f217ee9d1b20832991e2a3eb4e873c1150",
+    "cursor": "633e88838b7fda8ccdf3a1f401dbdbbc71b12f771505310705c829116c3d95c3",
+    "contract": "96d90d35de2ed50dc4a103f7ddec8781031c2cede74402825f43a72d0b6114e9",
+    "vla_libero": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711",
+    "motor_rng_helper": "4ba242a0c20068f72fa232d5aa0ba34160ede310c19c5a1bfd7525440884c430"
+  },
+  "all_inputs_unchanged": true,
+  "classification": "identical_saved_state_raw_representation_differs",
+  "actual_JAX_devices": [
+    "TFRT_CPU_0"
+  ],
+  "VLA_constructed": false,
+  "simulator_constructed": false,
+  "new_SGD": 0,
+  "new_robot_actions": 0,
+  "scope": "Only original small pixelSAC CPU initialization/restore/exactstate+RNG comparison; no actor sample/update/VLA constructor/weights/simulator"
+}

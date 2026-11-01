@@ -94,10 +94,11 @@ ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
 claim follows. [Evidence](../frozen-vla-libero/EVALUATION.md).
-The first slice closes at301,700 updates; an attempted same-state continuation
-fails its atomic recovery guard before any new episode/update. Original
-checkpoint bytes are preserved. Bounded allocated-CPU diagnosis is required
-before a guarded repair; the fixed endpoint remains incomplete.
+The first slice closes at301,700 updates. A continuation rejects a raw
+serialization hash before new interaction; allocated CPU diagnosis confirms
+exact model/Adam/replay/RNG state with27 mapping-order changes and zero leaf
+differences. A minimal guarded repair and qualification precede retry; the
+fixed endpoint remains incomplete.
 
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
