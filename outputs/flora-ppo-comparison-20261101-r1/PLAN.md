@@ -1,8 +1,10 @@
 # Quick test: RLinf PPO on LIBERO90 task 44, simulator reward vs Flora reward
 
-Draft, 2026-11-01, against main `c729a98`. **Plan only:** nothing has run.
-A separate frozen-pi0.5 DSRL run on task 44 (Baige `job-2qn8dpw3yvlb`) is
-active. This test shares no outputs, worktree or ledger with it.
+Draft, 2026-11-01; initializer correction published on main `2a1eebae`.
+The human authorizes launch when ready, readable logs and early stopping, and
+normalized partial credit for Flora. **No comparison job has launched.** The
+separate frozen-pi0.5 DSRL allocation is stopped and released; its recovery and
+ledger remain separate, and other jobs stay paused.
 This is a single-seed pilot to see whether the result is worth pursuing. It is
 not a definitive comparison.
 
@@ -11,9 +13,11 @@ not a definitive comparison.
 On LIBERO90 task 44 (`KITCHEN_SCENE9_turn_on_the_stove`, "turn on the
 stove"), does PPO trained only on
 [`nvidia/Flora-Rewarder`](https://huggingface.co/nvidia/Flora-Rewarder)
-outcome labels improve true success like PPO trained on the simulator's success
-reward? The simulator check scores every evaluation. Flora is used only as the
-training reward in arm F.
+graded outcome labels improve true success faster than PPO trained on the
+simulator's sparse success reward? The simulator check scores every evaluation.
+Flora is used only as the training reward in arm F. This compares binary
+simulator feedback with graded learned feedback; it does not isolate label
+accuracy from the value of partial credit.
 
 ## Setup
 
@@ -45,58 +49,121 @@ training reward in arm F.
 - **Episodes in both arms:** success termination is disabled in training, so
   every episode runs the full horizon. Otherwise episode length would leak
   the simulator's success signal into arm F. Each episode gets one terminal
-  reward on its last chunk: 1 if the stove is on in the final state, 0
-  otherwise.
+  reward on its last valid chunk, before GAE, as specified below. No process
+  rewards, extra reward terms or changes to the official PPO losses are added.
 
 | Arm | Who decides the terminal reward |
 | --- | --- |
-| **S** | The simulator success check |
-| **F** | Flora's outcome score ≥ τ, where τ is fixed in step 2. The trainer never reads the simulator label. |
+| **S** | 1 if the simulator says the stove is on in the final state, otherwise 0. |
+| **F** | `(expected_score - 1) / 4`, using Flora's expected outcome score in [1, 5]. The trainer never reads the simulator label. |
 
 In arm F, the simulator label is still logged to a side file for later
-analysis, and the trainer never reads that file.
+analysis, and the trainer never reads that file. The human's partial-credit
+choice supersedes the earlier binary-threshold design: there is no training
+cutoff, fitted score transform or per-batch min/max scaling. Preserve the raw
+score, probabilities and expected score. Reject missing, non-finite or
+out-of-range scores before any update; retain the pending batch for recovery.
+The normalized grade is not a calibrated probability of task success.
 
 ## Steps
 
 1. **Flora smoke test.** Download the pinned revision to Baige NVMe and run
    one task-44 episode through it: up to 64 agentview frames, upright, with
    the instruction. Check that the outcome score parses.
-2. **Baseline check, about 64 episodes, no training.** Roll out the SFT
+2. **Baseline check, 64 episodes, no training.** Roll out the SFT
    policy at the full horizon and label every episode with both the
    simulator and Flora. This gives:
    - the starting success rate
-   - Flora's agreement with the simulator, and its AUROC
-   - τ: the score cutoff that best matches the simulator labels
+   - Flora's score distributions for simulator successes and failures, and AUROC
+   - the exact scorer/parser and fixed [1, 5] to [0, 1] mapping
 
    **Stop** if the starting rate is under 5% or over 70%, since PPO then has
    little to work with. **Also stop** if Flora barely tracks the simulator
-   (AUROC < 0.7), meaning it can't see the stove state. Either way, report
-   what was found.
+   (AUROC < 0.7), indicating inadequate outcome separation on this bank.
+   Either way, report what was found. Do not tune the score mapping from these
+   outcomes. Use training states 0..39 for this check; a smoke episode counts
+   toward 64 only if its policy, seeds and video recipe are identical.
 3. **Wire up and test on CPU.** Add a relabel hook after rollout and before
    GAE, using Flora served on its own GPU. Add the full-horizon training env
    setting. Write tests that:
    - arm S, with a stub rewarder returning simulator labels, reproduces the
      plain config
    - arm F's trainer cannot read the simulator label
+   Finish these focused checks and exact-source loading/parity qualification
+   before admitting training; run tests and model computation on allocated Linux.
 4. **Run.** One seed each for S and F, from the same commit, seed and
-   training states, for about 10 iterations (about 0.5M actions per arm).
-   After every iteration, evaluate on 50 held-out initial states using the
-   simulator check.
+   training states, for up to 10 iterations, subject to the stop and budget rules.
+   After every iteration, evaluate 50 episodes using the simulator check:
+   states 40..49 with five predeclared action draws each. These are ten reserved
+   development placements, not 50 independent states or a blind test. Use the
+   same evaluation schedule and full-horizon final-state criterion in both arms.
 5. **Report.** Write `RESULT.md` with:
-   - success curves for S and F on the evaluation states, with Wilson
-     intervals
-   - Flora-vs-simulator agreement during training in arm F. If "Flora yes,
-     simulator no" rises, the policy is learning to fool the rewarder.
-   - actions and GPU time per arm, with Flora's compute charged to F
+   - true-success curves against physical actions, elapsed time and GPU-hours;
+     disclose repeated placements when reporting uncertainty
+   - Flora score versus simulator success during training in arm F; a rising
+     Flora score with flat/falling true success flags possible reward exploitation
+   - actions and GPU time per arm, with Flora's compute charged to F, exact stop
+     reasons, shared-budget comparisons and time/actions to a true-success target
+
+## Visibility and stopping
+
+Use well-formatted text logs, not a dashboard or external tracking service.
+Write a timestamped line on phase changes, episode/label/update/evaluation
+completion and at least every 60 seconds during long stages. Each line includes
+the run, arm, phase, iteration, progress, elapsed time and remaining budget.
+Evaluation lines include true successes out of 50, current/best success and
+plateau progress. Phase summaries include rollout/label/update/evaluation time,
+physical actions (training, evaluation, settle and failures), aggregate GPU-hours,
+GPU memory, PPO KL/clip fraction/value loss and available official diagnostics.
+Log Flora score distributions and its relationship to simulator truth through
+the isolated monitoring sidecar. Report stale or failed stages as such.
+
+Keep append-only scalar metrics and an atomic latest-status record, including
+the last heartbeat, complete checkpoint path and stop reason. These support
+readable logs and later reporting without a separate UI.
+
+Freeze the same per-arm rule before collecting outcomes. Let `p0` be the native
+baseline success and `p_i` the true evaluation success after PPO iteration `i`;
+let `B_i = max(p0, p_1, ..., p_i)`.
+
+- **Plateau:** after at least six iterations, stop if
+  `B_i - B_(i-3) < 0.04` (less than four percentage points of best-success gain
+  across the latest four evaluations). If `B_i - p0 < 0.10`, report low/flat
+  performance as **futility**, not successful convergence.
+- **Ceiling:** stop after three consecutive evaluations at or above 96% true
+  success (at least 48/50). This rule can stop before iteration six.
+- **Hard limits:** stop before any next phase would exceed the admitted action,
+  GPU-time or per-job wall-clock limit, regardless of learning progress.
+
+These are pilot stopping heuristics, not statistical proof of convergence.
+The controller uses simulator evaluation success, never Flora score or training
+return, for convergence decisions. Stop at a closed rollout/update/evaluation
+boundary, save full model/critic/optimizer/sampler/RNG and iteration state, emit
+the reason and checkpoint reference, then release the allocation. Reserve time
+for this closure. A stopped arm stays frozen; its peer may continue under the
+same rule and existing cap. Compare shared-budget prefixes, and report an arm
+that never reaches a target as censored; do not claim convergence from a crash.
 
 ## Budget
 
-- About 0.5M actions per arm, under the 1M-per-learner ledger.
-- Check arm S at iteration 10. If S has not clearly risen above its starting
-  rate, extend both arms by the same amount, up to 20 iterations (about 1M
-  actions each). Do not judge arm F against an S that hasn't learned yet.
-- At most 10 GPU-hours in total, including Flora serving. This is within the
-  standing limit.
+- One 32-env x 4-round training iteration uses an estimated 53,120 physical
+  actions at H400 plus the official LIBERO default of 15 settle actions per
+  episode. Its 50 evaluation episodes add 20,750, for 73,870 all-in actions per
+  iteration, or 738,700 for ten iterations.
+  Count actual physical execution, including padding/overshoot, rather than
+  relying on this estimate; never exclude evaluation or settle actions.
+- Keep the 1M-per-learner action ceiling. The earlier 20-iteration extension
+  would exceed it. If S has not learned by iteration ten and neither stop rule
+  has fired, admit only matched extensions that fit all remaining limits (at most
+  13 iterations under the estimate above), never extend a stopped arm. Do not
+  judge F against an S that has failed to learn.
+- The shared 64-episode baseline plus at most one separate smoke episode uses
+  an estimated 26,975 physical actions. Give this common preparation its own phase
+  bucket, charge it once and disclose its attribution alongside each arm.
+- At most 10 aggregate GPU-hours, including startup, loading/parity/capacity
+  qualification, baseline, Flora serving, training, evaluations, failures and
+  checkpoint closure. Every individual job is under eight hours. No old unused
+  budget is transferred. Freeze the concrete resource profile before launch.
 - If step 4's real iteration time exceeds the limit, cut iterations rather
   than the batch.
 
@@ -108,5 +175,6 @@ With one seed, only a large effect is readable. Possible outcomes:
   multi-seed follow-up.
 - F stays flat while S rises: Flora's labels don't carry enough signal for
   this task.
-- F's "Flora yes, simulator no" rate climbs: PPO is exploiting the rewarder.
+- F's score rises while true success does not: investigate reward exploitation
+  or misaligned partial credit before claiming a learning improvement.
 - S itself doesn't improve: the test says nothing about Flora.
