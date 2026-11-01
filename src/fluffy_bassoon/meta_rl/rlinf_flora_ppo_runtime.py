@@ -26,6 +26,19 @@ def validate_pending_checkpoint(batch,checkpoint_ref):
     return checkpoint
 
 
+def private_evaluation_rng(seed):
+    """Create a worker-private evaluation stream without consuming training RNG."""
+    import random
+    import numpy as np
+    import torch
+    from .rlinf_native_ppo import snapshot_rng,restore_rng
+    before=snapshot_rng()
+    try:
+        random.seed(seed);np.random.seed(seed);torch.manual_seed(seed)
+        return snapshot_rng()
+    finally:restore_rng(before)
+
+
 class TerminalRewardActorMixin:
     def _reward_directory(self):
         return Path(self.cfg.flora_ppo.exchange_root)/self.cfg.flora_ppo.arm/'train'/f'iteration-{int(self.version)+1:04d}'
@@ -133,7 +146,8 @@ def rollout_class():
     class MatchedRollout(PilotRollout):
         def init_worker(self):
             result=super().init_worker()
-            self._flora_eval_rng=snapshot_rng()
+            seed=getattr(self.cfg.flora_ppo,'eval_seed',None)
+            self._flora_eval_rng=(snapshot_rng() if seed is None else private_evaluation_rng(int(seed)+self._rank))
             return result
 
         def flora_evaluation_rng(self,restore_training=False):

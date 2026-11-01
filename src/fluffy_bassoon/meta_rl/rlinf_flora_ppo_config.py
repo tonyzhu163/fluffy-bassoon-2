@@ -2,9 +2,13 @@
 from .rlinf_flora_ppo import INITIALIZER_REPO, INITIALIZER_REVISION, INITIALIZER_WEIGHT_SHA, NORM_SHA, RLINF
 
 
-def evaluation_schedule(world, phase):
+def evaluation_schedule(world, phase, tasks=None):
     """Padding is explicit, unscored and physically charged; never extra cases."""
     if world not in (1,2,4,8):raise ValueError('Explicit1/2/4/8 worker placement required')
+    if phase in ('screen','confirm'):
+        from .rlinf_libero_headroom import headroom_schedule
+        if world!=4:raise ValueError('Headroom search uses the explicit four-worker profile')
+        return headroom_schedule(tasks,phase)
     if phase=='smoke':
         if world!=1:raise ValueError('Single smoke episode uses one rollout/env worker')
         cases=[dict(nominal_state=0,draw=0,counted=True)]
@@ -46,8 +50,10 @@ def validate_config(cfg):
         'flora_ppo.initializer_revision':INITIALIZER_REVISION,'flora_ppo.initializer_weight_sha256':INITIALIZER_WEIGHT_SHA,
         'flora_ppo.normalization_sha256':NORM_SHA,
     }
+    headroom=cfg.flora_ppo.phase in ('screen','confirm')
+    tasks=list(cfg.flora_ppo.headroom_tasks) if headroom else [44]
     for mode in ('train','eval'):
-        for field,value in dict(env_type='libero',task_suite_name='libero_90',task_id_filter=[44],
+        for field,value in dict(env_type='libero',task_suite_name='libero_90',task_id_filter=tasks if mode=='eval' else [44],
                 max_episode_steps=400,max_steps_per_rollout_epoch=400,num_steps_wait=15,
                 auto_reset=False,ignore_terminations=True,skip_intermediate_renders=False).items():
             expected[f'env.{mode}.{field}']=value
@@ -60,9 +66,13 @@ def validate_config(cfg):
     placement=cfg.cluster.component_placement
     if len(placement)!=1 or list(placement.values())!=[f'0-{world-1}']:
         raise ValueError('Explicit common actor/env/rollout placement required')
-    if cfg.flora_ppo.arm not in ('S','F') or cfg.flora_ppo.phase not in ('smoke','baseline','train'):
+    if cfg.flora_ppo.arm not in ('S','F') or cfg.flora_ppo.phase not in ('smoke','baseline','train','screen','confirm'):
         raise ValueError('Concrete comparison phase and arm required')
-    schedule=evaluation_schedule(world,'DEV' if cfg.flora_ppo.phase=='train' else cfg.flora_ppo.phase)
+    schedule=evaluation_schedule(world,'DEV' if cfg.flora_ppo.phase=='train' else cfg.flora_ppo.phase,tasks)
+    if headroom:
+        from .rlinf_libero_headroom import evaluation_seed
+        if cfg.flora_ppo.arm!='S' or cfg.flora_ppo.eval_seed!=evaluation_seed(tasks,cfg.flora_ppo.phase):
+            raise ValueError('Native-only headroom requires the frozen phase/task sampling seed')
     if cfg.env.eval.total_num_envs!=len(schedule) or cfg.env.eval.rollout_epoch!=1:
         raise ValueError('Evaluation vector must bind exact scored schedule plus explicit padding')
     if cfg.runner.only_eval!=(cfg.flora_ppo.phase!='train'):raise ValueError('No optimizer initialization for smoke/baseline')

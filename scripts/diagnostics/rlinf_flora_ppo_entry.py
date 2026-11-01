@@ -15,9 +15,11 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo_config import NORM_SHA,evaluation_sc
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--phase',choices=['smoke','baseline','train'],required=True)
+    parser.add_argument('--phase',choices=['smoke','baseline','train','screen','confirm'],required=True)
     parser.add_argument('--arm',choices=['S','F'],required=True)
     parser.add_argument('--world',type=int,choices=[1,2,4,8],required=True)
+    parser.add_argument('--headroom-tasks',help='Frozen comma-separated task IDs for native evaluation only')
+    parser.add_argument('--eval-seed',type=int)
     for key in ('profile','model','norm','output','exchange','monitoring','accounting','attempt'):
         parser.add_argument('--'+key,required=True)
     args,overrides=parser.parse_known_args()
@@ -44,11 +46,15 @@ def main():
     if not weights or not weights<=declared:raise ValueError('Every loaded safetensors shard must be receipt-bound')
     for key in ('model','norm','output','exchange','monitoring','accounting','profile'):
         if not Path(getattr(args,key)).is_absolute():raise ValueError('Explicit absolute resource paths required')
-    schedule=evaluation_schedule(args.world,'DEV' if args.phase=='train' else args.phase)
+    headroom=args.phase in ('screen','confirm')
+    tasks=list(map(int,args.headroom_tasks.split(','))) if args.headroom_tasks else None
+    if not headroom and (tasks is not None or args.eval_seed is not None):raise ValueError('Headroom options cannot alter PPO or the existing baseline')
+    schedule=evaluation_schedule(args.world,'DEV' if args.phase=='train' else args.phase,tasks)
     values=dict(ARM=args.arm,PHASE=args.phase,WORLD=args.world,PLACEMENT=f'0-{args.world-1}',
         EVAL_SLOTS=len(schedule),ONLY_EVAL=str(args.phase!='train').lower(),MODEL=args.model,NORM=args.norm,
         OUTPUT=args.output,EXCHANGE=args.exchange,MONITORING=args.monitoring,ACCOUNTING=args.accounting,
-        PROFILE=args.profile,PROFILE_SHA=sha(args.profile),ATTEMPT=args.attempt)
+        PROFILE=args.profile,PROFILE_SHA=sha(args.profile),ATTEMPT=args.attempt,
+        HEADROOM_TASKS=json.dumps(tasks),EVAL_SEED=json.dumps(args.eval_seed))
     for key,value in values.items():os.environ['FLORA_PPO_'+key]=str(value)
     from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import actor_class,rollout_class
     from fluffy_bassoon.meta_rl.rlinf_flora_ppo_env import environment_class
@@ -60,7 +66,12 @@ def main():
     entry=importlib.util.module_from_spec(spec);spec.loader.exec_module(entry)
     entry.EmbodiedRunner=MatchedRunner;entry.EnvWorker=environment_class();entry.MultiStepRolloutWorker=rollout_class()
     sys.argv=[sys.argv[0],'--config-path',str(code/'configs/native_ppo'),'--config-name','libero44_flora',*overrides]
-    entry.main()
+    if headroom:sys.argv+=['env.eval.task_id_filter='+json.dumps(tasks,separators=(',',':'))]
+    try:entry.main()
+    finally:
+        if headroom:
+            import ray
+            ray.shutdown() # This child's own local RLinf/Ray cluster, not another allocation.
 
 
 if __name__=='__main__':main()

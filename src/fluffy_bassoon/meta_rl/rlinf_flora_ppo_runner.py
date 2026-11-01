@@ -37,6 +37,16 @@ class MatchedRunner(EmbodiedRunner):
                 or not p.get('initializer_artifact_receipt') or p.get('source_commit') is None):
             raise ValueError('Concrete fresh allocation/probe/initializer/finite-clock profile required')
         for key in ('actual_gpu_probe','initializer_artifact_receipt'):read_ref(p[key])
+        if p['phase'] in ('screen','confirm'):
+            if (p.get('headroom_tasks')!=list(self.cfg.flora_ppo.headroom_tasks)
+                    or p.get('case_schedule_sha256')!=digest(self.contract['scored_schedule'])
+                    or p.get('eval_seed')!=self.cfg.flora_ppo.eval_seed
+                    or p.get('maximum_new_actions')!=len(self.contract['scored_schedule'])*415):
+                raise ValueError('Exact native search cases/phase RNG/physical limit required')
+            for key in ('cpu_qualification','loading_qualification','native_libero_import_qualification'):
+                proof=read_ref(p[key])
+                if proof.get('completed',proof.get('passed')) is not True:
+                    raise ValueError(f'Unqualified native headroom dependency: {key}')
         if p['phase']=='train':
             for key in ('cpu_qualification','loading_qualification','baseline_validation'):
                 ref=read_ref(p[key])
@@ -94,9 +104,13 @@ class MatchedRunner(EmbodiedRunner):
         episodes,actions=self._records(evaluation=True)
         side=Path(self.cfg.flora_ppo.monitoring_root)/self.cfg.flora_ppo.arm/phase/f'iteration-{self.global_step:04d}'
         monitor=[r for path in sorted(side.glob('rank-*-round-*.json')) for r in json.loads(path.read_text())]
-        expected=50 if phase=='DEV' else (64 if phase=='baseline' else 1)
+        headroom=phase in ('screen','confirm')
+        expected=len(self.contract['scored_schedule']) if headroom else (50 if phase=='DEV' else (64 if phase=='baseline' else 1))
         scored=[r for r in monitor if r['case']['counted']]
         if len(scored)!=expected or len(monitor)!=len(episodes):raise ValueError('Incomplete actual evaluation vector')
+        if headroom:
+            actual=sorted((r['case'] for r in monitor),key=lambda r:r['slot'])
+            if actual!=self.contract['scored_schedule']:raise ValueError('Native actual case bank differs from frozen headroom schedule')
         root=self._root(phase,self.global_step)
         write_new(root/'episodes.json',episodes)
         with (root/'jobs.jsonl').open('x') as stream:
@@ -105,6 +119,13 @@ class MatchedRunner(EmbodiedRunner):
             episodes=expected,successes=sum(r['simulator_final_success'] for r in scored),
             unique_nominal_states=len({r['case']['nominal_state'] for r in scored}),
             padding_episodes=len(monitor)-expected,physical_actions=actions,official_metrics=metrics)
+        if headroom:
+            result['metric_source']='native_headroom_final_success'
+            result['task_results']={str(t):dict(episodes=sum(r['case']['task_id']==t for r in scored),
+                successes=sum(r['simulator_final_success'] for r in scored if r['case']['task_id']==t))
+                for t in self.cfg.flora_ppo.headroom_tasks}
+            result['case_schedule_sha256']=digest(self.contract['scored_schedule'])
+            result['eval_seed_base']=self.cfg.flora_ppo.eval_seed
         write_new(root/'evaluation.json',result)
         return result,episodes,actions
 
@@ -221,3 +242,6 @@ class MatchedRunner(EmbodiedRunner):
             raise
         finally:
             log.close();self._finish_run()
+            if self.cfg.flora_ppo.phase in ('screen','confirm'):
+                self.env.flora_close_environments().wait()
+                for group in (self.env,self.rollout,self.actor):group._close()

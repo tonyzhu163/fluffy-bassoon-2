@@ -202,6 +202,8 @@ flora_ppo:
   profile_sha256: ${oc.env:FLORA_PPO_PROFILE_SHA}
   pending_resume: false
   evaluation_history: null
+  headroom_tasks: ${oc.decode:${oc.env:FLORA_PPO_HEADROOM_TASKS,null}}
+  eval_seed: ${oc.decode:${oc.env:FLORA_PPO_EVAL_SEED,null}}
   rlinf_commit: c605b9d55ed93a180119b099e6f836abff293b08
   initializer_repository: RLinf/RLinf-Pi05-LIBERO-SFT
   initializer_revision: 45ccfcc4e28634f1576ebf78cab0fbe2fd82432d

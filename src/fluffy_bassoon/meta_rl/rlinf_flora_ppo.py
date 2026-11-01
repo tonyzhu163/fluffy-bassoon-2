@@ -80,7 +80,7 @@ def baseline_validation(rows):
 def validate_video(episode):
     fields={'id','task','camera_order','info_on_video','extra_info_on_video','raw_rgb_only',
         'success_termination_disabled','horizon','completed','video','frame_clock','rank','round','local_env'}
-    if (set(episode)!=fields or episode['task']!=TASK
+    if (set(episode)!=fields or not isinstance(episode['task'],str) or not episode['task'].strip()
             or episode.get('camera_order')!=['agentview'] or episode.get('info_on_video') is not False
             or episode.get('extra_info_on_video')!=[] or episode.get('raw_rgb_only') is not True
             or episode.get('success_termination_disabled') is not True

@@ -31,7 +31,9 @@ def libero_class(original, worker):
             offset=int(self.cumsum_trial_id_bins[43])
             if self.is_eval:
                 schedule=worker._flora_schedule
-                ids=np.asarray([offset+r['nominal_state'] for r in schedule],dtype=np.int64)
+                from .rlinf_libero_headroom import reset_ids_for_cases
+                native_cases=[dict(r,task_id=r.get('task_id',44)) for r in schedule]
+                ids=np.asarray(reset_ids_for_cases(native_cases,self.trial_id_bins),dtype=np.int64)
                 if len(ids)%self.total_num_processes:raise ValueError('Explicit padded evaluation layout required')
                 return ids.reshape(-1,self.total_num_processes).T.copy()
             ids=np.arange(offset,offset+40,dtype=np.int64)
@@ -51,7 +53,9 @@ def libero_class(original, worker):
             result=super().reset(*args,**kwargs)
             self._flora_journal.finish(intent,self.num_envs*15)
             self._flora_round+=1
-            if np.any(self.task_ids!=44):raise ValueError('Actual reset escaped task44')
+            expected_tasks=([r['task_id'] for r in worker._flora_schedule[worker._rank::worker._world_size]]
+                if worker._flora_phase in ('screen','confirm') else [44]*self.num_envs)
+            if list(map(int,self.task_ids))!=expected_tasks:raise ValueError('Actual reset escaped requested native tasks')
             trials=self.trial_ids.tolist()
             allowed=set(range(40,50)) if self.is_eval and worker._flora_phase=='DEV' else set(range(40))
             if not set(trials)<=allowed:raise ValueError('Actual reset escaped frozen nominal-state partition')
@@ -64,7 +68,8 @@ def libero_class(original, worker):
             root.mkdir(parents=True,exist_ok=True)
             self._flora_episode_meta=[]
             for local_env,raw in enumerate(self.current_raw_obs):
-                key=f'{worker._flora_phase}-i{worker._flora_iteration:04d}-r{worker._rank:02d}-e{self._flora_round:02d}-{local_env:02d}'
+                prefix=f'task-{int(self.task_ids[local_env]):02d}-' if worker._flora_phase in ('screen','confirm') else ''
+                key=f'{prefix}{worker._flora_phase}-i{worker._flora_iteration:04d}-r{worker._rank:02d}-e{self._flora_round:02d}-{local_env:02d}'
                 video=root/f'{key}.mp4'
                 if video.exists():raise ValueError('Never overwrite or recollect an existing episode')
                 writer=imageio.get_writer(str(video),fps=self._flora_fps[local_env],codec='libx264',
@@ -92,7 +97,7 @@ def libero_class(original, worker):
                 rows=[];monitor=[]
                 for local_env,meta in enumerate(self._flora_episode_meta):
                     fps=self._flora_fps[local_env]
-                    row=dict(id=meta['id'],task=TASK,camera_order=['agentview'],info_on_video=False,
+                    row=dict(id=meta['id'],task=self.task_descriptions[local_env],camera_order=['agentview'],info_on_video=False,
                         extra_info_on_video=[],raw_rgb_only=True,success_termination_disabled=True,
                         horizon=400,completed=True,video=dict(path=str(meta['video']),sha256=sha(meta['video'])),
                         frame_clock=dict(frame_count=401,native_fps=fps,encoded_fps=fps,resampled=False,
@@ -102,7 +107,8 @@ def libero_class(original, worker):
                     rows.append(row)
                     case=(worker._flora_schedule[worker._rank+local_env*worker._world_size]
                         if self.is_eval else dict(nominal_state=meta['nominal_state'],counted=True,draw=None))
-                    if case['nominal_state']!=meta['nominal_state']:raise ValueError('Actual initial case differs from schedule')
+                    if (case['nominal_state']!=meta['nominal_state'] or case.get('task_id',44)!=int(self.task_ids[local_env])):
+                        raise ValueError('Actual initial case differs from schedule')
                     monitor.append(dict(id=meta['id'],case=case,simulator_final_success=bool(truth[local_env]),
                         initial_raw_observation_sha256=meta['initial_raw_observation_sha256'],
                         initial_observation_sha256=meta['initial_observation_sha256'],
@@ -137,9 +143,11 @@ def environment_class():
             self._flora_phase='unstarted';self._flora_iteration=0
             from .rlinf_flora_ppo_config import evaluation_schedule
             phase='DEV' if self.cfg.flora_ppo.phase=='train' else self.cfg.flora_ppo.phase
-            self._flora_schedule=evaluation_schedule(self._world_size,phase)
+            tasks=getattr(self.cfg.flora_ppo,'headroom_tasks',None)
+            self._flora_schedule=evaluation_schedule(self._world_size,phase,tasks)
             self._flora_journal=ActionJournal(self.cfg.flora_ppo.accounting_root,rank=self._rank,
-                world=self._world_size,attempt=self.cfg.flora_ppo.attempt)
+                world=self._world_size,attempt=self.cfg.flora_ppo.attempt,
+                maximum_actions=(len(self._flora_schedule)*415 if phase in ('screen','confirm') else 1000000))
             return super().init_worker()
 
         def _setup_env_and_wrappers(self,env_cls,env_cfg,num_envs_per_stage):
@@ -160,6 +168,15 @@ def environment_class():
             envs=self.eval_env_list if evaluation else self.env_list
             return dict(rank=self._rank,episodes=[r for env in envs for r in env._flora_rows],
                 physical_actions=self._flora_journal.charged())
+
+        def flora_close_environments(self):
+            # Called only for a closed headroom child, before its next wave.
+            # Native vector close terminates precisely this worker's simulators.
+            for env in self.env_list+self.eval_env_list:
+                for writer in env._flora_writers:writer.close()
+                env._flora_writers=[]
+                env.env.close()
+            return dict(rank=self._rank,closed=True)
 
         def flora_capture(self,directory,**kwargs):
             if self._prefetched_train_bootstrap is not None:raise ValueError('No in-flight bootstrap checkpoint')

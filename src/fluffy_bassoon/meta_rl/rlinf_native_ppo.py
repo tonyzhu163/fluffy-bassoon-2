@@ -101,10 +101,10 @@ class ActionJournal:
     publishes valid_action_mask for training. Retrying uses a NEW attempt name
     under the SAME accounting root; old unresolved intents remain fully charged.
     """
-    def __init__(self, root, *, rank, world, attempt):
+    def __init__(self, root, *, rank, world, attempt, maximum_actions=1000000):
         self.root = Path(root) / f'rank-{rank:02d}'
         self.root.mkdir(parents=True, exist_ok=True)
-        self.limit = 1000000 // int(world)
+        self.limit = int(maximum_actions) // int(world)
         self.attempt = attempt
         self.path = self.root / (attempt + '.json')
         if self.path.exists():
