@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "ticket_id": "ppo-focused-cpu-q1",
+  "source_commit": "a8940d24f9eeae3e47dee341263e65ac4d5a46c3",
+  "source_branch": "codex/libero44-flora-ppo-runtime-20261101",
+  "source_base_main": "d82a9839",
+  "execution_owner": "/root/finish_assembly",
+  "status": "admitted_no_further_ACK",
+  "grant_ref": "GRANT.json",
+  "grant_sha256": "a8f287a3875ff68ab940197f04618010648d4c5a4e378ef94de2ae6ddb2d2655",
+  "aggregate_cpu_scope": {
+    "phase_cap_worker_seconds": 360,
+    "ticket_total_inclusive_worker_seconds": 300,
+    "remaining_unrequested_worker_seconds": 60,
+    "clock": "One cumulative allocated-worker wall clock plus conservative startup; include ALL attestation,imports,tests,failures and cleanup. No reset between stages or hidden rerun."
+  },
+  "resource": {
+    "gpus": 0,
+    "cpus": 8,
+    "ram_gib": 32,
+    "scheduler_minutes": 4,
+    "retry": false,
+    "inner_deadline_seconds": 180,
+    "term_seconds": 220,
+    "kill_seconds": 230,
+    "outer_seconds": 240,
+    "startup_allowance_seconds": 60,
+    "outputs_mib": 256
+  },
+  "resource_binding": "The initial phase metadata listed2CPU16GiB. This prospective child explicitly admits8CPU32GiB for concrete c605/Torch imports without changing the360CPU-worker-second aggregate cap. No old-phase balance is used.",
+  "selector": "tests/test_rlinf_flora_ppo.py",
+  "prepared_case_count_by_source_AST": 58,
+  "executed_case_count": 0,
+  "command": [
+    "<qualified-PPO-python>",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "<exact-source>/tests/test_rlinf_flora_ppo.py",
+    "--junitxml=<fresh-output>/junit.xml"
+  ],
+  "environment": {
+    "PYTHONPATH": "<exact-source>/src:<exact-c605-checkout>",
+    "EMBODIED_PATH": "<exact-c605-checkout>/examples/embodiment",
+    "RLINF_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "note": "Bind actual imported origins; oldeditableRLinf mustnot silentlywin."
+  },
+  "scope": [
+    "58prepared focusedNEW cases including real c605configcomposition1/2/4/8 and officialGAE equivalence, gradedrewards/truthisolation/labelbarrier/checkpointidentity/accounting/plainlogs/stops.",
+    "No realactor/model/scorer/VLA/simulator constructors, productioncheckpoint load, SGD, physicalepisodes or featureencoding.",
+    "Keep original selector and actual failure statuses; diagnose failures before a separately pinned unique successor within remaining same360 total."
+  ],
+  "static_review": {
+    "owner": "/root",
+    "mode": "source reading only on Mac; no test/import/model execution",
+    "result": "No additional static approval gate. Root read exact source critical path; parent reports prior concrete bugs fixed. Actual allocatedCPU result is required, not invented.",
+    "science": "Unchanged official PPO learner/critic/GAE/Adam; reward-only preGAE barrier and fullH400. Fixed50scored+6unscored physicalDEVslots for4/8layouts; allpaddingcharged."
+  },
+  "priority": "Q1officialconversion independent; launch CPU alongside it when operationallypossible after converter submission, without waiting for PPO GPU integration or a new human/root ACK.",
+  "outputs": [
+    "actual allocation/0GPU/resource/import-origin/sourceattestation",
+    "exact JUnit including passed/failed/error/skips and independent exit",
+    "all-inclusive workerclock and phaseledger settlement",
+    "retained logs and any realfailure evidence"
+  ]
+}
