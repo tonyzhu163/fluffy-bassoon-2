@@ -106,8 +106,12 @@ The next source decision adopts a separate all40 existing-TRAIN-actor
 assessment on fixed states40/41, with matched native/tied and mean/sample
 controls and genuine original initialized states only where retained. It
 creates no source-learning histories or student; missing initial comparisons
-stay missing. Binding/qualification are pending under explicit new inclusive
-10,800-GPU-second/196,800-action ceilings. No allocation is reserved, and the
+stay missing. All40 final references are metadata-bound; no genuine original initialized
+checkpoint is proven in the bounded retained-index search. Initialized roles
+are omitted:320 episodes/max131,200 new actions under the unchanged inclusive
+10,800-GPU-second phase ceiling. It assesses final competence without
+isolating SGD improvement. Payload/executable qualification remains pending.
+No allocation is reserved, and the
 old25h collection/fit expansion remains unfunded.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

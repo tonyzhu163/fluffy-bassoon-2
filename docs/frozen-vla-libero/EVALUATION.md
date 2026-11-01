@@ -106,7 +106,13 @@ sample-efficiency claim follows. [Selection/launch](../../outputs/libero90-pi05-
 The next independent source assessment is now prospectively adopted: all40
 source goals at states40/41, final TRAIN mean/sample versus raw native/tied
 warmup, with actual original initialized actors only where retained. Exact
-actor/code/runtime bindings are pending. No new teacher training, collection
+final-actor references are now metadata-bound for all40; none of the exact
+current/ancestor indices proves a retained original initialized actor. Its
+comparisons are omitted, leaving320 episodes/max131,200 actions. This panel
+can assess competence but cannot isolate initialized-to-final SGD gains.
+States40/41 had no actual TRAIN episodes in the examined indices, but the
+fixed8 VAL/prior competence histories exposed them; they are not globally
+unseen. Payload load, executable and runtime bindings remain pending. No new teacher training, collection
 for pretraining or student fit is admitted. Two cases per goal measure limited
 same-mode competence; a missing initial cannot establish learning. This is
 separate from the unfunded25h source expansion and preserves every old ledger.

@@ -1,0 +1,67 @@
+{
+  "format": "headroom_1030_light_receipt_v1",
+  "job_id": "job-2qn8dpw3yvlb",
+  "scheduler_state": "Running",
+  "scheduler_UI_elapsed_seconds": 3784,
+  "execution_source": "d2369fb94a024315c7ef41d7021bebe171c8b515",
+  "scientific_source": "b6655659d8bff2c6b5d14eaf05d63f4647176d4f",
+  "reader_ref": {
+    "git_commit": "c07fa25088ca979bb6c25815a8dfe87d61f683ce",
+    "git_blob": "9b2d1160dffbb549c5ce991f399e143a3744c846",
+    "sha256": "a4f4dc45ce71d2858849680c86ff47af4bd3bb633a73105d972f6c0e6467d3a3"
+  },
+  "data_ref": {
+    "path": "outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-1030.json",
+    "sha256": "3200274a47eb302913dbc07b9c360728c6e409da6e35015447d4d379863b87d3"
+  },
+  "index_snapshot": {
+    "updates": 334500,
+    "replay_rows": 17219,
+    "training": {
+      "episodes": 1929,
+      "chunks": 17219,
+      "primitive_steps": 163571,
+      "settling_steps": 19290
+    },
+    "successes": 1890,
+    "failures": 39,
+    "actions": 330968,
+    "output_bytes": 19691542644
+  },
+  "rolling_full_snapshot": {
+    "pointer": {
+      "path": "recovery-0.pkl",
+      "sha256": "8bf41fcbcacd475705dea6b4d99c8dbb4f7c6bb6fbf089412d9e091155221c95",
+      "updates": 334660,
+      "replay_rows": 17227,
+      "signature": "290b21884a57b975b1afa6244586b95f67b7539bbe3ecb53bc763895c33d4bea"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/dsrl-pi05-headroom-20261101-s0-r1/experiment/case-learn-44/recovery-0.pkl",
+      "sha256": "8bf41fcbcacd475705dea6b4d99c8dbb4f7c6bb6fbf089412d9e091155221c95",
+      "bytes": 473107741
+    },
+    "stable": true,
+    "cursor_next_threshold": 340000,
+    "cursor_phase": "training"
+  },
+  "snapshot_timing": "Index334500 and separately stable rolling-full334660 were read during continuing publication; counter snapshots are distinct.",
+  "new_completed_panels_since320k": [],
+  "last_completed_panel": {
+    "threshold": 320000,
+    "actual_updates": 320040,
+    "successes": 20,
+    "queries": 20
+  },
+  "actual_cursor_next_threshold": 340000,
+  "actual_cursor_phase": "training",
+  "finite_latest_losses": true,
+  "new_raw_trace_matches": true,
+  "one_RPC_sample_hashes_match": true,
+  "observed_conservative_GPU_seconds": 32057,
+  "maximum_phase_GPU_seconds": 57600,
+  "maximum_all_in_actions": 1000000,
+  "maximum_output_bytes": 68719476736,
+  "next_owned_check": "2026-11-01 10:50 Asia/Shanghai",
+  "verification_limits": "Current producer counters, separately stable pointer/full hash, one new trace/RPC sample. No older milestone rehash, journal forest, checkpoint deserialization, model/test/array/simulator execution or job control. Final motor-after remains pending while active."
+}
