@@ -1,0 +1,56 @@
+{
+  "completed": true,
+  "scope": "Static source/AST and saved scalar/XML/hash review only on macOS.",
+  "files": [
+    {
+      "path": "scripts/diagnostics/robocasa_residual_ppo.py",
+      "bytes": 36433,
+      "sha256": "b9ba17ab1fb530d4f30d2dfa6df015500059fa03abf862e73482838b7ef36fcd"
+    },
+    {
+      "path": "scripts/diagnostics/robocasa_residual_score.py",
+      "bytes": 22951,
+      "sha256": "bf4cfbd7d95c91be8f3fc269fd03228be438eaae2c003074d7bffe261f617817"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_flora_ppo.py",
+      "bytes": 15724,
+      "sha256": "e165096947e792c99d8632ecb2e595a8cb5421820119473a30dbb60d6efff773"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/rlinf_robocasa_ppo.py",
+      "bytes": 19944,
+      "sha256": "b29bced8e98a13b3786ab0d420891b842b452488eb82e12f15ed52c26739edbb"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/flora_terminal_shards.py",
+      "bytes": 4538,
+      "sha256": "ef71ca253e235a75a6937ffb7e885c3346666238128104b19fec4884bccbea2c"
+    }
+  ],
+  "implementation": [
+    "One balanced 80-episode joint batch: 16 per task, native750/600 horizons, 1152 H50 chunks and 18 minibatches64 per PPO epoch.",
+    "Eight native rollout workers; one small residual learner. This is not eight-rank full-weight actor FSDP.",
+    "Mixed per-episode native protocol map and SHA bound to complete pending recovery before all80 terminal grades and GAE.",
+    "Exact five calibration references and actual measured human exceptions checked before loading policy; no failed74% result rewritten.",
+    "Fixed40-case DEV and paired250 ID/250 OOD panels use native task horizons and disjoint case banks; final panels never stop/select a checkpoint.",
+    "Small initial head tensor fingerprint and full zero-update boundary; both fresh arms share identical motor/norm/sampler/head/optimizer initialization.",
+    "Complete final checkpoints saved before final panels; evaluation completion has a separate marker. No partial pending update or substitute rollout."
+  ],
+  "core_evidence": [
+    {
+      "path": "outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+      "sha256": "d0fec170ecd7fb12ab4d43d7e9e8c6a01c3f01b1681ff956cf1e8d07b8e34ba3"
+    },
+    {
+      "path": "outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+      "sha256": "66b626804163e3996947a96c89d5aaec4f82c13f09a82d3e099660a009ed173e"
+    },
+    {
+      "path": "outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+      "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+    }
+  ],
+  "runtime_limit": "Qualified affected learner/mixed-native/terminal-service core cases on allocated Linux; controller integration is statically reviewed, not yet actual jointGPU training/colocation qualified. First real retained capacity iteration must qualify that path.",
+  "admission": "No new joint GPU job or SGD admitted by this static review. Native74% task decision and fresh all-in action/resource profiles remain unresolved."
+}

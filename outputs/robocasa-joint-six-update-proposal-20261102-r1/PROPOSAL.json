@@ -1,0 +1,187 @@
+{
+  "status": "PROPOSED_NOT_ADMITTED_NO_NEW_GPU_ALLOCATION_OR_SGD",
+  "purpose": "Two joint residual PPO policies on the fixed five-task portfolio, simulator terminal0/1 versus unchanged Flora terminal(expected_score-1)/4, with paired50/task ID and OOD evaluation.",
+  "task_manifest": {
+    "path": "outputs/robocasa-five-task-flora-ppo-20261102-r1/TASK-PORTFOLIO.json",
+    "sha256": "fb43c5291771322752c92276a5afea3343d6196e4f8c6b7d4a91749e8ce01559"
+  },
+  "selection_disclosure": {
+    "path": "outputs/robocasa-five-task-flora-ppo-20261102-r1/SELECTION-DISCLOSURE.json",
+    "sha256": "0b5f94c094ecbc9206c4889f55d1b6310f0b99245bf0fdfc9142ddbe4191f92e"
+  },
+  "calibration_review": {
+    "path": "outputs/robocasa-flora-five-task-fifty-score-20261102-r1/PARENT-REVIEW.json",
+    "sha256": "3aa660a935e724d348596f0d0f70bf898c9b4f920ee0c5d51803c829a9d39387"
+  },
+  "proposed_training": {
+    "maximum_iterations": 6,
+    "train_episodes_per_iteration": 80,
+    "episodes_per_task": 16,
+    "tasks": [
+      "OpenDrawer",
+      "PickPlaceCounterToCabinet",
+      "PickPlaceDrawerToCounter",
+      "TurnOffStove",
+      "CoffeeSetupMug"
+    ],
+    "horizons": [
+      750,
+      750,
+      750,
+      750,
+      600
+    ],
+    "H50_chunks": 1152,
+    "minibatch": 64,
+    "minibatches_per_epoch": 18,
+    "epochs": 4,
+    "feature_dim": 2088,
+    "residual_dimensions": 6,
+    "bound_fraction_of_native_action_std": 0.25,
+    "width": 256,
+    "layers": 2,
+    "learning_rate": 0.0003,
+    "Adam_betas": [
+      0.9,
+      0.999
+    ],
+    "Adam_eps": 1e-08,
+    "Adam_weight_decay": 0,
+    "initial_std": 0.5,
+    "gamma": 1,
+    "GAE_lambda": 0.95,
+    "PPO_clip": 0.2,
+    "value_coefficient": 0.5,
+    "entropy_coefficient": 0,
+    "gradient_clip": 1,
+    "initializer": "Released original RoboCasa365 Human30075000 pi0.5, frozen motor, same normalization/transforms/10-flow H50 sampler. Fresh zero residual policy and Adam for both arms, not the old trained single-task S head.",
+    "seeds": {
+      "head_initialization": 42,
+      "motor": 710100,
+      "residual": 42,
+      "update": 43,
+      "evaluation_motor_seeds": {
+        "initial_DEV": 810100,
+        "DEV": 810100,
+        "before_ID": 910100,
+        "ID": 910100,
+        "before_OOD": 1010100,
+        "OOD": 1010100
+      },
+      "native_constructor": "Exact pinned joint_case_bank: TRAIN210100,DEV310100,ID410100,OOD510100 + task_index*10000 + original bank offsets. No random task-selection seed."
+    },
+    "reward": "One full-native-horizon terminal reward before GAE; no success termination/intermediate delta success. Same samples/masks/learner otherwise.",
+    "recovery": "Save model+critic+Adam/global+private RNG/motor/case state and complete producing80-case rollout before any label. Missing/partial/stale grades preserve pending recovery, no partial update/recollection.",
+    "stopping": "Independent per-arm all-five-task DEV8/8 ceiling, or after update6 no task improves at least one fixed DEV case over own common initial DEV at updates2/4/6. Fixed6 endpoint otherwise. Descriptive heuristic, not statistical convergence.",
+    "final": "Keep final actor/critic/Adam/config/global-private RNG/motor/case checkpoint before final ID/OOD. Separate evaluation completion marker; no final/OOD-driven checkpoint selection."
+  },
+  "physical_accounting": {
+    "units": "Actual native control calls plus actual reset/settle/internal/failed/uncertain physical commands; count each actual action once. Proposed bounds reserve128 per episode for reset/internal overhead. Fail closed before another complete bank if insufficient.",
+    "common": {
+      "already_completed_native_qualification": {
+        "episodes": 250,
+        "actual_controls": 180000
+      },
+      "new_initial_DEV": {
+        "episodes": 40,
+        "controls": 28800,
+        "reset_reserve": 5120,
+        "bound": 33920
+      },
+      "new_before_ID": {
+        "episodes": 250,
+        "controls": 180000,
+        "reset_reserve": 32000,
+        "bound": 212000
+      },
+      "new_before_OOD": {
+        "episodes": 250,
+        "controls": 172500,
+        "reset_reserve": 32000,
+        "bound": 204500
+      },
+      "remaining_common_bound": 450420,
+      "total_common_including_qualification": 630420,
+      "physical_charge": "ONCE; never duplicate the same common episode as two physical consumptions."
+    },
+    "each_arm": {
+      "TRAIN": {
+        "episodes": 480,
+        "controls": 345600
+      },
+      "DEV": {
+        "episodes": 120,
+        "controls": 86400
+      },
+      "final_ID": {
+        "episodes": 250,
+        "controls": 180000
+      },
+      "final_OOD": {
+        "episodes": 250,
+        "controls": 172500
+      },
+      "total_episodes": 1100,
+      "total_controls": 784500,
+      "reset_reserve": 140800,
+      "all_in_bound": 925300
+    },
+    "stage_total": 2481020,
+    "requested_stage_ceiling": 2500000,
+    "unrequested_margin": 18980,
+    "remaining_total_after_already_spent_qualification": 2301020,
+    "old_caps": "No automatic reset/refill: old OpenDrawer common cap28400 and S owncap971600, partial13350/S8spent319200, all old clocks/unused balances remain immutable and charged. This proposal requests a separate explicit five-task stage action decision, not a transfer.",
+    "rejection": "If human keeps the prior1M logical per-arm envelope without a fresh stage allowance, do not launch this larger common+two-arm schedule."
+  },
+  "resources": {
+    "aggregate_GPU_limit": 24,
+    "retained_development_GPU_count": 1,
+    "new_common_before": {
+      "gpus": 8,
+      "node_count": 4,
+      "gpus_per_node": 2,
+      "CPU_per_node": 32,
+      "RAM_GiB_per_node": 128,
+      "SHM_GiB_per_node": 16,
+      "minutes": 119,
+      "retry": false,
+      "maximum_inclusive_GPU_seconds": 57600,
+      "outer_seconds": 7140,
+      "startup_allowance_seconds": 60,
+      "closure_seconds": 300,
+      "output_bound_GiB": 48
+    },
+    "each_training_arm": {
+      "gpus": 8,
+      "node_count": 4,
+      "gpus_per_node": 2,
+      "CPU_per_node": 32,
+      "RAM_GiB_per_node": 256,
+      "SHM_GiB_per_node": 16,
+      "minutes": 359,
+      "retry": false,
+      "maximum_inclusive_GPU_seconds": 172800,
+      "outer_seconds": 21540,
+      "startup_allowance_seconds": 60,
+      "closure_seconds": 300,
+      "S_output_bound_GiB": 80,
+      "F_output_bound_GiB": 112
+    },
+    "dispatch": "Common before completes once after tasks frozen. Then launch two8-GPU arms concurrently when real hardware/scorer allows:16+retaineddev1=17 below24. Never three8-GPU jobs+dev1=25. Each finite job<8h. No automatic retry/renewed clocks.",
+    "outputs": "Proposed240GiB new common/S/F budget within initial256GiB envelope; actual existing five-task qualification footprints+remaining outputs+block/temp overhead must fit before submission. Fresh capacity/write proof, quotaUNVERIFIED unless actually available; no old input/recovery deletion.",
+    "Flora": "Eight persistent TP1 engines, batch8, util.78, actual memory/free barrier before colocated policy rollout. Same card for native rollout and scorer. Actual combined colocation must qualify in the first retained update; no synthetic/full-model extra benchmark.",
+    "capacity": "First update is retained actual training, not a discarded benchmark. Record actual rollout/annotation/update/DEV/final-panel throughput before ETA; reserve final500 panels and complete closure before each further update.",
+    "first_retained_iteration_wall_ceiling_seconds": 7200,
+    "DEV_panel_wall_ceiling_seconds": 1800,
+    "final500_panel_wall_reserve_seconds": 7200,
+    "clock_admission": "These ceilings reserve complete final panels and may censor before6 updates if actual capacity/time cannot fit; they are finite reservations, not measured ETAs or permission for partial/truncated episodes."
+  },
+  "needed_before_dispatch": [
+    "Explicit native74% keep-or-replace decision; original measured go:false remains false and any exception binds exact calibration SHA.",
+    "Explicit fresh-stage action decision; no old balance borrowing or unstated5M cap.",
+    "Exact pinned deployed commit and actualGPU source/resource checks, case banks/private seed profile, complete output/action clocks and actual capacity/write proof.",
+    "Fresh common-before saved initializer fingerprint/DEV/ID/OOD before either arm; both use identical initial fingerprint. No OOD in PPO/calibration/DEV.",
+    "Actual retained first full80-case update demonstrates combined native/scorer/core integration and cost; finite closure preserves full recovery."
+  ],
+  "readiness": "No claimed actual jointGPU update or lifetime memory qualification. Affected mixed-native learner, terminalAPI and joint80service core cases passed allocatedLinux; controller reviewed statically. No new headroom exception or budget granted by this file."
+}

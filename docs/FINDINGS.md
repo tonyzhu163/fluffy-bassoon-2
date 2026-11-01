@@ -94,16 +94,29 @@ Batch8 processed64replay requests in113.38seconds per GPU after about580–586se
 cold startup, with observed peak77,625MiB on a97,887MiB card and no OOM. Replays
 measure throughput and add no independent cases. [Three-view audit](../outputs/robocasa-flora-throughput-three-view-20261102-r2/PARENT-REVIEW.json).
 
-The prospectively chosen five-task qualification now has **29/50 native
-OpenDrawer successes (58%)**, within the declared5%–70% headroom range. Its first
-eight cases were retained and the remaining42 continued the exact native sampler
-stream; all50 ran the full750-step horizon with three synchronized views. The other native cohorts finished at37/50 Counter-to-Cabinet,23/50
-Drawer-to-Counter,7/50 Turn-Off-Stove and17/50 CoffeeSetupMug. Counter-to-Cabinet
-exceeds the declared70% upper gate; its74% result remains a failed gate pending
-a human decision. The other four tasks pass. This is initializer qualification,
-with no new joint-policy updates; three-view Flora discrimination on each full
-50-case bank is still pending. The human selected one joint policy per reward
-arm and five separate PPO-held-out OOD tasks. [OpenDrawer50 result](../outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/NATIVE-QUALIFICATION.json).
+The five-task initializer qualification and Flora scoring are complete. Task
+selection was manual for diversity, and OpenDrawer carried over from the earlier
+pilot. Fixed seeds control episodes and policy sampling; these tasks are a
+development subset, not a random sample of RoboCasa365.
+
+| PPO candidate | Native successes | Flora AUROC |
+| --- | ---: | ---: |
+| OpenDrawer |29/50 (58%)|0.966|
+| PickPlaceCounterToCabinet |37/50 (74%)|0.900|
+| PickPlaceDrawerToCounter |23/50 (46%)|0.977|
+| TurnOffStove |7/50 (14%)|0.894|
+| CoffeeSetupMug |17/50 (34%)|0.923|
+
+All five AUROCs exceed0.7 on their paired full50-case native banks. Each episode
+ran its full native750- or600-step horizon with synchronized left, wrist and
+right recordings; all250 official raw scores/probabilities are retained.
+Counter-to-Cabinet exceeds the declared70% native-success ceiling, so its gate
+remains failed pending an explicit human keep-or-replace decision. The other four
+native gates pass. This measures initializer success and scorer discrimination,
+with no new joint-policy training or camera-ablation claim. The human selected
+one joint policy per reward arm and five PPO-held-out OOD tasks.
+[Paired native/Flora audit](../outputs/robocasa-flora-five-task-fifty-score-20261102-r1/PARENT-REVIEW.json),
+[selection disclosure](../outputs/robocasa-five-task-flora-ppo-20261102-r1/SELECTION-DISCLOSURE.json).
 
 ## LIBERO
 
