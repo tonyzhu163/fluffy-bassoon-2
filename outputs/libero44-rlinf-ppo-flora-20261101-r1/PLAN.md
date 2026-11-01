@@ -1,5 +1,16 @@
 # LIBERO44: standard RLinf PPO versus Flora-reward PPO
 
+**SUPERSEDED PROPOSAL — DO NOT EXECUTE.** After this proposal was prepared, the
+human directed the source owner to pull and follow coordination.md. Main
+`a0f5acbd06a40877a340416a0ae48f407c397c69` points to
+`outputs/flora-ppo-comparison-20261101-r1/PLAN.md`, which is the authoritative
+draft. It uses RLinf130-SFT, full-horizon/no-success-stopping training, a
+64-episode calibration stage and binary Flora labels, rather than the
+OpenPI40/continuous-score/onset design below. Preserve this file as proposal
+history only. The historical OpenPI40 6/20 baseline is not a measurement of the
+new draft's initialization. Both old GPU allocations are released and all
+three old launch-capable automations are paused; no comparison is launched.
+
 Prepared 2026-11-01 Asia/Shanghai from main `c729a989021ceadceed71f6fb80782c9905f4db4`.
 The human selected LIBERO task44 and NVIDIA Flora-Rewarder, and paused all other
 project experiments. This document is preparation, not a runtime qualification
