@@ -44,8 +44,14 @@ def main():
                 indices = core.terminal_frame_indices(collage.num_frames, collage.fps)
                 prompt = engine.render(processor, core.terminal_messages(job['task'], False),
                                        thinking=False)
+                metadata = core.video_metadata(indices, collage.fps, collage.num_frames)
+                # The official vLLM request accepts this processing option beside
+                # frame-clock metadata; Transformers VideoMetadata accepts only
+                # the clock fields. Preserve its unchanged value as the kwarg.
+                if metadata.pop('do_sample_frames') is not False:
+                    raise ValueError('Official sampled frames must never be resampled')
                 encoded = processor(text=[prompt], videos=[collage.frames(indices)],
-                    video_metadata=[core.video_metadata(indices, collage.fps, collage.num_frames)],
+                    video_metadata=[metadata],
                     do_sample_frames=False, size=engine.COLLAGE_VIDEO_SIZE, return_tensors='pt')
                 grids = encoded['video_grid_thw'].tolist()
                 total = int(encoded['input_ids'].shape[-1])
