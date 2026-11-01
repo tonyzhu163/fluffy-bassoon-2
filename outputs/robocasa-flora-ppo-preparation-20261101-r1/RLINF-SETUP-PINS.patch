@@ -1,0 +1,20 @@
+--- a/requirements/install.sh
++++ b/requirements/install.sh
+@@ -2544,7 +2544,7 @@
+         robocasa365)
+             create_and_sync_venv
+             install_common_embodied_deps
+-            uv pip install git+${GITHUB_PREFIX}https://github.com/RLinf/openpi
++            uv pip install git+${GITHUB_PREFIX}https://github.com/RLinf/openpi@c5dc4b9296a1a4739bf52828f28a579f12dce763
+             install_flash_attn
+             install_robocasa365_env
+             ;;
+@@ -3593,7 +3593,7 @@
+     # OpenPI's optional offline data loader still imports lerobot.common;
+     # PPO/eval do not use that loader, but SFT co-training needs an API update.
+     uv pip install -e "$robocasa_dir"
+-    uv pip install --no-deps "robosuite @ git+${GITHUB_PREFIX}https://github.com/ARISE-Initiative/robosuite.git@master"
++    uv pip install --no-deps "robosuite @ git+${GITHUB_PREFIX}https://github.com/ARISE-Initiative/robosuite.git@5ce6643f3092639d08f7b0f90ed1c6a84f50552c"
+     # robosuite is installed without dependencies to preserve RoboCasa's
+     # MuJoCo pin, so install its QP solver requirement explicitly.
+     uv pip install "qpsolvers[quadprog]>=4.3.1"
