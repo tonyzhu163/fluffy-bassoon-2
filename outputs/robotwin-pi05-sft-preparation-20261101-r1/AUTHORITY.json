@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "phase_id": "robotwin-pi05-sft-preparation-20261101-r1",
+  "owner": "/root",
+  "execution_owner": "/root/finish_assembly",
+  "implementation_owner": "01a18be4-a6ab-79a2-af3d-13f76308e253",
+  "protocol_owner": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+  "direct_human_evidence": {
+    "chat_id": "01a18adc-fa3e-7a00-ac76-84aa4a622c00",
+    "turn_id": "01a19640-c073-7971-bb36-f02c9b2f29a4",
+    "messages": [
+      {
+        "id": "01a19640-c0c4-70f0-b883-21069ca6d72d",
+        "quote": "i meant we need to sft a pi0.5 on the robotwin first check vlrla's hyperparams listed"
+      },
+      {
+        "id": "01a19640-cbc3-7360-947b-c911220a9a5b",
+        "quote": "for the pi0.5"
+      }
+    ],
+    "root_verification": "Read the actual two human messages through read_thread, not inferred from a coordinator recommendation."
+  },
+  "decision": "SFT pi0.5 on RoboTwin FIRST, then use the identical resulting checkpoint to initialize the simulator-reward and Flora-reward PPO arms. Merely restoring Motus or picking a previously SFT task motor no longer completes the requested initializer stage.",
+  "preparation_scope": "Minimal existing official OpenPI/RLinf pi0.5 SFT recipe and data/initializer/runtime provenance for the six-source-task clean/random study; no new trainer, simulator or model framework. Preserve and reuse existing assets/setup where compatible.",
+  "paper_hyperparameters": "Protocol owner is auditing VLRLA primary sources. Its bridge S1 AdamW1e-4/batch64 and its PPO S2 actor5e-6/value1e-4/global2048 are DIFFERENT stages and must not be relabelled as initial pi0.5 SFT settings. Missing SFT settings remain explicitly unreported until actually found; use a named official recipe for any reconstruction.",
+  "initialization_and_exposure": "Prefer a documented official pi0.5 base initializer for new RoboTwin clean SFT. Retained Motus has randomized RoboTwin training exposure and is preserved as runtime/reference evidence, not silently labelled a new clean-only SFT checkpoint. Disclose foundation and any inherited training exposure.",
+  "resource_status": "Human has explicitly requested SFT; exact finite data/config/fit endpoint/validation/resources must be made concrete and recorded before sole-owner allocation. No SFT allocation or resource reservation yet, and no old budget or unused balance imported. Existing per-job<=8GPUs/<8h applies.",
+  "holds": "LIBERO90 search remains held/unallocated. No S/F PPO until SFT completes, native headroom and Flora discrimination are measured under that resulting checkpoint, and the exact prospective training profile is admitted. All unrelated old jobs remain paused/terminal."
+}
