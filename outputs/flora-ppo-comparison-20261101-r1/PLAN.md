@@ -160,12 +160,21 @@ that never reaches a target as censored; do not claim convergence from a crash.
 - The shared 64-episode baseline plus at most one separate smoke episode uses
   an estimated 26,975 physical actions. Give this common preparation its own phase
   bucket, charge it once and disclose its attribution alongside each arm.
-- At most 10 aggregate GPU-hours, including startup, loading/parity/capacity
-  qualification, baseline, Flora serving, training, evaluations, failures and
-  checkpoint closure. Every individual job is under eight hours. No old unused
-  budget is transferred. Freeze the concrete resource profile before launch.
-- If step 4's real iteration time exceeds the limit, cut iterations rather
-  than the batch.
+- **Human resource override (2026-11-01):** "no these two jobs i authorize
+  however many, you can only ask up to 8 gpus per job". The former ten aggregate
+  GPU-hour ceiling is superseded for these two comparison arms and their
+  necessary qualification/scoring. No replacement aggregate GPU-hour ceiling
+  was supplied; do not limit a run to the earlier 67/35-minute budget examples.
+  Request at most eight GPUs in any scheduler job, counting every GPU in that
+  allocation. A separate rewarder allocation must independently satisfy this
+  per-job limit. Choose useful execution parallelism from actual capacity and
+  throughput, preserving the saved batch, losses, optimizer schedule and cases.
+- Continue logging all GPU allocation time for startup, qualification,
+  baseline, Flora, training, evaluation, failures and checkpoint closure. The
+  standing rule that each individual job is under eight hours still applies;
+  reserve closure time and preserve full recovery. The existing scientific
+  action limits and convergence/futility rules remain in force. This resource
+  authorization does not resume other paused work or add scientific arms.
 
 ## Reading the result
 
