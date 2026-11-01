@@ -1,0 +1,81 @@
+{
+  "format": "all40_teacher_assessment_single_GPU_launch_v1",
+  "job_id": "job-bmolej07bhsg",
+  "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "submitted_once": true,
+  "scheduler_created": "2026-11-01 11:12:45 Asia/Shanghai",
+  "scheduler_status": "Running",
+  "resources": {
+    "GPU": 1,
+    "CPU": 16,
+    "memory_GiB": 96,
+    "shared_memory_GiB": 8,
+    "scheduler_minutes": 179,
+    "automatic_retry": false
+  },
+  "resource_attempt": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/clock/attempts/1793502780000000-0000",
+  "clock_reserved_seconds": 10800,
+  "slice_seconds": 10740,
+  "driver_deadline_unix": 1793513400,
+  "planned_episodes": 320,
+  "schedule_all_in_action_cap": 131200,
+  "original_grant_action_ceiling": 196800,
+  "omitted160_initial_slots_repurposable": false,
+  "output_cap_bytes": 34359738368,
+  "GPU_probe_pass": true,
+  "actual_resources": {
+    "hostname": "job-bmolej07bhsg-master-0",
+    "CPU": 16.0,
+    "memory_bytes": 103079215104,
+    "shared_memory_bytes": 8589934592,
+    "raw_cgroup": {
+      "/proc/self/cgroup": "0::/",
+      "/sys/fs/cgroup/cpu.max": "1600000 100000",
+      "/sys/fs/cgroup/memory.max": "103079215104",
+      "/sys/fs/cgroup/cpuset.cpus.effective": "0-179"
+    },
+    "scheduler_visibility": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "NVIDIA_VISIBLE_DEVICES": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc"
+    },
+    "no_added_GPU_namespace": true
+  },
+  "source_motor_parameter_sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+  "GPU_uuid": "GPU-4fefdbca-20de-a4eb-b4d1-090ccbda38bc",
+  "artifacts": [
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/gpu-r1-admission/actual-resources.json",
+      "sha256": "0e7de57022393570c5d30a855d32e2f7e8ad362b582d293cc116e277045f9e73",
+      "bytes": 508
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/gpu-r1-admission/attempt.json",
+      "sha256": "6954161b7b537302b9518f070d4adedaac74c4fc59fe88e2a5235f2ae20c08a5",
+      "bytes": 275
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/gpu-r1-admission/gpu-probe.json",
+      "sha256": "cd36fe0623b3dde74988e2f13ca105cf840e095a1d53c76b8d5b6c65d1c91455",
+      "bytes": 2867
+    },
+    {
+      "path": "outputs/libero40-teacher-assessment-20261101-r1/gpu-r1-admission/ticket.json",
+      "sha256": "ccef81ddfe47679d6476657163c0e0bc0572a67f16ed657346ef07d4892bb570",
+      "bytes": 6188
+    }
+  ],
+  "command": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/GPU-COMMAND.sh",
+    "sha256": "d88e3682f851cd493b71eb4f4d441a80b0f15bf899abf6e7fc8b58eb01541cd0",
+    "bytes": 7311
+  },
+  "proof": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/gpu-submitted.jpg",
+    "sha256": "9f3d06457ccf4a6d896df8fbe0a6c7241096d5ba72ce449752b71f496f861c82",
+    "bytes": 73277
+  },
+  "all40_actual_payload_binding_pending": true,
+  "first_real_episode_pending": true,
+  "source_or_student_admission": false,
+  "primary_next_check": "2026-11-01 11:30 Asia/Shanghai"
+}
