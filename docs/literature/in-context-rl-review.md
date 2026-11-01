@@ -537,6 +537,11 @@ identification, not reward-driven ICRL.
 
 ## Recommended CTM in-context RL loop
 
+**Superseded (2026-11-01):** the meta-learner is now a plain causal decoder,
+not a CTM or other recurrent core; see
+[PAPER.md](../PAPER.md). The CTM architecture below
+is kept as history.
+
 The goal is a CTM whose carried state turns *rewarded* experience across
 episodes into better behavior, with weights frozen at test time. The
 candidate loop keeps the competent frozen motor, adds a learned in-context

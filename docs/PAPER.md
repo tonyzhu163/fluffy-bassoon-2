@@ -406,11 +406,16 @@ is semantically unseen.
   persists from support to query. New trial → empty context. Different cases
   make different trials. Case/split metadata is never a controller input.
   See [META-TASK.md](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/frozen-vla-libero/META-TASK.md).
-- **Meta-learner architecture is fixed (human, 2026-11-01):** a standard
-  causal (GPT-style) Transformer, as in Algorithm Distillation and DPT.
-  Architecture is not a tested axis: no CTM, CMM, GRU, Transformer-XL or MLP
-  comparisons, and no architecture claim. Static and reset controls use the
-  same Transformer. A strong static Transformer establishes policy transfer,
+- **Meta-learner architecture is fixed (human, 2026-11-01):** a plain
+  causal decoder, as in Algorithm Distillation, DPT and Vintix (LLaMA-style
+  layers, causal mask, ALiBi or RoPE so a sliding-window cache works). No
+  segment recurrence or gating: not Transformer-XL or GTrXL. One backbone
+  for every condition, including any direct meta-RL arm. Architecture is not
+  a tested axis: no CTM, CMM, GRU, GTrXL, Transformer-XL, hierarchical
+  (ECET) or MLP comparisons, and no architecture claim. Static and reset
+  controls use the same decoder. The current LIBERO history controller
+  (`vla_history.py`) still uses GTrXL and must be switched before new
+  meta-learner results. A strong static Transformer establishes policy transfer,
   not implicit deployment-time ICRL.
 
 ### Source and target boundaries
