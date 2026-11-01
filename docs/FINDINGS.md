@@ -57,7 +57,17 @@ not run. On exactly those eight native videos, official Flora expected scores
 ranked10of15 success/failure pairs correctly: **AUROC0.6667**, below the
 predeclared0.70 gate. Both integrated simulator- and Flora-reward residual PPO
 pipelines therefore stopped cleanly before optimizer updates or shared before
-panels. No comparative learning or final trained checkpoint exists.
+panels. That original attempt produced no comparative learning or final trained checkpoint.
+
+The user subsequently authorized continuation below the original AUROC gate.
+The unchanged initializer scored **4/8 on the fixed held-out ID panel** and
+**6/8 on the predeclared CloseFridge OOD panel**, before PPO; initial DEV was
+7/8. These eight-case panels are descriptive and remain separate from TRAIN.
+A common 64-episode residual-PPO batch now collects through eight allocated
+GPU workers; the numerical checks preserve the serial draw stream and next
+Adam update. This execution qualification does not yet establish a learning
+gain or simulator-versus-Flora result. The original failed calibration remains
+unchanged. [Before panels and qualification](../outputs/robocasa-eight-gpu-speed-20261102-r1/RUNTIME-STATUS.json).
 
 The persistent official scorer loaded once and completed all eight labels;
 two affected core numerical/reuse/cleanup cases passed on allocated Linux.
