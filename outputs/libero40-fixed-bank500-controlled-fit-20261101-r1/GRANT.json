@@ -1,0 +1,20 @@
+{
+  "status": "BOUNDED_FIT_PREPARATION_FUNDED_NO_RESERVATION",
+  "maximum_cumulative_GPU_seconds": 7200,
+  "models": ["ad_full", "ad_static", "dpt_full", "dpt_static"],
+  "per_model_cumulative_GPU_seconds": 1800,
+  "per_job_slice_seconds": 1740,
+  "per_job_startup_allowance_seconds": 60,
+  "scheduler_minutes_per_child": 29,
+  "single_child_resources": {"GPU": 1, "expected_kind": "RPBZZZ6", "CPU": 8, "memory_GiB": 32, "automatic_retry": false},
+  "maximum_new_outputs_bytes": 17179869184,
+  "maximum_new_robot_actions": 0,
+  "maximum_new_teacher_SGD": 0,
+  "student_endpoint": "500TOTAL per model, preserve valid100 prefix if exact resume proven; no favorable checkpoint/VAL selection",
+  "conditional_CPU_qualification": {"maximum_aggregate_CPU_worker_seconds": 180, "GPU": 0, "CPU": 2, "memory_GiB": 16, "scope": "Only genuinely changed profile/migration checks if concrete code requires them. No already-passed suite or test allocation for unchanged qualified code. Exact selectors reviewed before any CPU admission."},
+  "inclusive_accounting": "All source/input checks, restore, startup, model loads, tests if admitted, updates, validation/inference, failures and cleanup counted once. One original shared7200 clock with four fixed serial model subcaps1800, immutable per-allocation identities. Independent fits may run concurrently on actual distinct allocated GPU tickets; no fresh budget on resume/retry or unused-other-model borrowing.",
+  "admission_needed": ["Exact four100 endpoints and full-state/normalizer/input manifest hashes", "Unchanged original numerical recipe and source/data lineage compatibility", "Concrete executable/profile and latest-main/static or affected allocated qualification", "Actual per-model time/storage/RAM and exclusive GPU admission, original shared clock binding"],
+  "source_commit": null,
+  "actual_jobs": [],
+  "source_or_target_data_admission_changed": false
+}

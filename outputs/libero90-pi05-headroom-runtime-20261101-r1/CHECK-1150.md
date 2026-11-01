@@ -1,0 +1,1 @@
+Primarytask44 Running375,260updates/2,187TRAIN/19,257replay;2,148successes/39failures,finite losses. Latestcompletepanel360,080remains20/20,next380k;21completepanels. Stablefullrecovery/newrawRPCbytehashes pass.356,081all-in actions/21.799GBoutputs/36,856conservative observedGPU-s includingactiveelapsed. No terminalcharge or finalmotorafter claim. Next12:10.

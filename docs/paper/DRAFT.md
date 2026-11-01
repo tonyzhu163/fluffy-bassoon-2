@@ -89,7 +89,7 @@ no compatible source teacher or meta-learning result follows.
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through360,080 scores20/20. All panels are retained. This is interim
+from40,140 through380,000 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
@@ -115,9 +115,18 @@ then begins one bounded GPU assessment. All40 actual payloads/state bind
 before outcomes; first8 episodes close with672actions and zero native/feature
 repeat delta. It then stops at161/320 completed roles on a reset-pair guard before
 steering; finalC565 remains unchanged. The26,096 actions and1,340GPU-seconds
-are retained. Exact predicate diagnosis is pending, not a teacher failure
-claim or source/student admission. The
-old25h collection/fit expansion remains unfunded.
+are retained. Saved-record CPU diagnosis isolates two one-LSB wrist-channel
+differences with byte-identical main image, proprioception and simulator
+state. Failed derived features/instruction remain unavailable. The existing
+source40 camera-precision contract supports a narrow successor for the158
+unstarted roles; failed161 stays an unreplayed null-score abort. Exact
+code/qualification/storage admission remains pending. No teacher-failure
+claim or source/student admission follows. The
+old25h collection/fit expansion remains unfunded. A separate current-bank
+100→500 four-model controlled-fit preparation preserves the exact TRAIN
+data, numerical recipe and recoverable100 state. Its bounded offline fit
+grants no robot readout; the fresh55.25h source-generation proposal is also
+unfunded.
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers
 through500 updates. Its first all90 target queries scored native31/90; AD
