@@ -1,0 +1,91 @@
+{
+  "status": "PROPOSAL_ACTUAL_ADMISSION_PENDING",
+  "phase": {
+    "maximum_GPU_seconds": 7200,
+    "models": 4,
+    "per_model_cumulative_seconds": 1800,
+    "execution_slice_seconds": 1740,
+    "scheduler_allowance_seconds": 60,
+    "per_child_GPU": 1,
+    "per_child_CPU": 8,
+    "per_child_memory_GiB": 32,
+    "scheduler_minutes": 29,
+    "maximum_new_outputs_bytes": 17179869184,
+    "robot_actions": 0,
+    "teacher_or_source_SGD": 0
+  },
+  "historical_measured_100_seconds": {
+    "ad_full": 91.484384637326,
+    "ad_static": 92.27559118904173,
+    "dpt_full": 91.08855365496129,
+    "dpt_static": 93.04056777339429
+  },
+  "linear_400_update_seconds": {
+    "ad_full": 365.937538549304,
+    "ad_static": 369.10236475616693,
+    "dpt_full": 364.35421461984515,
+    "dpt_static": 372.16227109357715
+  },
+  "prospective_inclusive_GPU_seconds_per_model": [
+    450,
+    650
+  ],
+  "projection_limit": "Estimates from actual fixed100 timings, not new timing/capacity observations. Inclusive bound remains original1800 per model.",
+  "actual_RAM_or_CUDA_peak_observed_here": false,
+  "logical_arrays_bytes": {
+    "train_one_objective": 562802094,
+    "validation_one_objective": 136858572
+  },
+  "host_RAM_proposal": {
+    "allocated_GiB": 32,
+    "conservative_expected_peak_GiB": 8,
+    "basis": "One33729x4104 float32 training corpus, one legacy VAL, corrected VAL sequentially; small1.5M-parameter student and Adam. Original100 same recipe already completed."
+  },
+  "GPU_capacity": {
+    "kind": "NVIDIA RPBZZZ6",
+    "actual_probe_pending": true,
+    "extra_capacity_SGD": 0,
+    "recipe_changed_on_failure": false,
+    "measurement": "Original100 fit is prior capacity evidence. Record actual same-ticket restore bytes and existing trainer per-update CUDA peak; no extra optimizer updates or batch tuning."
+  },
+  "new_output_proposal": {
+    "expected_per_model_bytes": 134217728,
+    "expected_four_model_bytes": 536870912,
+    "source_inputs_copied": false,
+    "contents": "Atomic latest recovery/temp, immutable500 full recovery, fixed-final candidate and immutable policy, metrics/inspection/migration/RNG-hash receipts;100 originals remain referenced."
+  },
+  "conditional_CPU": {
+    "maximum_CPU_worker_seconds": 180,
+    "CPU": 2,
+    "memory_GiB": 16,
+    "GPU": 0,
+    "new_test_cases": 9,
+    "actual_original_model_pairs": 4,
+    "forward_of_original_models": false,
+    "inspector_model_construction": false,
+    "proposed_test_wall_seconds": 15,
+    "proposed_actual_inspection_wall_seconds": 40,
+    "proposed_startup_cleanup_wall_seconds": 5,
+    "proposed_total_wall_seconds": 60,
+    "accounting": "All startup/qualification/tests/actual inspection/failures/cleanup within original180 worker-seconds; existing owner clock authoritative, no refreshed budget.",
+    "return_codes": [
+      "new_tests_rc",
+      "actual_original_inspection_rc"
+    ],
+    "proposed_receipt_output_limit_bytes": 16777216
+  },
+  "runtime": {
+    "executable": "/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python",
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "device": "NVIDIA RPBZZZ6",
+    "new_environment_created": false
+  },
+  "not_granted": [
+    "robot100/500 readout",
+    "fresh-native robot panel",
+    "expanded source generation",
+    "old25h collection/fits",
+    "architecture or optimizer tuning"
+  ]
+}

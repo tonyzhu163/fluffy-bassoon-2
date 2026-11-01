@@ -1,0 +1,40 @@
+PREPARATION ONLY; NO COMMAND EXECUTED HERE. Root/finish_assembly alone executes.
+Current profile and exact reviewed code pin must be adopted before admission.
+
+Conditional CPU qualification: ONE original180 CPU-worker-second envelope,
+2CPU/16GiB/zeroGPU, no VLA/teacher/simulator/actions. Proposed process wall
+subcaps15s for NEW tests and40s for actual inspection, plus5s cleanup/startup;
+the owner's actual clock (including all overhead) is authoritative. Do not retry
+or refresh a budget on failure. Save separate tests_rc and inspection_rc.
+
+PYTHONPATH=<PINNED_WORKTREE>/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTEST_ADDOPTS='' <ORIGINAL_OPENPI_PYTHON> -m pytest -q tests/test_vla_source40_fixed_bank_depth.py --junitxml=<FRESH_CPU_RECEIPT>/migration.junit.xml
+
+PYTHONPATH=<PINNED_WORKTREE>/src <ORIGINAL_OPENPI_PYTHON> -m fluffy_bassoon.meta_rl.vla_source40_fixed_bank_depth inspect --profile <FROZEN_PROFILE> --profile-sha256 <ACTUAL_PROFILE_SHA> --output <FRESH_CPU_RECEIPT>/actual-original100-inspection --source-commit <CLEAN_QUALIFIED_CODE_PIN> --expected-hostname <ACTUAL_ALLOCATED_CPU_HOST>
+
+inspect reads the exact original four100 endpoints/fullrecoveries after byte
+checks; writes actual leaf/Adam/RNG/normalizer identities, actual time/RSS and
+runtime. It is NOT a synthetic test. CUDA restore remains GPU-startup scope.
+
+Prospective existing clock API for the sole owner (no launcher added):
+from fluffy_bassoon.meta_rl.vla_source40_fixed_bank_depth import clock_contract
+from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin, finish
+attempt = begin(<PHASE_ROOT>, clock_contract(<PROFILE>, <PROFILE_SHA>, <CODE_PIN>),
+                slice_seconds=1740, worker_seconds=7200,
+                lineage=<ONE_MODEL_ID>, lineage_seconds=1800,
+                resume=<ORIGINAL_SHARED_CLOCK_ALREADY_EXISTS>, now=<ACCOUNTED_JOB_START>)
+Root uses actual distinct allocated tickets; no overlapping attempt for one model.
+
+Inside each qualified exclusive1GPU/8CPU/32GiB/29minute ticket, after the actual
+GPU probe and admission, with an inclusive outer1740-second execution limit:
+
+PYTHONPATH=<PINNED_WORKTREE>/src <ORIGINAL_OPENPI_PYTHON> -m fluffy_bassoon.meta_rl.vla_source40_fixed_bank_depth train --profile <FROZEN_PROFILE> --profile-sha256 <ACTUAL_PROFILE_SHA> --model <ad_full|ad_static|dpt_full|dpt_static> --phase-root <ORIGINAL_PHASE_ROOT> --attempt <OWNED_MODEL_ATTEMPT> --inspection <ACTUAL_PRELAUNCH_INSPECTION_JSON> --inspection-sha256 <ACTUAL_INSPECTION_SHA> --output <ORIGINAL_PHASE_ROOT>/models/<MODEL_ID> --source-commit <CLEAN_QUALIFIED_CODE_PIN> --expected-hostname <ACTUAL_ALLOCATED_GPU_HOST>
+
+Record each model_rc separately; root calls existing finish once after actual
+cleanup. Optional MANUAL --resume-phase requires another admitted remaining
+original-model ticket and never refreshes any cap or repeats100 training.
+
+Existing training child receives fixed500TOTAL, original TRAIN and legacyVAL,
+batch8/context300/window128/AdamW3e-4/seed0/threads4/final selection. It restores
+exact100 policy/Adam/normalizer/all RNG and runs101..500. Corrected VAL is only
+separate100/500 frozen inference. No same100 refit, data recapture, teacher pass,
+new source quota, architectural/loss/optimizer/globalbatch tuning, or robot job.
