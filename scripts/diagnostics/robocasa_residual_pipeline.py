@@ -44,6 +44,9 @@ def main():
             for child in watched:
                 if child.poll() is not None:
                     raise RuntimeError(f"Child exited {child.returncode} before {path}")
+            peer = exchange / ("S-terminal.json" if arm == "F" else "F-terminal.json")
+            if peer.exists():
+                raise RuntimeError(f"Peer pipeline closed before {path}; no idle continuation")
             time.sleep(1)
         raise TimeoutError(f"Finite allocation deadline before {path}")
 
