@@ -1,0 +1,102 @@
+# Proposed local adaptation of RLinf c605's official OpenPI SFT path.
+# This is our recipe, not a reported VLRLA initial-SFT configuration.
+# Required paths intentionally have no Motus/LIBERO/task-SFT fallback.
+defaults:
+  - model/pi0_5@actor.model
+  - hybrid_engines/openpi_fsdp@actor.fsdp_config
+  - override hydra/job_logging: stdout
+  - _self_
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:RLINF_PATH}/examples/sft/config/
+    - file://${oc.env:RLINF_PATH}/examples/embodiment/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor,env,rollout: all
+
+runner:
+  task_type: sft
+  logger:
+    log_path: ${oc.env:ROBOTWIN_SFT_OUTPUT}
+    project_name: robotwin_clean_pi05_sft
+    experiment_name: six_clean_pi05_seed0
+    logger_backends: [tensorboard]
+  max_epochs: -1
+  max_steps: 20000
+  # c605's embodied SFT worker does not implement validation loss.
+  val_check_interval: -1
+  save_interval: 5000
+
+data:
+  train_data_paths: ${oc.env:ROBOTWIN_SFT_TRAIN_DATA}
+  num_workers: 4
+
+actor:
+  group_name: ActorGroup
+  training_backend: fsdp
+  micro_batch_size: 4
+  global_batch_size: 32
+  seed: 0
+  model:
+    model_path: ${oc.env:ROBOTWIN_SFT_BASE_MODEL}
+    pi05: true
+    precision: fp32
+    is_lora: false
+    num_action_chunks: 50
+    action_dim: 14
+    num_steps: 5
+    add_value_head: false
+    openpi:
+      task: sft
+      config_name: pi05_aloha_robotwin
+      embed_dtype: bf16
+      action_horizon: 50
+      model_action_dim: 32
+      action_env_dim: 14
+      num_images_in_input: 3
+      discrete_state_input: true
+      max_token_len: 200
+      train_expert_only: false
+      torch_compile: false
+    openpi_data:
+      norm_stats_path: ${oc.env:ROBOTWIN_SFT_NORM_STATS}
+      adapt_to_pi: true
+      extra_delta_transform: true
+  optim:
+    lr: 2.5e-5
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-8
+    weight_decay: 1.0e-10
+    clip_grad: 1.0
+    # Deliberately distinct from the fixed 20k fit endpoint.
+    total_training_steps: 30000
+    lr_warmup_steps: 1000
+    lr_scheduler: openpi_cosine
+    num_cycles: 0.5
+    min_lr: 2.5e-6
+  fsdp_config:
+    strategy: fsdp
+    sharding_strategy: full_shard
+    use_orig_params: true
+    gradient_checkpointing: true
+    gradient_checkpointing_use_reentrant: false
+    amp_autocast:
+      enabled: false
+    mixed_precision:
+      param_dtype: bf16
+      reduce_dtype: fp32
+      buffer_dtype: fp32
+      cast_forward_inputs: false
+      cast_root_forward_inputs: false
+
+reward:
+  use_reward_model: false
+critic:
+  use_critic_model: false

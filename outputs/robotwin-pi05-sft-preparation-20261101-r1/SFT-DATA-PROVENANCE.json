@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "ARCHIVE_METADATA_ONLY_NOT_DOWNLOADED_OR_INSPECTED_HERE",
+  "source_inventory": "outputs/archive/vlrla-protocol-20261029-r1/robotwin-datasets.json",
+  "source_inventory_sha256": "b405775f5787e3b127e26fcc05348c446ca6bef017cd63db67829a417d0d8f55",
+  "repository": "TianxingChen/RoboTwin2.0",
+  "revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "tasks": [
+    "handover_mic",
+    "pick_diverse_bottles",
+    "place_a2b_left",
+    "place_object_stand",
+    "place_phone_stand",
+    "scan_object"
+  ],
+  "entries": [
+    {
+      "task": "handover_mic",
+      "vlrla_split": "source",
+      "path": "dataset/handover_mic/demo_clean.zip",
+      "bytes": 406382725,
+      "sha256": "c43714747294929689a542308235815205156b9e895c1de729288cf2e8feb787",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/handover_mic/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "vlrla_split": "source",
+      "path": "dataset/pick_diverse_bottles/demo_clean.zip",
+      "bytes": 320055853,
+      "sha256": "5e3afcced9ed6154f23074ae8f6d6ac536393aa25d5e15fbd477a8f171d8d9ff",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/pick_diverse_bottles/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    },
+    {
+      "task": "place_a2b_left",
+      "vlrla_split": "source",
+      "path": "dataset/place_a2b_left/demo_clean.zip",
+      "bytes": 304998944,
+      "sha256": "fd1ce66646a9c518a52d98c266b0ffbf73155cc40eb4c6080be55accd0338f31",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/place_a2b_left/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    },
+    {
+      "task": "place_object_stand",
+      "vlrla_split": "source",
+      "path": "dataset/place_object_stand/demo_clean.zip",
+      "bytes": 277911965,
+      "sha256": "6da23fc5c3c5d98fbb039d312a4e30a89c56673e98c672754eceba71280c8658",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/place_object_stand/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    },
+    {
+      "task": "place_phone_stand",
+      "vlrla_split": "source",
+      "path": "dataset/place_phone_stand/demo_clean.zip",
+      "bytes": 250454556,
+      "sha256": "ee42bbfae49da74c0500fa2765ecd6a46e347f42e64c2f78024a33b6b57a107b",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/place_phone_stand/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    },
+    {
+      "task": "scan_object",
+      "vlrla_split": "source",
+      "path": "dataset/scan_object/demo_clean.zip",
+      "bytes": 408869910,
+      "sha256": "a37821f93a1a4cf6f7cbf41e15aa88ee2c656cc8c2a34ec2f28ddb1c6ebb2167",
+      "url": "https://huggingface.co/datasets/TianxingChen/RoboTwin2.0/resolve/3dc3b798668feb99ac61cc9086d84cbcc3d79186/dataset/scan_object/demo_clean.zip",
+      "kind": "standard_RoboTwin_demonstrations_not_VLRLA_learning_histories"
+    }
+  ],
+  "total_archive_bytes": 1968673953,
+  "actual_local_paths": null,
+  "actual_episode_counts": null,
+  "actual_frame_counts": null,
+  "actual_embodiment_and_array_checks": null,
+  "conversion_commit": "13c3c47ff4312dd62484bcd51be034af55c062d1",
+  "simulator_commit_separate": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "split_proposal": "All verified episodes from exactly these six clean archives are TRAIN. Fresh simulator evaluation cases are separate; no periodic held-out SFT loss is claimed. No randomized archive, alternative duplicate clean50 archive, held-out task, source RL history or target data enters this dataset.",
+  "sampling": "Existing shuffled official map-style frame/window loader over the union. Actual per-task frame counts recorded; no claim of balanced task sampling.",
+  "normalization": "Compute from the actual six-task clean TRAIN after native transforms, bind exact state/action norms to SFT/eval/PPO. No Motus norm reuse.",
+  "physical_collection_actions": 0,
+  "data_or_model_compute_here": false
+}
