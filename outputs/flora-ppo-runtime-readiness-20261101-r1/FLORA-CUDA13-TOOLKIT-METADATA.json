@@ -1,0 +1,58 @@
+{
+  "toolkit_paths": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc",
+      "exists": true,
+      "resolved": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/bin/nvcc",
+      "bytes": 33994064,
+      "executable": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda_runtime.h",
+      "exists": true,
+      "resolved": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda_runtime.h",
+      "bytes": 100474,
+      "executable": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda.h",
+      "exists": true,
+      "resolved": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/include/cuda.h",
+      "bytes": 1146681,
+      "executable": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/lib/libcudart.so.13",
+      "exists": true,
+      "resolved": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/lib/libcudart.so.13",
+      "bytes": 704288,
+      "executable": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/nvidia/cu13/lib64/libcudart.so.13",
+      "exists": false,
+      "resolved": null,
+      "bytes": null,
+      "executable": false
+    }
+  ],
+  "compiler_package_metadata": [],
+  "flashinfer_cpp_ext": {
+    "path": "/mowenjie/fluffy-bassoon-2/envs/flora-rewarder-129a2ada-py312-20261101-r1/lib/python3.12/site-packages/flashinfer/jit/cpp_ext.py",
+    "sha256": "9d20f28baed969411220456b140a2786a081a2b7195d2433a70daec3c8ae7403",
+    "excerpts": [
+      {
+        "start_line": 49,
+        "text": "@functools.cache\ndef get_cuda_path() -> str:\n    cuda_home = os.environ.get(\"CUDA_HOME\") or os.environ.get(\"CUDA_PATH\")\n    if cuda_home is not None:\n        return cuda_home\n    # get output of \"which nvcc\"\n    nvcc_path = subprocess.run([\"which\", \"nvcc\"], capture_output=True)\n    if nvcc_path.returncode == 0:\n        cuda_home = os.path.dirname(\n            os.path.dirname(nvcc_path.stdout.decode(\"utf-8\").strip())\n        )\n    else:\n        cuda_home = \"/usr/local/cuda\"  # This default value is from: https://github.com/pytorch/pytorch/blob/ceb11a584d6b3fdc600358577d9bf2644f88def9/torch/utils/cpp_extension.py#L115\n        if not os.path.exists(cuda_home):\n            raise RuntimeError(\n                f\"Could not find nvcc and default {cuda_home=} doesn't exist\"\n            )\n    return cuda_home\n\n"
+      },
+      {
+        "start_line": 68,
+        "text": "\n@functools.cache\ndef get_cuda_version() -> Version:\n    # Try to query nvcc for CUDA version; if nvcc is unavailable, fall back to torch.version.cuda\n    try:\n        cuda_home = get_cuda_path()\n        nvcc = os.path.join(cuda_home, \"bin/nvcc\")\n        txt = subprocess.check_output([nvcc, \"--version\"], text=True)\n        matches = re.findall(r\"release (\\d+\\.\\d+),\", txt)\n        if not matches:\n            raise RuntimeError(\n                f\"Could not parse CUDA version from nvcc --version output: {txt}\"\n            )\n        return Version(matches[0])\n    except (RuntimeError, FileNotFoundError, subprocess.CalledProcessError) as e:\n        # NOTE(Zihao): when nvcc is unavailable, fall back to torch.version.cuda\n        if torch.version.cuda is None:\n            raise RuntimeError(\n                \"nvcc not found and PyTorch is not built with CUDA support. \"\n                \"Could not determine CUDA version.\""
+      },
+      {
+        "start_line": 90,
+        "text": "\n\ndef is_cuda_version_at_least(version_str: str) -> bool:\n    return get_cuda_version() >= Version(version_str)\n\n\ndef get_nvcc_parallelism_flags() -> List[str]:\n    \"\"\"Build nvcc flags controlled by FlashInfer parallelism environment variables.\"\"\"\n    env_var_name = \"FLASHINFER_NVCC_THREADS\"\n    default = 1\n    value = os.environ.get(env_var_name, str(default))\n\n    try:\n        threads = int(value)\n    except ValueError:\n        logger.warning(\n            \"Ignoring invalid %s=%r; using %s.\", env_var_name, value, default\n        )\n        threads = default\n"
+      }
+    ]
+  }
+}

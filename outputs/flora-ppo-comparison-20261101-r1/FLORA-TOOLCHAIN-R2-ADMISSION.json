@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "phase_id": "flora-ppo-comparison-20261101-r1",
+  "status": "ADMITTED_AFTER_STATIC_RESOURCE_REVIEW_SUBJECT_TO_ACTUAL_ALLOCATION_GATES",
+  "execution_owner": "/root/finish_assembly",
+  "reviewed_owner_pin": "80519162d1c610cd235b2ac57571b3aedd08dc74",
+  "proposal": "outputs/flora-ppo-runtime-readiness-20261101-r1/FLORA-TOOLCHAIN-REPAIR-PROPOSAL.json",
+  "review": "TOOLCHAIN-RESTORATION-PARENT-REVIEW.json",
+  "authority": "Existing human-authorized comparison and necessary scorer qualification; original GRANT flora-official-inference-q1 ticket, no new time grant or scientific scope.",
+  "same_clock": {
+    "root": "/mowenjie/fluffy-bassoon-2/outputs/flora-ppo-official-inference-q1-20261101-r1/clock",
+    "original_inclusive_gpu_seconds": 3600,
+    "closed_prior_gpu_seconds": 446,
+    "remaining_before_this_attempt": 3154,
+    "maximum_new_inclusive_gpu_seconds": 3000,
+    "unrequested_seconds": 154,
+    "policy": "Preserve original contract/header/origin/finished446 row and use the existing begin/finish mechanism with a fresh immutable allocation/output identity. No sibling clock, refund, transferred balance or double multiplication."
+  },
+  "resource": {
+    "gpus": 1,
+    "gpu_type": "RPBZZZ6",
+    "cpus": 16,
+    "ram_gib": 96,
+    "shm_gib": 8,
+    "scheduler_minutes": 49,
+    "retry": false,
+    "inner_seconds": 2820,
+    "term_seconds": 2880,
+    "kill_seconds": 2910,
+    "outer_seconds": 2940,
+    "startup_allowance_seconds": 60,
+    "new_output_gib": 16,
+    "new_robot_actions": 0,
+    "optimizer_steps": 0
+  },
+  "repair": "Set CUDA_HOME and CUDA_PATH to the already-present isolatedFlora site-packages/nvidia/cu13 toolkit, CUDACXX to its bin/nvcc, and corresponding PATH/lib prefix BEFORE the first Torch/FlashInfer/vLLM import in a fresh child. Existing compiler metadata is CUDA13.2/V13.2.86; system /usr/local/cuda remains untouched at12.8. No model/scorer source or numeric-precision change.",
+  "required_before_model": [
+    "Pin the literal resource wrapper/profile and inspect latest main relevant differences; correct PFS mount, finite actual capacity/quota/write and output bound.",
+    "Actual allocated GPUcount/CUDA/ownPID probe and real hardware SM capability, preserving scheduler GPU visibility.",
+    "Record resolved nvcc path, executable SHA and actual --version; FlashInfer get_cuda_path/get_cuda_version must select this explicit toolkit and report at least12.9.",
+    "Record nonempty FlashInfer TARGET_CUDA_ARCHS consistent with the real allocated SM12 device before model warmup; never force fake architecture or relax its guard."
+  ],
+  "scope": "Unchanged official Flora129a/model031299 CLI, existing exact archived native smoke video08987c0d, same seed0 and sampler arguments. No extra episode or new baseline scoring, no PPO. Actual JIT/score success is still unqualified until this execution completes.",
+  "launch": "Sole owner prepares the concrete immutable literal wrapper and dispatches once after these resource/profile gates, with no additional human/root ACK or publication gate. Verify first real advancement promptly, then20-minute checks only while active. Preserve all failures/costs and no automatic further retry."
+}
