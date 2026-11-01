@@ -1,0 +1,61 @@
+{
+  "status": "TERMINAL_PARTIAL_FAILURE_METADATA_REVIEWED",
+  "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "owner_commit": "0a470235",
+  "job": "job-bmolej07bhsg",
+  "terminal": {
+    "scheduler": "Failed",
+    "exit": 1,
+    "GPU_seconds": 1340,
+    "CPU_seconds_already": 80
+  },
+  "counts": {
+    "completed": 161,
+    "failed_before_steering": 1,
+    "unstarted": 158,
+    "physical_resets": 162,
+    "all_in_actions": 26096,
+    "unresolved_failed_actions": 0
+  },
+  "balanced_prefix": "First20 source goals/two cases: native40/40,mean40/40,sample40/40,tied37/40; extra native1/1 separate. Not fullALL40/learning-gain evidence.",
+  "failure": {
+    "ordinal": 161,
+    "source_ordinal": 20,
+    "task_key": "libero_spatial:05",
+    "initial_state": 40,
+    "scene_seed": 123,
+    "episode_random_seed": 20281141,
+    "role": "exact_source_tied_Gaussian_warmup",
+    "reason": "check_pair rejected actual same-case initial/raw/public input equality before steering",
+    "failed_predicate_not_isolated": true,
+    "actual_settling_steps": 10,
+    "steering_chunks": 0
+  },
+  "recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+    "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+    "bytes": 62745
+  },
+  "motor_unchanged": {
+    "before": {
+      "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+      "leaves": 51,
+      "elements_by_dtype": {
+        "bfloat16": 3353433872
+      }
+    },
+    "after": {
+      "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+      "leaves": 51,
+      "elements_by_dtype": {
+        "bfloat16": 3353433872
+      }
+    },
+    "unchanged": true
+  },
+  "output_bytes": "Unknown;8second metadata walk timed out, no broad rescan",
+  "scope": "Root scalarJSON/text/byte hashes only. Producer closed26086 plus sole failed-reset10 independently read, not whole journal proof. Active161 marker preserved, failed computed feature absent, no array/model/recovery restore or retry.",
+  "remaining_GPU": 9460,
+  "remaining_CPU": 100,
+  "next_action": "ONE bounded allocatedCPU saved-record predicate comparison after exact inspector/profile/static review; no guard relaxation/failed-role replay/newGPU admitted."
+}
