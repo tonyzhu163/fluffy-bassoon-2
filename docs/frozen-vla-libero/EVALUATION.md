@@ -29,9 +29,11 @@ physical states40–49 with two private-noise draws each.
 | Eleventh learned panel |20/20|220,040|
 | Twelfth learned panel |20/20|240,080|
 | Thirteenth learned panel |20/20|260,040|
+| Fourteenth learned panel |20/20|280,000|
+| Fifteenth learned panel |20/20|300,140|
 
 The repeated learned panels exceed every untrained control on this selected
-development bank. The latest260,040 panel uses1,493 query primitives+200
+development bank. The latest300,140 panel uses1,498 query primitives+200
 settling actions. The early1/20 panel remains in the curve. The tied control's
 13/20 advantage illustrates why a native-only comparison cannot isolate
 learning. Low entropy and concentration also coexist with the later excellent
@@ -39,22 +41,37 @@ panels, so they alone do not explain the early failure. Replay coverage,
 critic fit and transient learning remain competing explanations; narrow
 pinned-source checks found no concrete scale/order/reward/entropy mismatch.
 
-The07:40 owner check verifies270,900 updates/1,526 training episodes,
-1,487 successes/39 failures. The completed260,040 panel is20/20. Stable full
-recovery/new milestone/raw-RPC hashes and finite losses pass. Whole-phase
-291,847 actions/16.214GB include screening, controls and learning; screen3,076
-plus active21,412 GPU-seconds is not a final charge. The unchanged same-run
-resume command is prepared, with no second job or reservation yet; a later
-slice would restore the same learner and full clocks after actual closeout.
-[Owned proof](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0740-PROOF.json).
+The first learning slice closes normally at301,700 updates/1,720 training
+episodes,1,681 successes/39 failures and15,579 replay rows. The completed
+300,140 panel remains20/20, with matched initial cases, fixed query weights,
+replay isolation and immutable milestone verified. Stable full recovery and
+new raw/RPC hashes pass; whole-phase actions are311,694 and outputs17.927GB.
+Screen3,076 plus first-slice24,952 GPU-seconds are28,028 closed seconds.
+[Saved first-slice metadata](../../outputs/libero90-pi05-headroom-runtime-20261101-r1/CHECK-0840.json).
 
-Baige job-w8deahieli8q/sourceb665 continues the fixed first whole burst≥500k,
-all20k panels, last-three gain criterion and final native. This child reserves
-25,200 seconds in the original57,600/1M/64GiB lineage. The next check is08:00.
-No checkpoint/task/seed substitution, retuning or extra learner seed is used.
-The fixed endpoint and persistence test discriminate sustained improvement
-from a favorable interim checkpoint. This is promising ordinary RL evidence,
-not a completed replication or meta-learning result.
+The same-source continuation passes the allocation probe but stops at the
+atomic cursor/model/training consistency guard before any new episode or
+update. The full301,700 recovery remains byte-identical. This failed attempt's
+189 GPU-seconds remain charged, for28,217/57,600 total and29,383 remaining.
+The guard does not log which of four predicates failed. Static inspection
+identifies raw Flax serialization order as one competing explanation; actual
+state, counter or cursor mismatch is not yet excluded. Existing fake-learner
+fixtures do not establish real Flax serialization invariance.
+
+A fresh bounded300-CPU-worker-second, zero-GPU inspector is admitted to report
+the four predicates and exact canonical actor/critics/targets/temperature/Adam,
+replay/counter/sampler/global-private RNG state, preserving original bytes.
+There is no blind GPU retry, cold restart, guard removal or new learner.
+A repair must follow the actual diagnosis and preserve the stored raw-byte
+signature binding plus exact restored-state checks.
+[Failure interpretation and discriminating check](../../outputs/libero-headroom-resume-diagnosis-cpu-20261101-r1/INTERPRETATION.md).
+
+The fixed first whole burst≥500k, all20k panels, final native and final-three
+persistence test remain unchanged and incomplete. No checkpoint/task/seed
+substitution, retuning or control replay is admitted. The fixed endpoint
+discriminates sustained improvement from a favorable interim checkpoint.
+This is promising selected-bank ordinary RL evidence, not a completed
+replication or meta-learning result.
 
 All240 screens and40 confirmations are retained. Selection and target histories
 are disclosed development exposure and excluded from source40/new pretraining.

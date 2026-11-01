@@ -1,0 +1,54 @@
+{
+  "status": "AUDITED_NEGATIVE_FIXED8_TERMINAL",
+  "copied_owner_files": {
+    "TERMINAL-RECEIPT.json": {
+      "sha256": "9fe2d771782a709fa5aa2ed53614b7b2bab20d587eef90acd2ec683f26e6ce1e",
+      "bytes": 44476
+    },
+    "TERMINAL-READER.py": {
+      "sha256": "eeac27d62cb1d175f2f0b24d6c7f0d38bcea68fdbc8927746bae72a8dc1104ec",
+      "bytes": 7235
+    }
+  },
+  "job_id": "job-3m9241gyyv9p",
+  "source_commit": "86f4a962c8f7fc83cfcfa39b466dafcde9f2b25b",
+  "native_successes": 0,
+  "fitted5000_zero4_successes": 0,
+  "cases_per_condition": 4,
+  "physical_episodes": 8,
+  "new_actions": 3200,
+  "new_optimizer_updates": 0,
+  "new_GPU_seconds": 427,
+  "CPU_worker_seconds": 79,
+  "output_bytes": 105639098,
+  "all_complete_natural400_no_budget_truncation": true,
+  "all4_paired_initials_and_noise": true,
+  "frozen_motor": "721a7ed12c70d36e08882b02d8afee709286f6f27e72482570d7ac7451c0ae41",
+  "embedded_qualification_passed": true,
+  "full_recovery": {
+    "expected": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/recoveries/cell-08-d2534321a07b4f26ba573dbc9ee77429.pt",
+      "sha256": "1e3745887f468e930fec6dd2b79939414449dac98b13a3b4948ef1d65b0cf08a"
+    },
+    "actual": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/frozen-pi05-train-capacity8-20261101-r1/experiment/recoveries/cell-08-d2534321a07b4f26ba573dbc9ee77429.pt",
+      "sha256": "1e3745887f468e930fec6dd2b79939414449dac98b13a3b4948ef1d65b0cf08a",
+      "bytes": 287033
+    },
+    "matches": true,
+    "ZIP_testzip_bad_member": null
+  },
+  "owner_manifest_sample_and_closed_RNG_checks": "8manifests/16first-lastJSON/8closedcontrolRNG refs SHA matches; opaquefullrecovery SHA+ZIPCRC, not actualrestore",
+  "old_vs_new_costs": {
+    "old_original_phone_GPU_seconds": 7698,
+    "old_actual_actions": 29922,
+    "new_phase_GPU_seconds": 427,
+    "new_actual_actions": 3200,
+    "descriptive_combined_GPU_seconds": 8125,
+    "descriptive_combined_actions": 33122,
+    "original_headers_caps_unchanged": true
+  },
+  "no_source_teacher_student_or_search_admission": true,
+  "interpretation": "Failure also on fixed fitted TRAIN resets, not isolated to VAL. Does not identify optimization/coverage/head-class/live-execution cause or reject AD/DPT/fullsteering class. Fixed head/cases unchanged.",
+  "parent_scope": "Mac copiedscalarJSON/sourcebytes only; root recomputes metadata counts/seeds/pairs/clocks/ref-equalities. Owner performed original filehashes; root does not claim independentNPZ/PT/RGB/maskvalue/array/model restore/fulljournal audit."
+}

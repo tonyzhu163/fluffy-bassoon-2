@@ -78,15 +78,26 @@ cases. Magnitudes/physical causes remain unresolved; no representational-limit,
 source RL or Transformer claim follows, and
 validation never selects an earlier endpoint.
 [Evaluation](../robotwin-coefficient-steering/EVALUATION.md).
+A separate fixed eight-control follow-up on four successful expert TRAIN
+reset cases also scores raw0/4 and fixed wide5,000/zero4D0/4, all400 actions,
+with actual parity/frozen-motor/zero-gradient qualification. Failure therefore
+also occurs on fitted TRAIN resets; coverage, optimization and execution
+mismatch remain unresolved. Cached overall MSE gains coexist with worse arm MSE
+on each selected TRAIN record and do not imply better arm tracking. It costs427 GPU-seconds and3,200 new actions;
+no compatible source teacher or meta-learning result follows.
 
 The weak-native pi0.5 pilot selects task44 at native5/20 in screening and
 confirmation. Fresh controls score native6/20, untrained tiedGaussian13/20 and
 initializedSAC8/20. The learned20,580 panel scores1/20; every subsequent panel
-from40,140 through220,040 scores20/20. All panels are retained. This is interim
+from40,140 through300,140 scores20/20. All panels are retained. This is interim
 ordinary RL improvement on a reused development bank of ten physical states
 with two draws each. Fixed500k, final native and last-three persistence remain
 pending. No memory, population, new-task transfer or overall sample-efficiency
 claim follows. [Evidence](../frozen-vla-libero/EVALUATION.md).
+The first slice closes at301,700 updates; an attempted same-state continuation
+fails its atomic recovery guard before any new episode/update. Original
+checkpoint bytes are preserved. Bounded allocated-CPU diagnosis is required
+before a guarded repair; the fixed endpoint remains incomplete.
 
 
 The earlier527-case/2,108-episode source snapshot fitted all four controllers

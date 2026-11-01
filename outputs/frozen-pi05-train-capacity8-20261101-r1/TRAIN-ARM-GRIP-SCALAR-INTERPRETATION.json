@@ -1,0 +1,128 @@
+{
+  "status": "READ_EXISTING_QUALIFIED_CPU_SCALARS_NO_NEW_COMPUTE",
+  "original_report": {
+    "path": "outputs/command-readout-linked-resource-cpu-20261101-r1/wide5000-analysis.json",
+    "sha256": "9d23a945fc701a16670403d2d6596606ebb2075ae54434e1c929f5a3d825a147"
+  },
+  "selected_fixed_TRAIN_cases": {
+    "phone-00": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 136,
+          "raw14_MSE": 0.008257786753365658,
+          "arm12_MSE": 0.00208183718817563,
+          "gripper2_MSE": 0.04531348414450582,
+          "clipped_gripper2_MSE": 0.045271440768485806
+        },
+        "wide5000": {
+          "clipped_gripper_values": 152,
+          "raw14_MSE": 0.004767208935470535,
+          "arm12_MSE": 0.00310430197180093,
+          "gripper2_MSE": 0.014744650717488159,
+          "clipped_gripper2_MSE": 0.012469116953921389
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-01": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 161,
+          "raw14_MSE": 0.014577078924992735,
+          "arm12_MSE": 0.007200727097661603,
+          "gripper2_MSE": 0.05883518988897952,
+          "clipped_gripper2_MSE": 0.05882692619167241
+        },
+        "wide5000": {
+          "clipped_gripper_values": 128,
+          "raw14_MSE": 0.008633091057672524,
+          "arm12_MSE": 0.007799589895374662,
+          "gripper2_MSE": 0.013634098031459698,
+          "clipped_gripper2_MSE": 0.01225577524274549
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-02": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 159,
+          "raw14_MSE": 0.005304733559271499,
+          "arm12_MSE": 0.0031274206346898516,
+          "gripper2_MSE": 0.018368611106761384,
+          "clipped_gripper2_MSE": 0.018358571238845846
+        },
+        "wide5000": {
+          "clipped_gripper_values": 157,
+          "raw14_MSE": 0.004667423615784894,
+          "arm12_MSE": 0.004071229830534569,
+          "gripper2_MSE": 0.008244586327286847,
+          "clipped_gripper2_MSE": 0.006708393671022558
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    },
+    "phone-03": {
+      "split": "train",
+      "submitted_slots": 224,
+      "historical_native_actions": 193,
+      "rows": 7,
+      "models": {
+        "native": {
+          "clipped_gripper_values": 112,
+          "raw14_MSE": 0.013855350586090852,
+          "arm12_MSE": 0.004528595767893558,
+          "gripper2_MSE": 0.06981587949527464,
+          "clipped_gripper2_MSE": 0.0697626381079098
+        },
+        "wide5000": {
+          "clipped_gripper_values": 115,
+          "raw14_MSE": 0.005413475821306424,
+          "arm12_MSE": 0.004568972965815308,
+          "gripper2_MSE": 0.010480492954253129,
+          "clipped_gripper2_MSE": 0.008697728762855081
+        },
+        "interval_lower_bound": {
+          "clipped_gripper_values": 0,
+          "raw14_MSE": 0.0,
+          "arm12_MSE": 0.0,
+          "gripper2_MSE": 0.0,
+          "clipped_gripper2_MSE": 0.0
+        }
+      }
+    }
+  },
+  "observed_ordering": "All four cached raw14 MSE improve while all four arm12 MSE worsen; raw and clipped gripper2 MSE improve. Per-slot interval lower bounds remain zero.",
+  "interpretation": "Aggregate plan MSE improvement is not improved arm tracking. The negative rollout also occurs on fitted TRAIN reset cases, but these cached metrics do not isolate closed-loop/error/noise coverage, optimization/class or physical execution as a cause. Interval feasibility is not network or robotic capacity.",
+  "unchanged": "Prospectivelyfixed5000 head/cases/8episode contract; no checkpoint selection, labels, code, resources, tests, models, arrays or extra robot actions."
+}
