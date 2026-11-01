@@ -296,8 +296,7 @@ def test_new_human_authority_has_no_old10h_gate():
         charged_gpu_seconds=0,projected_gpu_seconds=0)
 
 
-@pytest.mark.parametrize('world',[1,2,4,8])
-def test_compose_actual_official_config(monkeypatch,tmp_path,world):
+def _compose_official_config(monkeypatch,tmp_path,world):
     import os
     from hydra import compose,initialize_config_dir
     assert Path(os.environ['EMBODIED_PATH']).is_dir(),'Allocated CPU gate must stage actual c605 config checkout'
@@ -309,9 +308,38 @@ def test_compose_actual_official_config(monkeypatch,tmp_path,world):
     code=Path(__file__).resolve().parents[1]
     with initialize_config_dir(version_base='1.1',config_dir=str(code/'configs/native_ppo')):
         cfg=compose(config_name='libero44_flora')
+    return cfg
+
+
+@pytest.mark.parametrize('world',[1,2,4,8])
+def test_compose_actual_official_config(monkeypatch,tmp_path,world):
+    from rlinf.config import validate_fsdp_cfg
+    cfg=_compose_official_config(monkeypatch,tmp_path,world)
     result=validate_config(cfg)
+    # Compose alone missed the actual entrypoint's OpenPI precision guard.
+    validate_fsdp_cfg(cfg.actor)
+    assert cfg.actor.fsdp_config.use_orig_params is True
+    assert cfg.actor.fsdp_config.mixed_precision.param_dtype=='bf16'
     assert result['accumulation_steps']==2048//(32*world)
     assert cfg.actor.model.openpi.action_horizon==10 and cfg.actor.model.openpi_data.extra_delta_transform is False
     assert result['estimated_iteration_actions']==(128+len(schedule))*415
     cfg.algorithm.update_epoch=5
     with pytest.raises(ValueError):validate_config(cfg)
+
+
+def test_real_fsdp_validator_rejects_missing_openpi_fp32_rules(monkeypatch,tmp_path):
+    from rlinf.config import validate_fsdp_cfg
+    cfg=_compose_official_config(monkeypatch,tmp_path,4)
+    broken=deepcopy(cfg.actor)
+    broken.fsdp_config.mixed_precision_rules={}
+    with pytest.raises(ValueError,match='require mixed_precision_rules'):
+        validate_fsdp_cfg(broken)
+    actor=validate_fsdp_cfg(cfg.actor)
+    assert actor.fsdp_config.mixed_precision.param_dtype=='bf16'
+    assert actor.fsdp_config.mixed_precision.reduce_dtype=='bf16'
+    assert actor.fsdp_config.mixed_precision.buffer_dtype=='bf16'
+    policy=actor.fsdp_config.mixed_precision_policies.openpi_fp32
+    assert (policy.param_dtype,policy.reduce_dtype,policy.buffer_dtype)==('fp32','fp32','fp32')
+    assert policy.cast_forward_inputs is True
+    assert list(actor.fsdp_config.wrappers.openpi_fp32_projections.module_names)==[
+        'action_in_proj','action_out_proj','time_mlp_in','time_mlp_out']

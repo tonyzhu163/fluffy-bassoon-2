@@ -148,6 +148,29 @@ actor:
     strategy: fsdp
     sharding_strategy: no_shard
     gradient_checkpointing: false
+    # Preserve c605 Pi0.to_bfloat16_for_selected_params() FP32 islands,
+    # Pi0._no_split_modules/_no_split_names and Pi0RL's FP32 value head.
+    # Individual boundaries retain the author's automatic bf16 child wraps.
+    wrappers:
+      openpi_fp32_classes:
+        module_classes:
+          - rlinf.models.embodiment.openpi.modules.gemma.RMSNorm
+          - rlinf.models.embodiment.openpi.modules.siglip.Float32Conv2d
+          - rlinf.models.embodiment.openpi.modules.siglip.SigLIPViT
+          - rlinf.models.embodiment.modules.value_head.ValueHead
+        wrap_mode: individual
+      openpi_fp32_projections:
+        module_names: [action_in_proj, action_out_proj, time_mlp_in, time_mlp_out]
+        wrap_mode: individual
+    mixed_precision_policies:
+      openpi_fp32:
+        param_dtype: fp32
+        reduce_dtype: fp32
+        buffer_dtype: fp32
+        cast_forward_inputs: true
+    mixed_precision_rules:
+      openpi_fp32_classes: openpi_fp32
+      openpi_fp32_projections: openpi_fp32
     mixed_precision:
       param_dtype: ${actor.model.precision}
       reduce_dtype: ${actor.model.precision}
