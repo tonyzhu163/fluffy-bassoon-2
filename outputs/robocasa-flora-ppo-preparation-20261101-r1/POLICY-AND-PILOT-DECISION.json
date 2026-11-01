@@ -14,18 +14,129 @@
   "adapter": "Verify original official three-view/native state16/action12 ordering, padstate32 BEFORE MEAN/STD normalization/tokenization. No generic LeRobot-order/quantile carry. Use existing official conversion/native loader only as actually needed, strict body load and affected numerical reference-transform qualification. No speculative weight-comparison project.",
   "native_environment": "RLinf d80cf00e / RoboCasa3443cdf3 declared1.0.1 / Robosuite5ce6643f / installerOpenPIc5dc4b92. Original checkpoint evaluation1.0.0 differs and is disclosed; do not claim exact leaderboard reproduction.",
   "pilot_proposal": {
-    "candidate": "ScrubCuttingBoard, prospectively proposed before outcomes; exact native headroom bank and at most one predeclared fallback still to bind",
-    "registry_horizon": 1200,
-    "action_chunk_horizon": 50,
-    "train_envs": 16,
-    "rollout_rounds": 4,
-    "ppo_epochs": 4,
-    "global_batch": 512,
-    "reason": "64 complete episodes*1200/50=1536 chunk samples, divisible by512. Prior target1024 was not divisible.",
-    "max_iterations": "MUST be reduced to actual full-episode train/eval/qualification/settling/padding/failure costs within1M actions/arm.12 rounds cost921600 TRAIN actions alone, not an admitted complete schedule.20 is not admitted at this horizon.",
-    "optimizer": "Preserve official default PPO optimizer/loss/LR/GAE and measured microbatch capacity; no new learner.",
-    "reward": "Both full native horizon/no-success termination; one S terminal0/1 versus one F terminal(expected_score-1)/4, with simulator truth isolated from F. This intentionally changes stock delta-success reward timing, equally for both arms.",
-    "before_training": "Actual selected policy load/transform/episode/recovery and native headroom plus Flora discrimination. Exact baseline/eval bank/stopping/accounting and finite resources must be concrete before launch. No new SFT or broad search."
+    "status": "PROSPECTIVE_SCIENTIFIC_SCHEDULE_ADOPTED_NO_TRAINING_RESOURCE_ADMISSION",
+    "train_environments": 16,
+    "complete_rollout_rounds": 4,
+    "action_horizon_and_chunk": 50,
+    "PPO_epochs": 4,
+    "maximum_matched_iterations": 10,
+    "DEV_schedule_iterations": [
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "DEV_cases_each": 8,
+    "fresh_final_cases_each": 8,
+    "common_native_and_qualification_actions_ceiling_counted_once": 15600,
+    "arm_all_in_upper": 1000000,
+    "remainder_not_new_authority": true,
+    "reward_S": "full-horizon terminal GT0/1 only",
+    "reward_F": "full-horizon terminal (expected_score-1)/4 only; GT outside optimizer path",
+    "stock_delta_success_reward_retained": false,
+    "same_model_norm_sampler_optimizer_and_eval": true,
+    "resource_proposal": {
+      "scheduler_jobs": 2,
+      "proposed_gpus_per_job": 4,
+      "authorized_gpu_ceiling_per_job": 8,
+      "arms": "Separate S and F jobs, concurrently when hardware/scorer capacity permits; separate complete recoveries. Serial scheduling is optional, not a scientific or readiness gate.",
+      "maximum_inclusive_wall_seconds_per_job": 21600,
+      "maximum_gpu_seconds_per_proposed_job": 86400,
+      "maximum_aggregate_gpu_seconds_for_both_proposed_jobs": 172800,
+      "maximum_new_output_gib_per_job": 128,
+      "maximum_new_output_gib_both_jobs": 256,
+      "resource_boundary": "Concrete proposal only, not a reservation; standing <=8 GPUs/job does not mean default8 or additional authority beyond the chosen matched phase. No aggregate GPU-hour cap is inferred.",
+      "scorer_capacity": "Owner binds actual independent repaired scorer capacity/clock; every allocation/wait/failure is charged once, no old balance assumed.",
+      "status": "UNADMITTED_UNRESERVED; actual qualification, first retained capacity iteration, scorer clock and finite tickets precede any dispatch"
+    },
+    "early_stop": "At a planned fixedDEV boundary, stop both arms if both reach8/8 (exploratory ceiling stop); after iteration6, stop paired continuation if neither gains even one fixedDEV case over its own initial sameDEV baseline at2/4/6. Final8 never participates. This is the stated bounded-pilot futility rule, not statistical evidence of convergence/significance; preserve all outcomes and complete pending recovery.",
+    "selected_task_before_SGD": null,
+    "task_profiles": {
+      "OpenDrawer": {
+        "native_horizon": 750,
+        "rollout_chunk_samples_per_iteration": 960,
+        "global_optimization_batch": 320,
+        "minibatches_per_PPO_pass": 3,
+        "example_execution_layouts": {
+          "2_ranks": {
+            "microbatch": 32,
+            "accumulation": 5
+          },
+          "4_ranks": {
+            "microbatch": 16,
+            "accumulation": 5
+          },
+          "8_ranks": {
+            "microbatch": 8,
+            "accumulation": 5
+          }
+        },
+        "TRAIN_actions_per_arm_per_iteration": 48000,
+        "maximum_TRAIN_actions_per_arm": 480000,
+        "scheduled_DEV_actions_per_arm": 30000,
+        "fresh_final_actions_per_arm": 6000,
+        "initial_same_DEV_extra_reserve_per_arm_if_not_exactly_reused": 6000,
+        "maximum_train_plus_all_eval_actions_per_arm_including_initial_reserve": 522000
+      },
+      "ScrubCuttingBoard": {
+        "native_horizon": 1200,
+        "rollout_chunk_samples_per_iteration": 1536,
+        "global_optimization_batch": 512,
+        "minibatches_per_PPO_pass": 3,
+        "example_execution_layouts": {
+          "2_ranks": {
+            "microbatch": 32,
+            "accumulation": 8
+          },
+          "4_ranks": {
+            "microbatch": 16,
+            "accumulation": 8
+          },
+          "8_ranks": {
+            "microbatch": 8,
+            "accumulation": 8
+          }
+        },
+        "TRAIN_actions_per_arm_per_iteration": 76800,
+        "maximum_TRAIN_actions_per_arm": 768000,
+        "scheduled_DEV_actions_per_arm": 48000,
+        "fresh_final_actions_per_arm": 9600,
+        "initial_same_DEV_extra_reserve_per_arm_if_not_exactly_reused": 9600,
+        "maximum_train_plus_all_eval_actions_per_arm_including_initial_reserve": 835200
+      }
+    },
+    "initial_same_DEV_baseline": {
+      "cases": 8,
+      "reserve_extra_per_arm_until_reuse_is_proven": true,
+      "reuse_requires": "Same actual cases, initializer, normalization, sampler/private action RNG, termination/label timing and input identities. Common native data is not automatically the sameDEV baseline.",
+      "accounting": "A proven reused physical case is charged once; reserve is a ceiling, not duplicated consumption."
+    },
+    "DEV_seed_bank": null,
+    "freeze_DEV_seeds_before_any_outcomes": true,
+    "fresh_final_unused_for_stopping": true,
+    "reporting": "Exploratory8-case panels: publish success numerators/denominators and the predeclared stop rule; no significance or convergence claim from a one-case increase."
   },
-  "compute_here": "Only static source/saved scalar metadata and byte review on Mac; no tests/models/simulators."
+  "compute_here": "Only static source/saved scalar metadata and byte review on Mac; no tests/models/simulators.",
+  "prospective_source_profile": "e17d8f4f, scientific pilot fields adopted before native outcomes; allocation proposal still NOT admitted",
+  "native_headroom_protocol": {
+    "status": "PROSPECTIVE_NO_NATIVE_OUTCOMES_YET",
+    "order": [
+      "OpenDrawer",
+      "ScrubCuttingBoard only if OpenDrawer fails"
+    ],
+    "cases_each_maximum": 8,
+    "first_case_is_qualification_no_extra_smoke": true,
+    "natural_horizons": {
+      "OpenDrawer": 750,
+      "ScrubCuttingBoard": 1200
+    },
+    "headroom": "First bank with1..5 successes/8 freezes task. Other outcomes fail; at most the named fallback, no broader search, retuning or score-selected task. This is an exploratory8-case gate within5..70%, not a precise population-rate estimate.",
+    "termination": "Full native horizon/no success-driven stop, terminal final-state success. The source first-case eval config withignore_terminations:false is NOT itself the admitted headroom protocol; actual source/profile must implement this before outcomes.",
+    "sampler": "Freeze actual common intended PPO/evaluation sampler before these outcomes; preserve original10steps unless an explicit prospective binding replaces it. Do not carry baseline across a later sampler change.",
+    "case_rng": "Exact native layouts/states/private-noise/case seeds frozen in the literal supported runtime profile before first case; no post-score selection.",
+    "flora_gate": "After first nativepassingtask freezes, use exactly that native8 bank with positive+negative labels and officialAUROC>=.7; failing Flora gate stops comparison, never another favorable task search. Software fixture parse is not AUROC.",
+    "actions": "15600 is maximum requested POLICY CONTROL actions, not proven all-in physical cost. Actual reset/settle/internal commands/sim-step clock, uncertainty and supported all-in bound must be admitted before any native GPU job."
+  },
+  "current_qualification": "a5c5330f admits exact0GPU8CPU128GiB/3600inclusiveworker-s stage/conversion/5newnumericalcases/actualstrictload after independent native env setup; tests/model/physics not run by root."
 }
