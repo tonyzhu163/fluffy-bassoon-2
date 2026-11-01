@@ -13,7 +13,8 @@ import subprocess
 import time
 
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import sha, write_new
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import paired_stopping
+from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
+from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import paired_stopping, protocol, require_calibration_permission
 
 
 def main():
@@ -32,7 +33,8 @@ def main():
     def start(python, script, child_profile, env):
         path = exchange / f"{arm}-{script}-{len(children)}.json"
         write_new(path, child_profile)
-        child = subprocess.Popen([python, "-B", str(source / "scripts/diagnostics" / (script + ".py")),
+        policy_source = Path(profile.get("policy_source", source))
+        child = subprocess.Popen([python, "-B", str(policy_source / "scripts/diagnostics" / (script + ".py")),
                                   "--profile", str(path)], env={**os.environ, **env}, start_new_session=True)
         children.append(child)
         return child
@@ -54,7 +56,7 @@ def main():
         while child.poll() is None and time.time() < deadline:
             if scorer is not None and scorer.poll() not in (None, 0):
                 raise RuntimeError("Persistent reward worker failed; keep the complete pending batch, no fallback")
-            if arm == "S":
+            if arm == "S" and not profile.get("independent_arm"):
                 coordinate()
             time.sleep(1)
         if child.poll() is None:
@@ -87,10 +89,16 @@ def main():
             else:
                 break
 
-    gate_path = Path(profile["scorer"]["output"]) / "baseline-validation.json"
+    reused_calibration = profile.get("calibration")
+    gate_path = (Path(reused_calibration["path"]) if reused_calibration
+                 else Path(profile["scorer"]["output"]) / "baseline-validation.json")
     scorer = None
     terminal = dict(completed=False, arm=arm)
     try:
+        if reused_calibration:
+            require_calibration_permission(read_ref(reused_calibration), protocol(profile["training"]["task"]),
+                calibration_sha256=reused_calibration["sha256"],
+                authorization=read_ref(profile["calibration_exception"]) if profile.get("calibration_exception") else None)
         if arm == "F":
             # Validate the newly added engine-reuse core on allocated Linux,
             # without loading another model or rerunning earlier suites.
@@ -109,11 +117,14 @@ def main():
                     "--junitxml=" + str(exchange / "persistent-worker-core.xml")],
                     env={**os.environ, **profile["policy_env"]}, check=True,
                     timeout=min(120, max(1, deadline - time.time())))
-            worker_profile = dict(profile["scorer"], mode="integrated")
+            worker_profile = dict(profile["scorer"], mode="train" if reused_calibration else "integrated")
+            if reused_calibration:
+                worker_profile.update(baseline_validation=reused_calibration,
+                                      calibration_exception=profile.get("calibration_exception"))
             # These arguments belong only to calibration. The F policy profile
             # and training label requests contain no calibration truth path.
-            calibration_args = ["--episodes", profile["native_episodes"],
-                                "--baseline-monitor", profile["native_monitor"]]
+            calibration_args = ([] if reused_calibration else ["--episodes", profile["native_episodes"],
+                                "--baseline-monitor", profile["native_monitor"]])
             worker_path = exchange / "F-scorer-profile.json"
             write_new(worker_path, worker_profile)
             scorer = subprocess.Popen([profile["scorer_python"], "-B",
@@ -122,7 +133,7 @@ def main():
                 env={**os.environ, **profile["scorer_env"]}, start_new_session=True)
             children.append(scorer)
         gate = wait_file(gate_path, [scorer] if scorer else [])
-        if gate.get("go") is not True:
+        if gate.get("go") is not True and not reused_calibration:
             terminal.update(completed=True, stop_reason="native8_Flora_AUROC_gate_failed", gate=gate)
             return
         gate_ref = dict(path=str(gate_path), sha256=sha(gate_path))
@@ -134,8 +145,14 @@ def main():
             write_new(common_done, dict(completed=True, output=profile["common_before"]["output"]))
         else:
             wait_file(common_done, [scorer])
-        policy = start(profile["policy_python"], "robocasa_residual_ppo",
-                       dict(profile["training"], baseline_validation=gate_ref), profile["policy_env"])
+        training = dict(profile["training"], baseline_validation=gate_ref)
+        if profile.get("calibration_exception"):
+            training['calibration_exception'] = profile['calibration_exception']
+        if profile.get("independent_arm"):
+            initial = Path(profile['common_before']['output'])/'initial_DEV-000/evaluation.json'
+            training.update(independent_stopping=True,
+                            initial_dev_evaluation=dict(path=str(initial),sha256=sha(initial)))
+        policy = start(profile["policy_python"], "robocasa_residual_ppo", training, profile["policy_env"])
         child_result(policy)
         final = Path(profile["training"]["output"]) / "FINAL.json"
         if not final.exists():

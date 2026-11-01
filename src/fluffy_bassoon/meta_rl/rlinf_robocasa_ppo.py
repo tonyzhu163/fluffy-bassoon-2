@@ -35,6 +35,25 @@ def validate_protocol(value,training=False):
     return value
 
 
+def require_calibration_permission(calibration, expected_protocol, *, calibration_sha256,
+                                   authorization=None):
+    """Keep a failed measurement immutable when a human permits continuation."""
+    import math
+    validate_protocol(expected_protocol, training=True)
+    if (calibration.get('completed') is not True or calibration.get('protocol')!=expected_protocol
+            or calibration.get('count')!=8 or not .05<=calibration.get('initial_success_rate',-1)<=.70
+            or calibration.get('AUROC') is None or not math.isfinite(calibration['AUROC'])):
+        raise ValueError('Same completed native headroom/both-class calibration required')
+    if calibration.get('go') is True:return 'original_calibration_gate_passed'
+    if (not isinstance(authorization,dict) or authorization.get('allow_training_below_auc_gate') is not True
+            or authorization.get('calibration_sha256')!=calibration_sha256
+            or authorization.get('protocol')!=expected_protocol
+            or authorization.get('measured_AUROC')!=calibration['AUROC']
+            or not authorization.get('direct_human_instruction')):
+        raise ValueError('Failed calibration requires an explicit human decision bound to these measured bytes')
+    return 'human_authorized_below_original_AUROC_gate'
+
+
 def case_bank(task,phase,*,iteration=0,round_index=0):
     """Fixed identities, disjoint by purpose; DEV is never final ID or OOD."""
     validate_protocol(protocol(task))
@@ -164,3 +183,19 @@ def paired_stopping(own,peer):
     return dict(stop=bool(latest>=10 or ceiling or flat),
         reason='fixed10' if latest>=10 else ('both_DEV8of8' if ceiling else ('both_no_DEV_improvement_after6' if flat else 'continue')),
         interpretation='Exploratory paired resource heuristic, not statistical convergence')
+
+
+def arm_stopping(rows):
+    """Same DEV rule per independent arm; never wait for the other job."""
+    if not rows or rows[0].get('phase')!='initial_DEV' or rows[0].get('iteration')!=0:
+        raise ValueError('Fixed initial DEV evidence required')
+    for index,row in enumerate(rows):
+        if (row.get('phase')!=('initial_DEV' if index==0 else 'DEV') or row.get('episodes')!=8
+                or type(row.get('successes')) is not int or not 0<=row['successes']<=8
+                or row.get('iteration')!=(0,*DEV_STEPS)[index]):
+            raise ValueError('Only the ordered complete fixed DEV panels may stop an arm')
+    latest=rows[-1]['iteration'];ceiling=rows[-1]['successes']==8
+    flat=latest>=6 and max(row['successes'] for row in rows[1:])<=rows[0]['successes']
+    return dict(stop=bool(latest>=10 or ceiling or flat),
+        reason='fixed10' if latest>=10 else ('DEV8of8' if ceiling else ('no_DEV_improvement_after6' if flat else 'continue')),
+        interpretation='Independent-arm exploratory stopping; compare shared prefixes and report time censoring')

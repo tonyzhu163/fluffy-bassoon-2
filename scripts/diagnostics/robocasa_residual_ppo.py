@@ -30,7 +30,9 @@ from fluffy_bassoon.meta_rl.rlinf_flora_ppo import (
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo_monitor import ProgressLog
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal, restore_rng, snapshot_rng
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS, case_bank, protocol
+from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import (
+    TASKS, arm_stopping, case_bank, protocol, require_calibration_permission,
+)
 from fluffy_bassoon.meta_rl.vla_history import save_dataset
 from fluffy_bassoon.rl.action_residual import ResidualBound, action_std_from_norm_stats
 
@@ -184,8 +186,11 @@ def main():
             panel("OOD", int(profile["iteration"]))
             return
         gate = read_ref(profile["baseline_validation"])
-        if gate.get("go") is not True or gate.get("protocol") != protocol(task):
-            raise ValueError("Native headroom and same-bank Flora AUROC gate required before learning")
+        authorization = read_ref(profile["calibration_exception"]) if profile.get("calibration_exception") else None
+        permission = require_calibration_permission(gate, protocol(task),
+            calibration_sha256=profile["baseline_validation"]["sha256"], authorization=authorization)
+        contract.update(calibration=profile["baseline_validation"], calibration_permission=permission,
+                        calibration_exception=profile.get("calibration_exception"))
         cases = [case for iteration in range(1, 11) for round_index in range(4)
                  for case in case_bank(task, "train", iteration=iteration, round_index=round_index)]
         if profile["training_cases"] != cases:
@@ -210,6 +215,8 @@ def main():
             save_checkpoint(output / "boundary-000.pt", policy=policy, optimizer=optimizer, bound=bound, motor=motor,
                 environment=train_env, generators=generators, contract=contract, iteration=0, stage="boundary")
         history = []
+        dev_evaluations = ([read_ref(profile["initial_dev_evaluation"])]
+                          if profile.get("independent_stopping") else [])
         iteration_times = []
         stop_reason = "fixed10"
         final_actions = 8 * (TASKS[task][0] + 128) + 8 * (900 + 128)
@@ -273,7 +280,17 @@ def main():
             write_new(output / f"update-{iteration:03d}.json", dict(iteration=iteration, metrics=metrics,
                 physical_actions=journal.charged(), checkpoint=dict(path=str(checkpoint), sha256=sha(checkpoint))))
             if iteration in (2, 4, 6, 8, 10):
-                panel("DEV", iteration)
+                _, _, evaluation = panel("DEV", iteration)
+                if profile.get("independent_stopping"):
+                    dev_evaluations.append(evaluation)
+                    decision = arm_stopping(dev_evaluations)
+                    write_new(output / f"stop-{iteration:03d}.json", decision)
+                    if decision["stop"]:
+                        stop_reason = decision["reason"]
+                        iteration_times.append(time.monotonic() - iteration_start)
+                        break
+                    iteration_times.append(time.monotonic() - iteration_start)
+                    continue
                 # The owner combines complete same-iteration DEV panels only;
                 # final ID/OOD never enter this decision.
                 stop_path = Path(profile["paired_stop_root"]) / f"{iteration:03d}.json"

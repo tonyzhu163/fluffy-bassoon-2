@@ -1,0 +1,33 @@
+{
+  "kind": "human_calibration_continuation_20261101",
+  "allow_training_below_auc_gate": true,
+  "calibration_sha256": "ce3e1ecdc0d3ef924f9d2a2fe22442ed1dd18bedda57459b2286f1b6e4d861f6",
+  "protocol": {
+    "benchmark": "robocasa365",
+    "task": "OpenDrawer",
+    "horizon": 750,
+    "camera_order": [
+      "robot0_agentview_left"
+    ],
+    "train_episodes": 64,
+    "baseline_count": 8
+  },
+  "measured_AUROC": 0.6666666666666666,
+  "original_minimum_AUROC": 0.7,
+  "original_gate_pass": false,
+  "direct_human_instruction": [
+    "what is auroc 0.667? its ok to keep going",
+    "it seems like tahts good enough",
+    "we should try the ppo now, what scale?",
+    "no i meant the ppo baseline without flora",
+    "and then figure out flora, and then launch the ppo with flora",
+    "these two are seperate",
+    "keep going",
+    "im giving you a max gpu count of 24 across all jobs, as long as its under that keep going"
+  ],
+  "aggregate_gpu_limit": 24,
+  "per_job_gpu_limit": 8,
+  "per_job_hours_strictly_less_than": 8,
+  "per_arm_actions_unchanged": 1000000,
+  "interpretation": "Launch simulator-reward residual PPO independently first. Profile annotation batch throughput in parallel, then launch the Flora-reward arm separately. Keep failed calibration/scoring bytes unchanged, no reannotation, score/prompt/task tuning, or reset of past actions. Same native-only DEV stop rule applied independently to both arms so neither waits for the other."
+}
