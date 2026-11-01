@@ -20,7 +20,7 @@ from fluffy_bassoon.meta_rl.vla_history import file_sha256
 from fluffy_bassoon.meta_rl.vla_noise_sac import SACConfig, SquashedGaussianActor
 
 
-PLAN = live.ROOT/'outputs/robotwin-source-teacher-profile-20261031-r1/plan.json'
+PLAN = live.ROOT/'outputs/archive/robotwin-source-teacher-profile-20261031-r1/plan.json'
 
 
 def configuration():

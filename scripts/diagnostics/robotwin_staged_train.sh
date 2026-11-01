@@ -119,7 +119,7 @@ TASK_ARGS=(--source-commit "$TASK_COMMIT" --model-path "$TASK_MODEL" \
     --sac-warmup 500 --sac-batch-size 256 --sac-utd 20 \
     --campaign-root "$TASK_ROOT/campaigns/robotwin-one-million-20261029-r1" \
     --campaign-id robotwin-one-million-20261029-r1 --campaign-max-actions 1000000 \
-    --campaign-prior-receipts "$TASK_WORKTREE/outputs/robotwin-campaign-1m-20261029-r1/prior-receipts.json" \
+    --campaign-prior-receipts "$TASK_WORKTREE/outputs/archive/robotwin-campaign-1m-20261029-r1/prior-receipts.json" \
     --record-corpus --final-observation-only \
     --capture-qualification "$TASK_ROOT/outputs/robotwin-capture-qual-20261029-r1/qualification/qualification.json" \
     --wall-seconds "$TASK_DRIVER_SECONDS" --boundary-reserve-seconds 240)

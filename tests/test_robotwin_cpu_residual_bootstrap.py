@@ -12,7 +12,7 @@ import time
 import pytest
 
 REPO=Path(__file__).resolve().parents[1]
-ROOT=REPO/'outputs/robotwin-sac65-cpu-compat-20261031-r2'
+ROOT=REPO/'outputs/archive/robotwin-sac65-cpu-compat-20261031-r2'
 
 
 def load(name,path):

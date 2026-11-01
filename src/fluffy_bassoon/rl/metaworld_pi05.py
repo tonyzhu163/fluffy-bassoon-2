@@ -1,6 +1,6 @@
 """Released RLinf pi0.5 MetaWorld SFT under fixed noise arms and discrete goals (CPU pieces).
 
-outputs/libero-noise-icrl-20261029-r1/PLAN.md, Meta-World companion, with the released
+outputs/archive/libero-noise-icrl-20261029-r1/PLAN.md, Meta-World companion, with the released
 motor `RLinf/RLinf-Pi05-MetaWorld-SFT` (few-shot SFT on lerobot/metaworld_mt50; RLinf
 reports 43.8% MT50 success). Conventions follow RLinf e1a82eb's
 toolkits/standalone_eval_scripts/openpi/metaworld_eval.py: camera 2 moved to

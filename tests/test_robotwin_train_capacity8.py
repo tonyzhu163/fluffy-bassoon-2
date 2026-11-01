@@ -9,7 +9,7 @@ import pytest
 from fluffy_bassoon.meta_rl import robotwin_train_capacity8 as entry
 
 pytestmark=pytest.mark.skipif(sys.platform!='linux',reason='Allocated Linux CPU only')
-ROOT=Path(__file__).resolve().parents[1]/'outputs/robotwin-train-capacity8-driver-20261101-r1'
+ROOT=Path(__file__).resolve().parents[1]/'outputs/archive/robotwin-train-capacity8-driver-20261101-r1'
 
 
 def documents():

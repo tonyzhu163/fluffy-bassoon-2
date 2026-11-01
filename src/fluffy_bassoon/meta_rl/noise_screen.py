@@ -1,6 +1,6 @@
 """Stage 0 gates for noise-arm selection over a frozen pi0.5 (CPU, saved artifacts only).
 
-outputs/noise-mode-icrl-20261029-r1/PLAN.md. Reads the outcomes.jsonl and trajectory
+outputs/archive/noise-mode-icrl-20261029-r1/PLAN.md. Reads the outcomes.jsonl and trajectory
 files written by scripts/diagnostics/maniskill_pi05_noise_cache.py. A condition is a
 physics variant (C2) or a (variant, object) pair (C1). Per condition, arm success
 p(c, k) is estimated on two disjoint halves of its scenes: the oracle arm is selected

@@ -1,9 +1,15 @@
 # CTM in-context RL: coordination
 
 Live coordination for `fluffy-bassoon-2`, updated **2026-11-01 Asia/Shanghai**.
-Keep current decisions and jobs here, method contracts in `docs/`, verified
-results in `EVALUATION.md`, and dated plans and evidence in
-`outputs/<run-id>/`. Follow [AGENTS.md](../AGENTS.md) and the
+Keep current decisions and jobs here, the five shared documents in
+[`docs/`](../docs/README.md), verified results in `docs/FINDINGS.md`, and dated
+plans and evidence in `outputs/<run-id>/`. **Cleanup 2026-11-01:** the old
+method docs and finished runs without usable evidence were deleted (git history
+keeps them; old links are permalinks). Dead runs that code still loads moved to
+[`archive/`](archive/) under the same run IDs. Live runs stay at the top level.
+Record new results in the run folder and `docs/FINDINGS.md`; the old
+`docs/frozen-vla-libero/EVALUATION.md`, `docs/paper/DRAFT.md` and
+`docs/frozen-vla-steering-summary.md` are gone (paper: `docs/PAPER.md`). Follow [AGENTS.md](../AGENTS.md) and the
 [retention policy](../README.md#artifact-retention).
 
 The [2026-11-01 snapshot](archive/coordination/coordination-20261101.md) holds
@@ -27,24 +33,24 @@ informative history and optimization.
 - Judge adaptation with paired fresh probes, trained static/reset controls
   and valid history interventions.
 
-Contracts: [support/probe](../docs/ctm-support-probe.md),
-[feature bridge](../docs/pi05-feature-bridge.md),
-[PPO replay](../docs/pi05-bridge-policy.md).
-Results: [meta-RL evaluation](../src/fluffy_bassoon/meta_rl/EVALUATION.md).
+Contracts: [support/probe](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/ctm-support-probe.md),
+[feature bridge](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-feature-bridge.md),
+[PPO replay](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-bridge-policy.md).
+Results: [meta-RL evaluation](metta-common-ppo-chart-20261029-r1/ML10-EVALUATION.md).
 
 ### Redesign (2026-10-31)
 
 No robot comparison so far shows memory or adaptation. The governing plan is
-the [frozen pi0.5 steering screen](frozen-pi05-steering-screen-20261031-r1/PLAN.md):
+the [frozen pi0.5 steering screen](archive/frozen-pi05-steering-screen-20261031-r1/PLAN.md):
 first show a controller can improve the frozen motor on cases it fails, then
 show experience changes a useful later decision. The
-[steering-headroom audit](steering-headroom-audit-20261031-r1/AUDIT.md) gives
+[steering-headroom audit](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/steering-headroom-audit-20261031-r1/AUDIT.md) gives
 the paired fixed100 evidence. The earlier
-[headroom diagnosis](archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
+[headroom diagnosis](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
 archived as superseded, with corrections listed at its top. A
-[criteria proposal](steering-interface-criteria-20261031-r1/PROPOSAL.md)
+[criteria proposal](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/steering-interface-criteria-20261031-r1/PROPOSAL.md)
 informs the newly authorized [targeted scope](frozen-pi05-endtoend-20261031-r1/SCOPE.json),
-which adopts A1/A2/A3 with the [review safeguards](frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
+which adopts A1/A2/A3 with the [review safeguards](archive/frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
 The proposal is not adopted verbatim: search is explicitly bounded, improvement
 must be measured rather than assumed, and the initial mechanism panel does not
 replace fresh32-case confirmation before broader claims.
@@ -85,7 +91,7 @@ update.
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
   queued behind the task57 DSRL run, which has since finished. Owner
   `frozen-vla-poc`: confirm whether it is still queued.
-  [Plan](vlrla-native-ppo-pilot-20261031-r1/PLAN.md).
+  [Plan](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/vlrla-native-ppo-pilot-20261031-r1/PLAN.md).
 - Three jobs last recorded on 2026-10-28 (RoboTwin GRPO gate
   `job-vh9lp7fvgf9n`, MetaWorld pilot r2 `job-x2x4kdpfn011`, thu2 CMM
   48983/48984) are listed in the
@@ -96,7 +102,7 @@ update.
 
 - **Meta-World released pi0.5 noise screen**, Baige `job-orgyjb0z9h6d`: paused
   at user request 2026-10-29; reach screens fail headroom.
-  [Pause record](metaworld-pi05-noise-baige-20261029-r2/PAUSED.md).
+  [Pause record](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/metaworld-pi05-noise-baige-20261029-r2/PAUSED.md).
 
 ## Recently completed work
 
@@ -106,7 +112,7 @@ update.
   [snapshot](archive/coordination/coordination-20261101.md#ongoing-work).
 - **RoboTwin final100 AD export (R4)**, Baige `job-vth2qv6r4lxu`: complete,
   exit 0, 2026-10-31; AD GPU fit deferred.
-  [Final report](robotwin-final100-ad-export-20261031-r4/RESULTS.md).
+  [Final report](archive/robotwin-final100-ad-export-20261031-r4/RESULTS.md).
 - Work completed on 2026-10-28/29 (CMM calibration, DSRL Stage 0 smoke,
   native-context pilot r3, CTM/XL PPO gates, cached screens, Baige cleanup) is
   summarized in the [2026-11-01 snapshot](archive/coordination/coordination-20261101.md#recently-completed-work).

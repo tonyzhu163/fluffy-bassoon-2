@@ -128,7 +128,7 @@ def test_constructor_requires_ordered_source_limits_and_explicit_provenance(faul
 def test_committed_prospective_config_constructs_exactly_with_its_declared_hash():
     import hashlib
     from pathlib import Path
-    root=Path(__file__).parents[1]/'outputs/robotwin-wide-action-head-20261101-r1'
+    root=Path(__file__).parents[1]/'outputs/archive/robotwin-wide-action-head-20261101-r1'
     config=json.loads((root/'CONFIG.json').read_text());profile=json.loads((root/'PROFILE.json').read_text())
     assert hashlib.sha256((root/'CONFIG.json').read_bytes()).hexdigest()==profile['configuration_file_sha256']
     module=WideActionResidual.from_config(config)

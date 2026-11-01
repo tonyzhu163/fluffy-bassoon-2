@@ -21,7 +21,7 @@ def test_caller_checksum_cannot_replace_the_fixed_plan(tmp_path,monkeypatch):
 
 
 def test_original_pinned_plan_remains_readable():
-    path=live.ROOT/'outputs/robotwin-native-evaluation-plan-20261030-r1/plan.json'
+    path=live.ROOT/'outputs/archive/robotwin-native-evaluation-plan-20261030-r1/plan.json'
     value=live.read_fixed_plan(path,live.PLAN_SHA)
     assert value['max_actions']==57600 and value['max_episodes']==144
 

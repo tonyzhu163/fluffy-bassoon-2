@@ -107,7 +107,7 @@ def main(argv=None):
     from .vla_cnd_corpus import load_frozen_split
     from .vla_history import FrozenHistoryController, load_policy
     from .vla_rlinf_libero import FrozenRLinfPi05Libero
-    _, tasks = load_frozen_split(root / "outputs/libero-pi05-corpus-20261029-r1/split.json")
+    _, tasks = load_frozen_split(root / "outputs/archive/libero-pi05-corpus-20261029-r1/split.json")
     args.output.mkdir(parents=True, exist_ok=False)
     import fcntl
     lock = (args.output / "run.lock").open("w")

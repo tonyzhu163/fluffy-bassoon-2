@@ -8,7 +8,7 @@ Modes (one simulator per process; run them as separate steps):
              instruction differs: names slot-0 object (RLinf's native prompt), names the
              slot-1 object, or the vague "put object on plate".
   summarize  Combine single/multi episode files into metrics.json (CPU only).
-See outputs/pi05-instruction-swap-thu2-20261029-r1/PLAN.md.
+See outputs/archive/pi05-instruction-swap-thu2-20261029-r1/PLAN.md.
 """
 import argparse
 import hashlib

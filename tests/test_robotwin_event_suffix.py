@@ -113,7 +113,7 @@ def test_original_canonical_ledger_lock_keeps_costs_and_only_one_fresh_run(tmp_p
 
 
 def test_manifest_retains_all12_and_never_licenses_fit_on_easier_suffix():
-    path=Path(__file__).parents[1]/'outputs/robotwin-event-fixed-suffix-20261101-r1/MANIFEST.json'
+    path=Path(__file__).parents[1]/'outputs/archive/robotwin-event-fixed-suffix-20261101-r1/MANIFEST.json'
     manifest=json.loads(path.read_text())
     assert len(manifest['original_teacher_ids'])==12 and len(manifest['suffix_specs'])==7
     assert list(manifest['whole_split'].values()).count('validation')==4

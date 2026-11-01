@@ -156,7 +156,7 @@ def test_prospective900_clock_does_not_refill_spent336_or_reuse_B(mutation):
 
 @pytest.mark.parametrize('mutation',['order','dose','hash','budget'])
 def test_four_explicit_case_profiles_and_hashes_cannot_silently_change(mutation):
-    path=Path(__file__).resolve().parents[1]/'outputs/robotwin-prelift-dose-grip-20261101-r1/PROFILE.json'
+    path=Path(__file__).resolve().parents[1]/'outputs/archive/robotwin-prelift-dose-grip-20261101-r1/PROFILE.json'
     profile=json.loads(path.read_text());row=dict(id='phone-04',canonical_index=4,reset_seed=4,instruction='Take the black phone to the green phone rack.')
     result=factorial_specs(profile,row);assert [(s['probe_holds'],s['condition']) for s in result]==list(FACTORIAL_CASES)
     if mutation=='order':profile['case_profiles'].reverse()

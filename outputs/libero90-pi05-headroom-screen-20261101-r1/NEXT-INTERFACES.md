@@ -4,8 +4,8 @@ Drafted 2026-11-01 as the follow-on to [PLAN.md](PLAN.md). **Proposal only.**
 It adds no grant and doesn't change the authorized RoboTwin
 [targeted scope](../frozen-pi05-endtoend-20261031-r1/SCOPE.json), which already
 adopts the A1/A2/A3 criteria
-([proposal](../steering-interface-criteria-20261031-r1/PROPOSAL.md),
-[review](../frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md)).
+([proposal](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/steering-interface-criteria-20261031-r1/PROPOSAL.md),
+[review](../archive/frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md)).
 This document applies those criteria to LIBERO once a replication exists.
 
 ## Why the replication comes first
@@ -30,7 +30,7 @@ learner/recipe question, not an interface one.
 
 | Factor | Levels (DSRL reference first) | Why it matters |
 | --- | --- | --- |
-| Where the controller acts | initial flow noise; native KV-cache residual (VLRLA-bridge-style); flow-velocity bridge ([existing](../../docs/pi05-feature-bridge.md)); decoded-action residual | Different expressiveness and different risk of leaving the motor's competent manifold |
+| Where the controller acts | initial flow noise; native KV-cache residual (VLRLA-bridge-style); flow-velocity bridge ([existing](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-feature-bridge.md)); decoded-action residual | Different expressiveness and different risk of leaving the motor's competent manifold |
 | When it is chosen | per chunk (DSRL); **one setting held for a whole episode** | A per-episode choice is a bandit arm across attempts, the unit that in-context RL selects between |
 | Dimension | 32D tied (DSRL); 4D coefficients (RoboTwin pilot); full 10×32 | Search/learning cost versus reach |
 | Conditioning | observation-conditioned (DSRL); context-blind constant | Separates reactive control from what history could add |
@@ -75,7 +75,7 @@ controls on locked fresh cases.
 2. **4D noise coefficients**: the same parameterization as the RoboTwin pilot,
    so the two benchmarks become comparable.
 3. **KV-cache residual**: the strongest published frozen-motor interface
-   ([VLRLA protocol](../../docs/vlrla-protocol.md)), at the cost of new hooks.
+   ([VLRLA protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/vlrla-protocol.md)), at the cost of new hooks.
 4. **Decoded-action residual**: highest reach but leaves the motor's
    manifold, so treat as an upper reference, not the target interface.
 

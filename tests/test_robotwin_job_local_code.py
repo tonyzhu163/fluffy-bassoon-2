@@ -9,7 +9,7 @@ import tempfile
 import pytest
 
 REPO=Path(__file__).resolve().parents[1]
-ROOT=REPO/'outputs/robotwin-sac65-cpu-compat-20261031-r4'
+ROOT=REPO/'outputs/archive/robotwin-sac65-cpu-compat-20261031-r4'
 spec=importlib.util.spec_from_file_location('fixture_local_code',ROOT/'stage_local_code.py')
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 

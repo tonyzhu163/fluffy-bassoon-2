@@ -5,7 +5,7 @@ stats are always passed explicitly: the SFT and RL checkpoints store them at
 different relative paths, and RLinf silently skips normalization when its default
 lookup misses. The rotation hook implements docs/maniskill-pi05-icrl.md; the
 initial-noise arms and object-physics variants implement
-outputs/noise-mode-icrl-20261029-r1/PLAN.md.
+outputs/archive/noise-mode-icrl-20261029-r1/PLAN.md.
 """
 from contextlib import contextmanager
 import hashlib

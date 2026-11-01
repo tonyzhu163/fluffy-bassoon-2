@@ -66,5 +66,5 @@ meta-pretraining. Native action-expert PPO remains queued. Its later authorized
 25 TOTAL iterations retain the same128 matched starting-model cases.
 
 References: [published DSRL](https://arxiv.org/html/2506.15799v2),
-[static fidelity/readiness](../dsrl-pi05-task57-readiness-20261031-r1/READINESS.md),
-[existing capture](../dsrl-frozen-pi05-data-readiness-20261031-r1/READINESS.md).
+[static fidelity/readiness](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/dsrl-pi05-task57-readiness-20261031-r1/READINESS.md),
+[existing capture](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/dsrl-frozen-pi05-data-readiness-20261031-r1/READINESS.md).

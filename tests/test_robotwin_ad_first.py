@@ -91,7 +91,7 @@ def test_final100_ad_only_indexes_keep_coverage_input_binding_and_disjoint_cases
 
 def bindings_file(tmp_path,objectives,*,execute=False):
     b=json.loads((Path(__file__).resolve().parents[1]/
-        'outputs/robotwin-finalbank-offline-plan-20261031-r1/bindings.template.json').read_text())
+        'outputs/archive/robotwin-finalbank-offline-plan-20261031-r1/bindings.template.json').read_text())
     b['objectives']=list(objectives)
     if 'dpt' not in objectives:b.pop('teacher100_source')
     if execute:

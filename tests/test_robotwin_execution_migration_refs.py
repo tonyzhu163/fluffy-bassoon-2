@@ -46,7 +46,7 @@ def replace_migration(entry,value,path=None):
 
 
 def test_exact_retained_final62_metadata_explains_the_runtime_schema_mismatch():
-    path=Path(__file__).resolve().parents[1]/'outputs/robotwin-finalbank-offline-plan-20261031-r1/SAC100-FINAL-REFERENCE-20261031.json'
+    path=Path(__file__).resolve().parents[1]/'outputs/archive/robotwin-finalbank-offline-plan-20261031-r1/SAC100-FINAL-REFERENCE-20261031.json'
     assert sha(path)=='0af5082349ec1a032eff6b752e3b91fd473b8c922a394c496b4f75bceff68c7e'
     a=json.loads(path.read_text());entries=a['ordered_ancestry']
     assert len(entries)==62 and 'execution_migration' not in entries[0]

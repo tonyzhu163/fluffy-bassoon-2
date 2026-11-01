@@ -31,4 +31,4 @@ no90/Plus/Pro trajectory enters that pretraining bank.
 Sources: [Algorithm Distillation](https://arxiv.org/abs/2210.14215),
 [DPT](https://arxiv.org/abs/2306.14892),
 [DSRL](https://arxiv.org/html/2506.15799v2), and the
-[existing capture inspection](../dsrl-frozen-pi05-data-readiness-20261031-r1/READINESS.md).
+[existing capture inspection](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/dsrl-frozen-pi05-data-readiness-20261031-r1/READINESS.md).

@@ -99,7 +99,7 @@ def main(argv=None):
             or subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True).strip()):
         raise ValueError("Require a clean, exact reviewed run source")
     from .vla_cnd_corpus import load_frozen_split
-    split_path = args.frozen_split or root / "outputs/libero-pi05-corpus-20261029-r1/split.json"
+    split_path = args.frozen_split or root / "outputs/archive/libero-pi05-corpus-20261029-r1/split.json"
     split, tasks = load_frozen_split(split_path)
     args.output.mkdir(parents=True, exist_ok=False)
     import fcntl

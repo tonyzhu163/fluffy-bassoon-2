@@ -1,6 +1,6 @@
 """Released RLinf pi0.5 LIBERO motor on LIBERO-Plus/PRO variants under fixed noise arms.
 
-outputs/libero-noise-icrl-20261029-r1/PLAN.md, Stage L0 (headroom per perturbation
+outputs/archive/libero-noise-icrl-20261029-r1/PLAN.md, Stage L0 (headroom per perturbation
 type), no training. Both packages ship perturbed variants of LIBERO-10 (and of Spatial,
 Object, Goal) but not of LIBERO-90, whose entries are the originals; this screen uses
 LIBERO-10, the held-out tasks of the frozen split.

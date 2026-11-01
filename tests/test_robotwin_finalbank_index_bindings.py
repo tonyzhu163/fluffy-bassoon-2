@@ -11,7 +11,7 @@ import sys
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-PLAN = REPO / 'outputs/robotwin-finalbank-offline-plan-20261031-r1'
+PLAN = REPO / 'outputs/archive/robotwin-finalbank-offline-plan-20261031-r1'
 
 def load(name, path):
     spec = importlib.util.spec_from_file_location(name, path)

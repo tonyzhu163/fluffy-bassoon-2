@@ -28,7 +28,7 @@ from fluffy_bassoon.rl.robotwin_campaign_budget import CampaignBudget
 
 
 ROOT=Path(__file__).resolve().parents[1]
-EVIDENCE=ROOT/'outputs/robotwin-reactive-capacity-20261031-r1/AUTHOR-CONVENTION.json'
+EVIDENCE=ROOT/'outputs/archive/robotwin-reactive-capacity-20261031-r1/AUTHOR-CONVENTION.json'
 INVENTORY=ROOT/'outputs/frozen-pi05-endtoend-20261031-r1/phone-stage0-cpu-artifacts/inventory.json'
 
 

@@ -1,6 +1,6 @@
 """Headroom of the released RLinf pi0.5 LIBERO motor on LIBERO-Plus/PRO under fixed noise arms.
 
-outputs/libero-noise-icrl-20261029-r1/PLAN.md, Stage L0, no training. For each package
+outputs/archive/libero-noise-icrl-20261029-r1/PLAN.md, Stage L0, no training. For each package
 (--kinds plus,pro), selects --per-category LIBERO-10 variants of every perturbation type
 (seeded, spread over base tasks; 'clean' is the unperturbed base task) and records success
 for every (variant, scene, arm, repeat); arm -1 is native sampling. Scenes are the

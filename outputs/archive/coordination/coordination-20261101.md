@@ -29,24 +29,24 @@ informative history and optimization.
 - Judge adaptation with paired fresh probes, trained static/reset controls
   and valid history interventions.
 
-Contracts: [support/probe](../../../docs/ctm-support-probe.md),
-[feature bridge](../../../docs/pi05-feature-bridge.md),
-[PPO replay](../../../docs/pi05-bridge-policy.md).
-Results: [meta-RL evaluation](../../../src/fluffy_bassoon/meta_rl/EVALUATION.md).
+Contracts: [support/probe](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/ctm-support-probe.md),
+[feature bridge](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-feature-bridge.md),
+[PPO replay](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/pi05-bridge-policy.md).
+Results: [meta-RL evaluation](../../metta-common-ppo-chart-20261029-r1/ML10-EVALUATION.md).
 
 ### Redesign (2026-10-31)
 
 No robot comparison so far shows memory or adaptation. The governing plan is
-the [frozen pi0.5 steering screen](../../frozen-pi05-steering-screen-20261031-r1/PLAN.md):
+the [frozen pi0.5 steering screen](../frozen-pi05-steering-screen-20261031-r1/PLAN.md):
 first show a controller can improve the frozen motor on cases it fails, then
 show experience changes a useful later decision. The
-[steering-headroom audit](../../steering-headroom-audit-20261031-r1/AUDIT.md) gives
+[steering-headroom audit](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/steering-headroom-audit-20261031-r1/AUDIT.md) gives
 the paired fixed100 evidence. The earlier
-[headroom diagnosis](../../archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
+[headroom diagnosis](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/archive/icrl-headroom-diagnosis-20261031-r1/PLAN.md) is
 archived as superseded, with corrections listed at its top. A
-[criteria proposal](../../steering-interface-criteria-20261031-r1/PROPOSAL.md)
+[criteria proposal](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/steering-interface-criteria-20261031-r1/PROPOSAL.md)
 informs the newly authorized [targeted scope](../../frozen-pi05-endtoend-20261031-r1/SCOPE.json),
-which adopts A1/A2/A3 with the [review safeguards](../../frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
+which adopts A1/A2/A3 with the [review safeguards](../frozen-pi05-steering-screen-20261031-r1/CRITERIA-REVIEW.md).
 The proposal is not adopted verbatim: search is explicitly bounded, improvement
 must be measured rather than assumed, and the initial mechanism panel does not
 replace fresh32-case confirmation before broader claims.
@@ -82,8 +82,8 @@ update.
 | LIBERO task44 DSRL on frozen pi0.5 | R3 `job-2qn8dpw3yvlb` Running; sole `finish_assembly` | **12:30:**394240updates/2308TRAIN/20206replay,2269success39failure.22completepanels,last38000020/20,next400k;stablefull/newrawRPC/finitelosses pass. 367898phaseactions/22856910460B;activeGPUelapsed notfinalcharge. Next12:50. [Proof](../../libero90-pi05-headroom-runtime-20261101-r1/CHECK-1230-PARENT-REVIEW.json). |
 | Frozen pi0.5 interface/data redesign | AssessmentR2 `job-bc2ooyztqsfh` Running on9d29; sole `finish_assembly` | Actualprobe/resource/migration pass;cursor168=161oldvalid+6newvalid+1nullabort.26722combinedactions/626new/0uncertain;firstnew162success96+10steps,0SGD. Original1340GPU-s+9420reservation inside10800;32GiBshared,oldCPU154/180 andfresh77/120 separateclosed. Failed161 neverreplayed;finalC565pendingactive. NextPRIMARY12:50,assessment12:59. Current-bank500preparation separate7200,notyetlaunched. [Proof](../../libero40-teacher-assessment-20261101-r1/R2-LAUNCH-PARENT-REVIEW.json). |
 | LIBERO90 pi0.5 headroom screen for DSRL replication | Owned Stage A terminal Succeeded/exit0, `4ec35eb9`; owner chat `01a192cf` | **Nov1 09:54 saved-reference review:** own384 audit/task59 native3/16 vs untrained tied9/16 unchanged (3,890GPU-s/134,629actions). Separate task44 recovery repair qualified; executiond236/scienceb665 resumes preserved learner to302180 with3newEP/480updates. Fixed500k/finalnative/motor pending; no duplicate learner or interface GPU launch. [Reconciliation and gate](../../libero90-pi05-headroom-screen-20261101-r1/REFERENCE-RECONCILIATION.md). |
-| RoboTwin final100 AD export (R4) | Baige `job-vth2qv6r4lxu`, CPU only | **2026-10-31 13:38 Shanghai: complete, exit 0.** AD train and BC validation exports pass independent audits; no new GPU, robot actions or SGD. AD GPU fit stays deferred for the DSRL/SAC-first priority. [Final report](../../robotwin-final100-ad-export-20261031-r4/RESULTS.md); [source campaign](../../robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
-| Meta-World released pi0.5 noise screen | Baige `job-orgyjb0z9h6d`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17 Shanghai: paused at user request.** Reach screens fail headroom; goals 1 and 3 never reached. Remain paused. [Pause record](../../metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). |
+| RoboTwin final100 AD export (R4) | Baige `job-vth2qv6r4lxu`, CPU only | **2026-10-31 13:38 Shanghai: complete, exit 0.** AD train and BC validation exports pass independent audits; no new GPU, robot actions or SGD. AD GPU fit stays deferred for the DSRL/SAC-first priority. [Final report](../robotwin-final100-ad-export-20261031-r4/RESULTS.md); [source campaign](../robotwin-trained-continuation-20261031-r1/FINAL-CAMPAIGN-RESULTS.md). |
+| Meta-World released pi0.5 noise screen | Baige `job-orgyjb0z9h6d`; run `metaworld-pi05-noise-baige-20261029-r2` | **2026-10-29 20:17 Shanghai: paused at user request.** Reach screens fail headroom; goals 1 and 3 never reached. Remain paused. [Pause record](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/metaworld-pi05-noise-baige-20261029-r2/PAUSED.md). |
 
 ### Needs owner refresh
 

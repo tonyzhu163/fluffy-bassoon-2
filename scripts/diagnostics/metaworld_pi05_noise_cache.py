@@ -1,6 +1,6 @@
 """Success of the released RLinf pi0.5 MetaWorld SFT under fixed noise arms and discrete goals.
 
-outputs/libero-noise-icrl-20261029-r1/PLAN.md, Meta-World companion, no training. For
+outputs/archive/libero-noise-icrl-20261029-r1/PLAN.md, Meta-World companion, no training. For
 each task and goal visibility (marker visible or hidden), records success for every
 (goal, scene, arm, repeat); arm -1 is native sampling seeded per episode. Each
 (task, visibility) directory holds outcomes.jsonl, first-chunk trajectories and

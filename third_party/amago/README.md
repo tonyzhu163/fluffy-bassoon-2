@@ -44,5 +44,5 @@ Install them in a new uv `--system-site-packages` overlay; the borrowed runtime
 must remain read-only. Full runtime pins remain available as separate profiles.
 
 `ml10-amago1.args` is consumed through argparse's `@file` syntax. See
-[`docs/metaworld-amago.md`](../../docs/metaworld-amago.md) for commands,
+[`docs/metaworld-amago.md`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/metaworld-amago.md) for commands,
 scientific departures, checkpoint/replay recovery and admission requirements.

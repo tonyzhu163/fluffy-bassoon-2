@@ -1,6 +1,6 @@
 """Success of the frozen pi0.5 motor under fixed initial-noise arms (Stage 0 screen and cache).
 
-outputs/noise-mode-icrl-20261029-r1/PLAN.md: an arm is one fixed initial-noise tensor
+outputs/archive/noise-mode-icrl-20261029-r1/PLAN.md: an arm is one fixed initial-noise tensor
 (ms.arm_noise) used for every chunk of an 80-step attempt; arm -1 is native sampling
 with fresh N(0, I) noise from the seeded batch generator at every chunk. This script
 records outcomes for each (physics variant, scene, arm, repeat). Each variant builds

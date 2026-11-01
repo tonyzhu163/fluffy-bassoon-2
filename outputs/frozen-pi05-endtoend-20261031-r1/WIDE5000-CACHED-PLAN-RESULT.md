@@ -5,7 +5,7 @@ job-4jq7u25x1sv6. Both components passed,85/180 inclusive CPU-worker-seconds,
 zero GPU/actions/SGD. Script4084144 and endpoint19ed635c were fixed before the
 report. This reads all90 cached plans from whole8 TRAIN/4 VAL, including failed04.
 No VLA, simulator or new robot query ran. Root read saved scalar outputs only.
-[Exact report](../command-readout-linked-resource-cpu-20261101-r1/wide5000-analysis.json).
+[Exact report](../archive/command-readout-linked-resource-cpu-20261101-r1/wide5000-analysis.json).
 
 | Cached submitted-plan measure | Native proposal | Wide5,000 |
 | --- | ---: | ---: |

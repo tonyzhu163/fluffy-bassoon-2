@@ -1,16 +1,17 @@
 # Repository guidance
 
-This repository asks whether a CTM can do in-context reinforcement learning.
-It was split from `tonyzhu163/fluffy-bassoon` (branch `lycoreco_rl`); see
-[PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
+This repository studies in-context reinforcement learning for frozen VLAs; the
+current first step is learned-reward (Flora-Rewarder) PPO. Start with
+[docs/README.md](docs/README.md). It was split from `tonyzhu163/fluffy-bassoon`
+(branch `lycoreco_rl`); see [PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
 commits stay there.
 
 Keep this file short and durable. Do not append experiment recipes, dated
 decisions, run histories, job IDs, availability snapshots, or session notes.
-Put method contracts in `docs/` or the method's `DESIGN.md`, verified results in
-its `EVALUATION.md`, dated plans and raw evidence in `outputs/<run-id>/`, and
-live status in the single `outputs/coordination.md` (archived per the
-[retention policy](README.md#artifact-retention)).
+Keep `docs/` to its five documents. Put per-run contracts, dated plans and raw
+evidence in `outputs/<run-id>/`, verified results in `docs/FINDINGS.md`, and
+live status in the single `outputs/coordination.md`. Delete or archive finished
+runs per the [retention policy](README.md#artifact-retention).
 
 ## Development and deployment
 

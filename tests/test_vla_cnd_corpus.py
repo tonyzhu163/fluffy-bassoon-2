@@ -13,7 +13,7 @@ from fluffy_bassoon.meta_rl.vla_noise_distillation import collect_noise_distilla
 from test_vla_noise_distillation import arguments
 
 
-SPLIT = Path(__file__).resolve().parents[1] / "outputs/libero-pi05-corpus-20261029-r1/split.json"
+SPLIT = Path(__file__).resolve().parents[1] / "outputs/archive/libero-pi05-corpus-20261029-r1/split.json"
 
 
 def make_shard(tmp_path):

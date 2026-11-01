@@ -18,7 +18,7 @@ TASK_LIBERO=$TASK_ROOT/deps/libero-dsrl-87edbd1-20261029-r1/repo
 TASK_DSRL=$TASK_ROOT/deps/dsrl-pi0-7f48937-20261029-r1/repo
 TASK_OVERLAY=$TASK_ROOT/envs/dsrl-pi0-overlay-20261029-r1
 TASK_CHECKPOINT=$TASK_ROOT/inputs/rlinf-pi05-libero130-sft-6222623f-20261029-r1
-TASK_SPLIT=$TASK_WORKTREE/outputs/libero-pi05-corpus-20261029-r1/split.json
+TASK_SPLIT=$TASK_WORKTREE/outputs/archive/libero-pi05-corpus-20261029-r1/split.json
 cd "$TASK_WORKTREE"
 test "$(git rev-parse HEAD)" = "$TASK_SOURCE"
 test -z "$(git status --porcelain)"

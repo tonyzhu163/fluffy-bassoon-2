@@ -26,7 +26,7 @@ from fluffy_bassoon.meta_rl.robotwin_history_corpus import (
     CorpusReader, export_corpus, read_source, source_recovery)
 
 REPO = Path(__file__).resolve().parents[1]
-PLAN = REPO / 'outputs/robotwin-finalbank-offline-plan-20261031-r1'
+PLAN = REPO / 'outputs/archive/robotwin-finalbank-offline-plan-20261031-r1'
 
 
 def load(name, path):
@@ -168,7 +168,7 @@ def test_distinct_stage_serialization_requires_actual_closed_actor_and_counter_m
 
 
 def test_import_firewall_and_optimizer_guard_are_cpu_only(tmp_path):
-    module = load('fixture_cpu_import_firewall', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/phase_worker.py')
+    module = load('fixture_cpu_import_firewall', REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/phase_worker.py')
     guard = module.CPUImportGuard()
     for name in ('jax', 'openpi', 'sapien', 'rlinf', 'fluffy_bassoon.rl.robotwin_noise'):
         with pytest.raises(ImportError, match='forbids'):
@@ -404,7 +404,7 @@ def test_no_copy_fallback_and_incomplete_projection_retained(tmp_path, monkeypat
 @pytest.mark.parametrize('kind', ['valid', 'scalar_schema', 'old_source', 'old_teacher',
                                  'wrong_count', 'wrong_projection', 'wrong_phase'])
 def test_closed65_index_descriptor_requires_current_source_teacher_schema_and_projection(tmp_path, kind):
-    worker = load('fixture_source65_descriptor', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/phase_worker.py')
+    worker = load('fixture_source65_descriptor', REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/phase_worker.py')
     source = tmp_path / 'source65'; source.write_bytes(b'owned metadata fixture, not tensors')
     source_ref = dict(path=str(source), sha256=sha(source))
     projection = tmp_path / 'projection.json'; projection.write_text('{}')
@@ -441,7 +441,7 @@ def bootstrap_ticket(path, code='fixture-pin', hostname='fixture-host', output='
 
 
 def test_bootstrap_wait_uses_same_deadline_and_accepts_only_atomic_final_ticket(tmp_path):
-    job = load('fixture_bootstrap_job', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    job = load('fixture_bootstrap_job', REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
     ticket = tmp_path / 'actual.json'; now = [100.]
     def clock(): return now[0]
     def sleep(seconds):
@@ -457,7 +457,7 @@ def test_bootstrap_wait_uses_same_deadline_and_accepts_only_atomic_final_ticket(
 
 
 def test_bootstrap_missing_ticket_cannot_extend_the_shared_deadline(tmp_path):
-    job = load('fixture_bootstrap_timeout', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    job = load('fixture_bootstrap_timeout', REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
     now = [1698.]
     with pytest.raises(TimeoutError):
         job.wait_bootstrap(tmp_path/'absent', code_commit='fixture-pin', output=Path('/fixture-output'),
@@ -468,7 +468,7 @@ def test_bootstrap_missing_ticket_cannot_extend_the_shared_deadline(tmp_path):
 
 @pytest.mark.parametrize('field', ['code_commit', 'hostname', 'output', 'schema'])
 def test_bootstrap_rejects_stale_scope_without_accepting_a_resource_template(tmp_path, field):
-    job = load('fixture_bootstrap_scope', REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
+    job = load('fixture_bootstrap_scope', REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/gate_job.py')
     path=tmp_path/'ticket.json'; bootstrap_ticket(path)
     value=json.loads(path.read_text()); value[field]='wrong'; write(path,value)
     with pytest.raises(ValueError,match='Stale or mismatched'):
@@ -478,7 +478,7 @@ def test_bootstrap_rejects_stale_scope_without_accepting_a_resource_template(tmp
 
 @pytest.mark.parametrize('mode', ['timeout', 'TERM', 'INT', 'KILL'])
 def test_owned_cpu_guardian_reaps_worker_and_changed_pgid_descendant_only(tmp_path, mode):
-    adapter_path = REPO / 'outputs/robotwin-sac65-cpu-compat-20261031-r1/owned_cpu_runtime.py'
+    adapter_path = REPO / 'outputs/archive/robotwin-sac65-cpu-compat-20261031-r1/owned_cpu_runtime.py'
     adapter = load('fixture_cpu_owned_runtime', adapter_path)
     adapter.become_subreaper()  # Only this owned pytest worker's descendants.
     helper_dir = os.environ['FB2_CPU_OWNED_HELPERS']

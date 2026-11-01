@@ -91,7 +91,7 @@ def run(args):
             raise ValueError('All38 production assignments must be unique and exclude quota-filled bridges')
         immutable(args.output/'assignments.json',dict(source_admission=admission,workers=workers,
             all40_coverage='All40 admitted;38 new assignments and2 retained terminal leaves; not completed collection'))
-        template=json.loads((code/'outputs/libero40-sac-production-worker-budget-20261031-r1/budget-template.json').read_text())
+        template=json.loads((code/'outputs/archive/libero40-sac-production-worker-budget-20261031-r1/budget-template.json').read_text())
         template.update(funding_status='UNFUNDED_TEMPLATE',source_commit=args.source,plan_sha256=plan['plan_sha256'],
             campaign_prefix=args.production_prefix,campaign_root=str(PROJECT/'outputs'/args.production_prefix))
         immutable(args.output/'unfunded-macro-budget.json',template)

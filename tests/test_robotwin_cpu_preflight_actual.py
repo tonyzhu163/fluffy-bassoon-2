@@ -12,7 +12,7 @@ import pytest
 from test_robotwin_cpu_residual_bootstrap import resource_table
 
 REPO=Path(__file__).resolve().parents[1]
-ROOT=REPO/'outputs/robotwin-sac65-cpu-compat-20261031-r3'
+ROOT=REPO/'outputs/archive/robotwin-sac65-cpu-compat-20261031-r3'
 
 
 def load(name,path):

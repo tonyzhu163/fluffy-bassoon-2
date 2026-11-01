@@ -110,7 +110,7 @@ def test_incomplete_case_cannot_advance_resumable_cursor(fault):
 
 def test_profile_is_always_partial11_not_twelve_fit_or_new_robot_work():
     import json
-    profile_path=Path(__file__).parents[1]/'outputs/robotwin-partial11-cache-20261101-r1/PROFILE.json'
+    profile_path=Path(__file__).parents[1]/'outputs/archive/robotwin-partial11-cache-20261101-r1/PROFILE.json'
     value=json.loads(profile_path.read_text());module.validate_profile(value)
     for key,replacement in [('partial_only',False),('fit_eligible',True),('maximum_robot_actions',1),
                             ('maximum_aggregate_gpu_seconds',1201),('case_ids',module.IDS+['phone-04'])]:

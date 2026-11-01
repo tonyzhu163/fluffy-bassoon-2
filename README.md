@@ -2,72 +2,28 @@
 
 Can a history-conditioned steering policy adapt a frozen vision-language-action
 model to held-out robotic tasks with high sample efficiency and strong final
-performance? We start with LIBERO and compare against ordinary DSRL.
+performance? The paper stays about in-context RL. **The current first step is
+PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)) on
+LIBERO, then RoboCasa.
 
-[Paper draft](docs/paper/DRAFT.md) · [Research decisions](docs/paper/DECISIONS.md) ·
-[Verified LIBERO results](docs/frozen-vla-libero/EVALUATION.md) ·
-[Frozen corpus split](outputs/libero-pi05-corpus-20261029-r1/PLAN.md)
+**Start here:** [docs/README.md](docs/README.md) indexes the five documents:
+[paper plan](docs/PAPER.md), [findings to date](docs/FINDINGS.md),
+[Flora PPO](docs/FLORA-PPO.md) and [shared methods and code](docs/METHODS.md).
+Agents and collaborators also read [AGENTS.md](AGENTS.md) (clusters, storage,
+GPU rules) and the live [coordination file](outputs/coordination.md).
 
-Earlier work asks whether a Continuous Thought Machine (CTM) can do in-context
-reinforcement learning.
-This repository holds the trial environments, the full-trial recurrent PPO
-trainer, the matched learners (persistent CTM, Continuous Memory Machine,
-Transformer-XL, GRU, looped Transformer), the CMM calibration task and the
-frozen pi0.5 ManiSkill motor used for the robot demonstration.
+Other earlier work, including CTM pilots, ManiSkill, RoboMimic, RoboTwin and most
+of the LIBERO source40 pipeline,
+was removed on 2026-11-01 because it produced no usable evidence. Git history
+keeps it, and [`outputs/archive/`](outputs/archive/) holds the few dead-run
+folders that code still loads.
 
-It was split from `tonyzhu163/fluffy-bassoon` (branch `lycoreco_rl`) on
-2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied file and its
-source hash. Agents start with [AGENTS.md](AGENTS.md) and the live
-[coordination file](outputs/coordination.md).
-
-## ML10 results
-
-There are two comparisons, each at 10M training transitions per run:
-
-| Comparison | Policies | What is matched | Plot coverage |
-| --- | --- | --- | --- |
-| [Common-PPO core controls](outputs/metta-common-ppo-chart-20261029-r1/README.md) | GRU, Transformer-XL, CTM, CMM | Common PPO setup and 250k parameter cap; actual counts 232,361–249,095 | Final 10M-step endpoints; GRU/XL have no intermediate evaluations |
-| [Native-method comparison](outputs/metaworld-ml10-matched-baige-20261028-r1/README.md) | CTM, RL²-PPO, ECET, AMAGO1 | Training interactions; model sizes and learners differ | Learning curves evaluated every 625k training steps |
-
-Both use seed 1000. The CTM checkpoint is shared across the comparisons;
-these are not two independent CTM runs. Neither establishes a CTM advantage.
-
-## Learned-reward benchmarks
-
-For RL with NVIDIA's
-[Flora-Rewarder](https://research.nvidia.com/labs/gear/flora) (27B video
-reward model; episode scores 1–5 and per-step normal/suboptimal/failed labels;
-non-commercial license), use **LIBERO first, then RoboCasa**:
-
-1. **LIBERO** reuses the existing pi0.5 setup. Score existing rollouts against
-   simulator success before training on Flora rewards, and keep reporting true
-   success rate.
-2. **RoboCasa** is NVIDIA's GR00T benchmark, closer in appearance to the
-   rewarder's likely training data and far from saturated.
-
-The rewarder is too slow for dense per-step rewards, and its reported
-failed-step recall is only 53%. Its training simulators are not published.
-
-## Layout
-
-| Path | Contents |
-| --- | --- |
-| `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO, training and evaluation CLIs, Transformer-XL, CMM wrapper, Copy and few-shot regression tasks |
-| `src/fluffy_bassoon/rl/` | ManiSkill pi0.5 motor settings and rollout, RLinf checkpoint compatibility |
-| `src/lerobot_policy_ctm/` | Recurrent cores: persistent CTM, CMM, looped Transformer action experts, Sakana CTM reference components |
-| `src/fluffy_bassoon/{gpu_execution,baige_gpu,evaluation_stages}.py` | Execution-mode checks and receipt helpers |
-| `scripts/` | GPU probe and availability check, ManiSkill gate and headroom scripts, RLinf copy preparation |
-| `patches/` | RLinf flow-noise key patch, applied only to an isolated copy |
-| `docs/` | Method contracts and reviews ([index](docs/README.md)) |
-| `outputs/` | Coordination, dated plans and selected result bundles (tracked); other run outputs (untracked) |
-
-The package names `fluffy_bassoon` and `lerobot_policy_ctm` are kept from the
-source repository so the copied code stays byte-identical; a rename can come
-later.
+The repository was split from `tonyzhu163/fluffy-bassoon` (branch
+`lycoreco_rl`) on 2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied
+file and its source hash. The package names `fluffy_bassoon` and
+`lerobot_policy_ctm` are kept so the copied code stays byte-identical.
 
 ## Environments and tests
-
-The compact learners need only PyTorch and NumPy:
 
 ```bash
 uv sync
@@ -75,8 +31,8 @@ uv run pytest
 ```
 
 Run tests on allocated Linux resources, not macOS. `tests/test_meta_rl_cuda.py`
-runs inside a GPU step. The ManiSkill motor uses the separate RLinf
-environment in [docs/maniskill-pi05-icrl.md](docs/maniskill-pi05-icrl.md#environment).
+runs inside a GPU step. Robot runtimes are separate environments; see
+[docs/METHODS.md](docs/METHODS.md#environments-and-tests).
 
 ## Artifact retention
 
@@ -89,8 +45,9 @@ active lineage. Prune other checkpoint payloads after checking live
 dependencies. Keep all configurations, logs and evaluation records.
 
 `outputs/`, data, downloaded weights, run worktrees and caches are untracked.
-Keep method contracts beside implementations, verified results in
-`EVALUATION.md`, and raw evidence in each run's `outputs/<run-id>/`. Never commit
+Keep the five documents in `docs/` ([index](docs/README.md)): per-run
+contracts in each run's `PLAN.md`, verified results in `docs/FINDINGS.md`, and
+raw evidence in `outputs/<run-id>/`. Never commit
 credentials or machine-local authentication configuration.
 
 Planning documents and compact result bundles are tracked exceptions in
@@ -102,10 +59,10 @@ Planning documents and compact result bundles are tracked exceptions in
   `outputs/archive/coordination/coordination-<YYYYMMDD>.md` (links fixed for
   the new location) when a phase closes or it passes about 300 lines, then
   trim it to current work and point it at the snapshot.
-- Dated plans, handoffs and working notes live in `outputs/<run-id>/`. Run
-  folders are never moved, so links and receipts stay valid. When a run is
-  superseded or retired, add one status line at the top of its main document
-  naming the replacement.
+- Dated plans, handoffs and working notes live in `outputs/<run-id>/`. When
+  a run finishes, keep the folder only if FINDINGS cites it or live work loads
+  it. Otherwise delete it, or move it unchanged to `outputs/archive/<run-id>/`
+  if code still loads it. Git history keeps deleted runs; never reuse a run ID.
 - Track reports, plans, figures, curve data and audit summaries. Checkpoints,
   raw trajectories, videos and bulk inputs stay untracked; for a file above
   about 5 MB or a copy of another run's file, record its hash and cluster path

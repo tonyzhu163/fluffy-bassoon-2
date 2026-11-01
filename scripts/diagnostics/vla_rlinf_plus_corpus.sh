@@ -87,7 +87,7 @@ test -e "$TASK_OUTPUT/simulator-8766/simulator-ready.json"
 export PYTHONPATH=$TASK_OVERLAY:$TASK_WORKTREE/src:$TASK_RLINF:$TASK_DSRL
 "$TASK_MODEL" -m fluffy_bassoon.meta_rl.vla_rlinf_plus_corpus \
   --output "$TASK_OUTPUT/experiment" --source-commit "$TASK_SOURCE" \
-  --frozen-split "$TASK_WORKTREE/outputs/libero-pi05-corpus-20261029-r1/split.json" \
-  --source-cases "$TASK_WORKTREE/outputs/libero-pi05-corpus-20261029-r3/source-cases.json" \
+  --frozen-split "$TASK_WORKTREE/outputs/archive/libero-pi05-corpus-20261029-r1/split.json" \
+  --source-cases "$TASK_WORKTREE/outputs/archive/libero-pi05-corpus-20261029-r3/source-cases.json" \
   --ports 8765 8766 --checkpoint "$TASK_CHECKPOINT" --rlinf-root "$TASK_RLINF" \
   --openpi-root "$TASK_OPENPI" --dsrl-root "$TASK_DSRL" --seed 0

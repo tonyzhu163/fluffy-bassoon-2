@@ -11,7 +11,7 @@ import pytest
 from fluffy_bassoon.meta_rl import robotwin_command_readout_resources as gate
 
 pytestmark=pytest.mark.skipif(sys.platform!='linux',reason='Actual allocated Linux CPU only')
-DATA=Path(__file__).resolve().parents[1]/'outputs/robotwin-command-readout-linked-20261101-r1'
+DATA=Path(__file__).resolve().parents[1]/'outputs/archive/robotwin-command-readout-linked-20261101-r1'
 
 
 class SyntheticAudit:

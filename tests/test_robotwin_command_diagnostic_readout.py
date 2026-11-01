@@ -18,7 +18,7 @@ from fluffy_bassoon.rl.robotwin_wide_action import WideActionResidual
 from test_robotwin_steering import interface
 
 pytestmark=pytest.mark.skipif(sys.platform!='linux',reason='Allocated Linux CPU only')
-ROOT=Path(__file__).resolve().parents[1]/'outputs/robotwin-command-readout-driver-20261101-r1'
+ROOT=Path(__file__).resolve().parents[1]/'outputs/archive/robotwin-command-readout-driver-20261101-r1'
 
 
 def paired_data():

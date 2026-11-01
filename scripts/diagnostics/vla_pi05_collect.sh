@@ -57,7 +57,7 @@ CUDA_VISIBLE_DEVICES='' PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
   "$TASK_TORCH" -m pytest -q -p no:cacheprovider tests/test_vla*.py tests/test_gpu_probe.py \
   > "$TASK_OUTPUT/focused-tests.log" 2>&1
 # Check the frozen split before loading a model or collecting any trajectory.
-"$TASK_MODEL" - "$TASK_WORKTREE/outputs/libero-pi05-corpus-20261029-r1/split.json" "$TASK_SUITE" "$TASK_TASK" <<'PY'
+"$TASK_MODEL" - "$TASK_WORKTREE/outputs/archive/libero-pi05-corpus-20261029-r1/split.json" "$TASK_SUITE" "$TASK_TASK" <<'PY'
 import json, pathlib, sys
 manifest = json.loads(pathlib.Path(sys.argv[1]).read_text())
 rows = [row for row in manifest['tasks'] if row['suite'] == sys.argv[2] and row['task_id'] == int(sys.argv[3])]

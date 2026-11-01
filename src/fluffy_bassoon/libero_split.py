@@ -1,7 +1,7 @@
-"""Frozen LIBERO train/validation/test split (outputs/libero-pi05-corpus-20261029-r1).
+"""Frozen LIBERO train/validation/test split (outputs/archive/libero-pi05-corpus-20261029-r1).
 
 Loads split.json, checks its content hash and exposes the tasks each stage may use.
-The motor SFT of outputs/libero-noise-icrl-20261029-r1/PLAN.md (Stage M0) trains on
+The motor SFT of outputs/archive/libero-noise-icrl-20261029-r1/PLAN.md (Stage M0) trains on
 the demonstrations of the training tasks only: the split forbids gradients from
 validation tasks (`supervised_validation_gradients`) and every use of test tasks.
 """
@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 
-DEFAULT = Path(__file__).resolve().parents[2]/"outputs/libero-pi05-corpus-20261029-r1/split.json"
+DEFAULT = Path(__file__).resolve().parents[2]/"outputs/archive/libero-pi05-corpus-20261029-r1/split.json"
 SPLITS = ("train", "validation", "test", "test_auxiliary_excluded_90")
 COUNTS = dict(train=78, validation=10, test=10, test_auxiliary_excluded_90=2)
 

@@ -30,7 +30,7 @@ excluded.
 | --- | --- |
 | Mixed fixed100 K0 outcome (1–4 of 5) | 29, 33, 53, 59, 64, 70, 77, 79, 82 |
 | Native flipped between two runs with matched inputs ([cross-run](../libero40-native-crossrun-20261030-r1/README.md)) | 38, 44 (33, 82 already listed) |
-| Ordinary DSRL reached training successes (72/240, [long audit](../libero40-target-online-dsrl-long-audit-20261031-r1/README.md)) | 0 |
+| Ordinary DSRL reached training successes (72/240, [long audit](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-target-online-dsrl-long-audit-20261031-r1/README.md)) | 0 |
 
 That gives **12 tasks**: 0, 29, 33, 38, 44, 53, 59, 64, 70, 77, 79, 82. Task57 is
 excluded (measured ceiling) and task40 too (0/240 under DSRL exploration).
@@ -39,7 +39,7 @@ The list is closed; no task is added after Stage A outcomes.
 All are LIBERO90 target-suite tasks. Every screen record has role
 `target-headroom-screen`, counts as development exposure, and never enters
 source40 pretraining
-([protocol](../libero40-meta90-20261029-r1/PROTOCOL.md#target-roles)).
+([protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md#target-roles)).
 State0 (fixed100's target case) and states 40–49 (the DSRL query panel)
 are not used.
 

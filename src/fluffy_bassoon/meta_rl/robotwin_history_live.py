@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[3]
 BACKEND_SHA = 'eacc64b4daf8f78aeb5e023a2c4d2a2a040eacfd2e662335c118334c2ab50ff3'
 PLAN_SHA = 'b911dd972cc30e6f6b02cacf831eafa84738bd66ebd032824bb5fc94d340287c'
 SOURCE_PLAN_SHA = 'ce2d744ed97bb14e5068306807dd829543b898d5c203c7b712ab831b7ce23602'
-AD500_TEMPLATE = ROOT/'outputs/robotwin-ad500-readout-20261031-r1/plan.prepared.json'
+AD500_TEMPLATE = ROOT/'outputs/archive/robotwin-ad500-readout-20261031-r1/plan.prepared.json'
 AD500_TEMPLATE_SHA = 'e98957126989a0cfa9acc3286879bbf90b6379a20617350eb1f33753f435571a'
 
 

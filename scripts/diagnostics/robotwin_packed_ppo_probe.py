@@ -34,7 +34,7 @@ def commands(worktree, output, source, *, python=sys.executable):
         '--ppo-epochs', '5', '--ppo-minibatch-trials', '16', '--learning-rate', '1e-6',
         '--ppo-max-update-kl', '.1', '--native-horizon', '32', '--episode-limit', '600',
         '--seed', '20261030', '--record-corpus', '--final-observation-only',
-        '--capture-qualification', str(ROOT/'outputs/robotwin-capture-qual-20261029-r1/qualification/qualification.json'),
+        '--capture-qualification', str(ROOT/'outputs/archive/robotwin-capture-qual-20261029-r1/qualification/qualification.json'),
         '--native-episodes', '0', '--source-validation-episodes', '0',
         '--stage-source-validation-only', '--wall-seconds', '2340',
         '--boundary-reserve-seconds', '180']

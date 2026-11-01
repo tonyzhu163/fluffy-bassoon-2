@@ -103,7 +103,7 @@ def build_commands(plan):
             "--sac-warmup", "500", "--sac-batch-size", "256", "--sac-utd", "20",
             "--campaign-root", str(ledger_root(method)), "--campaign-id", CAMPAIGN + "-" + method,
             "--campaign-max-actions", str(CAPS[method]), "--record-corpus", "--final-observation-only",
-            "--capture-qualification", str(ROOT / "outputs/robotwin-capture-qual-20261029-r1/qualification/qualification.json"),
+            "--capture-qualification", str(ROOT / "outputs/archive/robotwin-capture-qual-20261029-r1/qualification/qualification.json"),
             "--wall-seconds", str(plan["child_wall_seconds"]), "--boundary-reserve-seconds", "180",
             "--resume", arm["checkpoint"]["path"], "--resume-trial-manifest", arm["manifest"]["path"],
             "--resume-trial-manifest-sha256", arm["manifest"]["sha256"],
