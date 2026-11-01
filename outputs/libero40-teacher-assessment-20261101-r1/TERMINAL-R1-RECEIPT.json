@@ -1,0 +1,149 @@
+{
+  "format": "all40_teacher_assessment_terminal_partial_receipt_v1",
+  "job_id": "job-bmolej07bhsg",
+  "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "scheduled_check": "2026-11-01 11:36 Asia/Shanghai",
+  "scheduler_status": "Failed",
+  "scheduler_created": "2026-11-01 11:12:45 Asia/Shanghai",
+  "scheduler_ended": "2026-11-01 11:34:54 Asia/Shanghai",
+  "scheduler_duration_seconds": 1310,
+  "actual_exit_code": 1,
+  "completed_planned_roles": 161,
+  "failed_before_first_steering_chunk": 1,
+  "never_started_planned_roles": 158,
+  "planned_roles_total": 320,
+  "omitted_initial_roles": 160,
+  "omitted_capacity_repurposable": false,
+  "partial_summary": {
+    "by_role": {
+      "raw_native_full_H_Gaussian": {
+        "planned": 80,
+        "complete": 41,
+        "successes": 41
+      },
+      "exact_source_tied_Gaussian_warmup": {
+        "planned": 80,
+        "complete": 40,
+        "successes": 37
+      },
+      "preselected_final_TRAIN_SAC_mean": {
+        "planned": 80,
+        "complete": 40,
+        "successes": 40
+      },
+      "preselected_final_TRAIN_SAC_sample": {
+        "planned": 80,
+        "complete": 40,
+        "successes": 40
+      }
+    },
+    "omitted_initial_slots": 160,
+    "all40_retained": true,
+    "source_pretraining_admitted": false,
+    "interpretation": "Two fixed cases per goal; descriptive assessment, no competence certificate or measured initial-to-final curve"
+  },
+  "failed_role": {
+    "ordinal": 161,
+    "source_ordinal": 20,
+    "task_key": "libero_spatial:05",
+    "initial_state": 40,
+    "scene_seed": 123,
+    "episode_random_seed": 20281141,
+    "role": "exact_source_tied_Gaussian_warmup",
+    "reason": "check_pair rejected actual same-case initial/raw/public input equality before steering",
+    "failed_predicate_not_isolated": true,
+    "actual_settling_steps": 10,
+    "steering_chunks": 0
+  },
+  "all_in_assessment_actions": 26096,
+  "closed_progress_actions": 26086,
+  "independently_checked_failed_reset_actions": 10,
+  "physical_reset_attempts": 162,
+  "uncertain_failed_reset_actions": 0,
+  "action_verification_scope": "Producer closed-prefix26086 plus independently read sole failedreset journal10; NOT full independent replay of all prior journals.",
+  "charged_GPU_seconds": 1340,
+  "maximum_phase_GPU_seconds": 10800,
+  "remaining_GPU_seconds": 9460,
+  "CPU_charged_seconds": 80,
+  "maximum_phase_CPU_seconds": 180,
+  "CPU_remaining_seconds": 100,
+  "CPU_remaining_scope_unmodified": true,
+  "original_source_TRAIN_actions_linked_once": 351297,
+  "full_frozen_motor": {
+    "before": {
+      "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+      "leaves": 51,
+      "elements_by_dtype": {
+        "bfloat16": 3353433872
+      }
+    },
+    "after": {
+      "sha256": "c565dd3f0c4005be728cf7597698cba937c4011cd5bd813700a89b789f9d69e9",
+      "leaves": 51,
+      "elements_by_dtype": {
+        "bfloat16": 3353433872
+      }
+    },
+    "unchanged": true
+  },
+  "current_recovery": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/assessment-recovery.pkl",
+    "sha256": "c96dc68b18f95f136550eb824fa5bdf7fcad23950257500f446d28e3a1b94b8c",
+    "bytes": 62745
+  },
+  "current_recovery_description": "Preserved active ordinal161 checkpoint written before failed reset. Last closedprogress hash refers to earlier closed161 boundary; terminal difference follows the explicit active-marker write, not an unresolved concurrent-write/corruption claim. No checkpoint deserialization performed.",
+  "native_case_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/case-reference-20-40.pkl.gz",
+    "sha256": "50f9dd77c52fb39b08763d5d5adaacb31a50b810c9bc767f5f594e6d59022d94",
+    "bytes": 178636
+  },
+  "latest_completed_group_paired_initials_and_frozen_state": true,
+  "newest_trace_RNG_hashes": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-160/trace.pkl.gz",
+      "sha256": "091fc5af7a3ce370c5d3a1523f26ff10838739736ec993d7ab70d3b8f259146f",
+      "bytes": 1848721,
+      "matches": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-160/rng-context.pkl.gz",
+      "sha256": "54c94d26d238c3a09fcafc8cae870dc7c33ef194dd4f617e7fb98ef55a31a1f7",
+      "bytes": 9325,
+      "matches": true
+    }
+  ],
+  "output_size": {
+    "actual_phase_output_bytes": null,
+    "limit": "TimeoutExpired"
+  },
+  "output_size_limit": "8second output-size metadata check expired; no broad rescan. Actual output size unverified in this check.",
+  "proof": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/CHECK-1136-scheduler.jpg",
+    "sha256": "ea9d17a534166834d6c84cea375fe12a9683c01743f91220d9278f48bcee69c6",
+    "bytes": 73748
+  },
+  "light_read": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/CHECK-1136.json",
+    "sha256": "6384764635fe9b46857d97b13dd5193267526e906e05d4fa7372c424050a8932",
+    "bytes": 26730
+  },
+  "failure_metadata": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/FAILURE-161-METADATA.json",
+    "sha256": "fdd8acbeb27d4ed7744f2bb07b4135f32e2a7f57a69286633123a9be556d6a04",
+    "bytes": 16795
+  },
+  "reader": {
+    "git_commit": "dbfa6631",
+    "git_blob": "60b35cd46396ef577eaa59a3d79bf8d0de93f0c4",
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/CHECK-1136-READER.py",
+    "sha256": "6d632c107378bc922a86bba68d067f8003222c39a9b4b3a9f539a2f115500fef",
+    "bytes": 4643
+  },
+  "no_retry": true,
+  "no_new_allocation": true,
+  "no_guard_relaxation": true,
+  "source_or_student_admitted": false,
+  "final_terminal_index_absent": true,
+  "next_assessment_action": "Bounded saved-artifact predicate diagnosis and only an explicitly reviewed migration/resource plan before any retry; no further livepoll.",
+  "next_primary_check": "2026-11-01 11:50 Asia/Shanghai"
+}
