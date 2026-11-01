@@ -12,6 +12,11 @@ four pi0.5 action/time projections. Individual wrappers retain automatic BF16
 child boundaries, so the `img` parent owns its FP32 positional embedding while
 the encoder/head keep their existing policies. No whole-model FP32 switch,
 validation bypass, standalone weight conversion or production Python hook.
+Both FP32 and default BF16 wrapper policies disable forward-input casting,
+including root input casting; AMP stays disabled. The author's model explicitly
+casts its FP32 projections/stem and restores RMSNorm output to the incoming
+dtype. Forcing FP32 RMSNorm inputs would instead feed FP32 activations into
+the BF16 attention projections. These flags preserve that native behavior.
 
 Primary c605 definitions:
 

@@ -340,6 +340,9 @@ def test_real_fsdp_validator_rejects_missing_openpi_fp32_rules(monkeypatch,tmp_p
     assert actor.fsdp_config.mixed_precision.buffer_dtype=='bf16'
     policy=actor.fsdp_config.mixed_precision_policies.openpi_fp32
     assert (policy.param_dtype,policy.reduce_dtype,policy.buffer_dtype)==('fp32','fp32','fp32')
-    assert policy.cast_forward_inputs is True
+    assert policy.cast_forward_inputs is False
+    assert actor.fsdp_config.mixed_precision.cast_forward_inputs is False
+    assert actor.fsdp_config.mixed_precision.cast_root_forward_inputs is False
+    assert actor.fsdp_config.amp_autocast.enabled is False
     assert list(actor.fsdp_config.wrappers.openpi_fp32_projections.module_names)==[
         'action_in_proj','action_out_proj','time_mlp_in','time_mlp_out']

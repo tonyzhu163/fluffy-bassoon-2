@@ -167,7 +167,9 @@ actor:
         param_dtype: fp32
         reduce_dtype: fp32
         buffer_dtype: fp32
-        cast_forward_inputs: true
+        cast_forward_inputs: false
+    amp_autocast:
+      enabled: false
     mixed_precision_rules:
       openpi_fp32_classes: openpi_fp32
       openpi_fp32_projections: openpi_fp32
@@ -175,6 +177,8 @@ actor:
       param_dtype: ${actor.model.precision}
       reduce_dtype: ${actor.model.precision}
       buffer_dtype: ${actor.model.precision}
+      cast_forward_inputs: false
+      cast_root_forward_inputs: false
 
 reward:
   use_reward_model: false
