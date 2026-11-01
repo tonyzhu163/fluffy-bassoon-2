@@ -1,8 +1,10 @@
 {
   "static_AST": "PASS",
   "file": "scripts/diagnostics/robocasa_residual_ppo.py",
-  "sha256": "53d1b370519f5c2f445052c6b88b37d0282d61758fc324325030fb78bc7582ac",
+  "sha256": "a06b8834a040769a455f282650fbfdbe40d31f7fbc8c5d812494b8c79fc10e2c",
   "scope": "Optional CPU placement of unused controller motor only when separate eight GPU rollout workers perform every prediction. Native worker model/sampler, private seed state, residual learner and checkpoints unchanged. Active baseline source remains immutable.",
   "qualification": "Actual allocation must verify CPU placement and saved CUDA memory scalars before colocated persistent Flora starts; no Mac runtime qualification claimed.",
-  "validation_scope": "Existing motor state_dict/load_state_dict contain only private NumPy seed RNG. Parallel collect consumes motor.seed_rng and workers independently load and run the frozen motor."
+  "validation_scope": "Existing motor state_dict/load_state_dict contain only private NumPy seed RNG. Parallel collect consumes motor.seed_rng and workers independently load and run the frozen motor.",
+  "startup_barrier": "Offload receipt is published after learner/private RNG and initial full checkpoint exist. Exact8 source/model/profile/GPU UUID/memory ready references precede all physical dispatch. Owned annotation error paths abort startup/label waiting without any partial PPO update.",
+  "runtime_status": "AST reviewed; actual offload/warmup/memory qualification is still required in the future F allocation. Active S and benchmark immutable."
 }

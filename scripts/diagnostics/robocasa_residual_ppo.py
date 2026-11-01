@@ -8,6 +8,7 @@ with no GAE/update, rather than collecting a replacement on-policy batch.
 import argparse
 from dataclasses import asdict
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -35,6 +36,71 @@ from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import (
 )
 from fluffy_bassoon.meta_rl.vla_history import save_dataset
 from fluffy_bassoon.rl.action_residual import ResidualBound, action_std_from_norm_stats
+
+
+def annotation_failure(profile):
+    for name in profile.get("annotation_error_paths", []):
+        path = Path(name)
+        if path.exists():
+            raise RuntimeError(f"Owned annotation service failed; preserve complete pending state: {path}")
+
+
+def wait_for_annotation_engines(profile, report):
+    """Bind real scorer warmups before a colocated policy allocates its motor."""
+    bindings = profile.get("annotation_engines")
+    if bindings is None:
+        if profile["arm"] == "F" and profile.get("parallel_controller_cpu_offload"):
+            raise ValueError("Colocated F requires all eight actual scorer warmups before rollout")
+        return
+    if (profile["arm"] != "F" or not profile.get("parallel_controller_cpu_offload")
+            or len(bindings) != 8 or len(profile["rollout_devices"]) != 8):
+        raise ValueError("Eight colocated scorers and an offloaded F controller required")
+    expected = [read_ref(row["profile"]) for row in bindings]
+    paths = [Path(row["ready_path"]) for row in bindings]
+    offload_path = Path(profile["output"]) / "controller-motor-offload.json"
+    offload_ref = dict(path=str(offload_path), sha256=sha(offload_path))
+    limit = min(profile["deadline_unix"] - profile["closure_seconds"],
+                time.time() + profile["annotation_startup_wall_ceiling_seconds"])
+    while not all(path.exists() for path in paths):
+        annotation_failure(profile)
+        if time.time() >= limit:
+            raise TimeoutError("Scorer warmups incomplete; no policy rollout dispatched")
+        report("waiting_for_eight_scorer_warmups")
+        time.sleep(1)
+    references = []
+    for rank, (path, scorer) in enumerate(zip(paths, expected)):
+        ready = json.loads(path.read_text())
+        device = profile["rollout_devices"][rank]
+        required = scorer["minimum_free_mib_after_engine_warmup"]
+        memory = ready["memory"]
+        if (scorer["annotation_rank"] != rank or scorer["annotation_world"] != 8
+                or scorer["source_commit"] != profile["source_commit"]
+                or scorer["F_output"] != profile["output"] or scorer["task"] != profile["task"]
+                or scorer["baseline_validation"] != profile["baseline_validation"]
+                or scorer.get("calibration_exception") != profile.get("calibration_exception")
+                or scorer["engine_ready_path"] != str(path) or scorer["expected_gpu_uuid"] != device["uuid"]
+                or ready.get("format") != "robocasa_flora_tp1_engine_ready_v1"
+                or ready.get("completed") is not True or ready["annotation_rank"] != rank
+                or ready["annotation_world"] != 8 or ready["source_commit"] != profile["source_commit"]
+                or ready["profile_sha256"] != digest(scorer) or ready["gpu_uuid"] != device["uuid"]
+                or ready["gpu_probe"] != scorer["actual_gpu_probe"]
+                or ready["code_commit"] != FLORA_CODE or ready["model_revision"] != FLORA_MODEL
+                or ready["model_receipt"] != scorer["model_receipt"]
+                or ready["controller_offload"] != offload_ref or ready["tensor_parallel_size"] != 1
+                or ready["batch_size"] != scorer["batch_size"]
+                or ready["gpu_memory_utilization"] != scorer["gpu_memory_utilization"]
+                or type(ready["engine_process_pid"]) is not int or ready["engine_process_pid"] <= 0
+                or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+                           for v in (required, memory["free_mib"], memory["used_mib"], memory["total_mib"]))
+                or required <= 0 or memory["minimum_free_required_mib"] != required
+                or memory["free_mib"] < required or not 0 <= memory["used_mib"] < memory["total_mib"]
+                or memory["free_mib"] > memory["total_mib"]):
+            raise ValueError("Exact eight source/model/device/profile/memory warmups required before rollout")
+        references.append(dict(path=str(path), sha256=sha(path)))
+    annotation_failure(profile)
+    write_new(Path(profile["output"]) / "annotation-engines-bound.json", dict(
+        completed=True, engines=references, controller_offload=offload_ref,
+        qualification="Actual warmup and observed free-memory barrier; no new physical episode"))
 
 
 def main():
@@ -128,10 +194,6 @@ def main():
         if any(t.is_cuda for t in model.parameters()) or any(t.is_cuda for t in model.buffers()):
             raise ValueError("The unused controller motor must release all CUDA tensors")
         torch.cuda.empty_cache()
-        write_new(output / "controller-motor-offload.json", dict(
-            completed=True, device="cpu", predictions="allocated rollout workers only",
-            cuda_allocated_bytes=torch.cuda.memory_allocated(),
-            cuda_reserved_bytes=torch.cuda.memory_reserved()))
     bound = ResidualBound.from_std(action_std_from_norm_stats(norm_path), indices=range(6), fraction=.25, action_dim=12)
     torch.manual_seed(42)
     config = ResidualPPOConfig(**profile["ppo"])
@@ -249,6 +311,14 @@ def main():
         else:
             save_checkpoint(output / "boundary-000.pt", policy=policy, optimizer=optimizer, bound=bound, motor=motor,
                 environment=train_env, generators=generators, contract=contract, iteration=0, stage="boundary")
+        if profile.get("parallel_controller_cpu_offload"):
+            # Publish only after the learner/RNG and initial recovery are fully
+            # created, so vLLM profiles a stable controller CUDA footprint.
+            write_new(output / "controller-motor-offload.json", dict(
+                completed=True, device="cpu", predictions="allocated rollout workers only",
+                cuda_allocated_bytes=torch.cuda.memory_allocated(),
+                cuda_reserved_bytes=torch.cuda.memory_reserved()))
+        wait_for_annotation_engines(profile, report)
         history = []
         dev_evaluations = ([read_ref(profile["initial_dev_evaluation"])]
                           if profile.get("independent_stopping") else [])
@@ -294,6 +364,7 @@ def main():
             else:
                 ready_path = request / "ready.json"
                 while not ready_path.exists():
+                    annotation_failure(profile)
                     if time.time() + profile["closure_seconds"] >= profile["deadline_unix"]:
                         raise TimeoutError("Entire pending batch saved; Flora labels incomplete; no update")
                     report("waiting_for_complete_Flora_labels", iteration=iteration + 1)
