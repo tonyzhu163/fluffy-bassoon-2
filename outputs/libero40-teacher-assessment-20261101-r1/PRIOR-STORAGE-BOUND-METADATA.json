@@ -1,0 +1,5101 @@
+{
+  "format": "all40_assessment_prior_output_storage_bound_v1",
+  "status": "metadata_complete_pending_raw_schema_confirmation",
+  "error": null,
+  "output_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1",
+  "completed_roles": 161,
+  "failed_zero_chunk_resets": 1,
+  "closed_primitive_steps": 24476,
+  "chunk_count_upper": 2592,
+  "raw_RPC_file_count_upper": 5346,
+  "raw_RPC_per_file_bound_bytes": 1048576,
+  "raw_RPC_structural_upper_bytes": 5605687296,
+  "ledger_JSON_count_upper": 2754,
+  "ledger_JSON_per_file_bound_bytes": 4096,
+  "ledger_JSON_structural_upper_bytes": 11280384,
+  "measured_non_RPC_bytes": 479934242,
+  "conditional_prior_output_upper_bytes": 6096901922,
+  "measured_files": [
+    {
+      "path": "assessment-launcher.lock",
+      "category": "phase root metadata",
+      "bytes": 0,
+      "mtime_ns": 1793502783740983000
+    },
+    {
+      "path": "write-probe.txt",
+      "category": "phase root metadata",
+      "bytes": 41,
+      "mtime_ns": 1793502376373461372
+    },
+    {
+      "path": "write-probe-gpu.txt",
+      "category": "phase root metadata",
+      "bytes": 29,
+      "mtime_ns": 1793502796281599713
+    },
+    {
+      "path": "prelaunch-write.txt",
+      "category": "phase root metadata",
+      "bytes": 17,
+      "mtime_ns": 1793502733322515825
+    },
+    {
+      "path": "exit-code.txt",
+      "category": "phase root metadata",
+      "bytes": 2,
+      "mtime_ns": 1793504059227467960
+    },
+    {
+      "path": "cpu-r1/junit.xml",
+      "category": "original CPU qualification",
+      "bytes": 10183,
+      "mtime_ns": 1793502434510207000
+    },
+    {
+      "path": "cpu-r1/cpu-worker-clock.json",
+      "category": "original CPU qualification",
+      "bytes": 509,
+      "mtime_ns": 1793502436347600579
+    },
+    {
+      "path": "cpu-r1/zero-gpu-attestation.json",
+      "category": "original CPU qualification",
+      "bytes": 975,
+      "mtime_ns": 1793502431575127990
+    },
+    {
+      "path": "cpu-r1/allocation.json",
+      "category": "original CPU qualification",
+      "bytes": 976,
+      "mtime_ns": 1793502431576177601
+    },
+    {
+      "path": "cpu-r1/pytest.log",
+      "category": "original CPU qualification",
+      "bytes": 215,
+      "mtime_ns": 1793502434511097621
+    },
+    {
+      "path": "cpu-r1/exit-code.txt",
+      "category": "original CPU qualification",
+      "bytes": 2,
+      "mtime_ns": 1793502436348630326
+    },
+    {
+      "path": "cpu-r1/summary.json",
+      "category": "original CPU qualification",
+      "bytes": 750,
+      "mtime_ns": 1793502436348267683
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/analysis.log",
+      "category": "two-record CPU diagnosis",
+      "bytes": 0,
+      "mtime_ns": 1793505192912510000
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/junit.xml",
+      "category": "two-record CPU diagnosis",
+      "bytes": 976,
+      "mtime_ns": 1793505192815705942
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/cpu-worker-clock.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 1139,
+      "mtime_ns": 1793505193077105607
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/zero-gpu-attestation.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 987,
+      "mtime_ns": 1793505192316346291
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/allocation.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 1899,
+      "mtime_ns": 1793505192346118753
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/reset-diagnosis.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 6597,
+      "mtime_ns": 1793505193028764000
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/analysis-command.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 1200,
+      "mtime_ns": 1793505192912081339
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/pytest.log",
+      "category": "two-record CPU diagnosis",
+      "bytes": 230,
+      "mtime_ns": 1793505192816142504
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/exit-code.txt",
+      "category": "two-record CPU diagnosis",
+      "bytes": 2,
+      "mtime_ns": 1793505193077812644
+    },
+    {
+      "path": "reset-diagnosis-cpu-r1/summary.json",
+      "category": "two-record CPU diagnosis",
+      "bytes": 705,
+      "mtime_ns": 1793505193077516361
+    },
+    {
+      "path": "clock/worker-time.lock",
+      "category": "GPU clock metadata",
+      "bytes": 0,
+      "mtime_ns": 1793502787799357000
+    },
+    {
+      "path": "clock/worker-time.json",
+      "category": "GPU clock metadata",
+      "bytes": 1915,
+      "mtime_ns": 1793504059194879734
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/actual-resources.json",
+      "category": "closed GPU attempt metadata",
+      "bytes": 508,
+      "mtime_ns": 1793502794959176800
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/ticket.json",
+      "category": "closed GPU attempt metadata",
+      "bytes": 6188,
+      "mtime_ns": 1793502796337863000
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/gpu-probe.json",
+      "category": "closed GPU attempt metadata",
+      "bytes": 2867,
+      "mtime_ns": 1793502793574652145
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/attempt.json",
+      "category": "closed GPU attempt metadata",
+      "bytes": 383,
+      "mtime_ns": 1793504059208850073
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/exit-code.txt",
+      "category": "closed GPU attempt metadata",
+      "bytes": 2,
+      "mtime_ns": 1793504059218268068
+    },
+    {
+      "path": "clock/attempts/1793502780000000-0000/console.log",
+      "category": "closed GPU attempt metadata",
+      "bytes": 15761,
+      "mtime_ns": 1793504059213666841
+    },
+    {
+      "path": "data/case-reference-11-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 159144,
+      "mtime_ns": 1793503570553493000
+    },
+    {
+      "path": "data/case-reference-09-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221537,
+      "mtime_ns": 1793503445531562000
+    },
+    {
+      "path": "data/case-reference-04-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 174780,
+      "mtime_ns": 1793503190002259000
+    },
+    {
+      "path": "data/case-reference-04-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 176344,
+      "mtime_ns": 1793503211544132000
+    },
+    {
+      "path": "data/case-reference-03-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 214062,
+      "mtime_ns": 1793503138547815000
+    },
+    {
+      "path": "data/case-reference-07-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 214417,
+      "mtime_ns": 1793503357613086000
+    },
+    {
+      "path": "data/case-reference-10-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 181908,
+      "mtime_ns": 1793503492633664000
+    },
+    {
+      "path": "data/results-summary.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 707,
+      "mtime_ns": 1793504047789024058
+    },
+    {
+      "path": "data/loaded-actor-bindings.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 48190,
+      "mtime_ns": 1793502808544955000
+    },
+    {
+      "path": "data/case-reference-15-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 166141,
+      "mtime_ns": 1793503758625400000
+    },
+    {
+      "path": "data/case-results.csv",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 51781,
+      "mtime_ns": 1793504047788497000
+    },
+    {
+      "path": "data/motor-binding.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 231,
+      "mtime_ns": 1793502948059145988
+    },
+    {
+      "path": "data/case-reference-10-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182810,
+      "mtime_ns": 1793503509889551000
+    },
+    {
+      "path": "data/case-reference-05-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 226389,
+      "mtime_ns": 1793503258049783000
+    },
+    {
+      "path": "data/case-reference-12-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 175997,
+      "mtime_ns": 1793503623624073000
+    },
+    {
+      "path": "data/progress.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 372,
+      "mtime_ns": 1793504047760796359
+    },
+    {
+      "path": "data/case-reference-07-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 214647,
+      "mtime_ns": 1793503323405041000
+    },
+    {
+      "path": "data/case-reference-18-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182941,
+      "mtime_ns": 1793503944146891000
+    },
+    {
+      "path": "data/case-reference-19-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 200711,
+      "mtime_ns": 1793504002477913000
+    },
+    {
+      "path": "data/case-reference-17-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221620,
+      "mtime_ns": 1793503875058880000
+    },
+    {
+      "path": "data/case-reference-12-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 176629,
+      "mtime_ns": 1793503603727075000
+    },
+    {
+      "path": "data/case-reference-01-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221240,
+      "mtime_ns": 1793502995184773000
+    },
+    {
+      "path": "data/case-reference-14-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182088,
+      "mtime_ns": 1793503696136685000
+    },
+    {
+      "path": "data/case-reference-03-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 214248,
+      "mtime_ns": 1793503098367381000
+    },
+    {
+      "path": "data/case-reference-02-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182106,
+      "mtime_ns": 1793503054205048000
+    },
+    {
+      "path": "data/case-reference-14-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182672,
+      "mtime_ns": 1793503722017180000
+    },
+    {
+      "path": "data/case-reference-17-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 222202,
+      "mtime_ns": 1793503898209483000
+    },
+    {
+      "path": "data/assessment-recovery.pkl",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 62745,
+      "mtime_ns": 1793504048168192000
+    },
+    {
+      "path": "data/case-reference-08-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 179077,
+      "mtime_ns": 1793503399032913000
+    },
+    {
+      "path": "data/case-reference-06-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182124,
+      "mtime_ns": 1793503300625863000
+    },
+    {
+      "path": "data/case-reference-00-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 178770,
+      "mtime_ns": 1793502971700564000
+    },
+    {
+      "path": "data/case-reference-06-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 181841,
+      "mtime_ns": 1793503283817038000
+    },
+    {
+      "path": "data/case-reference-00-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 178505,
+      "mtime_ns": 1793502936294169000
+    },
+    {
+      "path": "data/motor-final.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 385,
+      "mtime_ns": 1793504056572151186
+    },
+    {
+      "path": "data/case-reference-01-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221871,
+      "mtime_ns": 1793503019227230000
+    },
+    {
+      "path": "data/case-reference-15-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 163585,
+      "mtime_ns": 1793503786642188000
+    },
+    {
+      "path": "data/case-reference-13-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221408,
+      "mtime_ns": 1793503669583795000
+    },
+    {
+      "path": "data/case-reference-13-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 221396,
+      "mtime_ns": 1793503648446337000
+    },
+    {
+      "path": "data/case-reference-16-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 174740,
+      "mtime_ns": 1793503844138402000
+    },
+    {
+      "path": "data/case-reference-19-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 200826,
+      "mtime_ns": 1793503968257496000
+    },
+    {
+      "path": "data/case-reference-08-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 179065,
+      "mtime_ns": 1793503419956375000
+    },
+    {
+      "path": "data/case-reference-05-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 226440,
+      "mtime_ns": 1793503237864001000
+    },
+    {
+      "path": "data/case-reference-16-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 172830,
+      "mtime_ns": 1793503819765475000
+    },
+    {
+      "path": "data/case-reference-11-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 160099,
+      "mtime_ns": 1793503538985544000
+    },
+    {
+      "path": "data/case-reference-20-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 178636,
+      "mtime_ns": 1793504044369427000
+    },
+    {
+      "path": "data/case-reference-09-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 220895,
+      "mtime_ns": 1793503465967770000
+    },
+    {
+      "path": "data/case-reference-18-40.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 182577,
+      "mtime_ns": 1793503926893212000
+    },
+    {
+      "path": "data/source-provenance.json",
+      "category": "assessment top metadata and rolling recovery",
+      "bytes": 12741,
+      "mtime_ns": 1793502808545742000
+    },
+    {
+      "path": "data/case-reference-02-41.pkl.gz",
+      "category": "41 original case references",
+      "bytes": 181989,
+      "mtime_ns": 1793503072857924000
+    },
+    {
+      "path": "data/server-24-1793503090852215366/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 681,
+      "mtime_ns": 1793503095986165372
+    },
+    {
+      "path": "data/server-24-1793503090852215366/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503098286555332
+    },
+    {
+      "path": "data/server-24-1793503090852215366/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503095986469844
+    },
+    {
+      "path": "data/server-80-1793503486568326720/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 626,
+      "mtime_ns": 1793503490871722648
+    },
+    {
+      "path": "data/server-80-1793503486568326720/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503492556064298
+    },
+    {
+      "path": "data/server-80-1793503486568326720/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1219,
+      "mtime_ns": 1793503490872079527
+    },
+    {
+      "path": "data/server-120-1793503752100409877/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 689,
+      "mtime_ns": 1793503756806887111
+    },
+    {
+      "path": "data/server-120-1793503752100409877/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503758548649228
+    },
+    {
+      "path": "data/server-120-1793503752100409877/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503756807249960
+    },
+    {
+      "path": "data/server-56-1793503315985666889/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 675,
+      "mtime_ns": 1793503321032623531
+    },
+    {
+      "path": "data/server-56-1793503315985666889/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503323324557088
+    },
+    {
+      "path": "data/server-56-1793503315985666889/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1220,
+      "mtime_ns": 1793503321033042933
+    },
+    {
+      "path": "data/server-144-1793503920889407239/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 613,
+      "mtime_ns": 1793503925185032760
+    },
+    {
+      "path": "data/server-144-1793503920889407239/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 234,
+      "mtime_ns": 1793503926815391055
+    },
+    {
+      "path": "data/server-144-1793503920889407239/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1221,
+      "mtime_ns": 1793503925185430898
+    },
+    {
+      "path": "data/server-16-1793503048061704259/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 618,
+      "mtime_ns": 1793503052432406946
+    },
+    {
+      "path": "data/server-16-1793503048061704259/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503054124326501
+    },
+    {
+      "path": "data/server-16-1793503048061704259/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1219,
+      "mtime_ns": 1793503052432749879
+    },
+    {
+      "path": "data/server-88-1793503533285109814/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 643,
+      "mtime_ns": 1793503537487549980
+    },
+    {
+      "path": "data/server-88-1793503533285109814/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503538909405577
+    },
+    {
+      "path": "data/server-88-1793503533285109814/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1219,
+      "mtime_ns": 1793503537487926845
+    },
+    {
+      "path": "data/server-0-1793502910029792510/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 714,
+      "mtime_ns": 1793502918023215327
+    },
+    {
+      "path": "data/server-0-1793502910029792510/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793502920121534908
+    },
+    {
+      "path": "data/server-0-1793502910029792510/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1221,
+      "mtime_ns": 1793502918023523795
+    },
+    {
+      "path": "data/server-48-1793503277828233272/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 594,
+      "mtime_ns": 1793503282090522080
+    },
+    {
+      "path": "data/server-48-1793503277828233272/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503283738475678
+    },
+    {
+      "path": "data/server-48-1793503277828233272/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1220,
+      "mtime_ns": 1793503282090912026
+    },
+    {
+      "path": "data/server-136-1793503868475220549/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 641,
+      "mtime_ns": 1793503873034762944
+    },
+    {
+      "path": "data/server-136-1793503868475220549/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 234,
+      "mtime_ns": 1793503874978114297
+    },
+    {
+      "path": "data/server-136-1793503868475220549/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1219,
+      "mtime_ns": 1793503873035068132
+    },
+    {
+      "path": "data/server-96-1793503597215443372/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 682,
+      "mtime_ns": 1793503601669498851
+    },
+    {
+      "path": "data/server-96-1793503597215443372/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503603649947499
+    },
+    {
+      "path": "data/server-96-1793503597215443372/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503601669806877
+    },
+    {
+      "path": "data/server-72-1793503438822661392/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 654,
+      "mtime_ns": 1793503443467902467
+    },
+    {
+      "path": "data/server-72-1793503438822661392/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503445452041440
+    },
+    {
+      "path": "data/server-72-1793503438822661392/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503443468210626
+    },
+    {
+      "path": "data/server-8-1793502988443528764/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 652,
+      "mtime_ns": 1793502993132815184
+    },
+    {
+      "path": "data/server-8-1793502988443528764/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793502995100818593
+    },
+    {
+      "path": "data/server-8-1793502988443528764/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793502993133196116
+    },
+    {
+      "path": "data/server-40-1793503231336150489/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 650,
+      "mtime_ns": 1793503235937172153
+    },
+    {
+      "path": "data/server-40-1793503231336150489/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503237784090950
+    },
+    {
+      "path": "data/server-40-1793503231336150489/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503235937504921
+    },
+    {
+      "path": "data/server-128-1793503813240213612/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 726,
+      "mtime_ns": 1793503817723454630
+    },
+    {
+      "path": "data/server-128-1793503813240213612/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503819687511441
+    },
+    {
+      "path": "data/server-128-1793503813240213612/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1221,
+      "mtime_ns": 1793503817723832143
+    },
+    {
+      "path": "data/server-160-1793504037821792137/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 677,
+      "mtime_ns": 1793504042255802629
+    },
+    {
+      "path": "data/server-160-1793504037821792137/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 234,
+      "mtime_ns": 1793504044291430921
+    },
+    {
+      "path": "data/server-160-1793504037821792137/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1220,
+      "mtime_ns": 1793504042256265523
+    },
+    {
+      "path": "data/server-104-1793503641957629256/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 644,
+      "mtime_ns": 1793503646519426515
+    },
+    {
+      "path": "data/server-104-1793503641957629256/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503648366531928
+    },
+    {
+      "path": "data/server-104-1793503641957629256/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1221,
+      "mtime_ns": 1793503646526666319
+    },
+    {
+      "path": "data/server-64-1793503392532045378/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 682,
+      "mtime_ns": 1793503396982883108
+    },
+    {
+      "path": "data/server-64-1793503392532045378/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503398950708114
+    },
+    {
+      "path": "data/server-64-1793503392532045378/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503396983199503
+    },
+    {
+      "path": "data/server-32-1793503183391677712/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 686,
+      "mtime_ns": 1793503187987208474
+    },
+    {
+      "path": "data/server-32-1793503183391677712/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503189919436297
+    },
+    {
+      "path": "data/server-32-1793503183391677712/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1220,
+      "mtime_ns": 1793503187987554912
+    },
+    {
+      "path": "data/server-152-1793503960420747585/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 734,
+      "mtime_ns": 1793503965743034592
+    },
+    {
+      "path": "data/server-152-1793503960420747585/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 234,
+      "mtime_ns": 1793503968179024293
+    },
+    {
+      "path": "data/server-152-1793503960420747585/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1219,
+      "mtime_ns": 1793503965743430655
+    },
+    {
+      "path": "data/server-112-1793503690018707159/simulator-ready.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 630,
+      "mtime_ns": 1793503694328481254
+    },
+    {
+      "path": "data/server-112-1793503690018707159/renderer-binding.json",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 233,
+      "mtime_ns": 1793503696057901895
+    },
+    {
+      "path": "data/server-112-1793503690018707159/simulator.log",
+      "category": "21 simulator server metadata/logs",
+      "bytes": 1222,
+      "mtime_ns": 1793503694328798646
+    },
+    {
+      "path": "data/episode-000/qualification.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1312,
+      "mtime_ns": 1793502953462054121
+    },
+    {
+      "path": "data/episode-000/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1519877,
+      "mtime_ns": 1793502956026872476
+    },
+    {
+      "path": "data/episode-000/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 12656,
+      "mtime_ns": 1793502956029123000
+    },
+    {
+      "path": "data/episode-000/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793502956031189029
+    },
+    {
+      "path": "data/episode-001/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1529671,
+      "mtime_ns": 1793502960511475392
+    },
+    {
+      "path": "data/episode-001/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9335,
+      "mtime_ns": 1793502960514008000
+    },
+    {
+      "path": "data/episode-001/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1880,
+      "mtime_ns": 1793502960531243768
+    },
+    {
+      "path": "data/episode-002/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1342587,
+      "mtime_ns": 1793502965045072164
+    },
+    {
+      "path": "data/episode-002/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9358,
+      "mtime_ns": 1793502965047057000
+    },
+    {
+      "path": "data/episode-002/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1877,
+      "mtime_ns": 1793502965048955812
+    },
+    {
+      "path": "data/episode-003/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1329538,
+      "mtime_ns": 1793502969823141181
+    },
+    {
+      "path": "data/episode-003/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9362,
+      "mtime_ns": 1793502969825157000
+    },
+    {
+      "path": "data/episode-003/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1881,
+      "mtime_ns": 1793502969827035320
+    },
+    {
+      "path": "data/episode-004/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1504247,
+      "mtime_ns": 1793502974109231295
+    },
+    {
+      "path": "data/episode-004/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9312,
+      "mtime_ns": 1793502974111522000
+    },
+    {
+      "path": "data/episode-004/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793502974113474123
+    },
+    {
+      "path": "data/episode-005/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1669390,
+      "mtime_ns": 1793502978630149722
+    },
+    {
+      "path": "data/episode-005/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793502978632172000
+    },
+    {
+      "path": "data/episode-005/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1879,
+      "mtime_ns": 1793502978634410641
+    },
+    {
+      "path": "data/episode-006/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1498987,
+      "mtime_ns": 1793502983121156946
+    },
+    {
+      "path": "data/episode-006/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9342,
+      "mtime_ns": 1793502983123192000
+    },
+    {
+      "path": "data/episode-006/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1877,
+      "mtime_ns": 1793502983125125790
+    },
+    {
+      "path": "data/episode-007/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1477116,
+      "mtime_ns": 1793502987600198983
+    },
+    {
+      "path": "data/episode-007/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9332,
+      "mtime_ns": 1793502987602231000
+    },
+    {
+      "path": "data/episode-007/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1881,
+      "mtime_ns": 1793502987604301196
+    },
+    {
+      "path": "data/episode-008/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3024600,
+      "mtime_ns": 1793502998755363001
+    },
+    {
+      "path": "data/episode-008/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9294,
+      "mtime_ns": 1793502998757534000
+    },
+    {
+      "path": "data/episode-008/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793502998760841234
+    },
+    {
+      "path": "data/episode-009/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3203184,
+      "mtime_ns": 1793503004626148005
+    },
+    {
+      "path": "data/episode-009/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9297,
+      "mtime_ns": 1793503004628447000
+    },
+    {
+      "path": "data/episode-009/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1879,
+      "mtime_ns": 1793503004632145910
+    },
+    {
+      "path": "data/episode-010/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3302110,
+      "mtime_ns": 1793503011157774013
+    },
+    {
+      "path": "data/episode-010/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9324,
+      "mtime_ns": 1793503011160222000
+    },
+    {
+      "path": "data/episode-010/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1877,
+      "mtime_ns": 1793503011163690037
+    },
+    {
+      "path": "data/episode-011/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3289256,
+      "mtime_ns": 1793503017433138430
+    },
+    {
+      "path": "data/episode-011/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503017435492000
+    },
+    {
+      "path": "data/episode-011/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1881,
+      "mtime_ns": 1793503017439111813
+    },
+    {
+      "path": "data/episode-012/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3606757,
+      "mtime_ns": 1793503023645596756
+    },
+    {
+      "path": "data/episode-012/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9317,
+      "mtime_ns": 1793503023647935000
+    },
+    {
+      "path": "data/episode-012/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503023651866115
+    },
+    {
+      "path": "data/episode-013/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4718866,
+      "mtime_ns": 1793503031597086927
+    },
+    {
+      "path": "data/episode-013/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9317,
+      "mtime_ns": 1793503031598873000
+    },
+    {
+      "path": "data/episode-013/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1879,
+      "mtime_ns": 1793503031606161259
+    },
+    {
+      "path": "data/episode-014/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3488818,
+      "mtime_ns": 1793503038237709297
+    },
+    {
+      "path": "data/episode-014/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503038240013000
+    },
+    {
+      "path": "data/episode-014/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1877,
+      "mtime_ns": 1793503038243767442
+    },
+    {
+      "path": "data/episode-015/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4839527,
+      "mtime_ns": 1793503047372284288
+    },
+    {
+      "path": "data/episode-015/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503047374840000
+    },
+    {
+      "path": "data/episode-015/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1881,
+      "mtime_ns": 1793503047382482236
+    },
+    {
+      "path": "data/episode-016/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2115973,
+      "mtime_ns": 1793503057357953489
+    },
+    {
+      "path": "data/episode-016/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503057360044000
+    },
+    {
+      "path": "data/episode-016/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1852,
+      "mtime_ns": 1793503057362642346
+    },
+    {
+      "path": "data/episode-017/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2142734,
+      "mtime_ns": 1793503062063732367
+    },
+    {
+      "path": "data/episode-017/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9311,
+      "mtime_ns": 1793503062065823000
+    },
+    {
+      "path": "data/episode-017/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503062068399133
+    },
+    {
+      "path": "data/episode-018/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1982438,
+      "mtime_ns": 1793503066546674957
+    },
+    {
+      "path": "data/episode-018/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503066548768000
+    },
+    {
+      "path": "data/episode-018/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503066551295315
+    },
+    {
+      "path": "data/episode-019/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2113733,
+      "mtime_ns": 1793503071296008236
+    },
+    {
+      "path": "data/episode-019/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9340,
+      "mtime_ns": 1793503071298487000
+    },
+    {
+      "path": "data/episode-019/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1867,
+      "mtime_ns": 1793503071300996029
+    },
+    {
+      "path": "data/episode-020/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2211518,
+      "mtime_ns": 1793503075974697680
+    },
+    {
+      "path": "data/episode-020/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9318,
+      "mtime_ns": 1793503075977363000
+    },
+    {
+      "path": "data/episode-020/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1852,
+      "mtime_ns": 1793503075980019746
+    },
+    {
+      "path": "data/episode-021/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2366524,
+      "mtime_ns": 1793503080898011415
+    },
+    {
+      "path": "data/episode-021/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9313,
+      "mtime_ns": 1793503080900574000
+    },
+    {
+      "path": "data/episode-021/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503080903328128
+    },
+    {
+      "path": "data/episode-022/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2063809,
+      "mtime_ns": 1793503085403446947
+    },
+    {
+      "path": "data/episode-022/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503085406009000
+    },
+    {
+      "path": "data/episode-022/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503085408530162
+    },
+    {
+      "path": "data/episode-023/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2187602,
+      "mtime_ns": 1793503090149385147
+    },
+    {
+      "path": "data/episode-023/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9347,
+      "mtime_ns": 1793503090151546000
+    },
+    {
+      "path": "data/episode-023/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503090154124619
+    },
+    {
+      "path": "data/episode-024/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5716565,
+      "mtime_ns": 1793503105949454178
+    },
+    {
+      "path": "data/episode-024/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9319,
+      "mtime_ns": 1793503105952514000
+    },
+    {
+      "path": "data/episode-024/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1843,
+      "mtime_ns": 1793503105959694568
+    },
+    {
+      "path": "data/episode-025/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 6591350,
+      "mtime_ns": 1793503116956653492
+    },
+    {
+      "path": "data/episode-025/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9319,
+      "mtime_ns": 1793503116958887000
+    },
+    {
+      "path": "data/episode-025/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1858,
+      "mtime_ns": 1793503116968937543
+    },
+    {
+      "path": "data/episode-026/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5663751,
+      "mtime_ns": 1793503126773092215
+    },
+    {
+      "path": "data/episode-026/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9350,
+      "mtime_ns": 1793503126775362000
+    },
+    {
+      "path": "data/episode-026/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1855,
+      "mtime_ns": 1793503126783750906
+    },
+    {
+      "path": "data/episode-027/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5283329,
+      "mtime_ns": 1793503136173839481
+    },
+    {
+      "path": "data/episode-027/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503136176480000
+    },
+    {
+      "path": "data/episode-027/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1859,
+      "mtime_ns": 1793503136183700644
+    },
+    {
+      "path": "data/episode-028/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 7103918,
+      "mtime_ns": 1793503148031217549
+    },
+    {
+      "path": "data/episode-028/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9303,
+      "mtime_ns": 1793503148033565000
+    },
+    {
+      "path": "data/episode-028/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1843,
+      "mtime_ns": 1793503148043905733
+    },
+    {
+      "path": "data/episode-029/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 7948658,
+      "mtime_ns": 1793503161210031119
+    },
+    {
+      "path": "data/episode-029/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9301,
+      "mtime_ns": 1793503161213333000
+    },
+    {
+      "path": "data/episode-029/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1859,
+      "mtime_ns": 1793503161223093273
+    },
+    {
+      "path": "data/episode-030/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5892139,
+      "mtime_ns": 1793503171598774798
+    },
+    {
+      "path": "data/episode-030/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9333,
+      "mtime_ns": 1793503171601641000
+    },
+    {
+      "path": "data/episode-030/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1855,
+      "mtime_ns": 1793503171609605716
+    },
+    {
+      "path": "data/episode-031/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 6681421,
+      "mtime_ns": 1793503182547665612
+    },
+    {
+      "path": "data/episode-031/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9320,
+      "mtime_ns": 1793503182550618000
+    },
+    {
+      "path": "data/episode-031/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1860,
+      "mtime_ns": 1793503182559392412
+    },
+    {
+      "path": "data/episode-032/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1984535,
+      "mtime_ns": 1793503193315903545
+    },
+    {
+      "path": "data/episode-032/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503193318440000
+    },
+    {
+      "path": "data/episode-032/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1858,
+      "mtime_ns": 1793503193321208492
+    },
+    {
+      "path": "data/episode-033/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2147077,
+      "mtime_ns": 1793503198979542690
+    },
+    {
+      "path": "data/episode-033/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9313,
+      "mtime_ns": 1793503198982389000
+    },
+    {
+      "path": "data/episode-033/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503198985179776
+    },
+    {
+      "path": "data/episode-034/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1975687,
+      "mtime_ns": 1793503204220479332
+    },
+    {
+      "path": "data/episode-034/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9350,
+      "mtime_ns": 1793503204222666000
+    },
+    {
+      "path": "data/episode-034/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503204225232743
+    },
+    {
+      "path": "data/episode-035/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1962914,
+      "mtime_ns": 1793503209557806543
+    },
+    {
+      "path": "data/episode-035/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9342,
+      "mtime_ns": 1793503209560254000
+    },
+    {
+      "path": "data/episode-035/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1874,
+      "mtime_ns": 1793503209563024478
+    },
+    {
+      "path": "data/episode-036/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1988678,
+      "mtime_ns": 1793503214896849071
+    },
+    {
+      "path": "data/episode-036/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9303,
+      "mtime_ns": 1793503214899175000
+    },
+    {
+      "path": "data/episode-036/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1858,
+      "mtime_ns": 1793503214901874506
+    },
+    {
+      "path": "data/episode-037/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1955440,
+      "mtime_ns": 1793503220161382758
+    },
+    {
+      "path": "data/episode-037/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793503220163500000
+    },
+    {
+      "path": "data/episode-037/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503220165958294
+    },
+    {
+      "path": "data/episode-038/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1798358,
+      "mtime_ns": 1793503225283944260
+    },
+    {
+      "path": "data/episode-038/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9338,
+      "mtime_ns": 1793503225286083000
+    },
+    {
+      "path": "data/episode-038/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503225288729421
+    },
+    {
+      "path": "data/episode-039/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1962155,
+      "mtime_ns": 1793503230569371730
+    },
+    {
+      "path": "data/episode-039/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503230571564000
+    },
+    {
+      "path": "data/episode-039/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1874,
+      "mtime_ns": 1793503230573996220
+    },
+    {
+      "path": "data/episode-040/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2860305,
+      "mtime_ns": 1793503241259218347
+    },
+    {
+      "path": "data/episode-040/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9334,
+      "mtime_ns": 1793503241261658000
+    },
+    {
+      "path": "data/episode-040/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1855,
+      "mtime_ns": 1793503241265253565
+    },
+    {
+      "path": "data/episode-041/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2672207,
+      "mtime_ns": 1793503246150352218
+    },
+    {
+      "path": "data/episode-041/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9329,
+      "mtime_ns": 1793503246152786000
+    },
+    {
+      "path": "data/episode-041/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503246155903508
+    },
+    {
+      "path": "data/episode-042/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2663394,
+      "mtime_ns": 1793503251033469562
+    },
+    {
+      "path": "data/episode-042/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9364,
+      "mtime_ns": 1793503251035684000
+    },
+    {
+      "path": "data/episode-042/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503251038823130
+    },
+    {
+      "path": "data/episode-043/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2842820,
+      "mtime_ns": 1793503256223031784
+    },
+    {
+      "path": "data/episode-043/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9360,
+      "mtime_ns": 1793503256225484000
+    },
+    {
+      "path": "data/episode-043/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503256229017563
+    },
+    {
+      "path": "data/episode-044/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2887105,
+      "mtime_ns": 1793503261271537652
+    },
+    {
+      "path": "data/episode-044/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9306,
+      "mtime_ns": 1793503261274274000
+    },
+    {
+      "path": "data/episode-044/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503261278220287
+    },
+    {
+      "path": "data/episode-045/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2852426,
+      "mtime_ns": 1793503266433078167
+    },
+    {
+      "path": "data/episode-045/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793503266435372000
+    },
+    {
+      "path": "data/episode-045/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503266438763556
+    },
+    {
+      "path": "data/episode-046/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3075309,
+      "mtime_ns": 1793503271824920843
+    },
+    {
+      "path": "data/episode-046/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9344,
+      "mtime_ns": 1793503271827178000
+    },
+    {
+      "path": "data/episode-046/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503271830990457
+    },
+    {
+      "path": "data/episode-047/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2867406,
+      "mtime_ns": 1793503276994644981
+    },
+    {
+      "path": "data/episode-047/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9323,
+      "mtime_ns": 1793503276996943000
+    },
+    {
+      "path": "data/episode-047/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503277000244166
+    },
+    {
+      "path": "data/episode-048/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1887693,
+      "mtime_ns": 1793503286295792842
+    },
+    {
+      "path": "data/episode-048/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9307,
+      "mtime_ns": 1793503286297916000
+    },
+    {
+      "path": "data/episode-048/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1852,
+      "mtime_ns": 1793503286300462099
+    },
+    {
+      "path": "data/episode-049/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1717408,
+      "mtime_ns": 1793503290252131347
+    },
+    {
+      "path": "data/episode-049/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9311,
+      "mtime_ns": 1793503290254117000
+    },
+    {
+      "path": "data/episode-049/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503290256449199
+    },
+    {
+      "path": "data/episode-050/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1881974,
+      "mtime_ns": 1793503294511078040
+    },
+    {
+      "path": "data/episode-050/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9342,
+      "mtime_ns": 1793503294513111000
+    },
+    {
+      "path": "data/episode-050/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503294547043212
+    },
+    {
+      "path": "data/episode-051/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1888703,
+      "mtime_ns": 1793503298935215660
+    },
+    {
+      "path": "data/episode-051/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9342,
+      "mtime_ns": 1793503298938457000
+    },
+    {
+      "path": "data/episode-051/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1867,
+      "mtime_ns": 1793503298979520463
+    },
+    {
+      "path": "data/episode-052/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1746462,
+      "mtime_ns": 1793503303190541306
+    },
+    {
+      "path": "data/episode-052/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793503303192623000
+    },
+    {
+      "path": "data/episode-052/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1851,
+      "mtime_ns": 1793503303194984142
+    },
+    {
+      "path": "data/episode-053/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1923814,
+      "mtime_ns": 1793503307691396977
+    },
+    {
+      "path": "data/episode-053/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9302,
+      "mtime_ns": 1793503307693747000
+    },
+    {
+      "path": "data/episode-053/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503307696250212
+    },
+    {
+      "path": "data/episode-054/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1571370,
+      "mtime_ns": 1793503311526036915
+    },
+    {
+      "path": "data/episode-054/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9338,
+      "mtime_ns": 1793503311528058000
+    },
+    {
+      "path": "data/episode-054/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503311530495309
+    },
+    {
+      "path": "data/episode-055/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1408627,
+      "mtime_ns": 1793503315130569234
+    },
+    {
+      "path": "data/episode-055/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9321,
+      "mtime_ns": 1793503315132625000
+    },
+    {
+      "path": "data/episode-055/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503315134718027
+    },
+    {
+      "path": "data/episode-056/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4850473,
+      "mtime_ns": 1793503329861857962
+    },
+    {
+      "path": "data/episode-056/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9316,
+      "mtime_ns": 1793503329864421000
+    },
+    {
+      "path": "data/episode-056/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1848,
+      "mtime_ns": 1793503329871952137
+    },
+    {
+      "path": "data/episode-057/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4865104,
+      "mtime_ns": 1793503338484538223
+    },
+    {
+      "path": "data/episode-057/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9328,
+      "mtime_ns": 1793503338487033000
+    },
+    {
+      "path": "data/episode-057/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503338494086469
+    },
+    {
+      "path": "data/episode-058/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4633997,
+      "mtime_ns": 1793503346921679821
+    },
+    {
+      "path": "data/episode-058/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9357,
+      "mtime_ns": 1793503346923514000
+    },
+    {
+      "path": "data/episode-058/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1860,
+      "mtime_ns": 1793503346931715585
+    },
+    {
+      "path": "data/episode-059/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4624297,
+      "mtime_ns": 1793503355415285539
+    },
+    {
+      "path": "data/episode-059/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9351,
+      "mtime_ns": 1793503355418468000
+    },
+    {
+      "path": "data/episode-059/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503355424389402
+    },
+    {
+      "path": "data/episode-060/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5115839,
+      "mtime_ns": 1793503364262986530
+    },
+    {
+      "path": "data/episode-060/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9297,
+      "mtime_ns": 1793503364265619000
+    },
+    {
+      "path": "data/episode-060/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1848,
+      "mtime_ns": 1793503364273187231
+    },
+    {
+      "path": "data/episode-061/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5373518,
+      "mtime_ns": 1793503373666419368
+    },
+    {
+      "path": "data/episode-061/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793503373668872000
+    },
+    {
+      "path": "data/episode-061/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1862,
+      "mtime_ns": 1793503373676586586
+    },
+    {
+      "path": "data/episode-062/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5062927,
+      "mtime_ns": 1793503382655848752
+    },
+    {
+      "path": "data/episode-062/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9339,
+      "mtime_ns": 1793503382657810000
+    },
+    {
+      "path": "data/episode-062/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1860,
+      "mtime_ns": 1793503382666356699
+    },
+    {
+      "path": "data/episode-063/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5065436,
+      "mtime_ns": 1793503391685589404
+    },
+    {
+      "path": "data/episode-063/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9333,
+      "mtime_ns": 1793503391687529000
+    },
+    {
+      "path": "data/episode-063/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503391696049286
+    },
+    {
+      "path": "data/episode-064/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1856673,
+      "mtime_ns": 1793503402424943594
+    },
+    {
+      "path": "data/episode-064/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9324,
+      "mtime_ns": 1793503402427239000
+    },
+    {
+      "path": "data/episode-064/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1856,
+      "mtime_ns": 1793503402429929470
+    },
+    {
+      "path": "data/episode-065/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2013737,
+      "mtime_ns": 1793503407640922993
+    },
+    {
+      "path": "data/episode-065/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9322,
+      "mtime_ns": 1793503407643073000
+    },
+    {
+      "path": "data/episode-065/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503407645540104
+    },
+    {
+      "path": "data/episode-066/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1842794,
+      "mtime_ns": 1793503412871362494
+    },
+    {
+      "path": "data/episode-066/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9353,
+      "mtime_ns": 1793503412873485000
+    },
+    {
+      "path": "data/episode-066/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503412875881120
+    },
+    {
+      "path": "data/episode-067/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1838451,
+      "mtime_ns": 1793503417977720716
+    },
+    {
+      "path": "data/episode-067/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9354,
+      "mtime_ns": 1793503417979786000
+    },
+    {
+      "path": "data/episode-067/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503417982188727
+    },
+    {
+      "path": "data/episode-068/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1701717,
+      "mtime_ns": 1793503422825202843
+    },
+    {
+      "path": "data/episode-068/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9318,
+      "mtime_ns": 1793503422827260000
+    },
+    {
+      "path": "data/episode-068/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1856,
+      "mtime_ns": 1793503422829767964
+    },
+    {
+      "path": "data/episode-069/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1884513,
+      "mtime_ns": 1793503428214598966
+    },
+    {
+      "path": "data/episode-069/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9322,
+      "mtime_ns": 1793503428216832000
+    },
+    {
+      "path": "data/episode-069/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503428219431572
+    },
+    {
+      "path": "data/episode-070/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1689053,
+      "mtime_ns": 1793503433044995595
+    },
+    {
+      "path": "data/episode-070/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503433046955000
+    },
+    {
+      "path": "data/episode-070/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503433049126217
+    },
+    {
+      "path": "data/episode-071/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1695373,
+      "mtime_ns": 1793503437968297900
+    },
+    {
+      "path": "data/episode-071/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9344,
+      "mtime_ns": 1793503437970232000
+    },
+    {
+      "path": "data/episode-071/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503437972427900
+    },
+    {
+      "path": "data/episode-072/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2862092,
+      "mtime_ns": 1793503448767803042
+    },
+    {
+      "path": "data/episode-072/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9319,
+      "mtime_ns": 1793503448769917000
+    },
+    {
+      "path": "data/episode-072/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1856,
+      "mtime_ns": 1793503448773057075
+    },
+    {
+      "path": "data/episode-073/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2634464,
+      "mtime_ns": 1793503453681937731
+    },
+    {
+      "path": "data/episode-073/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503453684168000
+    },
+    {
+      "path": "data/episode-073/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503453687153147
+    },
+    {
+      "path": "data/episode-074/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2640097,
+      "mtime_ns": 1793503458692647833
+    },
+    {
+      "path": "data/episode-074/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9348,
+      "mtime_ns": 1793503458694829000
+    },
+    {
+      "path": "data/episode-074/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503458697701504
+    },
+    {
+      "path": "data/episode-075/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2840990,
+      "mtime_ns": 1793503464006827851
+    },
+    {
+      "path": "data/episode-075/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9333,
+      "mtime_ns": 1793503464009023000
+    },
+    {
+      "path": "data/episode-075/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503464012196768
+    },
+    {
+      "path": "data/episode-076/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2634994,
+      "mtime_ns": 1793503469116789610
+    },
+    {
+      "path": "data/episode-076/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9332,
+      "mtime_ns": 1793503469118966000
+    },
+    {
+      "path": "data/episode-076/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1856,
+      "mtime_ns": 1793503469127995143
+    },
+    {
+      "path": "data/episode-077/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3054911,
+      "mtime_ns": 1793503475002641363
+    },
+    {
+      "path": "data/episode-077/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9329,
+      "mtime_ns": 1793503475005428000
+    },
+    {
+      "path": "data/episode-077/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503475008860504
+    },
+    {
+      "path": "data/episode-078/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2613476,
+      "mtime_ns": 1793503480149449224
+    },
+    {
+      "path": "data/episode-078/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9356,
+      "mtime_ns": 1793503480151660000
+    },
+    {
+      "path": "data/episode-078/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503480154666880
+    },
+    {
+      "path": "data/episode-079/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2849596,
+      "mtime_ns": 1793503485619625295
+    },
+    {
+      "path": "data/episode-079/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9349,
+      "mtime_ns": 1793503485621994000
+    },
+    {
+      "path": "data/episode-079/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503485625240184
+    },
+    {
+      "path": "data/episode-080/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1629311,
+      "mtime_ns": 1793503495112408554
+    },
+    {
+      "path": "data/episode-080/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9319,
+      "mtime_ns": 1793503495114704000
+    },
+    {
+      "path": "data/episode-080/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1851,
+      "mtime_ns": 1793503495116987040
+    },
+    {
+      "path": "data/episode-081/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1768614,
+      "mtime_ns": 1793503499536761945
+    },
+    {
+      "path": "data/episode-081/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9321,
+      "mtime_ns": 1793503499538778000
+    },
+    {
+      "path": "data/episode-081/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1867,
+      "mtime_ns": 1793503499541407409
+    },
+    {
+      "path": "data/episode-082/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1765471,
+      "mtime_ns": 1793503504002756763
+    },
+    {
+      "path": "data/episode-082/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9338,
+      "mtime_ns": 1793503504004904000
+    },
+    {
+      "path": "data/episode-082/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503504007410501
+    },
+    {
+      "path": "data/episode-083/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1605253,
+      "mtime_ns": 1793503508176433023
+    },
+    {
+      "path": "data/episode-083/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503508183528000
+    },
+    {
+      "path": "data/episode-083/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503508189022180
+    },
+    {
+      "path": "data/episode-084/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1621578,
+      "mtime_ns": 1793503512322276810
+    },
+    {
+      "path": "data/episode-084/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9324,
+      "mtime_ns": 1793503512324163000
+    },
+    {
+      "path": "data/episode-084/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1852,
+      "mtime_ns": 1793503512326351754
+    },
+    {
+      "path": "data/episode-085/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 6732802,
+      "mtime_ns": 1793503523856514714
+    },
+    {
+      "path": "data/episode-085/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9326,
+      "mtime_ns": 1793503523859123000
+    },
+    {
+      "path": "data/episode-085/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503523868365972
+    },
+    {
+      "path": "data/episode-086/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1584116,
+      "mtime_ns": 1793503527879063479
+    },
+    {
+      "path": "data/episode-086/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9359,
+      "mtime_ns": 1793503527881462000
+    },
+    {
+      "path": "data/episode-086/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1863,
+      "mtime_ns": 1793503527883692649
+    },
+    {
+      "path": "data/episode-087/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1599499,
+      "mtime_ns": 1793503532071291134
+    },
+    {
+      "path": "data/episode-087/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503532073331000
+    },
+    {
+      "path": "data/episode-087/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503532075476795
+    },
+    {
+      "path": "data/episode-088/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3751479,
+      "mtime_ns": 1793503544676338649
+    },
+    {
+      "path": "data/episode-088/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503544678704000
+    },
+    {
+      "path": "data/episode-088/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793503544683018420
+    },
+    {
+      "path": "data/episode-089/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5706094,
+      "mtime_ns": 1793503554927817982
+    },
+    {
+      "path": "data/episode-089/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9335,
+      "mtime_ns": 1793503554929887000
+    },
+    {
+      "path": "data/episode-089/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1863,
+      "mtime_ns": 1793503554938429648
+    },
+    {
+      "path": "data/episode-090/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3561392,
+      "mtime_ns": 1793503562126838343
+    },
+    {
+      "path": "data/episode-090/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9366,
+      "mtime_ns": 1793503562129264000
+    },
+    {
+      "path": "data/episode-090/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503562132999671
+    },
+    {
+      "path": "data/episode-091/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3581648,
+      "mtime_ns": 1793503569061546460
+    },
+    {
+      "path": "data/episode-091/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9365,
+      "mtime_ns": 1793503569064151000
+    },
+    {
+      "path": "data/episode-091/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503569067882398
+    },
+    {
+      "path": "data/episode-092/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3639782,
+      "mtime_ns": 1793503575993748554
+    },
+    {
+      "path": "data/episode-092/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9306,
+      "mtime_ns": 1793503575996084000
+    },
+    {
+      "path": "data/episode-092/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793503576000256558
+    },
+    {
+      "path": "data/episode-093/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3483652,
+      "mtime_ns": 1793503582613516829
+    },
+    {
+      "path": "data/episode-093/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9308,
+      "mtime_ns": 1793503582615777000
+    },
+    {
+      "path": "data/episode-093/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1862,
+      "mtime_ns": 1793503582619491291
+    },
+    {
+      "path": "data/episode-094/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3290594,
+      "mtime_ns": 1793503589100963758
+    },
+    {
+      "path": "data/episode-094/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9345,
+      "mtime_ns": 1793503589103270000
+    },
+    {
+      "path": "data/episode-094/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503589106791965
+    },
+    {
+      "path": "data/episode-095/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3563553,
+      "mtime_ns": 1793503596205840143
+    },
+    {
+      "path": "data/episode-095/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9330,
+      "mtime_ns": 1793503596208239000
+    },
+    {
+      "path": "data/episode-095/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503596212158198
+    },
+    {
+      "path": "data/episode-096/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1635182,
+      "mtime_ns": 1793503606479426020
+    },
+    {
+      "path": "data/episode-096/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9305,
+      "mtime_ns": 1793503606481555000
+    },
+    {
+      "path": "data/episode-096/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503606484049464
+    },
+    {
+      "path": "data/episode-097/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1643910,
+      "mtime_ns": 1793503611350476565
+    },
+    {
+      "path": "data/episode-097/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9295,
+      "mtime_ns": 1793503611352579000
+    },
+    {
+      "path": "data/episode-097/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503611354742706
+    },
+    {
+      "path": "data/episode-098/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1639416,
+      "mtime_ns": 1793503616511248827
+    },
+    {
+      "path": "data/episode-098/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9339,
+      "mtime_ns": 1793503616513208000
+    },
+    {
+      "path": "data/episode-098/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503616515411747
+    },
+    {
+      "path": "data/episode-099/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1670782,
+      "mtime_ns": 1793503621483708775
+    },
+    {
+      "path": "data/episode-099/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9317,
+      "mtime_ns": 1793503621485847000
+    },
+    {
+      "path": "data/episode-099/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503621488066111
+    },
+    {
+      "path": "data/episode-100/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1644018,
+      "mtime_ns": 1793503626387752306
+    },
+    {
+      "path": "data/episode-100/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9304,
+      "mtime_ns": 1793503626389681000
+    },
+    {
+      "path": "data/episode-100/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503626391838544
+    },
+    {
+      "path": "data/episode-101/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1617232,
+      "mtime_ns": 1793503631274212542
+    },
+    {
+      "path": "data/episode-101/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9302,
+      "mtime_ns": 1793503631276193000
+    },
+    {
+      "path": "data/episode-101/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503631278391058
+    },
+    {
+      "path": "data/episode-102/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1631269,
+      "mtime_ns": 1793503636083277361
+    },
+    {
+      "path": "data/episode-102/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9341,
+      "mtime_ns": 1793503636085209000
+    },
+    {
+      "path": "data/episode-102/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503636087383373
+    },
+    {
+      "path": "data/episode-103/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1632648,
+      "mtime_ns": 1793503640999377566
+    },
+    {
+      "path": "data/episode-103/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9327,
+      "mtime_ns": 1793503641001529000
+    },
+    {
+      "path": "data/episode-103/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503641003753459
+    },
+    {
+      "path": "data/episode-104/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2806414,
+      "mtime_ns": 1793503651790226375
+    },
+    {
+      "path": "data/episode-104/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9312,
+      "mtime_ns": 1793503651792394000
+    },
+    {
+      "path": "data/episode-104/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1858,
+      "mtime_ns": 1793503651795585333
+    },
+    {
+      "path": "data/episode-105/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2767603,
+      "mtime_ns": 1793503656934180740
+    },
+    {
+      "path": "data/episode-105/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9316,
+      "mtime_ns": 1793503656936377000
+    },
+    {
+      "path": "data/episode-105/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503656939552396
+    },
+    {
+      "path": "data/episode-106/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2792969,
+      "mtime_ns": 1793503662179709085
+    },
+    {
+      "path": "data/episode-106/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9350,
+      "mtime_ns": 1793503662181877000
+    },
+    {
+      "path": "data/episode-106/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503662185027841
+    },
+    {
+      "path": "data/episode-107/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2789539,
+      "mtime_ns": 1793503667373177363
+    },
+    {
+      "path": "data/episode-107/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9338,
+      "mtime_ns": 1793503667375377000
+    },
+    {
+      "path": "data/episode-107/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503667378579013
+    },
+    {
+      "path": "data/episode-108/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2802504,
+      "mtime_ns": 1793503672881183392
+    },
+    {
+      "path": "data/episode-108/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9305,
+      "mtime_ns": 1793503672883341000
+    },
+    {
+      "path": "data/episode-108/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503672886499406
+    },
+    {
+      "path": "data/episode-109/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2606211,
+      "mtime_ns": 1793503677857737200
+    },
+    {
+      "path": "data/episode-109/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9304,
+      "mtime_ns": 1793503677860035000
+    },
+    {
+      "path": "data/episode-109/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1872,
+      "mtime_ns": 1793503677863136068
+    },
+    {
+      "path": "data/episode-110/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2799083,
+      "mtime_ns": 1793503682953723603
+    },
+    {
+      "path": "data/episode-110/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9341,
+      "mtime_ns": 1793503682956145000
+    },
+    {
+      "path": "data/episode-110/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503682959225343
+    },
+    {
+      "path": "data/episode-111/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3372621,
+      "mtime_ns": 1793503689041353824
+    },
+    {
+      "path": "data/episode-111/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9326,
+      "mtime_ns": 1793503689044072000
+    },
+    {
+      "path": "data/episode-111/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503689047738081
+    },
+    {
+      "path": "data/episode-112/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3140516,
+      "mtime_ns": 1793503700800076216
+    },
+    {
+      "path": "data/episode-112/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9335,
+      "mtime_ns": 1793503700802754000
+    },
+    {
+      "path": "data/episode-112/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1853,
+      "mtime_ns": 1793503700806200047
+    },
+    {
+      "path": "data/episode-113/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2822958,
+      "mtime_ns": 1793503706880726757
+    },
+    {
+      "path": "data/episode-113/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9335,
+      "mtime_ns": 1793503706882981000
+    },
+    {
+      "path": "data/episode-113/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1867,
+      "mtime_ns": 1793503706886174508
+    },
+    {
+      "path": "data/episode-114/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2979606,
+      "mtime_ns": 1793503713372304205
+    },
+    {
+      "path": "data/episode-114/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9363,
+      "mtime_ns": 1793503713374727000
+    },
+    {
+      "path": "data/episode-114/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503713378042617
+    },
+    {
+      "path": "data/episode-115/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3162383,
+      "mtime_ns": 1793503720217008993
+    },
+    {
+      "path": "data/episode-115/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9357,
+      "mtime_ns": 1793503720219382000
+    },
+    {
+      "path": "data/episode-115/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503720222853769
+    },
+    {
+      "path": "data/episode-116/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3320744,
+      "mtime_ns": 1793503727107705979
+    },
+    {
+      "path": "data/episode-116/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9309,
+      "mtime_ns": 1793503727110057000
+    },
+    {
+      "path": "data/episode-116/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1854,
+      "mtime_ns": 1793503727113604587
+    },
+    {
+      "path": "data/episode-117/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4997290,
+      "mtime_ns": 1793503736982314423
+    },
+    {
+      "path": "data/episode-117/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9313,
+      "mtime_ns": 1793503736984600000
+    },
+    {
+      "path": "data/episode-117/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1867,
+      "mtime_ns": 1793503736992769704
+    },
+    {
+      "path": "data/episode-118/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3299186,
+      "mtime_ns": 1793503743892134171
+    },
+    {
+      "path": "data/episode-118/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9343,
+      "mtime_ns": 1793503743894411000
+    },
+    {
+      "path": "data/episode-118/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503743897880966
+    },
+    {
+      "path": "data/episode-119/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3443106,
+      "mtime_ns": 1793503751092529349
+    },
+    {
+      "path": "data/episode-119/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9336,
+      "mtime_ns": 1793503751095224000
+    },
+    {
+      "path": "data/episode-119/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1870,
+      "mtime_ns": 1793503751098914634
+    },
+    {
+      "path": "data/episode-120/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3352291,
+      "mtime_ns": 1793503763465829921
+    },
+    {
+      "path": "data/episode-120/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9316,
+      "mtime_ns": 1793503763468016000
+    },
+    {
+      "path": "data/episode-120/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793503763471586671
+    },
+    {
+      "path": "data/episode-121/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3695894,
+      "mtime_ns": 1793503771028338406
+    },
+    {
+      "path": "data/episode-121/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9309,
+      "mtime_ns": 1793503771030732000
+    },
+    {
+      "path": "data/episode-121/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1863,
+      "mtime_ns": 1793503771034819121
+    },
+    {
+      "path": "data/episode-122/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3181390,
+      "mtime_ns": 1793503777727972812
+    },
+    {
+      "path": "data/episode-122/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9349,
+      "mtime_ns": 1793503777730241000
+    },
+    {
+      "path": "data/episode-122/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503777733623695
+    },
+    {
+      "path": "data/episode-123/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3446737,
+      "mtime_ns": 1793503784793139660
+    },
+    {
+      "path": "data/episode-123/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9344,
+      "mtime_ns": 1793503784795499000
+    },
+    {
+      "path": "data/episode-123/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503784799243602
+    },
+    {
+      "path": "data/episode-124/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3323708,
+      "mtime_ns": 1793503791592566491
+    },
+    {
+      "path": "data/episode-124/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9310,
+      "mtime_ns": 1793503791594951000
+    },
+    {
+      "path": "data/episode-124/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793503791598573026
+    },
+    {
+      "path": "data/episode-125/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3265994,
+      "mtime_ns": 1793503798758060005
+    },
+    {
+      "path": "data/episode-125/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503798760506000
+    },
+    {
+      "path": "data/episode-125/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1863,
+      "mtime_ns": 1793503798764087546
+    },
+    {
+      "path": "data/episode-126/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3261722,
+      "mtime_ns": 1793503805546532175
+    },
+    {
+      "path": "data/episode-126/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9346,
+      "mtime_ns": 1793503805548918000
+    },
+    {
+      "path": "data/episode-126/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503805552422610
+    },
+    {
+      "path": "data/episode-127/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3145197,
+      "mtime_ns": 1793503812199018811
+    },
+    {
+      "path": "data/episode-127/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9341,
+      "mtime_ns": 1793503812201360000
+    },
+    {
+      "path": "data/episode-127/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503812204677024
+    },
+    {
+      "path": "data/episode-128/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2054654,
+      "mtime_ns": 1793503823661167249
+    },
+    {
+      "path": "data/episode-128/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503823663299000
+    },
+    {
+      "path": "data/episode-128/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1859,
+      "mtime_ns": 1793503823666394398
+    },
+    {
+      "path": "data/episode-129/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2031947,
+      "mtime_ns": 1793503829830968367
+    },
+    {
+      "path": "data/episode-129/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9327,
+      "mtime_ns": 1793503829833110000
+    },
+    {
+      "path": "data/episode-129/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503829835709419
+    },
+    {
+      "path": "data/episode-130/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2038698,
+      "mtime_ns": 1793503835864997464
+    },
+    {
+      "path": "data/episode-130/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9348,
+      "mtime_ns": 1793503835867328000
+    },
+    {
+      "path": "data/episode-130/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503835869839731
+    },
+    {
+      "path": "data/episode-131/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2032452,
+      "mtime_ns": 1793503841934817984
+    },
+    {
+      "path": "data/episode-131/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9343,
+      "mtime_ns": 1793503841937501000
+    },
+    {
+      "path": "data/episode-131/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1875,
+      "mtime_ns": 1793503841940053472
+    },
+    {
+      "path": "data/episode-132/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2209473,
+      "mtime_ns": 1793503848248477676
+    },
+    {
+      "path": "data/episode-132/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9332,
+      "mtime_ns": 1793503848250636000
+    },
+    {
+      "path": "data/episode-132/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1859,
+      "mtime_ns": 1793503848253405687
+    },
+    {
+      "path": "data/episode-133/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2197342,
+      "mtime_ns": 1793503854722705347
+    },
+    {
+      "path": "data/episode-133/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9325,
+      "mtime_ns": 1793503854724810000
+    },
+    {
+      "path": "data/episode-133/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1874,
+      "mtime_ns": 1793503854728006773
+    },
+    {
+      "path": "data/episode-134/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2201278,
+      "mtime_ns": 1793503860998470241
+    },
+    {
+      "path": "data/episode-134/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9359,
+      "mtime_ns": 1793503861000535000
+    },
+    {
+      "path": "data/episode-134/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503861003225074
+    },
+    {
+      "path": "data/episode-135/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2201427,
+      "mtime_ns": 1793503867411802179
+    },
+    {
+      "path": "data/episode-135/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9358,
+      "mtime_ns": 1793503867414050000
+    },
+    {
+      "path": "data/episode-135/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1875,
+      "mtime_ns": 1793503867416765565
+    },
+    {
+      "path": "data/episode-136/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2874735,
+      "mtime_ns": 1793503878375342038
+    },
+    {
+      "path": "data/episode-136/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9315,
+      "mtime_ns": 1793503878377584000
+    },
+    {
+      "path": "data/episode-136/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503878380846711
+    },
+    {
+      "path": "data/episode-137/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3083280,
+      "mtime_ns": 1793503883866972870
+    },
+    {
+      "path": "data/episode-137/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9309,
+      "mtime_ns": 1793503883869191000
+    },
+    {
+      "path": "data/episode-137/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503883872775069
+    },
+    {
+      "path": "data/episode-138/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 2858662,
+      "mtime_ns": 1793503889328953557
+    },
+    {
+      "path": "data/episode-138/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9346,
+      "mtime_ns": 1793503889331354000
+    },
+    {
+      "path": "data/episode-138/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503889334747323
+    },
+    {
+      "path": "data/episode-139/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3863392,
+      "mtime_ns": 1793503896017590320
+    },
+    {
+      "path": "data/episode-139/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9338,
+      "mtime_ns": 1793503896020291000
+    },
+    {
+      "path": "data/episode-139/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1874,
+      "mtime_ns": 1793503896025038653
+    },
+    {
+      "path": "data/episode-140/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3285937,
+      "mtime_ns": 1793503902013201685
+    },
+    {
+      "path": "data/episode-140/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9299,
+      "mtime_ns": 1793503902015726000
+    },
+    {
+      "path": "data/episode-140/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1857,
+      "mtime_ns": 1793503902019647636
+    },
+    {
+      "path": "data/episode-141/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3051746,
+      "mtime_ns": 1793503907980641170
+    },
+    {
+      "path": "data/episode-141/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9302,
+      "mtime_ns": 1793503907983006000
+    },
+    {
+      "path": "data/episode-141/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1871,
+      "mtime_ns": 1793503907986717757
+    },
+    {
+      "path": "data/episode-142/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3050686,
+      "mtime_ns": 1793503913785428747
+    },
+    {
+      "path": "data/episode-142/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9327,
+      "mtime_ns": 1793503913788018000
+    },
+    {
+      "path": "data/episode-142/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1869,
+      "mtime_ns": 1793503913791640519
+    },
+    {
+      "path": "data/episode-143/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 3260786,
+      "mtime_ns": 1793503919803258460
+    },
+    {
+      "path": "data/episode-143/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9320,
+      "mtime_ns": 1793503919805673000
+    },
+    {
+      "path": "data/episode-143/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1873,
+      "mtime_ns": 1793503919812673063
+    },
+    {
+      "path": "data/episode-144/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1687691,
+      "mtime_ns": 1793503929157519104
+    },
+    {
+      "path": "data/episode-144/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9280,
+      "mtime_ns": 1793503929159763000
+    },
+    {
+      "path": "data/episode-144/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1852,
+      "mtime_ns": 1793503929162207285
+    },
+    {
+      "path": "data/episode-145/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1697166,
+      "mtime_ns": 1793503933542626929
+    },
+    {
+      "path": "data/episode-145/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9283,
+      "mtime_ns": 1793503933544687000
+    },
+    {
+      "path": "data/episode-145/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503933547035650
+    },
+    {
+      "path": "data/episode-146/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1540215,
+      "mtime_ns": 1793503937814923675
+    },
+    {
+      "path": "data/episode-146/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9315,
+      "mtime_ns": 1793503937817077000
+    },
+    {
+      "path": "data/episode-146/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503937819394705
+    },
+    {
+      "path": "data/episode-147/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1698779,
+      "mtime_ns": 1793503942139896679
+    },
+    {
+      "path": "data/episode-147/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9314,
+      "mtime_ns": 1793503942142034000
+    },
+    {
+      "path": "data/episode-147/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503942144881774
+    },
+    {
+      "path": "data/episode-148/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1585745,
+      "mtime_ns": 1793503946662626237
+    },
+    {
+      "path": "data/episode-148/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9324,
+      "mtime_ns": 1793503946664826000
+    },
+    {
+      "path": "data/episode-148/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1851,
+      "mtime_ns": 1793503946667079745
+    },
+    {
+      "path": "data/episode-149/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1531624,
+      "mtime_ns": 1793503950871068355
+    },
+    {
+      "path": "data/episode-149/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9320,
+      "mtime_ns": 1793503950873153000
+    },
+    {
+      "path": "data/episode-149/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793503950876445034
+    },
+    {
+      "path": "data/episode-150/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1573348,
+      "mtime_ns": 1793503955128412777
+    },
+    {
+      "path": "data/episode-150/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9353,
+      "mtime_ns": 1793503955130778000
+    },
+    {
+      "path": "data/episode-150/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1864,
+      "mtime_ns": 1793503955132903512
+    },
+    {
+      "path": "data/episode-151/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1582471,
+      "mtime_ns": 1793503959320291723
+    },
+    {
+      "path": "data/episode-151/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9348,
+      "mtime_ns": 1793503959322318000
+    },
+    {
+      "path": "data/episode-151/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1868,
+      "mtime_ns": 1793503959324441513
+    },
+    {
+      "path": "data/episode-152/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4614618,
+      "mtime_ns": 1793503974338410590
+    },
+    {
+      "path": "data/episode-152/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9329,
+      "mtime_ns": 1793503974340841000
+    },
+    {
+      "path": "data/episode-152/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793503974347929919
+    },
+    {
+      "path": "data/episode-153/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4582093,
+      "mtime_ns": 1793503982938686482
+    },
+    {
+      "path": "data/episode-153/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9334,
+      "mtime_ns": 1793503982940880000
+    },
+    {
+      "path": "data/episode-153/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1863,
+      "mtime_ns": 1793503982948159944
+    },
+    {
+      "path": "data/episode-154/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4377874,
+      "mtime_ns": 1793503991423797616
+    },
+    {
+      "path": "data/episode-154/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9364,
+      "mtime_ns": 1793503991425677000
+    },
+    {
+      "path": "data/episode-154/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793503991433734264
+    },
+    {
+      "path": "data/episode-155/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4215622,
+      "mtime_ns": 1793503999599594725
+    },
+    {
+      "path": "data/episode-155/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9348,
+      "mtime_ns": 1793503999602606000
+    },
+    {
+      "path": "data/episode-155/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1866,
+      "mtime_ns": 1793503999608605072
+    },
+    {
+      "path": "data/episode-156/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4385020,
+      "mtime_ns": 1793504008648292490
+    },
+    {
+      "path": "data/episode-156/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9313,
+      "mtime_ns": 1793504008650423000
+    },
+    {
+      "path": "data/episode-156/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1849,
+      "mtime_ns": 1793504008657348426
+    },
+    {
+      "path": "data/episode-157/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 5270792,
+      "mtime_ns": 1793504018591913894
+    },
+    {
+      "path": "data/episode-157/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9316,
+      "mtime_ns": 1793504018593976000
+    },
+    {
+      "path": "data/episode-157/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1862,
+      "mtime_ns": 1793504018603676233
+    },
+    {
+      "path": "data/episode-158/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4351644,
+      "mtime_ns": 1793504027716661091
+    },
+    {
+      "path": "data/episode-158/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9347,
+      "mtime_ns": 1793504027720294000
+    },
+    {
+      "path": "data/episode-158/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1861,
+      "mtime_ns": 1793504027724884765
+    },
+    {
+      "path": "data/episode-159/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 4358262,
+      "mtime_ns": 1793504036561583448
+    },
+    {
+      "path": "data/episode-159/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9341,
+      "mtime_ns": 1793504036564123000
+    },
+    {
+      "path": "data/episode-159/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1865,
+      "mtime_ns": 1793504036570591641
+    },
+    {
+      "path": "data/episode-160/trace.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1848721,
+      "mtime_ns": 1793504047544293879
+    },
+    {
+      "path": "data/episode-160/rng-context.pkl.gz",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 9325,
+      "mtime_ns": 1793504047546388000
+    },
+    {
+      "path": "data/episode-160/receipt.json",
+      "category": "closed episode trace/RNG/receipt or first qualification",
+      "bytes": 1859,
+      "mtime_ns": 1793504047548923587
+    }
+  ],
+  "structural_subtrees": [
+    {
+      "path": "data/episode-000/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-000/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-001/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-001/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-002/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-002/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-003/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-003/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-004/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-004/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-005/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-005/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-006/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-006/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-007/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-007/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-008/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-008/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-009/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-009/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-010/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-010/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-011/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-011/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-012/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-012/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-013/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-013/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-014/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-014/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-015/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-015/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-016/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-016/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-017/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-017/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-018/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-018/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-019/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-019/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-020/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-020/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-021/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-021/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-022/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-022/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-023/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-023/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-024/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-024/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-025/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-025/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-026/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-026/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-027/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-027/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-028/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-028/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-029/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-029/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-030/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-030/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-031/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-031/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-032/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-032/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-033/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-033/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-034/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-034/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-035/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-035/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-036/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-036/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-037/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-037/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-038/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-038/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-039/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-039/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-040/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-040/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-041/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-041/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-042/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-042/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-043/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-043/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-044/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-044/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-045/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-045/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-046/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-046/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-047/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-047/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-048/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-048/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-049/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-049/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-050/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-050/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-051/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-051/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-052/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-052/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-053/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-053/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-054/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-054/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-055/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-055/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-056/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-056/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-057/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-057/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-058/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-058/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-059/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-059/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-060/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-060/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-061/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-061/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-062/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-062/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-063/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-063/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-064/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-064/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-065/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-065/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-066/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-066/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-067/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-067/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-068/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-068/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-069/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-069/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-070/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-070/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-071/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-071/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-072/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-072/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-073/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-073/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-074/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-074/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-075/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-075/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-076/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-076/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-077/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-077/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-078/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-078/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-079/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-079/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-080/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-080/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-081/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-081/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-082/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-082/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-083/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-083/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-084/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-084/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-085/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-085/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-086/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-086/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-087/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-087/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-088/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-088/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-089/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-089/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-090/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-090/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-091/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-091/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-092/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-092/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-093/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-093/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-094/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-094/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-095/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-095/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-096/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-096/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-097/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-097/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-098/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-098/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-099/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-099/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-100/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-100/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-101/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-101/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-102/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-102/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-103/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-103/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-104/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-104/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-105/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-105/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-106/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-106/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-107/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-107/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-108/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-108/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-109/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-109/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-110/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-110/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-111/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-111/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-112/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-112/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-113/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-113/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-114/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-114/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-115/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-115/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-116/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-116/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-117/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-117/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-118/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-118/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-119/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-119/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-120/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-120/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-121/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-121/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-122/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-122/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-123/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-123/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-124/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-124/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-125/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-125/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-126/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-126/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-127/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-127/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-128/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-128/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-129/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-129/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-130/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-130/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-131/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-131/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-132/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-132/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-133/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-133/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-134/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-134/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-135/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-135/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-136/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-136/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-137/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-137/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-138/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-138/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-139/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-139/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-140/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-140/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-141/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-141/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-142/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-142/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-143/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-143/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-144/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-144/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-145/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-145/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-146/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-146/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-147/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-147/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-148/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-148/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-149/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-149/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-150/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-150/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-151/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-151/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-152/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-152/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-153/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-153/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-154/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-154/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-155/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-155/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-156/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-156/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-157/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-157/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-158/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-158/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-159/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-159/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-160/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-160/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-161/raw-rpc",
+      "kind": "raw RPC subtree; contents NOT enumerated"
+    },
+    {
+      "path": "data/episode-161/physical-journal",
+      "kind": "fixed CostLedger JSON subtree; contents NOT enumerated"
+    }
+  ],
+  "unfamiliar": [],
+  "missing": [],
+  "actual_stat_calls": 626,
+  "maximum_stat_calls": 1200,
+  "metadata_elapsed_seconds": 13.746479255147278,
+  "metadata_deadline_seconds": 40,
+  "counter_refs": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/progress.json",
+      "sha256": "6487c10f1bc7b8fb48fc57a9115fee7306ff45157cd599ad7f0873d01076f908"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+      "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+    }
+  ],
+  "actor_inputs_copied_into_output": false,
+  "actor_inputs_scope": "No actor/checkpoint file class is allowed in the measured output tree. Original2.3GB actors remain external references; no actor payload loaded or enumerated here.",
+  "actual_recursive_du_bytes": null,
+  "raw_schema_confirmation_pending": true,
+  "no_runtime_or_storage_admission": true,
+  "limits": [
+    "Conservative logical-file-byte bound, not exact du or filesystem allocated-block measurement.",
+    "Known source-written rawRPC and six-field CostLedger subtrees are structurally bounded without enumeration.",
+    "Any unknown shallow file/directory class or exceeded metadata deadline leaves the proof held.",
+    "No raw/journal payload forest, array/checkpoint/model deserialization, tests, simulator or new allocation."
+  ]
+}

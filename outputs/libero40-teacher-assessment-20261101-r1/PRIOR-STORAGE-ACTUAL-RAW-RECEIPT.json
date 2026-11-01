@@ -1,0 +1,106 @@
+{
+  "format": "libero40_assessment_prior_storage_size_proof_v1",
+  "proof_complete": true,
+  "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+  "prior_output_root": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1",
+  "raw_measurement": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/RAW-RPC-SIZES-METADATA.json",
+    "sha256": "9783939900d75a1f52496ff43fc534e687b2c0f737c6fe1cdf53aad2105843c3",
+    "bytes": 968428
+  },
+  "raw_reader": {
+    "git_commit": "6983e8d9",
+    "git_blob": "9af19b49a383ce54b1a155f7e94f904d61f99602",
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/RAW-RPC-SIZES-READER.py",
+    "sha256": "343758d19142ec53cde2226ae796a4728820d2fd95489cf87a93f0f3257b2e30",
+    "bytes": 3187
+  },
+  "earlier_non_RPC_measurement": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/PRIOR-STORAGE-BOUND-METADATA.json",
+    "sha256": "47b3dfd4417f9a2e4feeb316399f47150980dd6835fad8943c73706876e5cfbc",
+    "bytes": 164580
+  },
+  "earlier_source_counter_receipt": {
+    "path": "outputs/libero40-teacher-assessment-20261101-r1/PRIOR-STORAGE-BOUND-RECEIPT.json",
+    "sha256": "57848cd706f92a7ef7b69f005feaef781babf29ed70951c734dbb48f6dd7f916",
+    "bytes": 5674
+  },
+  "source_code_basis": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_teacher_assessment.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "e207850a72b6781b7b53b157d0d556782320f03e",
+      "sha256": "fc5274d39990d569cd201a5e45f94b15dafc6e3fb23b50d8cca2147bc13b3ef6",
+      "bytes": 31594,
+      "relevant_lines": "246-343: one trace/RNG/receipt percomplete role; qualification firstonly; no actor/replay payload outputcopy"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_memory_replication.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "f01ed22113d7b0d257cf2919ee7bc5b96f488f36",
+      "sha256": "9a6f798ec54cd7ffafb0a541d9d370fb878fe30fed634a55f09bc8ee29984be6",
+      "bytes": 21128,
+      "relevant_lines": "95-138: gzipprotocol5; exactly1inference+1outcome perchunk and1reset perphysicalreset"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_source40_evaluate.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "c2cd854a2f9cf6dbc5ada55afd100e6a9ddbe73a",
+      "sha256": "84a935139b477dd97012f37881e313fa5386d1f194ea084fbce88d1766db735d",
+      "bytes": 34273,
+      "relevant_lines": "150-196: fixed6key atomicCostLedger JSON perRPC;254-340: H10/7D finitecommands, onlyfinalchunkcanbefewerthan10"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/vla_libero.py",
+      "source_commit": "7ef8a62058773201e85c8b2ec26bf3847ff15026",
+      "git_blob": "9ff9e835d303fecfc9bd852e87aba147e9bcc32d",
+      "sha256": "325ef2a8780309f45a488241d5f2478f64c36ad5718bf5bcd055d652f1910711",
+      "bytes": 66177,
+      "relevant_lines": "34-38: atomically replacedJSON;161-215: two256x256cameras/resetstate;216-233:10actionoutcome;300-310:motorbindingmetadata"
+    }
+  ],
+  "counter_refs": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/progress.json",
+      "sha256": "6487c10f1bc7b8fb48fc57a9115fee7306ff45157cd599ad7f0873d01076f908"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero40-teacher-assessment-20261101-r1/data/episode-161/physical-journal/1793504048251783216-reset.json",
+      "sha256": "865954945faaf3c45cf659dd3f0832904b4296592ba96c6d5945aeddba0aa6f3"
+    }
+  ],
+  "complete_role_count": 161,
+  "failed_zero_chunk_reset_count": 1,
+  "exact_raw_directories": 162,
+  "exact_raw_files": 5202,
+  "exact_raw_file_classes": {
+    "reset": 162,
+    "inference": 2520,
+    "outcome": 2520
+  },
+  "exact_raw_logical_bytes": 913049087,
+  "measured_non_RPC_file_count": 626,
+  "measured_non_RPC_logical_bytes": 479934242,
+  "journal_record_count_upper": 2754,
+  "journal_JSON_byte_bound": 4096,
+  "journal_structural_upper_bytes": 11280384,
+  "ledger_episode_ID_maximum_ASCII_characters": 61,
+  "prior_output_upper_bytes": 1404263713,
+  "original_phase_output_cap_bytes": 34359738368,
+  "new_child_residual_output_limit_bytes": 32955474655,
+  "raw_measurement_seconds": 30.42074760282412,
+  "unknown_raw_fileclasses": [],
+  "unknown_earlier_shallow_classes": [],
+  "previous626files_restatted": 0,
+  "payload_bytes_read": 0,
+  "payload_hashes_computed": 0,
+  "journals_read": 0,
+  "actual_recursive_du_bytes": null,
+  "actual_total_output_bytes_unknown": true,
+  "unsupported_old_1MiB_raw_bound_used": false,
+  "unsupported_old_conditional_receipt_preserved": true,
+  "new_evidence_staging_policy": "Any newproof/ticket/migration/R2files must count in the newchild residue; originalmeasurement is a closed priorprefix, not permission to add uncounted files.",
+  "GPU_retry_admitted": false,
+  "new_CPU_or_GPU_allocation": false,
+  "scope": "Conservative logical-file-byte priorupper: exactflatrawfiles + earliermeasured knownfiles + proven fixedCostLedgerJSONupper. No recursivewalk, deserialization, journalread or runtimecontrol. Scientific/R2resourceadmission remains separate."
+}
