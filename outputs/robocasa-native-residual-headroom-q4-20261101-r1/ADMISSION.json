@@ -1,0 +1,53 @@
+{
+  "status": "ADMITTED_NATIVE_HEADROOM_ONLY",
+  "owner": "/root",
+  "benchmark": "robocasa365",
+  "policy": "OriginalHuman30075000 frozen pi0.5",
+  "method": "zero residual baseline for subsequent matched simulator-reward versus Flora-reward residual PPO",
+  "resource": {
+    "gpus": 1,
+    "cpus": 32,
+    "ram_gib": 128,
+    "shm_gib": 16,
+    "minutes": 112,
+    "retry": false
+  },
+  "maximum_inclusive_gpu_seconds": 6780,
+  "maximum_all_in_control_commands": 17648,
+  "maximum_physics_ticks": 2258944,
+  "new_outputs_gib": 32,
+  "deadline": {
+    "outer_TERM": 6660,
+    "KILL": 6720,
+    "startup": 60,
+    "inner": 6420,
+    "closure": 180
+  },
+  "task_order": [
+    {
+      "task": "OpenDrawer",
+      "episodes": 8,
+      "horizon": 750,
+      "maximum_commands": 7024
+    },
+    {
+      "task": "ScrubCuttingBoard",
+      "episodes": 8,
+      "horizon": 1200,
+      "maximum_commands": 10624,
+      "only_if_first_native_headroom_fails": true
+    }
+  ],
+  "eligibility": "First task with1..5 native final-state successes/8 freezes before any Flora task scores; otherwise stop after named fallback.",
+  "qualification": "Carry all passed core/numerical tests, including reset-clock and native replay; no test repeats. Actual allocation probe then first planned native episode.",
+  "model_forward": "Frozen original native10-step/H50 sampler, three RGB; public features from same native prefix, no value head on motor.",
+  "physical_costs": "All constructor/reset controls, policy controls, failures and uncertain journal intents. Observed native control/simulation clocks, full horizon/no success termination. Max128reset commands/case and128physics ticks/control. No fake20Hz.",
+  "scientific_optimizer_updates": 0,
+  "old_unused_budgets_borrowed": false,
+  "all_previous_recoveries_preserved": true,
+  "original_maximum_inclusive_gpu_seconds": 7200,
+  "prior_closed_gpu_seconds": 322,
+  "remaining_unrequested_seconds": 98,
+  "same_original_clock": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-native-residual-headroom-20261101-r1/clock",
+  "diagnosis": "Q3 native lifecycle test passed; attempt journal correctly refused reused OpenDrawer identity. New task-run-specific journal name under SAME accounting root, retain prior128 unresolved. No episode or new physics in Q3. Resource wrapper correction only."
+}
