@@ -6,13 +6,13 @@
   "files": [
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/NATIVE-WORKLOAD.py",
-      "bytes": 10175,
-      "sha256": "f38068d2a12e4eaad960a0ecc8bd7bd8d2a92052631d12bdaad142fd5ceb8b1e"
+      "bytes": 10353,
+      "sha256": "f27187954017d741433796cdb8966965a6986d391b8ac09b703c333c313a99ab"
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/NATIVE-COMMAND.sh",
       "bytes": 3325,
-      "sha256": "adfe8309a579d57ce449222cd161ad26e21aae35f993fc474d0521b3b635f9da"
+      "sha256": "995b9d6da2b5a914e7ec65f01d9f4d055d825843c8babea207c5194f093ee3ff"
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-TEMPLATE.json",
@@ -35,5 +35,17 @@
     "common_inclusive_GPU_seconds": 57600,
     "S_inclusive_GPU_seconds": 172800
   },
-  "final_recovery": "Source controller saves common zero-update reference or S actor/critic/Adam/global-private RNG/motor/case final checkpoint, then final500 evaluations. No claim that this whole production path has run."
+  "final_recovery": "Source controller saves common zero-update reference or S actor/critic/Adam/global-private RNG/motor/case final checkpoint, then final500 evaluations. No claim that this whole production path has run.",
+  "rollout_execution_update": {
+    "human_instruction": "update that: use measured eight environments per GPU for future matched PPO collection",
+    "config": "configs/native_ppo/robocasa_residual_execution.json",
+    "rollout_lanes_per_gpu": 8,
+    "policy_copies_per_gpu": 1,
+    "global_training_episodes": 80,
+    "CPU_per_node": 64,
+    "RAM_GiB_per_node": 256,
+    "gpus_per_node": 2,
+    "qualification": "outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json",
+    "scope": "Future source-bound allocations only; existing run pins and checkpoints are unchanged. Continuous lane refill, original case/chunk plans and record order."
+  }
 }

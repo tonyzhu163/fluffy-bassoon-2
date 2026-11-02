@@ -4,7 +4,7 @@
   "policy_copies_per_gpu": 1,
   "global_training_episodes_preserved": 80,
   "per_task_episodes_preserved": 16,
-  "changes": "Batched shared motor; shrink completed native lanes; serial case/chunk record order and per-case random draws; pending full-bank barrier and complete recovery.",
+  "changes": "Existing main continuous lane refill/shared motor, full native horizons, chronological records and per-case draws, pending full-bank barrier and complete recovery; no duplicate collector.",
   "active_jobs": "All existing active/ended worktrees and run profiles remain unchanged; no sampler migration implicit in a checkpoint resume.",
   "maximum_additional_GPUs": 0,
   "CPU_qualification": {
@@ -16,10 +16,17 @@
       "tests/test_robocasa_residual.py::test_mixed_task_native_horizons_recover_only_at_full_episode_boundary",
       "tests/test_robocasa_residual.py::test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint",
       "tests/test_residual_parallel.py::test_uneven_worker_results_merge_all_episodes_and_preserve_recovery"
-    ]
+    ],
+    "consolidation": "Consolidate main continuous collector with safety/record/next-Adam/recovery cases; preserve prototype attempt XML as historical only."
   },
   "Flora": "Same lane count required in both future arms; minimum native free memory after scorer warmup27408MiB. Actual simultaneous Flora+8lane GPU execution remains unqualified; guard fails before rollout if insufficient.",
   "optimizer": "Do not alter configured PPO epochs, minibatches, optimizer or global rollout count.",
   "experiment_GPU_limit": 40,
-  "development_container_excluded": true
+  "development_container_excluded": true,
+  "future_per_two_GPU_node": {
+    "CPU": 64,
+    "RAM_GiB": 256,
+    "SHM_GiB": 16,
+    "reason": "Match the measured eight-lane standalone capacity configuration."
+  }
 }

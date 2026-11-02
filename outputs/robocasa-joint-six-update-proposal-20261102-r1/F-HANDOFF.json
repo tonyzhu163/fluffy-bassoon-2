@@ -52,7 +52,7 @@
     "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
   },
   "measured_annotation": "Five unique50 banks complete;250fresh requests in156.52s progressspan after505\u2013521s cold engine. This is not a joint80 rollout/annotation/update ETA.",
-  "memory": "Three-view measured isolatedpeak77625MiB +observedpolicyphysical9344 +reserve8192 =95161 of97887; no actualcolocation/lifetimepeakclaim. All8warmreadyfree>=17536 required before first retained80-case update.",
+  "memory": "Eight-lane standalone sampled peak19216MiB plus8192MiB reserve requires27408MiB free AFTER actual scorer warmup. Actual eight-lane Flora colocation remains unqualified. Existing isolated scorer peak77625MiB leaves insufficient space at unchanged utilization; fail before rollout if this guard is not met.",
   "unresolved_dispatch": [
     "Actualhuman_action_authority ref with allow_joint_stage_actions/max2500000/oldspendpreserved.",
     "Actualhuman_task_authority ref equal Counter74 calibrationexception; existinggo:false preserved.",
@@ -67,7 +67,7 @@
     "gpus": 8,
     "nodes": 4,
     "gpus_per_node": 2,
-    "CPU_per_node": 32,
+    "CPU_per_node": 64,
     "RAM_GiB_per_node": 256,
     "SHM_GiB_per_node": 16,
     "minutes": 359,
@@ -89,13 +89,13 @@
   "files": [
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/F-WORKLOAD.py",
-      "bytes": 18265,
-      "sha256": "ded9b302eaa50f19e4c77e82bc6efb77d17ef82e245163e173e81315354065fd"
+      "bytes": 18523,
+      "sha256": "6035df51f4c37c8eca2c46d1f4c380caa1227eb902231427d7544c098e8b8026"
     },
     {
       "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/F-COMMAND.sh",
       "bytes": 2874,
-      "sha256": "076e609887e68223408a8a7336b7edf57c18afb3e7f994e6732ff6739d6a9954"
+      "sha256": "9eafdb4592834a8334368a79fa8642a830f8556c8a8e7b36f020c5fc8bffd278"
     }
   ],
   "binding_fields_required": [
@@ -121,5 +121,17 @@
     "issue": "After sixth serve_shard, ranks1..7 may exit0 before rank0 releases globalready. Globalready count is not a correct liveness condition for each individual worker.",
     "correction": "On first normal exit, require that worker six completed source-matched shard files, or an actual controller FINAL for legitimate earlystop. Memoize verified exits. Global80-label/pending/source barrier stays unchanged. Already exited owned process groups are treated as closed during TERM/KILL cleanup; other exceptions still propagate.",
     "qualification": "Static protocol/source/AST review only, no new tests or execution. No actual runtime failure occurred and no old active/ended run was changed."
+  },
+  "rollout_execution_update": {
+    "human_instruction": "update that: use measured eight environments per GPU for future matched PPO collection",
+    "config": "configs/native_ppo/robocasa_residual_execution.json",
+    "rollout_lanes_per_gpu": 8,
+    "policy_copies_per_gpu": 1,
+    "global_training_episodes": 80,
+    "CPU_per_node": 64,
+    "RAM_GiB_per_node": 256,
+    "gpus_per_node": 2,
+    "qualification": "outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json",
+    "scope": "Future source-bound allocations only; existing run pins and checkpoints are unchanged. Continuous lane refill, original case/chunk plans and record order."
   }
 }
