@@ -20,7 +20,7 @@ import numpy as np
 import torch
 
 from fluffy_bassoon.meta_rl.residual_ppo import (
-    ResidualActorCritic, ResidualPPOConfig, history_trial, stack_records, update,
+    ResidualActorCritic, ResidualPPOConfig, history_trial, ppo_config_record, stack_records, update,
 )
 from fluffy_bassoon.meta_rl.robocasa_residual import (
     FrozenRoboCasaMotor, RoboCasaResidualEnvironment, collect_pending,
@@ -266,14 +266,17 @@ def main():
         torch.cuda.empty_cache()
     bound = ResidualBound.from_std(action_std_from_norm_stats(norm_path), indices=range(6), fraction=.25, action_dim=12)
     torch.manual_seed(42)
-    config = ResidualPPOConfig(**profile["ppo"])
+    ppo_settings = dict(profile["ppo"])
+    if profile["mode"] in ("train", "common_before") and not profile.get("resume"):
+        ppo_settings.setdefault("target_kl", .02)
+    config = ResidualPPOConfig(**ppo_settings)
     if config.feature_dim != 2088 or config.residual_dim != 6:
         raise ValueError("Public proprio16 + first12 + mean12 + native pooled2048, six arm controls")
     policy = ResidualActorCritic(config).to("cuda").eval()
     optimizer = torch.optim.Adam(policy.parameters(), lr=config.learning_rate)
     generators = {"action": torch.Generator(device="cuda").manual_seed(profile["residual_seed"]),
                   "update": torch.Generator().manual_seed(profile["update_seed"])}
-    contract = dict(initializer=initializer, bound=asdict(bound), ppo=asdict(config), arm=profile["arm"],
+    contract = dict(initializer=initializer, bound=asdict(bound), ppo=ppo_config_record(config), arm=profile["arm"],
         task=profile["task"], source_commit=profile["source_commit"],
         motor_seed=profile["motor_seed"], residual_seed=profile["residual_seed"], update_seed=profile["update_seed"],
         features="normalized proprio16+base first12+mean12+same-prefix masked mean2048/RMS; fixed no fit")
@@ -293,7 +296,7 @@ def main():
             for key,tensor in sorted(policy.state_dict().items()):
                 fingerprint.update(json.dumps([key,str(tensor.dtype),list(tensor.shape)]).encode())
                 fingerprint.update(tensor.detach().cpu().contiguous().reshape(-1).view(torch.uint8).numpy().tobytes())
-            initial=dict(completed=True,policy_tensor_sha256=fingerprint.hexdigest(),ppo=asdict(config),
+            initial=dict(completed=True,policy_tensor_sha256=fingerprint.hexdigest(),ppo=ppo_config_record(config),
                 bound=asdict(bound),initializer=initializer,motor_seed=profile['motor_seed'],
                 residual_seed=profile['residual_seed'],update_seed=profile['update_seed'],optimizer_states=len(optimizer.state))
             if lanes != 1:
@@ -533,7 +536,14 @@ def main():
             labeled = install_terminal_labels(records, episodes, labels, arm=profile["arm"])
             write_new(output / f"UPDATE-STARTED-{iteration + 1:03d}.json", dict(
                 producing_pending_sha256=checkpoint_sha, effective_iteration=iteration + 1))
-            metrics = update(policy, optimizer, stack_records(labeled, device="cuda"), generator=generators["update"])
+            def report_epoch(row):
+                write_new(output / f"ppo-epoch-{iteration + 1:03d}-{row['epoch']:02d}.json",
+                          dict(iteration=iteration + 1, metrics=row))
+                progress.emit(event="ppo_epoch", phase="PPO_optimization", iteration=iteration + 1,
+                              ppo_diagnostics=row)
+
+            metrics = update(policy, optimizer, stack_records(labeled, device="cuda"),
+                             generator=generators["update"], epoch_callback=report_epoch)
             progress.emit(phase="PPO_update_complete", iteration=iteration + 1, physical_actions=journal.charged(),
                 policy_updates=iteration + 1, episodes_complete=(iteration + 1) * train_episodes, labels_complete=train_episodes,
                 ppo_diagnostics=metrics)

@@ -89,6 +89,27 @@ before the next:
 
 ## RoboCasa residual PPO rollout execution
 
+Fresh residual-PPO training and its common-before profile default to
+`target_kl=0.02`, unless explicitly configured otherwise. After each optimizer
+epoch, evaluate the current policy on the entire collected chunk batch and
+stop actor and critic optimization if the mean sampled KL from the behavior
+policy exceeds that threshold. Keep the completed epoch; this is early
+stopping, not rollback or a guarantee that final KL stays below the threshold.
+An initial check also rejects further optimization of an already over-threshold
+policy on a pending batch. Historical resumes preserve their saved setting;
+`target_kl=null` retains fixed-epoch optimization. The checkpoint contract
+includes any enabled threshold and rejects changing it during recovery.
+
+Each `ppo-epoch-III-EE.json` records full-batch KL, clip fraction, actor and
+critic losses, entropy, explained variance, pre-clipping gradient norms,
+optimizer-step counts and elapsed time. Epoch rows also stream into the
+progress log. The final update record includes requested/completed epochs,
+actual optimizer steps and sample passes, stop reason, initial/final policy
+diagnostics, and raw advantage/return statistics. Explained variance is null
+for constant returns. Existing top-level loss/KL values remain averages of
+pre-step optimization minibatches; use `final_metrics` for the final policy's
+KL and `epoch_metrics` for its evolution.
+
 Future matched joint runs use eight native environments per GPU and one shared
 frozen policy copy. The scientific batch stays at 80 complete episodes, 16 per
 training task; execution batching does not increase its size or change the

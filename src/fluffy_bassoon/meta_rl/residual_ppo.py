@@ -16,6 +16,7 @@ finished episode. Real computation and tests belong in allocated Linux jobs.
 
 from dataclasses import asdict, dataclass
 import math
+import time
 
 import numpy as np
 import torch
@@ -42,6 +43,9 @@ class ResidualPPOConfig:
     entropy_coef: float = 0.
     value_coef: float = .5
     max_grad_norm: float = 1.
+    # Mean sampled KL(old || new), checked over the full rollout after each
+    # optimization epoch. None preserves the historical fixed-epoch learner.
+    target_kl: float | None = None
 
     def __post_init__(self):
         counts = (self.feature_dim, self.residual_dim, self.width, self.layers, self.epochs, self.minibatch_size)
@@ -51,6 +55,9 @@ class ResidualPPOConfig:
                 or self.learning_rate <= 0 or self.max_grad_norm <= 0
                 or self.entropy_coef < 0 or self.value_coef < 0):
             raise ValueError("Invalid residual PPO configuration")
+        if self.target_kl is not None and (type(self.target_kl) not in (int, float)
+                or not math.isfinite(self.target_kl) or self.target_kl <= 0):
+            raise ValueError("target_kl must be a finite positive number or None")
 
 
 def _mlp(input_dim, width, layers, output_dim):
@@ -155,8 +162,17 @@ def stack_records(records, device=None):
                 ends=as_tensor("done", torch.bool)[:, None])
 
 
-def update(policy, optimizer, rollout, *, generator=None):
-    """Clipped PPO over flattened chunk decisions; returns mean metrics."""
+def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
+    """PPO with full-rollout epoch diagnostics and optional KL stopping.
+
+    Existing scalar loss/KL metrics remain sample-weighted averages of the
+    pre-step optimization minibatches. initial_metrics, epoch_metrics and
+    final_metrics instead evaluate a single policy on the entire rollout.
+    Stop both actor and critic after an epoch exceeds target_kl; the completed
+    epoch is retained, not rolled back. The target is a stopping threshold,
+    not a hard trust-region bound. No extra random draws enter diagnostics.
+    """
+    started = time.perf_counter()
     config = policy.config
     advantages, returns = generalized_advantages(rollout["rewards"], rollout["values"], rollout["ends"],
                                                  gamma=config.gamma, gae_lambda=config.gae_lambda)
@@ -165,36 +181,94 @@ def update(policy, optimizer, rollout, *, generator=None):
                 log_probs=rollout["log_probs"].reshape(-1), values=rollout["values"].reshape(-1),
                 advantages=advantages.reshape(-1), returns=returns.reshape(-1))
     advantage = flat["advantages"]
+    advantage_mean, advantage_std = float(advantage.mean()), float(advantage.std(unbiased=False))
     flat["advantages"] = (advantage - advantage.mean()) / (advantage.std(unbiased=False) + 1e-8)
     size, totals, count = len(advantage), {}, 0
+
+    def losses(index):
+        log_prob, entropy, value = policy.evaluate(flat["features"][index], flat["controls"][index])
+        log_ratio = log_prob - flat["log_probs"][index]
+        ratio = log_ratio.exp()
+        adv = flat["advantages"][index]
+        actor_loss = torch.maximum(-adv * ratio, -adv * ratio.clamp(1 - config.clip, 1 + config.clip)).mean()
+        old_value, target = flat["values"][index], flat["returns"][index]
+        clipped = old_value + (value - old_value).clamp(-config.clip, config.clip)
+        critic_loss = .5 * torch.maximum((value - target).square(), (clipped - target).square()).mean()
+        loss = actor_loss + config.value_coef * critic_loss - config.entropy_coef * entropy.mean()
+        metrics = dict(loss=loss, actor_loss=actor_loss, critic_loss=critic_loss,
+                       entropy=entropy.mean(), approximate_kl=((ratio - 1) - log_ratio).mean(),
+                       clip_fraction=((ratio - 1).abs() > config.clip).float().mean())
+        return loss, metrics, value, log_ratio
+
+    @torch.no_grad()
+    def full_rollout_metrics():
+        sums, predictions = {}, []
+        for begin in range(0, size, config.minibatch_size):
+            index = slice(begin, min(begin + config.minibatch_size, size))
+            _, metrics, value, log_ratio = losses(index)
+            # expm1 avoids cancellation when the policies are almost equal.
+            metrics["approximate_kl"] = (torch.expm1(log_ratio) - log_ratio).mean()
+            weight = len(value)
+            for key, metric in metrics.items():
+                scalar = float(metric)
+                if not math.isfinite(scalar):
+                    raise FloatingPointError(f"Nonfinite PPO diagnostic: {key}")
+                sums[key] = sums.get(key, 0.) + scalar * weight
+            predictions.append(value)
+        result = {key: value / size for key, value in sums.items()}
+        variance = flat["returns"].var(unbiased=False)
+        result["explained_variance"] = (float(1 - (flat["returns"] - torch.cat(predictions)).var(
+            unbiased=False) / variance) if float(variance) > 0 else None)
+        return result
+
+    initial_metrics = full_rollout_metrics()
+    final_metrics = initial_metrics
+    epoch_metrics, optimizer_steps = [], 0
+    early_stopped = config.target_kl is not None and initial_metrics["approximate_kl"] > config.target_kl
     policy.train()
-    for _ in range(config.epochs):
+    for epoch in range(config.epochs):
+        if early_stopped:
+            break
+        epoch_started = time.perf_counter()
         order = torch.randperm(size, generator=generator).to(advantage.device)
+        epoch_steps, gradient_norm_sum, gradient_norm_max = 0, 0., 0.
         for begin in range(0, size, config.minibatch_size):
             index = order[begin:begin + config.minibatch_size]
-            log_prob, entropy, value = policy.evaluate(flat["features"][index], flat["controls"][index])
-            log_ratio = log_prob - flat["log_probs"][index]
-            ratio = log_ratio.exp()
-            adv = flat["advantages"][index]
-            actor_loss = torch.maximum(-adv * ratio, -adv * ratio.clamp(1 - config.clip, 1 + config.clip)).mean()
-            old_value, target = flat["values"][index], flat["returns"][index]
-            clipped = old_value + (value - old_value).clamp(-config.clip, config.clip)
-            critic_loss = .5 * torch.maximum((value - target).square(), (clipped - target).square()).mean()
-            loss = actor_loss + config.value_coef * critic_loss - config.entropy_coef * entropy.mean()
+            loss, metrics, _, _ = losses(index)
             if not torch.isfinite(loss):
                 raise FloatingPointError("Nonfinite residual PPO loss")
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
-            nn.utils.clip_grad_norm_(policy.parameters(), config.max_grad_norm, error_if_nonfinite=True)
+            gradient_norm = float(nn.utils.clip_grad_norm_(policy.parameters(), config.max_grad_norm,
+                                                         error_if_nonfinite=True))
             optimizer.step()
-            metrics = dict(loss=loss, actor_loss=actor_loss, critic_loss=critic_loss,
-                           entropy=entropy.mean(), approximate_kl=((ratio - 1) - log_ratio).mean(),
-                           clip_fraction=((ratio - 1).abs() > config.clip).float().mean())
+            optimizer_steps += 1
+            epoch_steps += 1
+            gradient_norm_sum += gradient_norm
+            gradient_norm_max = max(gradient_norm_max, gradient_norm)
             for key, metric in metrics.items():
                 totals[key] = totals.get(key, 0.) + float(metric.detach()) * len(index)
             count += len(index)
+        final_metrics = full_rollout_metrics()
+        early_stopped = config.target_kl is not None and final_metrics["approximate_kl"] > config.target_kl
+        epoch_metrics.append(dict(epoch=epoch + 1, **final_metrics, optimizer_steps=epoch_steps,
+            cumulative_optimizer_steps=optimizer_steps, samples=size,
+            gradient_norm_mean=gradient_norm_sum / epoch_steps, gradient_norm_max=gradient_norm_max,
+            elapsed_seconds=time.perf_counter() - epoch_started, kl_threshold_exceeded=early_stopped))
+        if epoch_callback is not None:
+            epoch_callback(dict(epoch_metrics[-1]))
     policy.eval()
-    return {key: value / count for key, value in totals.items()}
+    result = ({key: value / count for key, value in totals.items()} if count else
+              {key: value for key, value in initial_metrics.items() if key != "explained_variance"})
+    result.update(samples=size, samples_processed=count, epochs_requested=config.epochs,
+        epochs_completed=len(epoch_metrics), optimizer_steps=optimizer_steps, target_kl=config.target_kl,
+        early_stopped=early_stopped,
+        stop_reason="target_kl" if early_stopped else "epochs_completed",
+        advantage_mean=advantage_mean, advantage_std=advantage_std,
+        return_mean=float(flat["returns"].mean()), return_std=float(flat["returns"].std(unbiased=False)),
+        initial_metrics=initial_metrics, final_metrics=final_metrics, epoch_metrics=epoch_metrics,
+        elapsed_seconds=time.perf_counter() - started)
+    return result
 
 
 def history_trial(records_by_update):
@@ -238,6 +312,14 @@ class HistoryResidualController:
         self.controller.observe(control, reward, done)
 
 
+def ppo_config_record(config):
+    """Keep disabled-KL contracts identical to pre-KL checkpoints."""
+    result = asdict(config)
+    if result["target_kl"] is None:
+        del result["target_kl"]
+    return result
+
+
 def config_record(config, bound):
     """Serializable contract for receipts."""
-    return dict(ppo=asdict(config), bound=asdict(bound))
+    return dict(ppo=ppo_config_record(config), bound=asdict(bound))
