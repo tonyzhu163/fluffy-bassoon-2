@@ -74,8 +74,7 @@ unchanged. [Before panels and qualification](../outputs/robocasa-eight-gpu-speed
 
 The persistent official scorer loaded once and completed all eight labels;
 two affected core numerical/reuse/cleanup cases passed on allocated Linux.
-This qualifies scorer execution, while Flora-reward training-batch/optimizer integration
-remains unexercised. A separate one-view throughput benchmark completed all
+This qualified scorer execution before the complete Flora training result below. A separate one-view throughput benchmark completed all
 eight batch settings: batch8 processed64replay requests in75.35seconds per
 GPU after about590seconds cold startup. Those repeated videos measure speed,
 not additional independent calibration cases or three-view performance. The eight-case result is descriptive development evidence,
@@ -131,6 +130,30 @@ one DrawerToCounter episode is false at600 and true at750: terminal positives
 are48 at600 versus49 at the original horizons. Stove's two successes were
 transient, with no final750 success in this partial panel. A600-step comparison
 requires matched Flora calibration. [Decision, episode values and closure](../outputs/robocasa-pi05-success-timing-20261102-r3/RESULT.md).
+
+The matched six-update OpenDrawer residual-PPO arms now have full50-case
+held-out after-training panels:
+
+| Reward used for PPO | OpenDrawer ID | CloseFridge OOD |
+| --- | ---: | ---: |
+| Simulator terminal success |34/50 (68%)|32/50 (64%)|
+| Official three-view Flora expected score |31/50 (62%)|28/50 (56%)|
+
+Flora did not exceed simulator PPO on these panels. This is one training task
+and one PPO source seed; it does not establish the cause of the difference or
+an OOD degradation relative to the untouched motor. The original before panel
+has only8 cases per split; its matching50+50 evaluation is being prepared.
+Do not substitute the separate50-case calibration bank for that baseline.
+The Flora arm completed384 TRAIN episodes with all384 official labels audited;
+its full5760-decision history exactly merges the preserved four-update prefix
+and the two-update recovery. The transient disk-monitor failure and partial
+fifth rollout remain charged:430,528 controls and46,384 GPU-s across the two
+Flora attempts, including DEV and final panels. Full actor/critic/Adam/sampler/RNG
+recoveries remain preserved. These histories support development of AD/DPT;
+they do not by themselves establish in-context adaptation.
+[Simulator panel audit](../outputs/robocasa-simulator-ppo-eval50-20261102-r1/TERMINAL-REVIEW.json),
+[Flora terminal audit](../outputs/robocasa-opendrawer-flora-resume-20261102-r1/TERMINAL-REVIEW.json),
+[original matching-panel contract](../outputs/robocasa-original-pi05-eval50-20261102-r1/PLAN.json).
 
 ## LIBERO
 

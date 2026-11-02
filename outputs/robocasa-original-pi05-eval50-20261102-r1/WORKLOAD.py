@@ -1,0 +1,180 @@
+"""Evaluate the original zero-residual pi0.5 on the SAME50 ID and50 OOD cases.
+
+No training, optimizer updates or checkpoint writes. Eight native workers use
+the original motor, residual tensors, native cases and evaluation seed streams.
+"""
+import copy
+import json
+import os
+from pathlib import Path
+import signal
+import socket
+import subprocess
+import sys
+import time
+
+import torch
+from fluffy_bassoon.meta_rl.rlinf_flora_ppo import sha, write_new
+from fluffy_bassoon.meta_rl.rlinf_flora_ppo_runtime import read_ref
+from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import rollout_migration_contract
+
+root, code, out = map(Path, (os.environ['TASK_ROOT'], os.environ['TASK_META'], os.environ['TASK_OUT']))
+binding_path = Path(os.environ['TASK_BINDINGS'])
+binding = read_ref(dict(path=str(binding_path), sha256=os.environ['TASK_BINDINGS_SHA256']))
+kind = 'evaluation'
+assert binding['stage']==kind and binding['status']=='ADMITTED'
+assert binding['source_commit']==os.environ['TASK_CODE_PIN']
+authority=read_ref(binding['human_action_authority'])
+assert authority['evaluation_only'] is True and authority['new_optimizer_updates']==0
+assert authority['ID_episodes']==authority['OOD_episodes']==50
+qualification=read_ref(binding['core_qualification'])
+assert qualification['completed'] is True and qualification['failures']==qualification['errors']==0
+for name,checksum in qualification['files'].items():assert sha(code/name)==checksum
+assert sha(binding['checkpoint']['path'])==binding['checkpoint']['sha256']
+node_rank, start = int(os.environ['RANK']), int(os.environ['TASK_STARTED'])
+worker_seconds = 3600
+slice_seconds = worker_seconds - 60
+closure = 300
+deadline = start + slice_seconds - closure
+ram_gib = 128
+action_cap = 100000
+output_gib = 24
+assert os.environ['WORLD_SIZE'] == '4' and os.environ['NPROC_PER_NODE'] == '2' and 0 <= node_rank < 4
+assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == 2
+if not os.environ.get('CUDA_VISIBLE_DEVICES'):
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+cpu = Path('/sys/fs/cgroup/cpu.max').read_text().split()
+assert int(cpu[0]) / int(cpu[1]) == 32 and int(Path('/sys/fs/cgroup/memory.max').read_text()) == ram_gib << 30
+assert subprocess.check_output(['git', '-C', str(code), 'rev-parse', 'HEAD'], text=True).strip() == binding['source_commit']
+assert not subprocess.check_output(['git', '-C', str(code), 'status', '--porcelain'], text=True).strip()
+# Actual namespace/output sizing and the protected old recoveries are checked
+# before admission. This child verifies that the admitted remaining space exists.
+storage = read_ref(binding['storage_proof'])
+assert storage['completed'] is True and storage['write_probe_pass'] is True
+assert storage['old_recoveries_preserved'] is True and storage['stage_supported_upper_bytes'] <= 256 << 30
+free = os.statvfs(out).f_bavail * os.statvfs(out).f_frsize
+assert free >= storage['remaining_output_reservation_bytes'] >= output_gib << 30
+write_probe = out / 'write-probe'
+with write_probe.open('x') as stream:
+    stream.write('fresh native joint namespace\n')
+    stream.flush()
+    os.fsync(stream.fileno())
+write_probe.unlink()
+probe = out / 'gpu-probe.json'
+subprocess.run([sys.executable, '-B', str(code / 'scripts/[train]gpu_probe.py'), '--expected-count', '2',
+    '--purpose', 'training', '--baige-container', '--baige-exclusive-training', '--output', str(probe)],
+    check=True, timeout=min(120, max(1, deadline - time.time())))
+devices = json.loads(probe.read_text())['devices']
+run = root / 'outputs' / os.environ['TASK_RUN']
+job, dispatch = run / 'job', run / 'job/dispatch'
+dispatch.mkdir(exist_ok=True)
+write_new(out / 'manifest.json', dict(node_rank=node_rank, hostname=socket.gethostname(),
+    source_commit=binding['source_commit'], allocated_start_unix=start, probe_path=str(probe), devices=devices,
+    cpus=32, ram_gib=ram_gib, free_bytes=free, quota=storage.get('quota', 'UNVERIFIED'),
+    human_action_authority=binding['human_action_authority'], binding_sha256=os.environ['TASK_BINDINGS_SHA256']))
+manifests = [job / f'node-{rank:02d}/manifest.json' for rank in range(4)]
+while not all(path.exists() for path in manifests):
+    if any((job / f'node-{rank:02d}/error.json').exists() for rank in range(4)):
+        raise RuntimeError('An owned native node failed before its manifest')
+    if time.time() >= min(start + 300, deadline):
+        raise TimeoutError('All four actual allocated nodes must advance before policy construction')
+    time.sleep(1)
+manifests = [json.loads(path.read_text()) for path in manifests]
+assert [m['node_rank'] for m in manifests] == list(range(4))
+assert all(m['source_commit'] == binding['source_commit'] and m['binding_sha256'] == os.environ['TASK_BINDINGS_SHA256'] for m in manifests)
+global_devices = [dict(d, node_rank=rank, probe_path=m['probe_path']) for rank, m in enumerate(manifests) for d in m['devices']]
+assert len(global_devices) == len({d['uuid'] for d in global_devices}) == 8
+deadline = min(m['allocated_start_unix'] for m in manifests) + slice_seconds - closure
+profile = copy.deepcopy(binding['policy_profile'])
+assert profile['task']=='OpenDrawer' and profile['heldout_evaluation_count']==50
+assert profile['iteration']==0 and profile['rollout_lanes_per_gpu']==1
+assert profile['evaluation_motor_seeds']['ID']==910100 and profile['evaluation_motor_seeds']['OOD']==1010100
+assert read_ref(binding['seed_audit'])['existing_S_F_actual_seed_schedules_equal'] is True
+initial=torch.load(binding['checkpoint']['path'],map_location='cpu',weights_only=False)
+assert initial['iteration']==0 and initial['stage']=='boundary' and not initial['optimizer']['state']
+assert torch.count_nonzero(initial['policy']['actor.4.weight'])==0
+assert torch.count_nonzero(initial['policy']['actor.4.bias'])==0
+del initial
+assert profile['checkpoint']==binding['checkpoint']['path'] and profile['checkpoint_sha256']==binding['checkpoint']['sha256']
+assert not any(profile.get(key) for key in ('resume','rollout_migration','prior_dev_evaluations'))
+native_env = dict(PYTHONPATH=str(code / 'src') + ':' + os.environ['TASK_RLINF'], RLINF_PATH=os.environ['TASK_RLINF'],
+    ROBOCASA_ASSETS_PATH=str(root / 'setups/robocasa365-native-20261101-r1/assets'),
+    OPENPI_DATA_HOME=str(root / 'setups/robocasa365-native-20261101-r1/cache/.cache/openpi'),
+    MUJOCO_GL='egl', PYOPENGL_PLATFORM='egl', ROBOCASA_NATIVE_OUTPUT=str(out),
+    ROBOCASA_PI05_TORCH_MODEL=profile['initializer']['model_directory'],
+    ROBOCASA_PI05_NATIVE_NORM=profile['initializer']['norm_path'])
+write_new(out / 'node-profile.json', dict(node_rank=node_rank, devices=devices, dispatch_root=str(dispatch),
+    native_env=native_env, probe_path=str(probe), source_commit=binding['source_commit'], deadline_unix=deadline))
+service = subprocess.Popen([sys.executable, '-B', str(code / 'scripts/diagnostics/robocasa_residual_node.py'),
+    '--profile', str(out / 'node-profile.json')], start_new_session=True)
+def halt(signum, frame):
+    raise SystemExit(128 + signum)
+
+
+signal.signal(signal.SIGTERM, halt)
+signal.signal(signal.SIGINT, halt)
+try:
+    if node_rank == 0:
+        profile.update(mode='evaluate', arm='S',
+            source_commit=binding['source_commit'], output=str(run / 'policy'), monitoring_root=str(run / 'monitoring'),
+            accounting_root=str(run / 'actions'), attempt=os.environ['TASK_RUN'], episode_id_namespace='original-eval50-',
+            allocated_start_unix=start, deadline_unix=deadline, scheduler_seconds=slice_seconds, closure_seconds=closure,
+            maximum_all_in_actions=action_cap, rollout_devices=global_devices, parallel_controller_cpu_offload=True,
+            actual_gpu_probe=dict(path=str(probe), sha256=sha(probe)), distributed_rollout_root=str(dispatch),
+            gpu_allocation_starts_unix=[m['allocated_start_unix'] for m in manifests for _ in range(2)])
+        write_new(out / 'policy-profile.json', profile)
+        environment = dict(os.environ, **native_env)
+        environment.update(CUDA_VISIBLE_DEVICES=global_devices[0]['visibility_token'], LYCO_BAIGE_GPU_MAP=str(probe),
+            LYCO_BAIGE_ISOLATED_UUID=global_devices[0]['uuid'], MUJOCO_EGL_DEVICE_ID='0')
+        subprocess.run([sys.executable, '-B', str(code / 'scripts/diagnostics/robocasa_residual_ppo.py'),
+            '--profile', str(out / 'policy-profile.json')], env=environment, check=True,
+            timeout=max(1, deadline - time.time()))
+        checkpoint=binding['checkpoint']
+        assert sha(checkpoint['path'])==checkpoint['sha256']
+        panels={phase:json.loads((run/f'policy/{phase}-000/evaluation.json').read_text()) for phase in ('ID','OOD')}
+        assert all(row['episodes']==50 for row in panels.values())
+        assert not list((run/'policy').glob('update-*.json'))
+        assert not list((run/'policy').glob('boundary-*.pt'))
+        # Verify all1650 actual H50 decisions executed the untouched motor.
+        import numpy as np
+        decisions=0
+        for phase,expected in [('ID',750),('OOD',900)]:
+            results=sorted((run/f'policy/{phase}-000/videos').glob('parallel-*/rank-*/result.pt'))
+            assert len(results)==8
+            for path in results:
+                result=torch.load(path,map_location='cpu',weights_only=False)
+                for row in result['records']:
+                    assert np.count_nonzero(row['control'])==0
+                    assert np.array_equal(row['base_chunk'],row['executed_chunk'])
+                    decisions+=1
+        assert decisions==1650
+        write_new(run/'ZERO-RESIDUAL-VERIFIED.json',dict(completed=True,decisions=decisions,
+            unchanged_base_chunk=True,zero_executed_residual=True,checkpoint=binding['checkpoint']))
+        actual_bytes=sum(path.stat().st_size for path in run.rglob('*') if path.is_file())
+        assert actual_bytes<=output_gib<<30
+        write_new(run/'COMPLETED.json',dict(completed=True,evaluation_only=True,new_optimizer_updates=0,
+            checkpoint=checkpoint,checkpoint_hash_unchanged=True,panels=panels,
+            actual_output_bytes=actual_bytes,authority=binding['human_action_authority']))
+        write_new(dispatch / 'shutdown.json', dict(completed=True))
+    else:
+        while not (dispatch / 'shutdown.json').exists():
+            if service.poll() is not None:
+                raise RuntimeError('Owned native node service failed')
+            if time.time() >= deadline:
+                raise TimeoutError('Finite native node closure')
+            time.sleep(1)
+        if json.loads((dispatch / 'shutdown.json').read_text())['completed'] is not True:
+            raise RuntimeError('Coordinator failed; preserve partial evidence and action charge')
+except BaseException as error:
+    write_new(out / 'error.json', dict(error=f'{type(error).__name__}: {error}'))
+    if node_rank == 0 and not (dispatch / 'shutdown.json').exists():
+        write_new(dispatch / 'shutdown.json', dict(completed=False, error=str(error)))
+    raise
+finally:
+    if service.poll() is None:
+        service.terminate()
+    try:
+        service.wait(timeout=30)
+    except subprocess.TimeoutExpired:
+        os.killpg(service.pid, signal.SIGKILL)
+        service.wait()

@@ -1,0 +1,15 @@
+{
+  "task": "Evaluate the untouched original pi0.5 on the full matching panel",
+  "human_instruction": "evalute it using the full matching panel, also did you ensure the random seed for all these are consistent?",
+  "evaluation_only": true,
+  "new_optimizer_updates": 0,
+  "ID": {"task": "OpenDrawer", "episodes": 50, "native_seed_first": 410100, "motor_seed": 910100, "horizon": 750},
+  "OOD": {"task": "CloseFridge", "episodes": 50, "native_seed_first": 510100, "motor_seed": 1010100, "horizon": 900},
+  "baseline": "The preserved iteration-zero residual head has exactly zero output weights and bias; deterministic evaluation reproduces the frozen motor. Verify all1650 executed decision chunks equal the original base chunks.",
+  "execution": {"logical_workers": 8, "GPUs": 8, "nodes": 4, "GPUs_per_node": 2, "CPU_per_node": 32, "RAM_GiB_per_node": 128, "SHM_GiB_per_node": 16, "lanes_per_GPU": 1, "scheduler_minutes": 59, "worker_seconds": 3600, "maximum_GPU_seconds": 28800, "automatic_retry": false},
+  "maximum_all_in_actions": 100000,
+  "expected_full_horizon_controls": 82500,
+  "maximum_output_GiB": 24,
+  "seed_audit": "Compare all actual S/F episode cases and per-chunk noise seeds. Bind the original evaluation to the identical canonical banks and motor draw schedules; verify its actual results after completion.",
+  "interpretation": "Report paired original/S/F outcomes. The old 8-case baseline and separate 50-case calibration bank do not replace this matching panel. OOD degradation is not established until this baseline finishes."
+}
