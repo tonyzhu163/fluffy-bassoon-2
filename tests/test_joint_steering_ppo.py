@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.joint_steering_ppo import (
-    boundary_state, chronological_records, make_policy, normalize_first_bank, restore_boundary,
+    boundary_state, chronological_records, make_policy, normalize_first_bank, qualify_optimizer_restore, restore_boundary,
     summarize_episodes,
 )
 from fluffy_bassoon.meta_rl.residual_ppo import (
@@ -131,6 +131,16 @@ def test_actual_1152_coefficient_actor_update_and_next_update_restore():
 
     first = update(policy, optimizer, rollout(), generator=generator)
     assert first["optimizer_steps"] >= 1 and np.isfinite(first["final_metrics"]["approximate_kl"])
+    rng_before = torch.get_rng_state().clone()
+    weights_before = deepcopy(policy.state_dict())
+    from fluffy_bassoon.meta_rl.joint_steering_ppo import spec_arguments
+    qualification = qualify_optimizer_restore(policy, optimizer, generator, features,
+        arm="kv_all_layers", interface_spec=spec_arguments("kv_all_layers"))
+    assert qualification["next_update_exact"] and qualification["optimizer_steps_each"] >= 1
+    assert qualification["physical_controls"] == 0 and qualification["live_learner_unchanged"]
+    for key, value in policy.state_dict().items():
+        torch.testing.assert_close(value, weights_before[key], rtol=0, atol=0)
+    torch.testing.assert_close(torch.get_rng_state(), rng_before, rtol=0, atol=0)
     saved = deepcopy(boundary_state(policy, optimizer, generator, arm="kv_all_layers",
         iteration=1, sequence=4, worker_states={}, escrow={}))
     second_rollout = rollout()

@@ -23,7 +23,7 @@ import torch
 
 from .joint_steering_ppo import (
     DEV_ROUNDS, UPDATES, JointActionJournal, boundary_state, case_key, cases_for,
-    chronological_records, make_policy, normalize_first_bank, restore_boundary,
+    chronological_records, make_policy, normalize_first_bank, qualify_optimizer_restore, restore_boundary,
     sha_file, spec_arguments, summarize_episodes, write_json,
 )
 from .joint_steering_ppo_worker import _save
@@ -334,6 +334,11 @@ def run_master(run, profile, *, deadline, resume=False):
                     if status["ppo"]["optimizer_steps"] < 1:
                         raise ValueError("No optimizer update occurred; diagnose behavior likelihoods before advancing the round")
                     iteration = requested_iteration
+                    if requested_iteration == 1:
+                        status["gpu_recovery_qualification"] = qualify_optimizer_restore(policy, optimizer,
+                            generator, rollout["features"].reshape(-1, policy.config.feature_dim),
+                            arm=arm, interface_spec=specification)
+                        write_json(run / "GPU-ADAM-RECOVERY.json", status["gpu_recovery_qualification"])
                 else:
                     _save(run / "evaluations" / f"{phase}-{requested_iteration:03d}.pt",
                           dict(episodes=episodes, summary=status["summary"], policy_iteration=iteration))
@@ -355,14 +360,17 @@ def run_master(run, profile, *, deadline, resume=False):
                           completed_events=cursor, total_events=len(schedule))
             if phase == "train":
                 future = schedule[cursor:]
-                projected_remaining = sum(float(np.mean(measured_seconds.get(
-                    "test_before" if name == "test_after" else name, [30.]))) for name, _ in future)
+                def estimate_phase(name):
+                    values = measured_seconds.get("test_before" if name == "test_after" else name, [30.])
+                    # Round1 includes one-time normalization/recovery work.
+                    return float(np.mean(values[1:] if name == "train" and len(values) > 1 else values))
+                projected_remaining = sum(estimate_phase(name) for name, _ in future)
                 status["projected_remaining_seconds"] = projected_remaining
                 status["projected_all_attempt_gpu_hours"] = (profile["prior_conservative_gpu_seconds"] +
                     8 * (time.time() - profile["submitted_unix"] + projected_remaining + 120)) / 3600
             write_json(run / "metrics" / f"event-{cursor:03d}.json", status)
             write_json(run / "PROGRESS.json", status)
-            if phase == "train" and status["projected_all_attempt_gpu_hours"] > 10:
+            if phase == "train" and iteration >= 2 and status["projected_all_attempt_gpu_hours"] > 10:
                 write_json(run / "PAUSED.json", dict(completed=False, reason="measured_budget_decision",
                     iteration=iteration, sequence=cursor, checkpoint=reference,
                     projected_all_attempt_gpu_hours=status["projected_all_attempt_gpu_hours"],

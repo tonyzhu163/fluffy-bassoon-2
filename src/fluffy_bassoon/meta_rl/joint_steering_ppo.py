@@ -302,3 +302,55 @@ def restore_boundary(state, policy, optimizer, generator, *, arm, interface_spec
     from .rlinf_native_ppo import restore_rng
     restore_rng(state["global_rng"])
     return state["iteration"], state["sequence"], state["worker_states"]
+
+
+def qualify_optimizer_restore(policy, optimizer, generator, features, *, arm, interface_spec):
+    """Compare two next Adam updates on the actual device without advancing PPO.
+
+    The shadow batch uses retained public TRAIN features with synthetic actor
+    draws/rewards. It never enters the scientific history or controls an env.
+    The live actor, optimizer, sampler and global RNG remain unchanged.
+    """
+    from .rlinf_native_ppo import restore_rng, tensor_hash
+    from .residual_ppo import update
+    saved = boundary_state(policy, optimizer, generator, arm=arm, iteration=1, sequence=0,
+        worker_states={}, escrow={}, interface_spec=interface_spec)
+    weight = next(policy.parameters())
+    observations = torch.as_tensor(features, device=weight.device, dtype=weight.dtype)[:24]
+    if len(observations) != 24:
+        raise ValueError("Recovery qualification requires24 retained public TRAIN feature rows")
+    try:
+        states, diagnostics, rollout = [], [], None
+        for _ in range(2):
+            shadow = ResidualActorCritic(policy.config).to(weight.device)
+            adam = torch.optim.Adam(shadow.parameters(), lr=policy.config.learning_rate)
+            sampler = torch.Generator()
+            restore_boundary(saved, shadow, adam, sampler, arm=arm, interface_spec=interface_spec)
+            if rollout is None:
+                noise = torch.randn((24, policy.config.residual_dim),
+                    generator=torch.Generator().manual_seed(921019)).to(weight.device)
+                controls, logs, values = shadow.act(observations, action_noise=noise)
+                ends = torch.tensor([False] * 5 + [True], device=weight.device)[:, None].repeat(4, 1)
+                rollout = dict(features=observations[:, None], controls=controls[:, None],
+                    log_probs=logs[:, None], values=values[:, None], ends=ends,
+                    rewards=ends.to(weight.dtype))
+            diagnostic = update(shadow, adam, rollout, generator=sampler)
+            if diagnostic["optimizer_steps"] < 1:
+                raise ValueError("Shadow recovery check did not exercise an Adam step")
+            diagnostics.append(diagnostic["final_metrics"])
+            states.append(tensor_hash(dict(policy=shadow.state_dict(), optimizer=adam.state_dict(),
+                                           generator=sampler.get_state())))
+        if states[0] != states[1] or diagnostics[0] != diagnostics[1]:
+            raise ValueError("Restored next Adam update differs from its same-device reference")
+        live = tensor_hash(dict(policy=policy.state_dict(), optimizer=optimizer.state_dict(),
+                                generator=generator.get_state()))
+        before = tensor_hash({key: saved[key] for key in ("policy", "optimizer", "generator")})
+        if live != before:
+            raise ValueError("Shadow qualification modified the scientific learner")
+        return dict(completed=True, device=str(weight.device), feature_dim=policy.config.feature_dim,
+            steering_dim=policy.config.residual_dim, next_update_exact=True,
+            live_learner_unchanged=True, optimizer_steps_each=diagnostic["optimizer_steps"],
+            final_metrics=diagnostics[0], state_sha256=states[0], physical_controls=0,
+            scope="Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO")
+    finally:
+        restore_rng(saved["global_rng"])
