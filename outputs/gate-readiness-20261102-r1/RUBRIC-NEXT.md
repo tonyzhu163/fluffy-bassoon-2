@@ -1,5 +1,12 @@
 # Continue rubric iteration; compare explicit binary completion
 
+The subsequent [twenty-video failure sample](../robocasa-flora-rubric-failure-sample-20261102-r1/RESULT.md)
+has now tested two iterations of revision1 and matched direct-binary outputs.
+The best graded wording reduces false successes12→7 on fourteen selected
+failures; binary and numerical-predicate versions perform worse. The exact
+draft below was not run verbatim and is not qualified. Continue from that
+sample's case-level findings rather than interpreting this proposal as a result.
+
 Human correction,2026-11-02: the central work is to encode the simulator's
 task semantics accurately and keep iterating. Failure of revision1 and of
 terminal thresholding does not end wording work. Binary labels are a proposed
@@ -38,10 +45,12 @@ the simulator's one-frame first success is the reference.
 **OpenDrawer**
 
 ```text
-The requested drawer must be fully open, near the end of its designed travel.
-The simulator defines success as an opening of at least95% of full travel
-for every joint belonging to that target drawer mechanism. A drawer that is
-visibly open but still only partly extended does not satisfy the condition.
+Identify the upper target drawer on the side named relative to the robot's
+starting position, rather than camera-image left or right. The drawer has
+one slide joint. The simulator requires outward displacement divided by
+0.55 times the drawer fixture depth to be at least0.95; this is not a check
+that every drawer in a stack is open. A visible gap or exposed interior
+does not by itself establish that the target has reached this opening region.
 The robot may still be touching the drawer: releasing it or moving the hand
 away is not required.
 ```
