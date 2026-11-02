@@ -77,7 +77,14 @@ def main():
         require_time(p)
         progress.emit(phase='baseline_only_official_engine_loading', measurement_only=True)
         cold = time.monotonic()
-        worker = TerminalWorker(p['model'],batch_size=8,gpu_memory_utilization=.78)
+        worker = TerminalWorker(p['model'],batch_size=p['batch_size'],gpu_memory_utilization=p['gpu_memory_utilization'])
+        warmup_count = 0
+        if p.get('warmup_episodes'):
+            warmup = read_ref(p['warmup_episodes'])
+            if len(warmup) != 8:
+                raise ValueError('Eight real full-protocol videos required for a colocated warmup')
+            score(worker,warmup,output/'warmup-scores.jsonl',p['model_receipt'],p['warmup_protocol'])
+            warmup_count = len(warmup)
         memory = subprocess.check_output(['nvidia-smi','--id='+selected,
             '--query-gpu=uuid,memory.used,memory.free,memory.total','--format=csv,noheader,nounits'],
             text=True,timeout=5).strip().split(',')
@@ -86,7 +93,8 @@ def main():
         write_new(exchange/'engines'/f'rank-{rank:02d}.json',dict(completed=True,
             mode=p['mode'],annotation_rank=rank,source_commit=p['source_commit'],gpu_uuid=selected,
             model_revision=FLORA_MODEL,code_commit=FLORA_CODE,profile_sha256=digest(p),
-            batch_size=8,tensor_parallel_size=1,gpu_memory_utilization=.78,
+            batch_size=p['batch_size'],tensor_parallel_size=1,gpu_memory_utilization=p['gpu_memory_utilization'],
+            warmup_videos=warmup_count,
             cold_engine_seconds=time.monotonic()-cold,
             memory_snapshot=dict(used_mib=float(memory[1]),free_mib=float(memory[2]),total_mib=float(memory[3])),
             model_load_count=1,robot_actions=0))
