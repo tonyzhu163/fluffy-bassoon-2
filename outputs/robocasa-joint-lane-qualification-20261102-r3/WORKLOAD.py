@@ -75,7 +75,7 @@ try:
     candidates=[dict(lanes=n,required_free_mib=native_rollout_memory_reserve_mib(dict(rollout_lanes_per_gpu=n)),
         measured_free_mib=free,admitted=free>=native_rollout_memory_reserve_mib(dict(rollout_lanes_per_gpu=n))) for n in (8,4)]
     write_new(out/'headroom.json',candidates)
-    selected=8 if free>=19216+512 else 4 if free>=13781+512 else None
+    selected=8 if candidates[0]['admitted'] else 4 if free>=13781+512 else None
     if selected is None:
         result.update(completed=True,selected_lanes=None,reason='Neither8nor4 fits measured standalone peak plus512MiB measurement margin',headroom=candidates)
     else:
