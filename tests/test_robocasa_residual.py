@@ -369,6 +369,8 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
     checkpoints = {}
     def checkpoint(slot, records, episode):
         checkpoints[slot] = (deepcopy(records), deepcopy(episode))
+        from fluffy_bassoon.meta_rl.warmstart import atomic_save
+        atomic_save(tmp_path / 'checkpoints' / 'episodes' / f'{slot}.pt', dict(records=records, episode=episode))
         records[0]['reward'] = 999.  # The hook cannot mutate the returned batch.
     lane_records, lane_episodes = collect_pending_lanes(policy, bound(), lane_motor,
         [env(tmp_path / "lanes") for _ in range(2)], planned_motor_seeds=seeds, planned_action_noise=noise,
@@ -386,6 +388,8 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
         assert lane["log_prob"] == serial["log_prob"]
     assert set(checkpoints) == set(range(len(cases)))
     for slot, (records, episode) in checkpoints.items():
+        saved = torch.load(tmp_path / 'checkpoints' / 'episodes' / f'{slot}.pt', map_location='cpu', weights_only=False)
+        assert saved['episode'] == episode and saved['records'][0]['reward'] == 0.
         assert len(records) == 12 and records[-1]['done'] and records[0]['episode_start']
         assert episode['id'] == lane_episodes[slot]['id']
         for key in ('features', 'control', 'base_chunk', 'executed_chunk'):
@@ -411,16 +415,32 @@ def test_complete_lane_is_checkpointed_before_sibling_failure(tmp_path, failed_l
         env.fail = lane == failed_lane
         environments.append(env)
     checkpoints = []
+    def checkpoint(slot, records, info):
+        from fluffy_bassoon.meta_rl.warmstart import atomic_save
+        atomic_save(tmp_path / 'recovery' / 'episodes' / f'{slot}.pt', dict(records=records, episode=info))
+        checkpoints.append((slot, records, info))
     policy = ResidualActorCritic(ResidualPPOConfig(42, 6, width=8))
     with pytest.raises(RuntimeError, match='Sibling step failed'):
         collect_pending_lanes(policy, bound(), FrozenRoboCasaMotor(LaneModel(), stats), environments,
             planned_motor_seeds=list(range(24)), deterministic=True,
-            episode_callback=lambda slot, records, info: checkpoints.append((slot, records, info)))
+            episode_callback=checkpoint)
     assert len(checkpoints) == 1 and checkpoints[0][0] == 1 - failed_lane
     assert len(checkpoints[0][1]) == 12 and checkpoints[0][1][-1]['done']
     assert checkpoints[0][2]['completed']
+    saved = torch.load(tmp_path / 'recovery' / 'episodes' / f'{1-failed_lane}.pt', map_location='cpu', weights_only=False)
+    assert len(saved['records']) == 12 and saved['records'][-1]['done'] and saved['episode']['completed']
     for env in environments:
         env.close()
+
+
+def test_atomic_episode_checkpoint_preserves_an_unresolved_partial(tmp_path):
+    from fluffy_bassoon.meta_rl.warmstart import atomic_save
+    path = tmp_path / 'episodes' / 'case.pt'
+    partial = path.with_suffix('.pt.partial'); partial.parent.mkdir()
+    partial.write_bytes(b'unresolved earlier write')
+    with pytest.raises(FileExistsError):
+        atomic_save(path, dict(records=[]))
+    assert not path.exists() and partial.read_bytes() == b'unresolved earlier write'
 
 
 def test_native_reset_child_cannot_keep_another_lanes_video_pipe_open():

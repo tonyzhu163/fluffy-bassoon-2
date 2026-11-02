@@ -36,6 +36,7 @@ def compatibility(family, contract):
 
 def atomic_save(path, payload):
     path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".partial")
     with temporary.open("xb") as stream:
         torch.save(payload, stream)
