@@ -1,0 +1,65 @@
+{
+  "checked_utc": "2026-11-02T11:58:47.178041+00:00",
+  "job_id": "job-al2ztuon33dz",
+  "state": "all_fresh_gates_passed_common_before_advancing",
+  "calibration_episodes": 250,
+  "calibration_grades": 250,
+  "calibration_policy_controls": 150000,
+  "gates": [
+    {
+      "task": "OpenDrawer",
+      "count": 50,
+      "successes": 31,
+      "native_success_rate": 0.62,
+      "AUROC": 0.933786078098472,
+      "gate_sha256": "9c3f3736ff0c6683ae3d6a159637a5e2987adaeebdaae6e3e380c3e925e448a7",
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "count": 50,
+      "successes": 28,
+      "native_success_rate": 0.56,
+      "AUROC": 0.9058441558441559,
+      "gate_sha256": "b5604ee1e6cc30d078e13505e561b3b0e564272329c5a3a7837cfdad7dbc64b8",
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "count": 50,
+      "successes": 14,
+      "native_success_rate": 0.28,
+      "AUROC": 0.9821428571428571,
+      "gate_sha256": "df825365542714827767ebcb8c108c15efe73620186f0c5160d1fcb14a93f282",
+      "permission_passed": true
+    },
+    {
+      "task": "TurnOffStove",
+      "count": 50,
+      "successes": 7,
+      "native_success_rate": 0.14,
+      "AUROC": 0.9036544850498339,
+      "gate_sha256": "855a16d7a7b47be11477fcec91c0982d6caca05658d54bc9ee1bc9d52ab4bde2",
+      "permission_passed": true
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "count": 50,
+      "successes": 15,
+      "native_success_rate": 0.3,
+      "AUROC": 0.8476190476190476,
+      "gate_sha256": "a7484ed05082661eb04fedf120a5d532497b3e7ff401be1b8158b3349f8faacf",
+      "permission_passed": true
+    }
+  ],
+  "common_panels": [
+    {
+      "phase": "initial_DEV",
+      "episodes": 40,
+      "successes": 19
+    }
+  ],
+  "common_before_completed": false,
+  "optimizer_updates": 0,
+  "complete_terminal_audit_pending": true
+}
