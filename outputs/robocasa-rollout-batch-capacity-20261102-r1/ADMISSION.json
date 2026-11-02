@@ -1,0 +1,48 @@
+{
+  "direct_human_instruction": "test this: batching2/4/8 environments per GPU versus current1",
+  "status": "EXECUTION_AUTHORIZED_CPU_QUALIFICATION_REQUIRED_BEFORE_GPU",
+  "benchmark": "RoboCasa365 OpenDrawer nativeH750/H50/10flow/frozenHuman30075000 plus unchanged original residualhead",
+  "lane_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "gpu_replicas_each": 2,
+  "episodes_each_gpu": 8,
+  "full_episodes": 64,
+  "new_policy_control_steps": 48000,
+  "maximum_reset_controls": 8192,
+  "all_in_physical_control_ceiling": 56192,
+  "training_actions": 0,
+  "optimizer_updates": 0,
+  "Flora_calls": 0,
+  "independent_native_cases": 8,
+  "cases": "same8prospective native constructor6600100..6600107; capacity-only, disjoint TRAIN/DEV/ID/OOD; retained all outcomes, no task selection",
+  "model_noise": "explicit per-lane native fp32(1,50,32) noise with independent frozen seeds; same ODE/normalization/native controllers and video cost; report batch/single kernel drift",
+  "resources": {
+    "cluster": "Baige",
+    "gpus": 8,
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "CPU_per_node": 64,
+    "RAM_GiB_per_node": 256,
+    "SHM_GiB_per_node": 16,
+    "minutes": 29,
+    "retry": false,
+    "inclusive_node_wall_seconds": 1800,
+    "maximum_GPU_seconds": 14400,
+    "new_outputs_GiB": 16
+  },
+  "concurrency": "existingFlora8+newbenchmark8+retaineddev1=17within24; actual scheduler inventory before submit; no active job mutation",
+  "numerical_qualification": {
+    "location": "actual allocatedLinux; finite90sCPUchild on retaineddev1GPU",
+    "selectors": [
+      "tests/test_robocasa_motor_batch.py"
+    ],
+    "new_model_or_simulator_constructors": false
+  },
+  "metric": "completed full-episode controls/s including native reset, simulation, three-view video, batchedVLA/residual inference; numerical reference and cold load reported separately",
+  "preserved": "old inputs/recoveries/active immutable WTs; no train cap debit for capacity evaluation; GPU/CPU/physics costs retained separately",
+  "limitations": "OpenDrawer fixed8case speed test; two devices/config, no population claim, no automatically qualified production sampler-equivalence or Flora colocation"
+}
