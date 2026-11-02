@@ -1,0 +1,3422 @@
+[
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 50,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0007077325506684e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.7935,
+        "progress": 0.1984,
+        "probabilities": {
+          "1": 0.5111,
+          "2": 0.31,
+          "3": 0.1006,
+          "4": 0.0307,
+          "5": 0.0475
+        },
+        "rationale": null,
+        "duration_s": 2.55,
+        "sampled_frames": 24,
+        "output": "Score: 1",
+        "observed_through": 50,
+        "prefix_frame_count": 51,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.3244,
+        "progress": 0.3311,
+        "probabilities": {
+          "1": 0.1358,
+          "2": 0.5372,
+          "3": 0.2239,
+          "4": 0.0727,
+          "5": 0.0303
+        },
+        "rationale": null,
+        "duration_s": 2.55,
+        "sampled_frames": 24,
+        "output": "Score: 2",
+        "observed_through": 50,
+        "prefix_frame_count": 51,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.2824,
+        "progress": 0.3206,
+        "probabilities": {
+          "1": 0.1552,
+          "2": 0.5417,
+          "3": 0.1993,
+          "4": 0.0733,
+          "5": 0.0306
+        },
+        "rationale": null,
+        "duration_s": 2.55,
+        "sampled_frames": 24,
+        "output": "Score: 2",
+        "observed_through": 50,
+        "prefix_frame_count": 51,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 100,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0009089410889173e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9229,
+        "progress": 0.2307,
+        "probabilities": {
+          "1": 0.4157,
+          "2": 0.3669,
+          "3": 0.135,
+          "4": 0.0438,
+          "5": 0.0387
+        },
+        "rationale": null,
+        "duration_s": 5.05,
+        "sampled_frames": 50,
+        "output": "Score: 1",
+        "observed_through": 100,
+        "prefix_frame_count": 101,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.3385,
+        "progress": 0.3346,
+        "probabilities": {
+          "1": 0.108,
+          "2": 0.5486,
+          "3": 0.2591,
+          "4": 0.0655,
+          "5": 0.0188
+        },
+        "rationale": null,
+        "duration_s": 5.05,
+        "sampled_frames": 50,
+        "output": "Score: 2",
+        "observed_through": 100,
+        "prefix_frame_count": 101,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.2713,
+        "progress": 0.3178,
+        "probabilities": {
+          "1": 0.1647,
+          "2": 0.5073,
+          "3": 0.2396,
+          "4": 0.0687,
+          "5": 0.0197
+        },
+        "rationale": null,
+        "duration_s": 5.05,
+        "sampled_frames": 50,
+        "output": "Score: 2",
+        "observed_through": 100,
+        "prefix_frame_count": 101,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 150,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.00062545486829e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.0851,
+        "progress": 0.2713,
+        "probabilities": {
+          "1": 0.4345,
+          "2": 0.2635,
+          "3": 0.1598,
+          "4": 0.0666,
+          "5": 0.0755
+        },
+        "rationale": null,
+        "duration_s": 7.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 150,
+        "prefix_frame_count": 151,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.5772,
+        "progress": 0.3943,
+        "probabilities": {
+          "1": 0.0822,
+          "2": 0.4173,
+          "3": 0.3683,
+          "4": 0.1055,
+          "5": 0.0267
+        },
+        "rationale": null,
+        "duration_s": 7.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 150,
+        "prefix_frame_count": 151,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 2.8151,
+        "progress": 0.4538,
+        "probabilities": {
+          "1": 0.0704,
+          "2": 0.2785,
+          "3": 0.4592,
+          "4": 0.1491,
+          "5": 0.0427
+        },
+        "rationale": null,
+        "duration_s": 7.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 150,
+        "prefix_frame_count": 151,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 200,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0003338268378076e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.6311,
+        "progress": 0.4078,
+        "probabilities": {
+          "1": 0.2288,
+          "2": 0.2593,
+          "3": 0.2593,
+          "4": 0.1573,
+          "5": 0.0954
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.159,
+        "progress": 0.5398,
+        "probabilities": {
+          "1": 0.0099,
+          "2": 0.1549,
+          "3": 0.5406,
+          "4": 0.2554,
+          "5": 0.0392
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4354,
+        "progress": 0.6089,
+        "probabilities": {
+          "1": 0.0039,
+          "2": 0.0571,
+          "3": 0.478,
+          "4": 0.4218,
+          "5": 0.0392
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 250,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0001153890211973e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.2823,
+        "progress": 0.3206,
+        "probabilities": {
+          "1": 0.2411,
+          "2": 0.3976,
+          "3": 0.2411,
+          "4": 0.0783,
+          "5": 0.0419
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.0631,
+        "progress": 0.5158,
+        "probabilities": {
+          "1": 0.0127,
+          "2": 0.1547,
+          "3": 0.6117,
+          "4": 0.1986,
+          "5": 0.0223
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1264,
+        "progress": 0.5316,
+        "probabilities": {
+          "1": 0.0083,
+          "2": 0.1466,
+          "3": 0.5796,
+          "4": 0.2416,
+          "5": 0.0239
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 300,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0000034325323948e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3598,
+        "progress": 0.3399,
+        "probabilities": {
+          "1": 0.3486,
+          "2": 0.2114,
+          "3": 0.2715,
+          "4": 0.0686,
+          "5": 0.0999
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.52,
+        "progress": 0.63,
+        "probabilities": {
+          "1": 0.0019,
+          "2": 0.0459,
+          "3": 0.4631,
+          "4": 0.4087,
+          "5": 0.0805
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6888,
+        "progress": 0.6722,
+        "probabilities": {
+          "1": 0.0008,
+          "2": 0.0192,
+          "3": 0.3619,
+          "4": 0.5266,
+          "5": 0.0915
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 350,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0017646113898718e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3909,
+        "progress": 0.3477,
+        "probabilities": {
+          "1": 0.3807,
+          "2": 0.1798,
+          "3": 0.2309,
+          "4": 0.0849,
+          "5": 0.1236
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4363,
+        "progress": 0.6091,
+        "probabilities": {
+          "1": 0.003,
+          "2": 0.0472,
+          "3": 0.5074,
+          "4": 0.3952,
+          "5": 0.0472
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6509,
+        "progress": 0.6627,
+        "probabilities": {
+          "1": 0.0008,
+          "2": 0.022,
+          "3": 0.3898,
+          "4": 0.5005,
+          "5": 0.087
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 400,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.999112967763686e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.111,
+        "progress": 0.2778,
+        "probabilities": {
+          "1": 0.469,
+          "2": 0.1955,
+          "3": 0.1725,
+          "4": 0.0815,
+          "5": 0.0815
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3462,
+        "progress": 0.5865,
+        "probabilities": {
+          "1": 0.0026,
+          "2": 0.0343,
+          "3": 0.6076,
+          "4": 0.3252,
+          "5": 0.0303
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6298,
+        "progress": 0.6575,
+        "probabilities": {
+          "1": 0.0011,
+          "2": 0.0187,
+          "3": 0.3988,
+          "4": 0.5121,
+          "5": 0.0693
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 450,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0000418985163554e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.4006,
+        "progress": 0.3502,
+        "probabilities": {
+          "1": 0.3349,
+          "2": 0.2302,
+          "3": 0.2302,
+          "4": 0.1087,
+          "5": 0.096
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3754,
+        "progress": 0.5939,
+        "probabilities": {
+          "1": 0.0026,
+          "2": 0.0425,
+          "3": 0.5865,
+          "4": 0.3139,
+          "5": 0.0546
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6602,
+        "progress": 0.665,
+        "probabilities": {
+          "1": 0.001,
+          "2": 0.0162,
+          "3": 0.392,
+          "4": 0.5034,
+          "5": 0.0875
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 500,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.999418538570747e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.1092,
+        "progress": 0.2773,
+        "probabilities": {
+          "1": 0.533,
+          "2": 0.1189,
+          "3": 0.173,
+          "4": 0.0562,
+          "5": 0.1189
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4326,
+        "progress": 0.6081,
+        "probabilities": {
+          "1": 0.0039,
+          "2": 0.0545,
+          "3": 0.5166,
+          "4": 0.3551,
+          "5": 0.0699
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.7605,
+        "progress": 0.6901,
+        "probabilities": {
+          "1": 0.0016,
+          "2": 0.0241,
+          "3": 0.3535,
+          "4": 0.4539,
+          "5": 0.167
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 550,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002822553374459e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.6228,
+        "progress": 0.4057,
+        "probabilities": {
+          "1": 0.3214,
+          "2": 0.172,
+          "3": 0.2209,
+          "4": 0.134,
+          "5": 0.1518
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4366,
+        "progress": 0.6091,
+        "probabilities": {
+          "1": 0.0031,
+          "2": 0.0716,
+          "3": 0.4972,
+          "4": 0.3417,
+          "5": 0.0864
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6741,
+        "progress": 0.6685,
+        "probabilities": {
+          "1": 0.0012,
+          "2": 0.0365,
+          "3": 0.3689,
+          "4": 0.4736,
+          "5": 0.1198
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 600,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.986490501923084e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9077,
+        "progress": 0.2269,
+        "probabilities": {
+          "1": 0.5383,
+          "2": 0.198,
+          "3": 0.1542,
+          "4": 0.0366,
+          "5": 0.0728
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4063,
+        "progress": 0.6016,
+        "probabilities": {
+          "1": 0.007,
+          "2": 0.0848,
+          "3": 0.488,
+          "4": 0.3354,
+          "5": 0.0848
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4746,
+        "progress": 0.6186,
+        "probabilities": {
+          "1": 0.0024,
+          "2": 0.061,
+          "3": 0.4797,
+          "4": 0.3736,
+          "5": 0.0834
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 650,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002249260105753e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.1036,
+        "progress": 0.2759,
+        "probabilities": {
+          "1": 0.4637,
+          "2": 0.2191,
+          "3": 0.1706,
+          "4": 0.0431,
+          "5": 0.1035
+        },
+        "rationale": null,
+        "duration_s": 32.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 650,
+        "prefix_frame_count": 651,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3861,
+        "progress": 0.5965,
+        "probabilities": {
+          "1": 0.0038,
+          "2": 0.0718,
+          "3": 0.5307,
+          "4": 0.3219,
+          "5": 0.0718
+        },
+        "rationale": null,
+        "duration_s": 32.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 650,
+        "prefix_frame_count": 651,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.428,
+        "progress": 0.607,
+        "probabilities": {
+          "1": 0.0022,
+          "2": 0.074,
+          "3": 0.4826,
+          "4": 0.3758,
+          "5": 0.0653
+        },
+        "rationale": null,
+        "duration_s": 32.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 650,
+        "prefix_frame_count": 651,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 700,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002214104460742e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.8264,
+        "progress": 0.2066,
+        "probabilities": {
+          "1": 0.5397,
+          "2": 0.225,
+          "3": 0.1546,
+          "4": 0.0304,
+          "5": 0.0502
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.2959,
+        "progress": 0.574,
+        "probabilities": {
+          "1": 0.0044,
+          "2": 0.0882,
+          "3": 0.5751,
+          "4": 0.2717,
+          "5": 0.0606
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4008,
+        "progress": 0.6002,
+        "probabilities": {
+          "1": 0.0026,
+          "2": 0.0774,
+          "3": 0.5047,
+          "4": 0.3469,
+          "5": 0.0683
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 750,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0016494896012307e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.584,
+        "progress": 0.396,
+        "probabilities": {
+          "1": 0.3007,
+          "2": 0.2342,
+          "3": 0.2066,
+          "4": 0.0976,
+          "5": 0.1609
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4613,
+        "progress": 0.6153,
+        "probabilities": {
+          "1": 0.0024,
+          "2": 0.0381,
+          "3": 0.5264,
+          "4": 0.3618,
+          "5": 0.0712
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6491,
+        "progress": 0.6623,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.0308,
+          "3": 0.4,
+          "4": 0.4533,
+          "5": 0.1146
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 500,
+    "native_first_success": 542,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.005579599158165955,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9949,
+        "progress": 0.2487,
+        "probabilities": {
+          "1": 0.4345,
+          "2": 0.2986,
+          "3": 0.1598,
+          "4": 0.0519,
+          "5": 0.0552
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.4828,
+        "progress": 0.3707,
+        "probabilities": {
+          "1": 0.1137,
+          "2": 0.3969,
+          "3": 0.3969,
+          "4": 0.0781,
+          "5": 0.0145
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.5302,
+        "progress": 0.3826,
+        "probabilities": {
+          "1": 0.1036,
+          "2": 0.4096,
+          "3": 0.3615,
+          "4": 0.1036,
+          "5": 0.0217
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 550,
+    "native_first_success": 542,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.2489801369685916,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.0174,
+        "progress": 0.5043,
+        "probabilities": {
+          "1": 0.2252,
+          "2": 0.1987,
+          "3": 0.1987,
+          "4": 0.0882,
+          "5": 0.2892
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1803,
+        "progress": 0.5451,
+        "probabilities": {
+          "1": 0.0126,
+          "2": 0.1195,
+          "3": 0.6069,
+          "4": 0.197,
+          "5": 0.064
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3257,
+        "progress": 0.5814,
+        "probabilities": {
+          "1": 0.002,
+          "2": 0.0853,
+          "3": 0.5563,
+          "4": 0.2978,
+          "5": 0.0586
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 600,
+    "native_first_success": 542,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.2811948398726491,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.7282,
+        "progress": 0.6821,
+        "probabilities": {
+          "1": 0.0994,
+          "2": 0.1276,
+          "3": 0.1638,
+          "4": 0.1638,
+          "5": 0.4454
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4236,
+        "progress": 0.6059,
+        "probabilities": {
+          "1": 0.0056,
+          "2": 0.0641,
+          "3": 0.537,
+          "4": 0.2875,
+          "5": 0.1058
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6937,
+        "progress": 0.6734,
+        "probabilities": {
+          "1": 0.0027,
+          "2": 0.0396,
+          "3": 0.3756,
+          "4": 0.4256,
+          "5": 0.1566
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 750,
+    "native_first_success": 542,
+    "native_current_success": false,
+    "native_ever_success": true,
+    "normalized_opening": 0.8205079455856062,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.7505,
+        "progress": 0.6876,
+        "probabilities": {
+          "1": 0.0674,
+          "2": 0.126,
+          "3": 0.1833,
+          "4": 0.2353,
+          "5": 0.388
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.5718,
+        "progress": 0.643,
+        "probabilities": {
+          "1": 0.0062,
+          "2": 0.0589,
+          "3": 0.4089,
+          "4": 0.4089,
+          "5": 0.1171
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.907,
+        "progress": 0.7267,
+        "probabilities": {
+          "1": 0.0022,
+          "2": 0.0289,
+          "3": 0.2422,
+          "4": 0.5128,
+          "5": 0.2138
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 350,
+    "native_first_success": 384,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": -8.757504580046343e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.443,
+        "progress": 0.1108,
+        "probabilities": {
+          "1": 0.6739,
+          "2": 0.2479,
+          "3": 0.0553,
+          "4": 0.007,
+          "5": 0.0158
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.4553,
+        "progress": 0.3638,
+        "probabilities": {
+          "1": 0.1594,
+          "2": 0.3823,
+          "3": 0.3374,
+          "4": 0.0853,
+          "5": 0.0356
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.236,
+        "progress": 0.309,
+        "probabilities": {
+          "1": 0.2148,
+          "2": 0.4546,
+          "3": 0.2434,
+          "4": 0.0543,
+          "5": 0.0329
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 400,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5161369074524107,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.8252,
+        "progress": 0.2063,
+        "probabilities": {
+          "1": 0.579,
+          "2": 0.213,
+          "3": 0.1006,
+          "4": 0.0186,
+          "5": 0.0888
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 2.9056,
+        "progress": 0.4764,
+        "probabilities": {
+          "1": 0.0631,
+          "2": 0.2827,
+          "3": 0.4113,
+          "4": 0.1715,
+          "5": 0.0715
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 2.9656,
+        "progress": 0.4914,
+        "probabilities": {
+          "1": 0.0415,
+          "2": 0.2706,
+          "3": 0.4462,
+          "4": 0.1641,
+          "5": 0.0775
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 450,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8176492758449527,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3651,
+        "progress": 0.3413,
+        "probabilities": {
+          "1": 0.378,
+          "2": 0.2598,
+          "3": 0.139,
+          "4": 0.0657,
+          "5": 0.1576
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.2063,
+        "progress": 0.5516,
+        "probabilities": {
+          "1": 0.0349,
+          "2": 0.2009,
+          "3": 0.4253,
+          "4": 0.2009,
+          "5": 0.1381
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1046,
+        "progress": 0.5262,
+        "probabilities": {
+          "1": 0.0093,
+          "2": 0.1994,
+          "3": 0.542,
+          "4": 0.176,
+          "5": 0.0733
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 750,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8176492323636342,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9091,
+        "progress": 0.2273,
+        "probabilities": {
+          "1": 0.4482,
+          "2": 0.308,
+          "3": 0.1649,
+          "4": 0.0444,
+          "5": 0.0346
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 2.9928,
+        "progress": 0.4982,
+        "probabilities": {
+          "1": 0.0306,
+          "2": 0.1997,
+          "3": 0.5429,
+          "4": 0.1997,
+          "5": 0.027
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.0648,
+        "progress": 0.5162,
+        "probabilities": {
+          "1": 0.03,
+          "2": 0.1835,
+          "3": 0.4989,
+          "4": 0.267,
+          "5": 0.0206
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 200,
+    "native_first_success": 208,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.7288782842760492,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8488,
+        "progress": 0.7122,
+        "probabilities": {
+          "1": 0.0384,
+          "2": 0.0812,
+          "3": 0.1949,
+          "4": 0.3641,
+          "5": 0.3213
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1705,
+        "progress": 0.5426,
+        "probabilities": {
+          "1": 0.0085,
+          "2": 0.1515,
+          "3": 0.5288,
+          "4": 0.2831,
+          "5": 0.028
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3244,
+        "progress": 0.5811,
+        "probabilities": {
+          "1": 0.0036,
+          "2": 0.0998,
+          "3": 0.5067,
+          "4": 0.3483,
+          "5": 0.0416
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 250,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5085123404693686,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.1958,
+        "progress": 0.5489,
+        "probabilities": {
+          "1": 0.2334,
+          "2": 0.1416,
+          "3": 0.1604,
+          "4": 0.1249,
+          "5": 0.3396
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.2141,
+        "progress": 0.5535,
+        "probabilities": {
+          "1": 0.012,
+          "2": 0.2,
+          "3": 0.4234,
+          "4": 0.291,
+          "5": 0.0736
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4114,
+        "progress": 0.6029,
+        "probabilities": {
+          "1": 0.0025,
+          "2": 0.0923,
+          "3": 0.4685,
+          "4": 0.3649,
+          "5": 0.0719
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 300,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5085123488806598,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.6579,
+        "progress": 0.4145,
+        "probabilities": {
+          "1": 0.268,
+          "2": 0.2365,
+          "3": 0.2087,
+          "4": 0.1434,
+          "5": 0.1434
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.219,
+        "progress": 0.5547,
+        "probabilities": {
+          "1": 0.0093,
+          "2": 0.1546,
+          "3": 0.4763,
+          "4": 0.3274,
+          "5": 0.0324
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3836,
+        "progress": 0.5959,
+        "probabilities": {
+          "1": 0.0024,
+          "2": 0.0911,
+          "3": 0.4626,
+          "4": 0.4082,
+          "5": 0.0357
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 750,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.3657831821547164,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.6653,
+        "progress": 0.1663,
+        "probabilities": {
+          "1": 0.5515,
+          "2": 0.2952,
+          "3": 0.1086,
+          "4": 0.0258,
+          "5": 0.0189
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.3019,
+        "progress": 0.3255,
+        "probabilities": {
+          "1": 0.1851,
+          "2": 0.444,
+          "3": 0.2693,
+          "4": 0.0874,
+          "5": 0.0143
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.3568,
+        "progress": 0.3392,
+        "probabilities": {
+          "1": 0.1916,
+          "2": 0.4056,
+          "3": 0.2788,
+          "4": 0.1026,
+          "5": 0.0215
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 200,
+    "native_first_success": 216,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.6746267583777759,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.1005,
+        "progress": 0.7751,
+        "probabilities": {
+          "1": 0.0019,
+          "2": 0.0109,
+          "3": 0.0915,
+          "4": 0.6762,
+          "5": 0.2195
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4671,
+        "progress": 0.6168,
+        "probabilities": {
+          "1": 0.002,
+          "2": 0.0491,
+          "3": 0.4957,
+          "4": 0.3861,
+          "5": 0.0671
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.5765,
+        "progress": 0.6441,
+        "probabilities": {
+          "1": 0.001,
+          "2": 0.0211,
+          "3": 0.452,
+          "4": 0.452,
+          "5": 0.0738
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 250,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8159117173813064,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.3548,
+        "progress": 0.8387,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.007,
+          "3": 0.0627,
+          "4": 0.4935,
+          "5": 0.4355
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9271,
+        "progress": 0.7318,
+        "probabilities": {
+          "1": 0.003,
+          "2": 0.0469,
+          "3": 0.2236,
+          "4": 0.4733,
+          "5": 0.2533
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.881,
+        "progress": 0.7202,
+        "probabilities": {
+          "1": 0.0004,
+          "2": 0.0156,
+          "3": 0.2767,
+          "4": 0.517,
+          "5": 0.1902
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 300,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8151441425313184,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 4.4658,
+        "progress": 0.8665,
+        "probabilities": {
+          "1": 0.0034,
+          "2": 0.0063,
+          "3": 0.0437,
+          "4": 0.4145,
+          "5": 0.5322
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.6329,
+        "progress": 0.6582,
+        "probabilities": {
+          "1": 0.0055,
+          "2": 0.0629,
+          "3": 0.3854,
+          "4": 0.3854,
+          "5": 0.1607
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.7921,
+        "progress": 0.698,
+        "probabilities": {
+          "1": 0.0009,
+          "2": 0.0222,
+          "3": 0.3465,
+          "4": 0.445,
+          "5": 0.1855
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 750,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.815144217909221,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.0376,
+        "progress": 0.7594,
+        "probabilities": {
+          "1": 0.0097,
+          "2": 0.0464,
+          "3": 0.1429,
+          "4": 0.4986,
+          "5": 0.3024
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3854,
+        "progress": 0.5964,
+        "probabilities": {
+          "1": 0.0028,
+          "2": 0.0759,
+          "3": 0.4951,
+          "4": 0.3856,
+          "5": 0.0406
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.5539,
+        "progress": 0.6385,
+        "probabilities": {
+          "1": 0.002,
+          "2": 0.0581,
+          "3": 0.4034,
+          "4": 0.4571,
+          "5": 0.0794
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 200,
+    "native_first_success": 222,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.3707553466591283,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8493,
+        "progress": 0.7123,
+        "probabilities": {
+          "1": 0.0173,
+          "2": 0.0603,
+          "3": 0.164,
+          "4": 0.5725,
+          "5": 0.1859
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.2105,
+        "progress": 0.5526,
+        "probabilities": {
+          "1": 0.0034,
+          "2": 0.1142,
+          "3": 0.5797,
+          "4": 0.2738,
+          "5": 0.0289
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3154,
+        "progress": 0.5789,
+        "probabilities": {
+          "1": 0.0022,
+          "2": 0.0931,
+          "3": 0.5358,
+          "4": 0.325,
+          "5": 0.044
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 250,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.7021139821080846,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9425,
+        "progress": 0.7356,
+        "probabilities": {
+          "1": 0.017,
+          "2": 0.0524,
+          "3": 0.1516,
+          "4": 0.5291,
+          "5": 0.2499
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4113,
+        "progress": 0.6028,
+        "probabilities": {
+          "1": 0.0022,
+          "2": 0.0495,
+          "3": 0.5327,
+          "4": 0.3661,
+          "5": 0.0495
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.5653,
+        "progress": 0.6413,
+        "probabilities": {
+          "1": 0.0008,
+          "2": 0.0259,
+          "3": 0.4321,
+          "4": 0.4896,
+          "5": 0.0516
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 300,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8164663654338535,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.2991,
+        "progress": 0.8248,
+        "probabilities": {
+          "1": 0.0076,
+          "2": 0.0172,
+          "3": 0.0874,
+          "4": 0.4439,
+          "5": 0.4439
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.7842,
+        "progress": 0.6961,
+        "probabilities": {
+          "1": 0.0033,
+          "2": 0.0478,
+          "3": 0.3531,
+          "4": 0.3531,
+          "5": 0.2427
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.0749,
+        "progress": 0.7687,
+        "probabilities": {
+          "1": 0.0006,
+          "2": 0.0108,
+          "3": 0.2162,
+          "4": 0.4578,
+          "5": 0.3146
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 750,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.81167811326595,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.9562,
+        "progress": 0.489,
+        "probabilities": {
+          "1": 0.2246,
+          "2": 0.1982,
+          "3": 0.1982,
+          "4": 0.1544,
+          "5": 0.2246
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.5661,
+        "progress": 0.6415,
+        "probabilities": {
+          "1": 0.0033,
+          "2": 0.0486,
+          "3": 0.4069,
+          "4": 0.4611,
+          "5": 0.0801
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8369,
+        "progress": 0.7092,
+        "probabilities": {
+          "1": 0.0022,
+          "2": 0.0307,
+          "3": 0.2414,
+          "4": 0.5792,
+          "5": 0.1464
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001",
+    "control": 200,
+    "native_first_success": 212,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.5302482174514846,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000216-rank-03-episode-000001.json",
+    "replay_sha256": "23edc248fe591264b39ce2ef382767a3ae1a30ffb4a54be04e1fd152293e87d8",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 2.95,
+        "progress": 0.4875,
+        "probabilities": {
+          "1": 0.1034,
+          "2": 0.248,
+          "3": 0.3609,
+          "4": 0.1705,
+          "5": 0.1172
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-200/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1905,
+        "progress": 0.5476,
+        "probabilities": {
+          "1": 0.0041,
+          "2": 0.106,
+          "3": 0.6103,
+          "4": 0.2544,
+          "5": 0.0252
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-200/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.2375,
+        "progress": 0.5594,
+        "probabilities": {
+          "1": 0.0028,
+          "2": 0.0916,
+          "3": 0.5973,
+          "4": 0.2821,
+          "5": 0.0262
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001",
+    "control": 250,
+    "native_first_success": 212,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.818469732477243,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000216-rank-03-episode-000001.json",
+    "replay_sha256": "23edc248fe591264b39ce2ef382767a3ae1a30ffb4a54be04e1fd152293e87d8",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.4883,
+        "progress": 0.6221,
+        "probabilities": {
+          "1": 0.0665,
+          "2": 0.1407,
+          "3": 0.2629,
+          "4": 0.2979,
+          "5": 0.232
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3132,
+        "progress": 0.5783,
+        "probabilities": {
+          "1": 0.0051,
+          "2": 0.1478,
+          "3": 0.4552,
+          "4": 0.3129,
+          "5": 0.0791
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.507,
+        "progress": 0.6268,
+        "probabilities": {
+          "1": 0.0014,
+          "2": 0.0548,
+          "3": 0.459,
+          "4": 0.4051,
+          "5": 0.0798
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001",
+    "control": 300,
+    "native_first_success": 212,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.817591919994185,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000216-rank-03-episode-000001.json",
+    "replay_sha256": "23edc248fe591264b39ce2ef382767a3ae1a30ffb4a54be04e1fd152293e87d8",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 3.129,
+        "progress": 0.5323,
+        "probabilities": {
+          "1": 0.1383,
+          "2": 0.228,
+          "3": 0.228,
+          "4": 0.1776,
+          "5": 0.228
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.4469,
+        "progress": 0.6117,
+        "probabilities": {
+          "1": 0.0042,
+          "2": 0.0585,
+          "3": 0.4897,
+          "4": 0.3813,
+          "5": 0.0663
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6423,
+        "progress": 0.6606,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.0348,
+          "3": 0.3984,
+          "4": 0.4514,
+          "5": 0.1141
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001",
+    "control": 750,
+    "native_first_success": 212,
+    "native_current_success": false,
+    "native_ever_success": true,
+    "normalized_opening": 0.20213863676881214,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000216-rank-03-episode-000001.json",
+    "replay_sha256": "23edc248fe591264b39ce2ef382767a3ae1a30ffb4a54be04e1fd152293e87d8",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.2511,
+        "progress": 0.3128,
+        "probabilities": {
+          "1": 0.3417,
+          "2": 0.3015,
+          "3": 0.2072,
+          "4": 0.0632,
+          "5": 0.0864
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.5383,
+        "progress": 0.6346,
+        "probabilities": {
+          "1": 0.0068,
+          "2": 0.0682,
+          "3": 0.3926,
+          "4": 0.4449,
+          "5": 0.0876
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6052,
+        "progress": 0.6513,
+        "probabilities": {
+          "1": 0.0028,
+          "2": 0.0433,
+          "3": 0.3629,
+          "4": 0.528,
+          "5": 0.0631
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002",
+    "control": 700,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.9130968493309144,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000256-rank-00-episode-000002.json",
+    "replay_sha256": "7df5df2e475b5a3191899380223d1316d7c2ef5367e8dd4ab2b19fe591bd655f",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9186,
+        "progress": 0.7297,
+        "probabilities": {
+          "1": 0.0179,
+          "2": 0.0624,
+          "3": 0.1498,
+          "4": 0.5229,
+          "5": 0.247
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1617,
+        "progress": 0.5404,
+        "probabilities": {
+          "1": 0.0074,
+          "2": 0.1088,
+          "3": 0.626,
+          "4": 0.2303,
+          "5": 0.0275
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3717,
+        "progress": 0.5929,
+        "probabilities": {
+          "1": 0.0021,
+          "2": 0.0973,
+          "3": 0.4941,
+          "4": 0.3396,
+          "5": 0.0669
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002",
+    "control": 750,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.9130969719320197,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000256-rank-00-episode-000002.json",
+    "replay_sha256": "7df5df2e475b5a3191899380223d1316d7c2ef5367e8dd4ab2b19fe591bd655f",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.6781,
+        "progress": 0.6695,
+        "probabilities": {
+          "1": 0.0294,
+          "2": 0.1025,
+          "3": 0.2459,
+          "4": 0.4053,
+          "5": 0.217
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.1841,
+        "progress": 0.546,
+        "probabilities": {
+          "1": 0.0072,
+          "2": 0.1269,
+          "3": 0.5689,
+          "4": 0.2687,
+          "5": 0.0283
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3168,
+        "progress": 0.5792,
+        "probabilities": {
+          "1": 0.0035,
+          "2": 0.1028,
+          "3": 0.522,
+          "4": 0.3166,
+          "5": 0.055
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000",
+    "control": 700,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.6175240046062394,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000336-rank-02-episode-000000.json",
+    "replay_sha256": "46d4a4fbe4299c75894ea7d0de722f49f8a130236c51a90e28d9df0e41b7c955",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.2966,
+        "progress": 0.5741,
+        "probabilities": {
+          "1": 0.1411,
+          "2": 0.1812,
+          "3": 0.1812,
+          "4": 0.2327,
+          "5": 0.2637
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.3768,
+        "progress": 0.5942,
+        "probabilities": {
+          "1": 0.0088,
+          "2": 0.1068,
+          "3": 0.4225,
+          "4": 0.4225,
+          "5": 0.0393
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.5175,
+        "progress": 0.6294,
+        "probabilities": {
+          "1": 0.007,
+          "2": 0.091,
+          "3": 0.3598,
+          "4": 0.462,
+          "5": 0.0803
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000",
+    "control": 750,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.6175241090630744,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000336-rank-02-episode-000000.json",
+    "replay_sha256": "46d4a4fbe4299c75894ea7d0de722f49f8a130236c51a90e28d9df0e41b7c955",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 3.0155,
+        "progress": 0.5039,
+        "probabilities": {
+          "1": 0.1624,
+          "2": 0.2363,
+          "3": 0.2086,
+          "4": 0.2086,
+          "5": 0.1841
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/direct_fraction",
+        "task": "Pull the top left drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 3,
+        "expected_score": 3.291,
+        "progress": 0.5727,
+        "probabilities": {
+          "1": 0.0075,
+          "2": 0.1414,
+          "3": 0.4354,
+          "4": 0.3842,
+          "5": 0.0315
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/explicit_boundary",
+        "task": "Open the top left drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.428,
+        "progress": 0.607,
+        "probabilities": {
+          "1": 0.0046,
+          "2": 0.1185,
+          "3": 0.3649,
+          "4": 0.4685,
+          "5": 0.0436
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005",
+    "control": 700,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.005599290353558282,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000376-rank-07-episode-000005.json",
+    "replay_sha256": "8c284036112c791857c0ee5f08e7029809e1aa212f56b3d83d6ebf5ef398c3c6",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.7837,
+        "progress": 0.6959,
+        "probabilities": {
+          "1": 0.0307,
+          "2": 0.0888,
+          "3": 0.188,
+          "4": 0.451,
+          "5": 0.2414
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9023,
+        "progress": 0.7256,
+        "probabilities": {
+          "1": 0.0038,
+          "2": 0.0317,
+          "3": 0.1943,
+          "4": 0.5986,
+          "5": 0.1715
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.0407,
+        "progress": 0.7602,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.0154,
+          "3": 0.1654,
+          "4": 0.5773,
+          "5": 0.2407
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005",
+    "control": 750,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.005599117106968267,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-drawer-extra-failures-20261103-r1/physics-replay/flora-single-case-000376-rank-07-episode-000005.json",
+    "replay_sha256": "8c284036112c791857c0ee5f08e7029809e1aa212f56b3d83d6ebf5ef398c3c6",
+    "labels": {
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.0202,
+        "progress": 0.755,
+        "probabilities": {
+          "1": 0.014,
+          "2": 0.0433,
+          "3": 0.1333,
+          "4": 0.5272,
+          "5": 0.2822
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "direct_fraction": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/direct_fraction",
+        "task": "Pull the top right drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8522,
+        "progress": 0.7131,
+        "probabilities": {
+          "1": 0.0035,
+          "2": 0.0372,
+          "3": 0.2012,
+          "4": 0.6198,
+          "5": 0.1383
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "explicit_boundary": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/explicit_boundary",
+        "task": "Open the top right drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9967,
+        "progress": 0.7492,
+        "probabilities": {
+          "1": 0.0019,
+          "2": 0.0246,
+          "3": 0.1815,
+          "4": 0.559,
+          "5": 0.233
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  }
+]

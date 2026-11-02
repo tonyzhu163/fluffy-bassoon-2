@@ -323,6 +323,17 @@ an ever-success case for first-success analysis.3000 retained controls replayed,
 verify. These selected examples establish additional failure modes, not their
 population prevalence; the missing-full-MuJoCo-state caveat remains.
 [Replay evidence and next small panel](../outputs/robocasa-flora-drawer-extra-failures-20261103-r1/RESULT.md).
+An exact52.25%-depth wording comparison on10 retained trajectories/45 prefixes
+also fails: both shorter candidates give0/27 false full scores but0/18 true
+post-success full scores, with0/6 valid confirmed first detections. Four1.6
+anchors reproduce. The expanded reference exposes further errors: near-boundary
+256 and wrong-drawer376 both score4/4 at700/750, so accepting4 admits failures;
+insufficient-opening336 scores5 at700. The numerical candidates suppress5
+without repairing recognition, including128.104 new outputs,15 receipts,104
+actual message audits and60 exported hashes verify;748 workerGPU-s,0 new
+controls/SGD. Neither rubric nor a lower threshold is promoted. This reused,
+error-enriched sparse panel supplies no independent or online qualification.
+[Exact texts, per-case scores and limits](../outputs/robocasa-flora-drawer-exact-threshold-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
