@@ -1,0 +1,23 @@
+{
+  "tested": false,
+  "production_qualified": false,
+  "scope": "Next small comparison on ten retained trajectories; no full634 replay",
+  "native_success_fraction_of_fixture_depth": 0.5225,
+  "threshold_semantics": "Full success requires native predicate; Score4 remains partial and must not be assumed success",
+  "candidates": [
+    {
+      "id": "direct_fraction",
+      "task_template": "Pull the top {side} drawer out by at least 52.25% of its front-to-back depth. Holding the handle is allowed."
+    },
+    {
+      "id": "explicit_boundary",
+      "task_template": "Open the top {side} drawer. Success requires that same drawer to extend at least 52.25% of its front-to-back depth beyond its closed position. Opening it only halfway is still short of the goal. Holding the handle is allowed."
+    }
+  ],
+  "required_preparation": [
+    "Linux actual source video hashes/frame clocks for four additional videos",
+    "Geometric target check for four new layouts before relying on top wording",
+    "Freeze new full-success detection screen before inference; retain old >=4 screen as diagnostic",
+    "Compare existing reference and controls without changing score grammar or model"
+  ]
+}

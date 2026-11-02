@@ -311,6 +311,18 @@ controls/SGD. This location sentence's effect does not require the negative
 clause; the model's internal cause remains unknown. The next diagnosis should
 add other retained never-success failures before further tuning to112 alone.
 [Factorial texts, scores and limits](../outputs/robocasa-flora-drawer-location-exclusion-20261103-r1/RESULT.md).
+Four additional retained failure replays qualify on allocated Linux CPU, with
+all40 saved metadata fields and60 public16D state boundaries matching exactly.
+Three never succeed:376 opens another drawer (target peak7.58% fixture depth),
+256 opens the target50.22%, and336 opens it33.96%. Native requires52.25%, so
+'roughly half' is too loose as a binary-success specification; this is not
+proof of Flora's internal reason for its old grade.216 succeeds at control212
+(10.6s), then closes to11.12% depth and ends as a terminal failure. It must be
+an ever-success case for first-success analysis.3000 retained controls replayed,
+0 new sampling/motor/optimizer/GPU calls,366.97s CPU wall. All7 exported hashes
+verify. These selected examples establish additional failure modes, not their
+population prevalence; the missing-full-MuJoCo-state caveat remains.
+[Replay evidence and next small panel](../outputs/robocasa-flora-drawer-extra-failures-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
