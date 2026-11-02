@@ -52,3 +52,19 @@ on held-out failures and successes. Do not launch more history collection.
 
 Request four2-GPU workers (8 GPUs total),64 CPUs/256GiB RAM/32GiB SHM per worker, for at most180minutes (86400 GPU-seconds). The driver has a175-minute operational deadline and preserves partial records on failure. Source/checkpoint binding and core checks run before GPU allocation. Resource binding and scheduler ID will be added only after actual allocation.
 No automatic retries; monitor launched work every20minutes.
+
+Deployment preflight: direct HTTPS Git fetch succeeded on Baige; the detached
+run checkout is pinned to `2250ac96b087fde2bc8164aff8b91d45df005e82`.
+The original1000 episode/checkpoint/seed/truth bindings passed, and the15 core
+controller tests passed on allocated Linux CPUs in2.83s, CUDA hidden
+(`core-tests-2250ac96.log` in the shared output directory). Shared storage has
+637GiB available and the binding write succeeded. No source files were copied.
+
+Baige accepted `job-kw6ub7t73wri` at19:48 Shanghai on2026-11-02, queue
+`aihcq-rh0wwk9muei4`: four2-GPU RPBZZZ6 instances with64 CPUs/256GiB RAM
+and32GiB SHM each,180-minute cap, automatic fault recovery off. It is queued;
+GPU probes and first matched simulator episodes are not yet verified. A
+20-minute chat heartbeat monitors capacity, actual progress and terminal
+artifacts, stays quiet on unchanged status, and stops after completion or
+terminal failure. The partial web-terminal bundle transfer was abandoned;
+use direct Git fetch for source synchronization.
