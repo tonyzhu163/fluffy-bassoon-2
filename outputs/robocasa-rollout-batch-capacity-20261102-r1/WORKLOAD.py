@@ -41,19 +41,10 @@ all_devices=[device for path in manifests for device in json.loads(path.read_tex
 assert len(all_devices)==len({d['uuid'] for d in all_devices})==8
 pipeline=json.loads((root/'outputs/robocasa-residual-approved-20261101-r1/S-job/pipeline-profile.json').read_text())
 native_env=dict(os.environ,**pipeline['policy_env'],PYTHONPATH=str(code/'src')+':'+os.environ['TASK_RLINF'])
-if rank==0:
-    selectors=['tests/test_robocasa_motor_batch.py',
-        'tests/test_robocasa_residual.py::test_native_draw_replay_features_and_zero_residual_identity',
-        'tests/test_robocasa_residual.py::test_motor_restores_hook_on_native_prediction_failure']
-    command=[sys.executable,'-B','-m','pytest','-q',*selectors,'--junitxml='+str(out/'affected-core.xml')]
-    with (out/'affected-core.log').open('x') as stream:
-        subprocess.run(command,cwd=code,env=dict(native_env,CUDA_VISIBLE_DEVICES=''),
-                       stdout=stream,stderr=subprocess.STDOUT,check=True,timeout=90)
-    write_new(job/'CORE-READY.json',dict(source_commit=os.environ['TASK_CODE_PIN'],
-        xml=dict(path=str(out/'affected-core.xml'),sha256=sha(out/'affected-core.xml'))))
-while not (job/'CORE-READY.json').exists():
-    if time.time()>min(start+330,deadline-180): raise TimeoutError('Affected motor numerical qualification missing')
-    time.sleep(1)
+qualification=json.loads((code/'outputs/robocasa-rollout-batch-capacity-20261102-r1/CPU-QUALIFICATION.json').read_text())
+assert qualification['completed'] and qualification['tests']==5 and qualification['failures']==qualification['errors']==0
+assert sha(code/qualification['motor_source']['path'])==qualification['motor_source']['sha256']
+assert sha(qualification['xml']['path'])==qualification['xml']['sha256']
 cases=case_bank('OpenDrawer','baseline',count=8)
 for index,case in enumerate(cases):
     case.update(bank='capacity_benchmark',native_seed=6_600_100+index,slot=index)
