@@ -187,6 +187,7 @@ class BatchNativeModel(torch.nn.Module):
         self.weight = torch.nn.Parameter(torch.ones(1))
         self.prefixes = self.draws = 0
         self.empty_row = self.fail_draw = False
+        self.layers = 1
 
     def build_prefix_cache(self, observation):
         self.prefixes += 1
@@ -199,7 +200,8 @@ class BatchNativeModel(torch.nn.Module):
         if self.empty_row:
             mask[-1] = False
         value = (row[:, None, None, None] + 1) * torch.arange(1., 9.).reshape(1, 1, 2, 4)
-        self.built = (hidden, mask, ((torch.ones_like(value), value),))
+        self.built = (hidden, mask, tuple((torch.ones_like(value), value * (layer + 1))
+                                          for layer in range(self.layers)))
         return self.built
 
     def velocity_from_suffix(self, suffix):
