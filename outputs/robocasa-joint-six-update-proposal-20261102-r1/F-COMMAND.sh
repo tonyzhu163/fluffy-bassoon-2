@@ -20,7 +20,7 @@ from pathlib import Path
 from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
 contract=dict(source_commit=os.environ['TASK_CODE_PIN'],purpose='Joint five-task Flora residual PPO with colocated TP1 engines',
  stage='F',run_id=os.environ['TASK_RUN'],binding_sha256=os.environ['TASK_BINDINGS_SHA256'],
- requested_gpus=2,global_gpus=8,cpus=32,ram_gib=256,shm_gib=16,
+ requested_gpus=2,global_gpus=8,cpus=64,ram_gib=256,shm_gib=16,
  worker_seconds=21600,maximum_gpu_seconds_global=172800,
  robot_actions_global_ceiling=925300,new_output_GiB=112)
 print(begin(Path(os.environ['TASK_OUT'])/'clock',contract,slice_seconds=21540,

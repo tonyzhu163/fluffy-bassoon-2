@@ -146,6 +146,7 @@ def test_incomplete_draw_plan_is_rejected_before_any_native_reset():
 def test_native_lane_seek_retains_original_episode_id_and_round(tmp_path):
     from test_robocasa_residual import environment
     env = environment(tmp_path)
+    env.cases.append(dict(native_seed=2, task='OpenDrawer', round=1))
     env.seek(1); env.reset()
     for _ in range(15):
         _, done, episode = env.step_chunk(np.zeros((50, 12), np.float32))

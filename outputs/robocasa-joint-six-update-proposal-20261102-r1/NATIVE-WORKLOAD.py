@@ -35,7 +35,7 @@ worker_seconds = 7200 if kind == 'common' else 21600
 slice_seconds = worker_seconds - 60
 closure = 300
 deadline = start + slice_seconds - closure
-ram_gib = 128 if kind == 'common' else 256
+ram_gib = 256
 action_cap = None  # Uncapped, actions still journaled (human, 2026-11-02).
 output_gib = 48 if kind == 'common' else 80
 assert os.environ['WORLD_SIZE'] == '4' and os.environ['NPROC_PER_NODE'] == '2' and 0 <= node_rank < 4
@@ -43,7 +43,7 @@ assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == 
 if not os.environ.get('CUDA_VISIBLE_DEVICES'):
     os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 cpu = Path('/sys/fs/cgroup/cpu.max').read_text().split()
-assert int(cpu[0]) / int(cpu[1]) == 32 and int(Path('/sys/fs/cgroup/memory.max').read_text()) == ram_gib << 30
+assert int(cpu[0]) / int(cpu[1]) == 64 and int(Path('/sys/fs/cgroup/memory.max').read_text()) == ram_gib << 30
 assert subprocess.check_output(['git', '-C', str(code), 'rev-parse', 'HEAD'], text=True).strip() == binding['source_commit']
 assert not subprocess.check_output(['git', '-C', str(code), 'status', '--porcelain'], text=True).strip()
 # Actual namespace/output sizing and the protected old recoveries are checked
@@ -69,7 +69,7 @@ job, dispatch = run / 'job', run / 'job/dispatch'
 dispatch.mkdir(exist_ok=True)
 write_new(out / 'manifest.json', dict(node_rank=node_rank, hostname=socket.gethostname(),
     source_commit=binding['source_commit'], allocated_start_unix=start, probe_path=str(probe), devices=devices,
-    cpus=32, ram_gib=ram_gib, free_bytes=free, quota=storage.get('quota', 'UNVERIFIED'),
+    cpus=64, ram_gib=ram_gib, free_bytes=free, quota=storage.get('quota', 'UNVERIFIED'),
     human_action_authority=binding['human_action_authority'], binding_sha256=os.environ['TASK_BINDINGS_SHA256']))
 manifests = [job / f'node-{rank:02d}/manifest.json' for rank in range(4)]
 while not all(path.exists() for path in manifests):

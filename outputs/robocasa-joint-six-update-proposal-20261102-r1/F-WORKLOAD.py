@@ -82,7 +82,7 @@ def main():
     assert socket.gethostname().startswith('job-') and torch.cuda.device_count()==2
     if not os.environ.get('CUDA_VISIBLE_DEVICES'):os.environ['CUDA_VISIBLE_DEVICES']='0,1'
     cpu=Path('/sys/fs/cgroup/cpu.max').read_text().split()
-    assert int(cpu[0])/int(cpu[1])==32 and int(Path('/sys/fs/cgroup/memory.max').read_text())==256<<30
+    assert int(cpu[0])/int(cpu[1])==64 and int(Path('/sys/fs/cgroup/memory.max').read_text())==256<<30
     head=lambda p:subprocess.check_output(['git','-C',str(p),'rev-parse','HEAD'],text=True).strip()
     assert head(code)==binding['source_commit'] and head(os.environ['TASK_RLINF'])==spec['rlinf_execution_commit']
     assert not subprocess.check_output(['git','-C',str(code),'status','--porcelain'],text=True).strip()
@@ -108,7 +108,7 @@ def main():
     assert all(d['inventory']['memory_total_mib']>=90000 for d in devices)
     dispatch.mkdir(exist_ok=True)
     write_new(out/'manifest.json',dict(node_rank=rank,hostname=socket.gethostname(),source_commit=binding['source_commit'],
-        allocated_start_unix=start,probe_path=str(probe),devices=devices,cpus=32,ram_gib=256,free_bytes=free,
+        allocated_start_unix=start,probe_path=str(probe),devices=devices,cpus=64,ram_gib=256,free_bytes=free,
         quota=storage.get('quota','UNVERIFIED'),write_probe_pass=True,binding=binding_ref,
         human_action_authority=binding['human_action_authority'],human_task_authority=binding['human_task_authority']))
     paths=[job/f'node-{r:02d}/manifest.json' for r in range(4)]

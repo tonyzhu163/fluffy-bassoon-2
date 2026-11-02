@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 : "${TASK_META:?}" "${TASK_CODE_PIN:?}" "${TASK_RUN:?}" "${TASK_LAUNCH_KIND:?}" "${TASK_BINDINGS:?}" "${TASK_BINDINGS_SHA256:?}"
 case "$TASK_LAUNCH_KIND" in
- common) TASK_WORKER_SECONDS=7200; TASK_RAM_GIB=128; TASK_ACTION_CAP=450420; TASK_OUTPUT_GIB=48 ;;
+ common) TASK_WORKER_SECONDS=7200; TASK_RAM_GIB=256; TASK_ACTION_CAP=450420; TASK_OUTPUT_GIB=48 ;;
  S) TASK_WORKER_SECONDS=21600; TASK_RAM_GIB=256; TASK_ACTION_CAP=925300; TASK_OUTPUT_GIB=80 ;;
  *) exit 64 ;;
 esac
@@ -25,7 +25,7 @@ out=Path(os.environ['TASK_OUT'])
 seconds=int(os.environ['TASK_WORKER_SECONDS'])
 contract=dict(source_commit=os.environ['TASK_CODE_PIN'],purpose='Five-task joint common-before or simulator-reward residual PPO',
  stage=os.environ['TASK_LAUNCH_KIND'],binding_sha256=os.environ['TASK_BINDINGS_SHA256'],
- requested_gpus=2,global_gpus=8,cpus=32,ram_gib=int(os.environ['TASK_RAM_GIB']),shm_gib=16,
+ requested_gpus=2,global_gpus=8,cpus=64,ram_gib=int(os.environ['TASK_RAM_GIB']),shm_gib=16,
  worker_seconds=seconds,maximum_gpu_seconds_global=seconds*8,
  robot_actions_global_ceiling=int(os.environ['TASK_ACTION_CAP']),new_output_GiB=int(os.environ['TASK_OUTPUT_GIB']))
 print(begin(out/'clock',contract,slice_seconds=int(os.environ['TASK_SLICE_SECONDS']),worker_seconds=seconds,

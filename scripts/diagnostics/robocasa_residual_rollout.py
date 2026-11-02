@@ -32,6 +32,7 @@ def main():
     verify_selected_cuda(torch)
     request = torch.load(args.request, map_location="cpu", weights_only=False)
     profile, code = request["profile"], Path(__file__).resolve().parents[2]
+    configured_lanes = rollout_envs_per_gpu(profile)
     head = lambda path: subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"], text=True).strip()
     if head(code) != profile["source_commit"] or head(os.environ["RLINF_PATH"]) != profile["rlinf_execution_commit"]:
         raise ValueError("Immutable reviewed source for native workers")
@@ -48,7 +49,6 @@ def main():
     policy.load_state_dict(request["policy"], strict=True)
     bound = ResidualBound(**request["bound"])
     cap = None if profile["maximum_all_in_actions"] is None else 1_000_000
-    configured_lanes = rollout_envs_per_gpu(profile)
     lanes = min(configured_lanes, len(request["cases"]))
     # One journal per lane; the rank directory sums every lane's escrow.
     journals = [ActionJournal(profile["accounting_root"], rank=request["rank"], world=request["world"],
