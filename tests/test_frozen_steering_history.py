@@ -179,3 +179,38 @@ def test_source_mapping_and_final_teacher_version_cannot_be_reinterpreted(tmp_pa
     with pytest.raises(ValueError, match="terminal source version"):
         save_corpus(tmp_path / "corpus", streams, spec, teacher_reference=reference(teacher["path"]),
                     provenance=dict(fixture=True))
+
+
+def test_real_producer_serialization_has_zero_based_behavior_and_post_update_teacher(tmp_path):
+    """Use producer execution, not a mirrored serialization fixture."""
+    import time
+    from test_joint_steering_ppo_worker import Environment, Motor, policy, request
+    from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import collect_bank
+    spec = SteeringSource("velocity", "source", "runtime", "motor", "norm", ("A", "B"),
+        InterfaceSpec(kind="velocity", steering_dim=32).record(),
+        episodes_per_task_per_update=3, feature_dim=2)
+    loaded = []
+    for version in (0, 1):
+        cases = [dict(task=task, slot=version * 3 + slot, native_seed=100 + version * 10 + slot,
+                      horizon=100, first_success=25 if slot == 0 else None)
+                 for task in spec.tasks for slot in range(3)]
+        root = tmp_path / f"round-{version + 1}"
+        specification = request(cases)
+        specification["iteration"] = version + 1
+        environment = Environment(cases, root, 0)
+        result = collect_bank(policy(), Motor(), [environment], request=specification,
+            output=root / "history", rank=0, deadline_unix=time.time() + 30)
+        loaded.extend(load_episode(item["checkpoint"], spec) for item in result["episodes"])
+    streams = split_streams(loaded, spec, validation_slots=[2], expected_updates=(0, 1))
+    teacher = teacher_file(tmp_path, spec)
+    manifests = save_corpus(tmp_path / "corpus", streams, spec, teacher_reference=teacher,
+                            provenance=dict(synthetic_producer=True))
+    assert manifests["ad_train"]["transitions"] == manifests["dpt_train"]["transitions"] == 16
+    ad, _ = load_dataset(tmp_path / "corpus/ad-train.npz")
+    dpt, _ = load_dataset(tmp_path / "corpus/dpt-train.npz")
+    np.testing.assert_array_equal(ad[0]["teacher_steps"], [0, 0, 1, 1])
+    np.testing.assert_array_equal(ad[0]["rewards"], [1, 0, 1, 0])
+    np.testing.assert_array_equal(ad[0]["dones"], [False, True, False, True])
+    for actual, labeled in zip(ad, dpt, strict=True):
+        np.testing.assert_array_equal(trial_tokens(actual), trial_tokens(labeled))
+        np.testing.assert_allclose(labeled["target_noise"], .75)
