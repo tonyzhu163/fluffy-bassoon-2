@@ -110,7 +110,7 @@ def joint_calibrations(profile):
     gates,exceptions=profile.get('baseline_validations'),profile.get('calibration_exceptions',{})
     if (profile.get('task')!='joint_five' or profile.get('tasks')!=list(PPO_TASKS)
             or profile['mode']!='train' or profile.get('annotation_world')!=8
-            or profile.get('batch_size')!=8 or profile.get('gpu_memory_utilization')!=.78
+            or profile.get('batch_size')!=8 or profile.get('gpu_memory_utilization') not in (.75,.78)
             or profile.get('minimum_free_mib_after_engine_warmup',0)<17536
             or not isinstance(gates,dict) or set(gates)!=set(PPO_TASKS)
             or not isinstance(exceptions,dict) or not set(exceptions)<=set(PPO_TASKS)):

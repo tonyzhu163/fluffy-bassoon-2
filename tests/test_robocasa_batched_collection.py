@@ -75,7 +75,7 @@ def learner():
 
 
 def test_mixed_horizon_batch_preserves_serial_records_and_next_adam_update():
-    cases = [dict(task=task) for task in ('OpenDrawer', 'CoffeeSetupMug', 'OpenDrawer')]
+    cases = [dict(task=task) for task in ('OpenDrawer', 'CoffeeSetupMug', 'CloseFridge')]
     offsets = native_chunk_offsets(cases)
     policy, optimizer = learner(); bound = ResidualBound(12, tuple(range(6)), (.25,)*6)
     seeds, noise = draw_schedule(Motor(), policy, torch.Generator().manual_seed(8), offsets[-1], deterministic=False)
@@ -127,7 +127,7 @@ def test_failed_lane_cannot_produce_complete_records_or_recovery():
     with pytest.raises(RuntimeError, match='native failure'):
         try:
             collect_pending_lanes(policy, ResidualBound(12, tuple(range(6)), (.25,)*6), Motor(), lanes,
-                                  deterministic=True, planned_motor_seeds=list(range(30)))
+                                  deterministic=True, planned_motor_seeds=list(range(24)))
         finally:
             for lane in lanes: lane.close()
     assert all(lane.closed for lane in lanes) and any(lane.active for lane in lanes)
@@ -139,7 +139,7 @@ def test_incomplete_draw_plan_is_rejected_before_any_native_reset():
     policy, _ = learner()
     with pytest.raises(ValueError):
         collect_pending_lanes(policy, ResidualBound(12, tuple(range(6)), (.25,)*6), Motor(), lanes,
-            deterministic=False, planned_motor_seeds=list(range(15)), planned_action_noise=torch.zeros(14, 6))
+            deterministic=False, planned_motor_seeds=list(range(12)), planned_action_noise=torch.zeros(11, 6))
     assert all(lane.resets==0 for lane in lanes)
 
 
@@ -148,7 +148,7 @@ def test_native_lane_seek_retains_original_episode_id_and_round(tmp_path):
     env = environment(tmp_path)
     env.cases.append(dict(native_seed=2, task='OpenDrawer', round=1))
     env.seek(1); env.reset()
-    for _ in range(15):
+    for _ in range(12):
         _, done, episode = env.step_chunk(np.zeros((50, 12), np.float32))
     assert done and episode['id'].endswith('episode-000001') and episode['round'] == 1
     assert env.state_dict()['cursor'] == 2

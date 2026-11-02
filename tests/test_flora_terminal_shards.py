@@ -15,11 +15,11 @@ def bank():
         key, lower = f'episode-{index:03d}', 1 + index % 4
         episodes.append(dict(id=key, task='open the drawer', camera_order=list(REWARD_CAMERAS),
             info_on_video=False, extra_info_on_video=[], raw_rgb_only=True,
-            success_termination_disabled=True, horizon=750, completed=True,
+            success_termination_disabled=True, horizon=600, completed=True,
             videos=[dict(camera=camera, path=f'/qualified/{key}-{camera}.mp4', sha256='a' * 64)
                     for camera in REWARD_CAMERAS],
-            frame_clock=dict(frame_count=751, native_fps=20., encoded_fps=20., resampled=False,
-                physical_steps=750, initial_frame_included=True, timestamp_sha256='b' * 64),
+            frame_clock=dict(frame_count=601, native_fps=20., encoded_fps=20., resampled=False,
+                physical_steps=600, initial_frame_included=True, timestamp_sha256='b' * 64),
             rank=index // 8, round=index % 8, local_env=0))
         expected = lower + .5
         outputs.append(dict(id=key, task='open the drawer', score=lower, expected_score=expected,

@@ -13,11 +13,11 @@ def test_fifty_unequal_shards_preserve_grades_and_cannot_release_partial_quality
         lower = 1+i%4
         episodes.append(dict(id=f'case-{i}', task='Open the drawer.', camera_order=list(REWARD_CAMERAS),
             info_on_video=False, extra_info_on_video=[], raw_rgb_only=True,
-            success_termination_disabled=True, horizon=750, completed=True,
+            success_termination_disabled=True, horizon=600, completed=True,
             videos=[dict(camera=c, path=f'/qualified/case-{i}-{c}.mp4', sha256='a'*64)
                     for c in REWARD_CAMERAS],
-            frame_clock=dict(frame_count=751, native_fps=20., encoded_fps=20., resampled=False,
-                physical_steps=750, initial_frame_included=True, timestamp_sha256='b'*64),
+            frame_clock=dict(frame_count=601, native_fps=20., encoded_fps=20., resampled=False,
+                physical_steps=600, initial_frame_included=True, timestamp_sha256='b'*64),
             rank=i%8, round=0, local_env=0))
         rows.append(dict(id=f'case-{i}', task='Open the drawer.', score=lower,
             expected_score=lower+.5, progress=(lower-.5)/4,

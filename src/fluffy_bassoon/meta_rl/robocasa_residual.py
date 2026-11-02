@@ -265,6 +265,9 @@ def native_environment_factory(cfg):
         from .rlinf_robocasa_ppo import TASKS
         horizon, soup, mode, _ = TASKS[case["task"]]
         config.task_soup, config.task_mode, config.split = soup, mode, "target"
+        # Use the declared task contract, including the 600-control PPO cap;
+        # task_horizon would silently restore the registry's 750 controls.
+        config.episode_horizon_source = "max_episode_steps"
         config.max_episode_steps = config.max_steps_per_rollout_epoch = horizon
         return CountedNative(config, num_envs=1, seed_offset=0, total_num_processes=1, worker_info=None)
     return factory

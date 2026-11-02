@@ -1,0 +1,23 @@
+{
+  "status": "READY_FOR_FINITE_QUALIFICATION",
+  "purpose": "Qualify the600-control five-task protocol and .75 Flora cache with the unchanged production memory reserve",
+  "resources": {
+    "gpus": 1,
+    "cpu": 32,
+    "ram_gib": 128,
+    "shm_gib": 16,
+    "wall_minutes": 16
+  },
+  "episodes": 10,
+  "maximum_policy_controls": 6000,
+  "optimizer_updates": 0,
+  "lanes": "8 if production reserve passes, otherwise4; fail if neither qualifies",
+  "flora": {
+    "batch_size": 8,
+    "gpu_memory_utilization": 0.75,
+    "context": 16384,
+    "views": 3
+  },
+  "inputs": "CoffeeSetupMug600-control calibration videos are warmup only; no old750-control calibration admitted",
+  "immutable_prior_run": "robocasa-joint-lane-qualification-20261102-r4"
+}

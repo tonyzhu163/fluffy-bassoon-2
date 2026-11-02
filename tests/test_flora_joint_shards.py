@@ -53,7 +53,7 @@ def test_joint80_mixed_horizons_preserve_all_grades_and_reject_partial_or_wrong_
         mapping=deepcopy(protocols)
         if kind=='missing':mapping.pop(episodes[0]['id'])
         elif kind=='OOD':mapping[episodes[0]['id']]=protocol('CloseFridge',baseline_count=50)
-        elif kind=='wrong_horizon':mapping[episodes[0]['id']]['horizon']=600
+        elif kind=='wrong_horizon':mapping[episodes[0]['id']]['horizon']=750
         else:mapping[episodes[0]['id']],mapping[episodes[1]['id']]=mapping[episodes[1]['id']],mapping[episodes[0]['id']]
         with pytest.raises(ValueError):joint_episode_shard(episodes,0,mapping)
 

@@ -12,12 +12,12 @@ ROBOSUITE='5ce6643f3092639d08f7b0f90ed1c6a84f50552c'
 REPOSITORY='robocasa/robocasa365_checkpoints'
 REVISION='c484448aba1a9b60a04c9b0ca117241518ea69f3'
 PREFIX='pi05_pretrain_human300/multitask_learning/75000'
-TASKS={'OpenDrawer':(750,'atomic_seen','atomic',320),
+TASKS={'OpenDrawer':(600,'atomic_seen','atomic',320),
        'ScrubCuttingBoard':(1200,'composite_seen','composite',512),
        'CloseFridge':(900,'atomic_seen','atomic',None),
-       'PickPlaceCounterToCabinet':(750,'atomic_seen','atomic',None),
-       'PickPlaceDrawerToCounter':(750,'atomic_seen','atomic',None),
-       'TurnOffStove':(750,'atomic_seen','atomic',None),
+       'PickPlaceCounterToCabinet':(600,'atomic_seen','atomic',None),
+       'PickPlaceDrawerToCounter':(600,'atomic_seen','atomic',None),
+       'TurnOffStove':(600,'atomic_seen','atomic',None),
        'CoffeeSetupMug':(600,'atomic_seen','atomic',None),
        'OpenCabinet':(1050,'atomic_seen','atomic',None),
        'TurnOnMicrowave':(450,'atomic_seen','atomic',None),
@@ -206,7 +206,7 @@ def validate_config(cfg):
     }
     for mode in ('train','eval'):
         for field,value in dict(env_type='robocasa365',auto_reset=False,ignore_terminations=True,
-                episode_horizon_source='task_horizon',max_episode_steps=horizon,
+                episode_horizon_source='max_episode_steps',max_episode_steps=horizon,
                 max_steps_per_rollout_epoch=horizon,split='target',group_size=1,
                 task_filter=[task],task_soup=TASKS[task][1],task_mode=TASKS[task][2]).items():
             expected[f'env.{mode}.{field}']=value

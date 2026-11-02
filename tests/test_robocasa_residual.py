@@ -76,9 +76,9 @@ def test_zero_residual_native_qualification_executes_one_episode_not_two(tmp_pat
     env = environment(tmp_path)
     rows, episodes = collect_pending(policy, bound(), m, env, episodes=1,
         generator=torch.Generator().manual_seed(1), deterministic=True, verify_zero=True)
-    assert len(episodes) == 1 and len(rows) == 15
+    assert len(episodes) == 1 and len(rows) == 12
     assert all(row["zero_residual_verified"] for row in rows)
-    assert env.native.steps == 750 and m.model.calls == 30
+    assert env.native.steps == 600 and m.model.calls == 24
 
 
 class Journal:
@@ -107,7 +107,7 @@ class Native:
     task_descriptions = ["open the drawer"]
     current_info_list = [dict(ep_meta={})]
 
-    def __init__(self, early=False, horizon=750, success=None):
+    def __init__(self, early=False, horizon=600, success=None):
         self.early = early
         self.horizon = horizon
         self.success = success or (lambda step: True)
@@ -139,21 +139,21 @@ class Native:
 
 def environment(tmp_path, early=False):
     return RoboCasaResidualEnvironment(lambda case: Native(early), [dict(native_seed=1, task="OpenDrawer")],
-        horizon=750, output=tmp_path / "videos", monitoring_root=tmp_path / "monitor", journal=Journal(), writer_factory=Writer)
+        horizon=600, output=tmp_path / "videos", monitoring_root=tmp_path / "monitor", journal=Journal(), writer_factory=Writer)
 
 
 def test_full_native_horizon_and_video_are_truth_isolated(tmp_path):
     env = environment(tmp_path)
     observation = env.reset()
     assert "success" not in observation and "task_metadata" not in observation
-    for index in range(15):
+    for index in range(12):
         observation, done, info = env.step_chunk(np.zeros((50, 12), np.float32))
-        assert done == (index == 14)
+        assert done == (index == 11)
         if not done:
             assert info == {}
     assert "simulator_final_success" not in info and "success" not in info
-    assert info["frame_clock"]["frame_count"] == 751 and env.writer.count == 751
-    assert [writer.count for writer in env.writer.writers] == [751, 751, 751]
+    assert info["frame_clock"]["frame_count"] == 601 and env.writer.count == 601
+    assert [writer.count for writer in env.writer.writers] == [601, 601, 601]
     assert [set(writer.values) for writer in env.writer.writers] == [{11}, {22}, {33}]
     assert [ref['camera'] for ref in info['videos']] == info['camera_order']
     from fluffy_bassoon.meta_rl.rlinf_flora_ppo import flora_jobs
@@ -177,23 +177,23 @@ def test_success_mask_or_short_episode_cannot_be_scored(tmp_path):
     env.close()
 
 
-@pytest.mark.parametrize('steps', [(), (137,), (137, 138, 750), (750,)])
+@pytest.mark.parametrize('steps', [(), (137,), (137, 138, 600), (600,)])
 def test_first_success_counts_primitive_controls_and_preserves_transient_success(tmp_path, steps):
     cases = [dict(native_seed=1, task='OpenDrawer')] * 2
     env = RoboCasaResidualEnvironment(lambda case: Native(success=lambda step: step in steps), cases,
-        horizon=750, output=tmp_path/'videos', monitoring_root=tmp_path/'monitor',
+        horizon=600, output=tmp_path/'videos', monitoring_root=tmp_path/'monitor',
         journal=Journal(), writer_factory=Writer)
     import json
     for episode_index in range(2):
         env.reset()
-        for _ in range(15):
+        for _ in range(12):
             observation, _, episode = env.step_chunk(np.zeros((50, 12), np.float32))
             assert 'first_success_step' not in observation and 'first_success_step' not in episode
         row = json.loads((tmp_path/f'monitor/episode-{episode_index:06d}.json').read_text())
         assert row['first_success_step'] == (steps[0] if steps else None)
         assert row['success_steps'] == list(steps)
         assert row['simulator_success_once'] is bool(steps)
-        assert row['simulator_final_success'] is (750 in steps)
+        assert row['simulator_final_success'] is (600 in steps)
     env.close()
 
 
@@ -217,7 +217,7 @@ def test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks(tmp
 
 def test_mixed_task_native_horizons_recover_only_at_full_episode_boundary(tmp_path):
     from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
-    cases=[dict(task='CoffeeSetupMug',native_seed=1),dict(task='OpenDrawer',native_seed=2)]
+    cases=[dict(task='CoffeeSetupMug',native_seed=1),dict(task='CloseFridge',native_seed=2)]
     factory=lambda case:Native(horizon=TASKS[case['task']][0])
     env=RoboCasaResidualEnvironment(factory,cases,horizon=None,output=tmp_path/'first',
         monitoring_root=tmp_path/'monitor',journal=Journal(),writer_factory=Writer)
@@ -230,8 +230,8 @@ def test_mixed_task_native_horizons_recover_only_at_full_episode_boundary(tmp_pa
         monitoring_root=tmp_path/'monitor',journal=Journal(),writer_factory=Writer)
     recovered.load_state_dict(state);recovered.reset()
     with pytest.raises(ValueError,match='boundaries'):recovered.state_dict()
-    for _ in range(15):_,done,episode=recovered.step_chunk(np.zeros((50,12),np.float32))
-    assert done and episode['horizon']==750 and episode['frame_clock']['frame_count']==751
+    for _ in range(18):_,done,episode=recovered.step_chunk(np.zeros((50,12),np.float32))
+    assert done and episode['horizon']==900 and episode['frame_clock']['frame_count']==901
     assert recovered.state_dict()['cursor']==2
     recovered.close()
 

@@ -43,7 +43,7 @@ def test_mixed_native_protocols_preserve_all_eighty_official_terminal_grades():
         records.extend(dict(reward=0.,done=i==episode['horizon']//50-1)
                        for i in range(episode['horizon']//50))
     labeled=install_terminal_labels(records,episodes,labels,arm='F')
-    assert len(labeled)==1152 and all(r['reward']==0 for r in records)
+    assert len(labeled)==960 and all(r['reward']==0 for r in records)
     assert [r['reward'] for r in labeled if r['done']]==[labels[e['id']] for e in episodes]
     assert all(r['reward']==0 for r in labeled if not r['done'])
     with pytest.raises(ValueError):flora_jobs(episodes,protocol('OpenDrawer'),episode_protocols=protocols)

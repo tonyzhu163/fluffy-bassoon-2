@@ -151,7 +151,7 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
     def child(command, **kwargs):
         request=torch.load(command[-1],weights_only=False)
         first=request['cases'][0]['slot']; count=len(request['cases'])
-        rows,completed=collect_pending(policy,bound,Motor(),Environment(first,chunks=15),episodes=count,
+        rows,completed=collect_pending(policy,bound,Motor(),Environment(first,chunks=12),episodes=count,
             generator=None,planned_motor_seeds=request['seeds'],planned_action_noise=request['noise'])
         assert request['episode_id_prefix'].startswith('PPO-task-')
         atomic_save(module.Path(request['output'])/'result.pt',dict(cases=request['cases'],records=rows,
@@ -172,14 +172,14 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
             child([value['request']])
         monkeypatch.setattr(rlinf_flora_ppo,'write_new',queued)
         profile['distributed_rollout_root']=str(tmp_path/'dispatch')
-    env=ParallelResidualEnvironment(cases,horizon=750,output=tmp_path/'bank',monitoring_root=tmp_path/'monitor',
+    env=ParallelResidualEnvironment(cases,horizon=600,output=tmp_path/'bank',monitoring_root=tmp_path/'monitor',
         profile=profile,code=tmp_path,report=lambda *a,**k:None)
     rows,episodes=env.collect(policy,bound,Motor(),episodes=50,generator=None,deterministic=True)
-    assert len(rows)==750 and [e['id'] for e in episodes]==[str(i) for i in range(1,51)]
+    assert len(rows)==600 and [e['id'] for e in episodes]==[str(i) for i in range(1,51)]
     state=env.state_dict()
     assert state['cursor']==50 and len(state['worker_recovery'])==8
     assert [r['environment']['cursor'] for r in state['worker_recovery']]==[7,7,6,6,6,6,6,6]
-    restored=ParallelResidualEnvironment(cases,horizon=750,output=tmp_path/'recovered',monitoring_root=tmp_path/'monitor',
+    restored=ParallelResidualEnvironment(cases,horizon=600,output=tmp_path/'recovered',monitoring_root=tmp_path/'monitor',
         profile=profile,code=tmp_path,report=lambda *a,**k:None)
     restored.load_state_dict(state)
     assert restored.state_dict()==state
@@ -190,8 +190,8 @@ def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
     cases=[dict(task=task) for _ in range(16) for task in PPO_TASKS]
     offsets=native_chunk_offsets(cases)
     lengths=[b-a for a,b in zip(offsets,offsets[1:])]
-    assert offsets[-1]==1152
-    assert [offsets[b]-offsets[a] for a,b in episode_partitions(80)]==[144]*8
+    assert offsets[-1]==960
+    assert [offsets[b]-offsets[a] for a,b in episode_partitions(80)]==[120]*8
     policy,optimizer=learner();bound=ResidualBound(12,tuple(range(6)),(.25,)*6)
     motor,generator=Motor(),torch.Generator().manual_seed(42)
     serial,episodes=collect_pending(policy,bound,motor,Environment(lengths=lengths),episodes=80,generator=generator)
@@ -203,7 +203,7 @@ def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
             generator=None,planned_motor_seeds=seeds[offsets[first]:offsets[stop]],
             planned_action_noise=noise[offsets[first]:offsets[stop]])
         actual.extend(rows);completed.extend(finished)
-    assert completed==episodes and len(serial)==len(actual)==1152
+    assert completed==episodes and len(serial)==len(actual)==960
     for left,right in zip(serial,actual):
         for key in left:
             if isinstance(left[key],np.ndarray):np.testing.assert_array_equal(left[key],right[key])

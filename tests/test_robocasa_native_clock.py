@@ -25,3 +25,26 @@ def test_clock_is_read_from_initialized_native_reset_not_constructor(monkeypatch
     assert actual._flora_accounting["clock"] == dict(control_freq=25., control_timestep=.04, model_timestep=.002, lite_physics=True)
     assert actual._flora_accounting["phase"] == "policy"
     assert actual._flora_accounting["control_time"] == 0.
+
+
+def test_residual_factory_uses_declared_ppo_cap_and_preserves_native_ood(monkeypatch):
+    from omegaconf import OmegaConf
+    from rlinf.envs.sim.robocasa365.robocasa365_env import Robocasa365Env
+    from rlinf.envs.sim.robocasa365.utils import resolve_robocasa365_episode_horizons
+    from fluffy_bassoon.meta_rl.robocasa_residual import native_environment_factory
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS, OOD_TASKS, TASKS
+    # Exercise the production factory and pinned native resolver without physics.
+    captured=[]
+    def capture(self, cfg, **kwargs):
+        captured.append(cfg)
+        self.task_horizons=resolve_robocasa365_episode_horizons(
+            task_horizons=[750], max_episode_steps=cfg.max_episode_steps,
+            episode_horizon_source=cfg.episode_horizon_source)
+    monkeypatch.setattr(Robocasa365Env, '__init__', capture)
+    factory=native_environment_factory(OmegaConf.create(dict(episode_horizon_source='task_horizon')))
+    for task in (*PPO_TASKS,*OOD_TASKS):
+        env=factory(dict(task=task,native_seed=42))
+        assert list(env.task_horizons)==[TASKS[task][0]]
+        assert captured[-1].max_steps_per_rollout_epoch==TASKS[task][0]
+    assert [TASKS[t][0] for t in PPO_TASKS]==[600]*5
+    assert [TASKS[t][0] for t in OOD_TASKS]==[900,1050,450,600,450]

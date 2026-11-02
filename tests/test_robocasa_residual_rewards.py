@@ -6,12 +6,12 @@ from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
 
 
 def test_native_video_and_probability_grade_use_actual_horizon():
-    episode = dict(id="native-1", task="open the drawer", horizon=750, completed=True,
+    episode = dict(id="native-1", task="open the drawer", horizon=600, completed=True,
         camera_order=list(REWARD_CAMERAS), raw_rgb_only=True, info_on_video=False,
         extra_info_on_video=[], success_termination_disabled=True, rank=0, round=0, local_env=0,
         videos=[dict(camera=camera,path=f"/native/{camera}.mp4",sha256="a" * 64)
                 for camera in REWARD_CAMERAS], frame_clock=dict(
-            frame_count=751, native_fps=25., encoded_fps=25., physical_steps=750,
+            frame_count=601, native_fps=25., encoded_fps=25., physical_steps=600,
             resampled=False, initial_frame_included=True, timestamp_sha256="b" * 64))
     p = protocol("OpenDrawer")
     assert flora_jobs([episode], p) == [dict(id="native-1", task="open the drawer",
@@ -44,3 +44,13 @@ def test_eight_native_cases_require_headroom_and_both_score_classes():
         row["simulator_final_success"] = True
     actual = baseline_validation(rows, protocol("OpenDrawer"))
     assert not actual["go"] and actual["AUROC"] is None
+
+
+def test_prior_750_control_calibration_cannot_admit_600_control_training():
+    from copy import deepcopy
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import require_calibration_permission
+    expected=protocol('OpenDrawer',baseline_count=50)
+    old=deepcopy(expected);old['horizon']=750
+    calibration=dict(completed=True,protocol=old,count=50,initial_success_rate=.3,AUROC=.9,go=True)
+    with pytest.raises(ValueError,match='Same completed'):
+        require_calibration_permission(calibration,expected,calibration_sha256='a'*64)
