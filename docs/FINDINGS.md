@@ -328,6 +328,9 @@ rows lack actual chunk records and are not AD/DPT training histories.
 The campaign charged2,582,096 controls and conservatively32,652 GPU-seconds
 (9.07hours), including both failed attempts and the full four-GPU scheduler
 lifetime;16 old unresolved calls remain charged. Zero PPO updates occurred.
+Following this screen the human chose velocity residual and KV conditioning as
+the two Stage 1 PPO arms (2026-11-02), replacing the action residual; the
+screen itself does not establish that either is learnable by PPO.
 Actual improving simulator- and Flora-reward PPO curves remain gates for new
 AD/DPT histories. [Six-family results and limits](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md),
 [paired evidence](../outputs/robocasa-interface-screen-20261102-r3/FINAL-RESULT.json),

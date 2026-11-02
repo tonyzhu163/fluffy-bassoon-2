@@ -108,8 +108,8 @@ before the next:
 4. **Gate 4: steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
    ([PAPER.md](PAPER.md)). The agreed steering interfaces are **velocity
-   residual and KV conditioning**, retaining the frozen vision-language
-   backbone and action expert. The ordinary RL
+   residual and KV conditioning**, as two separate arms retaining the frozen
+   vision-language backbone and action expert. The ordinary RL
    baseline and the history-generating learner use the same interface as the
    meta-learner ([review](literature/vla-steering-review.md)). The
    sample-efficiency claim is query success per robot episode against that
