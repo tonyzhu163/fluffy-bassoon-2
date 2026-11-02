@@ -1,0 +1,30 @@
+{
+  "cluster": "Baige Pro6K / 算法Z组",
+  "queue_id": "aihcq-rh0wwk9muei4",
+  "job_id": "job-dxxkwgvdk4hy",
+  "status": "FAILED",
+  "source_commit": "1b9291bdc5729490cf0bf34f00c55a777e8bfe23",
+  "job_started_shanghai": "2026-11-02 23:10:13",
+  "job_failed_shanghai": "2026-11-03 00:43:33",
+  "master_exit_code": 1,
+  "instances": {
+    "master-0": "FAILED",
+    "worker-0": "STOPPED",
+    "worker-1": "STOPPED",
+    "worker-2": "STOPPED",
+    "worker-3": "SUCCEEDED",
+    "worker-4": "SUCCEEDED",
+    "worker-5": "SUCCEEDED",
+    "worker-6": "SUCCEEDED"
+  },
+  "all_eight_allocations_terminal": true,
+  "evidence": "Refreshed authenticated Baige job detail and instance table; shared node-0.log",
+  "diagnosis": "CONTROL.py called wait_for_nodes in the immutable pre-barrier BASE mapping after completing rank 0. The missing key raised KeyError and the scheduler stopped three unfinished sibling workers.",
+  "r1_gpu_seconds_conservative": 17280,
+  "r2_gpu_seconds_conservative": 45600,
+  "r2_bound_method": "Eight GPUs times 95 minutes; longest scheduler instance lifetime 94 minutes 20 seconds, including startup.",
+  "combined_gpu_seconds_conservative": 62880,
+  "original_gpu_seconds_ceiling": 86400,
+  "automatic_retry": false,
+  "partial_artifacts_and_pinned_worktrees_preserved": true
+}

@@ -274,7 +274,9 @@ def main():
     if any(codes):
         raise RuntimeError('Control failed; preserve all records and diagnose before retry')
     if node == 0:
-        BASE['wait_for_nodes'](OUT / 'job', args.deadline, nodes=nodes)
+        # BASE is the immutable pre-barrier readout; use the current helper.
+        readout = runpy.run_path(str(CODE / 'outputs/opendrawer-ad-dpt-k1-id-ood-20261102-r1/READOUT.py'))
+        readout['wait_for_nodes'](OUT / 'job', args.deadline, nodes=nodes)
 
 
 if __name__ == '__main__':
