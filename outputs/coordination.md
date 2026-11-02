@@ -109,6 +109,8 @@ update.
   at user request 2026-10-29; reach screens fail headroom.
   [Pause record](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/metaworld-pi05-noise-baige-20261029-r2/PAUSED.md).
 
+| OpenDrawer Flora PPO catch-up | Owner chat `01a199ef-f9c0-75c1-8c1e-1c88c63a17f1`; Baige `job-btcpf0pdsj0c`, source `13b88083` | **Nov2 09:59 Shanghai: submitted and scheduled, 4×2 GPUs.** Human requested finishing the original F arm first: same initial head/PPO/64-episode batches, up to6 updates, three-view Flora terminal reward, final50 ID+50 CloseFridge OOD. Linux12/12 passed; max500k actions/359min/no retry, checkpoints+histories retained. Next verify actual probes, initializer equality and first complete Flora-labeled update; five-task training is outside this run. [Submission](robocasa-opendrawer-flora-first-20261102-r1/SUBMITTED.json). |
+
 ## Recently completed work
 
 - **Original Pi0 DSRL task57 replication**, Baige `job-psgxs9n5b08w`:
