@@ -1,0 +1,80 @@
+{
+  "completed": true,
+  "source_commit": "eaedbd1d3c5c4afd2b81a9bca94c21f7c14544d2",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-wo3w0fjf63z3",
+  "scheduler_status": "SUCCEEDED",
+  "scheduler_submitted_Shanghai": "2026-11-03 00:55:51",
+  "scheduler_ended_Shanghai": "2026-11-03 01:04:01",
+  "scheduler_submission_to_end_seconds_upper": 490,
+  "process_started_unix": 1793638569,
+  "process_ended_unix": 1793639032,
+  "process_elapsed_seconds": 463.156724691391,
+  "exit_code": 0,
+  "resources": {
+    "gpus": 1,
+    "cpus": 22,
+    "ram_gib": 208,
+    "shm_gib": 48
+  },
+  "GPU_total_MiB": 97887,
+  "configurations": [
+    {
+      "lanes": 32,
+      "episodes": 32,
+      "policy_controls": 19200,
+      "all_in_controls": 19200,
+      "controls_per_second": 150.85616470143378,
+      "observed_peak_GPU_MiB": 55026,
+      "observed_peak_container_RAM_bytes": 132212236288,
+      "model_load_seconds": 60.334030787460506,
+      "total_seconds": 199.4591984886676,
+      "completed": true,
+      "exit_code": 0,
+      "all_frame_clocks_601": true,
+      "collection_seconds": 127.27355251275003,
+      "observed_peak_GPU_GiB": 53.736328125,
+      "observed_peak_host_RAM_GiB": 123.13224029541016,
+      "initial_batch_single_action_max_abs": 0.11414353845596313
+    },
+    {
+      "lanes": 48,
+      "episodes": 48,
+      "policy_controls": 28800,
+      "all_in_controls": 28800,
+      "controls_per_second": 155.96945163689446,
+      "observed_peak_GPU_MiB": 77791,
+      "observed_peak_container_RAM_bytes": 188303224832,
+      "model_load_seconds": 36.68565061222762,
+      "total_seconds": 237.04767979402095,
+      "completed": true,
+      "exit_code": 0,
+      "all_frame_clocks_601": true,
+      "collection_seconds": 184.65154360514134,
+      "observed_peak_GPU_GiB": 75.9677734375,
+      "observed_peak_host_RAM_GiB": 175.37104415893555,
+      "initial_batch_single_action_max_abs": 0.11414353845596313
+    }
+  ],
+  "physical_episodes": 80,
+  "physical_policy_controls": 48000,
+  "actual_all_in_controls": 48000,
+  "optimizer_updates": 0,
+  "raw_server_result": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-3248-20261103-r1/gpu/RESULT.json",
+  "raw_server_result_sha256": "5302f35978aad6d40ed043bee0141318925a43a0ef9097c6793f497ae8296692",
+  "memory_headroom_48": {
+    "sampled_GPU_GiB": 19.625,
+    "sampled_host_RAM_GiB": 32.62895584106445
+  },
+  "comparison": "Same22CPU/208GiB resource allocation, first32cases shared;32vs48episode cohorts differ in size, so no controlled speedup ratio is claimed.",
+  "interpretation": "48native simulator lanes per GPU pass full600control collection with three-view video. Eight GPUs would give384concurrent rollout environments, subject to actual eight-GPU qualification. Does not qualify the separate velocity/KV history writer, actual optimizer runtime, or Flora colocation.",
+  "numerical_boundary": "Initial batched-versus-singleton action differences reached0.11414; use a fresh baseline with matched actual production batching rather than treating old singleton/four-lane outcomes as identical.",
+  "campaign": {
+    "first_job": "job-80hp54zqcwta",
+    "first_scheduler_GPU_seconds_upper": 727,
+    "second_scheduler_GPU_seconds_upper": 490,
+    "total_scheduler_GPU_seconds_upper": 1217,
+    "ceiling_GPU_seconds": 1800,
+    "all_allocations_terminal": true
+  }
+}

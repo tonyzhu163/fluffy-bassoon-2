@@ -1,0 +1,52 @@
+{
+  "status": "CAPACITY_PASSED_SCIENTIFIC_LAUNCH_STILL_HELD",
+  "human_requested_iterations_per_arm": 50,
+  "checkpoint_and_DEV_updates": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50
+  ],
+  "arms": [
+    "velocity",
+    "kv_all_layers"
+  ],
+  "independent_actor_critic_optimizer_buffer_checkpoints": true,
+  "training_tasks": [
+    "OpenDrawer",
+    "PickPlaceCounterToCabinet",
+    "PickPlaceDrawerToCounter",
+    "TurnOffStove",
+    "CoffeeSetupMug"
+  ],
+  "horizon": 600,
+  "environments_per_GPU": 48,
+  "GPUs_per_arm": 8,
+  "total_GPUs_if_concurrent": 16,
+  "proposed_global_episode_batch": 384,
+  "episodes_per_arm": 19200,
+  "policy_controls_per_arm": 11520000,
+  "policy_controls_both_arms": 23040000,
+  "task_balance": "Rotate the task with76episodes; other four tasks have77each. Over50updates each task contributes3840episodes.",
+  "per_node": {
+    "GPUs": 8,
+    "CPU": 176,
+    "RAM_GiB": 1664,
+    "SHM_GiB": 384
+  },
+  "preliminary_collection_only_projection": {
+    "assumption": "Ideal linear eight-GPU scaling at the measured one-GPU48lane rate; excludes optimizer, evaluations, canonical history I/O and additional native interface qualification.",
+    "measured_controls_per_second_per_GPU": 155.96945163689446,
+    "GPU_hours_both_arms": 41.033676356698074,
+    "wall_hours_per_arm_at8GPUs": 2.5646047722936296
+  },
+  "next": "Production owner must bind the finalized recipe, qualify native48lane velocity/KV behavior/history memory and match before-panels. Existing20GPUh combined training allowance has not been increased here; measured collection alone exceeds it. No scientific PPO job launched.",
+  "capacity_evidence": "outputs/robocasa-rollout-capacity-3248-20261103-r1/RESULT-SUMMARY.json"
+}

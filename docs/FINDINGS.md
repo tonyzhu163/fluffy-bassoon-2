@@ -97,6 +97,8 @@ A native rollout capacity test completed 64 full 750-step OpenDrawer episodes, u
 
 The 2026-11-03 capacity extension completed the same32fresh five-task cases at600controls with8/16/32environments on one GPU: **83.04/138.93/202.08controls/s**, with sampled peak VRAM18.09/28.56/49.77GiB. Every setting completed32episodes and19,200physical controls with three-view video; total57,600controls, zeroSGD, exit0 and scheduler success. This allocation used64CPUs/256GiB RAM. The32-lane host-RAM peak was116.43GiB, and64CPUs/GPU cannot scale to eight GPUs on a180CPU Baige node. A separate22CPU/208GiB comparison of32and48lanes therefore measures a feasible per-node resource split; no eight-GPU scaling, steering-history overhead or Flora colocation follows from the standalone result. [Completed capacity evidence](../outputs/robocasa-rollout-capacity-1632-20261103-r1/RESULT-SUMMARY.json).
 
+The node-compatible follow-up used22CPUs/208GiB RAM per GPU. **32and48lanes both completed**, at150.86and155.97controls/s respectively; the cohorts contain32and48episodes with the first32cases shared, so this is not a controlled speedup ratio. The48-lane peak was75.97GiB VRAM and175.37GiB host RAM, leaving19.63GiB VRAM and32.63GiB host RAM on the allocation. All80episodes have601-frame clocks and600physical controls, all48,000intents resolved, zeroSGD and scheduler success. Two eight-GPU jobs fit the advertised node resources at176CPUs/1664GiB each, but actual eight-GPU scaling and the velocity/KV history writer remain unqualified. Initial batch/single action differences reached0.11414; paired comparisons need matched actual production batching. Both capacity jobs together charge at most1217GPU-s, below1800. [48-lane audit](../outputs/robocasa-rollout-capacity-3248-20261103-r1/RESULT-SUMMARY.json).
+
 With one persistent official Flora TP1 engine (batch limit8, utilization.78), a four-lane worker completed ten mixed-task episodes and7,200 controls with all ten grades streamed before the final request and zero SGD. Collection from the first reset intent through the final complete video took147.65seconds (48.77controls/s/GPU); including native model loading it took183.02seconds (39.34controls/s). Sampled peak combined VRAM was88.01GiB. The first continuous-refill attempt exposed a forked reset child retaining another lane's FFmpeg pipe and blocking video EOF; spawned resets repaired it, with57/57 affected Linux core tests and a regression that fails on the old code. [Audited colocation measurement](../outputs/robocasa-joint-lane-qualification-20261102-r4/PARENT-REVIEW.json), [pipe evidence](../outputs/robocasa-joint-lane-qualification-20261102-r3/DEADLOCK-EVIDENCE.json).
 
 This is one GPU's physical measurement, not an eight-GPU joint PPO iteration. After the real Flora warmup only20,664MiB was free: below the8-lane27,408MiB requirement and1,309MiB below the4-lane21,973MiB production requirement, which includes an8GiB operating reserve. At that pin the four-lane production reserve remained unmet. Sixteen native lanes have not been measured; eight was the largest and fastest standalone setting tested. That native-horizon measurement does not qualify the later600-control protocol.
@@ -350,6 +352,15 @@ from the AD/DPT held-out panel. Eight draws cannot establish p=0 or p=1;
 oracle best-of8 recovery is a diagnostic, not an ICRL ceiling. This makes
 matched empty-memory motor streams essential before claiming memory gains.
 [Per-case estimates and uncertainty](../outputs/opendrawer-memory-controls-20261102-r1/NOISE.md).
+
+The matched reset/window64 continuation was interrupted by a driver barrier
+error on November 3, before completing the comparison. Independent CPU
+verification retains 1052/1100 collected endpoints (785 new plus267 carried);
+48 DPT/ID episodes remain missing. The completed records passed original
+case/stream, source, truth/hash, native pairing, horizon and cache checks.
+All eight allocations are terminal, and the future barrier call is corrected;
+no automatic retry or final memory-effect claim follows from these partial
+data. [Failure diagnosis and preserved coverage](../outputs/opendrawer-memory-controls-20261102-r2/TERMINAL.md).
 
 **RoboCasa Stage 0 interface screen completed (2026-11-02).** On 20 TRAIN
 cases/task selected by an independent native failure anchor, eight new draws
