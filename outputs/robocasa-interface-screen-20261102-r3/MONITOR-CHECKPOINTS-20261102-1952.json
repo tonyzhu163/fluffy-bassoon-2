@@ -1,0 +1,180 @@
+{
+  "job_id": "job-8ppjn68jxa9e",
+  "checked_unix": 1793620346.3606577,
+  "tasks": [
+    {
+      "task": "OpenDrawer",
+      "progress": {
+        "stage": "direct",
+        "new_completed_episodes": 49,
+        "carried_episodes": 0,
+        "completed_episodes": 49,
+        "bank_total": 160,
+        "updated_unix": 1793620331.5506148,
+        "every_complete_episode_checkpointed": true
+      },
+      "saved_episode_checkpoints_by_bank": {
+        "conditioning": 160,
+        "velocity": 160,
+        "direct": 49,
+        "native8": 127,
+        "noise32": 160,
+        "direct-qualification-head": 8,
+        "action050": 160,
+        "action025": 160,
+        "direct-qualification-native": 8
+      },
+      "task_result": false
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "progress": {
+        "stage": "select8",
+        "completed_episodes": 20,
+        "new_completed_episodes": 20,
+        "carried_episodes": 0,
+        "bank_total": 20,
+        "updated_unix": 1793620000.2749808,
+        "seconds": 260.15210421942174,
+        "successes": 5,
+        "every_complete_episode_checkpointed": true
+      },
+      "saved_episode_checkpoints_by_bank": {
+        "conditioning": 160,
+        "velocity": 160,
+        "native8": 111,
+        "noise32": 160,
+        "action050": 160,
+        "select8": 20,
+        "action025": 160
+      },
+      "task_result": true,
+      "incomplete_families": [
+        "direct: warm-start/competence gate not passed"
+      ],
+      "direct_competence": null
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "progress": {
+        "stage": "select8",
+        "completed_episodes": 20,
+        "new_completed_episodes": 20,
+        "carried_episodes": 0,
+        "bank_total": 20,
+        "updated_unix": 1793619549.7608519,
+        "seconds": 247.38916787318885,
+        "successes": 4,
+        "every_complete_episode_checkpointed": true
+      },
+      "saved_episode_checkpoints_by_bank": {
+        "conditioning": 160,
+        "velocity": 160,
+        "native8": 95,
+        "noise32": 160,
+        "direct-qualification-head": 8,
+        "action050": 160,
+        "select8": 20,
+        "action025": 160,
+        "direct-qualification-native": 8
+      },
+      "task_result": true,
+      "incomplete_families": [
+        "direct: warm-start/competence gate not passed"
+      ],
+      "direct_competence": {
+        "native_successes": 3,
+        "direct_successes": 0,
+        "cases": 8,
+        "admitted": false,
+        "gate": "Preliminary eight-case TRAIN competence check; no broad equivalence claim"
+      }
+    },
+    {
+      "task": "TurnOffStove",
+      "progress": {
+        "stage": "select8",
+        "completed_episodes": 20,
+        "new_completed_episodes": 20,
+        "carried_episodes": 0,
+        "bank_total": 20,
+        "updated_unix": 1793619523.0743601,
+        "seconds": 250.28457228653133,
+        "successes": 1,
+        "every_complete_episode_checkpointed": true
+      },
+      "saved_episode_checkpoints_by_bank": {
+        "conditioning": 160,
+        "velocity": 160,
+        "native8": 94,
+        "noise32": 160,
+        "direct-qualification-head": 8,
+        "action050": 160,
+        "select8": 20,
+        "action025": 160,
+        "direct-qualification-native": 8
+      },
+      "task_result": true,
+      "incomplete_families": [
+        "direct: warm-start/competence gate not passed"
+      ],
+      "direct_competence": {
+        "native_successes": 0,
+        "direct_successes": 0,
+        "cases": 8,
+        "admitted": false,
+        "gate": "Preliminary eight-case TRAIN competence check; no broad equivalence claim"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "rank": 0,
+      "errors": []
+    },
+    {
+      "rank": 1,
+      "worker-terminal.json": {
+        "exit_code": 0
+      },
+      "clock.json": {
+        "started_unix": 1793614058,
+        "finished_unix": 1793620007,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 5949,
+        "exit_code": 0
+      },
+      "errors": []
+    },
+    {
+      "rank": 2,
+      "worker-terminal.json": {
+        "exit_code": 0
+      },
+      "clock.json": {
+        "started_unix": 1793614058,
+        "finished_unix": 1793619556,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 5498,
+        "exit_code": 0
+      },
+      "errors": []
+    },
+    {
+      "rank": 3,
+      "worker-terminal.json": {
+        "exit_code": 0
+      },
+      "clock.json": {
+        "started_unix": 1793614057,
+        "finished_unix": 1793619529,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 5472,
+        "exit_code": 0
+      },
+      "errors": []
+    }
+  ],
+  "PPO_updates": 0,
+  "total_saved_new_episode_checkpoints": 3784
+}
