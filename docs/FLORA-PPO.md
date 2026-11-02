@@ -107,14 +107,25 @@ before the next:
    and use separate held-out-task folds to test task generalization.
 4. **Gate 4: steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
-   ([PAPER.md](PAPER.md)). The steering interface is a bounded action residual
-   (alternatives in [PAPER.md](PAPER.md)); the ordinary RL
+   ([PAPER.md](PAPER.md)). The agreed steering interfaces are **velocity
+   residual and KV conditioning**, retaining the frozen vision-language
+   backbone and action expert. The ordinary RL
    baseline and the history-generating learner use the same interface as the
    meta-learner ([review](literature/vla-steering-review.md)). The
    sample-efficiency claim is query success per robot episode against that
    ordinary Flora-reward learner at equal interactions, with reset and
    reward-blind controls. Full-weight PPO is a reward check, not that
    baseline.
+
+New PPO contracts evaluate a fixed development panel before training and
+**every five PPO rounds**, saving the corresponding policy checkpoints and
+per-task success curves. Reserve these evaluation controls in the run budget
+before launch. Keep a separate fixed test panel for the final paired readout;
+development checks do not replace that test. Historical before/after-only
+runs retain their original contracts and are not described as having periodic
+evaluation. Multi-task source histories must retain each task's policy-update
+order and use the selected velocity/KV steering labels; a full action-expert
+teacher corpus does not supply those labels automatically.
 
 Prospective comparisons share the case/noise/attempt schedule in
 `paired_evaluation.py`: 200 canonical cases per task by default, paired motor

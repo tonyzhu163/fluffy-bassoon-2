@@ -20,8 +20,8 @@ is semantically unseen.
 
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
-- Approach: causal history → bounded action residual (alternatives in Agreed
-  design) → frozen π₀.₅;
+- Approach: causal history → velocity residual or KV conditioning
+  (interfaces in Agreed design) → frozen π₀.₅;
   pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
@@ -147,8 +147,8 @@ is semantically unseen.
 | Route | Behavior used to collect context | Query target / outer objective | Interpretation |
 | --- | --- | --- | --- |
 | CND | Fixed competent teacher mixed with annealed bounded uniform noise | Actually executed mixture | Vintix-inspired noise distillation in steering space; not an improving teacher |
-| Paired DPT | Same actual CND or DSRL histories; identify the source route | Qualified teacher/final actor's query coordinate | Change supervision while preserving all executed context/outcomes bitwise; candidate labels are not assumed expert |
-| AD | Successive real DSRL policy checkpoints, updates between complete episodes | Original executed coordinate | Distill a source learning trajectory; a collection clock is not a teacher-update identity |
+| Paired DPT | Same actual CND or steering-PPO histories; identify the source route | Qualified teacher/final actor's query coordinate | Change supervision while preserving all executed context/outcomes bitwise; candidate labels are not assumed expert |
+| AD | Successive real steering-PPO policy checkpoints, updates between complete episodes | Original executed coordinate | Distill a source learning trajectory; a collection clock is not a teacher-update identity |
 | Direct RL² | Student's own complete multi-episode trials | Trial return, PPO in the present implementation | Meta-learn steering directly; compare additional interaction cost |
 
 - CND mixture:
@@ -163,7 +163,7 @@ is semantically unseen.
   collection budget or proof of expert quality.
 - DPT labels cannot rewrite historical executed noise or its actual reward.
   Same source data and collection cost shared across CND/DPT.
-- Planned first source route: actual advancing DSRL learning histories with
+- Planned first source route: actual advancing velocity/KV steering-PPO histories with
   paired AD and DPT-style query labels, preserving executed contexts bitwise.
   Source teacher learning may require many more episodes than the deployment
   shot budget. Published π₀ DSRL uses batch 256, replay warmup >500 query chunks
@@ -368,49 +368,40 @@ is semantically unseen.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- **Steering interface (human, 2026-11-01): bounded action residual.** A
-  small correction added to the frozen π₀.₅ action chunk, clipped per
-  dimension to a bound declared per benchmark before launch. \(z_t\) below
-  denotes this residual. The
+- **Steering interfaces (human, 2026-11-02): velocity residual and KV
+  conditioning.** Keep both the vision-language backbone and the original
+  action expert frozen. A learned controller supplies either a correction
+  to the expert's flow velocity or a residual on its KV conditioning.
+  Each arm declares its hook, steering coordinates, scale and label schema
+  before launch; zero steering must reproduce the native expert. \(z_t\)
+  denotes that arm's steering output. This supersedes the earlier bounded
+  action-residual choice. The
   [steering scoping review](literature/vla-steering-review.md) maps the
   options.
   - Label rule: the meta-learner's output must be something its source
-    histories can label. A residual learner labels residuals directly.
-    Full-weight PPO (RLinf πRL) labels a residual as its action minus the
-    frozen π₀.₅ action for the same observation and sampler noise, so record
-    that noise. Frozen-motor PPO/DSRL labels noise directly; full-weight PPO
-    labels noise only through inversion through the frozen flow decoder,
-    which can leave the bounded noise range.
+    histories can label. Retain actual velocity/KV steering outputs and
+    their executed outcomes in policy-update order for AD. DPT-style labels
+    come from a separately qualified teacher using the same steering map
+    on the recorded query inputs; they never replace historical actions or
+    feedback. Full action-expert PPO does not directly label velocity/KV
+    steering. Any conversion requires its own qualified mapping.
   - Matched baseline rule: the ordinary RL baseline and the
     history-generating learner use the same interface as the meta-learner,
     so the sample-efficiency comparison changes only the learner. For the
-    action residual that is Policy Decorator/ResiP-style residual PPO with
-    the same bound. Full-weight PPO stays a reward check and reference, not
-    the matched baseline.
-  - Alternative interfaces, kept as recorded choices (same plain decoder,
-    same frozen π₀.₅, same matched-baseline rule):
-    1. Conditioning/KV/prompt residual: zero-initialized residual on π₀.₅'s
-       conditioning, trained by flow matching through the frozen expert.
-       Matches VLRLA-bridge. Support: soft prompts on frozen π₀.₅ in
-       RoboCasa. Warning: the earlier RoboTwin KV heads scored 0/5.
-    2. Initial-noise steering: 32 bounded noise coordinates, the existing
-       DSRL interface and the only one that has worked here (task44
-       5/20 → 20/20). Keep native-noise and tied-noise controls separate.
-    3. Direct action head: actions from frozen VLA features, bypassing
-       π₀.₅'s action expert (VLRLA-simp).
-    4. Velocity residual: a correction to the flow velocity inside the
-       denoiser. In-context use reduces to the meta-learner emitting a
-       per-chunk code to a small zero-initialized velocity head, close to
-       alternative 1.
-    5. Sample and select: draw K chunks from frozen π₀.₅ and let the
-       meta-learner score them from history. Bounded by π₀.₅'s own samples
-       and K times the inference cost; labels are values or the PPO choice,
-       not actions. Can combine with the residual (select, then correct).
+    selected velocity/KV arm, qualify ordinary PPO with the same frozen
+    expert and steering map used by the history learner. Full action-expert
+    PPO stays a reward check and reference, not the matched baseline.
+  - Bounded output-action residuals, initial-noise steering, direct action
+    heads and sample-and-select remain comparison interfaces. A direct head
+    bypasses the action expert and is not evidence of steering it. The
+    existing restricted conditioning/velocity screen is not a qualification
+    of every learned KV/velocity adapter or of PPO improvement.
 - One frozen motor/tokenizer/normalization/feature receipt across all tasks.
   Requalify the OpenPI40 backend on the actual allocation. RLinf4104 features
   and learned controllers are incompatible receipts, not reusable coordinates.
-- Planned source route: actual advancing DSRL histories with paired AD and
-  DPT-style final-query labels. Historical executed actions and feedback stay
+- Planned source route: actual advancing PPO histories on the selected
+  velocity/KV interface, with paired AD and DPT-style final-query labels.
+  Historical executed steering outputs, actions and feedback stay
   actual. Source improvement and final-actor expertise require independent
   evaluation; update counts alone prove neither.
 - <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
