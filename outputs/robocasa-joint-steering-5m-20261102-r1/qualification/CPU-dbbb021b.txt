@@ -1,0 +1,40 @@
+.....................................F.................................. [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+___ test_all_layer_conditioning_steers_each_layer_and_keeps_final_layer_map ____
+
+    def test_all_layer_conditioning_steers_each_layer_and_keeps_final_layer_map():
+        noise = np.linspace(-1, 1, 2 * 50 * 32, dtype=np.float32).reshape(2, 50, 32)
+        code = np.linspace(-2, 2, 64, dtype=np.float32).reshape(2, 32)
+        runs = {}
+        for kind in ("conditioning", "conditioning_all"):
+            native, observation = batch_native()
+            native.model.layers = 3
+            adapter = FrozenRoboCasaInterface(native)
+            _, prepared = adapter.prepare_batch(observation)
+            cache = [entry[1].clone() for entry in prepared["prefix"][2]]
+            zero = InterfaceSpec(kind=kind, steering_dim=32, fraction=.17)
+            result = adapter.execute_batch(prepared, noise=noise, steering=np.zeros((2, 32)), spec=zero)
+            for used, original in zip(native.model.used[2], cache):
+                torch.testing.assert_close(used[1], original, rtol=0, atol=0)
+            _, prepared = adapter.prepare_batch(observation)
+            runs[kind] = (adapter.execute_batch(prepared, noise=noise, steering=code, spec=zero),
+                          [entry[1] for entry in native.model.used[2]], cache, result)
+        tanh = torch.from_numpy(code).tanh()
+        single, every = runs["conditioning"][1], runs["conditioning_all"][1]
+        cache = runs["conditioning"][2]
+        for layer, original in enumerate(cache):
+            projection = np.random.default_rng(921003 + 2 - layer).choice((-1., 1.), (32, 4)) / np.sqrt(32)
+            delta = (tanh @ torch.as_tensor(projection, dtype=torch.float32)).reshape(2, 1, 1, 4)
+            rms = original.square().mean((1, 2, 3), keepdim=True).sqrt()
+>           torch.testing.assert_close(every[layer], original + .17 * rms * delta, rtol=0, atol=0)
+E           AssertionError: Tensor-likes are not equal!
+E           
+E           Mismatched elements: 16 / 16 (100.0%)
+E           Greatest absolute difference: 26.164306640625 at index (1, 0, 0, 3)
+E           Greatest relative difference: 0.48670563101768494 at index (0, 0, 0, 1)
+
+tests/test_interface_ppo.py:525: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_interface_ppo.py::test_all_layer_conditioning_steers_each_layer_and_keeps_final_layer_map
+1 failed, 79 passed in 12.76s

@@ -1,0 +1,102 @@
+....F................................................................... [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+______ test_actual_1152_coefficient_actor_update_and_next_update_restore _______
+
+    def test_actual_1152_coefficient_actor_update_and_next_update_restore():
+        policy = make_policy("kv_all_layers", seed=91)
+        optimizer = torch.optim.Adam(policy.parameters(), lr=policy.config.learning_rate)
+        generator = torch.Generator().manual_seed(92)
+        features = torch.randn((24, 2064), generator=torch.Generator().manual_seed(93))
+        noise = torch.randn((24, 1152), generator=torch.Generator().manual_seed(94))
+    
+        def rollout():
+            control, log_prob, value = policy.act(features, action_noise=noise)
+            return dict(features=features[:, None], controls=control[:, None],
+                        log_probs=log_prob[:, None], values=value[:, None],
+                        rewards=torch.tensor([0., 0., 0., 0., 0., 1.] * 4)[:, None],
+                        ends=torch.tensor([False] * 5 + [True])[:, None].repeat(4, 1))
+    
+        first = update(policy, optimizer, rollout(), generator=generator)
+        assert first["optimizer_steps"] >= 1 and np.isfinite(first["final_metrics"]["approximate_kl"])
+        rng_before = torch.get_rng_state().clone()
+        weights_before = deepcopy(policy.state_dict())
+        from fluffy_bassoon.meta_rl.joint_steering_ppo import spec_arguments
+>       qualification = qualify_optimizer_restore(policy, optimizer, generator, features,
+            arm="kv_all_layers", interface_spec=spec_arguments("kv_all_layers"))
+
+tests/test_joint_steering_ppo.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+policy = ResidualActorCritic(
+  (actor): Sequential(
+    (0): Linear(in_features=2064, out_features=256, bias=True)
+    (1): Ta...res=256, out_features=256, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=256, out_features=1, bias=True)
+  )
+)
+optimizer = Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    decoupled_weight_decay: ...tiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 0.0003
+    maximize: False
+    weight_decay: 0
+)
+generator = <torch._C.Generator object at 0x7f4e66c0f870>
+features = tensor([[ 0.2419, -0.5710,  0.5902,  ..., -0.1089,  1.3148,  1.0248],
+        [ 0.2698, -0.4434,  0.5777,  ...,  0.391...7803, -1.3784,  ..., -1.3053, -0.0329,  0.7012],
+        [-1.9434, -0.8768, -0.7586,  ...,  0.6577, -0.5171, -0.1240]])
+arm = 'kv_all_layers'
+interface_spec = {'kind': 'kv_all_layers', 'steering_dim': 1152, 'kv_layers': 18, 'fraction': 0.041666666666666664}
+
+    def qualify_optimizer_restore(policy, optimizer, generator, features, *, arm, interface_spec):
+        """Compare two next Adam updates on the actual device without advancing PPO.
+    
+        The shadow batch uses retained public TRAIN features with synthetic actor
+        draws/rewards. It never enters the scientific history or controls an env.
+        The live actor, optimizer, sampler and global RNG remain unchanged.
+        """
+        from .rlinf_native_ppo import restore_rng, tensor_hash
+        from .residual_ppo import update
+        saved = boundary_state(policy, optimizer, generator, arm=arm, iteration=1, sequence=0,
+            worker_states={}, escrow={}, interface_spec=interface_spec)
+        weight = next(policy.parameters())
+        observations = torch.as_tensor(features, device=weight.device, dtype=weight.dtype)[:24]
+        if len(observations) != 24:
+            raise ValueError("Recovery qualification requires24 retained public TRAIN feature rows")
+        try:
+            states, diagnostics, rollout = [], [], None
+            for _ in range(2):
+                shadow = ResidualActorCritic(policy.config).to(weight.device)
+                adam = torch.optim.Adam(shadow.parameters(), lr=policy.config.learning_rate)
+                sampler = torch.Generator()
+                restore_boundary(saved, shadow, adam, sampler, arm=arm, interface_spec=interface_spec)
+                if rollout is None:
+                    noise = torch.randn((24, policy.config.residual_dim),
+                        generator=torch.Generator().manual_seed(921019)).to(weight.device)
+                    controls, logs, values = shadow.act(observations, action_noise=noise)
+                    ends = torch.tensor([False] * 5 + [True], device=weight.device)[:, None].repeat(4, 1)
+                    rollout = dict(features=observations[:, None], controls=controls[:, None],
+                        log_probs=logs[:, None], values=values[:, None], ends=ends,
+                        rewards=ends.to(weight.dtype))
+                diagnostic = update(shadow, adam, rollout, generator=sampler)
+                if diagnostic["optimizer_steps"] < 1:
+                    raise ValueError("Shadow recovery check did not exercise an Adam step")
+                diagnostics.append(diagnostic["final_metrics"])
+                states.append(tensor_hash(dict(policy=shadow.state_dict(), optimizer=adam.state_dict(),
+                                               generator=sampler.get_state())))
+            if states[0] != states[1] or diagnostics[0] != diagnostics[1]:
+>               raise ValueError("Restored next Adam update differs from its same-device reference")
+E               ValueError: Restored next Adam update differs from its same-device reference
+
+src/fluffy_bassoon/meta_rl/joint_steering_ppo.py:344: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_joint_steering_ppo.py::test_actual_1152_coefficient_actor_update_and_next_update_restore
+1 failed, 79 passed in 11.00s

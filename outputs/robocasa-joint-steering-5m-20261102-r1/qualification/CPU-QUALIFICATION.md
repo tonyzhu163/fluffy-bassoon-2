@@ -1,0 +1,17 @@
+# Joint frozen steering: CPU qualification
+
+2026-11-03 00:11 Shanghai. Source `dd3e51334fda9b839f37b777d68ffb79f66d638c`, merged into main `dc0964cc`. **80/80 core tests pass** on the existing allocated Baige development CPU (13 cores,112GiB), Torch2.11.0+cu128, CUDA visibility masked. No macOS model computation, new simulator episode, physical control or GPU use. [Final log](CPU-dd3e5133.txt).
+
+Coverage includes complete first-success logical episodes with retained physical suffixes, lane-independent draws, actual steering dimensions, chronological regrouping before GAE, native motor batching, every K/V cache target, public-only reset calibration, exact next Adam update restoration and unchanged live weights/RNG during shadow qualification. Actual1152-dimensional policy updates are numerically tested, not just shape-checked.
+
+The master now has the finite103-round five-task schedule, every5 DEV and separate500-case paired before/after panels, behavior archives, full per-update actor/value/Adam/RNG/worker checkpoints, exact source/runtime/initializer binding, real physical-call escrow, joint KL diagnostics and complete-boundary checkpoint-and-exit. First-bank feature fitting preserves Gaussian parameters and the actual worker behavior log probabilities; batch-reduction differences are recorded rather than subjected to a bitwise precision guard.
+
+Clean `--resume` is supported only within the same allocation after verified release of the exact owned children, under a single-master lock and the original resource deadline. A different allocation or source requires an explicit fresh-attempt migration with retained prefixes/accounting; the CLI does not silently rebind it. A failed partial native bank is retained for diagnosis, not cold-replayed.
+
+First real TRAIN update includes two numerical shadow next-Adam updates on synthetic rewards/retained public features, on the actual GPU. These do not advance the scientific learner or execute controls. First-round setup work is excluded from the steady-state projection once round2 exists. If the measured target exceeds the retained10GPUh arm budget, stop at a full checkpoint for a concrete resource decision; no128GPUh budget is inferred.
+
+[Schedule audit](SCHEDULE-dd3e5133.json):8240 unique TRAIN episodes,16/task/round,4,944,000 policy controls; historical3-control reset projection4,968,744 inclusive of8calibration resets, below5M. Evaluation policy controls1,173,000 plus projected5,640reset controls, below1.2M. Actual calls, failures and unresolved reservations remain authoritative.
+
+Earlier qualification receipts remain preserved. `dbbb021b` exposed the previously known stale multi-layer test fixture; it was reconciled to the passing main reference. `a09bdf27` exposed CPU Adam moment storage aliasing across repeated checkpoint loads; `dd3e5133` deep-copies moments before restoration and passes the exact repeated next-update check.
+
+**Native GPU qualification is still pending.** CPU synthetic tests do not establish actual camera/model/cache behavior, GPU memory/throughput, physics episodes or PPO improvement. At00:03 Shanghai the visible Baige queue had4free GPUs total, insufficient for an8GPU learner. A bounded one-GPU native qualification is being prepared; neither joint scientific PPO arm is submitted. Ali remained0free and its small compatibility test is still unexecuted.
