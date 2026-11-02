@@ -397,8 +397,27 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
 
 
 @pytest.mark.parametrize('failed_lane', [0, 1])
-def test_complete_lane_is_checkpointed_before_sibling_failure(tmp_path, failed_lane):
+def test_complete_lane_is_checkpointed_before_sibling_failure(tmp_path, failed_lane, monkeypatch):
+    from concurrent.futures import Future
     from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
+    # Both resets and both final steps belong to one deterministic batch. A
+    # real executor can start one lane earlier; then its sibling is unfinished
+    # when the failure occurs and correctly has no complete checkpoint yet.
+    class EagerExecutor:
+        def __init__(self, **kwargs):
+            pass
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            pass
+        def submit(self, function, *args):
+            future = Future()
+            try:
+                future.set_result(function(*args))
+            except Exception as error:
+                future.set_exception(error)
+            return future
+    monkeypatch.setattr('concurrent.futures.ThreadPoolExecutor', EagerExecutor)
     stats = {key: dict(mean=[0.] * 32, std=[2.] * 32) for key in ('state', 'actions')}
     cases = [dict(task='OpenDrawer', native_seed=i) for i in range(2)]
     class FailingLane(RoboCasaResidualEnvironment):
