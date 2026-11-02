@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r3/scripts/diagnostics/robocasa_residual_ppo.py", line 620, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r3/scripts/diagnostics/robocasa_residual_ppo.py", line 157, in main
+    qualified = read_ref(profile["loading_qualification"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r3/src/fluffy_bassoon/meta_rl/rlinf_flora_ppo_runtime.py", line 14, in read_ref
+    if sha(path)!=ref['sha256']:raise ValueError('Immutable batch/label reference changed')
+       ^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r3/src/fluffy_bassoon/meta_rl/rlinf_flora_ppo.py", line 32, in sha
+    with Path(path).open('rb') as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json'
