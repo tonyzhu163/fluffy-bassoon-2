@@ -104,23 +104,31 @@ def run_bank(name, cases, draws, arm='native', fraction=0., direct=None, critic=
     atomic_save(destination / 'PLAN.pt', dict(source_commit=os.environ['TASK_CODE_PIN'], cases=cases, draws=draws,
         original_indices=original_indices, planned_motor_seeds=seeds, actor_standard_normal=noise if stochastic else None,
         motor_controls={key: value.numpy() for key, value in codes.items()}, carried_rows=carried, arm=arm, fraction=fraction))
+    completed_slots = set()
     def checkpoint(slot, records, episode):
+        assert slot not in completed_slots
         planned = seeds[slot * 12:(slot + 1) * 12]
         atomic_save(destination / 'episodes' / f'slot-{slot:06d}.pt', dict(case=cases[slot], draw=draws[slot],
             original_index=original_indices[slot], source_commit=os.environ['TASK_CODE_PIN'],
             records=records, episode=episode, planned_motor_seeds=planned,
             selector_draws={seed: adapter.selector_draws[seed] for seed in planned if seed in adapter.selector_draws}))
+        completed_slots.add(slot)
+        save(OUT / 'progress.json', dict(stage=name, new_completed_episodes=len(completed_slots),
+            carried_episodes=len(carried), completed_episodes=len(carried) + len(completed_slots),
+            bank_total=len(carried) + len(cases), completed_slots=sorted(completed_slots),
+            updated_unix=time.time(), every_complete_episode_checkpointed=True))
     tick = time.monotonic()
     try:
         records, episodes = collect_pending_lanes(policy, bound, adapter, environments,
             planned_motor_seeds=seeds, planned_action_noise=noise if stochastic else None,
             deterministic=not stochastic, verify_zero=not stochastic, episode_callback=checkpoint)
         rows = []
-        for episode, native_case, draw in zip(episodes, cases, draws, strict=True):
+        for index, (episode, native_case, draw) in enumerate(zip(episodes, cases, draws, strict=True)):
             truth = json.loads((destination / 'monitoring' / (episode['id'] + '.json')).read_text())
             assert truth['case'] == native_case
             assert truth['native_counts']['controls'] - truth['native_counts']['reset_controls'] == 600
             rows.append(dict(case=native_case, draw=draw, success=truth['simulator_final_success'],
+                original_slot=original_indices[index], source_run='robocasa-interface-screen-20261102-r2',
                 truth=dict(path=str(destination / 'monitoring' / (episode['id'] + '.json')),
                            sha256=sha(destination / 'monitoring' / (episode['id'] + '.json'))),
                 episode=episode))
@@ -129,7 +137,8 @@ def run_bank(name, cases, draws, arm='native', fraction=0., direct=None, critic=
             actor_standard_normal=noise if stochastic else None, selector_choices=adapter.selector_choices,
             selector_draws=adapter.selector_draws,
             inference_draws=adapter.inference_draws))
-        result = dict(completed=True, task=TASK, arm=arm, fraction=fraction, rows=carried + rows,
+        combined_rows = sorted(carried + rows, key=lambda row: row['original_slot'])
+        result = dict(completed=True, task=TASK, arm=arm, fraction=fraction, rows=combined_rows,
             carried_episodes=len(carried), new_episodes=len(rows), new_policy_controls=len(rows) * 600,
             policy_controls=(len(carried) + len(rows)) * 600,
             inference_draws=adapter.inference_draws + len(carried) * 12, new_inference_draws=adapter.inference_draws,
