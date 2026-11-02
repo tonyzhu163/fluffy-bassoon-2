@@ -237,6 +237,16 @@ promoting the fitted threshold. The corrected retry completed70 labels,
 including8 recovered baseline outputs, with673 worker GPU-seconds; the failed
 allocation remains separately charged520. No new robot actions or SGD.
 [Per-case times, raw scores and limits](../outputs/robocasa-flora-first-success-rubric-20261103-r2/RESULT.md).
+A subsequent frozen comparison on the same35 prefixes does not repair these
+losses. Adding clearest-view guidance gives1/20 false full scores and recognises
+3/5 successful episodes at valid sampled times; adding native sufficient-opening
+and first-success wording gives3/20 and1/5. Both still score successful128
+prefixes1. Four repeated1.6 anchors reproduce exactly. All74 new outputs and
+35 artifact hashes are verified, with0 new robot actions or SGD. No candidate
+passes the prespecified development screen. These rewrites leave the system
+and final grading instruction asking for terminal success; putting the rubric
+into grading instructions remains an untested hypothesis.
+[Exact changes, paired results and prompt limits](../outputs/robocasa-flora-first-success-rubric-20261103-r3/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
