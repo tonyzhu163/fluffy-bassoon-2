@@ -1,0 +1,488 @@
+{
+  "checked_at": "2026-11-02T06:58:52.693617+00:00",
+  "phases": [
+    {
+      "run": "opendrawer-ad-first-id-ood-20261102-r2",
+      "manifests": [
+        {
+          "node": 0,
+          "hostname": "job-tft9nlsdrn4e-master-0",
+          "gpu_uuids": [
+            "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+            "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+          ],
+          "manifest_sha256": "a61c065c991b3977f86b0a40caebee3723995408fb51e5ed5e3a93194fa071d4",
+          "probe_sha256": "be83aba67faadb102d70fe1af14d906a033e910301de6190bd1decbc51045194"
+        },
+        {
+          "node": 1,
+          "hostname": "job-tft9nlsdrn4e-worker-0",
+          "gpu_uuids": [
+            "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01",
+            "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+          ],
+          "manifest_sha256": "9c3d7cf6b40d09d3903abe8b520533bf0e9c043fb2e03b9e6247515503165ff4",
+          "probe_sha256": "90012ef889d2dfd2ae8b46c6c191f7c50c9f6aa52aaafb1dcd8ec5bc29c67c87"
+        },
+        {
+          "node": 2,
+          "hostname": "job-tft9nlsdrn4e-worker-1",
+          "gpu_uuids": [
+            "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0",
+            "GPU-7af6fb3a-3b82-1d13-413e-90d0643d2342"
+          ],
+          "manifest_sha256": "c2bc2dfc8c251e490677c3f18fad8fbb7ad6331fd591d3e1f2a2e4649bd937e8",
+          "probe_sha256": "d2eb452328d95221829460fd26b366f9c6562ef94d563ec89078c0233bda35ce"
+        },
+        {
+          "node": 3,
+          "hostname": "job-tft9nlsdrn4e-worker-2",
+          "gpu_uuids": [
+            "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f",
+            "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a"
+          ],
+          "manifest_sha256": "52c49a5f65b9fe8bffeaafdfb11d2d366f7efb24ad9b68284000b0573f350a4a",
+          "probe_sha256": "2c101f5eb05ba63186952c431c6b77a8fd036187b1f1f55049b17fb156354150"
+        }
+      ],
+      "completed_episodes": 64,
+      "completed_by_endpoint": {
+        "OOD/ad_full/K0/query": 10,
+        "OOD/ad_full/K1/query": 8,
+        "OOD/ad_full/K1/support": 8,
+        "OOD/ad_static/K0/query": 9,
+        "OOD/ppo_final/K0/query": 13,
+        "OOD/ppo_initial/K0/query": 16
+      },
+      "first_verified_native_endpoints": [
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ppo_initial/K0/query/result.json",
+          "result_sha256": "10faa99fa1d69a95065ffbe8db2ce8195daf735a859058c1ab95710441121ca6",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "779e5a465ffe69f83e67f11a99f8e35c9106343f031391fec45a442a95b059b8",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ppo_final/K0/query/result.json",
+          "result_sha256": "bf53f34c80740c2e1281c274b5f23b658432bf35a38f832f485070180f8d059b",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 1,
+                "differing_components": 1,
+                "total_components": 196608,
+                "mean_absolute_delta": 5.086263020833333e-06
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "20f6dd177defe88cfe4fd57e33043fed18c1e67c8db435790582ec86c854faa4",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ad_full/K0/query/result.json",
+          "result_sha256": "8996767990d718039df808bc80c8ec14490071b26357c0e78f4661b468a23557",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "4aaba5deebe8684732d325272466ca7b9e7699a6bab60e1adf22e415aa5cc18f",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ad_full/K1/support/result.json",
+          "result_sha256": "34da143535d6ef19ec8507687d72c9df71fda12f2ca4f48fa66d39c2affb6f45",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "6fbb2168a7dab6be680e991a85bbcf10428c052ae4ee214e24a5a5079a9bfcbe",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ad_full/K1/query/result.json",
+          "result_sha256": "08c31e91eca82bbde2cc9af9b93b3dd27570ba52358b9f33dbe0f0c6a72505bf",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 1,
+                "differing_components": 8,
+                "total_components": 196608,
+                "mean_absolute_delta": 4.0690104166666664e-05
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "c4f7804dcf7cdf2a5e7422efafe12fc6a867cee7c5b029ca7d2f451d70b31fd1",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/episodes/OOD/case-000/ad_static/K0/query/result.json",
+          "result_sha256": "3150c048e7288fc497161440291fc65f5e0c66326477288f26e1794f8562f717",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 1,
+                "differing_components": 6,
+                "total_components": 196608,
+                "mean_absolute_delta": 3.0517578125e-05
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "55819888017b9b89c7f4099a07e18b3f2a52c4dc6db1b6f08215098b87b954ff",
+          "records_terminal_feedback_verified": true
+        }
+      ],
+      "worker_errors": []
+    },
+    {
+      "run": "opendrawer-dpt-full-id-ood-20261102-r2",
+      "manifests": [
+        {
+          "node": 0,
+          "hostname": "job-7fh78syofjo2-master-0",
+          "gpu_uuids": [
+            "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+            "GPU-3f6e12a2-efda-dcd0-5077-99da187c20d4"
+          ],
+          "manifest_sha256": "72600d243a1aa4577dc7d6ee47c65f081200734452a80d6b0bb9c1547333b03a",
+          "probe_sha256": "4badef65fdc6d612122c15981988519d096c97ef1d5e325d8f68aaae749a2edd"
+        },
+        {
+          "node": 1,
+          "hostname": "job-7fh78syofjo2-worker-0",
+          "gpu_uuids": [
+            "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+            "GPU-3be1501f-813c-fda6-763b-da00e562883c"
+          ],
+          "manifest_sha256": "36b1a8355ff4a39049dffc306ee800479343f5f1ce2bbcdcb2d6e20007c24808",
+          "probe_sha256": "6aac1ecfa672fb161bb44e2d8c0c1a23cfe0233829dec0555a837b6b88ca06a8"
+        },
+        {
+          "node": 2,
+          "hostname": "job-7fh78syofjo2-worker-1",
+          "gpu_uuids": [
+            "GPU-94a59f83-e11f-88bd-d8d3-59e159e9f5de",
+            "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+          ],
+          "manifest_sha256": "ea966edd37340935d8b658f670a0603a4b0f293aeaf851e7a844363674d690e4",
+          "probe_sha256": "97e47109a4bc59bb3ab8b8e68568ba500858b4bbcdc9b3182d9c02abcdffedad"
+        },
+        {
+          "node": 3,
+          "hostname": "job-7fh78syofjo2-worker-2",
+          "gpu_uuids": [
+            "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+            "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+          ],
+          "manifest_sha256": "f0ea61549711a96a7c74ca5e24fae1f069e2f3a8852740062a6bedb72d3711c0",
+          "probe_sha256": "d313bbb35e7ae9f3f8203c0a002844171d2255bdfa726c9daf87db845d033168"
+        }
+      ],
+      "completed_episodes": 67,
+      "completed_by_endpoint": {
+        "OOD/dpt_full/K0/query": 24,
+        "OOD/dpt_full/K1/query": 19,
+        "OOD/dpt_full/K1/support": 24
+      },
+      "first_verified_native_endpoints": [
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/OOD/case-000/dpt_full/K0/query/result.json",
+          "result_sha256": "b4755fc269aa23286aa46af0ddeee25919b14c78f45b1278f805cbbcf45e6162",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 1,
+                "differing_components": 2,
+                "total_components": 196608,
+                "mean_absolute_delta": 1.0172526041666666e-05
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "f0db208b93806668527c7c579346f6b380f73c7195e6286aadc384d7569bd893",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/OOD/case-000/dpt_full/K1/support/result.json",
+          "result_sha256": "da2750c5d1138b6e9633ae2c0fdacce894940e994a669d63700ff04dfcfb7c70",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "10fd70e11c021af31f586f399bfdd42ee16faf9e2a2aa4357da501e1d03bc433",
+          "records_terminal_feedback_verified": true
+        },
+        {
+          "result": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/OOD/case-000/dpt_full/K1/query/result.json",
+          "result_sha256": "bc40ee9b112f1fab35609c6a75baeca96c8bbb241f469fc9c283ccd30a2f1d30",
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/OOD/case-000/complete.json",
+            "sha256": "628658829b061f514fe47c83be2d268c065a411383b8e62c89d1bc601b4b2362"
+          },
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          },
+          "simulator_truth_sha256": "1b0e6a9158685416b5b09f05582f0149432092324102c7b27095ac9cba61c4ff",
+          "records_terminal_feedback_verified": true
+        }
+      ],
+      "worker_errors": []
+    },
+    {
+      "run": "opendrawer-dpt-static-id-ood-20261102-r1",
+      "manifests": [],
+      "completed_episodes": 0,
+      "completed_by_endpoint": {},
+      "first_verified_native_endpoints": [],
+      "worker_errors": []
+    }
+  ],
+  "outcome_summary": false,
+  "unique_allocated_gpu_uuids": 16,
+  "training_closeout": {
+    "job": "job-8kb761dxfvtm",
+    "scheduler_status": "stopped",
+    "scheduler_created": "2026-11-02T11:48:26+08:00",
+    "scheduler_running": "2026-11-02T11:48:41+08:00",
+    "scheduler_terminal": "2026-11-02T14:48:58+08:00",
+    "allocated_gpus": 2,
+    "conservative_creation_to_terminal_gpu_seconds": 21664,
+    "complete_legacy_episodes": 30,
+    "legacy_admissible_for_repaired_comparison": false,
+    "journals": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/accounting/rank-00/baige-r1.json",
+        "sha256": "7fbc9ec61f489cda5efc430614a15be190c58eea5b6a923c6dabec5e89ee08f8",
+        "calls": 267,
+        "unresolved": 1,
+        "conservative_controls": 12500
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/accounting/rank-01/baige-r1.json",
+        "sha256": "e04b1e7cf0948649f183144c5f07c80d796d47f568979952d75fc818e69aa00f",
+        "calls": 225,
+        "unresolved": 1,
+        "conservative_controls": 10628
+      }
+    ],
+    "recoveries_preserved": true,
+    "selected_and_latest_hashes_unchanged": true
+  }
+}
