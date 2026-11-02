@@ -143,6 +143,9 @@ def test_actual_1152_coefficient_actor_update_and_next_update_restore():
     torch.testing.assert_close(torch.get_rng_state(), rng_before, rtol=0, atol=0)
     saved = deepcopy(boundary_state(policy, optimizer, generator, arm="kv_all_layers",
         iteration=1, sequence=4, worker_states={}, escrow={}))
+    assert saved["interface"]["kv_map"]["targets"] == ["key", "value"]
+    assert saved["interface"]["kv_layers"] == 18
+    assert "kv_map" not in saved["spec"]  # Constructor arguments remain separately usable.
     second_rollout = rollout()
     expected = update(policy, optimizer, second_rollout, generator=generator)
     expected_weights = deepcopy(policy.state_dict())

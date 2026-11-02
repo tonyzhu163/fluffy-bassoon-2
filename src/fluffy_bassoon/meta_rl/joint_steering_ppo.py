@@ -285,8 +285,11 @@ def native_scale_calibration(motor, observations, spec):
 
 def boundary_state(policy, optimizer, generator, *, arm, iteration, sequence, worker_states, escrow,
                    interface_spec=None):
+    from .interface_ppo import InterfaceSpec
+    specification = interface_spec or spec_arguments(arm)
     return cpu_tree(dict(format="joint_frozen_steering_boundary_v1", arm=arm,
-        spec=interface_spec or spec_arguments(arm), policy_config=asdict(policy.config), policy=policy.state_dict(),
+        spec=specification, interface=InterfaceSpec(**specification).record(),
+        policy_config=asdict(policy.config), policy=policy.state_dict(),
         optimizer=optimizer.state_dict(), generator=generator.get_state(), global_rng=snapshot_rng(),
         iteration=iteration, sequence=sequence, worker_states=worker_states, escrow=escrow))
 
