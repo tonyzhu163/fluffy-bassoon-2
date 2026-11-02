@@ -1,0 +1,1173 @@
+{
+  "format": "joint_steering_single_gpu_native_qualification_v1",
+  "completed": true,
+  "status": "passed",
+  "hostname": "job-peaxl7mua1os-master-0",
+  "expected_hostname": "job-peaxl7mua1os-master-0",
+  "pid": 109,
+  "started_unix": 1793637071.8726647,
+  "started_utc": "2026-11-02T16:31:11.872676+00:00",
+  "scientific_policy_controls": 0,
+  "scientific_ppo_updates": 0,
+  "policy_episodes": 0,
+  "charged_to_arm": "velocity",
+  "arms": {
+    "velocity": {
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.05
+      },
+      "scientific_ppo_updates": 0,
+      "scientific_policy_controls": 0,
+      "repeated_observation_rows": 4,
+      "native_resets_added": 0,
+      "scale_calibration": {
+        "completed": true,
+        "zero_native_bitwise_equal": true,
+        "target_normalized_action_rms": 0.08495954424142838,
+        "candidates": [
+          {
+            "fraction": 0.025,
+            "normalized_action_rms": 0.016176406294107437
+          },
+          {
+            "fraction": 0.05,
+            "normalized_action_rms": 0.03208916634321213
+          },
+          {
+            "fraction": 0.1,
+            "normalized_action_rms": 0.06392842531204224
+          }
+        ],
+        "selection": "Parent selects nearest mean action RMS across the eight TRAIN resets",
+        "extra_policy_controls": 0,
+        "reward_or_success_used": false
+      },
+      "cached_qualification": {
+        "completed": true,
+        "interface": {
+          "kind": "velocity",
+          "motor_shape": [
+            50,
+            32
+          ],
+          "steering_dim": 32,
+          "candidates": 8,
+          "fraction": 0.05
+        },
+        "batch_size": 4,
+        "zero_native_exact": true,
+        "prefix_reused": true,
+        "extra_physical_controls": 0,
+        "cache_targets": [],
+        "consumed_cache_layers": null,
+        "original_cache_unchanged": null,
+        "consumed_cache_observation": null,
+        "probe_seed": 921117,
+        "probe_coefficient_std": 0.5,
+        "action_delta_rms": 0.005434390569435406,
+        "action_delta_max": 0.032533202320337296,
+        "baseline_action_rms": 0.4816593236283316,
+        "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+        "qualification": "identity and influence only; scale acceptance belongs to the master"
+      },
+      "cached_outputs": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/velocity/cached-outputs.pt",
+        "sha256": "715d203ed0b22eccd32b07043eb1d81be8d9990aaeb9829fc0630fc5b697be5a"
+      },
+      "synthetic_update": {
+        "loss": 0.10430541634559631,
+        "actor_loss": -0.061510801812011094,
+        "critic_loss": 0.33163243532180786,
+        "entropy": 23.229302215576173,
+        "approximate_kl": 0.005743834504391998,
+        "clip_fraction": 0.08333333432674409,
+        "samples": 24,
+        "samples_processed": 120,
+        "epochs_requested": 10,
+        "epochs_completed": 5,
+        "optimizer_steps": 5,
+        "target_kl": 0.02,
+        "early_stopped": true,
+        "stop_reason": "target_kl",
+        "advantage_mean": 0.8369752168655396,
+        "advantage_std": 0.08807728439569473,
+        "return_mean": 0.8658374547958374,
+        "return_std": 0.08807728439569473,
+        "initial_metrics": {
+          "loss": 0.17707158625125885,
+          "actor_loss": 3.178914482759865e-07,
+          "critic_loss": 0.35414254665374756,
+          "entropy": 23.225322723388672,
+          "approximate_kl": 0.0,
+          "clip_fraction": 0.0,
+          "explained_variance": 0.0
+        },
+        "final_metrics": {
+          "loss": 0.018462583422660828,
+          "actor_loss": -0.13076820969581604,
+          "critic_loss": 0.29846158623695374,
+          "entropy": 23.234798431396484,
+          "approximate_kl": 0.02147160843014717,
+          "clip_fraction": 0.375,
+          "explained_variance": 4.76837158203125e-07
+        },
+        "epoch_metrics": [
+          {
+            "epoch": 1,
+            "loss": 0.1387830376625061,
+            "actor_loss": -0.032574884593486786,
+            "critic_loss": 0.3427158296108246,
+            "entropy": 23.227123260498047,
+            "approximate_kl": 0.0009107139776460826,
+            "clip_fraction": 0.0,
+            "explained_variance": 0.0,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 1,
+            "samples": 24,
+            "gradient_norm_mean": 3.1750802993774414,
+            "gradient_norm_max": 3.1750802993774414,
+            "elapsed_seconds": 0.29649175610393286,
+            "kl_threshold_exceeded": false
+          },
+          {
+            "epoch": 2,
+            "loss": 0.09843532741069794,
+            "actor_loss": -0.06730389595031738,
+            "critic_loss": 0.33147844672203064,
+            "entropy": 23.229351043701172,
+            "approximate_kl": 0.00382950808852911,
+            "clip_fraction": 0.0,
+            "explained_variance": 0.0,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 2,
+            "samples": 24,
+            "gradient_norm_mean": 3.2024781703948975,
+            "gradient_norm_max": 3.2024781703948975,
+            "elapsed_seconds": 0.004752535372972488,
+            "kl_threshold_exceeded": false
+          },
+          {
+            "epoch": 3,
+            "loss": 0.0669146403670311,
+            "actor_loss": -0.09328927844762802,
+            "critic_loss": 0.32040783762931824,
+            "entropy": 23.2314453125,
+            "approximate_kl": 0.009042290970683098,
+            "clip_fraction": 0.1666666716337204,
+            "explained_variance": -7.152557373046875e-07,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 3,
+            "samples": 24,
+            "gradient_norm_mean": 3.258514165878296,
+            "gradient_norm_max": 3.258514165878296,
+            "elapsed_seconds": 0.004108097404241562,
+            "kl_threshold_exceeded": false
+          },
+          {
+            "epoch": 4,
+            "loss": 0.040322497487068176,
+            "actor_loss": -0.11438624560832977,
+            "critic_loss": 0.3094174861907959,
+            "entropy": 23.23326873779297,
+            "approximate_kl": 0.014936631545424461,
+            "clip_fraction": 0.25,
+            "explained_variance": -2.384185791015625e-07,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 4,
+            "samples": 24,
+            "gradient_norm_mean": 2.3514487743377686,
+            "gradient_norm_max": 2.3514487743377686,
+            "elapsed_seconds": 0.003996390849351883,
+            "kl_threshold_exceeded": false
+          },
+          {
+            "epoch": 5,
+            "loss": 0.018462583422660828,
+            "actor_loss": -0.13076820969581604,
+            "critic_loss": 0.29846158623695374,
+            "entropy": 23.234798431396484,
+            "approximate_kl": 0.02147160843014717,
+            "clip_fraction": 0.375,
+            "explained_variance": 4.76837158203125e-07,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 5,
+            "samples": 24,
+            "gradient_norm_mean": 2.249359369277954,
+            "gradient_norm_max": 2.249359369277954,
+            "elapsed_seconds": 0.003947228193283081,
+            "kl_threshold_exceeded": true
+          }
+        ],
+        "elapsed_seconds": 0.37606058549135923
+      },
+      "adam_restore": {
+        "completed": true,
+        "device": "cuda:0",
+        "feature_dim": 2064,
+        "steering_dim": 32,
+        "next_update_exact": true,
+        "live_learner_unchanged": true,
+        "optimizer_steps_each": 6,
+        "final_metrics": {
+          "loss": 0.01301100105047226,
+          "actor_loss": -0.10685297101736069,
+          "critic_loss": 0.2397279441356659,
+          "entropy": 23.239948272705078,
+          "approximate_kl": 0.02511068806052208,
+          "clip_fraction": 0.3333333432674408,
+          "explained_variance": 0.0
+        },
+        "state_sha256": "9706ddfaf9130c93bca557d45077f16ff90764f0573c226e7e6ee40e9278f5c9",
+        "physical_controls": 0,
+        "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+      },
+      "synthetic_boundary": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/velocity/synthetic-boundary.pt",
+        "sha256": "3fe615e0fef2cfb5220879f6f14c12e034be9af11b6519bc2b21bdef0b1b4592"
+      },
+      "elapsed_seconds": 3.809828758239746,
+      "completed": true
+    },
+    "kv_all_layers": {
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.041666666666666664,
+        "kv_layers": 18,
+        "kv_map": {
+          "version": "independent_layer_kv_rademacher32_rms_v1",
+          "rank": 32,
+          "targets": [
+            "key",
+            "value"
+          ],
+          "order": "layer,key_or_value,coefficient",
+          "seed_base": 921003,
+          "seed": "921003 + 2 * layer_index + key_or_value_index",
+          "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+        }
+      },
+      "scientific_ppo_updates": 0,
+      "scientific_policy_controls": 0,
+      "repeated_observation_rows": 4,
+      "native_resets_added": 0,
+      "scale_calibration": {
+        "completed": true,
+        "zero_native_bitwise_equal": true,
+        "target_normalized_action_rms": 0.08495954424142838,
+        "candidates": [
+          {
+            "fraction": 0.01,
+            "normalized_action_rms": 0.002520622918382287
+          },
+          {
+            "fraction": 0.02,
+            "normalized_action_rms": 0.004340029321610928
+          },
+          {
+            "fraction": 0.041666666666666664,
+            "normalized_action_rms": 0.008455178700387478
+          },
+          {
+            "fraction": 0.08,
+            "normalized_action_rms": 0.01479334570467472
+          }
+        ],
+        "selection": "Parent selects nearest mean action RMS across the eight TRAIN resets",
+        "extra_policy_controls": 0,
+        "reward_or_success_used": false
+      },
+      "cached_qualification": {
+        "completed": true,
+        "interface": {
+          "kind": "kv_all_layers",
+          "motor_shape": [
+            50,
+            32
+          ],
+          "steering_dim": 1152,
+          "candidates": 8,
+          "fraction": 0.041666666666666664,
+          "kv_layers": 18,
+          "kv_map": {
+            "version": "independent_layer_kv_rademacher32_rms_v1",
+            "rank": 32,
+            "targets": [
+              "key",
+              "value"
+            ],
+            "order": "layer,key_or_value,coefficient",
+            "seed_base": 921003,
+            "seed": "921003 + 2 * layer_index + key_or_value_index",
+            "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+          }
+        },
+        "batch_size": 4,
+        "zero_native_exact": true,
+        "prefix_reused": true,
+        "extra_physical_controls": 0,
+        "cache_targets": [
+          {
+            "layer": 0,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 891926,
+            "delta_rms": 0.024005500599741936,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 0,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 903447,
+            "delta_rms": 0.024947425350546837,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 1,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 904565,
+            "delta_rms": 0.02234605886042118,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 1,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 897139,
+            "delta_rms": 0.014900211244821548,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 2,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 898769,
+            "delta_rms": 0.02416573278605938,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 2,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 890659,
+            "delta_rms": 0.013720168732106686,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 3,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 904503,
+            "delta_rms": 0.024824170395731926,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 3,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 896274,
+            "delta_rms": 0.013152379542589188,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 4,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 901235,
+            "delta_rms": 0.024017643183469772,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 4,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 896778,
+            "delta_rms": 0.014246129430830479,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 5,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 914471,
+            "delta_rms": 0.029109468683600426,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 5,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 895534,
+            "delta_rms": 0.013969413936138153,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 6,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 907472,
+            "delta_rms": 0.026154853403568268,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 6,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 887615,
+            "delta_rms": 0.01571989245712757,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 7,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 902709,
+            "delta_rms": 0.02874325029551983,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 7,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 893436,
+            "delta_rms": 0.01619342900812626,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 8,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 924356,
+            "delta_rms": 0.030972732231020927,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 8,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 895853,
+            "delta_rms": 0.020345158874988556,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 9,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 909262,
+            "delta_rms": 0.031755317002534866,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 9,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 897313,
+            "delta_rms": 0.017689093947410583,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 10,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 919851,
+            "delta_rms": 0.0325889028608799,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 10,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 886692,
+            "delta_rms": 0.021834827959537506,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 11,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 912319,
+            "delta_rms": 0.0402691513299942,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 11,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 876951,
+            "delta_rms": 0.02555982582271099,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 12,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 914602,
+            "delta_rms": 0.0361282117664814,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 12,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 898648,
+            "delta_rms": 0.042683955281972885,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 13,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 921671,
+            "delta_rms": 0.035543568432331085,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 13,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 879042,
+            "delta_rms": 0.030640775337815285,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 14,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 922543,
+            "delta_rms": 0.0404680110514164,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 14,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 901474,
+            "delta_rms": 0.07461614906787872,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 15,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 914648,
+            "delta_rms": 0.04313206300139427,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 15,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 894885,
+            "delta_rms": 0.06607158482074738,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 16,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 917812,
+            "delta_rms": 0.043850127607584,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 16,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 879031,
+            "delta_rms": 0.05813464894890785,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 17,
+            "target": "key",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 920670,
+            "delta_rms": 0.05747726559638977,
+            "finite": true,
+            "original_cache_unchanged": true
+          },
+          {
+            "layer": 17,
+            "target": "value",
+            "shape": [
+              4,
+              968,
+              1,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "components": 991232,
+            "differing_components": 909677,
+            "delta_rms": 0.2929266393184662,
+            "finite": true,
+            "original_cache_unchanged": true
+          }
+        ],
+        "consumed_cache_layers": 18,
+        "original_cache_unchanged": true,
+        "consumed_cache_observation": "existing nonzero prediction prefix hook; no additional model calls",
+        "probe_seed": 921117,
+        "probe_coefficient_std": 0.5,
+        "action_delta_rms": 0.0012772107888559725,
+        "action_delta_max": 0.008105576038360596,
+        "baseline_action_rms": 0.4816593236283316,
+        "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+        "qualification": "identity and influence only; scale acceptance belongs to the master"
+      },
+      "cached_outputs": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/kv_all_layers/cached-outputs.pt",
+        "sha256": "1dad1270bad59829b77cedfda3420a7b28c28d5656ad266ebc2045a7e64c761a"
+      },
+      "synthetic_update": {
+        "loss": 0.20567676424980164,
+        "actor_loss": 1.0728836059570312e-06,
+        "critic_loss": 0.41135138273239136,
+        "entropy": 836.1116943359375,
+        "approximate_kl": 0.0,
+        "clip_fraction": 0.0,
+        "samples": 24,
+        "samples_processed": 24,
+        "epochs_requested": 10,
+        "epochs_completed": 1,
+        "optimizer_steps": 1,
+        "target_kl": 0.02,
+        "early_stopped": true,
+        "stop_reason": "target_kl",
+        "advantage_mean": 0.9021867513656616,
+        "advantage_std": 0.0936054214835167,
+        "return_mean": 0.8574168086051941,
+        "return_std": 0.0936054214835167,
+        "initial_metrics": {
+          "loss": 0.20567676424980164,
+          "actor_loss": 1.0728836059570312e-06,
+          "critic_loss": 0.41135138273239136,
+          "entropy": 836.1116943359375,
+          "approximate_kl": 0.0,
+          "clip_fraction": 0.0,
+          "explained_variance": 0.0
+        },
+        "final_metrics": {
+          "loss": 0.02664656937122345,
+          "actor_loss": -0.17272356152534485,
+          "critic_loss": 0.3987402617931366,
+          "entropy": 836.0912475585938,
+          "approximate_kl": 0.7534767389297485,
+          "clip_fraction": 0.9166666865348816,
+          "explained_variance": 0.0
+        },
+        "epoch_metrics": [
+          {
+            "epoch": 1,
+            "loss": 0.02664656937122345,
+            "actor_loss": -0.17272356152534485,
+            "critic_loss": 0.3987402617931366,
+            "entropy": 836.0912475585938,
+            "approximate_kl": 0.7534767389297485,
+            "clip_fraction": 0.9166666865348816,
+            "explained_variance": 0.0,
+            "optimizer_steps": 1,
+            "cumulative_optimizer_steps": 1,
+            "samples": 24,
+            "gradient_norm_mean": 18.98300552368164,
+            "gradient_norm_max": 18.98300552368164,
+            "elapsed_seconds": 0.005302395671606064,
+            "kl_threshold_exceeded": true
+          }
+        ],
+        "elapsed_seconds": 0.00872521847486496
+      },
+      "adam_restore": {
+        "completed": true,
+        "device": "cuda:0",
+        "feature_dim": 2064,
+        "steering_dim": 1152,
+        "next_update_exact": true,
+        "live_learner_unchanged": true,
+        "optimizer_steps_each": 1,
+        "final_metrics": {
+          "loss": 0.02057991921901703,
+          "actor_loss": -0.1732523888349533,
+          "critic_loss": 0.3876646161079407,
+          "entropy": 836.0770263671875,
+          "approximate_kl": 0.2029322385787964,
+          "clip_fraction": 0.875,
+          "explained_variance": -3.5762786865234375e-07
+        },
+        "state_sha256": "a36e487e533c422f1afc140385b53ab81c11097ad0d76bfc43d95c07d6cc088f",
+        "physical_controls": 0,
+        "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+      },
+      "synthetic_boundary": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/kv_all_layers/synthetic-boundary.pt",
+        "sha256": "68f9d7dac137842bdc9c8cc2d09363b7da3a8fe09719de6c1ebd6c838abf14aa"
+      },
+      "elapsed_seconds": 3.129420757293701,
+      "completed": true
+    }
+  },
+  "scope": "Shared numerical qualification; one TRAIN reset only",
+  "input_hashes": {
+    "script": "36f4dd98fea86bf5d15db15d16327ba8eb348d55d03b3c360d445adb2be12cc7",
+    "profile": "75eb57a1472ad7ad7cb0c8a5171151b6e60ae25b92d20719839cc9d6eb84e971",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "public_observation": "f02a27cbcbd586d332efdc5ddc408b2f035d7f58dd8a2f37cfe21a6c18c15578",
+    "raw_observation": "5b6a1a3b36ae0c0803dc1a1b065e1d0ee0632e214718f57c2360a855c3523e6f",
+    "physical_snapshot": "6b78720dfd6bbe85064c70a41f21b9f7a0d8cdd02545065da57f5d03cef4b682"
+  },
+  "external_timeout_seconds": 600,
+  "stage": "kv_all_layers/synthetic_actor_value_update_and_cuda_adam_restore",
+  "bindings": {
+    "code": "/mowenjie/fluffy-bassoon-2/worktrees/robocasa-joint-native-qual-20261103-r1",
+    "source_commit": "ccaea60b72bfce8b8a4d22244caecd537c27f47c",
+    "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+  },
+  "storage_before": {
+    "total_bytes": 2199023255552,
+    "used_bytes": 1573648334848,
+    "free_bytes": 625374920704
+  },
+  "cgroup_before": {
+    "cpu.max": "1600000 100000",
+    "memory.max": "137438953472",
+    "memory.current": "547983360",
+    "memory.peak": "576737280"
+  },
+  "gpu_probe": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/gpu-probe.json",
+    "sha256": "95f38cc8477c3edf5d5ab47d2332bea0f358658eb63d7657fe8c03bc6d04a175",
+    "device": {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "13e419d9-e19a-f3c0-3dfd-9a0f46f372e3",
+      "cuda_name": "NVIDIA RPBZZZ6",
+      "cuda_total_bytes": 101973950464,
+      "pci_bus_id": "0000:a2:00.0",
+      "uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887.0,
+        "memory_used_mib": 0.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:A2:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "touched_gpu_uuids": [
+          "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13"
+        ],
+        "own_pid_gpu_uuids": [
+          "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13"
+        ]
+      }
+    }
+  },
+  "native_frozen_signature": {
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "source_commit": "ccaea60b72bfce8b8a4d22244caecd537c27f47c",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "parameter_count": 3353433872,
+    "cuda_uuid": "13e419d9-e19a-f3c0-3dfd-9a0f46f372e3",
+    "scheduler_uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+    "device_name": "NVIDIA RPBZZZ6",
+    "all_parameters_frozen": true,
+    "parameter_versions_sha256": "a2dfa470179d52480a23bffc2b87edf316f172e82a50e42fd749425ff7d4b7c9"
+  },
+  "native_load_seconds": 60.96431112289429,
+  "case": {
+    "bank": "joint_steering_train",
+    "task": "OpenDrawer",
+    "split": "target",
+    "native_seed": 1700000,
+    "reset_ordinal": 0,
+    "slot": 0,
+    "counted": true,
+    "layout_source": "native_target_constructor_seed_first_reset"
+  },
+  "initial": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/initial.pt",
+    "sha256": "b392ceffb980ca8d1eadb5d6ac1697ae253854fc1a80c55f02b0b0eca017b0fa"
+  },
+  "native_versions_unchanged": true,
+  "native_counts": {
+    "controls": 0,
+    "reset_controls": 0,
+    "physics_ticks": 250,
+    "step1_calls": 250,
+    "phase": "policy",
+    "control_time": 0.0,
+    "clock": {
+      "control_freq": 20.0,
+      "control_timestep": 0.05,
+      "model_timestep": 0.002,
+      "lite_physics": true
+    }
+  },
+  "reset_only_scope": {
+    "full_physical_episode": false,
+    "scoreable_episode": false,
+    "reset_only": true,
+    "policy_controls": 0,
+    "frames": 1,
+    "videos": [
+      {
+        "camera": "robot0_agentview_left",
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/videos/reset-only-episode-000000-robot0_agentview_left.mp4",
+        "sha256": "5754fadaecf322b7bae86e6aa55bfffe1dba9111fa36ad20cc53db7627bdd0cd"
+      },
+      {
+        "camera": "robot0_eye_in_hand",
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/videos/reset-only-episode-000000-robot0_eye_in_hand.mp4",
+        "sha256": "1e6e77da92ad85b3eca517004172502dd508a8143086129cfb28f2780fc81ab9"
+      },
+      {
+        "camera": "robot0_agentview_right",
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/videos/reset-only-episode-000000-robot0_agentview_right.mp4",
+        "sha256": "ee626d79cbc9afc6df4a57dbd9473a4d27708306c59a768c9e02ce2de4a0f9c5"
+      }
+    ],
+    "charged_to_arm": "velocity"
+  },
+  "escrow": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 5000000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 0,
+      "eval": 0
+    },
+    "pending": {}
+  },
+  "charged_controls": 0,
+  "cgroup_after": {
+    "cpu.max": "1600000 100000",
+    "memory.max": "137438953472",
+    "memory.current": "17602809856",
+    "memory.peak": "29163220992"
+  },
+  "cuda_memory": {
+    "allocated_bytes": 7063620096,
+    "reserved_bytes": 7287603200,
+    "peak_allocated_bytes": 7754400768,
+    "peak_reserved_bytes": 8420065280
+  },
+  "cuda_process_telemetry": {
+    "returncode": 0,
+    "stdout": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13, 109, 7620\n",
+    "stderr": "",
+    "sampled_unix": 1793637179.089121
+  },
+  "ended_unix": 1793637179.0891228,
+  "process_gpu_seconds": 107.2164580821991,
+  "allocated_gpu_seconds_through_check": 108.0891227722168,
+  "allocation_release_not_included": true,
+  "ended_utc": "2026-11-02T16:32:59.089133+00:00"
+}

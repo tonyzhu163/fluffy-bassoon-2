@@ -1,5 +1,5 @@
 {
-  "status": "PREPARING_AND_QUALIFYING_NOT_SUBMITTED",
+  "status": "HUMAN_RECIPE_HOLD_NOT_SUBMITTED",
   "scientific_scope": "Two separate joint five-task frozen-motor steering PPO learners; preserve actual steering histories for later AD/DPT",
   "arms": {
     "velocity": {
@@ -154,5 +154,28 @@
     "actor/value/Adam/RNG/sampler/worker boundary recoveries",
     "full native three-view videos and action accounting"
   ],
-  "other_work": "Closed Flow and Stage 0 remain immutable; the older single-task four-learner warm-start proposal is not duplicated; no Flora, student fit or new scientific task expansion"
+  "other_work": "Closed Flow and Stage 0 remain immutable; the older single-task four-learner warm-start proposal is not duplicated; no Flora, student fit or new scientific task expansion",
+  "recipe_status": "PROVISIONAL_ITERATIONS_AND_ENVS_PER_GPU_UNFINALIZED",
+  "launch_hold": {
+    "hold": true,
+    "status": "HUMAN_RECIPE_HOLD",
+    "recorded_Shanghai": "2026-11-03T00:54:41.115677+08:00",
+    "source": "Explicit human launch hold relayed with human authorization from owner chat01a199fb-3586-7171-bd20-52fa70e5378c",
+    "human_quote": "wait we're still changing the scale up formula right now, the PPO steering interface should wait until we are sure how many iterations and how many envs per gpu",
+    "affected_arms": [
+      "velocity",
+      "kv_all_layers"
+    ],
+    "scientific_jobs_submitted": 0,
+    "pending_human_choices": [
+      "PPO iteration count",
+      "environments per GPU",
+      "final scale-up formula and action accounting"
+    ],
+    "preserved_native_qualification": "job-peaxl7mua1os",
+    "native_qualification_GPU_seconds": 122,
+    "explicit_hold": "Both scientific PPO launches; no older OpenDrawer pilot substitute",
+    "parent_conservative_followup": "No additional GPU qualification or parameter/formula changes while hold is pending; static evidence/accounting only",
+    "release_condition": "Human finalization of the concrete revised iteration/env recipe within existing approval; ask only for a material scope or resource-budget expansion."
+  }
 }
