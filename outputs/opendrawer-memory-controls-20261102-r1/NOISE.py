@@ -60,7 +60,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / 'NOISE.json').write_text(json.dumps(result, indent=2) + '\n')
     with (args.output / 'NOISE.csv').open('w', newline='') as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(['task', 'native_seed', 'successes', 'draws', 'p_hat', 'wilson95_low', 'wilson95_high', 'class', 'pair_disagreement'])
         for row in cases:
             writer.writerow([row['task'], row['native_seed'], row['successes'], 8, row['probability_estimate'],
