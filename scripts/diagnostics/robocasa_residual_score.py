@@ -93,8 +93,6 @@ def main():
         raise ValueError("Same qualified official Flora code, weights and local receipt required")
     baseline_count = profile.get('baseline_count', 8)
     joint=profile.get('task')=='joint_five'
-    if baseline_count != 8 and profile['mode'] != 'baseline' and not joint:
-        raise ValueError('The fifty-case extension is baseline measurement only, not a training migration')
     proto = None if joint else protocol(profile["task"], baseline_count=baseline_count)
     output = Path(profile["output"])
     output.mkdir(parents=True, exist_ok=False)

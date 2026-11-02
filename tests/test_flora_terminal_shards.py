@@ -29,9 +29,10 @@ def bank():
     return episodes, outputs
 
 
-def test_eight_terminal_shards_preserve_all64_graded_rewards_and_chronology():
+@pytest.mark.parametrize('baseline_count', [8, 50])
+def test_eight_terminal_shards_preserve_all64_graded_rewards_and_chronology(baseline_count):
     episodes, rows = bank()
-    proto = protocol('OpenDrawer')
+    proto = protocol('OpenDrawer', baseline_count=baseline_count)
     shards = {rank: list(reversed(rows[rank * 8:(rank + 1) * 8])) for rank in reversed(range(8))}
     for rank in range(8):
         assert [row['id'] for row in shard_episode_bank(episodes, rank, 8, proto)] == [

@@ -123,6 +123,10 @@ def main():
         raise RuntimeError("Exactly one actually allocated Linux GPU required")
     profile = json.loads(Path(args.profile).read_text())
     joint = profile.get('task') == 'joint_five'
+    calibration_count = profile.get('calibration_baseline_count', 8)
+    heldout_count = profile.get('heldout_evaluation_count', 8)
+    if calibration_count not in (8, 50) or heldout_count not in (8, 50):
+        raise ValueError('Use the original eight-case or fixed fifty-case banks')
     maximum_iterations = profile.get('maximum_iterations', 10)
     if (type(maximum_iterations) is not int or not 1 <= maximum_iterations <= 10
             or joint and (profile.get('tasks') != list(PPO_TASKS) or profile['mode'] == 'headroom'
@@ -179,7 +183,7 @@ def main():
         else:
             gate = read_ref(profile["baseline_validation"])
             authorization = read_ref(profile["calibration_exception"]) if profile.get("calibration_exception") else None
-            permission = require_calibration_permission(gate, protocol(task),
+            permission = require_calibration_permission(gate, protocol(task, baseline_count=calibration_count),
                 calibration_sha256=profile["baseline_validation"]["sha256"], authorization=authorization)
             calibration_contract.update(calibration=profile["baseline_validation"], calibration_permission=permission,
                                         calibration_exception=profile.get("calibration_exception"))
@@ -295,6 +299,8 @@ def main():
         if joint:
             return joint_case_bank(phase, iteration=iteration)
         target = 'CloseFridge' if 'OOD' in phase else task
+        if phase in ('before_ID', 'ID', 'before_OOD', 'OOD'):
+            return case_bank(target, phase, count=heldout_count)
         return case_bank(target, phase, iteration=iteration, round_index=round_index)
 
     def action_bound(cases):
@@ -305,7 +311,8 @@ def main():
 
     def panel(phase, iteration):
         offset = profile.get("headroom_offset", 0) if phase == "baseline" else 0
-        count = profile.get("headroom_count", 8) if phase == "baseline" else 8
+        count = (profile.get("headroom_count", 8) if phase == "baseline" else
+                 heldout_count if phase in ('before_ID', 'ID', 'before_OOD', 'OOD') else 8)
         if joint:
             cases = bank(phase)
             count = len(cases)
@@ -464,14 +471,14 @@ def main():
             request.mkdir()
             producing_cases = cases[train_env.cursor-train_episodes:train_env.cursor]
             episode_protocols = joint_episode_protocols(episodes, producing_cases) if joint else None
-            jobs = flora_jobs(episodes, None if joint else protocol(task), episode_protocols=episode_protocols)
+            jobs = flora_jobs(episodes, None if joint else protocol(task, baseline_count=calibration_count), episode_protocols=episode_protocols)
             value = dict(pending_checkpoint=dict(path=str(path), sha256=checkpoint_sha),
                 jobs=jobs, jobs_sha256=digest(jobs), episodes=episodes)
             if joint:
                 value.update(source_commit=profile['source_commit'], episode_protocols=episode_protocols,
                              episode_protocols_sha256=digest(episode_protocols))
             else:
-                value['protocol']=protocol(task)
+                value['protocol']=protocol(task, baseline_count=calibration_count)
             write_new(request / "request.json", value)
             if profile["arm"] == "S":
                 labels = truth(episodes, "train")
@@ -490,7 +497,7 @@ def main():
                 if joint and (ready.get('source_commit')!=profile['source_commit']
                         or ready.get('episode_protocols_sha256')!=digest(episode_protocols)):
                     raise ValueError('Complete joint source and native protocol map must match before GAE')
-                labels = parse_outputs(episodes, read_ref(ready["outputs"]), None if joint else protocol(task),
+                labels = parse_outputs(episodes, read_ref(ready["outputs"]), None if joint else protocol(task, baseline_count=calibration_count),
                                        episode_protocols=episode_protocols)
             labeled = install_terminal_labels(records, episodes, labels, arm=profile["arm"])
             write_new(output / f"UPDATE-STARTED-{iteration + 1:03d}.json", dict(
