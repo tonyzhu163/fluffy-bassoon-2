@@ -56,8 +56,10 @@ def check():
         last_size=time.monotonic()
 
 
-def wait(paths):
-    while not all(path.exists() for path in paths):check();time.sleep(1)
+def wait(paths,limit=None):
+    while not all(path.exists() for path in paths):
+        if limit is not None and time.time()>=limit:raise TimeoutError('Finite startup barrier expired')
+        check();time.sleep(1)
 
 
 def run_controller(profile,native_env,name):
@@ -100,7 +102,7 @@ def main():
     write_new(OUT/'manifest.json',dict(node_rank=RANK,hostname=socket.gethostname(),source_commit=os.environ['TASK_CODE_PIN'],
         allocated_start_unix=START,devices=devices,probe_path=str(probe),cpus=64,ram_gib=256,shm_gib=32,
         free_bytes=free,write_probe_pass=True,quota='UNVERIFIED',resource_authority_sha256=digest(authority)))
-    manifests=[JOB/f'node-{r:02d}/manifest.json' for r in range(4)];wait(manifests)
+    manifests=[JOB/f'node-{r:02d}/manifest.json' for r in range(4)];wait(manifests,START+300)
     manifests=[json.loads(p.read_text()) for p in manifests]
     assert [m['node_rank'] for m in manifests]==list(range(4))
     assert all(m['source_commit']==os.environ['TASK_CODE_PIN'] and m['resource_authority_sha256']==digest(authority) for m in manifests)
@@ -153,7 +155,7 @@ def main():
             check();time.sleep(1)
         if not json.loads((DISPATCH/'shutdown.json').read_text())['completed']:raise RuntimeError('Coordinator failed')
         return
-    engines=[EXCHANGE/f'engines/rank-{r:02d}.json' for r in range(8)];wait(engines)
+    engines=[EXCHANGE/f'engines/rank-{r:02d}.json' for r in range(8)];wait(engines,min(DEADLINE-180,START+1200))
     for rank,path in enumerate(engines):
         engine=json.loads(path.read_text())
         assert engine['completed'] and engine['annotation_rank']==rank and engine['gpu_uuid']==global_devices[rank]['uuid']
