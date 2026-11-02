@@ -165,6 +165,8 @@ class FlowRollout(PilotRollout):
 
 class FlowEnvironment(EnvWorker):
     def init_worker(self):
+        import torch.multiprocessing as mp
+        mp.set_start_method('spawn', force=True)
         self._flow_phase = 'initialization'
         self._flow_iteration = 0
         self._flow_journal = ActionJournal(self.cfg.native_pilot.accounting_root,
