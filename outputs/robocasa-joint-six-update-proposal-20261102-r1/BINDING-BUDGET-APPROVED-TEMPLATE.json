@@ -1,7 +1,7 @@
 {
   "status": "NOT_ADMITTED_BUDGET_APPROVED_TASK_DECISION_PENDING",
   "stage": null,
-  "source_commit": "9d52490df5d74e0b40a4a0f253c692a698f8c574",
+  "source_commit": "9cef9304d3db734e4b71813d8ad2ca761a5d6ebe",
   "tasks": [
     "OpenDrawer",
     "PickPlaceCounterToCabinet",
@@ -45,6 +45,10 @@
       {
         "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
         "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r4/CPU-QUALIFICATION.json",
+        "sha256": "549b91f33b70bb4b4f11d2a4ca97d9df6f836bc4c8fa8e3fddcab66efdcb378c"
       }
     ],
     "initializer": {
@@ -111,8 +115,8 @@
     "calibration_exceptions": {
       "PickPlaceCounterToCabinet": null
     },
-    "source_commit": "9d52490df5d74e0b40a4a0f253c692a698f8c574",
-    "rollout_lanes_per_gpu": 8
+    "source_commit": "9cef9304d3db734e4b71813d8ad2ca761a5d6ebe",
+    "rollout_lanes_per_gpu": 4
   },
   "unresolved": [
     "Actionbudget approved by actualhumanreply; taskauthority/storage/commoncheckpoint/source-bound scheduleradmission remain unbound.",
@@ -122,6 +126,9 @@
     "Common-before completion/fingerprint/initialDEV refs before S/F. F additionally actual eight scorer/probe/colocation profiles."
   ],
   "human_task_authority": null,
-  "source_qualification": "outputs/robocasa-joint-lane-qualification-20261102-r1/CPU-QUALIFICATION.json",
-  "colocation_qualification": "PENDING: outputs/robocasa-joint-lane-qualification-20261102-r3/PLAN.json"
+  "source_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r4/CPU-QUALIFICATION.json",
+    "sha256": "549b91f33b70bb4b4f11d2a4ca97d9df6f836bc4c8fa8e3fddcab66efdcb378c"
+  },
+  "colocation_qualification": "PENDING: outputs/robocasa-joint-lane-qualification-20261102-r4/PLAN.json; 8lanes rejected for headroom; 4lane complete throughput recheck after spawned-reset EOF repair. Existing production reserve remains enforced."
 }
