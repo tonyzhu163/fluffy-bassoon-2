@@ -287,7 +287,8 @@ def arm_stopping(rows):
     return dict(stop=bool(latest>=10 or ceiling or flat),
         reason='fixed10' if latest>=10 else ('DEV8of8' if ceiling else ('no_DEV_improvement_after6' if flat else 'continue')),
         interpretation='Independent-arm exploratory stopping; compare shared prefixes and report time censoring')
-def rollout_migration_contract(current, migration, *, checkpoint_sha256):
+def rollout_migration_contract(current, migration, *, checkpoint_sha256,
+                               kind='eight_gpu_rollout_only'):
     """Validate logical JSON equality, then retain typed checkpoint fields.
 
     JSON turns bound tuples into lists. Reconstructing from the current typed
@@ -297,7 +298,8 @@ def rollout_migration_contract(current, migration, *, checkpoint_sha256):
     from copy import deepcopy
     from .rlinf_flora_ppo import digest
     original = migration["original_contract"]
-    if (migration["kind"] != "eight_gpu_rollout_only"
+    if (kind not in ('eight_gpu_rollout_only', 'eight_gpu_evaluation_only')
+            or migration["kind"] != kind
             or migration["checkpoint_sha256"] != checkpoint_sha256
             or migration["to_source_commit"] != current["source_commit"]
             or original["source_commit"] != migration["from_source_commit"]

@@ -127,6 +127,9 @@ def main():
     heldout_count = profile.get('heldout_evaluation_count', 8)
     if calibration_count not in (8, 50) or heldout_count not in (8, 50):
         raise ValueError('Use the original eight-case or fixed fifty-case banks')
+    evaluation_cameras = profile.get('evaluation_calibration_camera_order')
+    if (evaluation_cameras is not None or profile.get('evaluation_source_migration')) and profile['mode'] != 'evaluate':
+        raise ValueError('Archived checkpoint compatibility is evaluation only')
     maximum_iterations = profile.get('maximum_iterations', 10)
     if (type(maximum_iterations) is not int or not 1 <= maximum_iterations <= 10
             or joint and (profile.get('tasks') != list(PPO_TASKS) or profile['mode'] == 'headroom'
@@ -183,7 +186,8 @@ def main():
         else:
             gate = read_ref(profile["baseline_validation"])
             authorization = read_ref(profile["calibration_exception"]) if profile.get("calibration_exception") else None
-            permission = require_calibration_permission(gate, protocol(task, baseline_count=calibration_count),
+            permission = require_calibration_permission(gate, protocol(task,
+                camera_order=evaluation_cameras, baseline_count=calibration_count),
                 calibration_sha256=profile["baseline_validation"]["sha256"], authorization=authorization)
             calibration_contract.update(calibration=profile["baseline_validation"], calibration_permission=permission,
                                         calibration_exception=profile.get("calibration_exception"))
@@ -385,8 +389,13 @@ def main():
             if sha(profile["checkpoint"]) != profile["checkpoint_sha256"]:
                 raise ValueError("Final checkpoint bytes changed before ID/OOD evaluation")
             env = environment(cases, "resume-state")
+            checkpoint_contract = contract
+            if profile.get('evaluation_source_migration'):
+                checkpoint_contract = rollout_migration_contract(contract,
+                    read_ref(profile['evaluation_source_migration']),
+                    checkpoint_sha256=profile['checkpoint_sha256'], kind='eight_gpu_evaluation_only')
             restore_checkpoint(profile["checkpoint"], policy=policy, optimizer=optimizer, bound=bound, motor=motor,
-                environment=env, generators=generators, contract=contract)
+                environment=env, generators=generators, contract=checkpoint_contract)
             panel("ID", int(profile["iteration"]))
             panel("OOD", int(profile["iteration"]))
             if joint:
