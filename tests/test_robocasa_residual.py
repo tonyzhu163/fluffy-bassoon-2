@@ -107,9 +107,10 @@ class Native:
     task_descriptions = ["open the drawer"]
     current_info_list = [dict(ep_meta={})]
 
-    def __init__(self, early=False, horizon=750):
+    def __init__(self, early=False, horizon=750, success=None):
         self.early = early
         self.horizon = horizon
+        self.success = success or (lambda step: True)
         self.count = dict(controls=3, reset_controls=3, physics_ticks=30, control_time=0., clock=dict(control_freq=20.))
         self.env = SimpleNamespace(get_env_attr=lambda key: [deepcopy(self.count)])
 
@@ -130,7 +131,7 @@ class Native:
         self.count["controls"] += 1
         self.count["physics_ticks"] += 10
         self.count["control_time"] += .05
-        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == self.horizon]), dict(episode=dict(success_at_end=np.array([True])))
+        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == self.horizon]), dict(episode=dict(success_at_end=np.array([self.success(self.steps)])))
 
     def close(self):
         pass
@@ -173,6 +174,26 @@ def test_success_mask_or_short_episode_cannot_be_scored(tmp_path):
     with pytest.raises(ValueError, match="boundaries"):
         env.state_dict()
     assert not list((tmp_path / "monitor").glob("*.json"))
+    env.close()
+
+
+@pytest.mark.parametrize('steps', [(), (137,), (137, 138, 750), (750,)])
+def test_first_success_counts_primitive_controls_and_preserves_transient_success(tmp_path, steps):
+    cases = [dict(native_seed=1, task='OpenDrawer')] * 2
+    env = RoboCasaResidualEnvironment(lambda case: Native(success=lambda step: step in steps), cases,
+        horizon=750, output=tmp_path/'videos', monitoring_root=tmp_path/'monitor',
+        journal=Journal(), writer_factory=Writer)
+    import json
+    for episode_index in range(2):
+        env.reset()
+        for _ in range(15):
+            observation, _, episode = env.step_chunk(np.zeros((50, 12), np.float32))
+            assert 'first_success_step' not in observation and 'first_success_step' not in episode
+        row = json.loads((tmp_path/f'monitor/episode-{episode_index:06d}.json').read_text())
+        assert row['first_success_step'] == (steps[0] if steps else None)
+        assert row['success_steps'] == list(steps)
+        assert row['simulator_success_once'] is bool(steps)
+        assert row['simulator_final_success'] is (750 in steps)
     env.close()
 
 

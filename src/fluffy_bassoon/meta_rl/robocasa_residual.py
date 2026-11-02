@@ -149,6 +149,8 @@ class RoboCasaResidualEnvironment:
             raise ValueError("Actual native frame clock missing")
         self.timestamps = [counts["control_time"]]
         self.steps, self.active = 0, True
+        # Monitoring only: do not expose simulator truth to the motor or PPO.
+        self.success_steps = []
         from .robocasa_video import EpisodeVideos
         self.writer = EpisodeVideos(self.output, self.key, fps=self.fps, writer_factory=self.writer_factory)
         self._frame(observation)
@@ -179,6 +181,8 @@ class RoboCasaResidualEnvironment:
         for action in chunk:
             observation, _, terminations, truncations, info = self.native.step(action[None], auto_reset=False)
             self.steps += 1
+            if bool(np.asarray(info["episode"]["success_at_end"])[0]):
+                self.success_steps.append(self.steps)
             if np.asarray(terminations).any() or bool(np.asarray(truncations).any()) != (self.steps == self.horizon):
                 raise ValueError("Native masks must end exactly at the full horizon")
             counts = self._counts()
@@ -207,6 +211,9 @@ class RoboCasaResidualEnvironment:
         truth = bool(np.asarray(info["episode"]["success_at_end"])[0])
         write_new(self.monitoring_root / (self.key + ".json"), dict(id=self.key, case=self.case,
             simulator_final_success=truth, native_counts=counts,
+            first_success_step=self.success_steps[0] if self.success_steps else None,
+            simulator_success_once=bool(self.success_steps), success_steps=self.success_steps,
+            success_step_unit="one-based policy controls after reset; excludes reset controls",
             native_ep_meta=deepcopy(self.native.current_info_list[0].get("ep_meta")),
             video_refs_sha256=digest(episode["videos"])))
         return public_observation(observation), True, episode
