@@ -62,6 +62,19 @@ def clean(path):
     return not subprocess.check_output(['git','-C',str(path),'status','--porcelain'],text=True).strip()
 
 
+def wait_for_nodes(attempt, deadline, nodes=4):
+    """Keep Baige's master alive until every node has finished its own work."""
+    paths=[Path(attempt)/f'node-{node:02d}'/'workers-terminal.json' for node in range(nodes)]
+    while True:
+        terminals=[json.loads(path.read_text()) for path in paths if path.exists()]
+        if any(any(value['exit_codes']) for value in terminals):
+            raise RuntimeError('A readout node failed; retain completed episodes before recovery')
+        if len(terminals)==nodes:return
+        if time.time()>=deadline:
+            raise RuntimeError('Node completion boundary; preserve completed and partial records')
+        time.sleep(1)
+
+
 def tasks():
     return [('OOD',i) for i in range(50)]+[('ID',i) for i in range(0 if FRESH_ID else 8,50)]
 
@@ -378,6 +391,10 @@ def main():
     for s in streams:s.close()
     write(attempt/'workers-terminal.json',dict(exit_codes=codes,finished_unix=time.time()))
     if any(codes):raise RuntimeError('Additional readout failed; preserve records and diagnose before retry')
+    if node==0:
+        # Baige considers master exit to be job success and stops sibling pods.
+        # This waits only for this allocation, never for another model's fit.
+        wait_for_nodes(attempt.parent,args.deadline)
 
 
 if __name__=='__main__':main()
