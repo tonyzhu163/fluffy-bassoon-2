@@ -1,5 +1,6 @@
 import gzip
 import pickle
+from dataclasses import replace
 
 import numpy as np
 import pytest
@@ -8,7 +9,7 @@ import torch
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
 from fluffy_bassoon.meta_rl.frozen_steering_history import (
-    SteeringSource, load_episode, load_final_teacher, save_corpus, split_streams,
+    EpisodeSchedule, SteeringSource, load_episode, load_final_teacher, save_corpus, split_streams,
 )
 from fluffy_bassoon.meta_rl.vla_history import file_sha256, load_dataset, trial_tokens
 
@@ -25,10 +26,10 @@ def source(arm="velocity"):
                           InterfaceSpec(**interface).record(), episodes_per_task_per_update=3, feature_dim=4)
 
 
-def episode_file(root, spec, *, task="A", update=0, slot=0, success=True):
+def episode_file(root, spec, *, task="A", update=0, slot=0, success=True, case=None):
     directory = root / f"{task}-{update}-{slot}"
     directory.mkdir(parents=True)
-    case = dict(task=task, slot=update * 3 + slot, native_seed=1000 + update * 10 + slot)
+    case = case or dict(task=task, slot=update * 3 + slot, native_seed=1000 + update * 10 + slot)
     chunks, logical = [], []
     for index in range(2):
         valid = index == 0 or not success
@@ -66,7 +67,7 @@ def all_episodes(root, spec):
             for task in spec.tasks for update in (0, 1) for slot in range(3)]
 
 
-def teacher_file(root, spec, *, interface=None):
+def teacher_file(root, spec, *, interface=None, iteration=2):
     config = ResidualPPOConfig(spec.feature_dim, spec.steering_dim, width=8, layers=1)
     teacher = ResidualActorCritic(config)
     with torch.no_grad():
@@ -77,7 +78,7 @@ def teacher_file(root, spec, *, interface=None):
                    if key in ("kind", "steering_dim", "fraction", "kv_layers")}
     torch.save(dict(format="joint_frozen_steering_boundary_v1", arm=spec.arm,
         spec=interface or constructor, policy_config=asdict(config), policy=teacher.state_dict(),
-        iteration=2), path)
+        iteration=iteration), path)
     return reference(path)
 
 
@@ -214,3 +215,64 @@ def test_real_producer_serialization_has_zero_based_behavior_and_post_update_tea
     for actual, labeled in zip(ad, dpt, strict=True):
         np.testing.assert_array_equal(trial_tokens(actual), trial_tokens(labeled))
         np.testing.assert_allclose(labeled["target_noise"], .75)
+
+
+def ragged_source(root, arm="velocity"):
+    spec = replace(source(arm), episodes_per_task_per_update=None)
+    entries, references, counters = [], [], {task: 0 for task in spec.tasks}
+    for version in range(4):
+        for task in spec.tasks:
+            count = 3 if (version + (task == "B")) % 2 == 0 else 2
+            for slot in range(count):
+                case = dict(task=task, slot=counters[task], native_seed=(10000 if task == "B" else 1000) + counters[task])
+                counters[task] += 1
+                entries.append(dict(case=case, behavior_version=version, stream_slot=slot))
+    schedule = EpisodeSchedule(entries, spec, expected_updates=(0, 1, 2, 3))
+    for entry in entries:
+        case, version, slot = entry["case"], entry["behavior_version"], entry["stream_slot"]
+        ref = episode_file(root, spec, task=case["task"], update=version, slot=slot,
+                           case=case, success=slot == 0)
+        references.append(ref)
+    loaded = [load_episode(ref, spec, schedule=schedule) for ref in references]
+    return spec, entries, schedule, references, loaded
+
+
+@pytest.mark.parametrize("arm", ["velocity", "kv_all_layers"])
+def test_rotating_task_counts_retain_all_episodes_and_final_teacher_labels(tmp_path, arm):
+    spec, _, schedule, _, loaded = ragged_source(tmp_path / "source", arm)
+    streams = split_streams(loaded, spec, validation_slots={"A": [1], "B": [1]},
+                            expected_updates=(0, 1, 2, 3), schedule=schedule)
+    trials = dict(streams["train"] + streams["validation"])
+    assert len(loaded) == 20 and sum(len(trial["observations"]) for trial in trials.values()) == 40
+    np.testing.assert_array_equal(trials["A:slot-002"]["teacher_steps"], [0, 0, 2, 2])
+    np.testing.assert_array_equal(trials["B:slot-002"]["teacher_steps"], [1, 1, 3, 3])
+    for identity, trial in trials.items():
+        assert np.all(trial["observations"] == (1 if identity.startswith("A:") else 2))
+    teacher = teacher_file(tmp_path, spec, iteration=4)
+    manifests = save_corpus(tmp_path / "corpus", streams, spec, teacher_reference=teacher,
+                            provenance=dict(synthetic_rotating_tasks=True))
+    assert manifests["ad_train"]["transitions"] + manifests["ad_validation"]["transitions"] == 40
+    for partition in ("train", "validation"):
+        ad, _ = load_dataset(tmp_path / "corpus" / f"ad-{partition}.npz")
+        dpt, _ = load_dataset(tmp_path / "corpus" / f"dpt-{partition}.npz")
+        for actual, labeled in zip(ad, dpt, strict=True):
+            np.testing.assert_array_equal(trial_tokens(actual), trial_tokens(labeled))
+            np.testing.assert_allclose(labeled["target_noise"], .75)
+
+
+def test_declared_sparse_versions_are_distinct_from_missing_or_duplicate_data(tmp_path):
+    spec, entries, schedule, refs, loaded = ragged_source(tmp_path)
+    kwargs = dict(validation_slots={"A": [1], "B": [1]}, expected_updates=(0, 1, 2, 3), schedule=schedule)
+    with pytest.raises(ValueError, match="Incomplete"):
+        split_streams(loaded[:-1], spec, **kwargs)
+    with pytest.raises(ValueError, match="Duplicate"):
+        split_streams(loaded + loaded[:1], spec, **kwargs)
+    with pytest.raises(ValueError, match="explicit producer case schedule"):
+        load_episode(refs[0], spec)
+    changed = [dict(entry) for entry in entries]
+    changed[0] = dict(changed[0], case=dict(changed[0]["case"], native_seed=999))
+    other = EpisodeSchedule(changed, spec, expected_updates=(0, 1, 2, 3))
+    with pytest.raises(ValueError, match="not declared"):
+        load_episode(refs[0], spec, schedule=other)
+    with pytest.raises(ValueError, match="uniform"):
+        EpisodeSchedule(entries, replace(spec, episodes_per_task_per_update=3), expected_updates=(0, 1, 2, 3))

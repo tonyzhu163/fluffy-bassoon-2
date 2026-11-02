@@ -6,6 +6,7 @@ logical episodes and their full physical suffixes are deliberately distinct.
 """
 from dataclasses import dataclass
 import gzip
+import json
 from pathlib import Path
 import pickle
 
@@ -42,7 +43,7 @@ class SteeringSource:
     normalization_sha256: str
     tasks: tuple[str, ...]
     interface: dict
-    episodes_per_task_per_update: int
+    episodes_per_task_per_update: int | None
     feature_dim: int = 2064
 
     def __post_init__(self):
@@ -53,7 +54,9 @@ class SteeringSource:
                 or not np.isfinite(self.interface.get("fraction", np.nan))
                 or self.interface.get("fraction", 0) <= 0
                 or not self.tasks or len(set(self.tasks)) != len(self.tasks)
-                or self.episodes_per_task_per_update < 2 or self.feature_dim < 1
+                or self.episodes_per_task_per_update is not None and (
+                    type(self.episodes_per_task_per_update) is not int or self.episodes_per_task_per_update < 2)
+                or self.feature_dim < 1
                 or interface_record(self.interface) != self.interface
                 or any(not value for value in (self.source_commit, self.runtime_commit,
                                                self.motor_sha256, self.normalization_sha256))):
@@ -71,7 +74,53 @@ def checked_reference(reference):
     return path
 
 
-def load_episode(reference, source):
+def case_identity(case):
+    return json.dumps(case, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+class EpisodeSchedule:
+    """Exact prospective case/behavior coverage, including intentional gaps.
+
+    Entries come from the producer's published requests, before outcomes or
+    DPT labels. A variable task count must be declared explicitly by setting
+    episodes_per_task_per_update=None; it never falls back to a fixed count.
+    """
+    def __init__(self, entries, source, *, expected_updates):
+        self.source, self.versions = source, tuple(expected_updates)
+        if (len(self.versions) < 2 or any(type(v) is not int or v < 0 for v in self.versions)
+                or tuple(sorted(set(self.versions))) != self.versions):
+            raise ValueError("Require multiple chronological source versions")
+        self.by_case, self.by_stream = {}, {}
+        observed_versions, tasks = set(), set()
+        count = source.episodes_per_task_per_update
+        for entry in entries:
+            case, version, slot = entry["case"], entry["behavior_version"], entry["stream_slot"]
+            task = case.get("task")
+            if (task not in source.tasks or type(version) is not int or version not in self.versions
+                    or type(slot) is not int or slot < 0):
+                raise ValueError("Unknown task, stream or behavior in producer schedule")
+            if count is not None and (slot >= count or case["slot"] != version * count + slot):
+                raise ValueError("Declared uniform source schedule differs from its collection slots")
+            identity, stream = (version, case_identity(case)), (task, slot)
+            group = self.by_stream.setdefault(stream, {})
+            if identity in self.by_case or version in group:
+                raise ValueError("Duplicate scheduled source episode")
+            self.by_case[identity] = stream
+            group[version] = identity[1]
+            observed_versions.add(version)
+            tasks.add(task)
+        if tasks != set(source.tasks) or observed_versions != set(self.versions):
+            raise ValueError("Schedule must cover all declared source tasks and versions")
+        self.slots = {task: sorted(slot for t, slot in self.by_stream if t == task) for task in source.tasks}
+        for task, slots in self.slots.items():
+            if len(slots) < 2 or slots != list(range(len(slots))):
+                raise ValueError("Require contiguous task-pure source stream identities")
+        for group in self.by_stream.values():
+            if len(group) < 2 or count is not None and tuple(sorted(group)) != self.versions:
+                raise ValueError("Incomplete uniform schedule or insufficient AD behavior versions")
+
+
+def load_episode(reference, source, *, schedule=None):
     """Read one complete producer episode, including its physical suffix.
 
     The optimizer's logical prefix ends at first success or physical timeout.
@@ -99,9 +148,18 @@ def load_episode(reference, source):
     count = source.episodes_per_task_per_update
     # Producer round n collects with policy n-1, then performs update n.
     # Initial behavior version0 is real source data, not a missing update.
-    slot = int(case["slot"]) - update * count
-    if not 0 <= slot < count:
-        raise ValueError("Case slot does not match its declared chronological source round")
+    if schedule is None:
+        if count is None:
+            raise ValueError("Variable task counts require an explicit producer case schedule")
+        slot = int(case["slot"]) - update * count
+        if not 0 <= slot < count:
+            raise ValueError("Case slot does not match its declared chronological source round")
+    else:
+        if schedule.source != source or (update, case_identity(case)) not in schedule.by_case:
+            raise ValueError("Actual source episode is not declared in this producer schedule")
+        task, slot = schedule.by_case[(update, case_identity(case))]
+        if task != case["task"]:
+            raise ValueError("Scheduled source stream crosses tasks")
     for index, row in enumerate(rows):
         if (row["case"] != case or row["chunk_index"] != index
                 or bool(row["episode_start"]) != (index == 0)
@@ -155,38 +213,53 @@ def load_episode(reference, source):
     # only after a task/slot-preserving train/validation split.
     validate_trial(trial, objective="behavior_cloning")
     return dict(task=case["task"], stream_slot=slot, update=update, trial=trial,
-                source_episode=reference, physical_episode=episode)
+                source_episode=reference, physical_episode=episode,
+                request_reference=(dict(path=saved["request_path"], sha256=saved["request_sha256"])
+                    if saved.get("request_path") and saved.get("request_sha256") else None))
 
 
-def split_streams(episodes, source, *, validation_slots, expected_updates):
-    """Group one task/collection slot through all declared behavior versions."""
-    slots = set(validation_slots)
+def split_streams(episodes, source, *, validation_slots, expected_updates, schedule=None):
+    """Group task/slot streams, preserving every scheduled physical episode."""
     count = source.episodes_per_task_per_update
     versions = tuple(expected_updates)
-    if (not slots or len(slots) >= count or any(type(i) is not int or not 0 <= i < count for i in slots)
-            or len(versions) < 2 or tuple(sorted(set(versions))) != versions):
+    if (len(versions) < 2 or any(type(v) is not int or v < 0 for v in versions)
+            or tuple(sorted(set(versions))) != versions
+            or schedule is None and count is None
+            or schedule is not None and (schedule.source != source or schedule.versions != versions)):
+        raise ValueError("Require the exact producer schedule and chronological source versions")
+    available = ({task: list(range(count)) for task in source.tasks} if schedule is None else schedule.slots)
+    heldout = (validation_slots if isinstance(validation_slots, dict)
+               else {task: validation_slots for task in source.tasks})
+    if set(heldout) != set(source.tasks) or any(
+            not slots or len(set(slots)) != len(slots) or len(slots) >= len(available[task])
+            or any(type(i) is not int or i not in available[task] for i in slots)
+            for task, slots in heldout.items()):
         raise ValueError("Require held-out slots and multiple chronological source versions")
     groups = {}
     for episode in episodes:
         key = (episode["task"], episode["stream_slot"])
-        if key[0] not in source.tasks or not 0 <= key[1] < count:
+        if key[0] not in source.tasks or key[1] not in available[key[0]]:
             raise ValueError("Unknown source task/stream slot")
+        if schedule is not None and schedule.by_stream[key].get(episode["update"]) != case_identity(
+                episode["physical_episode"]["case"]):
+            raise ValueError("Actual episode differs from the scheduled source case")
         by_update = groups.setdefault(key, {})
         if episode["update"] in by_update:
             raise ValueError("Duplicate source episode; successful retries cannot add samples twice")
         by_update[episode["update"]] = episode
-    if set(groups) != {(task, slot) for task in source.tasks for slot in range(count)}:
+    if set(groups) != {(task, slot) for task in source.tasks for slot in available[task]}:
         raise ValueError("Every declared training task needs every source collection slot")
     result = {"train": [], "validation": []}
     for task in source.tasks:
-        for slot in range(count):
+        for slot in available[task]:
             group = groups[(task, slot)]
-            if tuple(sorted(group)) != versions:
+            expected = versions if schedule is None else tuple(sorted(schedule.by_stream[(task, slot)]))
+            if tuple(sorted(group)) != expected:
                 raise ValueError("Incomplete or changed behavior-version coverage")
-            fields = group[versions[0]]["trial"]
-            trial = {key: np.concatenate([group[v]["trial"][key] for v in versions]) for key in fields}
+            fields = group[expected[0]]["trial"]
+            trial = {key: np.concatenate([group[v]["trial"][key] for v in expected]) for key in fields}
             validate_trial(trial, objective="ad")
-            destination = "validation" if slot in slots else "train"
+            destination = "validation" if slot in heldout[task] else "train"
             result[destination].append((f"{task}:slot-{slot:03d}", trial))
     return result
 
@@ -216,6 +289,10 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
     if (any(not values or len(set(values)) != len(values) for values in identities.values())
             or set(identities["train"]) & set(identities["validation"])):
         raise ValueError("Require distinct complete source streams in the two student partitions")
+    terminal = max(int(trial["teacher_steps"][-1])
+                   for partition in ("train", "validation") for _, trial in streams[partition])
+    if terminal + 1 != final_update:
+        raise ValueError("DPT final teacher must match the declared terminal source version")
     output = Path(directory)
     if output.exists():
         raise ValueError("Never overwrite a bound source corpus")
@@ -223,8 +300,6 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
     manifests = {}
     for partition in ("train", "validation"):
         identities, actual = zip(*streams[partition], strict=True)
-        if any(int(trial["teacher_steps"][-1]) + 1 != final_update for trial in actual):
-            raise ValueError("DPT final teacher must match the declared terminal source version")
         labeled = relabel_teacher(actual, teacher, deterministic=True)
         for objective, trials in (("ad", actual), ("dpt", labeled)):
             metadata = dict(provenance, trial_ids=list(identities), source_tasks=list(source.tasks),
@@ -236,7 +311,7 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
                 teacher=teacher_reference, logical_boundary="source PPO first-success prefix retained separately",
                 physical_boundary="actual native physical_done; full physical episodes for history",
                 physical_suffix="actual post-success controls included; no reward is moved or invented",
-                streams="same task/collection slot across versions; source scenes may change",
+                streams="same task/declared collection slot across scheduled versions; source scenes may change",
                 validation="student imitation only; source PPO saw all source states")
             path = output / f"{objective}-{partition}.npz"
             manifests[f"{objective}_{partition}"] = save_dataset(path, list(trials), objective=objective,
