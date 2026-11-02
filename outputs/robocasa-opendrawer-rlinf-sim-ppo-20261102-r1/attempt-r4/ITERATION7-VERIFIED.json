@@ -1,0 +1,347 @@
+{
+  "checked_Shanghai": "2026-11-02T19:31:59.904314+08:00",
+  "cluster": "Baige",
+  "job": "job-h3d8va4slqg5",
+  "source": "9ed1d19d42a346c6330c4d7f55303a48d21158ad",
+  "completed_global_iteration": 7,
+  "new_8gpu_iterations": 1,
+  "TRAIN_episodes_first8iteration": 128,
+  "TRAIN_controls_first8iteration": 51200,
+  "TRAIN_success_once": 83,
+  "TRAIN_success_at_end": 83,
+  "updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 6,
+      "optimizer_steps_before": 96,
+      "optimizer_steps_after": 112,
+      "batch_shape": [
+        8,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 44.48894119262695,
+        "actor/policy_loss": -0.2783287465572357,
+        "actor/policy_loss_abs": 0.9086318016052246,
+        "actor/total_loss": -0.026082869619131088,
+        "critic/value_loss": 0.06966578960418701
+      },
+      "metrics": {
+        "actor/approx_kl": 0.04975238814949989,
+        "actor/clip_fraction": 0.17616991698741913,
+        "actor/clipped_ratio": 0.9955222606658936,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 44.48894119262695,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.2783287465572357,
+        "actor/policy_loss_abs": 0.9086318016052246,
+        "actor/ratio": 1.0199520587921143,
+        "actor/ratio_abs": 0.19702497124671936,
+        "actor/total_loss": -0.026082869619131088,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.011079154908657074,
+        "critic/value_loss": 0.06966578960418701,
+        "critic/explained_variance": 0.2403547763824463
+      },
+      "training_seconds": 80.53718284703791,
+      "cuda_peak_allocated_bytes": 17086689792,
+      "cuda_peak_reserved_bytes": 19920846848,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 6,
+      "optimizer_steps_before": 96,
+      "optimizer_steps_after": 112,
+      "batch_shape": [
+        8,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 44.48894119262695,
+        "actor/policy_loss": -0.2783287465572357,
+        "actor/policy_loss_abs": 0.9086318016052246,
+        "actor/total_loss": -0.026082869619131088,
+        "critic/value_loss": 0.06966578960418701
+      },
+      "metrics": {
+        "actor/approx_kl": 0.04975238814949989,
+        "actor/clip_fraction": 0.17616991698741913,
+        "actor/clipped_ratio": 0.9955222606658936,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 44.48894119262695,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.2783287465572357,
+        "actor/policy_loss_abs": 0.9086318016052246,
+        "actor/ratio": 1.0199520587921143,
+        "actor/ratio_abs": 0.19702497124671936,
+        "actor/total_loss": -0.026082869619131088,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.011079154908657074,
+        "critic/value_loss": 0.06966578960418701,
+        "critic/explained_variance": 0.2403547763824463
+      },
+      "training_seconds": 80.31428625248373,
+      "cuda_peak_allocated_bytes": 17086689792,
+      "cuda_peak_reserved_bytes": 19920846848,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "checkpoint_checks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/actor-00.pt",
+      "bytes": 347772310,
+      "sha256": "840c0a7020387f2ce87ad25a4197305b507667bf697d86223af6adf06def7f8f",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/actor-01.pt",
+      "bytes": 347772118,
+      "sha256": "b90e58971e219ac62612875b7052e12a0220ca7ddf61831b22064c81168e1358",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-00.pt",
+      "bytes": 28057,
+      "sha256": "fbc91f5e45515c9d81d51f7f96cf485374a19e781b9fa77456bbd6686415f550",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-01.pt",
+      "bytes": 28057,
+      "sha256": "ba84aa59567ac3f207a5ffcb3956077400ecd7d33a30d4e84a73206b9508da18",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-02.pt",
+      "bytes": 28057,
+      "sha256": "84ea8261c6a797486dab24b52bb40612e5d21587f919c8916ca808441e52bc73",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-03.pt",
+      "bytes": 28057,
+      "sha256": "33d90a61fc44a14161a36307eac3244e3c3decfc3b0d18596210955b383e9196",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-04.pt",
+      "bytes": 28057,
+      "sha256": "13cc70e3c138a3bf585f253fa58ea2aead49911ffd076b9b99ea7bcb3475923e",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-05.pt",
+      "bytes": 28121,
+      "sha256": "65ec5f3149fdebc518faeb642fd5ff0d8b9222deb11e003c28ca8827f3c1c6cd",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-06.pt",
+      "bytes": 28121,
+      "sha256": "27333d44f92ff2b3e0600ec9bcaa4badc6db4e200c36aee8f027de557fb10285",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/rollout-07.pt",
+      "bytes": 27993,
+      "sha256": "3c563b60259dd7352a494455a1191a39a387a7efc01188a7645e5deba4ee39af",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-00.pt",
+      "bytes": 28405,
+      "sha256": "d26a1c8a05135d46bc515af393b16f807260eddfecf33423f11a8ec5a0425b97",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-01.pt",
+      "bytes": 28405,
+      "sha256": "3b532b36997e6ecd2770a520d669de0499b7d9fc28c7932041563c53d8ced97e",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-02.pt",
+      "bytes": 28405,
+      "sha256": "46fe24fad34c0130611ee8b24837ab31ba7772439b7c4938bda202b770851c15",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-03.pt",
+      "bytes": 28405,
+      "sha256": "bc51b0a7b0be85dd5b62bbfc194c9a78394a522f7a1a54089d38cbfff1a4ba96",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-04.pt",
+      "bytes": 28213,
+      "sha256": "47e2d3931fe7258b3fe2dba5e80ce7c0d15b5d5ab21be4ad1220215007a8d17c",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-05.pt",
+      "bytes": 28213,
+      "sha256": "648e9990514533627f0dc1039b296bf1df3e2d25040c18194de854faec8b4824",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-06.pt",
+      "bytes": 28213,
+      "sha256": "34eb29fe9d97d72ee2971eec1631ffdebcfd1af591ef322035e9270ba16925e6",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/pilot/env-07.pt",
+      "bytes": 28213,
+      "sha256": "174878f9386bc394c4d9be6aad2e50ba64cee6f33da488ef4fe0f3831a5b5976",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/actor/dcp_checkpoint/.metadata",
+      "bytes": 513788,
+      "sha256": "2023b7d09f1dc988d3a053f119bbe68ec39b5499e4050ac623a8e9c9b1a6302f",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/actor/dcp_checkpoint/__0_0.distcp",
+      "bytes": 4575995801,
+      "sha256": "a38895eaa1d954f4126b24c9876377e7f594bc6d1c13b1ed8939253cf0b08c1d",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/actor/dcp_checkpoint/__1_0.distcp",
+      "bytes": 4575742267,
+      "sha256": "7a3ef22d73f41ee64c591fc611b612047f88673c1a9fb45a28157a57f38fdda1",
+      "matched": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_7/actor/model_state_dict/full_weights.pt",
+      "bytes": 6949286402,
+      "sha256": "006ee48de7a1bd6d085b064c9b98a1df5634b38c464daf925aab829cb520b1ff",
+      "matched": true
+    }
+  ],
+  "timing_comparison": {
+    "time/generate_rollouts": {
+      "old2_mean_seconds": 266.4180374145508,
+      "new8_first_seconds": 191.10739135742188,
+      "speedup_ratio": 1.3940750042277428
+    },
+    "time/actor_training": {
+      "old2_mean_seconds": 80.77943420410156,
+      "new8_first_seconds": 80.54041290283203,
+      "speedup_ratio": 1.002967718846412
+    },
+    "time/step": {
+      "old2_mean_seconds": 349.1345443725586,
+      "new8_first_seconds": 274.2237854003906,
+      "speedup_ratio": 1.2731738199251816
+    },
+    "time/env/env/bootstrap_step": {
+      "old2_mean_seconds": 131.6192398071289,
+      "new8_first_seconds": 84.7806167602539,
+      "speedup_ratio": 1.5524685339259465
+    },
+    "time/env/env_interact_step": {
+      "old2_mean_seconds": 108.44736099243164,
+      "new8_first_seconds": 90.87104797363281,
+      "speedup_ratio": 1.193420384277936
+    },
+    "time/rollout/predict": {
+      "old2_mean_seconds": 35.194790840148926,
+      "new8_first_seconds": 20.900129318237305,
+      "speedup_ratio": 1.6839508648129846
+    }
+  },
+  "GPU_max_observed_MiB": {
+    "0": 35353.0,
+    "1": 33895.0,
+    "2": 13638.0,
+    "3": 13608.0,
+    "4": 13858.0,
+    "5": 13364.0,
+    "6": 14078.0,
+    "7": 13330.0
+  },
+  "memory_limit_per_GPU_MiB": 97887,
+  "old2_sample_MiB": [
+    40274,
+    40616
+  ],
+  "memory_comparison_limit": "Old memory is one19:05snapshot; new memory is a15-second telemetry maximum, not a matched peak benchmark",
+  "old_boundary6_retained": true,
+  "partial_old_bank_control_charge": 2400,
+  "projected_total_controls": 975200,
+  "accounting_snapshot": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-00/flow-sde-r2.json",
+      "resolved": 12800,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-00/flow-sde-r3.json",
+      "resolved": 154400,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-00/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-01/flow-sde-r2.json",
+      "resolved": 12800,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-01/flow-sde-r3.json",
+      "resolved": 154400,
+      "unresolved_reserved": 800
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-01/flow-sde-r4.json",
+      "resolved": 9400,
+      "unresolved_reserved": 200
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-02/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 512
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-03/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-04/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 512
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-05/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-06/flow-sde-r4.json",
+      "resolved": 9600,
+      "unresolved_reserved": 0
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting/rank-07/flow-sde-r4.json",
+      "resolved": 9400,
+      "unresolved_reserved": 0
+    }
+  ]
+}

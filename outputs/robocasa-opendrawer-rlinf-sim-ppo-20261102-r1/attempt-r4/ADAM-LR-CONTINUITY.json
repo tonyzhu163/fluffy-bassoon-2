@@ -1,0 +1,63 @@
+{
+  "completed": true,
+  "checked_Shanghai": "2026-11-02T19:34:02.933919+08:00",
+  "verification": "Actual198Adamstep tensors and LR/scheduler fields selectively read from native DCP on allocatedCPU; no model/inference/GPU work",
+  "states": [
+    {
+      "attempt": "r3",
+      "global_iteration": 6,
+      "Adam_parameter_states": 198,
+      "all_Adam_steps": [
+        96.0
+      ],
+      "lr_and_scheduler": {
+        "fsdp_checkpoint.optimizers.param_groups.0.lr": 5e-06,
+        "fsdp_checkpoint.optimizers.param_groups.1.lr": 0.0001,
+        "fsdp_checkpoint.lr_schedulers.0.base_lrs": [
+          5e-06,
+          0.0001
+        ],
+        "fsdp_checkpoint.lr_schedulers.0.last_epoch": 6,
+        "fsdp_checkpoint.lr_schedulers.0._step_count": 7,
+        "fsdp_checkpoint.lr_schedulers.0._is_initial": false,
+        "fsdp_checkpoint.lr_schedulers.0._get_lr_called_within_step": false,
+        "fsdp_checkpoint.lr_schedulers.0._last_lr": [
+          5e-06,
+          0.0001
+        ],
+        "fsdp_checkpoint.lr_schedulers.0.lr_lambdas": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "attempt": "r4",
+      "global_iteration": 7,
+      "Adam_parameter_states": 198,
+      "all_Adam_steps": [
+        112.0
+      ],
+      "lr_and_scheduler": {
+        "fsdp_checkpoint.optimizers.param_groups.0.lr": 5e-06,
+        "fsdp_checkpoint.optimizers.param_groups.1.lr": 0.0001,
+        "fsdp_checkpoint.lr_schedulers.0.base_lrs": [
+          5e-06,
+          0.0001
+        ],
+        "fsdp_checkpoint.lr_schedulers.0.last_epoch": 7,
+        "fsdp_checkpoint.lr_schedulers.0._step_count": 8,
+        "fsdp_checkpoint.lr_schedulers.0._is_initial": false,
+        "fsdp_checkpoint.lr_schedulers.0._get_lr_called_within_step": false,
+        "fsdp_checkpoint.lr_schedulers.0._last_lr": [
+          5e-06,
+          0.0001
+        ],
+        "fsdp_checkpoint.lr_schedulers.0.lr_lambdas": [
+          null,
+          null
+        ]
+      }
+    }
+  ]
+}
