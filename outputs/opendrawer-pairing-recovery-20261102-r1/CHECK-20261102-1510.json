@@ -1,0 +1,165 @@
+{
+  "checked_at": "2026-11-02T07:10:41.094586+00:00",
+  "phases": [
+    {
+      "run": "opendrawer-ad-first-id-ood-20261102-r2",
+      "attempt": "ad-paired-r2",
+      "complete": 163,
+      "expected": 600,
+      "counts": {
+        "OOD/ad_full/K0/query": 27,
+        "OOD/ad_full/K1/query": 24,
+        "OOD/ad_full/K1/support": 25,
+        "OOD/ad_static/K0/query": 25,
+        "OOD/ppo_final/K0/query": 30,
+        "OOD/ppo_initial/K0/query": 32
+      },
+      "first_ID_endpoints": []
+    },
+    {
+      "run": "opendrawer-dpt-full-id-ood-20261102-r2",
+      "attempt": "dpt-full-paired-r2",
+      "complete": 169,
+      "expected": 300,
+      "counts": {
+        "ID/dpt_full/K0/query": 9,
+        "ID/dpt_full/K1/query": 5,
+        "ID/dpt_full/K1/support": 6,
+        "OOD/dpt_full/K0/query": 50,
+        "OOD/dpt_full/K1/query": 49,
+        "OOD/dpt_full/K1/support": 50
+      },
+      "first_ID_endpoints": [
+        {
+          "result": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/ID/case-000/dpt_full/K0/query/result.json",
+            "sha256": "0adc4b620d09edeb06905e2944b6269128b2233ed6edfdeb1b52d2cedad7a36c"
+          },
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/ID/case-000/complete.json",
+            "sha256": "3316e25963d0d14f5dd8e90786a499bc7ffc5eea28cdddd1c91435104ebd4285"
+          },
+          "physical_and_public_state_exact": true,
+          "motor_schedule_exact": true,
+          "simulator_truth_verified": true,
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          }
+        },
+        {
+          "result": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/ID/case-001/dpt_full/K1/query/result.json",
+            "sha256": "da86435e9b987ae2b8827d5d0ba510ec9920d9eb123754da8d29a0949529ffe3"
+          },
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/ID/case-001/complete.json",
+            "sha256": "255feb21ccbbfd11281ac4561ad2c1b838d1e0c598656052d43c79546c321e26"
+          },
+          "physical_and_public_state_exact": true,
+          "motor_schedule_exact": true,
+          "simulator_truth_verified": true,
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          }
+        },
+        {
+          "result": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/episodes/ID/case-001/dpt_full/K1/support/result.json",
+            "sha256": "d2fac538504e61bab2ebf997755b4ea583ab98cef4e61ccd4fd7fa3adbae9ff0"
+          },
+          "canonical": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/ID/case-001/complete.json",
+            "sha256": "255feb21ccbbfd11281ac4561ad2c1b838d1e0c598656052d43c79546c321e26"
+          },
+          "physical_and_public_state_exact": true,
+          "motor_schedule_exact": true,
+          "simulator_truth_verified": true,
+          "comparison": {
+            "matched": true,
+            "physical_state_exact": true,
+            "public_state_exact": true,
+            "max_permitted_RGB_delta": 1,
+            "images": {
+              "main_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "wrist_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              },
+              "extra_view_images": {
+                "max_absolute_delta": 0,
+                "differing_components": 0,
+                "total_components": 196608,
+                "mean_absolute_delta": 0.0
+              }
+            },
+            "observations_modified": false
+          }
+        }
+      ]
+    },
+    {
+      "run": "opendrawer-dpt-static-id-ood-20261102-r1",
+      "attempt": "dpt-static-paired-r1",
+      "complete": 0,
+      "expected": 100,
+      "counts": {},
+      "first_ID_endpoints": []
+    }
+  ],
+  "outcome_summary": false
+}
