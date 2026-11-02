@@ -263,8 +263,10 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
                     planned_motor_seeds=None, planned_action_noise=None):
     """Complete batch FIRST. No simulator or Flora reward is read here."""
     if hasattr(environment, "collect"):
+        planned = {} if planned_motor_seeds is None and planned_action_noise is None else dict(
+            planned_motor_seeds=planned_motor_seeds, planned_action_noise=planned_action_noise)
         return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
-                                   deterministic=deterministic, verify_zero=verify_zero)
+                                   deterministic=deterministic, verify_zero=verify_zero, **planned)
     if planned_motor_seeds is None and planned_action_noise is not None:
         raise ValueError("Explicit actor noise requires a complete motor seed plan")
     reference = next(policy.parameters())
