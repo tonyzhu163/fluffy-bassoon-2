@@ -22,6 +22,13 @@ instance exposes a working PPU is an open question to resolve on the actual
 allocated host. Do not submit a duplicate because it is queued, alter quota,
 or touch other users' running instances.
 
+**Startup outcome, Nov2 18:54:43 Shanghai:** the instance changed to Failed
+after thirty minutes in the resource queue. The lifecycle table explicitly
+reports `Resource queue timeout, lack of sufficient resources`; no working
+SSH endpoint or numerical test became available. This is a capacity failure,
+not a software/device compatibility result. See [startup receipt](STARTUP-RESULT.json).
+Do not blindly restart the same request without a capacity change.
+
 ## Small test, once admitted
 
 Use a fresh project-specific directory on verified persistent storage and
