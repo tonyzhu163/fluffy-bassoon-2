@@ -173,6 +173,17 @@ on the 50-video calibration bank. This is retained-video development evidence,
 not a new PPO or independent qualification result. The exact original prompt,
 tested wording, complete comparison and an untested next draft are in
 [the rubric document](../outputs/robocasa-flora-rubric-replay-20261102-r1/RUBRIC.md).
+A subsequent failure-focused iteration uses only20 retained videos,14 failed
+trajectories and6 success controls, with revision1 kept verbatim as its control.
+Clearer target/opening/knob wording reduces false successes12→7, correcting6
+and introducing1; it retains4/6 controls but loses1 and recovers1. All four
+sampled Stove errors are corrected, while7/10 failed drawers remain accepted.
+Direct0/1 labels under the same criteria accept11 failures; explicit numerical
+predicates accept10 with graded or binary output. These ablations do not
+improve on the clearer graded wording, and no variant qualifies production
+reward. Cached revision1 hard grades reproduce20/20. This is an error-enriched
+development sample, not population accuracy or first-success qualification;
+no full-bank replay or new robot rollout was run. [Per-case readout and limits](../outputs/robocasa-flora-rubric-failure-sample-20261102-r1/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3
@@ -335,6 +346,29 @@ Actual improving simulator- and Flora-reward PPO curves remain gates for new
 AD/DPT histories. [Six-family results and limits](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md),
 [paired evidence](../outputs/robocasa-interface-screen-20261102-r3/FINAL-RESULT.json),
 [terminal costs](../outputs/robocasa-interface-screen-20261102-r3/TERMINAL-ACCOUNTING.json).
+
+**OpenDrawer simulator-reward action-expert Flow-SDE PPO completed
+(2026-11-02).** Eighteen updates / 288 optimizer steps retain a frozen VLM,
+but do not establish learning: TRAIN first-three versus last-three banks are
+221→224/384 (+0.78 points), failing the declared ≥10-point gate. On the same
+64 native cases, first success is 35→43 (18 recoveries / 10 regressions,
+exact two-sided McNemar p=.18493); success at end is 34→43 (19/10,
+p=.13605). Neither paired change is significant at .05. Physical/camera/public
+reset identity matched; RGB stayed diagnostic-only. The positive held-out point
+estimate is uncertain, not proof of zero effect.
+
+Adam/LR continuation, finite updates, all 18 frozen-VLM checks and the full
+final recovery checkpoint passed. Critic explained variance rises to .3437,
+while 14,079/18,432 H50 decisions have valid PPO masks and 1,336 positive
+rewards exactly match native TRAIN successes. Native per-update behavior-KL
+proxies are .0219–.1287; they do not measure original-SFT cumulative drift.
+This run does not identify a causal explanation for weak actor improvement.
+The final eight-GPU job succeeded/released at 20:21:39 Shanghai. All attempts
+charge 975,200/1M controls and conservatively 34,162 GPU-seconds (9.49 hours).
+Raw histories remain candidate/reference data; compatible velocity/KV labels
+and an improving matched frozen-motor teacher have not been established here.
+[Result and curves](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/RESULT.md),
+[history compatibility and gaps](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/HISTORY-AUDIT.md).
 
 ## LIBERO
 
