@@ -186,6 +186,13 @@ improve on the clearer graded wording, and no variant qualifies production
 reward. Cached revision1 hard grades reproduce20/20. This is an error-enriched
 development sample, not population accuracy or first-success qualification;
 no full-bank replay or new robot rollout was run. [Per-case readout and limits](../outputs/robocasa-flora-rubric-failure-sample-20261102-r1/RESULT.md).
+A subsequent OpenDrawer-only check explicitly withholds Score5 until the
+drawer visibly appears fully open. On the same14 selected videos, this raises
+false successes7→8 out of10 failures and retains the same3/4 success controls:
+zero old errors corrected, one new false success. The prior rubric reproduces
+all14 hard grades. This stricter-sounding wording does not repair the sampled
+errors and remains unqualified; it is not a population accuracy or first-success
+result. [Exact wording and paired grades](../outputs/robocasa-flora-rubric-failure-sample-20261102-r2/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3
