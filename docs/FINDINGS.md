@@ -141,7 +141,7 @@ requires matched Flora calibration. [Decision, episode values and closure](../ou
 The matched six-update OpenDrawer residual-PPO arms now have full50-case
 held-out after-training panels:
 
-| Reward used for PPO | OpenDrawer ID | CloseFridge OOD |
+| Policy / PPO reward | OpenDrawer ID | CloseFridge OOD |
 | --- | ---: | ---: |
 | Untouched original pi0.5 |28/50 (56%)|28/50 (56%)|
 | Simulator terminal success |34/50 (68%)|32/50 (64%)|
@@ -154,6 +154,16 @@ schedules and1650 unchanged zero-residual chunks verified. This is one training
 task and one PPO source seed; the paired two-sided exact p-values for S versus
 original are0.210 ID/0.481 OOD, and F versus S are0.508 ID/0.388 OOD. These
 small-panel differences do not establish a reliable population advantage or cause.
+Retained-data investigation confirms identical initial residual tensors/configs
+and360 Adam steps per arm; true TRAIN success is197/384 for S and201/384 for F.
+Flora TRAIN reward AUROC is0.925, but the model explicitly emits `Score: 5` on
+58/183 simulator failures. Holding the F records/critic fixed and substituting
+binary labels changes23.1% of normalized advantage signs in batch6 (actor-gradient
+cosine0.308), without any optimizer update. This measures reward/metric mismatch,
+not the cause of a reliable S/F performance gap. [Investigation and limits](../outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/RESULT.md).
+A [candidate rubric](../outputs/robocasa-flora-rubric-audit-20261102-r1/CANDIDATE-RUBRIC.md)
+now translates the native predicates into qualitative end-state descriptions;
+physical thresholds stay in the human audit and require separate calibration.
 Do not substitute the separate50-case calibration bank for that baseline.
 The Flora arm completed384 TRAIN episodes with all384 official labels audited;
 its full5760-decision history exactly merges the preserved four-update prefix

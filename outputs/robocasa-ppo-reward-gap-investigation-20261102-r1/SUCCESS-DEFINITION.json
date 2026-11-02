@@ -1,0 +1,34 @@
+{
+  "source": {
+    "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_drawer.py",
+    "sha256": "7b29347c1af004d0af54c22c746e8e9c840d221ba4a55682f6df050de05fb8c3"
+  },
+  "RoboCasa_commit": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+  "function_lines": [
+    "    def _check_success(self):",
+    "        \"\"\"",
+    "        Check if the drawer manipulation task is successful.",
+    "",
+    "        Returns:",
+    "            bool: True if the task is successful, False otherwise.",
+    "        \"\"\"",
+    "        door_state = self.drawer.get_door_state(env=self)",
+    "",
+    "        success = True",
+    "        for joint_p in door_state.values():",
+    "            if self.behavior == \"open\":",
+    "                if joint_p < 0.95:",
+    "                    success = False",
+    "                    break",
+    "            elif self.behavior == \"close\":",
+    "                if joint_p > 0.05:",
+    "                    success = False",
+    "                    break",
+    "",
+    "        return success",
+    "",
+    "",
+    "class OpenDrawer(ManipulateDrawer):"
+  ],
+  "criterion": "Open: every target drawer state >=0.95; simulator sidecar uses success_at_end, not best visual progress in the video"
+}

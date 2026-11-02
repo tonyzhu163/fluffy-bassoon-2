@@ -1,0 +1,36 @@
+{
+  "completed": true,
+  "checked_at_Shanghai": "2026-11-02T14:12:54.490394+08:00",
+  "data_analysis_source_commit": "6eac4ef55c230b9421a3d91503d58746f793f41d",
+  "visualization_source_commit": "b2b3796edb3fb043f97783e903fb16cdacaafe59",
+  "data_analysis": "All numeric diagnostics and REPORT/EPISODES completed; initial process then failed at optional matplotlib import. Preserved log. Plot rendered separately using an isolated uv environment; no shared model environment changed.",
+  "report": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/REPORT.json",
+    "sha256": "af15d57c2d4b5a1afc5c47686ae756a16cb026e68577a05c507530ec53d47223"
+  },
+  "episodes": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/EPISODES.json",
+    "sha256": "8b951489ba22676506b529856c397a2a0ac05b38d7dfbe0b6da99610211d7405"
+  },
+  "plot_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/PLOT-RECEIPT.json",
+    "sha256": "cb96aa3dd825aa433dd1c519e2e83b89b83cced770fc0663113138f11a8572df"
+  },
+  "frame_receipt": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/FRAME-RECEIPT.json",
+    "sha256": "e9dd548ee8023b8166ceb688e59166235df100361cedcc2dd184032665fa08f6"
+  },
+  "CPU_only": true,
+  "CPU_threads": 4,
+  "new_optimizer_steps": 0,
+  "new_physical_episodes": 0,
+  "new_GPU_allocations": 0,
+  "conclusion": "Reward/metric mismatch is a measured plausible mechanism, not proof of why a small one-seed held-out lead occurred. No infrastructure/initialization/Adam-count mismatch found.",
+  "limitations": [
+    "One source seed and50 cases per split; paired tests do not establish S over F.",
+    "Nonbitwise frozen-motor outputs despite matched case/noise seeds.",
+    "Label-only gradients keep the saved F critic fixed; no trained binary counterfactual.",
+    "Fixed-feature head predictions do not establish closed-loop robot effects.",
+    "Video examples were selected mechanically by score extremes; precise final target-joint positions were not retained."
+  ]
+}

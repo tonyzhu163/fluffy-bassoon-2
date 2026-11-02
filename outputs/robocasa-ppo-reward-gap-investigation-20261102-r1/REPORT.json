@@ -1,0 +1,1893 @@
+{
+  "completed": true,
+  "analysis": "retained-data investigation; CPU only; no new episodes or optimizer steps",
+  "original_S_F_comparison": {
+    "completed": true,
+    "checked_at_Shanghai": "2026-11-02T13:48:39.766795+08:00",
+    "cluster": "Baige",
+    "job_id": "job-028lwmw7ikwc",
+    "source_commit": "0be8cc272b0aea655776faf7e706c7d774a40394",
+    "scheduler_status": "Succeeded",
+    "checkpoint": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/S/boundary-000.pt",
+      "sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7"
+    },
+    "checkpoint_hash_unchanged": true,
+    "new_optimizer_updates": 0,
+    "zero_residual_verified_decisions": 1650,
+    "all_three_actual_case_and_noise_schedules_verified": true,
+    "independent_sidecars_verified": 100,
+    "panels": {
+      "ID": {
+        "original": {
+          "successes": 28,
+          "episodes": 50,
+          "rate": 0.56
+        },
+        "simulator_PPO": {
+          "successes": 34,
+          "episodes": 50,
+          "rate": 0.68
+        },
+        "Flora_PPO": {
+          "successes": 31,
+          "episodes": 50,
+          "rate": 0.62
+        }
+      },
+      "OOD": {
+        "original": {
+          "successes": 28,
+          "episodes": 50,
+          "rate": 0.56
+        },
+        "simulator_PPO": {
+          "successes": 32,
+          "episodes": 50,
+          "rate": 0.64
+        },
+        "Flora_PPO": {
+          "successes": 28,
+          "episodes": 50,
+          "rate": 0.56
+        }
+      }
+    },
+    "paired_outcomes": {
+      "ID": {
+        "simulator_PPO_vs_original": {
+          "wins": 11,
+          "losses": 5,
+          "both_success": 23,
+          "both_failure": 11,
+          "exact_paired_two_sided_p": 0.210113525390625
+        },
+        "Flora_PPO_vs_original": {
+          "wins": 7,
+          "losses": 4,
+          "both_success": 24,
+          "both_failure": 15,
+          "exact_paired_two_sided_p": 0.548828125
+        },
+        "Flora_PPO_vs_simulator_PPO": {
+          "wins": 3,
+          "losses": 6,
+          "both_success": 28,
+          "both_failure": 13,
+          "exact_paired_two_sided_p": 0.5078125
+        }
+      },
+      "OOD": {
+        "simulator_PPO_vs_original": {
+          "wins": 11,
+          "losses": 7,
+          "both_success": 21,
+          "both_failure": 11,
+          "exact_paired_two_sided_p": 0.480682373046875
+        },
+        "Flora_PPO_vs_original": {
+          "wins": 9,
+          "losses": 9,
+          "both_success": 19,
+          "both_failure": 13,
+          "exact_paired_two_sided_p": 1.0
+        },
+        "Flora_PPO_vs_simulator_PPO": {
+          "wins": 4,
+          "losses": 8,
+          "both_success": 24,
+          "both_failure": 14,
+          "exact_paired_two_sided_p": 0.3876953125
+        }
+      }
+    },
+    "numerical_comparison_to_original": {
+      "ID": {
+        "simulator_PPO": {
+          "max_initial_proprio_abs_difference": 0.0,
+          "max_initial_base_chunk_abs_difference": 0.005167260766029358,
+          "bitwise_base_equal": false
+        },
+        "Flora_PPO": {
+          "max_initial_proprio_abs_difference": 0.0,
+          "max_initial_base_chunk_abs_difference": 0.0029479563236236572,
+          "bitwise_base_equal": false
+        }
+      },
+      "OOD": {
+        "simulator_PPO": {
+          "max_initial_proprio_abs_difference": 0.0,
+          "max_initial_base_chunk_abs_difference": 0.23382681608200073,
+          "bitwise_base_equal": false
+        },
+        "Flora_PPO": {
+          "max_initial_proprio_abs_difference": 0.0,
+          "max_initial_base_chunk_abs_difference": 1.9410467147827148,
+          "bitwise_base_equal": false
+        }
+      }
+    },
+    "physical_controls": 82500,
+    "unresolved_calls": 0,
+    "closed_GPU_seconds": 7332,
+    "node_charges": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-00/clock/attempts/1793596902000000-0000",
+        "started_unix": 1793596902.0,
+        "slice_seconds": 3540,
+        "reserved_seconds": 3600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793597784.0180023,
+        "exit_code": 0,
+        "charged_seconds": 943,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 1886
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-01/clock/attempts/1793596936000000-0000",
+        "started_unix": 1793596936.0,
+        "slice_seconds": 3540,
+        "reserved_seconds": 3600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793597784.389131,
+        "exit_code": 0,
+        "charged_seconds": 909,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 1818
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-02/clock/attempts/1793596938000000-0000",
+        "started_unix": 1793596938.0,
+        "slice_seconds": 3540,
+        "reserved_seconds": 3600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793597784.2349384,
+        "exit_code": 0,
+        "charged_seconds": 907,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 1814
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-03/clock/attempts/1793596938000000-0000",
+        "started_unix": 1793596938.0,
+        "slice_seconds": 3540,
+        "reserved_seconds": 3600,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793597784.1848707,
+        "exit_code": 0,
+        "charged_seconds": 907,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 1814
+      }
+    ],
+    "all_four_exit_zero": true,
+    "output_bytes_recorded_at_completion": 819337227,
+    "output_limit_bytes": 25769803776,
+    "interpretation": "On these50-case panels normal PPO is+6 ID/+4 OOD versus original; Flora PPO is+3 ID/tied OOD. No observed OOD degradation of Flora versus original. One training seed and small held-out cohort; seed-matched inference is not bitwise identical, so do not assign differences solely to reward learning.",
+    "next": "Close original/S/F execution monitoring; continue independent AD/DPT readouts",
+    "scheduler_end_Shanghai": "2026-11-02 13:36:35",
+    "all_four_scheduler_instances_succeeded": true
+  },
+  "initial_policy_tensors_identical": true,
+  "learner_configs_identical": true,
+  "final_Adam_steps": {
+    "S": [
+      360
+    ],
+    "F": [
+      360
+    ]
+  },
+  "final_pre_tanh_std": {
+    "S": [
+      0.4861474633216858,
+      0.4956760108470917,
+      0.4918708801269531,
+      0.4890790581703186,
+      0.5003274083137512,
+      0.4994474947452545
+    ],
+    "F": [
+      0.4899460971355438,
+      0.49529674649238586,
+      0.49831530451774597,
+      0.4876357913017273,
+      0.5041534900665283,
+      0.5030479431152344
+    ]
+  },
+  "final_feature_normalization_equal": true,
+  "training_batches": [
+    {
+      "arm": "S",
+      "update": 1,
+      "successes": 35,
+      "episodes": 64,
+      "true_success_rate": 0.546875,
+      "reward": {
+        "n": 64,
+        "mean": 0.546875,
+        "std": 0.4977978850648122,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 35,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 29,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.07414151312162479,
+        "actor_loss": 0.0008776455807189147,
+        "critic_loss": 0.14652773564060528,
+        "entropy": 4.350303586324056,
+        "approximate_kl": 0.009238801974182328,
+        "clip_fraction": 0.1359375
+      },
+      "Adam_steps_before": [],
+      "Adam_steps_after": [
+        60
+      ]
+    },
+    {
+      "arm": "S",
+      "update": 2,
+      "successes": 37,
+      "episodes": 64,
+      "true_success_rate": 0.578125,
+      "reward": {
+        "n": 64,
+        "mean": 0.578125,
+        "std": 0.4938587696649721,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 37,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 27,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.044769935340931016,
+        "actor_loss": 0.005382582638412714,
+        "critic_loss": 0.07877470497041941,
+        "entropy": 4.342326800028483,
+        "approximate_kl": 0.00658050118945539,
+        "clip_fraction": 0.0796875
+      },
+      "Adam_steps_before": [
+        60
+      ],
+      "Adam_steps_after": [
+        120
+      ]
+    },
+    {
+      "arm": "S",
+      "update": 3,
+      "successes": 26,
+      "episodes": 64,
+      "true_success_rate": 0.40625,
+      "reward": {
+        "n": 64,
+        "mean": 0.40625,
+        "std": 0.4911323014219285,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 26,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 38,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.02326295170933008,
+        "actor_loss": -0.0013880392846961815,
+        "critic_loss": 0.04930198403696219,
+        "entropy": 4.333157062530518,
+        "approximate_kl": 0.00819837871628503,
+        "clip_fraction": 0.11484375
+      },
+      "Adam_steps_before": [
+        120
+      ],
+      "Adam_steps_after": [
+        180
+      ]
+    },
+    {
+      "arm": "S",
+      "update": 4,
+      "successes": 32,
+      "episodes": 64,
+      "true_success_rate": 0.5,
+      "reward": {
+        "n": 64,
+        "mean": 0.5,
+        "std": 0.5,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.5,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 32,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 32,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.026253782181690135,
+        "actor_loss": 0.0018484290689229966,
+        "critic_loss": 0.04881070641179879,
+        "entropy": 4.3203260660171505,
+        "approximate_kl": 0.008097529426837962,
+        "clip_fraction": 0.1078125
+      },
+      "Adam_steps_before": [
+        180
+      ],
+      "Adam_steps_after": [
+        240
+      ]
+    },
+    {
+      "arm": "S",
+      "update": 5,
+      "successes": 34,
+      "episodes": 64,
+      "true_success_rate": 0.53125,
+      "reward": {
+        "n": 64,
+        "mean": 0.53125,
+        "std": 0.4990224819584785,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 34,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 30,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.014296211581677199,
+        "actor_loss": -0.00397711854117612,
+        "critic_loss": 0.03654665946960449,
+        "entropy": 4.2980094194412235,
+        "approximate_kl": 0.009251351639007529,
+        "clip_fraction": 0.13776041666666666
+      },
+      "Adam_steps_before": [
+        240
+      ],
+      "Adam_steps_after": [
+        300
+      ]
+    },
+    {
+      "arm": "S",
+      "update": 6,
+      "successes": 33,
+      "episodes": 64,
+      "true_success_rate": 0.515625,
+      "reward": {
+        "n": 64,
+        "mean": 0.515625,
+        "std": 0.49975579974123363,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_success": {
+        "n": 33,
+        "mean": 1.0,
+        "std": 0.0,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "maximum": 1.0
+      },
+      "reward_on_failure": {
+        "n": 31,
+        "mean": 0.0,
+        "std": 0.0,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0,
+        "maximum": 0.0
+      },
+      "reward_AUROC_vs_terminal_success": 1.0,
+      "metrics": {
+        "loss": 0.012119660309205452,
+        "actor_loss": -0.004533920592317979,
+        "critic_loss": 0.033307163137942554,
+        "entropy": 4.282562589645385,
+        "approximate_kl": 0.010125614702701569,
+        "clip_fraction": 0.14348958333333334
+      },
+      "Adam_steps_before": [
+        300
+      ],
+      "Adam_steps_after": [
+        360
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 1,
+      "successes": 36,
+      "episodes": 64,
+      "true_success_rate": 0.5625,
+      "reward": {
+        "n": 64,
+        "mean": 0.707322265625,
+        "std": 0.263880177150376,
+        "minimum": 0.1835,
+        "q25": 0.40898124999999996,
+        "median": 0.838425,
+        "q75": 0.91064375,
+        "maximum": 0.9643999999999999
+      },
+      "reward_on_success": {
+        "n": 36,
+        "mean": 0.8853256944444445,
+        "std": 0.07243564156999395,
+        "minimum": 0.56965,
+        "q25": 0.8736875000000001,
+        "median": 0.900475,
+        "q75": 0.9355125,
+        "maximum": 0.9643999999999999
+      },
+      "reward_on_failure": {
+        "n": 28,
+        "mean": 0.47846071428571424,
+        "std": 0.24351339445307976,
+        "minimum": 0.1835,
+        "q25": 0.29644375,
+        "median": 0.37215,
+        "q75": 0.7521875,
+        "maximum": 0.888225
+      },
+      "reward_AUROC_vs_terminal_success": 0.9474206349206349,
+      "metrics": {
+        "loss": 0.06541669176270565,
+        "actor_loss": 0.0020109497321148715,
+        "critic_loss": 0.12681148511668047,
+        "entropy": 4.358040428161621,
+        "approximate_kl": 0.009063419854889313,
+        "clip_fraction": 0.12786458333333334
+      },
+      "Adam_steps_before": [],
+      "Adam_steps_after": [
+        60
+      ],
+      "failures_reward_at_least_075": 7
+    },
+    {
+      "arm": "F",
+      "update": 2,
+      "successes": 35,
+      "episodes": 64,
+      "true_success_rate": 0.546875,
+      "reward": {
+        "n": 64,
+        "mean": 0.67646484375,
+        "std": 0.25860508765624535,
+        "minimum": 0.15589999999999998,
+        "q25": 0.44421249999999995,
+        "median": 0.82365,
+        "q75": 0.8999625,
+        "maximum": 0.96695
+      },
+      "reward_on_success": {
+        "n": 35,
+        "mean": 0.8638442857142857,
+        "std": 0.10219258798354952,
+        "minimum": 0.5425,
+        "q25": 0.8446,
+        "median": 0.8948,
+        "q75": 0.9264374999999999,
+        "maximum": 0.9638249999999999
+      },
+      "reward_on_failure": {
+        "n": 29,
+        "mean": 0.45031724137931034,
+        "std": 0.20363584236956525,
+        "minimum": 0.15589999999999998,
+        "q25": 0.296675,
+        "median": 0.419975,
+        "q75": 0.564975,
+        "maximum": 0.96695
+      },
+      "reward_AUROC_vs_terminal_success": 0.9142857142857143,
+      "metrics": {
+        "loss": 0.02470081780726711,
+        "actor_loss": 0.0010674867468575637,
+        "critic_loss": 0.04726666094114383,
+        "entropy": 4.360007611910502,
+        "approximate_kl": 0.007328631961718202,
+        "clip_fraction": 0.10052083333333334
+      },
+      "Adam_steps_before": [
+        60
+      ],
+      "Adam_steps_after": [
+        120
+      ],
+      "failures_reward_at_least_075": 2
+    },
+    {
+      "arm": "F",
+      "update": 3,
+      "successes": 30,
+      "episodes": 64,
+      "true_success_rate": 0.46875,
+      "reward": {
+        "n": 64,
+        "mean": 0.624040234375,
+        "std": 0.2887535511354007,
+        "minimum": 0.185525,
+        "q25": 0.31741874999999997,
+        "median": 0.6725625,
+        "q75": 0.91509375,
+        "maximum": 0.96915
+      },
+      "reward_on_success": {
+        "n": 30,
+        "mean": 0.8794841666666667,
+        "std": 0.11134233742594153,
+        "minimum": 0.406875,
+        "q25": 0.87890625,
+        "median": 0.9171499999999999,
+        "q75": 0.939125,
+        "maximum": 0.96915
+      },
+      "reward_on_failure": {
+        "n": 34,
+        "mean": 0.3986485294117647,
+        "std": 0.19399222154482432,
+        "minimum": 0.185525,
+        "q25": 0.26361875,
+        "median": 0.326175,
+        "q75": 0.502425,
+        "maximum": 0.913225
+      },
+      "reward_AUROC_vs_terminal_success": 0.9666666666666667,
+      "metrics": {
+        "loss": 0.013746181999643644,
+        "actor_loss": 0.0005197600771983464,
+        "critic_loss": 0.026452844527860484,
+        "entropy": 4.351040863990784,
+        "approximate_kl": 0.00789438138405482,
+        "clip_fraction": 0.10494791666666667
+      },
+      "Adam_steps_before": [
+        120
+      ],
+      "Adam_steps_after": [
+        180
+      ],
+      "failures_reward_at_least_075": 3
+    },
+    {
+      "arm": "F",
+      "update": 4,
+      "successes": 29,
+      "episodes": 64,
+      "true_success_rate": 0.453125,
+      "reward": {
+        "n": 64,
+        "mean": 0.6425406250000001,
+        "std": 0.26435707579974216,
+        "minimum": 0.11957499999999999,
+        "q25": 0.40420625,
+        "median": 0.7884875,
+        "q75": 0.8819625,
+        "maximum": 0.9492750000000001
+      },
+      "reward_on_success": {
+        "n": 29,
+        "mean": 0.8664120689655173,
+        "std": 0.06991842340847139,
+        "minimum": 0.6018,
+        "q25": 0.833175,
+        "median": 0.8708499999999999,
+        "q75": 0.9172,
+        "maximum": 0.9492750000000001
+      },
+      "reward_on_failure": {
+        "n": 35,
+        "mean": 0.4570471428571428,
+        "std": 0.21864132907012576,
+        "minimum": 0.11957499999999999,
+        "q25": 0.29885,
+        "median": 0.42035,
+        "q75": 0.546025,
+        "maximum": 0.9283999999999999
+      },
+      "reward_AUROC_vs_terminal_success": 0.9251231527093596,
+      "metrics": {
+        "loss": 0.010364419190833966,
+        "actor_loss": 0.00262240922699372,
+        "critic_loss": 0.015484020269165436,
+        "entropy": 4.347905445098877,
+        "approximate_kl": 0.01570684260999163,
+        "clip_fraction": 0.20026041666666666
+      },
+      "Adam_steps_before": [
+        180
+      ],
+      "Adam_steps_after": [
+        240
+      ],
+      "failures_reward_at_least_075": 6
+    },
+    {
+      "arm": "F",
+      "update": 5,
+      "successes": 37,
+      "episodes": 64,
+      "true_success_rate": 0.578125,
+      "reward": {
+        "n": 64,
+        "mean": 0.66162421875,
+        "std": 0.27183107558138636,
+        "minimum": 0.16820000000000002,
+        "q25": 0.3957,
+        "median": 0.7672375,
+        "q75": 0.8886875000000001,
+        "maximum": 0.9719
+      },
+      "reward_on_success": {
+        "n": 37,
+        "mean": 0.8464837837837839,
+        "std": 0.0993840046432333,
+        "minimum": 0.53395,
+        "q25": 0.78715,
+        "median": 0.868825,
+        "q75": 0.9145749999999999,
+        "maximum": 0.9719
+      },
+      "reward_on_failure": {
+        "n": 27,
+        "mean": 0.40829814814814813,
+        "std": 0.224972184075458,
+        "minimum": 0.16820000000000002,
+        "q25": 0.2160625,
+        "median": 0.37044999999999995,
+        "q75": 0.530675,
+        "maximum": 0.9526749999999999
+      },
+      "reward_AUROC_vs_terminal_success": 0.9214214214214215,
+      "metrics": {
+        "loss": 0.0034668713497618834,
+        "actor_loss": -0.005002546776086092,
+        "critic_loss": 0.016938834792623918,
+        "entropy": 4.340234311421712,
+        "approximate_kl": 0.009777772923310597,
+        "clip_fraction": 0.14088541666666668
+      },
+      "Adam_steps_before": [
+        240
+      ],
+      "Adam_steps_after": [
+        300
+      ],
+      "failures_reward_at_least_075": 2
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "successes": 34,
+      "episodes": 64,
+      "true_success_rate": 0.53125,
+      "reward": {
+        "n": 64,
+        "mean": 0.64590078125,
+        "std": 0.2638443236613134,
+        "minimum": 0.19965,
+        "q25": 0.36616874999999993,
+        "median": 0.7085250000000001,
+        "q75": 0.9004812500000001,
+        "maximum": 0.9413
+      },
+      "reward_on_success": {
+        "n": 34,
+        "mean": 0.8153830882352942,
+        "std": 0.17083408345704865,
+        "minimum": 0.28915,
+        "q25": 0.79685625,
+        "median": 0.897525,
+        "q75": 0.9155562500000001,
+        "maximum": 0.9413
+      },
+      "reward_on_failure": {
+        "n": 30,
+        "mean": 0.4538208333333334,
+        "std": 0.21444140653522478,
+        "minimum": 0.19965,
+        "q25": 0.268575,
+        "median": 0.38704999999999995,
+        "q75": 0.6247437499999999,
+        "maximum": 0.92885
+      },
+      "reward_AUROC_vs_terminal_success": 0.8808823529411764,
+      "metrics": {
+        "loss": 0.007891758088953793,
+        "actor_loss": 0.0011835506496330102,
+        "critic_loss": 0.01341641549176226,
+        "entropy": 4.321827189127604,
+        "approximate_kl": 0.011602009786292911,
+        "clip_fraction": 0.16848958333333333
+      },
+      "Adam_steps_before": [
+        300
+      ],
+      "Adam_steps_after": [
+        360
+      ],
+      "failures_reward_at_least_075": 3
+    }
+  ],
+  "DEV_curves": {
+    "S": [
+      {
+        "update": 0,
+        "phase": "initial_DEV",
+        "iteration": 0,
+        "episodes": 8,
+        "successes": 7,
+        "physical_actions": 6000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 2,
+        "phase": "DEV",
+        "iteration": 2,
+        "episodes": 8,
+        "successes": 6,
+        "physical_actions": 102000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 4,
+        "phase": "DEV",
+        "iteration": 4,
+        "episodes": 8,
+        "successes": 6,
+        "physical_actions": 204000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 6,
+        "phase": "DEV",
+        "iteration": 6,
+        "episodes": 8,
+        "successes": 7,
+        "physical_actions": 306000,
+        "policy_checkpoint": null
+      }
+    ],
+    "F": [
+      {
+        "update": 0,
+        "phase": "initial_DEV",
+        "iteration": 0,
+        "episodes": 8,
+        "successes": 7,
+        "physical_actions": 6000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 2,
+        "phase": "DEV",
+        "iteration": 2,
+        "episodes": 8,
+        "successes": 6,
+        "physical_actions": 102000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 4,
+        "phase": "DEV",
+        "iteration": 4,
+        "episodes": 8,
+        "successes": 7,
+        "physical_actions": 204000,
+        "policy_checkpoint": null
+      },
+      {
+        "update": 6,
+        "phase": "DEV",
+        "iteration": 6,
+        "episodes": 8,
+        "successes": 6,
+        "physical_actions": 102000,
+        "policy_checkpoint": null
+      }
+    ]
+  },
+  "Flora_training_reward_alignment": {
+    "episodes": 384,
+    "successes": 201,
+    "AUROC": 0.9254003208003697,
+    "reward_on_success": {
+      "n": 201,
+      "mean": 0.8590033582089552,
+      "std": 0.11233037080755244,
+      "minimum": 0.28915,
+      "q25": 0.837575,
+      "median": 0.8951,
+      "q75": 0.925,
+      "maximum": 0.9719
+    },
+    "reward_on_failure": {
+      "n": 183,
+      "mean": 0.44068565573770485,
+      "std": 0.21813005574294997,
+      "minimum": 0.11957499999999999,
+      "q25": 0.2695125,
+      "median": 0.3798,
+      "q75": 0.5707625000000001,
+      "maximum": 0.96695
+    },
+    "failures_reward_at_least_075": 23,
+    "failures": 183,
+    "successes_below_median_failed_reward": 2
+  },
+  "label_only_gradient_diagnostics": [
+    {
+      "full_batch_actor_gradient_cosine": 0.7216973900794983,
+      "soft_gradient_norm": 0.6170478463172913,
+      "binary_gradient_norm": 0.6001408100128174,
+      "normalized_advantage_correlation": 0.7654475480675422,
+      "normalized_advantage_sign_disagreement": 0.2708333432674408,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 1
+    },
+    {
+      "full_batch_actor_gradient_cosine": 0.4667990803718567,
+      "soft_gradient_norm": 0.7924609780311584,
+      "binary_gradient_norm": 0.3062811493873596,
+      "normalized_advantage_correlation": 0.7731978169106237,
+      "normalized_advantage_sign_disagreement": 0.12083332985639572,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 2
+    },
+    {
+      "full_batch_actor_gradient_cosine": 0.9735087752342224,
+      "soft_gradient_norm": 0.7334403395652771,
+      "binary_gradient_norm": 0.8261357545852661,
+      "normalized_advantage_correlation": 0.8134561600014253,
+      "normalized_advantage_sign_disagreement": 0.0989583358168602,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 3
+    },
+    {
+      "full_batch_actor_gradient_cosine": 0.8730171322822571,
+      "soft_gradient_norm": 0.7687721848487854,
+      "binary_gradient_norm": 0.6571938395500183,
+      "normalized_advantage_correlation": 0.7293118493061265,
+      "normalized_advantage_sign_disagreement": 0.13750000298023224,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 4
+    },
+    {
+      "full_batch_actor_gradient_cosine": 0.8867643475532532,
+      "soft_gradient_norm": 0.97633957862854,
+      "binary_gradient_norm": 0.6506341099739075,
+      "normalized_advantage_correlation": 0.7155623117297427,
+      "normalized_advantage_sign_disagreement": 0.18645833432674408,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 5
+    },
+    {
+      "full_batch_actor_gradient_cosine": 0.30828723311424255,
+      "soft_gradient_norm": 0.4251082241535187,
+      "binary_gradient_norm": 1.070938229560852,
+      "normalized_advantage_correlation": 0.5570424327947295,
+      "normalized_advantage_sign_disagreement": 0.23125000298023224,
+      "scope": "Labels changed on same saved Flora records/critic, before update; diagnostic gradient only, no optimizer steps or robot counterfactual",
+      "update": 6
+    }
+  ],
+  "fixed_original_feature_residual_predictions": {
+    "ID": {
+      "S": {
+        "decisions": 750,
+        "mean_abs_bound_fraction": 0.06715347617864609,
+        "signed_mean_bound_fraction_per_dimension": [
+          0.06004577502608299,
+          0.1188223585486412,
+          -0.018396813422441483,
+          -0.037841640412807465,
+          -0.13537779450416565,
+          -0.025012947618961334
+        ],
+        "mean_abs_bound_fraction_per_dimension": [
+          0.06022688373923302,
+          0.1188223585486412,
+          0.018396813422441483,
+          0.03929925709962845,
+          0.13537779450416565,
+          0.030797889456152916
+        ],
+        "p95_abs_bound_fraction_per_dimension": [
+          0.07705292850732803,
+          0.12968453764915466,
+          0.02871660701930523,
+          0.048746634274721146,
+          0.151200532913208,
+          0.046324472874403
+        ],
+        "bound_saturation_fraction": 0.0,
+        "mean_abs_physical_residual_per_dimension": [
+          0.0056336881747841615,
+          0.009398279670464787,
+          0.0015015315655582668,
+          0.0008302320161697448,
+          0.0035108631734903977,
+          0.0007530305224251162
+        ]
+      },
+      "F": {
+        "decisions": 750,
+        "mean_abs_bound_fraction": 0.04592050611972809,
+        "signed_mean_bound_fraction_per_dimension": [
+          0.03577718511223793,
+          0.06176937744021416,
+          0.002106769010424614,
+          -0.022801276296377182,
+          -0.10153953731060028,
+          0.01495027169585228
+        ],
+        "mean_abs_bound_fraction_per_dimension": [
+          0.03804166615009308,
+          0.06176937744021416,
+          0.012994827702641487,
+          0.02554800920188427,
+          0.10153953731060028,
+          0.035629596561193466
+        ],
+        "p95_abs_bound_fraction_per_dimension": [
+          0.06539472937583923,
+          0.12327537685632706,
+          0.030320990830659866,
+          0.03823862224817276,
+          0.1960221230983734,
+          0.10157743096351624
+        ],
+        "bound_saturation_fraction": 0.0,
+        "mean_abs_physical_residual_per_dimension": [
+          0.0035584591499943463,
+          0.004885663061469793,
+          0.0010606274951830265,
+          0.0005397242703509501,
+          0.0026333102553916152,
+          0.0008711689795918095
+        ]
+      }
+    },
+    "OOD": {
+      "S": {
+        "decisions": 900,
+        "mean_abs_bound_fraction": 0.06343105435371399,
+        "signed_mean_bound_fraction_per_dimension": [
+          0.04119759798049927,
+          0.12204640358686447,
+          -0.018534084782004356,
+          -0.03744255751371384,
+          -0.12884777784347534,
+          -0.020779462531208992
+        ],
+        "mean_abs_bound_fraction_per_dimension": [
+          0.04274681583046913,
+          0.12204640358686447,
+          0.018534084782004356,
+          0.03856971487402916,
+          0.12884777784347534,
+          0.029841499403119087
+        ],
+        "p95_abs_bound_fraction_per_dimension": [
+          0.06657122075557709,
+          0.1295638382434845,
+          0.041389405727386475,
+          0.04669671505689621,
+          0.14661435782909393,
+          0.0516187846660614
+        ],
+        "bound_saturation_fraction": 0.0,
+        "mean_abs_physical_residual_per_dimension": [
+          0.003998584863506886,
+          0.009653290991563788,
+          0.0015127363499128391,
+          0.0008148190532057506,
+          0.0033415173130700044,
+          0.0007296455394922494
+        ]
+      },
+      "F": {
+        "decisions": 900,
+        "mean_abs_bound_fraction": 0.07072947919368744,
+        "signed_mean_bound_fraction_per_dimension": [
+          0.0012046186020597816,
+          0.10660538822412491,
+          0.025990374386310577,
+          -0.0022554912138730288,
+          -0.17623810470104218,
+          0.07688037306070328
+        ],
+        "mean_abs_bound_fraction_per_dimension": [
+          0.020672384649515152,
+          0.10660538822412491,
+          0.02630804292857647,
+          0.0170911718159914,
+          0.17623810470104218,
+          0.0774618461728096
+        ],
+        "p95_abs_bound_fraction_per_dimension": [
+          0.04028131440281868,
+          0.136715367436409,
+          0.04716748744249344,
+          0.03346939757466316,
+          0.22155199944972992,
+          0.13318663835525513
+        ],
+        "bound_saturation_fraction": 0.0,
+        "mean_abs_physical_residual_per_dimension": [
+          0.0019337166644777153,
+          0.008431981686234248,
+          0.0021472403009628973,
+          0.0003610662290682345,
+          0.004570527808339146,
+          0.0018939967541649774
+        ]
+      }
+    }
+  },
+  "residual_prediction_limit": "Same original trajectory features for both heads, no simulator counterfactual; intervention sizes do not establish which actions cause wins/losses.",
+  "highest_reward_failures": [
+    {
+      "arm": "F",
+      "update": 2,
+      "id": "flora-single-case-000112-rank-06-episode-000001",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210213,
+        "reset_ordinal": 0,
+        "slot": 1,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.96695,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_agentview_left.mp4",
+          "sha256": "e8d24123ef93c853b9053341a0bc8db95fcf3912332187b1dac56e5f99f1e485"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_eye_in_hand.mp4",
+          "sha256": "b176f4e08093305553490238c6ebaebc6a67ee871e99e12d72c1cdaed332dfeb"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_agentview_right.mp4",
+          "sha256": "02b0df0ba6da689060d3e448374fd7456b11bc759f22bd4429c37864a3553a0c"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 2,
+      "id": "flora-single-case-000064-rank-00-episode-000001",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210165,
+        "reset_ordinal": 0,
+        "slot": 1,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.9657500000000001,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_agentview_left.mp4",
+          "sha256": "846147bb91d6d941affdf051b54830114a98ff57086d05b10a9b239093e061e4"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_eye_in_hand.mp4",
+          "sha256": "4972b97012ee6e47b0d704aaeb517289347c326d1d42f6cf323b50869ddd502c"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_agentview_right.mp4",
+          "sha256": "b17504c64f3e8948d7785cbc35831ae9600c53f3c443272d3420e17cc5d5d667"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 5,
+      "id": "flora-single-case-000272-rank-02-episode-000004",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210376,
+        "reset_ordinal": 0,
+        "slot": 4,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.9526749999999999,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-02/videos/flora-single-case-000272-rank-02-episode-000004-robot0_agentview_left.mp4",
+          "sha256": "c358d338a7780ced55fd4b66b0fa8f75536a407e8d36344fd995621a1299e3b4"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-02/videos/flora-single-case-000272-rank-02-episode-000004-robot0_eye_in_hand.mp4",
+          "sha256": "aacf3cd2878e811fa464877d8a7b2c2f07aaae3667bdf2a9f2e12476676d70e5"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-02/videos/flora-single-case-000272-rank-02-episode-000004-robot0_agentview_right.mp4",
+          "sha256": "1bb236a5a2ced8b5feebd736aef53669197172180271d5332a1640de746ab939"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000376-rank-07-episode-000005",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210481,
+        "reset_ordinal": 0,
+        "slot": 13,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.92885,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-07/videos/flora-single-case-000376-rank-07-episode-000005-robot0_agentview_left.mp4",
+          "sha256": "b48a0b343fb1132627e7879197abe0fca3ada8aee278a175209c344b150b5399"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-07/videos/flora-single-case-000376-rank-07-episode-000005-robot0_eye_in_hand.mp4",
+          "sha256": "24c483cef96a58af4ff4acbd9d612bb7af771f651cb99bdcdb035fa6bb5cb1ce"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-07/videos/flora-single-case-000376-rank-07-episode-000005-robot0_agentview_right.mp4",
+          "sha256": "5a0fc0268ed7d31871a536d43e4d95e4f85d59de370fd2f515a47b438faf712d"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 4,
+      "id": "flora-single-case-000216-rank-03-episode-000001",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210317,
+        "reset_ordinal": 0,
+        "slot": 9,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.9283999999999999,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-03/videos/flora-single-case-000216-rank-03-episode-000001-robot0_agentview_left.mp4",
+          "sha256": "ed35fc587e7f1b5645d2b2311444e2872449f24fd01af128d25010f7bbb6c41d"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-03/videos/flora-single-case-000216-rank-03-episode-000001-robot0_eye_in_hand.mp4",
+          "sha256": "115899e44b54dfebb32f879eb7529bc92b2478344e2279b355ceb411fe60a71e"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-03/videos/flora-single-case-000216-rank-03-episode-000001-robot0_agentview_right.mp4",
+          "sha256": "8a313f302db9516c5dfd777ec61a70e6505be7f3738b71ecb8744359e3d159e3"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 5,
+      "id": "flora-single-case-000256-rank-00-episode-000002",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210358,
+        "reset_ordinal": 0,
+        "slot": 2,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.9211,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-00/videos/flora-single-case-000256-rank-00-episode-000002-robot0_agentview_left.mp4",
+          "sha256": "ffeb4a58a397c69de98076eb51cbfa71be6fa5df7233fc629654abd63bd3a608"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-00/videos/flora-single-case-000256-rank-00-episode-000002-robot0_eye_in_hand.mp4",
+          "sha256": "2559c890d5ef14d5d52b109cc25d57e77af314b7c2689ef491eefd123ee5c168"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-00/videos/flora-single-case-000256-rank-00-episode-000002-robot0_agentview_right.mp4",
+          "sha256": "4920b46a5d1005b5d0036e9a5a192b03baf629d3f38a3bae35c285c55c64a340"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000360-rank-05-episode-000007",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210467,
+        "reset_ordinal": 0,
+        "slot": 15,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.91795,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000007-robot0_agentview_left.mp4",
+          "sha256": "11604f4937189183f5b3a808ebc7624d620c982d307129f6bbe524d932d26874"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000007-robot0_eye_in_hand.mp4",
+          "sha256": "875ad1f39bcf94cf773c67a392958841b31ca2bf0bbe89a6526e2ed76f40b911"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000007-robot0_agentview_right.mp4",
+          "sha256": "b3196493db47c28e4c73f0d4ea89373c2ae181566ce1f4f3b43698e578f7f0b6"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 3,
+      "id": "flora-single-case-000184-rank-07-episode-000004",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210288,
+        "reset_ordinal": 0,
+        "slot": 12,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.913225,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-07/videos/flora-single-case-000184-rank-07-episode-000004-robot0_agentview_left.mp4",
+          "sha256": "17b5aa47849f0d43b3c610f36f4f39f088e044a97a19dee398e6bb0fc59dcb28"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-07/videos/flora-single-case-000184-rank-07-episode-000004-robot0_eye_in_hand.mp4",
+          "sha256": "120243369e9c4eb46b172faa301fd8db78f4691554df9bb2715aea09a232cb5d"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-07/videos/flora-single-case-000184-rank-07-episode-000004-robot0_agentview_right.mp4",
+          "sha256": "1ee671d8aebf0915ff27b8e831cc0db3fe9cb1971951c834b4df3c6b4430cfbf"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 4,
+      "id": "flora-single-case-000224-rank-04-episode-000006",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210330,
+        "reset_ordinal": 0,
+        "slot": 6,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.9055,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-04/videos/flora-single-case-000224-rank-04-episode-000006-robot0_agentview_left.mp4",
+          "sha256": "091d94fcf0d02ba291e802eb6ba0ed318d4d6c195ece4d7883b3621490a31b9a"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-04/videos/flora-single-case-000224-rank-04-episode-000006-robot0_eye_in_hand.mp4",
+          "sha256": "5f998a59a9132e442521d0bd168fc976b321c3da4bb8be4d7b0cda7dea4dae25"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-04/videos/flora-single-case-000224-rank-04-episode-000006-robot0_agentview_right.mp4",
+          "sha256": "639bd7c27e34428adc2f7423651cda5cf4dcb979a4cbb9841fa2f38953d14b4d"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 4,
+      "id": "flora-single-case-000232-rank-05-episode-000006",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210338,
+        "reset_ordinal": 0,
+        "slot": 14,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.8904749999999999,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-05/videos/flora-single-case-000232-rank-05-episode-000006-robot0_agentview_left.mp4",
+          "sha256": "7089ede5762e9751db79044230686f1dd324e92d3705379b0033149c1c83ef68"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-05/videos/flora-single-case-000232-rank-05-episode-000006-robot0_eye_in_hand.mp4",
+          "sha256": "d029f5a79e79469f0ea56e2d460f12eb5384dd7edc0f9d195769d83eb39e812a"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000192/rank-05/videos/flora-single-case-000232-rank-05-episode-000006-robot0_agentview_right.mp4",
+          "sha256": "d540f139c0df431e78c5018e0414fbf49a2c74546ab92bf1c57a88e82226a4ea"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 1,
+      "id": "flora-single-case-000040-rank-05-episode-000000",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210140,
+        "reset_ordinal": 0,
+        "slot": 8,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": false,
+      "reward": 0.888225,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000000/rank-05/videos/flora-single-case-000040-rank-05-episode-000000-robot0_agentview_left.mp4",
+          "sha256": "d06aaa17790e7d7e188c3f492ea7beba288783c6dda49ed16e63f31029a6f155"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000000/rank-05/videos/flora-single-case-000040-rank-05-episode-000000-robot0_eye_in_hand.mp4",
+          "sha256": "b45b5185a63998bf57633bd8966201b960345a7573f8df6a613cd09d9708de6f"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000000/rank-05/videos/flora-single-case-000040-rank-05-episode-000000-robot0_agentview_right.mp4",
+          "sha256": "1e216485b10f082d4e1879668b3eb665012697ba7184f5ced691a30e1891a7d7"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 3,
+      "id": "flora-single-case-000144-rank-02-episode-000000",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210244,
+        "reset_ordinal": 0,
+        "slot": 0,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": false,
+      "reward": 0.87965,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000000-robot0_agentview_left.mp4",
+          "sha256": "d2652cd2e1408fa83c4684c2f3011ac6ef78f998ade173146c4e67e2bba1c146"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000000-robot0_eye_in_hand.mp4",
+          "sha256": "adeb5a7cdf5bbc7eca8f03dfa48e3f6323c85b4dc14defa7a89d0092044dccda"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000000-robot0_agentview_right.mp4",
+          "sha256": "8895ab8abcf6bbbdce5fb3a3163ebb1f9adadd3ec7aa23b10b6ae3d1c2da8c32"
+        }
+      ]
+    }
+  ],
+  "lowest_reward_successes": [
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000344-rank-03-episode-000003",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210447,
+        "reset_ordinal": 0,
+        "slot": 11,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": true,
+      "reward": 0.28915,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000003-robot0_agentview_left.mp4",
+          "sha256": "a21e509f4f85fe3f8d5d57af9e09a385a4465b426a709b2a0401c639281d4946"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000003-robot0_eye_in_hand.mp4",
+          "sha256": "8db5f9cc12214f8a64479d61e655455876be3e1bea083a711f2e37fc97f9591a"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000003-robot0_agentview_right.mp4",
+          "sha256": "d890014bba78668704c9d12f4f1f5d043f7860dc2b0d38ae505fc6a3272ff72e"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000344-rank-03-episode-000000",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210444,
+        "reset_ordinal": 0,
+        "slot": 8,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": true,
+      "reward": 0.350225,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000000-robot0_agentview_left.mp4",
+          "sha256": "bdc41895346d531abc5b86236d8e6d9406e282b06e68379abe74ff9659b3fc33"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000000-robot0_eye_in_hand.mp4",
+          "sha256": "b1ebb82531e8ee6506db2de3f132e3dbb7e03085f4ab608f713767c8f2d6b1b8"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-03/videos/flora-single-case-000344-rank-03-episode-000000-robot0_agentview_right.mp4",
+          "sha256": "9a4323a257c45b5bdf956158a854762046b476f3f38786b9ecb98c281e901cf6"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 3,
+      "id": "flora-single-case-000144-rank-02-episode-000007",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210251,
+        "reset_ordinal": 0,
+        "slot": 7,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": true,
+      "reward": 0.406875,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000007-robot0_agentview_left.mp4",
+          "sha256": "cc00a45ba3400f3dc3816fa9fe31f5972fb1ecf6ac9e276cd37344cc2cf2ea7d"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000007-robot0_eye_in_hand.mp4",
+          "sha256": "54ceb67786817a87a32ce8d5025fd026ce19757939764ecdcfd225636fda2232"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000007-robot0_agentview_right.mp4",
+          "sha256": "eda4e19e299195b02de95d8c9d6dc6e30be90543e533dc2b5598cf95bb88295a"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000328-rank-01-episode-000005",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210433,
+        "reset_ordinal": 0,
+        "slot": 13,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": true,
+      "reward": 0.412675,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-01/videos/flora-single-case-000328-rank-01-episode-000005-robot0_agentview_left.mp4",
+          "sha256": "dbeeb98ee61d0dcbfd7e96fd3bac5c97cb11eba66170468ff3240acc6ba6dcdb"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-01/videos/flora-single-case-000328-rank-01-episode-000005-robot0_eye_in_hand.mp4",
+          "sha256": "4fd2a571354faef609ce1d77ae9dddc898242cdbb6ee79418c7726aa6cf7a52a"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-01/videos/flora-single-case-000328-rank-01-episode-000005-robot0_agentview_right.mp4",
+          "sha256": "44c2c95a5d5bf7ca4eaa2aa73e8b437f4c0eacccbf59cd013db284b1c5b58ede"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 6,
+      "id": "flora-single-case-000360-rank-05-episode-000004",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210464,
+        "reset_ordinal": 0,
+        "slot": 12,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the right drawer.",
+      "success": true,
+      "reward": 0.50975,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000004-robot0_agentview_left.mp4",
+          "sha256": "8646ae9d2aa90951cd39374e700dec50ed45d1f467a370ce54d8c3e04bb8c980"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000004-robot0_eye_in_hand.mp4",
+          "sha256": "1c2f44d19e128b266baad8f8ad919015eb3da8a04f290db24e917e1af977d495"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000320/rank-05/videos/flora-single-case-000360-rank-05-episode-000004-robot0_agentview_right.mp4",
+          "sha256": "0db87b7247146e2dd8a82aeb0cd0c8dbf331e8f4a7a8ec3225919f0c77cd8274"
+        }
+      ]
+    },
+    {
+      "arm": "F",
+      "update": 5,
+      "id": "flora-single-case-000296-rank-05-episode-000000",
+      "case": {
+        "bank": "train",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 210396,
+        "reset_ordinal": 0,
+        "slot": 8,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "task": "Open the left drawer.",
+      "success": true,
+      "reward": 0.53395,
+      "videos": [
+        {
+          "camera": "robot0_agentview_left",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-05/videos/flora-single-case-000296-rank-05-episode-000000-robot0_agentview_left.mp4",
+          "sha256": "7d349809367a1eddd1faacdeb711571b63acad5d02fd270f28805186b77404cd"
+        },
+        {
+          "camera": "robot0_eye_in_hand",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-05/videos/flora-single-case-000296-rank-05-episode-000000-robot0_eye_in_hand.mp4",
+          "sha256": "76340b46b0e319eac1eded149fdfe6003d5a66bd90dc42bdbf736372d7686d0f"
+        },
+        {
+          "camera": "robot0_agentview_right",
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/train/videos/parallel-000256/rank-05/videos/flora-single-case-000296-rank-05-episode-000000-robot0_agentview_right.mp4",
+          "sha256": "b132def055b393a4e0822a4a43cf717f30acacd67172b818ee6b70f05ee6fcc6"
+        }
+      ]
+    }
+  ],
+  "calibration_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/baseline-validation.json",
+    "data": {
+      "format": "rlinf_libero44_flora_terminal_ppo_v1",
+      "baseline_sha256": "09d83d9ec322972c83eeb55c9c3b17fe68bae2a4c6e39e20786715956873d63e",
+      "score_field": "expected_score",
+      "training_reward_rule": "(expected_score-1)/4; no threshold or fitted transform",
+      "count": 50,
+      "initial_success_rate": 0.58,
+      "AUROC": 0.9655172413793104,
+      "go": true,
+      "calibration_only": true,
+      "policy_optimizer_updates": 0,
+      "protocol": {
+        "benchmark": "robocasa365",
+        "task": "OpenDrawer",
+        "horizon": 750,
+        "camera_order": [
+          "robot0_agentview_left",
+          "robot0_eye_in_hand",
+          "robot0_agentview_right"
+        ],
+        "train_episodes": 64,
+        "baseline_count": 50
+      },
+      "completed": true,
+      "measurement_only": true,
+      "training_authorization": false,
+      "native_receipt": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/NATIVE-QUALIFICATION.json",
+        "sha256": "e68af62f4d3b127630f481bc6d1461f84bbc3889dc4fcee23c02a210c1d55d79"
+      },
+      "native_episodes": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/episodes.json",
+        "sha256": "6abcacd92dd8b9ea5361c401d80bbc5072bacc49d278e0f4f0b533a8f95ae67c"
+      },
+      "native_monitor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/cohorts/OpenDrawer/CASE-ROWS.json",
+        "sha256": "0f02b88686dd8daf86d349bf3f92a2762d734b81a5ac1b07877183a20cd9b12b"
+      },
+      "official_outputs": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/official-outputs.json",
+        "sha256": "9831ab0a5b807d2b9018c0d081b17da6ecefc27ce7424e8b5851736e72a6092a"
+      },
+      "shards": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-00.json",
+          "sha256": "caea0cbab18fc13145284096e8f70c948fe5c83aab11e8279c42d59a36e3e1b5"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-01.json",
+          "sha256": "6ae3e4c9b12a3a963f731510cffb1e1153613be6ff8fd3a4a6219c3746c714bd"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-02.json",
+          "sha256": "5bf10189647733d0977b6dd5d1e5a2ce4658167bdfa71be5f04a0ef475e0bf62"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-03.json",
+          "sha256": "89a886c60502b2dd4916765b9c0503ed84ecb372c9ab972df10c506bae568bcd"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-04.json",
+          "sha256": "aefb94a0abc910cdd25579e202de65721a5136a00fff97ee30925db1fb8e3a39"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-05.json",
+          "sha256": "cf440bcb70b62f88ebe68a87b36780b2c7b4de521120061771d2fe123648ed44"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-06.json",
+          "sha256": "efcbec754a9a3dc24185acedf7ef353ec0efe19a2d37b2d0e33d57e58910926b"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/shards/rank-07.json",
+          "sha256": "3a654c8eea2c8485b28cb444790e1ac3f23a64fa165c824d7ab0a8d1dcaf8e26"
+        }
+      ]
+    }
+  },
+  "source_checkpoints": {
+    "S": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/final.pt",
+      "sha256": "84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d"
+    },
+    "F": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/policy/final.pt",
+      "sha256": "1e4184af31a253f8f4b8bfd989372d9f2125b82f0303a752b3b5066019dd5d5a"
+    }
+  }
+}

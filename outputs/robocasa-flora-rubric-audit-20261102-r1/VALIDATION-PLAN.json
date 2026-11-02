@@ -1,0 +1,29 @@
+{
+  "status": "PLANNED_NOT_RUN",
+  "purpose": "Compare official prompt with one frozen qualitative criterion candidate on identical videos",
+  "keep_fixed": [
+    "official model weights/revision",
+    "native task instruction",
+    "video bytes and order",
+    "camera order",
+    "frame sampler including final frame",
+    "episode horizon",
+    "decoding/parser",
+    "reward aggregation"
+  ],
+  "measure": [
+    "AUROC",
+    "Score5 false-positive rate",
+    "Score5 precision/recall",
+    "low-scored true successes",
+    "expected-reward distributions by simulator truth",
+    "all ambiguous/near-completion cases retained"
+  ],
+  "candidate_selection": "Code-derived criteria; no prompt sweep or tuning to final ID/OOD policy outcomes",
+  "data": "Retained calibration clips plus all retained F TRAIN clips are development evidence; freeze candidate before independent validation/new PPO qualification",
+  "cache": "Bind shared criterion, selected task criterion, rendered prompt digest and rubric version into job/ready/cache identities; never reuse labels across prompt versions",
+  "output_contract": "Keep existing model output and current expected-grade reward map for this comparison",
+  "no_new_model_inference_has_run": true,
+  "no_new_physical_episodes": true,
+  "existing_task_admission_gates_preserved": true
+}

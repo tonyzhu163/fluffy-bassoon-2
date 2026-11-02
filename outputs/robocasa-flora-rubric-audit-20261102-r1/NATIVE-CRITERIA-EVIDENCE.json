@@ -1,0 +1,349 @@
+{
+  "completed": true,
+  "checked_at_Shanghai": "2026-11-02T14:30:37.004009+08:00",
+  "RoboCasa_commit": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+  "official_Flora_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+  "scope": "five current reward-training tasks and five evaluation-only OOD references; static source audit only",
+  "source_functions": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_sink.py",
+      "sha256": "dcf8748a2d395139a4dcc16b2ae142dd181a7c587dc3a4c9ebc5875f3e6ca51a",
+      "class_name": "ManipulateSinkFaucet",
+      "method": "_setup_kitchen_references",
+      "line": 19,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the sink faucet tasks\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.sink = self.get_fixture(FixtureType.SINK)\n        self.init_robot_base_ref = self.sink"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_sink.py",
+      "sha256": "dcf8748a2d395139a4dcc16b2ae142dd181a7c587dc3a4c9ebc5875f3e6ca51a",
+      "class_name": "ManipulateSinkFaucet",
+      "method": "get_ep_meta",
+      "line": 27,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the sink faucet tasks.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        ep_meta[\n            \"lang\"\n        ] = f\"{self.behavior.replace('_', ' ').capitalize()} the sink faucet.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_sink.py",
+      "sha256": "dcf8748a2d395139a4dcc16b2ae142dd181a7c587dc3a4c9ebc5875f3e6ca51a",
+      "class_name": "ManipulateSinkFaucet",
+      "method": "_check_success",
+      "line": 94,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the sink faucet manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        handle_state = self.sink.get_handle_state(env=self)\n        water_on = handle_state[\"water_on\"]\n\n        if self.behavior == \"turn_on\":\n            success = water_on\n        elif self.behavior == \"turn_off\":\n            success = not water_on\n\n        return success"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_doors.py",
+      "sha256": "7b19051b1276a780675868257c251cdf715cc700ffd83a7d30e27bcbda3700ec",
+      "class_name": "ManipulateDoor",
+      "method": "_setup_kitchen_references",
+      "line": 22,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the door tasks.\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.fxtr = self.register_fixture_ref(\"fxtr\", dict(id=self.fixture_id))\n        self.init_robot_base_ref = self.fxtr"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_doors.py",
+      "sha256": "7b19051b1276a780675868257c251cdf715cc700ffd83a7d30e27bcbda3700ec",
+      "class_name": "ManipulateDoor",
+      "method": "get_ep_meta",
+      "line": 30,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the door tasks.\n        This includes the language description of the task.\n\n        Returns:\n            dict: Episode metadata.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        if isinstance(self.fxtr, HingeCabinet) or isinstance(\n            self.fxtr, FridgeFrenchDoor\n        ):\n            door_name = \"doors\"\n        else:\n            door_name = \"door\"\n        ep_meta[\n            \"lang\"\n        ] = f\"{self.behavior.capitalize()} the {self.fxtr.nat_lang} {door_name}.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_doors.py",
+      "sha256": "7b19051b1276a780675868257c251cdf715cc700ffd83a7d30e27bcbda3700ec",
+      "class_name": "ManipulateDoor",
+      "method": "_check_success",
+      "line": 62,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the door manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        if self.behavior == \"open\":\n            return self.fxtr.is_open(env=self)\n        elif self.behavior == \"close\":\n            return self.fxtr.is_closed(env=self)"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stove.py",
+      "sha256": "02351ada62c10f20d4dddbdd0ce80e3c693ec47cf9ee32897c773de3dc7f1146",
+      "class_name": "ManipulateStoveKnob",
+      "method": "_setup_kitchen_references",
+      "line": 21,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the stove knob tasks\n        This includes the stove and the stove knob to manipulate, and the burner to place the cookware on.\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.stove = self.get_fixture(FixtureType.STOVE)\n        if \"task_refs\" in self._ep_meta:\n            self.knob = self._ep_meta[\"task_refs\"][\"knob\"]\n            self.cookware_burner = self._ep_meta[\"task_refs\"][\"cookware_burner\"]\n        else:\n            valid_knobs = [\n                k for (k, v) in self.stove.knob_joints.items() if v is not None\n            ]\n            if self.knob_id == \"random\":\n                self.knob = self.rng.choice(list(valid_knobs))\n            else:\n                assert self.knob_id in valid_knobs\n                self.knob = self.knob\n            self.cookware_burner = (\n                self.knob\n                if self.rng.uniform() <= 0.50\n                else self.rng.choice(valid_knobs)\n            )\n        self.init_robot_base_ref = self.stove"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stove.py",
+      "sha256": "02351ada62c10f20d4dddbdd0ce80e3c693ec47cf9ee32897c773de3dc7f1146",
+      "class_name": "ManipulateStoveKnob",
+      "method": "get_ep_meta",
+      "line": 47,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the stove knob tasks.\n        This includes the language description of the task and the task references.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        ep_meta[\n            \"lang\"\n        ] = f\"{self.behavior.replace('_', ' ').capitalize()} the {self.knob.replace('_', ' ')} burner of the stove.\"\n        ep_meta[\"task_refs\"] = dict(\n            knob=self.knob,\n            cookware_burner=self.cookware_burner,\n        )\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stove.py",
+      "sha256": "02351ada62c10f20d4dddbdd0ce80e3c693ec47cf9ee32897c773de3dc7f1146",
+      "class_name": "ManipulateStoveKnob",
+      "method": "_check_success",
+      "line": 105,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the stove knob manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        burner_on = self.stove.is_burner_on(env=self, burner_loc=self.knob)\n\n        if self.behavior == \"turn_on\":\n            success = burner_on\n        elif self.behavior == \"turn_off\":\n            success = not burner_on\n\n        return success"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceCounterToCabinet",
+      "method": "_setup_kitchen_references",
+      "line": 39,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the counter to cabinet pick and place task:\n        The cabinet to place object in and the counter to initialize it on\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.cab = self.register_fixture_ref(\"cab\", dict(id=self.cab_id))\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.cab)\n        )\n        self.init_robot_base_ref = self.cab"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceCounterToCabinet",
+      "method": "get_ep_meta",
+      "line": 51,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to cabinet pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the cabinet.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceCounterToCabinet",
+      "method": "_check_success",
+      "line": 127,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the counter to cabinet pick and place task is successful.\n        Checks if the object is inside the cabinet and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_inside_cab = OU.obj_inside_of(self, \"obj\", self.cab)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_inside_cab and gripper_obj_far"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceDrawerToCounter",
+      "method": "_setup_kitchen_references",
+      "line": 1540,
+      "source": "    def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.drawer)\n        )\n        self.init_robot_base_ref = self.drawer"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceDrawerToCounter",
+      "method": "get_ep_meta",
+      "line": 1554,
+      "source": "    def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the drawer and place it on the counter.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "class_name": "PickPlaceDrawerToCounter",
+      "method": "_check_success",
+      "line": 1594,
+      "source": "    def _check_success(self):\n        on_counter = OU.check_obj_any_counter_contact(self, \"obj\")\n        return on_counter and OU.gripper_obj_far(self, \"obj\")"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_coffee.py",
+      "sha256": "f6bf57df9c9b83ec74cd7d371587298037f60e76a3fcf7495dc8c2d34797746c",
+      "class_name": "PickPlaceCoffee",
+      "method": "_setup_kitchen_references",
+      "line": 19,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the coffee tasks. (Coffee machine and counter)\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.coffee_machine = self.get_fixture(FixtureType.COFFEE_MACHINE)\n        self.counter = self.get_fixture(FixtureType.COUNTER, ref=self.coffee_machine)\n        self.init_robot_base_ref = self.coffee_machine"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_coffee.py",
+      "sha256": "f6bf57df9c9b83ec74cd7d371587298037f60e76a3fcf7495dc8c2d34797746c",
+      "class_name": "PickPlaceCoffee",
+      "method": "get_ep_meta",
+      "line": 28,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the coffee tasks.\n        This includes the language description of the task.\n\n        Returns:\n            dict: Episode metadata.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        if self.behavior == \"counter_to_machine\":\n            ep_meta[\n                \"lang\"\n            ] = f\"Pick the {obj_lang} from the counter and place it under the coffee machine dispenser.\"\n        elif self.behavior == \"machine_to_counter\":\n            ep_meta[\n                \"lang\"\n            ] = f\"Pick the {obj_lang} from under the coffee machine dispenser and place it on the counter.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_coffee.py",
+      "sha256": "f6bf57df9c9b83ec74cd7d371587298037f60e76a3fcf7495dc8c2d34797746c",
+      "class_name": "PickPlaceCoffee",
+      "method": "_check_success",
+      "line": 92,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the coffee task is successful.\n        This includes checking if the gripper is far from the object and the object is in corretly placed\n        on the desired fixture (counter or coffee machine).\n        \"\"\"\n        gripper_obj_far = OU.gripper_obj_far(self)\n\n        if self.behavior == \"counter_to_machine\":\n            contact_check = self.coffee_machine.check_receptacle_placement_for_pouring(\n                self, \"obj\"\n            )\n        elif self.behavior == \"machine_to_counter\":\n            contact_check = OU.check_obj_fixture_contact(self, \"obj\", self.counter)\n        return contact_check and gripper_obj_far"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_drawer.py",
+      "sha256": "7b29347c1af004d0af54c22c746e8e9c840d221ba4a55682f6df050de05fb8c3",
+      "class_name": "ManipulateDrawer",
+      "method": "_setup_kitchen_references",
+      "line": 100,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the drawer tasks\n        \"\"\"\n        super()._setup_kitchen_references()\n        valid_drawer = False\n        for i in range(7):\n            self.drawer = self.get_fixture(id=self.drawer_id)\n            if self._place_robot():\n                valid_drawer = True\n                break\n            if macros.VERBOSE:\n                print(f\"Attempt {i} to place robot failed\")\n        if not valid_drawer:\n            if macros.VERBOSE:\n                print(\"Could not place robot. Trying again with self._load_model()\")\n            self._destroy_sim()\n            self._load_model()\n            return\n\n        self.drawer = self.register_fixture_ref(\"drawer\", dict(id=self.drawer))\n        self.init_robot_base_ref = self.drawer"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_drawer.py",
+      "sha256": "7b29347c1af004d0af54c22c746e8e9c840d221ba4a55682f6df050de05fb8c3",
+      "class_name": "ManipulateDrawer",
+      "method": "get_ep_meta",
+      "line": 123,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the drawer tasks.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = f\"{self.behavior.capitalize()} the {self.drawer_side} drawer.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_drawer.py",
+      "sha256": "7b29347c1af004d0af54c22c746e8e9c840d221ba4a55682f6df050de05fb8c3",
+      "class_name": "ManipulateDrawer",
+      "method": "_check_success",
+      "line": 172,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the drawer manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        door_state = self.drawer.get_door_state(env=self)\n\n        success = True\n        for joint_p in door_state.values():\n            if self.behavior == \"open\":\n                if joint_p < 0.95:\n                    success = False\n                    break\n            elif self.behavior == \"close\":\n                if joint_p > 0.05:\n                    success = False\n                    break\n\n        return success"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_microwave.py",
+      "sha256": "acd9aa8ab1b55118923d3835388defaf21b28059919a5f7806e43866db868add",
+      "class_name": "MicrowavePressButton",
+      "method": "_setup_kitchen_references",
+      "line": 18,
+      "source": "    def _setup_kitchen_references(self):\n        \"\"\"\n        Setup the kitchen references for the microwave tasks\n        \"\"\"\n        super()._setup_kitchen_references()\n        self.microwave = self.get_fixture(FixtureType.MICROWAVE)\n        if self.behavior == \"turn_off\":\n            self.microwave._turned_on = True\n        self.init_robot_base_ref = self.microwave"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_microwave.py",
+      "sha256": "acd9aa8ab1b55118923d3835388defaf21b28059919a5f7806e43866db868add",
+      "class_name": "MicrowavePressButton",
+      "method": "get_ep_meta",
+      "line": 28,
+      "source": "    def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the microwave tasks.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        if self.behavior == \"turn_on\":\n            ep_meta[\"lang\"] = \"Press the start button on the microwave.\"\n        elif self.behavior == \"turn_off\":\n            ep_meta[\"lang\"] = \"Press the stop button on the microwave.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_microwave.py",
+      "sha256": "acd9aa8ab1b55118923d3835388defaf21b28059919a5f7806e43866db868add",
+      "class_name": "MicrowavePressButton",
+      "method": "_check_success",
+      "line": 64,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the microwave manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        turned_on = self.microwave.get_state()[\"turned_on\"]\n        gripper_button_far = self.microwave.gripper_button_far(\n            self, button=\"start_button\" if self.behavior == \"turn_on\" else \"stop_button\"\n        )\n\n        if self.behavior == \"turn_on\":\n            return turned_on and gripper_button_far\n        elif self.behavior == \"turn_off\":\n            return not turned_on and gripper_button_far"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stand_mixer.py",
+      "sha256": "4e0e987e55903990aad9d0f83c19efa8b1c8029edf51b071602b3555c5aac714",
+      "class_name": "OpenStandMixerHead",
+      "method": "_setup_kitchen_references",
+      "line": 13,
+      "source": "    def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.stand_mixer = self.get_fixture(FixtureType.STAND_MIXER)\n        self.init_robot_base_ref = self.stand_mixer"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stand_mixer.py",
+      "sha256": "4e0e987e55903990aad9d0f83c19efa8b1c8029edf51b071602b3555c5aac714",
+      "class_name": "OpenStandMixerHead",
+      "method": "get_ep_meta",
+      "line": 18,
+      "source": "    def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Open the stand mixer head.\"\n        return ep_meta"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_stand_mixer.py",
+      "sha256": "4e0e987e55903990aad9d0f83c19efa8b1c8029edf51b071602b3555c5aac714",
+      "class_name": "OpenStandMixerHead",
+      "method": "_check_success",
+      "line": 26,
+      "source": "    def _check_success(self):\n        \"\"\"\n        Check if the stand mixer head is open.\n\n        Returns:\n            bool: True if the head is open, False otherwise.\n        \"\"\"\n        return self.stand_mixer.get_state(self)[\"head\"] > 0.99"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/utils/object_utils.py",
+      "sha256": "3a7ddb8ba503c5f397baa1513b7b5f370c3c3b2a6a67fa723e83c9472c58af4a",
+      "method": "obj_inside_of",
+      "line": 14,
+      "source": "def obj_inside_of(env, obj_name, fixture_id, partial_check=False, th=0.05):\n    \"\"\"\n    whether an object (another mujoco object) is inside of fixture. applies for most fixtures\n    \"\"\"\n    from robocasa.models.fixtures import Fixture\n\n    obj = env.objects[obj_name]\n    fixture = env.get_fixture(fixture_id)\n    assert isinstance(obj, MJCFObject)\n    assert isinstance(fixture, Fixture)\n\n    # step 1: calculate fxiture points\n    fixtr_int_regions = fixture.get_int_sites(relative=False)\n    for (fixtr_p0, fixtr_px, fixtr_py, fixtr_pz) in fixtr_int_regions.values():\n        u = fixtr_px - fixtr_p0\n        v = fixtr_py - fixtr_p0\n        w = fixtr_pz - fixtr_p0\n\n        # get the position and quaternion of object\n        obj_pos = np.array(env.sim.data.body_xpos[env.obj_body_id[obj.name]])\n        obj_quat = T.convert_quat(\n            env.sim.data.body_xquat[env.obj_body_id[obj.name]], to=\"xyzw\"\n        )\n\n        if partial_check:\n            obj_points_to_check = [obj_pos]\n            th = 0.0\n        else:\n            # calculate 8 boundary points of object\n            obj_points_to_check = obj.get_bbox_points(trans=obj_pos, rot=obj_quat)\n\n        inside_of = True\n        for obj_p in obj_points_to_check:\n            check1 = (\n                np.dot(u, fixtr_p0) - th <= np.dot(u, obj_p) <= np.dot(u, fixtr_px) + th\n            )\n            check2 = (\n                np.dot(v, fixtr_p0) - th <= np.dot(v, obj_p) <= np.dot(v, fixtr_py) + th\n            )\n            check3 = (\n                np.dot(w, fixtr_p0) - th <= np.dot(w, obj_p) <= np.dot(w, fixtr_pz) + th\n            )\n\n            if not (check1 and check2 and check3):\n                inside_of = False\n                break\n\n        if inside_of is True:\n            return True\n\n    return False"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/utils/object_utils.py",
+      "sha256": "3a7ddb8ba503c5f397baa1513b7b5f370c3c3b2a6a67fa723e83c9472c58af4a",
+      "method": "check_obj_any_counter_contact",
+      "line": 632,
+      "source": "def check_obj_any_counter_contact(env, obj_name):\n    from robocasa.models.fixtures import Counter\n\n    \"\"\"\n    check if the object is in contact with any counter fixture in the environment.\n    \"\"\"\n    for fixture in env.fixtures.values():\n        if isinstance(fixture, Counter):\n            if check_obj_fixture_contact(env, obj_name, fixture):\n                return True\n    return False"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/utils/object_utils.py",
+      "sha256": "3a7ddb8ba503c5f397baa1513b7b5f370c3c3b2a6a67fa723e83c9472c58af4a",
+      "method": "gripper_obj_far",
+      "line": 645,
+      "source": "def gripper_obj_far(env, obj_name=\"obj\", th=0.25):\n    \"\"\"\n    check if gripper is far from object based on distance defined by threshold\n    \"\"\"\n    obj_pos = env.sim.data.body_xpos[env.obj_body_id[obj_name]]\n    gripper_site_pos = env.sim.data.site_xpos[env.robots[0].eef_site_id[\"right\"]]\n    gripper_obj_far = np.linalg.norm(gripper_site_pos - obj_pos) > th\n    return gripper_obj_far"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fixture.py",
+      "sha256": "6945428028acdcf39b0e139f2cbc95709460ad962d23b9964fbf32563f967c57",
+      "method": "get_joint_state",
+      "line": 660,
+      "source": "    def get_joint_state(self, env, joint_names):\n        \"\"\"\n        Args:\n            env (MujocoEnv): environment\n\n        Returns:\n            dict: maps door names to a percentage of how open they are\n        \"\"\"\n        joint_state = dict()\n\n        for j_name in joint_names:\n            joint_qpos = env.sim.data.qpos[env.sim.model.get_joint_qpos_addr(j_name)]\n            joint_info = self._joint_infos.get(j_name, None)\n            assert joint_info is not None\n            joint_min, joint_max = joint_info[\"range\"]\n            # convert to normalized joint value\n            norm_qpos = OU.normalize_joint_value(\n                joint_qpos,\n                joint_min=joint_min,\n                joint_max=joint_max,\n            )\n            if joint_min < 0:\n                norm_qpos = 1 - norm_qpos\n            joint_state[j_name] = norm_qpos\n\n        return joint_state"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fixture.py",
+      "sha256": "6945428028acdcf39b0e139f2cbc95709460ad962d23b9964fbf32563f967c57",
+      "method": "is_open",
+      "line": 712,
+      "source": "    def is_open(self, env, joint_names=None, th=0.90):\n        if joint_names is None:\n            joint_names = self.door_joint_names\n        joint_state = self.get_joint_state(env, joint_names)\n        for j_name in joint_names:\n            assert j_name in joint_state\n            norm_qpos = joint_state[j_name]\n            if norm_qpos < th:\n                return False\n        return True"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fixture.py",
+      "sha256": "6945428028acdcf39b0e139f2cbc95709460ad962d23b9964fbf32563f967c57",
+      "method": "is_closed",
+      "line": 723,
+      "source": "    def is_closed(self, env, joint_names=None, th=0.005):\n        if joint_names is None:\n            joint_names = self.door_joint_names\n        joint_state = self.get_joint_state(env, joint_names)\n        for j_name in joint_names:\n            assert j_name in joint_state\n            norm_qpos = joint_state[j_name]\n            if norm_qpos > th:\n                return False\n        return True"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fridge.py",
+      "sha256": "b5749166916fd8f5fd052cca1a192d75a66ea20392a2264c33c064f4191c997d",
+      "method": "is_open",
+      "line": 175,
+      "source": "    def is_open(\n        self,\n        env,\n        compartment=\"fridge\",\n        th=0.90,\n        reg_type=\"door\",\n        drawer_rack_index=None,\n    ):\n        \"\"\"\n        checks whether the fixture is open\n\n        Args:\n            env (Kitchen): the environment the fridge belongs to\n            compartment (str): \"fridge\" or \"freezer\" \u2014 which compartment to check\n            th (float): threshold for determining if open (default: 0.90)\n            reg_type (str): \"door\" or \"drawer\" \u2014 which type of opening to check\n            drawer_rack_index (int or None): if reg_type is \"drawer\", checks specific drawer rack by index\n                (0 = lowest, -1 = highest, -2 = second highest). If None, checks all drawer racks.\n                Ignored when reg_type is \"door\".\n        Returns:\n            bool: True if the fixture is open, False otherwise\n        \"\"\"\n        if reg_type == \"door\":\n            joint_names = None\n            if compartment == \"fridge\":\n                joint_names = self._fridge_door_joint_names\n            elif compartment == \"freezer\":\n                joint_names = self._freezer_door_joint_names\n            return super().is_open(env, joint_names, th=th)\n        elif reg_type == \"drawer\":\n            drawer_joints = self._get_drawer_joints(\n                compartment=compartment, drawer_rack_index=drawer_rack_index\n            )\n            if not drawer_joints:\n                return False\n            return super().is_open(env, joint_names=drawer_joints, th=th)\n        else:\n            raise ValueError(f\"Invalid reg_type: {reg_type}\")"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fridge.py",
+      "sha256": "b5749166916fd8f5fd052cca1a192d75a66ea20392a2264c33c064f4191c997d",
+      "method": "is_closed",
+      "line": 214,
+      "source": "    def is_closed(\n        self,\n        env,\n        compartment=\"fridge\",\n        th=0.005,\n        reg_type=\"door\",\n        drawer_rack_index=None,\n    ):\n        \"\"\"\n        checks whether the fixture is closed\n\n        Args:\n            env (Kitchen): the environment the fridge belongs to\n            compartment (str): \"fridge\" or \"freezer\" \u2014 which compartment to check\n            th (float): threshold for determining if closed (default: 0.005)\n            reg_type (str): \"door\" or \"drawer\" \u2014 which type of opening to check\n            drawer_rack_index (int or None): if reg_type is \"drawer\", checks specific drawer rack by index\n                (0 = lowest, -1 = highest, -2 = second highest). If None, checks all drawer racks.\n                Ignored when reg_type is \"door\".\n\n        Returns:\n            bool: True if the fixture is closed, False otherwise\n        \"\"\"\n        if reg_type == \"door\":\n            joint_names = None\n            if compartment == \"fridge\":\n                joint_names = self._fridge_door_joint_names\n            elif compartment == \"freezer\":\n                joint_names = self._freezer_door_joint_names\n            return super().is_closed(env, joint_names, th=th)\n        elif reg_type == \"drawer\":\n            drawer_joints = self._get_drawer_joints(\n                compartment=compartment, drawer_rack_index=drawer_rack_index\n            )\n            if not drawer_joints:\n                return True\n            return super().is_closed(env, joint_names=drawer_joints, th=th)\n        else:\n            raise ValueError(f\"Invalid reg_type: {reg_type}\")"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/coffee_machine.py",
+      "sha256": "0f8b06825811b5e208d3809e042eef1580063c3e795ad7f1c4073b30421f23db",
+      "method": "check_receptacle_placement_for_pouring",
+      "line": 95,
+      "source": "    def check_receptacle_placement_for_pouring(self, env, obj_name, xy_thresh=0.04):\n        \"\"\"\n        check whether receptacle is placed under coffee machine for pouring\n\n        Args:\n            env (MujocoEnv): The environment to check the state of the coffee machine in\n\n            obj_name (str): name of the object\n\n            xy_thresh (float): threshold for xy distance between object and receptacle\n\n        Returns:\n            bool: True if object is placed under coffee machine, False otherwise\n        \"\"\"\n        obj_pos = np.array(env.sim.data.body_xpos[env.obj_body_id[obj_name]])\n        pour_site_name = \"{}{}\".format(self.naming_prefix, \"receptacle_place_site\")\n        site_id = env.sim.model.site_name2id(pour_site_name)\n        pour_site_pos = env.sim.data.site_xpos[site_id]\n        xy_check = np.linalg.norm(obj_pos[0:2] - pour_site_pos[0:2]) < xy_thresh\n        z_check = np.abs(obj_pos[2] - pour_site_pos[2]) < 0.10\n        return xy_check and z_check"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/stove.py",
+      "sha256": "556ef57873bc4c07e2296bb42353666a19731c1c5bc77c9fc867e50aafde0d11",
+      "method": "is_burner_on",
+      "line": 185,
+      "source": "    def is_burner_on(self, env, burner_loc, th=0.35):\n        \"\"\"\n        checks if a specified burner is on or off\n        \"\"\"\n        knobs_state = self.get_knobs_state(env=env)\n        knob_value = knobs_state[burner_loc]\n        knob_on = th <= np.abs(knob_value) <= 2 * np.pi - 0.35\n        return knob_on"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/microwave.py",
+      "sha256": "8f1c8ffd1c3643a70fa55931f0fa85a285eb3e7605ea4f1ce0d6ad082d4843b9",
+      "method": "update_state",
+      "line": 66,
+      "source": "    def update_state(self, env):\n        \"\"\"\n        If the microwave is open, the state is set to off. Otherwise, if the gripper\n        is pressing the start button, the microwave will stay/turn on. If the gripper is\n        pressing the stop button, the microwave will stay/turn off.\n\n        Args:\n            env (MujocoEnv): The environment to check the state of the microwave in\n\n        \"\"\"\n        start_button_pressed = env.check_contact(\n            env.robots[0].gripper[\"right\"], \"{}_start_button\".format(self.name)\n        )\n        stop_button_pressed = env.check_contact(\n            env.robots[0].gripper[\"right\"], \"{}_stop_button\".format(self.name)\n        )\n\n        door_open = self.is_open(env)\n        if door_open:\n            self._turned_on = False\n        else:\n            if self._turned_on is True and stop_button_pressed:\n                self._turned_on = False\n            elif self._turned_on is False and start_button_pressed:\n                self._turned_on = True"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/microwave.py",
+      "sha256": "8f1c8ffd1c3643a70fa55931f0fa85a285eb3e7605ea4f1ce0d6ad082d4843b9",
+      "method": "gripper_button_far",
+      "line": 92,
+      "source": "    def gripper_button_far(self, env, button, th=0.15):\n        \"\"\"\n        check whether gripper is far from the start button\n\n        Args:\n            env (MujocoEnv): The environment to check the state of the microwave in\n\n            button (str): button to check\n\n            th (float): threshold for distance between gripper and button\n\n        Returns:\n            bool: True if gripper is far from the button, False otherwise\n        \"\"\"\n        assert button in [\"start_button\", \"stop_button\"]\n        button_id = env.sim.model.geom_name2id(\n            \"{}{}\".format(self.naming_prefix, button)\n        )\n        button_pos = env.sim.data.geom_xpos[button_id]\n        gripper_site_pos = env.sim.data.site_xpos[env.robots[0].eef_site_id[\"right\"]]\n\n        gripper_button_far = np.linalg.norm(gripper_site_pos - button_pos) > th\n\n        return gripper_button_far"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/sink.py",
+      "sha256": "714d0e2962d3cb7cfcecbe2268e5c0db969c38168c959e6d066a0acae8de86d4",
+      "method": "get_handle_state",
+      "line": 142,
+      "source": "    def get_handle_state(self, env):\n        \"\"\"\n        Gets the state of the handle_joint\n\n        Args:\n            env (MujocoEnv): environment\n\n        Returns:\n            dict describing:\n                - handle_joint: actual qpos of the on/off joint\n                - water_on: bool if water is flowing\n                - spout_joint: actual qpos of spout rotation\n                - spout_ori: string in {left, center, right}\n                - temp_joint: actual qpos of the temperature joint\n                - water_temp_state: \"hot\" or \"cold\" (based on temp_joint)\n                - water_temp: normalized float [0, 1] (0 = coldest, 1 = hottest)\n        \"\"\"\n        handle_state = {}\n        if self.handle_joint is None:\n            return handle_state\n\n        handle_joint_id = env.sim.model.get_joint_qpos_addr(\n            \"{}handle_joint\".format(self.naming_prefix)\n        )\n        handle_joint_max = string_to_array(self.handle_joint.get(\"range\"))[1]\n        handle_joint_qpos = deepcopy(env.sim.data.qpos[handle_joint_id])\n\n        # TODO: use joint ranges instead of harcoded values like np.pi and 0.2\n        handle_joint_qpos = handle_joint_qpos % (2 * np.pi)\n        if handle_joint_qpos < 0:\n            handle_joint_qpos += 2 * np.pi\n\n        joint_use_ratio = handle_joint_qpos / handle_joint_max\n        handle_state[\"handle_joint\"] = handle_joint_qpos\n        handle_state[\"water_on\"] = 0.40 < handle_joint_qpos < np.pi\n\n        if joint_use_ratio > 0.5 and handle_state[\"water_on\"]:\n            handle_state[\"water_pressure\"] = \"high\"\n        elif handle_state[\"water_on\"]:\n            handle_state[\"water_pressure\"] = \"low\"\n        else:\n            handle_state[\"water_pressure\"] = \"zero\"\n\n        # Spout rotation\n        spout_joint_id = env.sim.model.get_joint_qpos_addr(\n            \"{}spout_joint\".format(self.naming_prefix)\n        )\n        spout_joint_qpos = deepcopy(env.sim.data.qpos[spout_joint_id])\n        spout_joint_qpos = spout_joint_qpos % (2 * np.pi)\n        if spout_joint_qpos < 0:\n            spout_joint_qpos += 2 * np.pi\n        handle_state[\"spout_joint\"] = spout_joint_qpos\n        if np.pi <= spout_joint_qpos <= 2 * np.pi - np.pi / 6:\n            spout_ori = \"left\"\n        elif np.pi / 6 <= spout_joint_qpos <= np.pi:\n            spout_ori = \"right\"\n        else:\n            spout_ori = \"center\"\n        handle_state[\"spout_ori\"] = spout_ori\n\n        # Temperature joint\n        temp_joint_id = env.sim.model.get_joint_qpos_addr(\n            f\"{self.naming_prefix}handle_temp_joint\"\n        )\n        temp_joint_qpos = float(env.sim.data.qpos[temp_joint_id])\n        handle_state[\"temp_joint\"] = temp_joint_qpos\n\n        lo, hi = env.sim.model.jnt_range[\n            env.sim.model.joint_name2id(f\"{self.naming_prefix}handle_temp_joint\")\n        ]\n\n        # Normalize temp where lo = cold (0.0) and hi = hot (1.0)\n        normalized_temp = (temp_joint_qpos - lo) / (hi - lo)\n        normalized_temp = float(np.clip(normalized_temp, 0.0, 1.0))\n\n        handle_state[\"water_temp\"] = normalized_temp\n        handle_state[\"water_temp_state\"] = \"hot\" if normalized_temp >= 0.5 else \"cold\"\n\n        return handle_state"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/stand_mixer.py",
+      "sha256": "afbf070bacec2161c17f3abaef62e133f38331d5e609bc1731fb4d69c2636789",
+      "method": "update_state",
+      "line": 75,
+      "source": "    def update_state(self, env):\n        \"\"\"\n        Update the state of the stand mixer\n        \"\"\"\n        # read power button\n        btn = self._joint_names[\"button_head_lock\"]\n        if btn in env.sim.model.joint_names:\n            pos = self.get_joint_state(env, [btn])[btn]\n            if pos > 0.75:\n                self._button_head_lock = True\n\n        # sync positions back into internal values\n        mapping = {\n            \"_speed_dial_knob_value\": \"knob_speed\",\n            \"_head_value\": \"head\",\n        }\n        for attr, key in mapping.items():\n            jn = self._joint_names[key]\n            if jn in env.sim.model.joint_names:\n                setattr(self, attr, self.get_joint_state(env, [jn])[jn])"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/stand_mixer.py",
+      "sha256": "afbf070bacec2161c17f3abaef62e133f38331d5e609bc1731fb4d69c2636789",
+      "method": "get_state",
+      "line": 128,
+      "source": "    def get_state(self, env):\n        \"\"\"\n        Returns a dictionary representing the state of the stand mixer.\n        \"\"\"\n        st = {}\n        for name, jn in self._joint_names.items():\n            if jn in env.sim.model.joint_names:\n                st[name] = getattr(self, f\"_{name}_value\", None)\n        return st"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo/rewarder/batch_utils/core.py",
+      "sha256": "cf08fc1a9ecfcb748479c8fd0b996bd6fc60b28a123cc71ea3df37080d3dace8",
+      "method": "terminal_frame_indices",
+      "line": 330,
+      "source": "def terminal_frame_indices(num_frames: int, fps: float) -> list[int]:\n    \"\"\"Uniform whole-episode sampling: ``min(64, floor(duration * 10))`` frames, even, >= 2.\n\n    The frame count follows the episode duration; keep it, the model relies on it.\n    \"\"\"\n    if num_frames <= 0 or not math.isfinite(fps) or fps <= 0:\n        raise ValueError(f\"invalid timing: frames={num_frames}, fps={fps}\")\n    count = min(TERMINAL_MAX_FRAMES, max(2, math.floor(num_frames / fps * TERMINAL_MAX_SAMPLE_FPS)))\n    count = max(2, count - count % 2)\n    if num_frames == 1:\n        return [0, 0]\n    return [round(i * (num_frames - 1) / (count - 1)) for i in range(count)]"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo/rewarder/batch_utils/core.py",
+      "sha256": "cf08fc1a9ecfcb748479c8fd0b996bd6fc60b28a123cc71ea3df37080d3dace8",
+      "method": "terminal_messages",
+      "line": 344,
+      "source": "def terminal_messages(task: str, with_rationale: bool = False) -> list[dict[str, Any]]:\n    if with_rationale:\n        suffix = (\n            \"Provide one short, compact rationale followed by the score. Return exactly:\\n\"\n            \"Rationale: <rationale>\\n\\nScore: <1-5>\"\n        )\n    else:\n        suffix = \"Do not provide a rationale. Return exactly:\\nScore: <1-5>\"\n    user = (\n        f\"Task: {_compact(task)}\\n\\n\"\n        \"Complete trajectory video:\\n<video>\\n\\n\"\n        \"Evaluate the terminal success of the task.\"\n    )\n    return _messages(f\"{_TERMINAL_SYSTEM}\\n{suffix}\", user)"
+    }
+  ],
+  "no_new_episodes": true,
+  "no_model_inference": true,
+  "no_active_run_changes": true,
+  "final_frame_already_sampled": true,
+  "frame_sampler": "64 uniformly spaced frames, including index0 and final index; no frame-sampling change proposed"
+}

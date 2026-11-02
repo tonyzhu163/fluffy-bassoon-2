@@ -24,7 +24,12 @@ Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLA
 For RoboCasa, new reward recordings contain synchronized left, wrist and right
 RGB videos, in that collage order. Use the same official terminal-success
 prompt and 1–5 score across tasks, supplying only the native task instruction;
-there are no task-specific rubrics. The policy already consumes these three
+completed and active protocols use no task-specific rubrics. A new
+[qualitative completion-criteria candidate](../outputs/robocasa-flora-rubric-audit-20261102-r1/CANDIDATE-RUBRIC.md)
+is drafted from native success predicates for separate validation. It uses
+observable end states rather than asking the video model to measure simulator
+distances or percentages. A rubric change requires a new prompt/calibration/cache
+identity; the original qualification does not carry over. The policy already consumes these three
 views. Save each view from reset through the final physical step, verify all
 video hashes, and bind the camera order in the reward protocol. Archived
 left-only results retain their original protocol and cannot qualify a new
