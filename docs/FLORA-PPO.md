@@ -107,8 +107,9 @@ before the next:
    and use separate held-out-task folds to test task generalization.
 4. **Gate 4: steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
-   ([PAPER.md](PAPER.md)). The steering interface is a bounded action residual
-   (alternatives in [PAPER.md](PAPER.md)); the ordinary RL
+   ([PAPER.md](PAPER.md)). The steering interface is two expert-preserving
+   arms, velocity residual and KV conditioning (human, 2026-11-02;
+   alternatives in [PAPER.md](PAPER.md)); the ordinary RL
    baseline and the history-generating learner use the same interface as the
    meta-learner ([review](literature/vla-steering-review.md)). The
    sample-efficiency claim is query success per robot episode against that

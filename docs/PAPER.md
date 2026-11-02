@@ -20,8 +20,8 @@ is semantically unseen.
 
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
-- Approach: causal history → bounded action residual (alternatives in Agreed
-  design) → frozen π₀.₅;
+- Approach: causal history → expert-preserving steering (velocity residual
+  and KV conditioning arms; alternatives in Agreed design) → frozen π₀.₅;
   pretrain using actual source-policy learning histories; compare data construction,
   supervision and direct meta-RL.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
@@ -368,7 +368,20 @@ is semantically unseen.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- **Steering interface (human, 2026-11-01): bounded action residual.** A
+- **Steering interface (human, 2026-11-02): velocity residual and KV
+  conditioning, as two separate Stage 1 PPO arms.** This supersedes the
+  2026-11-01 action-residual choice. Both keep the frozen action expert in
+  the loop and reproduce native π₀.₅ exactly at zero output, so the PPO
+  head starts at identity with a zero-initialized final layer. In the
+  RoboCasa Stage 0 screen they were the only perturbations at or above
+  native resampling on every task (velocity 84/49/53/20, conditioning
+  89/44/47/20, native 79/43/44/16 of 160), though no gain reached p<.05
+  and random perturbations do not show what PPO can learn
+  ([FINDINGS](FINDINGS.md), [screen](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md)).
+  Action residual 0.25 was flat and 0.5 degraded. A combined
+  velocity+conditioning arm was not screened. Each arm's matched baseline
+  is PPO on that same interface; the meta-learner labels its own codes.
+- *Earlier choice (human, 2026-11-01), superseded:* bounded action residual. A
   small correction added to the frozen π₀.₅ action chunk, clipped per
   dimension to a bound declared per benchmark before launch. \(z_t\) below
   denotes this residual. The
