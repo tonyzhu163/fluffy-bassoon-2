@@ -1,0 +1,33 @@
+{
+  "completed": true,
+  "source_commit": "c0d9aaf5ee6af4989cb507eca3b37da92bda7752",
+  "tests": 92,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "pytest_seconds": 159.011,
+  "execution": "Allocated Baige Linux CPU, CUDA masked, pinned RLinf and offline imports",
+  "xml": {
+    "path": "outputs/robocasa-joint-h600-preparation-20261102-r2/core.xml",
+    "sha256": "c1d6f10428d1ee431d670775d9a1aff14b9fc2af04ea6192ca5385d57d82d7c2"
+  },
+  "files": {
+    "scripts/diagnostics/robocasa_flora_fifty_score.py": "395c36f2dcebf01289a2f23e4871c05d9fd01fbb8f7e476e912e4dfbd561670e",
+    "scripts/diagnostics/robocasa_residual_ppo.py": "678a2c53cd276d5b143f0bb7c8be59c1e66ba2ef98e33a57602096db691aec3d",
+    "scripts/diagnostics/robocasa_residual_rollout.py": "84b5e8711fa6f5ac6d8cb2edcafb0c99c33d009a227a6d2a45c48426ae1eb028",
+    "scripts/diagnostics/robocasa_residual_node.py": "4b60e27d1e678555d8e125ae8555474ca13bae35ae5140e2b34209406fdc88be",
+    "src/fluffy_bassoon/meta_rl/robocasa_residual.py": "04536d050c164ea279cde61c267919746e141c3d252fdc0cf3edf6ef3cf2408f",
+    "src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py": "7bb85ee00e6f1df6b9b2cf61be38c935958ae5b26238ed501d9da3603236acc6",
+    "src/fluffy_bassoon/meta_rl/flora_terminal_shards.py": "33ff849f28f3f73db03991302720900ca3f899068ae5a924acbef124be71aa2c",
+    "src/fluffy_bassoon/meta_rl/rlinf_robocasa_ppo.py": "7a99d2f7210f773c33563b1ffa2dba22bb8c22c750286a8d58d517f67c650125",
+    "src/fluffy_bassoon/meta_rl/flora_terminal_worker.py": "44bfb6f044ab3e4ec27e14a49b42f84b993033110bccb783f55fec7528b5296d",
+    "src/fluffy_bassoon/meta_rl/residual_ppo.py": "44c7d17ef67723cb8b7e7175d7c3e73c538e0a3eb38272185fa7614ae52c32f5"
+  },
+  "numerical_checks": [
+    "Four and eight workers preserve all fifty episode draws, GAE and next model/Adam/RNG update exactly",
+    "Four and eight complete calibration shards preserve all fifty original grades and reject partial/misrouted outputs",
+    "Distributed four-worker collection merges complete episodes and preserves recovery; changed world size cannot resume silently",
+    "One- and two-GPU node routing retains distinct physical worker ownership"
+  ],
+  "entry_review": "AST, bash syntax, actual GPU routing, finite startup/cleanup clocks and same total GPU budget reviewed; no launch-bookkeeping tests"
+}
