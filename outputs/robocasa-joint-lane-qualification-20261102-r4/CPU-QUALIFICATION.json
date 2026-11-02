@@ -1,0 +1,31 @@
+{
+  "completed": true,
+  "source_commit": "0030b6664f371bc67115b78e95df16e9f4bee4a9",
+  "tests": 57,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "pytest_seconds": 92.511,
+  "execution": "Allocated Baige Linux CPU; CUDA masked; pinned RLinf config search path",
+  "xml": {
+    "path": "outputs/robocasa-joint-lane-qualification-20261102-r4/affected-core.xml",
+    "sha256": "c3123d75b2e1073645f7140c694836812a1d36f7001916c5756b7986a741ee24"
+  },
+  "negative_control": {
+    "expected_failure": true,
+    "source_commit": "9d52490df5d74e0b40a4a0f253c692a698f8c574",
+    "tests": 1,
+    "failures": 1,
+    "xml": {
+      "path": "outputs/robocasa-joint-lane-qualification-20261102-r4/negative-control.xml",
+      "sha256": "2240e4fd63906c1ed367cdc18c604f87b0e090b16fb44e708106b58679d55283"
+    }
+  },
+  "regression": "A live reset child cannot retain an unrelated video encoder write pipe; fails on old fork factory and passes with spawn.",
+  "files": {
+    "src/fluffy_bassoon/meta_rl/robocasa_residual.py": "84c9807efbf50795ee7b946f77bb3209614e545e7ce3e616a21c9056b8450e3d",
+    "scripts/diagnostics/robocasa_residual_rollout.py": "84b5e8711fa6f5ac6d8cb2edcafb0c99c33d009a227a6d2a45c48426ae1eb028",
+    "scripts/diagnostics/robocasa_residual_score.py": "f4f8b8189fc129a45f22d8ff8695efc8b00f55d530858642292878a78d0dc7ee",
+    "tests/test_robocasa_residual.py": "79c11a535a4944e01aafb9ec019c1f7575a472d5d08348b9f4c0682722e926b6"
+  }
+}

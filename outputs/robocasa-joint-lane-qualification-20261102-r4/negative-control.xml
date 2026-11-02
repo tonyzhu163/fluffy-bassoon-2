@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="5.768" timestamp="2026-11-02T13:21:14.772274+08:00" hostname="aibox-rffe453e3884-5f96c78b88-rtvhb"><testcase classname="tests.test_robocasa_residual" name="test_native_reset_child_cannot_keep_another_lanes_video_pipe_open" time="3.915"><failure message="AssertionError: Traceback (most recent call last):&#10;    File &quot;&lt;string&gt;&quot;, line 15, in &lt;module&gt;&#10;  AssertionError: reset child retained the encoder write end&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python', '-B', '-c', ...nt call last):\n  File &quot;&lt;string&gt;&quot;, line 15, in &lt;module&gt;\nAssertionError: reset child retained the encoder write end\n').returncode">def test_native_reset_child_cannot_keep_another_lanes_video_pipe_open():
+        """Refilling a lane cannot prevent a finished encoder from receiving EOF."""
+        import subprocess
+        import sys
+        code = r'''
+    import multiprocessing as mp
+    import os
+    import select
+    import time
+    from fluffy_bassoon.meta_rl.robocasa_residual import native_environment_factory
+    
+    mp.set_start_method("fork", force=True)
+    reader, writer = os.pipe()
+    native_environment_factory({})  # Production factory selects the child context.
+    child = mp.Process(target=time.sleep, args=(30,))
+    child.start()
+    try:
+        os.close(writer)
+        assert select.select([reader], [], [], 2)[0], "reset child retained the encoder write end"
+        assert os.read(reader, 1) == b"" and child.is_alive()
+    finally:
+        os.close(reader)
+        child.terminate()
+        child.join(timeout=5)
+    '''
+        result = subprocess.run([sys.executable, "-B", "-c", code], capture_output=True,
+                                text=True, timeout=30)
+&gt;       assert result.returncode == 0, result.stdout + result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "&lt;string&gt;", line 15, in &lt;module&gt;
+E         AssertionError: reset child retained the encoder write end
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python', '-B', '-c', ...nt call last):\n  File "&lt;string&gt;", line 15, in &lt;module&gt;\nAssertionError: reset child retained the encoder write end\n').returncode
+
+/mowenjie/fluffy-bassoon-2/worktrees/joint-lane-qualification-20261102-r4/tests/test_robocasa_residual.py:411: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,19 @@
+{
+  "diagnosis": "Reset fork inherited a finished episode encoder write end, preventing FFmpeg EOF and blocking collector closure",
+  "observed_pipe": "pipe:[2580184775]",
+  "encoder_pid": 5817,
+  "encoder_stdin_fd": 0,
+  "reset_child_pid": 6701,
+  "reset_child_inherited_fd": 59,
+  "parent_pid": 4864,
+  "parent_write_end_already_closed": true,
+  "first_full_episode_streamed_grade": 1,
+  "physical_controls": 2900,
+  "unresolved_intents": 0,
+  "optimizer_updates": 0,
+  "sampled_peak_GPU_MiB": 90095,
+  "minimum_free_MiB": 7156,
+  "limitation": "Partial bank; no valid completed throughput estimate or joint training admission",
+  "fix": "native_environment_factory selects spawn before starting resets",
+  "regression": "../robocasa-joint-lane-qualification-20261102-r4/CPU-QUALIFICATION.json"
+}
