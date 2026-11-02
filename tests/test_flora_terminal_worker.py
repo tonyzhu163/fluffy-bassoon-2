@@ -127,3 +127,26 @@ def test_explicit_engine_memory_budget_keeps_official_prompt_and_graded_output(t
     assert a.gpu_memory_utilization == .78 and b.gpu_memory_utilization == .65
     assert first == second and default.requests == lower.requests
     assert all(row['expected_score'] == 2.75 and row['progress'] == .4375 for row in second)
+
+
+def test_prefix_scoring_never_samples_future_frames_or_reports_full_duration(tmp_path):
+    api,state=backend(batch_size=2)
+    worker=TerminalWorker('/pinned/model',batch_size=2,_backend=api)
+    jobs=[dict(id=f'prefix-{step}',task='open drawer',videos=['/native/video.mp4'],
+               prefix_controls=step,initial_frame_included=True) for step in (50,100)]
+    rows=worker.score_jobs(jobs,tmp_path/'prefixes.jsonl')
+    assert [row['observed_through'] for row in rows]==[50,100]
+    assert [row['duration_s'] for row in rows]==[2.55,5.05]
+    for step,request in zip((50,100),state.requests,strict=True):
+        frames,metadata=request['multi_modal_data']['video']
+        assert frames[1]==[0,step] and metadata['count']==step+1
+    assert state.released==2
+
+
+@pytest.mark.parametrize('changes',[dict(prefix_controls=751,initial_frame_included=True),
+                                  dict(prefix_controls=50,initial_frame_included=False)])
+def test_invalid_prefix_releases_reader_before_inference(tmp_path,changes):
+    api,state=backend();worker=TerminalWorker('/pinned/model',_backend=api)
+    with pytest.raises(ValueError):
+        worker.score_jobs([dict(id='bad',task='open',videos=['/native/video.mp4'],**changes)],tmp_path/'bad.jsonl')
+    assert state.released==1 and not state.requests

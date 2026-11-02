@@ -9,6 +9,23 @@ from pathlib import Path
 from types import SimpleNamespace
 
 
+class _PrefixCollage:
+    """A video reader whose sampler and metadata see only a causal prefix."""
+    def __init__(self, source, controls):
+        if type(controls) is not int or not 1 <= controls < source.num_frames:
+            raise ValueError("Prefix control must exist in a reset-inclusive video")
+        self.source, self.num_frames, self.fps = source, controls + 1, source.fps
+        self.duration_s = self.num_frames / self.fps
+
+    def frames(self, indices):
+        if any(not 0 <= index < self.num_frames for index in indices):
+            raise ValueError("Flora prefix sampler attempted to read a future frame")
+        return self.source.frames(indices)
+
+    def release(self):
+        self.source.release()
+
+
 def _official():
     from rewarder.batch_utils import core, engine
     from vllm import SamplingParams
@@ -55,6 +72,11 @@ class TerminalWorker:
                     for job in batch:
                         collage = core.Collage(job["videos"])
                         prepared.append((job, collage, None))
+                        if "prefix_controls" in job:
+                            if job.get("initial_frame_included") is not True:
+                                raise ValueError("Bind the reset-inclusive frame/control correspondence")
+                            collage = _PrefixCollage(collage, job["prefix_controls"])
+                            prepared[-1] = (job, collage, None)
                         indices = core.terminal_frame_indices(collage.num_frames, collage.fps)
                         prepared[-1] = (job, collage, indices)
                     requests = [dict(prompt=engine.render(self.processor,
@@ -78,6 +100,10 @@ class TerminalWorker:
                             probabilities={key: round(value, 4) for key, value in probabilities.items()},
                             rationale=rationale, duration_s=round(collage.duration_s, 3),
                             sampled_frames=len(indices), output=completion.text)
+                        if "prefix_controls" in job:
+                            row.update(observed_through=job["prefix_controls"],
+                                       prefix_frame_count=collage.num_frames,
+                                       score_protocol="causal_prefix_terminal_v1")
                         engine.write_record(stream, row)
                         rows.append(row)
                 finally:
