@@ -334,6 +334,24 @@ actual message audits and60 exported hashes verify;748 workerGPU-s,0 new
 controls/SGD. Neither rubric nor a lower threshold is promoted. This reused,
 error-enriched sparse panel supplies no independent or online qualification.
 [Exact texts, per-case scores and limits](../outputs/robocasa-flora-drawer-exact-threshold-20261103-r1/RESULT.md).
+A matched system-rubric comparison tests explicit meanings for grades1–5 on
+the same10-video/45-prefix panel. Adding grade anchors raises true post-success
+full scores11→15/18 but false full scores18→19/27; both variants falsely
+confirm all4 never-success cases.128 gets5 only at750,366 controls after native
+success384, so timely detection remains missed. Both also score72/264 as5
+before native first success. No candidate passes the frozen confirmed-Score5
+screen or enters PPO.94 new grades,4 exact repeat anchors,13 receipts,94 actual
+message audits and54 artifact hashes verify;643 workerGPU-s,0 controls/SGD.
+[Matched rubric texts and per-case grades](../outputs/robocasa-flora-drawer-grade-rubric-20261103-r1/RESULT.md).
+An accompanying2.223s Linux CPU audit decodes14 raw three-view collages for the
+4 added cases, verifying12 video hashes and5 exported artifacts. The selected
+stills place several target regions near frame edges or behind occlusions;
+the50.22%/52.25% distinction cannot be reliably measured from these stills.
+This does not prove that all actual sampled frames lack evidence or establish
+the cause of a Flora grade. The next input audit should inspect those actual
+sampled sequences before further rubric search.0 model/simulator calls; these
+annotated human-inspection sheets never enter the scoring comparison.
+[Visual evidence and limits](../outputs/robocasa-flora-drawer-visual-audit-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
