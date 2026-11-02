@@ -1,5 +1,11 @@
 # OpenDrawer AD/DPT pilot on completed simulator-reward PPO
 
+**Provisional plan; no GPU launch.** The human questioned the self-imposed
+action/GPU caps before launch. The numeric fit endpoint and total-resource
+caps below are the original proposal, not adopted stopping criteria. Finish
+the offline audit first; measure fitting speed and define convergence and
+paired evaluation criteria before an execution plan replaces this draft.
+
 Human request, 2026-11-02: try AD and DPT on the existing OpenDrawer PPO data
 and compare performance with the original PPO. This is an explicitly
 simulator-reward development experiment. It is not the Flora method result;

@@ -44,10 +44,10 @@ def main():
     assert file_sha256(INITIAL) == INITIAL_SHA
     saved = torch.load(SOURCE/'final.pt', map_location='cpu', weights_only=False)
     assert saved['final'] and saved['stage'] == 'boundary' and saved['iteration'] == 6
-    assert saved['contract'] == manifest['metadata']['contract']
+    assert json.loads(json.dumps(saved['contract'])) == manifest['metadata']['contract']
     teacher = ResidualActorCritic(ResidualPPOConfig(**saved['config']['ppo']))
     teacher.load_state_dict(saved['policy'], strict=True)
-    contract = saved['contract']
+    contract = json.loads(json.dumps(saved['contract']))
     assert contract['task'] == 'OpenDrawer' and contract['arm'] == 'S'
     validation_slots = sorted(np.random.default_rng(90211).choice(64, 8, replace=False).tolist())
     split = split_learning_stream(trial, validation_slots=validation_slots)
