@@ -140,6 +140,16 @@ class FrozenRoboCasaInterface:
                 value = _steer_kv_tensor(value, code, fraction=spec.fraction, seed=921003)
                 if value is not cache[-1][1]:
                     native_prefix = (hidden, mask, (*cache[:-1], (key, value)))
+            elif spec.kind == "conditioning_all":
+                # Legacy Stage 1 comparison: one shared32 code, values only.
+                hidden, mask, cache = native_prefix
+                changed = []
+                for layer, (key, value) in enumerate(cache):
+                    altered = _steer_kv_tensor(value, code, fraction=spec.fraction,
+                                               seed=921003 + len(cache) - 1 - layer)
+                    changed.append((key, altered))
+                if code.any():
+                    native_prefix = (hidden, mask, tuple(changed))
             elif spec.kind == "kv_all_layers":
                 hidden, mask, cache = native_prefix
                 if len(cache) != spec.kv_layers:

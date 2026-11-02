@@ -496,3 +496,34 @@ def test_native_first_success_closes_early_and_keeps_truth_out_of_flora_payload(
     truth=json.loads((tmp_path/'monitor/episode-000000.json').read_text())
     assert truth['first_success_step']==73 and truth['simulator_final_success']
     assert env.writer.count==101 and env.state_dict()['horizon']==400
+
+
+def test_all_layer_conditioning_steers_each_layer_and_keeps_final_layer_map():
+    noise = np.linspace(-1, 1, 2 * 50 * 32, dtype=np.float32).reshape(2, 50, 32)
+    code = np.linspace(-2, 2, 64, dtype=np.float32).reshape(2, 32)
+    runs = {}
+    for kind in ("conditioning", "conditioning_all"):
+        native, observation = batch_native()
+        native.model.layers = 3
+        adapter = FrozenRoboCasaInterface(native)
+        _, prepared = adapter.prepare_batch(observation)
+        cache = [entry[1].clone() for entry in prepared["prefix"][2]]
+        zero = InterfaceSpec(kind=kind, steering_dim=32, fraction=.17)
+        result = adapter.execute_batch(prepared, noise=noise, steering=np.zeros((2, 32)), spec=zero)
+        for used, original in zip(native.model.used[2], cache):
+            torch.testing.assert_close(used[1], original, rtol=0, atol=0)
+        _, prepared = adapter.prepare_batch(observation)
+        runs[kind] = (adapter.execute_batch(prepared, noise=noise, steering=code, spec=zero),
+                      [entry[1] for entry in native.model.used[2]], cache, result)
+    tanh = torch.from_numpy(code).tanh()
+    single, every = runs["conditioning"][1], runs["conditioning_all"][1]
+    cache = runs["conditioning"][2]
+    for layer, original in enumerate(cache):
+        projection = np.random.default_rng(921003 + 2 - layer).choice((-1., 1.), (32, 4)) / np.sqrt(32)
+        delta = (tanh @ torch.as_tensor(projection, dtype=torch.float32)).reshape(2, 1, 1, 4)
+        rms = original.square().mean((1, 2, 3), keepdim=True).sqrt()
+        torch.testing.assert_close(every[layer], original + .17 * rms * delta, rtol=0, atol=0)
+        if layer < 2:
+            torch.testing.assert_close(single[layer], original, rtol=0, atol=0)
+    torch.testing.assert_close(every[-1], single[-1], rtol=0, atol=0)
+    np.testing.assert_array_equal(runs["conditioning"][3], runs["conditioning_all"][3])

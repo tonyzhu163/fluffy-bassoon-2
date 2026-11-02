@@ -33,7 +33,7 @@ class InterfaceSpec:
         if (all_kv and (type(self.kv_layers) is not int or self.kv_layers < 1)
                 or not all_kv and self.kv_layers is not None):
             raise ValueError("Bind kv_layers only for the all-layer K/V interface")
-        dimensions = {"action": 6, "noise": 0, "conditioning": 32,
+        dimensions = {"action": 6, "noise": 0, "conditioning": 32, "conditioning_all": 32,
                       "velocity": 32, "select": self.candidates, "direct": 600,
                       "kv_all_layers": 2 * self.kv_layers * 32 if all_kv else None}
         if (self.kind not in dimensions or self.steering_dim != dimensions[self.kind]
