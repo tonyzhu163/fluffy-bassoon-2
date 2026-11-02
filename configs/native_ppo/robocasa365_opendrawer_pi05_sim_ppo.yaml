@@ -35,6 +35,9 @@ runner:
   # 18 x 51,200 train actions + 2 x 25,600 eval = 972,800 of the 1M budget.
   max_epochs: 18
   max_steps: -1
+  use_training_pipeline: false
+  overlap_env_bootstrap: false
+  weight_sync_interval: 1
   only_eval: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_ONLY_EVAL,false}}
   val_check_interval: 18
   save_interval: 6

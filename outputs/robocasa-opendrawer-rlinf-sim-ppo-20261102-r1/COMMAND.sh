@@ -30,6 +30,32 @@ trap finish EXIT
 test "$(git -C "$TASK_META" rev-parse HEAD)" = "$TASK_CODE_PIN"
 test -z "$(git -C "$TASK_META" status --porcelain)"
 test "$(git -C "$RLINF_PATH" rev-parse HEAD)" = 8a1233c3fae6f5905adfda7684c455842b0ecfb8
+"$TASK_PY" -B - <<'PY'
+import hashlib,json,os,pathlib,socket,time
+root=pathlib.Path(os.environ['TASK_OUTPUT'])
+assert socket.gethostname().startswith('job-')
+cpu=pathlib.Path('/sys/fs/cgroup/cpu.max').read_text().split()
+assert int(cpu[0])/int(cpu[1])>=64
+assert int(pathlib.Path('/sys/fs/cgroup/memory.max').read_text())>=256*(1<<30)
+fs=os.statvfs(root)
+assert fs.f_bavail*fs.f_frsize>=256*(1<<30)
+shm=os.statvfs('/dev/shm');assert shm.f_blocks*shm.f_frsize>=32*(1<<30)
+(root/'write-probe').write_text('Flow SDE allocated project write probe\n')
+def digest(path):
+ h=hashlib.sha256()
+ with pathlib.Path(path).open('rb') as f:
+  for b in iter(lambda:f.read(8<<20),b''):h.update(b)
+ return h.hexdigest()
+model=digest(pathlib.Path(os.environ['ROBOCASA_PI05_TORCH_MODEL'])/'model.safetensors')
+norm=digest(os.environ['ROBOCASA_PI05_NATIVE_NORM'])
+assert model=='661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5'
+assert norm=='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
+(root/'manifest.json').write_text(json.dumps(dict(hostname=socket.gethostname(),source=os.environ['TASK_CODE_PIN'],
+ runtime='8a1233c3fae6f5905adfda7684c455842b0ecfb8',model_sha256=model,norm_sha256=norm,
+ allocated_gpus=2,CPU=64,RAM_GiB=256,SHM_GiB=32,free_bytes=fs.f_bavail*fs.f_frsize,
+ quota='Shared PFS2TiB; no per-project quota interface exposed',started_unix=time.time(),
+ nominal_policy_controls=972800,maximum_all_in_actions=1000000),indent=2)+'\n')
+PY
 "$TASK_PY" -B "$TASK_META/scripts/[train]gpu_probe.py" --expected-count 2 --purpose training \
  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
 timeout --signal=TERM --kill-after=60s 28200 "$TASK_PY" -B "$TASK_META/scripts/[train]robocasa_flow_ppo.py"
