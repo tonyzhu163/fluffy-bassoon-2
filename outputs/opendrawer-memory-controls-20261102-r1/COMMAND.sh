@@ -6,6 +6,7 @@ TASK_OUT=${TASK_MEMORY_OUTPUT:-$TASK_ROOT/outputs/opendrawer-memory-controls-202
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 TASK_STARTED=$(date +%s)
 TASK_LIMIT_SECONDS=${TASK_MEMORY_LIMIT_SECONDS:-10800}
+TASK_LOCAL_GPUS=${TASK_MEMORY_GPUS_PER_NODE:-2}
 test "$TASK_LIMIT_SECONDS" -le 10800
 TASK_DEADLINE=$((TASK_STARTED+TASK_LIMIT_SECONDS-300))
 export PYTHONPATH=$TASK_CODE/src:$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
@@ -26,8 +27,8 @@ finish() {
  TASK_RC=$?
  trap - EXIT
  TASK_FINISHED=$(date +%s)
- printf '{"started_unix":%s,"finished_unix":%s,"allocated_gpus":2,"gpu_seconds":%s,"exit_code":%s}\n' \
-  "$TASK_STARTED" "$TASK_FINISHED" "$(((TASK_FINISHED-TASK_STARTED)*2))" "$TASK_RC" > "$TASK_OUT/logs/node-$RANK-clock.json"
+ printf '{"started_unix":%s,"finished_unix":%s,"allocated_gpus":%s,"gpu_seconds":%s,"exit_code":%s}\n' \
+  "$TASK_STARTED" "$TASK_FINISHED" "$TASK_LOCAL_GPUS" "$(((TASK_FINISHED-TASK_STARTED)*TASK_LOCAL_GPUS))" "$TASK_RC" > "$TASK_OUT/logs/node-$RANK-clock.json"
  exit "$TASK_RC"
 }
 trap finish EXIT

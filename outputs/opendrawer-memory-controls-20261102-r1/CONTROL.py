@@ -241,17 +241,19 @@ def main():
         worker(args.worker, binding, args.deadline); return
     import torch
     node = int(os.environ['RANK'])
-    assert os.environ['WORLD_SIZE'] == '4' and torch.cuda.device_count() == 2
+    nodes = int(os.environ['WORLD_SIZE'])
+    local_gpus = int(os.environ.get('TASK_MEMORY_GPUS_PER_NODE', '2'))
+    assert nodes * local_gpus == WORLD and torch.cuda.device_count() == local_gpus
     attempt = OUT / 'job' / f'node-{node:02d}'; attempt.mkdir(parents=True, exist_ok=False)
     assert os.statvfs(OUT).f_bavail * os.statvfs(OUT).f_frsize >= 96 << 30
     probe = attempt / 'gpu-probe.json'
-    subprocess.run([sys.executable, '-B', str(CODE / 'scripts/[train]gpu_probe.py'), '--expected-count', '2',
+    subprocess.run([sys.executable, '-B', str(CODE / 'scripts/[train]gpu_probe.py'), '--expected-count', str(local_gpus),
         '--purpose', 'evaluation', '--baige-container', '--output', str(probe)], check=True)
     devices = json.loads(probe.read_text())['devices']; children = []; streams = []
     write(attempt / 'manifest.json', dict(node=node, source=binding['source'], binding=ref(OUT / 'binding.json'),
         devices=devices, deadline=args.deadline))
     for local, device in enumerate(devices):
-        rank = node * 2 + local
+        rank = node * local_gpus + local
         env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device['visibility_token']),
             LYCO_BAIGE_GPU_MAP=str(probe), LYCO_BAIGE_ISOLATED_UUID=device['uuid'],
             MUJOCO_EGL_DEVICE_ID=str(device['allocation_ordinal']))
@@ -272,7 +274,7 @@ def main():
     if any(codes):
         raise RuntimeError('Control failed; preserve all records and diagnose before retry')
     if node == 0:
-        BASE['wait_for_nodes'](OUT / 'job', args.deadline)
+        BASE['wait_for_nodes'](OUT / 'job', args.deadline, nodes=nodes)
 
 
 if __name__ == '__main__':
