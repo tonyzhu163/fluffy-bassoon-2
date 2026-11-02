@@ -288,6 +288,17 @@ six-video panel,0 controls/SGD,756 workerGPU-s. The next target-description
 revision should test removing stack presuppositions while retaining an explicit
 wrong-drawer rule; the cause inside Flora is not established.
 [Clause texts, scores and limits](../outputs/robocasa-flora-drawer-clause-ablation-20261103-r1/RESULT.md).
+Deleting only the stack-presupposition sentence from1.6 does not fix128:
+all four grades remain1, two-probe>=4 detection stays4/5 with0 false episodes,
+and valid raw detections fall3→2. A compact countertop description retaining
+explicit wrong-drawer rejection also misses128 and falsely confirms112 at350
+(4/5 valid successful cases,1 false accepted episode). Both fail the frozen
+screen.74 new grades,4 exact repeats,11 receipts,74 actual message audits and47
+artifact hashes verify;687 workerGPU-s,0 new controls/SGD. This rules out the
+stack sentence alone as a sufficient explanation under the remaining1.6 text.
+The positive location and negative exclusion clauses remain coupled in the
+compact condition; neither is established as the cause. No promotion.
+[Target wording and per-case results](../outputs/robocasa-flora-drawer-target-wording-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
