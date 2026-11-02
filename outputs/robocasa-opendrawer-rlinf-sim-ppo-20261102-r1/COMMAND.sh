@@ -14,6 +14,10 @@ export ROBOCASA_PI05_NATIVE_NORM=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-
 export ROBOCASA_SIM_PPO_OUTPUT=$TASK_OUTPUT
 export ROBOCASA_SIM_PPO_ACCOUNTING=$TASK_ROOT/outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/accounting
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
+# Baige exposes the two allocated devices to the container, but does not set
+# CUDA_VISIBLE_DEVICES. Preserve an existing selection; otherwise expose both
+# local allocation ordinals for the probe and native RLinf placement.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1}
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 WANDB_MODE=disabled
 mkdir -p "$TASK_OUTPUT"
