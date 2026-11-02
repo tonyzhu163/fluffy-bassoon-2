@@ -33,7 +33,9 @@ class PhysicalReference:
         return dict(controls=self.steps + 3, reset_controls=3)
 
     def observation(self):
-        return dict(states=np.ones((1, 25), np.float32))
+        rgb = np.arange(12, dtype=np.uint8).reshape(1, 2, 2, 3)
+        return dict(states=np.ones((1, 25), np.float32), main_images=rgb.copy(),
+                    wrist_images=rgb.copy(), extra_view_images=rgb[:, None].copy())
 
     def reset(self):
         token = self.journal.begin(128, phase="native_constructor_reset")
@@ -66,15 +68,16 @@ class PhysicalReference:
         self.closed, self.native = True, None
 
 
-def backend(root, *, spec, environment_type=PhysicalReference):
+def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta=1):
     from test_interface_ppo import batch_native
     native, _ = batch_native()
     native.model.layers = 18
     journal = ActionJournal(root / "accounting", rank=0, world=1, attempt="fixture", maximum_actions=None)
     result = NativeAttemptBackend(output=root / "episodes", canonical_root=root / "canonical",
         motor=FrozenRoboCasaInterface(native), spec=spec, native_factory=lambda _: None, journal=journal,
-        writer_factory=lambda _: None, binding=dict(source="fixture", candidate="frozen-fixture"),
-        environment_type=environment_type)
+        writer_factory=lambda _: None, binding=dict(source="fixture", candidate="frozen-fixture",
+            render_contract="diagnostic_only" if maximum_rgb_delta is None else "bounded"),
+        environment_type=environment_type, maximum_rgb_delta=maximum_rgb_delta)
     return result, native.model, journal
 
 
@@ -132,3 +135,16 @@ def test_native_attempt_noise_is_case_stable_and_attempt_specific():
     assert meta == repeated and first.shape == (50, 32) and first.dtype == np.float32
     assert not np.array_equal(first, attempt_noise(case, 2, 0)[0])
     assert not np.array_equal(first, attempt_noise(case, 1, 1)[0])
+
+
+def test_explicit_diagnostic_render_contract_keeps_original_policy_pixels(tmp_path):
+    class Diagnostic(PhysicalReference):
+        render_delta = 2
+    spec = InterfaceSpec(kind="velocity", steering_dim=32)
+    policy = HistoryNoisePolicy(HistoryConfig(20, 32, width=8, heads=2, layers=1, context_length=12))
+    runner, _, journal = backend(tmp_path, spec=spec, environment_type=Diagnostic, maximum_rgb_delta=None)
+    results = runner.run_case(policy, dict(task="OpenDrawer", native_seed=17), horizon=100, attempts=1)
+    assert journal.charged() == 103
+    np.testing.assert_array_equal(results[0]["records"][0]["observation"]["main_images"],
+                                 np.arange(12, dtype=np.uint8).reshape(1, 2, 2, 3))
+    assert runner.binding["native_attempt_protocol"]["maximum_rgb_delta"] is None

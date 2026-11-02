@@ -39,10 +39,11 @@ def attempt_noise(case, attempt, chunk):
 
 class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
-                 writer_factory, binding, rank=0, environment_type=_RecordingEnvironment,
-                 maximum_rgb_delta=1):
+                 writer_factory, binding, maximum_rgb_delta,
+                 rank=0, environment_type=_RecordingEnvironment):
         if (not binding or maximum_rgb_delta is not None
-                and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)):
+                and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)
+                or maximum_rgb_delta is None and binding.get("render_contract") != "diagnostic_only"):
             raise ValueError("Bind immutable source/model identity and qualified render contract")
         self.output, self.canonical_root = Path(output), Path(canonical_root)
         self.motor, self.spec, self.native_factory = motor, spec, native_factory
