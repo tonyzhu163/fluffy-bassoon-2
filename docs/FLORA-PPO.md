@@ -84,9 +84,15 @@ frozen policy copy. The scientific batch stays at 80 complete episodes, 16 per
 training task; execution batching does not increase its size or change the
 configured optimizer. Two-GPU nodes request 64 CPUs and 256 GiB RAM, matching
 the measured capacity configuration. Each worker continuously refills its eight lanes from the original case bank,
-starting the next case as soon as a lane finishes. Shorter episodes retain
-their native horizons without padding or truncating longer episodes. Both reward arms and their before/after
-evaluations use the same batching.
+starting the next case as soon as a lane finishes. The selected cutoff for
+new matched comparisons is **600 physical policy controls (12 H50 chunks)**,
+based on the [partial native first-success panel](../outputs/robocasa-pi05-success-timing-20261102-r3/RESULT.md).
+Both reward arms and their before/after evaluations must use the same cutoff
+and batching. This is a prospective protocol decision: implementation and
+Flora calibration must bind the600-step clips and terminal labels before a new
+comparison is admitted. Existing750-step calibrations and pinned runs retain
+their original contracts. First success and success at the cutoff are distinct;
+the timing panel contains one DrawerToCounter terminal success lost at600.
 
 Motor and actor draws are assigned in the original serial case/chunk order.
 Worker records return in that order before labels or GAE, and a failed lane

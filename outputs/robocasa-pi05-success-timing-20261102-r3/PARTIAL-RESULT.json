@@ -1,0 +1,1557 @@
+{
+  "source_commit": "c5d271b40ed911b1b08136f2e2d40202b78ebb33",
+  "job_id": "job-kpdi47srqc2m",
+  "planned_panel_complete": false,
+  "planned_episodes": 250,
+  "completed_episodes": 126,
+  "human_selected_cutoff": 600,
+  "action_chunk": 50,
+  "cutoff_chunks": 12,
+  "population_p99_established": false,
+  "definition": "Nearest-rank empirical p99 conditional on ever success, separately on final success; failures not imputed.",
+  "limitation": "Partial fixed-bank prefix; with under100 successes, empirical p99 equals the observed maximum. Stove has transient successes but no terminal750 successes.",
+  "tasks": [
+    {
+      "task": "CoffeeSetupMug",
+      "episodes": 26,
+      "metrics": {
+        "ever_success": {
+          "successes": 6,
+          "first_success_steps": [
+            218,
+            262,
+            265,
+            294,
+            329,
+            524
+          ],
+          "empirical_p99": 524,
+          "maximum": 524
+        },
+        "final_success": {
+          "successes": 6,
+          "first_success_steps": [
+            218,
+            262,
+            265,
+            294,
+            329,
+            524
+          ],
+          "empirical_p99": 524,
+          "maximum": 524
+        }
+      },
+      "success_at600": 6,
+      "final_success_lost_at600": 0
+    },
+    {
+      "task": "OpenDrawer",
+      "episodes": 26,
+      "metrics": {
+        "ever_success": {
+          "successes": 15,
+          "first_success_steps": [
+            175,
+            176,
+            178,
+            183,
+            184,
+            199,
+            202,
+            205,
+            209,
+            210,
+            221,
+            224,
+            231,
+            237,
+            279
+          ],
+          "empirical_p99": 279,
+          "maximum": 279
+        },
+        "final_success": {
+          "successes": 14,
+          "first_success_steps": [
+            175,
+            176,
+            183,
+            184,
+            199,
+            202,
+            205,
+            209,
+            210,
+            221,
+            224,
+            231,
+            237,
+            279
+          ],
+          "empirical_p99": 279,
+          "maximum": 279
+        }
+      },
+      "success_at600": 14,
+      "final_success_lost_at600": 0
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "episodes": 26,
+      "metrics": {
+        "ever_success": {
+          "successes": 18,
+          "first_success_steps": [
+            181,
+            183,
+            189,
+            192,
+            201,
+            221,
+            224,
+            234,
+            236,
+            257,
+            263,
+            280,
+            282,
+            298,
+            315,
+            463,
+            513,
+            538
+          ],
+          "empirical_p99": 538,
+          "maximum": 538
+        },
+        "final_success": {
+          "successes": 18,
+          "first_success_steps": [
+            181,
+            183,
+            189,
+            192,
+            201,
+            221,
+            224,
+            234,
+            236,
+            257,
+            263,
+            280,
+            282,
+            298,
+            315,
+            463,
+            513,
+            538
+          ],
+          "empirical_p99": 538,
+          "maximum": 538
+        }
+      },
+      "success_at600": 18,
+      "final_success_lost_at600": 0
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "episodes": 24,
+      "metrics": {
+        "ever_success": {
+          "successes": 11,
+          "first_success_steps": [
+            288,
+            290,
+            330,
+            392,
+            468,
+            484,
+            494,
+            515,
+            518,
+            535,
+            538
+          ],
+          "empirical_p99": 538,
+          "maximum": 538
+        },
+        "final_success": {
+          "successes": 11,
+          "first_success_steps": [
+            288,
+            290,
+            330,
+            392,
+            468,
+            484,
+            494,
+            515,
+            518,
+            535,
+            538
+          ],
+          "empirical_p99": 538,
+          "maximum": 538
+        }
+      },
+      "success_at600": 10,
+      "final_success_lost_at600": 1
+    },
+    {
+      "task": "TurnOffStove",
+      "episodes": 24,
+      "metrics": {
+        "ever_success": {
+          "successes": 2,
+          "first_success_steps": [
+            301,
+            317
+          ],
+          "empirical_p99": 317,
+          "maximum": 317
+        },
+        "final_success": {
+          "successes": 0,
+          "first_success_steps": [],
+          "empirical_p99": null,
+          "maximum": null
+        }
+      },
+      "success_at600": 0,
+      "final_success_lost_at600": 0
+    }
+  ],
+  "maximum_observed_first_success": 538,
+  "policy_controls": 90600,
+  "charged_actions": 90600,
+  "unresolved_actions": 0,
+  "optimizer_updates": 0,
+  "closed_workers": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/worker-0/result.json",
+      "bytes": 479216,
+      "sha256": "76bbe6a971b2d46ea8cf7b9f51721f777ccb46080652eeba6b1c1d63b3ef9119"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/worker-1/result.json",
+      "bytes": 490494,
+      "sha256": "c7057c8fbc45331933820317a0172db98de36995660ee602b6dbf8186b90102a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/worker-2/result.json",
+      "bytes": 456602,
+      "sha256": "c72171e1d204e03c7e9bbfc6c244054d6a6557da8104fd965fc8a3f147ebc84f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/worker-3/result.json",
+      "bytes": 477308,
+      "sha256": "258c98dbdf5d4f18702721071356d4a9785e114d285e98c895e3313fed265281"
+    }
+  ],
+  "probe": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/gpu-probe.json",
+    "bytes": 4283,
+    "sha256": "0b959b22ec234c81bc18dcd9cb3ad5a8dd23e88e0b9e422c763a03813f7bcf2a"
+  },
+  "clock": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-pi05-success-timing-20261102-r3/job/node-00/clock/worker-time.json",
+    "bytes": 792,
+    "sha256": "72e65d6fc7b4499230f0ce478424255ce5d179ac79dae0a0b53785ee9da1f745"
+  },
+  "terminal_charge": null,
+  "external_closure": {
+    "job_id": "job-kpdi47srqc2m",
+    "scheduler_status": "\u5df2\u505c\u6b62 / manual stop",
+    "scheduler_ended_Shanghai": "2026-11-02 13:00:44",
+    "pod_ended_Shanghai": "2026-11-02 13:00:36",
+    "command_clock_started_unix": 1793594937,
+    "scheduler_ended_unix": 1793595644,
+    "GPUs": 2,
+    "scheduler_allowance_seconds_per_GPU": 60,
+    "charged_GPU_seconds_upper_bound": 1534,
+    "method": "Fresh authenticated Baige job detail confirms stopped job and stopped sole master pod; use job end minus recorded command start plus60seconds allowance per GPU.",
+    "raw_worker_clock_unfinished": true,
+    "terminal_charge_file_absent": true,
+    "closed_logical_workers": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "completed_episodes": 126,
+    "charged_actions": 90600,
+    "unresolved_actions": 0,
+    "reason": "Human selected600 cutoff; stopped after second complete wave. No further rollout or test authorization needed.",
+    "remaining_workers_no_simulator_actions": true,
+    "next_wave_model_loading_may_have_started": true
+  },
+  "conservative_r3_GPU_seconds": 1534,
+  "prior_r1_GPU_seconds": 726,
+  "r2_GPU_seconds": 0,
+  "clock_action_ceiling_metadata": 236000,
+  "enforced_action_ceiling": 212000,
+  "clock_metadata_note": "The launcher clock field236000 resulted from textual clock replacement; per-rank escrow and driver enforce212000. Observed actions remain below both.",
+  "episodes": [
+    {
+      "id": "timing-r0-CoffeeSetupMug-s00-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150100,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s08-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150108,
+      "horizon": 600,
+      "first_success_step": 329,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s16-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150116,
+      "horizon": 600,
+      "first_success_step": 265,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s24-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150124,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s32-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150132,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s40-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150140,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-CoffeeSetupMug-s48-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150148,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s00-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110100,
+      "horizon": 750,
+      "first_success_step": 176,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s08-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110108,
+      "horizon": 750,
+      "first_success_step": 202,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s16-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110116,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s24-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110124,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s32-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110132,
+      "horizon": 750,
+      "first_success_step": 178,
+      "ever_success": true,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s40-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110140,
+      "horizon": 750,
+      "first_success_step": 237,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-OpenDrawer-s48-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110148,
+      "horizon": 750,
+      "first_success_step": 210,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s06-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120106,
+      "horizon": 750,
+      "first_success_step": 263,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s14-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120114,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s22-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120122,
+      "horizon": 750,
+      "first_success_step": 282,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s30-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120130,
+      "horizon": 750,
+      "first_success_step": 224,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s38-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120138,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-PickPlaceCounterToCabinet-s46-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120146,
+      "horizon": 750,
+      "first_success_step": 234,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s04-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130104,
+      "horizon": 750,
+      "first_success_step": 288,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s12-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130112,
+      "horizon": 750,
+      "first_success_step": 518,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s20-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130120,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s28-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130128,
+      "horizon": 750,
+      "first_success_step": 515,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s36-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130136,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-PickPlaceDrawerToCounter-s44-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130144,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s02-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140102,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s10-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140110,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s18-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140118,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s26-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140126,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s34-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140134,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r0-TurnOffStove-s42-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140142,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s01-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150101,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s09-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150109,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s17-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150117,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s25-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150125,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s33-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150133,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s41-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150141,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-CoffeeSetupMug-s49-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150149,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s01-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110101,
+      "horizon": 750,
+      "first_success_step": 231,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s09-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110109,
+      "horizon": 750,
+      "first_success_step": 221,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s17-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110117,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s25-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110125,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s33-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110133,
+      "horizon": 750,
+      "first_success_step": 205,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s41-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110141,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-OpenDrawer-s49-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110149,
+      "horizon": 750,
+      "first_success_step": 209,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s07-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120107,
+      "horizon": 750,
+      "first_success_step": 280,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s15-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120115,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s23-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120123,
+      "horizon": 750,
+      "first_success_step": 315,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s31-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120131,
+      "horizon": 750,
+      "first_success_step": 189,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s39-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120139,
+      "horizon": 750,
+      "first_success_step": 298,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceCounterToCabinet-s47-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120147,
+      "horizon": 750,
+      "first_success_step": 236,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s05-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130105,
+      "horizon": 750,
+      "first_success_step": 290,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s13-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130113,
+      "horizon": 750,
+      "first_success_step": 484,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s21-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130121,
+      "horizon": 750,
+      "first_success_step": 392,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s29-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130129,
+      "horizon": 750,
+      "first_success_step": 330,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s37-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130137,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-PickPlaceDrawerToCounter-s45-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130145,
+      "horizon": 750,
+      "first_success_step": 538,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s03-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140103,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s11-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140111,
+      "horizon": 750,
+      "first_success_step": 301,
+      "ever_success": true,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s19-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140119,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s27-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140127,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s35-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140135,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r1-TurnOffStove-s43-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140143,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s02-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150102,
+      "horizon": 600,
+      "first_success_step": 262,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s10-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150110,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s18-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150118,
+      "horizon": 600,
+      "first_success_step": 294,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s26-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150126,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s34-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150134,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-CoffeeSetupMug-s42-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150142,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s02-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110102,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s10-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110110,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s18-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110118,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s26-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110126,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s34-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110134,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-OpenDrawer-s42-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110142,
+      "horizon": 750,
+      "first_success_step": 175,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s00-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120100,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s08-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120108,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s16-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120116,
+      "horizon": 750,
+      "first_success_step": 201,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s24-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120124,
+      "horizon": 750,
+      "first_success_step": 463,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s32-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120132,
+      "horizon": 750,
+      "first_success_step": 183,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s40-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120140,
+      "horizon": 750,
+      "first_success_step": 538,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceCounterToCabinet-s48-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120148,
+      "horizon": 750,
+      "first_success_step": 257,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s06-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130106,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s14-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130114,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s22-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130122,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s30-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130130,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s38-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130138,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-PickPlaceDrawerToCounter-s46-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130146,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s04-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140104,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s12-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140112,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s20-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140120,
+      "horizon": 750,
+      "first_success_step": 317,
+      "ever_success": true,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s28-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140128,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s36-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140136,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r2-TurnOffStove-s44-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140144,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s03-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150103,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s11-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150111,
+      "horizon": 600,
+      "first_success_step": 524,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s19-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150119,
+      "horizon": 600,
+      "first_success_step": 218,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s27-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150127,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s35-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150135,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-CoffeeSetupMug-s43-episode-000000",
+      "task": "CoffeeSetupMug",
+      "native_seed": 150143,
+      "horizon": 600,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s03-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110103,
+      "horizon": 750,
+      "first_success_step": 279,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s11-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110111,
+      "horizon": 750,
+      "first_success_step": 184,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s19-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110119,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s27-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110127,
+      "horizon": 750,
+      "first_success_step": 183,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s35-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110135,
+      "horizon": 750,
+      "first_success_step": 199,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-OpenDrawer-s43-episode-000000",
+      "task": "OpenDrawer",
+      "native_seed": 110143,
+      "horizon": 750,
+      "first_success_step": 224,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s01-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120101,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s09-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120109,
+      "horizon": 750,
+      "first_success_step": 181,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s17-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120117,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s25-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120125,
+      "horizon": 750,
+      "first_success_step": 513,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s33-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120133,
+      "horizon": 750,
+      "first_success_step": 192,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s41-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120141,
+      "horizon": 750,
+      "first_success_step": 221,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceCounterToCabinet-s49-episode-000000",
+      "task": "PickPlaceCounterToCabinet",
+      "native_seed": 120149,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s07-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130107,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s15-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130115,
+      "horizon": 750,
+      "first_success_step": 535,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s23-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130123,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s31-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130131,
+      "horizon": 750,
+      "first_success_step": 494,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s39-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130139,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-PickPlaceDrawerToCounter-s47-episode-000000",
+      "task": "PickPlaceDrawerToCounter",
+      "native_seed": 130147,
+      "horizon": 750,
+      "first_success_step": 468,
+      "ever_success": true,
+      "final_success": true,
+      "success_at600": true
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s05-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140105,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s13-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140113,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s21-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140121,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s29-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140129,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s37-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140137,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    },
+    {
+      "id": "timing-r3-TurnOffStove-s45-episode-000000",
+      "task": "TurnOffStove",
+      "native_seed": 140145,
+      "horizon": 750,
+      "first_success_step": null,
+      "ever_success": false,
+      "final_success": false,
+      "success_at600": false
+    }
+  ]
+}

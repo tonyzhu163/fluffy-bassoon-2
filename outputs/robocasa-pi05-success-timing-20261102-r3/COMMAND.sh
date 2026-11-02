@@ -16,7 +16,7 @@ from fluffy_bassoon.meta_rl.vla_source40_ppo_worker import begin
 out=Path(os.environ['TASK_OUT'])
 contract=dict(source_commit=os.environ['TASK_CODE_PIN'],purpose='native pi05 first-success timing, same five50-case banks, noSGD',
     requested_gpus=2,cpus=64,ram_gib=256,shm_gib=16,worker_seconds=3600,
-    robot_actions_global_ceiling=236000,global_gpus=2,maximum_gpu_seconds_global=7200)
+    robot_actions_global_ceiling=212000,global_gpus=2,maximum_gpu_seconds_global=7200)
 print(begin(out/'clock',contract,slice_seconds=3540,worker_seconds=3600,now=int(os.environ['TASK_STARTED'])))
 CLOCK
 )

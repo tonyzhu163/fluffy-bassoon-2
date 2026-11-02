@@ -120,6 +120,18 @@ one joint policy per reward arm and five PPO-held-out OOD tasks.
 [Paired native/Flora audit](../outputs/robocasa-flora-five-task-fifty-score-20261102-r1/PARENT-REVIEW.json),
 [selection disclosure](../outputs/robocasa-five-task-flora-ppo-20261102-r1/SELECTION-DISCLOSURE.json).
 
+A partial native first-success timing panel retained126 full episodes, with
+52 ever-successes. Per-task empirical p99 first-success times were279
+(OpenDrawer),538 (CounterToCabinet),538 (DrawerToCounter),317 (TurnOffStove)
+and524 (CoffeeSetupMug). With fewer than100 successful observations per task,
+these are sample maxima, not established population99% coverage. The human
+selected a prospective600-control cutoff, and the timing allocation was
+stopped after its second wave. All observed first successes occur by538, but
+one DrawerToCounter episode is false at600 and true at750: terminal positives
+are48 at600 versus49 at the original horizons. Stove's two successes were
+transient, with no final750 success in this partial panel. A600-step comparison
+requires matched Flora calibration. [Decision, episode values and closure](../outputs/robocasa-pi05-success-timing-20261102-r3/RESULT.md).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The
