@@ -1,0 +1,157 @@
+{
+  "checked_Shanghai": "2026-11-02T20:04:15.384552+08:00",
+  "CPU_only": true,
+  "extra_model_or_simulator_calls": 0,
+  "example_join": [
+    {
+      "environment_rank": 0,
+      "source_case_seed": 210868,
+      "actor_rank": 1,
+      "time_index": 0,
+      "batch_slot": 4,
+      "exact_flow_chain_match": true,
+      "max_action_difference_from_decoded_env": 0.007874369621276855,
+      "continuous10_max_difference": 0.0,
+      "binary_adapter_then_exact_physical_command_match": true
+    },
+    {
+      "environment_rank": 0,
+      "source_case_seed": 210869,
+      "actor_rank": 1,
+      "time_index": 0,
+      "batch_slot": 5,
+      "exact_flow_chain_match": true,
+      "max_action_difference_from_decoded_env": 0.010302841663360596,
+      "continuous10_max_difference": 0.0,
+      "binary_adapter_then_exact_physical_command_match": true
+    },
+    {
+      "environment_rank": 0,
+      "source_case_seed": 210870,
+      "actor_rank": 1,
+      "time_index": 0,
+      "batch_slot": 6,
+      "exact_flow_chain_match": true,
+      "max_action_difference_from_decoded_env": 0.008791327476501465,
+      "continuous10_max_difference": 0.0,
+      "binary_adapter_then_exact_physical_command_match": true
+    },
+    {
+      "environment_rank": 0,
+      "source_case_seed": 210871,
+      "actor_rank": 1,
+      "time_index": 0,
+      "batch_slot": 7,
+      "exact_flow_chain_match": true,
+      "max_action_difference_from_decoded_env": 0.85821533203125,
+      "continuous10_max_difference": 0.0,
+      "binary_adapter_then_exact_physical_command_match": true
+    }
+  ],
+  "gaussian_transition_methods": [
+    {
+      "index": 0,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 1,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 2,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 3,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 4,
+      "method": "flow_sde",
+      "std_max": 0.11618953943252563,
+      "std_min": 0.11618953943252563
+    },
+    {
+      "index": 5,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 6,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 7,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 8,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    },
+    {
+      "index": 9,
+      "method": "flow_ode",
+      "std_max": 0.0,
+      "std_min": 0.0
+    }
+  ],
+  "initial_gaussian_shape": [
+    4,
+    50,
+    32
+  ],
+  "decoded_command_shape": [
+    4,
+    50,
+    12
+  ],
+  "actual_physical_command_reconstruction": "Environment decoded_actions is already after native prepare_actions binarization and equals executed12D command (the env mapping is idempotent). Actor batch actions retain pre-binary scores; threshold dimensions6and11 at0.5 to-1/+1, continuous10 match exactly.",
+  "physical_discrete_values": {
+    "6": [
+      -1.0
+    ],
+    "11": [
+      -1.0,
+      1.0
+    ]
+  },
+  "terminal_chunk_top_keys": [
+    "phase",
+    "iteration",
+    "round",
+    "seeds",
+    "current_observation",
+    "decoded_actions",
+    "rewards",
+    "terminations",
+    "truncations",
+    "final_info"
+  ],
+  "terminal_final_info_keys": [
+    "success",
+    "ep_meta",
+    "env_id",
+    "episode"
+  ],
+  "terminal_raw_RGB_recorded": false,
+  "primitive_substep_RGBs_retained": false,
+  "train_video_enabled": false,
+  "features_or_KV_cached": false,
+  "actor_batch_seed_mapping": "Not embedded; exact sampled-chain join recovered all4examplecases across2actorbatches; case/round/chunk metadata remains in env traces",
+  "old_GENERIC_RoboTwin_exporter_directly_compatible": false
+}

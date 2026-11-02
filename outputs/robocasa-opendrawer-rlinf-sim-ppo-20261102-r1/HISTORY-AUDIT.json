@@ -1,0 +1,1365 @@
+{
+  "checked_Shanghai": "2026-11-02T19:59:02.735950+08:00",
+  "CPU_only": true,
+  "extra_model_or_simulator_calls": 0,
+  "representative_artifacts": [
+    {
+      "attempt": "r3",
+      "environment_chunk": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/environment/rank-00/training-i000-round00-chunk01.pt.gz",
+      "chunk_structure": {
+        "phase": {
+          "type": "str",
+          "example": "training"
+        },
+        "iteration": {
+          "type": "int",
+          "example": "0"
+        },
+        "round": {
+          "type": "int",
+          "example": "0"
+        },
+        "seeds": {
+          "type": "list",
+          "length": 16,
+          "sample": {
+            "type": "int",
+            "example": "210100"
+          }
+        },
+        "current_observation": {
+          "main_images": {
+            "shape": [
+              16,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          },
+          "wrist_images": {
+            "shape": [
+              16,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          },
+          "states": {
+            "shape": [
+              16,
+              25
+            ],
+            "dtype": "torch.float32"
+          },
+          "task_descriptions": {
+            "type": "list",
+            "length": 16,
+            "sample": {
+              "type": "str",
+              "example": "Open the right drawer."
+            }
+          },
+          "task_metadata": {
+            "type": "list",
+            "length": 16,
+            "sample": {
+              "task_name": {
+                "type": "str",
+                "example": "OpenDrawer"
+              },
+              "env_name": {
+                "type": "str",
+                "example": "robocasa/OpenDrawer"
+              },
+              "task_source": {
+                "type": "str",
+                "example": "dataset_registry"
+              },
+              "dataset_source": {
+                "type": "str",
+                "example": "human"
+              },
+              "split": {
+                "type": "str",
+                "example": "target"
+              },
+              "task_soup": {
+                "type": "str",
+                "example": "atomic_seen"
+              },
+              "benchmark_selection": {
+                "type": "str",
+                "example": "human/target/atomic_seen"
+              },
+              "task_mode": {
+                "type": "str",
+                "example": "atomic"
+              },
+              "task_description": {
+                "type": "str",
+                "example": "Open the right drawer."
+              }
+            }
+          },
+          "extra_view_images": {
+            "shape": [
+              16,
+              1,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          }
+        },
+        "decoded_actions": {
+          "shape": [
+            16,
+            50,
+            12
+          ],
+          "dtype": "float32"
+        },
+        "rewards": {
+          "shape": [
+            16,
+            50
+          ],
+          "dtype": "torch.float32"
+        },
+        "terminations": {
+          "shape": [
+            16,
+            50
+          ],
+          "dtype": "torch.bool"
+        },
+        "truncations": {
+          "shape": [
+            16,
+            50
+          ],
+          "dtype": "torch.bool"
+        },
+        "final_info": {
+          "success": {
+            "type": "list",
+            "length": 16,
+            "sample": {
+              "type": "bool",
+              "example": "False"
+            }
+          },
+          "ep_meta": {
+            "type": "list",
+            "length": 16,
+            "instance_fields": {
+              "layout_id": {
+                "type": "int",
+                "example": "10"
+              },
+              "style_id": {
+                "type": "int",
+                "example": "10"
+              },
+              "object_cfg_count": 4,
+              "fixture_count": 99
+            },
+            "other_keys": [
+              "layout_id",
+              "style_id",
+              "object_cfgs",
+              "fixtures",
+              "gen_textures",
+              "lang",
+              "fixture_refs",
+              "cam_configs",
+              "init_robot_base_pos",
+              "init_robot_base_ori"
+            ]
+          },
+          "env_id": {
+            "type": "list",
+            "length": 16,
+            "sample": {
+              "type": "int",
+              "example": "0"
+            }
+          },
+          "episode": {
+            "success_once": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.bool"
+            },
+            "return": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.float32"
+            },
+            "episode_len": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.int32"
+            },
+            "reward": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.float32"
+            }
+          }
+        }
+      },
+      "sampling_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/sampling/rank-00/00000.pt.gz",
+      "sampling_structure": {
+        "format": {
+          "type": "str",
+          "example": "rlinf_native_ppo_actual_sampling_v1"
+        },
+        "mode": {
+          "type": "str",
+          "example": "train"
+        },
+        "evaluation_data": {
+          "type": "bool",
+          "example": "False"
+        },
+        "terminal_value_only": {
+          "type": "bool",
+          "example": "False"
+        },
+        "collection_iteration": {
+          "type": "int",
+          "example": "1"
+        },
+        "producing_policy_iteration": {
+          "type": "int",
+          "example": "0"
+        },
+        "rank": {
+          "type": "int",
+          "example": "0"
+        },
+        "prediction_ordinal": {
+          "type": "int",
+          "example": "0"
+        },
+        "public_observation_sha256": {
+          "type": "str",
+          "example": "becab4c12a12f45786cf8b5730dce33ba06bcbba29b552103cfc8b5aba33d42d"
+        },
+        "actions_sha256": {
+          "type": "str",
+          "example": "b93bdb21d2ed5d9e1b5b072639cb2706a4435a60ba70c50f0baeb04ee5c351fd"
+        },
+        "rng_before": {
+          "python": {
+            "type": "tuple",
+            "length": 3,
+            "sample": {
+              "type": "int",
+              "example": "3"
+            }
+          },
+          "numpy": {
+            "type": "tuple",
+            "length": 5,
+            "sample": {
+              "type": "str",
+              "example": "MT19937"
+            }
+          },
+          "torch": {
+            "shape": [
+              5056
+            ],
+            "dtype": "torch.uint8"
+          },
+          "cuda": {
+            "type": "list",
+            "length": 1,
+            "sample": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.uint8"
+            }
+          }
+        },
+        "rng_after": {
+          "python": {
+            "type": "tuple",
+            "length": 3,
+            "sample": {
+              "type": "int",
+              "example": "3"
+            }
+          },
+          "numpy": {
+            "type": "tuple",
+            "length": 5,
+            "sample": {
+              "type": "str",
+              "example": "MT19937"
+            }
+          },
+          "torch": {
+            "shape": [
+              5056
+            ],
+            "dtype": "torch.uint8"
+          },
+          "cuda": {
+            "type": "list",
+            "length": 1,
+            "sample": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.uint8"
+            }
+          }
+        },
+        "actual_gaussian_parameters": {
+          "type": "list",
+          "length": 10,
+          "sample": {
+            "index": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.int64"
+            },
+            "noise_method": {
+              "type": "str",
+              "example": "flow_ode"
+            },
+            "noise_level": {
+              "type": "float",
+              "example": "0.3"
+            },
+            "num_steps": {
+              "type": "int",
+              "example": "10"
+            },
+            "mean": {
+              "shape": [
+                16,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            },
+            "std": {
+              "shape": [
+                16,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            }
+          }
+        },
+        "forward_sampling_fields": {
+          "chains": {
+            "shape": [
+              16,
+              11,
+              50,
+              32
+            ],
+            "dtype": "torch.float32"
+          },
+          "denoise_inds": {
+            "shape": [
+              16,
+              10
+            ],
+            "dtype": "torch.int64"
+          },
+          "action": {
+            "shape": [
+              16,
+              600
+            ],
+            "dtype": "torch.float32"
+          },
+          "model_action": {
+            "shape": [
+              16,
+              1600
+            ],
+            "dtype": "torch.float32"
+          }
+        },
+        "old_logprobs": {
+          "shape": [
+            16,
+            50,
+            12
+          ],
+          "dtype": "torch.float32"
+        },
+        "old_values": {
+          "shape": [
+            16,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        "model_actions": {
+          "shape": [
+            16,
+            50,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        "processed_model_state": {
+          "shape": [
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        "initial_gaussian_path": {
+          "type": "str",
+          "example": "forward_sampling_fields.chains[:,0]"
+        },
+        "noise_semantics": {
+          "type": "str",
+          "example": "Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed"
+        },
+        "frozen_sft_steering_target_compatible": {
+          "type": "bool",
+          "example": "False"
+        }
+      },
+      "batch_metadata": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/training-rollouts/iteration-0001-policy-0000-rank-00.pt",
+        "sha256": "1826e90006364292cb974066f45809cb5250b0390d06e90de30272231561d2e1",
+        "completed": true,
+        "capture_format": "rlinf_native_ppo_history_capture_v1",
+        "collection_iteration": 1,
+        "producing_policy_iteration": 0,
+        "rank": 0,
+        "optimizer_steps_before": 0,
+        "fields": [
+          "actions",
+          "advantages",
+          "dones",
+          "forward_inputs",
+          "intervene_flags",
+          "loss_mask",
+          "loss_mask_sum",
+          "prev_logprobs",
+          "prev_values",
+          "returns",
+          "rewards",
+          "terminations",
+          "truncations",
+          "versions"
+        ],
+        "field_shapes": {
+          "forward_inputs": {
+            "observation/image": {
+              "shape": [
+                8,
+                64,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            },
+            "chains": {
+              "shape": [
+                8,
+                64,
+                11,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            },
+            "observation/wrist_image": {
+              "shape": [
+                8,
+                64,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            },
+            "observation/extra_view_image": {
+              "shape": [
+                8,
+                64,
+                1,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            },
+            "model_action": {
+              "shape": [
+                8,
+                64,
+                1600
+              ],
+              "dtype": "torch.float32"
+            },
+            "denoise_inds": {
+              "shape": [
+                8,
+                64,
+                10
+              ],
+              "dtype": "torch.int64"
+            },
+            "observation/state": {
+              "shape": [
+                8,
+                64,
+                25
+              ],
+              "dtype": "torch.float32"
+            },
+            "action": {
+              "shape": [
+                8,
+                64,
+                600
+              ],
+              "dtype": "torch.float32"
+            },
+            "tokenized_prompt": {
+              "shape": [
+                8,
+                64,
+                200
+              ],
+              "dtype": "torch.int64"
+            },
+            "tokenized_prompt_mask": {
+              "shape": [
+                8,
+                64,
+                200
+              ],
+              "dtype": "torch.bool"
+            }
+          },
+          "actions": {
+            "shape": [
+              8,
+              64,
+              600
+            ],
+            "dtype": "torch.float32"
+          },
+          "intervene_flags": {
+            "shape": [
+              8,
+              64,
+              600
+            ],
+            "dtype": "torch.bool"
+          },
+          "rewards": {
+            "shape": [
+              8,
+              64,
+              50
+            ],
+            "dtype": "torch.float32"
+          },
+          "terminations": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "truncations": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "dones": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "prev_logprobs": {
+            "shape": [
+              8,
+              64,
+              50,
+              12
+            ],
+            "dtype": "torch.float32"
+          },
+          "prev_values": {
+            "shape": [
+              9,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "versions": {
+            "shape": [
+              8,
+              64,
+              50,
+              12
+            ],
+            "dtype": "torch.float32"
+          },
+          "loss_mask": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.bool"
+          },
+          "loss_mask_sum": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.int64"
+          },
+          "advantages": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "returns": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          }
+        },
+        "evaluation_data": false,
+        "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/resolved-native-config.json",
+        "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+      },
+      "actual_resolved_config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/resolved-config.json",
+      "legacy_batch_metadata_config_reference_exists": false,
+      "train_video_cfg": {
+        "save_video": false,
+        "info_on_video": true,
+        "video_base_dir": "../results/video/train"
+      },
+      "eval_video_cfg": {
+        "save_video": true,
+        "info_on_video": false,
+        "video_base_dir": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r3/video/eval"
+      }
+    },
+    {
+      "attempt": "r4",
+      "environment_chunk": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/environment/rank-00/training-i006-round00-chunk01.pt.gz",
+      "chunk_structure": {
+        "phase": {
+          "type": "str",
+          "example": "training"
+        },
+        "iteration": {
+          "type": "int",
+          "example": "6"
+        },
+        "round": {
+          "type": "int",
+          "example": "0"
+        },
+        "seeds": {
+          "type": "list",
+          "length": 4,
+          "sample": {
+            "type": "int",
+            "example": "210868"
+          }
+        },
+        "current_observation": {
+          "main_images": {
+            "shape": [
+              4,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          },
+          "wrist_images": {
+            "shape": [
+              4,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          },
+          "states": {
+            "shape": [
+              4,
+              25
+            ],
+            "dtype": "torch.float32"
+          },
+          "task_descriptions": {
+            "type": "list",
+            "length": 4,
+            "sample": {
+              "type": "str",
+              "example": "Open the right drawer."
+            }
+          },
+          "task_metadata": {
+            "type": "list",
+            "length": 4,
+            "sample": {
+              "task_name": {
+                "type": "str",
+                "example": "OpenDrawer"
+              },
+              "env_name": {
+                "type": "str",
+                "example": "robocasa/OpenDrawer"
+              },
+              "task_source": {
+                "type": "str",
+                "example": "dataset_registry"
+              },
+              "dataset_source": {
+                "type": "str",
+                "example": "human"
+              },
+              "split": {
+                "type": "str",
+                "example": "target"
+              },
+              "task_soup": {
+                "type": "str",
+                "example": "atomic_seen"
+              },
+              "benchmark_selection": {
+                "type": "str",
+                "example": "human/target/atomic_seen"
+              },
+              "task_mode": {
+                "type": "str",
+                "example": "atomic"
+              },
+              "task_description": {
+                "type": "str",
+                "example": "Open the right drawer."
+              }
+            }
+          },
+          "extra_view_images": {
+            "shape": [
+              4,
+              1,
+              256,
+              256,
+              3
+            ],
+            "dtype": "torch.uint8"
+          }
+        },
+        "decoded_actions": {
+          "shape": [
+            4,
+            50,
+            12
+          ],
+          "dtype": "float32"
+        },
+        "rewards": {
+          "shape": [
+            4,
+            50
+          ],
+          "dtype": "torch.float32"
+        },
+        "terminations": {
+          "shape": [
+            4,
+            50
+          ],
+          "dtype": "torch.bool"
+        },
+        "truncations": {
+          "shape": [
+            4,
+            50
+          ],
+          "dtype": "torch.bool"
+        },
+        "final_info": {
+          "success": {
+            "type": "list",
+            "length": 4,
+            "sample": {
+              "type": "bool",
+              "example": "False"
+            }
+          },
+          "ep_meta": {
+            "type": "list",
+            "length": 4,
+            "instance_fields": {
+              "layout_id": {
+                "type": "int",
+                "example": "4"
+              },
+              "style_id": {
+                "type": "int",
+                "example": "4"
+              },
+              "object_cfg_count": 3,
+              "fixture_count": 72
+            },
+            "other_keys": [
+              "layout_id",
+              "style_id",
+              "object_cfgs",
+              "fixtures",
+              "gen_textures",
+              "lang",
+              "fixture_refs",
+              "cam_configs",
+              "init_robot_base_pos",
+              "init_robot_base_ori"
+            ]
+          },
+          "env_id": {
+            "type": "list",
+            "length": 4,
+            "sample": {
+              "type": "int",
+              "example": "0"
+            }
+          },
+          "episode": {
+            "success_once": {
+              "shape": [
+                4
+              ],
+              "dtype": "torch.bool"
+            },
+            "return": {
+              "shape": [
+                4
+              ],
+              "dtype": "torch.float32"
+            },
+            "episode_len": {
+              "shape": [
+                4
+              ],
+              "dtype": "torch.int32"
+            },
+            "reward": {
+              "shape": [
+                4
+              ],
+              "dtype": "torch.float32"
+            }
+          }
+        }
+      },
+      "sampling_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/sampling/rank-00/00000.pt.gz",
+      "sampling_structure": {
+        "format": {
+          "type": "str",
+          "example": "rlinf_native_ppo_actual_sampling_v1"
+        },
+        "mode": {
+          "type": "str",
+          "example": "train"
+        },
+        "evaluation_data": {
+          "type": "bool",
+          "example": "False"
+        },
+        "terminal_value_only": {
+          "type": "bool",
+          "example": "False"
+        },
+        "collection_iteration": {
+          "type": "int",
+          "example": "7"
+        },
+        "producing_policy_iteration": {
+          "type": "int",
+          "example": "6"
+        },
+        "rank": {
+          "type": "int",
+          "example": "0"
+        },
+        "prediction_ordinal": {
+          "type": "int",
+          "example": "0"
+        },
+        "public_observation_sha256": {
+          "type": "str",
+          "example": "8ac033ebf91b43c9302311e30ef7c2e2c150b884c8aa61eb3b2e54b572bbbeb4"
+        },
+        "actions_sha256": {
+          "type": "str",
+          "example": "cbc418fa0b703dec6598e0af1a4cfcf1de3da44ae5953638538da02489010419"
+        },
+        "rng_before": {
+          "python": {
+            "type": "tuple",
+            "length": 3,
+            "sample": {
+              "type": "int",
+              "example": "3"
+            }
+          },
+          "numpy": {
+            "type": "tuple",
+            "length": 5,
+            "sample": {
+              "type": "str",
+              "example": "MT19937"
+            }
+          },
+          "torch": {
+            "shape": [
+              5056
+            ],
+            "dtype": "torch.uint8"
+          },
+          "cuda": {
+            "type": "list",
+            "length": 1,
+            "sample": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.uint8"
+            }
+          }
+        },
+        "rng_after": {
+          "python": {
+            "type": "tuple",
+            "length": 3,
+            "sample": {
+              "type": "int",
+              "example": "3"
+            }
+          },
+          "numpy": {
+            "type": "tuple",
+            "length": 5,
+            "sample": {
+              "type": "str",
+              "example": "MT19937"
+            }
+          },
+          "torch": {
+            "shape": [
+              5056
+            ],
+            "dtype": "torch.uint8"
+          },
+          "cuda": {
+            "type": "list",
+            "length": 1,
+            "sample": {
+              "shape": [
+                16
+              ],
+              "dtype": "torch.uint8"
+            }
+          }
+        },
+        "actual_gaussian_parameters": {
+          "type": "list",
+          "length": 10,
+          "sample": {
+            "index": {
+              "shape": [
+                4
+              ],
+              "dtype": "torch.int64"
+            },
+            "noise_method": {
+              "type": "str",
+              "example": "flow_ode"
+            },
+            "noise_level": {
+              "type": "float",
+              "example": "0.3"
+            },
+            "num_steps": {
+              "type": "int",
+              "example": "10"
+            },
+            "mean": {
+              "shape": [
+                4,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            },
+            "std": {
+              "shape": [
+                4,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            }
+          }
+        },
+        "forward_sampling_fields": {
+          "chains": {
+            "shape": [
+              4,
+              11,
+              50,
+              32
+            ],
+            "dtype": "torch.float32"
+          },
+          "denoise_inds": {
+            "shape": [
+              4,
+              10
+            ],
+            "dtype": "torch.int64"
+          },
+          "action": {
+            "shape": [
+              4,
+              600
+            ],
+            "dtype": "torch.float32"
+          },
+          "model_action": {
+            "shape": [
+              4,
+              1600
+            ],
+            "dtype": "torch.float32"
+          }
+        },
+        "old_logprobs": {
+          "shape": [
+            4,
+            50,
+            12
+          ],
+          "dtype": "torch.float32"
+        },
+        "old_values": {
+          "shape": [
+            4,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        "model_actions": {
+          "shape": [
+            4,
+            50,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        "processed_model_state": {
+          "shape": [
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        "initial_gaussian_path": {
+          "type": "str",
+          "example": "forward_sampling_fields.chains[:,0]"
+        },
+        "noise_semantics": {
+          "type": "str",
+          "example": "Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed"
+        },
+        "frozen_sft_steering_target_compatible": {
+          "type": "bool",
+          "example": "False"
+        }
+      },
+      "batch_metadata": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/training-rollouts/iteration-0007-policy-0006-rank-00.pt",
+        "sha256": "d656cd99a5c3d73e28046ee28292897a66a7817953e6b5cc22d1ba61d5da6bb6",
+        "completed": true,
+        "capture_format": "rlinf_native_ppo_history_capture_v1",
+        "collection_iteration": 7,
+        "producing_policy_iteration": 6,
+        "rank": 0,
+        "optimizer_steps_before": 96,
+        "fields": [
+          "actions",
+          "advantages",
+          "dones",
+          "forward_inputs",
+          "intervene_flags",
+          "loss_mask",
+          "loss_mask_sum",
+          "prev_logprobs",
+          "prev_values",
+          "returns",
+          "rewards",
+          "terminations",
+          "truncations",
+          "versions"
+        ],
+        "field_shapes": {
+          "forward_inputs": {
+            "observation/state": {
+              "shape": [
+                8,
+                64,
+                25
+              ],
+              "dtype": "torch.float32"
+            },
+            "tokenized_prompt": {
+              "shape": [
+                8,
+                64,
+                200
+              ],
+              "dtype": "torch.int64"
+            },
+            "observation/image": {
+              "shape": [
+                8,
+                64,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            },
+            "denoise_inds": {
+              "shape": [
+                8,
+                64,
+                10
+              ],
+              "dtype": "torch.int64"
+            },
+            "chains": {
+              "shape": [
+                8,
+                64,
+                11,
+                50,
+                32
+              ],
+              "dtype": "torch.float32"
+            },
+            "model_action": {
+              "shape": [
+                8,
+                64,
+                1600
+              ],
+              "dtype": "torch.float32"
+            },
+            "action": {
+              "shape": [
+                8,
+                64,
+                600
+              ],
+              "dtype": "torch.float32"
+            },
+            "tokenized_prompt_mask": {
+              "shape": [
+                8,
+                64,
+                200
+              ],
+              "dtype": "torch.bool"
+            },
+            "observation/extra_view_image": {
+              "shape": [
+                8,
+                64,
+                1,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            },
+            "observation/wrist_image": {
+              "shape": [
+                8,
+                64,
+                256,
+                256,
+                3
+              ],
+              "dtype": "torch.uint8"
+            }
+          },
+          "actions": {
+            "shape": [
+              8,
+              64,
+              600
+            ],
+            "dtype": "torch.float32"
+          },
+          "intervene_flags": {
+            "shape": [
+              8,
+              64,
+              600
+            ],
+            "dtype": "torch.bool"
+          },
+          "rewards": {
+            "shape": [
+              8,
+              64,
+              50
+            ],
+            "dtype": "torch.float32"
+          },
+          "terminations": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "truncations": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "dones": {
+            "shape": [
+              9,
+              64,
+              50
+            ],
+            "dtype": "torch.bool"
+          },
+          "prev_logprobs": {
+            "shape": [
+              8,
+              64,
+              50,
+              12
+            ],
+            "dtype": "torch.float32"
+          },
+          "prev_values": {
+            "shape": [
+              9,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "versions": {
+            "shape": [
+              8,
+              64,
+              50,
+              12
+            ],
+            "dtype": "torch.float32"
+          },
+          "loss_mask": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.bool"
+          },
+          "loss_mask_sum": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.int64"
+          },
+          "advantages": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "returns": {
+            "shape": [
+              8,
+              64,
+              1
+            ],
+            "dtype": "torch.float32"
+          }
+        },
+        "evaluation_data": false,
+        "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/resolved-native-config.json",
+        "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+      },
+      "actual_resolved_config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/resolved-config.json",
+      "legacy_batch_metadata_config_reference_exists": false,
+      "train_video_cfg": {
+        "save_video": false,
+        "info_on_video": true,
+        "video_base_dir": "../results/video/train"
+      },
+      "eval_video_cfg": {
+        "save_video": true,
+        "info_on_video": false,
+        "video_base_dir": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/video/eval"
+      }
+    }
+  ]
+}
