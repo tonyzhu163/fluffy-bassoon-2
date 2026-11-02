@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "case": "unchanged",
+      "reference_returncode": 0,
+      "parallel_all_passed": true
+    },
+    {
+      "case": "content_same_size_mtime",
+      "reference_returncode": 1,
+      "parallel_all_passed": false
+    },
+    {
+      "case": "missing_file",
+      "reference_returncode": 1,
+      "parallel_all_passed": false
+    },
+    {
+      "case": "symlink_target",
+      "reference_returncode": 1,
+      "parallel_all_passed": false
+    },
+    {
+      "case": "mode",
+      "reference_returncode": 1,
+      "parallel_all_passed": false
+    },
+    {
+      "case": "mtime",
+      "reference_returncode": 1,
+      "parallel_all_passed": false
+    }
+  ],
+  "qualified": true,
+  "exact_member_partition": true,
+  "literal_names_with_spaces_newline_and_globs": true,
+  "hardlink_and_symlink_fixture": true,
+  "finished_at": "2026-11-03T04:13:37+0800"
+}
