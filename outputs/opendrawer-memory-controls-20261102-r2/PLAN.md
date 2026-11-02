@@ -21,9 +21,17 @@ incomplete r1 material as failure evidence, and collect its endpoint under
 this new identity. The final summary verifies all1100 collected controls
 across both allocations plus900 original unchanged endpoints =2000.
 
-Four2-GPU containers,64 CPUs/256GiB RAM/32GiB SHM each,140-minute scheduler
+Eight1-GPU containers,32 CPUs/128GiB RAM/32GiB SHM each,140-minute scheduler
 cap (`TASK_MEMORY_LIMIT_SECONDS=8400`,135-minute operational deadline).
 r1 conservatively charges17280 GPU-seconds; r2 maximum67200 gives84480 total,
 below the original86400 ceiling. Automatic fault retries stay off. Check the
 first750-control ID episode promptly, then every20minutes. Diagnose a failure
 before considering another identity. Fifty cases per task remain exploratory.
+
+The available cards are fragmented: the scheduler admitted only three2-GPU
+instances at preparation. Use `TASK_MEMORY_GPUS_PER_NODE=1` and eight nodes;
+logical ranks/case partitioning stay0..7, one singleton motor per GPU. The
+driver requires scheduler nodes × requested local GPUs =8 and probes exactly
+the requested local count. Total requested CPU/RAM and GPU-time cap are
+unchanged. The CPU preflight already verified750/900 and267 carried records
+at `cbcffb71`; rerun the binding at the final scheduler-layout source pin.
