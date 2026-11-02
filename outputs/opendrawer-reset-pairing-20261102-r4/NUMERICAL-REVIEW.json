@@ -1,0 +1,63 @@
+{
+  "completed": true,
+  "checked_at": "2026-11-02T06:21:57.760671+00:00",
+  "job": "job-fewxvmo02btm",
+  "reset_count": 24,
+  "motor_inferences": 48,
+  "actual_policy_controls": 0,
+  "same_observation_seed_motor_outputs_exact": true,
+  "cross_process_simulator_state_and_camera_exact": true,
+  "global_seeding_does_not_change_measured_physical_states": true,
+  "all_RGB_differences_at_most_one_uint8_level": true,
+  "case_reports": [
+    {
+      "task": "CloseFridge",
+      "index": 0,
+      "repeats": 6,
+      "state_and_camera_exact": true,
+      "compiled_array_variations": [
+        "geom_rgba"
+      ],
+      "max_RGB_delta": 1,
+      "max_differing_components_per_view": 6,
+      "camera_pair_comparisons": 45
+    },
+    {
+      "task": "CloseFridge",
+      "index": 4,
+      "repeats": 6,
+      "state_and_camera_exact": true,
+      "compiled_array_variations": [
+        "geom_rgba"
+      ],
+      "max_RGB_delta": 1,
+      "max_differing_components_per_view": 78,
+      "camera_pair_comparisons": 45
+    },
+    {
+      "task": "CloseFridge",
+      "index": 6,
+      "repeats": 6,
+      "state_and_camera_exact": true,
+      "compiled_array_variations": [
+        "geom_rgba"
+      ],
+      "max_RGB_delta": 1,
+      "max_differing_components_per_view": 45,
+      "camera_pair_comparisons": 45
+    },
+    {
+      "task": "OpenDrawer",
+      "index": 0,
+      "repeats": 6,
+      "state_and_camera_exact": true,
+      "compiled_array_variations": [
+        "geom_rgba"
+      ],
+      "max_RGB_delta": 0,
+      "max_differing_components_per_view": 0,
+      "camera_pair_comparisons": 45
+    }
+  ],
+  "conclusion": "Feature/base byte equality is not a valid cross-reset case identity guard. Verify exact native state and camera plus <=1 RGB roundoff; keep original pixels. Seed child global RNG to make native decorative geom_rgba deterministic before strict compiled/XML comparison."
+}
