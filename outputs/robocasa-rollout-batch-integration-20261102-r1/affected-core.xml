@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="10" time="3.666" timestamp="2026-11-02T12:20:40.215116+08:00" hostname="aibox-rffe453e3884-5f96c78b88-rtvhb"><testcase classname="tests.test_robocasa_batched_collection" name="test_mixed_horizon_batch_preserves_serial_records_and_next_adam_update" time="0.924"><failure message="ValueError: Require the complete serial per-case motor and actor draw plan">def test_mixed_horizon_batch_preserves_serial_records_and_next_adam_update():
+        cases = [dict(task=task) for task in ('OpenDrawer', 'CoffeeSetupMug', 'OpenDrawer')]
+        offsets = native_chunk_offsets(cases)
+        policy, optimizer = learner()
+        bound = ResidualBound(12, tuple(range(6)), (.25,)*6)
+        seeds, noise = draw_schedule(Motor(), policy, torch.Generator().manual_seed(8), offsets[-1], deterministic=False)
+        serial, serial_episodes = [], []
+        for i, case in enumerate(cases):
+            rows, episodes = collect_pending(policy, bound, Motor(), Lane(i, case), episodes=1, generator=None,
+                planned_motor_seeds=seeds[offsets[i]:offsets[i+1]], planned_action_noise=noise[offsets[i]:offsets[i+1]])
+            serial.extend(rows); serial_episodes.extend(episodes)
+        env = BatchedRoboCasaResidualEnvironment(Lane, cases, horizon=None, environments_per_gpu=2)
+&gt;       actual, episodes = collect_pending(policy, bound, Motor(), env, episodes=3, generator=None,
+            planned_motor_seeds=seeds, planned_action_noise=noise)
+
+tests/test_robocasa_batched_collection.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robocasa_residual.py:266: in collect_pending
+    return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
+../../setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.meta_rl.robocasa_residual_batch.BatchedRoboCasaResidualEnvironment object at 0x7f4cba14bb10&gt;
+policy = ResidualActorCritic(
+  (actor): Sequential(
+    (0): Linear(in_features=3, out_features=8, bias=True)
+    (1): Tanh()
+..._features=8, out_features=8, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+bound = ResidualBound(action_dim=12, indices=(0, 1, 2, 3, 4, 5), scale=(0.25, 0.25, 0.25, 0.25, 0.25, 0.25))
+motor = &lt;test_robocasa_batched_collection.Motor object at 0x7f4cba61d050&gt;
+episodes = 3, generator = None, deterministic = False, verify_zero = False
+planned_motor_seeds = None, planned_action_noise = None
+
+    @torch.no_grad()
+    def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False,
+                verify_zero=False, planned_motor_seeds=None, planned_action_noise=None):
+        from .robocasa_residual_parallel import native_chunk_offsets
+        if self.active or self.cursor or episodes != len(self.cases):
+            raise ValueError('Collect each exact complete worker bank once')
+        offsets = native_chunk_offsets(self.cases, self.horizon)
+        if (planned_motor_seeds is None or len(planned_motor_seeds) != offsets[-1]
+                or (not deterministic and planned_action_noise is None)
+                or (planned_action_noise is not None and len(planned_action_noise) != offsets[-1])):
+&gt;           raise ValueError('Require the complete serial per-case motor and actor draw plan')
+E           ValueError: Require the complete serial per-case motor and actor draw plan
+
+src/fluffy_bassoon/meta_rl/robocasa_residual_batch.py:60: ValueError</failure></testcase><testcase classname="tests.test_robocasa_batched_collection" name="test_eight_lanes_shrink_at_native_ends_without_padding_and_pin_recovery" time="0.004"><failure message="ValueError: Require the complete serial per-case motor and actor draw plan">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-83/test_eight_lanes_shrink_at_nat0')
+
+    def test_eight_lanes_shrink_at_native_ends_without_padding_and_pin_recovery(tmp_path):
+        cases = [dict(task='CoffeeSetupMug' if i%5==0 else 'OpenDrawer') for i in range(10)]
+        offsets = native_chunk_offsets(cases)
+        policy, _ = learner(); motor = Motor()
+        seeds, _ = draw_schedule(motor, policy, torch.Generator().manual_seed(8), offsets[-1], deterministic=True)
+        env = BatchedRoboCasaResidualEnvironment(Lane, cases, horizon=None, environments_per_gpu=8)
+&gt;       records, episodes = collect_pending(policy, ResidualBound(12, tuple(range(6)), (.25,)*6), motor, env,
+            episodes=10, generator=None, deterministic=True, verify_zero=True, planned_motor_seeds=seeds)
+
+tests/test_robocasa_batched_collection.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robocasa_residual.py:266: in collect_pending
+    return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
+../../setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.meta_rl.robocasa_residual_batch.BatchedRoboCasaResidualEnvironment object at 0x7f4cb023bf10&gt;
+policy = ResidualActorCritic(
+  (actor): Sequential(
+    (0): Linear(in_features=3, out_features=8, bias=True)
+    (1): Tanh()
+..._features=8, out_features=8, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+bound = ResidualBound(action_dim=12, indices=(0, 1, 2, 3, 4, 5), scale=(0.25, 0.25, 0.25, 0.25, 0.25, 0.25))
+motor = &lt;test_robocasa_batched_collection.Motor object at 0x7f4cb0498f10&gt;
+episodes = 10, generator = None, deterministic = True, verify_zero = True
+planned_motor_seeds = None, planned_action_noise = None
+
+    @torch.no_grad()
+    def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False,
+                verify_zero=False, planned_motor_seeds=None, planned_action_noise=None):
+        from .robocasa_residual_parallel import native_chunk_offsets
+        if self.active or self.cursor or episodes != len(self.cases):
+            raise ValueError('Collect each exact complete worker bank once')
+        offsets = native_chunk_offsets(self.cases, self.horizon)
+        if (planned_motor_seeds is None or len(planned_motor_seeds) != offsets[-1]
+                or (not deterministic and planned_action_noise is None)
+                or (planned_action_noise is not None and len(planned_action_noise) != offsets[-1])):
+&gt;           raise ValueError('Require the complete serial per-case motor and actor draw plan')
+E           ValueError: Require the complete serial per-case motor and actor draw plan
+
+src/fluffy_bassoon/meta_rl/robocasa_residual_batch.py:60: ValueError</failure></testcase><testcase classname="tests.test_robocasa_batched_collection" name="test_failed_lane_keeps_bank_incomplete_and_closes_native_children" time="0.002"><failure message="ValueError: Require the complete serial per-case motor and actor draw plan">def test_failed_lane_keeps_bank_incomplete_and_closes_native_children():
+        cases = [dict(task='OpenDrawer')]*2; created = []
+        def make(index, case):
+            env = Lane(index, case, fail=index==1); created.append(env); return env
+        env = BatchedRoboCasaResidualEnvironment(make, cases, horizon=None, environments_per_gpu=2)
+        policy, _ = learner(); seeds = list(range(30))
+        with pytest.raises(RuntimeError, match='native failure'):
+&gt;           collect_pending(policy, ResidualBound(12, tuple(range(6)), (.25,)*6), Motor(), env,
+                episodes=2, generator=None, deterministic=True, planned_motor_seeds=seeds)
+
+tests/test_robocasa_batched_collection.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/fluffy_bassoon/meta_rl/robocasa_residual.py:266: in collect_pending
+    return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
+../../setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;fluffy_bassoon.meta_rl.robocasa_residual_batch.BatchedRoboCasaResidualEnvironment object at 0x7f4cb004b810&gt;
+policy = ResidualActorCritic(
+  (actor): Sequential(
+    (0): Linear(in_features=3, out_features=8, bias=True)
+    (1): Tanh()
+..._features=8, out_features=8, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=8, out_features=1, bias=True)
+  )
+)
+bound = ResidualBound(action_dim=12, indices=(0, 1, 2, 3, 4, 5), scale=(0.25, 0.25, 0.25, 0.25, 0.25, 0.25))
+motor = &lt;test_robocasa_batched_collection.Motor object at 0x7f4cb00fd190&gt;
+episodes = 2, generator = None, deterministic = True, verify_zero = False
+planned_motor_seeds = None, planned_action_noise = None
+
+    @torch.no_grad()
+    def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False,
+                verify_zero=False, planned_motor_seeds=None, planned_action_noise=None):
+        from .robocasa_residual_parallel import native_chunk_offsets
+        if self.active or self.cursor or episodes != len(self.cases):
+            raise ValueError('Collect each exact complete worker bank once')
+        offsets = native_chunk_offsets(self.cases, self.horizon)
+        if (planned_motor_seeds is None or len(planned_motor_seeds) != offsets[-1]
+                or (not deterministic and planned_action_noise is None)
+                or (planned_action_noise is not None and len(planned_action_noise) != offsets[-1])):
+&gt;           raise ValueError('Require the complete serial per-case motor and actor draw plan')
+E           ValueError: Require the complete serial per-case motor and actor draw plan
+
+src/fluffy_bassoon/meta_rl/robocasa_residual_batch.py:60: ValueError</failure></testcase><testcase classname="tests.test_robocasa_batched_collection" name="test_incomplete_draw_plan_is_rejected_before_any_native_reset" time="0.002" /><testcase classname="tests.test_robocasa_batched_collection" name="test_native_lane_retains_original_episode_id_round_and_recovery_offset" time="0.023" /><testcase classname="tests.test_robocasa_residual" name="test_full_native_horizon_and_video_are_truth_isolated" time="0.022" /><testcase classname="tests.test_robocasa_residual" name="test_mixed_task_native_horizons_recover_only_at_full_episode_boundary" time="0.039" /><testcase classname="tests.test_robocasa_residual" name="test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint" time="0.039" /><testcase classname="tests.test_residual_parallel" name="test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[False]" time="0.276" /><testcase classname="tests.test_residual_parallel" name="test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[True]" time="0.272" /></testsuite></testsuites>

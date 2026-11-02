@@ -77,6 +77,30 @@ before the next:
    reward-blind controls. Full-weight PPO is a reward check, not that
    baseline.
 
+## RoboCasa residual PPO rollout execution
+
+Future matched joint runs use eight native environments per GPU and one shared
+frozen policy copy. The scientific batch stays at 80 complete episodes, 16 per
+training task; execution batching does not increase its size or change the
+configured optimizer. Each worker collects its ten cases in groups of eight
+and two, removing shorter episodes when their native horizons finish without
+padding or truncating longer episodes. Both reward arms and their before/after
+evaluations use the same batching.
+
+Motor and actor draws are assigned in the original serial case/chunk order.
+Worker records return in that order before labels or GAE, and a failed lane
+leaves the entire bank incomplete. Checkpoints bind the lane count, original
+case IDs and full recovery state. Legacy profiles without the new field retain
+one lane; current run worktrees and historical recoveries remain unchanged.
+Batched BF16 inference is not bit-identical to historical singleton inference.
+
+The colocated Flora startup check requires at least 27,408 MiB free after
+scorer warmup: the measured eight-lane native peak plus an 8 GiB reserve.
+Standalone rollout capacity does not qualify simultaneous scorer/rollout
+memory use; a job fails before dispatch if that reservation is unavailable.
+See the [execution configuration](../configs/native_ppo/robocasa_residual_execution.json)
+and [allocated Linux core checks](../outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json).
+
 ## First test: LIBERO90 task 44, simulator reward vs Flora reward
 
 A single-seed pilot to decide whether the idea is worth pursuing; the
