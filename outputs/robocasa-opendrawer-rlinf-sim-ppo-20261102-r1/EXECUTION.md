@@ -55,3 +55,21 @@ checks. The before-panel success_once must fall in5–70%; a result outside that
 range stops for the predeclared human task decision. No automatic task swap.
 After qualification verify actual advancing updates and complete artifacts,
 then monitor every20minutes. Preserve partials/costs before any fresh attempt.
+
+## Checkpoint-zero recovery and before-panel reuse
+
+The complete native before64 panel is35/64 first-success and34/64 final success,
+so its admission gate passes. Attempt r2 stopped while serializing native NumPy
+scalar metrics after that panel and before any SGD; the metric serializer is
+corrected in afe4e97b. [BEFORE-RECOVERY.json](BEFORE-RECOVERY.json) binds every
+episode truth receipt, the fixed64 seeds, the original canonical reset bank and
+the full step0 checkpoint. All actor/DCP/worker files were byte-hash verified
+on allocated Linux. The old attempt stays immutable.
+
+Fresh recovery attempts set ROBOCASA_SIM_PPO_RESUME to that checkpoint and
+ROBOCASA_SIM_PPO_BEFORE_REFERENCE/SHA256 to the bound reference. The runner
+verifies the original64 rows, copies the canonical snapshots into the new
+attempt and records reused metrics without new evaluation controls. Actor,
+Adam, LR, scaler, sampler and Python/NumPy/Torch/CUDA worker states restore
+before iteration1. This is an explicit source migration for serialization and
+recovery only; the motor, task, before bank and optimization contract are fixed.
