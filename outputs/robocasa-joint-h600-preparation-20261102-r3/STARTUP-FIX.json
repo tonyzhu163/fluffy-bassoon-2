@@ -1,0 +1,17 @@
+{
+  "cause": "Qualified GPU probe requires an explicit CUDA_VISIBLE_DEVICES list; r2 inherited no value",
+  "fix": "Preserve scheduler CUDA visibility if nonempty; otherwise select index0 inside its already isolated one-GPU container. NVIDIA_VISIBLE_DEVICES and probe guards unchanged.",
+  "evidence": "outputs/robocasa-joint-h600-preparation-20261102-r2/TERMINAL-EVIDENCE.json",
+  "model_or_test_code_changed": false,
+  "tests_rerun": false,
+  "reason": "All production core bytes retain the passing92-test hashes; reversible launch setting and finite clocks reviewed directly",
+  "budget": {
+    "total_authorized_gpu_seconds": 26400,
+    "prior_attempt_upper_gpu_seconds": 1153,
+    "prior_r1_upper": 864,
+    "prior_r2_charged": 289,
+    "new_attempt_maximum_gpu_seconds": 25200,
+    "combined_upper_gpu_seconds": 26353,
+    "uncommitted_margin_gpu_seconds": 47
+  }
+}

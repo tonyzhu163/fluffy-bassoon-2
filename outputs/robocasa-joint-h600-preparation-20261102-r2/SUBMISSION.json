@@ -1,0 +1,26 @@
+{
+  "cluster": "Baige Pro6K",
+  "job_id": "job-lfuslcf57vpj",
+  "name": "mwj_1102_joint_h600_prep_4x1_r2",
+  "source_commit": "ab88fb5109a25fe9a33a94b4ebea9e53e1d4b4cd",
+  "created_Shanghai": "2026-11-02 15:42:10",
+  "status": "Failed",
+  "terminal_Shanghai": "2026-11-02 15:43:12",
+  "GPUs": 4,
+  "scheduler_running_seconds": 30,
+  "pod_lifetimes_seconds": [
+    53,
+    59,
+    53,
+    53
+  ],
+  "entire_job_lifetime_GPU_seconds_upper": 248,
+  "clock_charged_GPU_seconds": 289,
+  "accounted_GPU_seconds": 289,
+  "all_allocations_terminal": true,
+  "models_loaded": 0,
+  "policy_controls": 0,
+  "optimizer_updates": 0,
+  "cause": "Missing CUDA_VISIBLE_DEVICES; all four real assigned GPUs were idle but the probe correctly refused an implicit selection",
+  "next": "New immutable r3; restore the qualified explicit index0 fallback inside the scheduler GPU namespace"
+}
