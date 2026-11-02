@@ -21,8 +21,11 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
     def create():
         from robosuite.environments.base import MujocoEnv
         from robosuite.utils.binding_utils import MjSim
+        # first_success_control: 1-based policy control at which the native
+        # success check first held (None if never). Monitoring-only truth used
+        # to choose task horizons; it never reaches the learner or Flora.
         counts=dict(controls=0,reset_controls=0,physics_ticks=0,step1_calls=0,
-            phase='reset',control_time=None,clock=None)
+            phase='reset',control_time=None,clock=None,first_success_control=None)
         step=MujocoEnv.step
         def counted_step(env,action):
             if counts['phase']=='reset' and counts['reset_controls']>=reset_control_limit:
@@ -31,6 +34,9 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
             if counts['phase']=='reset':counts['reset_controls']+=1
             result=step(env,action)
             counts['control_time']=float(env.cur_time)
+            if (counts['phase']=='policy' and counts['first_success_control'] is None
+                    and hasattr(env,'_check_success') and bool(env._check_success())):
+                counts['first_success_control']=counts['controls']-counts['reset_controls']
             return result
         MujocoEnv.step=counted_step
         # lite_physics uses step1+step2, ordinary physics uses step. A completed
@@ -46,7 +52,7 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
         env=factory()
         original_reset=env.reset
         def reset(*args,**kwargs):
-            counts['phase']='reset'
+            counts['phase']='reset';counts['first_success_control']=None
             try:result=original_reset(*args,**kwargs)
             finally:counts['phase']='policy'
             # RoboCasa defers time initialization until native reset. Read
