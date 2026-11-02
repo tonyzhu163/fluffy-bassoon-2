@@ -1,0 +1,7 @@
+{
+  "replaces": "baige-storage-tiering-20261103-r2",
+  "reason": "Serial metadata latency; r2 stopped before packing, upload or reclaim.",
+  "first_phase": "First six r1 sources already verified and cold-moved; r1 stopped at the recorded boundary.",
+  "ownership": "Own only r1 original plan sources after its first six, disjoint from completed first phase.",
+  "verification": "Same GNU tar content comparison, object SHA256 readback and unchanged-source checks. Eight metadata reads per archive; three archives maximum. Ignore only sibling-induced hardlink count changes."
+}
