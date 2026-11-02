@@ -366,8 +366,13 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
         env(tmp_path / "serial"), episodes=len(cases), generator=None,
         planned_motor_seeds=seeds, planned_action_noise=noise)
     lane_motor = FrozenRoboCasaMotor(LaneModel(), stats)
+    checkpoints = {}
+    def checkpoint(slot, records, episode):
+        checkpoints[slot] = (deepcopy(records), deepcopy(episode))
+        records[0]['reward'] = 999.  # The hook cannot mutate the returned batch.
     lane_records, lane_episodes = collect_pending_lanes(policy, bound(), lane_motor,
-        [env(tmp_path / "lanes") for _ in range(2)], planned_motor_seeds=seeds, planned_action_noise=noise)
+        [env(tmp_path / "lanes") for _ in range(2)], planned_motor_seeds=seeds, planned_action_noise=noise,
+        episode_callback=checkpoint)
     # Background resets make the forward count timing dependent; draws are keyed by case and chunk.
     assert lane_motor.model.calls >= 30
     assert [e["id"] for e in lane_episodes] == [e["id"] for e in serial_episodes]
@@ -379,6 +384,43 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
         for key in ("features", "control", "base_chunk", "executed_chunk"):
             np.testing.assert_array_equal(lane[key], serial[key])
         assert lane["log_prob"] == serial["log_prob"]
+    assert set(checkpoints) == set(range(len(cases)))
+    for slot, (records, episode) in checkpoints.items():
+        assert len(records) == 12 and records[-1]['done'] and records[0]['episode_start']
+        assert episode['id'] == lane_episodes[slot]['id']
+        for key in ('features', 'control', 'base_chunk', 'executed_chunk'):
+            np.testing.assert_array_equal(records[0][key], lane_records[slot * 12][key])
+
+
+@pytest.mark.parametrize('failed_lane', [0, 1])
+def test_complete_lane_is_checkpointed_before_sibling_failure(tmp_path, failed_lane):
+    from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
+    stats = {key: dict(mean=[0.] * 32, std=[2.] * 32) for key in ('state', 'actions')}
+    cases = [dict(task='OpenDrawer', native_seed=i) for i in range(2)]
+    class FailingLane(RoboCasaResidualEnvironment):
+        def step_chunk(self, chunk):
+            result = super().step_chunk(chunk)
+            if self.fail and result[1]:
+                raise RuntimeError('Sibling step failed')
+            return result
+    environments = []
+    for lane in range(2):
+        env = FailingLane(lambda case: StepNative(), cases, horizon=600,
+            output=tmp_path/f'lane-{lane}/videos', monitoring_root=tmp_path/f'lane-{lane}/monitor',
+            journal=Journal(), writer_factory=Writer)
+        env.fail = lane == failed_lane
+        environments.append(env)
+    checkpoints = []
+    policy = ResidualActorCritic(ResidualPPOConfig(42, 6, width=8))
+    with pytest.raises(RuntimeError, match='Sibling step failed'):
+        collect_pending_lanes(policy, bound(), FrozenRoboCasaMotor(LaneModel(), stats), environments,
+            planned_motor_seeds=list(range(24)), deterministic=True,
+            episode_callback=lambda slot, records, info: checkpoints.append((slot, records, info)))
+    assert len(checkpoints) == 1 and checkpoints[0][0] == 1 - failed_lane
+    assert len(checkpoints[0][1]) == 12 and checkpoints[0][1][-1]['done']
+    assert checkpoints[0][2]['completed']
+    for env in environments:
+        env.close()
 
 
 def test_native_reset_child_cannot_keep_another_lanes_video_pipe_open():

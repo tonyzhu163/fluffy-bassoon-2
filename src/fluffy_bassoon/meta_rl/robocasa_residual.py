@@ -333,7 +333,8 @@ def combine_observations(observations):
 
 
 def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_seeds,
-                          planned_action_noise=None, deterministic=False, verify_zero=False):
+                          planned_action_noise=None, deterministic=False, verify_zero=False,
+                          episode_callback=None):
     """Run one worker's case bank with concurrent simulator lanes on one GPU.
 
     ``environments`` are lane environments over the SAME case list. A lane takes
@@ -342,6 +343,9 @@ def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_s
     chunk keeps its serial-order planned motor seed and actor noise, and
     records/episodes return in case order, so ids, draws and GAE match the
     serial collector. Batched BF16 inference is not bitwise equal to batch 1.
+    An optional callback receives an independent copy of each complete episode's
+    records before refill. Successful sibling steps are delivered even if another
+    lane in the same batch fails, so callers can checkpoint completed episodes.
     """
     from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
     from .robocasa_residual_parallel import native_chunk_offsets
@@ -399,18 +403,30 @@ def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_s
                     log_prob=float(log_prob[0]), value=float(value[0]), reward=0., done=False,
                     episode_start=running[lane][1] == 0, zero_residual_verified=verified))
             steps = [pool.submit(environments[lane].step_chunk, chunk) for lane, chunk in zip(lanes, executed)]
+            outcomes, errors = [], []
             for lane, slot, step in zip(lanes, slots, steps):
-                observation, done, info = step.result()
+                try:
+                    outcomes.append((lane, slot, step.result()))
+                except Exception as error:
+                    errors.append(error)
+            completed_lanes = []
+            for lane, slot, (observation, done, info) in outcomes:
                 if bool(done) != (running[lane][1]+1 == offsets[slot+1]-offsets[slot]):
                     raise ValueError('Each lane must finish at its exact native horizon')
                 records[slot][-1]["done"] = bool(done)
                 if done:
                     finished[slot] = info
+                    if episode_callback is not None:
+                        episode_callback(slot, deepcopy(records[slot]), deepcopy(info))
                     del running[lane]
-                    start(lane, pool)
+                    completed_lanes.append(lane)
                 else:
                     running[lane][1] += 1
                     running[lane][2] = observation
+            if errors:
+                raise errors[0]
+            for lane in completed_lanes:
+                start(lane, pool)
     records = [row for slot in range(len(cases)) for row in records[slot]]
     finished = [finished.get(slot) for slot in range(len(cases))]
     if len(records) != offsets[-1] or any(info is None for info in finished):
