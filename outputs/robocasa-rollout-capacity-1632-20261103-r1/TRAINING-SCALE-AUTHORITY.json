@@ -1,0 +1,20 @@
+{
+  "human_direction_Shanghai": "2026-11-03",
+  "applies_to": "Future joint five-task PPO; does not change the running capacity benchmark",
+  "requested_environments_per_gpu": 32,
+  "rollout_gpus": 8,
+  "requested_episodes_per_joint_update": 256,
+  "batch_adoption_condition": "32 real native environments per GPU pass capacity measurement",
+  "requested_joint_ppo_iterations": 60,
+  "reason": "Human emphasized that larger batches and a larger total PPO scale are important; previous PPO scale was too small.",
+  "arm_allocation": "PENDING_CLARIFICATION: 60 joint updates per velocity and KV arm, or 60 shared across the two arms",
+  "if_60_per_arm": {
+    "episodes_per_arm": 15360,
+    "policy_controls_per_arm": 9216000,
+    "physical_reset_controls": "additional, journaled",
+    "task_balance": "Each update has one task with52 episodes and four with51; rotate the extra episode over five updates. Over60 updates each task has3072 episodes."
+  },
+  "prior_5M_control_plan": "Superseded in scale by this human direction; exact per-arm contract and full physical budget wait for clarification and measured throughput.",
+  "resource_budget": "Measure first; publish a concrete runtime estimate and identify any increase beyond the previously retained combined20GPUh ceiling before launching training.",
+  "training_launched_here": false
+}
