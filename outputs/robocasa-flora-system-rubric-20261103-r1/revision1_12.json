@@ -1,0 +1,12 @@
+{
+  "criteria_id": "revision1_12",
+  "task_template": "Open the very top drawer directly underneath the countertop on the {side} of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The task is complete as soon as that target drawer has slid out by at least 52.25% of its front-to-back depth, just over half. Maximum extension is not required. Holding the handle is allowed. Later closing or occlusion does not undo that first success. The three synchronized views show the same scene. Use the clearest available view of the target; the drawer need not be visible in every view. Left/right refers to the robot at the start, not the current image edge.",
+  "qualified": false,
+  "episode_simulator_state_in_prompt": false,
+  "native_instruction_rewrite": "Native instruction preserved verbatim in user message; deterministic side extraction only for system rubric.",
+  "previous_criteria_id": "revision1_10",
+  "change": "Native short task plus verbatim1.10 rubric in system; system and final question aligned to first success.",
+  "prompt_placement": "system",
+  "aligned_first_success_grading": true,
+  "source_criteria_sha256": "9b6953b2560cc22d423b70ae596fb6fd493c02ff81a18c75370ee26a6ba20593"
+}
