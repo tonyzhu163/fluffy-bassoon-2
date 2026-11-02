@@ -74,7 +74,7 @@ def main():
         assert final['completed'] and final['headroom_only'] and final['PPO_updates']==0
         panels={}
         for name in REQUIRED + (('direct',) if 'direct' in final['panels'] else ()):
-            audit_path=ROOT/'audits'/(task+'-'+name+'.json')
+            audit_path=ROOT/'final-audits'/(task+'-'+name+'.json')
             audit=json.loads(audit_path.read_text())
             assert audit['completed']
             result_path=ROOT/task/name/'RESULT.json'

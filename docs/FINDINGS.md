@@ -302,6 +302,37 @@ oracle best-of8 recovery is a diagnostic, not an ICRL ceiling. This makes
 matched empty-memory motor streams essential before claiming memory gains.
 [Per-case estimates and uncertainty](../outputs/opendrawer-memory-controls-20261102-r1/NOISE.md).
 
+**RoboCasa Stage 0 interface screen completed (2026-11-02).** On 20 TRAIN
+cases/task selected by an independent native failure anchor, eight new draws
+at 600 controls gave native successes 79/43/44/16 of 160 on
+OpenDrawer/DrawerToCounter/Coffee/Stove. Action residual0.25 scored
+81/42/31/12, residual0.5 42/38/16/7, bounded tied-noise32 1/0/0/0,
+conditioning 89/44/47/20 and velocity 84/49/53/20. Positive per-task changes
+do not reach p<.05 in exploratory exact tests that preserve eight-draw case
+clusters. Native best-of-eight recovers19/15/16/9 of20 cases; it is simulator
+oracle search, not a deployed selector or a bound on all chunkwise policies.
+The realizable eight-candidate value-heuristic selector scores13/5/4/1 of20
+versus matched native draw0 12/4/4/3 (paired p=1/1/1/.625); its scorer is not
+a qualified Q-function or a history policy.
+
+All six planned families were attempted, but the direct-head arm is a
+**distillation diagnostic that bypasses the expert outputs**, not frozen-expert
+steering. Only OpenDrawer qualified (8/8 versus native3/8 on eight fresh TRAIN
+competence cases); its109/160 full-bank score uses target cases that also
+contributed imitation training/validation and model selection, so possible
+overfitting is unresolved and this score is excluded from steering rankings.
+The other three direct families remain incomplete after fit/competence gates.
+All35 banks and349 carried outcomes passed final Linux CPU truth/video,
+checkpoint, control and physical/public-pairing audits. The213 carried native
+rows lack actual chunk records and are not AD/DPT training histories.
+The campaign charged2,582,096 controls and conservatively32,652 GPU-seconds
+(9.07hours), including both failed attempts and the full four-GPU scheduler
+lifetime;16 old unresolved calls remain charged. Zero PPO updates occurred.
+Actual improving simulator- and Flora-reward PPO curves remain gates for new
+AD/DPT histories. [Six-family results and limits](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md),
+[paired evidence](../outputs/robocasa-interface-screen-20261102-r3/FINAL-RESULT.json),
+[terminal costs](../outputs/robocasa-interface-screen-20261102-r3/TERMINAL-ACCOUNTING.json).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The
