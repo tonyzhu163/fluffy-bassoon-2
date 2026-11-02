@@ -140,13 +140,17 @@ held-out after-training panels:
 
 | Reward used for PPO | OpenDrawer ID | CloseFridge OOD |
 | --- | ---: | ---: |
+| Untouched original pi0.5 |28/50 (56%)|28/50 (56%)|
 | Simulator terminal success |34/50 (68%)|32/50 (64%)|
 | Official three-view Flora expected score |31/50 (62%)|28/50 (56%)|
 
-Flora did not exceed simulator PPO on these panels. This is one training task
-and one PPO source seed; it does not establish the cause of the difference or
-an OOD degradation relative to the untouched motor. The original before panel
-has only8 cases per split; its matching50+50 evaluation is now running.
+Flora did not exceed simulator PPO on these panels. Its OOD count ties the
+untouched original, so there is no observed net OOD degradation on this cohort.
+The original matching50+50 evaluation completed with all100 cases, actual noise
+schedules and1650 unchanged zero-residual chunks verified. This is one training
+task and one PPO source seed; the paired two-sided exact p-values for S versus
+original are0.210 ID/0.481 OOD, and F versus S are0.508 ID/0.388 OOD. These
+small-panel differences do not establish a reliable population advantage or cause.
 Do not substitute the separate50-case calibration bank for that baseline.
 The Flora arm completed384 TRAIN episodes with all384 official labels audited;
 its full5760-decision history exactly merges the preserved four-update prefix
@@ -163,7 +167,7 @@ establish perfect numerical pairing or the cause of a few-case success gap.
 [Seed and numerical audit](../outputs/robocasa-original-pi05-eval50-20261102-r1/INITIAL-NUMERICS.json).
 [Simulator panel audit](../outputs/robocasa-simulator-ppo-eval50-20261102-r1/TERMINAL-REVIEW.json),
 [Flora terminal audit](../outputs/robocasa-opendrawer-flora-resume-20261102-r1/TERMINAL-REVIEW.json),
-[original matching-panel contract](../outputs/robocasa-original-pi05-eval50-20261102-r1/PLAN.json).
+[original matching-panel audit](../outputs/robocasa-original-pi05-eval50-20261102-r1/TERMINAL-REVIEW.json).
 
 ## LIBERO
 

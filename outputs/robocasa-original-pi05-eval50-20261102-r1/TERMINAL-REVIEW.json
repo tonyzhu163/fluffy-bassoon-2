@@ -1,0 +1,191 @@
+{
+  "completed": true,
+  "checked_at_Shanghai": "2026-11-02T13:48:39.766795+08:00",
+  "cluster": "Baige",
+  "job_id": "job-028lwmw7ikwc",
+  "source_commit": "0be8cc272b0aea655776faf7e706c7d774a40394",
+  "scheduler_status": "Succeeded",
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/S/boundary-000.pt",
+    "sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7"
+  },
+  "checkpoint_hash_unchanged": true,
+  "new_optimizer_updates": 0,
+  "zero_residual_verified_decisions": 1650,
+  "all_three_actual_case_and_noise_schedules_verified": true,
+  "independent_sidecars_verified": 100,
+  "panels": {
+    "ID": {
+      "original": {
+        "successes": 28,
+        "episodes": 50,
+        "rate": 0.56
+      },
+      "simulator_PPO": {
+        "successes": 34,
+        "episodes": 50,
+        "rate": 0.68
+      },
+      "Flora_PPO": {
+        "successes": 31,
+        "episodes": 50,
+        "rate": 0.62
+      }
+    },
+    "OOD": {
+      "original": {
+        "successes": 28,
+        "episodes": 50,
+        "rate": 0.56
+      },
+      "simulator_PPO": {
+        "successes": 32,
+        "episodes": 50,
+        "rate": 0.64
+      },
+      "Flora_PPO": {
+        "successes": 28,
+        "episodes": 50,
+        "rate": 0.56
+      }
+    }
+  },
+  "paired_outcomes": {
+    "ID": {
+      "simulator_PPO_vs_original": {
+        "wins": 11,
+        "losses": 5,
+        "both_success": 23,
+        "both_failure": 11,
+        "exact_paired_two_sided_p": 0.210113525390625
+      },
+      "Flora_PPO_vs_original": {
+        "wins": 7,
+        "losses": 4,
+        "both_success": 24,
+        "both_failure": 15,
+        "exact_paired_two_sided_p": 0.548828125
+      },
+      "Flora_PPO_vs_simulator_PPO": {
+        "wins": 3,
+        "losses": 6,
+        "both_success": 28,
+        "both_failure": 13,
+        "exact_paired_two_sided_p": 0.5078125
+      }
+    },
+    "OOD": {
+      "simulator_PPO_vs_original": {
+        "wins": 11,
+        "losses": 7,
+        "both_success": 21,
+        "both_failure": 11,
+        "exact_paired_two_sided_p": 0.480682373046875
+      },
+      "Flora_PPO_vs_original": {
+        "wins": 9,
+        "losses": 9,
+        "both_success": 19,
+        "both_failure": 13,
+        "exact_paired_two_sided_p": 1.0
+      },
+      "Flora_PPO_vs_simulator_PPO": {
+        "wins": 4,
+        "losses": 8,
+        "both_success": 24,
+        "both_failure": 14,
+        "exact_paired_two_sided_p": 0.3876953125
+      }
+    }
+  },
+  "numerical_comparison_to_original": {
+    "ID": {
+      "simulator_PPO": {
+        "max_initial_proprio_abs_difference": 0.0,
+        "max_initial_base_chunk_abs_difference": 0.005167260766029358,
+        "bitwise_base_equal": false
+      },
+      "Flora_PPO": {
+        "max_initial_proprio_abs_difference": 0.0,
+        "max_initial_base_chunk_abs_difference": 0.0029479563236236572,
+        "bitwise_base_equal": false
+      }
+    },
+    "OOD": {
+      "simulator_PPO": {
+        "max_initial_proprio_abs_difference": 0.0,
+        "max_initial_base_chunk_abs_difference": 0.23382681608200073,
+        "bitwise_base_equal": false
+      },
+      "Flora_PPO": {
+        "max_initial_proprio_abs_difference": 0.0,
+        "max_initial_base_chunk_abs_difference": 1.9410467147827148,
+        "bitwise_base_equal": false
+      }
+    }
+  },
+  "physical_controls": 82500,
+  "unresolved_calls": 0,
+  "closed_GPU_seconds": 7332,
+  "node_charges": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-00/clock/attempts/1793596902000000-0000",
+      "started_unix": 1793596902.0,
+      "slice_seconds": 3540,
+      "reserved_seconds": 3600,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793597784.0180023,
+      "exit_code": 0,
+      "charged_seconds": 943,
+      "slice_overrun": false,
+      "charged_gpu_seconds": 1886
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-01/clock/attempts/1793596936000000-0000",
+      "started_unix": 1793596936.0,
+      "slice_seconds": 3540,
+      "reserved_seconds": 3600,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793597784.389131,
+      "exit_code": 0,
+      "charged_seconds": 909,
+      "slice_overrun": false,
+      "charged_gpu_seconds": 1818
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-02/clock/attempts/1793596938000000-0000",
+      "started_unix": 1793596938.0,
+      "slice_seconds": 3540,
+      "reserved_seconds": 3600,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793597784.2349384,
+      "exit_code": 0,
+      "charged_seconds": 907,
+      "slice_overrun": false,
+      "charged_gpu_seconds": 1814
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-original-pi05-eval50-20261102-r1/job/node-03/clock/attempts/1793596938000000-0000",
+      "started_unix": 1793596938.0,
+      "slice_seconds": 3540,
+      "reserved_seconds": 3600,
+      "status": "finished",
+      "scheduler_allowance_seconds": 60,
+      "ended_unix": 1793597784.1848707,
+      "exit_code": 0,
+      "charged_seconds": 907,
+      "slice_overrun": false,
+      "charged_gpu_seconds": 1814
+    }
+  ],
+  "all_four_exit_zero": true,
+  "output_bytes_recorded_at_completion": 819337227,
+  "output_limit_bytes": 25769803776,
+  "interpretation": "On these50-case panels normal PPO is+6 ID/+4 OOD versus original; Flora PPO is+3 ID/tied OOD. No observed OOD degradation of Flora versus original. One training seed and small held-out cohort; seed-matched inference is not bitwise identical, so do not assign differences solely to reward learning.",
+  "next": "Close original/S/F execution monitoring; continue independent AD/DPT readouts",
+  "scheduler_end_Shanghai": "2026-11-02 13:36:35",
+  "all_four_scheduler_instances_succeeded": true
+}

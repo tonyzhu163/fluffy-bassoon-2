@@ -1,0 +1,13 @@
+{
+  "human_request": "yes i want you to investigate the results; why normal ppo better",
+  "scope": "Read-only analysis of retained original/S/F checkpoints, six training batches, official Flora outputs, simulator sidecars and final paired outcomes.",
+  "execution": "Allocated Baige development container, Linux CPU only, four CPU threads; no simulator or frozen VLA loads, no new physical episodes, optimizer steps, candidate selection or GPU allocation.",
+  "checks": [
+    "Confirm identical initial residual tensors, learner configuration and complete Adam step counts, including Flora recovery.",
+    "Measure official Flora reward discrimination and success/failure overlap on its actual384 on-policy TRAIN episodes, retaining all outcomes.",
+    "Compare PPO metrics and true success curves across six batches.",
+    "Recompute GAE on the same Flora pending records using actual soft labels versus binary terminal truth; compare normalized advantage signs and full-batch actor-gradient directions without optimizer steps.",
+    "Compare final residual predictions on identical original-policy feature panels; these are descriptive off-policy predictions, not counterfactual robot results.",
+    "Keep paired-case uncertainty and nonbitwise frozen-motor execution visible; do not claim a unique causal explanation from one seed."
+  ]
+}
