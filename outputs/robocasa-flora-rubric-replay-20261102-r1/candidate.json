@@ -1,0 +1,29 @@
+{
+  "status": "DRAFT_NOT_QUALIFIED",
+  "criteria_id": "robocasa-native-visual-completion-v1",
+  "source": "Pinned native task predicates translated into generalized observable language",
+  "renderer_scope": "Use unchanged native task instruction plus shared_criteria and only the selected current task text. Keep all audit and episode labels outside model input.",
+  "shared_criteria": "Use the native task instruction to identify the requested object and target.\nFollow the same target throughout the video, even when camera viewpoints change.\nUse the synchronized views together. Judge whether the requested outcome is\nachieved at the end of the trajectory. Earlier progress that is later undone\ndoes not establish terminal success.\n\nReserve complete success for an outcome satisfying all of the task's completion\nconditions. Reaching, touching, grasping, moving toward the goal or nearly\nfinishing are partial progress. Use visible evidence; occlusion alone is neither\nproof of failure nor proof of success. Do not add requirements absent from the\ntask's completion conditions. Keep the official one-to-five output format.",
+  "reward_training_task_criteria": {
+    "OpenDrawer": "The requested drawer is fully open at the end, near the end of its travel. A partly pulled drawer is not complete success. Judge the drawer identified by the instruction and initial scene, rather than switching targets as the camera moves.",
+    "PickPlaceCounterToCabinet": "The requested object has been placed fully inside the intended cabinet, and the acting hand has released it and withdrawn clearly away. Holding it in the doorway or leaving it protruding is incomplete. Closing the cabinet door afterward is not required.",
+    "PickPlaceDrawerToCounter": "The requested object has been taken out of the drawer and placed in contact with a counter surface. The acting hand has released it and withdrawn clearly away. Keeping it held above the counter is incomplete. Closing the drawer afterward is not required.",
+    "TurnOffStove": "The burner named in the instruction is off at the end. Follow the named burner and its control; cookware may be on a different burner. Other burners do not have to be turned off. Moving a knob without reaching the requested off state is incomplete.",
+    "CoffeeSetupMug": "The requested mug is positioned directly under the coffee dispenser at the receiving position. The acting hand has released it and withdrawn clearly away. Leaving it beside the machine or holding it under the dispenser is incomplete. Brewing coffee or turning the machine on is not required."
+  },
+  "evaluation_only_reference_criteria": {
+    "CloseFridge": "All doors of the refrigerator compartment being closed are flush closed at the end. A door left visibly ajar is incomplete. Do not add a separate freezer-door requirement when the task concerns the refrigerator compartment.",
+    "OpenCabinet": "The requested cabinet is fully open at the end, with all of its required door leaves open. Opening only one leaf of a two-door target is incomplete.",
+    "TurnOnMicrowave": "The microwave has entered its on/running state after the start action, and the acting hand has moved clearly away from the start button. Touching or continuing to hold the button does not by itself establish completion.",
+    "TurnOnSinkFaucet": "Water is flowing from the requested faucet at the end. Merely moving the spout or touching the handle is incomplete. No additional temperature or pressure setting is required.",
+    "OpenStandMixerHead": "The mixer head is fully raised at the end. Touching the release or lifting the head only partway is incomplete."
+  },
+  "output_format": "Score: <1-5>",
+  "reward_mapping": "Unchanged expected grade mapping for a proposed prompt-only comparison; a different mapping is a separate ablation",
+  "physical_measurements_in_prompt": false,
+  "per_episode_simulator_state_in_prompt": false,
+  "qualified": false,
+  "requires_new_prompt_protocol_digest": true,
+  "requires_new_label_cache_identity": true,
+  "active_runs_modified": false
+}

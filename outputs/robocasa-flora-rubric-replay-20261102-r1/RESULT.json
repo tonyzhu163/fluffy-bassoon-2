@@ -1,0 +1,953 @@
+{
+  "completed": true,
+  "development_only": true,
+  "independent_qualification": false,
+  "videos": 634,
+  "labels": 1268,
+  "cohorts": {
+    "TRAIN/OpenDrawer": {
+      "saved_original": {
+        "count": 384,
+        "successes": 201,
+        "AUROC": 0.9254003208003697,
+        "Score5_true_positives": 196,
+        "Score5_false_positives": 58,
+        "Score5_false_positive_rate": 0.31693989071038253,
+        "Score5_precision": 0.7716535433070866,
+        "Score5_recall": 0.9751243781094527,
+        "true_success_scores_below3": 4,
+        "mean_reward": 0.6596488281249998
+      },
+      "rerun_original": {
+        "count": 384,
+        "successes": 201,
+        "AUROC": 0.9269363564690211,
+        "Score5_true_positives": 196,
+        "Score5_false_positives": 58,
+        "Score5_false_positive_rate": 0.31693989071038253,
+        "Score5_precision": 0.7716535433070866,
+        "Score5_recall": 0.9751243781094527,
+        "true_success_scores_below3": 4,
+        "mean_reward": 0.6593167968749999
+      },
+      "candidate": {
+        "count": 384,
+        "successes": 201,
+        "AUROC": 0.919065872821684,
+        "Score5_true_positives": 161,
+        "Score5_false_positives": 43,
+        "Score5_false_positive_rate": 0.23497267759562843,
+        "Score5_precision": 0.7892156862745098,
+        "Score5_recall": 0.8009950248756219,
+        "true_success_scores_below3": 4,
+        "mean_reward": 0.6585552083333334
+      },
+      "paired_false_success_corrections": 20,
+      "paired_new_false_successes": 5,
+      "paired_false_success_p": 0.004077315330505371,
+      "true_full_scores_lost": 35,
+      "true_full_scores_gained": 0,
+      "original_replay_hard_grade_changes": 10,
+      "original_replay_max_expected_grade_difference": 0.0996999999999999
+    },
+    "CALIBRATION/OpenDrawer": {
+      "saved_original": {
+        "count": 50,
+        "successes": 29,
+        "AUROC": 0.9655172413793104,
+        "Score5_true_positives": 29,
+        "Score5_false_positives": 3,
+        "Score5_false_positive_rate": 0.14285714285714285,
+        "Score5_precision": 0.90625,
+        "Score5_recall": 1.0,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6719995
+      },
+      "rerun_original": {
+        "count": 50,
+        "successes": 29,
+        "AUROC": 0.9671592775041051,
+        "Score5_true_positives": 29,
+        "Score5_false_positives": 3,
+        "Score5_false_positive_rate": 0.14285714285714285,
+        "Score5_precision": 0.90625,
+        "Score5_recall": 1.0,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6730710000000001
+      },
+      "candidate": {
+        "count": 50,
+        "successes": 29,
+        "AUROC": 0.9540229885057471,
+        "Score5_true_positives": 23,
+        "Score5_false_positives": 1,
+        "Score5_false_positive_rate": 0.047619047619047616,
+        "Score5_precision": 0.9583333333333334,
+        "Score5_recall": 0.7931034482758621,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6584775
+      },
+      "paired_false_success_corrections": 2,
+      "paired_new_false_successes": 0,
+      "paired_false_success_p": 0.5,
+      "true_full_scores_lost": 6,
+      "true_full_scores_gained": 0,
+      "original_replay_hard_grade_changes": 1,
+      "original_replay_max_expected_grade_difference": 0.06919999999999993
+    },
+    "CALIBRATION/PickPlaceCounterToCabinet": {
+      "saved_original": {
+        "count": 50,
+        "successes": 37,
+        "AUROC": 0.9002079002079002,
+        "Score5_true_positives": 9,
+        "Score5_false_positives": 0,
+        "Score5_false_positive_rate": 0.0,
+        "Score5_precision": 1.0,
+        "Score5_recall": 0.24324324324324326,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.5777565
+      },
+      "rerun_original": {
+        "count": 50,
+        "successes": 37,
+        "AUROC": 0.9022869022869023,
+        "Score5_true_positives": 8,
+        "Score5_false_positives": 0,
+        "Score5_false_positive_rate": 0.0,
+        "Score5_precision": 1.0,
+        "Score5_recall": 0.21621621621621623,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.576389
+      },
+      "candidate": {
+        "count": 50,
+        "successes": 37,
+        "AUROC": 0.8274428274428275,
+        "Score5_true_positives": 4,
+        "Score5_false_positives": 0,
+        "Score5_false_positive_rate": 0.0,
+        "Score5_precision": 1.0,
+        "Score5_recall": 0.10810810810810811,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.5430194999999999
+      },
+      "paired_false_success_corrections": 0,
+      "paired_new_false_successes": 0,
+      "paired_false_success_p": 1.0,
+      "true_full_scores_lost": 4,
+      "true_full_scores_gained": 0,
+      "original_replay_hard_grade_changes": 2,
+      "original_replay_max_expected_grade_difference": 0.07550000000000079
+    },
+    "CALIBRATION/PickPlaceDrawerToCounter": {
+      "saved_original": {
+        "count": 50,
+        "successes": 23,
+        "AUROC": 0.9774557165861514,
+        "Score5_true_positives": 23,
+        "Score5_false_positives": 3,
+        "Score5_false_positive_rate": 0.1111111111111111,
+        "Score5_precision": 0.8846153846153846,
+        "Score5_recall": 1.0,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6133865000000003
+      },
+      "rerun_original": {
+        "count": 50,
+        "successes": 23,
+        "AUROC": 0.9774557165861514,
+        "Score5_true_positives": 23,
+        "Score5_false_positives": 3,
+        "Score5_false_positive_rate": 0.1111111111111111,
+        "Score5_precision": 0.8846153846153846,
+        "Score5_recall": 1.0,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6127115
+      },
+      "candidate": {
+        "count": 50,
+        "successes": 23,
+        "AUROC": 0.9742351046698873,
+        "Score5_true_positives": 22,
+        "Score5_false_positives": 2,
+        "Score5_false_positive_rate": 0.07407407407407407,
+        "Score5_precision": 0.9166666666666666,
+        "Score5_recall": 0.9565217391304348,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.6499934999999998
+      },
+      "paired_false_success_corrections": 1,
+      "paired_new_false_successes": 0,
+      "paired_false_success_p": 1.0,
+      "true_full_scores_lost": 1,
+      "true_full_scores_gained": 0,
+      "original_replay_hard_grade_changes": 1,
+      "original_replay_max_expected_grade_difference": 0.05569999999999986
+    },
+    "CALIBRATION/TurnOffStove": {
+      "saved_original": {
+        "count": 50,
+        "successes": 7,
+        "AUROC": 0.893687707641196,
+        "Score5_true_positives": 6,
+        "Score5_false_positives": 5,
+        "Score5_false_positive_rate": 0.11627906976744186,
+        "Score5_precision": 0.5454545454545454,
+        "Score5_recall": 0.8571428571428571,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.47683099999999995
+      },
+      "rerun_original": {
+        "count": 50,
+        "successes": 7,
+        "AUROC": 0.893687707641196,
+        "Score5_true_positives": 6,
+        "Score5_false_positives": 6,
+        "Score5_false_positive_rate": 0.13953488372093023,
+        "Score5_precision": 0.5,
+        "Score5_recall": 0.8571428571428571,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.4771674999999999
+      },
+      "candidate": {
+        "count": 50,
+        "successes": 7,
+        "AUROC": 0.9036544850498339,
+        "Score5_true_positives": 6,
+        "Score5_false_positives": 17,
+        "Score5_false_positive_rate": 0.3953488372093023,
+        "Score5_precision": 0.2608695652173913,
+        "Score5_recall": 0.8571428571428571,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.5976710000000001
+      },
+      "paired_false_success_corrections": 0,
+      "paired_new_false_successes": 11,
+      "paired_false_success_p": 0.0009765625,
+      "true_full_scores_lost": 0,
+      "true_full_scores_gained": 0,
+      "original_replay_hard_grade_changes": 2,
+      "original_replay_max_expected_grade_difference": 0.07489999999999997
+    },
+    "CALIBRATION/CoffeeSetupMug": {
+      "saved_original": {
+        "count": 50,
+        "successes": 17,
+        "AUROC": 0.9233511586452763,
+        "Score5_true_positives": 16,
+        "Score5_false_positives": 7,
+        "Score5_false_positive_rate": 0.21212121212121213,
+        "Score5_precision": 0.6956521739130435,
+        "Score5_recall": 0.9411764705882353,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.7790900000000002
+      },
+      "rerun_original": {
+        "count": 50,
+        "successes": 17,
+        "AUROC": 0.93048128342246,
+        "Score5_true_positives": 16,
+        "Score5_false_positives": 8,
+        "Score5_false_positive_rate": 0.24242424242424243,
+        "Score5_precision": 0.6666666666666666,
+        "Score5_recall": 0.9411764705882353,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.7797275000000004
+      },
+      "candidate": {
+        "count": 50,
+        "successes": 17,
+        "AUROC": 0.9269162210338681,
+        "Score5_true_positives": 17,
+        "Score5_false_positives": 8,
+        "Score5_false_positive_rate": 0.24242424242424243,
+        "Score5_precision": 0.68,
+        "Score5_recall": 1.0,
+        "true_success_scores_below3": 0,
+        "mean_reward": 0.7962920000000001
+      },
+      "paired_false_success_corrections": 2,
+      "paired_new_false_successes": 2,
+      "paired_false_success_p": 1.0,
+      "true_full_scores_lost": 0,
+      "true_full_scores_gained": 1,
+      "original_replay_hard_grade_changes": 1,
+      "original_replay_max_expected_grade_difference": 0.04479999999999995
+    }
+  },
+  "focus_original_failed_Score5": {
+    "count": 58,
+    "saved_original_histogram": {
+      "5": 58
+    },
+    "rerun_original_histogram": {
+      "5": 58
+    },
+    "candidate_histogram": {
+      "5": 38,
+      "4": 9,
+      "3": 6,
+      "2": 3,
+      "1": 2
+    },
+    "candidate_no_longer_full_success": 20,
+    "candidate_still_full_success": 38
+  },
+  "manifest": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/MANIFEST.json",
+    "sha256": "61d4d4cc2e55e5a6cb3c9178c669ccea3deb9051b4d0f99d95980dfa46d68c39"
+  },
+  "paired_episodes": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/PAIRED-EPISODES.json",
+    "sha256": "797eef99574c1eb59b9f7391576363b8bb111821bfeb2747e3c8550435075925"
+  },
+  "focus": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/FOCUS-58.json",
+    "sha256": "cea4186ffca1ba2e55d793c550e9394ed1e80e36ee054877e906489dfa9a675c"
+  },
+  "inference_receipts": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0000.receipt.json",
+      "sha256": "8b1dc394a564dfb275f902e1af33754af05d5d1fb5ff93a48ee300f17c2f4060"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0001.receipt.json",
+      "sha256": "0487c8db6e2ab685b040a94804fe94040d5a0423af9c09501dec947fa7bafa18"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0002.receipt.json",
+      "sha256": "8b18040490c58370845aaacf81307a47e600ca4c64699cd66baafb63c4ba5835"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0003.receipt.json",
+      "sha256": "ee7b10a851e8f0804243d438402e477a775985560630b1a411be4a3470bea021"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0004.receipt.json",
+      "sha256": "b0d3fccd043758781f5cc848ec6ccb4580e4e2a722dca8d5ab3e5adbeddcaf49"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0005.receipt.json",
+      "sha256": "cf07b1706ca74ca950a392168f7ed2dd86bebc5f08d57645979baac0477447e7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0006.receipt.json",
+      "sha256": "fad3b6fe07f2d4545ce83977a82d5864bc31f126b3cdc66bb33ed07407ca6286"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0007.receipt.json",
+      "sha256": "bc1ef160f5bbb1c1fb9787248f9061a36e2dc688f9ca76eec439d953d535c1f6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0008.receipt.json",
+      "sha256": "65378c889de8ef61e5608372e90bad1c63dde37f695cfeb597f48fdccc20cc58"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0009.receipt.json",
+      "sha256": "d3b6348ef37547cd6976563491668c9b8409afa699c066d677fd1e68ea8eb9f9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0010.receipt.json",
+      "sha256": "9d8db7542df2182ec5527e56bcf17c29bbf3e73f1a1c8218ef55eb83471ed10c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0011.receipt.json",
+      "sha256": "c151237f4e2b426437ee6461fb94235045c97442689e0254b694d9111abf4147"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0012.receipt.json",
+      "sha256": "8255d7befeb5f9751b95a913c9d68ff143aa891b6a8daa7f21bafd2803a38c54"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0013.receipt.json",
+      "sha256": "656878bf34d09a02ce1f5f9299cb7dd4a1ff92c4740b1937dd73c0806519354b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0014.receipt.json",
+      "sha256": "7c0b129f3769ae6f901061690af61aa1e5cfb31c692a11bf55ef35beb1fc3e44"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0015.receipt.json",
+      "sha256": "1d060080d1c9eaff718e14e2e9c305b0175ff2257a3af8335321222ba41b6b27"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0016.receipt.json",
+      "sha256": "39271a60887be802a3595500db9bfa6ac52358b7fa2935d2a5a62173f2e17316"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0017.receipt.json",
+      "sha256": "c0053ccab4baca3e17b738ecfab927e7485e268d047c4f16686b5b34a23590a2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0018.receipt.json",
+      "sha256": "7bf2bc4356917b675c02a6325e60bd0bb22df993c41e5191255346d3bc419f18"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0019.receipt.json",
+      "sha256": "c18fdf56a6d1db5d8a6e1882bdad40e055bc6623d281a6342945c8b3daaed4a4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0020.receipt.json",
+      "sha256": "3fe34529afe81e8108228380ce7ca548a51adc0410bc0d8226e304620423adc8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0021.receipt.json",
+      "sha256": "dccc059c75b9090bdbadd26b81107fbeecbdd9c862311dccf12e30a61a3cbb4a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0022.receipt.json",
+      "sha256": "a43145899db09d679fbb6dda54162842f74b7c84059a4f53ed2880f997aa68d5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0023.receipt.json",
+      "sha256": "3f6ebb2bb6235939d8600cd088eb3b3afa7c2d755204501eb9182bd4314a2802"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0024.receipt.json",
+      "sha256": "c3445c71cf19a3b87107e3dc2699f2f07a1d04250882634a9ed2ee3b1d1d3d07"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0025.receipt.json",
+      "sha256": "91f5fab4716175b0f1445dad4c1e0954437c1654c076c8e2baa064ee46eaa9c2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0026.receipt.json",
+      "sha256": "82b14bc6340f1e43b6bdc9e074fe7a061dce0a0179a50c9a9f026894ef39b3f4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0027.receipt.json",
+      "sha256": "43e9f4501ceff94f26dee5fa520288ac37c87e2f2da1735b01bc4072963632f1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0028.receipt.json",
+      "sha256": "74dea5930e704c84aaf0dcad0eb2c159bfaf64011f5f03c3a7bbcf46207ff153"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0029.receipt.json",
+      "sha256": "0d4e72a063201835356bfd52edb4fe9bb362899bc0db2f85502dc63835bf4cdd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0030.receipt.json",
+      "sha256": "d03c4ec1de0c158fc06b2d39b4547aabf54743fb7bd1754491f27829a4a191d3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0031.receipt.json",
+      "sha256": "72cbc77fd4196d5a16381641cb553bb62637dca87bc4115c722ceab4c0d2ac9d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0032.receipt.json",
+      "sha256": "752b4e6b26d04a88c341148dd7de02b6b1a48adf99c91131c301e2d7ddfeb3af"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0033.receipt.json",
+      "sha256": "a0fb29f78e7299251fc4116496bbbc7a8f9ddcdd8c6ee9a469976886b3c51edd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0034.receipt.json",
+      "sha256": "bfbc176d49b820df003b8a6c17232a2c162aec9cc08a0062bbab22aff943ddcb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0035.receipt.json",
+      "sha256": "48dba973dedfb552ad2bc6c8faf83b954ae117212375cc1e4e03080d66129d99"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0036.receipt.json",
+      "sha256": "f481d48144cd2ec5c4caa4faa8257d45bd43afd0a8a3476506bafeb3da382205"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0037.receipt.json",
+      "sha256": "ba156cee01cfc82db6b1b82f65eca6eaed9c7d67acb32b7760850dd5157c3830"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0038.receipt.json",
+      "sha256": "6f7d2378c1e1c20074cb0f388f752bc42a8a339d01ed40ff4b83354db9be6d13"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-00/batch-0039.receipt.json",
+      "sha256": "0582f05229139545804eb907733744790ef2ce0164333f5848776c72e4e3d420"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0000.receipt.json",
+      "sha256": "0fefbf5d87b71ed8505dd439db083998893e8d00618aa36fff98c631ce77bd92"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0001.receipt.json",
+      "sha256": "1ca58c49c5f1841918024502b105c80d3798f087503f04a8ab0a918b9a1d6895"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0002.receipt.json",
+      "sha256": "c48539314af534ada15f3e12ac41535622bf3022ea3a995267ea26843f740664"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0003.receipt.json",
+      "sha256": "3b4432b2e3cc8ec225c2eb236cd6ad3acf77fb5c615a0c3340dae2ac930c1b3c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0004.receipt.json",
+      "sha256": "8304abcff24644d87a165880be480c4ed12729e2e6a3f98936f488cda39886ef"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0005.receipt.json",
+      "sha256": "2781051d84f2f93e3180cc3d61d9c00972778b534eb61b34790ec1e636bf22b5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0006.receipt.json",
+      "sha256": "536851d7373da4f17f0a85ef6c41b0133934f9ba7ba2252fb2812adc2bc5c636"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0007.receipt.json",
+      "sha256": "c586d5e15a6c703edddee4de34018b40e16f3a88b9d0d8a6c646a7e179bb5e1f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0008.receipt.json",
+      "sha256": "e760903337cf39ac4ae7240a687a4b3ced6d1f4c44415a28efe6611f70d1ca1f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0009.receipt.json",
+      "sha256": "cad8b94bd713c9aec15b90a37c3d135c9bdd4c4ed1c92e8f95ca0b303a153aa0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0010.receipt.json",
+      "sha256": "92ad1cd3f5b8f0df4350dcd52b3e72893d3a06acc1817fc9674a75c2a5152d5b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0011.receipt.json",
+      "sha256": "bef26ff152f3e43a2318420db552bf5b577f9f383b65cd85da3bf5df05a8f67e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0012.receipt.json",
+      "sha256": "f12662b4a2c712af78aa5d3e0196a5a17cc5f7a2258ce5c640c67ca9e6dab752"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0013.receipt.json",
+      "sha256": "6ffaa54b2d8aa7df255b2a9a6c8b46576de7b879c434a2b3fb0ba0da87690bb2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0014.receipt.json",
+      "sha256": "bd82796d386ba0c507d617fa6cb0997717051fe1df5a99a28df8d58c1598ccbe"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0015.receipt.json",
+      "sha256": "2b933c2ec4c7b077b30ac4cd9c72877e8e74ee9648973e8f4c4637c3e52e3b7a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0016.receipt.json",
+      "sha256": "592b019b1c3f995911f2ef015127399099462f269b9c65d90b0b6c7889c45bda"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0017.receipt.json",
+      "sha256": "d75d59c2dcb8d2f8ed8fc8b6a82a959a0840d5bdaea3b68d9a1031a413c6313f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0018.receipt.json",
+      "sha256": "c7af0eb957c2349b156d8fa3ba51ccee1b68e166f2aad5d9e44149b0a8f4162a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0019.receipt.json",
+      "sha256": "374e304a3881a1157689330c03cf80ca7dc97ec52ae5c7d07091036202e87bb8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0020.receipt.json",
+      "sha256": "51334105f9dd3445e71d584335893e465f7bb304547292c6661dbfc7dc80a8c9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0021.receipt.json",
+      "sha256": "d55407b960a502b05ab2aafafa2bc58652edea1ec35675ade1b5aa872cdf9610"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0022.receipt.json",
+      "sha256": "5e9c8f8d37f175559716e45d2781144e2b22614e465f30d83de7f608d60cd321"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0023.receipt.json",
+      "sha256": "93f6e63bec3e21a0a7ce3de00ef09de01c8283559c3b8990c0fd6b3922667519"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0024.receipt.json",
+      "sha256": "034bd5a963f77015245232d8a7b282e5a621bd0ac43f3f138af97e34a252ef1f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0025.receipt.json",
+      "sha256": "b8d3e48472d702a71721627582618974ac798c24ab7f81bc4c6edcbdb2739de4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0026.receipt.json",
+      "sha256": "5a984bb97b9bb9cce8448f06ffd9df764d17d02909181f78d8fc16ed51232ed1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0027.receipt.json",
+      "sha256": "ecba5f23a399c0a4820b6c88093bbdf8666b946dcdad1a2ba235066da8e75028"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0028.receipt.json",
+      "sha256": "766a29ca79b3fd32dabebc8dd640a991717d8e6a9523b78ebb9c75556afbf814"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0029.receipt.json",
+      "sha256": "9987c09b0475f01c14ff156105b27a2d025d272a3e60ed9754acc1e19c46f1a0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0030.receipt.json",
+      "sha256": "5cee76412fbb36392e74d054caf3fe67af7954f24bbfaa09e819d86c476874a8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0031.receipt.json",
+      "sha256": "c4d69d39c48f65b8dd0c48875768141811bd17472680a02fddd47f82a94e290d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0032.receipt.json",
+      "sha256": "ea9c87288cda29d5810c0db5ff46ff05647bc3db6bc540b92aca9509d6c1d4e4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0033.receipt.json",
+      "sha256": "821bf27c4027e67bd71cbe3006b76d6da13544e36f3acc3211403160309ced2e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0034.receipt.json",
+      "sha256": "79a5614e9b355bbf200c319d2fcbe8814793752655766bf1035b4811aca8a237"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0035.receipt.json",
+      "sha256": "218c70b83af3ab150f77b82718fc87ecf0242b36315b15602aa5790719d09f72"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0036.receipt.json",
+      "sha256": "8db90bcc6f114ef6a9caf6ae26bd94251a81958720d91208c0ecbd9b673f6bba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0037.receipt.json",
+      "sha256": "6ab491f70d5517b2c9f4123a084656ed13cea1c903fa08b82effbf2fc951e8b0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0038.receipt.json",
+      "sha256": "2b157cf8bf7dde16e2abff013ef4f7e9cdbba233a98a4ece673a82307635aec0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-01/batch-0039.receipt.json",
+      "sha256": "38a89a3597c3cf3a4b160b0905a0e4dff486e9c687fca3440e91ea839868c8c8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0000.receipt.json",
+      "sha256": "6f69dbed0d5298ace160122dc673c5c258fc8f3a5fcbdef1587417f97e42bdaf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0001.receipt.json",
+      "sha256": "cd3043e9212524d96382154a46f3cfdc28e2076f8353c2571c367855baca6c4c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0002.receipt.json",
+      "sha256": "05d761e5d85f33eb0bc4495f34aab74d3353127a3f8bd6c08166f06e19f5c3fe"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0003.receipt.json",
+      "sha256": "cb48bdda23a12f76ce419bd6b27180b56a0715e33b5169ba958bb8aaae27d61f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0004.receipt.json",
+      "sha256": "a580cc708412128bb7ccbdb35536cd802a6fa039a160005439ff1e4608d90d1e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0005.receipt.json",
+      "sha256": "1915abbb44d2147d1b202b509fd64bd866905ff5e31027c62a500b1e354cace1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0006.receipt.json",
+      "sha256": "f6d01116eaa7d77a7db97a2b5aa6ff343cfe6c13a9b8ca979e679c0db653cb5e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0007.receipt.json",
+      "sha256": "37dd9b862c67532e07a163084186478dbe7611b975c38fd7d0b0d6b406a4ae85"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0008.receipt.json",
+      "sha256": "e5c4441d25c3189ed20cfa3a0b630157d0aa17a5baefc1acb2b2ab37addc8857"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0009.receipt.json",
+      "sha256": "76178ad02adb6bf06dc3d06cc08f028a3517333d35a20d5a480db06355592ad5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0010.receipt.json",
+      "sha256": "094497d7c9aebdd303e7f263f1b3b0add862f766e7f6e4cb3d5145de385ab66b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0011.receipt.json",
+      "sha256": "e842e742ea13652f985cd5365ecae01fb0092d7709905892d8316621a466a530"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0012.receipt.json",
+      "sha256": "795c5f14584de28819745c472dabceda01ea16feb15ef158a636d3a1e569bd5f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0013.receipt.json",
+      "sha256": "c6291ee877a0813a120209a37ff3e4aa967e10ecb38ead346d7bd6b478e1c3d9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0014.receipt.json",
+      "sha256": "9baf745567b0b968f9be3773e2c8571cfa68be02f115844eb6c4c0d278ea83bd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0015.receipt.json",
+      "sha256": "d2843c316623d5b4a20cba73d46c7994a5d8e7ecdbf6665cfdfad394eaa35055"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0016.receipt.json",
+      "sha256": "34ba3bc455312e475b00ff260b271e298d108e8ce1f98dfc25deed29ce220ac2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0017.receipt.json",
+      "sha256": "940c7c1792ee701b01f8b29c9964d3b23577f2f932fc07f145fabd18b065787c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0018.receipt.json",
+      "sha256": "88a05bbe4a5b4563019085c1bd2b65f8712e3fe2e920d205c2449022f89ca2b5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0019.receipt.json",
+      "sha256": "b7bf75a391d6fb1619f3df693a67e8bfd3d803f1f6f3421caf93852429001a39"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0020.receipt.json",
+      "sha256": "f0c4eb8c365ef9037db701f2d6810d2e5a040782cb77798435c3ce91554aecb4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0021.receipt.json",
+      "sha256": "95dfb3ad4813acbb8aa3d965619bd012887713f850810dfe47aa0ab77d3f568f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0022.receipt.json",
+      "sha256": "c82a73464e6abf87cbb6267d4bcb620ffcca4dac9950b86e9abff132c4913ff3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0023.receipt.json",
+      "sha256": "4721a630c7787a64def50c64ba9ec7625832ff10212c4b8c3ab056b6241fe8e2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0024.receipt.json",
+      "sha256": "191846f710f998b7cb7770db2d44f4fae6361c1ed7bffd6a1184fa90d313ace8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0025.receipt.json",
+      "sha256": "5e9ce1b4abae9a67f2ecd18a9846b0656a2a950cd58ba50d5203eb035f6fc351"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0026.receipt.json",
+      "sha256": "517eaed58366fbe1d2b4ddf9dd3bd1c243f579faed06086bc4632b169f32ce66"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0027.receipt.json",
+      "sha256": "a0c015daa62a269aa0d6818adbe55c1e12f3bfa8ff2be4aa0f46515288e6fb5b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0028.receipt.json",
+      "sha256": "b963f7f8666593c06384966140d783cc4bdafc1eaae2866e7978b509ecd727a0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0029.receipt.json",
+      "sha256": "100737fa01c0f3975fb2900f33af226f1080d1d9238d4e9acb51706ac585d364"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0030.receipt.json",
+      "sha256": "0bc5012607e0a000d2b056508132900aa6d1afcb41528fc119b852a72cccf33a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0031.receipt.json",
+      "sha256": "f04788f0550a711b79c36e06a5a396fc9b2e04b4fb1cfde18aba481f9b7d7ce4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0032.receipt.json",
+      "sha256": "ca3e72939c0ab37a06faf51dd269584779496bde5efe5d8a0b35bc8b915ded53"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0033.receipt.json",
+      "sha256": "6b44dc860af940b44a9c29b3f3171a707eb91f45d6fb09f0dbefed666bd15cb8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0034.receipt.json",
+      "sha256": "5e37fdae82d0197371e70f48442dbbcec4a0a0b79e836b31578d38e313bb9b29"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0035.receipt.json",
+      "sha256": "67d8c4ef846e31765f91358e23390e9657cbbc751372898f84d4bacc537b1ea2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0036.receipt.json",
+      "sha256": "ba3162c7321f6ae41f03da62e30b5854344f780d27aee757d712e486f121b3cd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0037.receipt.json",
+      "sha256": "3d40c0c08352a87e5685f46f3027d397975a6b0e84319409138e519e2e30a04f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0038.receipt.json",
+      "sha256": "4c2ae6833345b67378f6b97a4c3d9a4fcf8cf2fce92d9a76a64e50b913bc6a49"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-02/batch-0039.receipt.json",
+      "sha256": "7ff2fe5ee4cd2548bde94da546eac963cf1512923a4ceb91353a837115fd6cd5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0000.receipt.json",
+      "sha256": "2612541c4543a2e3b0ac498655424bd22665cf18196d30d7761ba5d106f756bc"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0001.receipt.json",
+      "sha256": "c3afe7a5985f074c39fa94f027a45b505b4f42a9e6477fb4889cb541bebdeb3f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0002.receipt.json",
+      "sha256": "032fb790e6b31ae5abea561c0a29fe1a6d565d48c3c490fa232ed5aa88a6135d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0003.receipt.json",
+      "sha256": "1e601e9ee62385dfe256f0dca4fa7386a8ce85cd91ba9cd8035c939729a20fa6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0004.receipt.json",
+      "sha256": "178e9df5f191da76a810cbbb2fa1ca027aa79a3a6c7d9635b853202b65b7d37b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0005.receipt.json",
+      "sha256": "f69c1e9c72690677e2dd570d35ce6a1d596c206e95f1bcd8ae98236967125122"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0006.receipt.json",
+      "sha256": "9b28676cdef8e1eb087742e80fc511eb6e6960c1b9b59fc4becd1c9d16e0279c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0007.receipt.json",
+      "sha256": "74bd5feb1ed320fe7ad9c41e9bede8cca67d133f1aa08219bdd9b23ac289d5c6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0008.receipt.json",
+      "sha256": "cec61aaef1ae5246e25b0a54ee384387035adaad1dad8e6221ad17a6a4d264ba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0009.receipt.json",
+      "sha256": "36906fe0d66725f8fd14514ba89d5fb49e5c9edfebf7947c0e6ba857a2535460"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0010.receipt.json",
+      "sha256": "495738acd0865d387ee08fb7f2a2afecbe5c11cd64b75e00b8622b6fe016dc79"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0011.receipt.json",
+      "sha256": "d8e359f55e4486b6a271767350c77f153ae8122d7ac2418b01135f25e0ab5d74"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0012.receipt.json",
+      "sha256": "5a34f3c11a1d59176becb20d3b9a3e096253e4fd8509344c7bc8a413c589c873"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0013.receipt.json",
+      "sha256": "3fdf9d4eb618c9078db6493152c57f860d3f81b3433f7e9c8bac12d1cae32ede"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0014.receipt.json",
+      "sha256": "801481915410100082e37ec38c1bdff670530aa9bfd746bfe3d2a8026d0ca274"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0015.receipt.json",
+      "sha256": "f5c88445918e0b48f77f805b0695df3f523de81a92725b0ca4e5dfbec109a292"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0016.receipt.json",
+      "sha256": "1f6031acb5d553322ef07cfee471c074e4d7eede83d92e4125b0fd00eb6b7bfd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0017.receipt.json",
+      "sha256": "31799e34007cd23ff634e953bdc4ce5aaf082823d29309301255a2405af2a67f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0018.receipt.json",
+      "sha256": "0d0063de60f938293c9677189a6983c977c8ede6045f6b27fc1b20388df79eeb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0019.receipt.json",
+      "sha256": "e77ee1ca9fa93fc204c93c5531ef3c0802025a20059ca907afc38addc9020309"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0020.receipt.json",
+      "sha256": "97df1794a759b3829b5ae132257c04e83902097bc0a8d4ebfd89138d25bb23f0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0021.receipt.json",
+      "sha256": "17862de4c3856f52e48d799baf6a3112bf81128998851404762a0b3ce51a0e2d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0022.receipt.json",
+      "sha256": "4d3f3d06dd50eba036b36a40ac00a6f76c9916fe183203e8fa94a7040ffbae2a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0023.receipt.json",
+      "sha256": "244a7b949f1695dc033bf7f7c11b9acfe3b300593d9b04789068374e8fb6b499"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0024.receipt.json",
+      "sha256": "382847c4a196449f74a950f364fe03c473992585d0de5d2f4390bf7e8c173a4b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0025.receipt.json",
+      "sha256": "ab9c9946b1f8f5bed6c94d42a28fd9b3c58df4ee8a105e6ac21ce8e7060859b6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0026.receipt.json",
+      "sha256": "6dcaed99517c1f8a36cae5971d06c0d62f6e00109e533379b42933b882f0d605"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0027.receipt.json",
+      "sha256": "add93b52338d2787c0741e6a8906f88c0f4557260c63d952d43f1ef42c97c32b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0028.receipt.json",
+      "sha256": "9cfea69a706d0ceaa88f7315a191fcdd0021d87625c6a6d75b7ffefcee5db6c8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0029.receipt.json",
+      "sha256": "213ead8a10b44d5d2aceb59d77aeabadc75d0e521e0a5e679ac52af450ea9ac1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0030.receipt.json",
+      "sha256": "a5a6248b63e2e454787d97be304746a2c52c2272d2a3d70e9844aa48b343d490"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0031.receipt.json",
+      "sha256": "d234be619a0069daf932befa9e6b1b27da98200f63411d89b1cf5e63c22a2d13"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0032.receipt.json",
+      "sha256": "08f5f892a2dcdadf81959e452a0c1f67f839d4b8ebfa3ee739dc59c158be6f7d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0033.receipt.json",
+      "sha256": "c69716b7634bcef5ef49455f990b014e4a552510cbad22ad6e7871f950d0a6c9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0034.receipt.json",
+      "sha256": "f7fc513173c46bee143b3387e54cb1a7bece85eb086ca078e14330fa1789b336"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0035.receipt.json",
+      "sha256": "d0a6e44667f9194b66f597c0cc0eaac205de5cd9631628e5bc3f4aab52c5b573"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0036.receipt.json",
+      "sha256": "db9418a329f2dc098bf60e0c5d10b2963f22aa014b6c86f6badef1c3043ec9a2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0037.receipt.json",
+      "sha256": "0ed3cbc78aa97131389c7401ac9dd4cd9af4090f5d7f8a30b714a4c3f5475b7f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0038.receipt.json",
+      "sha256": "b342e690469813e6d771b9e3aeed93677260530bb5f3ca22f03ace90ce82378c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-rubric-replay-20261102-r1/rank-03/batch-0039.receipt.json",
+      "sha256": "c0b3ca3046a7d30e1fd9c3e3f2fbd6030d149a1cdf265fdfd4873e1626acfd74"
+    }
+  ],
+  "robot_actions": 0,
+  "optimizer_steps": 0
+}
