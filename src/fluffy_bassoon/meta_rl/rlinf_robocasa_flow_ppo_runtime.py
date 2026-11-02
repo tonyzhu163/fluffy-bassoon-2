@@ -149,6 +149,7 @@ def native_class(original, owner):
 
 class FlowActor(PilotActor):
     def run_training(self):
+        started = time.monotonic()
         before = self.optimizer_steps
         batch_shape = tuple(self.rollout_batch['prev_logprobs'].shape)
         metrics = EmbodiedFSDPActor.run_training(self)
@@ -162,6 +163,9 @@ class FlowActor(PilotActor):
             dict(completed=True, rank=self._rank, producing_policy_iteration=self.version,
                  optimizer_steps_before=before, optimizer_steps_after=self.optimizer_steps,
                  batch_shape=batch_shape, losses=losses, metrics={k: float(v) for k, v in metrics.items()},
+                 training_seconds=time.monotonic() - started,
+                 cuda_peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                 cuda_peak_reserved_bytes=torch.cuda.max_memory_reserved(),
                  frozen_vlm_unchanged=unchanged))
         return metrics
 

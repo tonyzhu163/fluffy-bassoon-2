@@ -28,6 +28,7 @@ exec > >(tee "$TASK_OUTPUT/console.log") 2>&1
 finish() {
  TASK_RC=$?
  trap - EXIT
+ if [[ -n ${TASK_TELEMETRY_PID:-} ]]; then kill "$TASK_TELEMETRY_PID" 2>/dev/null || true; fi
  TASK_FINISHED=$(date +%s)
  printf '{"started_unix":%s,"finished_unix":%s,"allocated_gpus":%s,"observed_gpu_seconds":%s,"exit_code":%s}\n' \
   "$TASK_STARTED" "$TASK_FINISHED" "$TASK_GPUS" "$((TASK_GPUS*(TASK_FINISHED-TASK_STARTED)))" "$TASK_RC" > "$TASK_OUTPUT/clock.json"
@@ -66,4 +67,9 @@ assert norm=='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
 PY
 "$TASK_PY" -B "$TASK_META/scripts/[train]gpu_probe.py" --expected-count "$TASK_GPUS" --purpose training \
  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
+(while true; do
+ nvidia-smi --query-gpu=timestamp,index,uuid,memory.used,memory.total,utilization.gpu --format=csv,noheader,nounits
+ sleep 15
+done) > "$TASK_OUTPUT/gpu-memory.csv" &
+TASK_TELEMETRY_PID=$!
 timeout --signal=TERM --kill-after=60s "$TASK_WALL_SECONDS" "$TASK_PY" -B "$TASK_META/scripts/[train]robocasa_flow_ppo.py"
