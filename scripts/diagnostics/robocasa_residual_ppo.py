@@ -134,9 +134,10 @@ def main():
     if (evaluation_cameras is not None or profile.get('evaluation_source_migration')) and profile['mode'] != 'evaluate':
         raise ValueError('Archived checkpoint compatibility is evaluation only')
     maximum_iterations = profile.get('maximum_iterations', 10)
+    rollout_worlds = (4, 8) if profile['mode'] in ('headroom', 'common_before') else (8,)
     if (type(maximum_iterations) is not int or not 1 <= maximum_iterations <= 10
             or joint and (profile.get('tasks') != list(PPO_TASKS) or profile['mode'] == 'headroom'
-                          or len(profile.get('rollout_devices', [])) != 8
+                          or len(profile.get('rollout_devices', [])) not in rollout_worlds
                           or profile['mode']=='train' and profile.get('independent_stopping') is not True
                               and profile.get('stopping') != 'fixed')):
         raise ValueError('Explicit bounded joint task/layout and iteration endpoint required')
@@ -222,8 +223,8 @@ def main():
         raise ValueError("Controller motor offload requires separate native rollout workers")
     if parallel:
         from fluffy_bassoon.meta_rl.robocasa_residual_parallel import ParallelActionJournal, ParallelResidualEnvironment
-        if len(parallel) != 8 or len({row["uuid"] for row in parallel}) != 8:
-            raise ValueError("Eight distinct allocated GPUs required for parallel rollouts")
+        if len(parallel) not in rollout_worlds or len({row["uuid"] for row in parallel}) != len(parallel):
+            raise ValueError("Distinct allocated GPUs and the mode-qualified rollout worker count required")
         journal = ParallelActionJournal(profile["accounting_root"], len(parallel), journal_cap)
     else:
         journal = ActionJournal(profile["accounting_root"], rank=0, world=1, attempt=profile["attempt"],

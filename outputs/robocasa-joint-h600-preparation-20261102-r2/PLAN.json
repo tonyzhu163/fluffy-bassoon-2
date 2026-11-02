@@ -1,0 +1,97 @@
+{
+  "status": "HUMAN_APPROVED_FOUR_GPU_REPLACEMENT",
+  "purpose": "Requalify600-control five-task Flora gates and collect matched joint common-before panels; zero SGD",
+  "resources": {
+    "cluster": "Baige Pro6K",
+    "instances": 4,
+    "gpus_per_instance": 1,
+    "total_gpus": 4,
+    "cpu_per_instance": 32,
+    "ram_gib_per_instance": 128,
+    "shm_gib_per_instance": 16,
+    "maximum_wall_minutes": 106,
+    "maximum_gpu_seconds": 25440,
+    "maximum_concurrent_experiment_gpus": 40
+  },
+  "execution": {
+    "source": "Pin latest qualified main before launch; actual four-worker evaluation and four scorer shards",
+    "lanes_per_gpu": 4,
+    "flora_batch_capacity": 8,
+    "flora_gpu_memory_utilization": 0.75,
+    "flora_views": 3,
+    "context": 16384,
+    "render_size": [
+      256,
+      256
+    ],
+    "scorer_tile_size": [
+      320,
+      320
+    ],
+    "reserve_mib": 21973,
+    "seed_banks": "Existing case_bank/joint_case_bank and private_action_seed; no new task sampling or outcomes reused",
+    "clock_input": false,
+    "training_world": "Existing eight-worker training is unchanged; four-worker support is evaluation-only"
+  },
+  "stages": [
+    {
+      "name": "fresh_calibration",
+      "episodes": 250,
+      "cases_per_task": 50,
+      "task_horizons": [
+        600,
+        600,
+        600,
+        600,
+        600
+      ],
+      "controls": 150000,
+      "entry": "scripts/diagnostics/robocasa_residual_ppo.py --profile (mode=headroom,50 fixed cases/task); existing native rollout/node services",
+      "scoring": "scripts/diagnostics/robocasa_flora_fifty_score.py --profile; eight source-bound TP1 scorer shards"
+    },
+    {
+      "name": "common_before",
+      "episodes": 540,
+      "DEV": 40,
+      "ID": 250,
+      "OOD": 250,
+      "DEV_ID_horizon": 600,
+      "OOD_horizons": [
+        900,
+        1050,
+        450,
+        600,
+        450
+      ],
+      "controls": 346500,
+      "entry": "scripts/diagnostics/robocasa_residual_ppo.py --profile (mode=common_before,task=joint_five); saves existing COMMON-FINAL and initial-policy fingerprint",
+      "dependency": "All five fresh completed calibration gates pass or exact measured human exceptions are supplied"
+    }
+  ],
+  "total_episodes": 790,
+  "policy_controls": 496500,
+  "reset_internal_reserve": 101120,
+  "estimated_all_in_controls": 597620,
+  "actions": "Journal every physical command; preserve all earlier spend; no finite action cap fabricated",
+  "optimizer_updates": 0,
+  "retention": "Fresh output identities, unmodified active worktrees; retain videos/monitoring and source/GPU/storage/clock receipts",
+  "stop_conditions": [
+    "Any model, source, GPU, horizon, video, journal or memory mismatch",
+    "Any task has a failed/undefined fresh calibration gate: preserve measurement and stop before common_before",
+    "Deadline or insufficient capacity: preserve complete resumable evidence and stop"
+  ],
+  "outputs": [
+    "Five fresh horizon-matched calibration receipts",
+    "Common-beforeDEV/ID/OOD panels and COMMON-FINAL.json",
+    "Rebound S/F templates, still no SGD admission"
+  ],
+  "approval_reason": "Direct human requested4GPUs and approved up to110minutes at the same26400GPU-second budget. Reserve864GPU-seconds for the cancelled first attempt; new106minute ceiling preserves total.",
+  "approved_run_id": "robocasa-joint-h600-preparation-20261102-r2",
+  "budget": {
+    "total_authorized_gpu_seconds": 26400,
+    "prior_attempt_upper_gpu_seconds": 864,
+    "new_attempt_maximum_gpu_seconds": 25440,
+    "combined_upper_gpu_seconds": 26304,
+    "uncommitted_margin_gpu_seconds": 96
+  }
+}

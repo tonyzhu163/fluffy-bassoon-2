@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Eight persistent official engines annotate the five fixed native50 banks.
+"""Four or eight persistent official engines annotate the five fixed native50 banks.
 
 Calibration only: no policy, optimizer, training exchange or simulator exists
 here. Each per-task result requires all fifty labels and its frozen native bank.
@@ -30,7 +30,7 @@ def wait_for(paths, profile, progress):
     last_emit = 0.
     while True:
         require_time(profile)
-        if any((Path(profile['exchange'])/'errors'/f'rank-{r:02d}.json').exists() for r in range(8)):
+        if any((Path(profile['exchange'])/'errors'/f'rank-{r:02d}.json').exists() for r in range(profile['annotation_world'])):
             raise RuntimeError('A peer scorer failed; preserve partial outputs without retry')
         if all(path.exists() for path in paths):
             return
@@ -47,10 +47,11 @@ def main():
     p = json.loads(Path(args.profile).read_text())
     rank = p['annotation_rank']
     if (platform.system() != 'Linux' or p['mode'] != 'fifty_case_baseline_only'
-            or p['annotation_world'] != 8 or type(rank) is not int or not 0 <= rank < 8
+            or type(p['annotation_world']) is not int or p['annotation_world'] not in (4,8)
+            or type(rank) is not int or not 0 <= rank < p['annotation_world']
             or p['batch_size'] != 8 or p['gpu_memory_utilization'] not in (.75,.78)
             or [c['task'] for c in p['cohorts']] != list(PPO_TASKS)):
-        raise ValueError('Exact five prospectively named PPO task banks and eight fixed baseline scorers required')
+        raise ValueError('Exact five prospectively named PPO task banks and four or eight fixed baseline scorers required')
     source = Path(__file__).resolve().parents[2]
     if subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip() != p['source_commit']:
         raise ValueError('Exact immutable annotation source required')
@@ -115,7 +116,7 @@ def main():
                 if expected and native[key]['sha256'] != expected:
                     raise ValueError('A prebound native bank identity changed')
             episodes = read_ref(native['episodes'])
-            subset = baseline_episode_shard(episodes,rank,proto)
+            subset = baseline_episode_shard(episodes,rank,proto,world=p['annotation_world'])
             directory = exchange/'cohorts'/task
             target = output/(task+'.jsonl')
             progress.emit(phase='baseline_only_official_terminal_inference',task=task,
@@ -130,7 +131,7 @@ def main():
                 outputs=dict(path=str(array),sha256=sha(array)),scorer_receipt=receipt,
                 inference_seconds=time.monotonic()-began,model_load_count=worker.model_load_count))
             if rank == 0:
-                paths = [directory/'shards'/f'rank-{r:02d}.json' for r in range(8)]
+                paths = [directory/'shards'/f'rank-{r:02d}.json' for r in range(p['annotation_world'])]
                 wait_for(paths,p,progress)
                 shards = {}
                 for r, shard_path in enumerate(paths):
@@ -141,7 +142,7 @@ def main():
                             or value['scorer_receipt']['model_receipt'] != p['model_receipt']):
                         raise ValueError('Partial, stale or different-model baseline shard')
                     shards[r] = read_ref(value['outputs'])
-                ordered, _ = gather_baseline_outputs(episodes,shards,proto)
+                ordered, _ = gather_baseline_outputs(episodes,shards,proto,world=p['annotation_world'])
                 truth_rows = read_ref(native['monitor'])
                 truth = {r['id']:r['simulator_final_success'] for r in truth_rows}
                 if (len(truth_rows) != 50 or set(truth) != {e['id'] for e in episodes}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Run this allocated node's two workers in the existing complete-batch path."""
+"""Run this allocated node's GPU workers in the existing complete-batch path."""
 import argparse
 import json
 import os
@@ -10,6 +10,7 @@ import sys
 import time
 
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import sha, write_new
+from fluffy_bassoon.meta_rl.robocasa_residual_parallel import native_worker_rank
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
             if (queue_root / 'shutdown.json').exists():
                 return
             for local_rank, device in enumerate(profile['devices']):
-                rank = profile['node_rank'] * 2 + local_rank
+                rank = native_worker_rank(profile['node_rank'], local_rank, len(profile['devices']))
                 if rank in active:
                     child, task = active[rank]
                     if child.poll() is None:

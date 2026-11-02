@@ -99,7 +99,8 @@ def test_deterministic_parallel_plan_keeps_training_actor_rng_untouched():
     torch.testing.assert_close(before, generator.get_state(), rtol=0, atol=0)
 
 
-def test_fifty_complete_episodes_without_padding_keep_draws_gae_and_next_adam():
+@pytest.mark.parametrize('world',[4,8])
+def test_fifty_complete_episodes_without_padding_keep_draws_gae_and_next_adam(world):
     policy, optimizer = learner()
     bound = ResidualBound(12, tuple(range(6)), (.25,) * 6)
     motor, generator = Motor(), torch.Generator().manual_seed(42)
@@ -108,11 +109,11 @@ def test_fifty_complete_episodes_without_padding_keep_draws_gae_and_next_adam():
     second_motor, second_generator = Motor(), torch.Generator().manual_seed(42)
     seeds, noise = draw_schedule(second_motor, policy, second_generator, 100, deterministic=False)
     actual, finished = [], []
-    for first, stop in episode_partitions(50):
+    for first, stop in episode_partitions(50,world):
         rows, completed = collect_pending(policy, bound, Motor(), Environment(first), episodes=stop-first,
             generator=None, planned_motor_seeds=seeds[first*2:stop*2], planned_action_noise=noise[first*2:stop*2])
         actual.extend(rows);finished.extend(completed)
-    assert [stop-first for first,stop in episode_partitions(50)] == [7,7,6,6,6,6,6,6]
+    assert [stop-first for first,stop in episode_partitions(50,world)] == ([13,13,12,12] if world==4 else [7,7,6,6,6,6,6,6])
     assert finished == episodes and len(actual) == len(expected) == 100
     for left, right in zip(expected, actual):
         for key in left:
@@ -143,7 +144,8 @@ def test_retained_eight_then_forty_two_keep_exact_fifty_motor_draw_stream():
 
 
 @pytest.mark.parametrize('distributed',[False,True])
-def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch,distributed):
+@pytest.mark.parametrize('world',[4,8])
+def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch,distributed,world):
     import time
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
     from fluffy_bassoon.meta_rl import robocasa_residual_parallel as module
@@ -160,7 +162,7 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
         return SimpleNamespace(returncode=0,poll=lambda:0,wait=lambda **kw:0)
     monkeypatch.setattr(module.subprocess,'Popen',child)
     cases=[dict(task='OpenDrawer',slot=i) for i in range(50)]
-    profile=dict(rollout_devices=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0) for i in range(8)],
+    profile=dict(rollout_devices=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0) for i in range(world)],
         attempt='core',source_commit='a'*40,episode_id_namespace='PPO-task-',
         deadline_unix=time.time()+60,closure_seconds=1)
     if distributed:
@@ -177,12 +179,20 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
     rows,episodes=env.collect(policy,bound,Motor(),episodes=50,generator=None,deterministic=True)
     assert len(rows)==600 and [e['id'] for e in episodes]==[str(i) for i in range(1,51)]
     state=env.state_dict()
-    assert state['cursor']==50 and len(state['worker_recovery'])==8
-    assert [r['environment']['cursor'] for r in state['worker_recovery']]==[7,7,6,6,6,6,6,6]
+    assert state['cursor']==50 and len(state['worker_recovery'])==world
+    assert [r['environment']['cursor'] for r in state['worker_recovery']]==([13,13,12,12] if world==4 else [7,7,6,6,6,6,6,6])
     restored=ParallelResidualEnvironment(cases,horizon=600,output=tmp_path/'recovered',monitoring_root=tmp_path/'monitor',
         profile=profile,code=tmp_path,report=lambda *a,**k:None)
     restored.load_state_dict(state)
     assert restored.state_dict()==state
+
+
+    other=deepcopy(profile)
+    other['rollout_devices']=[dict(visibility_token=str(i),uuid=str(i),allocation_ordinal=0)
+                              for i in range(8 if world==4 else 4)]
+    incompatible=ParallelResidualEnvironment(cases,horizon=600,output=tmp_path/'other',monitoring_root=tmp_path/'monitor',
+        profile=other,code=tmp_path,report=lambda *a,**k:None)
+    with pytest.raises(ValueError,match='case bank'):incompatible.load_state_dict(state)
 
 
 def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
@@ -217,3 +227,11 @@ def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
     for key,value in policy.state_dict().items():torch.testing.assert_close(value,second.state_dict()[key],rtol=0,atol=0)
     for left,right in zip(optimizer.state_dict()['state'].values(),opt2.state_dict()['state'].values()):
         for key in left:torch.testing.assert_close(left[key],right[key],rtol=0,atol=0)
+
+
+def test_single_and_dual_gpu_node_routing_keeps_distinct_worker_ownership():
+    from fluffy_bassoon.meta_rl.robocasa_residual_parallel import native_worker_rank
+    assert [native_worker_rank(node,0,1) for node in range(4)]==list(range(4))
+    assert [native_worker_rank(node,local,2) for node in range(4) for local in range(2)]==list(range(8))
+    for args in ((0,1,1),(0,0,4),(-1,0,1),(8,0,1),(0,True,1)):
+        with pytest.raises(ValueError):native_worker_rank(*args)

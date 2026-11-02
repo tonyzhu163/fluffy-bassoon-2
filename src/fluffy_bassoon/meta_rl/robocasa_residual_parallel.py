@@ -32,8 +32,8 @@ def draw_schedule(motor, policy, generator, count, *, deterministic):
 
 def episode_partitions(episodes, world=8):
     """Contiguous complete episodes, with no padding or discarded samples."""
-    if type(episodes) is not int or world != 8 or episodes < world:
-        raise ValueError("At least one complete episode on each of eight workers required")
+    if type(episodes) is not int or type(world) is not int or world not in (4, 8) or episodes < world:
+        raise ValueError("At least one complete episode on each of four or eight workers required")
     base, extra = divmod(episodes, world)
     cursor, result = 0, []
     for rank in range(world):
@@ -41,6 +41,15 @@ def episode_partitions(episodes, world=8):
         result.append((cursor, stop))
         cursor = stop
     return result
+
+
+def native_worker_rank(node_rank, local_rank, local_gpu_count):
+    """Map one- or two-GPU nodes to the same contiguous global worker IDs."""
+    if (any(type(value) is not int for value in (node_rank, local_rank, local_gpu_count))
+            or node_rank < 0 or local_gpu_count not in (1, 2)
+            or not 0 <= local_rank < local_gpu_count or node_rank * local_gpu_count + local_rank >= 8):
+        raise ValueError('One or two local GPUs and a valid global worker rank required')
+    return node_rank * local_gpu_count + local_rank
 
 
 def native_chunk_offsets(cases, horizon=None):
@@ -94,6 +103,8 @@ class ParallelResidualEnvironment:
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)
         self.profile, self.code, self.report = profile, Path(code), report
         self.environments_per_gpu = rollout_envs_per_gpu(profile)
+        self.world_size = len(profile['rollout_devices']) if profile.get('rollout_devices') else 8
+        if self.world_size not in (4, 8):raise ValueError('Four or eight distinct native workers required')
         self.cursor, self.active, self.batch = 0, False, 0
         self.worker_recovery = []
 
@@ -102,13 +113,15 @@ class ParallelResidualEnvironment:
             raise ValueError("Only a complete parallel episode bank is resumable")
         state = dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.horizon,
                      worker_recovery=deepcopy(self.worker_recovery))
+        if self.world_size != 8:state['rollout_world_size'] = self.world_size
         if self.environments_per_gpu != 1:
             state['rollout_lanes_per_gpu'] = self.environments_per_gpu
         return state
 
     def load_state_dict(self, state):
         if (self.active or state["cases"] != self.cases or state["horizon"] != self.horizon
-                or state.get('rollout_lanes_per_gpu', 1) != self.environments_per_gpu):
+                or state.get('rollout_lanes_per_gpu', 1) != self.environments_per_gpu
+                or state.get('rollout_world_size', 8) != self.world_size):
             raise ValueError("Preserve the exact native case bank on migration")
         self.cursor = int(state["cursor"])
         self.worker_recovery = deepcopy(state.get("worker_recovery", []))
@@ -116,8 +129,8 @@ class ParallelResidualEnvironment:
     def collect(self, policy, bound, motor, *, episodes, generator, deterministic=False, verify_zero=False):
         devices = self.profile["rollout_devices"]
         world = len(devices)
-        if world != 8 or self.cursor + episodes > len(self.cases):
-            raise ValueError("Eight allocated workers and an exact complete episode bank required")
+        if world != self.world_size or self.cursor + episodes > len(self.cases):
+            raise ValueError("The bound worker count and an exact complete episode bank are required")
         partitions = episode_partitions(episodes, world)
         bank = self.output / f"parallel-{self.cursor:06d}"
         bank.mkdir(parents=True, exist_ok=False)  # Never recollect an attempted bank.
