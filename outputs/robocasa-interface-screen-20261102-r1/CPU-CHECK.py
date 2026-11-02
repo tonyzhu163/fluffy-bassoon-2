@@ -29,3 +29,19 @@ assert head(features).shape == (2, 50, 12)
 matrix = module.projection(32, 16, 921003)
 assert torch.equal(matrix, module.projection(32, 16, 921003))
 print('PASS: KV zero identity/nonzero value-only intervention; velocity reference; direct base-action independence; projection reproducibility')
+
+source = Path('/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/pending-001.pt')
+payload = torch.load(source, map_location='cpu', weights_only=False)
+assert payload['stage'] == 'pending_labels'
+records = payload['pending_records']
+assert len(records) == 960 and sum(row['episode_start'] for row in records) == 64
+import numpy as np
+x = torch.tensor(np.stack([row['features'] for row in records[:4]]))
+y = torch.tensor(np.stack([row['base_chunk'] for row in records[:4]]))
+assert x.shape == (4, 2088) and y.shape == (4, 50, 12)
+head = module.DirectHead()
+optimizer = torch.optim.AdamW(head.parameters(), lr=3e-4)
+loss = (head(x) - y).square().mean()
+optimizer.zero_grad(); loss.backward(); optimizer.step()
+assert torch.isfinite(loss) and len(optimizer.state) == 4
+print('PASS: retained pending-record schema, actual frozen-feature/action shapes, direct-head optimizer step')

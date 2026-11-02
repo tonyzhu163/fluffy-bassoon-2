@@ -80,12 +80,12 @@ class PairedEnvironment(RoboCasaResidualEnvironment):
         return observation
 
 
-def run_bank(name, cases, draws, arm='native', fraction=0., direct=None, critic=None):
+def run_bank(name, cases, draws, arm='native', fraction=0., direct=None, critic=None, deterministic_direct=False):
     destination = OUT / name
     destination.mkdir(parents=True, exist_ok=False)
     seeds, codes, noise = plan(cases, draws)
     adapter = interfaces.InterfaceMotor(motor, arm=arm, controls=codes, fraction=fraction, direct=direct, critic=critic)
-    stochastic = arm in ('action', 'direct')
+    stochastic = arm == 'action' or arm == 'direct' and not deterministic_direct
     bound = ResidualBound.from_std(stats['actions']['std'], indices=range(6), fraction=fraction if arm == 'action' else .25, action_dim=12)
     lanes = min(8, len(cases))
     journals = [ActionJournal(str(RUN / 'actions'), rank=RANK, world=4, attempt=name + '-lane' + str(lane),
@@ -168,7 +168,8 @@ def fit_direct(anchor_records):
     for update in range(1, 7):
         path = source / f'pending-{update:03d}.pt'
         payload = torch.load(path, map_location='cpu', weights_only=False)
-        records.extend(payload['records'])
+        assert payload['stage'] == 'pending_labels'
+        records.extend(payload['pending_records'])
         sources.append(dict(path=str(path), sha256=sha(path)))
     x = torch.as_tensor(np.stack([r['features'] for r in records]), device='cuda')
     y = torch.as_tensor(np.stack([r['base_chunk'] for r in records]), device='cuda')
@@ -249,6 +250,13 @@ def main():
         free_bytes=filesystem.f_bavail * filesystem.f_frsize, deadline=DEADLINE,
         aggregate_authorized_GPU_seconds=43200, PPO_updates=0)
     write_new(OUT / 'manifest.json', manifest)
+    while not all((RUN / task / 'manifest.json').exists() for task in TASKS):
+        if time.time() > START + 600:
+            raise TimeoutError('Actual four-task GPU admission incomplete')
+        time.sleep(2)
+    manifests = [json.loads((RUN / task / 'manifest.json').read_text()) for task in TASKS]
+    assert len({value['device']['uuid'] for value in manifests}) == 4
+    assert all(value['source_commit'] == os.environ['TASK_CODE_PIN'] for value in manifests)
     with initialize_config_dir(config_dir=str(CODE / 'configs/native_ppo'), version_base=None):
         cfg = compose(config_name='robocasa365_pi05_eval')
     cfg.env.eval.episode_horizon_source = 'max_episode_steps'
@@ -286,9 +294,8 @@ def main():
         qualified_cases = [case(i) for i in range(200, 208)]
         original, _ = run_bank('direct-qualification-native', qualified_cases, [0] * 8)
         # Deterministic direct head: use arm directly but zero residual actor.
-        initial_std = policy.log_std.clone(); policy.log_std.fill_(-20.)
-        candidate, _ = run_bank('direct-qualification-head', qualified_cases, [0] * 8, 'direct', .25, direct=direct)
-        policy.log_std.copy_(initial_std)
+        candidate, _ = run_bank('direct-qualification-head', qualified_cases, [0] * 8, 'direct', .25,
+                                direct=direct, deterministic_direct=True)
         a, b = sum(r['success'] for r in original['rows']), sum(r['success'] for r in candidate['rows'])
         supplementary_controls += original['policy_controls'] + candidate['policy_controls']
         admitted = b >= max(1, a - 1)
