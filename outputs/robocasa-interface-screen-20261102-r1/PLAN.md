@@ -75,9 +75,11 @@ access. Require actual allocated GPU/CUDA probes and an advancing real
 episode. A finite cap may leave a family incomplete; report that explicitly
 and diagnose before proposing a successor. No automatic fresh allocation.
 
-**Expanded resource ceiling and direct-head/scorer training await the human
-budget decision.** The user's original Stage 0 request authorizes preparation
-and the original residual/native screen. No expanded GPU job has launched.
+**The human approved the expanded12GPU-hour ceiling and direct-head/selector
+qualification in this chat.** [Authority](AUTHORITY.json) preserves the exact
+answer. The [first allocation contract](EXECUTION.md) defines the adapters,
+scale selection, direct-head fit and realizable selector. No GPU job has
+launched at this planning checkpoint.
 No Stage 1 PPO or multi-task history collection is authorized by this plan.
 
 ## Preservation

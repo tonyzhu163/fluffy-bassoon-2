@@ -59,6 +59,7 @@ class InterfaceMotor:
         self.direct, self.critic = direct, critic
         self.inference_draws = 0
         self.selector_choices = []
+        self.selector_draws = {}
 
     @contextmanager
     def intervention(self, code):
@@ -98,10 +99,12 @@ class InterfaceMotor:
             chunks = (predicted * (std + 1e-6) + mean).astype(np.float32)
         elif self.arm == 'select':
             banks, feature_banks = [chunks], [features]
+            candidate_seeds = [seeds]
             for candidate in range(1, 8):
                 more = [int(np.random.default_rng(seed + candidate * 1000003).integers(0, 2**63 - 1)) for seed in seeds]
                 sample, feat, _ = self.native.infer_batch(observation, noise_seeds=more)
                 banks.append(sample); feature_banks.append(feat)
+                candidate_seeds.append(more)
                 self.inference_draws += len(seeds)
             # A realizable fixed heuristic, not an oracle: the saved source
             # PPO value network scores each candidate's public frozen features.
@@ -114,5 +117,8 @@ class InterfaceMotor:
             chunks = np.stack([banks[int(k)][i] for i, k in enumerate(selected)])
             features = np.stack([feature_banks[int(k)][i] for i, k in enumerate(selected)])
             self.selector_choices.extend(map(int, selected))
+            for i, seed in enumerate(seeds):
+                self.selector_draws[seed] = dict(candidate_seeds=[bank[i] for bank in candidate_seeds],
+                    selected_candidate=int(selected[i]), actual_motor_seed=candidate_seeds[int(selected[i])][i])
         assert np.isfinite(chunks).all() and np.isfinite(features).all()
         return chunks, features, seeds
