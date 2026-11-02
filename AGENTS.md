@@ -43,59 +43,45 @@ runs per the [retention policy](README.md#artifact-retention).
   without overwriting changes.
 - Never commit credentials, machine-local SSH configuration, or secret-bearing
   logs. Protect shared data and checkpoints needed by active jobs.
-- Launch GPU jobs within the user-approved task scope as soon as verified code
+- Launch accelerator jobs within the user-approved task scope as soon as verified code
   and allocated resources are ready; no repeated launch confirmation is needed.
   Ask before expanding the scientific scope or a materially larger resource
   budget. CPU tests and static checks need no ask.
 
-## Cluster access
+## Environment access
+
+Baige is the default environment for computation, job launches, availability
+checks and job-status questions unless the user names another environment.
 
 | Environment | Entry point | Rules |
 | --- | --- | --- |
-| Primary school cluster | `ssh thu1-master` | Use the machine-local alias; do not bypass its authentication/routing with a direct IP. |
-| Secondary school cluster | `ssh thu2-node01` | Use configured `thu2-*` aliases; off-campus routing uses `ProxyJump mac-mini`. |
 | Baige | Authenticated console or configured development SSH endpoint | The user's scheduler containers are exclusive; use their allocation as the isolation boundary. |
-| DeltaAI | `yliu21@dtai-login.delta.ncsa.illinois.edu` | Only requested DeltaAI work; account `bhyv-dtai-gh` (project `CIS261376`), batch partition `ghx4`. |
+| Ali PPU | Authenticated Alibaba Cloud PAI console or configured DSW development endpoint | Use allocated PPU resources; preserve vendor framework and accelerator libraries, and qualify workloads on the actual device. |
 
-- Both school-cluster aliases reach campus through the `mac-mini` Tailscale
-  jump host. If it loses power it stays off the tailnet until someone logs in
-  at its console; running cluster jobs are unaffected.
-- The school clusters have separate Slurm controllers and homes. Always
-  identify the cluster along with a node or job ID.
-- Jiaxuan is reserved for Yuxiang Liu (`yuxiangliu`) and work he explicitly
-  authorizes. Use the school clusters otherwise.
-- Keep SSH routing and authentication local. For DeltaAI, inspect `ssh -G`,
-  reuse a live authenticated control connection, and expect password/Duo
-  authentication when it expires. Never store authentication material here.
-- Before scheduling, run `bash scripts/gpu_availability.sh` for the school
-  clusters and check the target's `sinfo`, `squeue`, partitions and GRES.
-  Discover current hardware and limits instead of keeping node inventories here.
-- On DeltaAI, specify `--account=bhyv-dtai-gh` on every allocation and validate
-  ARM-compatible packages and CUDA on allocated Grace Hopper hardware.
+- Keep SSH routing and authentication local. Never store authentication
+  material here.
+- Before scheduling, check the target's queue capacity, resource limits and
+  actual accelerator type. Discover current hardware and limits instead of
+  keeping node inventories here.
 
 ## Storage and environments
 
 - Use project-specific shared NVMe for code, environments, caches and outputs,
   rather than NFS home. Check capacity, quota and a write probe before setup.
-- Secondary project root: `/cluster/nvme5/zhujiayang/fluffy-bassoon-2`, with
-  the canonical clone in `repo/`, pinned runs in `worktrees/<run-id>/` and
-  outputs in `outputs/<run-id>/`. Never reuse a run ID. Environments and model
-  caches already under `/cluster/nvme5/zhujiayang/fluffy-bassoon/{envs,cache}`
-  are reused in place by path; do not move them while fluffy-bassoon runs use
-  them.
+- Never reuse a run ID or move shared environments and model caches while
+  active jobs depend on them.
 - Prefer direct downloads. If blocked, use a Git bundle for private code;
   public mirrors must never receive private-repo credentials. Use the user's
   own Hugging Face authentication for gated weights.
 
-## GPU jobs
+## Accelerator jobs
 
 - On Baige, retain scheduler GPU visibility without extra device namespaces or
   bubblewrap. For evaluation-only work on an unchanged qualified runtime, use a
   lightweight GPU-count/CUDA check and a real simulator episode.
-- On school and DeltaAI clusters, run GPU work inside Slurm allocations and
-  `srun` steps, never login shells. Set `--ntasks=1` on both `sbatch` and `srun`
-  for single-process drivers. Request the partition's actual GRES type and
-  enough CPU/RAM; pin nodes only for a hardware or runtime constraint.
+- On Ali PPU, validate framework/device support and core numerical behavior
+  inside the allocated instance before model work; CPU fallback does not
+  qualify accelerator support.
 - Scheduler availability, GPU health and allocation isolation are separate
   checks. Run `scripts/[train]gpu_probe.py` inside the actual job step with
   `--expected-count` and `--output`. `IDLE` or readable `nvidia-smi` is
