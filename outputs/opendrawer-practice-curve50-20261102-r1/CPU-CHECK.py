@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import runpy
 import sys
+import tempfile
 
 import numpy as np
 import torch
@@ -20,6 +21,20 @@ for method in ('ad_full','dpt_full'):
     os.environ['TASK_CURVE_METHOD']=method
     os.environ['TASK_CURVE_OUTPUT']=str(ROOT/'outputs'/f'opendrawer-{method}-practice-qualification')
     m=runpy.run_path(str(Path(__file__).with_name('CURVE.py')))
+    with tempfile.TemporaryDirectory() as temporary:
+        journal_function=m['make_journal']
+        original_out=journal_function.__globals__['OUT']
+        journal_function.__globals__['OUT']=Path(temporary)
+        os.environ['TASK_ATTEMPT']='pinned-runtime-api-check'
+        try:
+            for rank in range(8):
+                journal=journal_function(rank)
+                cursor=journal.begin(50,phase='CPU_API_CHECK_NO_SIMULATOR')
+                journal.finish(cursor,0)
+                assert journal.charged()==0
+        finally:journal_function.__globals__['OUT']=original_out
+    report.setdefault('startup_checks',[]).append(dict(method=method,pinned_journal_API_passed=True,
+        all_eight_rank_cohorts_fit_recording_guard=True,constructor_checked_before_motor_loading=True))
     b=json.loads((m['SOURCE']/'binding.json').read_text());candidate=b['selected'][method]['candidate']
     policy,_=load_policy(candidate['path'],expected_sha256=candidate['sha256'],device='cpu')
     frozen={k:v.clone() for k,v in policy.state_dict().items()}
