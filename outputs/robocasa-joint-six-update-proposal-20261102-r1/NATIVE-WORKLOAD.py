@@ -30,6 +30,15 @@ assert authority['direct_human_instruction'] and authority['old_trial_spend_pres
 assert binding['tasks'] == list(PPO_TASKS) and binding['maximum_iterations'] == 6
 assert binding['human_task_authority'] == binding['policy_profile']['calibration_exceptions'].get('PickPlaceCounterToCabinet')
 assert read_ref(binding['human_task_authority'])['direct_human_instruction']
+# A fixed-count arm cut by the clock resumes in a NEW run id from the
+# previous slice's RESUME-REQUIRED.json (same source, same contract).
+resume_ref = (dict(path=os.environ['TASK_RESUME_FROM'], sha256=os.environ['TASK_RESUME_FROM_SHA256'])
+              if os.environ.get('TASK_RESUME_FROM') else None)
+resume = read_ref(resume_ref) if resume_ref else None
+if resume:
+    assert resume['maximum_iterations'] == 6 and 0 <= resume['iteration'] < 6
+    assert sha(resume['checkpoint']['path']) == resume['checkpoint']['sha256']
+assert resume is None or kind == 'S'
 node_rank, start = int(os.environ['RANK']), int(os.environ['TASK_STARTED'])
 worker_seconds = 7200 if kind == 'common' else 21600
 slice_seconds = worker_seconds - 60
@@ -121,6 +130,9 @@ try:
             profile.update(stopping='fixed', initial_policy_fingerprint=binding['initial_policy_fingerprint'],
                 initial_dev_evaluation=binding['initial_dev_evaluation'],
                 training_cases=[case for iteration in range(1, 7) for case in joint_case_bank('train', iteration=iteration)])
+            if resume:
+                profile.update(resume=resume['checkpoint']['path'], resume_sha256=resume['checkpoint']['sha256'],
+                               resumed_from=resume_ref)
         write_new(out / 'policy-profile.json', profile)
         environment = dict(os.environ, **native_env)
         environment.update(CUDA_VISIBLE_DEVICES=global_devices[0]['visibility_token'], LYCO_BAIGE_GPU_MAP=str(probe),
@@ -129,7 +141,11 @@ try:
             '--profile', str(out / 'policy-profile.json')], env=environment, check=True,
             timeout=max(1, deadline - time.time()))
         marker = run / 'policy' / ('COMMON-FINAL.json' if kind == 'common' else 'EVALUATION-COMPLETE.json')
-        assert json.loads(marker.read_text())['completed'] is True
+        resume_next = run / 'policy' / 'RESUME-REQUIRED.json'
+        if kind == 'S' and resume_next.exists():
+            marker = resume_next  # Clock-limited fixed count: resume from this boundary, no final yet.
+        else:
+            assert json.loads(marker.read_text())['completed'] is True
         actual_bytes = sum(path.stat().st_size for path in run.rglob('*') if path.is_file())
         assert actual_bytes <= output_gib << 30
         write_new(run / 'COMPLETED.json', dict(completed=True, stage=kind, actual_output_bytes=actual_bytes,

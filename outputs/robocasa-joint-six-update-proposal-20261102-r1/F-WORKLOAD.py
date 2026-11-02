@@ -25,6 +25,12 @@ spec=json.loads((code/'outputs/robocasa-joint-six-update-proposal-20261102-r1/F-
 binding_ref=dict(path=os.environ['TASK_BINDINGS'],sha256=os.environ['TASK_BINDINGS_SHA256'])
 binding=read_ref(binding_ref)
 rank,start=int(os.environ['RANK']),int(os.environ['TASK_STARTED'])
+# A fixed-count arm cut by the clock resumes in a NEW run id from the
+# previous slice's RESUME-REQUIRED.json (same source, same contract).
+resume_ref=(dict(path=os.environ['TASK_RESUME_FROM'],sha256=os.environ['TASK_RESUME_FROM_SHA256'])
+            if os.environ.get('TASK_RESUME_FROM') else None)
+resume=read_ref(resume_ref) if resume_ref else None
+batches=6-(resume['iteration'] if resume else 0)
 deadline=start+21540-300
 services=[];streams=[];controller=None
 
@@ -74,6 +80,9 @@ def main():
     assert spec['scorer_qualification'] in profile['core_qualification']
     for ref in profile['core_qualification']:read_ref(ref)
     assert not any(profile.get(k) for k in ('resume','resume_sha256','rollout_migration','checkpoint','prior_dev_evaluations'))
+    if resume:
+        assert resume['maximum_iterations']==6 and 0<=resume['iteration']<6
+        assert sha(resume['checkpoint']['path'])==resume['checkpoint']['sha256']
     common=read_ref(binding['common_final'])
     assert common['completed'] is True and common['policy_updates']==0 and common['ID_episodes']==common['OOD_episodes']==250
     for key in ('initial_policy_fingerprint','initial_dev_evaluation'):
@@ -144,7 +153,7 @@ def main():
             minimum_free_mib_after_engine_warmup=execution['native_rollout_memory_reserve_mib'],
             engine_ready_path=str(job/'engines'/f'rank-{annotation_rank:02d}.json'),
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),expected_gpu_uuid=device['uuid'],
-            scheduler_seconds=21540,deadline_unix=deadline,closure_seconds=300,maximum_batches=6,
+            scheduler_seconds=21540,deadline_unix=deadline,closure_seconds=300,maximum_batches=batches,
             shutdown_file=str(job/'annotation-shutdown.json'),stream_scoring=True)
         p=out/f'scorer-{annotation_rank:02d}-profile.json';write_new(p,scorer)
         scorer_refs.append((annotation_rank,p))
@@ -178,6 +187,8 @@ def main():
             final_evaluation_wall_reserve_seconds=7200,annotation_startup_wall_ceiling_seconds=1800,
             annotation_error_paths=errors,annotation_engines=[dict(profile=dict(path=str(p),sha256=sha(p)),
                 ready_path=str(job/'engines'/f'rank-{r:02d}.json')) for r,p in enumerate(scorer_paths)])
+        if resume:
+            profile.update(resume=resume['checkpoint']['path'],resume_sha256=resume['checkpoint']['sha256'],resumed_from=resume_ref)
         p=out/'policy-profile.json';write_new(p,profile)
         environment=dict(os.environ,**native_env,CUDA_VISIBLE_DEVICES=global_devices[0]['visibility_token'],
             LYCO_BAIGE_GPU_MAP=str(probe),LYCO_BAIGE_ISOLATED_UUID=global_devices[0]['uuid'],MUJOCO_EGL_DEVICE_ID='0')
@@ -204,7 +215,7 @@ def main():
                      (run/'policy').glob(f'labels-*/shards/rank-{r:02d}.json')]
                 count=sum(row.get('completed') is True and row.get('annotation_rank')==r
                           and row.get('source_commit')==binding['source_commit'] for row in own)
-                if not (run/'policy/FINAL.json').exists() and count!=6:
+                if not (run/'policy/FINAL.json').exists() and count!=batches:
                     raise RuntimeError('Scorer ended before its own six complete shards or controller final boundary')
                 completed_scorers.add(r)
         now=time.time()
@@ -221,6 +232,15 @@ def main():
                 last_size=now
             if controller.poll() is not None:
                 if controller.returncode:raise RuntimeError(f'F controller exited{controller.returncode}; retain saved full/pending state')
+                resume_next=run/'policy/RESUME-REQUIRED.json'
+                if resume_next.exists():
+                    # Clock-limited fixed count: no final policy yet; the next slice resumes here.
+                    write_new(run/'COMPLETED.json',dict(completed=True,stage='F',resume_required=dict(
+                        path=str(resume_next),sha256=sha(resume_next)),resumed_from=resume_ref,
+                        human_action_authority=binding['human_action_authority'],human_task_authority=binding['human_task_authority']))
+                    write_new(job/'annotation-shutdown.json',dict(completed=True))
+                    write_new(dispatch/'shutdown.json',dict(completed=True))
+                    break
                 final=read_ref(dict(path=str(run/'policy/FINAL.json'),sha256=sha(run/'policy/FINAL.json')))
                 completed=json.loads((run/'policy/EVALUATION-COMPLETE.json').read_text())
                 assert final['completed'] is True and 0<=final['iteration']<=6
