@@ -14,6 +14,13 @@ profiles={k:json.loads((p/'policy/profile.json').read_text()) for k,p in bases.i
 shared=['initializer','motor_seed','residual_seed','update_seed','ppo','evaluation_motor_seeds']
 assert all(profiles['S'][key]==profiles['F'][key] for key in shared)
 assert profiles['S']['training_cases'][:384]==profiles['F']['training_cases'][:384]
+def stable_meta(value):
+    # Native object-category membership is serialized from an unordered set.
+    # Preserve every value and every other list's order, including placements.
+    if isinstance(value,dict):
+        return {k:sorted(v) if k=='groups_containing_sampled_obj' else stable_meta(v) for k,v in value.items()}
+    if isinstance(value,list):return [stable_meta(v) for v in value]
+    return value
 panels={}
 for phase,task,motor_seed,chunks in [('ID','OpenDrawer',910100,15),('OOD','CloseFridge',1010100,18)]:
     actual={};metadata={}
@@ -32,7 +39,7 @@ for phase,task,motor_seed,chunks in [('ID','OpenDrawer',910100,15),('OOD','Close
             assert offset==len(result['records'])
         assert len(records)==50 and [records[i]['case'] for i in range(50)]==case_bank(task,phase,count=50)
         actual[arm]=records
-        metadata[arm]={v['case']['slot']:digest(v['native_ep_meta']) for p in
+        metadata[arm]={v['case']['slot']:digest(stable_meta(v['native_ep_meta'])) for p in
             (base/f'monitoring/{phase}-006').glob('*.json') for v in [json.loads(p.read_text())]}
     generator=np.random.default_rng(motor_seed)
     expected=[[int(generator.integers(0,2**63-1)) for _ in range(chunks)] for _ in range(50)]
@@ -43,7 +50,9 @@ for phase,task,motor_seed,chunks in [('ID','OpenDrawer',910100,15),('OOD','Close
     base_diff=[np.max(np.abs(actual['S'][i]['base_chunk']-actual['F'][i]['base_chunk'])) for i in range(50)]
     panels[phase]=dict(task=task,cases=case_bank(task,phase,count=50),motor_seed=motor_seed,
         chunks_per_episode=chunks,per_case_noise_seeds=expected,actual_S_F_noise_seeds_equal=True,
-        actual_S_F_native_ep_meta_equal=True,first_features_bitwise_equal=all(float(v)==0 for v in features),
+        actual_S_F_native_ep_meta_equal_ignoring_unordered_group_names=True,
+        metadata_normalization='sort only groups_containing_sampled_obj membership names; preserve all other arrays/values',
+        first_features_bitwise_equal=all(float(v)==0 for v in features),
         first_base_chunks_bitwise_equal=all(float(v)==0 for v in base_diff),
         max_initial_feature_abs_difference=float(max(features)),max_initial_base_chunk_abs_difference=float(max(base_diff)),
         canonical_case_bank_sha256=digest(case_bank(task,phase,count=50)),noise_seed_schedule_sha256=digest(expected))
