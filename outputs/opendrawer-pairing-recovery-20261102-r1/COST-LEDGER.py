@@ -1,0 +1,33 @@
+"""Allocated-CPU audit of inherited source and incremental AD/DPT costs."""
+from datetime import datetime,timezone
+import hashlib,json
+from pathlib import Path
+ROOT=Path('/mowenjie/fluffy-bassoon-2/outputs');OUT=ROOT/'opendrawer-pairing-recovery-20261102-r1'
+def ref(p):return dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+def read(p):return json.loads(p.read_text())
+def phase(run,job,start,end,gpus,new_episodes,role):
+ p=ROOT/run;journals=[]
+ for q in p.glob('accounting/rank-*/*.json'):
+  calls=read(q)['calls'];journals.append(dict(file=ref(q),calls=len(calls),unresolved=sum(not c['resolved'] for c in calls),conservative_controls=sum(c.get('executed_or_conservative',c['requested']) for c in calls)))
+ clocks=[dict(file=ref(q),clock=read(q)) for q in p.glob('attempts/*/node-*/clock.json')]
+ dt=lambda s:datetime.fromisoformat('2026-11-02T'+s+'+08:00')
+ return dict(run=run,job=job,role=role,scheduler_created=dt(start).isoformat(),scheduler_terminal=dt(end).isoformat(),allocated_gpus=gpus,new_complete_episodes=new_episodes,journals=journals,conservative_controls=sum(x['conservative_controls'] for x in journals),unresolved_calls=sum(x['unresolved'] for x in journals),known_process_clocks=clocks,known_process_gpu_seconds=sum(x['clock']['observed_gpu_seconds'] for x in clocks),creation_to_terminal_gpu_seconds_upper=int((dt(end)-dt(start)).total_seconds())*gpus,upper_includes_queue=True)
+rows=[phase('opendrawer-ppo-ad-dpt-20261102-r1','job-8kb761dxfvtm','11:48:26','14:48:58',2,30,'four converged fits plus excluded legacy spill'),phase('opendrawer-ad-first-id-ood-20261102-r1','job-gv4po7gq8aaf','13:28:31','13:34:27',8,32,'failed invalid feature-hash guard; excluded'),phase('opendrawer-dpt-full-id-ood-20261102-r1','job-t4xwnjnjuxp9','13:30:27','13:35:04',8,0,'stopped obsolete readout before episodes'),phase('opendrawer-ad-first-id-ood-20261102-r2','job-tft9nlsdrn4e','14:30:44','16:01:56',8,597,'admitted one-shot AD/PPO original partial phase'),phase('opendrawer-ad-query-recovery-20261102-r1','job-h7wu2todqdny','16:25:50','16:29:37',1,3,'admitted AD last-case recovery;597 reused records not recollected')]
+old_dpt=read(ROOT/'opendrawer-dpt-full-query-recovery-20261102-r1/TERMINAL-ACCOUNTING.json')
+for x in old_dpt['phases']:
+ x=dict(x);x['new_complete_episodes']=1 if x['job']=='job-cajo3v8oetx3' else x['complete_episodes'];x['role']='admitted DPT full/static/recovery';rows.append(x)
+scheduler=read(OUT/'SCHEDULER-CLOSEOUT.json')
+diags=[]
+for i,job in enumerate(('job-3laomtozsiy1','job-05m2kxpoyvcq','job-liccaq40joph','job-fewxvmo02btm'),1):
+ p=ROOT/f'opendrawer-reset-pairing-20261102-r{i}';clock=p/'clock.txt';values=clock.read_text().split();assert len(values)==4
+ result=read(p/'RESULT.json') if (p/'RESULT.json').exists() else {}
+ diags.append(dict(run=p.name,job=job,clock=ref(clock),started_unix=int(values[0]),finished_unix=int(values[1]),process_gpu_seconds=int(values[2]),allocated_gpus=1,exit_code=int(values[3]),policy_controls=0,reset_count=result.get('reset_count',0),motor_inferences=result.get('motor_inferences',0),scheduler_terminal_overhead_verified=True,scheduler_receipt=scheduler['jobs'][job],creation_to_terminal_gpu_seconds_upper=int((datetime.fromisoformat('2026-11-02T'+scheduler['jobs'][job]['terminal']+'+08:00')-datetime.fromisoformat('2026-11-02T'+scheduler['jobs'][job]['created']+'+08:00')).total_seconds())))
+fits={}
+for p in (ROOT/'opendrawer-ppo-ad-dpt-20261102-r1/fits').glob('*/training-status.json'):
+ d=read(p);assert d['converged'];fits[p.parent.name]=dict(status=ref(p),updates=d['update'],fit_process_seconds=d['elapsed_seconds'],best_validation_nll=d['best_validation_nll'])
+source=OUT/'source-cost-receipts';s8r2=read(source/'S8-r2.json');s8r1=read(source/'S8-r1.json');legacy=read(source/'legacy-S.json')
+report=dict(checked_at=datetime.now(timezone.utc).isoformat(),inherited_source=dict(source_S8_r2=ref(source/'S8-r2.json'),source_S8_r2_GPU_seconds=s8r2['closed_GPU_seconds'],source_S8_r2_controls=s8r2['physical_actions'],source_S8_r1=ref(source/'S8-r1.json'),source_S8_r1_GPU_seconds=s8r1['total_closed_gpu_seconds'],legacy_S=ref(source/'legacy-S.json'),legacy_S_GPU_seconds=legacy['charged_gpu_seconds'],inherited_GPU_seconds=s8r2['closed_GPU_seconds']+s8r1['total_closed_gpu_seconds']+legacy['charged_gpu_seconds'],note='Existing source acquisition lineage, not new AD/DPT expenditure. No foundation pretraining or unrelated Flora/batching jobs attributed.'),incremental_closed_phases=rows,fit_breakdown=fits,fit_seconds_are_subset_of_training_allocation=True,pairing_diagnostics=diags,curve_old_attempts=ref(ROOT/'opendrawer-attempts50-20261102-r1/OLD-CURVE-TERMINAL-ACCOUNTING.json'),active_actual_attempt_jobs=['job-pyhz34s90cnv','job-ci8hnzbt5ur9'],one_shot_scientific_comparison=ref(OUT/'COMBINED-RESULT.json'),original_ad_and_dpt_allocation_terminal_UI_verified=True,original_one_shot_resource_scope_covered=True,scheduler_closeout=ref(OUT/'SCHEDULER-CLOSEOUT.json'),all_experiment_terminal_accounting_complete=False,pending=['Actual-only AD/DPT allocations still active/queued; final clocks, journals and resources pending'],accounting_rules=['Never add a complete process clock and creation-to-terminal bound for the same allocation','Creation-to-terminal bounds include scheduler queues and exceed measured process time','Recovered result collections retain original references; count only newly collected episodes and journals in incremental costs','All unresolved calls are conservatively charged; excluded scientific results retain their resource charges','Per-fit timing is already within training allocation, not additive','GPU seconds are durations, not prices; no tariff assumed'])
+report['incremental_original_creation_to_terminal_GPU_seconds_upper']=sum(x.get('creation_to_terminal_gpu_seconds_upper',x.get('conservative_creation_to_terminal_gpu_seconds')) for x in rows)+sum(x['creation_to_terminal_gpu_seconds_upper'] for x in diags)
+report['old_curve_creation_to_terminal_GPU_seconds_upper']=sum(x['creation_to_terminal_gpu_seconds_upper'] for x in read(ROOT/'opendrawer-attempts50-20261102-r1/OLD-CURVE-TERMINAL-ACCOUNTING.json')['terminal_curves'])
+(OUT/'RESOURCE-LEDGER.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(dict(inherited_GPU_seconds=report['inherited_source']['inherited_GPU_seconds'],closed_phase_count=len(rows),conservative_controls=sum(x['conservative_controls'] for x in rows),unresolved_calls=sum(x['unresolved_calls'] for x in rows),diagnostic_process_GPU_seconds=sum(x['process_gpu_seconds'] for x in diags),pending=report['pending']),indent=2))

@@ -228,12 +228,14 @@ terminal receipts from every node in its own allocation. Source PPO streams
 span different scenes across versions; these remain single-source-task and
 single-fit-seed development results, and OOD means held out from student
 training rather than foundation pretraining. Failed/partial/recovery costs
-remain separate from admitted scientific episodes; the whole-experiment cost
-ledger is still being closed.
+remain separate from admitted scientific episodes. The resource ledger covers
+the inherited source and all closed fit/readout/diagnostic/recovery allocations;
+the two subsequently authorized actual-attempt curve allocations are ongoing.
 [Final combined result](../outputs/opendrawer-pairing-recovery-20261102-r1/COMBINED-RESULT.json),
 [AD independent result](../outputs/opendrawer-ad-query-recovery-20261102-r1/RESULT.json),
 [DPT full result](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/RESULT.json),
-[DPT static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json).
+[DPT static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json),
+[resource ledger](../outputs/opendrawer-pairing-recovery-20261102-r1/RESOURCE-LEDGER.json).
 
 ## LIBERO
 

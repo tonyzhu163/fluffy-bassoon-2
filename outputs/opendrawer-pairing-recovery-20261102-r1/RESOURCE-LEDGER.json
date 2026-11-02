@@ -1,0 +1,807 @@
+{
+  "checked_at": "2026-11-02T10:28:41.303183+00:00",
+  "inherited_source": {
+    "source_S8_r2": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-pairing-recovery-20261102-r1/source-cost-receipts/S8-r2.json",
+      "sha256": "6cbeb9bfcd3fa4a481d2811a852b2317fdddf3ce9de92c6104dd76ac7d31ea32"
+    },
+    "source_S8_r2_GPU_seconds": 25406,
+    "source_S8_r2_controls": 319200,
+    "source_S8_r1": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-pairing-recovery-20261102-r1/source-cost-receipts/S8-r1.json",
+      "sha256": "11995ec57937e44a9b88b177462792219ec547d7ced6a94f5b4a3c044d89e947"
+    },
+    "source_S8_r1_GPU_seconds": 1070,
+    "legacy_S": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-pairing-recovery-20261102-r1/source-cost-receipts/legacy-S.json",
+      "sha256": "21b27a7812217d512327fa21a8df108b182e191e6059af66b00f40fcca7aadc1"
+    },
+    "legacy_S_GPU_seconds": 5209,
+    "inherited_GPU_seconds": 31685,
+    "note": "Existing source acquisition lineage, not new AD/DPT expenditure. No foundation pretraining or unrelated Flora/batching jobs attributed."
+  },
+  "incremental_closed_phases": [
+    {
+      "run": "opendrawer-ppo-ad-dpt-20261102-r1",
+      "job": "job-8kb761dxfvtm",
+      "role": "four converged fits plus excluded legacy spill",
+      "scheduler_created": "2026-11-02T11:48:26+08:00",
+      "scheduler_terminal": "2026-11-02T14:48:58+08:00",
+      "allocated_gpus": 2,
+      "new_complete_episodes": 30,
+      "journals": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/accounting/rank-01/baige-r1.json",
+            "sha256": "e04b1e7cf0948649f183144c5f07c80d796d47f568979952d75fc818e69aa00f"
+          },
+          "calls": 225,
+          "unresolved": 1,
+          "conservative_controls": 10628
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/accounting/rank-00/baige-r1.json",
+            "sha256": "7fbc9ec61f489cda5efc430614a15be190c58eea5b6a923c6dabec5e89ee08f8"
+          },
+          "calls": 267,
+          "unresolved": 1,
+          "conservative_controls": 12500
+        }
+      ],
+      "conservative_controls": 23128,
+      "unresolved_calls": 2,
+      "known_process_clocks": [],
+      "known_process_gpu_seconds": 0,
+      "creation_to_terminal_gpu_seconds_upper": 21664,
+      "upper_includes_queue": true
+    },
+    {
+      "run": "opendrawer-ad-first-id-ood-20261102-r1",
+      "job": "job-gv4po7gq8aaf",
+      "role": "failed invalid feature-hash guard; excluded",
+      "scheduler_created": "2026-11-02T13:28:31+08:00",
+      "scheduler_terminal": "2026-11-02T13:34:27+08:00",
+      "allocated_gpus": 8,
+      "new_complete_episodes": 32,
+      "journals": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-02/ad-first-r1.json",
+            "sha256": "56fe34373b996d51ea3e2e3dbbb4f3bb80ec7b4f1d0eea804caf15f5da215ab4"
+          },
+          "calls": 89,
+          "unresolved": 1,
+          "conservative_controls": 4200
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-04/ad-first-r1.json",
+            "sha256": "5c5ee35d1ea4c206827d552062c7bf3007fdf5aa068a3709242f23142acc8817"
+          },
+          "calls": 76,
+          "unresolved": 0,
+          "conservative_controls": 3600
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-06/ad-first-r1.json",
+            "sha256": "dcbfb509998aa62e98020fa77f84fa8417a5813a6b1726fe48ad7e8013df04ef"
+          },
+          "calls": 76,
+          "unresolved": 0,
+          "conservative_controls": 3600
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-01/ad-first-r1.json",
+            "sha256": "844105d509aad97b0f90e58a3a3deb1a894de878a3fbf42e5e6847ef6a6aa122"
+          },
+          "calls": 78,
+          "unresolved": 1,
+          "conservative_controls": 3650
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-03/ad-first-r1.json",
+            "sha256": "21cf049777e2ee212d51e5657d877acff5cacb184d79c05e94249e9e41ca4480"
+          },
+          "calls": 97,
+          "unresolved": 1,
+          "conservative_controls": 4550
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-05/ad-first-r1.json",
+            "sha256": "d55cb148871829cf52af66094ec49facb4d6f3b4fd9e47f5735be13446f44aa4"
+          },
+          "calls": 94,
+          "unresolved": 1,
+          "conservative_controls": 4450
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-07/ad-first-r1.json",
+            "sha256": "4b8db11dfd2f7ecee230605154234867f10b5daff35a978224efaa53c9581699"
+          },
+          "calls": 71,
+          "unresolved": 1,
+          "conservative_controls": 3350
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/accounting/rank-00/ad-first-r1.json",
+            "sha256": "46d80309af25e5e0dd77f90acd3dd0667599f273d1894e5b4ae89c87fc9a2439"
+          },
+          "calls": 76,
+          "unresolved": 0,
+          "conservative_controls": 3600
+        }
+      ],
+      "conservative_controls": 31000,
+      "unresolved_calls": 5,
+      "known_process_clocks": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/attempts/ad-first-r1/node-00/clock.json",
+            "sha256": "b1a5d393c970aa0f50937430efe23415f9f159922285291b2c2558b071effc14"
+          },
+          "clock": {
+            "started_unix": 1793597334,
+            "finished_unix": 1793597640,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 612,
+            "exit_code": 1
+          }
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/attempts/ad-first-r1/node-02/clock.json",
+            "sha256": "75e7234f8435b8105df6a175bad2daa579b476190023085d1b92b2de5603d715"
+          },
+          "clock": {
+            "started_unix": 1793597339,
+            "finished_unix": 1793597646,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 614,
+            "exit_code": 1
+          }
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r1/attempts/ad-first-r1/node-03/clock.json",
+            "sha256": "75e7234f8435b8105df6a175bad2daa579b476190023085d1b92b2de5603d715"
+          },
+          "clock": {
+            "started_unix": 1793597339,
+            "finished_unix": 1793597646,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 614,
+            "exit_code": 1
+          }
+        }
+      ],
+      "known_process_gpu_seconds": 1840,
+      "creation_to_terminal_gpu_seconds_upper": 2848,
+      "upper_includes_queue": true
+    },
+    {
+      "run": "opendrawer-dpt-full-id-ood-20261102-r1",
+      "job": "job-t4xwnjnjuxp9",
+      "role": "stopped obsolete readout before episodes",
+      "scheduler_created": "2026-11-02T13:30:27+08:00",
+      "scheduler_terminal": "2026-11-02T13:35:04+08:00",
+      "allocated_gpus": 8,
+      "new_complete_episodes": 0,
+      "journals": [],
+      "conservative_controls": 0,
+      "unresolved_calls": 0,
+      "known_process_clocks": [],
+      "known_process_gpu_seconds": 0,
+      "creation_to_terminal_gpu_seconds_upper": 2216,
+      "upper_includes_queue": true
+    },
+    {
+      "run": "opendrawer-ad-first-id-ood-20261102-r2",
+      "job": "job-tft9nlsdrn4e",
+      "role": "admitted one-shot AD/PPO original partial phase",
+      "scheduler_created": "2026-11-02T14:30:44+08:00",
+      "scheduler_terminal": "2026-11-02T16:01:56+08:00",
+      "allocated_gpus": 8,
+      "new_complete_episodes": 597,
+      "journals": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-02/ad-paired-r2.json",
+            "sha256": "9242942afe208afccdaeabf2a234c4a891f008132bec4f2e7296ac67bb5ecf36"
+          },
+          "calls": 1323,
+          "unresolved": 1,
+          "conservative_controls": 62350
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-04/ad-paired-r2.json",
+            "sha256": "bf9cba51d23ce275cbd221ecdee6765584e529299f70304d306f7abc7a979a2a"
+          },
+          "calls": 1260,
+          "unresolved": 0,
+          "conservative_controls": 59400
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-06/ad-paired-r2.json",
+            "sha256": "aef658f1625d220d53a424d41a5a7dd21cdfa2f114b36bb39c9358daf741da93"
+          },
+          "calls": 1260,
+          "unresolved": 0,
+          "conservative_controls": 59400
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-01/ad-paired-r2.json",
+            "sha256": "b11444125f0e3c8d6182f44c10fa2c6ec3687042b273b9a74435bab0016bac52"
+          },
+          "calls": 1374,
+          "unresolved": 0,
+          "conservative_controls": 64800
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-03/ad-paired-r2.json",
+            "sha256": "834b44a025d018c56b62090357e2491c2519747b7cae2e7bc34927f9478319a0"
+          },
+          "calls": 1356,
+          "unresolved": 0,
+          "conservative_controls": 63900
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-05/ad-paired-r2.json",
+            "sha256": "28e7f7d44bc339e2454401e169e79a0072a731b11eed5f44f5d70d56293f7406"
+          },
+          "calls": 1260,
+          "unresolved": 0,
+          "conservative_controls": 59400
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-07/ad-paired-r2.json",
+            "sha256": "1515bbe33923b2c8d86e12add2050f57ae3114a7dc86900cf7b69b212433c71c"
+          },
+          "calls": 1260,
+          "unresolved": 0,
+          "conservative_controls": 59400
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/accounting/rank-00/ad-paired-r2.json",
+            "sha256": "06e1ce09d6986ad35df6384f19e2b5d1e23c67792b0cbf4228c3d290da2ebaae"
+          },
+          "calls": 1374,
+          "unresolved": 0,
+          "conservative_controls": 64800
+        }
+      ],
+      "conservative_controls": 493450,
+      "unresolved_calls": 1,
+      "known_process_clocks": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/attempts/ad-paired-r2/node-00/clock.json",
+            "sha256": "c1c20ddecfba3aa66b51a4a0236da90e785394fb04a030aa60fdc2c99d704307"
+          },
+          "clock": {
+            "started_unix": 1793602123,
+            "finished_unix": 1793606504,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 8762,
+            "exit_code": 0
+          }
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/attempts/ad-paired-r2/node-02/clock.json",
+            "sha256": "20f8392dee453f71577fadb964cb4ffce61c58422e1ac6466e2282662d72ede3"
+          },
+          "clock": {
+            "started_unix": 1793602130,
+            "finished_unix": 1793606160,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 8060,
+            "exit_code": 0
+          }
+        },
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-first-id-ood-20261102-r2/attempts/ad-paired-r2/node-03/clock.json",
+            "sha256": "a44f6dd8f9dfb32e69c55d32aacfc78b7ce51c0d6f6c6033b968f85a2fc406a9"
+          },
+          "clock": {
+            "started_unix": 1793602130,
+            "finished_unix": 1793606130,
+            "allocated_gpus": 2,
+            "observed_gpu_seconds": 8000,
+            "exit_code": 0
+          }
+        }
+      ],
+      "known_process_gpu_seconds": 24822,
+      "creation_to_terminal_gpu_seconds_upper": 43776,
+      "upper_includes_queue": true
+    },
+    {
+      "run": "opendrawer-ad-query-recovery-20261102-r1",
+      "job": "job-h7wu2todqdny",
+      "role": "admitted AD last-case recovery;597 reused records not recollected",
+      "scheduler_created": "2026-11-02T16:25:50+08:00",
+      "scheduler_terminal": "2026-11-02T16:29:37+08:00",
+      "allocated_gpus": 1,
+      "new_complete_episodes": 3,
+      "journals": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-query-recovery-20261102-r1/accounting/rank-02/ad-last-case-r1.json",
+            "sha256": "20dfc9fb530ee4e6bae85511afb2f8ce3a6e123e35c21d9164e18c49672627a8"
+          },
+          "calls": 48,
+          "unresolved": 0,
+          "conservative_controls": 2250
+        }
+      ],
+      "conservative_controls": 2250,
+      "unresolved_calls": 0,
+      "known_process_clocks": [
+        {
+          "file": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-query-recovery-20261102-r1/attempts/ad-last-case-r1/node-00/clock.json",
+            "sha256": "6596d22b4e43ea36e61af5e00e282d1a9a8b890434c32d9cf591be5d7f48be23"
+          },
+          "clock": {
+            "started_unix": 1793607964,
+            "finished_unix": 1793608166,
+            "allocated_gpus": 1,
+            "observed_gpu_seconds": 202,
+            "exit_code": 0
+          }
+        }
+      ],
+      "known_process_gpu_seconds": 202,
+      "creation_to_terminal_gpu_seconds_upper": 227,
+      "upper_includes_queue": true
+    },
+    {
+      "run": "opendrawer-dpt-full-id-ood-20261102-r2",
+      "job": "job-7fh78syofjo2",
+      "scheduler_terminal": "2026-11-02T15:26:40+08:00",
+      "scheduler_created": "2026-11-02T14:33:09+08:00",
+      "scheduler_status": "Succeeded",
+      "scientific_phase_complete": false,
+      "complete_episodes": 299,
+      "worker_receipts": 7,
+      "unique_gpu_uuids": [
+        "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+        "GPU-3f6e12a2-efda-dcd0-5077-99da187c20d4",
+        "GPU-94a59f83-e11f-88bd-d8d3-59e159e9f5de",
+        "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+        "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+        "GPU-3be1501f-813c-fda6-763b-da00e562883c",
+        "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+        "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+      ],
+      "known_process_clocks": [
+        {
+          "started_unix": 1793602125,
+          "finished_unix": 1793604380,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 4510,
+          "exit_code": 0
+        },
+        {
+          "started_unix": 1793602160,
+          "finished_unix": 1793604150,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 3980,
+          "exit_code": 0
+        },
+        {
+          "started_unix": 1793602160,
+          "finished_unix": 1793604135,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 3950,
+          "exit_code": 0
+        }
+      ],
+      "known_process_gpu_seconds": 12440,
+      "clock_count_incomplete": true,
+      "conservative_creation_to_terminal_gpu_seconds": 25688,
+      "upper_bound_includes_queue": true,
+      "journals": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-02/dpt-full-paired-r2.json",
+          "sha256": "d051c7c35ec7eed98da6ecf061b3fe710b99e8441da574deeff403bf9d4e82b3",
+          "calls": 666,
+          "unresolved": 1,
+          "controls": 31350
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-04/dpt-full-paired-r2.json",
+          "sha256": "60034c8a5950080dd0ca2ea767af2a78a96f10f94e04274ab20356fc3d3d265b",
+          "calls": 630,
+          "unresolved": 0,
+          "controls": 29700
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-06/dpt-full-paired-r2.json",
+          "sha256": "226df9093457f5da55b16f9207093fb62199aab5702175b43570052d29c06aad",
+          "calls": 630,
+          "unresolved": 0,
+          "controls": 29700
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-01/dpt-full-paired-r2.json",
+          "sha256": "79bc74070e487d7f7d1666ce9fc8e63e3bcd2ca4ee18a1c3f692f7edc0df6138",
+          "calls": 687,
+          "unresolved": 0,
+          "controls": 32400
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-03/dpt-full-paired-r2.json",
+          "sha256": "6f21365da5e76e8ea1058bf525120f4ca6746aaa2d6372a35185c79161c6d964",
+          "calls": 678,
+          "unresolved": 0,
+          "controls": 31950
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-05/dpt-full-paired-r2.json",
+          "sha256": "1bb117d2f4be8a0639766677655e2946ad6ececb262992fdf2cb0bddb65481d1",
+          "calls": 630,
+          "unresolved": 0,
+          "controls": 29700
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-07/dpt-full-paired-r2.json",
+          "sha256": "e382cbc17e95af937b4e9bb489a96551055982ae10fcc33558074f42c77c7da5",
+          "calls": 630,
+          "unresolved": 0,
+          "controls": 29700
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-id-ood-20261102-r2/accounting/rank-00/dpt-full-paired-r2.json",
+          "sha256": "b063db5cc8df52e7e939e600e6a1b164017966d2500f9911f719c9b5c3596448",
+          "calls": 687,
+          "unresolved": 0,
+          "controls": 32400
+        }
+      ],
+      "conservative_controls": 246900,
+      "unresolved_calls": 1,
+      "new_complete_episodes": 299,
+      "role": "admitted DPT full/static/recovery"
+    },
+    {
+      "run": "opendrawer-dpt-static-id-ood-20261102-r1",
+      "job": "job-5qtsrh7a1khb",
+      "scheduler_terminal": "2026-11-02T15:40:08+08:00",
+      "scheduler_created": "2026-11-02T14:55:47+08:00",
+      "scheduler_status": "Succeeded",
+      "scientific_phase_complete": true,
+      "complete_episodes": 100,
+      "worker_receipts": 8,
+      "unique_gpu_uuids": [
+        "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+        "GPU-3f6e12a2-efda-dcd0-5077-99da187c20d4",
+        "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+        "GPU-f1e7664b-8ffe-07db-b2af-450d7d4d1ec2",
+        "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa",
+        "GPU-94a59f83-e11f-88bd-d8d3-59e159e9f5de",
+        "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+        "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+      ],
+      "known_process_clocks": [
+        {
+          "started_unix": 1793604415,
+          "finished_unix": 1793605187,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 1544,
+          "exit_code": 0
+        },
+        {
+          "started_unix": 1793604421,
+          "finished_unix": 1793605124,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 1406,
+          "exit_code": 0
+        },
+        {
+          "started_unix": 1793604421,
+          "finished_unix": 1793605199,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 1556,
+          "exit_code": 0
+        },
+        {
+          "started_unix": 1793604421,
+          "finished_unix": 1793605114,
+          "allocated_gpus": 2,
+          "observed_gpu_seconds": 1386,
+          "exit_code": 0
+        }
+      ],
+      "known_process_gpu_seconds": 5892,
+      "clock_count_incomplete": false,
+      "conservative_creation_to_terminal_gpu_seconds": 21288,
+      "upper_bound_includes_queue": true,
+      "journals": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-02/dpt-static-paired-r1.json",
+          "sha256": "2e45e0a7a6ad63d93e68bde13657cd818f5c5e72838fdffa56959b4476c38e3b",
+          "calls": 226,
+          "unresolved": 0,
+          "controls": 10650
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-04/dpt-static-paired-r1.json",
+          "sha256": "643cc52f9763a7db17d5dfc932c38fbb5e134d8a637b0caafaa7bafd8700f0b8",
+          "calls": 210,
+          "unresolved": 0,
+          "controls": 9900
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-06/dpt-static-paired-r1.json",
+          "sha256": "ef9ba972388bac7e60b9021e483da610884daacca894ee71c2cb4797dcacfe7e",
+          "calls": 210,
+          "unresolved": 0,
+          "controls": 9900
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-01/dpt-static-paired-r1.json",
+          "sha256": "274d8dea7c7ded4b99d5d1b11434b963b0ebaf2fd41c3d453f1f2f6f9724f474",
+          "calls": 229,
+          "unresolved": 0,
+          "controls": 10800
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-03/dpt-static-paired-r1.json",
+          "sha256": "53862e9cae5497bcfdb8a319b5f0f724be095de1c46a3c242aedec0937610d1d",
+          "calls": 226,
+          "unresolved": 0,
+          "controls": 10650
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-05/dpt-static-paired-r1.json",
+          "sha256": "d034cc1eaa88abd8b7c0cfcdd48522648000e79c1b17125269a6b8dc0bc98592",
+          "calls": 210,
+          "unresolved": 0,
+          "controls": 9900
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-07/dpt-static-paired-r1.json",
+          "sha256": "f432649a74179d76b49f418782d7b476d758454813f14e25d62d01a90bc3c8ad",
+          "calls": 210,
+          "unresolved": 0,
+          "controls": 9900
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/accounting/rank-00/dpt-static-paired-r1.json",
+          "sha256": "7e6d2c91a21558f991f1d42d616d1f828e900d2072975dde561df0a80bc6e2a6",
+          "calls": 229,
+          "unresolved": 0,
+          "controls": 10800
+        }
+      ],
+      "conservative_controls": 82500,
+      "unresolved_calls": 0,
+      "new_complete_episodes": 100,
+      "role": "admitted DPT full/static/recovery"
+    },
+    {
+      "run": "opendrawer-dpt-full-query-recovery-20261102-r1",
+      "job": "job-cajo3v8oetx3",
+      "scheduler_terminal": "2026-11-02T15:44:29+08:00",
+      "scheduler_created": "2026-11-02T15:42:47+08:00",
+      "scheduler_status": "Succeeded",
+      "scientific_phase_complete": true,
+      "complete_episodes": 300,
+      "worker_receipts": 8,
+      "unique_gpu_uuids": [
+        "GPU-94a59f83-e11f-88bd-d8d3-59e159e9f5de"
+      ],
+      "known_process_clocks": [
+        {
+          "started_unix": 1793605376,
+          "finished_unix": 1793605463,
+          "allocated_gpus": 1,
+          "observed_gpu_seconds": 87,
+          "exit_code": 0
+        }
+      ],
+      "known_process_gpu_seconds": 87,
+      "clock_count_incomplete": false,
+      "conservative_creation_to_terminal_gpu_seconds": 102,
+      "upper_bound_includes_queue": true,
+      "journals": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-full-query-recovery-20261102-r1/accounting/rank-02/dpt-full-final-query-r1.json",
+          "sha256": "21eaa09c374cf941fd2182039a860cb765b77ece71b96a151ffb552aa2ca18b8",
+          "calls": 16,
+          "unresolved": 0,
+          "controls": 750
+        }
+      ],
+      "conservative_controls": 750,
+      "unresolved_calls": 0,
+      "new_complete_episodes": 1,
+      "role": "admitted DPT full/static/recovery"
+    }
+  ],
+  "fit_breakdown": {
+    "dpt_full": {
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/dpt_full/training-status.json",
+        "sha256": "8c85dc48759e907ab0f37b1843cd24cb54e357a19abc8350df5cdfe5c2d4f2ac"
+      },
+      "updates": 23800,
+      "fit_process_seconds": 4972.2630075104535,
+      "best_validation_nll": -24.288716793060303
+    },
+    "dpt_static": {
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/dpt_static/training-status.json",
+        "sha256": "44bf87eec9f96cf1a48bb77cecbe51bb79425fda9d4ef6e1e376857d67b821b8"
+      },
+      "updates": 24100,
+      "fit_process_seconds": 5003.299984972924,
+      "best_validation_nll": -24.264713764190674
+    },
+    "ad_full": {
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_full/training-status.json",
+        "sha256": "c022fd24b760a6b22cb63c1e9f84de49ae3711a842153269a342fae5f69d9732"
+      },
+      "updates": 1900,
+      "fit_process_seconds": 410.3715035878122,
+      "best_validation_nll": 4.584276854991913
+    },
+    "ad_static": {
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_static/training-status.json",
+        "sha256": "661dc896217b3d5e05d81f792175efa69bfd6edd5bfc0b2a4b96f95ee95d34bb"
+      },
+      "updates": 1900,
+      "fit_process_seconds": 405.67403791379184,
+      "best_validation_nll": 4.535853892564774
+    }
+  },
+  "fit_seconds_are_subset_of_training_allocation": true,
+  "pairing_diagnostics": [
+    {
+      "run": "opendrawer-reset-pairing-20261102-r1",
+      "job": "job-3laomtozsiy1",
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-reset-pairing-20261102-r1/clock.txt",
+        "sha256": "3a0d2bcd239f5b95e6c8641d9ec15fd48a4b344df2c0558825a8c714e9a23b5b"
+      },
+      "started_unix": 1793598285,
+      "finished_unix": 1793598312,
+      "process_gpu_seconds": 27,
+      "allocated_gpus": 1,
+      "exit_code": 1,
+      "policy_controls": 0,
+      "reset_count": 0,
+      "motor_inferences": 0,
+      "scheduler_terminal_overhead_verified": true,
+      "scheduler_receipt": {
+        "created": "13:44:30",
+        "terminal": "13:45:39",
+        "state": "Failed",
+        "gpus": 1
+      },
+      "creation_to_terminal_gpu_seconds_upper": 69
+    },
+    {
+      "run": "opendrawer-reset-pairing-20261102-r2",
+      "job": "job-05m2kxpoyvcq",
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-reset-pairing-20261102-r2/clock.txt",
+        "sha256": "9d0fb12041268ff20a24efc90ccaaa227c388cc30401c0251b1be59d0833a1ea"
+      },
+      "started_unix": 1793598481,
+      "finished_unix": 1793598486,
+      "process_gpu_seconds": 5,
+      "allocated_gpus": 1,
+      "exit_code": 1,
+      "policy_controls": 0,
+      "reset_count": 0,
+      "motor_inferences": 0,
+      "scheduler_terminal_overhead_verified": true,
+      "scheduler_receipt": {
+        "created": "13:47:47",
+        "terminal": "13:48:34",
+        "state": "Failed",
+        "gpus": 1
+      },
+      "creation_to_terminal_gpu_seconds_upper": 47
+    },
+    {
+      "run": "opendrawer-reset-pairing-20261102-r3",
+      "job": "job-liccaq40joph",
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-reset-pairing-20261102-r3/clock.txt",
+        "sha256": "58d243c1e40f4553a47e2b6c53bfbd4aa2b87a88e0d134cc3a30ba28bb2293a2"
+      },
+      "started_unix": 1793598826,
+      "finished_unix": 1793599051,
+      "process_gpu_seconds": 225,
+      "allocated_gpus": 1,
+      "exit_code": 0,
+      "policy_controls": 0,
+      "reset_count": 24,
+      "motor_inferences": 0,
+      "scheduler_terminal_overhead_verified": true,
+      "scheduler_receipt": {
+        "created": "13:53:35",
+        "terminal": "13:57:39",
+        "state": "Succeeded",
+        "gpus": 1
+      },
+      "creation_to_terminal_gpu_seconds_upper": 244
+    },
+    {
+      "run": "opendrawer-reset-pairing-20261102-r4",
+      "job": "job-fewxvmo02btm",
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-reset-pairing-20261102-r4/clock.txt",
+        "sha256": "6c0445811fee39d4083780faa8666fece0f6e18387490ec682d1c4060fd0193e"
+      },
+      "started_unix": 1793599466,
+      "finished_unix": 1793599828,
+      "process_gpu_seconds": 362,
+      "allocated_gpus": 1,
+      "exit_code": 0,
+      "policy_controls": 0,
+      "reset_count": 24,
+      "motor_inferences": 48,
+      "scheduler_terminal_overhead_verified": true,
+      "scheduler_receipt": {
+        "created": "14:04:16",
+        "terminal": "14:10:39",
+        "state": "Succeeded",
+        "gpus": 1
+      },
+      "creation_to_terminal_gpu_seconds_upper": 383
+    }
+  ],
+  "curve_old_attempts": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-attempts50-20261102-r1/OLD-CURVE-TERMINAL-ACCOUNTING.json",
+    "sha256": "c21775e2477630de6bba42d2dc779db3cdc31f57d76ebfb646d0fe3e6d36d9e9"
+  },
+  "active_actual_attempt_jobs": [
+    "job-pyhz34s90cnv",
+    "job-ci8hnzbt5ur9"
+  ],
+  "one_shot_scientific_comparison": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-pairing-recovery-20261102-r1/COMBINED-RESULT.json",
+    "sha256": "96154f04824754889f869c64455ff3863b34cca6b16377af6d46759f1c3112f4"
+  },
+  "original_ad_and_dpt_allocation_terminal_UI_verified": true,
+  "original_one_shot_resource_scope_covered": true,
+  "scheduler_closeout": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-pairing-recovery-20261102-r1/SCHEDULER-CLOSEOUT.json",
+    "sha256": "45d9eca4b10d204c1acedb4bffe1b2072c3649fe46ab814635274cea53e4647c"
+  },
+  "all_experiment_terminal_accounting_complete": false,
+  "pending": [
+    "Actual-only AD/DPT allocations still active/queued; final clocks, journals and resources pending"
+  ],
+  "accounting_rules": [
+    "Never add a complete process clock and creation-to-terminal bound for the same allocation",
+    "Creation-to-terminal bounds include scheduler queues and exceed measured process time",
+    "Recovered result collections retain original references; count only newly collected episodes and journals in incremental costs",
+    "All unresolved calls are conservatively charged; excluded scientific results retain their resource charges",
+    "Per-fit timing is already within training allocation, not additive",
+    "GPU seconds are durations, not prices; no tariff assumed"
+  ],
+  "incremental_original_creation_to_terminal_GPU_seconds_upper": 118552,
+  "old_curve_creation_to_terminal_GPU_seconds_upper": 67368
+}
