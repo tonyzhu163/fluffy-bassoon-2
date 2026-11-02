@@ -291,7 +291,9 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
         raise ValueError("Require distinct complete source streams in the two student partitions")
     terminal = max(int(trial["teacher_steps"][-1])
                    for partition in ("train", "validation") for _, trial in streams[partition])
-    if terminal + 1 != final_update:
+    if (terminal + 1 != final_update or source.episodes_per_task_per_update is not None and any(
+            int(trial["teacher_steps"][-1]) + 1 != final_update
+            for partition in ("train", "validation") for _, trial in streams[partition])):
         raise ValueError("DPT final teacher must match the declared terminal source version")
     output = Path(directory)
     if output.exists():
