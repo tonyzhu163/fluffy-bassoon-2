@@ -50,7 +50,7 @@ def test_mixed_native_protocols_preserve_all_eighty_official_terminal_grades():
     with pytest.raises(ValueError):parse_outputs(episodes,outputs[:-1],episode_protocols=protocols)
     short=deepcopy(protocols);short.pop(episodes[-1]['id'])
     with pytest.raises(ValueError):flora_jobs(episodes,episode_protocols=short)
-    wrong=deepcopy(protocols);wrong[episodes[4]['id']]=protocol('OpenDrawer',baseline_count=50)
+    wrong=deepcopy(protocols);wrong[episodes[4]['id']]['horizon']=750
     with pytest.raises(ValueError):parse_outputs(episodes,outputs,episode_protocols=wrong)
     wrong_case=deepcopy(cases);wrong_case[0]['task']='CloseFridge'
     with pytest.raises(ValueError):joint_episode_protocols(episodes,wrong_case)

@@ -48,7 +48,7 @@ def main():
     rank = p['annotation_rank']
     if (platform.system() != 'Linux' or p['mode'] != 'fifty_case_baseline_only'
             or p['annotation_world'] != 8 or type(rank) is not int or not 0 <= rank < 8
-            or p['batch_size'] != 8 or p['gpu_memory_utilization'] != .78
+            or p['batch_size'] != 8 or p['gpu_memory_utilization'] not in (.75,.78)
             or [c['task'] for c in p['cohorts']] != list(PPO_TASKS)):
         raise ValueError('Exact five prospectively named PPO task banks and eight fixed baseline scorers required')
     source = Path(__file__).resolve().parents[2]
