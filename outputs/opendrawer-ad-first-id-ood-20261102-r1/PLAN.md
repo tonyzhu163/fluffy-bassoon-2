@@ -1,5 +1,7 @@
 # Independent AD-first ID/OOD readout
 
+**Attempt ad-first-r1 failed its exact pairing guard.**32 complete episodes and5 unresolved calls are retained;31,000 controls are conservatively charged. No paired result is admitted. See INCIDENT.json and the separate reset-pairing diagnosis. Training and checkpoint selection remain unchanged.
+
 Human steering,2026-11-02: converged models should evaluate separately; fix the
 pipeline. The old all-four-model barrier delayed AD unnecessarily. It is
 removed from new dispatch. The active legacy training job stays immutable

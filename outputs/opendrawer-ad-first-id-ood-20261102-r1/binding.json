@@ -1,0 +1,67 @@
+{
+  "completed": true,
+  "evaluation_driver_commit": "e8c7641611899805612e17cbb97be31a871a51f3",
+  "runtime_core_commit": "68f2c5aa33218709453a7821f6c6223ac3803035",
+  "assembly": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/data/assembly.json",
+    "sha256": "39d3504358fd14bc06018b27f7547f69af4792c0b41295ec8515c68677102b11"
+  },
+  "selected": {
+    "ad_full": {
+      "candidate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_full/candidate.pt",
+        "sha256": "9cfe46a663784a694424b7115273f41a5a3d045ba54cbda3d3ee40ab97512f1f"
+      },
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_full/training-status.json",
+        "sha256": "c022fd24b760a6b22cb63c1e9f84de49ae3711a842153269a342fae5f69d9732"
+      },
+      "selected_update": 100,
+      "validation_nll": 4.584276854991913
+    },
+    "ad_static": {
+      "candidate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_static/candidate.pt",
+        "sha256": "a2310ec012175f17e94718ae9a2b83cefd60e8a3e67db7ecf01e47d690da1cc8"
+      },
+      "status": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/fits/ad_static/training-status.json",
+        "sha256": "661dc896217b3d5e05d81f792175efa69bfd6edd5bfc0b2a4b96f95ee95d34bb"
+      },
+      "selected_update": 100,
+      "validation_nll": 4.535853892564774
+    }
+  },
+  "initial": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/S/boundary-000.pt",
+    "sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7"
+  },
+  "teacher": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/final.pt",
+    "sha256": "84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d"
+  },
+  "primary_endpoint": "one complete support episode -> separate query, frozen weights",
+  "methods": [
+    "ppo_initial",
+    "ppo_final",
+    "ad_full",
+    "ad_static"
+  ],
+  "fresh_ID": true,
+  "independent_model_admission": true,
+  "ID": {
+    "task": "OpenDrawer",
+    "cases": 50,
+    "seed_first": 880110000,
+    "horizon": 750
+  },
+  "OOD": {
+    "task": "CloseFridge",
+    "cases": 50,
+    "seed_first": 880210000,
+    "horizon": 900
+  },
+  "source_training_unchanged": true,
+  "new_physical_episodes": 600,
+  "new_control_upper_bound": 571800
+}
