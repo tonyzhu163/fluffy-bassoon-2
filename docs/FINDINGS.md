@@ -214,6 +214,12 @@ decisions reproduce, though one lower grade changes2→1. Six causal prefixes on
 two replay-qualified trajectories bracket both native first crossings, but a
 prefix after the drawer is pushed back still gets5. This is diagnostic evidence,
 not first-success qualification. [Paired grades, rationale limits and prefixes](../outputs/robocasa-flora-rubric-failure-sample-20261102-r3/RESULT.md).
+Short direct task instructions also trade false-positive rejection for lost
+terminal controls. On diagnosed112/64 plus four success controls,1.6 fixes112
+but rejects every true control (1/2 full-score failures,0/4 controls, versus
+2/2 and3/4 for verbatim1.1);1.7 gives2/2 and1/4, and1.8 gives2/2 and0/4.
+All six baseline grades reproduce. None passes its frozen promotion rule.
+[Exact task texts and paired results](../outputs/robocasa-flora-rubric-short-sample-20261103-r1/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3
