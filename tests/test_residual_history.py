@@ -69,3 +69,19 @@ def test_online_adapter_resets_cases_and_consumes_only_observed_feedback():
     actor.begin_episode()
     repeated = actor.act(features, deterministic=True)[0]
     torch.testing.assert_close(first, repeated)
+
+
+def test_validation_plateau_counts_material_improvement_and_resumes_exactly():
+    from fluffy_bassoon.meta_rl.vla_history_train import advance_plateau
+    options = dict(minimum_updates=3, patience=2, relative_delta=.01)
+    state = advance_plateau({}, -2., 1, **options)
+    state = advance_plateau(state, -2.001, 2, **options)
+    assert not state['converged'] and state['stale_checks'] == 0
+    state = advance_plateau(dict(state), -2.002, 3, **options)
+    assert state['stale_checks'] == 1 and not state['converged']
+    state = advance_plateau(state, -2.1, 4, **options)
+    assert state['stale_checks'] == 0 and state['reference'] == -2.1
+    resumed = dict(state)
+    for update in (5, 6):
+        resumed = advance_plateau(resumed, -2.101, update, **options)
+    assert resumed['converged']

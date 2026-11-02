@@ -1,0 +1,129 @@
+{
+  "completed": true,
+  "source": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/history.npz",
+    "sha256": "7d66810302a46ddf95477ad108a64ca031d69b0784ae211980c32714e5cc4912"
+  },
+  "teacher": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/final.pt",
+    "sha256": "84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d"
+  },
+  "initial": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/S/boundary-000.pt",
+    "sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7"
+  },
+  "contract": {
+    "initializer": {
+      "repository": "robocasa/robocasa365_checkpoints",
+      "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+      "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+      "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+      "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+      "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+      "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json"
+    },
+    "bound": {
+      "action_dim": 12,
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scale": [
+        0.09354107417092798,
+        0.07909524089828711,
+        0.08161916436862626,
+        0.021125880719858898,
+        0.02593384036587672,
+        0.02445070474699303
+      ]
+    },
+    "ppo": {
+      "feature_dim": 2088,
+      "residual_dim": 6,
+      "width": 256,
+      "layers": 2,
+      "initial_std": 0.5,
+      "learning_rate": 0.0003,
+      "epochs": 4,
+      "minibatch_size": 64,
+      "clip": 0.2,
+      "gamma": 1.0,
+      "gae_lambda": 0.95,
+      "entropy_coef": 0.0,
+      "value_coef": 0.5,
+      "max_grad_norm": 1.0
+    },
+    "arm": "S",
+    "task": "OpenDrawer",
+    "source_commit": "b016e4ac1bf32e51941d4d3e588337b7ddc675c4",
+    "motor_seed": 710100,
+    "residual_seed": 42,
+    "update_seed": 43,
+    "features": "normalized proprio16+base first12+mean12+same-prefix masked mean2048/RMS; fixed no fit",
+    "calibration": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-integrated-20261101-r3/scorer/baseline-validation.json",
+      "sha256": "ce3e1ecdc0d3ef924f9d2a2fe22442ed1dd18bedda57459b2286f1b6e4d861f6"
+    },
+    "calibration_permission": "human_authorized_below_original_AUROC_gate",
+    "calibration_exception": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robocasa-residual-approved-d365878e-20261101-r1/outputs/robocasa-residual-approved-20261101-r1/AUTHORITY.json",
+      "sha256": "a8e3ae60cd94acc55e79556b41fa0a146f6f03b01d84a5fee641835baf58ccc5"
+    }
+  },
+  "datasets": {
+    "ad_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/data/ad-train.npz",
+      "sha256": "a76ca8446f39d22669698a7c94b87e4d39b15b8f3287b92f1fd74a16b2a613fd",
+      "trials": 56,
+      "transitions": 5040,
+      "episodes": 336
+    },
+    "dpt_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/data/dpt-train.npz",
+      "sha256": "03de7921249fe18f409d4613b3d8b2516810b1e0e2ab8a73920ad3b230fcefbb",
+      "trials": 56,
+      "transitions": 5040,
+      "episodes": 336
+    },
+    "ad_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/data/ad-validation.npz",
+      "sha256": "9306c42e67a5e25794b1c63b777a3ace8e74efe3620588f96c4041dcea62ec3b",
+      "trials": 8,
+      "transitions": 720,
+      "episodes": 48
+    },
+    "dpt_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ppo-ad-dpt-20261102-r1/data/dpt-validation.npz",
+      "sha256": "ff95f24a387354390199ddd7c11109f3d90bedd6514719944ed6d9c5f60255a3",
+      "trials": 8,
+      "transitions": 720,
+      "episodes": 48
+    }
+  },
+  "validation_slots": [
+    2,
+    6,
+    12,
+    23,
+    42,
+    45,
+    47,
+    55
+  ],
+  "training_episodes": 336,
+  "validation_episodes": 48,
+  "no_new_robot_actions": true,
+  "source_terminal_successes": 197,
+  "source_successes_per_version": [
+    35,
+    37,
+    26,
+    32,
+    34,
+    33
+  ]
+}

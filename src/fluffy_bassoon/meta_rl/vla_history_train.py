@@ -6,6 +6,7 @@ in-context adaptation. Evaluate frozen candidates on held-out simulator trials.
 
 import argparse
 from dataclasses import asdict
+import itertools
 import json
 import math
 import os
@@ -57,7 +58,27 @@ def parser():
     p.add_argument("--expected-hostname", required=True, help="Exact allocated Linux scheduler hostname")
     p.add_argument("--resume", type=Path)
     p.add_argument("--checkpoint-selection", choices=("validation-nll", "final"), default="validation-nll")
+    p.add_argument("--until-converged", action="store_true")
+    p.add_argument("--minimum-updates", type=int, default=1000)
+    p.add_argument("--validation-patience", type=int, default=10)
+    p.add_argument("--validation-relative-delta", type=float, default=.001)
     return p
+
+
+def advance_plateau(state, loss, update, *, minimum_updates, patience, relative_delta):
+    """Track material held-out improvement; state survives operational resumes."""
+    if (not math.isfinite(loss) or minimum_updates < 1 or patience < 1
+            or not math.isfinite(relative_delta) or relative_delta < 0):
+        raise ValueError("Invalid validation plateau criterion")
+    state = dict(state)
+    reference = state.get("reference")
+    improved = reference is None or reference - loss > relative_delta * max(1., abs(reference))
+    if improved:
+        state.update(reference=loss, stale_checks=0)
+    elif update >= minimum_updates:
+        state["stale_checks"] = state.get("stale_checks", 0) + 1
+    state["converged"] = update >= minimum_updates and state.get("stale_checks", 0) >= patience
+    return state
 
 
 def supervised_update(policy, optimizer, batch, *, mode, execution_batch_size=None):
@@ -126,6 +147,11 @@ def main(argv=None):
     if (not 0 <= args.seed < 2**32 or not math.isfinite(args.learning_rate) or args.learning_rate <= 0
             or not math.isfinite(args.max_elapsed_seconds) or args.max_elapsed_seconds <= 0):
         raise ValueError("Invalid seed/optimization budget")
+    if args.until_converged:
+        if args.checkpoint_selection != "validation-nll":
+            raise ValueError("Convergence training selects held-out NLL, never a fixed final endpoint")
+        advance_plateau({}, 0., 1, minimum_updates=args.minimum_updates,
+            patience=args.validation_patience, relative_delta=args.validation_relative_delta)
     root = Path(__file__).resolve().parents[3]
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     if (source != args.source_commit
@@ -172,7 +198,13 @@ def main(argv=None):
             checkpoint_selection=args.checkpoint_selection),
         supervised_objective="Gaussian target-noise NLL; motor adapter applies its fixed noise map",
         status="candidate; imitation NLL does not establish robot performance")
+    if args.until_converged:
+        contract["schedule"].update(updates=None, until_converged=True,
+            minimum_updates=args.minimum_updates, validation_patience=args.validation_patience,
+            validation_relative_delta=args.validation_relative_delta,
+            elapsed_limit="per invocation; operational boundary, not convergence")
     start_update, best, elapsed_before = 0, math.inf, 0.
+    plateau = {}
     if args.resume:
         # Full trusted local training checkpoint, not an inference artifact.
         saved = torch.load(args.resume, map_location="cpu", weights_only=False)
@@ -182,22 +214,33 @@ def main(argv=None):
         optimizer.load_state_dict(saved["optimizer"])
         _restore_rng(saved["rng"], sampler)
         start_update, best, elapsed_before = saved["update"], saved["best_validation_nll"], saved["elapsed_seconds"]
+        plateau = saved.get("plateau", {})
+        if plateau.get("converged"):
+            raise ValueError("This fit has already reached its declared validation plateau")
         if args.output_dir.resolve() != args.resume.parent.resolve():
             raise ValueError("Resume must continue its original output identity")
     else:
         args.output_dir.mkdir(parents=True, exist_ok=False)
         (args.output_dir / "contract.json").write_text(json.dumps(contract, indent=2, allow_nan=False) + "\n")
     started = time.monotonic()
-    for update in range(start_update + 1, args.updates + 1):
+    updates = itertools.count(start_update + 1) if args.until_converged else range(start_update + 1, args.updates + 1)
+    for update in updates:
         batch = sample_batch(train, policy, sampler, batch_size=args.batch_size,
                              max_context=max_context, mode=args.mode, max_episodes=args.max_episodes_per_window)
         metrics = supervised_update(policy, optimizer, batch, mode=args.mode,execution_batch_size=args.execution_batch_size)
         elapsed = elapsed_before + time.monotonic() - started
-        terminal = update == args.updates or elapsed >= args.max_elapsed_seconds
+        elapsed_limit = time.monotonic() - started if args.until_converged else elapsed
+        terminal = (not args.until_converged and update == args.updates) or elapsed_limit >= args.max_elapsed_seconds
         if update == 1 or update % args.eval_every == 0 or terminal:
             heldout = validate(policy, validation, mode=args.mode, batch_size=args.batch_size,
                 batches=args.validation_batches, max_context=max_context, max_episodes=args.max_episodes_per_window)
+            if args.until_converged and (update == 1 or update % args.eval_every == 0):
+                plateau = advance_plateau(plateau, heldout, update, minimum_updates=args.minimum_updates,
+                    patience=args.validation_patience, relative_delta=args.validation_relative_delta)
+                terminal = terminal or plateau["converged"]
             row = dict(update=update, elapsed_seconds=elapsed, validation_nll=heldout, **metrics)
+            if args.until_converged:
+                row["plateau"] = plateau
             with (args.output_dir / "metrics.jsonl").open("a") as stream:
                 stream.write(json.dumps(row, allow_nan=False) + "\n")
             print(json.dumps(row, allow_nan=False), flush=True)
@@ -210,11 +253,16 @@ def main(argv=None):
                                   train_transitions=train_manifest["transitions"]))
             atomic_save(args.output_dir / "latest.pt", dict(format=RESUME_FORMAT,
                 contract=contract, update=update, policy=policy.state_dict(), optimizer=optimizer.state_dict(),
-                rng=_rng_state(sampler), best_validation_nll=best, elapsed_seconds=elapsed))
+                rng=_rng_state(sampler), best_validation_nll=best, elapsed_seconds=elapsed, plateau=plateau))
         if terminal:
             break
-    if start_update >= args.updates:
+    if not args.until_converged and start_update >= args.updates:
         raise ValueError("Resume has already completed the requested updates")
+    if args.until_converged:
+        (args.output_dir / "training-status.json").write_text(json.dumps(dict(
+            converged=plateau.get("converged", False), update=update, best_validation_nll=best,
+            plateau=plateau, elapsed_seconds=elapsed,
+            stop_reason="validation_plateau" if plateau.get("converged") else "operational_checkpoint"), indent=2) + "\n")
 
 
 if __name__ == "__main__":
