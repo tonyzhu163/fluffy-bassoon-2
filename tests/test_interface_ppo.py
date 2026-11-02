@@ -193,3 +193,35 @@ def test_training_windows_reach_128_actual_tokens():
     assert batch[0].shape[0] == 128 and batch[2].sum() == 128
     result = supervised_update(policy,torch.optim.AdamW(policy.parameters(),lr=1e-3),batch,mode="full")
     assert np.isfinite(result["nll"]) and result["valid_positions"] == 128
+
+
+@pytest.mark.parametrize("arm",["S","F"])
+def test_native_first_success_closes_early_and_keeps_truth_out_of_flora_payload(tmp_path,arm):
+    import json
+    from test_robocasa_residual import Journal, Native, Writer
+    from fluffy_bassoon.meta_rl.robocasa_interface import RoboCasaInterfaceEnvironment
+    class Prefix:
+        def reset(self):
+            self.frames = 0
+        def append(self, frames):
+            assert len(frames) == 3 and all(x.dtype == np.uint8 for x in frames)
+            self.frames += 1
+        def score(self, step):
+            assert self.frames == step + 1
+            return dict(first_success_step=100 if step >= 100 else None,reward=float(step >= 100))
+    prefix = Prefix() if arm == "F" else None
+    env = RoboCasaInterfaceEnvironment(lambda case:Native(horizon=400,success=lambda step:step>=73),
+        [dict(native_seed=1,task="OpenDrawer")],interface_horizon=400,reward_arm=arm,
+        prefix_observer=prefix,output=tmp_path/'videos',monitoring_root=tmp_path/'monitor',
+        journal=Journal(),writer_factory=Writer)
+    observation = env.reset()
+    assert 'success' not in observation
+    for index in range(2):
+        observation,done,payload=env.step_chunk(np.zeros((50,12),np.float32))
+        assert not done and set(payload)=={'executed_controls','end_step','outcome'}
+        assert payload['outcome']['first_success_step'] == (None if index==0 else 73 if arm=='S' else 100)
+    env.end_episode()
+    assert env.native.steps==100 and not env.active
+    truth=json.loads((tmp_path/'monitor/episode-000000.json').read_text())
+    assert truth['first_success_step']==73 and truth['simulator_final_success']
+    assert env.writer.count==101 and env.state_dict()['horizon']==400

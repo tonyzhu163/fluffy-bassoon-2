@@ -11,6 +11,7 @@ import numpy as np
 import torch
 
 from .robocasa_residual import public_observation
+from .robocasa_residual import RoboCasaResidualEnvironment
 
 
 class _PrefixReady(Exception):
@@ -110,3 +111,69 @@ class FrozenRoboCasaInterface:
         finally:
             self.model.build_prefix_cache, self.model.velocity_from_suffix = prefix, velocity
             self._prepared = None
+
+
+class RoboCasaInterfaceEnvironment(RoboCasaResidualEnvironment):
+    """Native video/accounting port with an explicit first-success contract.
+
+    The factory must set its native wrapper to this horizon with physical
+    success termination disabled. PPO stops on the selected scorer's success
+    at a chunk boundary; the exact native success control is retained for S.
+    For F, prefix_observer consumes synchronized RGB from reset onwards and
+    scores causal prefixes. Native success never enters that observer/payload.
+    Final truth is written only into the isolated monitoring sidecar.
+    """
+    def __init__(self, *args, interface_horizon, reward_arm, prefix_observer=None, **kwargs):
+        if (type(interface_horizon) is not int or interface_horizon < 50 or interface_horizon % 50
+                or reward_arm not in ("S", "F") or reward_arm == "F" and prefix_observer is None):
+            raise ValueError("Bind a full-chunk horizon and an explicit success scorer")
+        super().__init__(*args, horizon=None, **kwargs)
+        self.interface_horizon, self.reward_arm = interface_horizon, reward_arm
+        self.prefix_observer = prefix_observer
+        self.bound_horizon = interface_horizon
+
+    def _frame(self, observation):
+        super()._frame(observation)
+        if self.prefix_observer is not None:
+            from .robocasa_video import observation_frames
+            self.prefix_observer.append(observation_frames(observation))
+
+    def reset(self):
+        if self.prefix_observer is not None:
+            self.prefix_observer.reset()
+        observation = super().reset()
+        self.horizon = self.interface_horizon
+        return observation
+
+    def step_chunk(self, chunk):
+        begin = self.steps
+        observation, done, episode = super().step_chunk(chunk)
+        payload = dict(executed_controls=self.steps - begin, end_step=self.steps)
+        if self.reward_arm == "S":
+            first = self.success_steps[0] if self.success_steps else None
+            payload["outcome"] = dict(first_success_step=first, reward=float(first is not None))
+        else:
+            payload["outcome"] = self.prefix_observer.score(self.steps)
+        return observation, done, payload
+
+    def end_episode(self):
+        if not self.active:
+            return  # The inherited full-horizon path already closed its evidence.
+        from .rlinf_flora_ppo import digest, write_new
+        from .robocasa_video import REWARD_CAMERAS
+        self.writer.close()
+        counts = self._counts()
+        if counts["controls"] - counts["reset_controls"] != self.steps:
+            raise ValueError("Physical controls differ from first-success accounting")
+        videos = self.writer.refs()
+        write_new(self.output / (self.key + ".json"), dict(id=self.key, completed=True,
+            task=self.native.task_descriptions[0], horizon=self.steps,
+            configured_horizon=self.interface_horizon, videos=videos, camera_order=list(REWARD_CAMERAS),
+            protocol="frozen_motor_first_success_chunk_v1", reward_arm=self.reward_arm,
+            raw_rgb_only=True, info_on_video=False, physical_controls=self.steps))
+        first = self.success_steps[0] if self.success_steps else None
+        write_new(self.monitoring_root / (self.key + ".json"), dict(id=self.key, case=self.case,
+            simulator_final_success=bool(self.success_steps and self.success_steps[-1] == self.steps),
+            simulator_success_once=first is not None, first_success_step=first,
+            success_steps=self.success_steps, native_counts=counts, video_refs_sha256=digest(videos)))
+        self.active = False
