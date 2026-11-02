@@ -61,12 +61,13 @@ def select(rows):
 def source_audit(root):
     native=root/'setups/robocasa365-native-20261101-r1/sources/RoboCasa'
     paths=[native/'robocasa/environments/kitchen/atomic/kitchen_drawer.py',
-           native/'robocasa/models/fixtures/cabinet.py',
            root/'deps/nvidia-flora-129a2ada-20261101-r1/repo/rewarder/batch_utils/core.py']
+    paths.extend(path for path in sorted((native/'robocasa/models/fixtures').glob('*.py'))
+                 if 'def get_door_state' in path.read_text())
     sources=[]
     for path in paths:
         source=path.read_text();tree=ast.parse(source);functions=[]
-        if path.name=='kitchen_drawer.py':functions=[dict(name='whole_file',source=source)]
+        if path.name in ('kitchen_drawer.py','core.py'):functions=[dict(name='whole_file',source=source)]
         else:
             for node in ast.walk(tree):
                 if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name in (
