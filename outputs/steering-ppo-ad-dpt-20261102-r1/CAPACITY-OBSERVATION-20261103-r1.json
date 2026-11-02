@@ -1,0 +1,63 @@
+{
+  "scope": "Read-only capacity observation, not PPO steering training or AD/DPT source data",
+  "result": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-3248-20261103-r1/gpu/RESULT.json",
+    "sha256": "5302f35978aad6d40ed043bee0141318925a43a0ef9097c6793f497ae8296692"
+  },
+  "allocation": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-3248-20261103-r1/gpu/allocation.json",
+    "sha256": "f9e2942aca484af44297ccd6e40411ef53d5ab6f3def8341055c6a04655f6b6d"
+  },
+  "hostname": "job-wo3w0fjf63z3-master-0",
+  "source": "eaedbd1d3c5c4afd2b81a9bca94c21f7c14544d2",
+  "completed": true,
+  "optimizer_updates": 0,
+  "process_exit": 0,
+  "limits": "One GPU,22CPUs,208GiB RAM; unequal cohorts32and48,first32cases shared; capacity-only; shared native model plus zero-initialized action residual and real three-view simulator episodes. Flora colocation and joint steering history overhead are not measured.",
+  "configurations": [
+    {
+      "reference": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-3248-20261103-r1/gpu/completed-32.json",
+        "sha256": "c397fd4e54b97e54712a2f6a75a839f3ac6d93571b4e3695a7939f022240bbaf"
+      },
+      "completed": true,
+      "lanes": 32,
+      "episodes": 32,
+      "horizon": 600,
+      "policy_controls": 19200,
+      "actual_all_in_controls": 19200,
+      "controls_per_second": 150.85616470143378,
+      "observed_memory": {
+        "phase": "parallel_native_H50_execution",
+        "completed_episodes": 32,
+        "policy_controls": 19200,
+        "peak_nvml_mib": 55026,
+        "gpu_utilization_percent": 3,
+        "peak_container_ram_bytes": 132212236288
+      },
+      "exit_code": 0
+    },
+    {
+      "reference": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-3248-20261103-r1/gpu/completed-48.json",
+        "sha256": "ef169c232df1d008573b468314ce2ad94abcdad60e28fb952e2c36131b9b6260"
+      },
+      "completed": true,
+      "lanes": 48,
+      "episodes": 48,
+      "horizon": 600,
+      "policy_controls": 28800,
+      "actual_all_in_controls": 28800,
+      "controls_per_second": 155.96945163689446,
+      "observed_memory": {
+        "phase": "parallel_native_H50_execution",
+        "completed_episodes": 48,
+        "policy_controls": 28800,
+        "peak_nvml_mib": 77791,
+        "gpu_utilization_percent": 0,
+        "peak_container_ram_bytes": 188303224832
+      },
+      "exit_code": 0
+    }
+  ]
+}

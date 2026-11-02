@@ -5,10 +5,10 @@
   "producer_observation": {
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
-    "status": "SINGLE_GPU_INTERFACE_QUALIFIED_NO_SCIENTIFIC_SOURCE_YET",
+    "status": "HUMAN_HOLD_ACKNOWLEDGED_ZERO_SCIENTIFIC_JOBS",
     "immutable_source": false,
-    "last_live_check_UTC": "2026-11-02T16:21:27Z",
-    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:8",
+    "last_live_check_UTC": "2026-11-02T17:09:21Z",
+    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:17",
     "driver_reference_commit": "dd3e51334fda9b839f37b777d68ffb79f66d638c",
     "CPU_tests_passed": 80,
     "evidence": "outputs/robocasa-joint-steering-5m-20261102-r1/qualification/CPU-QUALIFICATION.md",
@@ -18,7 +18,20 @@
     "qualification_source": "ccaea60b72bfce8b8a4d22244caecd537c27f47c",
     "scientific_ppo_updates": 0,
     "policy_episodes": 0,
-    "native_qualification_checked_UTC": "2026-11-02T16:35:50Z"
+    "native_qualification_checked_UTC": "2026-11-02T16:35:50Z",
+    "owner_acknowledgement": {
+      "thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+      "turn": "01a19d39-1892-79c2-b426-4b8d362c96c7",
+      "completed_unix": 1793639285,
+      "message": "Both PPO launches remain held while the recipe is finalized.",
+      "owner_monitor_updated": true,
+      "scientific_jobs_submitted": 0,
+      "source_hold": {
+        "path": "outputs/robocasa-joint-steering-5m-20261102-r1/LAUNCH-HOLD.json",
+        "sha256": "2a3dcb0fd956565acbfbeac881e2ebf45f3fa59752e5d29042da97890ee8920d",
+        "commit": "4b2ca5d0"
+      }
+    }
   },
   "campaigns": {
     "stage1_pilot": {
@@ -75,7 +88,7 @@
     5
   ],
   "status_evidence": "Producer thread was confirmed active by wait_threads; no launched source job or terminal dataset claimed",
-  "next_action": "Verify launch owner holds both arms; monitor recipe finalization. Bind exact final producer iterations/batch/envs per GPU; do not dispatch under the provisional recipe.",
+  "next_action": "Remain on confirmed human hold; monitor final recipe and source admission. Qualify exact finalized task/behavior stream schedule, then independent convergence fits and all per-task actual1\u20135 curves.",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
   "core_qualification_source": "28b44bf908c2db2dc87ab862efbcf5ce9035fedc",
@@ -117,10 +130,38 @@
     "source_binding": null,
     "relayed_to_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
     "relay_sent": true,
-    "owner_acknowledgement": "pending verification",
+    "owner_acknowledgement": {
+      "thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+      "turn": "01a19d39-1892-79c2-b426-4b8d362c96c7",
+      "completed_unix": 1793639285,
+      "message": "Both PPO launches remain held while the recipe is finalized.",
+      "owner_monitor_updated": true,
+      "scientific_jobs_submitted": 0,
+      "source_hold": {
+        "path": "outputs/robocasa-joint-steering-5m-20261102-r1/LAUNCH-HOLD.json",
+        "sha256": "2a3dcb0fd956565acbfbeac881e2ebf45f3fa59752e5d29042da97890ee8920d",
+        "commit": "4b2ca5d0"
+      }
+    },
     "goal_disposition": "Remain active; monitor hold and finalization, no stale-recipe launches"
   },
   "latest_affected_core_qualification_source": "2c7e02557a37214e6d26897b0558ecea6658c8cb",
   "latest_affected_CPU_tests_passed": 21,
-  "latest_affected_CPU_receipt": "NATIVE-BACKEND-R2-VALIDATION.json"
+  "latest_affected_CPU_receipt": "NATIVE-BACKEND-R2-VALIDATION.json",
+  "capacity_observation": "CAPACITY-OBSERVATION-20261103-r1.json",
+  "recipe_observation": {
+    "finalized": false,
+    "current_candidate_reference": "outputs/robocasa-rollout-capacity-3248-20261103-r1/PLAN.json",
+    "proposed_iterations": 50,
+    "proposed_envs_per_gpu": 48,
+    "proposed_episodes_per_update": 384,
+    "rollout_gpus_per_arm": 8,
+    "policy_controls_per_arm": 11520000,
+    "authority": "Candidate observed in capacity-owner plan; does not release the direct human launch hold",
+    "caveats": [
+      "Single-GPU native capacity only; velocity/full-KV production history writer and optimizer overhead unqualified",
+      "Source/RMS/LR/resource/calibration and final source case schedule must be bound before scientific launch",
+      "384 or256 episodes across five tasks requires varying task counts; never silently drop extras or reuse uniform16-slot grouping"
+    ]
+  }
 }
