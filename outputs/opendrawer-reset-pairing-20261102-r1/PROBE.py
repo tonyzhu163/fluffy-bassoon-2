@@ -11,7 +11,7 @@ import time
 
 ROOT = Path('/mowenjie/fluffy-bassoon-2')
 CORE = ROOT/'worktrees/opendrawer-ad-dpt-20261102-r1'
-OUT = ROOT/'outputs/opendrawer-reset-pairing-20261102-r1'
+OUT = Path(os.environ.get('TASK_PROBE_OUTPUT',str(ROOT/'outputs/opendrawer-reset-pairing-20261102-r1')))
 
 
 def digest(value):
