@@ -145,8 +145,10 @@ def run_bank(name, cases, draws, arm='native', fraction=0., direct=None, critic=
             seconds=time.monotonic() - tick, zero_residual_verified=sum(r['zero_residual_verified'] for r in records),
             source_commit=os.environ['TASK_CODE_PIN'])
         write_new(destination / 'RESULT.json', result)
-        save(OUT / 'progress.json', dict(stage=name, completed_episodes=len(rows), updated_unix=time.time(),
-                                        seconds=result['seconds'], successes=sum(r['success'] for r in rows)))
+        save(OUT / 'progress.json', dict(stage=name, completed_episodes=len(combined_rows), new_completed_episodes=len(rows),
+            carried_episodes=len(carried), bank_total=len(combined_rows), updated_unix=time.time(),
+            seconds=result['seconds'], successes=sum(r['success'] for r in combined_rows),
+            every_complete_episode_checkpointed=True))
         print(json.dumps(dict(stage=name, episodes=len(rows), successes=sum(r['success'] for r in rows),
                               seconds=result['seconds'])), flush=True)
         return result, records
