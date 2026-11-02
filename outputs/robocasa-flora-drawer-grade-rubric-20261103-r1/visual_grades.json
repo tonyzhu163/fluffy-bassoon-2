@@ -1,0 +1,9 @@
+{
+  "criteria_id": "visual_grades",
+  "success_rubric": "The target is the top drawer on the {side} side identified by the task. Judge how far that drawer's box has slid out relative to its closed position. Success requires at least 52.25% of its front-to-back depth to slide out, a little more than halfway. A small gap, a grasped handle, or a different drawer opening is not success. The target need not reach maximum extension, and the robot may keep holding its handle. Use the best state reached in any of the three synchronized views during the observed video; later closing does not undo an earlier success.",
+  "grade_anchors": "1: The target stays closed, including when another drawer opens.\n2: The target opens only a small amount.\n3: The target is partly pulled out but remains short of halfway.\n4: The target is about halfway out but has not clearly reached the required opening.\n5: The target has clearly reached or passed the required opening of 52.25% of its depth. This is complete success; maximum extension and releasing the handle are not required.",
+  "qualified": false,
+  "prompt_placement": "system",
+  "aligned_first_success_grading": true,
+  "episode_simulator_state_in_prompt": false
+}
