@@ -1,0 +1,95 @@
+{
+  "observation": "Read-only producer qualification check; not student or scientific PPO results",
+  "result_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-native-qualification-20261103-r1/qualification/RESULT.json",
+    "sha256": "68d83f74cdd3975fff11cdc23a6a0eaa25b83bf89c3d9224d1b5068849d9111b"
+  },
+  "completed": true,
+  "status": "passed",
+  "hostname": "job-peaxl7mua1os-master-0",
+  "bindings": {
+    "code": "/mowenjie/fluffy-bassoon-2/worktrees/robocasa-joint-native-qual-20261103-r1",
+    "source_commit": "ccaea60b72bfce8b8a4d22244caecd537c27f47c",
+    "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+  },
+  "scientific_ppo_updates": 0,
+  "policy_episodes": 0,
+  "scientific_policy_controls": 0,
+  "native_versions_unchanged": true,
+  "native_counts": {
+    "controls": 0,
+    "reset_controls": 0,
+    "physics_ticks": 250,
+    "step1_calls": 250,
+    "phase": "policy",
+    "control_time": 0,
+    "clock": {
+      "control_freq": 20,
+      "control_timestep": 0.05,
+      "model_timestep": 0.002,
+      "lite_physics": true
+    }
+  },
+  "arms": {
+    "velocity": {
+      "completed": true,
+      "width": 32,
+      "zero_native_exact": true,
+      "nonzero_action_influence": true,
+      "cache_targets": 0,
+      "targets": [],
+      "layers": [],
+      "all_targets_finite_nonzero": true,
+      "original_cache_unchanged": null,
+      "cuda_next_adam_exact": true
+    },
+    "kv_all_layers": {
+      "completed": true,
+      "width": 1152,
+      "zero_native_exact": true,
+      "nonzero_action_influence": true,
+      "cache_targets": 36,
+      "targets": [
+        "key",
+        "value"
+      ],
+      "layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "all_targets_finite_nonzero": true,
+      "original_cache_unchanged": true,
+      "cuda_next_adam_exact": true
+    }
+  },
+  "clock": {
+    "started_unix": 1793637071,
+    "finished_unix": 1793637181,
+    "allocated_gpus": 1,
+    "process_gpu_seconds": 110,
+    "exit_code": 0
+  },
+  "resource_scope": "Reference producer accounting once; script process clock is a subset of allocation clock"
+}

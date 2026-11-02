@@ -5,6 +5,7 @@ durable journal stay with the qualified backend. This loop owns only causal
 controller memory, real feedback and complete-attempt recovery.
 """
 import hashlib
+from copy import deepcopy
 
 import numpy as np
 
@@ -17,6 +18,24 @@ def weights_digest(policy):
         digest.update(name.encode())
         digest.update(tensor.detach().cpu().contiguous().numpy().tobytes())
     return digest.hexdigest()
+
+
+def memory_signature(controller):
+    """Exact functional cache/feedback identity, without storing a second cache."""
+    digest = hashlib.sha256()
+    for key, tensor in sorted((controller.state or {}).items()):
+        value = tensor.detach().cpu().contiguous().numpy()
+        digest.update(key.encode())
+        digest.update(str((value.dtype, value.shape)).encode())
+        digest.update(value.tobytes())
+    digest.update(controller.previous_noise.tobytes())
+    feedback = (controller.previous_reward, bool(controller.previous_done),
+                bool(controller.episode_start), bool(controller.pending))
+    digest.update(repr(feedback).encode())
+    return dict(sha256=digest.hexdigest(),
+        length=0 if controller.state is None else int(controller.state["length"][0]),
+        previous_reward=float(controller.previous_reward), previous_done=bool(controller.previous_done),
+        episode_start=bool(controller.episode_start), pending=bool(controller.pending))
 
 
 def replay_physical_attempt(controller, rows, *, horizon):
@@ -61,12 +80,17 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
         if (previous["case"] != case or previous["attempt"] != attempt
                 or previous["horizon"] != horizon or not previous["completed"]):
             raise ValueError("Recovery prefix changed physical case or attempt identity")
+        if previous["memory_entry"] != memory_signature(controller):
+            raise ValueError("Recovered attempt entry memory differs")
         replay_physical_attempt(controller, previous["records"], horizon=horizon)
+        if previous["memory_exit"] != memory_signature(controller):
+            raise ValueError("Recovered attempt exit memory differs")
         results.append(previous)
     for attempt in range(len(completed_prefix) + 1, attempts + 1):
         environment = environment_factory(case, attempt)
         records = []
         first_seen = False
+        entry = memory_signature(controller)
         try:
             observation = environment.reset()
             pairing = getattr(environment, "initial_evidence", {}).get("pairing", {})
@@ -81,13 +105,16 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
                 noise = np.asarray(noise, np.float32)
                 if noise.shape != (50, 32) or not np.isfinite(noise).all() or not provenance:
                     raise ValueError("Require explicit finite native Gaussian with saved draw provenance")
-                commands = motor.execute(prepared, noise=noise, steering=control, spec=spec)
+                # The native serial API retains its single candidate/batch
+                # axis. Record the physical draw as H50x32, execute as1xH50x32.
+                commands = motor.execute(prepared, noise=noise[None], steering=control, spec=spec)
                 commands = np.asarray(commands)
                 if commands.shape != (50, 12) or not np.isfinite(commands).all():
                     raise ValueError("Require all finite native H50 motor commands")
                 intent = dict(case=case, attempt=attempt, chunk=chunk, horizon=horizon,
                     features=features.copy(), control=control.copy(), native_noise=noise.copy(),
-                    native_noise_provenance=provenance, requested_commands=np.array(commands, copy=True))
+                    native_noise_provenance=provenance, requested_commands=np.array(commands, copy=True),
+                    observation=deepcopy(observation), memory_entry=entry if chunk == 0 else None)
                 before_dispatch(intent, environment)
                 begin = environment.steps
                 observation, done, _ = environment.step_chunk(commands)
@@ -98,7 +125,8 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
                 first_seen = first_seen or seen
                 controller.observe(control, reward, bool(done))
                 record = dict(intent, reward=reward, done=bool(done),
-                              episode_start=chunk == 0, executed_controls=50)
+                              episode_start=chunk == 0, executed_controls=50,
+                              next_observation=deepcopy(observation))
                 after_dispatch(record, environment)
                 records.append(record)
             first = environment.success_steps[0] if environment.success_steps else None
@@ -106,6 +134,7 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
                 success_once=first_seen, first_success_step=first,
                 success_at_end=bool(environment.success_steps and environment.success_steps[-1] == horizon),
                 records=records, memory_tokens=int(controller.state["length"][0]),
+                memory_entry=entry, memory_exit=memory_signature(controller),
                 pairing=environment.initial_evidence)
         finally:
             environment.close()

@@ -40,6 +40,7 @@ class Motor:
 
     def execute(self, prepared, *, noise, steering, spec):
         assert prepared == "prepared" and steering.shape == (spec.steering_dim,)
+        assert noise.shape == (1, 50, 32)
         self.executed.append((noise.copy(), steering.copy()))
         return np.zeros((50, 12), np.float32)
 
@@ -141,3 +142,37 @@ def test_pairing_capacity_and_early_stop_fail_before_fabricated_completion():
     with pytest.raises(ValueError, match="suffix"):
         collect_case_attempts(policy, spec, case, **args)
     assert environments[0].closed and not after and not completed
+
+
+@pytest.mark.parametrize("kind", ["velocity", "kv_all_layers"])
+def test_physical_loop_consumes_the_real_native_interface_serial_api(kind):
+    from test_interface_ppo import batch_native
+    from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
+    from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
+    native, observation = batch_native()
+    native.model.layers = 18
+    observation = dict(states=observation["states"][:1])
+    spec = (InterfaceSpec(kind=kind, steering_dim=32, fraction=.05) if kind == "velocity"
+            else InterfaceSpec(kind=kind, steering_dim=1152, kv_layers=18, fraction=.04))
+    actor = HistoryNoisePolicy(HistoryConfig(20, spec.steering_dim, width=8,
+                                            heads=2, layers=1, context_length=12))
+    args, environments, _, before, after, completed = collect(actor, spec, dict(task="A"))
+
+    class PublicEnvironment(Environment):
+        def reset(self):
+            return deepcopy(observation)
+        def step_chunk(self, commands):
+            _, done, info = super().step_chunk(commands)
+            return deepcopy(observation), done, info
+
+    def factory(case, attempt):
+        env = PublicEnvironment(case, attempt)
+        environments.append(env)
+        return env
+
+    args.update(environment_factory=factory, motor=FrozenRoboCasaInterface(native))
+    results = collect_case_attempts(actor, spec, dict(task="A"), **args)
+    assert len(results) == len(completed) == 5 and len(before) == len(after) == 10
+    assert native.model.prefixes == native.model.draws == 10
+    assert [row["memory_tokens"] for row in results] == [2, 4, 6, 8, 10]
+    assert all(row["records"][0]["native_noise"].shape == (50, 32) for row in results)

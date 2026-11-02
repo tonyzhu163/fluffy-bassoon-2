@@ -5,14 +5,20 @@
   "producer_observation": {
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
-    "status": "DRIVER_CPU_QUALIFIED_NATIVE_GPU_PENDING_NOT_SUBMITTED",
+    "status": "SINGLE_GPU_INTERFACE_QUALIFIED_NO_SCIENTIFIC_SOURCE_YET",
     "immutable_source": false,
     "last_live_check_UTC": "2026-11-02T16:21:27Z",
     "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:8",
     "driver_reference_commit": "dd3e51334fda9b839f37b777d68ffb79f66d638c",
     "CPU_tests_passed": 80,
     "evidence": "outputs/robocasa-joint-steering-5m-20261102-r1/qualification/CPU-QUALIFICATION.md",
-    "qualification_is_source_admission": false
+    "qualification_is_source_admission": false,
+    "native_qualification": "PRODUCER-NATIVE-GPU-20261103-0033.json",
+    "qualification_job": "job-peaxl7mua1os",
+    "qualification_source": "ccaea60b72bfce8b8a4d22244caecd537c27f47c",
+    "scientific_ppo_updates": 0,
+    "policy_episodes": 0,
+    "native_qualification_checked_UTC": "2026-11-02T16:35:50Z"
   },
   "campaigns": {
     "stage1_pilot": {
@@ -72,15 +78,19 @@
   "next_action": "Bind the actual committed producer source and integrate/qualify its native history-controller evaluator; monitor source release and launch each independent convergence fit when exact data become ready",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
-  "core_qualification_source": "3fc128ae7e11ca766ccf468e8311821515ef94ab",
-  "CPU_core_tests_passed": 29,
+  "core_qualification_source": "28b44bf908c2db2dc87ab862efbcf5ce9035fedc",
+  "CPU_core_tests_passed": 35,
   "context_capacity": 300,
   "training_window_rule": "1..max(5,ceil(5*max_eval_horizon/min_actual_source_horizon)) complete physical episodes; currently1..9",
   "numerical_recovery_and_108_token_training_105_token_inference_qualified": true,
   "evaluation_core": "src/fluffy_bassoon/meta_rl/steering_history_eval.py",
-  "evaluation_core_status": "29 allocated-Linux CPU tests including actual producer serialization; actual native/GPU qualification pending",
+  "evaluation_core_status": "35 allocated-Linux CPU numerical/core tests passed, including real motor API and durable native-shaped backend; actual selected-student native qualification pending",
   "legacy_core_qualification_source": "cfc8fda189e7a424805be353e3632e5065f07ffd",
   "evaluation_core_qualification_source": "f01478c3c9af4baeaf1fb7121442060a0ff99be9",
   "behavior_version_contract": "Collection round n uses real pre-update behavior version n-1; final DPT teacher version=max behavior+1",
-  "source_interface_comparison": "Exact InterfaceSpec.record() including calibrated fraction and K/V mapping metadata; constructor serialization may omit defaults"
+  "source_interface_comparison": "Exact InterfaceSpec.record() including calibrated fraction and K/V mapping metadata; constructor serialization may omit defaults",
+  "native_backend": "src/fluffy_bassoon/meta_rl/steering_history_native.py",
+  "native_backend_receipt": "NATIVE-BACKEND-VALIDATION.json",
+  "primary_policy_controls_per_model_interface": 1612500,
+  "primary_policy_controls_all_models_interfaces": 6450000
 }
