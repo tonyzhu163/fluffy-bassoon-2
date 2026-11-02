@@ -36,7 +36,7 @@ slice_seconds = worker_seconds - 60
 closure = 300
 deadline = start + slice_seconds - closure
 ram_gib = 128 if kind == 'common' else 256
-action_cap = 450420 if kind == 'common' else 925300
+action_cap = None  # Uncapped, actions still journaled (human, 2026-11-02).
 output_gib = 48 if kind == 'common' else 80
 assert os.environ['WORLD_SIZE'] == '4' and os.environ['NPROC_PER_NODE'] == '2' and 0 <= node_rank < 4
 assert socket.gethostname().startswith('job-') and torch.cuda.device_count() == 2
@@ -116,7 +116,7 @@ try:
         if kind == 'S':
             common = read_ref(binding['common_final'])
             assert common['completed'] is True and common['policy_updates'] == 0 and common['ID_episodes'] == common['OOD_episodes'] == 250
-            profile.update(independent_stopping=True, initial_policy_fingerprint=binding['initial_policy_fingerprint'],
+            profile.update(stopping='fixed', initial_policy_fingerprint=binding['initial_policy_fingerprint'],
                 initial_dev_evaluation=binding['initial_dev_evaluation'],
                 training_cases=[case for iteration in range(1, 7) for case in joint_case_bank('train', iteration=iteration)])
         write_new(out / 'policy-profile.json', profile)

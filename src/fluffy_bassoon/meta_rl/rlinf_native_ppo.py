@@ -95,16 +95,17 @@ def validate_recipe(cfg):
 
 
 class ActionJournal:
-    """Rank partitions share a strict 1M ceiling, including unresolved RPC intents.
+    """Rank partitions share a strict ceiling (1M by default; None records actions
+    without a ceiling), including unresolved RPC intents.
 
     Evaluation counts full requested chunks conservatively because upstream only
     publishes valid_action_mask for training. Retrying uses a NEW attempt name
     under the SAME accounting root; old unresolved intents remain fully charged.
     """
-    def __init__(self, root, *, rank, world, attempt):
+    def __init__(self, root, *, rank, world, attempt, maximum_actions=1000000):
         self.root = Path(root) / f'rank-{rank:02d}'
         self.root.mkdir(parents=True, exist_ok=True)
-        self.limit = 1000000 // int(world)
+        self.limit = None if maximum_actions is None else int(maximum_actions) // int(world)
         self.attempt = attempt
         self.path = self.root / (attempt + '.json')
         if self.path.exists():
@@ -127,7 +128,8 @@ class ActionJournal:
         return total
 
     def begin(self, requested, *, phase):
-        if not isinstance(requested, int) or requested <= 0 or self.charged() + requested > self.limit:
+        if (not isinstance(requested, int) or requested <= 0
+                or self.limit is not None and self.charged() + requested > self.limit):
             raise RuntimeError('Action escrow cannot reserve another complete vector chunk')
         self.rows.append(dict(requested=requested, phase=phase, started_unix=time.time(), resolved=False))
         self._save()  # Before the simulator call.

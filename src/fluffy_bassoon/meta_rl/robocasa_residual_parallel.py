@@ -57,15 +57,16 @@ def native_chunk_offsets(cases, horizon=None):
 
 class ParallelActionJournal:
     """Read the actual per-worker escrows, including unresolved intents."""
-    def __init__(self, root, world):
+    def __init__(self, root, world, maximum_actions=1_000_000):
         self.root, self.world = Path(root), int(world)
+        self.ceiling = None if maximum_actions is None else int(maximum_actions) // self.world
 
     def charged(self):
         total = 0
         for rank in range(self.world):
             for path in (self.root / f"rank-{rank:02d}").glob("*.json"):
                 value = json.loads(path.read_text())
-                if value["rank_action_ceiling"] != 1_000_000 // self.world:
+                if value["rank_action_ceiling"] != self.ceiling:
                     raise ValueError("Preserve the parallel action partition")
                 total += sum(row.get("executed_or_conservative", row["requested"])
                              for row in value["calls"])

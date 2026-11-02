@@ -46,7 +46,8 @@ def main():
     policy.load_state_dict(request["policy"], strict=True)
     bound = ResidualBound(**request["bound"])
     journal = ActionJournal(profile["accounting_root"], rank=request["rank"], world=request["world"],
-                            attempt=request["attempt"])
+                            attempt=request["attempt"],
+                            maximum_actions=None if profile["maximum_all_in_actions"] is None else 1_000_000)
     env = RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), request["cases"],
         horizon=request["horizon"], output=Path(request["output"]) / "videos",
         monitoring_root=request["monitoring_root"], journal=journal, writer_factory=imageio.get_writer,
