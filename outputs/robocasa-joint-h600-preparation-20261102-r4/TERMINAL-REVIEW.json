@@ -1,0 +1,177 @@
+{
+  "completed": true,
+  "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+  "run_id": "robocasa-joint-h600-preparation-20261102-r4",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-al2ztuon33dz",
+  "source_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4",
+  "scheduler": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/SCHEDULER-TERMINAL.json",
+    "sha256": "18ff3338e3c93aef02393ac8e7cc6d5bb2c8957696203dc236034e019a77a891"
+  },
+  "physical_and_checkpoint_audit": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/TERMINAL-AUDIT.json",
+    "sha256": "3bd21daa99a8e2918c5b0b9516e6549721530666229ceb52f19bd72a91117cc6"
+  },
+  "grade_source_audit": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/GRADE-SOURCE-AUDIT.json",
+    "sha256": "68e4d01c7b9b6aa8577535f0969e62ec2d1e54b52286e4151114dbe572e5ac45"
+  },
+  "calibration_episodes": 250,
+  "calibration_grades": 250,
+  "all_five_gates_passed": true,
+  "calibrations": [
+    {
+      "task": "OpenDrawer",
+      "count": 50,
+      "successes": 31,
+      "AUROC": 0.933786078098472,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/OpenDrawer/baseline-validation.json",
+        "sha256": "9c3f3736ff0c6683ae3d6a159637a5e2987adaeebdaae6e3e380c3e925e448a7"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "count": 50,
+      "successes": 28,
+      "AUROC": 0.9058441558441559,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceCounterToCabinet/baseline-validation.json",
+        "sha256": "b5604ee1e6cc30d078e13505e561b3b0e564272329c5a3a7837cfdad7dbc64b8"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "count": 50,
+      "successes": 14,
+      "AUROC": 0.9821428571428571,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceDrawerToCounter/baseline-validation.json",
+        "sha256": "df825365542714827767ebcb8c108c15efe73620186f0c5160d1fcb14a93f282"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "TurnOffStove",
+      "count": 50,
+      "successes": 7,
+      "AUROC": 0.9036544850498339,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/TurnOffStove/baseline-validation.json",
+        "sha256": "855a16d7a7b47be11477fcec91c0982d6caca05658d54bc9ee1bc9d52ab4bde2"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "count": 50,
+      "successes": 15,
+      "AUROC": 0.8476190476190476,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/CoffeeSetupMug/baseline-validation.json",
+        "sha256": "a7484ed05082661eb04fedf120a5d532497b3e7ff401be1b8158b3349f8faacf"
+      },
+      "permission_passed": true
+    }
+  ],
+  "before_panels": [
+    {
+      "bank": "common/initial_DEV",
+      "phase": "initial_DEV",
+      "task": null,
+      "episodes": 40,
+      "successes": 19,
+      "policy_controls": 24000,
+      "motor_seed": 810100,
+      "cases_sha256": "b6b79b4c9b3992c2b06f35128a665701d557c3f451b3f4ac1da6b0f99ca9e3e2",
+      "seed_plan_sha256": "d0418d31728de7b89df9d309db2c304d9ec25c3de40bee36f582816bacb33ee4",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/evaluation.json",
+        "sha256": "a02c02923817c4195227a0188a94f350df97d8b588e9152a1c55e06d4173bd79"
+      }
+    },
+    {
+      "bank": "common/before_ID",
+      "phase": "before_ID",
+      "task": null,
+      "episodes": 250,
+      "successes": 90,
+      "policy_controls": 150000,
+      "motor_seed": 910100,
+      "cases_sha256": "dc0c5853d2c5658100653c8c8e18a8c4c5499da272f12217b5b8a427efb66ce8",
+      "seed_plan_sha256": "18faafb825ef435e1db22c2d290e22be99c8ff210fe178ce738421bcdbc4d711",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/evaluation.json",
+        "sha256": "7f61cf36ab96bc2297940bbafc82b2a55b5f7b76e3ea509f3ea376bc21636587"
+      }
+    },
+    {
+      "bank": "common/before_OOD",
+      "phase": "before_OOD",
+      "task": null,
+      "episodes": 250,
+      "successes": 126,
+      "policy_controls": 172500,
+      "motor_seed": 1010100,
+      "cases_sha256": "19c589f28268c343208bda4b521b2c50f4fcedd00624bbcbc3c134e2cd52da49",
+      "seed_plan_sha256": "4778e24d93eb19eed2108654ace823982c3cdcc5eaec1953d56991fdcc3c4077",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/evaluation.json",
+        "sha256": "2426c6b2fb2c5e14fb7e1584c51a4f9d85b96f2310c192fcac465d14c1d60139"
+      }
+    }
+  ],
+  "total_episodes": 790,
+  "raw_records": 9930,
+  "policy_controls": 496500,
+  "three_view_videos": 2370,
+  "unresolved_journals": 0,
+  "optimizer_updates": 0,
+  "common_final": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/COMMON-FINAL.json",
+    "sha256": "9ff303703afd81983f2c0f6de0b8d26b668cbf46d844df31090c308feebc72d1"
+  },
+  "initial_policy_fingerprint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial-policy.json",
+    "sha256": "ccfb0fdbacdc874990888ad8443d01f389211f4d6fd1d6689aaea754c6de2449"
+  },
+  "initial_dev_evaluation": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/evaluation.json",
+    "sha256": "a02c02923817c4195227a0188a94f350df97d8b588e9152a1c55e06d4173bd79"
+  },
+  "policy_tensor_sha256": "641bc65f296cc3f377f3e92a7ea86c6a8f1756017ae7d351a8be09bb633cee24",
+  "costs": {
+    "r4_gpu_seconds": 16179,
+    "prior_preparation_gpu_seconds": 3268,
+    "combined_preparation_gpu_seconds": 19447,
+    "combined_preparation_gpu_hours": 5.401944444444444,
+    "authorized_gpu_seconds": 26400,
+    "remaining_unspent_gpu_seconds": 6953
+  },
+  "all_owned_allocations_terminal": true,
+  "joint_SGD_status": "NOT_ADMITTED",
+  "scientific_scope": "Frozen initializer calibration and common-before only; no learning result",
+  "execution": {
+    "rollout_workers": 4,
+    "lanes_per_gpu": 4,
+    "Flora_batch_capacity": 8,
+    "Flora_utilization": 0.75,
+    "Flora_on_OOD": false,
+    "clock_input": false,
+    "OOD_horizons": [
+      900,
+      1050,
+      450,
+      600,
+      450
+    ]
+  },
+  "limitations": [
+    "Frozen initializer preparation only; no learning comparison or SGD admission",
+    "Four-worker panels with four native lanes/GPU; no16-lane or8-lane colocation qualification",
+    "Independent full Flora weight rehash not repeated; qualified unchanged weight receipts and actual engine model revision retained"
+  ]
+}

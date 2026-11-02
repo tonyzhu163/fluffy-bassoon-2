@@ -1,0 +1,897 @@
+{
+  "completed": true,
+  "audit_utc": "2026-11-02T14:02:07.927588+00:00",
+  "execution": "Allocated Baige Linux CPU, CUDA masked; no model loading/forward or SGD",
+  "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+  "calibration_episodes": 250,
+  "calibration_grades": 250,
+  "common_before_episodes": 540,
+  "total_episodes": 790,
+  "raw_records": 9930,
+  "policy_controls": 496500,
+  "optimizer_updates": 0,
+  "bank_scoped_episode_identities": 790,
+  "video_files": 2370,
+  "video_headers_and_hashes_verified": true,
+  "video_audit_digest": "aeb4dd1f115b85ec1424e3acca5a757b81b31ecc7bd0d9700b1c38b087c2fe84",
+  "episode_audit_digest": "6195a72bcfaa404fbfa695019dafefb9eb080df26caba67ceb85c87f513c2ac9",
+  "native_frame_clocks_verified": true,
+  "camera_order": [
+    "robot0_agentview_left",
+    "robot0_eye_in_hand",
+    "robot0_agentview_right"
+  ],
+  "case_and_motor_seed_plans_verified": true,
+  "deterministic_residual_action_noise": null,
+  "zero_residual_actions_verified": true,
+  "action_calls": 10720,
+  "unresolved_intents": 0,
+  "banks": [
+    {
+      "bank": "native/OpenDrawer/baseline",
+      "phase": "baseline",
+      "task": "OpenDrawer",
+      "episodes": 50,
+      "successes": 31,
+      "policy_controls": 30000,
+      "motor_seed": 610100,
+      "cases_sha256": "fb453d61df0a9cd7235d00f04c10a8836f75b4c321f5cc4e733a5f27606ae8b9",
+      "seed_plan_sha256": "3c0345ba5a8146718b078add45d7c4d74dc95305d38c6e20133435be000a5140",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/evaluation.json",
+        "sha256": "2a314e60a467428cae339f875d1e9a0e0a9db9b438c7f63c2c739c91980cc571"
+      }
+    },
+    {
+      "bank": "native/PickPlaceCounterToCabinet/baseline",
+      "phase": "baseline",
+      "task": "PickPlaceCounterToCabinet",
+      "episodes": 50,
+      "successes": 28,
+      "policy_controls": 30000,
+      "motor_seed": 620100,
+      "cases_sha256": "fd0f83eff03b4a220ac571443b42334a960095b01ccea242b3979108982e889a",
+      "seed_plan_sha256": "2cf66ab83ffb1eaccd39985abc81e9341fd15339955769a225d2747215df8e01",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/evaluation.json",
+        "sha256": "39ef1d7ef8b26cab2e0f73fff9ed26923ecf0cb08e32f7f1a879017c15d2c05c"
+      }
+    },
+    {
+      "bank": "native/PickPlaceDrawerToCounter/baseline",
+      "phase": "baseline",
+      "task": "PickPlaceDrawerToCounter",
+      "episodes": 50,
+      "successes": 14,
+      "policy_controls": 30000,
+      "motor_seed": 630100,
+      "cases_sha256": "86b753a28febd0dfed1522107d0e2acac51ca7d82d437ba99c1d9a7b312dfb8f",
+      "seed_plan_sha256": "a80755c1ed56b655ed104dc70c03f10377d9fed401dc512fc3f3efc7c22b41f3",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/evaluation.json",
+        "sha256": "6139eeb789d20e16cc14a8f97580d8dcd0267d8ab333b1c7c9d3ff3b6d97a196"
+      }
+    },
+    {
+      "bank": "native/TurnOffStove/baseline",
+      "phase": "baseline",
+      "task": "TurnOffStove",
+      "episodes": 50,
+      "successes": 7,
+      "policy_controls": 30000,
+      "motor_seed": 640100,
+      "cases_sha256": "5ef604235b8975aa2ff0a1c6c54cd19a49010cbef86a0edd0f7f6f88c2d0bae0",
+      "seed_plan_sha256": "b27e98852ef512aeb95a5141d835cc474fc8813ea005568d5a66b4aaacb9f476",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/evaluation.json",
+        "sha256": "cd100a6df9832ef45783f406e423ec2cdb7bb8ac0dfcef6ffa0b292a46fca706"
+      }
+    },
+    {
+      "bank": "native/CoffeeSetupMug/baseline",
+      "phase": "baseline",
+      "task": "CoffeeSetupMug",
+      "episodes": 50,
+      "successes": 15,
+      "policy_controls": 30000,
+      "motor_seed": 650100,
+      "cases_sha256": "d980185834125704a0cb46bbd3df9e26194ee5911c5228c9b3200c5c2d399f5d",
+      "seed_plan_sha256": "94069fb7ce8650ece18efc1e685889e2e3f55fcab28218fbc861b04d2ddf67b7",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/evaluation.json",
+        "sha256": "6e85f470f5686094ed2566791b6e82534a46f4ea0310b5ae9e84a05af1e21bfd"
+      }
+    },
+    {
+      "bank": "common/initial_DEV",
+      "phase": "initial_DEV",
+      "task": null,
+      "episodes": 40,
+      "successes": 19,
+      "policy_controls": 24000,
+      "motor_seed": 810100,
+      "cases_sha256": "b6b79b4c9b3992c2b06f35128a665701d557c3f451b3f4ac1da6b0f99ca9e3e2",
+      "seed_plan_sha256": "d0418d31728de7b89df9d309db2c304d9ec25c3de40bee36f582816bacb33ee4",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/evaluation.json",
+        "sha256": "a02c02923817c4195227a0188a94f350df97d8b588e9152a1c55e06d4173bd79"
+      }
+    },
+    {
+      "bank": "common/before_ID",
+      "phase": "before_ID",
+      "task": null,
+      "episodes": 250,
+      "successes": 90,
+      "policy_controls": 150000,
+      "motor_seed": 910100,
+      "cases_sha256": "dc0c5853d2c5658100653c8c8e18a8c4c5499da272f12217b5b8a427efb66ce8",
+      "seed_plan_sha256": "18faafb825ef435e1db22c2d290e22be99c8ff210fe178ce738421bcdbc4d711",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/evaluation.json",
+        "sha256": "7f61cf36ab96bc2297940bbafc82b2a55b5f7b76e3ea509f3ea376bc21636587"
+      }
+    },
+    {
+      "bank": "common/before_OOD",
+      "phase": "before_OOD",
+      "task": null,
+      "episodes": 250,
+      "successes": 126,
+      "policy_controls": 172500,
+      "motor_seed": 1010100,
+      "cases_sha256": "19c589f28268c343208bda4b521b2c50f4fcedd00624bbcbc3c134e2cd52da49",
+      "seed_plan_sha256": "4778e24d93eb19eed2108654ace823982c3cdcc5eaec1953d56991fdcc3c4077",
+      "evaluation": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/evaluation.json",
+        "sha256": "2426c6b2fb2c5e14fb7e1584c51a4f9d85b96f2310c192fcac465d14c1d60139"
+      }
+    }
+  ],
+  "calibrations": [
+    {
+      "task": "OpenDrawer",
+      "count": 50,
+      "successes": 31,
+      "AUROC": 0.933786078098472,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/OpenDrawer/baseline-validation.json",
+        "sha256": "9c3f3736ff0c6683ae3d6a159637a5e2987adaeebdaae6e3e380c3e925e448a7"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "count": 50,
+      "successes": 28,
+      "AUROC": 0.9058441558441559,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceCounterToCabinet/baseline-validation.json",
+        "sha256": "b5604ee1e6cc30d078e13505e561b3b0e564272329c5a3a7837cfdad7dbc64b8"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "count": 50,
+      "successes": 14,
+      "AUROC": 0.9821428571428571,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceDrawerToCounter/baseline-validation.json",
+        "sha256": "df825365542714827767ebcb8c108c15efe73620186f0c5160d1fcb14a93f282"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "TurnOffStove",
+      "count": 50,
+      "successes": 7,
+      "AUROC": 0.9036544850498339,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/TurnOffStove/baseline-validation.json",
+        "sha256": "855a16d7a7b47be11477fcec91c0982d6caca05658d54bc9ee1bc9d52ab4bde2"
+      },
+      "permission_passed": true
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "count": 50,
+      "successes": 15,
+      "AUROC": 0.8476190476190476,
+      "gate": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/CoffeeSetupMug/baseline-validation.json",
+        "sha256": "a7484ed05082661eb04fedf120a5d532497b3e7ff401be1b8158b3349f8faacf"
+      },
+      "permission_passed": true
+    }
+  ],
+  "nodes": [
+    {
+      "rank": 0,
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-00/manifest.json",
+        "sha256": "f3ca12a8811830307b59f930c9a529f44dc8f0a683aa27e7f2efd4ae6fa6e383"
+      },
+      "engine": {
+        "completed": true,
+        "mode": "fifty_case_baseline_only",
+        "annotation_rank": 0,
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "gpu_uuid": "GPU-391c7e48-a84e-0117-f2ef-2ce225a9cb94",
+        "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+        "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+        "profile_sha256": "3639d16dbee8bda5a66ace07154efb594fb7e87b6fc2bba748d01ed40dbc786c",
+        "batch_size": 8,
+        "tensor_parallel_size": 1,
+        "gpu_memory_utilization": 0.75,
+        "warmup_videos": 8,
+        "cold_engine_seconds": 456.88941946439445,
+        "memory_snapshot": {
+          "used_mib": 73643.0,
+          "free_mib": 23608.0,
+          "total_mib": 97887.0
+        },
+        "model_load_count": 1,
+        "robot_actions": 0
+      },
+      "terminal": {
+        "node_rank": 0,
+        "child_exit_codes": [
+          143,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "elapsed_wall_seconds": 3988.2464413642883,
+        "optimizer_updates": 0
+      },
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-00/clock/attempts/1793618151000000-0000",
+        "started_unix": 1793618151.0,
+        "slice_seconds": 5700,
+        "reserved_seconds": 5760,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793622139.5860593,
+        "exit_code": 0,
+        "charged_seconds": 4049,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 4049
+      }
+    },
+    {
+      "rank": 1,
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-01/manifest.json",
+        "sha256": "e347db88f0795c02812089c18093c74439a5229aebd9a70c7cff4505e2b344d8"
+      },
+      "engine": {
+        "completed": true,
+        "mode": "fifty_case_baseline_only",
+        "annotation_rank": 1,
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "gpu_uuid": "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0",
+        "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+        "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+        "profile_sha256": "ebba0164835c4cb20e5f6e8fbeb1951215bac3f7728b0e97926451458810825f",
+        "batch_size": 8,
+        "tensor_parallel_size": 1,
+        "gpu_memory_utilization": 0.75,
+        "warmup_videos": 8,
+        "cold_engine_seconds": 728.7782310090261,
+        "memory_snapshot": {
+          "used_mib": 73643.0,
+          "free_mib": 23608.0,
+          "total_mib": 97887.0
+        },
+        "model_load_count": 1,
+        "robot_actions": 0
+      },
+      "terminal": {
+        "node_rank": 1,
+        "child_exit_codes": [
+          0,
+          0
+        ],
+        "elapsed_wall_seconds": 3981.6324396133423,
+        "optimizer_updates": 0
+      },
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-01/clock/attempts/1793618158000000-0000",
+        "started_unix": 1793618158.0,
+        "slice_seconds": 5700,
+        "reserved_seconds": 5760,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793622140.05554,
+        "exit_code": 0,
+        "charged_seconds": 4043,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 4043
+      }
+    },
+    {
+      "rank": 2,
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-02/manifest.json",
+        "sha256": "a690f2a1c202960924be3fb78f5824f40603b236716e95cb86c71bbbd0302a66"
+      },
+      "engine": {
+        "completed": true,
+        "mode": "fifty_case_baseline_only",
+        "annotation_rank": 2,
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "gpu_uuid": "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+        "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+        "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+        "profile_sha256": "44ad785023854cdcd3c350818ca53d6cad5d760c60c1fed7cf78307a8328c88d",
+        "batch_size": 8,
+        "tensor_parallel_size": 1,
+        "gpu_memory_utilization": 0.75,
+        "warmup_videos": 8,
+        "cold_engine_seconds": 729.4398109930335,
+        "memory_snapshot": {
+          "used_mib": 73643.0,
+          "free_mib": 23608.0,
+          "total_mib": 97887.0
+        },
+        "model_load_count": 1,
+        "robot_actions": 0
+      },
+      "terminal": {
+        "node_rank": 2,
+        "child_exit_codes": [
+          0,
+          0
+        ],
+        "elapsed_wall_seconds": 3982.6160740852356,
+        "optimizer_updates": 0
+      },
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-02/clock/attempts/1793618157000000-0000",
+        "started_unix": 1793618157.0,
+        "slice_seconds": 5700,
+        "reserved_seconds": 5760,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793622140.0401196,
+        "exit_code": 0,
+        "charged_seconds": 4044,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 4044
+      }
+    },
+    {
+      "rank": 3,
+      "manifest": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-03/manifest.json",
+        "sha256": "50a1dcc715497c68ea3a460163e946ed11df334cfe8bcc81e51f9ea16c12f6bc"
+      },
+      "engine": {
+        "completed": true,
+        "mode": "fifty_case_baseline_only",
+        "annotation_rank": 3,
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "gpu_uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+        "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+        "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+        "profile_sha256": "fffc6275fbc8b4449dbea7532a72aa2f6aa82425e83f4898fd181e0d376e5c0f",
+        "batch_size": 8,
+        "tensor_parallel_size": 1,
+        "gpu_memory_utilization": 0.75,
+        "warmup_videos": 8,
+        "cold_engine_seconds": 728.2891045700526,
+        "memory_snapshot": {
+          "used_mib": 73643.0,
+          "free_mib": 23608.0,
+          "total_mib": 97887.0
+        },
+        "model_load_count": 1,
+        "robot_actions": 0
+      },
+      "terminal": {
+        "node_rank": 3,
+        "child_exit_codes": [
+          0,
+          0
+        ],
+        "elapsed_wall_seconds": 3982.415125608444,
+        "optimizer_updates": 0
+      },
+      "clock": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-03/clock/attempts/1793618157000000-0000",
+        "started_unix": 1793618157.0,
+        "slice_seconds": 5700,
+        "reserved_seconds": 5760,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793622139.7259123,
+        "exit_code": 0,
+        "charged_seconds": 4043,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 4043
+      }
+    }
+  ],
+  "worker_receipts": [
+    {
+      "bank": "native/OpenDrawer/baseline",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "6db932311af92724e5f2ef08520068195cb24704da60fea71770fbf9517a7822"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "6f575a023e46c2476ab1aa20dcaeca81bb59d5e00e72920a24c871de81f2c217"
+      },
+      "cases_sha256": "c4d7f001950b684f8b402d40323a01a7fcbcb2e4b4d876249f080f8290685e3e",
+      "seed_plan_sha256": "c6c18496f80408bba5c76ceca91256afc870ff296a9e334fc69c4e6c6ae379c5"
+    },
+    {
+      "bank": "native/OpenDrawer/baseline",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "d6139ba88d41666a8557fece53d341e835a91cdd2bd29a84ff034a3e588dff7d"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "38a4b15cd33ec2b6ce953401b268e0f6275fef3a5a0574f8f8350a8bc9d68bf0"
+      },
+      "cases_sha256": "f547062b28447160282fefb3829b8e93f7c5c8bc80bc814e9affd5e4200ec025",
+      "seed_plan_sha256": "62e4dfa43848ee30357f83fbe835d0646e858c29cf4e83fb7581eb24fb7e13ae"
+    },
+    {
+      "bank": "native/OpenDrawer/baseline",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "3ad75879191783a972c719bc1461f0659d4cbd3fca30e02da5a2b011b8144dd5"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "323d946f46ed529d35ab264d2f7eae6b6acc586b22dbcf7b8e2f5f7233c03971"
+      },
+      "cases_sha256": "8daef50ccfb102011e50d4aceb2560735cd5dd5dbf650d694f0b15c50abc19b7",
+      "seed_plan_sha256": "eb86763bcc8d1599c1f383fafb09082ae7933bd790160dc28ac8a0b4457ca461"
+    },
+    {
+      "bank": "native/OpenDrawer/baseline",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "9647ed5a6fcc9d1a47c6b956abef002b263bb1316e2e505142323e0490e64703"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/OpenDrawer/baseline-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "72d57ba4d88123c7762f14f2a414ba6c9f1ca52e8f5449d1876cf1fc11e10d67"
+      },
+      "cases_sha256": "8da93eeb7476c7d8263217be9ab2eb89988ce98a423e1ec92da34a1525339e71",
+      "seed_plan_sha256": "5be1ef9b642e362b8d0028eb6b8401966c496517a44db898edec88d114f28776"
+    },
+    {
+      "bank": "native/PickPlaceCounterToCabinet/baseline",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "dedabfb1f4577aa7360f731a4d5644ec52f813e00160515254ecfccd1928c985"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "03bfd06ce934ca01ad1a7071581d95ecdb24c5471d0d9b3e9a00c59f574d7fb9"
+      },
+      "cases_sha256": "8b615c9a4c5a84fceeb5c56c5de9b50610eaafcf83587eec6fe28c58e1f238f0",
+      "seed_plan_sha256": "f9033cf9fef01fe2ac51e8b634926d5904d64ca4804851504df1eb1b2948549f"
+    },
+    {
+      "bank": "native/PickPlaceCounterToCabinet/baseline",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "8694be8b1bc2015d1b18e446cc07024d702bc28c7fbb3b4efbfdaa4ae18ea1e4"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "c55a4c1c69d2dcc4df2c67950acee9b4c23366068c6912b7bdaf467b4ccd5cea"
+      },
+      "cases_sha256": "97aae166287fef54574c86ee69b233072f0fccb7fb6723fb2865c6207ac7b807",
+      "seed_plan_sha256": "151039c2c6bf0e68466c8622249a2bbc12d5b5da0c0603067341b14cad1a4259"
+    },
+    {
+      "bank": "native/PickPlaceCounterToCabinet/baseline",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "0bda513f7d3b5c0f4d34559bfdef92784634177512bbef2f979ede32cc99a2de"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "a90266d3b89a506386b086fb55780ca2b2616eb46d9ee3f3410ca69653e50ba3"
+      },
+      "cases_sha256": "e8a6d1ab91d66cb635b24b602b68f81c057fe3c5e9d210aa42a3e7382850add8",
+      "seed_plan_sha256": "66f8b63635f8a5bd53374c4dd7ae96f7481b98cd997a4ffc49dec88635954dba"
+    },
+    {
+      "bank": "native/PickPlaceCounterToCabinet/baseline",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "0c6f2c299a146842e5ce5587c470f772fb9b934d337ec3aaffe00e7f296e12a3"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceCounterToCabinet/baseline-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "1a2c8ab83b0bf207c482c7285e69c1d6c23caeb6395b9778038d9a911bbcf38c"
+      },
+      "cases_sha256": "0e03c5b95a2e3234152d968f73515d409611d15ce3d8a714e7aeae649875e4d7",
+      "seed_plan_sha256": "1fa42239b9563ff9cca42c0e712347b5ee9cc7abc30d1345ec3399c0a1f8b8fe"
+    },
+    {
+      "bank": "native/PickPlaceDrawerToCounter/baseline",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "0a614f812f7772e83bfe31a408428153b99a21d95592488aa88f6faf2d925885"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "33415592330d07db2c55bbcd45ff5ec0fed85ec9cc4a33bf034117f3ff0653af"
+      },
+      "cases_sha256": "5c8b9960622fdbbdaaf4acf2192c1a9ee8447947c2649d72733c1b3ecf298dca",
+      "seed_plan_sha256": "a969402f61c06d4e7dd0456ad4978fc11e07d39df7f44122c8597c50dade0b2d"
+    },
+    {
+      "bank": "native/PickPlaceDrawerToCounter/baseline",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "a19ab14b0bd1e7001ec71f0d5fd214291b9047aaea592167ae90227047b8fff9"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "aae6dbae7332c811d3a37eb30a8165710e1850dc96201c8c5b678ee3c5362fe2"
+      },
+      "cases_sha256": "97d7af19a87d218f29062c0980ae650a6ad6aa2491bed8b128e645266621389e",
+      "seed_plan_sha256": "710695036fbcb090a070634e75d326df91b8f4422d28a5273a8a4f1e1703f988"
+    },
+    {
+      "bank": "native/PickPlaceDrawerToCounter/baseline",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "c341fab5effb43e30df1a0fac1cff5f3baa9a7166bd15527bed46a34e49fa25a"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "e57fc0b14d56be3aa7c49794bbf57a68e083f6cb3e288f67c87745a7c0538a35"
+      },
+      "cases_sha256": "3aa1a19966d5be3b065314efbc0a05af255eda1c1d8587d6e2c70f4c4061919a",
+      "seed_plan_sha256": "051e45558072a0425e5ad7834056c4ea83e707380a854895c5827e0fb90da7b4"
+    },
+    {
+      "bank": "native/PickPlaceDrawerToCounter/baseline",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "03e49fa516d4080e7bc7c709dffc27714a41cb1f37ca42743aebb3505c6b9ad5"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/PickPlaceDrawerToCounter/baseline-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "d5bc1e1c2406be3563b07105cdcf9d104e2a0608f290d433689bcfd349727db9"
+      },
+      "cases_sha256": "641f3eb25bf77b7fe99223e0bca72b6823f0b10df11fc854a8a7686c04e6442b",
+      "seed_plan_sha256": "adbca698104225b1ef534214535109a9c8e443e017cf10fa955a8edcbd5b4cc5"
+    },
+    {
+      "bank": "native/TurnOffStove/baseline",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "c3261fd525b782195add0d9cbc20ddbbe8b335bc8aa20959cbc2f05b773fed70"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "a225ff3df18030c1a2807e1c1f8f35d840563a89d30615f0516c6558740f4cda"
+      },
+      "cases_sha256": "332e944bd1a44afd4b86c817476bd229a8d47bb8993554faa4d2bdc2b8f5bac1",
+      "seed_plan_sha256": "03c0563708edb226329c947d2ba15caaefd709a5a550c452a1530bd3d5f68cdc"
+    },
+    {
+      "bank": "native/TurnOffStove/baseline",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "f4ac65e5fc1cb9646c597eb18c12d36671c9b9aeaef77410b93b24744b3e8219"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "1230886bb9cf859be0896babaf27c10c1f803b303345289cbe0ccea9e06fcffd"
+      },
+      "cases_sha256": "1abcf48b4a721ba87349d482a311dd6c3e2f9182f426fb1b3e1f8cf77deb4642",
+      "seed_plan_sha256": "1c970064cd5461a028f19bf19350c21fdd629137df148c87f390e3d121bc5805"
+    },
+    {
+      "bank": "native/TurnOffStove/baseline",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "7fa57466fe092216a5ccf6c2082366c839787e4f4da2c056ea77188a22e656e0"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "04cae72782f72f27bc711104912653148a8ad53ffbdacfd133e913295eecdedf"
+      },
+      "cases_sha256": "e36ff1c9cf26d6f336e9eccd9221762569fcaec65d9b98bd6fd34a19d9bd007b",
+      "seed_plan_sha256": "825869a9023b91c15bf3b7d0c6428ac886a5e2b3f6b6588d793bf31dd49e7b98"
+    },
+    {
+      "bank": "native/TurnOffStove/baseline",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "314d3cd3a86fe01c1f7e8e457d4459abd5f27936221679da25a8d626e6a34c8d"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/TurnOffStove/baseline-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "c7e9e4d4a9f114b0a6c93d3d113ae788e607378f6a55362400eefd34c2989684"
+      },
+      "cases_sha256": "ad6eb6d73e7c7e1e2c8e6625c28dba20c89878351e8fc50a7b423cfa0c728f83",
+      "seed_plan_sha256": "c9b194108c35370c441314433ed3f8ed2cdd4e3a914887c38eec5198522d971f"
+    },
+    {
+      "bank": "native/CoffeeSetupMug/baseline",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "9b08a9b93a664a593de0448ce7c84b33d718932c1c58d490b33ac435821225c6"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "a5fa09d5a016f64e39222455c4d9bc84ef52bb4fad9fd3df91cd27ca39c3147e"
+      },
+      "cases_sha256": "585d1e4b1e310ce43373d669aa70786da370f7e569d2d7c0b7dba2e804ecd47e",
+      "seed_plan_sha256": "03e98065450d008f7d7e67d7dbaea2d7278daf462f841dbdb19a5a549f27733e"
+    },
+    {
+      "bank": "native/CoffeeSetupMug/baseline",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "b00d0382a889a5491ea53d380ff4ab8a688636caf7c524782698318d37aabb68"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "309c2a646d4c412d238ce70f3d9a33ab3011ad524fac6bee461cccc384bb5800"
+      },
+      "cases_sha256": "d7f123ae3dbf90624d76e5a273564cb51543b78fe20f3330f78b176bd9a1cd23",
+      "seed_plan_sha256": "a0ecf006bd6a49cfe93035a80665ff697445247d6cb8d8b5f0bd1501e482df4c"
+    },
+    {
+      "bank": "native/CoffeeSetupMug/baseline",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "3d7df0f9befafece4c6f36763ee79c32ea0a00741e4d26bd5b05f88453996672"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "d3b561362561059bd67d8e23832e02854c2ede503605e67502c65f1a02a0647c"
+      },
+      "cases_sha256": "d50597a0349ea5a707aaa273a52fcc44faad288bd0829aceae1a0cbe05a36b18",
+      "seed_plan_sha256": "9f2c7281928437768f2e8f35cb7e923ec716ffd97c1d31150180dc591bf49318"
+    },
+    {
+      "bank": "native/CoffeeSetupMug/baseline",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "7e204570b85187644495346555e17b34d5bb7a7dd325e392968ece2789992a07"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "023a87f0c3253499125550598aa1041627d580edd90dc6769d272a1a80ae91c2"
+      },
+      "cases_sha256": "5b46d84dc6aca788e24fc444492705b8da35f6b591edf187f0741e530a75c608",
+      "seed_plan_sha256": "1ae0b3d89aed1a92ff1349f4ef672b6d8da1551d18584d01f0234cea7f210cc7"
+    },
+    {
+      "bank": "common/initial_DEV",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "da851cf00b1eabd54c989965ad6106bb6e8dfb0d24efbbc7674ab4486edeb8b8"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "cb8d630f9dae4bacfab0182cac0b0e71e50d039f6d575f31ee518351ebafb13d"
+      },
+      "cases_sha256": "a5d829368495c147839bb67ac547ca0e8eef0f329d2f08bf0c9ffbded0c0dff4",
+      "seed_plan_sha256": "367af7b64de4decfaf18a0c39cdc85aa7eeaa98e033ef2ef0e4294c596797a6a"
+    },
+    {
+      "bank": "common/initial_DEV",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "4c7841deb7aa45faeac1d271ce6319b2f3d4f930ab453ef693a7c6fb7e97e2db"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "c3d311439aa0047ec3ea64a1d4b50cbfdab791675cf098aa73751613806ff9a7"
+      },
+      "cases_sha256": "5d669239f26b8a8240b894d9ddb2144b67f90c9fcc6213071efdc4fb7250862c",
+      "seed_plan_sha256": "c40b56be4a486e72135bceaacd7134732815a3683910a441afc90e98d63790b0"
+    },
+    {
+      "bank": "common/initial_DEV",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "8a7af1b76b4fa86255051bce77c868d5e2a7f8e66623bed23d495fcdaeb1508c"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "421f8a38dc722aa63755183844df924af89e687a3cf1b51a73e756f743e97d74"
+      },
+      "cases_sha256": "2ca43eea3cbb38641f486e6c7382a115176a65002c3f1596285f46573b1393ad",
+      "seed_plan_sha256": "6b8180d513b0b29eee7925c1fb7df3bb09fa11428f19c40b5d4e4beeeab10c59"
+    },
+    {
+      "bank": "common/initial_DEV",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "4b97fb5a114e8552c48c4c68b4ead6b89489321004643e72983da14c29450327"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "41e94d2c81e8c0b2df1edb6f1f84295883fee033d3233e3cabe5e06913b11b53"
+      },
+      "cases_sha256": "afa53c47f60df46d2f33a4c696bbc7f56b43ccc82f19d3b882eed61fa23107a3",
+      "seed_plan_sha256": "d5130203c31bd23d26cbe5705cb8f97c566c99210dd611bad7c016700521a376"
+    },
+    {
+      "bank": "common/before_ID",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "bb8e4e444cf64ce8251c98732b941900b76e23433b2e711f0dd84d46c8787de8"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "54182a0ef11fabab11616f4df920c0194f0e1da4f1d8a2794dcc19b79c0d92a0"
+      },
+      "cases_sha256": "1b7ce84361ff3190affc0d0fe7c6fdc506092b8449d97e9cba6788854d8274ac",
+      "seed_plan_sha256": "7b4c961ba77628d4f0daa56c8b2abd382802b0b9cd38b0896c3967cab6825261"
+    },
+    {
+      "bank": "common/before_ID",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "2dc3fdc09e7c6cec0208b103fd47ad660c1e52fe8cf461149bf7ec0dab8e2543"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "f46e5f9fed4bc1df804f5b744732a615726de17e5a457cc6e314575ea86432e9"
+      },
+      "cases_sha256": "b53b719ec85dc1280a0c8771e08df1cb0010df415e32198be27dca81f7c71d80",
+      "seed_plan_sha256": "a8942754b034709e4acc7efca874c4978ff13de78259eac616f92a0d2ad1911d"
+    },
+    {
+      "bank": "common/before_ID",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "cb9e09cee96a4c455a71ec6a252f8c567ab74ebeb21da17ae7ac87617fc725c4"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "506442299a849b60692c43b2f571fa0e252c04b4116dca53fe42d8c940dc2ce0"
+      },
+      "cases_sha256": "d57c6c961c70814166f5711a94e872daccb8878f1d7fd73f012ca31c1874a907",
+      "seed_plan_sha256": "c5b27fa59b9af1005bbebebf6c245b6694fcafe197d03b72446ed4766192d252"
+    },
+    {
+      "bank": "common/before_ID",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "73e2826009fc8596d908630318b9ae40e82e192e1485c0399d8c3cb5f50e43ad"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_ID-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "dae6a0d0fa8c3854f11c4f283e7b55a2d219e13c8149bebce691c411e7f443d9"
+      },
+      "cases_sha256": "bd4b67019d6e48bb84ae3622b71bb5760c78ab0b7827f783afbcb08395469513",
+      "seed_plan_sha256": "17ce67ca4292a7a674966768a054f703355879ebd3836e7f5ca3b7be8cafca80"
+    },
+    {
+      "bank": "common/before_OOD",
+      "rank": 0,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-00/request.pt",
+        "sha256": "1b1ed949af6d54d7bf3ad56a0cc35c194daa9de2c4c5feeb1ca0aa22e8c5b382"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-00/result.pt",
+        "sha256": "b1581034abe4f4e2f42dbd7e3d343ee14df9bd34f8913ae6d48ac1918cd6c363"
+      },
+      "cases_sha256": "896c74805fca22b47f2b246e4c41ea087157289d3135385397ccc9c34375c083",
+      "seed_plan_sha256": "b1f663e5e2ae0e3277812c3f586881c12394ede62aa3cec2f9e2ce14f5b51160"
+    },
+    {
+      "bank": "common/before_OOD",
+      "rank": 1,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-01/request.pt",
+        "sha256": "47ee1acd66cd09b515b649f1f1dacb79498de7749a3d3c1d9058366eaff9496d"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-01/result.pt",
+        "sha256": "d53832ec848255b3f3e52afed213aeae499f2ea93ee928dc76b3f6c4365fea43"
+      },
+      "cases_sha256": "cefd4b10fd8f31cbc2228fcb56ab150ea8782cd31b10ea66256178ea14268f8f",
+      "seed_plan_sha256": "830c952eaa4a39b26fe1415ac5eb75a0d5d8cbd568c851b0f5c93b0df3bee051"
+    },
+    {
+      "bank": "common/before_OOD",
+      "rank": 2,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-02/request.pt",
+        "sha256": "131c71f289db6984752add3b07f97297962fa3478d9d0ffdc46931cf57d6cc61"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-02/result.pt",
+        "sha256": "9bfd23eec31382bb0332e1af5aa9f8cd268fc884fc747b638d5545a89dddd8d5"
+      },
+      "cases_sha256": "8981871ff166c0de3a4d8e293c5df7f0d42a08f5507c255dc3bc8b09c82cedc7",
+      "seed_plan_sha256": "ad27a81e33bda33c870fc889eff7d82df7c06bd680c92d65cd6237ef40d9969d"
+    },
+    {
+      "bank": "common/before_OOD",
+      "rank": 3,
+      "request": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-03/request.pt",
+        "sha256": "3f31a9f6e7e3e091d8937992fbe94d6f56fe04bbd103eee68f6c391cd147cfb0"
+      },
+      "result": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/before_OOD-000/videos/parallel-000000/rank-03/result.pt",
+        "sha256": "e9fe4a65d54c27250d8cb3519fe89e726747e3bd7f9ba7a5c2813bd6af51727d"
+      },
+      "cases_sha256": "35a95eac866292e10e936588e7c62ded8ffcdd184c42a418c22e861aafae0117",
+      "seed_plan_sha256": "e1ed991429e4059d98eb72b59b04d0183a253786c7ea2834c942cba7e9811247"
+    }
+  ],
+  "common_final": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/COMMON-FINAL.json",
+    "sha256": "9ff303703afd81983f2c0f6de0b8d26b668cbf46d844df31090c308feebc72d1"
+  },
+  "initial_policy": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial-policy.json",
+    "sha256": "ccfb0fdbacdc874990888ad8443d01f389211f4d6fd1d6689aaea754c6de2449"
+  },
+  "policy_tensor_sha256": "641bc65f296cc3f377f3e92a7ea86c6a8f1756017ae7d351a8be09bb633cee24",
+  "initial_DEV": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/evaluation.json",
+    "sha256": "a02c02923817c4195227a0188a94f350df97d8b588e9152a1c55e06d4173bd79"
+  },
+  "checkpoint_complete_recovery_verified": true,
+  "costs": {
+    "r4_gpu_seconds": 16179,
+    "prior_preparation_gpu_seconds": 3268,
+    "combined_preparation_gpu_seconds": 19447,
+    "combined_preparation_gpu_hours": 5.401944444444444,
+    "authorized_gpu_seconds": 26400,
+    "remaining_unspent_gpu_seconds": 6953
+  },
+  "limitations": [
+    "Frozen initializer preparation only; no learning comparison or SGD admission",
+    "Four-worker panels with four native lanes/GPU; no16-lane or8-lane colocation qualification",
+    "Independent full Flora weight rehash not repeated; qualified unchanged weight receipts and actual engine model revision retained"
+  ]
+}

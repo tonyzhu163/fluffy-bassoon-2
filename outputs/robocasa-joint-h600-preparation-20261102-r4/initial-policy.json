@@ -1,0 +1,58 @@
+{
+  "completed": true,
+  "policy_tensor_sha256": "641bc65f296cc3f377f3e92a7ea86c6a8f1756017ae7d351a8be09bb633cee24",
+  "ppo": {
+    "feature_dim": 2088,
+    "residual_dim": 6,
+    "width": 256,
+    "layers": 2,
+    "initial_std": 0.5,
+    "learning_rate": 0.0003,
+    "epochs": 10,
+    "minibatch_size": 32,
+    "clip": 0.2,
+    "gamma": 1.0,
+    "gae_lambda": 0.95,
+    "entropy_coef": 0.0,
+    "value_coef": 0.5,
+    "max_grad_norm": 1.0,
+    "target_kl": 0.02
+  },
+  "bound": {
+    "action_dim": 12,
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "scale": [
+      0.09354107417092798,
+      0.07909524089828711,
+      0.08161916436862626,
+      0.021125880719858898,
+      0.02593384036587672,
+      0.02445070474699303
+    ]
+  },
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json"
+  },
+  "motor_seed": 710100,
+  "residual_seed": 42,
+  "update_seed": 43,
+  "optimizer_states": 0,
+  "rollout_execution": {
+    "environments_per_gpu": 4,
+    "grouping": "continuous lane refill in original case order, no padding",
+    "noise": "serial per-case chunk seeds"
+  }
+}

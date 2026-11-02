@@ -1,7 +1,7 @@
 {
-  "status": "NOT_ADMITTED_BUDGET_APPROVED_TASK_DECISION_PENDING",
+  "status": "NOT_ADMITTED_PREPARATION_COMPLETE_SGD_RESOURCES_REQUIRED",
   "stage": null,
-  "source_commit": "c0bfd4a4eefda30ae0ce70287677cd5c8727d495",
+  "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
   "tasks": [
     "OpenDrawer",
     "PickPlaceCounterToCabinet",
@@ -11,13 +11,22 @@
   ],
   "maximum_iterations": 6,
   "human_action_authority": {
-    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-six-update-proposal-20261102-r1/HUMAN-ACTION-AUTHORITY.json",
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-six-update-proposal-20261102-r1/HUMAN-ACTION-AUTHORITY.json",
     "sha256": "da5a34e8ef58ba1d2351a9953899d5da1f52e4f62285abf9562c7be9f51145c0"
   },
   "storage_proof": null,
-  "common_final": null,
-  "initial_policy_fingerprint": null,
-  "initial_dev_evaluation": null,
+  "common_final": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/COMMON-FINAL.json",
+    "sha256": "9ff303703afd81983f2c0f6de0b8d26b668cbf46d844df31090c308feebc72d1"
+  },
+  "initial_policy_fingerprint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial-policy.json",
+    "sha256": "ccfb0fdbacdc874990888ad8443d01f389211f4d6fd1d6689aaea754c6de2449"
+  },
+  "initial_dev_evaluation": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/common/initial_DEV-000/evaluation.json",
+    "sha256": "a02c02923817c4195227a0188a94f350df97d8b588e9152a1c55e06d4173bd79"
+  },
   "policy_profile": {
     "task": "joint_five",
     "tasks": [
@@ -30,7 +39,7 @@
     "maximum_iterations": 6,
     "rlinf_execution_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
     "loading_qualification": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
       "sha256": "5d1723f6e66c65037b192174017225a29f6302bc03ebce2c921912e4513f3a57"
     },
     "core_qualification": [
@@ -49,6 +58,10 @@
       {
         "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
         "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-h600-preparation-20261102-r4/CPU-QUALIFICATION.json",
+        "sha256": "571d3e76dfdc2758ad1717aeff0e8566a4ba1bf52cd98e1ba42f0bbbaa7c179c"
       }
     ],
     "initializer": {
@@ -85,34 +98,49 @@
       "gae_lambda": 0.95,
       "entropy_coef": 0.0,
       "value_coef": 0.5,
-      "max_grad_norm": 1.0
+      "max_grad_norm": 1.0,
+      "target_kl": 0.02
     },
     "first_iteration_wall_ceiling_seconds": 7200,
     "dev_evaluation_wall_ceiling_seconds": 1800,
     "final_evaluation_wall_reserve_seconds": 7200,
     "baseline_validations": {
-      "OpenDrawer": null,
-      "PickPlaceCounterToCabinet": null,
-      "PickPlaceDrawerToCounter": null,
-      "TurnOffStove": null,
-      "CoffeeSetupMug": null
+      "OpenDrawer": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/OpenDrawer/baseline-validation.json",
+        "sha256": "9c3f3736ff0c6683ae3d6a159637a5e2987adaeebdaae6e3e380c3e925e448a7"
+      },
+      "PickPlaceCounterToCabinet": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceCounterToCabinet/baseline-validation.json",
+        "sha256": "b5604ee1e6cc30d078e13505e561b3b0e564272329c5a3a7837cfdad7dbc64b8"
+      },
+      "PickPlaceDrawerToCounter": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/PickPlaceDrawerToCounter/baseline-validation.json",
+        "sha256": "df825365542714827767ebcb8c108c15efe73620186f0c5160d1fcb14a93f282"
+      },
+      "TurnOffStove": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/TurnOffStove/baseline-validation.json",
+        "sha256": "855a16d7a7b47be11477fcec91c0982d6caca05658d54bc9ee1bc9d52ab4bde2"
+      },
+      "CoffeeSetupMug": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/calibration/cohorts/CoffeeSetupMug/baseline-validation.json",
+        "sha256": "a7484ed05082661eb04fedf120a5d532497b3e7ff401be1b8158b3349f8faacf"
+      }
     },
     "calibration_exceptions": {},
-    "source_commit": "c0bfd4a4eefda30ae0ce70287677cd5c8727d495",
+    "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
     "rollout_lanes_per_gpu": 4,
     "stopping": "fixed",
     "maximum_all_in_actions": null
   },
   "unresolved": [
-    "Fresh600-control calibration50/task and actual passing gates or exact measured human exceptions; old750-control refs deliberately cleared.",
-    "Fresh common-beforeDEV40/ID250/OOD250, complete common initializer checkpoint and initial-policy fingerprint.",
-    "Approval for the separately prepared8GPU55minute calibration/common-before resource budget, followed by finite actual GPU/storage/clock bindings.",
-    "Actual eight scorer warmups must independently pass the unchanged21973MiB guard before F rollout; ten-case qualification grants no SGD admission."
+    "Fresh finite SGD allocation/storage/source bindings and explicit ADMITTED arm-stage remain required; this preparation grant authorized zeroSGD.",
+    "Every actual future eight-GPU allocation must pass its own probes; all eight colocated F scorers must independently pass21973MiB free after real8video warmups.",
+    "Prospective before/after comparisons must preserve the qualified batching or qualify and record any execution migration."
   ],
   "human_task_authority": null,
   "source_qualification": {
-    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/SOURCE-QUALIFICATION.json",
-    "sha256": "8c5928b1c41e5193ce5e544d72e93132dcd1af81f81b875933e34a27b2cc3cc3"
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/SOURCE-QUALIFICATION.json",
+    "sha256": "e3f63626e71fe039f24d4b0a0f15130c7a704c0ae6ffb9be4df25fdb95ca5ee9"
   },
   "colocation_qualification": {
     "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/PARENT-REVIEW.json",
@@ -144,5 +172,16 @@
       "OpenStandMixerHead": 450
     },
     "clock_input": false
-  }
+  },
+  "preparation_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/TERMINAL-REVIEW.json",
+    "sha256": "8b08af5eedc73b3129d16c2075362468a7a78bef89e84526549b1a0579fdb06d"
+  },
+  "common_before_execution": {
+    "rollout_workers": 4,
+    "lanes_per_gpu": 4,
+    "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+    "paired_panel_identity": "These exact before panels and case/action plans; retain qualified batching or explicitly qualify a later execution migration"
+  },
+  "preparation_status": "FRESH600_GATES_AND_COMMON_BEFORE_AUDITED_COMPLETE_ZERO_SGD"
 }
