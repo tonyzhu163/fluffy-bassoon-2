@@ -6,6 +6,7 @@ import math
 import os
 from pathlib import Path
 import socket
+import signal
 import subprocess
 import sys
 import time
@@ -295,7 +296,16 @@ def main():
         streams.append(stream)
         children.append(subprocess.Popen([sys.executable, '-B', __file__, '--worker', str(rank),
             '--source-commit', args.source_commit, '--deadline', str(args.deadline)], env=env,
-            stdout=stream, stderr=subprocess.STDOUT))
+            stdout=stream, stderr=subprocess.STDOUT, start_new_session=True))
+    while not all(child.poll() is not None for child in children):
+        if any(child.poll() not in (None, 0) for child in children):
+            # These process groups were created by this exact job invocation.
+            # Preserve their last full recovery and any partial physical journal.
+            for child in children:
+                if child.poll() is None:
+                    os.killpg(child.pid, signal.SIGTERM)
+            break
+        time.sleep(5)
     codes = [child.wait() for child in children]
     for stream in streams:
         stream.close()

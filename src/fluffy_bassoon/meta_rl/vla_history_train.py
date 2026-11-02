@@ -259,10 +259,13 @@ def main(argv=None):
     if not args.until_converged and start_update >= args.updates:
         raise ValueError("Resume has already completed the requested updates")
     if args.until_converged:
-        (args.output_dir / "training-status.json").write_text(json.dumps(dict(
+        status_path = args.output_dir / "training-status.json"
+        temporary = status_path.with_suffix(".json.tmp")
+        temporary.write_text(json.dumps(dict(
             converged=plateau.get("converged", False), update=update, best_validation_nll=best,
             plateau=plateau, elapsed_seconds=elapsed,
             stop_reason="validation_plateau" if plateau.get("converged") else "operational_checkpoint"), indent=2) + "\n")
+        temporary.replace(status_path)
 
 
 if __name__ == "__main__":
