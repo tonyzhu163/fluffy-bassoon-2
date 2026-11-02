@@ -1,0 +1,19 @@
+{
+  "completed": true,
+  "qualification": "pinned-core numerical checks plus exact ID schedule comparison",
+  "runtime_core_commit": "68f2c5aa33218709453a7821f6c6223ac3803035",
+  "driver_test_commit": "8bc837d0",
+  "cpu_tests": 29,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 3.11,
+  "cuda_hidden": true,
+  "static_after_support_bitwise_equals_fresh": true,
+  "ID_case_and_noise_stream_exactly_matches_original": true,
+  "readout_episodes_added": 668,
+  "notes": "Initial invocation mixed newer upstream native fixtures with the intentionally pinned68f2c5aa runtime and had5 API/monitor-field mismatches. Matching pinned runtime fixtures plus the new static-support invariant then passed29/29. Both raw invocations remain in the canonical output root. Latest metadata admission checks and scheduler visibility fallback are statically checked; rerun --check-plan in the final deployment before binding candidates.",
+  "local_files_sha256": {
+    "src/fluffy_bassoon/meta_rl/residual_history.py": "ce87dd6bd4e9547614eee028c19e5e95bd979462d88ec5ed719bf2a5a9b2c2f5",
+    "tests/test_residual_history.py": "1c2bb2c5f558851a19b3225d1bdb2027a86505323f4f4a968568a03aee15ab04"
+  }
+}

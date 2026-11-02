@@ -88,6 +88,9 @@ def bind():
         contract=payload['manifest']['contract'];objective,mode=name.split('_')
         assert contract['source_commit']==CORE_PIN and contract['objective']==objective and contract['mode']==mode
         assert contract['train_sha256']==assembly['datasets'][objective+'_train']['sha256']
+        assert contract['validation_sha256']==assembly['datasets'][objective+'_validation']['sha256']
+        assert contract['schedule']['until_converged'] and status['stop_reason']=='validation_plateau'
+        assert payload['manifest']['validation_nll']==status['best_validation_nll']
         selected[name]=dict(candidate=ref(folder/'candidate.pt'),status=ref(folder/'training-status.json'),
             selected_update=payload['manifest']['update'],validation_nll=payload['manifest']['validation_nll'])
     OUT.mkdir(parents=True,exist_ok=True)
@@ -267,7 +270,8 @@ def summarize(binding):
     result=dict(completed=True,primary_endpoint='one-shot full students vs frozen PPO/static query controls',
         binding=ref(OUT/'binding.json'),ID=tables['ID'],OOD=tables['OOD'],
         OOD_meaning='CloseFridge held out from controller training, not necessarily foundation pretraining',
-        single_source_task=True,single_seed=True,reward='simulator-reward development pilot, not Flora result')
+        single_source_task=True,single_seed=True,source_streams_span_different_scenes=True,
+        reward='simulator-reward development pilot, not Flora result')
     write(OUT/'RESULT.json',result)
     lines=['# One-shot ID/OOD comparison','','Full students use one complete support then a separate query. PPO/static are context-blind query controls.','',
         '| Policy | ID OpenDrawer /50 | OOD CloseFridge /50 |','| --- | --- | --- |']
