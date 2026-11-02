@@ -1,0 +1,29 @@
+{
+  "status": "HUMAN_ACTION_BUDGET_APPROVED_TASK_GATE_SEPARATE",
+  "allow_joint_stage_actions": true,
+  "maximum_stage_actions": 2500000,
+  "maximum_iterations_per_arm": 6,
+  "evaluation_episodes_per_ID_OOD_task": 50,
+  "policy_layout": "Onejointpolicy perrewardarm",
+  "qualification_actions_already_spent": 180000,
+  "proposed_total_all_in_bound": 2481020,
+  "remaining_proposed_bound": 2301020,
+  "unrequested_margin": 18980,
+  "own_arm_action_bound": 925300,
+  "shared_common_total_bound": 630420,
+  "remaining_common_bound": 450420,
+  "old_trial_spend_preserved": true,
+  "direct_human_instruction": "Approve the six-update, 2.5M-action stage (Recommended)",
+  "reply_source": {
+    "questionItemId": "[\"request_user_input_async\",\"call_5b102893b6e6495da60ca887684d70d8\",0]",
+    "question": "For the five-task comparison, approve a 2.5M-action stage covering six complete PPO updates per arm and 50 ID/OOD episodes per task? This includes the180k qualification actions alreadyspent; the remainingbound is2,301,020 actions. Oldtrial costs staycharged. Thisbudget decision isseparate fromthepending Counter-to-Cabinet74% headroomexception."
+  },
+  "recorded_UTC": "2026-11-02 01:39:53 UTC",
+  "recorded_Shanghai": "2026-11-02 09:39:53",
+  "approved_proposal": {
+    "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/PROPOSAL.json",
+    "sha256": "48bd92e659626f1ace7bd8f57aab1b2c46588f732274bc32c8ae9bdf846327d1"
+  },
+  "native_headroom_exception_authorized": false,
+  "scope": "Budgetapproval only. No nativegate rewrite/taskreplacement, unlimitedscaleup, oldbudgettransfer or actualschedulerallocation is authorized by this record. Actual task decision, finite source/resource/storage profile and original per-job/24aggregate GPUlimits still apply."
+}
