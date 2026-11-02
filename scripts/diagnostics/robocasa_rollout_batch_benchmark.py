@@ -80,7 +80,7 @@ def run(profile):
         batch = int(profile['batch_size']); rank = int(profile['rank'])
         count = len(profile['cases'])
         horizons = {TASKS[case['task']][0] for case in profile['cases']}
-        if batch not in (1, 2, 4, 8, 16, 32) or count < batch or count % batch or len(horizons) != 1:
+        if batch not in (1, 2, 4, 8, 16, 32, 48) or count < batch or count % batch or len(horizons) != 1:
             raise ValueError('Require complete equal-horizon cohorts divisible by the lane count')
         horizon = horizons.pop()
         chunks_per_episode = horizon // 50

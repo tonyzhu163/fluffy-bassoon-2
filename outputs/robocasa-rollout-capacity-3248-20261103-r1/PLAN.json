@@ -1,0 +1,54 @@
+{
+  "authority": "Human requested48environments, increased CPU/RAM allocation and50PPOiterations per independent arm.",
+  "lane_counts": [
+    32,
+    48
+  ],
+  "resources": {
+    "gpus": 1,
+    "cpus": 22,
+    "ram_gib": 208,
+    "shm_gib": 48,
+    "wall_seconds": 900
+  },
+  "prior_campaign_GPU_seconds_upper": 900,
+  "campaign_GPU_seconds_ceiling": 1800,
+  "cohort": "Shared first32fresh prospective five-task cases, plus16additional cases for the48lane cohort;600controls each; unequal cohort sizes disclosed, no claim of a controlled speedup ratio.",
+  "maximum_policy_controls": 48000,
+  "optimizer_updates": 0,
+  "automatic_retry": false,
+  "node_fit": {
+    "gpus": 8,
+    "cpus": 176,
+    "ram_gib": 1664,
+    "physical_node_cpus": 180,
+    "physical_node_ram_gib": 1800
+  },
+  "conditions": "One shared native model, real resets and three-view video, same22CPU/208GiB budget in both settings; no Flora. New velocity/KV production histories need their own qualification.",
+  "training_target": {
+    "arms": [
+      "velocity",
+      "kv_all_layers"
+    ],
+    "independent_learners": true,
+    "iterations_per_arm": 50,
+    "proposed_episodes_per_update": 384,
+    "environments_per_gpu": 48,
+    "rollout_gpus_per_arm": 8,
+    "policy_controls_per_arm": 11520000,
+    "checkpoint_and_DEV_updates": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ]
+  },
+  "training_status": "NOT_LAUNCHED: capacity and a concrete resource estimate pending;50iterations supersedes60."
+}
