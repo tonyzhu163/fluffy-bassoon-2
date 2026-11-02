@@ -114,3 +114,12 @@ zero-shot episodes have zero nonterminal rewards and reset before each case.
                 or not np.isfinite(reward)):
             raise ValueError("Install a finite terminal label only after a completed episode")
         self.controller.previous_reward = float(reward)
+
+
+def evaluation_actor(policy, intervention, *, max_context=None, generator=None):
+    """Same frozen weights under the common evaluation harness's controls."""
+    if intervention not in ("full", "memory_reset", "reward_blind"):
+        raise ValueError("Unknown evaluation intervention")
+    return HistoryResidualActor(policy, mode="episode" if intervention == "memory_reset" else "full",
+                                reset_each_episode=False, reward_blind=intervention == "reward_blind",
+                                max_context=max_context, generator=generator)

@@ -10,6 +10,7 @@ from fluffy_bassoon.meta_rl.flora_success import FloraSuccessRule, first_success
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceLearner, InterfaceSpec, collect
 from fluffy_bassoon.meta_rl.paired_evaluation import EvaluationPlan, evaluate, paired_readout
 from fluffy_bassoon.meta_rl.residual_history import HistoryResidualActor
+from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy
 
 
@@ -140,3 +141,55 @@ def test_paired_harness_shares_cases_streams_and_clusters_draws():
     assert report["exact_case_sign_randomization_p"] == .5
     with pytest.raises(ValueError, match="every paired"):
         paired_readout(rows[:-2], "full", "reward_blind", attempt=2)
+
+
+def test_native_adapter_extracts_prefix_before_sampling_and_reuses_it_without_rng():
+    class Model(torch.nn.Module):
+        device = "cpu"
+        def __init__(self):
+            super().__init__(); self.weight = torch.nn.Parameter(torch.ones(1))
+            self.prefixes = self.draws = 0
+        def build_prefix_cache(self, *args):
+            self.prefixes += 1
+            return torch.ones(1, 2, 4), torch.ones(1, 2, dtype=torch.bool), ((torch.ones(1,1,2,4), torch.ones(1,1,2,4)),)
+        def velocity_from_suffix(self, suffix):
+            return suffix
+        def predict_action_batch(self, observation, *, mode, noise):
+            assert mode == "eval" and noise is not None
+            self.build_prefix_cache(observation)
+            self.draws += 1
+            return self.velocity_from_suffix(noise)[..., :12], None
+    model = Model()
+    stats = dict(state=dict(mean=np.zeros(16),std=np.ones(16)),
+                 actions=dict(mean=np.zeros(12),std=np.ones(12)))
+    adapter = FrozenRoboCasaInterface(SimpleNamespace(model=model,stats=stats))
+    before = torch.get_rng_state().clone()
+    features, prepared = adapter.prepare(dict(states=np.ones((1,25),np.float32)))
+    assert features.shape == (20,) and model.prefixes == 1 and model.draws == 0
+    with pytest.raises(RuntimeError, match="Execute"):
+        adapter.prepare(dict(states=np.ones((1,25),np.float32)))
+    spec = InterfaceSpec(kind="noise",steering_dim=0)
+    noise, steering = spec.decode(np.ones(32,np.float32))
+    chunk = adapter.execute(prepared,noise=noise,steering=steering,spec=spec)
+    np.testing.assert_array_equal(chunk,noise[0,:,:12])
+    assert model.prefixes == model.draws == 1
+    assert not model.weight.requires_grad
+    torch.testing.assert_close(before,torch.get_rng_state(),rtol=0,atol=0)
+
+
+def test_training_windows_reach_128_actual_tokens():
+    from fluffy_bassoon.meta_rl.vla_history import sample_batch
+    from fluffy_bassoon.meta_rl.vla_history_train import supervised_update
+    policy = HistoryNoisePolicy(HistoryConfig(3,2,width=8,layers=1,heads=2,context_length=128))
+    length = 128
+    trial = dict(observations=np.zeros((length,3),np.float32),
+                 executed_noise=np.zeros((length,2),np.float32), target_noise=np.zeros((length,2),np.float32),
+                 rewards=np.zeros(length,np.float32),dones=np.array([False]*127+[True]),
+                 episode_starts=np.array([True]+[False]*127),teacher_steps=np.arange(length,dtype=np.int64))
+    class LongestWindow:
+        def integers(self, low, high=None, size=None):
+            return np.zeros(size,dtype=np.int64) if size is not None else high - 1
+    batch = sample_batch([trial],policy,LongestWindow(),batch_size=1,max_context=128)
+    assert batch[0].shape[0] == 128 and batch[2].sum() == 128
+    result = supervised_update(policy,torch.optim.AdamW(policy.parameters(),lr=1e-3),batch,mode="full")
+    assert np.isfinite(result["nll"]) and result["valid_positions"] == 128

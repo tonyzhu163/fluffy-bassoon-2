@@ -255,14 +255,16 @@ allocations released successfully (DPT18:43:37, AD18:46:01 Shanghai).
 
 AD's ID attempt5-versus1 comparison has16 paired wins,2 losses and32 ties
 (unadjusted exact p=.0013123); its OOD comparison has9/16 wins/losses
-(p=.2295). DPT's endpoint change is+1 ID and0 OOD. This establishes an
-ID-specific attempt trend for AD, with no general adaptation benefit shown.
+(p=.2295). DPT's endpoint change is+1 ID and0 OOD. This is an exploratory
+ID attempt association for AD, not an established learning or memory effect.
 The motor stream changes with attempt number (matched across models), so a
 same-weight memory-reset comparison on the same streams is still needed to
 isolate a causal memory contribution. The separately scored PPO/static p0
 controls cannot substitute for that repeated-attempt control. These curves
 measure success on each actual attempt, not cumulative ever-success;75 ID/90
 OOD tokens exceed the64-token training window while fitting128-token capacity.
+That mismatch is a possible contributor to the late OOD drop, not a tested
+explanation; new fits use a128-token training window.
 The single-source-task/fit-seed and renderer qualifications above still apply.
 
 The curves reuse546 complete practices and collect454 new episodes, charging

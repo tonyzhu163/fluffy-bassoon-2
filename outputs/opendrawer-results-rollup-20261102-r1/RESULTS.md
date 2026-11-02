@@ -1,6 +1,6 @@
 # OpenDrawer development results — November 2, 2026
 
-The completed evidence supports an ID-specific AD attempt trend. General in-context adaptation, reliable OOD gains, and an overall student advantage over PPO remain unestablished. The next comparison should keep PPO as an anchor and isolate carried memory with the same weights, cases and attempt-specific motor draws. The already-running interface screen and Flow SDE PPO should finish before another scale-up decision.
+The completed evidence shows an exploratory association between AD's attempt number and ID success. It does not establish a learning or memory effect: motor noise changes across attempts, and attempts4–5 can exceed the64-token training window. General in-context adaptation, reliable OOD gains, and an overall student advantage over PPO remain unestablished. The next comparison should keep PPO as an anchor and isolate carried memory with the same weights, cases and attempt-specific motor draws. The interface screen and Flow SDE PPO need their paired endpoints before another scale-up decision.
 
 ## 1. PPO and learned reward
 

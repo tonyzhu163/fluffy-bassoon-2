@@ -70,9 +70,9 @@ def evaluate(plan, controller_factory, rollout, *, modes=CONTROLS, episode_callb
     """
     if not modes or len(set(modes)) != len(modes) or any(m not in CONTROLS for m in modes):
         raise ValueError("Unknown or repeated intervention")
-    rows = []
+    rows, canonical = [], {}
     for item in plan.schedule():
-        pairing = None
+        pairing = canonical.get(item["case_id"])
         for mode in modes:
             actor = controller_factory(mode)
             actor.begin_trial()
@@ -85,6 +85,7 @@ def evaluate(plan, controller_factory, rollout, *, modes=CONTROLS, episode_callb
                         or type(result.get("simulator_final_success")) is not bool):
                     raise ValueError("Incomplete, unpaired or success-truncated evaluation episode")
                 pairing = result["pairing_sha256"] if pairing is None else pairing
+                canonical[item["case_id"]] = pairing
                 if result["pairing_sha256"] != pairing:
                     raise ValueError("Physical canonical case changed between draws/attempts/controls")
                 first = result.get("first_success_step")

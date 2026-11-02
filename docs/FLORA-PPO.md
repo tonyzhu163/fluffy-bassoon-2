@@ -83,15 +83,24 @@ Earlier LIBERO and RoboTwin runs failed because source learners never
 improved ([FINDINGS.md](FINDINGS.md#lessons-carried-forward)). Pass each gate
 before the next:
 
-1. **Flora agreement and headroom, per task.** Score native rollouts with
+0. **Gate 0: Flora agreement and headroom, per task.** Score native rollouts with
    Flora and require AUROC ≥ 0.7 against simulator success. Keep tasks whose
    native success is neither 0 nor ceiling, and screen untrained tied noise
    as well as native sampling.
-2. **Positive control.** Ordinary PPO or DSRL must improve true success with
+1. **Gate 1: reward positive control.** Ordinary PPO or DSRL must improve true success with
    simulator reward and with Flora reward. If only the simulator arm
-   improves, the reward is the problem, not the method.
-3. **Collect histories** with Flora reward only, from learners that improve.
-4. **Steering interface and meta-learner.** The meta-learner is a standard
+   improves, the reward is the problem, not the method. The RLinf action-expert
+   scale-up covers only this gate's simulator-reward half. Its result cannot
+   establish improvement by a frozen-motor controller.
+2. **Gate 2: matched frozen-motor learner.** Qualify ordinary interface PPO
+   on the interface selected by gate 0, with sampling noise inside the policy,
+   first-success returns and chunk discounting. Use the same deterministic
+   steering map for the baseline, history source and meta-learner.
+3. **Gate 3: collect histories** with Flora reward only, from learners that
+   improve. Plan source histories across OpenDrawer, DrawerToCounter,
+   CoffeeSetupMug and TurnOffStove; hold out whole source streams for validation
+   and use separate held-out-task folds to test task generalization.
+4. **Gate 4: steering interface and meta-learner.** The meta-learner is a standard
    plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
    ([PAPER.md](PAPER.md)). The steering interface is a bounded action residual
    (alternatives in [PAPER.md](PAPER.md)); the ordinary RL
@@ -101,6 +110,21 @@ before the next:
    ordinary Flora-reward learner at equal interactions, with reset and
    reward-blind controls. Full-weight PPO is a reward check, not that
    baseline.
+
+Prospective comparisons share the case/noise/attempt schedule in
+`paired_evaluation.py`: 200 canonical cases per task by default, paired motor
+streams for every model and intervention, and both first-success and cutoff
+success. Include same-weight memory reset and reward-blind controls; cluster
+repeated draws by case. Historical 50-case development panels remain separate.
+New decoder fits use a 128-token training window and at least 128-token model
+capacity; see [fit profile](../configs/native_ppo/gate4_history.json). Capacity
+alone does not show that long contexts were trained.
+
+Flora first success needs a separately qualified causal prefix/chunk rule:
+report confirmation precision, recall and signed timing against native first
+success, including premature detections and never-success episodes. A terminal
+score cannot supply those timestamps. A hold over chunk scores is distinct
+from a hold over consecutive frames. [Readiness work](../outputs/gate-readiness-20261102-r1/PLAN.md).
 
 ## RoboCasa residual PPO rollout execution
 

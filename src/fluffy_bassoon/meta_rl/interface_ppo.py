@@ -74,6 +74,25 @@ def execute_control(motor, prepared, control, spec):
     return motor.execute(prepared, noise=noise, steering=steering, spec=spec)
 
 
+class FrozenInterfaceController:
+    """History deployment through the exact PPO feature/noise/steering ports."""
+    def __init__(self, controller, spec):
+        if controller.policy.config.noise_dim != spec.control_dim:
+            raise ValueError("History action must include the same motor noise and steering")
+        self.controller, self.spec = controller, spec
+
+    def reset_trial(self):
+        self.controller.reset_trial()
+
+    def act(self, motor, observation, *, deterministic=True):
+        features, prepared = motor.prepare(observation)
+        control = self.controller.act(features, deterministic=deterministic)
+        return execute_control(motor, prepared, control, self.spec), control
+
+    def observe(self, control, reward, done):
+        self.controller.observe(control, reward, done)
+
+
 def collect(policy, motor, environment, spec, reward, *, episodes, generator, deterministic=False):
     """Collect first-success transitions with a truth-free learned-reward port.
 
@@ -126,7 +145,7 @@ class InterfaceLearner:
     def __init__(self, feature_dim, spec, *, seed=0, device="cpu", **overrides):
         self.spec = spec
         with torch.random.fork_rng(devices=[]):
-            torch.manual_seed(seed)
+            torch.random.default_generator.manual_seed(seed)
             self.policy = ResidualActorCritic(policy_config(feature_dim, spec, **overrides)).to(device)
         with torch.no_grad():
             # Preserve the native iid noise law on the native-noise interfaces.

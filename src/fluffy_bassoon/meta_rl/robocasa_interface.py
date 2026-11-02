@@ -81,8 +81,10 @@ class FrozenRoboCasaInterface:
             native_prefix = (hidden, mask, (*cache[:-1], (key, value + spec.fraction * rms.to(value.dtype) * delta)))
         self.model.build_prefix_cache = lambda *args, **kwargs: native_prefix
         if spec.kind == "velocity":
-            self.model.velocity_from_suffix = lambda suffix: (
-                velocity(suffix) + spec.fraction * torch.tanh(code)[:, None, :].to(suffix.dtype))
+            def altered_velocity(suffix):
+                value = velocity(suffix)
+                return value + spec.fraction * torch.tanh(code)[:, None, :].to(value.dtype)
+            self.model.velocity_from_suffix = altered_velocity
         try:
             if spec.kind == "direct":
                 chunks = np.asarray(steering, dtype=np.float32).reshape(1, 50, 12)
