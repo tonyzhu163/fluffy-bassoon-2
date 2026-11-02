@@ -1,0 +1,3217 @@
+{
+  "completed": true,
+  "profiles": {
+    "robocasa-opendrawer-flora-first-20261102-r1": {
+      "keys": [
+        "source_commit",
+        "rlinf_execution_commit",
+        "task",
+        "scheduler_seconds",
+        "closure_seconds",
+        "deadline_unix",
+        "allocated_start_unix",
+        "loading_qualification",
+        "core_qualification",
+        "initializer",
+        "motor_seed",
+        "residual_seed",
+        "update_seed",
+        "evaluation_motor_seeds",
+        "ppo",
+        "first_iteration_wall_ceiling_seconds",
+        "dev_evaluation_wall_ceiling_seconds",
+        "final_evaluation_wall_reserve_seconds",
+        "mode",
+        "arm",
+        "output",
+        "monitoring_root",
+        "accounting_root",
+        "attempt",
+        "maximum_all_in_actions",
+        "training_cases",
+        "baseline_validation",
+        "independent_stopping",
+        "initial_dev_evaluation",
+        "maximum_iterations",
+        "calibration_baseline_count",
+        "heldout_evaluation_count",
+        "episode_id_namespace",
+        "rollout_devices",
+        "parallel_controller_cpu_offload",
+        "actual_gpu_probe",
+        "distributed_rollout_root",
+        "gpu_allocation_starts_unix",
+        "annotation_startup_wall_ceiling_seconds",
+        "annotation_error_paths",
+        "annotation_engines"
+      ],
+      "science": {
+        "source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+        "rlinf_execution_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "monitoring_root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/monitoring"
+      }
+    }
+  },
+  "episodes": [
+    {
+      "id": "flora-single-case-000112-rank-06-episode-000001",
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/pending-002.pt",
+        "sha256": "9a763cee4756bc7c8398e585207b729766e81e0fbd5ddedc5da5247afaa46730"
+      },
+      "checkpoint_keys": [
+        "format",
+        "config",
+        "contract",
+        "policy",
+        "optimizer",
+        "iteration",
+        "stage",
+        "final",
+        "rng",
+        "motor",
+        "environment",
+        "generators",
+        "pending_records",
+        "pending_episodes"
+      ],
+      "episode": {
+        "id": "flora-single-case-000112-rank-06-episode-000001",
+        "task": "Open the left drawer.",
+        "camera_order": [
+          "robot0_agentview_left",
+          "robot0_eye_in_hand",
+          "robot0_agentview_right"
+        ],
+        "horizon": 750,
+        "completed": true,
+        "success_termination_disabled": true,
+        "raw_rgb_only": true,
+        "info_on_video": false,
+        "extra_info_on_video": [],
+        "rank": 6,
+        "round": 1,
+        "local_env": 0,
+        "videos": [
+          {
+            "camera": "robot0_agentview_left",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_agentview_left.mp4",
+            "sha256": "e8d24123ef93c853b9053341a0bc8db95fcf3912332187b1dac56e5f99f1e485"
+          },
+          {
+            "camera": "robot0_eye_in_hand",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_eye_in_hand.mp4",
+            "sha256": "b176f4e08093305553490238c6ebaebc6a67ee871e99e12d72c1cdaed332dfeb"
+          },
+          {
+            "camera": "robot0_agentview_right",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-06/videos/flora-single-case-000112-rank-06-episode-000001-robot0_agentview_right.mp4",
+            "sha256": "02b0df0ba6da689060d3e448374fd7456b11bc759f22bd4429c37864a3553a0c"
+          }
+        ],
+        "frame_clock": {
+          "frame_count": 751,
+          "native_fps": 20.0,
+          "encoded_fps": 20.0,
+          "resampled": false,
+          "physical_steps": 750,
+          "initial_frame_included": true,
+          "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+        }
+      },
+      "monitor": {
+        "id": "flora-single-case-000112-rank-06-episode-000001",
+        "case": {
+          "bank": "train",
+          "task": "OpenDrawer",
+          "split": "target",
+          "native_seed": 210213,
+          "reset_ordinal": 0,
+          "slot": 1,
+          "counted": true,
+          "layout_source": "native_target_constructor_seed_first_reset"
+        },
+        "simulator_final_success": false,
+        "native_counts": {
+          "controls": 750,
+          "reset_controls": 0,
+          "physics_ticks": 19000,
+          "step1_calls": 19000,
+          "phase": "policy",
+          "control_time": 37.50000000000001,
+          "clock": {
+            "control_freq": 20.0,
+            "control_timestep": 0.05,
+            "model_timestep": 0.002,
+            "lite_physics": true
+          }
+        },
+        "native_ep_meta": {
+          "layout_id": 1,
+          "style_id": 1,
+          "object_cfgs": [
+            {
+              "name": "drawer_obj",
+              "obj_groups": [
+                "tool",
+                "utensil"
+              ],
+              "graspable": true,
+              "max_size": [
+                null,
+                null,
+                0.1
+              ],
+              "placement": {
+                "fixture": "stack_1_main_group_4",
+                "size": [
+                  0.3,
+                  0.3
+                ],
+                "pos": [
+                  null,
+                  -0.75
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "wooden_spoon",
+                  "utensil"
+                ],
+                "groups": [
+                  "tool",
+                  "utensil"
+                ],
+                "cat": "wooden_spoon",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/lightwheel/wooden_spoon/WoodenSpoon009/model.xml"
+              },
+              "reset_region": {
+                "offset": [
+                  0.0,
+                  -0.015000000000000013,
+                  -0.044
+                ],
+                "size": [
+                  0.378,
+                  0.51
+                ],
+                "height": 0.118,
+                "name": "int"
+              }
+            },
+            {
+              "name": "distr_counter_1",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_main_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_1_main_group_4",
+                  "min_size": [
+                    0.127373022,
+                    0.1060532025,
+                    0.126034587
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "lettuce",
+                  "vegetable",
+                  "food",
+                  "in_container"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "lettuce",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/lightwheel/lettuce/Lettuce008/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.5,
+                  0.65
+                ],
+                "offset": [
+                  -1.0,
+                  -3.469446951953614e-17,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            },
+            {
+              "name": "distr_counter_2",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_main_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_1_main_group_4",
+                  "min_size": [
+                    0.046066760999999984,
+                    0.040821181999999984,
+                    0.10107485099999997
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "boxed_drink",
+                  "drink"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "boxed_drink",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/boxed_drink/boxed_drink_4/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.5,
+                  0.65
+                ],
+                "offset": [
+                  -1.0,
+                  -3.469446951953614e-17,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            },
+            {
+              "name": "distr_counter_3",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_main_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_1_main_group_4",
+                  "min_size": [
+                    0.042583401629999997,
+                    0.17180189334,
+                    0.040235673555
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "corn",
+                  "vegetable",
+                  "food",
+                  "in_container",
+                  "oven_ready"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "corn",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/corn/corn_3/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.5,
+                  0.65
+                ],
+                "offset": [
+                  -1.0,
+                  -3.469446951953614e-17,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            }
+          ],
+          "fixtures": {
+            "wall_room": {
+              "cls": "Wall"
+            },
+            "wall_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_left_room": {
+              "cls": "Wall"
+            },
+            "wall_left_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_right_room": {
+              "cls": "Wall"
+            },
+            "wall_right_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_front_room": {
+              "cls": "Wall"
+            },
+            "wall_front_backing_room": {
+              "cls": "Wall"
+            },
+            "floor_room": {
+              "cls": "Floor"
+            },
+            "floor_backing_room": {
+              "cls": "Floor"
+            },
+            "outlet_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_2_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_2_room": {
+              "cls": "WallAccessory"
+            },
+            "sink_main_group": {
+              "cls": "Sink"
+            },
+            "counter_main_main_group": {
+              "cls": "Counter"
+            },
+            "stove_main_group": {
+              "cls": "Stove"
+            },
+            "counter_right_main_group": {
+              "cls": "Counter"
+            },
+            "fridge_main_group": {
+              "cls": "FridgeBottomFreezer"
+            },
+            "cab_1_main_group": {
+              "cls": "SingleCabinet"
+            },
+            "cab_2_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_main_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "microwave_main_group": {
+              "cls": "Microwave"
+            },
+            "cab_micro_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_3_main_group": {
+              "cls": "OpenCabinet"
+            },
+            "cab_4_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "stack_1_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_main_group_1": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_4": {
+              "cls": "Drawer"
+            },
+            "stack_2_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_2_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_2_main_group_2": {
+              "cls": "PanelCabinet"
+            },
+            "dishwasher_main_group": {
+              "cls": "Dishwasher"
+            },
+            "stack_3_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_3_main_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "stack_4_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_4_main_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "stack_4_main_group_2": {
+              "cls": "Drawer"
+            },
+            "toaster_main_group": {
+              "cls": "Toaster"
+            },
+            "knife_block_main_group": {
+              "cls": "Accessory"
+            },
+            "paper_towel_main_group": {
+              "cls": "Accessory"
+            },
+            "coffee_machine_main_group": {
+              "cls": "CoffeeMachine"
+            }
+          },
+          "gen_textures": {},
+          "lang": "Open the left drawer.",
+          "fixture_refs": {
+            "drawer": "stack_1_main_group_4"
+          },
+          "cam_configs": {
+            "robot0_agentview_center": {
+              "pos": [
+                -0.6,
+                0.0,
+                1.15
+              ],
+              "quat": [
+                0.636945903301239,
+                0.3325185477733612,
+                -0.3199238181114197,
+                -0.6175596117973328
+              ],
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_left": {
+              "pos": [
+                -0.5,
+                0.35,
+                1.05
+              ],
+              "quat": [
+                0.55623853,
+                0.29935253,
+                -0.37678665,
+                -0.6775092
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_right": {
+              "pos": [
+                -0.5,
+                -0.35,
+                1.05
+              ],
+              "quat": [
+                0.6775091886520386,
+                0.3767866790294647,
+                -0.2993525564670563,
+                -0.55623859167099
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_frontview": {
+              "pos": [
+                -0.5,
+                0,
+                0.95
+              ],
+              "quat": [
+                0.6088936924934387,
+                0.3814677894115448,
+                -0.3673907518386841,
+                -0.5905545353889465
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_eye_in_hand": {
+              "pos": [
+                0.05,
+                0,
+                0
+              ],
+              "quat": [
+                0,
+                0.707107,
+                0.707107,
+                0
+              ],
+              "parent_body": "robot0_right_hand"
+            }
+          },
+          "init_robot_base_pos": [
+            0.9363305783753083,
+            -0.8819126558235469,
+            0.0
+          ],
+          "init_robot_base_ori": [
+            0.0,
+            0.0,
+            1.5707963267948966
+          ]
+        },
+        "video_refs_sha256": "08a8864ec94cf137535ad31eb12d2b9992d30d111696640821a22643d2bd97e4"
+      },
+      "record_count": 15,
+      "record_keys": [
+        "features",
+        "noise_seed",
+        "base_chunk",
+        "executed_chunk",
+        "control",
+        "log_prob",
+        "value",
+        "reward",
+        "done",
+        "episode_start",
+        "zero_residual_verified"
+      ],
+      "record_shapes": {
+        "features": [
+          2088
+        ],
+        "noise_seed": [],
+        "base_chunk": [
+          50,
+          12
+        ],
+        "executed_chunk": [
+          50,
+          12
+        ],
+        "control": [
+          6
+        ],
+        "log_prob": [],
+        "value": [],
+        "reward": [],
+        "done": [],
+        "episode_start": [],
+        "zero_residual_verified": []
+      },
+      "has_executed_chunks": true,
+      "executed_shapes": [
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "flora-single-case-000064-rank-00-episode-000001",
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/pending-002.pt",
+        "sha256": "9a763cee4756bc7c8398e585207b729766e81e0fbd5ddedc5da5247afaa46730"
+      },
+      "checkpoint_keys": [
+        "format",
+        "config",
+        "contract",
+        "policy",
+        "optimizer",
+        "iteration",
+        "stage",
+        "final",
+        "rng",
+        "motor",
+        "environment",
+        "generators",
+        "pending_records",
+        "pending_episodes"
+      ],
+      "episode": {
+        "id": "flora-single-case-000064-rank-00-episode-000001",
+        "task": "Open the left drawer.",
+        "camera_order": [
+          "robot0_agentview_left",
+          "robot0_eye_in_hand",
+          "robot0_agentview_right"
+        ],
+        "horizon": 750,
+        "completed": true,
+        "success_termination_disabled": true,
+        "raw_rgb_only": true,
+        "info_on_video": false,
+        "extra_info_on_video": [],
+        "rank": 0,
+        "round": 1,
+        "local_env": 0,
+        "videos": [
+          {
+            "camera": "robot0_agentview_left",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_agentview_left.mp4",
+            "sha256": "846147bb91d6d941affdf051b54830114a98ff57086d05b10a9b239093e061e4"
+          },
+          {
+            "camera": "robot0_eye_in_hand",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_eye_in_hand.mp4",
+            "sha256": "4972b97012ee6e47b0d704aaeb517289347c326d1d42f6cf323b50869ddd502c"
+          },
+          {
+            "camera": "robot0_agentview_right",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000064/rank-00/videos/flora-single-case-000064-rank-00-episode-000001-robot0_agentview_right.mp4",
+            "sha256": "b17504c64f3e8948d7785cbc35831ae9600c53f3c443272d3420e17cc5d5d667"
+          }
+        ],
+        "frame_clock": {
+          "frame_count": 751,
+          "native_fps": 20.0,
+          "encoded_fps": 20.0,
+          "resampled": false,
+          "physical_steps": 750,
+          "initial_frame_included": true,
+          "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+        }
+      },
+      "monitor": {
+        "id": "flora-single-case-000064-rank-00-episode-000001",
+        "case": {
+          "bank": "train",
+          "task": "OpenDrawer",
+          "split": "target",
+          "native_seed": 210165,
+          "reset_ordinal": 0,
+          "slot": 1,
+          "counted": true,
+          "layout_source": "native_target_constructor_seed_first_reset"
+        },
+        "simulator_final_success": false,
+        "native_counts": {
+          "controls": 750,
+          "reset_controls": 0,
+          "physics_ticks": 19000,
+          "step1_calls": 19000,
+          "phase": "policy",
+          "control_time": 37.50000000000001,
+          "clock": {
+            "control_freq": 20.0,
+            "control_timestep": 0.05,
+            "model_timestep": 0.002,
+            "lite_physics": true
+          }
+        },
+        "native_ep_meta": {
+          "layout_id": 3,
+          "style_id": 3,
+          "object_cfgs": [
+            {
+              "name": "drawer_obj",
+              "obj_groups": [
+                "tool",
+                "utensil"
+              ],
+              "graspable": true,
+              "max_size": [
+                null,
+                null,
+                0.1
+              ],
+              "placement": {
+                "fixture": "stack_1_right_group_2",
+                "size": [
+                  0.3,
+                  0.3
+                ],
+                "pos": [
+                  null,
+                  -0.75
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "peeler",
+                  "tool",
+                  "in_container"
+                ],
+                "groups": [
+                  "tool",
+                  "utensil"
+                ],
+                "cat": "peeler",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/lightwheel/peeler/Peeler004/model.xml"
+              },
+              "reset_region": {
+                "offset": [
+                  0.0,
+                  -0.015000000000000013,
+                  -0.044
+                ],
+                "size": [
+                  0.378,
+                  0.51
+                ],
+                "height": 0.118,
+                "name": "int"
+              }
+            },
+            {
+              "name": "distr_counter_1",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_1_right_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_1_right_group_2",
+                  "min_size": [
+                    0.049955,
+                    0.04974,
+                    0.1744585375
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "mustard",
+                  "condiment"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "mustard",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/lightwheel/mustard/Mustard008/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.4999999999999998,
+                  0.65
+                ],
+                "offset": [
+                  1.1102230246251565e-16,
+                  0.0,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            }
+          ],
+          "fixtures": {
+            "wall_room": {
+              "cls": "Wall"
+            },
+            "wall_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_right_room": {
+              "cls": "Wall"
+            },
+            "wall_right_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_left_room": {
+              "cls": "Wall"
+            },
+            "wall_left_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_front_room": {
+              "cls": "Wall"
+            },
+            "wall_front_backing_room": {
+              "cls": "Wall"
+            },
+            "floor_room": {
+              "cls": "Floor"
+            },
+            "floor_backing_room": {
+              "cls": "Floor"
+            },
+            "outlet_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_2_room": {
+              "cls": "WallAccessory"
+            },
+            "utensil_rack_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_2_room": {
+              "cls": "WallAccessory"
+            },
+            "cab_1_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_2_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_main_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_corner_main_group": {
+              "cls": "Box"
+            },
+            "cab_corner_2_main_group": {
+              "cls": "Box"
+            },
+            "sink_main_group": {
+              "cls": "Sink"
+            },
+            "counter_main_main_group": {
+              "cls": "Counter"
+            },
+            "counter_corner_main_main_group": {
+              "cls": "Counter"
+            },
+            "stack_1_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_main_group_1": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_4": {
+              "cls": "Drawer"
+            },
+            "stack_2_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_2_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "dishwasher_main_group": {
+              "cls": "Dishwasher"
+            },
+            "stack_3_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_3_main_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "toaster_oven_main_group": {
+              "cls": "ToasterOven"
+            },
+            "plant_main_group": {
+              "cls": "Accessory"
+            },
+            "knife_block_main_group": {
+              "cls": "Accessory"
+            },
+            "paper_towel_main_group": {
+              "cls": "Accessory"
+            },
+            "counter_1_right_group": {
+              "cls": "Counter"
+            },
+            "counter_corner_left_right_group": {
+              "cls": "Counter"
+            },
+            "stove_right_group": {
+              "cls": "Stove"
+            },
+            "counter_2_right_group": {
+              "cls": "Counter"
+            },
+            "fridge_right_group": {
+              "cls": "FridgeBottomFreezer"
+            },
+            "fridge_housing_right_group": {
+              "cls": "HousingCabinet"
+            },
+            "stack_1_right_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_right_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "stack_1_right_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_2_right_group_base": {
+              "cls": "Box"
+            },
+            "stack_2_right_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_2_right_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_2_right_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_3_right_group_base": {
+              "cls": "Box"
+            },
+            "stack_3_right_group_1": {
+              "cls": "Drawer"
+            },
+            "stack_3_right_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_3_right_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_3_right_group_4": {
+              "cls": "Drawer"
+            },
+            "cab_1_right_group": {
+              "cls": "SingleCabinet"
+            },
+            "microwave_right_group": {
+              "cls": "Microwave"
+            },
+            "cab_micro_right_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_2_right_group": {
+              "cls": "SingleCabinet"
+            },
+            "shelves_right_group": {
+              "cls": "OpenCabinet"
+            },
+            "cab_3_right_group": {
+              "cls": "HingeCabinet"
+            },
+            "toaster_right_group": {
+              "cls": "Toaster"
+            },
+            "coffee_machine_right_group": {
+              "cls": "CoffeeMachine"
+            }
+          },
+          "gen_textures": {},
+          "lang": "Open the left drawer.",
+          "fixture_refs": {
+            "drawer": "stack_1_right_group_2"
+          },
+          "cam_configs": {
+            "robot0_agentview_center": {
+              "pos": [
+                -0.6,
+                0.0,
+                1.15
+              ],
+              "quat": [
+                0.636945903301239,
+                0.3325185477733612,
+                -0.3199238181114197,
+                -0.6175596117973328
+              ],
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_left": {
+              "pos": [
+                -0.5,
+                0.35,
+                1.05
+              ],
+              "quat": [
+                0.55623853,
+                0.29935253,
+                -0.37678665,
+                -0.6775092
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_right": {
+              "pos": [
+                -0.5,
+                -0.35,
+                1.05
+              ],
+              "quat": [
+                0.6775091886520386,
+                0.3767866790294647,
+                -0.2993525564670563,
+                -0.55623859167099
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_frontview": {
+              "pos": [
+                -0.5,
+                0,
+                0.95
+              ],
+              "quat": [
+                0.6088936924934387,
+                0.3814677894115448,
+                -0.3673907518386841,
+                -0.5905545353889465
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_eye_in_hand": {
+              "pos": [
+                0.05,
+                0,
+                0
+              ],
+              "quat": [
+                0,
+                0.707107,
+                0.707107,
+                0
+              ],
+              "parent_body": "robot0_right_hand"
+            }
+          },
+          "init_robot_base_pos": [
+            4.287292152435055,
+            -1.3639759179606734,
+            0.0
+          ],
+          "init_robot_base_ori": [
+            0.0,
+            0.0,
+            -3.673205103416066e-06
+          ]
+        },
+        "video_refs_sha256": "438dd172c06de5b754711c0d5b503ea959d2e59df447fd16e56bfd6837c43661"
+      },
+      "record_count": 15,
+      "record_keys": [
+        "features",
+        "noise_seed",
+        "base_chunk",
+        "executed_chunk",
+        "control",
+        "log_prob",
+        "value",
+        "reward",
+        "done",
+        "episode_start",
+        "zero_residual_verified"
+      ],
+      "record_shapes": {
+        "features": [
+          2088
+        ],
+        "noise_seed": [],
+        "base_chunk": [
+          50,
+          12
+        ],
+        "executed_chunk": [
+          50,
+          12
+        ],
+        "control": [
+          6
+        ],
+        "log_prob": [],
+        "value": [],
+        "reward": [],
+        "done": [],
+        "episode_start": [],
+        "zero_residual_verified": []
+      },
+      "has_executed_chunks": true,
+      "executed_shapes": [
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "flora-single-case-000128-rank-00-episode-000006",
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/pending-003.pt",
+        "sha256": "24f67f4db0b016549a6097bbb34b1c0741bc6a2b342f741eeec06ceb70d2fe0b"
+      },
+      "checkpoint_keys": [
+        "format",
+        "config",
+        "contract",
+        "policy",
+        "optimizer",
+        "iteration",
+        "stage",
+        "final",
+        "rng",
+        "motor",
+        "environment",
+        "generators",
+        "pending_records",
+        "pending_episodes"
+      ],
+      "episode": {
+        "id": "flora-single-case-000128-rank-00-episode-000006",
+        "task": "Open the left drawer.",
+        "camera_order": [
+          "robot0_agentview_left",
+          "robot0_eye_in_hand",
+          "robot0_agentview_right"
+        ],
+        "horizon": 750,
+        "completed": true,
+        "success_termination_disabled": true,
+        "raw_rgb_only": true,
+        "info_on_video": false,
+        "extra_info_on_video": [],
+        "rank": 0,
+        "round": 6,
+        "local_env": 0,
+        "videos": [
+          {
+            "camera": "robot0_agentview_left",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-00/videos/flora-single-case-000128-rank-00-episode-000006-robot0_agentview_left.mp4",
+            "sha256": "9ce773f58eb846f4a7b0f540f08d550c3cc382621a31233c4f97a8e61b5e0c06"
+          },
+          {
+            "camera": "robot0_eye_in_hand",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-00/videos/flora-single-case-000128-rank-00-episode-000006-robot0_eye_in_hand.mp4",
+            "sha256": "8728b50529811d009cb562e700b4d626a551c8779fbf598c5235eccca174c1f2"
+          },
+          {
+            "camera": "robot0_agentview_right",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-00/videos/flora-single-case-000128-rank-00-episode-000006-robot0_agentview_right.mp4",
+            "sha256": "9ef2c085dab38b12f7ec326cc3e186a0f3e8ea457a290ce5546c80acb2dc3fcd"
+          }
+        ],
+        "frame_clock": {
+          "frame_count": 751,
+          "native_fps": 20.0,
+          "encoded_fps": 20.0,
+          "resampled": false,
+          "physical_steps": 750,
+          "initial_frame_included": true,
+          "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+        }
+      },
+      "monitor": {
+        "id": "flora-single-case-000128-rank-00-episode-000006",
+        "case": {
+          "bank": "train",
+          "task": "OpenDrawer",
+          "split": "target",
+          "native_seed": 210234,
+          "reset_ordinal": 0,
+          "slot": 6,
+          "counted": true,
+          "layout_source": "native_target_constructor_seed_first_reset"
+        },
+        "simulator_final_success": true,
+        "native_counts": {
+          "controls": 750,
+          "reset_controls": 0,
+          "physics_ticks": 19000,
+          "step1_calls": 19000,
+          "phase": "policy",
+          "control_time": 37.50000000000001,
+          "clock": {
+            "control_freq": 20.0,
+            "control_timestep": 0.05,
+            "model_timestep": 0.002,
+            "lite_physics": true
+          }
+        },
+        "native_ep_meta": {
+          "layout_id": 10,
+          "style_id": 10,
+          "object_cfgs": [
+            {
+              "name": "drawer_obj",
+              "obj_groups": [
+                "tool",
+                "utensil"
+              ],
+              "graspable": true,
+              "max_size": [
+                null,
+                null,
+                0.1
+              ],
+              "placement": {
+                "fixture": "stack_3_main_group_2",
+                "size": [
+                  0.3,
+                  0.3
+                ],
+                "pos": [
+                  null,
+                  -0.75
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "strainer",
+                  "receptacle",
+                  "tool",
+                  "in_container"
+                ],
+                "groups": [
+                  "tool",
+                  "utensil"
+                ],
+                "cat": "strainer",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/lightwheel/strainer/Strainer012/model.xml"
+              },
+              "reset_region": {
+                "offset": [
+                  0.0,
+                  -0.015000000000000013,
+                  -0.044
+                ],
+                "size": [
+                  0.378,
+                  0.51
+                ],
+                "height": 0.118,
+                "name": "int"
+              }
+            },
+            {
+              "name": "distr_counter_1",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_1_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_3_main_group_2",
+                  "min_size": [
+                    0.10476326801124376,
+                    0.1697365580783231,
+                    0.11116816143750001
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "teapot",
+                  "receptacle"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "teapot",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/teapot/teapot_3/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.49999999999999933,
+                  0.65
+                ],
+                "offset": [
+                  -0.6500000000000004,
+                  0.0,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            },
+            {
+              "name": "distr_counter_2",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_1_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_3_main_group_2",
+                  "min_size": [
+                    0.09938610919999998,
+                    0.13999999719999995,
+                    0.04815501319999998
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "chips",
+                  "packaged_food"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "chips",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/chips/chips_5/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.49999999999999933,
+                  0.65
+                ],
+                "offset": [
+                  -0.6500000000000004,
+                  0.0,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            },
+            {
+              "name": "distr_counter_3",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_1_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_3_main_group_2",
+                  "min_size": [
+                    0.06753846210000002,
+                    0.06753846780000002,
+                    0.09500000000000003
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "coffee_cup",
+                  "drink"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "coffee_cup",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/coffee_cup/coffee_cup_8/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  0.49999999999999933,
+                  0.65
+                ],
+                "offset": [
+                  -0.6500000000000004,
+                  0.0,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            }
+          ],
+          "fixtures": {
+            "wall_room": {
+              "cls": "Wall"
+            },
+            "wall_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_front_room": {
+              "cls": "Wall"
+            },
+            "wall_front_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_left_room": {
+              "cls": "Wall"
+            },
+            "wall_left_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_left_2_room": {
+              "cls": "Wall"
+            },
+            "wall_2_left_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_right_room": {
+              "cls": "Wall"
+            },
+            "wall_right_backing_room": {
+              "cls": "Wall"
+            },
+            "utensil_rack_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_2_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_3_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_2_room": {
+              "cls": "WallAccessory"
+            },
+            "window_group_room": {
+              "cls": "Window"
+            },
+            "floor_room": {
+              "cls": "Floor"
+            },
+            "floor_backing_room": {
+              "cls": "Floor"
+            },
+            "floor_front_room": {
+              "cls": "Floor"
+            },
+            "floor_front_backing_room": {
+              "cls": "Floor"
+            },
+            "stool_1_room": {
+              "cls": "Stool"
+            },
+            "stool_2_room": {
+              "cls": "Stool"
+            },
+            "stool_3_room": {
+              "cls": "Stool"
+            },
+            "counter_corner_1_main_group": {
+              "cls": "Counter"
+            },
+            "counter_main_main_group": {
+              "cls": "Counter"
+            },
+            "stove_main_group": {
+              "cls": "Stove"
+            },
+            "counter_1_main_group": {
+              "cls": "Counter"
+            },
+            "counter_corner_2_main_group": {
+              "cls": "Counter"
+            },
+            "cab_corner_main_group": {
+              "cls": "Box"
+            },
+            "cab_main_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_1_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "hood_main_group": {
+              "cls": "Hood"
+            },
+            "shelves_main_group": {
+              "cls": "OpenCabinet"
+            },
+            "cab_corner_3_main_group": {
+              "cls": "Box"
+            },
+            "cab_corner_4_main_group": {
+              "cls": "Box"
+            },
+            "stack_1_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_1_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_1_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_2_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_2_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_2_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_2_main_group_3": {
+              "cls": "Drawer"
+            },
+            "right_corner_box_main_group": {
+              "cls": "Box"
+            },
+            "stack_3_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_3_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_3_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_3_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_4_main_group_1": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_4": {
+              "cls": "Drawer"
+            },
+            "coffee_machine_main_group": {
+              "cls": "CoffeeMachine"
+            },
+            "knife_block_main_group": {
+              "cls": "Accessory"
+            },
+            "plant_main_group": {
+              "cls": "Accessory"
+            },
+            "toaster_main_group": {
+              "cls": "Toaster"
+            },
+            "toaster_oven_main_group": {
+              "cls": "ToasterOven"
+            },
+            "fridge_left_group": {
+              "cls": "FridgeFrenchDoor"
+            },
+            "fridge_housing_left_group": {
+              "cls": "HousingCabinet"
+            },
+            "fridge_top_left_group": {
+              "cls": "HingeCabinet"
+            },
+            "stack_left_left_group_base": {
+              "cls": "Box"
+            },
+            "stack_left_left_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "stack_left_left_group_2": {
+              "cls": "SingleCabinet"
+            },
+            "stack_right_left_group_base": {
+              "cls": "Box"
+            },
+            "stack_right_left_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "stack_right_left_group_2": {
+              "cls": "SingleCabinet"
+            },
+            "box_left_top_left_group": {
+              "cls": "Box"
+            },
+            "box_left_bottom_left_group": {
+              "cls": "Box"
+            },
+            "box_right_top_left_group": {
+              "cls": "Box"
+            },
+            "box_right_bottom_left_group": {
+              "cls": "Box"
+            },
+            "sink_right_group": {
+              "cls": "Sink"
+            },
+            "counter_1_right_group": {
+              "cls": "Counter"
+            },
+            "counter_corner_right_group": {
+              "cls": "Counter"
+            },
+            "stack_1_right_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_right_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_1_right_group_2": {
+              "cls": "PanelCabinet"
+            },
+            "dishwasher_right_group": {
+              "cls": "Dishwasher"
+            },
+            "stack_2_right_group_base": {
+              "cls": "Box"
+            },
+            "stack_2_right_group_1": {
+              "cls": "SingleCabinet"
+            },
+            "cab_1_right_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_2_right_group": {
+              "cls": "SingleCabinet"
+            },
+            "counter_corner_1_front_group": {
+              "cls": "Counter"
+            },
+            "counter_1_front_group": {
+              "cls": "Counter"
+            },
+            "stack_1_front_group_base": {
+              "cls": "Box"
+            },
+            "stack_1_front_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_1_front_group_2": {
+              "cls": "Drawer"
+            },
+            "shelves_front_group": {
+              "cls": "OpenCabinet"
+            },
+            "bottom_front_group_base": {
+              "cls": "Box"
+            },
+            "bottom_front_group_1": {
+              "cls": "Drawer"
+            },
+            "bottom_front_group_2": {
+              "cls": "Drawer"
+            },
+            "cab_middle_front_group": {
+              "cls": "HingeCabinet"
+            },
+            "microwave_front_group": {
+              "cls": "Microwave"
+            },
+            "micro_housing_front_group": {
+              "cls": "HousingCabinet"
+            },
+            "top_front_group": {
+              "cls": "HingeCabinet"
+            },
+            "utensil_set_front_group": {
+              "cls": "Accessory"
+            },
+            "counter_1_dining_area_group": {
+              "cls": "Counter"
+            },
+            "paper_towel_dining_area_group": {
+              "cls": "Accessory"
+            }
+          },
+          "gen_textures": {},
+          "lang": "Open the left drawer.",
+          "fixture_refs": {
+            "drawer": "stack_3_main_group_2"
+          },
+          "cam_configs": {
+            "robot0_agentview_center": {
+              "pos": [
+                -0.6,
+                0.0,
+                1.15
+              ],
+              "quat": [
+                0.636945903301239,
+                0.3325185477733612,
+                -0.3199238181114197,
+                -0.6175596117973328
+              ],
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_left": {
+              "pos": [
+                -0.5,
+                0.35,
+                1.05
+              ],
+              "quat": [
+                0.55623853,
+                0.29935253,
+                -0.37678665,
+                -0.6775092
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_right": {
+              "pos": [
+                -0.5,
+                -0.35,
+                1.05
+              ],
+              "quat": [
+                0.6775091886520386,
+                0.3767866790294647,
+                -0.2993525564670563,
+                -0.55623859167099
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_frontview": {
+              "pos": [
+                -0.5,
+                0,
+                0.95
+              ],
+              "quat": [
+                0.6088936924934387,
+                0.3814677894115448,
+                -0.3673907518386841,
+                -0.5905545353889465
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_eye_in_hand": {
+              "pos": [
+                0.05,
+                0,
+                0
+              ],
+              "quat": [
+                0,
+                0.707107,
+                0.707107,
+                0
+              ],
+              "parent_body": "robot0_right_hand"
+            }
+          },
+          "init_robot_base_pos": [
+            4.130577973726897,
+            -0.8912808588493061,
+            0.0
+          ],
+          "init_robot_base_ori": [
+            0.0,
+            0.0,
+            1.5707963267948966
+          ]
+        },
+        "video_refs_sha256": "84ab1ece5c6d6774746bee2a13a6286c13f1f3969e0fd7e117bcb6dc5593aed9"
+      },
+      "record_count": 15,
+      "record_keys": [
+        "features",
+        "noise_seed",
+        "base_chunk",
+        "executed_chunk",
+        "control",
+        "log_prob",
+        "value",
+        "reward",
+        "done",
+        "episode_start",
+        "zero_residual_verified"
+      ],
+      "record_shapes": {
+        "features": [
+          2088
+        ],
+        "noise_seed": [],
+        "base_chunk": [
+          50,
+          12
+        ],
+        "executed_chunk": [
+          50,
+          12
+        ],
+        "control": [
+          6
+        ],
+        "log_prob": [],
+        "value": [],
+        "reward": [],
+        "done": [],
+        "episode_start": [],
+        "zero_residual_verified": []
+      },
+      "has_executed_chunks": true,
+      "executed_shapes": [
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "flora-single-case-000144-rank-02-episode-000004",
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/pending-003.pt",
+        "sha256": "24f67f4db0b016549a6097bbb34b1c0741bc6a2b342f741eeec06ceb70d2fe0b"
+      },
+      "checkpoint_keys": [
+        "format",
+        "config",
+        "contract",
+        "policy",
+        "optimizer",
+        "iteration",
+        "stage",
+        "final",
+        "rng",
+        "motor",
+        "environment",
+        "generators",
+        "pending_records",
+        "pending_episodes"
+      ],
+      "episode": {
+        "id": "flora-single-case-000144-rank-02-episode-000004",
+        "task": "Open the right drawer.",
+        "camera_order": [
+          "robot0_agentview_left",
+          "robot0_eye_in_hand",
+          "robot0_agentview_right"
+        ],
+        "horizon": 750,
+        "completed": true,
+        "success_termination_disabled": true,
+        "raw_rgb_only": true,
+        "info_on_video": false,
+        "extra_info_on_video": [],
+        "rank": 2,
+        "round": 4,
+        "local_env": 0,
+        "videos": [
+          {
+            "camera": "robot0_agentview_left",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000004-robot0_agentview_left.mp4",
+            "sha256": "726bf17bcf8c0a3d744cb5e29024fc1632fec7083a6e66b14b6c5774d8a28d9e"
+          },
+          {
+            "camera": "robot0_eye_in_hand",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000004-robot0_eye_in_hand.mp4",
+            "sha256": "d5da029274418c8278e11e54dc59efd50d21cc31fdd3aee83093aaccc4e8e8de"
+          },
+          {
+            "camera": "robot0_agentview_right",
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/train/videos/parallel-000128/rank-02/videos/flora-single-case-000144-rank-02-episode-000004-robot0_agentview_right.mp4",
+            "sha256": "9cacde3d3e57302c1ebcb9e495e46d30e04170ef6daf1e39708e7dadcb350457"
+          }
+        ],
+        "frame_clock": {
+          "frame_count": 751,
+          "native_fps": 20.0,
+          "encoded_fps": 20.0,
+          "resampled": false,
+          "physical_steps": 750,
+          "initial_frame_included": true,
+          "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+        }
+      },
+      "monitor": {
+        "id": "flora-single-case-000144-rank-02-episode-000004",
+        "case": {
+          "bank": "train",
+          "task": "OpenDrawer",
+          "split": "target",
+          "native_seed": 210248,
+          "reset_ordinal": 0,
+          "slot": 4,
+          "counted": true,
+          "layout_source": "native_target_constructor_seed_first_reset"
+        },
+        "simulator_final_success": true,
+        "native_counts": {
+          "controls": 750,
+          "reset_controls": 0,
+          "physics_ticks": 19000,
+          "step1_calls": 19000,
+          "phase": "policy",
+          "control_time": 37.50000000000001,
+          "clock": {
+            "control_freq": 20.0,
+            "control_timestep": 0.05,
+            "model_timestep": 0.002,
+            "lite_physics": true
+          }
+        },
+        "native_ep_meta": {
+          "layout_id": 2,
+          "style_id": 2,
+          "object_cfgs": [
+            {
+              "name": "drawer_obj",
+              "obj_groups": [
+                "tool",
+                "utensil"
+              ],
+              "graspable": true,
+              "max_size": [
+                null,
+                null,
+                0.1
+              ],
+              "placement": {
+                "fixture": "stack_4_main_group_3",
+                "size": [
+                  0.3,
+                  0.3
+                ],
+                "pos": [
+                  null,
+                  -0.75
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "ladle",
+                  "utensil"
+                ],
+                "groups": [
+                  "tool",
+                  "utensil"
+                ],
+                "cat": "ladle",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/ladle/ladle_4/model.xml"
+              },
+              "reset_region": {
+                "offset": [
+                  0.0,
+                  -0.015000000000000013,
+                  -0.044
+                ],
+                "size": [
+                  0.378,
+                  0.51
+                ],
+                "height": 0.118,
+                "name": "int"
+              }
+            },
+            {
+              "name": "distr_counter_1",
+              "obj_groups": "all",
+              "placement": {
+                "fixture": "counter_main_main_group",
+                "sample_region_kwargs": {
+                  "ref": "stack_4_main_group_3",
+                  "min_size": [
+                    0.09721456140000002,
+                    0.1099915454,
+                    0.031097501600000004
+                  ]
+                },
+                "size": [
+                  1.0,
+                  0.5
+                ],
+                "pos": [
+                  null,
+                  -1.0
+                ],
+                "offset": [
+                  0.0,
+                  0.1
+                ]
+              },
+              "type": "object",
+              "info": {
+                "groups_containing_sampled_obj": [
+                  "all",
+                  "bagel",
+                  "bread_food",
+                  "food",
+                  "in_container"
+                ],
+                "groups": [
+                  "all"
+                ],
+                "cat": "bagel",
+                "split": "target",
+                "mjcf_path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/assets/objects/objaverse/bagel/bagel_6/model.xml"
+              },
+              "reset_region": {
+                "size": [
+                  1.817460818110389,
+                  0.65
+                ],
+                "offset": [
+                  0.9912695909448055,
+                  -3.469446951953614e-17,
+                  0.46
+                ],
+                "name": "geom_0"
+              }
+            }
+          ],
+          "fixtures": {
+            "wall_room": {
+              "cls": "Wall"
+            },
+            "wall_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_left_room": {
+              "cls": "Wall"
+            },
+            "wall_left_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_right_room": {
+              "cls": "Wall"
+            },
+            "wall_right_backing_room": {
+              "cls": "Wall"
+            },
+            "wall_front_room": {
+              "cls": "Wall"
+            },
+            "wall_front_backing_room": {
+              "cls": "Wall"
+            },
+            "floor_room": {
+              "cls": "Floor"
+            },
+            "floor_backing_room": {
+              "cls": "Floor"
+            },
+            "outlet_room": {
+              "cls": "WallAccessory"
+            },
+            "outlet_2_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_room": {
+              "cls": "WallAccessory"
+            },
+            "light_switch_2_room": {
+              "cls": "WallAccessory"
+            },
+            "utensil_rack_room": {
+              "cls": "WallAccessory"
+            },
+            "stool_1_room": {
+              "cls": "Stool"
+            },
+            "stool_2_room": {
+              "cls": "Stool"
+            },
+            "stool_3_room": {
+              "cls": "Stool"
+            },
+            "stovetop_main_group": {
+              "cls": "Stovetop"
+            },
+            "counter_main_main_group": {
+              "cls": "Counter"
+            },
+            "bottom_main_group_base": {
+              "cls": "Box"
+            },
+            "bottom_main_group_1": {
+              "cls": "Drawer"
+            },
+            "bottom_main_group_2": {
+              "cls": "Drawer"
+            },
+            "oven_main_group": {
+              "cls": "Oven"
+            },
+            "oven_housing_main_group": {
+              "cls": "HousingCabinet"
+            },
+            "microwave_main_group": {
+              "cls": "Microwave"
+            },
+            "micro_housing_main_group": {
+              "cls": "HousingCabinet"
+            },
+            "top_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "fridge_main_group": {
+              "cls": "FridgeSideBySide"
+            },
+            "fridge_housing_main_group": {
+              "cls": "HousingCabinet"
+            },
+            "fridge_top_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "cab_main_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "hood_main_group": {
+              "cls": "Hood"
+            },
+            "shelves_main_group": {
+              "cls": "OpenCabinet"
+            },
+            "cab_2_main_group": {
+              "cls": "HingeCabinet"
+            },
+            "stack_3_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_3_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_3_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_3_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_4_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_4_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_4_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_5_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_5_main_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "stack_5_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_5_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_6_main_group_base": {
+              "cls": "Box"
+            },
+            "stack_6_main_group_1": {
+              "cls": "Drawer"
+            },
+            "stack_6_main_group_2": {
+              "cls": "Drawer"
+            },
+            "stack_6_main_group_3": {
+              "cls": "Drawer"
+            },
+            "stack_6_main_group_4": {
+              "cls": "Drawer"
+            },
+            "toaster_main_group": {
+              "cls": "Toaster"
+            },
+            "knife_block_main_group": {
+              "cls": "Accessory"
+            },
+            "paper_towel_main_group": {
+              "cls": "Accessory"
+            },
+            "coffee_machine_main_group": {
+              "cls": "CoffeeMachine"
+            },
+            "sink_island_group": {
+              "cls": "Sink"
+            },
+            "island_island_group": {
+              "cls": "Counter"
+            },
+            "island_stack_1_island_group_base": {
+              "cls": "Box"
+            },
+            "island_stack_1_island_group_1": {
+              "cls": "HingeCabinet"
+            },
+            "island_stack_1_island_group_2": {
+              "cls": "PanelCabinet"
+            },
+            "dishwasher_island_group": {
+              "cls": "Dishwasher"
+            },
+            "island_panel_cab_right_island_group_base": {
+              "cls": "Box"
+            },
+            "island_panel_cab_right_island_group_1": {
+              "cls": "PanelCabinet"
+            },
+            "island_cab_left_island_group_base": {
+              "cls": "Box"
+            },
+            "island_cab_left_island_group_1": {
+              "cls": "Drawer"
+            },
+            "island_cab_left_island_group_2": {
+              "cls": "Drawer"
+            },
+            "island_cab_left_island_group_3": {
+              "cls": "Drawer"
+            },
+            "island_cab_left_island_group_4": {
+              "cls": "Drawer"
+            },
+            "island_panel_cab_left_island_group_base": {
+              "cls": "Box"
+            },
+            "island_panel_cab_left_island_group_1": {
+              "cls": "PanelCabinet"
+            },
+            "island_base_box_island_group": {
+              "cls": "Box"
+            },
+            "plant_island_group": {
+              "cls": "Accessory"
+            }
+          },
+          "gen_textures": {},
+          "lang": "Open the right drawer.",
+          "fixture_refs": {
+            "drawer": "stack_4_main_group_3"
+          },
+          "cam_configs": {
+            "robot0_agentview_center": {
+              "pos": [
+                -0.6,
+                0.0,
+                1.15
+              ],
+              "quat": [
+                0.636945903301239,
+                0.3325185477733612,
+                -0.3199238181114197,
+                -0.6175596117973328
+              ],
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_left": {
+              "pos": [
+                -0.5,
+                0.35,
+                1.05
+              ],
+              "quat": [
+                0.55623853,
+                0.29935253,
+                -0.37678665,
+                -0.6775092
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_agentview_right": {
+              "pos": [
+                -0.5,
+                -0.35,
+                1.05
+              ],
+              "quat": [
+                0.6775091886520386,
+                0.3767866790294647,
+                -0.2993525564670563,
+                -0.55623859167099
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_frontview": {
+              "pos": [
+                -0.5,
+                0,
+                0.95
+              ],
+              "quat": [
+                0.6088936924934387,
+                0.3814677894115448,
+                -0.3673907518386841,
+                -0.5905545353889465
+              ],
+              "camera_attribs": {
+                "fovy": "60"
+              },
+              "parent_body": "mobilebase0_support"
+            },
+            "robot0_eye_in_hand": {
+              "pos": [
+                0.05,
+                0,
+                0
+              ],
+              "quat": [
+                0,
+                0.707107,
+                0.707107,
+                0
+              ],
+              "parent_body": "robot0_right_hand"
+            }
+          },
+          "init_robot_base_pos": [
+            2.506182362430619,
+            -0.8907461514536056,
+            0.0
+          ],
+          "init_robot_base_ori": [
+            0.0,
+            0.0,
+            1.5707963267948966
+          ]
+        },
+        "video_refs_sha256": "726ef208cd563ec9bf494b91c775656bf02130818a005abec1ffa3ed64cd8642"
+      },
+      "record_count": 15,
+      "record_keys": [
+        "features",
+        "noise_seed",
+        "base_chunk",
+        "executed_chunk",
+        "control",
+        "log_prob",
+        "value",
+        "reward",
+        "done",
+        "episode_start",
+        "zero_residual_verified"
+      ],
+      "record_shapes": {
+        "features": [
+          2088
+        ],
+        "noise_seed": [],
+        "base_chunk": [
+          50,
+          12
+        ],
+        "executed_chunk": [
+          50,
+          12
+        ],
+        "control": [
+          6
+        ],
+        "log_prob": [],
+        "value": [],
+        "reward": [],
+        "done": [],
+        "episode_start": [],
+        "zero_residual_verified": []
+      },
+      "has_executed_chunks": true,
+      "executed_shapes": [
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          50,
+          12
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_drawer.py",
+      "sha256": "7b29347c1af004d0af54c22c746e8e9c840d221ba4a55682f6df050de05fb8c3",
+      "functions": [
+        {
+          "name": "__init__",
+          "line": 15,
+          "source": "def __init__(\n        self,\n        behavior=\"open\",\n        drawer_id=FixtureType.TOP_DRAWER,\n        robot_spawn_deviation_pos_x=0.05,\n        *args,\n        **kwargs,\n    ):\n        # for open and close tasks the robot will next to the drawer.\n        # since for open tasks all drawers will be close it is ambigious which drawer to open,\n        # so we specify a which side the drawer is on to open. The side is determined in _load_model\n        self.robot_side = \"\"\n        self.drawer_id = drawer_id\n        assert behavior in [\"open\", \"close\"]\n        self.behavior = behavior\n        super().__init__(\n            robot_spawn_deviation_pos_x=robot_spawn_deviation_pos_x, *args, **kwargs\n        )"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 123,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the drawer tasks.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = f\"{self.behavior.capitalize()} the {self.drawer_side} drawer.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 172,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the drawer manipulation task is successful.\n\n        Returns:\n            bool: True if the task is successful, False otherwise.\n        \"\"\"\n        door_state = self.drawer.get_door_state(env=self)\n\n        success = True\n        for joint_p in door_state.values():\n            if self.behavior == \"open\":\n                if joint_p < 0.95:\n                    success = False\n                    break\n            elif self.behavior == \"close\":\n                if joint_p > 0.05:\n                    success = False\n                    break\n\n        return success"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 323,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        direction = \"out\" if self.should_pull else \"in\"\n        ep_meta[\"lang\"] = f\"Fully slide the top dishwasher rack {direction}.\"\n        ep_meta[\"should_pull\"] = self.should_pull\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 339,
+          "source": "def _check_success(self):\n        current_pos = self.dishwasher.get_state(self)[\"rack\"]\n\n        if self.should_pull:\n            return current_pos >= 0.95\n        else:\n            return current_pos <= 0.05"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 364,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Fully open the fridge drawer.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 417,
+          "source": "def _check_success(self):\n        return self.fridge.is_open(\n            self, compartment=\"fridge\", reg_type=\"drawer\", drawer_rack_index=-1, th=0.70\n        )"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 439,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Fully close the fridge drawer.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 492,
+          "source": "def _check_success(self):\n        return self.fridge.is_closed(\n            self, compartment=\"fridge\", reg_type=\"drawer\", drawer_rack_index=-1, th=0.05\n        )"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/atomic/kitchen_pick_place.py",
+      "sha256": "f7157fb5809e73d4ee954974d8c8e199f18d9a0f48ce41f84c2b5d7b74eaf676",
+      "functions": [
+        {
+          "name": "get_ep_meta",
+          "line": 51,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to cabinet pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the cabinet.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 127,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the counter to cabinet pick and place task is successful.\n        Checks if the object is inside the cabinet and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_inside_cab = OU.obj_inside_of(self, \"obj\", self.cab)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_inside_cab and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 170,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the cabinet to counter pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the cabinet and place it on the counter.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 241,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the cabinet to counter pick and place task is successful.\n        Checks if the object is on the counter and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        gripper_obj_far = OU.gripper_obj_far(self)\n        obj_on_counter = OU.check_obj_fixture_contact(self, \"obj\", self.counter)\n        return obj_on_counter and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 282,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to sink pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the sink.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 352,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the counter to sink pick and place task is successful.\n        Checks if the object is inside the sink and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_in_sink = OU.obj_inside_of(self, \"obj\", self.sink, partial_check=True)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_in_sink and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 393,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the sink to counter pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        cont_lang = self.get_obj_lang(obj_name=\"container\")\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the sink and place it on the {cont_lang} located on the counter.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 463,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the sink to counter pick and place task is successful.\n        Checks if the object is in the container, the container on the counter, and the gripper far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_in_recep = OU.check_obj_in_receptacle(self, \"obj\", \"container\")\n        recep_on_counter = self.check_contact(self.objects[\"container\"], self.counter)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_in_recep and recep_on_counter and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 518,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to microwave pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the microwave.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 586,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the counter to microwave pick and place task is successful.\n        Checks if the object is inside the microwave and on the container and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj = self.objects[\"obj\"]\n        container = self.objects[\"container\"]\n\n        obj_container_contact = self.check_contact(obj, container)\n        container_micro_contact = self.check_contact(container, self.microwave)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_container_contact and container_micro_contact and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 644,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the microwave to counter pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        cont_lang = self.get_obj_lang(obj_name=\"container\")\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the microwave and place it on {cont_lang} located on the counter.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 712,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the microwave to counter pick and place task is successful.\n        Checks if the object is inside the container and the gripper far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_container_contact = OU.check_obj_in_receptacle(self, \"obj\", \"container\")\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_container_contact and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 748,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        if self.oven.has_multiple_rack_levels():\n            rack_pos = \"top\" if self.rack_level == 1 else \"bottom\"\n            ep_meta[\n                \"lang\"\n            ] = f\"Place the {obj_lang} on the {rack_pos} rack of the oven.\"\n        else:\n            ep_meta[\"lang\"] = f\"Place the {obj_lang} on the rack of the oven.\"\n        ep_meta[\"rack_level\"] = self.rack_level\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 802,
+          "source": "def _check_success(self):\n        obj_container_contact = OU.check_obj_in_receptacle(self, \"obj\", \"oven_tray\")\n        on_rack = self.oven.check_rack_contact(\n            self, \"oven_tray\", rack_level=self.rack_level\n        )\n        gripper_far = OU.gripper_obj_far(self, \"obj\")\n        return on_rack and obj_container_contact and gripper_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 834,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to stove pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        cont_lang = self.get_obj_lang(obj_name=\"container\")\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the plate and place it in the {cont_lang}.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 888,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the counter to stove pick and place task is successful.\n        Checks if the object is on the pan and the gripper far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_in_container = OU.check_obj_in_receptacle(self, \"obj\", \"container\", th=0.07)\n        gripper_obj_far = OU.gripper_obj_far(self)\n\n        return obj_in_container and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 922,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the stove to counter pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        obj_cont_lang = self.get_obj_lang(obj_name=\"obj_container\")\n        cont_lang, preposition = self.get_obj_lang(\n            obj_name=\"container\", get_preposition=True\n        )\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the {obj_cont_lang} and place it {preposition} the {cont_lang}.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 980,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the stove to counter pick and place task is successful.\n        Checks if the object is inside the container on the counter and the gripper far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_in_container = OU.check_obj_in_receptacle(self, \"obj\", \"container\", th=0.07)\n        gripper_obj_far = OU.gripper_obj_far(self)\n\n        return obj_in_container and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1013,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the toaster to plate task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Place the toasted item on a plate.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1059,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the toaster to plate task is successful.\n        Checks if the object is on the plate and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_on_plate = OU.check_obj_in_receptacle(self, \"obj\", \"plate\")\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_on_plate and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1096,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        receptacle_type = \"rack\" if \"rack\" in self.chosen_toaster_receptacle else \"tray\"\n        if self.toaster_oven.has_multiple_rack_levels():\n            rack_pos = \"top\" if self.rack_level == 1 else \"bottom\"\n            ep_meta[\n                \"lang\"\n            ] = f\"Place the {obj_lang} on the {rack_pos} {receptacle_type} of the toaster oven.\"\n        else:\n            ep_meta[\n                \"lang\"\n            ] = f\"Place the {obj_lang} on the {receptacle_type} of the toaster oven.\"\n        ep_meta[\"rack_level\"] = self.rack_level\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1140,
+          "source": "def _check_success(self):\n        on_rack = self.toaster_oven.check_rack_contact(\n            self, \"obj\", rack_level=self.rack_level\n        )\n        gripper_far = OU.gripper_obj_far(self, \"obj\")\n        return on_rack and gripper_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1172,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        receptacle_type = \"rack\" if \"rack\" in self.chosen_toaster_receptacle else \"tray\"\n        obj_lang = self.get_obj_lang()\n        if self.toaster_oven.has_multiple_rack_levels():\n            rack_pos = \"top\" if self.rack_level == 1 else \"bottom\"\n            ep_meta[\n                \"lang\"\n            ] = f\"Pick the {obj_lang} from the {rack_pos} {receptacle_type} and place it on the plate on the counter.\"\n        else:\n            ep_meta[\n                \"lang\"\n            ] = f\"Pick the {obj_lang} from the {receptacle_type} and place it on the plate on the counter.\"\n        ep_meta[\"rack_level\"] = self.rack_level\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1232,
+          "source": "def _check_success(self):\n        obj_in_recep = OU.check_obj_in_receptacle(self, \"obj\", \"container\")\n        recep_on_counter = self.check_contact(self.objects[\"container\"], self.counter)\n        return obj_in_recep and recep_on_counter and OU.gripper_obj_far(self, \"obj\")"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1257,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\"lang\"] = f\"Place the {obj_lang} in the stand mixer bowl.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1288,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the food item is inside the stand mixer bowl.\n\n        Returns:\n            bool: True if the food item is inside the bowl, False otherwise.\n        \"\"\"\n        return self.stand_mixer.check_item_in_bowl(self, \"obj\") and OU.gripper_obj_far(\n            self, \"obj\"\n        )"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1327,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the fridge shelf and place it in the fridge drawer.\"\n        ep_meta[\"refs\"] = ep_meta.get(\"refs\", {})\n        ep_meta[\"refs\"][\"rack_index\"] = self.rack_index\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1376,
+          "source": "def _check_success(self):\n        obj_in_drawer = self.fridge.check_rack_contact(\n            self, \"obj\", compartment=\"fridge\", reg_type=(\"drawer\"), rack_index=-1\n        )\n        return obj_in_drawer and OU.gripper_obj_far(self, \"obj\", th=0.15)"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1406,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the fridge drawer and place it on a fridge shelf.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1453,
+          "source": "def _check_success(self):\n        obj_on_rack = self.fridge.check_rack_contact(\n            self, \"obj\", compartment=\"fridge\", reg_type=(\"shelf\")\n        )\n        return obj_on_rack and OU.gripper_obj_far(self, \"obj\", th=0.15)"
+        },
+        {
+          "name": "_setup_kitchen_references",
+          "line": 1468,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.drawer)\n        )\n        self.init_robot_base_ref = self.drawer"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1482,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the drawer.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1525,
+          "source": "def _check_success(self):\n        in_drawer = OU.obj_inside_of(\n            self, \"obj\", self.drawer\n        ) and not OU.check_obj_any_counter_contact(self, \"obj\")\n        return in_drawer and OU.gripper_obj_far(self, \"obj\")"
+        },
+        {
+          "name": "_setup_kitchen_references",
+          "line": 1540,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.drawer)\n        )\n        self.init_robot_base_ref = self.drawer"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1554,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the drawer and place it on the counter.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1594,
+          "source": "def _check_success(self):\n        on_counter = OU.check_obj_any_counter_contact(self, \"obj\")\n        return on_counter and OU.gripper_obj_far(self, \"obj\")"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1634,
+          "source": "def get_ep_meta(self):\n        \"\"\"\n        Get the episode metadata for the counter to blender pick and place task.\n        This includes the language description of the task.\n        \"\"\"\n        ep_meta = super().get_ep_meta()\n        obj_lang = self.get_obj_lang()\n        ep_meta[\n            \"lang\"\n        ] = f\"Pick the {obj_lang} from the counter and place it in the blender.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1685,
+          "source": "def _check_success(self):\n        \"\"\"\n        Check if the counter to blender pick and place task is successful.\n        Checks if the object is inside the blender and the gripper is far from the object.\n\n        Returns:\n            bool: True if the task is successful, False otherwise\n        \"\"\"\n        obj_in_blender = OU.obj_inside_of(self, \"obj\", self.blender, th=0.01)\n        gripper_obj_far = OU.gripper_obj_far(self)\n        return obj_in_blender and gripper_obj_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1720,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\n            \"lang\"\n        ] = \"Pick up the wedge of cheese and place it on the slice of bread to prepare a simple cheese on bread dish.\"\n\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1773,
+          "source": "def _check_success(self):\n        # Bread is still on the cutting board, and cheese is on top\n        return (\n            OU.check_obj_in_receptacle(self, \"bread\", \"bread_container\")\n            and OU.gripper_obj_far(self, obj_name=\"cheese\")\n            and self.check_contact(self.objects[\"cheese\"], self.objects[\"bread\"])\n        )"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1802,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Pick up an ice cube and place it in the glass of coffee.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1871,
+          "source": "def _check_success(self):\n        ice1_in_cup = OU.check_obj_in_receptacle(self, \"ice_cube1\", \"cup\", th=0.5)\n        ice2_in_cup = OU.check_obj_in_receptacle(self, \"ice_cube2\", \"cup\", th=0.5)\n        ice_in_cup = ice1_in_cup or ice2_in_cup\n\n        gripper_far_from_ice1 = OU.gripper_obj_far(self, \"ice_cube1\", th=0.15)\n        gripper_far_from_ice2 = OU.gripper_obj_far(self, \"ice_cube2\", th=0.15)\n        gripper_far = gripper_far_from_ice1 and gripper_far_from_ice2\n\n        return ice_in_cup and gripper_far"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 1902,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        sweets_lang = self.get_obj_lang(\"dessert\")\n        cooked_lang = self.get_obj_lang(\"cooked_food\")\n        ep_meta[\n            \"lang\"\n        ] = f\"Add the {sweets_lang} to the tupperware that contains the {cooked_lang}.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 1950,
+          "source": "def _check_success(self):\n        return (\n            OU.check_obj_in_receptacle(self, \"cooked_food\", \"cooked_food_container\")\n            and OU.check_obj_in_receptacle(self, \"dessert\", \"cooked_food_container\")\n            and OU.gripper_obj_far(self, \"dessert\")\n        )"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/organizing_utensils/arrange_utensils_by_type.py",
+      "sha256": "41563e7b1c9469a297bc002a6885a3397bd449864360584d25e93d8b5e4df05c",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 20,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n\n        self.cabinet = self.register_fixture_ref(\n            \"cabinet\", dict(id=FixtureType.CABINET_WITH_DOOR)\n        )\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, size=(0.8, 0.5))\n        )\n\n        self.init_robot_base_ref = self.counter"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 35,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = (\n            \"Organize the utensils by type. Pick up the wooden spoons from the counter \"\n            \"and place them in the open cabinet. Then pick up the metallic utensils from the counter \"\n            \"and place them in the open drawer.\"\n        )\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 114,
+          "source": "def _check_success(self):\n        wooden_spoon_1_in_cabinet = OU.obj_inside_of(\n            self, \"wooden_spoon\", self.cabinet\n        ) and not OU.check_obj_fixture_contact(self, \"wooden_spoon\", self.counter)\n\n        wooden_spoon_2_in_cabinet = OU.obj_inside_of(\n            self, \"wooden_spoon_2\", self.cabinet\n        ) and not OU.check_obj_fixture_contact(self, \"wooden_spoon_2\", self.counter)\n\n        metallic_utensil_1_in_drawer = OU.obj_inside_of(\n            self, \"metallic_utensil\", self.drawer\n        ) and not OU.check_obj_fixture_contact(self, \"metallic_utensil\", self.counter)\n\n        metallic_utensil_2_in_drawer = OU.obj_inside_of(\n            self, \"metallic_utensil_2\", self.drawer\n        ) and not OU.check_obj_fixture_contact(self, \"metallic_utensil_2\", self.counter)\n\n        gripper_obj_far = (\n            OU.gripper_obj_far(self, \"wooden_spoon\")\n            and OU.gripper_obj_far(self, \"wooden_spoon_2\")\n            and OU.gripper_obj_far(self, \"metallic_utensil\")\n            and OU.gripper_obj_far(self, \"metallic_utensil_2\")\n        )\n\n        return (\n            gripper_obj_far\n            and wooden_spoon_1_in_cabinet\n            and wooden_spoon_2_in_cabinet\n            and metallic_utensil_1_in_drawer\n            and metallic_utensil_2_in_drawer\n        )"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/organizing_utensils/cluster_utensils_in_drawer.py",
+      "sha256": "fb1efd6922b3db700037ad6a515ae3f232465eae6b0c2a81c5c1387714cc6c81",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 21,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER, size=(0.5, 0.5))\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.drawer)\n        )\n\n        if \"fork_side\" in self._ep_meta:\n            self.fork_side = self._ep_meta[\"fork_side\"]\n            self.spoon_side = self._ep_meta[\"spoon_side\"]\n        else:\n            sides = [\"left\", \"right\"]\n            fork_choice = self.rng.choice(sides)\n            spoon_choice = \"right\" if fork_choice == \"left\" else \"left\"\n            self.fork_side = fork_choice\n            self.spoon_side = spoon_choice\n\n        self.init_robot_base_ref = self.counter"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 43,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"fork_side\"] = self.fork_side\n        ep_meta[\"spoon_side\"] = self.spoon_side\n\n        ep_meta[\"lang\"] = (\n            f\"Pick up the fork from the counter and place it on the {self.fork_side} side of the drawer. \"\n            f\"Then, pick up the spoon from the counter and place it on the {self.spoon_side} side of the drawer. \"\n            f\"Make sure that the utensils are clustered by type.\"\n        )\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 129,
+          "source": "def _check_success(self):\n        utensil_names = [\"drawer_fork\", \"drawer_spoon\", \"counter_fork\", \"counter_spoon\"]\n        all_in_drawer = all(\n            OU.obj_inside_of(self, name, self.drawer) for name in utensil_names\n        )\n\n        all_not_on_counter = all(\n            not OU.check_obj_any_counter_contact(self, name) for name in utensil_names\n        )\n\n        threshold = 0.1\n\n        drawer_fork_pos = np.array(\n            self.sim.data.body_xpos[self.obj_body_id[\"drawer_fork\"]]\n        )\n        counter_fork_pos = np.array(\n            self.sim.data.body_xpos[self.obj_body_id[\"counter_fork\"]]\n        )\n        drawer_spoon_pos = np.array(\n            self.sim.data.body_xpos[self.obj_body_id[\"drawer_spoon\"]]\n        )\n        counter_spoon_pos = np.array(\n            self.sim.data.body_xpos[self.obj_body_id[\"counter_spoon\"]]\n        )\n\n        drawer_fork_x, drawer_fork_y = OU.transform_global_to_local(\n            drawer_fork_pos[0], drawer_fork_pos[1], -self.drawer.rot\n        )\n        counter_fork_x, counter_fork_y = OU.transform_global_to_local(\n            counter_fork_pos[0], counter_fork_pos[1], -self.drawer.rot\n        )\n        drawer_spoon_x, drawer_spoon_y = OU.transform_global_to_local(\n            drawer_spoon_pos[0], drawer_spoon_pos[1], -self.drawer.rot\n        )\n        counter_spoon_x, counter_spoon_y = OU.transform_global_to_local(\n            counter_spoon_pos[0], counter_spoon_pos[1], -self.drawer.rot\n        )\n\n        fork_x_distance = abs(drawer_fork_x - counter_fork_x)\n        spoon_x_distance = abs(drawer_spoon_x - counter_spoon_x)\n\n        forks_close = fork_x_distance < threshold\n        spoons_close = spoon_x_distance < threshold\n\n        gripper_far_fork = OU.gripper_obj_far(self, obj_name=\"counter_fork\")\n        gripper_far_spoon = OU.gripper_obj_far(self, obj_name=\"counter_spoon\")\n        gripper_far = gripper_far_fork and gripper_far_spoon\n\n        return (\n            all_in_drawer\n            and all_not_on_counter\n            and forks_close\n            and spoons_close\n            and gripper_far\n        )"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/organizing_utensils/organize_metalic_utensils.py",
+      "sha256": "81756396538732e98e5fa0b916b70fbf54861b938390708691f4c374e7e54c8a",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 22,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.stool = self.register_fixture_ref(\"stool\", dict(id=FixtureType.STOOL))\n        self.dining_counter = self.register_fixture_ref(\n            \"dining_counter\", dict(id=FixtureType.DINING_COUNTER, ref=self.stool)\n        )\n\n        if \"refs\" in self._ep_meta:\n            self.third_utensil_is_metallic = self._ep_meta[\"refs\"][\n                \"third_utensil_is_metallic\"\n            ]\n        else:\n            self.third_utensil_is_metallic = self.rng.random() > 0.5\n\n        self.init_robot_base_ref = self.dining_counter"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 42,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = (\n            f\"Pick up the metallic utensils from the counter and place them in the open drawer. \"\n            f\"Make sure not to pick up any wooden utensils.\"\n        )\n        ep_meta[\"refs\"] = ep_meta.get(\"refs\", {})\n        ep_meta[\"refs\"][\"third_utensil_is_metallic\"] = self.third_utensil_is_metallic\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 148,
+          "source": "def _check_success(self):\n        metals = [\"metallic_utensil\", \"metallic_utensil_2\"]\n        if self.third_utensil_is_metallic:\n            metals.append(\"third_metallic_utensil\")\n\n        for m in metals:\n            inside = OU.obj_inside_of(self, m, self.drawer)\n            on_counter = OU.check_obj_fixture_contact(self, m, self.dining_counter)\n            if not inside or on_counter:\n                return False\n\n        woods = [\"wooden_spoon\"]\n        if not self.third_utensil_is_metallic:\n            woods.append(\"second_wooden_spoon\")\n\n        for w in woods:\n            on_counter = OU.check_obj_fixture_contact(self, w, self.dining_counter)\n            inside = OU.obj_inside_of(self, w, self.drawer)\n            if not on_counter or inside:\n                return False\n\n        for obj in metals + woods:\n            far = OU.gripper_obj_far(self, obj)\n            if not far:\n                return False\n\n        return True"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/sanitizing_surface/countertop_cleanup.py",
+      "sha256": "d4735d9eb5de2e68c2cc55b85a780856fefa79bd884a9fad1b580f65a65b0fb5",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 19,
+          "source": "def _setup_kitchen_references(self):\n\n        super()._setup_kitchen_references()\n        self.cab = self.register_fixture_ref(\n            \"cab\", dict(id=FixtureType.CABINET_WITH_DOOR)\n        )\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER, ref=self.cab, size=(0.8, 0.5))\n        )\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER, ref=self.cab)\n        )\n        self.fridge = self.register_fixture_ref(\"fridge\", dict(id=FixtureType.FRIDGE))\n        self.init_robot_base_ref = self.counter"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 34,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n\n        utensil_name = self.get_obj_lang(\"utensil\")\n        receptacle_name = self.get_obj_lang(\"receptacle\")\n        food1_name = self.get_obj_lang(\"food1\")\n        food2_name = self.get_obj_lang(\"food2\")\n\n        if food1_name == food2_name:\n            food_text = f\"{food1_name}s\"\n        else:\n            food_text = f\"{food1_name} and {food2_name}\"\n\n        ep_meta[\"lang\"] = (\n            f\"Clean up the countertop by placing items away. \"\n            f\"Place the {utensil_name} in the open drawer. \"\n            f\"Place the {receptacle_name} in the open cabinet. \"\n            f\"Place the bowl with the {food_text} in the fridge.\"\n        )\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 142,
+          "source": "def _check_success(self):\n        utensil_in_drawer = OU.obj_inside_of(\n            self, \"utensil\", self.drawer\n        ) and not OU.check_obj_any_counter_contact(self, \"utensil\")\n\n        receptacle_in_cabinet = OU.obj_inside_of(self, \"receptacle\", self.cab)\n        food1_in_bowl = OU.check_obj_in_receptacle(self, \"food1\", \"food_bowl\")\n        food2_in_bowl = OU.check_obj_in_receptacle(self, \"food2\", \"food_bowl\")\n        food_bowl_in_fridge = self.fridge.check_rack_contact(\n            self, \"food_bowl\", compartment=\"fridge\"\n        )\n\n        gripper_far = all(\n            OU.gripper_obj_far(self, obj)\n            for obj in [\"utensil\", \"receptacle\", \"food_bowl\"]\n        )\n\n        return (\n            utensil_in_drawer\n            and receptacle_in_cabinet\n            and food1_in_bowl\n            and food2_in_bowl\n            and food_bowl_in_fridge\n            and gripper_far\n        )"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/serving_beverages/deliver_straw.py",
+      "sha256": "6b29e4a6a91426605856d5f64adf37be7af8aa5c63d529921fd811c85cbb55e5",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 20,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.stool = self.register_fixture_ref(\n            \"stool\",\n            dict(id=FixtureType.STOOL),\n        )\n        self.dining_counter = self.register_fixture_ref(\n            \"dining_counter\",\n            dict(id=FixtureType.DINING_COUNTER, ref=self.stool),\n        )\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.init_robot_base_ref = self.drawer"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 35,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        if self.use_novel_instructions:\n            ep_meta[\"lang\"] = self.rng.choice(self.novel_instructions)\n        else:\n            ep_meta[\n                \"lang\"\n            ] = \"Take a straw from the drawer in front and place it inside the glass cup on the dining counter.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 76,
+          "source": "def _check_success(self):\n        straw_in_glass_cup = OU.check_obj_in_receptacle(\n            self, \"straw\", \"glass_cup\", th=0.5\n        )\n        gripper_far = OU.gripper_obj_far(self, obj_name=\"straw\")\n        return straw_in_glass_cup and gripper_far"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/slicing_meat/set_up_cutting_station.py",
+      "sha256": "da2a6dae587c5d72fd87540c373d9dfaabf32cdad4cfb5a8e6f8cdc5ad6726e5",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 20,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.counter = self.register_fixture_ref(\n            \"counter\", dict(id=FixtureType.COUNTER)\n        )\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER, ref=self.counter)\n        )\n        self.init_robot_base_ref = self.drawer"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 30,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n\n        if self.use_novel_instructions:\n            ep_meta[\"lang\"] = self.rng.choice(self.novel_instructions)\n        else:\n            ep_meta[\n                \"lang\"\n            ] = f\"Pick up the knife from the drawer and place it on the cutting board. Then place the meat from the plate to the cutting board.\"\n\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 95,
+          "source": "def _check_success(self):\n\n        meat_on_board = OU.check_obj_in_receptacle(self, \"meat\", \"receptacle\")\n\n        knife_on_board = OU.check_obj_in_receptacle(self, \"knife\", \"receptacle\")\n\n        gripper_far = OU.gripper_obj_far(self, \"knife\") and OU.gripper_obj_far(\n            self, \"receptacle\"\n        )\n\n        return meat_on_board and knife_on_board and gripper_far"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/tidying_cabinets_and_drawers/drawer_utensil_sort.py",
+      "sha256": "5ecec914d5dbb66878e9328e19acf07ff5be72c9f0d4bd8f5cbc72ab7a6ce89a",
+      "functions": [
+        {
+          "name": "__init__",
+          "line": 20,
+          "source": "def __init__(self, drawer_id=FixtureType.TOP_DRAWER, *args, **kwargs):\n        super().__init__(behavior=\"open\", drawer_id=drawer_id, *args, **kwargs)"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 29,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\n            \"lang\"\n        ] = f\"{self.behavior} the {self.drawer_side} drawer and place the utensils inside it.\"\n        ep_meta[\"lang\"] = ep_meta[\"lang\"][0].capitalize() + ep_meta[\"lang\"][1:]\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 77,
+          "source": "def _check_success(self):\n        utensil1_inside_drawer = OU.obj_inside_of(\n            self, \"utensil1\", self.drawer\n        ) and not OU.check_obj_any_counter_contact(self, \"utensil1\")\n        utensil2_inside_drawer = OU.obj_inside_of(\n            self, \"utensil2\", self.drawer\n        ) and not OU.check_obj_any_counter_contact(self, \"utensil2\")\n\n        gripper_obj_far = OU.gripper_obj_far(\n            self, obj_name=\"utensil1\"\n        ) and OU.gripper_obj_far(self, obj_name=\"utensil2\")\n        return utensil1_inside_drawer and utensil2_inside_drawer and gripper_obj_far"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/environments/kitchen/composite/tidying_cabinets_and_drawers/utensil_shuffle.py",
+      "sha256": "f244171cc6014458a9b59db45e39bcdc187cff0b85259e4763f59cad42d2acb2",
+      "functions": [
+        {
+          "name": "_setup_kitchen_references",
+          "line": 19,
+          "source": "def _setup_kitchen_references(self):\n        super()._setup_kitchen_references()\n        self.drawer = self.register_fixture_ref(\n            \"drawer\", dict(id=FixtureType.TOP_DRAWER)\n        )\n        self.cab = self.register_fixture_ref(\n            \"cab\", dict(id=FixtureType.CABINET, ref=self.drawer)\n        )\n        self.init_robot_base_ref = self.cab"
+        },
+        {
+          "name": "get_ep_meta",
+          "line": 29,
+          "source": "def get_ep_meta(self):\n        ep_meta = super().get_ep_meta()\n        ep_meta[\"lang\"] = \"Pick and place the utensils into the open drawer.\"\n        return ep_meta"
+        },
+        {
+          "name": "_check_success",
+          "line": 80,
+          "source": "def _check_success(self):\n        utensil_in_drawer = (\n            OU.obj_inside_of(self, \"utensil1\", self.drawer)\n            and OU.obj_inside_of(self, \"utensil2\", self.drawer)\n            and not OU.obj_inside_of(self, \"condiment\", self.drawer)\n            and not OU.check_obj_any_counter_contact(self, \"utensil1\")\n            and not OU.check_obj_any_counter_contact(self, \"utensil2\")\n        )\n        gripper_far = all(\n            OU.gripper_obj_far(self, obj) for obj in [\"utensil1\", \"utensil2\"]\n        )\n        return utensil_in_drawer and gripper_far"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/cabinets.py",
+      "sha256": "5c49fa3fb08f64263879fae2b51beb47cfe54951ff5ba3259aaff63c0b1d5661",
+      "functions": [
+        {
+          "name": "Drawer",
+          "line": 855,
+          "source": "class Drawer(Cabinet):\n    \"\"\"\n    Creates a Drawer\n\n    Args:\n        name (str): name of the cabinet\n\n        handle_config (dict): configuration for handle. contains keyword arguments for handle class\n    \"\"\"\n\n    def __init__(\n        self,\n        name=\"drawer\",\n        handle_config=None,\n        *args,\n        **kwargs,\n    ):\n        self.cabinet_type = \"drawer\"\n\n        xml = \"fixtures/cabinets/drawer.xml\"\n\n        if handle_config is None:\n            handle_config = dict()\n        handle_config[\"orientation\"] = \"horizontal\"\n\n        super().__init__(\n            xml=xml,\n            name=name,\n            handle_config=handle_config,\n            *args,\n            **kwargs,\n        )\n\n    def get_reset_region_names(self):\n        return (\"int\",)\n\n    def _get_cab_components(self):\n        \"\"\"\n        Finds and returns all geoms, bodies, and joints used for drawers\n        returns:\n            dicts for geoms, bodies, and joints, mapping names to elements\n        \"\"\"\n        geom_names = [\n            \"top\",\n            \"bottom\",\n            \"back\",\n            \"right\",\n            \"left\",\n            \"inner_bottom\",\n            \"inner_back\",\n            \"inner_right\",\n            \"inner_left\",\n        ]\n        body_names = [\"inner_box\"]\n        joint_names = [\"slidejoint\"]\n\n        return self._get_elements_by_name(geom_names, body_names, joint_names)\n\n    def _create_cab(self):\n        \"\"\"\n        Creates the full cabinet. This involves setting the sizes and positions for the cabinet and the door,\n        creating the door class. This also involves calculating the exterior and interior bounding boxes.\n        \"\"\"\n        # divide everything by 2 according to mujoco convention\n        x, y, z = [dim / 2 for dim in self.size]\n        th = self.thickness / 2\n\n        self.geoms, bodies, joints = self._get_cab_components()\n\n        \"\"\"\n        core cabinet housing\n        \"\"\"\n\n        ix = x - 2 * th - 0.001  # inner box x\n        iy = y - 2 * th\n        iz = z - 2 * th - 0.001  # inner box z\n\n        sizes = {\n            \"top\": [x, y - th, th],\n            \"bottom\": [x, y - th, th],\n            \"back\": [x - 2 * th, th, z - 2 * th],\n            \"left\": [th, y - th, z - 2 * th],\n            \"right\": [th, y - th, z - 2 * th],\n            \"inner_bottom\": [ix, iy, th],\n            \"inner_back\": [ix - 2 * th, th, iz - 2 * th],\n            \"inner_left\": [th, iy, iz - 2 * th],\n            \"inner_right\": [th, iy, iz - 2 * th],\n        }\n        positions = {\n            \"top\": [0, th, z - th],\n            \"bottom\": [0, th, -z + th],\n            \"back\": [0, y - th, 0],\n            \"left\": [-x + th, th, 0],\n            \"right\": [x - th, th, 0],\n            \"inner_bottom\": [0, 0, -iz + th],\n            \"inner_back\": [0, iy - th, 0],\n            \"inner_left\": [-ix + th, 0, 0],\n            \"inner_right\": [ix - th, 0, 0],\n        }\n        set_geom_dimensions(sizes, positions, self.geoms, rotated=True)\n\n        # door body and joints\n        bodies[\"inner_box\"].set(\"pos\", a2s([0, 0, 0]))\n        # set joint position\n        joints[\"slidejoint\"].set(\"pos\", a2s([0, -y, 0]))\n        joints[\"slidejoint\"].set(\"range\", a2s([-y * 2, 0]))\n\n        # create door\n        door_w, door_h, door_th = x * 2, z * 2, th * 2  # multiply by 2 to set full size\n        door_pos = [0, -y + th, 0]\n        self._add_door(\n            w=door_w,\n            h=door_h,\n            th=door_th,\n            pos=door_pos,\n            parent_body=bodies[\"inner_box\"],\n            handle_hpos=\"center\",\n            handle_vpos=\"center\",\n        )\n\n        int_p0 = np.array(\n            [\n                -ix + 2 * th,\n                -iy,\n                -iz + 2 * th,\n            ]\n        )\n        int_p1 = np.array(\n            [\n                ix - 2 * th,\n                iy - 2 * th,\n                iz,\n            ]\n        )\n\n        self.update_regions(\n            {\n                \"main\": {\n                    \"pos\": [0.0, 0.0, 0.0],\n                    \"halfsize\": [x, y, z],\n                },\n                \"int\": {\n                    \"pos\": (int_p0 + int_p1) / 2,\n                    \"halfsize\": (int_p1 - int_p0) / 2,\n                },\n            },\n            update_elem=True,\n        )\n\n    @property\n    def nat_lang(self):\n        return \"drawer\"\n\n    def update_state(self, env):\n        \"\"\"\n        Updates the interior bounding boxes of the drawer to be matched with\n        how open the drawer is. This is needed when determining if an object\n        is inside the drawer or when placing an object inside an open drawer.\n\n        Args:\n            env (MujocoEnv): environment\n        \"\"\"\n        pos = get_fixture_to_point_rel_offset(\n            self, env.sim.data.get_geom_xpos(f\"{self.naming_prefix}reg_int\")\n        )\n        # use prev half size since this wont change\n        hs = s2a(self._regions[\"int\"][\"elem\"].get(\"size\"))\n        # don't update the element. the position here is with respect\n        # to the main drawer body, rather than the housing body.\n        self.update_regions({\"int\": {\"pos\": pos, \"halfsize\": hs}}, update_elem=False)\n\n    def open_door(self, env, min=0.9, max=1, partial_open=True):\n        if partial_open:\n            min *= 0.3\n            max *= 0.3\n        return super().open_door(env, min, max)\n\n    def set_door_state(self, min, max, env):\n        \"\"\"\n        Sets how open the drawer is. Chooses a random amount between min and max.\n        Min and max are percentages of how open the drawer is.\n\n        Args:\n            min (float): minimum percentage of how open the drawer is\n\n            max (float): maximum percentage of how open the drawer is\n\n            env (MujocoEnv): environment\n\n            rng (np.random.Generator): random number generator\n        \"\"\"\n        assert 0 <= min <= 1 and 0 <= max <= 1 and min <= max\n\n        joint_min = 0\n        joint_max = self.size[1] * 0.55  # dont want it to fully open up\n\n        desired_min = joint_min + (joint_max - joint_min) * min\n        desired_max = joint_min + (joint_max - joint_min) * max\n\n        sign = -1\n\n        env.sim.data.set_joint_qpos(\n            \"{}_slidejoint\".format(self.name),\n            sign * env.rng.uniform(desired_min, desired_max),\n        )\n\n    def get_door_state(self, env):\n        \"\"\"\n        Args:\n            env (MujocoEnv): environment\n\n        Returns:\n            dict: maps door name to a percentage of how open the door is\n        \"\"\"\n        sim = env.sim\n        hinge_qpos = sim.data.qpos[\n            sim.model.get_joint_qpos_addr(f\"{self.name}_slidejoint\")\n        ]\n        sign = -1\n        hinge_qpos = hinge_qpos * sign\n\n        # convert to percentages\n        door = OU.normalize_joint_value(\n            hinge_qpos, joint_min=0, joint_max=self.size[1] * 0.55\n        )\n\n        return {\n            \"door\": door,\n        }\n\n    @property\n    def handle_name(self):\n        return \"{}_door_handle_handle\".format(self.name)\n\n    @property\n    def door_joint_names(self):\n        return [j_name for j_name in self._joint_infos if \"slidejoint\" in j_name]"
+        },
+        {
+          "name": "get_door_state",
+          "line": 652,
+          "source": "def get_door_state(self, env):\n        \"\"\"\n        Args:\n            env (MujocoEnv): environment\n        Returns:\n            dict: maps door name to a percentage of how open the door is (0.0 closed, 1.0 fully open)\n        \"\"\"\n        sim = env.sim\n\n        # Get raw qpos values\n        left_qpos = sim.data.qpos[\n            sim.model.get_joint_qpos_addr(f\"{self.name}_leftdoorhinge\")\n        ]\n        right_qpos = sim.data.qpos[\n            sim.model.get_joint_qpos_addr(f\"{self.name}_rightdoorhinge\")\n        ]\n\n        # Normalize each based on correct direction\n        left_door = OU.normalize_joint_value(abs(left_qpos), 0, np.pi / 2)\n        right_door = OU.normalize_joint_value(abs(right_qpos), 0, np.pi / 2)\n\n        return {\n            \"left_door\": left_door,\n            \"right_door\": right_door,\n        }"
+        },
+        {
+          "name": "get_door_state",
+          "line": 1061,
+          "source": "def get_door_state(self, env):\n        \"\"\"\n        Args:\n            env (MujocoEnv): environment\n\n        Returns:\n            dict: maps door name to a percentage of how open the door is\n        \"\"\"\n        sim = env.sim\n        hinge_qpos = sim.data.qpos[\n            sim.model.get_joint_qpos_addr(f\"{self.name}_slidejoint\")\n        ]\n        sign = -1\n        hinge_qpos = hinge_qpos * sign\n\n        # convert to percentages\n        door = OU.normalize_joint_value(\n            hinge_qpos, joint_min=0, joint_max=self.size[1] * 0.55\n        )\n\n        return {\n            \"door\": door,\n        }"
+        }
+      ]
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fixture_utils.py",
+      "sha256": "0da38a72f9a438f498b9ee2262c48aa5930769ba95e6f5f8008be3856f5acf30",
+      "functions": [
+        {
+          "name": "fixture_is_type",
+          "line": 4,
+          "source": "def fixture_is_type(fixture, fixture_type):\n    \"\"\"\n    Check if a fixture is of a certain type\n\n    Args:\n        fixture (Fixture): The fixture to check\n\n        fixture_type (FixtureType): The type to check against\n    \"\"\"\n    if fixture_type == FixtureType.SINK:\n        return isinstance(fixture, Sink)\n    elif fixture_type == FixtureType.STOVE:\n        return isinstance(fixture, Stove)\n    elif fixture_type == FixtureType.OVEN:\n        return isinstance(fixture, Oven)\n    elif fixture_type == FixtureType.FRIDGE:\n        return isinstance(fixture, Fridge)\n    elif fixture_type == FixtureType.DISHWASHER:\n        return isinstance(fixture, Dishwasher)\n    elif fixture_type == FixtureType.ELECTRIC_KETTLE:\n        return isinstance(fixture, ElectricKettle)\n    elif fixture_type == FixtureType.COFFEE_MACHINE:\n        return isinstance(fixture, CoffeeMachine)\n    elif fixture_type == FixtureType.STAND_MIXER:\n        return isinstance(fixture, StandMixer)\n    elif fixture_type == FixtureType.TOASTER:\n        return isinstance(fixture, Toaster)\n    elif fixture_type == FixtureType.TOASTER_OVEN:\n        return isinstance(fixture, ToasterOven)\n    elif fixture_type == FixtureType.BLENDER:\n        return isinstance(fixture, Blender)\n    elif fixture_type == FixtureType.MICROWAVE:\n        return isinstance(fixture, Microwave)\n    elif fixture_type == FixtureType.STOOL:\n        return isinstance(fixture, Stool)\n    elif fixture_type == FixtureType.DISH_RACK:\n        return isinstance(fixture, DishRack)\n    elif fixture_type == FixtureType.ISLAND:\n        if not isinstance(fixture, Counter):\n            return False\n        # if island_only is True, this should be considered an island\n        if hasattr(fixture, \"island_only\") and fixture.island_only:\n            return True\n        # fallback to name-based check\n        return \"island\" in fixture.name\n    # elif fixture_type == FixtureType.COUNTER_NON_CORNER:\n    #     return isinstance(fixture, Counter) and \"corner\" not in fixture.name\n    elif fixture_type in [FixtureType.COUNTER, FixtureType.COUNTER_NON_CORNER]:\n        # merged COUNTER into COUNTER_NON_CORNER\n        # TODO: decide whether we want to ever sample corner counters\n        return isinstance(fixture, Counter) and \"corner\" not in fixture.name\n    elif fixture_type == FixtureType.DINING_COUNTER:\n        cls_check = any([isinstance(fixture, cls) for cls in [Counter]])\n        if not cls_check:\n            return False\n        # if island_only is True, this should NOT be considered a dining counter\n        if hasattr(fixture, \"island_only\") and fixture.island_only:\n            return False\n        # a hack to identify counters that start with name island\n        valid_dining_prefix = fixture.name.startswith(\n            \"island\"\n        ) or fixture.name.startswith(\"dining\")\n        return valid_dining_prefix or sum(fixture.base_opening) > 0\n    elif fixture_type == FixtureType.COUNTER_NON_DINING:\n        # Check that it's a counter but not a dining counter\n        cls_check = any([isinstance(fixture, cls) for cls in [Counter]])\n        if not cls_check:\n            return False\n        # if island_only is True, this should NOT be considered a dining counter\n        if hasattr(fixture, \"island_only\") and fixture.island_only:\n            return True\n        # Check that it's NOT a dining counter\n        valid_dining_prefix = fixture.name.startswith(\n            \"island\"\n        ) or fixture.name.startswith(\"dining\")\n        is_dining = valid_dining_prefix or sum(fixture.base_opening) > 0\n        return not is_dining\n    elif fixture_type in [\n        FixtureType.CABINET,\n        FixtureType.CABINET_WITH_DOOR,\n        FixtureType.CABINET_SINGLE_DOOR,\n        FixtureType.CABINET_DOUBLE_DOOR,\n    ]:\n        if fixture_type == FixtureType.CABINET:\n            valid_classes = [SingleCabinet, HingeCabinet, OpenCabinet]\n        elif fixture_type == FixtureType.CABINET_WITH_DOOR:\n            valid_classes = [SingleCabinet, HingeCabinet]\n        elif fixture_type == FixtureType.CABINET_SINGLE_DOOR:\n            valid_classes = [SingleCabinet]\n        elif fixture_type == FixtureType.CABINET_DOUBLE_DOOR:\n            valid_classes = [HingeCabinet]\n        cls_check = any([isinstance(fixture, cls) for cls in valid_classes])\n        if not cls_check:\n            return False\n\n        if \"stack\" in fixture.name:  # wall stack cabinets not valid\n            return False\n        if fixture.is_corner_cab is True:  # ignore corner cabinets\n            return False\n\n        # check that there are valid reset regions\n        reset_regions = fixture.get_reset_regions(\n            z_range=(1.0, 1.50)\n        )  # find reset regions within bounds\n        if len(reset_regions) > 0:\n            return True\n        else:\n            return False\n    elif fixture_type == FixtureType.TOP_DRAWER:\n        height_check = 0.7 <= fixture.pos[2] <= 0.9\n        return height_check and isinstance(fixture, Drawer)\n    elif fixture_type == FixtureType.DRAWER:\n        return isinstance(fixture, Drawer)\n    elif fixture_type == FixtureType.WINDOW:\n        return isinstance(fixture, Window)\n    else:\n        raise ValueError"
+        }
+      ]
+    }
+  ],
+  "simulation_steps": 0,
+  "model_calls": 0
+}
