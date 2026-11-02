@@ -23,4 +23,4 @@ export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 export PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONNOUSERSITE=1
 timeout --signal=TERM --kill-after=30s 1080 "$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python" -B \
- "$TASK_PROBE_CODE/outputs/opendrawer-reset-pairing-20261102-r1/PROBE.py"
+ "$TASK_PROBE_CODE/${TASK_PROBE_SCRIPT:-outputs/opendrawer-reset-pairing-20261102-r1/PROBE.py}"
