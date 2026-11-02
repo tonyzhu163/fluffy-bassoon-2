@@ -134,7 +134,8 @@ def main():
     if (type(maximum_iterations) is not int or not 1 <= maximum_iterations <= 10
             or joint and (profile.get('tasks') != list(PPO_TASKS) or profile['mode'] == 'headroom'
                           or len(profile.get('rollout_devices', [])) != 8
-                          or profile['mode']=='train' and profile.get('independent_stopping') is not True)):
+                          or profile['mode']=='train' and profile.get('independent_stopping') is not True
+                              and profile.get('stopping') != 'fixed')):
         raise ValueError('Explicit bounded joint task/layout and iteration endpoint required')
     code = Path(__file__).resolve().parents[2]
     head = lambda path: subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"], text=True).strip()
@@ -200,9 +201,16 @@ def main():
                                for case in case_bank(task, 'train', iteration=iteration, round_index=round_index)]
         if profile["training_cases"] != canonical_cases:
             raise ValueError("Prospectively frozen native TRAIN bank required")
+    # None records every physical action without a ceiling (human, 2026-11-02);
+    # the scheduler clock and fixed banks still bound the run.
     action_limit = profile["maximum_all_in_actions"]
-    if type(action_limit) is not int or not 0 < action_limit <= 1_000_000:
-        raise ValueError("Finite all-in physical action limit required")
+    if action_limit is not None and (type(action_limit) is not int or not 0 < action_limit <= 1_000_000):
+        raise ValueError("Finite all-in physical action limit or None required")
+    journal_cap = None if action_limit is None else 1_000_000
+    action_limit = math.inf if action_limit is None else action_limit
+    fixed_stopping = profile.get("stopping") == "fixed"
+    if profile.get("stopping") not in (None, "fixed") or fixed_stopping and profile.get("independent_stopping"):
+        raise ValueError("Use either fixed-count or independent DEV stopping")
     output = Path(profile["output"])
     output.mkdir(parents=True, exist_ok=False)
     write_new(output / "profile.json", profile)
@@ -213,9 +221,10 @@ def main():
         from fluffy_bassoon.meta_rl.robocasa_residual_parallel import ParallelActionJournal, ParallelResidualEnvironment
         if len(parallel) != 8 or len({row["uuid"] for row in parallel}) != 8:
             raise ValueError("Eight distinct allocated GPUs required for parallel rollouts")
-        journal = ParallelActionJournal(profile["accounting_root"], len(parallel))
+        journal = ParallelActionJournal(profile["accounting_root"], len(parallel), journal_cap)
     else:
-        journal = ActionJournal(profile["accounting_root"], rank=0, world=1, attempt=profile["attempt"])
+        journal = ActionJournal(profile["accounting_root"], rank=0, world=1, attempt=profile["attempt"],
+                                maximum_actions=journal_cap)
     progress = ProgressLog(output / "progress", profile["arm"], contract_sha256=digest(profile)).start()
     last_report = [0.]
 
@@ -531,6 +540,10 @@ def main():
                 physical_actions=journal.charged(), ppo_diagnostics=metrics)
             if iteration in (2, 4, 6, 8, 10):
                 _, _, evaluation = panel("DEV", iteration)
+                if fixed_stopping:
+                    # DEV is a learning-curve record only; it never stops training.
+                    iteration_times.append(time.monotonic() - iteration_start)
+                    continue
                 if profile.get("independent_stopping"):
                     dev_evaluations.append(evaluation)
                     decision = joint_arm_stopping(dev_evaluations) if joint else arm_stopping(dev_evaluations)
@@ -554,6 +567,15 @@ def main():
                     iteration_times.append(time.monotonic() - iteration_start)
                     break
             iteration_times.append(time.monotonic() - iteration_start)
+        if fixed_stopping and iteration < maximum_iterations:
+            # A fixed count is never cut short by the clock: keep the boundary
+            # and resume rather than evaluating an earlier policy as final.
+            boundary = output / f"boundary-{iteration:03d}.pt"
+            boundary = boundary if boundary.exists() else Path(profile["resume"])
+            write_new(output / "RESUME-REQUIRED.json", dict(iteration=iteration,
+                maximum_iterations=maximum_iterations, stop_reason=stop_reason,
+                checkpoint=dict(path=str(boundary), sha256=sha(boundary))))
+            return
         save_checkpoint(output / "final.pt", policy=policy, optimizer=optimizer, bound=bound, motor=motor,
             environment=train_env, generators=generators, contract=contract, iteration=iteration, stage="boundary", final=True)
         write_new(output / "FINAL.json", dict(completed=True, iteration=iteration, stop_reason=stop_reason,
