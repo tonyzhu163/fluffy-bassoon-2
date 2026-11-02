@@ -19,6 +19,7 @@ if __name__ == '__main__':
     third_root = BASE.parent / 'baige-storage-tiering-20261103-r3'
     fourth_root = BASE.parent / 'baige-storage-tiering-20261103-r4'
     fifth_root = BASE.parent / 'baige-storage-tiering-20261103-r5'
+    sixth_root = BASE.parent / 'baige-storage-tiering-20261103-r6'
     third = json.loads((third_root / 'SUMMARY.json').read_text())
     fourth = json.loads((fourth_root / 'SUMMARY.json').read_text())
     assert third.get('finished_at'), 'Archival still running'
@@ -28,6 +29,8 @@ if __name__ == '__main__':
         assert json.loads((fifth_root/'MIGRATION.json').read_text())['complete']
         assert json.loads((fifth_root/'COVERAGE.json').read_text())['archive_member_set_equals_inventory']
         assert json.loads((fifth_root/'actual/RESULT.json').read_text())['all_passed']
+    if sixth_root.exists():
+        assert json.loads((sixth_root/'SUMMARY.json').read_text())['complete']
     completed = list(first['completed'])
     preserved = list(first['preserved'])
     reconciled = []
@@ -87,7 +90,7 @@ if __name__ == '__main__':
         'object_directory': str(BOS), 'protected_roots_verified_present': protected,
         'verification': 'Every completed archive passed GNU tar content comparison, complete BOS SHA256 readback, unchanged-source checks, and final pointer/object-size reconciliation.',
         'completed': completed,
-        'phases': ['r1 first six verified moves', 'r2 stopped before packing; no payload moved', 'r3 bounded parallel continuation with qualified concurrent metadata inventory', 'r4 qualified parallel removal of only inventoried, already verified private quarantine members', 'r5 final source compared by eight exact nonrecursive GNU tar member partitions, with positive/negative qualification and complete archive/inventory member coverage']}
+        'phases': ['r1 first six verified moves', 'r2 stopped before packing; no payload moved', 'r3 bounded parallel continuation with qualified concurrent metadata inventory', 'r4 qualified parallel removal of only inventoried, already verified private quarantine members', 'r5 final source compared by eight exact nonrecursive GNU tar member partitions, with positive/negative qualification and complete archive/inventory member coverage', 'r6 reverse-order leaf-only assistance in final verified private quarantine; r4 retains directory and final receipt ownership']}
     save(BASE/'MANIFEST.json', result)
     save(BOS/'MANIFEST.json', result)
     script_hashes={}
@@ -98,7 +101,7 @@ if __name__ == '__main__':
     save(BASE/'SCRIPT-HASHES.json', script_hashes)
     receipts=BOS/'audit-receipts'
     receipts.mkdir(exist_ok=True)
-    for phase in (BASE,BASE.parent/'baige-storage-tiering-20261103-r2',third_root,fourth_root,fifth_root):
+    for phase in (BASE,BASE.parent/'baige-storage-tiering-20261103-r2',third_root,fourth_root,fifth_root,sixth_root):
         for name in ('PLAN.json','SUMMARY.json','MIGRATION.json','PHASE-CLOSEOUT.json',
                      'PHASE-BOUNDARY.json','INVENTORY-QUALIFICATION.json','QUALIFICATION.json',
                      'PROTECTION.json','INTERPRETER-DEPENDENCIES.json','COVERAGE.json'):
