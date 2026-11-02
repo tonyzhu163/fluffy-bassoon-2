@@ -142,7 +142,7 @@ held-out after-training panels:
 Flora did not exceed simulator PPO on these panels. This is one training task
 and one PPO source seed; it does not establish the cause of the difference or
 an OOD degradation relative to the untouched motor. The original before panel
-has only8 cases per split; its matching50+50 evaluation is being prepared.
+has only8 cases per split; its matching50+50 evaluation is now running.
 Do not substitute the separate50-case calibration bank for that baseline.
 The Flora arm completed384 TRAIN episodes with all384 official labels audited;
 its full5760-decision history exactly merges the preserved four-update prefix
@@ -151,6 +151,12 @@ fifth rollout remain charged:430,528 controls and46,384 GPU-s across the two
 Flora attempts, including DEV and final panels. Full actor/critic/Adam/sampler/RNG
 recoveries remain preserved. These histories support development of AD/DPT;
 they do not by themselves establish in-context adaptation.
+The actual case identities and per-chunk motor-noise seeds match across all100
+final S/F episodes, as does initial public proprioception. Frozen visual features
+and action chunks are not bitwise identical across runs, including a substantial
+gripper-channel difference in one OOD case. Matching seeds therefore does not
+establish perfect numerical pairing or the cause of a few-case success gap.
+[Seed and numerical audit](../outputs/robocasa-original-pi05-eval50-20261102-r1/INITIAL-NUMERICS.json).
 [Simulator panel audit](../outputs/robocasa-simulator-ppo-eval50-20261102-r1/TERMINAL-REVIEW.json),
 [Flora terminal audit](../outputs/robocasa-opendrawer-flora-resume-20261102-r1/TERMINAL-REVIEW.json),
 [original matching-panel contract](../outputs/robocasa-original-pi05-eval50-20261102-r1/PLAN.json).

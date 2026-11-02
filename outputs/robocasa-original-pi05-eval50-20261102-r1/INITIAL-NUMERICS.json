@@ -1,0 +1,27 @@
+{
+  "evaluation_seeds_audited": true,
+  "case_identities_equal_for_all100": true,
+  "actual_per_chunk_noise_seeds_equal_for_all100": true,
+  "initial_normalized_public_proprio_bitwise_equal_for_all100": true,
+  "native_episode_metadata_equal_after_sorting_only_unordered_object_category_membership": true,
+  "initial_frozen_motor_outputs_bitwise_equal": false,
+  "ID": {
+    "max_initial_proprio_abs_difference": 0.0,
+    "max_normalized_first12_abs_difference": 0.002935469150543213,
+    "max_normalized_mean12_abs_difference": 0.00690266489982605,
+    "max_pooled_visual_feature_abs_difference": 0.07850837707519531,
+    "largest_raw_chunk_abs_difference": 0.005167260766029358
+  },
+  "OOD": {
+    "max_initial_proprio_abs_difference": 0.0,
+    "max_normalized_first12_abs_difference": 0.004237949848175049,
+    "max_normalized_mean12_abs_difference": 0.03473277390003204,
+    "max_pooled_visual_feature_abs_difference": 0.1675405502319336,
+    "largest_raw_chunk_abs_difference": 1.7072198390960693,
+    "largest_raw_difference_dimension": 6,
+    "largest_raw_difference_case_slot": 22,
+    "largest_six_steered_arm_channel_difference_among_reported_cases": 0.017330318689346313
+  },
+  "interpretation": "Common cases and actual noise seeds are verified; cross-run bitwise frozen-motor parity is not established. Initial public robot state matches, but visual features and motor actions differ. Do not attribute a few-case success difference solely to reward learning or claim a cause of OOD degradation before the original full matching panel completes.",
+  "changes_to_existing_results": "none; all episodes, policies, raw values and failed attempts retained"
+}

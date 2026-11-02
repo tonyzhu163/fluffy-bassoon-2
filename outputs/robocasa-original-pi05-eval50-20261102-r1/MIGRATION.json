@@ -1,0 +1,70 @@
+{
+  "kind": "eight_gpu_evaluation_only",
+  "original_contract": {
+    "initializer": {
+      "repository": "robocasa/robocasa365_checkpoints",
+      "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+      "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+      "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+      "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+      "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+      "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json"
+    },
+    "bound": {
+      "action_dim": 12,
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "scale": [
+        0.09354107417092798,
+        0.07909524089828711,
+        0.08161916436862626,
+        0.021125880719858898,
+        0.02593384036587672,
+        0.02445070474699303
+      ]
+    },
+    "ppo": {
+      "feature_dim": 2088,
+      "residual_dim": 6,
+      "width": 256,
+      "layers": 2,
+      "initial_std": 0.5,
+      "learning_rate": 0.0003,
+      "epochs": 4,
+      "minibatch_size": 64,
+      "clip": 0.2,
+      "gamma": 1.0,
+      "gae_lambda": 0.95,
+      "entropy_coef": 0.0,
+      "value_coef": 0.5,
+      "max_grad_norm": 1.0
+    },
+    "arm": "S",
+    "task": "OpenDrawer",
+    "source_commit": "d365878e38162c0ff750150b4fa014b6464b8869",
+    "motor_seed": 710100,
+    "residual_seed": 42,
+    "update_seed": 43,
+    "features": "normalized proprio16+base first12+mean12+same-prefix masked mean2048/RMS; fixed no fit",
+    "calibration": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-integrated-20261101-r3/scorer/baseline-validation.json",
+      "sha256": "ce3e1ecdc0d3ef924f9d2a2fe22442ed1dd18bedda57459b2286f1b6e4d861f6"
+    },
+    "calibration_permission": "human_authorized_below_original_AUROC_gate",
+    "calibration_exception": {
+      "path": "/mowenjie/fluffy-bassoon-2/worktrees/robocasa-residual-approved-d365878e-20261101-r1/outputs/robocasa-residual-approved-20261101-r1/AUTHORITY.json",
+      "sha256": "a8e3ae60cd94acc55e79556b41fa0a146f6f03b01d84a5fee641835baf58ccc5"
+    }
+  },
+  "from_source_commit": "d365878e38162c0ff750150b4fa014b6464b8869",
+  "to_source_commit": "0be8cc272b0aea655776faf7e706c7d774a40394",
+  "checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+  "evaluation_only": true,
+  "reason": "Human requested matching original50ID+50OOD, singleton execution and unchanged scientific contract"
+}
