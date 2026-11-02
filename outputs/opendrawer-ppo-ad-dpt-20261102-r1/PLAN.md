@@ -1,5 +1,7 @@
 # OpenDrawer AD/DPT trained to convergence
 
+**Readout clarification:** the human subsequently made one-shot ID AND OOD the primary endpoint. This immutable job retains its ID baseline and first-eight support/query checks; the additional [one-shot ID/OOD plan](../opendrawer-ad-dpt-k1-id-ood-20261102-r1/PLAN.md) reuses them. Training and selection contracts stay unchanged.
+
 Human authorization,2026-11-02: train AD and DPT to convergence and compare
 them against initial and final PPO on the same held-out cases. This
 supersedes the provisional500-update/6GPU-hour/200k-action proposal.
