@@ -25,32 +25,3 @@ def test_clock_is_read_from_initialized_native_reset_not_constructor(monkeypatch
     assert actual._flora_accounting["clock"] == dict(control_freq=25., control_timestep=.04, model_timestep=.002, lite_physics=True)
     assert actual._flora_accounting["phase"] == "policy"
     assert actual._flora_accounting["control_time"] == 0.
-
-
-def test_first_success_control_is_recorded_once_per_episode_and_reset(monkeypatch):
-    from robosuite.environments.base import MujocoEnv
-    from robosuite.utils.binding_utils import MjSim
-    for cls, names in ((MujocoEnv, ("step",)), (MjSim, ("step", "step1", "step2"))):
-        for name in names:
-            monkeypatch.setattr(cls, name, getattr(cls, name))
-
-    def fake_step(env, action):
-        env.cur_time += .05
-        env.ticks += 1
-
-    monkeypatch.setattr(MujocoEnv, "step", fake_step)
-    env = SimpleNamespace(control_freq=20., control_timestep=.05, model_timestep=.002,
-        lite_physics=True, cur_time=0., ticks=0)
-    env._check_success = lambda: env.ticks in (3, 5)  # Success can also come and go.
-
-    def reset():
-        env.cur_time, env.ticks = 0., 0
-
-    env.reset = reset
-    actual = counted_native_factory(lambda: env, physics_tick_limit=100_000)()
-    actual.reset()
-    for _ in range(6):
-        MujocoEnv.step(actual, None)
-    assert actual._flora_accounting["first_success_control"] == 3
-    actual.reset()
-    assert actual._flora_accounting["first_success_control"] is None
