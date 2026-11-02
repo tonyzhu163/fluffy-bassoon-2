@@ -229,13 +229,51 @@ span different scenes across versions; these remain single-source-task and
 single-fit-seed development results, and OOD means held out from student
 training rather than foundation pretraining. Failed/partial/recovery costs
 remain separate from admitted scientific episodes. The resource ledger covers
-the inherited source and all closed fit/readout/diagnostic/recovery allocations;
-the two subsequently authorized actual-attempt curve allocations are ongoing.
+the inherited source and all closed fit/readout/diagnostic/recovery allocations.
+The subsequent actual-attempt curves and their terminal accounting are complete
+below.
 [Final combined result](../outputs/opendrawer-pairing-recovery-20261102-r1/COMBINED-RESULT.json),
 [AD independent result](../outputs/opendrawer-ad-query-recovery-20261102-r1/RESULT.json),
 [DPT full result](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/RESULT.json),
 [DPT static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json),
 [resource ledger](../outputs/opendrawer-pairing-recovery-20261102-r1/RESOURCE-LEDGER.json).
+
+
+The actual-attempt readout completed independently for AD and DPT, with50 ID
+and50 OOD cases per model. Memory contains previous actual attempts, the same
+case resets between attempts, and each new case starts with empty memory.
+Weights stay frozen. All500 native endpoints per model passed final
+physical/camera/truth/hash verification, all16 worker receipts pass, and both
+allocations released successfully (DPT18:43:37, AD18:46:01 Shanghai).
+
+| Actual attempt, successes /50 | 1 | 2 | 3 | 4 | 5 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| AD / ID |24|24|28|33|38|
+| AD / OOD |35|34|34|35|28|
+| DPT / ID |30|33|27|32|31|
+| DPT / OOD |36|31|35|38|36|
+
+AD's ID attempt5-versus1 comparison has16 paired wins,2 losses and32 ties
+(unadjusted exact p=.0013123); its OOD comparison has9/16 wins/losses
+(p=.2295). DPT's endpoint change is+1 ID and0 OOD. This establishes an
+ID-specific attempt trend for AD, with no general adaptation benefit shown.
+The motor stream changes with attempt number (matched across models), so a
+same-weight memory-reset comparison on the same streams is still needed to
+isolate a causal memory contribution. The separately scored PPO/static p0
+controls cannot substitute for that repeated-attempt control. These curves
+measure success on each actual attempt, not cumulative ever-success;75 ID/90
+OOD tokens exceed the64-token training window while fitting128-token capacity.
+The single-source-task/fit-seed and renderer qualifications above still apply.
+
+The curves reuse546 complete practices and collect454 new episodes, charging
+351600 conservative controls and25106 measured process GPU-seconds for the
+fresh continuations. The complete accounting retains every excluded failure,
+partial call, obsolete query and recovery, with queue-inclusive bounds separate
+from measured clocks. Source checkpoints and pinned worktrees remain preserved.
+[Curves, confidence intervals and paired tests](../outputs/opendrawer-attempts50-20261102-r1/COMBINED-RESULT.json),
+[figure](../outputs/opendrawer-attempts50-20261102-r1/figures/attempt-success.png),
+[final resource accounting](../outputs/opendrawer-attempts50-20261102-r1/FINAL-ACCOUNTING.json),
+[consolidated recent results and next-decision rationale](../outputs/opendrawer-results-rollup-20261102-r1/RESULTS.md).
 
 ## LIBERO
 
