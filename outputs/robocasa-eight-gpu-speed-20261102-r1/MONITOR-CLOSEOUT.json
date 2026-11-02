@@ -1,0 +1,209 @@
+{
+  "objective": "monitor the experiments over the next 8 hours",
+  "monitoring_window_complete": true,
+  "research_comparison_complete": false,
+  "window": {
+    "original_start_unix": 1793548561,
+    "original_start_Shanghai": "2026-11-01 23:56:01",
+    "required_end_unix": 1793577361,
+    "required_end_Shanghai": "2026-11-02 07:56:01",
+    "audited_end_UTC": "2026-11-01 23:56:51 UTC",
+    "elapsed_wall_seconds": 28850,
+    "original_deadline_reset": false,
+    "finite_wait_cell": "2836",
+    "finite_wait_completed_UTC": "2026-11-01 23:56:01 UTC"
+  },
+  "completion_requirements": [
+    {
+      "requirement": "Cover the original full8hour interval",
+      "evidence": "Actual goalcreated1793548561, immutable MONITOR-WINDOW end1793577361, live timer returned authoritative23:56:01UTC and independent closing clock23:56:51UTC.",
+      "result": "PROVEN"
+    },
+    {
+      "requirement": "Monitor the owned experiments and establish terminal outcomes",
+      "evidence": "Current nativeChrome traininglist refreshed before closingclock23:53:30UTC shows all10recent comparisonjobs terminal; latest task remainsknownFlora50. Formal native andFlora4node clocks allfinishedexit0, nativepending0. Allroot childagents completed. No new scientific submission while waiting.",
+      "result": "PROVEN_FOR_OWNED_COMPARISON_SCOPE"
+    },
+    {
+      "requirement": "Preserve usable completed outputs and recovery",
+      "evidence": "Raw250paired native/scorer outcomes and probabilities retained; oldS full6-update finalcheckpoint remainsregular14654853B/02:00:57mtime. Prior finalhash/config/Adam/RNG references retained; no checkpointpayload load/rehash or recovery deletion duringaudit.",
+      "result": "PROVEN_TO_RECORDED_TERMINAL_PROOF_AND_CURRENT_STAT_SCOPE"
+    },
+    {
+      "requirement": "Respect unresolved scientific/resource decisions",
+      "evidence": "NativeCounter37/50=.74 stillfailed70%gate; allfiveAUCgatespassed. Actual task/actionauthorityrefs remainnull andbindingNOT_ADMITTED. NojointSGD, no smaller task/eval substitute, no capreset/oldbalanceborrowing.",
+      "result": "PROVEN"
+    },
+    {
+      "requirement": "Remove obsolete recurring checks when the requested window ends",
+      "evidence": "automation_update mode:delete returneddeleteStatus:deleted for the ownedmonitor afterthe8hour/terminalaudit; oldmonitor-flora-ppo-comparison filewasalreadyabsent.",
+      "result": "PROVEN"
+    }
+  ],
+  "terminal_facts": {
+    "native_terminal": true,
+    "native_pending_calls": 0,
+    "native_new_actions": 174000,
+    "native_GPU_seconds": 15884,
+    "Flora_terminal": true,
+    "Flora_GPU_seconds": 5972,
+    "Flora_new_actions": 0,
+    "old_S_final": true,
+    "old_S_checkpoint": "84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d",
+    "joint_status": "NOT_ADMITTED_TEMPLATE_ONLY",
+    "actual_task_authority": null,
+    "actual_action_authority": null,
+    "headroom_decision": "HUMAN_DECISION_PENDING_FOR_EXPLICIT_NATIVE_GATE_EXCEPTION"
+  },
+  "five_task_initializer_results": [
+    {
+      "task": "OpenDrawer",
+      "count": 50,
+      "successes": 29,
+      "AUROC": 0.9655172413793104,
+      "pair_credit": 588,
+      "pair_denominator": 609,
+      "measured_go": true,
+      "validation_sha256": "1354fb5d34c8e2ff5369cef078b6b53cc1eb9d96171d6532e0765207739116cc"
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "count": 50,
+      "successes": 37,
+      "AUROC": 0.9002079002079002,
+      "pair_credit": 433,
+      "pair_denominator": 481,
+      "measured_go": false,
+      "validation_sha256": "453d0494880ef4547e3af469092452fcbfb9b0d5c2294e5129a666bdb499cca9"
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "count": 50,
+      "successes": 23,
+      "AUROC": 0.9774557165861514,
+      "pair_credit": 607,
+      "pair_denominator": 621,
+      "measured_go": true,
+      "validation_sha256": "b0764eaa2e05e8d2cd5b08c19d1f8f4dac9cc480a306c30c451a27fe76e51c92"
+    },
+    {
+      "task": "TurnOffStove",
+      "count": 50,
+      "successes": 7,
+      "AUROC": 0.893687707641196,
+      "pair_credit": 269,
+      "pair_denominator": 301,
+      "measured_go": true,
+      "validation_sha256": "d41fa7658ba5109e19048b3e1f5af3bf227fd9bac94404bb508f50b52c05ac8d"
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "count": 50,
+      "successes": 17,
+      "AUROC": 0.9233511586452763,
+      "pair_credit": 518,
+      "pair_denominator": 561,
+      "measured_go": true,
+      "validation_sha256": "cc31ac02b35ef87d7c4a411d41109bb4f386d1fe2da0506beda645f19f1cbedc"
+    }
+  ],
+  "annotation": {
+    "unique_native_videos": 250,
+    "postwarm_progress_span_seconds": 156.521,
+    "cold_engine_seconds_range": [
+      505.4,
+      521
+    ],
+    "scope": "Measuredcalibrationlatency, not promisedjointPPOETA or robotlearning."
+  },
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/final.pt",
+    "bytes": 14654853,
+    "recorded_SHA256": "84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d",
+    "includes": [
+      "policy",
+      "critic",
+      "Adam",
+      "global/private RNG",
+      "motor sampler",
+      "case cursor"
+    ],
+    "new_tensor_restore_or_rehash": false
+  },
+  "resources": {
+    "closed_benchmark_GPU_seconds": 75141,
+    "active_benchmark_holds": 0,
+    "development_allocation": "Retained container remainsreachable; lastattested1GPU, lifetimechargeunknown and excludedfrom CLOSED benchmarktotal. No GPUreprobe or resource stop incloseout.",
+    "unused_balances": "Sealed, nevertransferred."
+  },
+  "joint_stage": {
+    "new_optimizer_updates": 0,
+    "source_entry_status": "Prepared andstaticallyreviewed common/S/F entries onmain6c03426f, includingFfinal-shard exitcorrection629b5ef0. Affected7corecases previouslypassed allocatedLinux; actualfirstretainedjointGPU/colocation/update stillunqualified.",
+    "required_human_decisions": [
+      "Keepfive tasks with explicit74%headroomexception, orprospectivelyqualifyreplacement.",
+      "Approveproposed2.5M-action/six-updatefive-taskstage (180kqualificationalreadyspent), orkeepexistinglimits."
+    ],
+    "requested_stage_actions": 2500000,
+    "proposed_bound": 2481020,
+    "actual_authorities": "Pending; no newadmittedallocation."
+  },
+  "selection": "Manualdevelopmentsubset, not a seededrandomRoboCasa365 task sample. OODmeansheldoutfromPPO, notunseenfoundation.",
+  "monitor": {
+    "id": "monitor-robocasa-residual-ppo-and-flora-throughput",
+    "deleteStatus": "deleted",
+    "further_runtime_checks": "None due; no activebenchmarkjob. A newhuman decision is needed for jointPPO execution."
+  },
+  "evidence_refs": [
+    {
+      "path": "outputs/robocasa-eight-gpu-speed-20261102-r1/MONITOR-WINDOW.json",
+      "bytes": 455,
+      "sha256": "3dad53036df46785404cc0e9920cbc94d6dbcb7eb73582d1267344f27dc60cf0"
+    },
+    {
+      "path": "outputs/robocasa-eight-gpu-speed-20261102-r1/MONITOR-PRE-CLOSE-STATE.json",
+      "bytes": 2667,
+      "sha256": "c40ba8d4b0b6eb572555afa35d7055305a80a94e67380551ea3f021c340e51fb"
+    },
+    {
+      "path": "outputs/robocasa-eight-gpu-speed-20261102-r1/terminal-20261102-0205/FINAL.json",
+      "bytes": 2811,
+      "sha256": "e5d76ec94e45362685206a93fd1b58d93529e14b501714bcdb4e4647ad49ddf0"
+    },
+    {
+      "path": "outputs/robocasa-five-task-native-qualification-20261102-r1/TERMINAL-PARENT-REVIEW.json",
+      "bytes": 23934,
+      "sha256": "7c4e160b56c87689530c0f5ded55d2c8355353ef17e1d4c242c02a6835af802d"
+    },
+    {
+      "path": "outputs/robocasa-flora-five-task-fifty-score-20261102-r1/TERMINAL-PACKET.json",
+      "bytes": 65561,
+      "sha256": "0ed9f72435418adfd309d5044c1068fea6f02591e4872a31a325ae3b627158c0"
+    },
+    {
+      "path": "outputs/robocasa-flora-five-task-fifty-score-20261102-r1/PARENT-REVIEW.json",
+      "bytes": 2216,
+      "sha256": "3aa660a935e724d348596f0d0f70bf898c9b4f920ee0c5d51803c829a9d39387"
+    },
+    {
+      "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/PARENT-ENTRY-REVIEW.json",
+      "bytes": 3768,
+      "sha256": "f703df2c914132104270de6c973a3e12160d37f44a098e1d22e616c900b90e15"
+    },
+    {
+      "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/PROPOSAL.json",
+      "bytes": 9119,
+      "sha256": "48bd92e659626f1ace7bd8f57aab1b2c46588f732274bc32c8ae9bdf846327d1"
+    },
+    {
+      "path": "outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-TEMPLATE.json",
+      "bytes": 5223,
+      "sha256": "0915cddd9fc47d929fdad4ea556f4ea5bbbc613c6bc8602a5f5328b324fe8ebc"
+    },
+    {
+      "path": "outputs/robocasa-five-task-flora-ppo-20261102-r1/SELECTION-DISCLOSURE.json",
+      "bytes": 1090,
+      "sha256": "1c4d2335cf34d41b073dfd9398b4472032690c4d0188acb5e3fa9282b06300df"
+    }
+  ],
+  "limitations": "Timedmonitoringgoalcomplete; this does not claim a finishedmatchedfive-taskS/Flearningcomparison, statisticalconvergence, full365performance, novelunseenskills or memory/sampleefficiency."
+}
