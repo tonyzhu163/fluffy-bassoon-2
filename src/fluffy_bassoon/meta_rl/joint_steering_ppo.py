@@ -20,7 +20,6 @@ import torch
 
 from .residual_ppo import ResidualActorCritic, ResidualPPOConfig
 from .rlinf_native_ppo import cpu_tree, snapshot_rng
-from .warmstart import atomic_save
 
 TASKS = ("OpenDrawer", "PickPlaceCounterToCabinet", "PickPlaceDrawerToCounter",
          "TurnOffStove", "CoffeeSetupMug")
@@ -225,13 +224,21 @@ def normalize_first_bank(policy, records):
                                device=weight.device, dtype=weight.dtype)
     if any(torch.count_nonzero(value) for value in policy.actor[-1].parameters()):
         raise ValueError("Feature normalization must be fitted before actor learning")
+    before, _ = policy._distribution(features)
+    original_mean, original_std = before.mean.clone(), before.stddev.clone()
     policy.fit_feature_normalization(features)
+    after, _ = policy._distribution(features)
+    if not torch.equal(after.mean, original_mean) or not torch.equal(after.stddev, original_std):
+        raise ValueError("Fitting feature statistics changed the behavior distribution")
     log_probs, _, values = policy.evaluate(features, controls)
     old_log_probs = torch.tensor([row["log_prob"] for row in records], device=weight.device)
-    if not torch.equal(log_probs, old_log_probs):
-        raise ValueError("Fitting feature statistics changed the behavior distribution")
-    return [dict(row, pre_normalization_value=row["value"], value=float(value))
-            for row, value in zip(records, values)]
+    if not torch.isfinite(log_probs).all() or not torch.isfinite(old_log_probs).all():
+        raise ValueError("Nonfinite initial Gaussian likelihood")
+    # Preserve the actual behavior log-probabilities. GPU row reductions can
+    # differ slightly between worker batches1..4 and the master bank batch.
+    return [dict(row, pre_normalization_value=row["value"], value=float(value),
+                 normalization_log_prob_absolute_delta=float(delta))
+            for row, value, delta in zip(records, values, (log_probs - old_log_probs).abs())]
 
 
 @torch.no_grad()

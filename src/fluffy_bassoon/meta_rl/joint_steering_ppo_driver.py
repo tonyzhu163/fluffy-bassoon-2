@@ -7,10 +7,12 @@ the small steering/value network. Every request and SGD bank is retained.
 import argparse
 from dataclasses import asdict
 import json
+import fcntl
 import math
 import os
 from pathlib import Path
 import signal
+import socket
 import subprocess
 import sys
 import time
@@ -204,13 +206,19 @@ def stop_workers(run, children, streams):
             child.wait()
     for stream in streams:
         stream.close()
+    release = dict(hostname=socket.gethostname(), all_children_released=True,
+        child_exit_codes={str(child.pid): child.returncode for child in children},
+        profile_sha256=tensor_hash(json.loads((run / "PROFILE.json").read_text())), ended_unix=time.time())
+    write_json(run / f"released-{time.time_ns()}.json", release)
+    write_json(run / "RELEASED.json", release)
 
 
 def run_master(run, profile, *, deadline, resume=False):
     run = Path(run)
     # The old Stage1 handoff approved20GPUh combined. Reserve10per arm
     # including earlier attempts and release time, until a human changes it.
-    if not 0 <= profile["prior_conservative_gpu_seconds"] < 36_000:
+    if (not 0 <= profile["prior_conservative_gpu_seconds"] < 36_000
+            or not math.isfinite(profile["submitted_unix"]) or profile["submitted_unix"] > time.time()):
         raise ValueError("Require actual nonnegative prior-attempt GPU accounting")
     remaining_gpu_seconds = 36_000 - profile["prior_conservative_gpu_seconds"]
     hard_end = profile["submitted_unix"] + remaining_gpu_seconds / 8
@@ -224,16 +232,30 @@ def run_master(run, profile, *, deadline, resume=False):
             or sha_file(profile["norm_path"]) != profile["norm_sha256"]):
         raise ValueError("Approved original checkpoint/normalization identity differs")
     run.mkdir(parents=True, exist_ok=True)
+    if (run / "RESULT.json").exists() and json.loads((run / "RESULT.json").read_text()).get("completed"):
+        raise ValueError("A scientifically completed run must not be restarted")
     profile_path = run / "PROFILE.json"
     if profile_path.exists():
-        if not resume or json.loads(profile_path.read_text()) != profile:
+        if json.loads(profile_path.read_text()) != profile:
             raise ValueError("Existing run needs explicit same-contract complete-boundary recovery")
+        if not resume and ((run / "workers").exists() or (run / "checkpoint-latest.pt").exists()):
+            raise ValueError("A previously started run needs explicit recovery")
     else:
         if resume:
             raise ValueError("Recovery needs an existing immutable profile and checkpoint")
         write_json(profile_path, profile)
     if (run / "STOP").exists():
-        raise ValueError("A stopped run requires an explicit diagnosed fresh-attempt migration")
+        if not resume:
+            raise ValueError("A stopped run requires explicit recovery")
+        release = json.loads((run / "RELEASED.json").read_text())
+        if (release["hostname"] != socket.gethostname() or not release["all_children_released"]
+                or release["profile_sha256"] != tensor_hash(profile)
+                or any(value is None for value in release["child_exit_codes"].values())):
+            raise ValueError("Resume requires proved child release in the same allocation; otherwise migrate to a fresh attempt")
+        (run / "STOP").replace(run / f"stop-consumed-{time.time_ns()}")
+        marker = run / "CHECKPOINT_AND_EXIT"
+        if marker.exists():
+            marker.replace(run / f"checkpoint-exit-consumed-{time.time_ns()}")
     arm = profile["arm"]
     policy = make_policy(arm, device="cuda:0", seed=profile["seed"])
     optimizer = torch.optim.Adam(policy.parameters(), lr=policy.config.learning_rate)
@@ -250,6 +272,9 @@ def run_master(run, profile, *, deadline, resume=False):
         iteration, cursor, worker_states = restore_boundary(saved, policy, optimizer, generator,
             arm=arm, interface_spec=specification)
         measured_seconds = saved["measured_seconds"]
+        optimizer_progress = run / "optimizer-progress.json"
+        if optimizer_progress.exists():
+            optimizer_progress.replace(run / f"optimizer-progress-prior-{time.time_ns()}.json")
         if saved["escrow"] != journal.snapshot():
             # Outstanding collection after the last complete checkpoint may
             # legitimately add charged actions. It must not refund old ones.
@@ -306,6 +331,8 @@ def run_master(run, profile, *, deadline, resume=False):
                     status["ppo"] = update(policy, optimizer, rollout, generator=generator,
                         epoch_callback=lambda row: write_json(run / "optimizer-progress.json",
                             dict(iteration=requested_iteration, **row)))
+                    if status["ppo"]["optimizer_steps"] < 1:
+                        raise ValueError("No optimizer update occurred; diagnose behavior likelihoods before advancing the round")
                     iteration = requested_iteration
                 else:
                     _save(run / "evaluations" / f"{phase}-{requested_iteration:03d}.pt",
@@ -370,7 +397,10 @@ def main():
         from .joint_steering_ppo_worker import run_worker
         run_worker(args.run, args.worker_rank, Path(profile["code"]), args.deadline_unix)
     else:
-        run_master(args.run, profile, deadline=args.deadline_unix, resume=args.resume)
+        args.run.mkdir(parents=True, exist_ok=True)
+        with (args.run / ".master.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            run_master(args.run, profile, deadline=args.deadline_unix, resume=args.resume)
 
 
 if __name__ == "__main__":
