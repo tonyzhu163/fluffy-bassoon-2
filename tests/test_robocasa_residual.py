@@ -379,3 +379,33 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
         for key in ("features", "control", "base_chunk", "executed_chunk"):
             np.testing.assert_array_equal(lane[key], serial[key])
         assert lane["log_prob"] == serial["log_prob"]
+
+
+def test_native_reset_child_cannot_keep_another_lanes_video_pipe_open():
+    """Refilling a lane cannot prevent a finished encoder from receiving EOF."""
+    import subprocess
+    import sys
+    code = r'''
+import multiprocessing as mp
+import os
+import select
+import time
+from fluffy_bassoon.meta_rl.robocasa_residual import native_environment_factory
+
+mp.set_start_method("fork", force=True)
+reader, writer = os.pipe()
+native_environment_factory({})  # Production factory selects the child context.
+child = mp.Process(target=time.sleep, args=(30,))
+child.start()
+try:
+    os.close(writer)
+    assert select.select([reader], [], [], 2)[0], "reset child retained the encoder write end"
+    assert os.read(reader, 1) == b"" and child.is_alive()
+finally:
+    os.close(reader)
+    child.terminate()
+    child.join(timeout=5)
+'''
+    result = subprocess.run([sys.executable, "-B", "-c", code], capture_output=True,
+                            text=True, timeout=30)
+    assert result.returncode == 0, result.stdout + result.stderr

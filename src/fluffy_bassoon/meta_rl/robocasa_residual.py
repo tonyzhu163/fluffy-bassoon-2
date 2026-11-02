@@ -238,6 +238,12 @@ class RoboCasaResidualEnvironment:
 
 def native_environment_factory(cfg):
     """No constructor runs until a charged environment.reset()."""
+    import multiprocessing as mp
+    # A refilled lane must not inherit another lane's live encoder pipes or
+    # CUDA context. Inherited write ends prevent FFmpeg from observing EOF.
+    # Factories are prepared before any native reset workers are started.
+    mp.set_start_method("spawn", force=True)
+
     def factory(case):
         from omegaconf import OmegaConf
         from rlinf.envs.sim.robocasa365.robocasa365_env import Robocasa365Env
