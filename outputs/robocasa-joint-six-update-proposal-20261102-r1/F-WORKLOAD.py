@@ -142,7 +142,7 @@ def main():
             engine_ready_path=str(job/'engines'/f'rank-{annotation_rank:02d}.json'),
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),expected_gpu_uuid=device['uuid'],
             scheduler_seconds=21540,deadline_unix=deadline,closure_seconds=300,maximum_batches=6,
-            shutdown_file=str(job/'annotation-shutdown.json'))
+            shutdown_file=str(job/'annotation-shutdown.json'),stream_scoring=True)
         p=out/f'scorer-{annotation_rank:02d}-profile.json';write_new(p,scorer)
         scorer_refs.append((annotation_rank,p))
         toolkit=Path(flora['toolkit']);python=Path(spec['scorer_python']);cache=out/f'scorer-{annotation_rank:02d}-cache'

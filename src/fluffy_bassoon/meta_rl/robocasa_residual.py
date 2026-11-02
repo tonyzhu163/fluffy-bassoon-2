@@ -320,13 +320,14 @@ def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_s
                           planned_action_noise=None, deterministic=False, verify_zero=False):
     """Run one worker's case bank with concurrent simulator lanes on one GPU.
 
-    ``environments`` are lane environments over the SAME case list. Episodes run
-    in waves of ``len(environments)`` with one shared native forward per chunk;
-    each chunk keeps its serial-order planned motor seed and actor noise, and
+    ``environments`` are lane environments over the SAME case list. A lane takes
+    the next unstarted case as soon as its episode ends, and its constructor
+    reset runs in the background while the other lanes keep stepping. Every
+    chunk keeps its serial-order planned motor seed and actor noise, and
     records/episodes return in case order, so ids, draws and GAE match the
     serial collector. Batched BF16 inference is not bitwise equal to batch 1.
     """
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
     from .robocasa_residual_parallel import native_chunk_offsets
     cases = environments[0].cases
     if (any(env.cases != cases or env.cursor for env in environments)
@@ -336,52 +337,61 @@ def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_s
     if len(planned_motor_seeds) != offsets[-1]:
         raise ValueError("Require one planned motor draw per native chunk of the bank")
     reference = next(policy.parameters())
-    by_slot = {}
+    records = {slot: [] for slot in range(len(cases))}
+    finished = {}
+    upcoming = iter(range(len(cases)))
+    resetting, running = {}, {}  # future -> (lane, slot); lane -> [slot, chunk, observation]
+
+    def start(lane, pool):
+        slot = next(upcoming, None)
+        if slot is not None:
+            environments[lane].seek(slot)
+            resetting[pool.submit(environments[lane].reset)] = (lane, slot)
+
     with ThreadPoolExecutor(max_workers=len(environments)) as pool:
-        for first in range(0, len(cases), len(environments)):
-            lanes = list(zip(range(first, min(first + len(environments), len(cases))), environments))
-            for slot, env in lanes:
-                env.seek(slot)
-            observations = dict(zip((slot for slot, _ in lanes), pool.map(lambda pair: pair[1].reset(), lanes)))
-            chunk_index = {slot: 0 for slot, _ in lanes}
-            for slot, _ in lanes:
-                by_slot[slot] = ([], None)
-            active = [pair for pair in lanes]
-            while active:
-                slots = [slot for slot, _ in active]
-                seeds = [int(planned_motor_seeds[offsets[slot] + chunk_index[slot]]) for slot in slots]
-                chunks, features, _ = motor.infer_batch(combine_observations([observations[slot] for slot in slots]),
-                                                        noise_seeds=seeds)
-                executed = []
-                for row, slot in enumerate(slots):
-                    index = offsets[slot] + chunk_index[slot]
-                    noise = {} if deterministic else {"action_noise": planned_action_noise[index:index + 1]}
-                    tensor = torch.as_tensor(features[row], device=reference.device, dtype=reference.dtype)
-                    control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, **noise)
-                    control = control[0].cpu().numpy()
-                    applied = bound.apply(np.asarray(chunks[row]), control)
-                    verified = verify_zero and slot == 0
-                    if verified and (np.any(control != 0) or not np.array_equal(applied, chunks[row])):
-                        raise ValueError("Zero-residual native sampler replay differs before physical execution")
-                    executed.append(applied)
-                    by_slot[slot][0].append(dict(features=np.array(features[row], dtype=np.float32, copy=True),
-                        noise_seed=seeds[row], base_chunk=np.array(chunks[row], copy=True),
-                        executed_chunk=np.array(applied, copy=True), control=control.astype(np.float32),
-                        log_prob=float(log_prob[0]), value=float(value[0]), reward=0., done=False,
-                        episode_start=chunk_index[slot] == 0, zero_residual_verified=verified))
-                steps = list(pool.map(lambda pair: pair[0][1].step_chunk(pair[1]), zip(active, executed)))
-                still = []
-                for (slot, env), (observation, done, info) in zip(active, steps):
-                    by_slot[slot][0][-1]["done"] = bool(done)
-                    chunk_index[slot] += 1
-                    if done:
-                        by_slot[slot] = (by_slot[slot][0], info)
-                    else:
-                        observations[slot] = observation
-                        still.append((slot, env))
-                active = still
-    records = [row for slot in range(len(cases)) for row in by_slot[slot][0]]
-    finished = [by_slot[slot][1] for slot in range(len(cases))]
+        for lane in range(min(len(environments), len(cases))):
+            start(lane, pool)
+        while resetting or running:
+            if not running:
+                wait(resetting, return_when=FIRST_COMPLETED)
+            for future in [future for future in resetting if future.done()]:
+                lane, slot = resetting.pop(future)
+                running[lane] = [slot, 0, future.result()]
+            lanes = sorted(running)
+            slots = [running[lane][0] for lane in lanes]
+            indices = [offsets[slot] + running[lane][1] for lane, slot in zip(lanes, slots)]
+            seeds = [int(planned_motor_seeds[index]) for index in indices]
+            chunks, features, _ = motor.infer_batch(
+                combine_observations([running[lane][2] for lane in lanes]), noise_seeds=seeds)
+            executed = []
+            for row, (lane, slot, index) in enumerate(zip(lanes, slots, indices)):
+                noise = {} if deterministic else {"action_noise": planned_action_noise[index:index + 1]}
+                tensor = torch.as_tensor(features[row], device=reference.device, dtype=reference.dtype)
+                control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, **noise)
+                control = control[0].cpu().numpy()
+                applied = bound.apply(np.asarray(chunks[row]), control)
+                verified = verify_zero and slot == 0
+                if verified and (np.any(control != 0) or not np.array_equal(applied, chunks[row])):
+                    raise ValueError("Zero-residual native sampler replay differs before physical execution")
+                executed.append(applied)
+                records[slot].append(dict(features=np.array(features[row], dtype=np.float32, copy=True),
+                    noise_seed=seeds[row], base_chunk=np.array(chunks[row], copy=True),
+                    executed_chunk=np.array(applied, copy=True), control=control.astype(np.float32),
+                    log_prob=float(log_prob[0]), value=float(value[0]), reward=0., done=False,
+                    episode_start=running[lane][1] == 0, zero_residual_verified=verified))
+            steps = [pool.submit(environments[lane].step_chunk, chunk) for lane, chunk in zip(lanes, executed)]
+            for lane, slot, step in zip(lanes, slots, steps):
+                observation, done, info = step.result()
+                records[slot][-1]["done"] = bool(done)
+                if done:
+                    finished[slot] = info
+                    del running[lane]
+                    start(lane, pool)
+                else:
+                    running[lane][1] += 1
+                    running[lane][2] = observation
+    records = [row for slot in range(len(cases)) for row in records[slot]]
+    finished = [finished.get(slot) for slot in range(len(cases))]
     if len(records) != offsets[-1] or any(info is None for info in finished):
         raise ValueError("Incomplete lane bank cannot enter reward labeling")
     return records, finished

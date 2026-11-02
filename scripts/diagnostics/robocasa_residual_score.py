@@ -26,7 +26,42 @@ from fluffy_bassoon.meta_rl.flora_terminal_shards import (
 )
 
 
-def score(worker, episodes, output, model_receipt, proto=None, *, episode_protocols=None):
+def episode_job(episode):
+    """Official job for one finished training episode, before its batch request.
+
+    Every PPO task with this native horizon yields the same job (id, native
+    instruction, videos); the later request binds the true per-case protocol
+    and must reproduce this job exactly before a streamed grade is used.
+    """
+    candidates = [task for task in PPO_TASKS if protocol(task)['horizon'] == episode.get('horizon')]
+    if not candidates:
+        raise ValueError('Streamed scoring only covers declared PPO task horizons')
+    return flora_jobs([episode], protocol(candidates[0], baseline_count=50))[0]
+
+
+def prescore(profile, worker, output, progress):
+    """Grade this rank's finished training episodes while the batch still runs."""
+    rank, cache = profile['annotation_rank'], output / 'prescore'
+    cache.mkdir(exist_ok=True)
+    found = sorted(Path(profile['F_output']).glob(f'train/videos/parallel-*/rank-{rank:02d}/videos/*.json'))
+    fresh = [path for path in found if not (cache / path.name).exists()][:worker.batch_size]
+    if not fresh:
+        return
+    episodes = [json.loads(path.read_text()) for path in fresh]
+    for episode in episodes:
+        for ref in episode_video_refs(episode):
+            if sha(ref['path']) != ref['sha256']:
+                raise ValueError('Video bytes changed')
+    jobs = [episode_job(episode) for episode in episodes]
+    rows = worker.score_jobs(jobs, cache / f'batch-{worker.completed_batches:06d}.jsonl')
+    for episode, job, row in zip(episodes, jobs, rows, strict=True):
+        write_new(cache / (episode['id'] + '.json'), dict(job=job, video_refs=episode_video_refs(episode),
+            row=row, engine_batch_size=len(jobs)))
+    progress.emit(phase='streamed_Flora_prescoring', annotation_rank=rank,
+                  prescored=len(list(cache.glob('*.json'))))
+
+
+def score(worker, episodes, output, model_receipt, proto=None, *, episode_protocols=None, cache=None):
     jobs = (flora_jobs(episodes, proto) if episode_protocols is None else
             flora_jobs(episodes, episode_protocols=episode_protocols))
     for episode in episodes:
@@ -36,7 +71,24 @@ def score(worker, episodes, output, model_receipt, proto=None, *, episode_protoc
     with output.with_suffix(".jobs.jsonl").open("x") as stream:
         for row in jobs:
             stream.write(json.dumps(row) + "\n")
-    rows = worker.score_jobs(jobs, output)
+    streamed = {}
+    for job, episode in zip(jobs, episodes):
+        path = None if cache is None else cache / (job['id'] + '.json')
+        if path is not None and path.exists():
+            value = json.loads(path.read_text())
+            # A streamed grade is used only for the identical job and video bytes.
+            if value['job'] == job and value['video_refs'] == episode_video_refs(episode):
+                streamed[job['id']] = value['row']
+    missing = [job for job in jobs if job['id'] not in streamed]
+    if cache is None:
+        rows = worker.score_jobs(jobs, output)
+    else:
+        late = {row['id']: row for row in (worker.score_jobs(missing, output.with_suffix('.late.jsonl'))
+                                            if missing else [])}
+        rows = [streamed.get(job['id']) or late[job['id']] for job in jobs]
+        with output.open('x') as stream:
+            for row in rows:
+                stream.write(json.dumps(row) + '\n')
     labels = (parse_outputs(episodes, rows, proto) if episode_protocols is None else
               parse_outputs(episodes, rows, episode_protocols=episode_protocols))
     receipt = dict(code_commit=FLORA_CODE, model_revision=FLORA_MODEL, model_receipt=model_receipt,
@@ -45,6 +97,9 @@ def score(worker, episodes, output, model_receipt, proto=None, *, episode_protoc
         engine_process_pid=os.getpid(), model_load_count=worker.model_load_count,
         completed_batches=worker.completed_batches, engine="official persistent terminal_reward helpers",
         batch_size=worker.batch_size, gpu_memory_utilization=worker.gpu_memory_utilization)
+    if cache is not None:
+        receipt['streamed'] = dict(prescored=len(streamed), scored_at_request=len(missing),
+            note='Streamed grades use the same engine, prompt and video bytes; engine batch composition differs')
     if episode_protocols is not None:receipt['episode_protocols_sha256']=digest(episode_protocols)
     write_new(output.with_suffix(".receipt.json"), receipt)
     return rows, labels, receipt
@@ -217,7 +272,10 @@ def serve(profile, args, worker, output, proto, progress):
         raise ValueError("At most ten admitted F batches")
     seen = set()
     exchange = Path(profile["F_output"])
+    streaming = profile.get('stream_scoring') is True and profile.get('annotation_world') == 8
     while time.time() < profile["deadline_unix"] - profile["closure_seconds"] and len(seen) < maximum:
+        if streaming:
+            prescore(profile, worker, output, progress)
         for path in sorted(exchange.glob("labels-*/request.json")):
             if str(path) in seen:
                 continue
@@ -286,8 +344,9 @@ def serve_shard(profile, worker, output, proto, progress, path, request):
         target = output / (path.parent.name + '.jsonl')
         progress.emit(phase='official_Flora_shard_inference', episodes_complete=len(subset),
                       annotation_rank=rank, annotation_world=8)
-        rows, _, receipt = (score(worker,subset,target,profile['model_receipt'],episode_protocols=subset_protocols)
-            if joint else score(worker, subset, target, profile['model_receipt'], proto))
+        cache = output / 'prescore' if profile.get('stream_scoring') is True else None
+        rows, _, receipt = (score(worker,subset,target,profile['model_receipt'],episode_protocols=subset_protocols,cache=cache)
+            if joint else score(worker, subset, target, profile['model_receipt'], proto, cache=cache))
         array = target.with_suffix('.json')
         write_new(array, rows)
         shard=dict(completed=True, annotation_rank=rank, annotation_world=8,

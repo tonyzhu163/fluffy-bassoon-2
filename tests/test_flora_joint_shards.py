@@ -97,3 +97,40 @@ def test_joint80_service_binds_task_map_pending_source_and_waits_for_all_officia
         with pytest.raises(ValueError):
             service.serve_shard(dict(base,annotation_rank=0),worker,tmp_path,None,progress,path,bad)
     assert worker.completed_batches==8
+
+
+def test_streamed_grades_are_reused_only_for_identical_jobs_and_finish_at_request(tmp_path,monkeypatch):
+    source=Path(__file__).resolve().parents[1]/'scripts/diagnostics/robocasa_residual_score.py'
+    spec=importlib.util.spec_from_file_location('streamed_score_under_test',source)
+    service=importlib.util.module_from_spec(spec);spec.loader.exec_module(service)
+    original_sha=service.sha
+    monkeypatch.setattr(service,'sha',lambda p:'a'*64 if str(p).startswith('/qualified/') else original_sha(p))
+    episodes,rows,protocols=joint_bank();by_id={r['id']:r for r in rows}
+    scored=[]
+    class Worker:
+        model_load_count=1;completed_batches=0;batch_size=8;gpu_memory_utilization=.78
+        def score_jobs(self,jobs,path):
+            scored.extend(job['id'] for job in jobs)
+            result=[by_id[job['id']] for job in jobs]
+            path.write_text(''.join(json.dumps(r)+'\n' for r in result))
+            self.completed_batches+=1
+            return result
+    worker=Worker();policy=tmp_path/'policy'
+    videos=policy/'train/videos/parallel-000000/rank-00/videos';videos.mkdir(parents=True)
+    for episode in episodes[:10]:
+        write_new(videos/(episode['id']+'.json'),episode)
+    out=tmp_path/'scorer-00';out.mkdir()
+    profile=dict(task='joint_five',source_commit='c'*40,annotation_rank=0,F_output=str(policy),stream_scoring=True,
+        model_receipt=dict(path='/same/model/READY.json',sha256='d'*64),deadline_unix=time.time()+30,closure_seconds=1)
+    progress=SimpleNamespace(emit=lambda **kw:None)
+    service.prescore(profile,worker,out,progress)
+    assert scored==[e['id'] for e in episodes[:8]]  # One engine batch while the bank still runs.
+    stale=out/'prescore'/(episodes[1]['id']+'.json');value=json.loads(stale.read_text())
+    value['video_refs'][0]['sha256']='e'*64;stale.write_text(json.dumps(value))
+    subset,mapping=joint_episode_shard(episodes,0,protocols)
+    result,labels,receipt=service.score(worker,subset,out/'labels-001.jsonl',profile['model_receipt'],
+        episode_protocols=mapping,cache=out/'prescore')
+    assert result==rows[:10] and labels==parse_outputs(subset,rows[:10],episode_protocols=mapping)
+    assert scored[8:]==[episodes[1]['id'],episodes[8]['id'],episodes[9]['id']]
+    assert receipt['streamed']['prescored']==7 and receipt['streamed']['scored_at_request']==3
+    assert receipt['episode_protocols_sha256']==digest(mapping)
