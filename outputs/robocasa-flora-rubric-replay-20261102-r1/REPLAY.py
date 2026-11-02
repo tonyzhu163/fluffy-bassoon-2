@@ -73,7 +73,7 @@ def build(code):
         historical=ref(OUT/'historical.json'),candidate=ref(OUT/'candidate.json'),candidate_source=ref(candidate_path),
         sources=source,video_count=634,label_count=1268,focus_ids=sorted(focus),new_physical_episodes=0,optimizer_steps=0,
         camera_order=items[0]['videos'] and [v['camera'] for v in items[0]['videos']],
-        datasets=dict(Counter(x['dataset'] for x in items)),prompt_change='Append frozen qualitative criteria to unchanged native instruction; official system/output unchanged')))
+        datasets=dict(Counter(x['dataset'] for x in items)),prompt_change='Append frozen qualitative criteria to unchanged native instruction; official system/output unchanged'))
     print(json.dumps({'videos':634,'labels':1268,'focus_failures':58,'manifest':ref(OUT/'MANIFEST.json')}))
 
 def worker(profile):
