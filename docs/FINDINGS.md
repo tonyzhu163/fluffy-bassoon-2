@@ -237,6 +237,12 @@ promoting the fitted threshold. The corrected retry completed70 labels,
 including8 recovered baseline outputs, with673 worker GPU-seconds; the failed
 allocation remains separately charged520. No new robot actions or SGD.
 [Per-case times, raw scores and limits](../outputs/robocasa-flora-first-success-rubric-20261103-r2/RESULT.md).
+A subsequent CPU geometry audit finds all six selected targets at z=0.785,
+with no drawer above the target in its stack, and matching scene metadata.
+Thus an incorrectly assumed uppermost target does not explain the128/144
+misses on this panel; this does not establish equivalence of the native height
+filter and uppermost geometry across all layouts. Six resets,0 policy controls
+or motor calls. [Geometry evidence](../outputs/robocasa-flora-first-success-rubric-20261103-r2/TARGET-AUDIT.json).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3

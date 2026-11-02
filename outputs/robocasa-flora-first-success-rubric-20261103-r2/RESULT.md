@@ -55,6 +55,25 @@ grid; each successful trajectory has one pre-crossing, two post-crossing and
 terminal probes. The panel is selected development evidence, not population
 precision, recall or an online detector qualification.
 
+A follow-up CPU scene-reset audit checks the geometric interpretation behind
+the short instruction. All six targets are at z=0.785 and have no drawer
+above them in the same stack; all retained scene metadata fields match. Thus
+the missed128/144 controls are not explained by the native target being below
+another drawer in these scenes. TOP_DRAWER's source definition remains a
+height filter, so this does not prove a universal geometric equivalence in
+all layouts. The audit performs six scene resets and0 policy controls or
+motor calls. Its first setup attempt fails before imports/reset because a
+source-export JSON exists only in Git; the corrected audit reads that exact
+committed artifact. Both logs are retained. [Audit](TARGET-AUDIT.json).
+
+Human inspection of the original reset/350/400/450/750 camera frames finds
+the drawer opening visible in the left external view after native384, while
+the wrist view is largely blocked at350/400. Candidate1.6 still gives1 at
+400/450/750. This motivates examining view/target tracking; it does not prove
+the model's internal reason or establish that another camera protocol works.
+The [inspection sheet](drawer128-prefix-inspection.jpg) is diagnostic only,
+with labels added after inference; no annotated frame entered Flora.
+
 Evidence: [paired raw grades](PAIRED-SAMPLE.json), [metrics](RESULT.json),
 [post-hoc screen](OFFLINE-READOUT.json), [CPU preparation](CPU-CHECKS.json),
 [batch completion](scoring/COMPLETED.json), [copied hashes](COPIED-HASHES.json),
