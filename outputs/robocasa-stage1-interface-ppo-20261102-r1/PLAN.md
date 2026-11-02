@@ -1,7 +1,9 @@
 # Stage 1: velocity and all-layer KV steering PPO (simulator reward)
 
-2026-11-02. Status: **Stage 1 approved by the human; scope below recorded,
-code not yet written, no GPU launch.** Supersedes the residual Stage 1 in the
+2026-11-02. Status: **Stage 1 and a 20 GPU-h cap approved by the human.
+All-layer KV interface on `main` (`1c4c7039`), 34/34 thu2 CPU tests (job
+50005, two envs). Warm-start design reopened (below). No GPU launch; this
+session has no Baige route, so a Baige owner must launch.** Supersedes the residual Stage 1 in the
 [improvement gate](../robocasa-ppo-improvement-gate-20261102-r1/PLAN.md#stage-1-simulator-reward-positive-control-single-task);
 its pass test, logging and stop rule carry over unchanged.
 
@@ -36,32 +38,40 @@ policy outputs a per-chunk, observation-conditioned code.
 
 ## Warm-start and its limits
 
-- Stage 0 drew one code ~N(0, 0.5²) per **episode**, held fixed across all
-  12 chunks, independent of observation; 160 episodes/arm/task with success.
-  The warm start is a reward-weighted fit of the initial code mean and std
-  (CPU only), plus critic pretraining on those returns. It cannot be used as
-  on-policy PPO data: a per-chunk policy does not generate episode-constant
-  codes.
-- No Stage 0 gain reached p<.05, so most of the success variation is motor
-  noise. Warm-starting may just fit noise; the zero-init arms show this.
-- KW: the Stage 0 KV data belong to the final-layer fixed-projection map,
-  not the new adapter. KW initializes the adapter to reproduce that map on
-  the final layer (other layers zero) and warm-starts the code distribution;
-  this must be checked on CPU to match Stage 0 outputs before launch.
-- Critic pretraining needs per-chunk features. The 46,980 recorded chunks
-  are actual chunk records; features are recomputed on the frozen motor if
-  not stored.
+- **Correction:** Stage 0 drew an independent code ~N(0, 0.5²) per **chunk**
+  (12 per episode, `WORKLOAD.py` `plan`), observation-independent. That is
+  the zero-init PPO policy's steering law at the Stage 0 fraction.
+- **The planned code-mean warm start has no signal.** Codes rebuilt from the
+  Stage 0 seed rule, episode-mean code against case-centred success,
+  permutation p: OpenDrawer velocity .56, conditioning .86 (other tasks
+  .09–.63). A reward-weighted mean would move the start in a random
+  direction. Reconstruction is not yet checked against Baige `PLAN.pt`.
+- Usable alternative for VW only: the velocity bank (160 episodes on selected
+  failure cases) is an on-policy sample of the zero-init velocity policy, so
+  it can pretrain the critic or serve as a first PPO batch after per-chunk
+  features are recomputed on Baige. The KV bank used the final-layer map
+  and does not match `conditioning_all`.
+- Pending human choice: drop warm-start (V0, K0 only) or use the velocity
+  bank as above.
+
+## All-layer KV interface
+
+`InterfaceSpec(kind="conditioning_all")`: the same fixed ±1/√32 projection
+value residual on every prefix KV layer, scaled by that layer's RMS and one
+fraction; layer seeds count from the top so the final layer keeps the Stage 0
+map exactly. Zero code is bitwise native. The fraction is calibrated on GPU by
+the Stage 0 rule (action-space RMS matched to the action-residual 0.25
+target); the all-layer magnitude itself was not screened.
 
 ## Budget
 
 Each learner: up to 30 updates × 64 episodes (≤1.15M controls), ~4 GPU-h
 plus evaluation, per the gate plan. Four learners ≈ 16 GPU-h, cap 20 GPU-h
 including failures. The earlier ~1M-action approval was for one learner;
-**four learners need the human to confirm this cap.**
+Cap approved by the human (2026-11-02).
 
 ## Before launch
 
-1. Implement the all-layer KV adapter in `robocasa_interface`, with a
-   zero-output identity test and an all-layer causality/shape test.
+1. ~~All-layer KV adapter~~ done (`1c4c7039`).
 2. Implement the warm-start fit and critic pretraining (CPU).
 3. Run core tests on allocated Linux, pin a `main` commit, fresh run IDs.
