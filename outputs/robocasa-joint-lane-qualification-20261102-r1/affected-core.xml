@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="7" failures="0" skipped="0" tests="56" time="67.352" timestamp="2026-11-02T12:42:50.487343+08:00" hostname="aibox-rffe453e3884-5f96c78b88-rtvhb"><testcase classname="tests.test_robocasa_residual" name="test_native_draw_replay_features_and_zero_residual_identity" time="0.009" /><testcase classname="tests.test_robocasa_residual" name="test_motor_restores_hook_on_native_prediction_failure" time="0.001" /><testcase classname="tests.test_robocasa_residual" name="test_zero_residual_native_qualification_executes_one_episode_not_two" time="0.040" /><testcase classname="tests.test_robocasa_residual" name="test_full_native_horizon_and_video_are_truth_isolated" time="0.023" /><testcase classname="tests.test_robocasa_residual" name="test_success_mask_or_short_episode_cannot_be_scored" time="0.001" /><testcase classname="tests.test_robocasa_residual" name="test_first_success_counts_primitive_controls_and_preserves_transient_success[steps0]" time="0.043" /><testcase classname="tests.test_robocasa_residual" name="test_first_success_counts_primitive_controls_and_preserves_transient_success[steps1]" time="0.045" /><testcase classname="tests.test_robocasa_residual" name="test_first_success_counts_primitive_controls_and_preserves_transient_success[steps2]" time="0.043" /><testcase classname="tests.test_robocasa_residual" name="test_first_success_counts_primitive_controls_and_preserves_transient_success[steps3]" time="0.045" /><testcase classname="tests.test_robocasa_residual" name="test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks[TurnOnMicrowave-450]" time="0.014" /><testcase classname="tests.test_robocasa_residual" name="test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks[CoffeeSetupMug-600]" time="0.020" /><testcase classname="tests.test_robocasa_residual" name="test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks[OpenCabinet-1050]" time="0.034" /><testcase classname="tests.test_robocasa_residual" name="test_mixed_task_native_horizons_recover_only_at_full_episode_boundary" time="0.040" /><testcase classname="tests.test_robocasa_residual" name="test_pending_batch_has_no_labels_and_install_is_atomic" time="0.971" /><testcase classname="tests.test_robocasa_residual" name="test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint" time="0.040" /><testcase classname="tests.test_robocasa_residual" name="test_lane_collection_matches_serial_draws_ids_and_records" time="0.328" /><testcase classname="tests.test_flora_joint_shards" name="test_joint80_mixed_horizons_preserve_all_grades_and_reject_partial_or_wrong_tasks" time="0.052" /><testcase classname="tests.test_flora_joint_shards" name="test_joint80_service_binds_task_map_pending_source_and_waits_for_all_official_rows" time="0.118" /><testcase classname="tests.test_flora_joint_shards" name="test_streamed_grades_are_reused_only_for_identical_jobs_and_finish_at_request" time="0.014" /><testcase classname="tests.test_rlinf_native_ppo" name="test_published_batch_and_h400_compose" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f29a0d190&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_published_batch_and_h400_0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_four_rank_preserves_sixtyfour_microbatch_weights" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f29174310&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_four_rank_preserves_sixty0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_rejects_scientific_recipe_drift[actor.global_batch_size-1024]" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f29109110&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_rejects_scientific_recipe0')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_rejects_scientific_recipe_drift[env.train.max_episode_steps-200]" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f2911d550&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_rejects_scientific_recipe1')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_rejects_scientific_recipe_drift[actor.model.openpi.train_expert_only-False]" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f29127d90&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_rejects_scientific_recipe2')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_rejects_scientific_recipe_drift[actor.optim.lr_scheduler-cosine]" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f29a7ea50&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_rejects_scientific_recipe3')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_rejects_scientific_recipe_drift[runner.only_eval-True]" time="0.001"><error message="failed on setup with &quot;KeyError: 'EMBODIED_PATH'&quot;">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0f351caf50&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_rejects_scientific_recipe4')
+
+    @pytest.fixture
+    def recipe(monkeypatch, tmp_path):
+        from hydra import compose, initialize_config_dir
+        code = Path(__file__).resolve().parents[1]
+        for key, value in dict(NATIVE_PPO_OUTPUT=str(tmp_path), NATIVE_PPO_ACCOUNTING_ROOT=str(tmp_path/'actions'),
+                NATIVE_PPO_PLACEMENT='0-7', NATIVE_PPO_WORLD='8', NATIVE_PPO_DEADLINE='9999999999',
+                ROBOTWIN_ASSETS_PATH='/qualified/assets', NATIVE_PPO_MODEL='/qualified/fa8',
+                NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
+            monkeypatch.setenv(key, value)
+&gt;       assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rlinf_native_ppo.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OPENBLAS_NUM_THREADS': '2', 'OMP_NUM_THREADS': '2', 'PYTHONPATH': '/mowenjie/fluffy-bassoon-2/worktrees/join..., 'NATIVE_PPO_MODEL': '/qualified/fa8', 'NATIVE_PPO_INITIALIZER_REVISION': 'fa8df6ed103db0f5549c122f3a17c00ba6426c98'})
+key = 'EMBODIED_PATH'
+
+&gt;   ???
+E   KeyError: 'EMBODIED_PATH'
+
+&lt;frozen os&gt;:679: KeyError</error></testcase><testcase classname="tests.test_rlinf_native_ppo" name="test_unresolved_calls_remain_charged_across_fresh_attempt" time="0.003" /><testcase classname="tests.test_rlinf_native_ppo" name="test_prior_gpu_clock_requires_terminal_hash_bound_unique_receipts" time="0.001" /><testcase classname="tests.test_rlinf_native_ppo" name="test_worker_rng_roundtrip_cpu_no_models" time="0.001" /><testcase classname="tests.test_rlinf_native_ppo" name="test_official_runtime_import_and_baseline_precedes_training" time="57.169" /><testcase classname="tests.test_rlinf_native_ppo" name="test_boundary_capture_follows_official_environment_wait" time="0.001" /><testcase classname="tests.test_rlinf_native_ppo" name="test_sampler_and_eval_rng_survive_whole_boundary_restore" time="0.010" /><testcase classname="tests.test_rlinf_native_ppo" name="test_original_rollout_is_saved_before_official_training_shuffle" time="0.029" /><testcase classname="tests.test_rlinf_native_ppo" name="test_native_history_multirank_episode_contract" time="0.179" /><testcase classname="tests.test_residual_parallel" name="test_eight_partitions_preserve_draws_complete_gae_and_next_adam_update" time="0.064" /><testcase classname="tests.test_residual_parallel" name="test_deterministic_parallel_plan_keeps_training_actor_rng_untouched" time="0.006" /><testcase classname="tests.test_residual_parallel" name="test_fifty_complete_episodes_without_padding_keep_draws_gae_and_next_adam" time="0.178" /><testcase classname="tests.test_residual_parallel" name="test_retained_eight_then_forty_two_keep_exact_fifty_motor_draw_stream" time="0.002" /><testcase classname="tests.test_residual_parallel" name="test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[False]" time="0.268" /><testcase classname="tests.test_residual_parallel" name="test_uneven_worker_results_merge_all_episodes_and_preserve_recovery[True]" time="0.267" /><testcase classname="tests.test_residual_parallel" name="test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam" time="1.847" /><testcase classname="tests.test_robocasa_residual_rewards" name="test_native_video_and_probability_grade_use_actual_horizon" time="0.001" /><testcase classname="tests.test_robocasa_residual_rewards" name="test_eight_native_cases_require_headroom_and_both_score_classes" time="0.001" /><testcase classname="tests.test_residual_checkpoint_migration" name="test_json_roundtrip_keeps_typed_bound_full_recovery_and_next_adam[eight_gpu_rollout_only]" time="0.018" /><testcase classname="tests.test_residual_checkpoint_migration" name="test_json_roundtrip_keeps_typed_bound_full_recovery_and_next_adam[eight_gpu_evaluation_only]" time="0.016" /><testcase classname="tests.test_residual_ppo" name="test_zero_control_is_identity_and_only_arm_dims_move" time="0.034" /><testcase classname="tests.test_residual_ppo" name="test_residual_never_exceeds_bound_and_matches_torch" time="0.169" /><testcase classname="tests.test_residual_ppo" name="test_bound_validation_and_norm_stats" time="0.006" /><testcase classname="tests.test_residual_ppo" name="test_initial_deterministic_policy_reproduces_frozen_motor" time="0.004" /><testcase classname="tests.test_residual_ppo" name="test_ppo_learns_to_reach_target_and_exports_history" time="2.892" /><testcase classname="tests.test_residual_ppo" name="test_history_controller_adapter_applies_bound" time="0.006" /><testcase classname="tests.test_robocasa_batched_collection" name="test_mixed_horizon_batch_preserves_serial_records_and_next_adam_update" time="0.088" /><testcase classname="tests.test_robocasa_batched_collection" name="test_eight_lanes_refill_without_padding_and_pin_recovery" time="0.040" /><testcase classname="tests.test_robocasa_batched_collection" name="test_failed_lane_cannot_produce_complete_records_or_recovery" time="0.004" /><testcase classname="tests.test_robocasa_batched_collection" name="test_incomplete_draw_plan_is_rejected_before_any_native_reset" time="0.002" /><testcase classname="tests.test_robocasa_batched_collection" name="test_native_lane_seek_retains_original_episode_id_and_round" time="0.023" /></testsuite></testsuites>
