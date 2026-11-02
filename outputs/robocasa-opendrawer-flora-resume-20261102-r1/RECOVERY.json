@@ -1,0 +1,212 @@
+{
+  "completed": true,
+  "resume_iteration": 4,
+  "target_iteration": 6,
+  "source_commit": "72ae2202df934b1d87e3aed57ad61068acbbe85f",
+  "original_source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+  "original_job": "job-btcpf0pdsj0c",
+  "original_run": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1",
+  "resume_checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/policy/boundary-004.pt",
+    "sha256": "fd6ddc551368dee1d1928876677077e7948ff47c0e31a89f07ef6a3399baaa26"
+  },
+  "restored_components": [
+    "policy",
+    "critic",
+    "Adam",
+    "motor sampler",
+    "case cursor256",
+    "global RNG",
+    "action RNG",
+    "update RNG"
+  ],
+  "prior_action_charge": 246028,
+  "prior_unresolved_calls_conservatively_charged": 5,
+  "maximum_all_in_actions": 500000,
+  "remaining_all_in_actions": 253972,
+  "prior_GPU_seconds": 25396,
+  "budget_reset": false,
+  "logical_node_clocks": [
+    {
+      "rank": 0,
+      "ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-00/clock/worker-time.json",
+      "prior_charged_seconds": 3177,
+      "worker_seconds": 21600,
+      "new_slice_seconds": 14340,
+      "closure_reservation_seconds": 60,
+      "prior_snapshot": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+          "purpose": "Single-task OpenDrawer Flora residual PPO with colocated TP1 engines",
+          "stage": "F",
+          "run_id": "robocasa-opendrawer-flora-first-20261102-r1",
+          "binding_sha256": "80ceb541a1295d0d90242613e5b99def265b7b7debc3d1cd67eff6d0f6ce9aea",
+          "requested_gpus": 2,
+          "global_gpus": 8,
+          "cpus": 32,
+          "ram_gib": 256,
+          "shm_gib": 16,
+          "worker_seconds": 21600,
+          "maximum_gpu_seconds_global": 172800,
+          "robot_actions_global_ceiling": 500000,
+          "new_output_GiB": 112
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-00/clock/attempts/1793584767000000-0000",
+            "started_unix": 1793584767.0,
+            "slice_seconds": 21540,
+            "reserved_seconds": 21600,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793587883.7863247,
+            "exit_code": 1,
+            "charged_seconds": 3177,
+            "slice_overrun": false
+          }
+        ]
+      }
+    },
+    {
+      "rank": 1,
+      "ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-01/clock/worker-time.json",
+      "prior_charged_seconds": 3174,
+      "worker_seconds": 21600,
+      "new_slice_seconds": 14340,
+      "closure_reservation_seconds": 60,
+      "prior_snapshot": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+          "purpose": "Single-task OpenDrawer Flora residual PPO with colocated TP1 engines",
+          "stage": "F",
+          "run_id": "robocasa-opendrawer-flora-first-20261102-r1",
+          "binding_sha256": "80ceb541a1295d0d90242613e5b99def265b7b7debc3d1cd67eff6d0f6ce9aea",
+          "requested_gpus": 2,
+          "global_gpus": 8,
+          "cpus": 32,
+          "ram_gib": 256,
+          "shm_gib": 16,
+          "worker_seconds": 21600,
+          "maximum_gpu_seconds_global": 172800,
+          "robot_actions_global_ceiling": 500000,
+          "new_output_GiB": 112
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-01/clock/attempts/1793584771000000-0000",
+            "started_unix": 1793584771.0,
+            "slice_seconds": 21540,
+            "reserved_seconds": 21600,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793587884.6192822,
+            "exit_code": 1,
+            "charged_seconds": 3174,
+            "slice_overrun": false
+          }
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-02/clock/worker-time.json",
+      "prior_charged_seconds": 3173,
+      "worker_seconds": 21600,
+      "new_slice_seconds": 14340,
+      "closure_reservation_seconds": 60,
+      "prior_snapshot": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+          "purpose": "Single-task OpenDrawer Flora residual PPO with colocated TP1 engines",
+          "stage": "F",
+          "run_id": "robocasa-opendrawer-flora-first-20261102-r1",
+          "binding_sha256": "80ceb541a1295d0d90242613e5b99def265b7b7debc3d1cd67eff6d0f6ce9aea",
+          "requested_gpus": 2,
+          "global_gpus": 8,
+          "cpus": 32,
+          "ram_gib": 256,
+          "shm_gib": 16,
+          "worker_seconds": 21600,
+          "maximum_gpu_seconds_global": 172800,
+          "robot_actions_global_ceiling": 500000,
+          "new_output_GiB": 112
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-02/clock/attempts/1793584771000000-0000",
+            "started_unix": 1793584771.0,
+            "slice_seconds": 21540,
+            "reserved_seconds": 21600,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793587883.8500197,
+            "exit_code": 1,
+            "charged_seconds": 3173,
+            "slice_overrun": false
+          }
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-03/clock/worker-time.json",
+      "prior_charged_seconds": 3174,
+      "worker_seconds": 21600,
+      "new_slice_seconds": 14340,
+      "closure_reservation_seconds": 60,
+      "prior_snapshot": {
+        "format": "source40_ppo_worker_time_v1",
+        "contract": {
+          "source_commit": "13b8808364e20a75e8fd54c123dc3f2d068814f4",
+          "purpose": "Single-task OpenDrawer Flora residual PPO with colocated TP1 engines",
+          "stage": "F",
+          "run_id": "robocasa-opendrawer-flora-first-20261102-r1",
+          "binding_sha256": "80ceb541a1295d0d90242613e5b99def265b7b7debc3d1cd67eff6d0f6ce9aea",
+          "requested_gpus": 2,
+          "global_gpus": 8,
+          "cpus": 32,
+          "ram_gib": 256,
+          "shm_gib": 16,
+          "worker_seconds": 21600,
+          "maximum_gpu_seconds_global": 172800,
+          "robot_actions_global_ceiling": 500000,
+          "new_output_GiB": 112
+        },
+        "worker_seconds": 21600,
+        "attempts": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-first-20261102-r1/job/node-03/clock/attempts/1793584771000000-0000",
+            "started_unix": 1793584771.0,
+            "slice_seconds": 21540,
+            "reserved_seconds": 21600,
+            "status": "finished",
+            "scheduler_allowance_seconds": 60,
+            "ended_unix": 1793587884.2145946,
+            "exit_code": 1,
+            "charged_seconds": 3174,
+            "slice_overrun": false
+          }
+        ]
+      }
+    }
+  ],
+  "GPUs": 8,
+  "scheduler_minutes": 239,
+  "automatic_retry": false,
+  "maximum_total_output_bytes": 120259084288,
+  "prior_output_allocated_bytes": 6376422400,
+  "ledger_growth_reservation_bytes": 1048576,
+  "remaining_output_bytes": 113881613312,
+  "partial_batch5": "not complete; no pending checkpoint or SGD-start marker; recollect from boundary4 with old spend retained",
+  "history_prefix_dataset": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flora-resume-20261102-r1/prefix-history.npz",
+    "sha256": "a7ce4cbf6aeda67ae3716096d22c265e451975193202b5861a833fd74e81849a"
+  },
+  "preparation_time_unix": 1793592876.9261026
+}
