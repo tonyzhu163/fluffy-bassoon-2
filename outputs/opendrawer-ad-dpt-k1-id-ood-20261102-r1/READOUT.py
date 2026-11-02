@@ -15,12 +15,18 @@ import time
 
 ROOT = Path('/mowenjie/fluffy-bassoon-2')
 TRAIN = ROOT/'outputs/opendrawer-ppo-ad-dpt-20261102-r1'
-OUT = ROOT/'outputs/opendrawer-ad-dpt-k1-id-ood-20261102-r1'
+OUT = Path(os.environ.get('TASK_READOUT_OUTPUT',str(ROOT/'outputs/opendrawer-ad-dpt-k1-id-ood-20261102-r1')))
 CORE = ROOT/'worktrees/opendrawer-ad-dpt-20261102-r1'
 CORE_PIN = '68f2c5aa33218709453a7821f6c6223ac3803035'
 CODE = Path(__file__).resolve().parents[2]
-METHODS = ('ppo_initial','ppo_final','ad_full','ad_static','dpt_full','dpt_static')
-FULL = ('ad_full','dpt_full')
+ALL_METHODS = ('ppo_initial','ppo_final','ad_full','ad_static','dpt_full','dpt_static')
+if 'TASK_READOUT_METHODS' not in os.environ:
+    raise ValueError('Select explicit ready methods; evaluation has no all-model default barrier')
+METHODS = tuple(json.loads(os.environ['TASK_READOUT_METHODS']))
+assert METHODS and len(set(METHODS))==len(METHODS) and set(METHODS)<=set(ALL_METHODS)
+STUDENTS = tuple(name for name in METHODS if not name.startswith('ppo_'))
+FULL = tuple(name for name in METHODS if name.endswith('_full'))
+FRESH_ID = os.environ.get('TASK_READOUT_FRESH_ID')=='1'
 
 
 def sha(path):
@@ -54,7 +60,11 @@ def clean(path):
 
 
 def tasks():
-    return [('OOD',i) for i in range(50)]+[('ID',i) for i in range(8,50)]
+    return [('OOD',i) for i in range(50)]+[('ID',i) for i in range(0 if FRESH_ID else 8,50)]
+
+
+def episode_count(cohort):
+    return len(METHODS)+2*len(FULL) if cohort=='OOD' or FRESH_ID else 2*len(FULL)
 
 
 def horizon(cohort):
@@ -81,7 +91,8 @@ def bind():
     assert head(CORE)==CORE_PIN and clean(CORE) and clean(CODE)
     assembly=json.loads((TRAIN/'data/assembly.json').read_text())
     selected={}
-    for name in METHODS[2:]:
+    # Only the requested model's own readiness can gate its evaluation.
+    for name in STUDENTS:
         folder=TRAIN/'fits'/name;status=json.loads((folder/'training-status.json').read_text())
         assert status['converged'],name
         payload=torch.load(folder/'candidate.pt',map_location='cpu',weights_only=False)
@@ -98,26 +109,29 @@ def bind():
     write(path,dict(completed=True,evaluation_driver_commit=head(CODE),runtime_core_commit=CORE_PIN,
         assembly=ref(TRAIN/'data/assembly.json'),selected=selected,initial=assembly['initial'],teacher=assembly['teacher'],
         primary_endpoint='one complete support episode -> separate query, frozen weights',
+        methods=list(METHODS),fresh_ID=FRESH_ID,independent_model_admission=True,
         ID=dict(task='OpenDrawer',cases=50,seed_first=880110000,horizon=750),
         OOD=dict(task='CloseFridge',cases=50,seed_first=880210000,horizon=900),
-        source_training_unchanged=True,new_physical_episodes=668,combined_readout_episodes=1000,
-        new_control_upper_bound=661504,combined_control_upper_bound=953000))
+        source_training_unchanged=True,new_physical_episodes=sum(episode_count(c) for c,_ in tasks()),
+        new_control_upper_bound=sum(episode_count(c)*(horizon(c)+128) for c,_ in tasks())))
     print(json.dumps(ref(path)),flush=True)
 
 
 def check_plan():
     assignment=[tasks()[rank::8] for rank in range(8)]
-    assert sum(map(len,assignment))==92 and len(set(tasks()))==92
-    controls=[sum((10 if cohort=='OOD' else 4)*(horizon(cohort)+128) for cohort,_ in rows) for rows in assignment]
-    assert sum(controls)==661504 and max(controls)<125000
+    expected_tasks=100 if FRESH_ID else 92
+    assert sum(map(len,assignment))==expected_tasks and len(set(tasks()))==expected_tasks
+    controls=[sum(episode_count(cohort)*(horizon(cohort)+128) for cohort,_ in rows) for rows in assignment]
+    assert max(controls)<125000
     assert all(native_case('ID',i)['task']=='OpenDrawer' and len(motor_seeds('ID',i,False))==15 for i in range(50))
     assert all(native_case('OOD',i)['task']=='CloseFridge' and len(motor_seeds('OOD',i,False))==18 for i in range(50))
     old=runpy.run_path(str(CORE/'outputs/opendrawer-ppo-ad-dpt-20261102-r1/RUN.py'))
     for i in range(50):
         assert native_case('ID',i)==old['case'](i)
         for support in (False,True):assert motor_seeds('ID',i,support)==old['noise_plan'](i,support)
-    print(json.dumps(dict(completed=True,cohort='ID50/OOD50',new_episodes=668,
-        controls_per_rank=controls,ID_cases_and_motor_draws_exactly_preserved=True)))
+    print(json.dumps(dict(completed=True,cohort='ID50/OOD50',methods=list(METHODS),fresh_ID=FRESH_ID,
+        new_episodes=sum(episode_count(c) for c,_ in tasks()),controls_per_rank=controls,
+        ID_cases_and_motor_draws_exactly_preserved=True)))
 
 
 def worker(rank,binding,deadline):
@@ -147,9 +161,10 @@ def worker(rank,binding,deadline):
     motor=FrozenRoboCasaMotor(model,stats.get('norm_stats',stats),seed=991)
     bound=ResidualBound(**contract['bound'])
     old=runpy.run_path(str(CORE/'outputs/opendrawer-ppo-ad-dpt-20261102-r1/RUN.py'))
-    policies=dict(ppo_initial=old['load_ppo'](binding['initial'],'cuda'),ppo_final=old['load_ppo'](binding['teacher'],'cuda'))
+    policies={name:old['load_ppo'](binding['initial'] if name=='ppo_initial' else binding['teacher'],'cuda')
+        for name in METHODS if name.startswith('ppo_')}
     candidates=dict(ppo_initial=binding['initial'],ppo_final=binding['teacher'])
-    for name in METHODS[2:]:
+    for name in STUDENTS:
         selected=binding['selected'][name];assert read_ref(selected['status'])['converged']
         candidates[name]=selected['candidate']
         policy,manifest=load_policy(candidates[name]['path'],expected_sha256=candidates[name]['sha256'],device='cuda')
@@ -193,7 +208,7 @@ def worker(rank,binding,deadline):
 
     for cohort,index in assigned:
         baseline={}
-        if cohort=='OOD':
+        if cohort=='OOD' or FRESH_ID:
             for name in METHODS:
                 row,_=episode(cohort,index,name,policies[name],'K0','query');baseline[name]=row
             assert len({(r['initial_features_sha256'],r['initial_base_sha256']) for r in baseline.values()})==1
@@ -206,10 +221,10 @@ def worker(rank,binding,deadline):
                 actor.controller.act(row['features'],deterministic=True)
                 actor.controller.observe(row['control'],row['reward'],row['done'])
             query,_=episode(cohort,index,name,actor,'K1','query');queries.append(query)
-            if cohort=='OOD':
+            if cohort=='OOD' or FRESH_ID:
                 assert query['initial_features_sha256']==baseline[name]['initial_features_sha256']
                 assert query['initial_base_sha256']==baseline[name]['initial_base_sha256']
-        assert len({(r['initial_features_sha256'],r['initial_base_sha256']) for r in queries})==1
+        if queries:assert len({(r['initial_features_sha256'],r['initial_base_sha256']) for r in queries})==1
     write(OUT/'workers'/f'rank-{rank:02d}.json',dict(completed=True,rank=rank,source=binding['evaluation_driver_commit'],
         binding_sha256=sha(OUT/'binding.json'),tasks=assigned,charged_actions=journal.charged()))
 
@@ -222,7 +237,7 @@ def paired(a,b):
 
 def summarize(binding):
     for rank in range(8):assert json.loads((OUT/'workers'/f'rank-{rank:02d}.json').read_text())['completed']
-    assert json.loads((TRAIN/'RESULT.json').read_text())['completed']
+    if not FRESH_ID:assert json.loads((TRAIN/'RESULT.json').read_text())['completed']
     candidates=dict(ppo_initial=binding['initial'],ppo_final=binding['teacher'])
     candidates.update({name:value['candidate'] for name,value in binding['selected'].items()})
 
@@ -245,12 +260,12 @@ def summarize(binding):
         for index in range(50):
             for name in METHODS:
                 path=(TRAIN/'evaluation'/f'rank-{index%2:02d}'/'K0'/name/f'case-{index:03d}'/'query/result.json'
-                    if cohort=='ID' else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K0/query/result.json')
+                    if cohort=='ID' and not FRESH_ID else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K0/query/result.json')
                 row=verified(path,cohort,index,name,'K0','query');zero[name].append(row)
             assert len({(zero[name][-1]['initial_features_sha256'],zero[name][-1]['initial_base_sha256']) for name in METHODS})==1
             for name in FULL:
                 directory=(TRAIN/'evaluation'/f'rank-{index%2:02d}'/'K1'/name/f'case-{index:03d}'
-                    if cohort=='ID' and index<8 else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K1')
+                    if cohort=='ID' and index<8 and not FRESH_ID else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K1')
                 query=verified(directory/'query/result.json',cohort,index,name,'K1','query')
                 previous=verified(directory/'support/result.json',cohort,index,name,'K1','support')
                 assert query['candidate']==binding['selected'][name]['candidate']
@@ -264,11 +279,12 @@ def summarize(binding):
             zero_shot_successes={name:sum(values) for name,values in controls.items()},
             support_successes={name:sum(row['success'] for row in rows) for name,rows in support.items()},
             student_vs_PPO={f'{name}-vs-{baseline}':paired(primary[name],primary[baseline])
-                for name in METHODS[2:] for baseline in METHODS[:2]},
+                for name in STUDENTS for baseline in ('ppo_initial','ppo_final') if baseline in primary},
             full_K1_vs_K0={name:paired(primary[name],controls[name]) for name in FULL},
             context_blind_controls='PPO/static K0 query results reused; support cannot affect their policy; no invented support episodes')
     result=dict(completed=True,primary_endpoint='one-shot full students vs frozen PPO/static query controls',
-        binding=ref(OUT/'binding.json'),ID=tables['ID'],OOD=tables['OOD'],
+        binding=ref(OUT/'binding.json'),methods=list(METHODS),independent_phase_complete=True,
+        ID=tables['ID'],OOD=tables['OOD'],
         OOD_meaning='CloseFridge held out from controller training, not necessarily foundation pretraining',
         single_source_task=True,single_seed=True,source_streams_span_different_scenes=True,
         reward='simulator-reward development pilot, not Flora result')
@@ -287,6 +303,7 @@ def main():
     if args.check_plan:check_plan();return
     if args.bind:bind();return
     binding=json.loads((OUT/'binding.json').read_text());assert head(CORE)==binding['runtime_core_commit']==CORE_PIN
+    assert binding['methods']==list(METHODS) and binding['fresh_ID']==FRESH_ID
     assert head(CODE)==binding['evaluation_driver_commit'] and clean(CORE) and clean(CODE)
     if args.summarize:summarize(binding);return
     if args.worker is not None:worker(args.worker,binding,args.deadline);return

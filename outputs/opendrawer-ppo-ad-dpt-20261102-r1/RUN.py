@@ -253,6 +253,8 @@ def main():
     parser.add_argument('--worker', type=int)
     parser.add_argument('--source-commit', required=True)
     parser.add_argument('--deadline', type=float, required=True)
+    parser.add_argument('--legacy-combined', action='store_true',
+        help='Archived all-model evaluation barrier; new launches publish fits independently')
     args = parser.parse_args()
     assert sys.platform == 'linux'
     assert subprocess.check_output(['git', '-C', str(CODE), 'rev-parse', 'HEAD'], text=True).strip() == args.source_commit
@@ -263,6 +265,10 @@ def main():
         objective = ('ad', 'dpt')[args.worker]
         for mode in ('full', 'static'):
             fit(objective, mode, args.source_commit, args.deadline)
+            print(json.dumps(dict(event='model_ready_for_independent_evaluation',
+                method=f'{objective}_{mode}',status=str(RUN/'fits'/f'{objective}_{mode}'/'training-status.json'))),flush=True)
+        if not args.legacy_combined:
+            return
         while not all((RUN/'fits'/name/'training-status.json').exists()
                       and json.loads((RUN/'fits'/name/'training-status.json').read_text())['converged'] for name in METHODS[2:]):
             if time.time()+300 >= args.deadline:
@@ -294,8 +300,10 @@ def main():
             MUJOCO_EGL_DEVICE_ID=str(device['allocation_ordinal']), TASK_ALLOCATION_ORDINAL=str(device['allocation_ordinal']))
         stream = (attempt/f'worker-{rank:02d}.log').open('x')
         streams.append(stream)
-        children.append(subprocess.Popen([sys.executable, '-B', __file__, '--worker', str(rank),
-            '--source-commit', args.source_commit, '--deadline', str(args.deadline)], env=env,
+        command=[sys.executable, '-B', __file__, '--worker', str(rank),
+            '--source-commit', args.source_commit, '--deadline', str(args.deadline)]
+        if args.legacy_combined:command.append('--legacy-combined')
+        children.append(subprocess.Popen(command, env=env,
             stdout=stream, stderr=subprocess.STDOUT, start_new_session=True))
     while not all(child.poll() is not None for child in children):
         if any(child.poll() not in (None, 0) for child in children):
@@ -312,7 +320,11 @@ def main():
     write(attempt/'workers-terminal.json', dict(exit_codes=codes, finished_unix=time.time()))
     if any(codes):
         raise RuntimeError('Worker stopped; diagnose saved logs/checkpoints before any new allocation')
-    summarize(args.source_commit)
+    if args.legacy_combined:
+        summarize(args.source_commit)
+    else:
+        write(attempt/'fits-complete.json',dict(completed=True,
+            evaluation_dispatch='per model when its own status converges; no global evaluation barrier'))
 
 
 if __name__ == '__main__':

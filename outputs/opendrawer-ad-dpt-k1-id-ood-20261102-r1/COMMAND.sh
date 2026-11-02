@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 : "${TASK_EVAL_CODE:?}" "${TASK_ATTEMPT:?}" "${TASK_BINDING_SHA:?}" "${RANK:?}"
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_RUN=$TASK_ROOT/outputs/opendrawer-ad-dpt-k1-id-ood-20261102-r1
+TASK_RUN=${TASK_READOUT_OUTPUT:-$TASK_ROOT/outputs/opendrawer-ad-dpt-k1-id-ood-20261102-r1}
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 TASK_STARTED=$(date +%s)
 TASK_DEADLINE=$((TASK_STARTED+27900))

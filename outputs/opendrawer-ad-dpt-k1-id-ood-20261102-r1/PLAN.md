@@ -1,5 +1,12 @@
 # Primary one-shot ID/OOD readout
 
+**Dispatch correction:** the human subsequently required independent evaluation
+as each model converges. The selected-method driver now has no all-model
+default gate. [AD-first dispatch](../opendrawer-ad-first-id-ood-20261102-r1/PLAN.md)
+supersedes this document's grouped admission/reuse schedule; the locked cases,
+motor draws and one-shot semantics remain the same. The old training job is
+unchanged while DPT/static finishes. New per-method results publish independently.
+
 Human clarification,2026-11-02: evaluate both ID and OOD,with one-shot as the
 primary endpoint. This supplements the immutable convergence/baseline job
 `job-8kb761dxfvtm` at68f2c5aa; it does not edit or stop that active run.

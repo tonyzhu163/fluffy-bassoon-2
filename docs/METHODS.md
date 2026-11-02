@@ -53,6 +53,15 @@ Full claim boundaries are in [PAPER.md](PAPER.md#decisions-and-claim-boundaries)
 
 ## Code
 
+Evaluation readiness belongs to each model. Once its declared stopping rule
+is met, freeze its selected checkpoint and dispatch its ID/OOD readout without
+waiting for other learners or controls. Publish that model's results when ready;
+only the final comparison waits for every method. Keep evaluation outcomes
+outside the stopping and checkpoint-selection rules. History training publishes
+an atomic `training-status.json` per fit; readout dispatch selects explicit
+ready methods rather than admitting a whole experiment at once. Archived
+combined drivers require an explicit `--legacy-combined` opt-in.
+
 | Path | Contents |
 | --- | --- |
 | `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO/SAC, DSRL drivers (`vla_target_online_dsrl*`, `dsrl_pi0_replication`), headroom screen (`vla_headroom_screen`), RLinf motor (`vla_rlinf_libero`), RLinf native PPO (`rlinf_native_ppo*`), source40 pipeline (`vla_source40_*`), RoboTwin (`robotwin_*`), Meta-World (`metaworld_*`) |
