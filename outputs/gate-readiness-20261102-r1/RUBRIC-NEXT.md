@@ -104,7 +104,10 @@ invalid. Asking for binary labels is also different from thresholding a saved
 five-grade score. If0/1 token probabilities are saved, bind their exact
 extraction; do not treat the expected ordinal grade as P(success).
 
-Replay all634 development clips, retaining true successes and all failures.
+Human correction: begin with a small failure-focused sample from the634
+development clips, plus a few true-success controls; do not replay the full
+bank. The [20-video sample](../robocasa-flora-rubric-failure-sample-20261102-r1/PLAN.md)
+iterates the first tested rubric and includes its newly introduced errors.
 Keep video bytes, views and frame indices fixed across arms; keep original
 and revised-system identities distinct. Compare paired false-success
 corrections, new false successes, true-success losses, precision, recall and
