@@ -1,0 +1,61 @@
+{
+  "checked_UTC": "2026-11-02T18:10:46Z",
+  "objective_complete": false,
+  "blocking_condition": "Direct human hold remains active; final producer recipe/resource admission and actual five-task PPO histories do not exist yet",
+  "recurrence": "Same hold verified in successive goal turns covering relay/acknowledgement, schedule preparation, batched-readout preparation, and this fresh owner/hold check; at least three consecutive observations",
+  "owner": {
+    "thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+    "state": "idle",
+    "latest_turn": "01a19d70-08e8-7ff0-8ec6-9cb025d9a87c",
+    "completed_unix": 1793642784,
+    "verified_message": "Launch hold remains unchanged. No scientific PPO jobs submitted; Ali capacity remains unavailable."
+  },
+  "hold_reference": {
+    "path": "outputs/robocasa-joint-steering-5m-20261102-r1/LAUNCH-HOLD.json",
+    "sha256": "2a3dcb0fd956565acbfbeac881e2ebf45f3fa59752e5d29042da97890ee8920d"
+  },
+  "requirements": [
+    {
+      "requirement": "Completed five-task velocity and full all-layer K+V PPO sources",
+      "status": "blocked",
+      "actual_scientific_jobs_submitted": 0,
+      "source_binding": null
+    },
+    {
+      "requirement": "Source-specific AD/full and DPT/full to validation plateau for both interfaces",
+      "status": "not_started",
+      "completed_fits": 0,
+      "required_primary_fits": 4
+    },
+    {
+      "requirement": "50cases on each of five ID and five OOD tasks, actual attempts1\u20135 for every model/interface",
+      "status": "not_started",
+      "verified_actual_episodes": 0,
+      "required_episodes": 10000
+    },
+    {
+      "requirement": "Native selected-student GPU readout and allocation-runner qualification",
+      "status": "pending_actual_source_candidate",
+      "CPU_core_tests_passed": 42
+    },
+    {
+      "requirement": "Independent and combined per-task figures/statistics, real success and terminal resource accounting",
+      "status": "not_available_without_actual_runs"
+    }
+  ],
+  "preserved_scope": "No smaller substitute, old action-residual data, synthetic corpus, capacity probe or NLL result counts as completion",
+  "prepared_evidence": [
+    "SCHEDULE-QUALIFICATION.json",
+    "BATCH-READOUT-QUALIFICATION.json",
+    "NUMERICAL-RESUME-COVERAGE.json"
+  ],
+  "next_external_step": "Finalize/release the concrete PPO recipe and resource/steering-worker admission; producer then completes actual histories",
+  "monitor": {
+    "id": "monitor-steering-ppo-and-ad-dpt",
+    "status": "ACTIVE",
+    "cadence_minutes": 20,
+    "notification": "Quiet for unchanged hold; report meaningful release/source progress/failure or required action"
+  },
+  "goal_status_to_set": "blocked",
+  "not_paused_or_complete": true
+}
