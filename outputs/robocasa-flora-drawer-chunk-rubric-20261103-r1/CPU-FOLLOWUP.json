@@ -1,0 +1,54 @@
+{
+  "posthoc": true,
+  "computed_on": "Linux CPU after terminal GPU release",
+  "observation": "Developer terminal output, retained grades unchanged",
+  "source_sha256": "9b5ca5e9f35323cf48c59bdd2a0e69a347a5910cea9e4a6b83e28f4446c8f3b7",
+  "rule": "Two score>=threshold probes exactly50 controls apart; accept second and latch",
+  "results": {
+    "window50": {
+      "threshold4": {
+        "false_accepted_episodes": 0,
+        "correctly_timed_episodes": 0
+      },
+      "threshold5": {
+        "false_accepted_episodes": 0,
+        "correctly_timed_episodes": 0
+      }
+    },
+    "window100": {
+      "threshold4": {
+        "false_accepted_episodes": 0,
+        "correctly_timed_episodes": 3,
+        "first_acceptance_controls": {
+          "000064": 600,
+          "000072": null,
+          "000112": null,
+          "000128": null,
+          "000144": 300,
+          "000264": 250
+        }
+      },
+      "threshold5": {
+        "false_accepted_episodes": 0,
+        "correctly_timed_episodes": 0
+      }
+    }
+  },
+  "case128_scores": {
+    "window50": {
+      "350": 2,
+      "400": 1,
+      "450": 1,
+      "750": 1
+    },
+    "window100": {
+      "350": 1,
+      "400": 4,
+      "450": 1,
+      "750": 1
+    }
+  },
+  "independent_validation": false,
+  "production_qualified": false,
+  "new_gpu_or_model_calls": 0
+}

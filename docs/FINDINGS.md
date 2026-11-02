@@ -258,9 +258,22 @@ CPU post-hoc two-probe confirmation removes observed false triggers but detects
 only4/5 successful cases under either candidate, still missing128; these are
 50-control-spaced prefix judgments, not consecutive frames or independent
 validation. No rubric is promoted. Worker cost670 GPU-s,0 new controls/SGD;
-the allocation succeeded and released. Recent causal chunks with the explicit
-criterion held fixed are the next untested mechanism.
+the allocation succeeded and released. This motivated testing recent causal
+chunks with the explicit criterion held fixed.
 [System-message comparison, raw grades and limits](../outputs/robocasa-flora-system-rubric-20261103-r1/RESULT.md).
+Recent chunks worsen recognition under fixed1.6. Last50/100-control windows
+each give only1 full score on15 post-success endpoints, versus5 for full
+prefixes, while all three inputs give0/20 false full scores. Valid raw first
+detections fall from3/5 to0/5 and1/5. The predeclared two-Score5-probe rule
+confirms0/5 successes for either window;128 remains missed. Post-hoc threshold4
+confirmation gives0/5 and3/5, still missing128. All74 new grades,4 repeated
+anchors,70 exported hashes and74 actual prompt/frame-read records verify;
+8 CPU chunk decodes match direct source pixels. No production change, controls
+or SGD;598 workerGPU-s, allocation succeeded/released. Removing early context
+and changing sampled-frame count are coupled, so this does not isolate the
+cause. Next wording work should separate target identification from opening
+depth on full prefixes.
+[Chunk protocol, per-case scores and limits](../outputs/robocasa-flora-drawer-chunk-rubric-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
