@@ -206,6 +206,14 @@ These examples justify testing uppermost-target tracking and endpoint wording,
 and show why terminal failure counts cannot directly measure first-success
 false positives. They do not establish the prevalence of these error modes.
 [Source audit and retained-action diagnosis](../outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/RESULT.md).
+Explicit uppermost-target rules and a source-correct opening/endpoint rule also
+fail on the same14-video panel: both give7/10 full-score terminal failures and
+retain2/4 controls, versus7/10 and3/4 for verbatim1.1. Both fix88, introduce272,
+and lose128; neither fixes diagnosed112 or64. All14 baseline full-success
+decisions reproduce, though one lower grade changes2→1. Six causal prefixes on
+two replay-qualified trajectories bracket both native first crossings, but a
+prefix after the drawer is pushed back still gets5. This is diagnostic evidence,
+not first-success qualification. [Paired grades, rationale limits and prefixes](../outputs/robocasa-flora-rubric-failure-sample-20261102-r3/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3

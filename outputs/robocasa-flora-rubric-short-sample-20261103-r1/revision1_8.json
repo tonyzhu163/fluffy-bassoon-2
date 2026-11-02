@@ -1,0 +1,7 @@
+{
+  "criteria_id": "revision1_8",
+  "task_template": "Open the {side} drawer directly below the countertop. Left/right is relative to the robot's initial position. To give Score5, verify both facts at the final frame: (1) the TOPMOST drawer front itself has moved outward, not a drawer beneath it; (2) that same drawer remains pulled out by at least about52% of its depth. If either fact is false, use1-4 for the target's actual progress. The drawer need not reach its mechanical end stop or be released.",
+  "qualified": false,
+  "episode_simulator_state_in_prompt": false,
+  "native_instruction_rewrite": "Deterministic side extraction only; explicit native target and terminal predicate"
+}
