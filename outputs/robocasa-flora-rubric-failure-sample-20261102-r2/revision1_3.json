@@ -1,0 +1,16 @@
+{
+  "criteria_id": "revision1_3_visual_completion",
+  "previous_criteria_id": "revision1_1",
+  "shared_criteria": "Use the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.",
+  "reward_training_task_criteria": {
+    "OpenDrawer": "Identify the requested upper drawer in the initial scene. Left or right is relative to the robot at its starting position, not the edge of the current camera image. Fully open means this drawer has been pulled outward into its completed open position: the drawer box extends out from the cabinet and its front stands well away from the surrounding cabinet face. A crack, a visible gap, visible contents or an obviously partly extended drawer is not a completed open state. Reserve Score 5 until the requested drawer visibly appears fully open at the observed endpoint. If it still appears partly open, or the combined views do not establish a fully open state, use Score 1-4 according to the visible progress. Use all synchronized views before deciding. Do not require other drawers to open, the handle to be released or the hand to retreat."
+  },
+  "qualified": false,
+  "static_task_thresholds_in_prompt": false,
+  "episode_simulator_state_in_prompt": false,
+  "evaluation_only_reference_criteria": {
+    "CloseDrawer": "The requested drawer is pushed back into its cabinet. Its front sits flush or nearly flush with the surrounding cabinet face, with no substantial opening remaining. Moving inward or becoming mostly closed is insufficient for full success. Reserve Score 5 until the requested drawer visibly appears fully closed at the observed endpoint. Use Score 1-4 for partial progress. Holding the handle does not disqualify success."
+  },
+  "status": "FROZEN_FOR_SMALL_SAMPLE_NOT_QUALIFIED",
+  "closed_reference_scored": false
+}
